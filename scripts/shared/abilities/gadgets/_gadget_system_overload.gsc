@@ -1,0 +1,200 @@
+// Decompiled by Serious. Credits to Scoba for his original tool, Cerberus, which I heavily upgraded to support remaining features, other games, and other platforms.
+#using scripts\codescripts\struct;
+#using scripts\shared\abilities\_ability_player;
+#using scripts\shared\abilities\_ability_util;
+#using scripts\shared\callbacks_shared;
+#using scripts\shared\clientfield_shared;
+#using scripts\shared\flagsys_shared;
+#using scripts\shared\spawner_shared;
+#using scripts\shared\system_shared;
+#using scripts\shared\util_shared;
+
+#namespace _gadget_system_overload;
+
+/*
+	Name: __init__sytem__
+	Namespace: _gadget_system_overload
+	Checksum: 0x80829828
+	Offset: 0x208
+	Size: 0x34
+	Parameters: 0
+	Flags: AutoExec
+*/
+autoexec function __init__sytem__()
+{
+	system::register("gadget_system_overload", &__init__, undefined, undefined);
+}
+
+/*
+	Name: __init__
+	Namespace: _gadget_system_overload
+	Checksum: 0x674F32D3
+	Offset: 0x248
+	Size: 0x104
+	Parameters: 0
+	Flags: Linked
+*/
+function __init__()
+{
+	ability_player::register_gadget_activation_callbacks(18, &gadget_system_overload_on, &gadget_system_overload_off);
+	ability_player::register_gadget_possession_callbacks(18, &gadget_system_overload_on_give, &gadget_system_overload_on_take);
+	ability_player::register_gadget_flicker_callbacks(18, &gadget_system_overload_on_flicker);
+	ability_player::register_gadget_is_inuse_callbacks(18, &gadget_system_overload_is_inuse);
+	ability_player::register_gadget_is_flickering_callbacks(18, &gadget_system_overload_is_flickering);
+	ability_player::register_gadget_primed_callbacks(18, &gadget_system_overload_is_primed);
+	callback::on_connect(&gadget_system_overload_on_connect);
+}
+
+/*
+	Name: gadget_system_overload_is_inuse
+	Namespace: _gadget_system_overload
+	Checksum: 0xCA51D928
+	Offset: 0x358
+	Size: 0x2A
+	Parameters: 1
+	Flags: Linked
+*/
+function gadget_system_overload_is_inuse(slot)
+{
+	return self flagsys::get("gadget_system_overload_on");
+}
+
+/*
+	Name: gadget_system_overload_is_flickering
+	Namespace: _gadget_system_overload
+	Checksum: 0xB4212D92
+	Offset: 0x390
+	Size: 0x52
+	Parameters: 1
+	Flags: Linked
+*/
+function gadget_system_overload_is_flickering(slot)
+{
+	if(isdefined(level.cybercom) && isdefined(level.cybercom.system_overload))
+	{
+		return self [[level.cybercom.system_overload._is_flickering]](slot);
+	}
+	return 0;
+}
+
+/*
+	Name: gadget_system_overload_on_flicker
+	Namespace: _gadget_system_overload
+	Checksum: 0xDBB89C1E
+	Offset: 0x3F0
+	Size: 0x5C
+	Parameters: 2
+	Flags: Linked
+*/
+function gadget_system_overload_on_flicker(slot, weapon)
+{
+	if(isdefined(level.cybercom) && isdefined(level.cybercom.system_overload))
+	{
+		self [[level.cybercom.system_overload._on_flicker]](slot, weapon);
+	}
+}
+
+/*
+	Name: gadget_system_overload_on_give
+	Namespace: _gadget_system_overload
+	Checksum: 0xBE9D298B
+	Offset: 0x458
+	Size: 0x5C
+	Parameters: 2
+	Flags: Linked
+*/
+function gadget_system_overload_on_give(slot, weapon)
+{
+	if(isdefined(level.cybercom) && isdefined(level.cybercom.system_overload))
+	{
+		self [[level.cybercom.system_overload._on_give]](slot, weapon);
+	}
+}
+
+/*
+	Name: gadget_system_overload_on_take
+	Namespace: _gadget_system_overload
+	Checksum: 0x440B04B6
+	Offset: 0x4C0
+	Size: 0x5C
+	Parameters: 2
+	Flags: Linked
+*/
+function gadget_system_overload_on_take(slot, weapon)
+{
+	if(isdefined(level.cybercom) && isdefined(level.cybercom.system_overload))
+	{
+		self [[level.cybercom.system_overload._on_take]](slot, weapon);
+	}
+}
+
+/*
+	Name: gadget_system_overload_on_connect
+	Namespace: _gadget_system_overload
+	Checksum: 0x56153669
+	Offset: 0x528
+	Size: 0x44
+	Parameters: 0
+	Flags: Linked
+*/
+function gadget_system_overload_on_connect()
+{
+	if(isdefined(level.cybercom) && isdefined(level.cybercom.system_overload))
+	{
+		self [[level.cybercom.system_overload._on_connect]]();
+	}
+}
+
+/*
+	Name: gadget_system_overload_on
+	Namespace: _gadget_system_overload
+	Checksum: 0x22446C2A
+	Offset: 0x578
+	Size: 0x7C
+	Parameters: 2
+	Flags: Linked
+*/
+function gadget_system_overload_on(slot, weapon)
+{
+	self flagsys::set("gadget_system_overload_on");
+	if(isdefined(level.cybercom) && isdefined(level.cybercom.system_overload))
+	{
+		self [[level.cybercom.system_overload._on]](slot, weapon);
+	}
+}
+
+/*
+	Name: gadget_system_overload_off
+	Namespace: _gadget_system_overload
+	Checksum: 0x1FED9D77
+	Offset: 0x600
+	Size: 0x7C
+	Parameters: 2
+	Flags: Linked
+*/
+function gadget_system_overload_off(slot, weapon)
+{
+	self flagsys::clear("gadget_system_overload_on");
+	if(isdefined(level.cybercom) && isdefined(level.cybercom.system_overload))
+	{
+		self [[level.cybercom.system_overload._off]](slot, weapon);
+	}
+}
+
+/*
+	Name: gadget_system_overload_is_primed
+	Namespace: _gadget_system_overload
+	Checksum: 0x2B8350A7
+	Offset: 0x688
+	Size: 0x5C
+	Parameters: 2
+	Flags: Linked
+*/
+function gadget_system_overload_is_primed(slot, weapon)
+{
+	if(isdefined(level.cybercom) && isdefined(level.cybercom.system_overload))
+	{
+		self [[level.cybercom.system_overload._is_primed]](slot, weapon);
+	}
+}
+
