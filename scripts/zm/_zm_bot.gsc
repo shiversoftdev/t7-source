@@ -67,7 +67,7 @@ function debug_coop_bot_test()
 	/#
 		botcount = 0;
 		adddebugcommand("");
-		while(1)
+		while(true)
 		{
 			if(getdvarint("") > 0)
 			{

@@ -281,7 +281,7 @@ function suspensemusic(random)
 			println("");
 		}
 	#/
-	while(1)
+	while(true)
 	{
 		wait(randomintrange(25, 60));
 		/#
@@ -1251,7 +1251,7 @@ function getroundswitchdialog(switchtype)
 		{
 			return "overtime";
 		}
-		default
+		default:
 		{
 			return "side_switch";
 		}

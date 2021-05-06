@@ -53,7 +53,7 @@ function wait_zone_moved()
 {
 	self endon(#"death");
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		level waittill(#"zone_moved");
 		if(!self bot_combat::has_threat() && self botgoalset())

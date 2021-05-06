@@ -85,7 +85,7 @@ function spear_trap_think()
 	{
 		level flag::wait_till(self.enable_flag);
 	}
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", who);
 		if(!isdefined(who) || !isplayer(who) || who.sessionstate == "spectator")
@@ -233,7 +233,8 @@ function spear_trap_slow()
 */
 function spear_choke()
 {
-	while(1)
+	level._num_ai_released = 0;
+	while(true)
 	{
 		wait(0.05);
 		level._num_ai_released = 0;
@@ -257,6 +258,7 @@ function _zombie_spear_trap_damage_wait()
 		level._spear_choke = 1;
 		level thread spear_choke();
 	}
+	endtime = gettime() + randomintrange(800, 1200);
 	while(endtime > gettime())
 	{
 		if(isdefined(self.missinglegs) && self.missinglegs)
@@ -480,7 +482,7 @@ function waterfall_trap_init()
 */
 function waterfall_trap_think()
 {
-	while(1)
+	while(true)
 	{
 		self notify(#"trap_ready");
 		self.usetrigger sethintstring(&"ZM_TEMPLE_USE_WATER_TRAP");
@@ -556,7 +558,7 @@ function function_b68fdf22()
 {
 	self endon(#"waterfall_trap_off");
 	self triggerenable(1);
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", who);
 		if(isplayer(who))
@@ -678,7 +680,8 @@ function waterfall_trap_damage()
 {
 	self endon(#"trap_off");
 	fwd = anglestoforward(self.angles);
-	while(1)
+	zombies_knocked_down = [];
+	while(true)
 	{
 		self waittill(#"trigger", who);
 		if(isplayer(who))
@@ -1129,7 +1132,7 @@ function _maze_mover_play_fx(fx_name, offset)
 function maze_cell_watch()
 {
 	level endon(#"fake_death");
-	while(1)
+	while(true)
 	{
 		self.trigger waittill(#"trigger", who);
 		if(self.trigger.pathcount > 0)
@@ -1238,6 +1241,7 @@ function zombie_slow_trigger_exit(zombie)
 	{
 		zombie zombie_mud_move_slow();
 	}
+	zombie.mud_triggers[zombie.mud_triggers.size] = self;
 	while(self.pathcount == 0 && zombie istouching(self))
 	{
 		wait(0.1);
@@ -1325,6 +1329,7 @@ function zombie_normal_trigger_exit(zombie)
 	{
 		zombie zombie_mud_move_normal();
 	}
+	zombie.path_triggers[zombie.path_triggers.size] = self;
 	while(self.pathcount != 0 && zombie istouching(self))
 	{
 		wait(0.1);
@@ -1511,6 +1516,7 @@ function watch_slow_trigger_exit(player)
 		player allowslide(0);
 		player setmovespeedscale(0.35);
 	}
+	player.mazeslowtrigger[player.mazeslowtrigger.size] = self;
 	while(self.pathcount == 0 && player istouching(self))
 	{
 		wait(0.1);
@@ -1827,6 +1833,7 @@ function maze_vibrate_active_floors(time)
 {
 	level endon(#"maze_path_end");
 	level endon(#"maze_all_safe");
+	endtime = gettime() + time * 1000;
 	while(endtime > gettime())
 	{
 		for(i = 0; i < level.mazecells.size; i++)

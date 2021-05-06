@@ -211,7 +211,8 @@ function cash_back_player_prone_check(got_ability)
 {
 	self endon(#"death");
 	prone_time = 2.5;
-	while(1)
+	start_time = gettime();
+	while(true)
 	{
 		time = gettime();
 		dt = time - start_time / 1000;
@@ -301,7 +302,8 @@ function insta_kill_upgraded_player_kill_func(active_time)
 	self thread zm_pers_upgrades::insta_kill_pers_upgrade_icon();
 	start_time = gettime();
 	zombie_collide_radius = 50;
-	while(1)
+	zombie_player_height_test = 100;
+	while(true)
 	{
 		time = gettime();
 		dt = time - start_time / 1000;
@@ -529,7 +531,8 @@ function pers_upgrade_double_points_pickup_start()
 	}
 	self.double_points_ability_start_time = gettime();
 	last_score = self.score;
-	while(1)
+	ability_lost = 0;
+	while(true)
 	{
 		if(self.score > last_score)
 		{
@@ -1033,7 +1036,7 @@ function pers_magic_box_teddy_bear()
 	m_bear setinvisibletoall();
 	wait(0.1);
 	m_bear setvisibletoplayer(self);
-	while(1)
+	while(true)
 	{
 		box = level.chests[level.chest_index];
 		if(level.round_number >= level.pers_box_weapon_lose_round)
@@ -1043,7 +1046,7 @@ function pers_magic_box_teddy_bear()
 		if(zm_pers_upgrades::is_pers_system_disabled())
 		{
 			m_bear setinvisibletoall();
-			while(1)
+			while(true)
 			{
 				if(!zm_pers_upgrades::is_pers_system_disabled())
 				{
@@ -1078,7 +1081,7 @@ function pers_magic_box_teddy_bear()
 		if(isdefined(box._box_open) && box._box_open)
 		{
 			m_bear setinvisibletoall();
-			while(1)
+			while(true)
 			{
 				if(!(isdefined(box._box_open) && box._box_open))
 				{
@@ -1221,7 +1224,7 @@ function pers_magic_box_firesale()
 {
 	self endon(#"disconnect");
 	wait(1);
-	while(1)
+	while(true)
 	{
 		if(level.zombie_vars["zombie_powerup_fire_sale_on"] == 1)
 		{
@@ -1235,7 +1238,7 @@ function pers_magic_box_firesale()
 				box = level.chests[i];
 				self thread box_firesale_teddy_bear(box, i);
 			}
-			while(1)
+			while(true)
 			{
 				if(level.zombie_vars["zombie_powerup_fire_sale_on"] == 0)
 				{
@@ -1270,12 +1273,12 @@ function box_firesale_teddy_bear(box, box_index)
 	m_bear setinvisibletoall();
 	wait(0.1);
 	m_bear setvisibletoplayer(self);
-	while(1)
+	while(true)
 	{
 		if(isdefined(box._box_open) && box._box_open)
 		{
 			m_bear setinvisibletoall();
-			while(1)
+			while(true)
 			{
 				if(!(isdefined(box._box_open) && box._box_open))
 				{
@@ -1317,7 +1320,8 @@ function pers_nube_unlock_watcher()
 	}
 	num_melee_kills = self.pers["melee_kills"];
 	num_headshot_kills = self.pers["headshots"];
-	while(1)
+	num_boards = self.pers["boards"];
+	while(true)
 	{
 		self waittill(#"pers_player_zombie_kill");
 		if(self.pers["pers_max_round_reached"] >= level.pers_nube_lose_round)

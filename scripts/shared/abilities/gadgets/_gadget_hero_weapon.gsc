@@ -314,7 +314,7 @@ function hero_wait_for_out_of_ammo(slot, weapon)
 	self endon(#"death");
 	self notify(#"hero_noammo");
 	self endon(#"hero_noammo");
-	while(1)
+	while(true)
 	{
 		wait(0.1);
 		n_ammo = self getammocount(weapon);

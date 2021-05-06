@@ -132,7 +132,7 @@ function function_9708cb71(piecename)
 	var_983a0e9b = "zmb_craftable_pickup";
 	switch(piecename)
 	{
-		default
+		default:
 		{
 			var_983a0e9b = "zmb_craftable_pickup";
 			break;
@@ -325,7 +325,7 @@ function function_dbc8e9c0(player)
 */
 function function_272fcc74()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player zm_utility::in_revive_trigger())
@@ -374,7 +374,8 @@ function function_b4c30297(trig_stub, player)
 */
 function init_craftable_choke()
 {
-	while(1)
+	level.craftables_spawned_this_frame = 0;
+	while(true)
 	{
 		util::wait_network_frame();
 		level.craftables_spawned_this_frame = 0;

@@ -306,6 +306,7 @@ function sndcountdown()
 	clock_sound thread clock_timer();
 	level thread zm_factory::sndpa_dovox("vox_maxis_teleporter_ultimatum_0");
 	count = 30;
+	num = 11;
 	while(count > 0)
 	{
 		play = count == 20 || count == 15 || count <= 10;
@@ -357,7 +358,8 @@ function teleport_pad_active_think(index)
 {
 	self setcursorhint("HINT_NOICON");
 	self.teleport_active = 1;
-	while(1)
+	user = undefined;
+	while(true)
 	{
 		self waittill(#"trigger", user);
 		if(zm_utility::is_player_valid(user) && user zm_score::can_player_purchase(level.teleport_cost) && !level.is_cooldown)
@@ -576,6 +578,7 @@ function teleport_players()
 			continue;
 		}
 		slot = i;
+		start = 0;
 		while(occupied[slot] && start < 4)
 		{
 			start++;
@@ -623,7 +626,7 @@ function teleport_players()
 function teleport_core_hint_update()
 {
 	self setcursorhint("HINT_NOICON");
-	while(1)
+	while(true)
 	{
 		if(!level flag::get("power_on"))
 		{
@@ -670,7 +673,7 @@ function teleport_core_think()
 				}
 			}
 		#/
-		while(1)
+		while(true)
 		{
 			if(teleport_pads_are_active())
 			{
@@ -780,7 +783,7 @@ function teleport_pads_are_active()
 function teleport_2d_audio()
 {
 	self endon(#"fx_done");
-	while(1)
+	while(true)
 	{
 		players = getplayers();
 		wait(1.7);
@@ -896,7 +899,7 @@ function teleporter_vo_play(vox_type, pre_wait = 0)
 function play_tele_help_vox()
 {
 	level endon(#"tele_help_end");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", who);
 		if(level flag::get("power_on"))

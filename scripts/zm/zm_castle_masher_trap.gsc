@@ -236,7 +236,7 @@ function function_1ff56fb0(str_scene)
 */
 function function_aaf2ece7()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trap_activate");
 		if(isdefined(self.activated_by_player))
@@ -334,7 +334,7 @@ function function_d7e7dcf9(player)
 */
 function function_b776b443()
 {
-	while(1)
+	while(true)
 	{
 		if(level flag::get("masher_cooldown"))
 		{
@@ -378,7 +378,7 @@ function function_aaf7f74d()
 		self._trap_switches[i] playsound("evt_switch_flip_trap");
 	}
 	level flag::wait_till_all(array("power_on", "masher_unlocked"));
-	while(1)
+	while(true)
 	{
 		level flag::wait_till_clear("masher_cooldown");
 		for(i = 0; i < self._trap_switches.size; i++)
@@ -458,6 +458,7 @@ function function_8123d15a()
 {
 	array::run_all(self.var_beb932f1, &show);
 	n_start_time = gettime();
+	n_total_time = 0;
 	while(20 > n_total_time && level flag::get("masher_on"))
 	{
 		self movez(-116, 0.25);
@@ -525,7 +526,7 @@ function function_1a554e00(var_6ac4e9cb, var_8f915eab)
 */
 function trigger_damage(var_6ac4e9cb)
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_who);
 		self.activated_by_player = var_6ac4e9cb.activated_by_player;
@@ -606,7 +607,7 @@ function function_9087381a()
 		wait(0.05);
 		setdvar("", 0);
 		adddebugcommand("");
-		while(1)
+		while(true)
 		{
 			if(getdvarint(""))
 			{

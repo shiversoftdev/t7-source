@@ -92,7 +92,7 @@ function function_23a70949(localclientnum, oldval, newval, bnewent, binitialsnap
 			self.var_b5dfc765 = playfxontag(localclientnum, level._effect["mirg2000_charged_shot_2_up"], self, "tag_origin");
 			break;
 		}
-		default
+		default:
 		{
 			if(isdefined(self.var_b5dfc765))
 			{

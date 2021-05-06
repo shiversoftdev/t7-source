@@ -242,7 +242,7 @@ function function_ecd16539(e_player)
 */
 function function_c3c6c68d()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_who);
 		if(e_who zm_utility::in_revive_trigger())
@@ -287,7 +287,7 @@ function function_ae64b39a(var_9636d237, var_f40460f5, var_895cb900 = 0)
 {
 	self endon(#"hash_378095a2");
 	self endon(#"hash_7a0cef7b");
-	while(1)
+	while(true)
 	{
 		if(!isdefined(var_9636d237) && !var_895cb900)
 		{
@@ -392,7 +392,7 @@ function function_447658c7(var_9636d237, var_f40460f5)
 					self thread function_4357491f();
 					break;
 				}
-				default
+				default:
 				{
 					break;
 				}
@@ -462,7 +462,7 @@ function function_49a83594()
 	var_2bbd3ff9 = 40;
 	t_kill = spawn("trigger_radius", self.origin + vectorscale((0, 0, 1), 50), 0, var_793f092a, var_2bbd3ff9);
 	self thread function_b88d99d(t_kill);
-	while(1)
+	while(true)
 	{
 		foreach(var_61ca7ae5, player in level.activeplayers)
 		{
@@ -471,6 +471,7 @@ function function_49a83594()
 				wait(2);
 				if(player istouching(t_kill) && zm_utility::is_player_valid(player))
 				{
+					v_moveto = undefined;
 					while(!isdefined(v_moveto))
 					{
 						v_moveto = getclosestpointonnavmesh(self.origin, 64);
@@ -822,7 +823,7 @@ function function_26651461(var_75bf845a, var_49d71b32, var_9636d237, var_f40460f
 			self function_3e429652();
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}
@@ -1000,7 +1001,7 @@ function function_41663231(var_2826b50 = 0)
 			e_who notify(#"player_revealed_cache_plant_bad");
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}
@@ -1464,7 +1465,7 @@ function function_12c8548e(var_2826b50 = 0)
 	self scene::init("zm_dlc2_plant_babysitter_intro", self.var_f2a52ffa.model);
 	self.var_f2a52ffa.model waittill(#"hash_fca5370b");
 	self.var_f2a52ffa.trigger = spawn("trigger_radius", self.origin, 17, 150, 150);
-	while(1)
+	while(true)
 	{
 		self.var_f2a52ffa.trigger waittill(#"trigger", e_who);
 		if(isdefined(e_who.var_61f7b3a0) && e_who.var_61f7b3a0)
@@ -1585,7 +1586,7 @@ function function_8be57636(var_f2a52ffa)
 {
 	self endon(#"death");
 	self endon(#"zombie_reached_anim_spot");
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.missinglegs) && self.missinglegs)
 		{
@@ -1876,7 +1877,8 @@ function function_ff90a1ba(var_2826b50)
 function function_813b723b()
 {
 	self endon(#"hash_4729ad2");
-	while(1)
+	n_damage_amount = self.var_f2a52ffa.var_b454101b.health / 5;
+	while(true)
 	{
 		level waittill(#"end_of_round");
 		self.var_f2a52ffa.var_b454101b zm_attackables::do_damage(n_damage_amount);
@@ -1948,7 +1950,7 @@ function function_2870d1b8(var_f40460f5)
 		#/
 		self.var_b17878ae = var_e7fb417b;
 	}
-	while(1)
+	while(true)
 	{
 		var_f19144da = [];
 		var_566f2991 = undefined;
@@ -2186,7 +2188,7 @@ function function_374f973e(var_f2a52ffa, var_ac23a74d)
 	self endon(#"death");
 	self endon(#"zombie_reached_anim_spot");
 	var_f2a52ffa endon(#"hash_4729ad2");
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.missinglegs) && self.missinglegs)
 		{
@@ -3587,7 +3589,7 @@ function function_160d5071(var_f2a52ffa, str_anim)
 	self.v_zombie_custom_goal_pos = v_goal;
 	self.n_zombie_custom_goal_radius = 8;
 	self thread function_b0fddaee(var_f2a52ffa);
-	while(1)
+	while(true)
 	{
 		n_delta = distancesquared(v_goal, self.origin);
 		if(n_delta > 256)

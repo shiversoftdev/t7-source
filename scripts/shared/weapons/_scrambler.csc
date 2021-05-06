@@ -411,7 +411,7 @@ function isenemyscrambler(localclientnum)
 */
 function checkforplayerswitch()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"player_switch");
 		waittillframeend();

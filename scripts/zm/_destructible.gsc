@@ -270,7 +270,7 @@ function destructible_event_callback(destructible_event, attacker, weapon)
 			}
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}

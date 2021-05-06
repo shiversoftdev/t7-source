@@ -203,7 +203,7 @@ function function_cdb6d911()
 {
 	self notify(#"hash_cdb6d911");
 	self endon(#"hash_cdb6d911");
-	while(1)
+	while(true)
 	{
 		foreach(var_40ce22db, model in level.var_b9d30140)
 		{
@@ -238,7 +238,7 @@ function function_4d819138()
 {
 	self notify(#"hash_4d819138");
 	self endon(#"hash_4d819138");
-	while(1)
+	while(true)
 	{
 		foreach(var_8cc4e06f, doa in level.var_29e6f519)
 		{
@@ -284,7 +284,7 @@ function function_2c9a6a47()
 {
 	self notify(#"hash_2c9a6a47");
 	self endon(#"hash_2c9a6a47");
-	while(1)
+	while(true)
 	{
 		wait(0.016);
 		foreach(var_32495fea, doa in level.var_29e6f519)
@@ -523,6 +523,7 @@ function function_a08fe7c3(totaltime)
 {
 	totaltime = totaltime * 1000;
 	curtime = gettime();
+	endtime = curtime + totaltime;
 	while(curtime < endtime)
 	{
 		curtime = gettime();

@@ -191,7 +191,7 @@ function function_1fc9779e()
 		level endon(#"hash_b7bed0ed");
 	#/
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"hash_2e47bc4a");
 		switch(level.var_9d19c7e)
@@ -285,7 +285,7 @@ function function_2c1e6f00(e_player)
 function function_18dda0a0()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self trigger::wait_till();
 		player = self.who;
@@ -355,7 +355,7 @@ function function_7e873fe6()
 {
 	self zm_unitrigger::create_unitrigger("", 100, &function_9a167439);
 	zm_unitrigger::unitrigger_force_per_player_triggers(self.s_unitrigger, 1);
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger_activated", e_player);
 		if(e_player.var_e7d196cc === "dragon_wings")
@@ -440,7 +440,7 @@ function function_588ad36a()
 function function_42a9380e()
 {
 	level endon(#"wearables_raz_arms_complete");
-	while(1)
+	while(true)
 	{
 		level waittill(#"raz_arm_detach");
 		level.var_f090ed38.var_6755afc7++;
@@ -467,7 +467,7 @@ function function_42a9380e()
 function function_ac75c48f()
 {
 	level endon(#"wearables_raz_mask_complete");
-	while(1)
+	while(true)
 	{
 		level waittill(#"raz_mask_destroyed");
 		level.var_f090ed38.var_8fefef40++;
@@ -541,7 +541,7 @@ function function_449ba539(e_player)
 function function_ad641a9f()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self trigger::wait_till();
 		player = self.who;
@@ -578,7 +578,7 @@ function function_ad641a9f()
 function function_fe559f6c()
 {
 	level endon(#"hash_f40b8221");
-	while(1)
+	while(true)
 	{
 		level waittill(#"all_sentinel_arms_destroyed");
 		level.var_f090ed38.var_4da5ec78++;
@@ -605,7 +605,7 @@ function function_fe559f6c()
 function function_ba204ad8()
 {
 	level endon(#"wearables_sentinel_camera_complete");
-	while(1)
+	while(true)
 	{
 		level waittill(#"sentinel_camera_destroyed");
 		level.var_f090ed38.var_24859f92++;
@@ -679,7 +679,7 @@ function function_a6595bd6(e_player)
 function function_f3b06f8e()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self trigger::wait_till();
 		player = self.who;
@@ -786,7 +786,7 @@ function function_9c197fbf(e_inflictor, e_attacker, var_b2d13ae2, idflags, str_m
 					}
 				}
 			}
-			default
+			default:
 			{
 				return -1;
 			}
@@ -940,7 +940,7 @@ function function_70aa26aa()
 {
 	level endon(#"drshup_rune_step_done");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"hash_10fa975d");
 		var_7dda366c = self getweaponmuzzlepoint();
@@ -1005,7 +1005,7 @@ function function_cf47076(e_player)
 */
 function function_ac90554d()
 {
-	while(1)
+	while(true)
 	{
 		self trigger::wait_till();
 		if(!level flag::get("drshup_bathed_in_blood"))

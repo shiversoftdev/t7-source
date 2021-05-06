@@ -222,7 +222,7 @@ function function_e7616d2f()
 		adddebugcommand("");
 		adddebugcommand("");
 		adddebugcommand("");
-		while(1)
+		while(true)
 		{
 			cmd = getdvarstring("");
 			if(cmd != "")
@@ -251,7 +251,7 @@ function function_e7616d2f()
 					{
 						thread function_db177d();
 					}
-					default
+					default:
 					{
 						break;
 					}
@@ -435,7 +435,7 @@ function function_3f7cbd96(origin, zone_name, var_c9c9e21f, var_3cf0ecd5)
 		{
 			var_3cf0ecd5 = undefined;
 		}
-		while(1)
+		while(true)
 		{
 			if(isdefined(level.var_3d3b24de) && level.var_3d3b24de)
 			{
@@ -488,7 +488,7 @@ function function_d02d5c2a()
 {
 	/#
 		zombie_devgui_open_sesame();
-		while(1)
+		while(true)
 		{
 			if(isdefined(level.var_c0d235a5) && level.var_c0d235a5)
 			{
@@ -1021,7 +1021,7 @@ function zombie_healthbar(pos, dsquared)
 function devgui_zombie_healthbar()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			if(getdvarint("") == 1)
 			{
@@ -2179,7 +2179,7 @@ function zombie_devgui_think()
 				{
 					break;
 				}
-				default
+				default:
 				{
 					if(isdefined(level.custom_devgui))
 					{
@@ -2545,7 +2545,7 @@ function diable_fog_in_noclip()
 		level.fog_disabled_in_noclip = 1;
 		level endon(#"allowfoginnoclip");
 		level flag::wait_till("");
-		while(1)
+		while(true)
 		{
 			while(!any_player_in_noclip())
 			{
@@ -2865,7 +2865,8 @@ function zombie_devgui_preserve_turbines()
 		self endon(#"preserve_turbines");
 		if(!(isdefined(self.preserving_turbines) && self.preserving_turbines))
 		{
-			while(1)
+			self.preserving_turbines = 1;
+			while(true)
 			{
 				self.turbine_health = 1200;
 				wait(1);
@@ -2892,7 +2893,8 @@ function zombie_devgui_equipment_stays_healthy()
 		self endon(#"preserve_equipment");
 		if(!(isdefined(self.preserving_equipment) && self.preserving_equipment))
 		{
-			while(1)
+			self.preserving_equipment = 1;
+			while(true)
 			{
 				self.equipment_damage = [];
 				self.shielddamagetaken = 0;
@@ -2996,7 +2998,7 @@ function zombie_devgui_give_placeable_mine(weapon)
 			self takeweapon(self zm_utility::get_player_placeable_mine());
 		}
 		self thread zm_placeable_mine::setup_for_player(weapon);
-		while(1)
+		while(true)
 		{
 			self givemaxammo(weapon);
 			wait(1);
@@ -3038,7 +3040,7 @@ function zombie_devgui_give_claymores()
 		{
 			self thread zm_placeable_mine::setup_for_player(wpn_type);
 		}
-		while(1)
+		while(true)
 		{
 			self givemaxammo(wpn_type);
 			wait(1);
@@ -3077,7 +3079,7 @@ function zombie_devgui_give_lethal(weapon)
 		}
 		self giveweapon(weapon);
 		self zm_utility::set_player_lethal_grenade(weapon);
-		while(1)
+		while(true)
 		{
 			self givemaxammo(weapon);
 			wait(1);
@@ -3149,7 +3151,7 @@ function zombie_devgui_give_monkey()
 		if(isdefined(level.zombiemode_devgui_cymbal_monkey_give))
 		{
 			self [[level.zombiemode_devgui_cymbal_monkey_give]]();
-			while(1)
+			while(true)
 			{
 				self givemaxammo(getweapon(""));
 				wait(1);
@@ -3190,7 +3192,7 @@ function function_64c58d19()
 		if(isdefined(level.zombiemode_devgui_black_hole_bomb_give))
 		{
 			self [[level.zombiemode_devgui_black_hole_bomb_give]]();
-			while(1)
+			while(true)
 			{
 				self givemaxammo(level.var_453e74a0);
 				wait(1);
@@ -3231,7 +3233,7 @@ function function_1e20cc53()
 		if(isdefined(level.zombiemode_devgui_quantum_bomb_give))
 		{
 			self [[level.zombiemode_devgui_quantum_bomb_give]]();
-			while(1)
+			while(true)
 			{
 				self givemaxammo(level.var_17bac01d);
 				wait(1);
@@ -3272,7 +3274,7 @@ function zombie_devgui_give_dolls()
 		if(isdefined(level.zombiemode_devgui_nesting_dolls_give))
 		{
 			self [[level.zombiemode_devgui_nesting_dolls_give]]();
-			while(1)
+			while(true)
 			{
 				self givemaxammo(level.var_21ae0b78);
 				wait(1);
@@ -3313,7 +3315,7 @@ function zombie_devgui_give_emp_bomb()
 		if(isdefined(level.zombiemode_devgui_emp_bomb_give))
 		{
 			self [[level.zombiemode_devgui_emp_bomb_give]]();
-			while(1)
+			while(true)
 			{
 				self givemaxammo(getweapon(""));
 				wait(1);
@@ -3394,6 +3396,17 @@ function zombie_devgui_kill()
 */
 function zombie_devgui_toggle_ammo()
 {
+System.InvalidOperationException: Stack empty.
+   at System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   at System.Collections.Generic.Stack`1.Pop()
+   at Cerberus.Logic.Decompiler.BuildExpression(ScriptOp startOp) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 1185
+   at Cerberus.Logic.Decompiler.ProcessInstruction(ScriptOp operation, DecompilerBlock block) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 2343
+   at Cerberus.Logic.Decompiler.DecompileBlock(DecompilerBlock decompilerBlock, Int32 tabs) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 998
+   at Cerberus.Logic.Decompiler.DecompileBlock(DecompilerBlock decompilerBlock, Int32 tabs) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 968
+   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 222
+/*
+function zombie_devgui_toggle_ammo()
+{
 	/#
 		/#
 			assert(isdefined(self));
@@ -3406,32 +3419,32 @@ function zombie_devgui_toggle_ammo()
 		#/
 		self notify(#"devgui_toggle_ammo");
 		self endon(#"devgui_toggle_ammo");
-		while(isdefined(self) && self.ammo4evah)
-		{
-			if(!(isdefined(self.is_drinking) && self.is_drinking))
-			{
-				weapon = self getcurrentweapon();
-				if(weapon != level.weaponnone)
-				{
-					self setweaponoverheating(0, 0);
-					max = weapon.maxammo;
-					if(isdefined(max))
-					{
-						self setweaponammostock(weapon, max);
-					}
-					if(isdefined(self zm_utility::get_player_tactical_grenade()))
-					{
-						self givemaxammo(self zm_utility::get_player_tactical_grenade());
-					}
-					if(isdefined(self zm_utility::get_player_lethal_grenade()))
-					{
-						self givemaxammo(self zm_utility::get_player_lethal_grenade());
-					}
-				}
-			}
-			wait(1);
-		}
-	#/
+
+*/
+
+	/* ======== */
+
+/* 
+	Stack: 
+*/
+	/* ======== */
+
+/* 
+	Blocks: 
+	Cerberus.Logic.BasicBlock at 0x7F88, end at 0x8177
+	Cerberus.Logic.DevBlock at 0x7F9A, end at 0x8174
+	Cerberus.Logic.DevBlock at 0x7F9E, end at 0x7FBA
+	Cerberus.Logic.DevBlock at 0x7FBA, end at 0x7FE2
+	Cerberus.Logic.DevBlock at 0x7FE2, end at 0x800A
+	Cerberus.Logic.WhileLoop at 0x8042, end at 0x8170
+	Cerberus.Logic.IfBlock at 0x8054, end at 0x816A
+	Cerberus.Logic.IfBlock at 0x8086, end at 0x816A
+	Cerberus.Logic.IfBlock at 0x80C6, end at 0x80EA
+	Cerberus.Logic.IfBlock at 0x80EA, end at 0x812A
+	Cerberus.Logic.IfBlock at 0x812A, end at 0x816A
+*/
+	/* ======== */
+
 }
 
 /*
@@ -3535,7 +3548,8 @@ function zombie_devgui_give_health()
 		self endon(#"devgui_health");
 		self endon(#"disconnect");
 		self endon(#"death");
-		while(1)
+		level.devcheater = 1;
+		while(true)
 		{
 			self.maxhealth = 100000;
 			self.health = 100000;
@@ -3570,7 +3584,8 @@ function function_6b00a5a8()
 		self endon(#"devgui_health");
 		self endon(#"disconnect");
 		self endon(#"death");
-		while(1)
+		level.devcheater = 1;
+		while(true)
 		{
 			self.maxhealth = 10;
 			self.health = 10;
@@ -5080,7 +5095,8 @@ function function_13d8ea87()
 function wait_for_zombie(crawler)
 {
 	/#
-		while(1)
+		nodes = getallnodes();
+		while(true)
 		{
 			ai = getactorarray();
 			zombie = ai[0];
@@ -5144,7 +5160,8 @@ function zombie_draw_traversals()
 	/#
 		level thread wait_for_zombie();
 		level thread wait_for_zombie(1);
-		while(1)
+		nodes = getallnodes();
+		while(true)
 		{
 			if(isdefined(level.toggle_draw_traversals) && level.toggle_draw_traversals)
 			{
@@ -5217,7 +5234,7 @@ function function_364ed1b9()
 function function_1d21f4f()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			if(isdefined(level.var_c2a01768) && level.var_c2a01768)
 			{

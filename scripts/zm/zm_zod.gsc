@@ -664,7 +664,7 @@ function weather_setup()
 */
 function monitor_outdoor_rain_doorways()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_player);
 		if(isdefined(e_player.b_rain_on) && e_player.b_rain_on)
@@ -2026,7 +2026,7 @@ function function_e33614b9()
 {
 	self endon(#"disconnect");
 	util::wait_network_frame();
-	while(1)
+	while(true)
 	{
 		if(isdefined(self) && isplayer(self))
 		{
@@ -2064,7 +2064,8 @@ function function_5abd3b41(n_index)
 {
 	level notify(#"devgui_lightning_test");
 	level endon(#"devgui_lightning_test");
-	while(1)
+	player = getplayers()[0];
+	while(true)
 	{
 		player clientfield::increment_to_player("devgui_lightning_test", n_index);
 		wait(12);
@@ -2099,7 +2100,8 @@ function zod_ghost_test(n_index)
 	level notify(#"zod_ghost_test");
 	level endon(#"zod_ghost_test");
 	player = getplayers()[0];
-	while(1)
+	var_8cfd368 = 1;
+	while(true)
 	{
 		foreach(var_40f903ba, zombie in getaiteamarray(level.zombie_team))
 		{
@@ -2171,7 +2173,7 @@ function function_4173fe95(cmd)
 				function_30018788();
 				break;
 			}
-			default
+			default:
 			{
 				break;
 			}
@@ -2833,7 +2835,8 @@ function function_612012aa()
 function function_48fda59a()
 {
 	var_6a6d5f3e = 0;
-	while(1)
+	n_start_time = undefined;
+	while(true)
 	{
 		if(!var_6a6d5f3e && level.zombie_total <= 0)
 		{
@@ -2902,6 +2905,7 @@ function function_f7d81bd5()
 	self endon(#"disconnect");
 	level endon(#"stop_suicide_trigger");
 	e_volume = getent("into_disable_prone", "targetname");
+	var_d8d76cd3 = 0;
 	while(!(isdefined(level.intermission) && level.intermission))
 	{
 		if(self laststand::player_is_in_laststand())
@@ -2964,7 +2968,7 @@ function function_22eef972()
 */
 function function_aab1d0bd()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"start_of_round");
 		if(level.round_number < 12)
@@ -3008,6 +3012,7 @@ function function_aeb6b3db()
 	self endon(#"death");
 	s_start = struct::get("s_noire_ee_start", "targetname");
 	s_end = struct::get("s_noire_ee_end", "targetname");
+	var_3acf33ec = 0;
 	while(!var_3acf33ec)
 	{
 		if(self getstance() == "crouch")
@@ -3094,11 +3099,12 @@ function function_bef9943a()
 	exploder::stop_exploder("fx_exploder_lightning_junction");
 	while(level.round_number < 5)
 	{
+		n_round_number = level.round_number;
 		while(zombie_utility::get_current_zombie_count() == 0)
 		{
 			wait(0.1);
 		}
-		while(1)
+		while(true)
 		{
 			if(level.zombie_total == 0 && zombie_utility::get_current_zombie_count() <= 2)
 			{
@@ -3146,7 +3152,7 @@ function function_35c958af()
 {
 	self endon(#"death");
 	var_f1af2991 = 0;
-	while(1)
+	while(true)
 	{
 		n_delay = randomfloatrange(0.9, 1.4);
 		wait(n_delay);
@@ -3189,7 +3195,7 @@ function function_4df9f4ad()
 	level endon(#"end_game");
 	level notify(#"hash_a3369c1f");
 	level endon(#"hash_a3369c1f");
-	while(1)
+	while(true)
 	{
 		level waittill(#"host_migration_end");
 		setdvar("doublejump_enabled", 1);

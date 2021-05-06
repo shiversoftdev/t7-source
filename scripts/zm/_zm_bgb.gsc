@@ -254,7 +254,7 @@ private function function_47aee2eb()
 private function bgb_player_monitor()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		str_return = level util::waittill_any_return("between_round_over", "restart_round");
 		if(isdefined(level.var_4824bb2d))
@@ -841,7 +841,7 @@ private function bgb_limit_monitor()
 			self playsoundtoplayer("zmb_bgb_power_done_delayed", self);
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				assert(0, "" + self.bgb + "" + level.bgb[self.bgb].limit_type + "");
@@ -1183,6 +1183,7 @@ private function function_f9fad8b3(var_eeab9300, percent)
 	self endon(#"hash_f9fad8b3");
 	start_time = gettime();
 	end_time = start_time + 1000;
+	var_6d8b0ec7 = var_eeab9300;
 	while(var_6d8b0ec7 > percent)
 	{
 		var_6d8b0ec7 = lerpfloat(percent, var_eeab9300, calc_remaining_duration_lerp(start_time, end_time));
@@ -1256,6 +1257,7 @@ function run_timer(max)
 	self endon(#"disconnect");
 	self notify(#"hash_40cdac02");
 	self endon(#"hash_40cdac02");
+	current = max;
 	while(current > 0)
 	{
 		self set_timer(current, max);
@@ -1341,7 +1343,7 @@ function register(name, limit_type, limit, enable_func, disable_func, validation
 			#/
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				assert(0, "" + name + "" + limit_type + "");
@@ -1967,7 +1969,8 @@ function function_4ed517b9(n_max_distance, var_98a3e738, var_287a7adb)
 	self endon(#"disconnect");
 	self endon(#"bled_out");
 	self endon(#"bgb_update");
-	while(1)
+	self.var_6638f10b = [];
+	while(true)
 	{
 		foreach(var_5b5ce993, e_player in level.players)
 		{

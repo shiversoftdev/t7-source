@@ -128,7 +128,7 @@ function function_94fa04f0()
 {
 	level endon(#"end_game");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"nuke_triggered");
 		wait(2);
@@ -155,6 +155,7 @@ function function_a634891()
 {
 	level endon(#"end_game");
 	self endon(#"disconnect");
+	self.var_88c6ab10 = 0;
 	while(self.var_88c6ab10 < 10)
 	{
 		self thread function_47ae7759();
@@ -217,7 +218,7 @@ function function_2a1b645a()
 {
 	level endon(#"end_game");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		if(self.score_total >= 75000)
 		{
@@ -243,7 +244,7 @@ function function_b44fefa1()
 {
 	level endon(#"end_game");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.perk_hud) && self.perk_hud.size == 4)
 		{
@@ -269,6 +270,7 @@ function function_f67810a2()
 {
 	level endon(#"end_game");
 	self endon(#"disconnect");
+	self.var_dcd9b1e7 = 0;
 	while(self.var_dcd9b1e7 >= 200)
 	{
 		self waittill(#"hash_1d8b6c31");

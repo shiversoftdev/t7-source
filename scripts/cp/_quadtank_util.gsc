@@ -36,7 +36,8 @@ function function_ea61aedc()
 	self endon(#"hash_f1e417ec");
 	var_fae93870 = 0;
 	var_c1df3693 = 2;
-	while(1)
+	var_9a15ea97 = getweapon("launcher_standard");
+	while(true)
 	{
 		self notify(#"hash_82f5563d");
 		self waittill(#"projectile_applyattractor", missile);
@@ -123,7 +124,7 @@ function function_d9337df(var_ac4390f)
 	var_ac4390f endon(#"death");
 	self endon(#"death");
 	self endon(#"hash_d9337df");
-	while(1)
+	while(true)
 	{
 		var_ac4390f waittill(#"damage", n_damage, e_attacker, direction_vec, v_impact_point, damagetype, modelname, tagname, partname, weapon, idflags);
 		if(weapon.weapclass === "rocketlauncher" && isplayer(e_attacker))

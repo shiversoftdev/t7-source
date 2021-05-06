@@ -403,6 +403,7 @@ function addtomissiles(grenade)
 	{
 		level.missileentities = array(level.missileentities);
 	}
+	level.missileentities[level.missileentities.size] = grenade;
 	while(isdefined(grenade))
 	{
 		wait(0.05);

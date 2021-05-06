@@ -374,7 +374,7 @@ private autoexec function vehicle_camera_fx()
 function vehicle_enter(localclientnum)
 {
 	self endon(#"entityshutdown");
-	while(1)
+	while(true)
 	{
 		self waittill(#"enter_vehicle", user);
 		if(isdefined(user) && user isplayer())
@@ -398,7 +398,7 @@ function speed_fx(localclientnum)
 {
 	self endon(#"entityshutdown");
 	self endon(#"exit_vehicle");
-	while(1)
+	while(true)
 	{
 		curspeed = self getspeed();
 		curspeed = 0.0005 * curspeed;
@@ -467,7 +467,8 @@ function play_driving_fx(localclientnum)
 	}
 	self.last_screen_dirt = 0;
 	self.screen_dirt_delay = 0;
-	while(1)
+	speed_fraction = 0;
+	while(true)
 	{
 		speed = length(self getvelocity());
 		max_speed = (speed < 0 ? self getmaxreversespeed() : self getmaxspeed());
@@ -565,7 +566,7 @@ function collision_thread(localclientnum)
 {
 	self endon(#"entityshutdown");
 	self endon(#"exit_vehicle");
-	while(1)
+	while(true)
 	{
 		self waittill(#"veh_collision", hip, hitn, hit_intensity);
 		if(self islocalclientdriver(localclientnum))
@@ -629,7 +630,7 @@ function jump_landing_thread(localclientnum)
 {
 	self endon(#"entityshutdown");
 	self endon(#"exit_vehicle");
-	while(1)
+	while(true)
 	{
 		self waittill(#"veh_landed");
 		if(self islocalclientdriver(localclientnum))
@@ -676,7 +677,7 @@ function suspension_thread(localclientnum)
 {
 	self endon(#"entityshutdown");
 	self endon(#"exit_vehicle");
-	while(1)
+	while(true)
 	{
 		self waittill(#"veh_suspension_limit_activated");
 		if(self islocalclientdriver(localclientnum))

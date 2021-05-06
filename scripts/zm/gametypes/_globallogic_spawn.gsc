@@ -209,7 +209,7 @@ function spawnplayerprediction()
 	self endon(#"game_ended");
 	self endon(#"joined_spectators");
 	self endon(#"spawned");
-	while(1)
+	while(true)
 	{
 		wait(0.5);
 		if(isdefined(level.onspawnplayerunified) && getdvarint("scr_disableunifiedspawning") == 0)
@@ -800,6 +800,7 @@ function spawnintermission(usedefaultcallback)
 				self playlocalsound("mus_contract_complete");
 			}
 			self closeingamemenu();
+			waittime = 4;
 			while(waittime)
 			{
 				wait(0.25);
@@ -1144,7 +1145,7 @@ function waitrespawnorsafespawnbutton()
 {
 	self endon(#"disconnect");
 	self endon(#"end_respawn");
-	while(1)
+	while(true)
 	{
 		if(self usebuttonpressed())
 		{

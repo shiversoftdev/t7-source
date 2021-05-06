@@ -2006,7 +2006,7 @@ function monitorreloads()
 {
 	self endon(#"disconnect");
 	self endon(#"killmonitorreloads");
-	while(1)
+	while(true)
 	{
 		self waittill(#"reload");
 		currentweapon = self getcurrentweapon();
@@ -2071,7 +2071,7 @@ function watchweaponchangecomplete()
 	self endon(#"disconnect");
 	self endon(#"joined_team");
 	self endon(#"joined_spectators");
-	while(1)
+	while(true)
 	{
 		self.heroweaponkillsthisactivation = 0;
 		self waittill(#"weapon_change_complete");
@@ -2133,7 +2133,7 @@ function watchwallruntwooppositewallsnoground()
 	player endon(#"joined_team");
 	player endon(#"joined_spectators");
 	self.wallrantwooppositewallsnoground = 0;
-	while(1)
+	while(true)
 	{
 		if(!player iswallrunning())
 		{
@@ -2158,6 +2158,7 @@ function watchwallruntwooppositewallsnoground()
 		{
 			continue;
 		}
+		player.wallrantwooppositewallsnoground = 1;
 		while(player iswallrunning())
 		{
 			ret = player util::waittill_any_return("jump_end", "wallrun_end", "disconnect", "joined_team", "joined_spectators");

@@ -243,6 +243,7 @@ function player_enter_beastmode(name, trigger)
 function function_5d7a94fa(localclientnum)
 {
 	self endon(#"player_exit_beastmode");
+	var_3f39d2cc = 0;
 	while(isdefined(self))
 	{
 		scr_beast_no_visionset = getdvarint("scr_beast_no_visionset") > 0;
@@ -658,7 +659,7 @@ function player_on_spawned()
 */
 function function_7de05274()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"powerup_dropped", powerup);
 		powerup.grapple_type = 2;
@@ -792,7 +793,7 @@ function function_b7520b09(var_20fdcbbc)
 */
 function kiosk_cooldown()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"kiosk_used", e_kiosk);
 		if(isdefined(e_kiosk))
@@ -835,6 +836,7 @@ function _kiosk_cooldown()
 	self notify(#"_kiosk_cooldown");
 	self endon(#"_kiosk_cooldown");
 	self.is_cooling_down = 1;
+	n_start_round = round_number();
 	while(round_number() - n_start_round < 1)
 	{
 		level waittill(#"start_of_round");
@@ -891,6 +893,7 @@ function player_watch_cancel()
 	{
 		self thread beast_cancel_hint();
 	}
+	self.beast_cancel_timer = 0;
 	while(isdefined(self))
 	{
 		if(self stancebuttonpressed())
@@ -1290,7 +1293,7 @@ function watch_round_start_mana()
 	{
 		player player_check_grenades();
 	}
-	while(1)
+	while(true)
 	{
 		level waittill(#"start_of_round");
 		foreach(var_ab90ad3c, player in getplayers())
@@ -1541,6 +1544,7 @@ function player_beast_melee_juke(weapon)
 	self endon(#"weapon_melee");
 	self endon(#"weapon_melee_power");
 	self endon(#"weapon_melee_charge");
+	start_time = gettime();
 	while(start_time + 3000 > gettime())
 	{
 		self playrumbleonentity("zod_beast_juke");
@@ -1664,6 +1668,7 @@ function player_watch_lightning()
 	self.tesla_enemies = undefined;
 	self.tesla_enemies_hit = 0;
 	self.tesla_powerup_dropped = 0;
+	self.tesla_arc_count = 0;
 	while(isdefined(self))
 	{
 		self waittill(#"weapon_fired", weapon);
@@ -1828,6 +1833,7 @@ function player_watch_grapple()
 {
 	self endon(#"player_exit_beastmode");
 	self endon(#"death");
+	grapple = getweapon("zombie_beast_grapple_dwr");
 	while(isdefined(self))
 	{
 		self waittill(#"grapple_fired", weapon);
@@ -1909,6 +1915,7 @@ function function_77a9a8f6(weapon, rumble, length)
 	self endon(#"grapple_pulled");
 	self endon(#"grapple_landed");
 	self endon(#"grapple_cancel");
+	start_time = gettime();
 	while(start_time + 3000 > gettime())
 	{
 		self playrumbleonentity(rumble);
@@ -1979,6 +1986,7 @@ function player_watch_grappled_object()
 {
 	self endon(#"player_exit_beastmode");
 	self endon(#"death");
+	grapple = getweapon("zombie_beast_grapple_dwr");
 	while(isdefined(self))
 	{
 		self waittill(#"grapple_stick", weapon, target);
@@ -2012,6 +2020,7 @@ function player_watch_grapple_traverse()
 {
 	self endon(#"player_exit_beastmode");
 	self endon(#"death");
+	grapple = getweapon("zombie_beast_grapple_dwr");
 	while(isdefined(self))
 	{
 		self waittill(#"grapple_reelin", weapon, target);
@@ -2061,6 +2070,7 @@ function player_watch_grappled_zombies()
 {
 	self endon(#"player_exit_beastmode");
 	self endon(#"death");
+	grapple = getweapon("zombie_beast_grapple_dwr");
 	while(isdefined(self))
 	{
 		self waittill(#"grapple_pullin", weapon, target);
@@ -2085,6 +2095,7 @@ function player_kill_grappled_zombies()
 {
 	self endon(#"player_exit_beastmode");
 	self endon(#"death");
+	grapple = getweapon("zombie_beast_grapple_dwr");
 	while(isdefined(self))
 	{
 		self waittill(#"grapple_pulled", weapon, target);
@@ -2500,7 +2511,8 @@ function function_d7b8b2f5()
 {
 	self endon(#"player_exit_beastmode");
 	self endon(#"altbody_end");
-	while(1)
+	n_start_time = undefined;
+	while(true)
 	{
 		current_zone = self zm_utility::get_current_zone();
 		if(!isdefined(current_zone))

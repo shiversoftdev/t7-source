@@ -73,7 +73,8 @@ function setup_teleport_aftereffects()
 */
 function wait_for_black_box()
 {
-	while(1)
+	secondclientnum = -1;
+	while(true)
 	{
 		level waittill(#"black_box_start", localclientnum);
 		/#
@@ -100,7 +101,7 @@ function wait_for_black_box()
 */
 function wait_for_teleport_aftereffect()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"tae", localclientnum);
 		if(getdvarstring("factoryAftereffectOverride") == "-1")
@@ -157,8 +158,8 @@ System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative
 Parameter name: index
    at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
    at System.Collections.Generic.List`1.get_Item(Int32 index)
-   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 606
-   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 210
+   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 649
+   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 211
 /*
 No Output
 */

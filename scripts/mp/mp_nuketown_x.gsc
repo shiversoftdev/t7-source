@@ -94,7 +94,8 @@ function function_8d1f7bc9()
 	var_f91396f2 = var_3976bfdf[0];
 	var_1ab267f1 = var_cdcdc7c6[0];
 	level.var_3e9c9ee4 = 0;
-	while(1)
+	level.var_49ae1c91 = 0;
+	while(true)
 	{
 		players = getplayers();
 		actors = getactorarray();
@@ -173,7 +174,7 @@ function function_c2bbb7df()
 */
 function function_cadef408()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_cadef408");
 		if(isdefined(level.end_game_video))
@@ -512,7 +513,7 @@ private function function_ad600192()
 {
 	level notify(#"hash_ad600192");
 	level endon(#"hash_ad600192");
-	while(1)
+	while(true)
 	{
 		if(!function_4b855423())
 		{
@@ -594,7 +595,7 @@ private function function_3c0e90cb(weepingangel)
 private function function_339cd93d()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			level waittill(#"hash_42cf0b29");
 			function_6ac7b21();
@@ -615,7 +616,7 @@ private function function_339cd93d()
 private function function_599f53a6()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			level waittill(#"hash_68d18592");
 			function_6ac7b21();
@@ -636,7 +637,7 @@ private function function_599f53a6()
 private function function_d77bb766()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			level waittill(#"mannequin_force_cleanup");
 			function_6ac7b21();

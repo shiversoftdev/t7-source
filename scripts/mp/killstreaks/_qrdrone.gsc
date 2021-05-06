@@ -631,10 +631,10 @@ function play_lockon_sounds(player)
 	self.locksounds = spawn("script_model", self.origin);
 	wait(0.1);
 	self.locksounds linkto(self, "tag_player");
-	while(1)
+	while(true)
 	{
 		self waittill(#"hash_b081980b");
-		while(1)
+		while(true)
 		{
 			if(enemy_locking())
 			{
@@ -726,8 +726,9 @@ function qrdrone_playerexit(qrdrone)
 	qrdrone endon(#"death");
 	qrdrone endon(#"end_remote");
 	wait(2);
-	while(1)
+	while(true)
 	{
+		timeused = 0;
 		while(self usebuttonpressed())
 		{
 			timeused = timeused + 0.05;
@@ -783,7 +784,8 @@ function deleteonkillbrush(player)
 			killbrushes[killbrushes.size] = trig;
 		}
 	}
-	while(1)
+	crate_triggers = getentarray("crate_kill_trigger", "targetname");
+	while(true)
 	{
 		for(i = 0; i < killbrushes.size; i++)
 		{
@@ -1131,6 +1133,7 @@ function qrdrone_fire_for_time(totalfiretime)
 	weapon = self seatgetweapon(0);
 	firetime = weapon.firetime;
 	time = 0;
+	firecount = 1;
 	while(time < totalfiretime)
 	{
 		self fireweapon();
@@ -1153,7 +1156,8 @@ function qrdrone_crash_accel()
 {
 	self endon(#"crash_done");
 	self endon(#"death");
-	while(1)
+	count = 0;
+	while(true)
 	{
 		velocity = self getvelocity();
 		self setvehvelocity(velocity + anglestoup(self.angles) * self.crash_accel);
@@ -1197,7 +1201,7 @@ function qrdrone_collision()
 {
 	self endon(#"crash_done");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"veh_collision", velocity, normal);
 		ang_vel = self getangularvelocity() * 0.5;
@@ -1254,10 +1258,12 @@ function qrdrone_watch_distance(zoffset, minheightoverride)
 	}
 	self.centerref = spawn("script_model", level.mapcenter);
 	inrangepos = self.origin;
-	while(1)
+	self.rangecountdownactive = 0;
+	while(true)
 	{
 		if(!self qrdrone_in_range())
 		{
+			staticalpha = 0;
 			while(!self qrdrone_in_range())
 			{
 				if(!self.rangecountdownactive)
@@ -1519,8 +1525,9 @@ function qrdrone_watch_for_exit()
 	self endon(#"death");
 	self.owner endon(#"disconnect");
 	wait(1);
-	while(1)
+	while(true)
 	{
+		timeused = 0;
 		while(self.owner qrdrone_exit_button_pressed())
 		{
 			timeused = timeused + 0.05;
@@ -1639,7 +1646,7 @@ function qrdrone_watchheliproximity()
 	level endon(#"game_ended");
 	self endon(#"death");
 	self endon(#"end_remote");
-	while(1)
+	while(true)
 	{
 		inheliproximity = 0;
 		if(!self.inheliproximity && inheliproximity)
@@ -1672,6 +1679,7 @@ function qrdrone_detonatewaiter()
 	{
 		wait(0.05);
 	}
+	watcher = self.owner weaponobjects::getweaponobjectwatcher("qrdrone");
 	while(!self.owner attackbuttonpressed())
 	{
 		wait(0.05);
@@ -1699,7 +1707,7 @@ function qrdrone_fireguns(qrdrone)
 	level endon(#"game_ended");
 	qrdrone endon(#"end_remote");
 	wait(1);
-	while(1)
+	while(true)
 	{
 		if(self attackbuttonpressed())
 		{

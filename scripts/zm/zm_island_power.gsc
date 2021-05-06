@@ -76,7 +76,7 @@ function function_d17ab8c6()
 	level thread function_9e6292be();
 	level thread function_bbe228f8();
 	level scene::init("p7_fxanim_zm_island_bunker_door_main_bundle");
-	while(1)
+	while(true)
 	{
 		level util::waittill_any("power_on" + 1, "power_on" + 2);
 		if(flag::get("power_on" + 1) && flag::get("power_on" + 2))
@@ -105,7 +105,8 @@ function function_bbe228f8()
 {
 	level endon(#"connect_bunker_exterior_to_bunker_interior");
 	zm_utility::add_zombie_hint("bunker_door_text", &"ZM_ISLAND_BUNKER_DOOR_OPEN");
-	while(1)
+	var_25d5f24c = getent("door_bunker_main", "target");
+	while(true)
 	{
 		level waittill(#"override_bunker_door_string");
 		var_25d5f24c zm_utility::set_hint_string(var_25d5f24c, "bunker_door_text");
@@ -174,7 +175,8 @@ function function_d806d0f9()
 {
 	var_84f67a50 = [];
 	var_84f67a50[0] = "power_on" + 1;
-	while(1)
+	var_84f67a50[1] = "power_on";
+	while(true)
 	{
 		level flag::wait_till_any(var_84f67a50);
 		exploder::exploder("temporary_power_jungle_lab");
@@ -213,7 +215,8 @@ function function_46ffc7b4()
 {
 	var_84f67a50 = [];
 	var_84f67a50[0] = "power_on" + 2;
-	while(1)
+	var_84f67a50[1] = "power_on";
+	while(true)
 	{
 		level flag::wait_till_any(var_84f67a50);
 		exploder::exploder("temporary_power_swamp_lab");
@@ -834,7 +837,7 @@ function function_662fba30()
 */
 private function function_75656c0a()
 {
-	while(1)
+	while(true)
 	{
 		self.model = util::spawn_model("p7_zm_isl_bucket_115", self.origin, self.angles);
 		self.trigger = zm_island_util::spawn_trigger_radius(self.origin, 50, 1, &function_16434440);
@@ -843,7 +846,7 @@ private function function_75656c0a()
 		{
 			wait(0.05);
 		}
-		while(1)
+		while(true)
 		{
 			self.trigger waittill(#"trigger", e_who);
 			if(e_who clientfield::get_to_player("bucket_held"))
@@ -1084,7 +1087,7 @@ function function_3e519f17()
 	self setinvisibletoall();
 	self sethintstring(&"ZM_ISLAND_FILL_BUCKET");
 	self setcursorhint("HINT_NOICON");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_who);
 		if(!e_who clientfield::get_to_player("bucket_held"))
@@ -1114,7 +1117,7 @@ function function_3e519f17()
 function function_d99ed9ac()
 {
 	self sethintstring(&"");
-	while(1)
+	while(true)
 	{
 		self waittill(#"touch", e_who);
 		if(isvehicle(e_who))
@@ -1160,7 +1163,8 @@ function function_a7a30925()
 {
 	self endon(#"death");
 	self endon(#"sewer_over");
-	while(1)
+	var_72b16720 = getent("water_source_ee", "targetname");
+	while(true)
 	{
 		self util::waittill_use_button_pressed();
 		if(!self istouching(var_72b16720))

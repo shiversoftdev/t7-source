@@ -64,6 +64,7 @@ function watch_weapon_changes(localclientnum)
 	self endon(#"disconnect");
 	self endon(#"entityshutdown");
 	self.dragon_gauntlet = getweapon("dragon_gauntlet_flamethrower");
+	self.var_dd5c3be0 = getweapon("dragon_gauntlet");
 	while(isdefined(self))
 	{
 		self waittill(#"weapon_change", weapon);

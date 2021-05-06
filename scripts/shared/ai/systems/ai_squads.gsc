@@ -287,7 +287,7 @@ private function getsquad(squadname)
 */
 private function thinksquad(squadname)
 {
-	while(1)
+	while(true)
 	{
 		if([[ level._squads[squadname] ]]->think())
 		{
@@ -354,7 +354,7 @@ private function squadmemberthink()
 		{
 			level thread thinksquad(self.squadname);
 		}
-		while(1)
+		while(true)
 		{
 			squadleader = [[ level._squads[self.squadname] ]]->getleader();
 			if(isdefined(squadleader) && (!(isint(squadleader) && squadleader == 0)))

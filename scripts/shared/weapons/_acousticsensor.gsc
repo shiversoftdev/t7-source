@@ -149,7 +149,7 @@ function watchacousticsensordamage(watcher)
 	{
 		self.damagetaken = 0;
 	}
-	while(1)
+	while(true)
 	{
 		self.maxhealth = 100000;
 		self.health = self.maxhealth;

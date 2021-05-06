@@ -227,8 +227,8 @@ System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative
 Parameter name: index
    at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
    at System.Collections.Generic.List`1.get_Item(Int32 index)
-   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 606
-   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 210
+   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 649
+   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 211
 /*
 No Output
 */
@@ -323,7 +323,7 @@ function loop_thread(clientnum)
 	{
 		level waittill("start fx" + self.fxstart);
 	}
-	while(1)
+	while(true)
 	{
 		create_looper(clientnum);
 		if(isdefined(self.timeout))
@@ -402,8 +402,8 @@ System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative
 Parameter name: index
    at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
    at System.Collections.Generic.List`1.get_Item(Int32 index)
-   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 606
-   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 210
+   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 649
+   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 211
 /*
 No Output
 */
@@ -464,7 +464,7 @@ function blinky_light(localclientnum, tagname, friendlyfx, enemyfx)
 	self.lighttagname = tagname;
 	self util::waittill_dobj(localclientnum);
 	self thread blinky_emp_wait(localclientnum);
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.stunned) && self.stunned)
 		{

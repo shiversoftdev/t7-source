@@ -103,7 +103,7 @@ private function perfectinfothread()
 {
 	entity = self;
 	entity endon(#"death");
-	while(1)
+	while(true)
 	{
 		if(isdefined(entity.enemy))
 		{

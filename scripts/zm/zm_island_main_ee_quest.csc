@@ -183,7 +183,8 @@ function function_7ddd182c(localclientnum)
 	self endon(#"disconnect");
 	self endon(#"hash_1a229bcb");
 	player = getlocalplayer(localclientnum);
-	while(1)
+	var_ae6a34c0 = player getlocalclientnumber();
+	while(true)
 	{
 		self waittill(#"weapon_change");
 		currentweapon = getcurrentweapon(localclientnum);

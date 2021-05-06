@@ -248,7 +248,7 @@ function function_d56a2c4b(localclientnum, oldval, newval, bnewent, binitialsnap
 			m_generator generator_state_turn_off(localclientnum, n_blend_time);
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}
@@ -267,6 +267,7 @@ function function_d56a2c4b(localclientnum, oldval, newval, bnewent, binitialsnap
 function function_d66ac605(localclientnumber)
 {
 	self endon(#"entityshutdown");
+	self.var_c4cb7bc3 = 1;
 	while(isdefined(self.var_c4cb7bc3) && self.var_c4cb7bc3)
 	{
 		playrumbleonposition(localclientnumber, "generator_active", self.origin);
@@ -389,7 +390,8 @@ function function_8daa207b(localclientnumber)
 	{
 		self.var_25ac834 = [];
 	}
-	while(1)
+	a_tags = array("fx_side_exhaust01", "fx_frnt_exhaust", "fx_side_exhaust02", "j_piston_01");
+	while(true)
 	{
 		self.var_25ac834[localclientnumber] = playfxontag(localclientnumber, level._effect["zone_capture_damage_spark"], self, array::random(a_tags));
 		wait(randomfloatrange(0.15, 0.35));
@@ -414,7 +416,8 @@ function function_afe4ef7e(localclientnumber)
 	{
 		self.var_9fe4037d = [];
 	}
-	while(1)
+	a_tags = array("fx_side_exhaust01", "fx_frnt_exhaust", "fx_side_exhaust02", "j_piston_01");
+	while(true)
 	{
 		self.var_9fe4037d[localclientnumber] = playfxontag(localclientnumber, level._effect["zone_capture_damage_steam"], self, array::random(a_tags));
 		wait(randomfloatrange(0.25, 0.35));
@@ -496,7 +499,7 @@ function function_bbdb6db3(localclientnumber)
 			var_2a0fd09 = level._effect["capture_complete_6"];
 			break;
 		}
-		default
+		default:
 		{
 			return;
 		}
@@ -612,7 +615,7 @@ function function_f6af797d(localclientnumber)
 			var_2a0fd09 = level._effect["capture_progression_6"];
 			break;
 		}
-		default
+		default:
 		{
 			return;
 		}
@@ -834,7 +837,7 @@ function function_59c8afc0(localclientnumber, var_98ce6736, var_4333264, var_e2a
 	{
 		self.var_40a6544d = var_98ce6736;
 	}
-	while(1)
+	while(true)
 	{
 		var_68feedab = randomfloatrange(var_98ce6736, var_4333264);
 		n_transition_time = randomfloatrange(var_e2ad4e8e, var_22a5887c);
@@ -1001,8 +1004,8 @@ System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative
 Parameter name: index
    at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
    at System.Collections.Generic.List`1.get_Item(Int32 index)
-   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 606
-   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 210
+   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 649
+   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 211
 /*
 No Output
 */
@@ -1039,8 +1042,8 @@ System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative
 Parameter name: index
    at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
    at System.Collections.Generic.List`1.get_Item(Int32 index)
-   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 606
-   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 210
+   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 649
+   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 211
 /*
 No Output
 */
@@ -1102,6 +1105,7 @@ function function_aab40f28(localclientnumber, n_value)
 		self.var_40a6544d[localclientnumber] = 0;
 	}
 	n_delta = n_value - self.var_40a6544d[localclientnumber];
+	n_increment = n_delta / 4.5 * 0.016;
 	while(self.var_40a6544d[localclientnumber] != n_value)
 	{
 		self.var_40a6544d[localclientnumber] = math::clamp(self.var_40a6544d[localclientnumber] + n_increment, 0, 3);

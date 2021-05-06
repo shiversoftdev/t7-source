@@ -71,7 +71,7 @@ function main()
 			level.setbackweapon = level.weapon_sas_secondary_weapon;
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				assert(1, "");

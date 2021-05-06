@@ -81,7 +81,7 @@ function function_3c61f2df()
 	self endon(#"disconnect");
 	self endon(#"bled_out");
 	self endon(#"bgb_update");
-	while(1)
+	while(true)
 	{
 		self waittill(#"boarding_window", s_window);
 		self bgb::do_one_shot_use();

@@ -329,7 +329,7 @@ function water_vox()
 {
 	self endon(#"death");
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		interval = mpdialog_value("underwaterInterval", 0.05);
 		if(interval <= 0)
@@ -461,7 +461,7 @@ function enemy_threat()
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_ads");
 		if(self hasperk("specialty_quieter"))
@@ -668,7 +668,7 @@ function grenade_tracking()
 {
 	self endon(#"death");
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_fire", grenade, weapon);
 		if(!isdefined(grenade.weapon) || !isdefined(grenade.weapon.rootweapon) || !dialog_chance("incomingProjectileChance"))
@@ -697,7 +697,7 @@ function missile_tracking()
 {
 	self endon(#"death");
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		self waittill(#"missile_fire", missile, weapon);
 		if(!isdefined(missile.item) || !isdefined(missile.item.rootweapon) || !dialog_chance("incomingProjectileChance"))
@@ -736,7 +736,7 @@ function incoming_projectile_alert(thrower, projectile, dialogkey, waittime)
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		wait(waittime);
 		if(waittime > 0.2)
@@ -777,7 +777,7 @@ function sticky_grenade_tracking()
 {
 	self endon(#"death");
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_stuck", grenade);
 		if(isalive(self) && isdefined(grenade) && isdefined(grenade.weapon))
@@ -1204,6 +1204,7 @@ function count_keys(bundle, dialogkey)
 {
 	i = 0;
 	field = dialogkey + i;
+	fieldvalue = getstructfield(bundle, field);
 	while(isdefined(fieldvalue))
 	{
 		aliasarray[i] = fieldvalue;
@@ -1355,7 +1356,7 @@ function play_gadget_ready(weapon, userflip = 0)
 			dialogkey = "heatwaveAbilityReady";
 			break;
 		}
-		default
+		default:
 		{
 			return;
 		}
@@ -1542,7 +1543,7 @@ function play_gadget_activate(weapon)
 			dialogkey = "heatwaveAbilityUse";
 			break;
 		}
-		default
+		default:
 		{
 			return;
 		}
@@ -1663,7 +1664,7 @@ function play_gadget_success(weapon, waitkey, victim)
 			dialogkey = "heatwaveAbilitySuccess";
 			break;
 		}
-		default
+		default:
 		{
 			return;
 		}
@@ -1943,7 +1944,7 @@ function devgui_think()
 		setdvar("", "");
 		setdvar("", "");
 		setdvar("", "");
-		while(1)
+		while(true)
 		{
 			wait(1);
 			player = util::gethostplayer();

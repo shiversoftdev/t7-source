@@ -320,7 +320,7 @@ function function_28753fd1()
 function function_79774b04()
 {
 	level endon(#"hash_fb60eed2");
-	while(1)
+	while(true)
 	{
 		var_e6706bab = getentarray("power_volume", "targetname");
 		if(var_e6706bab.size == 0)
@@ -507,6 +507,7 @@ function function_fec7f142()
 	{
 		var_1574e07[i].is_enabled = 0;
 	}
+	self.var_98e1d15 = 0;
 	while(self.var_98e1d15 == 0)
 	{
 		self.var_a7dffe09 = 0;
@@ -519,7 +520,8 @@ function function_fec7f142()
 		self thread function_b016efbe();
 		level.zombie_ai_limit = 14;
 		self thread function_9214a0b3(14);
-		while(1)
+		level.var_9bbfcb9 = 1;
+		while(true)
 		{
 			if(isdefined(self.var_98e1d15) && self.var_98e1d15)
 			{
@@ -578,7 +580,7 @@ function function_fec7f142()
 function function_9214a0b3(var_9cc1b75)
 {
 	self endon(#"hash_e9b136f1");
-	while(1)
+	while(true)
 	{
 		var_cecd0670 = zombie_utility::get_current_zombie_count();
 		var_cecd0670 = var_cecd0670 - function_e793dedb();
@@ -646,6 +648,7 @@ function function_5da9abb7()
 function function_8a3885f2()
 {
 	level endon(#"hash_fb60eed2");
+	var_93b2c080 = 0;
 	while(!var_93b2c080)
 	{
 		if(!(isdefined(level.var_9bbfcb9) && level.var_9bbfcb9))
@@ -841,7 +844,8 @@ function function_1d9b9b7b()
 	self.var_b7d540e6 = gettime();
 	self.var_9437e3b6 = 0;
 	var_f2882ed8 = 0;
-	while(1)
+	var_13b0b925 = gettime();
+	while(true)
 	{
 		var_23e2425 = self function_d93f3a3f();
 		n_percent = var_23e2425 / 15;
@@ -979,7 +983,8 @@ function function_5168ed24()
 	self endon(self.var_3c42ad63);
 	self endon(self.str_kill_notify);
 	self thread function_c5b06d9d();
-	while(1)
+	var_95c4c9c7 = 1;
+	while(true)
 	{
 		foreach(var_6c6e44f3, player in level.activeplayers)
 		{
@@ -1236,7 +1241,8 @@ function function_6301de9e(v_pos, v_angles)
 function function_7b3cac15()
 {
 	self endon(#"death");
-	while(1)
+	self.var_3f80e7e8 = 0;
+	while(true)
 	{
 		level waittill(#"between_round_over");
 		self.var_3f80e7e8 = 0;
@@ -1292,7 +1298,7 @@ function function_e467fa8d(s_spawn_pos)
 			break;
 		}
 		case 3:
-		default
+		default:
 		{
 			n_random = randomint(1000);
 			if(n_random <= 333)
@@ -1547,7 +1553,7 @@ function get_spawn_delay()
 			break;
 		}
 		case 4:
-		default
+		default:
 		{
 			n_delay = randomfloatrange(0.65, 0.75);
 			break;

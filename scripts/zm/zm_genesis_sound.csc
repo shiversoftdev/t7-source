@@ -70,7 +70,7 @@ function function_bab3ea62()
 */
 function sndmusictrig()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", trigplayer);
 		if(trigplayer islocalplayer())
@@ -109,7 +109,8 @@ function function_53b9afad()
 	level.var_b6342abd = "mus_genesis_underscore_default";
 	level.var_6d9d81aa = "mus_genesis_underscore_default";
 	level.var_eb526c90 = spawn(0, (0, 0, 0), "script_origin");
-	while(1)
+	level.var_9433cf5a = level.var_eb526c90 playloopsound(level.var_b6342abd, 2);
+	while(true)
 	{
 		level waittill(#"hash_51d7bc7c", location);
 		level.var_6d9d81aa = "mus_genesis_underscore_" + location;
@@ -188,7 +189,7 @@ function function_849aa028()
 function function_ad9a8fa6()
 {
 	level endon("musThemeTriggered" + self.script_sound);
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", trigplayer);
 		if(self.script_sound == "default" && (!(isdefined(level.var_232ff65c) && level.var_232ff65c)))
@@ -242,7 +243,7 @@ function function_1401492e(trigplayer, location)
 */
 function function_899d68c0()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"stpthm");
 		if(isdefined(level.var_6191a71d))
@@ -281,7 +282,7 @@ function play_generator()
 */
 function function_37010187()
 {
-	while(1)
+	while(true)
 	{
 		wait(randomintrange(2, 6));
 		playsound(0, "amb_comp_sweets", (4737, -1043, 424));

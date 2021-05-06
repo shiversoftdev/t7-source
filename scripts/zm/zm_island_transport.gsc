@@ -107,7 +107,7 @@ function function_daa052ec(str_location, str_flag, str_exploder)
 	level flag::wait_till("power_on");
 	exploder::exploder(str_exploder);
 	function_b708e2f9(str_location, 1);
-	while(1)
+	while(true)
 	{
 		level flag::wait_till(str_flag);
 		exploder::exploder_stop(str_exploder);
@@ -170,7 +170,8 @@ function function_b708e2f9(var_7d3faaf0, var_7afe5e99 = 1)
 */
 function function_727b0365()
 {
-	while(1)
+	var_ff0e60dd = arraygetclosest(self.origin, struct::get_array("transport_zip_line", "targetname"));
+	while(true)
 	{
 		self waittill(#"trigger", e_who);
 		if(!level flag::get("flag_zipline_in_use"))
@@ -263,7 +264,7 @@ function function_1388fe2d(player)
 function function_32c54c4()
 {
 	var_f7516332 = self.stub.e_parent;
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_who);
 		if(level flag::get("flag_sewer_on_cooldown_" + self.script_noteworthy))
@@ -628,7 +629,7 @@ function function_3c997cb2(var_b2c1d9af)
 			zm_zonemgr::enable_zone("zone_jungle_lab_upper");
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				assertmsg("");

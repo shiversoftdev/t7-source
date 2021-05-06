@@ -230,7 +230,8 @@ function function_e2a1a825()
 	self endon(#"hash_e2a1a825");
 	self endon(#"disconnect");
 	self.doa.var_a483af0a = 0;
-	while(1)
+	self.doa.var_b55a8647 = 0;
+	while(true)
 	{
 		self util::waittill_any("doa_round_is_over", "bossEventComplete", "playerLeaderboardUploader", "disconnect");
 		if(level.doa.round_number >= getdvarint("scr_doa_min_level_stat_upload", 45))
@@ -251,7 +252,7 @@ function function_e2a1a825()
 */
 function function_eb67e3d2()
 {
-	while(1)
+	while(true)
 	{
 		if(self stancebuttonpressed())
 		{
@@ -567,7 +568,7 @@ function turnplayershieldon(short_shield = 1)
 private function function_6b0da7ff()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		wait(0.05);
 	}
@@ -702,7 +703,7 @@ private function function_ab9cf24b(player)
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		foreach(var_456bae16, hazard in level.doa.hazards)
 		{
@@ -730,7 +731,7 @@ function infiniteammo()
 	self endon(#"hash_93c32bc6");
 	self endon(#"disconnect");
 	wait(1);
-	while(1)
+	while(true)
 	{
 		wait(2);
 		weaponslist = self getweaponslistprimaries();
@@ -944,6 +945,7 @@ function function_832d21c2()
 	self thread namespace_eaa992c::function_285a2999("boots");
 	self.doa.fast_feet = 1;
 	self.doa.var_d5c84825 = undefined;
+	timeleft = gettime() + self doa_utility::function_1ded48e6(level.doa.rules.player_speed_time) * 1000;
 	while(isdefined(self.doa.fast_feet) && self.doa.fast_feet && gettime() < timeleft)
 	{
 		wait(0.05);
@@ -1191,7 +1193,7 @@ function function_ab0e2cf3()
 	self notify(#"hash_58a81b71");
 	self endon(#"hash_58a81b71");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		wait(0.05);
 		if(!isalive(self))
@@ -1397,7 +1399,7 @@ function function_73d40751()
 	self notify(#"hash_73d40751");
 	self endon(#"hash_73d40751");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		wait(0.05);
 		if(self weaponswitchbuttonpressed())
@@ -1430,7 +1432,7 @@ function function_f19e9b07()
 	self notify(#"hash_f26fb3a4");
 	self endon(#"hash_f26fb3a4");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		wait(0.05);
 		if(!isalive(self))
@@ -1469,7 +1471,7 @@ function function_4eabae51()
 	self notify(#"hash_97fb783");
 	self endon(#"hash_97fb783");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		wait(0.05);
 		if(!isalive(self))
@@ -1575,7 +1577,7 @@ function function_350f42fa(var_e1eb317e)
 	self endon(#"disconnect");
 	self notify(#"hash_42ae3dd7");
 	self endon(#"hash_42ae3dd7");
-	while(1)
+	while(true)
 	{
 		self waittill(#"missile_fire", projectile, weapon);
 		if(weapon == level.doa.var_e30c10ec)
@@ -1604,7 +1606,7 @@ function function_62c5034a(owner)
 	self endon(#"death");
 	owner endon(#"hash_42ae3dd7");
 	owner endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_bounce", pos, normal, ent, surface);
 		physicsexplosionsphere(pos, getdvarint("scr_doa_secondary_explo_rad", 64), getdvarint("scr_doa_secondary_explo_rad", 64), 3);
@@ -1629,7 +1631,7 @@ function function_48b5439d(owner)
 	owner endon(#"hash_42ae3dd7");
 	owner endon(#"disconnect");
 	owner.doa.var_cdd906a9 = 0;
-	while(1)
+	while(true)
 	{
 		owner waittill(#"hash_21f7a743", victim);
 		time = gettime();
@@ -2435,7 +2437,7 @@ private function function_ad1d5fcb(var_243f32c0 = 0)
 				spot = doa_utility::getclosestto(self.origin, level.doa.arenas[level.doa.current_arena].var_1d2ed40).origin;
 				break;
 			}
-			default
+			default:
 			{
 				spot = function_68ece679(self.entnum).origin;
 				break;
@@ -2540,7 +2542,7 @@ function function_2b1d321f(player, downedplayer)
 	player endon(#"disconnect");
 	level endon(#"doa_game_is_over");
 	downedplayer endon(#"player_respawned");
-	while(1)
+	while(true)
 	{
 		wait(0.05);
 		if(!isdefined(player.doa))
@@ -2845,6 +2847,7 @@ private function function_c240f40e(source, dest, orb)
 	orb thread doa_utility::function_75e76155(dest, "playerLifeRespawn");
 	orb thread doa_utility::function_783519c1("doa_game_is_over", 1);
 	orb thread doa_utility::function_1bd67aef(4);
+	end = dest.origin + vectorscale((0, 0, 1), 50);
 	while(isdefined(orb))
 	{
 		orb moveto(end, 0.2, 0, 0);
@@ -3105,7 +3108,7 @@ function function_fea7ed75(num)
 		{
 			return (1, 1, 0);
 		}
-		default
+		default:
 		{
 			/#
 				assert(0);
@@ -3157,7 +3160,7 @@ function function_ee495f41(num)
 		{
 			return "yellow";
 		}
-		default
+		default:
 		{
 			/#
 				assert(0);
@@ -3248,7 +3251,7 @@ function function_f300c612()
 	self endon(#"disconnect");
 	self notify(#"hash_f300c612");
 	self endon(#"hash_f300c612");
-	while(1)
+	while(true)
 	{
 		wait(0.05);
 		if(isdefined(self.doa.var_f4a883ed) && self.doa.var_f4a883ed)

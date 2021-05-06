@@ -233,7 +233,7 @@ function function_5143a242()
 */
 private function function_44a35094()
 {
-	while(1)
+	while(true)
 	{
 		battlechatter::function_d9f49fba(0);
 		wait(0.2);
@@ -379,7 +379,7 @@ function function_7ef5e890()
 	self.var_5206d4b9 = 0;
 	self.var_f4fa5cef = gettime() + 5000;
 	waittime = 2;
-	while(1)
+	while(true)
 	{
 		if(!isdefined(level.var_a9e78bf7) || !level.var_a9e78bf7["zombifyenabled"])
 		{
@@ -805,7 +805,7 @@ function function_55e64fc7()
 	self endon(#"death");
 	self endon(#"hash_d94c729a");
 	self endon(#"hash_abc05be8");
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.var_be85d412) && self.var_be85d412)
 		{
@@ -899,7 +899,7 @@ function function_8347526a()
 {
 	self endon(#"death");
 	wait(4);
-	while(1)
+	while(true)
 	{
 		if(!level.var_a9e78bf7["pathabilityenabled"])
 		{
@@ -1024,7 +1024,7 @@ function function_48401071()
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.in_the_ground) && self.in_the_ground || (isdefined(self.var_506b9d18) && self.var_506b9d18))
 		{
@@ -1184,7 +1184,8 @@ private function function_470f7d28()
 	{
 		return;
 	}
-	while(1)
+	var_f3b07235 = level.var_a9e78bf7["sprinttoplayerdistance"] * level.var_a9e78bf7["sprinttoplayerdistance"];
+	while(true)
 	{
 		if(isdefined(self.enemy) && distancesquared(self.enemy.origin, self.origin) > var_f3b07235)
 		{
@@ -1418,6 +1419,7 @@ function function_9bc25e40()
 		attacker thread function_11600557(self, attacker);
 	}
 	var_14e6a7e9 = self.origin;
+	var_5b43e537 = self.angles;
 	while(getaiteamarray("axis").size >= 24)
 	{
 		wait(randomintrange(2, 4));
@@ -1791,7 +1793,7 @@ function function_190da7c8()
 {
 	self endon(#"death");
 	self endon(#"stop_inert");
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.enemy))
 		{
@@ -1834,7 +1836,7 @@ function function_b04fbef3()
 {
 	self endon(#"death");
 	self endon(#"stop_inert");
-	while(1)
+	while(true)
 	{
 		if(!self haspath())
 		{
@@ -1870,7 +1872,7 @@ function function_745c9570()
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		if(!isdefined(self))
 		{
@@ -1906,7 +1908,7 @@ function function_a608d09()
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		level.failsafe_waittime = 30;
 		wait(level.failsafe_waittime);
@@ -2170,6 +2172,7 @@ function function_254de6e5(startorigin)
 	fxorg setignorepauseworld(1);
 	fxorg setmodel("tag_origin");
 	var_40ab2807 = 0;
+	var_69e07654 = 3;
 	while(gettime() < endtime)
 	{
 		if(var_40ab2807 >= var_69e07654)
@@ -2305,7 +2308,7 @@ function bzmutil_waitforallzombiestodie()
 		return;
 	}
 	level thread function_9b15c7b();
-	while(1)
+	while(true)
 	{
 		if(isdefined(level.var_a9e78bf7) && level.var_a9e78bf7["zombifyenabled"])
 		{
@@ -2332,7 +2335,7 @@ private function function_9b15c7b()
 {
 	level notify(#"hash_11692fba");
 	level endon(#"hash_11692fba");
-	while(1)
+	while(true)
 	{
 		if(isdefined(level.var_a9e78bf7) && level.var_a9e78bf7["zombifyenabled"])
 		{
@@ -2402,7 +2405,7 @@ function function_11692fba()
 	else
 	{
 		level thread function_9b15c7b();
-		while(1)
+		while(true)
 		{
 			if(isdefined(level.var_a9e78bf7) && level.var_a9e78bf7["zombifyenabled"])
 			{
@@ -2477,7 +2480,7 @@ function function_fa34e301()
 	self endon(#"hash_fa34e301");
 	self endon(#"death_or_disconnect");
 	waittillframeend();
-	while(1)
+	while(true)
 	{
 		level clientfield::set("cybercom_disabled", 1);
 		self cybercom_tacrig::giverigability("cybercom_playermovement", 1);
@@ -2499,7 +2502,7 @@ function function_5abd553b()
 {
 	self endon(#"disconnect");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"cybercom_decoy_released", misdirectionobject);
 		array::add(level.var_9a25f386, misdirectionobject);

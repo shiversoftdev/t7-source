@@ -179,7 +179,7 @@ function init_electric_cherry()
 function electric_cherry_perk_machine_think()
 {
 	init_electric_cherry();
-	while(1)
+	while(true)
 	{
 		machine = getentarray("vendingelectric_cherry", "targetname");
 		machine_triggers = getentarray("vending_electriccherry", "target");
@@ -391,7 +391,7 @@ function electric_cherry_reload_attack()
 	self endon("specialty_electriccherry" + "_stop");
 	self.wait_on_reload = [];
 	self.consecutive_electric_cherry_attacks = 0;
-	while(1)
+	while(true)
 	{
 		self waittill(#"reload_start");
 		current_weapon = self getcurrentweapon();
@@ -432,7 +432,7 @@ function electric_cherry_reload_attack()
 					n_zombie_limit = 2;
 					break;
 				}
-				default
+				default:
 				{
 					n_zombie_limit = 0;
 				}
@@ -529,7 +529,7 @@ function check_for_reload_complete(weapon)
 	self endon(#"disconnect");
 	self endon("player_lost_weapon_" + weapon.name);
 	self thread weapon_replaced_monitor(weapon);
-	while(1)
+	while(true)
 	{
 		self waittill(#"reload");
 		current_weapon = self getcurrentweapon();
@@ -556,7 +556,7 @@ function weapon_replaced_monitor(weapon)
 	self endon(#"death");
 	self endon(#"disconnect");
 	self endon("weapon_reload_complete_" + weapon.name);
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_change");
 		primaryweapons = self getweaponslistprimaries();

@@ -998,7 +998,7 @@ function function_274ba0e6(str_animname, var_e3c27047)
 	{
 		var_e3c27047 = 1;
 	}
-	while(1)
+	while(true)
 	{
 		self animation::play(str_animname, undefined, undefined, var_e3c27047, 0, 0);
 	}
@@ -1172,7 +1172,7 @@ function function_465ed3ec(localclientnum, mdl_god)
 {
 	level notify(#"hash_465ed3ec");
 	level endon(#"hash_465ed3ec");
-	while(1)
+	while(true)
 	{
 		self thread function_2de612ff(localclientnum, mdl_god);
 		var_7397ca31 = randomintrange(15, 60);

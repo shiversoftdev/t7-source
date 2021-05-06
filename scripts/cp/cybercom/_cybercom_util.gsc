@@ -89,7 +89,7 @@ function vehicle_init_cybercom(vehicle)
 			{
 				vehicle.nocybercom = 1;
 			}
-			default
+			default:
 			{
 				break;
 			}
@@ -605,7 +605,7 @@ function function_d4f9f451(slot, weapon)
 	self endon(#"death");
 	self endon(#"weaponendlockwatcher");
 	self endon(#"ccom_stop_lock_on");
-	while(1)
+	while(true)
 	{
 		for(i = 0; i < self.cybercom.lock_targets.size; i++)
 		{
@@ -1370,6 +1370,7 @@ function function_b5f4e597(weapon)
 	{
 		maxrangesqr = 0;
 	}
+	var_6f023b72 = 0;
 	while(self hasweapon(weapon))
 	{
 		if(maxrangesqr > 0)
@@ -1427,6 +1428,7 @@ function function_5ad57748()
 	self notify(#"hash_5ad57748");
 	self endon(#"hash_5ad57748");
 	self endon(#"hash_1bf7ef5");
+	var_82361971 = int(getdvarfloat("scr_hacktime_decay_rate", 0.25) / 20 * 1000);
 	while(self.var_6c8af4c4 > 0)
 	{
 		wait(0.05);

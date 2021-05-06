@@ -218,7 +218,7 @@ function function_2f621485(b_disable = 1)
 */
 function function_f8043960(var_57216c49, e_volume = undefined, var_50efb072 = 1, var_2f65a401 = undefined)
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_fbd59317", e_player);
 		if(isdefined(var_2f65a401) && ![[var_2f65a401]](e_player))
@@ -456,6 +456,7 @@ function function_f70dde0b(var_f328e82, a_s_spawnpoints, var_9c84987b, var_2494b
 	}
 	while(isdefined(var_54939bf3) && var_54939bf3 || var_613bb82b < n_max_zombies)
 	{
+		var_9a8fc4a4 = array::filter(var_9a8fc4a4, 0, &function_91d64824);
 		while(var_9a8fc4a4.size < var_2494b61e && (isdefined(var_54939bf3) && var_54939bf3 || var_613bb82b < n_max_zombies))
 		{
 			var_9a8fc4a4 = array::filter(var_9a8fc4a4, 0, &function_91d64824);
@@ -536,7 +537,7 @@ function function_9b76f612(var_56d259ba)
 */
 function function_28c0c208()
 {
-	while(1)
+	while(true)
 	{
 		util::wait_network_frame();
 		level.var_4209c599 = 0;
@@ -675,6 +676,7 @@ function function_d182335a(ai_zombie)
 function get_unused_spawn_point(a_s_spawnpoints)
 {
 	b_all_points_used = 0;
+	a_valid_spawn_points = [];
 	while(!a_valid_spawn_points.size)
 	{
 		foreach(var_76958f6d, s_spawn_point in a_s_spawnpoints)
@@ -734,6 +736,7 @@ function function_b55ebb81(var_cde5eb87, var_2b71b5b4, var_15eb9a52, var_f92c386
 	}
 	level flag::set("wave_event_raz_spawning_active");
 	var_4751753a = [];
+	var_766273f0 = 0;
 	while(isdefined(var_b4fcee85) && !isdefined(level.var_c3c3ffc5))
 	{
 		wait(0.05);
@@ -748,6 +751,7 @@ function function_b55ebb81(var_cde5eb87, var_2b71b5b4, var_15eb9a52, var_f92c386
 	util::wait_network_frame();
 	while(isdefined(var_54939bf3) && var_54939bf3 || var_766273f0 < var_2b71b5b4 && level flag::get("wave_event_raz_spawning_active"))
 	{
+		var_4751753a = array::remove_dead(var_4751753a, 0);
 		while(var_4751753a.size < var_15eb9a52 && (isdefined(var_54939bf3) && var_54939bf3 || var_766273f0 < var_2b71b5b4) && level flag::get("wave_event_raz_spawning_active"))
 		{
 			var_4751753a = array::remove_dead(var_4751753a, 0);
@@ -936,6 +940,7 @@ function function_77b29938(a_spawners, var_19764360)
 	{
 		var_cde5eb87 = arraycopy(level.zm_loc_types["raz_location"]);
 	}
+	a_valid_spawn_points = [];
 	while(!a_valid_spawn_points.size)
 	{
 		foreach(var_d2788ed5, s_spawn_point in var_cde5eb87)
@@ -988,6 +993,7 @@ function function_923f7f72(var_af22dd13, var_ed448d3b, var_e25e1ccc, var_b4fcee8
 	}
 	level flag::set("wave_event_sentinel_spawning_active");
 	var_5e8e8152 = [];
+	var_469adf27 = 0;
 	while(!isdefined(level.var_c3c3ffc5))
 	{
 		wait(0.05);
@@ -1002,6 +1008,7 @@ function function_923f7f72(var_af22dd13, var_ed448d3b, var_e25e1ccc, var_b4fcee8
 	util::wait_network_frame();
 	while(isdefined(var_54939bf3) && var_54939bf3 || var_469adf27 < var_af22dd13 && level flag::get("wave_event_sentinel_spawning_active"))
 	{
+		var_5e8e8152 = array::remove_dead(var_5e8e8152, 0);
 		while(var_5e8e8152.size < var_ed448d3b && (isdefined(var_54939bf3) && var_54939bf3 || var_469adf27 < var_af22dd13) && level flag::get("wave_event_sentinel_spawning_active"))
 		{
 			var_5e8e8152 = array::remove_dead(var_5e8e8152, 0);
@@ -1112,6 +1119,7 @@ function function_383b110b(a_spawners)
 	{
 		var_cde5eb87 = arraycopy(level.zm_loc_types["sentinel_location"]);
 	}
+	a_valid_spawn_points = [];
 	while(!a_valid_spawn_points.size)
 	{
 		foreach(var_2a70c54a, s_spawn_point in var_cde5eb87)
@@ -1262,7 +1270,7 @@ function function_5eeabbe0(var_47ee7db6, nd_path_start, var_f08b56c6, str_notify
 		{
 			exploder::exploder("fxexp_503");
 		}
-		default
+		default:
 		{
 			break;
 		}
@@ -1358,7 +1366,7 @@ function function_ab2df0ca()
 function play_current_fx()
 {
 	self endon(#"rail_over");
-	while(1)
+	while(true)
 	{
 		playfxontag(level._effect["current_effect"], self, "tag_origin");
 		wait(0.1);
@@ -1376,7 +1384,7 @@ function play_current_fx()
 */
 function function_eda4b163()
 {
-	while(1)
+	while(true)
 	{
 		self trigger::wait_till();
 		exploder::exploder(self.script_string);

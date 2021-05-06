@@ -550,7 +550,8 @@ function slot_watcher(equipment)
 	self notify(#"kill_equipment_slot_watcher");
 	self endon(#"kill_equipment_slot_watcher");
 	self endon(#"disconnect");
-	while(1)
+	notify_strings = get_notify_strings(equipment);
+	while(true)
 	{
 		self waittill(#"weapon_change", curr_weapon, prev_weapon);
 		if(self.sessionstate != "spectator")
@@ -1117,7 +1118,7 @@ function function_f30ee99e()
 		wait(0.05);
 		str_cmd = "" + "" + "";
 		adddebugcommand(str_cmd);
-		while(1)
+		while(true)
 		{
 			equipment_id = getdvarstring("");
 			if(equipment_id != "")

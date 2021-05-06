@@ -447,6 +447,7 @@ function create_concussion_wave(damage, slot, weapon)
 	self setweaponammoclip(spikeweapon, 2);
 	if(self hascybercomability("cybercom_concussive") == 2)
 	{
+		failsafe = gettime() + 800;
 		while(self is_jumping() == 0 && self hasweapon(spikeweapon) && gettime() < failsafe)
 		{
 			wait(0.05);

@@ -1219,7 +1219,7 @@ private function mechzspawnsetup()
 private function mechzflamewatcher()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.favoriteenemy))
 		{
@@ -1478,7 +1478,7 @@ function mechzdamagecallback(inflictor, attacker, damage, dflags, mod, weapon, p
 				return damage * 0.1;
 				break;
 			}
-			default
+			default:
 			{
 				/#
 					iprintlnbold("" + damage * 0.1 + "" + self.health - damage * 0.1);

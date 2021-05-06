@@ -126,7 +126,7 @@ function watchhackertoolfired()
 	self endon(#"disconnect");
 	self endon(#"death");
 	self endon(#"killhackermonitor");
-	while(1)
+	while(true)
 	{
 		self waittill(#"hacker_tool_fired", hackertooltarget, weapon);
 		if(isdefined(hackertooltarget))
@@ -270,7 +270,7 @@ function watchhackertoolinterrupt(weapon)
 	self endon(#"death");
 	self endon(#"weapon_change");
 	self endon(#"grenade_fire");
-	while(1)
+	while(true)
 	{
 		level waittill(#"use_interrupt", interrupttarget);
 		if(self.hackertooltarget == interrupttarget)
@@ -315,7 +315,7 @@ function watchforgrenadefire(weapon)
 	self endon(#"hacker_tool_fired");
 	self endon(#"weapon_change");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_fire", grenade_instance, grenade_weapon, respawnfromhack);
 		if(isdefined(respawnfromhack) && respawnfromhack)
@@ -386,7 +386,7 @@ function hackertooltargetloop(weapon)
 	self endon(#"grenade_fire");
 	self clientfield::set_to_player("hacker_tool", 1);
 	self playhackertoolsoundloop();
-	while(1)
+	while(true)
 	{
 		wait(0.05);
 		wait(0.05);
@@ -1230,7 +1230,7 @@ function getlockontime(target, weapon)
 function tunables()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			level.hackertoollostsightlimitms = getdvarint("", 1000);
 			level.hackertoollockonradius = getdvarfloat("", 20);

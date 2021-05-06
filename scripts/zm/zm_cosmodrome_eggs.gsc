@@ -249,7 +249,7 @@ function wait_for_use(monitor)
 			return;
 		}
 	#/
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", who);
 		while(isplayer(who) && who istouching(self))
@@ -363,7 +363,8 @@ function wait_for_sync_use(ss, button)
 {
 	level endon(#"between_round_over");
 	level endon(#"switches_synced");
-	while(1)
+	ss.pressed = 0;
+	while(true)
 	{
 		self waittill(#"trigger", who);
 		while(isplayer(who) && who istouching(self))
@@ -399,7 +400,8 @@ function switch_watcher()
 {
 	level endon(#"between_round_over");
 	pressed = 0;
-	while(1)
+	switches = struct::get_array("sync_switch_start", "targetname");
+	while(true)
 	{
 		level waittill(#"sync_button_pressed");
 		timeout = gettime() + 500;
@@ -820,7 +822,7 @@ function spin_letter()
 {
 	level endon(#"lander_grounded");
 	level endon(#"letter_acquired");
-	while(1)
+	while(true)
 	{
 		self rotateyaw(90, 5);
 		wait(5);
@@ -1016,7 +1018,7 @@ function wait_for_combo(trig)
 	#/
 	players = getplayers();
 	array::thread_all(players, &thundergun_check, self, trig, weapon_combo_spot);
-	while(1)
+	while(true)
 	{
 		trig waittill(#"damage", amount, inflictor, direction, point, type, tagname, modelname, partname, weapon);
 		if(isdefined(inflictor))
@@ -1059,7 +1061,7 @@ function thundergun_check(model, trig, weapon_combo_spot)
 		}
 	#/
 	model endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_fired");
 		var_ca8d49bb = self getcurrentweapon();

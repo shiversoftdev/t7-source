@@ -66,7 +66,7 @@ function on_spawn(watcher, owner)
 	spawn_time = gettime();
 	owner addweaponstat(self.weapon, "used", 1);
 	self thread simulate_weapon_fire(owner);
-	while(1)
+	while(true)
 	{
 		if(gettime() > spawn_time + decoy_time * 1000)
 		{
@@ -190,7 +190,7 @@ function simulate_weapon_fire(owner)
 			simulate_weapon_fire_shotgun(owner, weapon);
 			break;
 		}
-		default
+		default:
 		{
 			simulate_weapon_fire_machine_gun(owner, weapon);
 			break;
@@ -234,7 +234,8 @@ function simulate_weapon_fire_machine_gun_semi_auto(owner, weapon)
 	firetime = weapon.firetime;
 	reloadtime = weapon.reloadtime;
 	burst_spacing_min = 4;
-	while(1)
+	burst_spacing_max = 10;
+	while(true)
 	{
 		if(clipsize <= 1)
 		{
@@ -265,7 +266,8 @@ function simulate_weapon_fire_pistol(owner, weapon)
 	firetime = weapon.firetime;
 	reloadtime = weapon.reloadtime;
 	burst_spacing_min = 0.5;
-	while(1)
+	burst_spacing_max = 4;
+	while(true)
 	{
 		burst_count = randomintrange(1, clipsize);
 		self thread move(owner, burst_count, firetime, self.main_dir, self.max_offset_angle);
@@ -293,7 +295,8 @@ function simulate_weapon_fire_shotgun(owner, weapon)
 		clipsize = 2;
 	}
 	burst_spacing_min = 0.5;
-	while(1)
+	burst_spacing_max = 4;
+	while(true)
 	{
 		burst_count = randomintrange(1, clipsize);
 		self thread move(owner, burst_count, firetime, self.main_dir, self.max_offset_angle);
@@ -321,7 +324,8 @@ function simulate_weapon_fire_machine_gun_full_auto(owner, weapon)
 		clipsize = 30;
 	}
 	burst_spacing_min = 2;
-	while(1)
+	burst_spacing_max = 6;
+	while(true)
 	{
 		burst_count = randomintrange(int(clipsize * 0.6), clipsize);
 		interrupt = 0;
@@ -350,7 +354,8 @@ function simulate_weapon_fire_sniper(owner, weapon)
 		clipsize = 2;
 	}
 	burst_spacing_min = 3;
-	while(1)
+	burst_spacing_max = 5;
+	while(true)
 	{
 		burst_count = randomintrange(1, clipsize);
 		self thread move(owner, burst_count, firetime, self.main_dir, self.max_offset_angle);
@@ -537,7 +542,8 @@ function track_main_direction()
 	self endon(#"death");
 	self endon(#"done");
 	self.main_dir = int(vectortoangles((self.initial_velocity[0], self.initial_velocity[1], 0))[1]);
-	while(1)
+	up = (0, 0, 1);
+	while(true)
 	{
 		self waittill(#"grenade_bounce", pos, normal);
 		dot = vectordot(normal, up);

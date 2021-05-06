@@ -612,7 +612,7 @@ function get_out(str_mode)
 			exit_variable();
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				assertmsg("");
@@ -825,6 +825,7 @@ private function forward_euler_integration(e_move, v_target_landing, n_initial_s
 	integrationstep = 0.1;
 	position = self.origin;
 	velocity = (0, 0, n_initial_speed * -1);
+	gravity = vectorscale((0, 0, -1), 385.8);
 	while(!landed)
 	{
 		previousposition = position;
@@ -922,7 +923,7 @@ function exit_high_loop_anim(e_parent)
 {
 	self endon(#"death");
 	self endon(#"landing");
-	while(1)
+	while(true)
 	{
 		animation::play(self.rider_info.exithighloopanim, e_parent, "tag_origin");
 	}

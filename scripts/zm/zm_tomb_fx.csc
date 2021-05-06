@@ -238,7 +238,7 @@ function function_1c1d65fb()
 {
 	self endon(#"delete");
 	scene::add_scene_func(self.scriptbundlename, &function_b9b12551, "done");
-	while(1)
+	while(true)
 	{
 		self scene::play(self.scriptbundlename);
 		wait(randomfloatrange(10, 30));
@@ -273,7 +273,7 @@ function function_b9b12551(a_ents)
 */
 function trap_fx_monitor(str_name, str_side)
 {
-	while(1)
+	while(true)
 	{
 		level waittill(str_name);
 		var_276d0f92 = struct::get_array(str_name, "targetname");

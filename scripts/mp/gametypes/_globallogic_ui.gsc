@@ -515,6 +515,7 @@ function beginclasschoice()
 	team = self.pers["team"];
 	if(level.disableclassselection == 1 || (isdefined(self.disableclassselection) && self.disableclassselection) || getdvarint("migration_soak") == 1)
 	{
+		started_waiting = gettime();
 		while(!self isstreamerready(-1, 1) && started_waiting + 90000 > gettime())
 		{
 			wait(0.05);

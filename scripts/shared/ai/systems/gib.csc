@@ -60,7 +60,7 @@ autoexec function main()
 */
 private function _annihilatecorpse()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"corpse_explode", localclientnum, body, origin);
 		if(!util::is_mature() || util::is_gib_restricted_build())
@@ -290,6 +290,7 @@ private function _gibentity(localclientnum, gibflags, shouldspawngibs)
 		yaw = getanglefrombits(yaw_bits, 3);
 		gibdir = anglestoforward((0, yaw, 0));
 	}
+	gibbundle = struct::get_script_bundle("gibcharacterdef", _getgibdef(entity));
 	while(gibflags >= currentgibflag)
 	{
 		if(gibflags & currentgibflag)

@@ -100,7 +100,7 @@ function locationstingerwait(zone_name, type)
 	level.sndlastzone = undefined;
 	level.sndlocationplayed = 0;
 	level thread sndlocationbetweenroundswait();
-	while(1)
+	while(true)
 	{
 		level waittill(#"newzoneactive", activezone);
 		wait(0.1);
@@ -217,7 +217,8 @@ function sndlocationshouldplay(array, activezone)
 function sndstingerroundwait()
 {
 	wait(25);
-	while(1)
+	level.sndroundwait = 0;
+	while(true)
 	{
 		level waittill(#"end_of_round");
 		level thread sndstingerroundwait_start();
@@ -330,7 +331,7 @@ function sndlocationbetweenroundswait()
 	{
 		wait(0.1);
 	}
-	while(1)
+	while(true)
 	{
 		level thread sndlocationbetweenrounds();
 		level waittill(#"between_round_over");
@@ -407,7 +408,7 @@ function snddoormusictrigs()
 function snddoormusic()
 {
 	self endon(#"snddoormusic_triggered");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger");
 		if(!zm_audio_zhd::function_8090042c())
@@ -444,7 +445,7 @@ function sndmaelstrom()
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		trig waittill(#"trigger", who);
 		if(isplayer(who) && (!(isdefined(who.sndmaelstrom) && who.sndmaelstrom)))
@@ -585,7 +586,7 @@ function function_45b4acf2()
 function function_ada4c741()
 {
 	level endon(#"snd_zhdegg_activate");
-	while(1)
+	while(true)
 	{
 		level waittill(#"player_zombie_blood", e_player);
 		e_player clientfield::set_to_player("sndEggElements", 1);
@@ -645,7 +646,8 @@ function function_87c575b6()
 */
 function function_66aff463()
 {
-	while(1)
+	var_8e7ce497 = spawn("trigger_damage", self.origin, 0, 15, 50);
+	while(true)
 	{
 		var_8e7ce497 waittill(#"damage", amount, inflictor, direction, point, type, tagname, modelname, partname, weapon);
 		if(isplayer(inflictor) && issubstr(weapon.name, "staff_" + self.script_string))
@@ -769,7 +771,7 @@ function function_bec55ee6()
 	self endon(#"hash_3a53ac43");
 	self.var_ac086ffb setcandamage(1);
 	self.var_ac086ffb.health = 1000000;
-	while(1)
+	while(true)
 	{
 		self.var_ac086ffb waittill(#"damage", damage, attacker, dir, loc, type, model, tag, part, weapon, flags);
 		if(!isdefined(attacker) || !isplayer(attacker))

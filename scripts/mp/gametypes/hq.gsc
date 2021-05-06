@@ -317,6 +317,7 @@ function hqmainloop()
 		hqdestroyedinenemystr = &"MP_HQ_DESPAWN_IN";
 	}
 	spawn_first_radio();
+	objective_name = istring("objective");
 	while(level.inprematchperiod)
 	{
 		wait(0.05);
@@ -336,7 +337,7 @@ function hqmainloop()
 		timerdisplay[team].showplayerteamhudelemtospectator = 1;
 		thread hidetimerdisplayongameend(timerdisplay[team]);
 	}
-	while(1)
+	while(true)
 	{
 		iprintln(&"MP_HQ_REVEALED");
 		sound::play_on_players("mp_suitcase_pickup");
@@ -399,7 +400,7 @@ function hqmainloop()
 		{
 			level.hqdestroyedbytimer = 0;
 		}
-		while(1)
+		while(true)
 		{
 			ownerteam = level.radio.gameobject gameobjects::get_owner_team();
 			foreach(var_99b6a1af, team in level.teams)
@@ -769,6 +770,7 @@ function awardhqpoints(team)
 	level endon(#"hq_destroyed");
 	level notify(#"awardhqpointsrunning");
 	level endon(#"awardhqpointsrunning");
+	seconds = 5;
 	while(!level.gameended)
 	{
 		globallogic_score::giveteamscoreforobjective(team, seconds);
@@ -849,6 +851,7 @@ function getradioarray()
 		return undefined;
 	}
 	swapped = 1;
+	n = radios.size;
 	while(swapped)
 	{
 		swapped = 0;
@@ -1230,6 +1233,7 @@ function pickradiotospawn()
 	}
 	if(getcountofteamswithplayers(num) <= 1)
 	{
+		radio = level.radios[randomint(level.radios.size)];
 		while(isdefined(level.prevradio) && radio == level.prevradio)
 		{
 			radio = level.radios[randomint(level.radios.size)];

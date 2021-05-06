@@ -320,7 +320,8 @@ private function function_533483a3(room)
 	level endon(#"hash_16154574");
 	level endon(#"hash_d1f5acf7");
 	level.doa.var_e0d67a74 = struct::get_array(room.name + "_rise_spot");
-	while(1)
+	var_48be25f5 = getent("spawner_zombietron_skeleton", "targetname");
+	while(true)
 	{
 		axis = getaiteamarray("axis");
 		if(axis.size < 40)
@@ -330,6 +331,7 @@ private function function_533483a3(room)
 			{
 				var_e1a06452 = 40 - axis.size;
 			}
+			var_1db14d86 = getplayers().size * 500;
 			while(var_e1a06452)
 			{
 				var_e1a06452--;
@@ -383,7 +385,7 @@ private function function_533483a3(room)
 function function_c0808a91()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.players_viscache))
 		{
@@ -491,6 +493,7 @@ function function_246d3adb(room)
 	total = room.var_4f002f93.size;
 	var_82361971 = int(ceil(total / 80));
 	arena = level.doa.arenas[namespace_3ca3c537::function_5835533a(room.name)];
+	var_86a35fbd = struct::get(arena.entity.target, "targetname");
 	while(isdefined(var_86a35fbd) && total > 0)
 	{
 		for(var_2bb5aeba = 0; isdefined(var_86a35fbd) && var_2bb5aeba < var_82361971; var_2bb5aeba++)
@@ -507,7 +510,7 @@ function function_246d3adb(room)
 						reward = "zombietron_beryl";
 						break;
 					}
-					default
+					default:
 					{
 						reward = var_86a35fbd.script_parameters;
 						scale = 1;
@@ -604,7 +607,7 @@ function function_db531f2f(room)
 	level endon(#"hash_d1f5acf7");
 	room.var_74415e9d = 0;
 	level waittill(#"hash_c8bd32b9");
-	while(1)
+	while(true)
 	{
 		if(room.var_74415e9d < 4 + getplayers().size)
 		{
@@ -689,6 +692,7 @@ function function_5f0b67a9(room)
 	{
 		totaltime = room.timeout - 1 * 1000;
 	}
+	timeleft = gettime() + totaltime;
 	while(gettime() < timeleft)
 	{
 		wait(0.5);
@@ -838,6 +842,7 @@ function function_fe1ce5f1(einflictor, eattacker, idamage, idflags, smeansofdeat
 	{
 		player.doa.var_d55e6679 = 0;
 	}
+	player.room.var_e01f23f0 = array::remove_undefined(player.room.var_e01f23f0);
 	while(var_516eed4b && player.room.var_e01f23f0.size < 275)
 	{
 		switch(randomint(5))
@@ -1153,7 +1158,8 @@ function function_455c43ca()
 	level endon(#"hash_9bc1268b");
 	level waittill(#"hash_d9dd7818");
 	var_48be25f5 = getent("doa_basic_spawner", "targetname");
-	while(1)
+	spawnpoints = struct::get_array("redins_riser_spot");
+	while(true)
 	{
 		count = doa_utility::function_b99d78c7();
 		if(count < getdvarint("scr_redins_enemy_count", 16))
@@ -1235,7 +1241,7 @@ function function_67b5ba67()
 	var_efa02a6c = getent("redins_finish_line", "targetname");
 	level endon(#"hash_d1f5acf7");
 	level endon(#"hash_16154574");
-	while(1)
+	while(true)
 	{
 		var_efa02a6c waittill(#"trigger", truck);
 		if(truck.var_f71159da == level.doa.var_c93ed68a)
@@ -1266,6 +1272,7 @@ function function_3ed913b4(room)
 	}
 	level thread function_67b5ba67();
 	winner = undefined;
+	var_64c1db98 = 0;
 	while(!isdefined(winner))
 	{
 		players = getplayers();
@@ -1296,7 +1303,7 @@ function function_3ed913b4(room)
 						break;
 					}
 					case 4:
-					default
+					default:
 					{
 						bonus = 2;
 						break;
@@ -1386,7 +1393,7 @@ function function_c218114a()
 	level endon(#"hash_d1f5acf7");
 	myflag = int(self.script_parameters);
 	level function_bbb36dbe(myflag);
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", truck);
 		truck.var_f71159da = truck.var_f71159da | 1 << myflag;
@@ -1455,7 +1462,7 @@ function function_c71e611c(vehicle)
 	vehicle endon(#"death");
 	level.launchforce = 500;
 	vehicle vehicle::toggle_lights_group(1, 0);
-	while(1)
+	while(true)
 	{
 		wait(0.05);
 		if(!level flag::get("doa_challenge_running"))
@@ -1528,7 +1535,7 @@ function function_fb199a7c()
 	level endon(#"hash_e1dc3538");
 	mytrigger = getent(self.target, "targetname");
 	self.gem = doa_pickups::spawnubertreasure(self.origin, 1, 0, 0, 0, 5, self.script_noteworthy, undefined, 0, 0)[0];
-	while(1)
+	while(true)
 	{
 		mytrigger waittill(#"trigger", truck);
 		if(isplayer(truck))
@@ -1559,7 +1566,7 @@ function function_41ecdf7e(triggers)
 {
 	level endon(#"hash_276164a7");
 	level endon(#"hash_d1f5acf7");
-	while(1)
+	while(true)
 	{
 		players = getplayers();
 		foreach(var_8b5bf5a9, player in players)
@@ -1625,7 +1632,7 @@ function function_d64204d9()
 	level endon(#"hash_d1f5acf7");
 	self endon(#"disconnect");
 	self.doa.var_8779c24b = 0;
-	while(1)
+	while(true)
 	{
 		self waittill(#"hash_108fd845");
 		if(!isdefined(self.room))
@@ -1782,7 +1789,7 @@ function function_76dd5557(room)
 {
 	self endon(#"death");
 	wait(8);
-	while(1)
+	while(true)
 	{
 		if(isdefined(self) && !self istouching(room.safezone))
 		{
@@ -1816,7 +1823,7 @@ function function_76dd5557(room)
 function function_90585f48(room)
 {
 	level endon(#"hash_4f4a6e14");
-	while(1)
+	while(true)
 	{
 		level thread function_5284e8dc(room);
 		wait(8);
@@ -1908,7 +1915,7 @@ function function_7c9617ef(var_7bb420a0, goaltrigger)
 {
 	self endon(#"death");
 	level waittill(#"hash_130fa748");
-	while(1)
+	while(true)
 	{
 		self moveto(goaltrigger.posts[var_7bb420a0].origin, goaltrigger.movetime);
 		self util::waittill_any_timeout(goaltrigger.movetime + 0.25, "movedone");
@@ -1936,6 +1943,7 @@ function function_60fcd122(room, goaltrigger)
 	goaltrigger.posts = [];
 	goaltrigger.posts[goaltrigger.posts.size] = struct::get(goaltrigger.target, "targetname");
 	goaltrigger.colors = strtok(goaltrigger.posts[0].script_parameters, " ");
+	next = struct::get(goaltrigger.posts[0].target, "targetname");
 	while(next != goaltrigger.posts[0])
 	{
 		goaltrigger.posts[goaltrigger.posts.size] = next;
@@ -1955,7 +1963,7 @@ function function_60fcd122(room, goaltrigger)
 		}
 	}
 	lastcount = 0;
-	while(1)
+	while(true)
 	{
 		if(goaltrigger.var_f1e29613.size == 0)
 		{
@@ -2037,7 +2045,7 @@ function function_5dac2dae(room)
 	self.org.targetname = "trucksoccer_BlowTriggerThink";
 	self.org setmodel("tag_origin");
 	self.org thread namespace_eaa992c::function_285a2999("blow_hole");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", guy);
 		if(!isdefined(guy))
@@ -2097,7 +2105,7 @@ function function_71be5ae5(room)
 	self.var_f1e29613 = [];
 	self.myteam = int(self.script_noteworthy);
 	level thread function_60fcd122(room, self);
-	while(1)
+	while(true)
 	{
 		foreach(var_eb67756e, var_29833f21 in room.var_677f63c8)
 		{
@@ -2279,7 +2287,7 @@ function function_55e9043d()
 	level endon(#"hash_16154574");
 	level endon(#"hash_d1f5acf7");
 	level endon(#"hash_4f4a6e14");
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_c62f5087", left);
 		if(left == 50)
@@ -2288,7 +2296,8 @@ function function_55e9043d()
 		}
 	}
 	var_48be25f5 = getent("doa_basic_spawner", "targetname");
-	while(1)
+	spawnpoints = struct::get_array("truck_soccer_dirt_spawner");
+	while(true)
 	{
 		count = doa_utility::function_b99d78c7();
 		if(count < getdvarint("scr_trucksoccer_enemy_count", 50))
@@ -2395,7 +2404,7 @@ function function_e619ee5(vehicle)
 	level.launchforce = 500;
 	vehicle vehicle::toggle_lights_group(1, 0);
 	self.doa.var_f6a4f3f = 0;
-	while(1)
+	while(true)
 	{
 		wait(0.05);
 		if(!level flag::get("doa_challenge_running"))
@@ -2468,6 +2477,7 @@ function function_c0485deb(def)
 function function_dfbad276(number, startside)
 {
 	level endon(#"exit_taken");
+	spawn_locations = level.doa.var_99f9e71a[startside];
 	while(number > 0)
 	{
 		spawn_point = spawn_locations[randomint(spawn_locations.size)];
@@ -2523,7 +2533,7 @@ function function_caf96f2d()
 {
 	self endon(#"death");
 	self useanimtree($critter);
-	while(1)
+	while(true)
 	{
 		self animscripted("anim", self.origin, self.angles, self.animation);
 		self waittill_match(#"anim");
@@ -2600,7 +2610,7 @@ function run_cow_run(dest)
 function cow_damage_trigger(cow)
 {
 	cow endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", guy);
 		if(!isdefined(guy))
@@ -2662,7 +2672,7 @@ function cow_damage_trigger(cow)
 function cow_damage_watch()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", damagetaken, attacker, dir, point, dmg_type, model, tag, part, weapon, flags);
 		if(dmg_type == "MOD_PROJECTILE" || dmg_type == "MOD_GRENADE" || dmg_type == "MOD_CRUSH" || weapon == level.doa.var_69899304)

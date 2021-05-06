@@ -91,7 +91,7 @@ function function_b1b2ffc8()
 	self thread zm_weap_elemental_bow::function_982419bb("elemental_bow_wolf_howl");
 	self thread zm_weap_elemental_bow::function_ececa597("elemental_bow_wolf_howl", "elemental_bow_wolf_howl4", &function_9b74f1f4);
 	self thread zm_weap_elemental_bow::function_7bc6b9d("elemental_bow_wolf_howl", "elemental_bow_wolf_howl4", &function_dd4f7cba);
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_change", newweapon);
 		if(newweapon.name === "elemental_bow_wolf_howl")
@@ -348,7 +348,8 @@ function function_2abb74b7(e_player, var_8f0f462c, var_c807e383)
 	var_7839cab3 = 409600;
 	var_a90ad319 = vectortoangles(var_c807e383);
 	var_200ee8c9 = 1920 * 0.1 * 2;
-	while(1)
+	var_67da22f = 32;
+	while(true)
 	{
 		var_ae2cfcc2 = getaiteamarray(level.zombie_team);
 		var_7478bee7 = array::get_all_closest(var_28388a90.origin, var_ae2cfcc2, undefined, undefined, var_200ee8c9);
@@ -639,7 +640,7 @@ function function_a6220124(var_8f0f462c)
 	var_28388a90 endon(#"mechz_impact");
 	var_28388a90 thread function_81703066(var_9259c91b, 1);
 	var_28388a90 thread function_81703066(var_205259e0, -1);
-	while(1)
+	while(true)
 	{
 		var_28388a90 rotateroll(360, 0.6);
 		wait(0.6);
@@ -659,7 +660,7 @@ function function_81703066(var_ea1975a2, var_dad28a75)
 {
 	self endon(#"movedone");
 	self endon(#"mechz_impact");
-	while(1)
+	while(true)
 	{
 		v_up = anglestoup(self.angles);
 		v_offset = v_up * 24 * var_dad28a75;
@@ -751,6 +752,7 @@ function function_88bf0c4e(e_player, n_damage, v_hit_origin, weapon)
 		var_55e8a42 = 1;
 		if(!isdefined(self.var_ec71e17a))
 		{
+			self.var_ec71e17a = 1;
 		}
 		while(var_55e8a42 > 0.7)
 		{
@@ -767,6 +769,7 @@ function function_88bf0c4e(e_player, n_damage, v_hit_origin, weapon)
 		self asmsetanimationrate(0.7);
 		wait(4);
 		n_timer = 0;
+		self.var_ec71e17a = 0.73;
 		while(self.var_ec71e17a < 1)
 		{
 			self.var_ec71e17a = self.var_ec71e17a + self.var_ec71e17a - 0.7 * 0.05;

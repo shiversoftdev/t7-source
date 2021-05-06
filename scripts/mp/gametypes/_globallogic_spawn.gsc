@@ -224,7 +224,7 @@ function spawnplayerprediction()
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		wait(0.5);
 		spawning::onspawnplayer(1);
@@ -1226,7 +1226,7 @@ function waitrespawnorsafespawnbutton()
 {
 	self endon(#"disconnect");
 	self endon(#"end_respawn");
-	while(1)
+	while(true)
 	{
 		if(self usebuttonpressed())
 		{

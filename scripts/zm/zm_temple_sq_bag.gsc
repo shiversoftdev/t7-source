@@ -127,7 +127,8 @@ function bag_debug()
 			level._resonating_label.alpha = 1;
 			level._resonating_label settext("");
 		}
-		while(1)
+		gongs = getentarray("", "");
+		while(true)
 		{
 			if(isdefined(level._num_gongs))
 			{
@@ -279,7 +280,7 @@ function butter_fingers()
 {
 	self endon(#"boom");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", who);
 		if(isdefined(who) && zombie_utility::is_player_valid(who))
@@ -312,6 +313,7 @@ function give_me_the_boom_stick()
 	wall solid();
 	level flag::wait_till("meteorite_shrunk");
 	player_close = 0;
+	player = undefined;
 	while(!player_close)
 	{
 		players = getplayers();
@@ -333,6 +335,7 @@ function give_me_the_boom_stick()
 	level._give_trig setcursorhint("HINT_NOICON");
 	level._give_trig.radius = 48;
 	level._give_trig.height = 72;
+	not_given = 1;
 	while(not_given)
 	{
 		level._give_trig waittill(#"trigger", who);
@@ -348,6 +351,7 @@ function give_me_the_boom_stick()
 	level._give_trig = undefined;
 	level function_69e4e9b6();
 	players_far = 0;
+	players = getplayers();
 	while(players_far < players.size)
 	{
 		players_far = 0;
@@ -575,7 +579,7 @@ function gong_handler()
 		self.ringing = 0;
 	}
 	self thread debug_gong();
-	while(1)
+	while(true)
 	{
 		self waittill(#"triggered", who);
 		if(!self.ringing)
@@ -627,7 +631,7 @@ function gong_wobble()
 	}
 	self.wobble_threaded = 1;
 	self useanimtree($generic);
-	while(1)
+	while(true)
 	{
 		self waittill(#"triggered");
 		self animation::stop();
@@ -653,7 +657,7 @@ function dud_gong_handler()
 		self.ringing = 0;
 	}
 	self thread debug_gong();
-	while(1)
+	while(true)
 	{
 		self waittill(#"triggered");
 		if(!self.ringing)

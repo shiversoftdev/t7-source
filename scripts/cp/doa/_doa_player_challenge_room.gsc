@@ -128,6 +128,7 @@ private function function_4952be41(room)
 	{
 		timeout = room.timeout * 1000;
 		expire = gettime() + timeout;
+		var_4af4d74c = 0;
 		while(gettime() < expire)
 		{
 			if(level flag::get("doa_game_is_over"))

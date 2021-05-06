@@ -196,7 +196,7 @@ function state_death_update(params)
 				vehicle_death::plane_crash();
 				break;
 			}
-			default
+			default:
 			{
 				vehicle_death::random_crash(params.vdir);
 			}
@@ -262,6 +262,7 @@ function state_emped_update(params)
 	self.abnormal_status.emped = 0;
 	self vehicle::toggle_emp_fx(0);
 	self vehicle_ai::emp_startup_fx();
+	bootup_timer = 1.6;
 	while(bootup_timer > 0)
 	{
 		self vehicle::lights_on();
@@ -285,6 +286,7 @@ function state_emped_update(params)
 			}
 			starttime = gettime();
 			self.current_pathto_pos = self.position_before_fall;
+			foundgoal = self setvehgoalpos(self.current_pathto_pos, 1, 1);
 			while(!foundgoal && vehicle_ai::timesince(starttime) < 3)
 			{
 				foundgoal = self setvehgoalpos(self.current_pathto_pos, 1, 1);
@@ -327,6 +329,7 @@ function fall_and_bounce(killonimpact_speed, killonimpact_time)
 	angularvelstablizeparams = (0.3, 0.5, 0.2);
 	anglesstablizeinitialscale = 0.6;
 	anglesstablizeincrement = 0.2;
+	fallstart = gettime();
 	while(bouncedtime < maxbouncetime && lengthsquared(self.velocity) > 10 * 10)
 	{
 		self waittill(#"veh_collision", impact_vel, normal);
@@ -458,7 +461,8 @@ function guard_points_debug()
 		{
 			return;
 		}
-		while(1)
+		self.isdebugdrawing = 1;
+		while(true)
 		{
 			foreach(var_3b6438ed, point in self.debugpointsarray)
 			{
@@ -677,7 +681,7 @@ function state_guard_update(params)
 	timenotatgoal = gettime();
 	pointindex = 0;
 	stuckcount = 0;
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.enemy) && distancesquared(self.owner.origin, self.enemy.origin) < 1000 * 1000 && self vehseenrecently(self.enemy, 1) && ispointinnavvolume(self.origin, "navvolume_small"))
 		{
@@ -876,7 +880,8 @@ function turretfireupdate()
 {
 	self endon(#"death");
 	self endon(#"change_state");
-	while(1)
+	isrockettype = self.variant === "rocket";
+	while(true)
 	{
 		if(isdefined(self.enemy) && self vehcansee(self.enemy))
 		{
@@ -891,6 +896,7 @@ function turretfireupdate()
 				{
 					self setturrettargetent(self.enemy, vehicle_ai::gettargeteyeoffset(self.enemy) * -1 * 0.3);
 				}
+				startaim = gettime();
 				while(!self.turretontarget && vehicle_ai::timesince(startaim) < 3)
 				{
 					wait(0.2);
@@ -969,7 +975,7 @@ function path_update_interrupt()
 	self endon(#"reached_end_node");
 	old_enemy = self.enemy;
 	wait(1);
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.current_pathto_pos))
 		{
@@ -1018,6 +1024,7 @@ function wait_till_something_happens(timeout)
 	self endon(#"death");
 	wait(0.1);
 	time = timeout;
+	cant_see_count = 0;
 	while(time > 0)
 	{
 		if(isdefined(self.current_pathto_pos))

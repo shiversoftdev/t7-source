@@ -843,7 +843,7 @@ function giverankxp(type, value, devadd)
 			value = int(value * level.xpscale);
 			break;
 		}
-		default
+		default:
 		{
 			if(level.xpscale == 0)
 			{
@@ -912,7 +912,7 @@ function giverankxp(type, value, devadd)
 			inccodpoints(round_this_number(value * level.codpointschallengescale));
 			break;
 		}
-		default
+		default:
 		{
 			self.pers["summary"]["misc"] = self.pers["summary"]["misc"] + value;
 			self.pers["summary"]["match"] = self.pers["summary"]["match"] + value;
@@ -957,6 +957,7 @@ function updaterank()
 	}
 	oldrank = self.pers["rank"];
 	rankid = self.pers["rank"];
+	self.pers["rank"] = newrankid;
 	while(rankid <= newrankid)
 	{
 		self setdstat("playerstatslist", "rank", "StatValue", rankid);

@@ -518,7 +518,7 @@ function function_1ec3c42a()
 		wait(1);
 	}
 	array::add(level.var_d3b40681, self);
-	while(1)
+	while(true)
 	{
 		self waittill(#"web_torn");
 		if(self.var_f83345c7)
@@ -703,7 +703,7 @@ function function_9b238648(player)
 */
 function function_54db2b79()
 {
-	while(1)
+	while(true)
 	{
 		b_done = 0;
 		while(!(isdefined(b_done) && b_done))
@@ -973,7 +973,7 @@ function function_ed4dd4e3(player)
 	self endon(#"webtear_succeed");
 	self endon(#"webtear_failed");
 	self endon(#"hash_bd5f338b");
-	while(1)
+	while(true)
 	{
 		playfx(level._effect["building_dust"], player getplayercamerapos(), player.angles);
 		wait(0.5);
@@ -1282,7 +1282,8 @@ function function_588068b3()
 function function_90a782bd(var_aa9ee7dd, var_6a2f816c, var_c16251e2)
 {
 	var_95ac3b8c = var_aa9ee7dd + "_on";
-	while(1)
+	var_a7367b5a = var_aa9ee7dd + "_off";
+	while(true)
 	{
 		level util::waittill_any(var_95ac3b8c, "power_on");
 		function_4f44d932(var_6a2f816c, var_c16251e2, "on");
@@ -1356,7 +1357,7 @@ function function_80cf986b()
 			{
 				var_48b5604f.e_destructible setmodel("p7_zm_isl_web_vending_three_gun");
 			}
-			default
+			default:
 			{
 				break;
 			}

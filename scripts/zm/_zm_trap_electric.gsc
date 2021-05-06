@@ -122,7 +122,7 @@ function trap_audio(trap)
 function play_electrical_sound(trap)
 {
 	trap endon(#"trap_done");
-	while(1)
+	while(true)
 	{
 		wait(randomfloatrange(0.1, 0.5));
 		playsoundatposition("amb_sparks", self.origin);

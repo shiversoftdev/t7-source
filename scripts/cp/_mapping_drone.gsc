@@ -138,7 +138,7 @@ function function_fb6d201d()
 		self thread function_3c36d48d();
 	#/
 	self.n_speed = 0;
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.n_speed_override))
 		{
@@ -233,7 +233,7 @@ function function_3c36d48d()
 	/#
 		self endon(#"stop_speed_regulator");
 		self endon(#"reached_end_node");
-		while(1)
+		while(true)
 		{
 			wait(1);
 			switch(self.n_speed)
@@ -253,7 +253,7 @@ function function_3c36d48d()
 					iprintln("");
 					break;
 				}
-				default
+				default:
 				{
 					iprintln("");
 					break;
@@ -278,6 +278,7 @@ function function_517ced56(n_yaw_left = 90, n_yaw_right = 90, n_pitch_down = 10,
 	e_base = spawn("script_origin", self.origin);
 	e_base.angles = self.angles;
 	self linkto(e_base);
+	v_base_look = self.angles;
 	while(level flag::get("drone_scanning"))
 	{
 		v_look_offset = (randomfloatrange(n_pitch_down * -1, n_pitch_up), randomfloatrange(n_yaw_left * -1, n_yaw_right), 0);

@@ -191,7 +191,7 @@ function state_driving_update(params)
 	driver = self getseatoccupant(0);
 	if(isplayer(driver))
 	{
-		while(1)
+		while(true)
 		{
 			driver endon(#"disconnect");
 			driver util::waittill_vehicle_move_up_button_pressed();
@@ -341,7 +341,8 @@ function state_stationary_update(params)
 	losepatienttime = 3 + randomfloat(2);
 	starttime = gettime();
 	vehicle_ai::cooldown("rocket", 2);
-	while(1)
+	evade_now = 0;
+	while(true)
 	{
 		evade_now = self.settings.evade_enemies_locked_on_me === 1 && self.locked_on || (self.settings.evade_enemies_locking_on_me === 1 && self.locking_on);
 		if(vehicle_ai::timesince(starttime) > maxtime || evade_now)
@@ -486,7 +487,7 @@ function turretfireupdate()
 	self endon(#"change_state");
 	self setontargetangle(7);
 	self setontargetangle(7, 0);
-	while(1)
+	while(true)
 	{
 		if(self.avoid_shooting_owner === 1 && isdefined(self.owner))
 		{
@@ -1190,7 +1191,7 @@ function path_update_interrupt()
 	self endon(#"reached_end_node");
 	self endon(#"amws_end_interrupt_watch");
 	wait(1);
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.current_pathto_pos))
 		{

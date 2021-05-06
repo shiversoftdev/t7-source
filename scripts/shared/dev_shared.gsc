@@ -250,7 +250,8 @@ function drawminimapbounds(viewpos, mincorner, maxcorner)
 		corner2 = maxcorner;
 		corner3 = maxcorner - side;
 		toppos = vecscale(mincorner + maxcorner, 0.5) + vecscale(sidenorth, 0.51);
-		while(1)
+		textscale = diaglen * 0.003;
+		while(true)
 		{
 			line(corner0, corner1);
 			line(corner1, corner2);
@@ -355,7 +356,7 @@ function body_customization_process_command(character_index)
 		switch(split.size)
 		{
 			case 1:
-			default
+			default:
 			{
 				command0 = strtok(split[0], "");
 				character_index = int(command0[1]);

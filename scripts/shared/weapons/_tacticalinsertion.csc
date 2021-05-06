@@ -123,7 +123,7 @@ function watchtacinsertshutdown(localclientnum, fxhandle)
 */
 function stopflareloopwatcher(looporigin)
 {
-	while(1)
+	while(true)
 	{
 		if(!isdefined(self) || !isdefined(self.tacticalinsertionfx))
 		{
@@ -146,7 +146,7 @@ function stopflareloopwatcher(looporigin)
 function checkforplayerswitch(localclientnum)
 {
 	self endon(#"entityshutdown");
-	while(1)
+	while(true)
 	{
 		level waittill(#"player_switch");
 		if(isdefined(self.tacticalinsertionfx))

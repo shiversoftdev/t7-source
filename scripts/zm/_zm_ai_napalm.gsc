@@ -190,7 +190,7 @@ function function_b765d5ff()
 function function_7cce5d95()
 {
 	level waittill(#"start_of_round");
-	while(1)
+	while(true)
 	{
 		if(function_b765d5ff())
 		{
@@ -880,7 +880,7 @@ function napalm_fire_trigger(ai, radius, time, spawnfire)
 function triggerdamage()
 {
 	self endon(#"end_fire_effect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", guy);
 		if(isplayer(guy))
@@ -1248,7 +1248,7 @@ function napalm_add_wet_time(time)
 function napalm_watch_for_sliding()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.sliding) && self.sliding)
 		{

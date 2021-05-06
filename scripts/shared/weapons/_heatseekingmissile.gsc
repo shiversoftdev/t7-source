@@ -94,7 +94,7 @@ function stingerfirednotify()
 {
 	self endon(#"disconnect");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"missile_fire", missile, weapon);
 		/#
@@ -125,7 +125,7 @@ function debug_missile(missile)
 		level notify(#"debug_missile");
 		level endon(#"debug_missile");
 		level.debug_missile_dots = [];
-		while(1)
+		while(true)
 		{
 			if(getdvarint("", 0) == 0)
 			{
@@ -1601,7 +1601,7 @@ function debug_tracker(target)
 {
 	/#
 		target endon(#"death");
-		while(1)
+		while(true)
 		{
 			dev::debug_sphere(target.origin, 10, (1, 0, 0), 1, 1);
 			wait(0.05);

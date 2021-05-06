@@ -982,6 +982,7 @@ function add_remove_list(a = [], on_off)
 */
 function clean_deleted(array)
 {
+	done = 0;
 	while(!done && array.size > 0)
 	{
 		done = 1;
@@ -1105,7 +1106,7 @@ function is_valid_type_for_callback(type)
 		{
 			return 1;
 		}
-		default
+		default:
 		{
 			return 0;
 		}
@@ -1815,7 +1816,7 @@ function get_next_safehouse(str_next_map)
 		{
 			return "cp_sh_cairo";
 		}
-		default
+		default:
 		{
 			return "cp_sh_mobile";
 		}
@@ -1841,7 +1842,7 @@ function is_safehouse(str_next_map = tolower(getdvarstring("mapname")))
 		{
 			return 1;
 		}
-		default
+		default:
 		{
 			return 0;
 		}
@@ -1866,7 +1867,8 @@ function button_held_think(which_button)
 			self._holding_button = [];
 		}
 		self._holding_button[which_button] = 0;
-		while(1)
+		time_started = 0;
+		while(true)
 		{
 			if(self._holding_button[which_button])
 			{

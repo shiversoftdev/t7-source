@@ -96,7 +96,7 @@ function watch_for_grapple()
 	self endon(#"killreplaygunmonitor");
 	self thread translate_notify_1("weapon_switch_started", "grapple_weapon_change");
 	self thread translate_notify_1("weapon_change_complete", "grapple_weapon_change");
-	while(1)
+	while(true)
 	{
 		self waittill(#"grapple_weapon_change", event, weapon);
 		if(isdefined(weapon.grappleweapon) && weapon.grappleweapon)
@@ -129,7 +129,8 @@ function watch_lockon(weapon)
 	self endon(#"watch_lockon");
 	self thread watch_lockon_angles(weapon);
 	self thread clear_lockon_after_grapple(weapon);
-	while(1)
+	self.use_expensive_targeting = 1;
+	while(true)
 	{
 		wait(0.05);
 		if(!self isgrappling())
@@ -162,7 +163,7 @@ function clear_lockon_after_grapple(weapon)
 	self endon(#"grapple_unwield");
 	self notify(#"clear_lockon_after_grapple");
 	self endon(#"clear_lockon_after_grapple");
-	while(1)
+	while(true)
 	{
 		self util::waittill_any("grapple_pulled", "grapple_landed");
 		if(isdefined(self.lockonentity))
@@ -190,7 +191,7 @@ function watch_lockon_angles(weapon)
 	self endon(#"grapple_unwield");
 	self notify(#"watch_lockon_angles");
 	self endon(#"watch_lockon_angles");
-	while(1)
+	while(true)
 	{
 		wait(0.05);
 		if(!self isgrappling())

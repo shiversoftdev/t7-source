@@ -131,7 +131,7 @@ function wait_for_bullet_impact(localclientnum)
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", attacker, impactpos, effectdir, partname);
 		playfx(localclientnum, settings.weakspotfx, impactpos, effectdir);

@@ -103,7 +103,8 @@ function telepad_loop()
 */
 function teleportation_audio()
 {
-	while(1)
+	teleport_delay = 2;
+	while(true)
 	{
 		level waittill(#"tpa");
 		if(isdefined(self.script_sound))
@@ -126,7 +127,7 @@ function teleportation_audio()
 */
 function teleport_2d()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"t2d");
 		playsound(0, "evt_teleport_2d_fnt", (0, 0, 0));
@@ -145,7 +146,7 @@ function teleport_2d()
 */
 function teleport_2d_nopad()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"t2dn");
 		playsound(0, "evt_pad_warmup_2d", (0, 0, 0));
@@ -166,7 +167,7 @@ function teleport_2d_nopad()
 */
 function teleport_beam_fx_2d()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"t2bfx");
 		playsound(0, "evt_beam_fx_2d", (0, 0, 0));
@@ -184,7 +185,7 @@ function teleport_beam_fx_2d()
 */
 function teleport_specialroom_start()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"tss");
 		playsound(0, "evt_pad_warmup_2d", (0, 0, 0));
@@ -202,7 +203,7 @@ function teleport_specialroom_start()
 */
 function teleport_specialroom_go()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"tsg");
 		playsound(0, "evt_teleport_2d_fnt", (0, 0, 0));
@@ -238,7 +239,7 @@ function function_c9207335()
 */
 function function_60a32834()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", trigplayer);
 		if(trigplayer islocalplayer())
@@ -270,7 +271,8 @@ function function_d667714e()
 	level.var_b6342abd = "mus_theater_underscore_default";
 	level.var_6d9d81aa = "mus_theater_underscore_default";
 	level.var_eb526c90 = spawn(0, (0, 0, 0), "script_origin");
-	while(1)
+	level.var_9433cf5a = level.var_eb526c90 playloopsound(level.var_b6342abd, 2);
+	while(true)
 	{
 		level waittill(#"hash_51d7bc7c", location);
 		level.var_6d9d81aa = "mus_theater_underscore_" + location;

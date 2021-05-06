@@ -72,7 +72,7 @@ function function_bd3519f2(name)
 		{
 			return 1800;
 		}
-		default
+		default:
 		{
 			return 600;
 		}
@@ -674,7 +674,7 @@ function function_836d1e22(localclientnum, oldval, newval, bnewent, binitialsnap
 			setworldfogactivebank(localclientnum, 8);
 			break;
 		}
-		default
+		default:
 		{
 			level.doa.var_d94564a5 = "morning";
 			setworldfogactivebank(localclientnum, 1);
@@ -745,6 +745,7 @@ function setarena(localclientnum, oldval, newval, bnewent, binitialsnap, fieldna
 	{
 		level thread [[level.doa.arenas[level.doa.current_arena].var_f3114f93]](localclientnum);
 	}
+	players = getlocalplayers();
 	while(players.size == 0)
 	{
 		players = getlocalplayers();

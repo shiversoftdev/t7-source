@@ -557,7 +557,7 @@ function trigger_visible_to_player(player)
 function function_ededc488()
 {
 	self endon(#"kill_trigger");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		self.stub.trigger_target notify(#"trigger", player);
@@ -658,7 +658,7 @@ private function function_5bd3a49b(player)
 function function_d9f9a9c1()
 {
 	var_9bbdff4d = -1;
-	while(1)
+	while(true)
 	{
 		var_5e7af4df = undefined;
 		self waittill(#"trigger", user);
@@ -746,7 +746,7 @@ function function_d9f9a9c1()
 		{
 			gumballoffered = level.bgb[self.var_b287be].item_index;
 		}
-		while(1)
+		while(true)
 		{
 			self waittill(#"trigger", grabber);
 			if(isdefined(grabber.is_drinking) && grabber.is_drinking > 0)
@@ -1001,6 +1001,7 @@ function function_872660fc()
 		current_sale_time = level.zombie_vars["zombie_powerup_fire_sale_time"];
 		util::wait_network_frame();
 		self thread fire_sale_fix();
+		level.zombie_vars["zombie_powerup_fire_sale_time"] = current_sale_time;
 		while(level.zombie_vars["zombie_powerup_fire_sale_time"] > 0)
 		{
 			wait(0.1);
@@ -1068,7 +1069,7 @@ function function_ca233e7d()
 	clientfield::set("zm_bgb_machine_fx_state", 1);
 	self setzbarrierpiecestate(0, "closed");
 	self setzbarrierpiecestate(5, "closed");
-	while(1)
+	while(true)
 	{
 		wait(randomfloatrange(180, 1800));
 		self setzbarrierpiecestate(0, "opening");
@@ -1332,7 +1333,7 @@ function function_cffffa44(state)
 			self.state = "leaving";
 			break;
 		}
-		default
+		default:
 		{
 			if(isdefined(level.var_50c3449d))
 			{
@@ -1357,7 +1358,7 @@ function function_4fb7632c()
 	level endon(#"end_game");
 	level notify(#"hash_4fb7632c");
 	level endon(#"hash_4fb7632c");
-	while(1)
+	while(true)
 	{
 		level waittill(#"host_migration_end");
 		if(!isdefined(level.var_5081bd63))

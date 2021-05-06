@@ -192,7 +192,7 @@ function function_677ed44f(weapon)
 	self endon(#"hash_677ed44f");
 	self endon(#"hash_343d4580");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_63acb616", target, attacker, damage, weapon, hitorigin);
 		wait(0.05);
@@ -281,7 +281,7 @@ function aielectrostatickillmonitor(statusoverride)
 	}
 	self notify(#"electro_static_monitor_kill");
 	self endon(#"electro_static_monitor_kill");
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_63acb616", target, attacker, damage, weapon, hitorigin);
 		wait(0.05);
@@ -402,7 +402,7 @@ function electrostaticcontact(attacker, source, upgraded = 0, contactpoint, seco
 				tag = "j_spine4";
 				break;
 			}
-			default
+			default:
 			{
 				fx = level._effect["es_effect_generic"];
 				tag = "tag_body";

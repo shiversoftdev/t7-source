@@ -48,7 +48,7 @@ function __init__()
 function debugdvars()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			if(getdvarint("", 0))
 			{
@@ -174,7 +174,7 @@ function updatedebuginfo()
 		self.debuginfo = spawnstruct();
 		self.debuginfo.enabled = getdvarint("") > 0;
 		debugclearstate();
-		while(1)
+		while(true)
 		{
 			wait(0.05);
 			updatedebuginfointernal();

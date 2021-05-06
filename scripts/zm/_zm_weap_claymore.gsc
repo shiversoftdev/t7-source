@@ -97,7 +97,7 @@ function claymore_detonation(e_planter)
 		self.owner.placeable_mines = array(self.owner.placeable_mines);
 	}
 	self.owner.placeable_mines[self.owner.placeable_mines.size] = self;
-	while(1)
+	while(true)
 	{
 		damagearea waittill(#"trigger", ent);
 		if(isdefined(self.owner) && ent == self.owner)

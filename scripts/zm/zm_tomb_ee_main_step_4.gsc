@@ -317,6 +317,7 @@ function sndee4music()
 */
 function sndwait()
 {
+	counter = 0;
 	while(isdefined(level.music_override) && level.music_override)
 	{
 		wait(1);

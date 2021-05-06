@@ -136,7 +136,7 @@ function function_512d92f4(e_player)
 */
 function function_891da2d8()
 {
-	while(1)
+	while(true)
 	{
 		if(level flag::get("finger_trap_cooldown"))
 		{
@@ -201,6 +201,7 @@ function finger_trap_activate(var_3778532a)
 function function_88a65f39()
 {
 	n_start_time = gettime();
+	n_total_time = 0;
 	while(n_total_time < 15)
 	{
 		level scene::play("p7_fxanim_zm_stal_finger_trap_bundle");
@@ -220,7 +221,7 @@ function function_88a65f39()
 function function_f5af37c6(var_3778532a)
 {
 	level endon(#"finger_trap_cooldown");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_who);
 		if(!(isdefined(e_who.var_bd3a4420) && e_who.var_bd3a4420))

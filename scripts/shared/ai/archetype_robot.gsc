@@ -3283,7 +3283,7 @@ private function robottryreacquireservice(entity)
 			}
 			break;
 		}
-		default
+		default:
 		{
 			if(entity.reacquire_state > 15)
 			{
@@ -4019,6 +4019,7 @@ private function robotdeploywasp(entity)
 	wait(randomfloatrange(7, 10));
 	if(isdefined(entity) && isdefined(entity.wasp))
 	{
+		spawnoffset = (5, -15, 0);
 		while(!ispointinnavvolume(entity.wasp.origin + spawnoffset, "small volume"))
 		{
 			wait(1);

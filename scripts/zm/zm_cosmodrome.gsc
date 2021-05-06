@@ -389,7 +389,8 @@ function centrifuge_jumpup_fix()
 		return;
 	}
 	jump_pos = var_157ff899.origin;
-	while(1)
+	var_b9bd08ae = 0;
+	while(true)
 	{
 		if(level.zones["centrifuge_zone"].is_occupied && var_b9bd08ae == 0)
 		{
@@ -424,7 +425,8 @@ function centrifuge_jumpdown_fix()
 		return;
 	}
 	jump_pos = var_157ff899.origin;
-	while(1)
+	var_ac214666 = 1;
+	while(true)
 	{
 		if(level.zones["centrifuge_zone2"].is_occupied && var_ac214666 == 0)
 		{
@@ -485,6 +487,7 @@ function function_7eea24df()
 	level flag::wait_till("all_players_connected");
 	players = getplayers();
 	level.chest_min_move_usage = players.size;
+	chest = level.chests[level.chest_index];
 	while(level.chest_accessed < level.chest_min_move_usage)
 	{
 		chest waittill(#"chest_accessed");
@@ -760,7 +763,7 @@ function function_a97cb654()
 */
 function function_c6807eeb()
 {
-	while(1)
+	while(true)
 	{
 		self rotateyaw(360, 20);
 		self waittill(#"rotatedone");
@@ -1129,7 +1132,7 @@ function function_161eeb8e(cmd)
 				function_8a5ca1ef();
 				break;
 			}
-			default
+			default:
 			{
 				break;
 			}
@@ -1208,7 +1211,7 @@ function setup_devgui()
 function function_58ab8a92()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			if(getdvarstring("") == "")
 			{
@@ -1378,6 +1381,7 @@ function function_797b2641()
 		{
 			var_2921da00 = array("", "", "", "", "", "", "");
 			e_player = getplayers()[0];
+			var_18253ec9 = randomintrange(0, var_2921da00.size - 1);
 			while(e_player hasperk(var_2921da00[var_18253ec9]))
 			{
 				var_18253ec9 = randomintrange(0, var_2921da00.size - 1);
@@ -1529,7 +1533,7 @@ function function_a15d765e(spot, perk_attack_anim)
 		self endon(#"hash_cb63b091");
 		if(isdefined(spot))
 		{
-			while(1)
+			while(true)
 			{
 				time = getanimlength(perk_attack_anim);
 				level.var_93621cb animscripted("", spot.origin, spot.angles, perk_attack_anim);
@@ -1553,7 +1557,7 @@ function function_5b312f()
 	/#
 		level notify(#"hash_c7d06422");
 		level endon(#"hash_c7d06422");
-		while(1)
+		while(true)
 		{
 			foreach(var_9b20e7d2, spawn in level.monkey_zombie_spawners)
 			{
@@ -1805,7 +1809,8 @@ function function_620401c0(v_org, str_msg, str_ender, n_scale)
 		}
 		self endon(str_ender);
 		self thread function_9a889da5(str_msg, str_ender);
-		while(1)
+		var_ded2b0d1 = v_org - vectorscale((0, 0, 1), 16);
+		while(true)
 		{
 			print3d(var_ded2b0d1, "", vectorscale((0, 1, 0), 255), 1, n_scale, 1);
 			wait(0.1);

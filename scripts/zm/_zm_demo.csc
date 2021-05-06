@@ -70,7 +70,8 @@ function watch_predicted_player_changes(localclientnum)
 {
 	level.demolocalclients[localclientnum] = spawnstruct();
 	level.demolocalclients[localclientnum].nonpredicted_local_player = getnonpredictedlocalplayer(localclientnum);
-	while(1)
+	level.demolocalclients[localclientnum].predicted_local_player = getlocalplayer(localclientnum);
+	while(true)
 	{
 		nonpredicted_local_player = getnonpredictedlocalplayer(localclientnum);
 		predicted_local_player = getlocalplayer(localclientnum);

@@ -19,7 +19,7 @@
 */
 function door_struct_debug()
 {
-	while(1)
+	while(true)
 	{
 		wait(0.1);
 		origin = self.origin;

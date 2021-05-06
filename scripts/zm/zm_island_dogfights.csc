@@ -95,7 +95,7 @@ function play_dogfight_scenes(localclientnum, oldval, newval, bnewent, binitials
 			level thread function_63045f7a();
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}
@@ -115,7 +115,7 @@ function function_7a1c330()
 {
 	level notify(#"hash_fbb697ce");
 	level endon(#"hash_fbb697ce");
-	while(1)
+	while(true)
 	{
 		function_4fc200d2("scene_dogfight_ambient", 40, 60, 1);
 		wait(randomintrange(10, 20));
@@ -133,7 +133,7 @@ function function_7a1c330()
 */
 function function_5daf587e()
 {
-	while(1)
+	while(true)
 	{
 		function_4fc200d2("scene_dogfight_intro", 1, 4);
 		wait(randomintrange(60, 90));
@@ -151,7 +151,7 @@ function function_5daf587e()
 */
 function function_2737bcd8()
 {
-	while(1)
+	while(true)
 	{
 		function_4fc200d2("scene_dogfight_swamp_lab", 2, 5);
 		wait(randomintrange(60, 90));
@@ -169,7 +169,7 @@ function function_2737bcd8()
 */
 function function_99236d51()
 {
-	while(1)
+	while(true)
 	{
 		function_4fc200d2("scene_dogfight_jungle_lab", 1, 3);
 		wait(randomintrange(60, 90));
@@ -187,7 +187,7 @@ function function_99236d51()
 */
 function function_b9d547c()
 {
-	while(1)
+	while(true)
 	{
 		function_4fc200d2("scene_dogfight_upper_bunker", 1, 3);
 		wait(randomintrange(60, 90));
@@ -205,7 +205,7 @@ function function_b9d547c()
 */
 function function_63045f7a()
 {
-	while(1)
+	while(true)
 	{
 		if(randomint(100) <= 1)
 		{

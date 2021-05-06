@@ -1757,7 +1757,7 @@ function function_e1630fb4(weapon, player, pap_triggers)
 				var_17998646 = getweapon("thundergun");
 				break;
 			}
-			default
+			default:
 			{
 				return 1;
 			}

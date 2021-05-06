@@ -177,7 +177,7 @@ function achievement_perks_in_space()
 	{
 		self.perks_in_space_purchased_list[vending_triggers[i].script_noteworthy + "_purchased"] = 0;
 	}
-	while(1)
+	while(true)
 	{
 		self waittill(#"perk_bought", perk);
 		self.perks_in_space_purchased_list[perk + "_purchased"] = 1;
@@ -211,7 +211,7 @@ function achievement_fully_armed()
 {
 	level endon(#"end_game");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"pap_taken");
 		if(!self hasperk("specialty_additionalprimaryweapon"))

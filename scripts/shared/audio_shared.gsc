@@ -96,7 +96,7 @@ function sndchyronwatcher()
 */
 function sndigcskipwatcher()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"scene_skip_sequence_started");
 		music::setmusicstate("death");
@@ -230,7 +230,7 @@ function missilelockwatcher()
 	{
 		self flag::clear("playing_stinger_fired_at_me");
 	}
-	while(1)
+	while(true)
 	{
 		self waittill(#"missile_lock", attacker, weapon);
 		if(!flag::get("playing_stinger_fired_at_me"))
@@ -255,7 +255,7 @@ function missilefirewatcher()
 {
 	self endon(#"death");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"stinger_fired_at_me", missile, weapon, attacker);
 		waittillframeend();

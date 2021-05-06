@@ -52,6 +52,7 @@ function init()
 function plate_thread()
 {
 	level waittill(#"stage_1");
+	target = self.target;
 	while(isdefined(target))
 	{
 		struct = struct::get(target, "targetname");
@@ -94,7 +95,8 @@ function build_init()
 function plates()
 {
 	plates = getentarray("sq_cassimir_plates", "targetname");
-	while(1)
+	trig = getent("sq_cassimir_trigger", "targetname");
+	while(true)
 	{
 		trig waittill(#"damage", amount, attacker, direction, point, dmg_type, modelname, tagname);
 		if(isplayer(attacker) && (dmg_type == "MOD_PROJECTILE" || dmg_type == "MOD_PROJECTILE_SPLASH" || dmg_type == "MOD_EXPLOSIVE" || dmg_type == "MOD_EXPLOSIVE_SPLASH" || dmg_type == "MOD_GRENADE" || dmg_type == "MOD_GRENADE_SPLASH"))
@@ -416,6 +418,7 @@ function build_charge_stage(num_presses, lines)
 	stage = spawnstruct();
 	stage.num_presses = num_presses;
 	stage.lines = [];
+	i = 0;
 	while(i < lines.size)
 	{
 		l = spawnstruct();
@@ -570,7 +573,8 @@ function typing_sound_thread()
 	level endon(#"kill_typing_thread");
 	level._charge_sound_ent playloopsound("evt_typing_loop");
 	typing = 1;
-	while(1)
+	level._typing_time = gettime();
+	while(true)
 	{
 		if(typing)
 		{
@@ -623,6 +627,7 @@ function do_bucket_fill(target)
 		level._charge_sound_ent thread zm_sidequests::fake_use("press", &bucket_qualifier);
 		level._charge_sound_ent waittill(#"press");
 		presses++;
+		level._typing_time = gettime();
 		while(isdefined(richtofen) && richtofen usebuttonpressed())
 		{
 			wait(0.05);
@@ -643,7 +648,7 @@ function do_bucket_fill(target)
 function wrong_presser_thread()
 {
 	level endon(#"kill_press_monitor");
-	while(1)
+	while(true)
 	{
 		if(isdefined(level._charge_sound_ent))
 		{
@@ -667,7 +672,7 @@ function wrong_presser_thread()
 function wrong_collector()
 {
 	level endon(#"collected");
-	while(1)
+	while(true)
 	{
 		self thread zm_sidequests::fake_use("wrong_collector", &wrong_press_qualifier);
 		self waittill(#"wrong_collector", who);
@@ -744,7 +749,7 @@ function charge_exit_stage(success)
 function prevent_other_vox_while_here()
 {
 	level endon(#"start_player_vox_again");
-	while(1)
+	while(true)
 	{
 		while(level.zones["bridge_zone"].is_occupied)
 		{

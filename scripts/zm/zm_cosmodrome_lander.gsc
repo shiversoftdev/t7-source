@@ -391,7 +391,7 @@ function call_box_think()
 		self sethintstring(&"ZM_COSMODROME_LANDER_AT_STATION");
 		self setcursorhint("HINT_NOICON");
 	}
-	while(1)
+	while(true)
 	{
 		who = undefined;
 		self waittill(#"trigger", who);
@@ -470,7 +470,7 @@ function lander_buy_think()
 	level flag::set("lander_connected");
 	self sethintstring(&"ZM_COSMODROME_LANDER", 250);
 	node = getnode("goto_centrifuge", "targetname");
-	while(1)
+	while(true)
 	{
 		who = undefined;
 		self waittill(#"trigger", who);
@@ -926,6 +926,7 @@ function lock_players(destination)
 	lander thread takeoff_knockdown(81, 250);
 	players = getplayers();
 	lander_trig = getent("zip_buy", "script_noteworthy");
+	x = 0;
 	while(!level flag::get("lander_grounded"))
 	{
 		players = getplayers();
@@ -998,6 +999,7 @@ function function_e323fa97()
 	self.on_lander_last_stand = 1;
 	self allowcrouch(0);
 	self allowstand(0);
+	self.lander = 1;
 	while(self.lander === 1 && self laststand::player_is_in_laststand())
 	{
 		wait(0.05);
@@ -1402,7 +1404,8 @@ function lander_flight_wobble(lander, final_dest)
 	self endon(#"movedone");
 	self endon(#"start_approach");
 	first_time = 1;
-	while(1)
+	rot_time = 0.75;
+	while(true)
 	{
 		if(first_time)
 		{
@@ -1456,7 +1459,7 @@ function lander_flight_wobble(lander, final_dest)
 function lander_takeoff_wobble()
 {
 	level endon(#"lander_launched");
-	while(1)
+	while(true)
 	{
 		self rotateto((randomfloatrange(-10, 10), 0, randomfloatrange(-10, 10)), 0.5);
 		wait(0.5);
@@ -1475,6 +1478,7 @@ function lander_takeoff_wobble()
 function lander_landing_wobble(movetime)
 {
 	time = movetime - 1;
+	timer = gettime() + time * 1000;
 	while(gettime() < timer)
 	{
 		self rotateto((randomfloatrange(-5, 5), 0, randomfloatrange(-5, 5)), 0.75);
@@ -1516,7 +1520,8 @@ function lander_cooldown_think()
 {
 	lander_use_trig = getent("zip_buy", "script_noteworthy");
 	lander_callboxes = getentarray("zip_call_box", "targetname");
-	while(1)
+	lander = getent("lander", "targetname");
+	while(true)
 	{
 		level waittill(#"lu", riders, trig);
 		level flag::set("lander_inuse");
@@ -1620,7 +1625,7 @@ function lander_cooldown_think()
 */
 function play_launch_unlock_vox()
 {
-	while(1)
+	while(true)
 	{
 		level flag::wait_till("lander_grounded");
 		if(level flag::get("lander_a_used") && level flag::get("lander_b_used") && level flag::get("lander_c_used"))

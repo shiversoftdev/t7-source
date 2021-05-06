@@ -1060,7 +1060,7 @@ function pallas_greeting_event(b_starting)
 function function_ab0e4cbe()
 {
 	level endon(#"pallas_end");
-	while(1)
+	while(true)
 	{
 		level waittill(#"save_restore");
 		for(i = 1; i <= 3; i++)
@@ -1091,7 +1091,8 @@ function handle_pallas_pillar_weakspot()
 		trigger triggerenable(0);
 	}
 	level flag::wait_till("pallas_intro_completed");
-	while(1)
+	var_61b0688 = getentarray("diaz_tower_1", "targetname");
+	while(true)
 	{
 		level thread function_6030416();
 		n_random_int = randomint(var_61b0688.size);
@@ -1144,6 +1145,7 @@ function handle_pallas_pillar_weakspot()
 		{
 			level thread scene::init("cin_sgen_19_ghost_3rd_sh010");
 		}
+		b_player_valid = 0;
 		while(!b_player_valid)
 		{
 			t_coolant waittill(#"trigger", e_player);
@@ -1307,7 +1309,7 @@ function handle_pallas_pillar_weakspot()
 					n_spawn_count = 35;
 					break;
 				}
-				default
+				default:
 				{
 					n_spawn_count = 20;
 					break;
@@ -1544,6 +1546,7 @@ function do_attack_on_hendricks()
 	level.a_assault_bot = [];
 	level.var_2d3af18b = 0;
 	level.var_e15d967a = 8 + level.players.size * 2;
+	var_cf1fb9af = 0;
 	while(var_cf1fb9af < level.var_e15d967a)
 	{
 		for(i = 0; i < 2; i++)
@@ -1623,7 +1626,7 @@ function explode_robot(n_scene)
 			wait(3);
 			break;
 		}
-		default
+		default:
 		{
 			wait(7);
 			break;
@@ -1982,7 +1985,7 @@ function show_cracked_glass(n_crack)
 			e_glass = getent("pallas_glass_break_3", "targetname");
 			break;
 		}
-		default
+		default:
 		{
 			e_glass = getent("pallas_glass_break_2", "targetname");
 			break;
@@ -2018,7 +2021,7 @@ function delete_model_on_death(robot)
 function check_for_nearby_players()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		foreach(var_9a4e63df, player in level.players)
 		{
@@ -2043,7 +2046,8 @@ function check_for_nearby_players()
 function handle_robot_sm(str_triggername, str_sm)
 {
 	level endon(#"pallas_death");
-	while(1)
+	trigger = getent(str_triggername, "targetname");
+	while(true)
 	{
 		n_player = 0;
 		foreach(var_32f1922, player in level.players)

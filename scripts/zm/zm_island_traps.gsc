@@ -616,7 +616,7 @@ function function_25bf44e4(player)
 */
 function function_d6b07530()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", ent);
 		var_df549564 = 0;
@@ -675,7 +675,7 @@ function function_d6b07530()
 */
 function function_5245e8c3()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", ent);
 		if(level.var_e938db57.b_on !== 1 && level.var_e938db57.var_b44dbcd2 !== 1)
@@ -950,6 +950,7 @@ function function_55a15733(var_a464d35b)
 	self.var_96ff34d0 = 1;
 	if(isplayer(self))
 	{
+		var_b14e6934 = var_a464d35b.var_d6d6c058 * 75;
 		while(isalive(self) && self istouching(var_a464d35b))
 		{
 			if(self istouching(var_a464d35b.var_d93f9cb8))
@@ -1205,7 +1206,8 @@ function function_de0d7531(var_60532813)
 function function_74ddcad3()
 {
 	level flag::wait_till("defend_over");
-	while(1)
+	t_penstock_flow = getent("t_penstock_flow", "targetname");
+	while(true)
 	{
 		t_penstock_flow waittill(#"trigger", ent);
 		if(zm_utility::is_player_valid(ent) && (!(isdefined(ent.var_c73f00e0) && ent.var_c73f00e0)))
@@ -1228,6 +1230,7 @@ function function_74ddcad3()
 function function_b90ebe4e(t_penstock_flow)
 {
 	self endon(#"death");
+	var_b14e6934 = vectorscale((0, -1, 0), 20);
 	while(zm_utility::is_player_valid(self) && self istouching(t_penstock_flow))
 	{
 		v_player_velocity = self getvelocity();

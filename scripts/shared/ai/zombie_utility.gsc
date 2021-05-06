@@ -72,6 +72,7 @@ function get_closest_valid_player(origin, ignore_player, ignore_laststand_player
 			arrayremovevalue(targets, ignore_player[i]);
 		}
 	}
+	done = 1;
 	while(targets.size && !done)
 	{
 		done = 1;
@@ -104,6 +105,7 @@ function get_closest_valid_player(origin, ignore_player, ignore_laststand_player
 		pixendevent();
 		return target;
 	}
+	sortedpotentialtargets = arraysortclosest(targets, self.origin);
 	while(sortedpotentialtargets.size)
 	{
 		if(is_player_valid(sortedpotentialtargets[0], 1, ignore_laststand_players))
@@ -942,7 +944,7 @@ function showlastenemysightpos(string)
 		{
 			color = (1, 0.7, 0.4);
 		}
-		while(1)
+		while(true)
 		{
 			wait(0.05);
 			if(!isdefined(self.lastenemysightpos))
@@ -995,7 +997,7 @@ function debugposinternal(org, string, size)
 		{
 			color = (1, 0.7, 0.4);
 		}
-		while(1)
+		while(true)
 		{
 			wait(0.05);
 			print3d(org, string, color, 1, size);
@@ -1045,6 +1047,7 @@ function showdebugproc(frompoint, topoint, color, printtime)
 	/#
 		self endon(#"death");
 		timer = printtime * 20;
+		i = 0;
 		while(i < timer)
 		{
 			wait(0.05);
@@ -2493,7 +2496,7 @@ function round_spawn_failsafe_debug_draw()
 {
 	self endon(#"death");
 	prevorigin = self.origin;
-	while(1)
+	while(true)
 	{
 		if(isdefined(level.toggle_keyline_always) && level.toggle_keyline_always)
 		{
@@ -2538,7 +2541,7 @@ function round_spawn_failsafe()
 		self thread round_spawn_failsafe_debug_draw();
 	}
 	prevorigin = self.origin;
-	while(1)
+	while(true)
 	{
 		if(!level.zombie_vars["zombie_use_failsafe"])
 		{
@@ -2694,6 +2697,7 @@ function zombie_speed_up()
 	{
 		wait(3);
 	}
+	a_ai_zombies = get_round_enemy_array();
 	while(a_ai_zombies.size > 0 || level.zombie_total > 0)
 	{
 		if(a_ai_zombies.size == 1)
@@ -3086,7 +3090,7 @@ function get_current_corpse_count()
 */
 function zombie_gib_on_damage()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", amount, attacker, direction_vec, point, type, tagname, modelname, partname, weapon);
 		if(!isdefined(self))
@@ -3170,7 +3174,7 @@ function zombie_gib_on_damage()
 					}
 					break;
 				}
-				default
+				default:
 				{
 					if(self.damagelocation == "none")
 					{
@@ -3580,7 +3584,8 @@ function head_gib_damage_over_time(dmg, delay, attacker, means_of_death)
 		means_of_death = "MOD_UNKNOWN";
 	}
 	dot_location = self.damagelocation;
-	while(1)
+	dot_weapon = self.damageweapon;
+	while(true)
 	{
 		if(isdefined(delay))
 		{

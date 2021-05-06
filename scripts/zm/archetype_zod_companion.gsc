@@ -556,7 +556,7 @@ private function zodcompaniontryreacquireservice(entity)
 			}
 			break;
 		}
-		default
+		default:
 		{
 			if(entity.reacquire_state > 15)
 			{
@@ -976,7 +976,7 @@ function zod_companion_revive_player(player)
 function zod_companion_monitor_revive_attempt(player)
 {
 	self endon(#"revive_terminated");
-	while(1)
+	while(true)
 	{
 		if(isdefined(player.revivetrigger) && player.revivetrigger.beingrevived === 1 && player.being_revived_by_robot !== 1)
 		{
@@ -1358,7 +1358,7 @@ private function zodcompanionsoldierspawnsetup()
 function manage_companion()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		if(!self.reviving_a_player)
 		{

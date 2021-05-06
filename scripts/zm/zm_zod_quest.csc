@@ -305,6 +305,7 @@ function function_ae5b7493(localclientnum, var_afc7cc94, var_b05b3457, b_on, var
 	if(b_on)
 	{
 		var_24fbb6c6 = 0;
+		i = 0;
 		while(var_24fbb6c6 <= 1)
 		{
 			self function_487ce26(localclientnum, var_24fbb6c6, var_afc7cc94);
@@ -324,6 +325,7 @@ function function_ae5b7493(localclientnum, var_afc7cc94, var_b05b3457, b_on, var
 	else
 	{
 		var_24fbb6c6 = 1;
+		i = 1;
 		while(var_24fbb6c6 >= 0)
 		{
 			self function_487ce26(localclientnum, var_24fbb6c6, var_afc7cc94);

@@ -119,7 +119,7 @@ function trap_audio(trap)
 function play_fire_sound(trap)
 {
 	trap endon(#"trap_done");
-	while(1)
+	while(true)
 	{
 		wait(randomfloatrange(0.1, 0.5));
 		playsoundatposition("amb_flame", self.origin);

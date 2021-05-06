@@ -318,7 +318,7 @@ function waitforballtocometorest()
 		self.projectile endon(#"death");
 		self.projectile endon(#"stationary");
 		self.projectile endon(#"grenade_bounce");
-		while(1)
+		while(true)
 		{
 			wait(1);
 		}
@@ -437,7 +437,8 @@ function ballconsistencyswitchthread()
 	self endon(#"death");
 	self endon(#"delete");
 	player = self;
-	while(1)
+	ball = getweapon("ball");
+	while(true)
 	{
 		if(isdefined(ball) && player hasweapon(ball))
 		{
@@ -1422,7 +1423,7 @@ function ball_pass_watch()
 	self endon(#"disconnect");
 	self endon(#"death");
 	self endon(#"drop_object");
-	while(1)
+	while(true)
 	{
 		self waittill(#"ball_pass", weapon);
 		if(!isdefined(self.pass_target))
@@ -1477,7 +1478,7 @@ function ball_shoot_watch()
 	force = getdvarfloat("scr_ball_shoot_force", 1200);
 	playsoundatposition("wpn_ball_pickup", self.origin);
 	self playloopsound("prj_ball_loop_idle");
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_fired", weapon);
 		self stoploopsound();
@@ -1516,7 +1517,8 @@ function ball_weapon_change_watch()
 	self endon(#"disconnect");
 	self endon(#"death");
 	self endon(#"drop_object");
-	while(1)
+	ballweapon = getweapon("ball");
+	while(true)
 	{
 		if(ballweapon == self getcurrentweapon())
 		{
@@ -1524,7 +1526,7 @@ function ball_weapon_change_watch()
 		}
 		self waittill(#"weapon_change");
 	}
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_change", weapon, lastweapon);
 		if(isdefined(weapon) && weapon.gadget_type == 14)
@@ -1592,7 +1594,7 @@ function watchunderwater(trigger)
 {
 	self endon(#"death");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		if(self isplayerunderwater())
 		{
@@ -1704,6 +1706,7 @@ function adjust_for_stance(ball)
 {
 	target = self;
 	target endon(#"pass_end");
+	offs = 0;
 	while(isdefined(target) && isdefined(ball))
 	{
 		newoffs = 50;
@@ -2013,7 +2016,7 @@ function ball_physics_launch(force, droppingplayer)
 function function_1b26c689()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self.projectile waittill(#"grenade_bounce", pos, normal);
 		if(self.var_b4c16cba == 0)
@@ -2066,7 +2069,8 @@ function ball_check_oob()
 {
 	self endon(#"reset");
 	self endon(#"pickup_object");
-	while(1)
+	visual = self.visuals[0];
+	while(true)
 	{
 		skip_oob_check = isdefined(self.in_goal) && self.in_goal || (isdefined(self.isresetting) && self.isresetting);
 		if(!skip_oob_check)
@@ -2100,7 +2104,7 @@ function ball_physics_touch_cant_pickup_player(droppingplayer)
 	self endon(#"pickup_object");
 	ball = self.visuals[0];
 	trigger = self.trigger;
-	while(1)
+	while(true)
 	{
 		trigger waittill(#"trigger", player);
 		if(isactor(player))
@@ -2358,7 +2362,8 @@ function player_update_pass_target(ballobj)
 	self endon(#"update_pass_target");
 	self endon(#"disconnect");
 	self endon(#"cancel_update_pass_target");
-	while(1)
+	test_dot = 0.8;
+	while(true)
 	{
 		new_target = undefined;
 		if(!self isonladder())

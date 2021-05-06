@@ -1623,7 +1623,8 @@ function helper_message(message, delay, str_abort_flag)
 	{
 		delay = 5;
 	}
-	while(1)
+	start_time = gettime();
+	while(true)
 	{
 		time = gettime();
 		dt = time - start_time / 1000;

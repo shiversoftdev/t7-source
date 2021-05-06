@@ -232,7 +232,7 @@ function watch_smoke_detonate()
 	self endon(#"disconnect");
 	self endon(#"death");
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		if(self isplayerswimming() || self isonground() && !self iswallrunning() && !self istraversing())
 		{
@@ -457,7 +457,8 @@ function resurrect_breadcrumbs(slot)
 	self endon(#"disconnect");
 	self endon(#"game_ended");
 	self endon(#"resurrect_taken");
-	while(1)
+	self.resurrect_slot = slot;
+	while(true)
 	{
 		if(isalive(self) && self player_position_valid())
 		{
@@ -517,7 +518,7 @@ function wait_for_activate(msg)
 	self endon(#"disconnect");
 	self endon(#"game_ended");
 	self endon(msg);
-	while(1)
+	while(true)
 	{
 		if(self offhandspecialbuttonpressed())
 		{
@@ -786,7 +787,8 @@ function watch_bad_trigger_touch()
 	self endon(#"disconnect");
 	self endon(#"death");
 	level endon(#"game_ended");
-	while(1)
+	a_killbrushes = getentarray("trigger_hurt", "classname");
+	while(true)
 	{
 		a_killbrushes = getentarray("trigger_hurt", "classname");
 		for(i = 0; i < a_killbrushes.size; i++)
@@ -851,7 +853,8 @@ function watch_rejack_suicide()
 	}
 	if(isdefined(self.laststand) && self.laststand)
 	{
-		while(1)
+		starttime = gettime();
+		while(true)
 		{
 			if(!self usebuttonpressed())
 			{
@@ -906,6 +909,7 @@ function watch_rejack_activate_requested()
 	{
 		wait(0.05);
 	}
+	self.rejack_activate_requested = 0;
 	while(!self.rejack_activate_requested)
 	{
 		if(self offhandspecialbuttonpressed())
@@ -933,7 +937,7 @@ function watch_rejack_activate()
 	level endon(#"game_ended");
 	if(isdefined(self.laststand) && self.laststand)
 	{
-		while(1)
+		while(true)
 		{
 			wait(0.05);
 			if(isdefined(self.rejack_activate_requested) && self.rejack_activate_requested)

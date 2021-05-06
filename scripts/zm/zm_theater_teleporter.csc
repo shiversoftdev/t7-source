@@ -140,7 +140,8 @@ function pack_clock_run(time_values)
 		self rotatepitch(time_values["first_rotate"] * -1, 0.05);
 		self waittill(#"rotatedone");
 	}
-	while(1)
+	prev_time = getsystemtime();
+	while(true)
 	{
 		curr_time = getsystemtime();
 		if(prev_time != curr_time)

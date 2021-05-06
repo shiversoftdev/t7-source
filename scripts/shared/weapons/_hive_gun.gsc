@@ -62,7 +62,7 @@ function init_shared()
 function update_dvars()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			wait(1);
 			level.fireflies_min_speed = getdvarint("", 250);
@@ -237,7 +237,7 @@ function spawn_firefly_mover()
 */
 function firefly_mover_damage()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", damage, attacker, direction_vec, point, type, modelname, tagname, partname, weapon, idflags);
 		self thread firefly_death();
@@ -434,7 +434,8 @@ function firefly_check_for_collisions(target, move_to, time)
 	dir = vectornormalize(move_to - self.origin);
 	dist = distance(self.origin, move_to);
 	speed = dist / time;
-	while(1)
+	delta = dir * speed * level.fireflies_collision_check_interval;
+	while(true)
 	{
 		if(!firefly_check_move(self.origin + delta, target))
 		{
@@ -489,7 +490,7 @@ function firefly_pod_random_movement()
 {
 	self endon(#"death");
 	self endon(#"attacking");
-	while(1)
+	while(true)
 	{
 		point = firefly_pod_random_point();
 		delta = point - self.origin;
@@ -520,7 +521,8 @@ function firefly_spyrograph_patrol(degrees, increment, radius)
 	self endon(#"death");
 	self endon(#"attacking");
 	current_degrees = randomint(int(360 / degrees)) * degrees;
-	while(1)
+	height_offset = 0;
+	while(true)
 	{
 		point = firefly_pod_rotated_point(current_degrees, radius, height_offset);
 		delta = point - self.origin;
@@ -796,7 +798,7 @@ function target_bread_crumbs_render(target)
 	/#
 		self endon(#"death");
 		self endon(#"attack");
-		while(1)
+		while(true)
 		{
 			previous_crumb = self.origin;
 			for(i = 0; i < self.target_breadcrumbs.size; i++)
@@ -844,7 +846,7 @@ function target_bread_crumbs(target)
 			self thread target_bread_crumbs_render(target);
 		}
 	#/
-	while(1)
+	while(true)
 	{
 		wait(0.25);
 		previous_crumb_index = self.target_breadcrumb_last_added % self.max_crumbs;
@@ -922,7 +924,8 @@ function firefly_chase(target)
 	max_distance = 500;
 	attack_distance = 50;
 	max_offset = 10;
-	while(1)
+	up = (0, 0, 1);
+	while(true)
 	{
 		target_origin = target.origin + vectorscale((0, 0, 1), 50);
 		delta = target_origin - self.origin;

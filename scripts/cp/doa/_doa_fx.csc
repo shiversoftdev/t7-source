@@ -730,6 +730,7 @@ function zombie_eyes_clientfield_cb(localclientnum, oldval, newval, bnewent, bin
 */
 function function_7829d7af(localclientnum, mask = randomint(1 << level.var_de2ea8e7.size))
 {
+	idx = 0;
 	while(mask > 0)
 	{
 		if(mask & 1)

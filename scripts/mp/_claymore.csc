@@ -49,7 +49,7 @@ function spawned(localclientnum)
 {
 	self endon(#"entityshutdown");
 	self util::waittill_dobj(localclientnum);
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.stunned) && self.stunned)
 		{

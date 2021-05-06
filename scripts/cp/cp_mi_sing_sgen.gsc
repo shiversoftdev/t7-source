@@ -139,7 +139,7 @@ function function_4fef5e4()
 {
 	self endon(#"death");
 	level endon(#"chem_door_open");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", who);
 		if(isplayer(who))
@@ -579,7 +579,7 @@ function pull_out_last_weapon()
 function function_5dd1ccff(b_enable, b_use_trig = 1, e_player)
 {
 	level endon(#"descent");
-	while(1)
+	while(true)
 	{
 		if(b_use_trig)
 		{
@@ -684,7 +684,7 @@ function enhanced_vision_entity_on(a_ents)
 */
 function water_movement()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_player);
 		if(!(isdefined(e_player.is_in_water) && e_player.is_in_water))

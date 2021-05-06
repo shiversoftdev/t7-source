@@ -450,6 +450,7 @@ function system_overload(attacker, disabletimemsec, weapon = getweapon("gadget_s
 	self waittill_match(#"shutdown_anim");
 	waittillframeend();
 	self ai::set_behavior_attribute("robot_lights", 2);
+	self.ignoreall = 1;
 	while(gettime() < disablefor)
 	{
 		if(var_c60a5dd5)

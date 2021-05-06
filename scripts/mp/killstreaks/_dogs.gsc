@@ -377,7 +377,7 @@ function dog_manager_spawn_dog(owner, team, spawn_node, requireddeathcount)
 function monitor_dog_special_grenades()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", damage, attacker, direction_vec, point, type, modelname, tagname, partname, weapon, idflags);
 		if(weapon_utils::isflashorstunweapon(weapon))
@@ -406,12 +406,14 @@ function dog_manager_spawn_dogs(owner, deathcount, killstreak_id)
 	level.dog_abort = 0;
 	owner thread dog_manager_abort();
 	level thread dog_manager_game_ended();
+	count = 0;
 	while(count < 10)
 	{
 		if(level.dog_abort)
 		{
 			break;
 		}
+		dogs = dog_manager_get_dogs();
 		while(dogs.size < 5 && count < 10 && !level.dog_abort)
 		{
 			node = get_spawn_node(owner, team);
@@ -762,7 +764,7 @@ function dog_owner_kills()
 	self endon(#"clear_owner");
 	self endon(#"death");
 	self.script_owner endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"killed", player);
 		self.script_owner notify(#"dog_handler");
@@ -852,6 +854,7 @@ function dog_health_regen_think(delay, interval, regen_interval)
 	self endon(#"death");
 	self endon(#"damage");
 	wait(delay);
+	step = 0;
 	while(step <= 5)
 	{
 		if(self.health >= 100)

@@ -440,7 +440,7 @@ function devgui_think()
 				{
 					break;
 				}
-				default
+				default:
 				{
 					if(isdefined(level.custom_devgui))
 					{
@@ -779,6 +779,17 @@ function devgui_kill()
 */
 function devgui_toggle_ammo()
 {
+System.InvalidOperationException: Stack empty.
+   at System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   at System.Collections.Generic.Stack`1.Pop()
+   at Cerberus.Logic.Decompiler.BuildExpression(ScriptOp startOp) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 1185
+   at Cerberus.Logic.Decompiler.ProcessInstruction(ScriptOp operation, DecompilerBlock block) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 2343
+   at Cerberus.Logic.Decompiler.DecompileBlock(DecompilerBlock decompilerBlock, Int32 tabs) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 998
+   at Cerberus.Logic.Decompiler.DecompileBlock(DecompilerBlock decompilerBlock, Int32 tabs) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 968
+   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 222
+/*
+function devgui_toggle_ammo()
+{
 	/#
 		/#
 			assert(isdefined(self));
@@ -791,21 +802,29 @@ function devgui_toggle_ammo()
 		#/
 		self notify(#"devgui_toggle_ammo");
 		self endon(#"devgui_toggle_ammo");
-		while(isdefined(self) && self.ammo4evah)
-		{
-			weapon = self getcurrentweapon();
-			if(weapon != level.weaponnone)
-			{
-				self setweaponoverheating(0, 0);
-				max = weapon.maxammo;
-				if(isdefined(max))
-				{
-					self setweaponammostock(weapon, max);
-				}
-			}
-			wait(1);
-		}
-	#/
+
+*/
+
+	/* ======== */
+
+/* 
+	Stack: 
+*/
+	/* ======== */
+
+/* 
+	Blocks: 
+	Cerberus.Logic.BasicBlock at 0x2158, end at 0x22AF
+	Cerberus.Logic.DevBlock at 0x216A, end at 0x22AC
+	Cerberus.Logic.DevBlock at 0x216E, end at 0x218A
+	Cerberus.Logic.DevBlock at 0x218A, end at 0x21B2
+	Cerberus.Logic.DevBlock at 0x21B2, end at 0x21DA
+	Cerberus.Logic.WhileLoop at 0x2212, end at 0x22A8
+	Cerberus.Logic.IfBlock at 0x223E, end at 0x22A2
+	Cerberus.Logic.IfBlock at 0x227E, end at 0x22A2
+*/
+	/* ======== */
+
 }
 
 /*
@@ -909,7 +928,7 @@ function maintain_maxhealth(maxhealth)
 	/#
 		self endon(#"disconnect");
 		self endon(#"devgui_give_health");
-		while(1)
+		while(true)
 		{
 			wait(1);
 			if(self.maxhealth != maxhealth)
@@ -1311,7 +1330,7 @@ function devgui_give_weapon(weapon_name)
 		switch(split.size)
 		{
 			case 1:
-			default
+			default:
 			{
 				weapon = getweapon(split[0]);
 				break;

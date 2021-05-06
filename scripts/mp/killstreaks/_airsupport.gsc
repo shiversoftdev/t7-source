@@ -1189,6 +1189,7 @@ function leave(duration)
 	self unlink();
 	self thread stoprotation(1);
 	tries = 10;
+	yaw = 0;
 	while(tries > 0)
 	{
 		exitvector = anglestoforward(self.angles + (0, yaw, 0)) * 20000;
@@ -1342,6 +1343,7 @@ function debug_draw_bomb_path(projectile, color, time)
 		}
 		if(isdefined(level.airsupport_debug) && level.airsupport_debug == 1)
 		{
+			prevpos = self.origin;
 			while(isdefined(self.origin))
 			{
 				thread debug_line(prevpos, self.origin, color, time);
@@ -1678,7 +1680,7 @@ function monitorspeed(spawnprotectiontime)
 	{
 		wait(spawnprotectiontime);
 	}
-	while(1)
+	while(true)
 	{
 		velocity = self getvelocity();
 		speedsq = lengthsquared(velocity);

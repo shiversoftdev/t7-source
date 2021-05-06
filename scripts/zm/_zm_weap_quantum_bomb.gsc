@@ -349,7 +349,7 @@ function player_handle_quantum_bomb()
 	self endon(#"disconnect");
 	self endon(#"starting_quantum_bomb");
 	level endon(#"end_game");
-	while(1)
+	while(true)
 	{
 		grenade = self get_thrown_quantum_bomb();
 		if(isdefined(grenade))
@@ -396,7 +396,7 @@ function get_thrown_quantum_bomb()
 {
 	self endon(#"disconnect");
 	self endon(#"starting_quantum_bomb");
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_fire", grenade, weapname);
 		if(weapname == level.var_17bac01d)
@@ -1026,6 +1026,7 @@ function quantum_bomb_zombie_add_to_total_result(position)
 function function_61f28336()
 {
 	level.quantum_bomb_results["player_teleport"] = undefined;
+	origin = self.origin;
 	while(isdefined(self))
 	{
 		direction = self getplayerangles();

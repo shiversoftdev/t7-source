@@ -119,7 +119,7 @@ function function_a4815b6c()
 	level endon(#"breech");
 	level endon(#"game_ended");
 	level waittill(#"siren");
-	while(1)
+	while(true)
 	{
 		wait(2);
 		playsoundatposition("amb_troop_alarm", (3529, 427, -334));
@@ -140,7 +140,7 @@ function function_44ee5cb7()
 	level endon(#"breech");
 	level endon(#"game_ended");
 	level waittill(#"hash_5ea48ae9");
-	while(1)
+	while(true)
 	{
 		wait(1);
 		playsoundatposition("amb_troop_alarm", (5945, -2320, -119));
@@ -160,7 +160,7 @@ function function_a4312bfe()
 {
 	level endon(#"hash_f8e975b8");
 	level waittill(#"hash_fc089399");
-	while(1)
+	while(true)
 	{
 		wait(1);
 		playsoundatposition("amb_phone_ring", (-1760, -1624, 384));

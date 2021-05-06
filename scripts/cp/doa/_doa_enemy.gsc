@@ -657,7 +657,7 @@ private function function_f5ef629b()
 	{
 		self.zombie_move_speed = "run";
 	}
-	while(1)
+	while(true)
 	{
 		left = doa_utility::function_b99d78c7();
 		if(left <= 5)
@@ -955,7 +955,7 @@ function function_ff217d39(einflictor, eattacker, idamage, smeansofdeath, weapon
 				self thread namespace_eaa992c::function_285a2999("headshot_nochunks");
 				break;
 			}
-			default
+			default:
 			{
 				self thread namespace_eaa992c::function_285a2999("bloodspurt");
 				break;
@@ -1434,6 +1434,7 @@ function function_155957e9()
 	{
 		return;
 	}
+	var_2f36e0eb = 0;
 	while(!level flag::get("doa_game_is_over"))
 	{
 		wait(1);

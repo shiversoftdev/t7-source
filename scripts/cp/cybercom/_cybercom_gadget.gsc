@@ -146,7 +146,7 @@ function function_12bffd86()
 	self notify(#"hash_12bffd86");
 	self endon(#"hash_12bffd86");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		ret = self util::waittill_any_return("cybercom_activation_failed", "cybercom_activation_succeeded");
 		if(!isdefined(ret))
@@ -665,7 +665,7 @@ function getabilitiesfortype(type)
 function function_48868896()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"setcybercomability", var_4ccb808f);
 		self equipability(var_4ccb808f);

@@ -175,7 +175,7 @@ function setpoint(point, relativepoint, xoffset, yoffset, movetime = 0)
 			self.alignx = "left";
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				println("" + point);
@@ -250,7 +250,7 @@ function setpoint(point, relativepoint, xoffset, yoffset, movetime = 0)
 			relativex = "left";
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				println("" + relativepoint);
@@ -1047,7 +1047,7 @@ function flashthread()
 	{
 		self.alpha = 1;
 	}
-	while(1)
+	while(true)
 	{
 		if(self.frac >= self.flashfrac)
 		{

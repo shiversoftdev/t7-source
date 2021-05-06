@@ -193,7 +193,7 @@ function player_drown_fx(localclientnum, stage)
 	{
 		stageduration = 2000;
 	}
-	while(1)
+	while(true)
 	{
 		currenttime = getservertime(localclientnum);
 		elapsedtime = currenttime - self.drown_start_time;
@@ -226,6 +226,7 @@ function player_fade_out_drown_fx(localclientnum)
 	self endon(#"player_fade_out_drown_fx");
 	self player_init_drown_values();
 	fadestarttime = getservertime(localclientnum);
+	currenttime = getservertime(localclientnum);
 	while(currenttime - fadestarttime < 250)
 	{
 		ratio = currenttime - fadestarttime / 250;

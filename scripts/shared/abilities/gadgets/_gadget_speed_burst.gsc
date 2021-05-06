@@ -198,7 +198,7 @@ function gadget_speed_burst_flicker(slot, weapon)
 	}
 	eventtime = self._gadgets_player[slot].gadget_flickertime;
 	self set_gadget_status("Flickering", eventtime);
-	while(1)
+	while(true)
 	{
 		if(!self gadgetflickering(slot))
 		{

@@ -135,7 +135,7 @@ function function_92b4b156()
 	var_81f963f4 triggerignoreteam();
 	var_81f963f4 usetriggerrequirelookat();
 	exploder::exploder("fxexp_114 ");
-	while(1)
+	while(true)
 	{
 		switch(var_c59a59e1)
 		{
@@ -405,7 +405,8 @@ function function_a8fc7a77()
 {
 	level endon(#"writing_on_the_wall_complete");
 	self zm_unitrigger::create_unitrigger(undefined, 128);
-	while(1)
+	var_3cbdaba3 = getent(self.target, "targetname");
+	while(true)
 	{
 		self waittill(#"trigger_activated", e_player);
 		if(isdefined(e_player.var_fb4f9b70) && e_player.var_fb4f9b70)
@@ -674,7 +675,7 @@ function function_6e14903b()
 	s_unitrigger.require_look_at = 1;
 	s_unitrigger.b_enabled = 1;
 	array::add(level.var_aa421b74, s_unitrigger);
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger_activated", e_player);
 		if(s_unitrigger.b_enabled == 1)
@@ -805,7 +806,8 @@ function function_c1ccaae0()
 	var_2b641c49 = struct::get("egg_destination", "targetname");
 	var_62ceb838 moveto(var_2b641c49.origin, 3);
 	var_62ceb838 waittill(#"movedone");
-	while(1)
+	var_6d268157 = var_2b641c49 zm_unitrigger::create_unitrigger(undefined, 64);
+	while(true)
 	{
 		var_2b641c49 waittill(#"trigger_activated", e_who);
 		if(!e_who flag::get("holding_egg"))
@@ -831,7 +833,8 @@ function function_c1ccaae0()
 function function_ee1274a2()
 {
 	var_9c1e0e1a = struct::get("pot_trigger", "targetname");
-	while(1)
+	var_a0069a05 = var_9c1e0e1a zm_unitrigger::create_unitrigger(undefined, 64);
+	while(true)
 	{
 		var_9c1e0e1a waittill(#"trigger_activated", e_who);
 		if(isdefined(e_who.var_7f70ccd5) && e_who.var_7f70ccd5)
@@ -844,7 +847,7 @@ function function_ee1274a2()
 	level waittill(#"start_of_round");
 	level waittill(#"start_of_round");
 	level waittill(#"start_of_round");
-	while(1)
+	while(true)
 	{
 		var_9c1e0e1a waittill(#"trigger_activated", e_who);
 		if(isdefined(e_who.var_7f70ccd5) && e_who.var_7f70ccd5)
@@ -883,7 +886,8 @@ function function_82df6cd4(watcher)
 	self endon(#"death");
 	self endon(#"hacked");
 	self endon(#"kill_target_detection");
-	while(1)
+	e_trigger = getent("gateworm_meteor_trigger", "targetname");
+	while(true)
 	{
 		if(self istouching(e_trigger))
 		{

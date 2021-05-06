@@ -62,7 +62,7 @@ private function _checkvalue(archetype, attributename, value)
 				}
 				break;
 			}
-			default
+			default:
 			{
 				/#
 					assert("" + attribute[""] + "" + attributename + "");

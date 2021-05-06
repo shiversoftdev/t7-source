@@ -246,7 +246,7 @@ private function _getphalanxpositions(phalanxtype, tier)
 			loc_00000C70:
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				assert("" + phalanxtype + "");

@@ -1161,7 +1161,7 @@ function _call_state_funcs(str_state)
 						self._e_root thread [[func]](a_ents);
 						break;
 					}
-					default
+					default:
 					{
 						/#
 							assertmsg("");
@@ -1606,14 +1606,17 @@ function postfx_igc(localclientnum, oldval, newval, bnewent, binitialsnap, field
 	filter::set_filter_base_frame_transition_boost(self, 5, 1);
 	n_hex = 0;
 	b_streamer_wait = 1;
+	i = 0;
 	while(i < 2000)
 	{
 		st = i / 1000;
 		if(b_streamer_wait && st >= 0.65)
 		{
+			n_streamer_time_total = 0;
 			while(!isstreamerready() && n_streamer_time_total < 5000)
 			{
 				n_streamer_time = gettime();
+				j = 650;
 				while(j < 1150)
 				{
 					jt = j / 1000;
@@ -1621,6 +1624,7 @@ function postfx_igc(localclientnum, oldval, newval, bnewent, binitialsnap, field
 					wait(0.016);
 					j = j + 16;
 				}
+				j = 1150;
 				while(j < 650)
 				{
 					jt = j / 1000;
@@ -1795,6 +1799,7 @@ function postfx_igc_short(localclientnum, oldval, newval, bnewent, binitialsnap,
 	filter::enable_filter_frame_transition(self, 5);
 	filter::set_filter_frame_transition_iris(self, 5, 0);
 	b_streamer_wait = 1;
+	i = 0;
 	while(i < 850)
 	{
 		st = i / 1000;

@@ -71,7 +71,7 @@ function power_switch(trigger_name, var_1e1fc126)
 	switch_trigger = getent(trigger_name, "targetname");
 	switch_trigger sethintstring(&"ZM_TEMPLE_RELEASE_WATER");
 	switch_trigger setcursorhint("HINT_NOICON");
-	while(1)
+	while(true)
 	{
 		switch_trigger waittill(#"trigger", player);
 		if(isplayer(player))

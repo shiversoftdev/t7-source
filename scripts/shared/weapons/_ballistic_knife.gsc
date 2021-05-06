@@ -173,7 +173,7 @@ function watch_use_trigger(trigger, model, callback, playersoundonuse, npcsoundo
 	self endon(#"delete");
 	level endon(#"game_ended");
 	max_ammo = level.weaponballisticknife.maxammo + 1;
-	while(1)
+	while(true)
 	{
 		trigger waittill(#"trigger", player);
 		if(!isalive(player))

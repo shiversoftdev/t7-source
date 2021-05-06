@@ -50,7 +50,7 @@ function function_c9207335()
 */
 function function_60a32834()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", trigplayer);
 		if(trigplayer islocalplayer())
@@ -82,7 +82,8 @@ function function_d667714e()
 	level.var_b6342abd = "mus_prototype_underscore_default";
 	level.var_6d9d81aa = "mus_prototype_underscore_default";
 	level.var_eb526c90 = spawn(0, (0, 0, 0), "script_origin");
-	while(1)
+	level.var_9433cf5a = level.var_eb526c90 playloopsound(level.var_b6342abd, 2);
+	while(true)
 	{
 		level waittill(#"hash_51d7bc7c", location);
 		level.var_6d9d81aa = "mus_prototype_underscore_" + location;

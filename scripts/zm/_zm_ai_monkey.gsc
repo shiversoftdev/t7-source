@@ -728,7 +728,7 @@ function monkey_zombie_spawn(pack)
 function wait_for_damage()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", n_amount, e_attacker, v_direction, v_point, str_type);
 		if(e_attacker zm_utility::is_player())
@@ -780,7 +780,8 @@ function monkey_round_spawning()
 	}
 	level.monkey_intermission = 1;
 	level thread monkey_round_aftermath();
-	while(1)
+	pack_idx = 0;
+	while(true)
 	{
 		level monkey_pack_spawn();
 		pack_idx++;
@@ -846,7 +847,7 @@ function monkey_setup_health()
 			level.monkey_zombie_health = level.zombie_health * 0.75;
 			break;
 		}
-		default
+		default:
 		{
 			level.monkey_zombie_health = level.zombie_health;
 			break;
@@ -1115,7 +1116,7 @@ function monkey_pack_think()
 */
 function monkey_pack_update_perk()
 {
-	while(1)
+	while(true)
 	{
 		if(!isdefined(self.perk))
 		{
@@ -1431,7 +1432,7 @@ function monkey_round_tracker()
 	level.monkey_save_wait_func = level.round_wait_func;
 	level.next_monkey_round = level.round_number + randomintrange(1, 4);
 	level.prev_monkey_round = level.next_monkey_round;
-	while(1)
+	while(true)
 	{
 		level waittill(#"between_round_over");
 		if(level.round_number == level.next_monkey_round)
@@ -1574,7 +1575,7 @@ function monkey_player_has_perk()
 */
 function monkey_zombie_manager()
 {
-	while(1)
+	while(true)
 	{
 		while(level.num_monkey_zombies < level.max_monkey_zombies)
 		{
@@ -1691,7 +1692,7 @@ function monkey_zombie_think()
 function monkey_zombie_debug()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		forward = vectornormalize(anglestoforward(self.angles));
 		end_pos = self.origin - vectorscale(forward, 120);
@@ -1713,7 +1714,7 @@ function monkey_zombie_update()
 	self endon(#"death");
 	self endon(#"monkey_update_stop");
 	self animmode("none");
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.custom_think) && self.custom_think)
 		{
@@ -1758,7 +1759,7 @@ function monkey_zombie_update()
 function function_f0891021()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		dist_sq = 0;
 		start_pos = self.origin;
@@ -1833,7 +1834,8 @@ function monkey_pack_clear_perk_pos()
 function monkey_zombie_health_watcher()
 {
 	self endon(#"death");
-	while(1)
+	health_limit = self.health * 0.75;
+	while(true)
 	{
 		if(self.health <= health_limit)
 		{
@@ -1861,7 +1863,8 @@ function monkey_zombie_health_watcher()
 function monkey_zombie_fling_watcher()
 {
 	self endon(#"death");
-	while(1)
+	half_health = level.monkey_zombie_health * 0.5;
+	while(true)
 	{
 		if(self.health <= half_health)
 		{
@@ -1884,7 +1887,7 @@ function monkey_zombie_fling_watcher()
 function monkey_zombie_speed_watcher()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		if(self.health < self.maxhealth)
 		{
@@ -1929,7 +1932,7 @@ function monkey_grenade_watch()
 {
 	self endon(#"death");
 	level endon(#"grenade_watcher_stop");
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_fire", grenade, weapon);
 		if(zm_utility::is_lethal_grenade(weapon))
@@ -2056,7 +2059,8 @@ function monkey_zombie_watch_machine_damage()
 	self endon(#"death");
 	self endon(#"stop_perk_attack");
 	self endon(#"stop_machine_watch");
-	while(1)
+	arrival_health = self.health;
+	while(true)
 	{
 		monkey_zone = self monkey_get_zone();
 		if(isdefined(monkey_zone))
@@ -2197,7 +2201,8 @@ function monkey_zombie_attack_perk()
 		perk_attack_anim = level.monkey_perk_attack_anims[choose];
 	}
 	self thread monkey_wait_to_drop();
-	while(1)
+	time = getanimlength(perk_attack_anim);
+	while(true)
 	{
 		monkey_pack_flash_perk(self.perk.script_noteworthy);
 		self thread play_attack_impacts(time);
@@ -2226,7 +2231,8 @@ function monkey_wait_to_drop()
 	self endon(#"death");
 	wait(0.2);
 	self.dropped = 0;
-	while(1)
+	self.perk_attack_origin = self.attack.origin;
+	while(true)
 	{
 		diff = abs(self.perk_attack_origin[2] - self.origin[2]);
 		if(diff < 8)
@@ -2263,7 +2269,8 @@ function play_player_perk_theft_vox(perk, monkey)
 	{
 		return;
 	}
-	while(1)
+	level.perk_theft_vox[perk] = 1;
+	while(true)
 	{
 		player = getplayers();
 		rand = randomintrange(0, player.size);
@@ -2482,7 +2489,7 @@ function monkey_zombie_ground_hit_think()
 	self endon(#"death");
 	self.ground_hit = 0;
 	self.nextgroundhit = gettime() + level.monkey_ground_attack_delay;
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.state) && self.state == "attack_perk")
 		{
@@ -2643,6 +2650,7 @@ function monkey_zombie_grenade_pickup()
 {
 	self endon(#"death");
 	pickup_dist_sq = 1024;
+	picked_up = 0;
 	while(isdefined(self.monkey_grenade))
 	{
 		self setgoalpos(self.monkey_grenade.origin);
@@ -2659,7 +2667,7 @@ function monkey_zombie_grenade_pickup()
 	}
 	if(picked_up)
 	{
-		while(1)
+		while(true)
 		{
 			self setgoalpos(self.monkey_thrower.origin);
 			target_dir = self.monkey_thrower.origin - self.origin;
@@ -2713,7 +2721,7 @@ function monkey_zombie_grenade_watcher()
 {
 	self endon(#"death");
 	grenade_respond_dist_sq = 14400;
-	while(1)
+	while(true)
 	{
 		if(self.state == "default")
 		{
@@ -2822,7 +2830,8 @@ function monkey_zombie_bhb_failsafe()
 	self endon(#"death");
 	self endon(#"bhb_old_failsafe");
 	prev_origin = self.origin;
-	while(1)
+	min_movement = 256;
+	while(true)
 	{
 		wait(1);
 		dist = distancesquared(prev_origin, self.origin);
@@ -2949,7 +2958,7 @@ function monkey_zombie_bhb_watcher()
 {
 	self endon(#"death");
 	bhb_respond_dist_sq = 262144;
-	while(1)
+	while(true)
 	{
 		if(self.state == "default" || self.state == "ground_pound" || self.state == "ground_pound_taunt" || self.state == "grenade_reponse" || self.state == "bhb_response" || self.state == "attack_perk" || (!(isdefined(self.dropped) && self.dropped)))
 		{
@@ -3171,7 +3180,7 @@ function monkey_zombie_default_enter_level()
 function monkey_pathing()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.favoriteenemy))
 		{
@@ -3210,7 +3219,8 @@ function monkey_find_flesh()
 	{
 		self zm_spawner::zombie_history("monkey find flesh -> can't find player, continue");
 	}
-	while(1)
+	self.favoriteenemy = player;
+	while(true)
 	{
 		if(isdefined(self.pack) && isdefined(self.pack.enemy))
 		{
@@ -3543,7 +3553,7 @@ function monkey_print(str)
 function play_random_monkey_vox()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		wait(randomfloatrange(1.25, 3));
 	}

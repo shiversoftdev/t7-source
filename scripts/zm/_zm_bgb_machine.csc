@@ -840,7 +840,7 @@ private function function_763ef0fd(localclientnum)
 	self notify(#"hash_763ef0fd");
 	self endon(#"hash_763ef0fd");
 	self endon(#"entityshutdown");
-	while(1)
+	while(true)
 	{
 		rounds = getroundsplayed(localclientnum);
 		if(rounds != level.var_bb2b3f61[localclientnum])
@@ -866,7 +866,7 @@ private function function_5d9d13da(localclientnum)
 	self notify(#"hash_5d9d13da");
 	self endon(#"hash_5d9d13da");
 	self endon(#"entityshutdown");
-	while(1)
+	while(true)
 	{
 		self waittill(#"powerup", powerup, state);
 		if(powerup == "powerup_fire_sale")
@@ -889,7 +889,8 @@ private function function_5d9d13da(localclientnum)
 private function function_fda54943(localclientnum)
 {
 	self endon(#"entityshutdown");
-	while(1)
+	var_89caac36 = 160000;
+	while(true)
 	{
 		if(isdefined(level.var_5081bd63))
 		{

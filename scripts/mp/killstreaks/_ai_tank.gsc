@@ -380,7 +380,7 @@ function get_vehicle_name(vehicle_version)
 	switch(vehicle_version)
 	{
 		case 2:
-		default
+		default:
 		{
 			return "spawner_bo3_ai_tank_mp";
 			break;
@@ -429,7 +429,7 @@ function tank_think_debug()
 	text_scale = 0.5;
 	text_alpha = 1;
 	text_color = (1, 1, 1);
-	while(1)
+	while(true)
 	{
 		if(getdvarint("scr_ai_tank_think_debug") == 0)
 		{
@@ -568,7 +568,7 @@ function kill_monitor()
 	self endon(#"death");
 	last_kill_vo = 0;
 	kill_vo_spacing = 4000;
-	while(1)
+	while(true)
 	{
 		self waittill(#"killed", victim);
 		if(!isdefined(self.owner) || !isdefined(victim))
@@ -856,7 +856,8 @@ function deleteonkillbrush(player)
 {
 	player endon(#"disconnect");
 	self endon(#"death");
-	while(1)
+	killbrushes = getentarray("trigger_hurt", "classname");
+	while(true)
 	{
 		for(i = 0; i < killbrushes.size; i++)
 		{
@@ -935,6 +936,7 @@ function emp_crazy_death()
 	self clientfield::set("ai_tank_stun", 1);
 	self notify(#"death");
 	time = 0;
+	randomangle = randomint(360);
 	while(time < 1.45)
 	{
 		self setturrettargetvec(self.origin + anglestoforward((randomintrange(305, 315), int(randomangle + time * 180), 0)) * 100);
@@ -1430,7 +1432,7 @@ function tank_rocket_watch(player)
 	{
 		self disabledriverfiring(0);
 	}
-	while(1)
+	while(true)
 	{
 		player waittill(#"missile_fire", missile);
 		missile.ignore_team_kills = self.ignore_team_kills;
@@ -1456,7 +1458,7 @@ function tank_rocket_watch(player)
 function tank_rocket_watch_ai()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"missile_fire", missile);
 		missile.ignore_team_kills = self.ignore_team_kills;
@@ -1502,6 +1504,7 @@ function reload_rockets(player)
 function watchwater()
 {
 	self endon(#"death");
+	inwater = 0;
 	while(!inwater)
 	{
 		wait(0.3);
@@ -1614,6 +1617,7 @@ function devgui_debug_route()
 function tank_debug_hud_init()
 {
 	/#
+		host = util::gethostplayer();
 		while(!isdefined(host))
 		{
 			wait(0.25);

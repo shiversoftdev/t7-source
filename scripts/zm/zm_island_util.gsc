@@ -146,7 +146,7 @@ private function unitrigger_think()
 {
 	self endon(#"kill_trigger");
 	self.stub thread unitrigger_refresh_message();
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		self.stub notify(#"trigger", player);
@@ -201,6 +201,7 @@ function function_7448e472(e_target)
 		self endon(var_241c185a);
 	}
 	var_c2b47c7a = 0;
+	self.var_abd1c759 = e_target;
 	while(isdefined(e_target) && (!(isdefined(var_c2b47c7a) && var_c2b47c7a)))
 	{
 		if(self hasweapon(level.var_c003f5b))
@@ -219,6 +220,7 @@ function function_7448e472(e_target)
 					if(self keeper_skull::function_3f3f64e9(e_target) && self keeper_skull::function_5fa274c1(e_target))
 					{
 						self playrumbleonentity("zm_island_skull_reveal");
+						n_count = 0;
 						while(self util::ads_button_held())
 						{
 							wait(1);
@@ -570,7 +572,8 @@ function function_8faf1d24(v_color, var_8882142e, n_scale, str_endon)
 		{
 			self endon(str_endon);
 		}
-		while(1)
+		origin = self.origin;
+		while(true)
 		{
 			print3d(origin, var_8882142e, v_color, n_scale);
 			wait(0.1);

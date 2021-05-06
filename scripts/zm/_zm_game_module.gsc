@@ -352,7 +352,7 @@ function game_module_custom_intermission(intermission_struct)
 function create_fireworks(launch_spots, min_wait, max_wait, randomize)
 {
 	level endon(#"stop_fireworks");
-	while(1)
+	while(true)
 	{
 		if(isdefined(randomize) && randomize)
 		{
@@ -383,6 +383,7 @@ function fireworks_launch(launch_spot)
 	util::wait_network_frame();
 	playfxontag(level._effect["fw_trail_cheap"], firework, "tag_origin");
 	firework playloopsound("zmb_souls_loop", 0.75);
+	dest = launch_spot;
 	while(isdefined(dest) && isdefined(dest.target))
 	{
 		random_offset = (randomintrange(-60, 60), randomintrange(-60, 60), 0);

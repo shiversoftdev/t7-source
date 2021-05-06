@@ -124,7 +124,7 @@ function achievement_small_consolation()
 {
 	level endon(#"end_game");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_fired");
 		currentweapon = self getcurrentweapon();

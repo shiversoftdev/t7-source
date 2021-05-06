@@ -412,7 +412,8 @@ function function_26beb37e(value, limit, var_69de4866)
 function mechz_round_tracker()
 {
 	level.var_b20dd348 = randomintrange(12, 13);
-	while(1)
+	level.var_2f0a5661 = 0;
+	while(true)
 	{
 		while(level.round_number < level.var_b20dd348)
 		{
@@ -733,7 +734,7 @@ function function_78e44cda()
 		wait(0.05);
 		setdvar("", 0);
 		adddebugcommand("");
-		while(1)
+		while(true)
 		{
 			if(getdvarint(""))
 			{

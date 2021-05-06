@@ -92,6 +92,7 @@ function fire_puzzle_1_run()
 	level.clone_list = [];
 	level thread clone_cleanup_watch_player_presence();
 	array::thread_all(level.sacrifice_volumes, &init_sacrifice_volume);
+	b_any_volumes_unfinished = 1;
 	while(b_any_volumes_unfinished)
 	{
 		level waittill(#"fire_sacrifice_completed");
@@ -141,7 +142,7 @@ function fire_puzzle_1_cleanup()
 function clone_cleanup_watch_player_presence()
 {
 	level endon(#"fire_puzzle_1_complete");
-	while(1)
+	while(true)
 	{
 		wait(1);
 		if(level.clone_list.size > 0)
@@ -184,7 +185,7 @@ function init_sacrifice_volume()
 */
 function run_sacrifice_plinth(e_volume)
 {
-	while(1)
+	while(true)
 	{
 		if(level flag::get("fire_puzzle_1_complete"))
 		{
@@ -579,7 +580,7 @@ function fire_puzzle_2_is_complete()
 function fire_puzzle_watch_staff()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"projectile_impact", weapon, v_explode_point, n_radius, e_projectile, n_impact);
 		if(weapon == level.a_elemental_staffs["staff_fire"].w_weapon)
@@ -642,7 +643,7 @@ function fire_puzzle_torch_run()
 	self.b_correct_torch = 0;
 	max_hit_distance_sq = 4096;
 	var_32bc7eba = level.a_elemental_staffs["staff_fire"].w_weapon;
-	while(1)
+	while(true)
 	{
 		level waittill(#"fire_staff_explosion", v_point);
 		if(!is_church_occupied())

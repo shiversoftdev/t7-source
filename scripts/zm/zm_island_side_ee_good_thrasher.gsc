@@ -304,7 +304,7 @@ function function_c8310977()
 	mdl_mushroom_clip = getent("mdl_mushroom_clip", "targetname");
 	mdl_mushroom_clip setcandamage(1);
 	mdl_mushroom_clip thread function_ecaf0cc6();
-	while(1)
+	while(true)
 	{
 		mdl_mushroom_clip.health = 10000;
 		mdl_mushroom_clip waittill(#"damage", n_damage, e_attacker, v_vector, v_point, str_means_of_death, var_c4fe462, var_e64d69f9, var_c04aef90, w_weapon);
@@ -331,6 +331,7 @@ function function_ecaf0cc6()
 	self endon(#"hash_593bd276");
 	self endon(#"hash_101ca32e");
 	self endon(#"death");
+	b_exploded = 0;
 	while(!(isdefined(b_exploded) && b_exploded))
 	{
 		foreach(var_1c0bd7aa, player in level.activeplayers)
@@ -437,6 +438,7 @@ function function_4c6beece(var_f9f788a6, var_8963ba33, e_attacker)
 	s_org = level.var_564761a3.var_11c98268;
 	self thread spore_cloud_fx(var_8963ba33, s_org, var_f9f788a6);
 	playsoundatposition("zmb_spore_eject", self.origin);
+	var_88c0f006 = self function_cc07e4ad(self.var_66bbb0c0, s_org);
 	while(self.var_d7bb540a > 0 && (!isdefined(level.var_564761a3.var_1cd02afb) || !isalive(level.var_564761a3.var_1cd02afb)))
 	{
 		self.var_d7bb540a = self.var_d7bb540a - 1;
@@ -729,7 +731,7 @@ function function_2b2a9b70()
 function function_d3e5e5f4()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		str_zone = self zm_utility::get_current_zone();
 		if(str_zone === "zone_bunker_prison" && level.var_5258ba34)
@@ -780,7 +782,7 @@ function function_97e9942()
 {
 	self endon(#"hash_dd8e5266");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self clientfield::increment_to_player("postfx_futz_mild");
 		wait(2.7);
@@ -839,7 +841,7 @@ function function_20ca7e14()
 {
 	self endon(#"hash_36dceca1");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self dodamage(self.health / 10, self.origin);
 		wait(1);
@@ -863,7 +865,7 @@ function function_36f14fa1()
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		self thread zm_audio::playerexert("cough", 1);
 		wait(1);

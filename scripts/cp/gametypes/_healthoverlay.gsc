@@ -331,7 +331,8 @@ function sndhealthlow(healthcap)
 {
 	self endon(#"end_healthregen");
 	self endon(#"removehealthregen");
-	while(1)
+	self.sndhealthlow = 0;
+	while(true)
 	{
 		if(self.health <= healthcap && (!(isdefined(self laststand::player_is_in_laststand()) && self laststand::player_is_in_laststand())))
 		{

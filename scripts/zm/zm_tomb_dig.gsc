@@ -196,7 +196,7 @@ function function_f4768ce9(n_player)
 function shovel_unitrigger_think()
 {
 	self endon(#"kill_trigger");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_player);
 		if(e_player != self.parent_player)
@@ -349,7 +349,7 @@ function dig_spots_init()
 */
 function dig_spots_respawn(a_dig_spots)
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"end_of_round");
 		wait(2);
@@ -470,7 +470,7 @@ function dig_spot_trigger_visibility(player)
 */
 function waittill_dug(s_dig_spot)
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(isdefined(player.dig_vars["has_shovel"]) && player.dig_vars["has_shovel"])
@@ -991,7 +991,7 @@ function create_zombie_blood_dig_spot(e_player)
 function waittill_zombie_blood_dug(s_dig_spot)
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(isdefined(player.dig_vars["has_shovel"]) && player.dig_vars["has_shovel"])
@@ -1053,7 +1053,7 @@ function spawn_perk_upgrade_bottle(v_origin, e_player)
 function rotate_perk_upgrade_bottle()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self rotateyaw(360, 5);
 		self waittill(#"rotatedone");
@@ -1091,7 +1091,8 @@ function dig_powerups_tracking()
 	level.dig_magic_box_moved = 0;
 	level.dig_last_prize_rare = 0;
 	level.dig_n_zombie_bloods_spawned = 0;
-	while(1)
+	level.dig_n_powerups_spawned = 0;
+	while(true)
 	{
 		level waittill(#"end_of_round");
 		foreach(str_powerup, value in level.dig_powerups_tracking)
@@ -1210,7 +1211,7 @@ function setup_dig_devgui()
 function watch_devgui_dig()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			if(getdvarstring("") == "")
 			{

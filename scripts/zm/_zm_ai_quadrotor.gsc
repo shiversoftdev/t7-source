@@ -162,12 +162,13 @@ function quadrotor_fireupdate()
 {
 	level endon(#"end_game");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.enemy) && self vehcansee(self.enemy))
 		{
 			self setlookatent(self.enemy);
 			self setturrettargetent(self.enemy);
+			startaim = gettime();
 			while(!self.turretontarget && vehicle_ai::timesince(startaim) < 3)
 			{
 				wait(0.2);
@@ -360,7 +361,7 @@ function quadrotor_movementupdate()
 		assert(isalive(self));
 	#/
 	self setvehicleavoidance(1);
-	while(1)
+	while(true)
 	{
 		self waittill_pathing_done();
 		self thread quadrotor_blink_lights();
@@ -885,6 +886,7 @@ function quadrotor_fire_for_time(totalfiretime)
 	weapon = self seatgetweapon(0);
 	firetime = weapon.firetime;
 	time = 0;
+	firecount = 1;
 	while(time < totalfiretime && !isdefined(self.emped))
 	{
 		if(isdefined(self.enemy) && isdefined(self.enemy.attackeraccuracy) && self.enemy.attackeraccuracy == 0)
@@ -915,7 +917,8 @@ function quadrotor_crash_accel()
 	level endon(#"end_game");
 	self endon(#"crash_done");
 	self endon(#"death");
-	while(1)
+	count = 0;
+	while(true)
 	{
 		self setvehvelocity(self.velocity + anglestoup(self.angles) * self.crash_accel);
 		self.crash_accel = self.crash_accel * 0.98;
@@ -959,7 +962,7 @@ function quadrotor_predicted_collision()
 	level endon(#"end_game");
 	self endon(#"crash_done");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"veh_predictedcollision", velocity, normal);
 		if(normal[2] >= 0.6)
@@ -984,7 +987,7 @@ function quadrotor_collision_player()
 	self endon(#"change_state");
 	self endon(#"crash_done");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"veh_collision", velocity, normal);
 		driver = self getseatoccupant(0);
@@ -1016,7 +1019,8 @@ function quadrotor_collision()
 		self thread quadrotor_predicted_collision();
 	}
 	self.bounce_count = 0;
-	while(1)
+	time_of_last_bounce = 0;
+	while(true)
 	{
 		self waittill(#"veh_collision", velocity, normal);
 		ang_vel = self getangularvelocity() * 0.5;
@@ -1174,7 +1178,7 @@ function quadrotor_self_destruct()
 	self endon(#"exit_vehicle");
 	self_destruct = 0;
 	self_destruct_time = 0;
-	while(1)
+	while(true)
 	{
 		if(!self_destruct)
 		{
@@ -1382,7 +1386,8 @@ function kill_fx_if_target_revive(quadrotor, revive_target)
 	e_fx playsound("zmb_drone_revive_fire");
 	e_fx playloopsound("zmb_drone_revive_loop", 0.2);
 	e_fx moveto(revive_target.origin, 1);
-	while(1)
+	timer = 0;
+	while(true)
 	{
 		if(isdefined(revive_target) && revive_target laststand::player_is_in_laststand() && isdefined(quadrotor))
 		{

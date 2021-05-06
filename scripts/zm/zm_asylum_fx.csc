@@ -88,6 +88,7 @@ function function_1c1a68e1(ent)
 function perk_wire_fx(notify_wait, init_targetname)
 {
 	level waittill(notify_wait);
+	targ = struct::get(init_targetname, "targetname");
 	while(isdefined(targ))
 	{
 		players = getlocalplayers();
@@ -165,8 +166,10 @@ function function_4c17ba1b(localclientnum, oldval, newval, bnewent, binitialsnap
 function function_46f37b91(str_side, localclientnum)
 {
 	ent = struct::get("trap_wire_sparks_" + str_side, "targetname");
+	ent.fx = 1;
 	while(isdefined(ent.fx))
 	{
+		targ = struct::get(ent.target, "targetname");
 		while(isdefined(targ))
 		{
 			if(randomint(100) > 50)

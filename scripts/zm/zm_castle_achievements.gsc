@@ -121,7 +121,8 @@ function function_a54c1d45()
 	var_16939907["lower_courtyard_flinger"] = 0;
 	var_16939907["v10_rocket_pad_flinger"] = 0;
 	var_16939907["roof_flinger"] = 0;
-	while(1)
+	var_16939907["upper_courtyard_flinger"] = 0;
+	while(true)
 	{
 		str_notify = util::waittill_any_return("disconnect", "lower_courtyard_flinger", "v10_rocket_pad_flinger", "roof_flinger", "upper_courtyard_flinger");
 		var_16939907[str_notify]++;
@@ -163,7 +164,7 @@ function function_2ac65a0e()
 {
 	level endon(#"end_game");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill(#"weapon_bought", player, weapon);
 		if(player == self && weapon.name == "lmg_light")
@@ -187,6 +188,7 @@ function function_2aca0270()
 {
 	level endon(#"end_game");
 	self endon(#"disconnect");
+	self.zapped_zombies = 0;
 	while(self.zapped_zombies < 121)
 	{
 		self waittill(#"zombie_zapped");
@@ -241,7 +243,8 @@ function function_fd055c44()
 {
 	level endon(#"end_game");
 	self endon(#"disconnect");
-	while(1)
+	var_8a655363 = 0;
+	while(true)
 	{
 		self waittill(#"player_did_a_revive");
 		foreach(var_724b9744, e_player in level.players)

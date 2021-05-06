@@ -257,7 +257,7 @@ function function_6f772f30()
 	level endon(#"end_game");
 	level notify(#"hash_a3369c1f");
 	level endon(#"hash_a3369c1f");
-	while(1)
+	while(true)
 	{
 		level waittill(#"host_migration_end");
 		setdvar("doublejump_enabled", 1);
@@ -428,7 +428,7 @@ function function_15715797()
 {
 	level endon(#"hash_fa713eaf");
 	level flag::wait_till("test_activate_arena");
-	while(1)
+	while(true)
 	{
 		level flag::wait_till("test_activate_arena");
 		players = level.activeplayers;
@@ -464,7 +464,7 @@ function function_15715797()
 function function_32374471()
 {
 	level endon(#"hash_b7da93ea");
-	while(1)
+	while(true)
 	{
 		level thread function_f115a4c8();
 		level waittill(#"hash_78e9c51c");
@@ -512,7 +512,7 @@ function function_cba8ad32()
 	level clientfield::set("arena_state", 4);
 	level clientfield::set("circle_state", 5);
 	wait(5);
-	while(1)
+	while(true)
 	{
 		players = level.activeplayers;
 		foreach(var_f52cf598, player in players)
@@ -561,7 +561,7 @@ function function_a1c7821d(var_b852cbf7, var_3f571692 = 12)
 	level.var_b89abaf8 = level.zombie_ai_limit;
 	level.zombie_ai_limit = 16;
 	self.var_2cf2d836 = [];
-	while(1)
+	while(true)
 	{
 		if(!level flag::get("final_boss_started"))
 		{
@@ -739,6 +739,7 @@ function function_352c3c15()
 function function_7ebc257e()
 {
 	self.var_8c5f9971 = [];
+	var_d12aa484 = struct::get_array("arena_spider_spawner", "targetname");
 	while(level clientfield::get("circle_state") == 3)
 	{
 		self.var_8c5f9971 = array::remove_dead(self.var_8c5f9971, 0);
@@ -825,6 +826,7 @@ function function_17f3b496()
 				}
 				if(a_spawn_origins.size >= 1)
 				{
+					n_spawn = 0;
 					while(n_spawn < 1)
 					{
 						for(i = a_spawn_origins.size - 1; i >= 0; i--)
@@ -899,7 +901,8 @@ function function_e4dbca5a(var_87c8152d)
 	level notify(#"hash_e4dbca5a");
 	level endon(#"hash_e4dbca5a");
 	level endon(#"arena_challenge_ended");
-	while(1)
+	self.var_2da522a2 = [];
+	while(true)
 	{
 		self.var_2da522a2 = array::remove_dead(self.var_2da522a2, 0);
 		var_4dc249a = level.var_beccbadb < level.var_c4133b63;
@@ -924,6 +927,7 @@ function function_e4dbca5a(var_87c8152d)
 */
 function function_34c1d454(var_87c8152d)
 {
+	self.var_dacf61a8 = [];
 	while(level clientfield::get("circle_state") == 3)
 	{
 		self.var_dacf61a8 = array::remove_dead(self.var_dacf61a8, 0);
@@ -1168,7 +1172,7 @@ function function_523eee15()
 function function_877a7365()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		var_c7ca004c = [];
 		foreach(var_f1be0cdb, player in level.activeplayers)
@@ -1186,6 +1190,7 @@ function function_877a7365()
 				var_c7ca004c[var_c7ca004c.size] = player;
 			}
 		}
+		e_target_player = array::random(var_c7ca004c);
 		while(isalive(e_target_player) && (!(isdefined(e_target_player.beastmode) && e_target_player.beastmode)) && !e_target_player laststand::player_is_in_laststand())
 		{
 			self setgoal(e_target_player);
@@ -1207,6 +1212,7 @@ function function_877a7365()
 function get_unused_spawn_point(var_b852cbf7)
 {
 	a_valid_spawn_points = [];
+	b_all_points_used = 0;
 	while(!a_valid_spawn_points.size)
 	{
 		foreach(var_a0acd06a, s_spawn_point in self.var_4ff05dea)
@@ -1457,7 +1463,7 @@ function function_e05cf870()
 function function_2cca8355()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player zm_utility::in_revive_trigger())
@@ -1841,7 +1847,7 @@ function function_e883aed0()
 			var_ba0ff41[var_ba0ff41.size] = var_495730fe;
 		}
 	}
-	while(1)
+	while(true)
 	{
 		if(self laststand::player_is_in_laststand())
 		{
@@ -2074,7 +2080,7 @@ function function_80340a8d(n_path_index, var_45868921)
 	}
 	level.var_633c0362[level.var_633c0362.size] = var_f3364be4;
 	level thread function_5a0567f1(var_f3364be4);
-	while(1)
+	while(true)
 	{
 		n_path_index = n_path_index + 1;
 		if(n_path_index == var_45868921)
@@ -2102,6 +2108,7 @@ function function_5a0567f1(var_f3364be4)
 {
 	level endon(#"arena_challenge_ended");
 	level endon(#"shadow_challenge_ended");
+	var_56169cc1 = 0;
 	while(!var_56169cc1)
 	{
 		var_56169cc1 = 1;
@@ -2135,7 +2142,8 @@ function function_2b740dcf()
 	self notify(#"hash_2b740dcf");
 	self endon(#"hash_2b740dcf");
 	self endon(#"delete");
-	while(1)
+	players = arraycopy(level.activeplayers);
+	while(true)
 	{
 		if(!isdefined(self))
 		{
@@ -2169,7 +2177,7 @@ function function_2b740dcf()
 function function_306a8062()
 {
 	level endon(#"hash_306a8062");
-	while(1)
+	while(true)
 	{
 		function_c5938cab(1);
 		wait(3);
@@ -2196,7 +2204,7 @@ function function_88f5a59c(var_862980ee)
 	{
 		var_e0a3b3d7 = 0;
 	}
-	while(1)
+	while(true)
 	{
 		zm_genesis_util::function_c3266652("arena_smoke_perimeter_" + var_e0a3b3d7, 1);
 		level thread function_ab5cd340(var_e0a3b3d7);
@@ -2221,6 +2229,7 @@ function function_88f5a59c(var_862980ee)
 function function_ab5cd340(var_e0a3b3d7)
 {
 	s_smoke = struct::get("arena_smoke_perimeter_" + var_e0a3b3d7, "targetname");
+	n_start_time = gettime();
 	while(gettime() - n_start_time < 1)
 	{
 		a_players = arraycopy(level.activeplayers);
@@ -2671,7 +2680,8 @@ function function_e06bfc41()
 {
 	level endon(#"arena_challenge_ended");
 	level endon(#"fire_challenge_ended");
-	while(1)
+	var_44ed020 = randomintrange(0, 4);
+	while(true)
 	{
 		level thread function_a0aeb892(var_44ed020);
 		wait(31);
@@ -2782,7 +2792,8 @@ function function_d81d4dd8(var_7c34c9a5)
 	level endon("arena_challenge_flame_wall_damage_thread_" + var_7c34c9a5);
 	level endon(#"arena_challenge_ended");
 	level endon(#"fire_challenge_ended");
-	while(1)
+	a_e_triggers = getentarray("arena_flame_wall_" + var_7c34c9a5, "targetname");
+	while(true)
 	{
 		foreach(var_4ae660b0, e_trigger in a_e_triggers)
 		{
@@ -2814,7 +2825,7 @@ function function_e3782b49()
 	level endon(#"arena_challenge_ended");
 	level endon(#"fire_challenge_ended");
 	self endon(#"delete");
-	while(1)
+	while(true)
 	{
 		players = level.activeplayers;
 		foreach(var_3d193540, player in players)
@@ -2871,7 +2882,7 @@ function function_e499e553()
 {
 	level endon(#"arena_challenge_ended");
 	level endon(#"fire_challenge_ended");
-	while(1)
+	while(true)
 	{
 		var_98176bbc = randomint(5);
 		level thread function_e462dab8(1, var_98176bbc);
@@ -3027,7 +3038,7 @@ function function_c0d6adb6()
 			break;
 		}
 	}
-	while(1)
+	while(true)
 	{
 		b_reverse_dir = 0;
 		if(var_5c856d1f == 2 || var_5c856d1f == 1)
@@ -3102,7 +3113,8 @@ function function_e2a11bad()
 	level endon(#"arena_challenge_ended");
 	level endon(#"electricity_challenge_ended");
 	var_bcc7a104 = 0;
-	while(1)
+	var_d5c2ef73 = 6;
+	while(true)
 	{
 		var_bcc7a104 = var_bcc7a104 + 1;
 		if(var_bcc7a104 > 3)
@@ -3135,7 +3147,8 @@ function function_ffce63a9()
 {
 	level endon(#"arena_challenge_ended");
 	level endon(#"electricity_challenge_ended");
-	while(1)
+	a_indexes = array(0, 1, 2, 3, 4, 5);
+	while(true)
 	{
 		a_indexes = array::randomize(a_indexes);
 		for(i = 0; i < 3; i++)
@@ -3378,7 +3391,7 @@ function function_48791cb7()
 	self notify(#"hash_48791cb7");
 	self endon(#"hash_48791cb7");
 	self endon(#"delete");
-	while(1)
+	while(true)
 	{
 		if(!isdefined(self))
 		{
@@ -3500,7 +3513,8 @@ function function_a7750926()
 	self notify(#"hash_a7750926");
 	self endon(#"hash_a7750926");
 	self endon(#"delete");
-	while(1)
+	players = arraycopy(level.activeplayers);
+	while(true)
 	{
 		if(!isdefined(self))
 		{
@@ -3547,7 +3561,8 @@ function function_61e62395(var_50a530a1)
 {
 	level endon(#"arena_challenge_ended");
 	level endon(#"shadow_challenge_ended");
-	while(1)
+	var_c951867e = var_50a530a1;
+	while(true)
 	{
 		wait(3);
 		var_c951867e = var_c951867e + 1;
@@ -4019,7 +4034,7 @@ function function_d9624751()
 	{
 		level.var_eb7b7914 = 0;
 	}
-	while(1)
+	while(true)
 	{
 		if(level.var_eb7b7914 < level.var_a0135c54)
 		{
@@ -4137,7 +4152,7 @@ function function_63b428de()
 function function_aa6f9476()
 {
 	level endon(#"hash_7ea88c9e");
-	while(1)
+	while(true)
 	{
 		var_cecde52d = level.var_43e34f20[0];
 		level thread [[var_cecde52d]](0, 0, 1, 0);
@@ -4675,7 +4690,7 @@ function function_47c38473()
 	level endon(#"final_boss_defeated");
 	level.var_3ba63921 = 0;
 	var_90530d3 = 0;
-	while(1)
+	while(true)
 	{
 		self.health = 1000000;
 		self waittill(#"damage", amount, attacker, direction_vec, point, type, tagname, modelname, partname, weapon);
@@ -5011,7 +5026,7 @@ function function_5c0b3137()
 	{
 		level.var_eb7b7914 = 0;
 	}
-	while(1)
+	while(true)
 	{
 		if(level.var_eb7b7914 < level.var_a0135c54)
 		{
@@ -5045,7 +5060,7 @@ function function_f71c240d()
 	{
 		level.var_338630d6 = 0;
 	}
-	while(1)
+	while(true)
 	{
 		if(level.var_338630d6 < level.var_dba75e2a)
 		{
@@ -5241,7 +5256,7 @@ function function_5a68c25f(player)
 */
 function function_f20e5aa1()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_triggerer);
 		if(e_triggerer zm_utility::in_revive_trigger())
@@ -5284,7 +5299,7 @@ function function_f20e5aa1()
 */
 function function_4ea58c0(var_549b41ba)
 {
-	while(1)
+	while(true)
 	{
 		if(level.var_40ffc71d >= 15)
 		{
@@ -5311,7 +5326,7 @@ function function_867f6495()
 	level endon(#"hash_867f6495");
 	level endon(#"final_boss_defeated");
 	var_cb6acc3e = undefined;
-	while(1)
+	while(true)
 	{
 		var_46352a82 = level.ball;
 		var_d6ba68c5 = var_46352a82.visuals[0];
@@ -5733,7 +5748,8 @@ function function_4b9028e6()
 	level endon(#"grand_tour");
 	level.var_b1b99f8d = [];
 	level waittill(#"book_placed");
-	while(1)
+	var_c0132a00 = getent("rift_entrance_rune_portal", "targetname");
+	while(true)
 	{
 		if(function_64d5ef9() && level.var_b1b99f8d.size >= 4)
 		{
@@ -5822,6 +5838,7 @@ function function_b1e065cd()
 {
 	var_e9469e74 = 0;
 	a_s_port_locs = [];
+	var_edface0 = 3;
 	while(!var_e9469e74)
 	{
 		foreach(var_7142ad33, e_player in level.activeplayers)
@@ -6042,7 +6059,7 @@ function function_44d21c21(b_on)
 */
 function function_f2c00181()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player zm_utility::in_revive_trigger())

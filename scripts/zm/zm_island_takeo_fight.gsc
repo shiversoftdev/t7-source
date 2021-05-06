@@ -296,6 +296,7 @@ function function_4c7498f7()
 function function_279705f()
 {
 	level endon(#"hash_d1f7df7e");
+	var_ac9b7de4 = level.var_bbdc1f95.var_69943735[3];
 	while(!(isdefined(var_ac9b7de4.var_f162c552) && var_ac9b7de4.var_f162c552))
 	{
 		level thread function_4c7498f7();
@@ -722,6 +723,7 @@ function function_a49f3a92()
 	level flag::clear("spawn_zombies");
 	var_fe3fa728 = 400 * 400;
 	mdl_door = level.var_bbdc1f95.var_c093c394;
+	var_1bc21233 = 0;
 	while(var_1bc21233 != 1)
 	{
 		foreach(var_b2bc6603, player in level.activeplayers)
@@ -1365,6 +1367,7 @@ function function_fe7b0c13()
 {
 	level endon(#"hash_ec7f92f6");
 	var_d3111274 = "zone_bunker_prison";
+	level.var_f0fe245e = 0;
 	while(isdefined(level.var_5258ba34) && level.var_5258ba34 && (!(isdefined(level.var_f0fe245e) && level.var_f0fe245e)))
 	{
 		var_f66cf9d4 = [];

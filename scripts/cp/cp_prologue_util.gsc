@@ -308,7 +308,8 @@ function follow_linked_scripted_nodes()
 	self endon(#"death");
 	self.goalradius = 64;
 	self.ignoreall = 1;
-	while(1)
+	nd_node = getnode(self.script_string, "targetname");
+	while(true)
 	{
 		self setgoal(nd_node.origin);
 		self waittill(#"goal");
@@ -644,7 +645,8 @@ function function_8f7b1e06(str_trigger, var_390543cc, var_9d774f5d)
 function wait_for_all_players_to_pass_struct(str_struct, var_e209da48)
 {
 	s_struct = struct::get(str_struct, "targetname");
-	while(1)
+	v_struct_dir = anglestoforward(s_struct.angles);
+	while(true)
 	{
 		num_players_past = 0;
 		a_players = getplayers();
@@ -904,6 +906,7 @@ function vehicle_rumble(str_rumble_type = "damage_light", var_74584a64, var_48f8
 	}
 	self endon(#"death");
 	n_timepassed = 0;
+	b_done = 0;
 	while(!b_done)
 	{
 		self playrumbleonentity(str_rumble_type);
@@ -1063,7 +1066,8 @@ function function_e0fb6da9(str_struct, close_dist, wait_time, var_d1b83750, max_
 	var_7d22b48e = getent(var_98e9bc46, "targetname");
 	v_forward = anglestoforward(s_struct.angles);
 	s_struct.start_time = undefined;
-	while(1)
+	var_cc06a93d = 0;
+	while(true)
 	{
 		e_player = getplayers()[0];
 		v_dir = s_struct.origin - e_player.origin;
@@ -1208,7 +1212,7 @@ function function_92d5b013(speed_frac)
 function debug_line(e_ent)
 {
 	e_ent endon(#"death");
-	while(1)
+	while(true)
 	{
 		v_start = e_ent.origin;
 		v_end = v_start + vectorscale((0, 0, 1), 1000);
@@ -1441,7 +1445,7 @@ function function_e0f9fe98(str_door_name, b_state)
 {
 	level endon("stop_door_" + str_door_name);
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_who);
 		if(isplayer(e_who))
@@ -1472,7 +1476,8 @@ function function_e010251d(str_door_name, b_state, e_guy)
 	{
 		e_guy.a_doors = [];
 	}
-	while(1)
+	e_guy.a_doors[str_door_name] = 0;
+	while(true)
 	{
 		self waittill(#"trigger", e_who);
 		if(isai(e_who) && e_who == e_guy)

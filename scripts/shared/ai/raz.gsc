@@ -920,6 +920,7 @@ private function raztorpedodetonateifclosetotarget(torpedo_target, torpedo_targe
 {
 	self endon(#"death");
 	self endon(#"detonated");
+	torpedo = self;
 	while(isdefined(torpedo) && isdefined(torpedo_target))
 	{
 		torpedo_target_pos = torpedo_target.origin + torpedo_target_offset;
@@ -1428,7 +1429,7 @@ private function razgibzombiesonmelee()
 {
 	self endon(#"death");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"melee_fire");
 		a_zombies = getaiarchetypearray("zombie");

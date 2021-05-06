@@ -488,7 +488,7 @@ function idgun_part_blinks(mdl_part)
 	level notify(#"idgun_part_blinks");
 	level endon(#"idgun_part_blinks");
 	level endon(#"idgun_part_found");
-	while(1)
+	while(true)
 	{
 		mdl_part setinvisibletoall();
 		wait(0.5);
@@ -702,7 +702,8 @@ function idgun_proximity_sensor(var_3fbc06aa)
 	n_scaled_pulse_delay = undefined;
 	n_time_before_next_pulse = undefined;
 	n_scale = undefined;
-	while(1)
+	var_887c2fcb = undefined;
+	while(true)
 	{
 		var_5cc8da3f = self getcurrentweapon();
 		weapon_idgun = getweapon(level.idgun[0].str_wpnname);

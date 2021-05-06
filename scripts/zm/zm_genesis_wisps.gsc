@@ -129,7 +129,8 @@ function function_d1c51308()
 function function_f61f49b0()
 {
 	var_96cdbf35 = array("abcd", "abcd", "shad");
-	while(1)
+	var_6cf8e556 = array("shad", "abcd");
+	while(true)
 	{
 		str_notify = level util::waittill_any_return("wisps_on_abcd", "wisps_on_shad", "boss_round_end_vo_done", "chaos_round_end_vo_done", "wisps_off");
 		if(str_notify == "wisps_on_abcd")
@@ -240,7 +241,7 @@ function function_26ed5998(b_on = 1, str_who = "abcd")
 function function_3bcaa1c()
 {
 	self endon(#"hash_d8f13b7d");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger_activated", e_player);
 		/#
@@ -320,7 +321,8 @@ function function_bce246fa()
 */
 function function_b177eb62()
 {
-	while(1)
+	var_76bf4ac6 = level.var_783db6ab;
+	while(true)
 	{
 		str_wait = util::waittill_any_return("start_of_round");
 		if(level.round_number > var_76bf4ac6)
@@ -421,7 +423,7 @@ function set_funfact_fx(b_on = 1)
 function function_198aed06()
 {
 	self endon(#"hash_77f5f32b");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger_activated", e_player);
 		/#

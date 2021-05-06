@@ -135,7 +135,7 @@ function reward()
 function watch_for_respawn()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"spawned_player");
 		waittillframeend();
@@ -327,7 +327,7 @@ function nml_show_hide()
 {
 	level endon(#"intermission");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		level flag::wait_till("enter_nml");
 		self ghost();
@@ -619,7 +619,7 @@ function cassimir()
 function cheat_complete_stage()
 {
 	level endon(#"reset_sundial");
-	while(1)
+	while(true)
 	{
 		if(getdvarstring("cheat_sq") != "")
 		{
@@ -740,7 +740,8 @@ function get_variant_from_entity_num(player_number = 0)
 */
 function sq_flatcard_logic()
 {
-	while(1)
+	nml_set = 0;
+	while(true)
 	{
 		if(level flag::get("enter_nml") && !nml_set)
 		{
@@ -803,7 +804,7 @@ function sd_init()
 function function_7e76fe45(var_2ad32714)
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		var_2ad32714 waittill(#"microwaved");
 		level flag::set(self.targetname);
@@ -887,7 +888,8 @@ function function_948d4e7d()
 	var_51aa97ed = util::spawn_model(var_9f30ae72.model, var_9f30ae72.origin, var_9f30ae72.angles);
 	var_51aa97ed setscale(var_9f30ae72.script_float);
 	var_c1b1cd1c = 2.3 / 30;
-	while(1)
+	var_fa77a9e7 = 0;
+	while(true)
 	{
 		level waittill(#"hash_9b391ed5");
 		if(var_fa77a9e7 < 30)
@@ -923,7 +925,8 @@ function function_66951281()
 	var_51aa97ed = util::spawn_model(var_e7c6777b.model, var_e7c6777b.origin, var_e7c6777b.angles);
 	var_51aa97ed setscale(var_e7c6777b.script_float);
 	var_c1b1cd1c = 2 / 15;
-	while(1)
+	var_fa77a9e7 = 0;
+	while(true)
 	{
 		level waittill(#"hash_d7362b52");
 		if(var_fa77a9e7 < 15)
@@ -1020,7 +1023,7 @@ function function_93878170()
 	var_653beee4 = array("p7_fxanim_zmhd_moon_spacedog_path1_sec1_bundle", "p7_fxanim_zmhd_moon_spacedog_path1_sec2_bundle", "p7_fxanim_zmhd_moon_spacedog_path2_bundle");
 	var_efac5d38 = array("p7_fxanim_zmhd_moon_spacedog_path1_sec2_bundle", "p7_fxanim_zmhd_moon_spacedog_path2_bundle");
 	wait(1);
-	while(1)
+	while(true)
 	{
 		if(level flag::get("start_hangar_digger") || level flag::get("start_teleporter_digger"))
 		{

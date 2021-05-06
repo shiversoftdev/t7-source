@@ -88,6 +88,7 @@ function function_d28f5c87(localclientnum, oldval, newval, bnewent, binitialsnap
 	self thread function_9b0f57cf(localclientnum, newval);
 	if(newval)
 	{
+		i = 0;
 		while(i <= 1)
 		{
 			if(!isdefined(self))
@@ -101,6 +102,7 @@ function function_d28f5c87(localclientnum, oldval, newval, bnewent, binitialsnap
 	}
 	else
 	{
+		i = 1;
 		while(i > 0)
 		{
 			if(!isdefined(self))
@@ -129,6 +131,7 @@ function function_9b0f57cf(localclientnum, newval)
 	self endon(#"hash_9b0f57cf");
 	if(newval)
 	{
+		i = 0.25;
 		while(i <= 1)
 		{
 			if(!isdefined(self))
@@ -142,6 +145,7 @@ function function_9b0f57cf(localclientnum, newval)
 	}
 	else
 	{
+		i = 1;
 		while(i > 0.25)
 		{
 			if(!isdefined(self))
@@ -215,7 +219,7 @@ function function_2ce58010(n_local_client)
 {
 	self endon(#"entityshutdown");
 	level endon(#"hash_a35dee4e");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", e_attacker, v_impact_pos, var_778fe70f, var_77cbbb1b);
 		if(level.var_ef6a691 > 0)
@@ -322,7 +326,7 @@ function function_bd038ea4(n_local_client, var_2c17cb9d, var_116b515b)
 			var_4361a688 = "scriptVector3";
 			break;
 		}
-		default
+		default:
 		{
 			var_4361a688 = undefined;
 			break;
@@ -330,8 +334,9 @@ function function_bd038ea4(n_local_client, var_2c17cb9d, var_116b515b)
 	}
 	if(var_116b515b)
 	{
-		while(1)
+		while(true)
 		{
+			i = self.var_6f4c2683[var_2c17cb9d];
 			while(i < 1)
 			{
 				if(!isdefined(self))
@@ -343,6 +348,7 @@ function function_bd038ea4(n_local_client, var_2c17cb9d, var_116b515b)
 				wait(0.01);
 				i = i + 0.05;
 			}
+			i = self.var_6f4c2683[var_2c17cb9d];
 			while(i > 0.1)
 			{
 				if(!isdefined(self))
@@ -358,6 +364,7 @@ function function_bd038ea4(n_local_client, var_2c17cb9d, var_116b515b)
 	}
 	else
 	{
+		i = self.var_6f4c2683[var_2c17cb9d];
 		while(i > 0.1)
 		{
 			if(!isdefined(self))
@@ -369,6 +376,7 @@ function function_bd038ea4(n_local_client, var_2c17cb9d, var_116b515b)
 			wait(0.01);
 			i = i - 0.01;
 		}
+		i = 1;
 		while(i > 0.1)
 		{
 			if(!isdefined(self))

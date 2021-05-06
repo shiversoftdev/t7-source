@@ -363,7 +363,7 @@ function moon_quad_sidestep(animname, stepanim)
 	self endon(#"stop_sidestep");
 	self thread moon_quad_wait_phase_end(stepanim);
 	self thread moon_quad_exit_align(stepanim);
-	while(1)
+	while(true)
 	{
 		self waittill(animname, note);
 		if(note == "phase_start")

@@ -111,6 +111,7 @@ function ambient_flak_think(point)
 	level thread ambient_flak_flash(point, min_burst_time, max_burst_time);
 	for(;;)
 	{
+		timer = randomfloatrange(min_burst_time, max_burst_time);
 		while(timer > 0)
 		{
 			point.is_firing = 1;
@@ -189,7 +190,7 @@ function ambient_flak_flash(point, min_burst_time, max_burst_time)
 	min_burst_time = 0.25;
 	max_burst_time = 1;
 	fxpos = undefined;
-	while(1)
+	while(true)
 	{
 		if(!point.is_firing)
 		{
@@ -392,14 +393,14 @@ function ambient_fakefire_think(point)
 			weaptype = "turret";
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				assertmsg("" + point.weaponinfo + "");
 			#/
 		}
 	}
-	while(1)
+	while(true)
 	{
 		burst = randomintrange(burstmin, burstmax);
 		for(i = 0; i < burst; i++)
@@ -470,7 +471,7 @@ function spin_fan()
 			self.wobble_speed = self.speed * 0.5;
 		}
 	}
-	while(1)
+	while(true)
 	{
 		if(!do_wobble)
 		{
@@ -659,7 +660,8 @@ function clock_run(time_values)
 		self rotatepitch(time_values["first_rotate"], 0.05);
 		self waittill(#"rotatedone");
 	}
-	while(1)
+	prev_time = getsystemtime();
+	while(true)
 	{
 		curr_time = getsystemtime();
 		if(prev_time != curr_time)
@@ -720,7 +722,7 @@ function spoon_spin_func()
 	{
 		model_speed = 2;
 	}
-	while(1)
+	while(true)
 	{
 		speed = randomfloatrange(model_speed * 0.6, model_speed);
 		self rotateyaw(1200, speed);
@@ -756,7 +758,7 @@ function arrow_spin_func()
 	{
 		model_speed = 0.8;
 	}
-	while(1)
+	while(true)
 	{
 		direction_change = model_direction_change + randomintrange(-11, 11);
 		speed_change = randomfloatrange(model_speed * 0.3, model_speed);

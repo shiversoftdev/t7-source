@@ -463,7 +463,7 @@ function function_23c9ffd3(trigger)
 {
 	self notify(#"hash_23c9ffd3");
 	self endon(#"hash_23c9ffd3");
-	while(1)
+	while(true)
 	{
 		wait(0.5);
 		if(!isdefined(self))
@@ -595,7 +595,7 @@ function function_3f67a723(origin, arc_angle_degrees = 90, do_trace, e_ignore)
 */
 function function_424b6fe8()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger_activated", e_who);
 		if(self.script_int == e_who getentitynumber())
@@ -847,7 +847,7 @@ function function_b1f54cb4(e_player, s_reward, var_17b3dc96, var_21d0cf95)
 			self.var_3609adde.var_9cab68e0 = 1;
 			break;
 		}
-		default
+		default:
 		{
 			self.var_30ff0d6c = util::spawn_model(var_17b3dc96, var_51a2f105, var_9ef5a0dc);
 			break;
@@ -1143,6 +1143,7 @@ function function_e425ba86()
 function function_f1c59ae()
 {
 	self endon(#"disconnect");
+	self.var_c678bf7b = [];
 	while(self.var_c678bf7b.size < 3)
 	{
 		self waittill(#"hash_2e47bc4a");
@@ -1168,7 +1169,7 @@ function function_76bcffc2()
 {
 	self endon(#"flag_player_completed_challenge_1");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill(#"raz_arm_detach", e_attacker);
 		if(e_attacker === self)
@@ -1210,7 +1211,7 @@ function function_c169b7dd()
 {
 	self endon(#"flag_player_completed_challenge_1");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill(#"raz_mask_destroyed", e_attacker);
 		if(e_attacker === self)
@@ -1233,7 +1234,7 @@ function function_5efd7abf()
 {
 	self endon(#"disconnect");
 	self endon(#"flag_player_completed_challenge_1");
-	while(1)
+	while(true)
 	{
 		self waittill(#"hash_690aad79");
 		self thread function_8494f9a2();
@@ -1272,6 +1273,7 @@ function function_4322fb5f()
 {
 	self endon(#"disconnect");
 	var_d0e8cd34 = getent("finger_trap_slide_trigger", "targetname");
+	level.var_7ee8825e = self;
 	while(!self flag::get("flag_player_completed_challenge_2"))
 	{
 		self waittill(#"hash_ad9aba38");
@@ -1376,7 +1378,7 @@ function function_4e107409()
 {
 	self endon(#"flag_player_completed_challenge_2");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"hash_696f953");
 		self notify(#"update_challenge_2_3");
@@ -1395,6 +1397,7 @@ function function_4e107409()
 function function_81adc498()
 {
 	self endon(#"disconnect");
+	self.var_e34aa037 = 0;
 	while(!self flag::get("flag_player_completed_challenge_2"))
 	{
 		self waittill(#"hash_3d742bf8");
@@ -1473,7 +1476,7 @@ function function_31d5f655()
 {
 	self endon(#"flag_player_completed_challenge_2");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"hash_f7608efe", n_kill_count);
 		if(n_kill_count >= 8)
@@ -1496,7 +1499,7 @@ function function_75fdfc25()
 {
 	self endon(#"flag_player_completed_challenge_3");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"hash_2e47bc4a");
 		self thread function_638f34fd();
@@ -1539,6 +1542,7 @@ function function_638f34fd()
 function function_2bf9f9d4()
 {
 	self endon(#"disconnect");
+	self.var_f12fd515 = [];
 	while(self.var_f12fd515.size < 3)
 	{
 		self waittill(#"hash_e442448", n_kill_count, str_location);
@@ -1681,7 +1685,7 @@ function function_cdeaa5f()
 {
 	self endon(#"flag_player_completed_challenge_3");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill(#"all_sentinel_arms_destroyed", b_same_arms_attacker, e_attacker);
 		if(isdefined(b_same_arms_attacker) && b_same_arms_attacker && e_attacker === self)
@@ -1704,7 +1708,7 @@ function function_e480fc42()
 {
 	self endon(#"flag_player_completed_challenge_3");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill(#"sentinel_camera_destroyed", e_attacker);
 		if(e_attacker === self)
@@ -1740,6 +1744,7 @@ function function_2ce855f3(s_challenge)
 	}
 	self.var_873a3e27[s_challenge.n_index] = 0;
 	var_80792f67 = s_challenge.n_count;
+	var_ea184c3d = s_challenge.n_count;
 	while(var_80792f67 > 0)
 	{
 		self waittill(s_challenge.str_notify);
@@ -1932,7 +1937,7 @@ function function_be89247c()
 function function_d5da2be8(var_7ee6d8e6)
 {
 	self zm_unitrigger::create_unitrigger("");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger_activated", e_who);
 		if(e_who == var_7ee6d8e6)
@@ -1961,7 +1966,7 @@ function function_38091734(var_7ee6d8e6)
 	var_7ee6d8e6 function_34a8c625(self);
 	var_7ee6d8e6 clientfield::set_to_player("pr_l_c", 1);
 	self zm_unitrigger::create_unitrigger("");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger_activated", e_who);
 		if(e_who == var_7ee6d8e6)
@@ -2035,7 +2040,7 @@ function function_1fa81bf0()
 		}
 	}
 	level flag::wait_till("pr_m");
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_fire", grenade, weapon);
 		if(weapon === level.weaponzmcymbalmonkey || weapon === level.w_cymbal_monkey_upgraded)

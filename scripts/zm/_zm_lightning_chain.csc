@@ -115,7 +115,7 @@ function lc_play_death_fx(localclientnum, oldval, newval, bnewent, binitialsnap,
 			str_fx = level._effect["tesla_shock_nonfatal"];
 			break;
 		}
-		default
+		default:
 		{
 			str_fx = level._effect["tesla_shock"];
 			break;

@@ -403,7 +403,8 @@ function watchteamopstime()
 	{
 		return;
 	}
-	while(1)
+	startdelay = getdvarint("teamOpsStartDelay_" + level.gametype, 300);
+	while(true)
 	{
 		if(isdefined(game["teamops"].teamopsname))
 		{

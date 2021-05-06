@@ -258,7 +258,7 @@ function connection_on_notify(state_machine, notify_name, connection)
 {
 	self endon(state_machine.change_note);
 	state_machine endon(#"_cancel_connections");
-	while(1)
+	while(true)
 	{
 		self waittill(notify_name, param0, param1, param2, param3, param4, param5, param6, param7, param8, param9, param10, param11, param12, param13, param14, param15);
 		params = spawnstruct();

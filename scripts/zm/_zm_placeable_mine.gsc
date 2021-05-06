@@ -226,7 +226,7 @@ private function mine_watch(wpn_type)
 	self endon(#"death");
 	self notify(#"mine_watch");
 	self endon(#"mine_watch");
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_fire", mine, fired_weapon);
 		if(fired_weapon == wpn_type)
@@ -421,7 +421,7 @@ private function pickup_placeable_mine_trigger_listener_enable(trigger, player)
 {
 	self endon(#"delete");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		player util::waittill_any("zmb_enable_" + self.weapon.name + "_prompt", "spawned_player");
 		if(!isdefined(trigger))
@@ -446,7 +446,7 @@ private function pickup_placeable_mine_trigger_listener_disable(trigger, player)
 {
 	self endon(#"delete");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		player waittill("zmb_disable_" + self.weapon.name + "_prompt");
 		if(!isdefined(trigger))
@@ -474,7 +474,7 @@ private function placeable_mine_damage()
 	self.health = 100000;
 	self.maxhealth = self.health;
 	attacker = undefined;
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", amount, attacker);
 		if(!isdefined(self))
@@ -539,7 +539,7 @@ private function reset_satchel_explode_this_frame()
 */
 private function replenish_after_rounds()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"between_round_over");
 		if(isdefined(level.func_custom_placeable_mine_round_replenish))

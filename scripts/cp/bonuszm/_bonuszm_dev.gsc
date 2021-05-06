@@ -37,7 +37,7 @@ function function_17186302()
 {
 	/#
 		setdvar("", 0);
-		while(1)
+		while(true)
 		{
 			if(isdefined(level.var_a9e78bf7) && getdvarstring("") == "")
 			{
@@ -91,7 +91,7 @@ function function_10489e30()
 {
 	/#
 		setdvar("", 0);
-		while(1)
+		while(true)
 		{
 			if(getdvarstring("") == "" || (isdefined(level.var_5deb2d16) && level.var_5deb2d16))
 			{
@@ -145,7 +145,8 @@ function function_a2a8d5a6()
 {
 	/#
 		setdvar("", 0);
-		while(1)
+		nodes = getallnodes();
+		while(true)
 		{
 			if(getdvarstring("") == "")
 			{

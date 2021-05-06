@@ -61,7 +61,7 @@ function init_zeppelin(str_script_noteworthy, str_ender)
 		m_zeppelin = util::spawn_model("veh_t7_dlc_zm_zeppelin", (0, 0, 0));
 		m_zeppelin setforcenocull();
 		m_zeppelin clientfield::set("zeppelin_fx", 1);
-		while(1)
+		while(true)
 		{
 			m_zeppelin move_zeppelin_down_new_path(a_path_structs);
 		}
@@ -112,6 +112,7 @@ function move_zeppelin_down_new_path(a_structs)
 function get_unused_struct(a_structs)
 {
 	a_valid_structs = [];
+	b_no_unused_structs = 0;
 	while(!a_valid_structs.size)
 	{
 		foreach(var_b41743b4, struct in a_structs)
@@ -186,7 +187,7 @@ function function_add29756()
 */
 function function_b6165329()
 {
-	while(1)
+	while(true)
 	{
 		level flag::wait_till("play_animation_planes");
 		self scene::play(self.str_scene, self);
@@ -206,7 +207,8 @@ function function_b6165329()
 function function_511ab91d()
 {
 	var_e1149395 = getent("ambiance_dogfights_1", "targetname");
-	while(1)
+	var_7170dfe = getent("ambiance_dogfights_2", "targetname");
+	while(true)
 	{
 		var_f4570d42 = randomint(3);
 		if(level.var_1766c187)

@@ -108,7 +108,8 @@ function function_ffa114bb(localclientnum)
 	self endon(#"hash_c329133d");
 	self endon(#"entityshutdown");
 	toppos = self.origin + vectorscale((0, 0, 1), 12);
-	while(1)
+	bottompos = self.origin;
+	while(true)
 	{
 		self.var_bc148e61 moveto(toppos, 0.5, 0, 0);
 		self.var_bc148e61 waittill(#"movedone");

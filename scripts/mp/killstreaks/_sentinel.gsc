@@ -135,6 +135,7 @@ function drone_pain_for_time(time, stablizeparam, restorelookpoint, weapon)
 	self.painstarttime = gettime();
 	if(!(isdefined(self.inpain) && self.inpain) && isdefined(self.health) && self.health > 0)
 	{
+		self.inpain = 1;
 		while(gettime() < self.painstarttime + time * 1000)
 		{
 			self setvehvelocity(self.velocity * stablizeparam);
@@ -569,7 +570,7 @@ function healthmonitor()
 	params = level.killstreakbundle["sentinel"];
 	if(isdefined(params.fxlowhealth))
 	{
-		while(1)
+		while(true)
 		{
 			if(self.lowhealth > self.health)
 			{
@@ -664,7 +665,7 @@ function watchwater()
 {
 	sentinel = self;
 	sentinel endon(#"sentinel_shutdown");
-	while(1)
+	while(true)
 	{
 		wait(0.1);
 		trace = physicstrace(self.origin + vectorscale((0, 0, 1), 10), self.origin + vectorscale((0, 0, 1), 6), vectorscale((-1, -1, -1), 2), vectorscale((1, 1, 1), 2), self, 4);

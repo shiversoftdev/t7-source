@@ -218,7 +218,7 @@ function function_c691b60()
 */
 function function_6bf381de(var_2de8cf5e, var_bee8e45)
 {
-	while(1)
+	while(true)
 	{
 		var_2de8cf5e[0] zm_castle_util::create_unitrigger();
 		var_2de8cf5e[0] waittill(#"trigger_activated");
@@ -240,7 +240,7 @@ function function_6bf381de(var_2de8cf5e, var_bee8e45)
 function function_374ac18c(var_2de8cf5e, var_bee8e45)
 {
 	var_2de8cf5e[0].var_df5776d8 setcandamage(1);
-	while(1)
+	while(true)
 	{
 		var_2de8cf5e[0].var_df5776d8.health = 1000000;
 		var_2de8cf5e[0].var_df5776d8 waittill(#"damage", damage, attacker, dir, loc, type, model, tag, part, weapon, flags);
@@ -300,7 +300,7 @@ function function_972992c4(var_2de8cf5e, b_on)
 */
 function function_2db2bf79()
 {
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.var_a02b0d5a) && self.var_a02b0d5a)
 		{
@@ -338,7 +338,7 @@ function function_e437a08f()
 function function_4eb3851()
 {
 	level thread function_4e9df779();
-	while(1)
+	while(true)
 	{
 		level.var_6d5fd229 zm_castle_util::create_unitrigger();
 		level.var_6d5fd229 waittill(#"trigger_activated");
@@ -362,7 +362,7 @@ function function_4eb3851()
 */
 function function_4e9df779()
 {
-	while(1)
+	while(true)
 	{
 		level.var_6d5fd229 animation::first_frame("p7_fxanim_zm_castle_music_box_anim");
 		level flag::wait_till("ee_music_box_turning");
@@ -441,7 +441,7 @@ function function_2f183e13(n_index)
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		self waittill(#"bgb_bubble_blow_complete");
 		if(self bgb::is_active("zm_bgb_in_plain_sight"))
@@ -464,6 +464,7 @@ function function_2f183e13(n_index)
 */
 function function_e26b6053()
 {
+	var_7b63bfc8 = 0;
 	while(!var_7b63bfc8)
 	{
 		self.health = 1000000;
@@ -603,7 +604,8 @@ function function_3c992a71()
 function function_27da29cb()
 {
 	self endon(#"skull_revealed");
-	while(1)
+	var_43af6ca7 = self.origin[2];
+	while(true)
 	{
 		n_current_time = gettime();
 		n_offset = sin(n_current_time * 0.1) * 16;
@@ -670,7 +672,7 @@ function start()
 */
 function function_290563e9()
 {
-	while(1)
+	while(true)
 	{
 		if(!function_755ccf7d())
 		{
@@ -777,7 +779,7 @@ function function_1401a672(var_fc7b760)
 function function_1a856336()
 {
 	self.var_2eb50ca2 setcandamage(1);
-	while(1)
+	while(true)
 	{
 		self.var_2eb50ca2.health = 1000000;
 		self.var_2eb50ca2 waittill(#"damage", damage, attacker);
@@ -803,7 +805,7 @@ function function_1a856336()
 function function_4217f0a1()
 {
 	self.var_16cc14d0 setcandamage(1);
-	while(1)
+	while(true)
 	{
 		self.var_16cc14d0.health = 1000000;
 		self.var_16cc14d0 waittill(#"damage", damage, attacker);
@@ -923,7 +925,7 @@ function function_c02b51fb(n_index)
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		self waittill(#"bgb_bubble_blow_complete");
 		if(self bgb::is_active("zm_bgb_in_plain_sight"))
@@ -1050,7 +1052,7 @@ function function_64e6de56()
 function function_d23efff2()
 {
 	self endon(#"hash_d23efff2");
-	while(1)
+	while(true)
 	{
 		a_enemies = getactorteamarray("axis");
 		foreach(var_60c3b533, e_enemy in a_enemies)
@@ -1192,7 +1194,7 @@ function function_4811d22b()
 {
 	level endon(#"hash_4811d22b");
 	level.var_163864b7 setinvisibletoall();
-	while(1)
+	while(true)
 	{
 		level flag::wait_till("plunger_teleport_on");
 		level.var_163864b7 setvisibletoall();
@@ -1249,7 +1251,7 @@ function function_b98927d4(einflictor, eattacker, idamage, idflags, smeansofdeat
 */
 function function_52c08eab()
 {
-	while(1)
+	while(true)
 	{
 		level flag::wait_till("ee_disco_inferno");
 		[[ level.var_818b7815 ]]->function_1401a672(0);
@@ -1361,7 +1363,7 @@ function init()
 function start()
 {
 	self thread function_719601e4();
-	while(1)
+	while(true)
 	{
 		if(self.m_b_active)
 		{
@@ -1463,7 +1465,8 @@ function lightning_strikes()
 {
 	self notify(#"lightning_strikes");
 	self endon(#"lightning_strikes");
-	while(1)
+	self.var_23036e82 = 1;
+	while(true)
 	{
 		var_6443dac9 = randomfloatrange(5, 15);
 		wait(var_6443dac9);
@@ -1507,7 +1510,7 @@ function function_1f5408aa()
 function function_719601e4()
 {
 	self.m_mdl_switch zm_castle_util::create_unitrigger();
-	while(1)
+	while(true)
 	{
 		self.m_mdl_switch waittill(#"trigger_activated");
 		self function_aa7c5ce2();
@@ -1697,7 +1700,7 @@ function function_421bb7db()
 */
 function function_81d41eb8(var_7f701981)
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(level flag::get("ee_power_wallrun_teleport") == 0)
@@ -1736,7 +1739,7 @@ function function_81d41eb8(var_7f701981)
 */
 function function_8d508e48()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		player.var_130b9781 = 0;
@@ -1931,7 +1934,7 @@ function function_dbab79d5(player)
 */
 function function_6527501a()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player zm_utility::in_revive_trigger())
@@ -2045,7 +2048,8 @@ function function_1fcb04d7()
 function function_9daec9e3()
 {
 	self endon(#"disconnect");
-	while(1)
+	var_7c4fe278 = getweapon("knife_plunger");
+	while(true)
 	{
 		self waittill(#"weapon_melee", weapon);
 		if(weapon == var_7c4fe278 && isdefined(self.var_ea5424ae) && self.var_ea5424ae > 0)
@@ -2166,7 +2170,7 @@ function function_5c600852()
 	level.var_89ad28cd = 0;
 	var_d959ac05 = getentarray("hs_gramophone", "targetname");
 	array::thread_all(var_d959ac05, &function_db46cccd);
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_9c9fb305");
 		if(level.var_89ad28cd == var_d959ac05.size)
@@ -2226,7 +2230,7 @@ function function_553b8e23()
 	level.var_51d5c50c = 0;
 	var_c911c0a2 = struct::get_array("hs_bear", "targetname");
 	array::thread_all(var_c911c0a2, &function_4b02c768);
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_c3f82290");
 		if(level.var_51d5c50c == var_c911c0a2.size)
@@ -2306,7 +2310,7 @@ function spare_change()
 */
 function check_for_change()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_player);
 		if(e_player getstance() == "prone")

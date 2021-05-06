@@ -152,7 +152,7 @@ function function_6fbe2b2c(v_vortex_origin)
 function function_2bd571b9()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"projectile_impact", weapon, position, radius, attacker, normal);
 		position = function_6fbe2b2c(position + normal * 20);

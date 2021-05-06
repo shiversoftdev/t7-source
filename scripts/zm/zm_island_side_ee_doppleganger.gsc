@@ -134,7 +134,7 @@ function function_46051422(n_time = 60)
 {
 	level thread function_b1aa7056();
 	level waittill(#"hash_8d6c8d6d");
-	while(1)
+	while(true)
 	{
 		if(level.activeplayers.size > 1)
 		{
@@ -171,7 +171,7 @@ function function_b1aa7056()
 	t_lookat_doppleganger_enable = getent("t_lookat_doppleganger_enable", "targetname");
 	if(isdefined(t_lookat_doppleganger_enable))
 	{
-		while(1)
+		while(true)
 		{
 			t_lookat_doppleganger_enable waittill(#"trigger", e_who);
 			if(zm_utility::is_player_valid(e_who) && e_who util::ads_button_held() && !e_who flag::get("doppleganger_enabled"))
@@ -428,7 +428,7 @@ function function_89b0bd32()
 {
 	self endon(#"hash_916d8c9f");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self playrumbleonentity("tank_damage_heavy_mp");
 		earthquake(0.35, 0.5, self.origin, 325);

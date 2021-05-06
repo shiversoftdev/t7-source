@@ -401,7 +401,7 @@ function onbeginuse(e_player)
 function debug_draw_line(origin1)
 {
 	/#
-		while(1)
+		while(true)
 		{
 			recordline(origin1, origin1 + vectorscale((0, 0, 1), 2000), (1, 1, 1), "");
 			wait(0.05);
@@ -420,7 +420,7 @@ function debug_draw_line(origin1)
 */
 function function_7c315d3a()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"scene_sequence_started");
 		if(isdefined(level.bonuszm_musicoverride) && level.bonuszm_musicoverride)

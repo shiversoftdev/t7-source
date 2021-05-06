@@ -195,7 +195,7 @@ function player_snow_thread(localclientnum)
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		if(!isdefined(self))
 		{

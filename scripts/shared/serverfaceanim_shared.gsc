@@ -77,7 +77,7 @@ function init_serverfaceanim()
 */
 function wait_for_face_event()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"face", face_notify, ent);
 		if(isdefined(ent) && isdefined(ent.do_face_anims) && ent.do_face_anims)

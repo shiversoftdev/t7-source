@@ -82,7 +82,7 @@ function onplayerspawned()
 function watch_staff_lightning_fired()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"missile_fire", e_projectile, str_weapon);
 		if(str_weapon.name == "staff_lightning_upgraded2" || str_weapon.name == "staff_lightning_upgraded3")
@@ -178,7 +178,7 @@ function staff_lightning_ball_kill_zombies(e_attacker)
 {
 	self endon(#"death");
 	self endon(#"stop_killing");
-	while(1)
+	while(true)
 	{
 		a_zombies = staff_lightning_get_valid_targets(e_attacker, self.origin);
 		if(isdefined(a_zombies))
@@ -241,7 +241,7 @@ function staff_lightning_get_shot_range(n_charge)
 		{
 			return 1200;
 		}
-		default
+		default:
 		{
 			return 800;
 		}
@@ -272,7 +272,7 @@ function get_lightning_blast_range(n_charge)
 			break;
 		}
 		case 3:
-		default
+		default:
 		{
 			n_range = 250;
 			break;
@@ -302,7 +302,7 @@ function get_lightning_ball_damage_per_sec(n_charge)
 		{
 			return 3500;
 		}
-		default
+		default:
 		{
 			return 2500;
 		}

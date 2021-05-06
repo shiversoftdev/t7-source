@@ -768,6 +768,7 @@ function quadtank_turret_scan(scan_forever)
 {
 	self endon(#"death");
 	self endon(#"change_state");
+	self.turretrotscale = 0.3;
 	while(scan_forever || (!isdefined(self.enemy) || !self vehcansee(self.enemy)))
 	{
 		if(self.turretontarget && self.turret_state != 0)
@@ -905,7 +906,7 @@ function quadtank_weapon_think_cannon()
 	self set_side_turrets_enabled(1);
 	self setontargetangle(10);
 	self.getreadytofire = undefined;
-	while(1)
+	while(true)
 	{
 		if(self.hold_cannon === 1 || !vehicle_ai::iscooldownready("main_cannon"))
 		{
@@ -1020,7 +1021,7 @@ function attack_thread_rocket()
 	self endon(#"death");
 	self endon(#"end_attack_thread");
 	self vehicle::toggle_ambient_anim_group(2, 0);
-	while(1)
+	while(true)
 	{
 		usejavelin = 0;
 		if(isdefined(self.enemy))
@@ -1133,7 +1134,8 @@ function path_update_interrupt()
 	self endon(#"near_goal");
 	self endon(#"reached_end_node");
 	wait(1);
-	while(1)
+	cantseeenemycount = 0;
+	while(true)
 	{
 		if(isdefined(self.current_pathto_pos))
 		{
@@ -1196,7 +1198,7 @@ function movement_thread_wander()
 	self asmrequestsubstate("locomotion@movement");
 	wait(0.5);
 	self setbrake(0);
-	while(1)
+	while(true)
 	{
 		self setspeed(self.settings.defaultmovespeed, 5, 5);
 		pixbeginevent("_quadtank::Movement_Thread_Wander");
@@ -1330,7 +1332,8 @@ function quadtank_player_fireupdate()
 	self endon(#"death");
 	self endon(#"exit_vehicle");
 	weapon = self seatgetweapon(1);
-	while(1)
+	firetime = weapon.firetime;
+	while(true)
 	{
 		self setgunnertargetvec(self getgunnertargetvec(0), 1);
 		if(self isgunnerfiring(0))
@@ -1611,7 +1614,7 @@ function repulsor_fx()
 	self endon(#"end_repulsor_fx");
 	self endon(#"death");
 	self endon(#"change_state");
-	while(1)
+	while(true)
 	{
 		self util::waittill_any("projectile_applyattractor", "play_meleefx");
 		if(vehicle_ai::iscooldownready("repulsorfx_interval"))
@@ -1843,7 +1846,7 @@ function footstep_handler()
 {
 	self endon(#"death");
 	self endon(#"exit_vehicle");
-	while(1)
+	while(true)
 	{
 		note = self util::waittill_any_return("footstep_front_left", "footstep_front_right", "footstep_rear_left", "footstep_rear_right");
 		switch(note)
@@ -1926,6 +1929,7 @@ function railgun_sound(projectile)
 	self waittill(#"weapon_fired", projectile);
 	distance = 900;
 	alais = "wpn_quadtank_railgun_fire_rocket_flux";
+	players = level.players;
 	while(isdefined(projectile) && isdefined(projectile.origin))
 	{
 		if(isdefined(players[0]) && isdefined(players[0].origin))

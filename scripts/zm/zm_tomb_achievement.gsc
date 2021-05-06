@@ -265,7 +265,8 @@ function _zombie_blood_achievement_think()
 		self.zombie_blood_generators_started = 0;
 	}
 	b_did_capture = 0;
-	while(1)
+	n_revives = 0;
+	while(true)
 	{
 		str_action = util::waittill_any_return("completed_zone_capture", "do_revive_ended_normally", "revived_player_with_quadrotor", "revived_player_with_upgraded_staff", "zombie_blood_over");
 		if(issubstr(str_action, "revive"))
@@ -296,7 +297,7 @@ function achievement_master_of_disguise()
 {
 	level endon(#"end_game");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"zombie_blood");
 		b_finished_achievement = self _zombie_blood_achievement_think();
@@ -322,7 +323,7 @@ function watch_equipped_weapons_for_upgraded_staffs()
 {
 	self endon(#"disconnect");
 	self endon(#"stop_weapon_switch_watcher_thread");
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_change", w_weapon);
 		if(self.sessionstate != "playing")

@@ -150,7 +150,7 @@ function update(mod, inflictor, perkfeedback)
 					self thread play_hit_sound(mod, "mpl_hit_heli_gunner");
 					break;
 				}
-				default
+				default:
 				{
 					self thread play_hit_sound(mod, "mpl_hit_alert_low");
 					break;

@@ -169,7 +169,7 @@ function play_initial_alarm()
 function monkey_round_announcer()
 {
 	wait(3);
-	while(1)
+	while(true)
 	{
 		level flag::wait_till("monkey_round");
 		level thread play_cosmo_announcer_vox("vox_ann_monkey_begin");
@@ -238,7 +238,8 @@ function function_7624a208()
 function function_337aada8()
 {
 	level.var_568da27 = 0;
-	while(1)
+	var_85d06ae4 = struct::get_array("egg_phone", "targetname");
+	while(true)
 	{
 		level waittill(#"hash_b524a8eb");
 		level.var_568da27++;
@@ -265,7 +266,7 @@ function function_10544d8()
 	self endon(#"phone_activated");
 	self endon(#"timeout");
 	self.t_damage = spawn("trigger_damage", self.origin, 0, 5, 5);
-	while(1)
+	while(true)
 	{
 		self.t_damage waittill(#"damage", n_amount, e_attacker, dir, point, str_means_of_death);
 		if(!zm_audio_zhd::function_8090042c())
@@ -315,10 +316,11 @@ function init_redphone_eggs()
 	{
 		return;
 	}
-	while(1)
+	var_693fabd9 = undefined;
+	while(true)
 	{
 		wait(randomintrange(90, 240));
-		while(1)
+		while(true)
 		{
 			var_9d999891 = array::random(var_85d06ae4);
 			arrayremovevalue(var_85d06ae4, var_9d999891);
@@ -395,7 +397,7 @@ function function_99199901()
 	self.var_7f6e3a35 = spawn("trigger_radius", self.origin - vectorscale((0, 0, 1), 200), 0, 75, 400);
 	self.var_48df29fd = spawn("script_origin", self.origin);
 	self.var_48df29fd playloopsound("zmb_egg_phone_loop", 0.05);
-	while(1)
+	while(true)
 	{
 		self.var_7f6e3a35 waittill(#"trigger", who);
 		if(!isplayer(who))
@@ -477,7 +479,8 @@ function doll_egg(num)
 	}
 	self usetriggerrequirelookat();
 	self setcursorhint("HINT_NOICON");
-	while(1)
+	alias = undefined;
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		index = zm_utility::get_player_index(player);

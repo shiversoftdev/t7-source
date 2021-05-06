@@ -713,7 +713,7 @@ function dev_cac_gdt_update_think()
 					key = "";
 					break;
 				}
-				default
+				default:
 				{
 					key = undefined;
 					break;

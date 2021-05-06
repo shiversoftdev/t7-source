@@ -69,7 +69,7 @@ function wc_icon_setup(localclientnum)
 function update_wc_icon_extracam(localclientnum)
 {
 	level endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill("process_wc_icon_extracam_" + localclientnum, extracam_data_struct);
 		setup_wc_weapon_model(localclientnum, extracam_data_struct);
@@ -232,6 +232,7 @@ function spawn_weapon_model(localclientnum, origin, angles)
 function set_wc_icon_cosmetic_variants(acv_param, weapon_full_name, extracam_data_struct)
 {
 	acv_indexes = strtok(acv_param, ",");
+	i = 0;
 	while(i + 1 < acv_indexes.size)
 	{
 		extracam_data_struct.weapon_script_model setattachmentcosmeticvariantindex(weapon_full_name, acv_indexes[i], int(acv_indexes[i + 1]));
@@ -264,7 +265,7 @@ function get_safehouse_position_struct()
 			position.origin = (-1215, 2464, 190);
 			break;
 		}
-		default
+		default:
 		{
 			position.origin = (191, 113, -2550);
 			break;

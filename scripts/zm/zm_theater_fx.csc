@@ -164,7 +164,7 @@ function trap_fx_monitor(name, loc, trap_type)
 			points[points.size] = structs[i];
 		}
 	}
-	while(1)
+	while(true)
 	{
 		level waittill(loc + "1");
 		for(i = 0; i < points.size; i++)
@@ -214,7 +214,7 @@ function trap_play_fx(loc, trap_type)
 			break;
 		}
 		case "fire":
-		default
+		default:
 		{
 			fx_name = "fire_trap_med";
 			break;
@@ -390,7 +390,7 @@ function function_e4b3e1ca(localclientnum, oldval, newval, bnewent, binitialsnap
 */
 function dog_start_monitor()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"dog_start");
 		players = getlocalplayers();
@@ -412,7 +412,7 @@ function dog_start_monitor()
 */
 function dog_stop_monitor()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"dog_stop");
 		players = getlocalplayers();

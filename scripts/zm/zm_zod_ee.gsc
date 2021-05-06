@@ -298,6 +298,7 @@ function function_c3466d96(b_on)
 */
 function function_8a05e65()
 {
+	var_ad91cbf7 = 0;
 	while(!var_ad91cbf7)
 	{
 		if(isdefined(level.var_421ff75e) && level.var_421ff75e)
@@ -456,7 +457,7 @@ function function_7f4562e9()
 */
 function function_f0c43ca0()
 {
-	while(1)
+	while(true)
 	{
 		var_c96f65f1 = 1;
 		players = level.activeplayers;
@@ -656,7 +657,8 @@ function function_5334c072(player)
 	level endon(#"ee_final_boss_staggered");
 	player.var_884d1375 = 1;
 	player clientfield::set_to_player("ee_final_boss_attack_tell", 1);
-	while(1)
+	var_dcd4f61a = struct::get_array("final_boss_safepoint", "targetname");
+	while(true)
 	{
 		player.var_884d1375 = 1;
 		foreach(var_21d78be8, var_495730fe in var_dcd4f61a)
@@ -723,7 +725,7 @@ function function_3fe90552()
 function function_9b59ab6()
 {
 	level endon(#"ee_final_boss_defeated");
-	while(1)
+	while(true)
 	{
 		while(!function_c7c3f7b5(level.var_a6e16eb2))
 		{
@@ -754,8 +756,9 @@ function function_91c4dc69()
 	level endon(#"ee_final_boss_defeated");
 	zombie_utility::ai_calculate_health(level.round_number);
 	wait(3);
-	while(1)
+	while(true)
 	{
+		var_565450eb = zombie_utility::get_current_zombie_count();
 		while(var_565450eb >= 10 || var_565450eb >= level.players.size * 5)
 		{
 			wait(randomfloatrange(2, 4));
@@ -909,7 +912,7 @@ function function_3bd22f9e(var_9a8bfa33)
 	var_a5fd6c97 thread zm_altbody_beast::watch_lightning_damage(var_9440a97c);
 	level flag::clear(var_5dab4912);
 	var_a5fd6c97 clientfield::set("ee_rail_electricity_state", 0);
-	while(1)
+	while(true)
 	{
 		var_9440a97c waittill(#"trigger", e_triggerer);
 		function_d3b3eb03(var_9a8bfa33);
@@ -1045,7 +1048,7 @@ function function_729859d0()
 {
 	level endon(#"ee_final_boss_defeated");
 	level flag::set("ee_superworm_present");
-	while(1)
+	while(true)
 	{
 		level.o_zod_train flag::wait_till("moving");
 		function_f09f9721();
@@ -1098,7 +1101,8 @@ function function_f30f87e4(n_index)
 	var_da3dbbdf endon(#"delete");
 	var_da3dbbdf solid();
 	var_da3dbbdf setcandamage(1);
-	while(1)
+	var_da3dbbdf.health = 1000000;
+	while(true)
 	{
 		var_da3dbbdf waittill(#"damage", amount, attacker, direction, point, mod, tagname, modelname, partname, weapon);
 		var_da3dbbdf.health = 1000000;
@@ -1197,7 +1201,7 @@ function function_f09f9721()
 			break;
 		}
 	}
-	while(1)
+	while(true)
 	{
 		if(distance2dsquared(var_4843dc70.origin, var_a9f994a9.origin) <= dist2)
 		{
@@ -1346,7 +1350,7 @@ function function_d26c80f1()
 */
 function function_3f5c6609()
 {
-	while(1)
+	while(true)
 	{
 		players = level.activeplayers;
 		foreach(var_8b5bf5a9, player in players)
@@ -1520,7 +1524,7 @@ function function_19cf5463(player)
 */
 function function_e30b3505()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player zm_utility::in_revive_trigger())
@@ -1647,7 +1651,7 @@ function function_6bd33d28(player)
 */
 function function_f3d23e2c()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player zm_utility::in_revive_trigger())
@@ -1707,7 +1711,7 @@ function function_9190a90e(n_char_index)
 	str_charname = function_d93f551b(n_char_index);
 	str_triggername = "keeper_resurrection_" + str_charname;
 	var_e6e52f57 = getent(str_triggername, "targetname");
-	while(1)
+	while(true)
 	{
 		var_e6e52f57 waittill(#"trigger", player);
 		if(player zm_utility::in_revive_trigger())
@@ -2051,7 +2055,7 @@ function function_9207a201(player)
 */
 function function_5eae8cbb()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player zm_utility::in_revive_trigger())
@@ -2097,7 +2101,7 @@ function function_4bcb6826()
 	level endon(#"ee_boss_defeated");
 	var_9eb45ed3 = array("boxer", "detective", "femme", "magician");
 	level.var_df5409ea = 9;
-	while(1)
+	while(true)
 	{
 		var_a74ccb30 = 1;
 		foreach(var_89f99442, str_charname in var_9eb45ed3)
@@ -2267,7 +2271,7 @@ function function_a683d8ab(player)
 */
 function function_96ac6f7d()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player zm_utility::in_revive_trigger())
@@ -2523,7 +2527,7 @@ function function_51ca11ba(player)
 */
 function function_943c90e6()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player zm_utility::in_revive_trigger())
@@ -2723,7 +2727,8 @@ function function_353871a(var_ee1ff130, owner)
 	self.owner = owner;
 	self setowner(owner);
 	var_9124cf71 = 0;
-	while(1)
+	var_a62764b3 = 2400 + -1600 * level.activeplayers.size - 1 / 3;
+	while(true)
 	{
 		self waittill(#"damage", amount, attacker, direction_vec, point, type, tagname, modelname, partname, weapon);
 		self.health = 1000000;
@@ -2778,7 +2783,8 @@ function function_ac3c8848(var_ee1ff130)
 	level endon(#"ee_keeper_resurrection_failed");
 	level endon(#"hash_26f14b55");
 	var_cabf2f4c = 0;
-	while(1)
+	var_3efd73a6 = 5;
+	while(true)
 	{
 		level waittill(#"hash_d103204");
 		var_cabf2f4c++;
@@ -2814,8 +2820,9 @@ function function_877ea350()
 	level endon(#"ee_keeper_resurrection_failed");
 	level endon(#"ee_boss_defeated");
 	zombie_utility::ai_calculate_health(level.round_number);
-	while(1)
+	while(true)
 	{
+		var_565450eb = zombie_utility::get_current_zombie_count();
 		while(var_565450eb >= 10 || var_565450eb >= level.players.size * 5)
 		{
 			wait(randomfloatrange(2, 4));
@@ -2896,15 +2903,18 @@ function function_737ebab()
 	n_wasps_alive = 0;
 	level clientfield::set("toggle_on_parasite_fog", 1);
 	wait(3);
-	while(1)
+	while(true)
 	{
+		b_swarm_spawned = 0;
 		while(!b_swarm_spawned)
 		{
+			n_wasps_alive = zm_ai_wasp::get_current_wasp_count();
 			while(n_wasps_alive >= 8 || n_wasps_alive >= level.players.size * 4)
 			{
 				wait(randomfloatrange(2, 4));
 				n_wasps_alive = zm_ai_wasp::get_current_wasp_count();
 			}
+			spawn_point = undefined;
 			while(!isdefined(spawn_point))
 			{
 				favorite_enemy = array::random(level.activeplayers);
@@ -2953,6 +2963,7 @@ function function_737ebab()
 			}
 			if(a_spawn_origins.size >= 1)
 			{
+				n_spawn = 0;
 				while(n_spawn < 1 && level.zombie_total > 0)
 				{
 					for(i = a_spawn_origins.size - 1; i >= 0; i--)
@@ -3003,8 +3014,9 @@ function function_83bdd16b()
 	n_raps_alive = 0;
 	level clientfield::set("toggle_on_parasite_fog", 1);
 	wait(3);
-	while(1)
+	while(true)
 	{
+		n_raps_alive = zm_ai_raps::get_current_raps_count();
 		while(n_raps_alive >= 13 || n_raps_alive >= level.players.size * 4)
 		{
 			wait(randomfloatrange(2, 4));

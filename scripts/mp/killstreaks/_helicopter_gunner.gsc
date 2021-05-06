@@ -171,6 +171,7 @@ function updatekillstreakinventory(player)
 */
 function activatemaingunner(killstreaktype)
 {
+	player = self;
 	while(isdefined(level.vtol) && level.vtol.shuttingdown)
 	{
 		if(!player killstreakrules::iskillstreakallowed("helicopter_gunner", player.team))
@@ -603,8 +604,10 @@ function watchplayerexitrequestthread(player)
 	level endon(#"game_ended");
 	player endon(#"disconnect");
 	player endon(#"gunner_left");
-	while(1)
+	owner = mothership.ownerentnum == player.entnum;
+	while(true)
 	{
+		timeused = 0;
 		while(player usebuttonpressed())
 		{
 			timeused = timeused + 0.05;
@@ -776,7 +779,7 @@ function mainturretdestroyed(helicopter, eattacker, weapon)
 function wait_for_bda_dialog(killstreakid)
 {
 	self endon(#"vtol_shutdown");
-	while(1)
+	while(true)
 	{
 		self waittill(#"bda_dialog", dialogkey);
 		for(i = 0; i < 2; i++)
@@ -1222,7 +1225,8 @@ function watchmissilesthread()
 	player = helicopter.owner;
 	player endon(#"disconnect");
 	player endon(#"gunner_left");
-	while(1)
+	helimissile = getweapon("helicopter_gunner_turret_rockets");
+	while(true)
 	{
 		player waittill(#"missile_fire", missile);
 		trace_origin = level.vtol gettagorigin("tag_flash");
@@ -1267,7 +1271,7 @@ function watchvisionswitchthread()
 	player endon(#"gunner_left");
 	inverted = 0;
 	player clientfield::set_to_player("toggle_flir_postfx", 2);
-	while(1)
+	while(true)
 	{
 		if(player jumpbuttonpressed())
 		{
@@ -1281,6 +1285,7 @@ function watchvisionswitchthread()
 				player clientfield::set_to_player("toggle_flir_postfx", 1);
 				player playsoundtoplayer("mpl_cgunner_flir_on", player);
 			}
+			inverted = !inverted;
 			while(player jumpbuttonpressed())
 			{
 				wait(0.05);
@@ -1309,10 +1314,10 @@ function playlockonsoundsthread(player, heli)
 	heli.locksounds = spawn("script_model", heli.origin);
 	wait(0.1);
 	heli.locksounds linkto(heli, "tag_player");
-	while(1)
+	while(true)
 	{
 		heli waittill(#"hash_b081980b");
-		while(1)
+		while(true)
 		{
 			if(enemyislocking(heli))
 			{
@@ -1477,7 +1482,7 @@ function watchlocationchangethread(destnodes)
 	player.moves = 0;
 	helicopter waittill(#"near_goal");
 	helicopter waittill(#"goal");
-	while(1)
+	while(true)
 	{
 		if(self secondaryoffhandbuttonpressed())
 		{
@@ -1665,6 +1670,7 @@ function getoriginoffsets(goalnode)
 	numtraces = 0;
 	maxtraces = 40;
 	traceoffset = vectorscale((0, 0, -1), 196);
+	traceorigin = bullettrace(startorigin + traceoffset, endorigin + traceoffset, 0, self);
 	while(distancesquared(traceorigin["position"], endorigin + traceoffset) > 10 && numtraces < maxtraces)
 	{
 		/#

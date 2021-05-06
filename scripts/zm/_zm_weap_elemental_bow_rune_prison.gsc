@@ -358,6 +358,7 @@ function function_48899f7(e_player, v_hit_origin, str_weapon_name, var_3fee16b8)
 	var_3c817f0d = util::spawn_model("tag_origin", v_spawn_pos);
 	var_3c817f0d clientfield::set("runeprison_lava_geyser_fx", 1);
 	n_timer = 0;
+	var_4275176f = [];
 	while(n_timer < 3)
 	{
 		var_852420bf = array::get_all_closest(var_3c817f0d.origin, getaiteamarray(level.zombie_team), undefined, undefined, 48);
@@ -417,6 +418,7 @@ function function_e7abbbb8(var_3c817f0d, e_player)
 	self clientfield::set("runeprison_lava_geyser_dot_fx", 1);
 	var_2a8dacd1 = n_max_damage * 0.3;
 	self dodamage(var_2a8dacd1, self.origin, e_player, e_player, undefined, str_mod, 0, level.var_fb620116);
+	var_c18df445 = n_max_damage * 0.1;
 	while(n_timer < 6 && var_2a8dacd1 < n_max_damage)
 	{
 		var_e1fd6746 = randomfloatrange(0.4, 1);
@@ -440,6 +442,7 @@ function function_e7abbbb8(var_3c817f0d, e_player)
 */
 function function_46a00a8e(ai_enemy)
 {
+	n_z_diff = 12 * 2;
 	while(isdefined(ai_enemy) && isalive(ai_enemy) && (!(isdefined(ai_enemy.var_98056717) && ai_enemy.var_98056717)) && n_z_diff > 12)
 	{
 		var_c6f6381a = bullettrace(ai_enemy.origin, ai_enemy.origin - vectorscale((0, 0, 1), 1000), 0, undefined);

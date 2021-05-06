@@ -722,7 +722,8 @@ function player_intermission()
 	self.game_over_bg.vertalign = "fullscreen";
 	self.game_over_bg setshader("black", 640, 480);
 	self.game_over_bg.alpha = 1;
-	while(1)
+	org = undefined;
+	while(true)
 	{
 		points = array::randomize(points);
 		for(i = 0; i < points.size; i++)
@@ -846,7 +847,7 @@ function check_end_game_intermission_delay()
 {
 	if(isdefined(level.disable_intermission))
 	{
-		while(1)
+		while(true)
 		{
 			if(!isdefined(level.disable_intermission))
 			{

@@ -59,7 +59,7 @@ function init_shared()
 */
 function updatedvars()
 {
-	while(1)
+	while(true)
 	{
 		level.weaponobjectdebug = getdvarint("scr_weaponobject_debug", 0);
 		wait(1);
@@ -428,7 +428,8 @@ function getspikelauncheractivespikecount(watcher)
 function watchspikelauncheritemcountchanged(watcher)
 {
 	self endon(#"death");
-	while(1)
+	lastitemcount = undefined;
+	while(true)
 	{
 		self waittill(#"weapon_change", weapon);
 		while(weapon.name == "spike_launcher")
@@ -819,6 +820,7 @@ function waitanddetonate(object, delay, attacker, weapon)
 		{
 			return;
 		}
+		object.armed_detonation_wait = 1;
 		while(!(isdefined(object.proximity_deployed) && object.proximity_deployed))
 		{
 			wait(0.05);
@@ -1206,7 +1208,7 @@ function weaponobjectdamage(watcher)
 	self.health = self.maxhealth;
 	self.damagetaken = 0;
 	attacker = undefined;
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", damage, attacker, direction_vec, point, type, modelname, tagname, partname, weapon, idflags);
 		self.damagetaken = self.damagetaken + damage;
@@ -1306,7 +1308,7 @@ function watchobjectdamage(owner)
 	owner endon(#"disconnect");
 	self endon(#"hacked");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", damage, attacker);
 		if(isdefined(attacker) && isplayer(attacker) && attacker != owner)
@@ -1766,7 +1768,8 @@ function proximityalarmloop(watcher, owner)
 	}
 	self.proximity_deployed = 1;
 	alarmstatusold = "notify";
-	while(1)
+	alarmstatus = "off";
+	while(true)
 	{
 		wait(0.05);
 		if(!isdefined(self.owner) || !isplayer(self.owner))
@@ -1979,7 +1982,7 @@ function watchweaponobjectspawn(notify_type)
 	self notify("watchWeaponObjectSpawn_" + notify_type);
 	self endon("watchWeaponObjectSpawn_" + notify_type);
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(notify_type, weapon_instance, weapon);
 		if(sessionmodeiscampaignzombiesgame() || (isdefined(level.projectiles_should_ignore_world_pause) && level.projectiles_should_ignore_world_pause) && isdefined(weapon_instance))
@@ -2048,7 +2051,7 @@ function proximitysphere(origin, innerradius, incolor, outerradius, outcolor)
 {
 	/#
 		self endon(#"death");
-		while(1)
+		while(true)
 		{
 			if(isdefined(innerradius))
 			{
@@ -2133,7 +2136,8 @@ function showcone(angle, range, color)
 		right = vectorcross(forward, (0, 0, 1));
 		up = vectorcross(forward, right);
 		fullforward = forward * range * cos(angle);
-		while(1)
+		sideamnt = range * sin(angle);
+		while(true)
 		{
 			prevpoint = (0, 0, 0);
 			for(i = 0; i <= 20; i++)
@@ -2745,7 +2749,8 @@ function proximityweaponobject_spawnprotect(watcher, ent)
 	ent endon(#"disconnect");
 	self.protected_entities[self.protected_entities.size] = ent;
 	self thread proximityweaponobject_removespawnprotectondeath(ent);
-	while(1)
+	radius_sqr = watcher.detonateradius * watcher.detonateradius;
+	while(true)
 	{
 		if(distancesquared(ent.origin, self.origin) > radius_sqr)
 		{
@@ -2892,7 +2897,7 @@ function proximityweaponobjectdetonation(watcher)
 	damagearea = proximityweaponobject_createdamagearea(watcher);
 	up = anglestoup(self.angles);
 	traceorigin = self.origin + up;
-	while(1)
+	while(true)
 	{
 		damagearea waittill(#"trigger", ent);
 		if(!proximityweaponobject_validtriggerentity(watcher, ent))
@@ -3018,7 +3023,7 @@ function deleteonkillbrush(player)
 	self endon(#"stationary");
 	a_killbrushes = getentarray("trigger_hurt", "classname");
 	self thread testkillbrushonstationary(a_killbrushes, player);
-	while(1)
+	while(true)
 	{
 		a_killbrushes = getentarray("trigger_hurt", "classname");
 		for(i = 0; i < a_killbrushes.size; i++)
@@ -3060,7 +3065,7 @@ function deleteonkillbrush(player)
 function watchweaponobjectaltdetonation()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"alt_detonate");
 		if(!isalive(self) || self util::isusingremote())
@@ -3115,7 +3120,7 @@ function watchweaponobjectaltdetonate()
 function watchweaponobjectdetonation()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"detonate");
 		if(self isusingoffhand())
@@ -3206,7 +3211,7 @@ function deleteweaponobjectson()
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		msg = self util::waittill_any_return("joined_team", "joined_spectators", "death", "disconnect");
 		if(msg == "death")
@@ -3272,6 +3277,7 @@ function showheadicon(trigger)
 	self.bombsquadicons[useid].z = trigger.origin[2] + 24 + 128;
 	self.bombsquadicons[useid] fadeovertime(0.25);
 	self.bombsquadicons[useid].alpha = 1;
+	self.bombsquadicons[useid].detectid = trigger.detectid;
 	while(isalive(self) && isdefined(trigger) && self istouching(trigger))
 	{
 		wait(0.05);
@@ -3561,7 +3567,7 @@ function watchspecialcrossbowtrigger(trigger, callback, playersoundonuse, npcsou
 {
 	self endon(#"delete");
 	self endon(#"hacked");
-	while(1)
+	while(true)
 	{
 		trigger waittill(#"trigger", player);
 		if(!isalive(player))
@@ -3676,7 +3682,7 @@ function watchhatchettrigger(trigger, callback, playersoundonuse, npcsoundonuse)
 {
 	self endon(#"delete");
 	self endon(#"hacked");
-	while(1)
+	while(true)
 	{
 		trigger waittill(#"trigger", player);
 		if(!isalive(player))
@@ -4049,7 +4055,7 @@ function watchusetrigger(trigger, callback, playersoundonuse, npcsoundonuse)
 {
 	self endon(#"delete");
 	self endon(#"hacked");
-	while(1)
+	while(true)
 	{
 		trigger waittill(#"trigger", player);
 		if(isdefined(self.detonated) && self.detonated == 1)
@@ -4339,7 +4345,7 @@ function switch_team(entity, watcher, owner)
 		self endon(#"stop_disarmthink");
 		self endon(#"death");
 		setdvar("", "");
-		while(1)
+		while(true)
 		{
 			wait(0.5);
 			devgui_int = getdvarint("");

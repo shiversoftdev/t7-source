@@ -126,7 +126,7 @@ function function_82a94b2c(localclientnum)
 function function_85c8e13c(localclientnum)
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		var_f4570d42 = randomint(5);
 		switch(var_f4570d42)
@@ -268,7 +268,7 @@ function function_85c8e13c(localclientnum)
 				wait(0.05);
 				break;
 			}
-			default
+			default:
 			{
 				break;
 			}
@@ -484,7 +484,8 @@ function register_client_fields()
 */
 function function_d87a7dcc()
 {
-	while(1)
+	var_bd7ba30 = 0;
+	while(true)
 	{
 		if(!level clientfield::get("zombie_power_on"))
 		{
@@ -554,7 +555,7 @@ function radar_dish_init()
 function radar_dish_rotate()
 {
 	wait(0.1);
-	while(1)
+	while(true)
 	{
 		self rotateyaw(360, 10);
 		self waittill(#"rotatedone");
@@ -582,6 +583,7 @@ function perk_wire_fx_client(client_num, done_notify)
 	}
 	mover = spawn(client_num, targ.origin, "script_model");
 	mover setmodel("tag_origin");
+	fx = playfxontag(client_num, level._effect["wire_spark"], mover, "tag_origin");
 	while(isdefined(targ))
 	{
 		if(isdefined(targ.target))
@@ -616,7 +618,7 @@ function perk_wire_fx_client(client_num, done_notify)
 function tele_spark_audio_mover(fake_ent)
 {
 	level endon(#"spark_done");
-	while(1)
+	while(true)
 	{
 		wait(0.05);
 	}
@@ -772,7 +774,7 @@ function cosmodrome_tv_init(client_num)
 function magic_box_screen_swap(model_array, endon_notify)
 {
 	self endon(endon_notify);
-	while(1)
+	while(true)
 	{
 		for(i = 0; i < model_array.size; i++)
 		{
@@ -1641,7 +1643,7 @@ function do_lander_rumble_quake(localclientnum)
 	player = getlocalplayers()[localclientnum];
 	player endon(#"entityshutdown");
 	player endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		if(!isdefined(self.origin) || !isdefined(player.origin))
 		{
@@ -1714,6 +1716,7 @@ function centrifuge_rumble_when_close(ent_centrifuge, int_client_num)
 	level endon(#"centrifuge_rumble_done");
 	rumble_range = 360000;
 	centrifuge_rumble = "damage_heavy";
+	client_num = undefined;
 	while(isdefined(self))
 	{
 		distance_to_centrifuge = distancesquared(self.origin, ent_centrifuge.origin);

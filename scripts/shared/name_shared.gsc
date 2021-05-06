@@ -110,7 +110,7 @@ function add_nationality_names(str_nationality)
 			sing_police_names();
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				assertmsg("" + str_nationality);
@@ -1033,7 +1033,7 @@ function getrankfromname(name)
 			self.airank = "captain";
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				println("" + shortrank + "");

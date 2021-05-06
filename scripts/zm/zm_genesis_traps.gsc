@@ -175,7 +175,7 @@ function function_38d940ac(var_60532813)
 	s_unitrigger.var_60532813 = var_60532813;
 	s_unitrigger.script_int = var_60532813.script_int;
 	var_60532813._trap_type = "flogger";
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger_activated", e_player);
 		if(e_player zm_utility::in_revive_trigger())
@@ -267,7 +267,7 @@ function trap_move_switches()
 		level flag::wait_till("power_on" + self.script_int);
 	}
 	self trap_lights_green();
-	while(1)
+	while(true)
 	{
 		self flag::wait_till("trap_active");
 		self trap_lights_red();
@@ -399,7 +399,8 @@ function function_ec80dc42(var_4b6ad173)
 	var_4b6ad173 endon(#"rotatedone");
 	var_feed8b5b = var_4b6ad173.angles[0];
 	var_dea46db3 = var_4b6ad173.angles[0];
-	while(1)
+	firsttime = 1;
+	while(true)
 	{
 		wait(0.05);
 		var_feed8b5b = var_4b6ad173.angles[0];
@@ -465,7 +466,7 @@ function function_e5b7e8b0(var_ffd9e7a0, var_94be4c8f)
 function function_1f2a0da5(var_c4f1ee44, e_player)
 {
 	self endon(#"trap_done");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_who);
 		if(isplayer(e_who))

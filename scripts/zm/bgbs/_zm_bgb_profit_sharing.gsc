@@ -119,7 +119,7 @@ function add_to_player_score_override(n_points, str_awarded_by, var_1ed9bd9b)
 		{
 			return n_points;
 		}
-		default
+		default:
 		{
 			break;
 		}

@@ -181,7 +181,8 @@ function play_screen_fx_dust(localclientnum)
 */
 function play_driving_screen_fx(localclientnum)
 {
-	while(1)
+	speed_fraction = 0;
+	while(true)
 	{
 		speed = self getspeed();
 		maxspeed = self getmaxspeed();
@@ -215,7 +216,7 @@ function play_driving_screen_fx(localclientnum)
 function play_boost_fx(localclientnum)
 {
 	self endon(#"entityshutdown");
-	while(1)
+	while(true)
 	{
 		speed = self getspeed();
 		if(speed > 400)
@@ -240,7 +241,7 @@ function stunnedhandler(localclientnum)
 {
 	self endon(#"entityshutdown");
 	self thread enginestutterhandler(localclientnum);
-	while(1)
+	while(true)
 	{
 		self waittill(#"stunned");
 		self setstunned(1);
@@ -280,7 +281,7 @@ function play_stunned_fx_handler(localclientnum)
 	self endon(#"entityshutdown");
 	self endon(#"stunned");
 	self endon(#"not_stunned");
-	while(1)
+	while(true)
 	{
 		playfxontag(localclientnum, level._effect["rcbomb_stunned"], self, "tag_origin");
 		wait(0.5);
@@ -299,7 +300,7 @@ function play_stunned_fx_handler(localclientnum)
 function enginestutterhandler(localclientnum)
 {
 	self endon(#"entityshutdown");
-	while(1)
+	while(true)
 	{
 		self waittill(#"veh_engine_stutter");
 		if(self islocalclientdriver(localclientnum))

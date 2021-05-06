@@ -166,7 +166,7 @@ function function_bab3ea62()
 */
 function sndmusictrig()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", trigplayer);
 		if(trigplayer islocalplayer())
@@ -209,7 +209,8 @@ function function_53b9afad()
 	level.var_b6342abd = "mus_island_underscore_outdoor";
 	level.var_6d9d81aa = "mus_island_underscore_outdoor";
 	level.var_eb526c90 = spawn(0, (0, 0, 0), "script_origin");
-	while(1)
+	level.var_9433cf5a = level.var_eb526c90 playloopsound(level.var_b6342abd, 2);
+	while(true)
 	{
 		level waittill(#"hash_51d7bc7c", location);
 		level.var_6d9d81aa = "mus_island_underscore_" + location;
@@ -307,7 +308,7 @@ function function_7a83b09a()
 */
 function function_610a705b()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"sndfbm");
 		level notify(#"hash_51d7bc7c", level.var_2d9f200e);

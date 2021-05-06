@@ -87,7 +87,7 @@ function last_valid_position()
 		self.last_valid_position = getclosestpointonnavmesh(self.origin, 2048, 0);
 		wait(0.1);
 	}
-	while(1)
+	while(true)
 	{
 		if(distance2dsquared(self.origin, self.last_valid_position) < 15 * 15 && self.origin[2] - self.last_valid_position[2] * self.origin[2] - self.last_valid_position[2] < 16 * 16)
 		{

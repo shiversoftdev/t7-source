@@ -262,7 +262,7 @@ function event_callback(destructible_event, attacker, weapon)
 			self explosive_concussive_explosion(attacker, 275, 1);
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}

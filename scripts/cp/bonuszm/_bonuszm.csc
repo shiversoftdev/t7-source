@@ -319,6 +319,7 @@ function rise_dust_fx(localclientnum, type, billow_fx, burst_fx)
 		return;
 	}
 	self util::waittill_dobj(localclientnum);
+	t = 0;
 	while(t < dust_time)
 	{
 		fx = playfxontag(localclientnum, effect, self, dust_tag);
@@ -853,6 +854,7 @@ function function_69f683e7(localclientnum, onoff)
 	var_ec055171 = 0.25;
 	cycle_time = var_d7805253;
 	old_color = function_4778b020(var_781fc232, var_27745be8);
+	new_color = old_color;
 	while(isdefined(self))
 	{
 		if(cycle_time >= var_d7805253)

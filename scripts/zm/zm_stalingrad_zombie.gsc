@@ -118,7 +118,7 @@ private function function_7854f310()
 private function function_72fad482()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.zone_name))
 		{
@@ -288,6 +288,7 @@ private function function_285fbe6e(origin, players)
 	{
 		return undefined;
 	}
+	done = 0;
 	while(players.size && !done)
 	{
 		done = 1;
@@ -419,7 +420,7 @@ private function function_285fbe6e(origin, players)
 private function update_closest_player()
 {
 	level waittill(#"start_of_round");
-	while(1)
+	while(true)
 	{
 		reset_closest_player = 1;
 		zombies = zombie_utility::get_round_enemy_array();
@@ -529,7 +530,7 @@ function function_cec23cbf()
 			var_bb6abcd9[var_bb6abcd9.size] = s_spawn;
 		}
 	}
-	while(1)
+	while(true)
 	{
 		if(level flag::get("special_round"))
 		{
@@ -693,7 +694,7 @@ function function_3de9d297()
 function function_9b4d9341()
 {
 	level waittill(#"start_of_round");
-	while(1)
+	while(true)
 	{
 		if(flag::exists("world_is_paused"))
 		{

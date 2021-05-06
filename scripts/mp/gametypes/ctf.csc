@@ -32,6 +32,7 @@ function main()
 */
 function on_localclient_connect(localclientnum)
 {
+	objective_ids = [];
 	while(!isdefined(objective_ids["allies_base"]))
 	{
 		objective_ids["allies_base"] = serverobjective_getobjective(localclientnum, "allies_base");

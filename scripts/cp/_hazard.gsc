@@ -150,7 +150,7 @@ function reset(var_b18f74fe)
 function function_b6af57a8()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill(#"save_restore");
 		if(isdefined(self.var_8dcb3948) && self.var_8dcb3948)
@@ -178,7 +178,7 @@ function function_b6af57a8()
 function function_a421f870()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"player_revived");
 		foreach(str_name, _ in level.hazards)
@@ -249,7 +249,7 @@ function do_damage(str_name, n_damage, e_ent, disable_ui)
 			str_mod = "MOD_BURNED";
 			break;
 		}
-		default
+		default:
 		{
 			str_mod = "MOD_UNKNOWN";
 		}
@@ -563,7 +563,7 @@ function function_ccddb105(var_be6a04c9, var_6d20ee14, n_time, var_827d6de0)
 			n_damage = var_a6321c17 / n_time;
 		}
 	}
-	while(1)
+	while(true)
 	{
 		wait(1);
 		var_dd075cd2 = self do_damage(var_be6a04c9, n_damage);

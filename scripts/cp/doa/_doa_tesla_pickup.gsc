@@ -55,7 +55,7 @@ function tesla_discharge_mechanic()
 	self endon(#"tesla_discharge_mechanic");
 	self notify(#"tesla_discharge_mechanic");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self.tesla_discharge = 1;
 		self waittill(#"tesla_discharged");
@@ -395,6 +395,7 @@ function tesla_debug_arc(origin, distance)
 		{
 			return;
 		}
+		start = gettime();
 		while(gettime() < start + 3000)
 		{
 			wait(0.05);
@@ -461,7 +462,7 @@ function tesla_blockers_damage_trigger(player, note)
 {
 	player endon(note);
 	player endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", guy);
 		if(level thread function_395fdfb8(guy, player))
@@ -613,7 +614,8 @@ function tesla_blockers_deletion_monitors(org, note)
 {
 	self endon(note);
 	org endon(#"death");
-	while(1)
+	count = 0;
+	while(true)
 	{
 		for(i = 0; i < org.objects.size; i++)
 		{
@@ -645,7 +647,7 @@ function tesla_blockers_move(org, note)
 {
 	self endon(note);
 	org endon(#"death");
-	while(1)
+	while(true)
 	{
 		org rotateto(org.angles + vectorscale((0, 1, 0), 180), 1);
 		wait(1);

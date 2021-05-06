@@ -69,7 +69,7 @@ function sessionadvertisementcheck()
 	}
 	level endon(#"game_end");
 	level waittill(#"prematch_over");
-	while(1)
+	while(true)
 	{
 		sessionadvertcheckwait = getdvarint("sessionAdvertCheckwait", 1);
 		wait(sessionadvertcheckwait);
@@ -660,7 +660,7 @@ function sessionadvertismentupdatedebughud()
 		level.sessionadverthud_3b_text = "";
 		level.sessionadverthud_4a_text = "";
 		level.sessionadverthud_4b_text = "";
-		while(1)
+		while(true)
 		{
 			wait(1);
 			showdebughud = getdvarint("", 0);

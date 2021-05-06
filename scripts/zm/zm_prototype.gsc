@@ -181,6 +181,7 @@ function function_869d6f66()
 */
 function function_44c28e00()
 {
+	var_c7d6c8d8 = 0;
 	while(!var_c7d6c8d8)
 	{
 		var_c7d6c8d8 = 1;
@@ -550,6 +551,7 @@ function init_weapon_cabinet()
 	{
 		var_68c121fd.trigger_stub.script_height = 56;
 		var_68c121fd.trigger_stub.script_width = 38;
+		var_4e1a2d78 = 0;
 		while(!var_4e1a2d78)
 		{
 			level waittill(#"weapon_bought");
@@ -645,7 +647,7 @@ function function_9b3e5ee2()
 	var_9f0c2e1d = 0;
 	var_822cff7b = struct::get_array("zhdaudio_button", "targetname");
 	array::thread_all(var_822cff7b, &function_ab3e14a3);
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_672c1b1a");
 		var_9f0c2e1d++;

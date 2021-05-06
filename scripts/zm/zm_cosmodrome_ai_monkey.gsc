@@ -145,7 +145,7 @@ function monkey_cosmodrome_prespawn()
 function monkey_cosmodrome_failsafe()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		if(self.state != "bhb_jump")
 		{

@@ -124,7 +124,7 @@ function player_rumble_and_shake(localclientnum, oldval, newval, bnewent, biniti
 			self notify(#"stop_rumble_and_shake");
 			break;
 		}
-		default
+		default:
 		{
 			self notify(#"stop_rumble_and_shake");
 			break;
@@ -146,6 +146,7 @@ function player_continuous_rumble(localclientnum, n_rumble_level, var_10ba4a4c =
 	self notify(#"stop_rumble_and_shake");
 	self endon(#"disconnect");
 	self endon(#"stop_rumble_and_shake");
+	start_time = gettime();
 	while(gettime() - start_time < 120000)
 	{
 		if(isdefined(self) && self islocalplayer() && isdefined(self))
@@ -223,7 +224,7 @@ function emit_smoke(localclientnum, oldval, newval, bnewent, binitialsnap, field
 			}
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				assert(0, "");
@@ -246,7 +247,8 @@ function function_ed6c6bcf(localclientnum, str_fx_name, var_bec640ba)
 {
 	self endon(#"hash_b9956414");
 	v_forward = anglestoforward(self.angles);
-	while(1)
+	v_up = anglestoup(self.angles);
+	while(true)
 	{
 		self.var_c9da3e70 = playfx(localclientnum, level._effect[str_fx_name], self.origin, v_forward, v_up);
 		wait(var_bec640ba + randomfloatrange(0, 0.3));
@@ -406,6 +408,7 @@ function rq_gateworm_dissolve(localclientnum, var_9304bb31)
 	self endon(#"entityshutdown");
 	n_start_time = gettime();
 	n_end_time = n_start_time + 2 * 1000;
+	b_is_updating = 1;
 	while(b_is_updating)
 	{
 		n_time = gettime();

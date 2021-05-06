@@ -262,7 +262,7 @@ function watchforemp(localclientnum)
 {
 	self endon(#"entityshutdown");
 	self endon(#"player_hacking_callback");
-	while(1)
+	while(true)
 	{
 		if(self isempjammed())
 		{

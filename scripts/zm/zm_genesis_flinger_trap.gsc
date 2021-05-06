@@ -117,7 +117,7 @@ function function_38d940ac(var_60532813)
 	s_unitrigger.var_60532813 = var_60532813;
 	s_unitrigger.script_int = var_60532813.script_int;
 	var_60532813._trap_type = "flinger";
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger_activated", e_player);
 		if(e_player zm_utility::in_revive_trigger())
@@ -209,7 +209,7 @@ function trap_move_switches()
 		level flag::wait_till("power_on" + self.script_int);
 	}
 	self trap_lights_green();
-	while(1)
+	while(true)
 	{
 		self flag::wait_till("trap_active");
 		self trap_lights_red();

@@ -194,13 +194,13 @@ function run_chamber_exit(n_enum)
 			var_ff7119bc = "p7_fxanim_zm_ori_portal_open_elec_bundle";
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}
 	}
 	level flag::wait_till("start_zombie_round_logic");
-	while(1)
+	while(true)
 	{
 		s_activate_pos.trigger_stub waittill(#"trigger", e_player);
 		if(!zombie_utility::is_player_valid(e_player))
@@ -269,7 +269,7 @@ function run_chamber_entrance_teleporter()
 	level flag::wait_till("start_zombie_round_logic");
 	e_model thread scene::play("p7_fxanim_zm_ori_portal_collapse_bundle", e_model);
 	wait(collapse_time);
-	while(1)
+	while(true)
 	{
 		level flag::wait_till("enable_teleporter_" + self.script_int);
 		level flag::set(str_building_flag);
@@ -301,7 +301,7 @@ function run_chamber_entrance_teleporter()
 				var_ff7119bc = "p7_fxanim_zm_ori_portal_open_elec_bundle";
 				break;
 			}
-			default
+			default:
 			{
 				break;
 			}
@@ -359,7 +359,8 @@ function run_chamber_entrance_teleporter()
 function teleporter_radius_think(radius = 120)
 {
 	self endon(#"teleporter_radius_stop");
-	while(1)
+	radius_sq = radius * radius;
+	while(true)
 	{
 		a_players = getplayers();
 		foreach(var_7220281c, e_player in a_players)
@@ -389,7 +390,8 @@ function stargate_teleport_think()
 {
 	self endon(#"death");
 	level endon("disable_teleporter_" + self.script_int);
-	while(1)
+	e_potal = level.a_teleport_models[self.script_int];
+	while(true)
 	{
 		self.trigger_stub waittill(#"trigger", e_player);
 		if(e_player getstance() != "prone" && (!(isdefined(e_player.teleporting) && e_player.teleporting)))
@@ -591,7 +593,8 @@ function is_teleport_landing_valid(s_pos, n_radius)
 */
 function get_free_teleport_pos(player, a_structs)
 {
-	while(1)
+	n_player_radius = 64;
+	while(true)
 	{
 		a_players = getplayers();
 		foreach(var_99c6d62c, s_pos in a_structs)

@@ -269,7 +269,8 @@ function function_9fee0219()
 		{
 			level.var_478e3c32 = [];
 		}
-		while(1)
+		var_d38a76f6 = 0;
+		while(true)
 		{
 			dvar_value = getdvarint("");
 			if(dvar_value != var_d38a76f6)
@@ -523,7 +524,7 @@ function box_monitor(clientnum, state, oldstate)
 */
 function zpo_listener()
 {
-	while(1)
+	while(true)
 	{
 		int = undefined;
 		level waittill(#"zpo", int);
@@ -549,7 +550,7 @@ function zpo_listener()
 */
 function zpoff_listener()
 {
-	while(1)
+	while(true)
 	{
 		int = undefined;
 		level waittill(#"zpoff", int);
@@ -838,7 +839,7 @@ function zombie_eyes_handle_demo_jump(localclientnum)
 	self endon(#"entityshutdown");
 	self endon(#"death_or_disconnect");
 	self endon(#"new_zombie_eye_cb");
-	while(1)
+	while(true)
 	{
 		level util::waittill_any("demo_jump", "demo_player_switch");
 		self deletezombieeyes(localclientnum);
@@ -864,7 +865,7 @@ function zombie_eyes_demo_watcher(localclientnum, oldval, newval, bnewent, binit
 	self thread zombie_eyes_handle_demo_jump(localclientnum);
 	if(newval)
 	{
-		while(1)
+		while(true)
 		{
 			if(!self islocalplayer() || isspectating(localclientnum, 1) || localclientnum != self getlocalclientnumber())
 			{
@@ -1098,6 +1099,7 @@ function zombie_wait_explode(localclientnum)
 	{
 		where = self.origin;
 	}
+	start = gettime();
 	while(gettime() - start < 2000)
 	{
 		if(isdefined(self))
@@ -1307,7 +1309,7 @@ function check_should_gib()
 function resetgibcounter()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		wait(level.gibresettime);
 		level.gibtimer = 0;
@@ -1801,6 +1803,7 @@ function rise_dust_fx(clientnum, type, billow_fx, burst_fx)
 	{
 		return;
 	}
+	t = 0;
 	while(t < dust_time)
 	{
 		if(!isdefined(self))
@@ -1842,8 +1845,8 @@ System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative
 Parameter name: index
    at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
    at System.Collections.Generic.List`1.get_Item(Int32 index)
-   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 606
-   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 210
+   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 649
+   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 211
 /*
 No Output
 */

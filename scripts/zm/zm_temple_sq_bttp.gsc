@@ -76,7 +76,7 @@ function delayed_start_skit()
 function trap_trigger()
 {
 	level endon(#"hash_20531487");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", amount, attacker, direction, point, dmg_type, modelname, tagname);
 		if(isplayer(attacker) && (dmg_type == "MOD_EXPLOSIVE" || dmg_type == "MOD_EXPLOSIVE_SPLASH" || dmg_type == "MOD_GRENADE" || dmg_type == "MOD_GRENADE_SPLASH"))
@@ -147,7 +147,7 @@ function function_8feeec3c()
 {
 	hits = 0;
 	self thread function_e3bf4adb();
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", amount, attacker, dir, point, type);
 		self playsound("evt_sq_bttp_carve");
@@ -278,7 +278,7 @@ function stage_logic()
 		ents[i].tile = function_87175782(tile_models[i]);
 		ents[i] setmodel(tile_models[i]);
 	}
-	while(1)
+	while(true)
 	{
 		if(level.var_5f315f0b == ents.size)
 		{

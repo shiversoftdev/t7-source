@@ -116,6 +116,7 @@ function monitor_drop_landing(localclientnum)
 	whoosh_distance = 0;
 	if(isdefined(v_ground))
 	{
+		not_close_enough_to_ground = 1;
 		while(not_close_enough_to_ground)
 		{
 			velocity = self getvelocity();

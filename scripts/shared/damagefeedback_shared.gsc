@@ -176,7 +176,7 @@ function update(mod, inflictor, perkfeedback, weapon, victim, psoffsettime, shit
 					hitalias = "mpl_hit_alert_escort";
 					break;
 				}
-				default
+				default:
 				{
 					hitalias = "mpl_hit_alert";
 					break;
@@ -256,7 +256,7 @@ function update(mod, inflictor, perkfeedback, weapon, victim, psoffsettime, shit
 					hitalias = "mpl_hit_heli_gunner";
 					break;
 				}
-				default
+				default:
 				{
 					hitalias = "mpl_hit_alert";
 					break;

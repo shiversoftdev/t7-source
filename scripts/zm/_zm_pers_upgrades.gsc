@@ -368,7 +368,8 @@ function setup_pers_upgrade_nube()
 function pers_upgrade_boards_active()
 {
 	self endon(#"disconnect");
-	while(1)
+	last_round_number = level.round_number;
+	while(true)
 	{
 		self waittill(#"pers_stats_end_of_round");
 		if(level.round_number >= last_round_number)
@@ -398,7 +399,7 @@ function pers_upgrade_boards_active()
 function pers_upgrade_revive_active()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"player_failed_revive");
 		if(is_pers_system_active())
@@ -425,7 +426,7 @@ function pers_upgrade_revive_active()
 function pers_upgrade_headshot_active()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"zombie_death_no_headshot");
 		if(is_pers_system_active())
@@ -457,7 +458,7 @@ function pers_upgrade_cash_back_active()
 	/#
 	#/
 	wait(0.5);
-	while(1)
+	while(true)
 	{
 		self waittill(#"cash_back_failed_prone");
 		wait(0.1);
@@ -496,7 +497,7 @@ function pers_upgrade_insta_kill_active()
 	/#
 	#/
 	wait(0.2);
-	while(1)
+	while(true)
 	{
 		self waittill(#"pers_melee_swipe");
 		if(is_pers_system_active())
@@ -562,7 +563,7 @@ function pers_upgrade_jugg_active()
 	#/
 	wait(0.5);
 	self zm_perks::perk_set_max_health_if_jugg("jugg_upgrade", 1, 0);
-	while(1)
+	while(true)
 	{
 		level waittill(#"start_of_round");
 		if(is_pers_system_active())
@@ -605,7 +606,7 @@ function pers_upgrade_carpenter_active()
 	wait(0.2);
 	level waittill(#"carpenter_finished");
 	self.pers_carpenter_kill = undefined;
-	while(1)
+	while(true)
 	{
 		self waittill(#"carpenter_zombie_killed_check_finished");
 		if(is_pers_system_active())
@@ -650,7 +651,7 @@ function persistent_carpenter_ability_check()
 		carpenter_extra_time = 3;
 		carpenter_finished_start_time = undefined;
 		level.carpenter_finished_start_time = undefined;
-		while(1)
+		while(true)
 		{
 			if(!is_pers_system_disabled())
 			{
@@ -814,7 +815,7 @@ function pers_upgrade_pistol_points_active()
 		iprintlnbold("");
 	#/
 	wait(0.5);
-	while(1)
+	while(true)
 	{
 		self waittill(#"pers_pistol_points_kill");
 		accuracy = self zm_pers_upgrades_functions::pers_get_player_accuracy();
@@ -895,7 +896,8 @@ function pers_upgrade_box_weapon_active()
 	#/
 	self thread zm_pers_upgrades_functions::pers_magic_box_teddy_bear();
 	wait(0.5);
-	while(1)
+	self.pers_box_weapon_awarded = 1;
+	while(true)
 	{
 		level waittill(#"start_of_round");
 		if(is_pers_system_active())
@@ -929,7 +931,7 @@ function pers_upgrade_nube_active()
 		iprintlnbold("");
 	#/
 	wait(0.5);
-	while(1)
+	while(true)
 	{
 		level waittill(#"start_of_round");
 		if(is_pers_system_active())

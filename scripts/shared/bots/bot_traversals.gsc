@@ -94,7 +94,7 @@ function leave_water_traversal(startnode, endnode)
 		self press_swim_up();
 		wait(0.05);
 	}
-	while(1)
+	while(true)
 	{
 		self press_doublejump_button();
 		wait(0.05);
@@ -319,7 +319,7 @@ function exit_wallrun(startnode, endnode, wallnormal, runnormal)
 	{
 		vforward = 0;
 	}
-	while(1)
+	while(true)
 	{
 		wait(0.05);
 		enddir = endnode.origin - self.origin;

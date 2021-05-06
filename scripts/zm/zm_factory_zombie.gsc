@@ -233,7 +233,7 @@ private function factory_closest_player(origin, players)
 private function update_closest_player()
 {
 	level waittill(#"start_of_round");
-	while(1)
+	while(true)
 	{
 		reset_closest_player = 1;
 		zombies = zombie_utility::get_round_enemy_array();

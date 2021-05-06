@@ -287,7 +287,7 @@ function triggerweaponslockerthinkupdateprompt(player)
 function triggerweaponslockerthink()
 {
 	self.parent_player thread triggerweaponslockerweaponchangethink(self);
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		retrievingweapon = player wl_has_stored_weapondata();
@@ -392,7 +392,7 @@ function triggerweaponslockerweaponchangethink(trigger)
 	self endon(#"disconnect");
 	self endon(#"death");
 	trigger endon(#"kill_trigger");
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_change", newweapon);
 		trigger triggerweaponslockerisvalidweaponpromptupdate(self, newweapon);

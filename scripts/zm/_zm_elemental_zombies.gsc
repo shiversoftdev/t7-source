@@ -163,7 +163,7 @@ function function_2987b6dc()
 {
 	self endon(#"entityshutdown");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage");
 		if(randomint(100) < 50)
@@ -187,7 +187,7 @@ function function_d070bfba()
 {
 	self endon(#"entityshutdown");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage");
 		if(randomint(100) < 50)

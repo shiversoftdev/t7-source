@@ -178,6 +178,7 @@ function tweakart()
 		setdvar("", level.dofdefault[""]);
 		file = undefined;
 		filename = undefined;
+		tweak_toggle = 1;
 		for(;;)
 		{
 			while(getdvarint("") == 0)

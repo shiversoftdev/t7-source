@@ -88,7 +88,7 @@ function init_tag_array()
 */
 function water_dart_cleanup()
 {
-	while(1)
+	while(true)
 	{
 		a_grenades = getentarray("grenade", "classname");
 		foreach(var_2671007b, e_grenade in a_grenades)
@@ -135,7 +135,7 @@ function onplayerspawned()
 function watch_staff_water_fired()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"missile_fire", e_projectile, str_weapon);
 		if(str_weapon.name == "staff_water" || str_weapon.name == "staff_water_upgraded")
@@ -162,7 +162,7 @@ function watch_staff_water_fired()
 function watch_staff_water_impact()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"projectile_impact", str_weapon, v_explode_point, n_radius, str_name, n_impact);
 		if(str_weapon.name == "staff_water_upgraded2" || str_weapon.name == "staff_water_upgraded3")
@@ -348,7 +348,7 @@ function ice_staff_blizzard_do_kills(player, str_weapon)
 {
 	player endon(#"disconnect");
 	self endon(#"blizzard_off");
-	while(1)
+	while(true)
 	{
 		a_zombies = getaiarray();
 		foreach(var_e2d14a6a, zombie in a_zombies)

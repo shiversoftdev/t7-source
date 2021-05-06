@@ -540,6 +540,7 @@ function attack_thread()
 function go_back_on_navvolume()
 {
 	queryresult = positionquery_source_navigation(self.origin, 0, 100, 90, self.radius, self);
+	multiplier = 2;
 	while(queryresult.data.size < 1)
 	{
 		queryresult = positionquery_source_navigation(self.origin, 0, 100 * multiplier, 90 * multiplier, self.radius * multiplier, self);

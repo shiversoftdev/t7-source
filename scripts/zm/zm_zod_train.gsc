@@ -95,7 +95,7 @@ function function_eb0db7bc()
 {
 	level flag::wait_till("all_players_spawned");
 	level flag::wait_till("zones_initialized");
-	while(1)
+	while(true)
 	{
 		level waittill(#"host_migration_end");
 		[[ level.o_zod_train ]]->function_aaacaec9();
@@ -251,6 +251,7 @@ function function_69c89e00()
 	wait(1);
 	wallbuy = level.o_zod_train.var_36e768e4.buyable_weapon;
 	self notify(#"zm_bgb_secret_shopper", wallbuy);
+	self.var_316060b3 = 0;
 	while(isdefined(self))
 	{
 		if(isdefined(self.on_train) && self.on_train)
@@ -471,7 +472,7 @@ function debug_draw_paths()
 			wait(1);
 		}
 		while(!isdefined(n_debug) || n_debug <= 0);
-		while(1)
+		while(true)
 		{
 			a_keys = getarraykeys(self.var_c2e30cf8);
 			for(key_num = 0; key_num < self.var_c2e30cf8.size; key_num++)
@@ -529,7 +530,7 @@ function function_35ac589d()
 		wait(1);
 	}
 	while(!isdefined(n_debug) || n_debug <= 0);
-	while(1)
+	while(true)
 	{
 		duration = 1;
 		var_6ffe9d93 = 240;
@@ -701,7 +702,7 @@ function get_current_destination()
 function watch_node_parameters()
 {
 	self.var_36e768e4 endon(#"docked_in_station");
-	while(1)
+	while(true)
 	{
 		self.var_36e768e4 waittill(#"reached_node", nd);
 		if(isdefined(nd.script_parameters))
@@ -726,7 +727,7 @@ function watch_node_parameters()
 					}
 					break;
 				}
-				default
+				default:
 				{
 					/#
 						assertmsg("" + nd.script_parameters);
@@ -749,6 +750,7 @@ function watch_node_parameters()
 */
 function function_7eb2583b()
 {
+	timeout = 15;
 	while(timeout > 0 && self flag::get("moving"))
 	{
 		timeout = timeout - 1;
@@ -1024,6 +1026,7 @@ function function_aaacaec9()
 		str_key = a_keys[i];
 		nd_next = self.var_c2e30cf8[str_key].start_node;
 		nd_prev = undefined;
+		self.var_c2e30cf8[str_key].nodes = [];
 		while(isdefined(nd_next))
 		{
 			if(isdefined(nd_prev))
@@ -1256,12 +1259,12 @@ function main()
 	self.var_36e768e4 playloopsound("evt_train_idle_loop", 4);
 	open_doors();
 	thread run_switch();
-	while(1)
+	while(true)
 	{
 		update_use_trigger();
 		enable_train_switches(1);
 		level thread function_b0af9dac();
-		while(1)
+		while(true)
 		{
 			self.var_36e768e4 clientfield::set("train_switch_light", 1);
 			self.m_s_trigger waittill(#"trigger", e_who);
@@ -1462,7 +1465,7 @@ function function_955e57a7()
 */
 function function_b0af9dac()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"between_round_over");
 		level.var_33c4ee76 = 0;
@@ -1481,7 +1484,7 @@ function function_b0af9dac()
 */
 function run_callbox_hintstring(str_callbox, t_use, e_light)
 {
-	while(1)
+	while(true)
 	{
 		if(self.m_str_station == str_callbox)
 		{
@@ -1534,7 +1537,7 @@ function run_callbox(str_callbox)
 	e_lever = self.var_c2e30cf8[str_callbox].callbox;
 	t_use = zm_zod_util::spawn_trigger_radius(e_lever.origin, 60, 1);
 	thread run_callbox_hintstring(str_callbox, t_use, getent(e_lever.target, "targetname"));
-	while(1)
+	while(true)
 	{
 		t_use waittill(#"trigger", e_who);
 		if(!e_who zm_score::can_player_purchase(500))
@@ -1580,7 +1583,8 @@ function run_gate(e_gate, a_jump_nodes)
 	{
 		v_closed = v_open - anglestoforward(nd_start.angles) * 96;
 	}
-	while(1)
+	b_open = 1;
+	while(true)
 	{
 		if(b_open)
 		{
@@ -1955,7 +1959,7 @@ function send_train()
 */
 function run_switch()
 {
-	while(1)
+	while(true)
 	{
 		function_de6e1f4f(self.m_t_switch);
 		str_prev_dest = self.m_str_destination;
@@ -2083,7 +2087,7 @@ function watch_players_on_train()
 			#/
 		}
 	#/
-	while(1)
+	while(true)
 	{
 		foreach(var_16eaaf8f, e_player in level.players)
 		{
@@ -2479,7 +2483,8 @@ function get_origin()
 */
 function function_876255()
 {
-	while(1)
+	var_6609d101 = getentarray("map_train", "targetname");
+	while(true)
 	{
 		str_station = function_ae26c4a8();
 		switch(str_station)
@@ -2806,7 +2811,7 @@ function train_devgui()
 		adddebugcommand("");
 		adddebugcommand("");
 		adddebugcommand("");
-		while(1)
+		while(true)
 		{
 			cmd = getdvarstring("");
 			if(cmd != "")
@@ -2834,7 +2839,7 @@ function train_devgui()
 						debug_go_to_train();
 						break;
 					}
-					default
+					default:
 					{
 						break;
 					}

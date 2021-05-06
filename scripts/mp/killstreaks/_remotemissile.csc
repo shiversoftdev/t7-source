@@ -167,7 +167,8 @@ function hud_update(localclientnum)
 	}
 	prev_z = missile.origin[2];
 	fps = 20;
-	while(1)
+	delay = 1 / fps;
+	while(true)
 	{
 		cur_z = missile.origin[2];
 		setuimodelvalue(altitude_ui_data_model, cur_z);

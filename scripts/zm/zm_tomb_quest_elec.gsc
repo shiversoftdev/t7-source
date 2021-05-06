@@ -73,7 +73,8 @@ function electric_puzzle_watch_staff()
 {
 	self endon(#"disconnect");
 	a_piano_keys = struct::get_array("piano_key", "script_noteworthy");
-	while(1)
+	var_dc8ace48 = level.a_elemental_staffs["staff_lightning"].w_weapon;
+	while(true)
 	{
 		self waittill(#"projectile_impact", w_weapon, v_explode_point, n_radius, e_projectile, n_impact);
 		if(w_weapon == var_dc8ace48)
@@ -203,6 +204,7 @@ function piano_run_chords()
 		/#
 			show_chord_debug(s_chord.notes);
 		#/
+		chord_solved = 0;
 		while(!chord_solved)
 		{
 			level waittill(#"piano_key_played");
@@ -269,7 +271,8 @@ function piano_run_chords()
 */
 function piano_key_run()
 {
-	while(1)
+	piano_key_note = self.script_string;
+	while(true)
 	{
 		self waittill(#"piano_key_shot");
 		if(!level flag::get("piano_chord_ringing"))
@@ -539,7 +542,8 @@ function relay_switch_run()
 	zm_unitrigger::register_unitrigger(self.trigger_stub, &relay_unitrigger_think);
 	level endon(#"electric_puzzle_2_complete");
 	self thread update_relay_rotation();
-	while(1)
+	n_tries = 0;
+	while(true)
 	{
 		self.trigger_stub waittill(#"trigger", e_user);
 		n_tries++;
@@ -578,7 +582,7 @@ function relay_switch_run()
 function relay_unitrigger_think()
 {
 	self endon(#"kill_trigger");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		self.stub notify(#"trigger", player);

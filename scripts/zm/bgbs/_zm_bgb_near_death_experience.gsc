@@ -269,7 +269,7 @@ function function_ff41ae2d(e_player)
 	e_player endon(#"disconnect");
 	self endon(#"disconnect");
 	self endon(#"hash_d59552a3");
-	while(1)
+	while(true)
 	{
 		if(!e_player laststand::player_is_in_laststand() && !self laststand::player_is_in_laststand())
 		{

@@ -337,7 +337,7 @@ function precache_mp_leaderboards()
 		{
 			break;
 		}
-		default
+		default:
 		{
 			careerleaderboard = " LB_MP_GB_SCOREPERMINUTE";
 			break;
@@ -2770,6 +2770,7 @@ function timelimitclock()
 {
 	level endon(#"game_ended");
 	wait(0.05);
+	clockobject = spawn("script_origin", (0, 0, 0));
 	while(game["state"] == "playing")
 	{
 		if(!level.timerstopped && level.timelimit)
@@ -2858,7 +2859,7 @@ function timelimitclock_intermission(waittime)
 function function_59b8efe0()
 {
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		for(i = 0; i < level.players.size; i++)
 		{
@@ -2923,6 +2924,7 @@ function startgame()
 */
 function waitforplayers()
 {
+	starttime = gettime();
 	while(getnumconnectedplayers() < 1)
 	{
 		wait(0.05);
@@ -3368,7 +3370,7 @@ function callback_startgametype()
 function forcedebughostmigration()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			hostmigration::waittillhostmigrationdone();
 			wait(60);

@@ -201,7 +201,7 @@ function function_ff9b21c4()
 		level waittill(#"start_of_round");
 		function_a67ada8();
 	#/
-	while(1)
+	while(true)
 	{
 		level waittill(#"between_round_over");
 		function_a67ada8();
@@ -228,7 +228,8 @@ function function_684ce0()
 		}
 	#/
 	old_spawn_func = level.round_spawn_func;
-	while(1)
+	old_wait_func = level.round_wait_func;
+	while(true)
 	{
 		level waittill(#"between_round_over");
 		/#
@@ -349,7 +350,7 @@ function function_a33bc00f()
 	level flag::set("raz_round_in_progress");
 	level endon(#"last_ai_down");
 	level thread function_25561504();
-	while(1)
+	while(true)
 	{
 		while(level.zombie_total > 0)
 		{
@@ -492,7 +493,7 @@ function function_852019c2()
 			break;
 		}
 		case 4:
-		default
+		default:
 		{
 			n_wave_count = 16;
 			break;
@@ -631,7 +632,7 @@ function function_a74c2884()
 			n_default_wait = 1.25;
 			break;
 		}
-		default
+		default:
 		{
 			n_default_wait = 0.75;
 			break;
@@ -924,6 +925,7 @@ function function_7b5bfac6()
 */
 function function_7ed6c714(n_to_spawn = 1, var_e41e673a, b_force_spawn = 0, var_b7959229 = undefined)
 {
+	n_spawned = 0;
 	while(n_spawned < n_to_spawn)
 	{
 		if(!b_force_spawn && !function_ea911683())
@@ -983,7 +985,7 @@ function function_7ed6c714(n_to_spawn = 1, var_e41e673a, b_force_spawn = 0, var_
 function function_175052a7()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self playsound("zmb_hellhound_vocals_amb");
 		wait(randomfloatrange(3, 6));

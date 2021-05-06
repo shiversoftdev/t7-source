@@ -260,7 +260,7 @@ function killstreak_switch_team(owner)
 		killstreakentity endon(#"killstreak_switch_team_singleton");
 		killstreakentity endon(#"death");
 		setdvar("", "");
-		while(1)
+		while(true)
 		{
 			wait(0.5);
 			devgui_int = getdvarint("");

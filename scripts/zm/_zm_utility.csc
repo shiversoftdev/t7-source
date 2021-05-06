@@ -279,7 +279,7 @@ function umbra_fix_logic(localclientnum)
 	self endon(#"disconnect");
 	self endon(#"entityshutdown");
 	umbra_settometrigger(localclientnum, "");
-	while(1)
+	while(true)
 	{
 		in_fix_area = 0;
 		if(isdefined(level.custom_umbra_hotfix))

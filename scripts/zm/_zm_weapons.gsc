@@ -107,7 +107,7 @@ function watchforgrenadeduds()
 {
 	self endon(#"spawned_player");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_fire", grenade, weapon);
 		if(!zm_equipment::is_equipment(weapon) && !zm_utility::is_placeable_mine(weapon))
@@ -131,7 +131,7 @@ function watchforgrenadelauncherduds()
 {
 	self endon(#"spawned_player");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_launcher_fire", grenade, weapon);
 		grenade thread checkgrenadefordud(weapon, 0, self);
@@ -509,7 +509,7 @@ function watchweaponusagezm()
 				self addweaponstat(curweapon, "shots", 1);
 				break;
 			}
-			default
+			default:
 			{
 				break;
 			}
@@ -530,7 +530,8 @@ function trackweaponzm()
 {
 	self.currentweapon = self getcurrentweapon();
 	self.currenttime = gettime();
-	while(1)
+	spawnid = getplayerspawnid(self);
+	while(true)
 	{
 		event = self util::waittill_any_return("weapon_change", "death", "disconnect", "bled_out");
 		newtime = gettime();
@@ -617,7 +618,8 @@ function watchweaponchangezm()
 	self endon(#"disconnect");
 	self.lastdroppableweapon = self getcurrentweapon();
 	self.hitsthismag = [];
-	while(1)
+	weapon = self getcurrentweapon();
+	while(true)
 	{
 		previous_weapon = self getcurrentweapon();
 		self waittill(#"weapon_change", newweapon);
@@ -822,6 +824,7 @@ function add_attachments(weapon, upgrade)
 		level.zombie_weapons[weapon].default_attachment = tablelookup(table, 0, upgrade.name, 1);
 		level.zombie_weapons[weapon].addon_attachments = [];
 		index = 2;
+		next_addon = tablelookup(table, 0, upgrade.name, index);
 		while(isdefined(next_addon) && next_addon.size > 0)
 		{
 			level.zombie_weapons[weapon].addon_attachments[level.zombie_weapons[weapon].addon_attachments.size] = next_addon;
@@ -1826,7 +1829,7 @@ function random_attachment(weapon, exclude)
 	}
 	if(attachments.size > minatt)
 	{
-		while(1)
+		while(true)
 		{
 			idx = randomint(attachments.size - lo) + lo;
 			if(!isdefined(exclude) || attachments[idx] != exclude)
@@ -3510,6 +3513,7 @@ function weapondata_take(weapondata)
 			self weapon_take(dw_weapon);
 		}
 	}
+	alt_weapon = weapon.altweapon;
 	while(alt_weapon != level.weaponnone)
 	{
 		if(self hasweapon(alt_weapon))
@@ -3749,6 +3753,7 @@ function load_weapon_spec_from_table(table, first_row)
 {
 	gametype = getdvarstring("ui_gametype");
 	index = 1;
+	row = tablelookuprow(table, index);
 	while(isdefined(row))
 	{
 		weapon_name = checkstringvalid(row[0]);

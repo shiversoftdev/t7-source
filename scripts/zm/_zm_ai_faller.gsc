@@ -433,7 +433,7 @@ function zombie_fall_loop()
 {
 	self endon(#"death");
 	self setanimstatefromasd("zm_faller_fall_loop");
-	while(1)
+	while(true)
 	{
 		ground_pos = zm_utility::groundpos_ignore_water_new(self.origin);
 		if(self.origin[2] - ground_pos[2] < 20)
@@ -540,7 +540,8 @@ function zombie_faller_watch_player(player)
 	closerange = 60;
 	closerangesqr = closerange * closerange;
 	dirtoplayerenter = (0, 0, 0);
-	while(1)
+	incloserange = 0;
+	while(true)
 	{
 		distsqr = distance2dsquared(self.origin, player.origin);
 		if(distsqr < rangesqr)
@@ -606,7 +607,8 @@ function zombie_fall_wait()
 	{
 		if(isdefined(level.zones) && isdefined(level.zones[self.zone_name]))
 		{
-			while(1)
+			zone = level.zones[self.zone_name];
+			while(true)
 			{
 				if(!zone.is_enabled || !zone.is_active)
 				{
@@ -856,6 +858,7 @@ function zombie_fall_dust_fx(zombie)
 	self thread stop_zombie_fall_dust_fx(zombie);
 	dust_time = 4.5;
 	dust_interval = 0.3;
+	t = 0;
 	while(t < dust_time)
 	{
 		playfxontag(level._effect["rise_dust"], zombie, dust_tag);
@@ -1077,6 +1080,7 @@ function zombie_emerge_dust_fx(zombie)
 	self thread stop_zombie_fall_dust_fx(zombie);
 	dust_time = 3.5;
 	dust_interval = 0.5;
+	t = 0;
 	while(t < dust_time)
 	{
 		playfxontag(level._effect["rise_dust"], zombie, dust_tag);

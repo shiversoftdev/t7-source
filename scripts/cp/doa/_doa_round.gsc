@@ -320,10 +320,12 @@ private function function_d87cb356()
 	level endon(#"hash_24d3a44");
 	while(!level flag::get("doa_game_is_over"))
 	{
+		level.doa.in_intermission = 0;
 		while(level flag::get("doa_round_active"))
 		{
 			wait(1);
 		}
+		level.doa.in_intermission = 1;
 		while(!level flag::get("doa_round_active"))
 		{
 			wait(1);
@@ -361,7 +363,7 @@ function function_40bfe842(entnum = 0)
 				var_3c70b682 = "left";
 				break;
 			}
-			default
+			default:
 			{
 				var_3c70b682 = "right";
 				break;

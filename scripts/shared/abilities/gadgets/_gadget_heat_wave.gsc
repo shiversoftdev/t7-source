@@ -76,7 +76,7 @@ function __init__()
 */
 function updatedvars()
 {
-	while(1)
+	while(true)
 	{
 		wait(1);
 	}
@@ -448,6 +448,7 @@ function heat_wave_damage_entities(weapon, heatwave)
 	self endon(#"disconnect");
 	self endon(#"heat_wave_think");
 	starttime = gettime();
+	burnedenemy = 0;
 	while(250 + starttime > gettime())
 	{
 		entities = getdamageableentarray(heatwave.origin, heatwave.radius, 1);

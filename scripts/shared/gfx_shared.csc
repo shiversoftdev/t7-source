@@ -106,7 +106,7 @@ function setstage(localclientnum, bundle, filterid, stageprefix, stagelength, ac
 						lerpratio = 0.5 - 0.5 * cos(360 * timeratio);
 						break;
 					}
-					default
+					default:
 					{
 						break;
 					}

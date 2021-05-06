@@ -192,7 +192,7 @@ function trophyactive(owner)
 	owner endon(#"disconnect");
 	self endon(#"death");
 	self endon(#"hacked");
-	while(1)
+	while(true)
 	{
 		if(!isdefined(self))
 		{
@@ -375,7 +375,7 @@ function watchtrophysystemdamage(watcher)
 	self.health = self.maxhealth;
 	self setmaxhealth(self.maxhealth);
 	attacker = undefined;
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", damage, attacker, direction_vec, point, type, modelname, tagname, partname, weapon, idflags);
 		attacker = self [[level.figure_out_attacker]](attacker);

@@ -76,7 +76,7 @@ function init_low_gravity_fx()
 */
 function gravity_trigger()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", who);
 		if(!isplayer(who))
@@ -386,7 +386,8 @@ function zombie_low_gravity_locomotion()
 function zombie_watch_nogravity()
 {
 	self endon(#"death");
-	while(1)
+	_off_ground_max = 32;
+	while(true)
 	{
 		if(isdefined(self.nogravity) && self.nogravity)
 		{
@@ -414,7 +415,7 @@ function zombie_watch_nogravity()
 function zombie_watch_run_notetracks()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"runanim", note);
 		if(!isdefined(self.script_noteworthy) || self.script_noteworthy != "moon_gravity")
@@ -460,7 +461,8 @@ function zombie_moon_update_player_gravity()
 {
 	level flag::wait_till("start_zombie_round_logic");
 	low_g = 136;
-	while(1)
+	player_zones = getentarray("player_volume", "script_noteworthy");
+	while(true)
 	{
 		players = getplayers();
 		for(i = 0; i < player_zones.size; i++)
@@ -544,7 +546,8 @@ function zombie_moon_player_float()
 {
 	self endon(#"death");
 	self endon(#"disconnect");
-	while(1)
+	boost_chance = 40;
+	while(true)
 	{
 		if(zombie_utility::is_player_valid(self) && (isdefined(self.in_low_gravity) && self.in_low_gravity) && self isonground() && self issprinting())
 		{
@@ -657,7 +660,7 @@ function low_gravity_watch()
 	}
 	starttime = gettime();
 	nexttime = gettime();
-	while(1)
+	while(true)
 	{
 		diff = nexttime - starttime;
 		if(isgodmode(self))
@@ -874,7 +877,7 @@ function player_throw_grenade()
 	self endon(#"player_throw_grenade");
 	self endon(#"disconnect");
 	level flag::wait_till("start_zombie_round_logic");
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_fire", grenade, weapname);
 		grenade thread watch_grenade_gravity();
@@ -895,7 +898,7 @@ function watch_grenade_gravity()
 	self endon(#"death");
 	self endon(#"explode");
 	player_zones = getentarray("player_volume", "script_noteworthy");
-	while(1)
+	while(true)
 	{
 		if(isdefined(level.on_the_moon) && level.on_the_moon && !level flag::get("power_on"))
 		{
@@ -969,7 +972,7 @@ function update_zombie_gravity_transition()
 */
 function zombie_airlock_think()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", who);
 		if(isplayer(who))

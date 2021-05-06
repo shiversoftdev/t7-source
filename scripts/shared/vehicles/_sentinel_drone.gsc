@@ -544,7 +544,7 @@ function state_combat_update(params)
 	thread sentinel_drone_target_selection();
 	thread sentinel_navigatetheworld();
 	thread sentine_rumblewhennearplayer();
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.playing_intro_anim) && self.playing_intro_anim)
 		{
@@ -831,7 +831,8 @@ function sentinel_navigatetheworld()
 	self asmrequestsubstate("locomotion@movement");
 	self.current_pathto_pos = undefined;
 	self.next_near_player_check = 0;
-	while(1)
+	b_use_path_finding = 1;
+	while(true)
 	{
 		current_pathto_pos = undefined;
 		b_in_tactical_position = 0;
@@ -1267,7 +1268,7 @@ function sentinel_chargeatplayernavigation(b_charge_at_player, time_out, charge_
 	self clearlookatent();
 	self setvehgoalpos(charge_at_position, 1, 0);
 	self setlookatorigin(charge_at_position);
-	while(1)
+	while(true)
 	{
 		velocity = self getvelocity() * 0.1;
 		velocitymag = length(velocity);
@@ -1318,7 +1319,7 @@ function sentinel_pathupdateinterrupt()
 		return;
 	}
 	wait(1);
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.current_pathto_pos))
 		{
@@ -1351,7 +1352,7 @@ function sentine_rumblewhennearplayer()
 {
 	self endon(#"death");
 	self endon(#"change_state");
-	while(1)
+	while(true)
 	{
 		while(sentinel_isnearanotherplayer(self.origin, 120))
 		{
@@ -1608,6 +1609,7 @@ function sentinel_firebeamburst(target_position)
 	wait(0.1);
 	start_beam_time = gettime() + 2000;
 	beam_damage_update = 0.1;
+	player_damage = int(100 * beam_damage_update);
 	while(gettime() < start_beam_time || (isdefined(self.sentinel_debugfx_playall) && self.sentinel_debugfx_playall))
 	{
 		sentinel_damagebeamtouchingentity(player_damage, target_position);
@@ -1741,6 +1743,7 @@ function sentinel_chargeatplayer()
 	self asmrequestsubstate("suicide_charge@death");
 	self setspeed(60);
 	self thread sentinel_chargeatplayernavigation(b_charge_at_player, 4000, charge_at_position);
+	detonation_distance_sq = 10000;
 	while(isdefined(self) && isdefined(self.sentinel_droneenemy))
 	{
 		distance_sq = distancesquared(self.sentinel_droneenemy.origin + vectorscale((0, 0, 1), 48), self.origin);
@@ -2705,7 +2708,7 @@ function sentinel_debugdrawsize()
 {
 	/#
 		self endon(#"death");
-		while(1)
+		while(true)
 		{
 			radius = getdvarint("", 35);
 			sphere(self.origin, radius, (0, 1, 0), 0.5);
@@ -2727,7 +2730,7 @@ function sentinel_debugfx()
 {
 	/#
 		self endon(#"death");
-		while(1)
+		while(true)
 		{
 			if(getdvarint("", 0) == 1)
 			{

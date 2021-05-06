@@ -349,7 +349,7 @@ function weapon_change_watcher()
 {
 	self endon(#"disconnect");
 	self.var_f2a52896 = undefined;
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_change", w_current, w_previous);
 		if(w_current === level.var_207d01be)
@@ -401,7 +401,7 @@ function function_22a08c51(weapon)
 	self endon(#"hash_9b74f71e");
 	self notify(#"hash_22a08c51");
 	self endon(#"hash_22a08c51");
-	while(1)
+	while(true)
 	{
 		if(!self laststand::player_is_in_laststand())
 		{
@@ -517,7 +517,7 @@ function function_d7a4275d()
 		}
 		wait(0.05);
 	}
-	while(1)
+	while(true)
 	{
 		time = gettime();
 		if(isdefined(self.var_d4b932e6) && time < self.var_d4b932e6)
@@ -572,7 +572,7 @@ function function_62d6a233()
 	self endon(#"hash_3307435");
 	self notify(#"hash_cf68b84e");
 	self endon(#"hash_cf68b84e");
-	while(1)
+	while(true)
 	{
 		self util::waittill_any("weapon_melee", "weapon_melee_power");
 		var_ebcc1e01 = self gettagorigin("tag_weapon_right");
@@ -638,6 +638,7 @@ function function_e7fe168a(weapon)
 	self endon(#"weapon_melee_charge");
 	self notify(#"hash_c0a47e94");
 	self endon(#"hash_c0a47e94");
+	start_time = gettime();
 	while(start_time + 1000 > gettime())
 	{
 		self playrumbleonentity("zod_shield_juke");
@@ -1043,7 +1044,7 @@ function function_a23fb854()
 		adddebugcommand(str_cmd);
 		str_cmd = "";
 		adddebugcommand(str_cmd);
-		while(1)
+		while(true)
 		{
 			equipment_id = getdvarstring("");
 			if(equipment_id != "")
@@ -1136,7 +1137,7 @@ function function_82f11e44()
 		self endon(#"death");
 		self endon(#"bled_out");
 		self endon(#"hash_bd42c97e");
-		while(1)
+		while(true)
 		{
 			self enableinvulnerability();
 			wait(0.5);

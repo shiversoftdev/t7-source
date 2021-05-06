@@ -202,7 +202,7 @@ function function_f7035c2f(nikolai_driver)
 	nikolai_driver.angles = self gettagangles("tag_driver");
 	nikolai_driver.targetname = "nikolai_driver";
 	nikolai_driver linkto(self, "tag_driver");
-	while(1)
+	while(true)
 	{
 		nikolai_driver scene::play("cin_zm_stalingrad_nikolai_cockpit_drink");
 		nikolai_driver thread scene::play("cin_zm_stalingrad_nikolai_cockpit_idle");
@@ -481,7 +481,8 @@ function state_jump_update(params)
 	self util::waittill_notify_or_timeout("start_engine", 1);
 	self vehicle::impact_fx(self.settings.takeofffx1);
 	params.landingstate = "land@jump";
-	while(1)
+	jumpstart = gettime();
+	while(true)
 	{
 		distancetogoal = distance2d(self.jump.linkent.origin, goal);
 		antigravityscaleup = mapfloat(0, 0.5, 0.6, 0, abs(0.5 - distancetogoal / totaldistance));
@@ -628,7 +629,7 @@ function state_groundcombat_update(params)
 	self thread movement_thread();
 	self thread footstep_left_monitor();
 	self thread footstep_right_monitor();
-	while(1)
+	while(true)
 	{
 		self vehicle_ai::evaluate_connections();
 		wait(1);
@@ -665,7 +666,7 @@ function footstep_left_monitor()
 	self endon(#"change_state");
 	self notify(#"stop_left_footstep_damage");
 	self endon(#"stop_left_footstep_damage");
-	while(1)
+	while(true)
 	{
 		self waittill(#"footstep_left_large_theia");
 		footstep_damage("tag_leg_left_foot_animate");
@@ -687,7 +688,7 @@ function footstep_right_monitor()
 	self endon(#"change_state");
 	self notify(#"stop_right_footstep_damage");
 	self endon(#"stop_right_footstep_damage");
-	while(1)
+	while(true)
 	{
 		self waittill(#"footstep_right_large_theia");
 		footstep_damage("tag_leg_right_foot_animate");
@@ -709,7 +710,8 @@ function movement_thread()
 	self endon(#"change_state");
 	self notify(#"end_movement_thread");
 	self endon(#"end_movement_thread");
-	while(1)
+	self.current_pathto_pos = self.origin;
+	while(true)
 	{
 		self setspeed(self.settings.defaultmovespeed);
 		e_enemy = self.enemy;
@@ -768,7 +770,7 @@ function attack_thread_gun()
 	self endon(#"end_attack_thread");
 	self notify(#"end_attack_thread_gun");
 	self endon(#"end_attack_thread_gun");
-	while(1)
+	while(true)
 	{
 		e_enemy = self.enemy;
 		if(!isdefined(e_enemy) || self.var_a7cd606 === 1)
@@ -779,6 +781,7 @@ function attack_thread_gun()
 		}
 		self vehicle_ai::setturrettarget(e_enemy, 0);
 		self vehicle_ai::setturrettarget(e_enemy, 1);
+		var_eb3cc6f2 = gettime();
 		while(isdefined(e_enemy) && !self.gunner1ontarget && vehicle_ai::timesince(var_eb3cc6f2) < 2)
 		{
 			wait(0.4);
@@ -787,6 +790,7 @@ function attack_thread_gun()
 		{
 			continue;
 		}
+		var_9e93cc65 = gettime();
 		while(isdefined(e_enemy) && e_enemy === self.enemy && self vehseenrecently(e_enemy, 1) && vehicle_ai::timesince(var_9e93cc65) < 5)
 		{
 			if(self flag::get("halt_thread_gun"))
@@ -894,6 +898,7 @@ function face_target(position, targetanglediff = 30, var_a39fa3d8 = 1)
 		self setturrettargetvec(position);
 	}
 	self locomotion_start();
+	angleadjustingstart = gettime();
 	while(anglediff > targetanglediff && vehicle_ai::timesince(angleadjustingstart) < 4)
 	{
 		anglediff = absangleclamp180(self.angles[1] - goalangles[1]);
@@ -1026,7 +1031,7 @@ function function_b9b039e0(einflictor, eattacker, idamage, idflags, smeansofdeat
 			str_partname = "tag_heat_vent_05_d1";
 			break;
 		}
-		default
+		default:
 		{
 			return 0;
 		}
@@ -1206,6 +1211,7 @@ function function_a3258c2a(var_f8b7c9a1)
 	var_a3f49a09 = 137.5;
 	weapon = self seatgetweapon(1);
 	fireinterval = weapon.firetime * 0.5;
+	var_9e93cc65 = gettime();
 	while(isdefined(self.enemy) && vehicle_ai::timesince(var_9e93cc65) < var_f8b7c9a1)
 	{
 		self setlookatent(self.enemy);
@@ -1269,6 +1275,7 @@ function function_59fe8c9c(targetposition)
 		{
 			self util::waittill_notify_or_timeout("fire_raps", 0.5);
 		}
+		ai_raps = undefined;
 		while(!isdefined(ai_raps))
 		{
 			if(level flag::get("world_is_paused"))
@@ -1443,11 +1450,13 @@ function pin_spike_to_ground(spike, targetorigin)
 {
 	spike endon(#"death");
 	targetdist = distance2d(spike.origin, targetorigin) - 400 + randomfloat(60);
+	startorigin = spike.origin;
 	while(distance2dsquared(spike.origin, startorigin) < targetdist * 0.4 * targetdist * 0.4)
 	{
 		wait(0.05);
 	}
 	var_5f13f183 = 1;
+	maxpitch = 10;
 	while(distance2dsquared(spike.origin, startorigin) < max(targetdist * targetdist, 150 * 150))
 	{
 		pitch = angleclamp180(spike.angles[0]);
@@ -1459,6 +1468,7 @@ function pin_spike_to_ground(spike, targetorigin)
 		wait(0.05);
 	}
 	var_5f13f183 = 16;
+	maxpitch = 76;
 	while(spike.angles[0] < maxpitch)
 	{
 		pitch = angleclamp180(spike.angles[0]);
@@ -1486,7 +1496,7 @@ function function_db9ecada()
 	self notify(#"hash_f7204730");
 	self endon(#"hash_f7204730");
 	self endon(#"change_state");
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_stuck", var_8e857deb, origin, normal);
 		var_8e857deb thread function_d7ef4d80();
@@ -1507,7 +1517,7 @@ function function_db9ecada()
 function function_d7ef4d80()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		a_ai_zombies = getaiarchetypearray("zombie");
 		a_ai_zombies = arraysortclosest(a_ai_zombies, self.origin, undefined, undefined, 200);

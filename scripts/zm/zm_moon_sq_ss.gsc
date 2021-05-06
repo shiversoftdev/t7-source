@@ -87,7 +87,7 @@ function ss_debug()
 			level.ss_user_val_text.alpha = 1;
 			level.ss_user_val_text settext("");
 		}
-		while(1)
+		while(true)
 		{
 			if(isdefined(level._ss_user_seq))
 			{
@@ -400,7 +400,7 @@ function sq_ss_button_debug()
 	level endon(#"ss_kill_button_thread");
 	level endon(#"sq_ss1_over");
 	level endon(#"sq_ss2_over");
-	while(1)
+	while(true)
 	{
 		/#
 			print3d(self.origin + vectorscale((0, 0, 1), 12), self.script_int, vectorscale((0, 1, 0), 255), 1);
@@ -491,7 +491,8 @@ function sq_ss_button_thread(dud)
 	}
 	pos = self.origin;
 	pressed = self.origin - anglestoright(self.angles) * 0.25;
-	while(1)
+	targ_model = self.terminal_model;
+	while(true)
 	{
 		self waittill(#"trigger");
 		if(!level flag::get("displays_active"))
@@ -564,6 +565,7 @@ function ss_logic(seq_length, seq_start_length)
 	seq = generate_sequence(seq_length);
 	level._ss_user_seq = [];
 	level._ss_sequence_matched = 0;
+	fails = 0;
 	while(!level._ss_sequence_matched)
 	{
 		wait(0.5);
@@ -680,6 +682,7 @@ function display_fail()
 	level flag::set("displays_active");
 	buttons = level._ss_buttons;
 	level thread do_ss_failure_vox(level._ss_stage);
+	all_screens_black = 0;
 	while(!all_screens_black)
 	{
 		all_screens_black = 1;
@@ -745,6 +748,7 @@ function display_success(seq)
 	level flag::set("displays_active");
 	buttons = level._ss_buttons;
 	level thread do_ss_success_vox(level._ss_stage);
+	all_screens_black = 0;
 	while(!all_screens_black)
 	{
 		all_screens_black = 1;

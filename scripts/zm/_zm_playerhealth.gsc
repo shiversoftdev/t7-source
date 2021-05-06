@@ -593,9 +593,9 @@ function playerhealthdebug()
 			setdvar("", "");
 		}
 		waittillframeend();
-		while(1)
+		while(true)
 		{
-			while(1)
+			while(true)
 			{
 				if(getdvarstring("") != "")
 				{
@@ -604,7 +604,7 @@ function playerhealthdebug()
 				wait(0.5);
 			}
 			thread printhealthdebug();
-			while(1)
+			while(true)
 			{
 				if(getdvarstring("") == "")
 				{
@@ -682,7 +682,7 @@ function printhealthdebug()
 			level.healthbarhudelems[key] = textelem;
 		}
 		level flag::wait_till("");
-		while(1)
+		while(true)
 		{
 			wait(0.05);
 			players = getplayers();

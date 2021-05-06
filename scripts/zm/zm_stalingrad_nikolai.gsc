@@ -398,7 +398,7 @@ function function_d9ffbd23()
 	var_15518756 = 3;
 	self.var_7231744c = 0;
 	wait(n_wait);
-	while(1)
+	while(true)
 	{
 		if(!(isdefined(self.var_7231744c) && self.var_7231744c) && randomint(100) >= 94)
 		{
@@ -953,6 +953,7 @@ function function_3c68f919(var_74557a8b)
 function function_1d0e6184()
 {
 	level endon(#"nikolai_complete");
+	var_3a73aa84 = undefined;
 	while(!isdefined(var_3a73aa84))
 	{
 		foreach(var_250c8721, player in level.activeplayers)
@@ -1162,7 +1163,7 @@ function function_dc342bfa(s_point)
 function function_cb725ad1()
 {
 	level endon(#"nikolai_complete");
-	while(1)
+	while(true)
 	{
 		if(!(isdefined(self.var_88e5f77d) && self.var_88e5f77d))
 		{
@@ -1229,7 +1230,7 @@ function function_4fd3f4f9(var_8087702e)
 	var_6be58df = array::sort_by_script_int(var_6be58df, 1);
 	self waittill(#"completed_spawning");
 	self setspeed(10);
-	while(1)
+	while(true)
 	{
 		self function_716d82f6();
 		wait(0.5);

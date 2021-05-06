@@ -181,7 +181,7 @@ function function_677ed44f(weapon)
 	self endon(#"hash_677ed44f");
 	self endon(#"hash_343d4580");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill(#"ravage_core", target, attacker, damage, weapon, hitorigin);
 		self notify(#"ravage_core", target, damage, weapon);

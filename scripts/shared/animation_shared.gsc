@@ -272,7 +272,8 @@ function _blend_out(animation, n_blend, n_rate, n_start_time)
 	self endon(#"end");
 	self endon(#"scriptedanim");
 	self endon(#"new_scripted_anim");
-	while(1)
+	n_server_length = floor(getanimlength(animation) / 0.05) * 0.05;
+	while(true)
 	{
 		n_current_time = self getanimtime(animation) * n_server_length;
 		n_time_left = n_server_length - n_current_time;
@@ -470,7 +471,7 @@ function debug_anim_reach()
 		self endon(#"new_anim_reach");
 		self endon(#"new_scripted_anim");
 		self endon(#"stop_scripted_anim");
-		while(1)
+		while(true)
 		{
 			level flagsys::wait_till("");
 			print3d(self.origin, "", (1, 0, 0), 1, 1, 1);
@@ -649,7 +650,7 @@ function call_notetrack_handler(str_note, param1, param2)
 					self [[func]]();
 					break;
 				}
-				default
+				default:
 				{
 					/#
 						assertmsg("");
@@ -706,7 +707,7 @@ function handle_notetracks(animation)
 {
 	self endon(#"death");
 	self endon(#"new_scripted_anim");
-	while(1)
+	while(true)
 	{
 		self waittill(animation, str_note, param1, param2);
 		if(isdefined(str_note))

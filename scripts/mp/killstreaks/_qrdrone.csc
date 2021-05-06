@@ -200,7 +200,7 @@ function blink_fx_and_sound(localclientnum, soundalias)
 	{
 		self.interval = 1;
 	}
-	while(1)
+	while(true)
 	{
 		self playsound(localclientnum, soundalias);
 		self spawn_solid_fx(localclientnum);
@@ -303,7 +303,7 @@ function loop_local_sound(localclientnum, alias, interval, fx)
 	{
 		self.interval = interval;
 	}
-	while(1)
+	while(true)
 	{
 		self playsound(localclientnum, alias);
 		self spawn_solid_fx(localclientnum);
@@ -392,7 +392,7 @@ function blink_light(localclientnum)
 function collisionhandler(localclientnum)
 {
 	self endon(#"entityshutdown");
-	while(1)
+	while(true)
 	{
 		self waittill(#"veh_collision", hip, hitn, hit_intensity);
 		driver_local_client = self getlocalclientdriver();
@@ -426,7 +426,7 @@ function collisionhandler(localclientnum)
 function enginestutterhandler(localclientnum)
 {
 	self endon(#"entityshutdown");
-	while(1)
+	while(true)
 	{
 		self waittill(#"veh_engine_stutter");
 		if(self islocalclientdriver(localclientnum))
@@ -507,10 +507,11 @@ function qrdrone_watch_distance()
 	soundent = spawn(0, self.origin, "script_origin");
 	soundent linkto(self);
 	self thread qrdrone_staticstopondeath(soundent);
-	while(1)
+	while(true)
 	{
 		if(!self qrdrone_in_range())
 		{
+			staticalpha = 0;
 			while(!self qrdrone_in_range())
 			{
 				if(isdefined(self.heliinproximity))

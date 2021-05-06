@@ -67,7 +67,7 @@ function player_sound_context_hack()
 		self endon(#"entityshutdown");
 		self notify(#"player_sound_context_hack");
 		self endon(#"player_sound_context_hack");
-		while(1)
+		while(true)
 		{
 			self setsoundentcontext("bomb_plant", "silent");
 			wait(1);

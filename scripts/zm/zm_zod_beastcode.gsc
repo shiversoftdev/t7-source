@@ -296,7 +296,7 @@ function setup_input_threads()
 */
 function function_36c50de5()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"start_of_round");
 		if(0 >= self.var_71f130fa)
@@ -473,7 +473,8 @@ function create_code_input_unitrigger()
 function function_71154a2(t_lookat, n_code_index, var_d7d7b586)
 {
 	var_c929283d = struct::get(t_lookat.target, "targetname");
-	while(1)
+	var_43544e59 = var_c929283d.origin;
+	while(true)
 	{
 		t_lookat waittill(#"trigger", player);
 		while(player istouching(t_lookat))
@@ -531,7 +532,8 @@ function keycode_input_prompt(player)
 	player endon(#"death_or_disconnect");
 	str_hint = &"";
 	str_old_hint = &"";
-	while(1)
+	a_s_input_button_tags = [[ self.stub.o_keycode ]]->get_tags_from_input_device();
+	while(true)
 	{
 		n_state = [[ self.stub.o_keycode ]]->get_keycode_device_state();
 		switch(n_state)
@@ -616,7 +618,7 @@ function keycode_input_prompt(player)
 */
 function keycode_input_trigger_think(o_beastcode, n_index)
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(o_beastcode.var_71f130fa <= 0)

@@ -321,6 +321,7 @@ function damageeffectarea(owner, position, radius, height, killcament)
 	}
 	var_5686ecd0 = owner.team;
 	loopwaittime = level.incendiaryfiredamageticktime;
+	durationofincendiary = level.incendiaryfireduration;
 	while(durationofincendiary > 0)
 	{
 		if(isdefined(owner) && owner.team !== var_5686ecd0)

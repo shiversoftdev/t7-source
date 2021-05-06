@@ -62,7 +62,7 @@ function function_6db69694(localclientnum, oldval, newval, bnewent, binitialsnap
 			str_exploder_name = "fxexp_213";
 			break;
 		}
-		default
+		default:
 		{
 			str_exploder_name = "";
 		}
@@ -92,7 +92,8 @@ function function_6e543e40(localclientnum, fieldname)
 {
 	level notify("stop_" + fieldname);
 	self endon("stop_" + fieldname);
-	while(1)
+	s_pos = struct::get(fieldname, "targetname");
+	while(true)
 	{
 		playfx(localclientnum, level._effect["wagon_fire"], s_pos.origin, anglestoforward(s_pos.angles), anglestoup(s_pos.angles));
 		wait(0.5);
@@ -244,7 +245,7 @@ function function_19452a40(localclientnum, oldval, newval, bnewent, binitialsnap
 {
 	self endon(#"entityshutdown");
 	self util::waittill_dobj(localclientnum);
-	while(1)
+	while(true)
 	{
 		e_player = getlocalplayer(localclientnum);
 		if(isdefined(e_player) && (isdefined(e_player.var_c5eb485f) && e_player.var_c5eb485f) && !isdefined(self.plane_fx))
@@ -334,7 +335,7 @@ function function_17bc361f(localclientnum)
 	self playloopsound("zmb_spawn_powerup_loop", 0.5);
 	self movey(-50, 2, 0, 1);
 	self waittill(#"movedone");
-	while(1)
+	while(true)
 	{
 		self rotateyaw(360, 4);
 		self waittill(#"rotatedone");
@@ -354,7 +355,7 @@ function function_4e9276ed(localclientnum)
 {
 	self endon(#"disconnect");
 	self endon(#"hash_7066982d");
-	while(1)
+	while(true)
 	{
 		playfx(localclientnum, level._effect["bottle_glow"], (-141, 4464, -322) + (60, 10, 25));
 		wait(0.1);

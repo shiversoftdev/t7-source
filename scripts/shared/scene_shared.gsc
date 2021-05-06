@@ -401,6 +401,7 @@ function _on_damage_run_scene_thread()
 	str_damage_types = !isdefined(self._s.runsceneondmg0) || (self._s.runsceneondmg0 == "none" ? "" : self._s.runsceneondmg0) + !isdefined(self._s.runsceneondmg1) || (self._s.runsceneondmg1 == "none" ? "" : self._s.runsceneondmg1) + !isdefined(self._s.runsceneondmg2) || (self._s.runsceneondmg2 == "none" ? "" : self._s.runsceneondmg2) + !isdefined(self._s.runsceneondmg3) || (self._s.runsceneondmg3 == "none" ? "" : self._s.runsceneondmg3) + !isdefined(self._s.runsceneondmg4) || (self._s.runsceneondmg4 == "none" ? "" : self._s.runsceneondmg4);
 	if(str_damage_types != "")
 	{
+		b_run_scene = 0;
 		while(!b_run_scene)
 		{
 			self._e waittill(#"damage", n_amount, e_attacker, v_org, v_dir, str_mod);
@@ -442,7 +443,7 @@ function _on_damage_run_scene_thread()
 					}
 					break;
 				}
-				default
+				default:
 				{
 					if(issubstr(str_damage_types, "all"))
 					{
@@ -3199,7 +3200,7 @@ function _play_camera_anim_on_player(player, v_origin, v_angles, ignore_initial_
 function loop_camera_anim_to_set_up_for_capture()
 {
 	level endon(#"stop_camera_anims");
-	while(1)
+	while(true)
 	{
 		_play_camera_anims();
 		_wait_for_camera_animation(self._s.cameraswitcher);
@@ -3742,7 +3743,7 @@ function _call_state_funcs(str_state)
 					self._e_root thread [[func]](a_ents);
 					break;
 				}
-				default
+				default:
 				{
 					/#
 						assertmsg("");
@@ -4150,6 +4151,7 @@ function skip_scene(b_sequence)
 			}
 		}
 	#/
+	scene_skip_timeout = gettime() + 4000;
 	while(!(isdefined(self.scene_stopped) && self.scene_stopped) && gettime() < scene_skip_timeout)
 	{
 		wait(0.05);
@@ -4168,6 +4170,7 @@ function skip_scene(b_sequence)
 		{
 			if(isdefined(level.linked_scenes))
 			{
+				linked_scenes_timeout = gettime() + 4000;
 				while(level.linked_scenes.size > 0 && gettime() < linked_scenes_timeout)
 				{
 					wait(0.05);
@@ -4369,7 +4372,8 @@ private function init_scene_sequence_started(b_started)
 		}
 		if(isstring(self._s.nextscenebundle))
 		{
-			while(1)
+			s_cur_bundle = scene::get_scenedef(self._s.nextscenebundle);
+			while(true)
 			{
 				s_cur_bundle.shared_scene_sequence = self._s.shared_scene_sequence;
 				if(isdefined(s_cur_bundle.s_female_bundle))
@@ -4605,7 +4609,7 @@ function play(str_alert_state)
 			}
 			break;
 		}
-		default
+		default:
 		{
 			cscriptbundleobjectbase::error(1, "Unsupported alert state");
 		}
@@ -5170,7 +5174,8 @@ function __init__()
 		}
 		if(isstring(s_scenedef.streamerhint))
 		{
-			while(1)
+			s_cur_bundle = s_scenedef;
+			while(true)
 			{
 				s_cur_bundle._endstreamerhint = s_scenedef.streamerhint;
 				if(isstring(s_cur_bundle.nextscenebundle))
@@ -6796,7 +6801,7 @@ function is_skipping_in_progress()
 function watch_scene_skip_requests()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill(#"scene_sequence_started");
 		self thread should_skip_scene_loop();
@@ -6899,7 +6904,7 @@ function should_skip_scene_loop()
 		player setluimenudata(player.skip_scene_menu_handle, "hostIsSkipping", 0);
 		player setluimenudata(player.skip_scene_menu_handle, "sceneSkipEndTime", 0);
 	}
-	while(1)
+	while(true)
 	{
 		if(self any_button_pressed() && (!(isdefined(level.chyron_text_active) && level.chyron_text_active)))
 		{

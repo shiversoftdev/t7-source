@@ -315,7 +315,8 @@ function moon_biodome_temptation_init()
 function moon_biodome_random_pad_temptation()
 {
 	level endon(#"end_game");
-	while(1)
+	structs = struct::get_array("struct_biodome_temptation", "script_noteworthy");
+	while(true)
 	{
 		rand = randomint(structs.size);
 		if(isdefined(level._biodome_tempt_arrays[structs[rand].targetname]))
@@ -352,6 +353,7 @@ function moon_biodome_powerup_temptation(struct_array)
 	first_time = 1;
 	struct = undefined;
 	rotation = 0;
+	temptation_array = array::randomize(temptation_array);
 	while(isdefined(powerup))
 	{
 		if(temptation_array[temptation_index] == "fire_sale" && (level.zombie_vars["zombie_powerup_fire_sale_on"] == 1 || level.chest_moves == 0))
@@ -419,6 +421,7 @@ function moon_biodome_powerup_temptation(struct_array)
 */
 function moon_biodome_temptation_active(ent_powerup)
 {
+	level._pad_powerup = 1;
 	while(isdefined(ent_powerup))
 	{
 		wait(0.1);
@@ -439,6 +442,7 @@ function moon_jump_pads_low_gravity()
 {
 	level endon(#"end_game");
 	biodome_pads = getentarray("biodome_pads", "script_noteworthy");
+	biodome_compromised = 0;
 	while(!biodome_compromised)
 	{
 		level waittill(#"digger_arm_smash", digger, zone);

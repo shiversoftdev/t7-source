@@ -214,6 +214,7 @@ function function_3c2e817d()
 {
 	level.var_753f10ae = getentarray("tombstone", "targetname");
 	array::thread_all(level.var_753f10ae, &wait_for_damage);
+	var_765a3ab1 = 1;
 	while(var_765a3ab1 <= 4)
 	{
 		level waittill(#"character", n_shot);
@@ -253,7 +254,7 @@ function function_3c2e817d()
 function wait_for_damage()
 {
 	level endon(#"character_stones_done");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger");
 		level notify(#"character", self.script_int);
@@ -423,7 +424,7 @@ function function_ccdb680e(var_be748f8, b_on)
 function function_e464aa51()
 {
 	self endon(#"hash_7aff9921");
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.var_a02b0d5a) && self.var_a02b0d5a)
 		{
@@ -451,7 +452,7 @@ function function_be26578d(var_f5e9fb6c)
 	util::wait_network_frame();
 	var_b44af04e moveto(var_4d544c7f.origin, 15);
 	var_b44af04e waittill(#"movedone");
-	while(1)
+	while(true)
 	{
 		if(isdefined(level.ai_companion) && isalive(level.var_bfd9ed83))
 		{
@@ -605,7 +606,7 @@ function function_5516baeb(b_valid_poi)
 						n_wave = 3;
 						break;
 					}
-					default
+					default:
 					{
 						n_wave = 0;
 					}
@@ -809,7 +810,7 @@ function function_21bfe3c8(var_f5e9fb6c)
 function function_24240140()
 {
 	self setcandamage(1);
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", n_damage, e_attacker, v_dir, v_loc, str_type, str_model, str_tag, str_part, w_weapon, n_flags);
 		if(isdefined(w_weapon) && w_weapon.name != "idgun_genesis_0_upgraded")
@@ -892,7 +893,7 @@ function function_958fb16()
 	{
 		self moveto(self.origin + vectorscale((0, 0, 1), 30), 2);
 	}
-	while(1)
+	while(true)
 	{
 		self rotateto(self.angles + vectorscale((0, 1, 0), 180), 1.5);
 		wait(1.5);
@@ -932,7 +933,7 @@ function function_43106b81()
 */
 function function_4e44f01(v_target, var_7e879af8 = 0)
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_2751215d", v_position, w_weapon, e_shooter);
 		if(var_7e879af8 && w_weapon != level.var_ed2646a1)
@@ -1115,7 +1116,7 @@ function function_9449053f()
 function function_ab34209c()
 {
 	level endon(#"sophia_at_teleporter");
-	while(1)
+	while(true)
 	{
 		level.var_2309b03e waittill(#"reached_node", nd_current);
 		b_pause = 1;
@@ -1276,7 +1277,8 @@ function function_7eefe596(str_endon)
 	level endon(str_endon);
 	self endon(#"death");
 	var_89bdf56b = self.origin;
-	while(1)
+	var_f72fcc71 = self.angles;
+	while(true)
 	{
 		n_random = randomfloatrange(2, 4);
 		self moveto(var_89bdf56b + (randomintrange(-5, 5), randomintrange(-5, 5), randomintrange(-5, 5)), n_random);
@@ -1304,7 +1306,7 @@ function function_cde49635()
 	level notify(#"hash_423907c1");
 	callback::on_spawned(&function_c2ad8318);
 	level thread function_a1369011();
-	while(1)
+	while(true)
 	{
 		e_player = arraygetclosest(level.var_a090a655.origin, level.activeplayers);
 		e_player function_a9536aec();
@@ -1325,6 +1327,7 @@ function function_a9536aec()
 {
 	level endon(#"hash_deeb3634");
 	self endon(#"death");
+	b_first_loop = 1;
 	while(zm_utility::is_player_valid(self) && function_86b1188c(750, level.var_a090a655, self))
 	{
 		if(b_first_loop)
@@ -1607,7 +1610,8 @@ function function_1b0994cb()
 	level waittill(#"hash_78e9c51c");
 	level flag::clear("arena_timer");
 	level thread zm_genesis_arena::function_ae8e44d6();
-	while(1)
+	s_unitrigger = self zm_unitrigger::create_unitrigger("", 100);
+	while(true)
 	{
 		self waittill(#"trigger_activated", e_player);
 		level notify(#"hash_6760e3ae");
@@ -1717,7 +1721,7 @@ function function_d3e3222b()
 function function_ea1417b1()
 {
 	self endon(#"hash_5c016997");
-	while(1)
+	while(true)
 	{
 		foreach(var_f94b209, e_player in level.activeplayers)
 		{
@@ -1785,7 +1789,7 @@ function function_71fa98ee()
 {
 	level endon(#"book_runes_failed");
 	level endon(#"book_runes_success");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger_activated", e_player);
 		self function_d3e3222b();
@@ -1828,7 +1832,7 @@ function ee_book_runes_in_summoning_circle(var_7b98b639)
 	level.var_5da45153 = array(0, 1, 2, 3, 4, 5);
 	var_cad0573e = array::randomize(level.var_5da45153);
 	self thread function_3d57dcdd();
-	while(1)
+	while(true)
 	{
 		level.var_63fa69fd = array::random(var_cad0573e);
 		var_cad0573e = array::exclude(var_cad0573e, level.var_63fa69fd);
@@ -2123,7 +2127,7 @@ function function_27b96bc()
 							var_39815a1b = vectornormalize(var_46352a82.lastcarrier.origin - var_f03dd5b1.origin) * 160;
 							break;
 						}
-						default
+						default:
 						{
 							/#
 								assert("");
@@ -2206,7 +2210,7 @@ function function_e2a94206(var_39815a1b)
 function function_7134f126()
 {
 	self endon(#"movedone");
-	while(1)
+	while(true)
 	{
 		self rotateto(self.angles + vectorscale((0, 1, 0), 180), 0.83);
 		wait(0.78);
@@ -2246,6 +2250,7 @@ function function_48e1990b()
 	var_d6ba68c5 = self.visuals[0];
 	wait(60);
 	var_6c9f55e = self.lastcarrier;
+	str_zone = var_6c9f55e zm_zonemgr::get_player_zone();
 	while(var_d6ba68c5 zm_genesis_util::function_37a5b776() || (!(isdefined(zm_utility::is_player_valid(var_6c9f55e)) && zm_utility::is_player_valid(var_6c9f55e))) || (isdefined(var_6c9f55e.var_122a2dda) && var_6c9f55e.var_122a2dda) || (isdefined(var_6c9f55e.teleporting) && var_6c9f55e.teleporting) || !isdefined(str_zone))
 	{
 		wait(2);
@@ -2376,7 +2381,7 @@ function function_941e28ac(var_3a814173, n_rotate_time)
 	{
 		n_rotate_time = 0.1;
 	}
-	while(1)
+	while(true)
 	{
 		var_3a814173 rotateto(var_3a814173.angles + vectorscale((0, 1, 0), 180), n_rotate_time);
 		wait(n_rotate_time - 0.05);
@@ -2595,6 +2600,7 @@ function function_3fade785(var_6cbdc65)
 	level flag::wait_till("spawn_zombies");
 	for(i = 0; i < var_6cbdc65.size; i++)
 	{
+		e_target = array::random(level.players);
 		while(!zm_utility::is_player_valid(e_target))
 		{
 			wait(0.05);

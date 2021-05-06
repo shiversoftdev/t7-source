@@ -205,7 +205,7 @@ function ramp_fog_in_out()
 */
 function dog_start_monitor()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"dog_start");
 		level thread ramp_fog_in_out();
@@ -241,7 +241,7 @@ function dog_start_monitor()
 */
 function dog_stop_monitor()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"dog_stop");
 		level thread ramp_fog_in_out();

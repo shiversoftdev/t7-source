@@ -71,7 +71,8 @@ function function_2c16a75b(localclientnum)
 	var_76dfdc9 = self.origin;
 	amplitude = randomfloatrange(4, 12);
 	dz = randomfloatrange(0.2, 1);
-	while(1)
+	z = randomint(360);
+	while(true)
 	{
 		z = z + dz;
 		if(z > 360)

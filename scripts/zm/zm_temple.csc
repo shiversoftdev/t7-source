@@ -355,7 +355,7 @@ function crystal_trail_runner(localclientnum, fx_name, dest)
 function crystal_sauce_monitor()
 {
 	num_players = getlocalplayers().size;
-	while(1)
+	while(true)
 	{
 		wait(0.016);
 		if(!isdefined(level._crystal_sauce_start) || !isdefined(level._crystal_sauce_end))
@@ -477,6 +477,7 @@ function function_bf1b3728(n_val, n_time)
 		var_83a6ec14 = level.var_3766c3d3 - n_val * -1;
 		wait(0.5);
 	}
+	n_change = var_83a6ec14 / n_time / 0.1;
 	while(level.var_3766c3d3 != n_val)
 	{
 		level.var_3766c3d3 = level.var_3766c3d3 + n_change;
@@ -549,7 +550,7 @@ function generator_move()
 	rottime = 0.1;
 	total = 0;
 	self rotateroll(0 - offsetangle, rottime);
-	while(1)
+	while(true)
 	{
 		self waittill(#"rotatedone");
 		self rotateroll(offsetangle * 2, rottime);
@@ -631,7 +632,7 @@ function rotatewheel(rotate, time)
 	spinuptime = time - 0.5;
 	self rotatepitch(rotate, time, spinuptime, 0.1);
 	self waittill(#"rotatedone");
-	while(1)
+	while(true)
 	{
 		self rotatepitch(rotate, time, 0, 0);
 		self waittill(#"rotatedone");
@@ -786,7 +787,7 @@ function sq_struct_debug()
 	/#
 		level endon(#"sr");
 		level endon(#"ksd");
-		while(1)
+		while(true)
 		{
 			print3d(self.origin, "", vectorscale((1, 0, 0), 255), 1);
 			wait(0.1);
@@ -816,7 +817,7 @@ function sq_std_struct_watcher(num_local_players)
 	}
 	level endon(#"sr");
 	self thread sq_std_watch_for_restart(num_local_players);
-	while(1)
+	while(true)
 	{
 		level waittill("S" + self.script_int);
 		/#
@@ -994,7 +995,7 @@ function temple_box_monitor(clientnum, state, oldstate)
 			level thread _random_location(clientnum);
 			break;
 		}
-		default
+		default:
 		{
 			level notify("location_set" + clientnum);
 			_setup_location(clientnum, state);
@@ -1102,7 +1103,8 @@ function _setup_view_model(clientnum, viewmodel)
 function _random_location(clientnum)
 {
 	level endon("location_set" + clientnum);
-	while(1)
+	index = 0;
+	while(true)
 	{
 		location = level._box_locations[index];
 		_setup_location(clientnum, location);
@@ -1403,7 +1405,8 @@ function board_bob()
 	dist = randomfloatrange(2.5, 3);
 	movetime = randomfloatrange(3.5, 4.5);
 	minz = self.start_origin[2] - dist;
-	while(1)
+	maxz = self.start_origin[2] + dist;
+	while(true)
 	{
 		toz = minz - self.origin[2];
 		self movez(toz, movetime);
@@ -1425,7 +1428,7 @@ function board_bob()
 */
 function board_rotate()
 {
-	while(1)
+	while(true)
 	{
 		yaw = randomfloatrange(-360, 360);
 		self rotateyaw(yaw, randomfloatrange(60, 90));
@@ -1445,7 +1448,8 @@ function board_rotate()
 function board_move()
 {
 	dist = randomfloatrange(20, 30);
-	while(1)
+	movetime = randomfloatrange(5, 10);
+	while(true)
 	{
 		yaw = randomfloatrange(0, 360);
 		tovector = anglestoforward((0, yaw, 0));
@@ -1536,7 +1540,7 @@ function spin_forever()
 	self start_spinner_sound();
 	self rotateyaw(360, spintime, 0.25);
 	self waittill(#"rotatedone");
-	while(1)
+	while(true)
 	{
 		self rotateyaw(360, spintime);
 		self waittill(#"rotatedone");
@@ -1596,6 +1600,7 @@ function spin_to_start()
 	self endon(#"stop_spinning");
 	endyaw = self.startangles[1];
 	currentyaw = self.angles[1];
+	deltayaw = endyaw - currentyaw;
 	while(deltayaw < 0)
 	{
 		deltayaw = deltayaw + 360;

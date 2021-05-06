@@ -233,7 +233,7 @@ function set_magic_box_zbarrier_state(state)
 			self.owner.is_locked = 0;
 			break;
 		}
-		default
+		default:
 		{
 			if(isdefined(level.custom_magicbox_state_handler))
 			{
@@ -346,7 +346,7 @@ function magic_box_open_idle()
 	self endon(#"stop_open_idle");
 	self hidezbarrierpiece(2);
 	self showzbarrierpiece(5);
-	while(1)
+	while(true)
 	{
 		self setzbarrierpiecestate(5, "opening");
 		while(self getzbarrierpiecestate(5) != "open")
@@ -421,7 +421,7 @@ function custom_magic_box_do_weapon_rise()
 */
 function handle_fire_sale()
 {
-	while(1)
+	while(true)
 	{
 		var_7c8b59c1 = level util::waittill_any_return("fire_sale_off", "fire_sale_on");
 		for(i = 0; i < level.chests.size; i++)
@@ -455,7 +455,7 @@ function function_cb604665()
 	level endon(#"end_game");
 	level notify(#"mb_hostmigration");
 	level endon(#"mb_hostmigration");
-	while(1)
+	while(true)
 	{
 		level waittill(#"host_migration_end");
 		if(!isdefined(level.chests))

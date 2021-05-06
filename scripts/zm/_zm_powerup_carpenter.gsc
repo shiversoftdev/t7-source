@@ -88,7 +88,7 @@ function start_carpenter(origin)
 	total = level.exterior_goals.size;
 	carp_ent = spawn("script_origin", (0, 0, 0));
 	carp_ent playloopsound("evt_carpenter");
-	while(1)
+	while(true)
 	{
 		windows = get_closest_window_repair(window_boards, origin);
 		if(!isdefined(windows))
@@ -102,7 +102,7 @@ function start_carpenter(origin)
 		{
 			arrayremovevalue(window_boards, windows);
 		}
-		while(1)
+		while(true)
 		{
 			if(zm_utility::all_chunks_intact(windows, windows.barrier_chunks))
 			{
@@ -196,7 +196,8 @@ function start_carpenter_new(origin)
 	{
 		window = boards_near_players[i];
 		num_chunks_checked = 0;
-		while(1)
+		last_repaired_chunk = undefined;
+		while(true)
 		{
 			if(zm_utility::all_chunks_intact(window, window.barrier_chunks))
 			{

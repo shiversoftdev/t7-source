@@ -102,7 +102,8 @@ function perk_machine_think(str_key, s_custom_perk)
 	level endon(str_endon);
 	str_on = s_custom_perk.alias + "_on";
 	str_off = s_custom_perk.alias + "_off";
-	while(1)
+	str_notify = str_key + "_power_on";
+	while(true)
 	{
 		machine = getentarray(s_custom_perk.radiant_machine_name, "targetname");
 		machine_triggers = getentarray(s_custom_perk.radiant_machine_name, "target");
@@ -344,7 +345,8 @@ function electric_perks_dialog()
 	}
 	self endon(#"warning_dialog");
 	level endon(#"switch_flipped");
-	while(1)
+	timer = 0;
+	while(true)
 	{
 		wait(0.5);
 		players = getplayers();
@@ -858,7 +860,8 @@ function check_player_has_perk(perk)
 			return;
 		}
 	#/
-	while(1)
+	dist = 16384;
+	while(true)
 	{
 		players = getplayers();
 		for(i = 0; i < players.size; i++)
@@ -919,6 +922,7 @@ function perk_think(perk)
 		}
 	#/
 	perk_str = perk + "_stop";
+	result = self util::waittill_any_return("fake_death", "death", "player_downed", perk_str);
 	while(self bgb::lost_perk_override(perk))
 	{
 		result = self util::waittill_any_return("fake_death", "death", "player_downed", perk_str);
@@ -1789,7 +1793,7 @@ function perk_hostmigration()
 	level endon(#"end_game");
 	level notify(#"perk_hostmigration");
 	level endon(#"perk_hostmigration");
-	while(1)
+	while(true)
 	{
 		level waittill(#"host_migration_end");
 		if(isdefined(level._custom_perks) && level._custom_perks.size > 0)
@@ -1861,7 +1865,7 @@ function spare_change(str_trigger = "audio_bump_trigger", str_sound = "zmb_perks
 function check_for_change()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player getstance() == "prone")

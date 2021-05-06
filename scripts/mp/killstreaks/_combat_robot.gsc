@@ -87,7 +87,8 @@ private function _calculaterobotspawnposition(player)
 */
 private function _cleanuprobotcorpses()
 {
-	while(1)
+	corpsedeletetime = 15000;
+	while(true)
 	{
 		deletecorpses = [];
 		foreach(var_f3de8f22, corpse in getcorpsearray())
@@ -215,7 +216,7 @@ private function _destroyguardmarker(robot)
 private function _underwater(robot)
 {
 	robot endon(#"death");
-	while(1)
+	while(true)
 	{
 		if(robot.origin[2] + 36 <= getwaterheight(robot.origin))
 		{
@@ -304,6 +305,7 @@ private function _guardposition(robot, position)
 	robot.escorting = 0;
 	robot.guarding = 1;
 	_destroyguardmarker(robot);
+	robot.guardmarker = _createguardmarker(robot, position);
 	while(robot.guarding)
 	{
 		attackingenemy = 0;
@@ -340,7 +342,7 @@ function _watchmodeswap(robot, player)
 {
 	robot endon(#"death");
 	nextswitchtime = gettime();
-	while(1)
+	while(true)
 	{
 		wait(0.05);
 		if(!isdefined(robot.usetrigger))
@@ -473,7 +475,7 @@ function dropkillthread()
 	robot = self;
 	robot endon(#"death");
 	robot endon(#"combat_robot_land");
-	while(1)
+	while(true)
 	{
 		robot supplydrop::is_touching_crate();
 		robot supplydrop::is_clone_touching_crate();
@@ -616,6 +618,7 @@ function epilog(context)
 function debug_delay_robot_deploy()
 {
 	/#
+		seconds_to_wait = getdvarint("", 0);
 		while(seconds_to_wait > 0)
 		{
 			iprintlnbold("" + seconds_to_wait);
@@ -698,6 +701,7 @@ function watchcombatrobothelicopterhacked(helicopter)
 */
 function cleanupthread(context)
 {
+	robot = context.robot;
 	while(isdefined(robot) && isdefined(context.marker) && robot flagsys::get("in_vehicle"))
 	{
 		wait(1);
@@ -761,6 +765,7 @@ function watchcombatrobotlanding()
 		wait(1);
 	}
 	robot notify(#"combat_robot_land");
+	robot.ignoretriggerdamage = 0;
 	while(isdefined(robot.traversestartnode))
 	{
 		robot waittill(#"traverse_end");
@@ -983,7 +988,7 @@ function sndwatchcombatrobotvoxnotifies()
 	combatrobot endon(#"combat_robot_shutdown");
 	combatrobot endon(#"death");
 	combatrobot playsoundontag("vox_robot_chatter", "j_head");
-	while(1)
+	while(true)
 	{
 		soundalias = undefined;
 		combatrobot waittill(#"bhtn_action_notify", notify_string);

@@ -183,7 +183,7 @@ function register_unitrigger_internal(unitrigger_stub, trigger_func)
 			unitrigger_stub.test_radius_sq = box_radius + 15 * box_radius + 15;
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				println("" + unitrigger_stub.targetname + "");
@@ -299,7 +299,8 @@ function unregister_unitrigger_internal(unitrigger_stub)
 */
 function delay_delete_contact_ent()
 {
-	while(1)
+	self.last_used_time = 0;
+	while(true)
 	{
 		wait(1);
 		if(gettime() - self.last_used_time > 1000)
@@ -416,7 +417,7 @@ function reregister_unitrigger_as_dynamic(unitrigger_stub)
 function debug_unitriggers()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			if(getdvarint("") > 0)
 			{
@@ -565,11 +566,12 @@ function main()
 		level._unitriggers._deferredinitlist = undefined;
 	}
 	valid_range = level._unitriggers.largest_radius + 15;
+	valid_range_sq = valid_range * valid_range;
 	while(!isdefined(level.active_zone_names))
 	{
 		wait(0.1);
 	}
-	while(1)
+	while(true)
 	{
 		waited = 0;
 		active_zone_names = level.active_zone_names;
@@ -1130,7 +1132,7 @@ function unitrigger_prompt_and_visibility(player)
 function unitrigger_logic()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player zm_utility::in_revive_trigger())

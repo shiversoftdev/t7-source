@@ -147,7 +147,7 @@ function player_handle_nesting_dolls()
 	self notify(#"starting_nesting_dolls");
 	self endon(#"disconnect");
 	self endon(#"starting_nesting_dolls");
-	while(1)
+	while(true)
 	{
 		grenade = get_thrown_nesting_dolls();
 		if(isdefined(grenade))
@@ -408,6 +408,7 @@ function spawn_doll_model(id, index, parent)
 function doll_behavior_explode_when_stopped(parent, doll_id, index)
 {
 	velocitysq = 100000000;
+	oldpos = self.origin;
 	while(velocitysq != 0)
 	{
 		wait(0.1);
@@ -548,7 +549,7 @@ function get_doll_best_doll_target(origin, range)
 */
 function nesting_dolls_cleanup(parent)
 {
-	while(1)
+	while(true)
 	{
 		if(!isdefined(parent))
 		{
@@ -592,7 +593,7 @@ function get_thrown_nesting_dolls()
 {
 	self endon(#"disconnect");
 	self endon(#"starting_nesting_dolls");
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_fire", grenade, weapon);
 		if(weapon == level.var_21ae0b78)

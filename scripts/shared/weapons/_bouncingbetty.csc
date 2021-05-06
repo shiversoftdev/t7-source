@@ -114,7 +114,7 @@ function bouncingbetty_detonating(localclientnum)
 function watchforexplosionnotetracks(localclientnum, up, forward)
 {
 	self endon(#"entityshutdown");
-	while(1)
+	while(true)
 	{
 		notetrack = self util::waittill_any_return("explode_1st", "explode_2nd", "explode_main", "entityshutdown");
 		switch(notetrack)
@@ -135,7 +135,7 @@ function watchforexplosionnotetracks(localclientnum, up, forward)
 				playfx(localclientnum, level._effect["fx_betty_exp_death"], self.origin, up, forward);
 				break;
 			}
-			default
+			default:
 			{
 				break;
 			}

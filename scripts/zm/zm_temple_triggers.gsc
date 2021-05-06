@@ -65,7 +65,7 @@ function trigger_code()
 		self.script_string = "cash";
 	}
 	self.players = [];
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", who);
 		if(is_in_array(self.players, who))
@@ -217,7 +217,7 @@ function code_trigger_activated(who)
 			who zm_score::add_to_player_score(100);
 			break;
 		}
-		default
+		default:
 		{
 		}
 	}
@@ -254,7 +254,8 @@ function touching_trigger(trigger)
 function watch_for_code(code)
 {
 	self endon(#"code_trigger_end");
-	while(1)
+	codes = strtok(code, " ");
+	while(true)
 	{
 		for(i = 0; i < codes.size; i++)
 		{
@@ -288,6 +289,7 @@ function watch_for_code(code)
 */
 function button_not_pressed(button, time)
 {
+	endtime = gettime() + time * 1000;
 	while(gettime() < endtime)
 	{
 		if(!self buttonpressed(button))
@@ -310,6 +312,7 @@ function button_not_pressed(button, time)
 */
 function button_pressed(button, time)
 {
+	endtime = gettime() + time * 1000;
 	while(gettime() < endtime)
 	{
 		if(self buttonpressed(button))
@@ -358,7 +361,7 @@ function init_slow_trigger()
 */
 function trigger_slow_touched_wait()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		player notify(#"enter_slowtrigger");
@@ -381,6 +384,7 @@ function trigger_slow_ent(player, endon_condition)
 	player endon(endon_condition);
 	if(isdefined(player))
 	{
+		prevtime = gettime();
 		while(player.movespeedscale > self.script_float)
 		{
 			wait(0.05);
@@ -411,6 +415,7 @@ function trigger_unslow_ent(player)
 	player endon(#"enter_slowtrigger");
 	if(isdefined(player))
 	{
+		prevtime = gettime();
 		while(player.movespeedscale < 1)
 		{
 			wait(0.05);
@@ -441,7 +446,7 @@ function trigger_corpse()
 	{
 		self.script_string = "";
 	}
-	while(1)
+	while(true)
 	{
 		/#
 			box(self.origin, self.mins, self.maxs, 0, (1, 0, 0));
@@ -531,7 +536,7 @@ function water_drop_trigger_think()
 	{
 		wait(self.script_float);
 	}
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", who);
 		if(isplayer(who))
@@ -733,7 +738,8 @@ function structs_code()
 		self.radius = 32;
 	}
 	self.radiussq = self.radius * self.radius;
-	while(1)
+	playersinradius = [];
+	while(true)
 	{
 		players = getplayers();
 		for(i = playersinradius.size - 1; i >= 0; i--)
@@ -780,7 +786,7 @@ function code_entry(player)
 	self endon(#"end_code_struct");
 	player endon(#"death");
 	player endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		for(i = 0; i < self.codes.size; i++)
 		{
@@ -826,7 +832,7 @@ function code_reward(player)
 			zm_temple_ai_monkey::monkey_ambient_gib_all();
 			break;
 		}
-		default
+		default:
 		{
 		}
 	}

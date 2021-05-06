@@ -150,6 +150,7 @@ function ready_to_activate(unitrigger_stub)
 */
 function watch_for_triple_attack()
 {
+	t_hole = getent("fire_link_damage", "targetname");
 	while(!level flag::get("ee_mech_zombie_hole_opened"))
 	{
 		t_hole waittill(#"damage", damage, attacker, direction, point, type, tagname, modelname, partname, weapon);
@@ -197,7 +198,7 @@ function mech_zombie_hole_valid(valid)
 function activate_fire_link()
 {
 	self endon(#"kill_trigger");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		self playsound("zmb_squest_robot_button");

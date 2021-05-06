@@ -205,7 +205,7 @@ function gadget_vision_pulse_watch_emp()
 	self notify(#"vision_pulse_watch_emp");
 	self endon(#"vision_pulse_watch_emp");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		if(self isempjammed())
 		{
@@ -331,7 +331,8 @@ function gadget_vision_pulse_start(slot, weapon)
 */
 function wait_until_is_done(slot, timepulse)
 {
-	while(1)
+	starttime = gettime();
+	while(true)
 	{
 		wait(0.25);
 		currenttime = gettime();
@@ -361,7 +362,7 @@ function gadget_vision_pulse_flicker(slot, weapon)
 	}
 	eventtime = self._gadgets_player[slot].gadget_flickertime;
 	self set_gadget_vision_pulse_status("^1" + "Flickering.", eventtime);
-	while(1)
+	while(true)
 	{
 		if(!self gadgetflickering(slot))
 		{

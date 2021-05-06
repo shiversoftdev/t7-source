@@ -475,7 +475,7 @@ function path_update_interrupt()
 	self endon(#"near_goal");
 	self endon(#"reached_end_node");
 	wait(1);
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.current_pathto_pos))
 		{
@@ -1107,7 +1107,7 @@ function function_963f8ef6(match, note, var_1ccbc268, end)
 	if(isdefined(end))
 	{
 		self endon(end);
-		while(1)
+		while(true)
 		{
 			if(isdefined(match))
 			{
@@ -1169,6 +1169,7 @@ private function _reacttoswarm(swarm, reactionanims, weapon)
 		self thread cybercom::stopanimscriptedonnotify("damage", "swarm_intro_anim");
 		self waittill_match(#"swarm_intro_anim");
 	}
+	attack = 1;
 	while(attack && isdefined(swarm))
 	{
 		self dodamage(5, self.origin, swarm.owner, swarm, "none", "MOD_UNKNOWN", 0, weapon, -1, 1);

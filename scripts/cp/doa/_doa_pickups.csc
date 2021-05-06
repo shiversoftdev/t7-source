@@ -100,7 +100,7 @@ function function_f7726690(parent)
 	parent endon(#"entityshutdown");
 	parent endon(#"hash_4c187db8");
 	self endon(#"entityshutdown");
-	while(1)
+	while(true)
 	{
 		self.origin = parent.origin;
 		wait(0.016);
@@ -203,6 +203,7 @@ function function_6093755a()
 	{
 		dir = -180;
 	}
+	time = randomfloatrange(3, 7);
 	while(isdefined(self))
 	{
 		self rotateto(self.angles + (0, dir, 0), time);

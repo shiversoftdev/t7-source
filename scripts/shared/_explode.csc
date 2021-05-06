@@ -53,7 +53,7 @@ function __init__()
 function updatedvars()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			level.dirt_enable_explosion = getdvarint("", level.dirt_enable_explosion);
 			level.dirt_enable_slide = getdvarint("", level.dirt_enable_slide);
@@ -111,7 +111,8 @@ function watchforplayerfalldamage(localclientnum)
 	self endon(#"entityshutdown");
 	seed = 0;
 	xdir = 0;
-	while(1)
+	ydir = 270;
+	while(true)
 	{
 		self waittill(#"fall_damage");
 		self thread dothedirty(localclientnum, xdir, ydir, 1, 1000, 500);
@@ -133,7 +134,8 @@ function watchforplayerslide(localclientnum)
 	seed = 0;
 	self.wasplayersliding = 0;
 	xdir = 0;
-	while(1)
+	ydir = 6000;
+	while(true)
 	{
 		self.isplayersliding = self isplayersliding();
 		if(self.isplayersliding)
@@ -177,6 +179,7 @@ function dothedirty(localclientnum, right, up, distance, dirtduration, dirtfadet
 	filter::set_filter_sprite_dirt_seed_offset(self, 5, randomfloatrange(0, 1));
 	starttime = getservertime(localclientnum);
 	currenttime = starttime;
+	elapsedtime = 0;
 	while(elapsedtime < dirtduration)
 	{
 		if(elapsedtime > dirtduration - dirtfadetime)
@@ -208,7 +211,7 @@ function dothedirty(localclientnum, right, up, distance, dirtduration, dirtfadet
 function watchforexplosion(localclientnum)
 {
 	self endon(#"entityshutdown");
-	while(1)
+	while(true)
 	{
 		level waittill(#"explode", localclientnum, position, mod, weapon, owner_cent);
 		explosiondistance = distance(self.origin, position);

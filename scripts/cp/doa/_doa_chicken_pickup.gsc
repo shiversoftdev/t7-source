@@ -256,10 +256,12 @@ function function_3118ca4d(player)
 		}
 		weapon = function_4d01b327(player);
 		self.spinouttime = randomfloatrange(5, 8);
+		firetime = 0.15;
 		while(self.spinouttime > 0)
 		{
 			rotate180time = 1;
 			self rotateto(self.angles + vectorscale((0, 1, 0), 180), rotate180time);
+			localrotatetime = rotate180time;
 			while(localrotatetime > 0)
 			{
 				self function_cea0c915(player, weapon);
@@ -309,7 +311,7 @@ function function_e636d9c5(player)
 {
 	self endon(#"death");
 	player endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_31680c6");
 		if(!isdefined(player))
@@ -346,7 +348,7 @@ function function_44ff9baa(player)
 	num_follow_points = getdvarint("scr_doa_max_chicken_points", 5);
 	follow_points = [];
 	self.var_6fdb49e0 = 1;
-	while(1)
+	while(true)
 	{
 		util::wait_network_frame();
 		if(isdefined(self.var_efa2b784) && self.var_efa2b784)
@@ -423,6 +425,7 @@ function function_8b81d592(player)
 		time = time * level.doa.rules.var_ef3d9a29;
 	}
 	level doa_utility::function_c8f4d63a();
+	timeout = gettime() + time;
 	while(gettime() < timeout)
 	{
 		if(!isdefined(player))
@@ -553,7 +556,7 @@ function function_8fb467a7(player)
 	self endon(#"death");
 	self endon(#"spinning_out");
 	self thread function_be58e20c(player);
-	while(1)
+	while(true)
 	{
 		self waittill(#"hash_4148f7d1");
 		if(isdefined(self.var_18845184) && self.var_18845184)
@@ -753,13 +756,14 @@ function function_c397fab3(player)
 {
 	self endon(#"death");
 	self endon(#"spinning_out");
-	while(1)
+	while(true)
 	{
 		player waittill(#"player_died");
 		/#
 			doa_utility::debugmsg("");
 		#/
 		var_141b6128 = self.var_fe6ede28 * 0.98;
+		self.var_1f6fdc8f = 1;
 		while(self.var_fe6ede28 > var_141b6128)
 		{
 			self.var_fe6ede28 = self.var_fe6ede28 - 0.05;
@@ -793,7 +797,7 @@ function function_cff32183(player)
 	self.var_fe6ede28 = 0;
 	self.var_5c667593 = 1;
 	self thread function_c397fab3(player);
-	while(1)
+	while(true)
 	{
 		wait(getdvarfloat("scr_doa_chicken_inc_interval", 15));
 		if(level flag::get("doa_round_active"))
@@ -902,6 +906,7 @@ function function_2d0f96ef(player)
 	chance = 100;
 	scale = 1;
 	var_19a5d5 = 2 + randomint(5);
+	roll = randomint(100);
 	while(var_19a5d5)
 	{
 		if(roll <= chance)
@@ -1045,7 +1050,7 @@ function function_d63bdb9(hop)
 function function_4c41e6af()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		var_9c9d6a5c = doa_utility::getarrayitemswithin(self.origin, getaiteamarray("axis"), 2304);
 		for(i = 0; i < var_9c9d6a5c.size; i++)

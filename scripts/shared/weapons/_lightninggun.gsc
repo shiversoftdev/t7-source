@@ -55,7 +55,7 @@ function init_shared()
 function update_dvars()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			wait(1);
 			level.weaponlightninggunkillcamtime = getdvarfloat("", 0.35);

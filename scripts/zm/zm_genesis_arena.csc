@@ -202,6 +202,7 @@ function function_79854312(localclientnum)
 	self endon(#"entityshutdown");
 	n_start_time = gettime();
 	n_end_time = n_start_time + 1633;
+	b_is_updating = 1;
 	while(b_is_updating)
 	{
 		n_time = gettime();
@@ -761,7 +762,8 @@ function function_17ef53cd()
 	self notify(#"hash_17ef53cd");
 	self endon(#"hash_17ef53cd");
 	v_origin = self.v_origin;
-	while(1)
+	n_duration = randomfloatrange(4.75, 5);
+	while(true)
 	{
 		self.var_b079127 moveto(v_origin + vectorscale((0, 0, 1), 4), n_duration);
 		self.var_4100f709 moveto(v_origin + vectorscale((0, 0, 1), 4), n_duration);
@@ -912,7 +914,8 @@ function function_3de943fb(state, e_model)
 				e_model.sndent linkto(e_model, "tag_origin");
 			}
 			looper = e_model.sndent playloopsound("evt_zod_ritual_started_loop", 2);
-			while(1)
+			pitch = 0.5;
+			while(true)
 			{
 				setsoundpitch(looper, pitch);
 				setsoundpitchrate(looper, 0.1);
@@ -979,7 +982,8 @@ function function_2bcc6bd2(state, e_model)
 				e_model.sndent linkto(e_model, "tag_origin");
 			}
 			looper = e_model.sndent playloopsound("evt_zod_ritual_started_loop", 2);
-			while(1)
+			pitch = 0.5;
+			while(true)
 			{
 				setsoundpitch(looper, pitch);
 				setsoundpitchrate(looper, 0.1);
@@ -997,7 +1001,8 @@ function function_2bcc6bd2(state, e_model)
 				e_model.sndent linkto(e_model, "tag_origin");
 			}
 			looper = e_model.sndent playloopsound("evt_zod_ritual_started_loop", 2);
-			while(1)
+			pitch = 0.5;
+			while(true)
 			{
 				setsoundpitch(looper, pitch);
 				setsoundpitchrate(looper, 0.1);

@@ -571,7 +571,7 @@ function vehicle_wait_player_enter_t()
 	self endon(#"transmute");
 	self endon(#"death");
 	self endon(#"delete");
-	while(1)
+	while(true)
 	{
 		self waittill(#"enter_vehicle", player);
 		player thread player_wait_exit_vehicle_t();
@@ -609,7 +609,7 @@ function vehicle_wait_damage_t()
 	self endon(#"transmute");
 	self endon(#"death");
 	self endon(#"delete");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage");
 		occupants = self getvehoccupants();
@@ -817,7 +817,7 @@ function cleanup_debug_print_t()
 	self endon(#"death");
 	self endon(#"delete");
 	/#
-		while(1)
+		while(true)
 		{
 			if(isdefined(self.debug_message) && getdvarint("") != 0)
 			{
@@ -843,7 +843,7 @@ function cleanup_debug_print_clearmsg_t()
 	self endon(#"death");
 	self endon(#"delete");
 	/#
-		while(1)
+		while(true)
 		{
 			self waittill(#"enter_vehicle");
 			self.debug_message = undefined;
@@ -930,7 +930,7 @@ function wait_then_cleanup_vehicle(test_name, cleanup_dvar_name)
 */
 function wait_until_severely_damaged()
 {
-	while(1)
+	while(true)
 	{
 		health_percentage = self.health / self.initial_state.health;
 		if(isdefined(level.k_severe_damage_health_percentage))
@@ -984,7 +984,8 @@ function do_alive_cleanup_wait(test_name)
 {
 	initialrandomwaitseconds = get_random_cleanup_wait_time("alive");
 	secondswaited = 0;
-	while(1)
+	seconds_per_iteration = 1;
+	while(true)
 	{
 		curve_begin = getdvarfloat("scr_veh_cleanuptime_dmgfraction_curve_begin");
 		curve_end = getdvarfloat("scr_veh_cleanuptime_dmgfraction_curve_end");
@@ -1038,6 +1039,7 @@ function do_dead_cleanup_wait(test_name)
 {
 	total_secs_to_wait = get_random_cleanup_wait_time("dead");
 	seconds_waited = 0;
+	seconds_per_iteration = 1;
 	while(seconds_waited < total_secs_to_wait)
 	{
 		self cleanup_debug_print(test_name + ": Waiting " + total_secs_to_wait - seconds_waited + "s");
@@ -1057,6 +1059,7 @@ function do_dead_cleanup_wait(test_name)
 */
 function cleanup(test_name, cleanup_dvar_name, cleanup_func)
 {
+	keep_waiting = 1;
 	while(keep_waiting)
 	{
 		cleanupenabled = !isdefined(cleanup_dvar_name) || getdvarint(cleanup_dvar_name) != 0;
@@ -1087,7 +1090,8 @@ function vehicle_wait_tread_damage()
 {
 	self endon(#"death");
 	self endon(#"delete");
-	while(1)
+	vehicle_name = get_vehicle_name(self);
+	while(true)
 	{
 		self waittill(#"broken", brokennotify);
 		if(brokennotify == "left_tread_destroyed")
@@ -1122,6 +1126,7 @@ function wait_for_vehicle_to_stop_outside_min_radius()
 	iterationwaitseconds = 1;
 	maxwaittimeenabledistinches = 12 * getdvarfloat("scr_veh_waittillstoppedandmindist_maxtimeenabledistfeet");
 	initialorigin = self.initial_state.origin;
+	totalsecondswaited = 0;
 	while(totalsecondswaited < maxwaittime)
 	{
 		speedmph = self getspeedmph();
@@ -1153,7 +1158,7 @@ function vehicle_abandoned_by_occupants_t()
 	self endon(#"transmute");
 	self endon(#"death");
 	self endon(#"delete");
-	while(1)
+	while(true)
 	{
 		self waittill(#"exit_vehicle");
 		occupants = self getvehoccupants();
@@ -1197,7 +1202,7 @@ function vehicle_ghost_entering_occupants_t()
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		self waittill(#"enter_vehicle", player, seat);
 		isdriver = seat == 0;
@@ -1282,7 +1287,7 @@ function player_change_seat_handler_t(vehicle)
 {
 	self endon(#"disconnect");
 	self endon(#"exit_vehicle");
-	while(1)
+	while(true)
 	{
 		self waittill(#"change_seat", vehicle, oldseat, newseat);
 		isdriver = newseat == 0;
@@ -1410,6 +1415,7 @@ function wait_for_vehicle_overturn()
 	self endon(#"death");
 	self endon(#"delete");
 	worldup = anglestoup(vectorscale((0, 1, 0), 90));
+	overturned = 0;
 	while(!overturned)
 	{
 		if(isdefined(self.angles))
@@ -1725,6 +1731,7 @@ function wait_for_unnoticeable_cleanup_opportunity()
 	maxpreventvisibilityinchessq = 144 * maxpreventvisibilityfeet * maxpreventvisibilityfeet;
 	maxsecondstowait = getdvarfloat("scr_veh_disappear_maxwaittime");
 	iterationwaitseconds = 1;
+	secondswaited = 0;
 	while(secondswaited < maxsecondstowait)
 	{
 		players_s = util::get_all_alive_players_s();
@@ -2186,6 +2193,7 @@ function follow_path(node)
 	self attachpath(pathstart);
 	self startpath();
 	self endon(#"newpath");
+	nextpoint = pathstart;
 	while(isdefined(nextpoint))
 	{
 		self waittill(#"reached_node", nextpoint);
@@ -2277,7 +2285,7 @@ function vehiclespawnthread(veh_spawner_id, veh_name, origin, angles, time_inter
 		level thread function_87e9a4ad(veh_name, origin, angles);
 		var_45b6c208 = time_interval;
 	#/
-	while(1)
+	while(true)
 	{
 		vehicle = veh_spawner spawnfromspawner(veh_name, 1, 1, 1);
 		if(!isdefined(vehicle))
@@ -2360,6 +2368,7 @@ function performvehicleprespawn(veh_spawner_id, veh_name, origin, angles, spawn_
 function kill_any_touching(kill_trigger, kill_duration_ms)
 {
 	kill_expire_time_ms = gettime() + kill_duration_ms;
+	kill_weapon = getweapon("hero_minigun");
 	while(gettime() <= kill_expire_time_ms)
 	{
 		foreach(var_81ceab27, player in level.players)
@@ -2435,7 +2444,8 @@ function destroy_vehicle(vehicle)
 function function_87e9a4ad(veh_name, origin, angles)
 {
 	/#
-		while(1)
+		fx_prespawn_time = 5;
+		while(true)
 		{
 			if(getdvarint("", 0) == 0)
 			{
@@ -2464,7 +2474,7 @@ function function_4b28749d(vehicle)
 	/#
 		vehicle endon(#"death");
 		setdvar("", 0);
-		while(1)
+		while(true)
 		{
 			if(getdvarint("") != 0)
 			{
@@ -2497,7 +2507,7 @@ function vehicleteamthread()
 	vehicle.forcedamagefeedback = 1;
 	vehicle.vehkilloccupantsondeath = 1;
 	vehicle disableaimassist();
-	while(1)
+	while(true)
 	{
 		vehicle setteam("neutral");
 		vehicle.ignoreme = 1;
@@ -2552,8 +2562,9 @@ function watchplayerexitrequestthread(player)
 	vehicle = self;
 	vehicle endon(#"death");
 	wait(1.5);
-	while(1)
+	while(true)
 	{
+		timeused = 0;
 		while(player usebuttonpressed())
 		{
 			timeused = timeused + 0.05;

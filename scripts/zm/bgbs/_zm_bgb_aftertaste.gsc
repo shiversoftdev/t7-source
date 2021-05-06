@@ -81,7 +81,7 @@ function event()
 	self endon(#"disconnect");
 	self endon(#"bled_out");
 	self endon(#"bgb_update");
-	while(1)
+	while(true)
 	{
 		self waittill(#"player_downed");
 		self bgb::do_one_shot_use(1);

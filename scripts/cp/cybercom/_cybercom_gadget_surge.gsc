@@ -242,7 +242,7 @@ private function _lock_requirement(target, secondary = 0)
 			{
 				break;
 			}
-			default
+			default:
 			{
 				self cybercom::function_29bf9dee(target, 2);
 				return 0;
@@ -482,7 +482,8 @@ function function_b8a5c1a6(attacker)
 private function function_a405f422()
 {
 	self endon(#"death");
-	while(1)
+	starttime = gettime();
+	while(true)
 	{
 		if(isdefined(self.pathgoalpos) && distancesquared(self.origin, self.pathgoalpos) <= self.goalradius * self.goalradius)
 		{
@@ -704,6 +705,7 @@ private function function_d09562d9(target, time, tag)
 	{
 		dest = target.origin;
 	}
+	intervals = int(time / 0.05);
 	while(isdefined(target) && intervals > 0)
 	{
 		dist = distance(self.origin, dest);

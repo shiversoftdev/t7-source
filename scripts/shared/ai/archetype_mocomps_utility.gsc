@@ -216,6 +216,7 @@ private function debuglocoexplosion(entity)
 		startorigin = entity.origin;
 		startyawforward = anglestoforward((0, entity.angles[1], 0));
 		damageyawforward = anglestoforward((0, entity.damageyaw - entity.angles[1], 0));
+		starttime = gettime();
 		while(gettime() - starttime < 10000)
 		{
 			recordsphere(startorigin, 5, (1, 0, 0), "", entity);

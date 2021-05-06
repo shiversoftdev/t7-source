@@ -48,7 +48,7 @@ function saygenericdialogue(typestring)
 			importance = 0.4;
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				println("" + typestring);

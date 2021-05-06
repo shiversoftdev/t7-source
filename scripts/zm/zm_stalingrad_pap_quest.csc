@@ -260,7 +260,7 @@ function function_5e369bd2(localclientnum, oldval, newval, bnewent, binitialsnap
 			var_165d49f6.var_888bfca3 = playfxontag(localclientnum, level._effect["drop_pod_hp_light_red"], var_165d49f6, "tag_health_red");
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}

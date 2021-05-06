@@ -186,7 +186,8 @@ function visual_trigger_vox(place)
 	{
 		return;
 	}
-	while(1)
+	vox_trig = spawn("trigger_radius", struct.origin - vectorscale((0, 0, 1), 100), 0, 250, 200);
+	while(true)
 	{
 		vox_trig waittill(#"trigger", who);
 		if(isplayer(who))
@@ -224,7 +225,7 @@ function function_45b4acf2()
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_ab740a84", num);
 		if(num == var_6932cc13[n_count])
@@ -255,7 +256,7 @@ function function_45b4acf2()
 function function_19277046()
 {
 	level endon(#"snd_zhdegg_activate");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", damage, attacker, dir, loc, str_type, model, tag, part, weapon, flags);
 		if(!level flag::get("gongs_resonating"))

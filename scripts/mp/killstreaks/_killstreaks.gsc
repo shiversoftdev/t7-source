@@ -315,6 +315,7 @@ function register_dialog(killstreaktype, informdialog, taacomdialogbundlekey, pi
 			bundle.pilotbundles[killstreaktype] = [];
 			i = 0;
 			field = pilotdialogarraykey + i;
+			fieldvalue = getstructfield(bundle, field);
 			while(isdefined(fieldvalue))
 			{
 				bundle.pilotbundles[killstreaktype][i] = fieldvalue;
@@ -1263,7 +1264,7 @@ function give_weapon(weapon, isinventory, usestoredammo)
 						}
 						break;
 					}
-					default
+					default:
 					{
 						break;
 					}
@@ -1296,7 +1297,7 @@ function give_weapon(weapon, isinventory, usestoredammo)
 				delta = 1;
 				break;
 			}
-			default
+			default:
 			{
 				delta = 0;
 				break;
@@ -1508,6 +1509,7 @@ function recordkillstreakbegindirect(recordstreakindex)
 function remove_when_done(killstreak, haskillstreakbeenused, isfrominventory)
 {
 	self endon(#"disconnect");
+	continue_wait = 1;
 	while(continue_wait)
 	{
 		self waittill(#"killstreak_done", successful, killstreaktype);
@@ -1928,7 +1930,8 @@ function wait_till_hero_weapon_is_fully_on(weapon)
 	self endon(#"death");
 	self endon(#"disconnect");
 	self endon(#"weapon_change");
-	while(1)
+	slot = self gadgetgetslot(weapon);
+	while(true)
 	{
 		if(self ability_player::gadget_is_in_use(slot))
 		{
@@ -2749,7 +2752,7 @@ function player_killstreak_threat_tracking(killstreaktype)
 	self endon(#"delete");
 	self endon(#"leaving");
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		if(!isdefined(self.owner))
 		{
@@ -3145,6 +3148,7 @@ function killstreak_data_dump()
 				/#
 					assert(type_data.size < 4);
 				#/
+				type_keys = getarraykeys(type_data);
 				while(type < type_keys.size)
 				{
 					if(type_data[type_keys[type]] == 1)
@@ -3359,7 +3363,7 @@ function monitordamage(killstreak_ref, max_health, destroyed_callback, low_healt
 	/#
 		assert(!isvehicle(self) || !issentient(self), "");
 	#/
-	while(1)
+	while(true)
 	{
 		weapon_damage = undefined;
 		self waittill(#"damage", damage, attacker, direction, point, type, tagname, modelname, partname, weapon, flags, inflictor, chargelevel);
@@ -3631,7 +3635,7 @@ function get_old_damage(attacker, weapon, type, damage, allow_bullet_damage)
 			}
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}
@@ -4271,7 +4275,7 @@ function debug_ricochet_protection()
 	/#
 		debug_wait = 0.5;
 		debug_frames = int(debug_wait / 0.05) + 1;
-		while(1)
+		while(true)
 		{
 			if(getdvarint("", 0) == 0)
 			{

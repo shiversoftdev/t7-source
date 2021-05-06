@@ -197,7 +197,7 @@ function state_unaware_update(params)
 	self thread turret_idle_sound();
 	self playsound("mpl_turret_startup");
 	self cleartargetentity();
-	while(1)
+	while(true)
 	{
 		rotscale = self.settings.scanning_speedscale;
 		if(!isdefined(rotscale))
@@ -280,7 +280,7 @@ function state_combat_update(params)
 		sentry_turret_alert_sound();
 		wait(0.5);
 	}
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.enemy) && self vehcansee(self.enemy))
 		{

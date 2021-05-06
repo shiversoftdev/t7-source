@@ -224,7 +224,7 @@ private function tryreacquireservice(behaviortreeentity)
 			}
 			break;
 		}
-		default
+		default:
 		{
 			if(behaviortreeentity.reacquire_state > 15)
 			{

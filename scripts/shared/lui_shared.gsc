@@ -281,7 +281,7 @@ private function _play_movie_for_player(str_movie, str_type, show_black_screen, 
 			str_menu = "PiPMenu";
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				assertmsg("" + str_type + "");
@@ -304,7 +304,7 @@ private function _play_movie_for_player(str_movie, str_type, show_black_screen, 
 		{
 			self setluimenudata(lui_menu, "additive", 1);
 		}
-		while(1)
+		while(true)
 		{
 			self waittill(#"menuresponse", menu, response);
 			if(menu == str_menu && response == "finished_movie_playback")
@@ -385,7 +385,7 @@ private function _play_movie_for_player_with_timeout(str_movie, str_type, timeou
 			str_menu = "PiPMenu";
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				assertmsg("" + str_type + "");

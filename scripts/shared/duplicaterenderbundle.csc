@@ -91,7 +91,7 @@ function duprenderbundledebuglisten()
 		setdvar("", "");
 		setdvar("", "");
 		setdvar("", "");
-		while(1)
+		while(true)
 		{
 			playbundlename = getdvarstring("");
 			if(playbundlename != "")
@@ -198,6 +198,7 @@ function playduprenderbundle(playbundlename)
 		adddupmaterial(localclientnum, bundle, stageprefix + "sonar_", 2);
 		loopingstage = looping && (!enterstage && stageidx == 0 || (enterstage && stageidx == 1));
 		accumtime = 0;
+		prevtime = self getclienttime();
 		while(loopingstage || accumtime < stagelength && !self.forcestopduprenderbundle)
 		{
 			gfx::setstage(localclientnum, bundle, undefined, stageprefix, stagelength, accumtime, totalaccumtime, &setshaderconstants);
@@ -362,6 +363,7 @@ function stopduprenderbundle()
 {
 	if(!(isdefined(self.forcestopduprenderbundle) && self.forcestopduprenderbundle) && isdefined(self.playingduprenderbundle) && self.playingduprenderbundle != "")
 	{
+		self.forcestopduprenderbundle = 1;
 		while(self.playingduprenderbundle != "")
 		{
 			wait(0.016);

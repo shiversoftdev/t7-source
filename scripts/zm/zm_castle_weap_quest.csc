@@ -245,6 +245,7 @@ function function_c54660fa(localclientnum)
 	n_start_time = gettime();
 	n_end_time = n_start_time + 3.6 * 1000;
 	var_2f4dbfb7 = n_start_time + 0.5 * 1000;
+	b_is_updating = 1;
 	while(b_is_updating)
 	{
 		n_time = gettime();
@@ -284,6 +285,7 @@ function function_2ea674b8(localclientnum)
 {
 	n_start_time = gettime();
 	n_end_time = n_start_time + 7 * 1000;
+	b_is_updating = 1;
 	while(b_is_updating && isdefined(self))
 	{
 		n_time = gettime();
@@ -315,6 +317,7 @@ function function_aa74062f(localclientnum)
 {
 	n_start_time = gettime();
 	n_end_time = n_start_time + 5 * 1000;
+	b_is_updating = 1;
 	while(b_is_updating)
 	{
 		n_time = gettime();
@@ -365,7 +368,8 @@ function function_979d2797(localclientnum)
 	{
 		return;
 	}
-	while(1)
+	self.var_d90397ef = 1;
+	while(true)
 	{
 		var_68e7aa53 = array::random(level.var_93ad1521);
 		self scene::play(var_68e7aa53, self);
@@ -468,7 +472,7 @@ function function_8cce2397(a_ents)
 	self endon(#"hash_7291a140");
 	self endon(#"hash_4b8a9b1");
 	self endon(#"hash_4846b79f");
-	while(1)
+	while(true)
 	{
 		self waittill_match(#"_anim_notify_");
 		self flag::set("dragon_far_right");
@@ -496,7 +500,7 @@ function function_def5820e(a_ents)
 	self endon(#"hash_7291a140");
 	self endon(#"hash_4b8a9b1");
 	self endon(#"hash_4846b79f");
-	while(1)
+	while(true)
 	{
 		self waittill_match(#"_anim_notify_");
 		self flag::set("dragon_far_left");
@@ -610,7 +614,7 @@ function function_4ae89880(body, localclientnum, direction)
 */
 function function_badc23de(localclientnum)
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"bite", note);
 		if(note == "blood")
@@ -689,7 +693,7 @@ function function_63f39fc0(localclientnum)
 	stopforcestreamingxmodel("c_zom_dragonhead_small_e");
 	self function_aa74062f(localclientnum);
 	playfxontag(localclientnum, level._effect["mini_dragon_eye"], self, "tag_eye_left_fx");
-	while(1)
+	while(true)
 	{
 		wait(randomintrange(20, 40));
 		playfxontag(localclientnum, level._effect["mini_dragon_fire"], self, "tag_throat_fx");

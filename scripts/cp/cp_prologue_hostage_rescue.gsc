@@ -313,6 +313,7 @@ function function_ee3c7f46()
 function function_3964d78d()
 {
 	e_volume = getent("info_final_tunnel_attackers", "targetname");
+	ready = 0;
 	while(!ready)
 	{
 		if(level.ai_hendricks istouching(e_volume))
@@ -337,7 +338,7 @@ function function_3964d78d()
 		e_ent.goalradius = 140;
 		e_ent setgoal(nd_target.origin);
 	}
-	while(1)
+	while(true)
 	{
 		num_touching = cp_prologue_util::function_609c412a("info_fuel_tunnel_upper_door", 1);
 		if(!num_touching)
@@ -417,7 +418,8 @@ function function_672c874()
 function function_5dc67e92()
 {
 	self endon(#"hero_catch_up_teleport");
-	while(1)
+	e_volume = getent("info_fuel_tunnel_fallback_end", "targetname");
+	while(true)
 	{
 		a_ai = cp_prologue_util::function_68b8f4af(e_volume);
 		if(a_ai.size <= 3)
@@ -494,7 +496,7 @@ function function_bbaa282a()
 */
 function function_7a05bbf()
 {
-	while(1)
+	while(true)
 	{
 		e_trigger = getent("t_script_color_allies_r570", "targetname");
 		if(!isdefined(e_trigger))
@@ -533,7 +535,7 @@ function function_1ddfda41()
 	self setgoal(nd_node.origin);
 	self.goalradius = 64;
 	self waittill(#"goal");
-	while(1)
+	while(true)
 	{
 		a_enemy = cp_prologue_util::function_68b8f4af(e_volume);
 		if(a_enemy.size == 0)
@@ -542,6 +544,7 @@ function function_1ddfda41()
 		}
 		wait(0.05);
 	}
+	a_ai_enemy = getaiteamarray("axis");
 	while(a_ai_enemy.size > 0)
 	{
 		a_ai_enemy[0] ai::bloody_death();
@@ -619,7 +622,8 @@ function function_8b6e6abe()
 */
 function function_c9d7d48a()
 {
-	while(1)
+	e_volume = getent("info_fueling_tunnel_exit_area", "targetname");
+	while(true)
 	{
 		num_players = cp_prologue_util::num_players_touching_volume(e_volume);
 		if(num_players > 0)
@@ -636,7 +640,8 @@ function function_c9d7d48a()
 	level.ai_hendricks setgoal(n_node, 1);
 	wait(0.5);
 	level notify(#"hash_5d08c61e");
-	while(1)
+	s_struct = struct::get("s_close_security_door", "targetname");
+	while(true)
 	{
 		v_forward = anglestoforward(s_struct.angles);
 		v_dir = vectornormalize(s_struct.origin - level.ai_hendricks.origin);
@@ -778,7 +783,7 @@ function function_d9bab593(str_trigger, str_door, str_spawners, var_137809d6, va
 		return;
 	}
 	wait(1);
-	while(1)
+	while(true)
 	{
 		num_touching = cp_prologue_util::function_609c412a(var_137809d6, 1);
 		if(!num_touching)
@@ -1869,7 +1874,8 @@ function function_b1017ede()
 	}
 	start_time = gettime();
 	var_c2798c63 = getent("info_lift_players_camping", "targetname");
-	while(1)
+	var_a9dae27c = getent("info_lift_area_volume", "targetname");
+	while(true)
 	{
 		e_player = getplayers()[0];
 		time = gettime();
@@ -1937,7 +1943,8 @@ function function_eeb1c74e()
 	level flag::wait_till("lift_arrived");
 	wait(10);
 	var_91737097 = getent("info_lift_area_volume", "targetname");
-	while(1)
+	var_2320a476 = getent("info_lift_start_area_volume", "targetname");
+	while(true)
 	{
 		if(isdefined(level.var_1f5f8798) && level.var_1f5f8798)
 		{
@@ -2081,7 +2088,8 @@ function function_e97f7dba()
 function function_17d64396()
 {
 	cp_prologue_util::function_d1f1caad("entering_lift_fight");
-	while(1)
+	start_time = gettime();
+	while(true)
 	{
 		time = gettime();
 		dt = time - start_time / 1000;
@@ -2260,7 +2268,8 @@ function function_4d214c02(delay)
 		}
 		wait(0.5);
 	}
-	while(1)
+	start_time = gettime();
+	while(true)
 	{
 		time = gettime();
 		dt = time - start_time / 1000;
@@ -2604,7 +2613,8 @@ function function_38a8e28b()
 */
 function function_93c4d161()
 {
-	while(1)
+	e_volume = getent("info_lift_start_area_volume", "targetname");
+	while(true)
 	{
 		var_b9c84787 = getaiteamarray("axis");
 		if(var_b9c84787.size < 5)
@@ -2623,7 +2633,8 @@ function function_93c4d161()
 		e_ai = a_enemy[i];
 		e_ai setgoal(var_d6bb42cf);
 	}
-	while(1)
+	var_d6bb42cf = getent("info_lift_area_volume", "targetname");
+	while(true)
 	{
 		a_enemy = cp_prologue_util::function_68b8f4af(e_volume);
 		if(a_enemy.size <= 1)
@@ -2653,7 +2664,8 @@ function function_93c4d161()
 function function_dfbe3c61()
 {
 	cp_prologue_util::function_d1f1caad("entering_lift_fight");
-	while(1)
+	start_time = gettime();
+	while(true)
 	{
 		time = gettime();
 		dt = time - start_time / 1000;

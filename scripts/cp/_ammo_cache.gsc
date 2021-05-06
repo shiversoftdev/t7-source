@@ -286,7 +286,7 @@ function function_e76edd0b(var_60a09143)
 {
 	self endon(#"death");
 	var_60a09143 endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", entity);
 		if(!isdefined(var_60a09143))
@@ -319,6 +319,7 @@ function function_2902ab6c(var_60a09143)
 	var_60a09143.var_ce22f999 = 1;
 	var_60a09143 scene::play("p7_fxanim_gp_ammo_resupply_02_open_bundle", var_60a09143);
 	wait(1);
+	var_d3571721 = 1;
 	while(var_d3571721 > 0)
 	{
 		var_d3571721 = 0;

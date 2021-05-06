@@ -131,6 +131,7 @@ function function_43b5419a(einflictor, eattacker, idamage, idflags, smeansofdeat
 function function_ea7e3000(s_unitrigger, var_df61c394, var_60e07243)
 {
 	self endon(#"disconnect");
+	var_8de3e280 = getent("pavlovs_second_floor", "targetname");
 	while(!level flag::get(var_df61c394))
 	{
 		if(!self istouching(var_8de3e280))
@@ -178,6 +179,7 @@ function function_41457bd1()
 {
 	level endon(#"_zombie_game_over");
 	level flag::wait_till("all_players_spawned");
+	self.var_f2c16bcc = 0;
 	while(self.var_f2c16bcc < 4)
 	{
 		var_f2c16bcc = 4 - level.players.size;
@@ -228,6 +230,7 @@ function function_8f02cb7e()
 	{
 		self thread function_748696f0(0, i);
 	}
+	self.var_f2c16bcc = 0;
 	while(self.var_f2c16bcc < 4)
 	{
 		var_f2c16bcc = 4 - level.players.size;
@@ -354,7 +357,7 @@ function function_10d61b3(player)
 function function_68299355()
 {
 	level flag::wait_till("all_players_spawned");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_player);
 		e_player clientfield::increment_to_player("interact_rumble");
@@ -400,6 +403,7 @@ function function_68299355()
 function function_f25c1083()
 {
 	level flag::wait_till("dragon_strike_quest_complete");
+	var_8de3e280 = getent("pavlovs_second_floor", "targetname");
 	while(!util::any_player_is_touching(var_8de3e280, "allies"))
 	{
 		wait(1);
@@ -491,7 +495,8 @@ function function_93510b8b()
 	level function_e6794c49();
 	level thread function_5cb61169();
 	level flag::wait_till("dragon_stage3_started");
-	while(1)
+	s_unitrigger = struct::get("dragon_strike_controller");
+	while(true)
 	{
 		s_unitrigger.var_f30d1f8f function_8f02cb7e();
 		level.var_d4286019 = 1;
@@ -593,7 +598,8 @@ function function_815a155e(var_62a210b7)
 	level notify(#"hash_2e199c2");
 	level endon(#"hash_2e199c2");
 	level flag::clear("dragonstrike_stage_complete");
-	while(1)
+	level.var_3810a36f = 0;
+	while(true)
 	{
 		level waittill(#"hash_d4eb8535");
 		level.var_3810a36f++;
@@ -639,7 +645,8 @@ function function_5cb61169()
 */
 function function_75a7ba2d()
 {
-	while(1)
+	self.takedamage = 1;
+	while(true)
 	{
 		self waittill(#"damage", damage, attacker, dir, loc, type, model, tag, part, weapon, flags);
 		if(weapon === getweapon("launcher_dragon_fire"))

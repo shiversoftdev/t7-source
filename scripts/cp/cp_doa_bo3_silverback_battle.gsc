@@ -207,6 +207,7 @@ function function_fc48f9f3()
 		level thread function_a733cd6a(mech);
 		level waittill(#"hash_885b3b5e");
 	}
+	var_3d99e7a6 = math::clamp(1 + level.doa.var_da96f13c, 1, 10);
 	while(var_3d99e7a6)
 	{
 		var_3d99e7a6--;
@@ -325,7 +326,7 @@ private function function_14ba3248()
 private function function_72e0a286()
 {
 	level endon(#"hash_a95298f3");
-	while(1)
+	while(true)
 	{
 		wait(1);
 		valid = [];
@@ -380,7 +381,7 @@ function function_28eb6914(ent)
 	if(isdefined(ent))
 	{
 		ent endon(#"death");
-		while(1)
+		while(true)
 		{
 			lasthealth = ent.health;
 			ent waittill(#"damage", damage, attacker);
@@ -615,7 +616,7 @@ function function_fb3b78fe()
 	level endon(#"hash_ae3ed999");
 	self.var_15a6bfe6 = 0;
 	self useanimtree($generic);
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.damagedplayer) && self.damagedplayer && self.damagedplayer < gettime() + 1500)
 		{
@@ -760,7 +761,7 @@ function function_3cc9ed44()
 	self endon(#"death");
 	safezone = namespace_3ca3c537::function_dc34896f();
 	failures = 0;
-	while(1)
+	while(true)
 	{
 		wait(1);
 		if(!self istouching(safezone))
@@ -832,7 +833,8 @@ function function_2fd43405()
 	self.var_d3627554 = int(self.health) * 0.75;
 	self.var_b220d777 = int(self.health) * 0.5;
 	self.var_e6ea564a = int(self.health) * 0.25;
-	while(1)
+	self.var_b96cf2ea = 0;
+	while(true)
 	{
 		lasthealth = self.health;
 		self waittill(#"damage");
@@ -869,7 +871,7 @@ function function_47e8d1a6()
 		{
 			self.maxhealth = self.health;
 		}
-		while(1)
+		while(true)
 		{
 			self dodamage(int(self.maxhealth * 0.05), self.origin);
 			if(getdvarint("scr_doa_soak_think", 0) > 1)
@@ -897,7 +899,7 @@ function function_c8f8a134()
 {
 	self endon(#"death");
 	self function_f98533fb("run");
-	while(1)
+	while(true)
 	{
 		wait(1);
 		if(isdefined(self.var_9d1f3352))
@@ -1090,7 +1092,7 @@ function function_b3eb3a0b(params)
 	var_b84274b8 = spawn("script_origin", self.origin);
 	var_b84274b8 thread doa_utility::function_75e76155(self, "death");
 	self.var_dc477b8d = 0;
-	while(1)
+	while(true)
 	{
 		wait(0.05);
 		if(isdefined(level.hostmigrationtimer) && level.hostmigrationtimer)
@@ -1247,7 +1249,7 @@ function function_b830b6d7(linktag, silverback)
 private function function_c2d22e21()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", guy);
 		if(isplayer(guy))
@@ -1336,7 +1338,7 @@ private function function_5659ec29(var_c840292d)
 private function function_a3a6c6d0()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		pickupsitems = getentarray("a_pickup_item", "script_noteworthy");
 		for(i = 0; i < pickupsitems.size; i++)
@@ -1369,6 +1371,7 @@ function function_f61639be(dist = 72)
 	level endon(#"exit_taken");
 	level endon(#"ape_exited");
 	self endon(#"death");
+	distsq = dist * dist;
 	while(isdefined(self))
 	{
 		players = namespace_831a4a7c::function_5eb6e4d1();
@@ -1407,6 +1410,7 @@ function function_a753035a(egg)
 	level.doa.var_2775f29c = egg;
 	level endon(#"doa_game_is_over");
 	egg physicslaunch(egg.origin, vectorscale((0, 0, 1), 10));
+	hops = 6;
 	while(hops)
 	{
 		wait(randomfloatrange(0.5 * hops, 1.2 * hops));
@@ -1438,7 +1442,8 @@ function function_1d9d0ed2(chicken)
 	chicken endon(#"death");
 	chicken thread namespace_5e6c5d1f::function_cdfa9ce8(chicken);
 	chicken.var_a732885d = 1;
-	while(1)
+	rotate180time = 1;
+	while(true)
 	{
 		chicken rotateto(chicken.angles + vectorscale((0, 1, 0), 180), rotate180time);
 		wait(1);
@@ -1464,7 +1469,8 @@ function move_to_position_over_time(destination, timems, elevationdelta)
 	if(isdefined(elevationdelta))
 	{
 		deltaz = elevationdelta / frames / 2;
-		while(1)
+		stoptimeup = gettime() + timems / 2;
+		while(true)
 		{
 			time = gettime();
 			if(time > stoptime)

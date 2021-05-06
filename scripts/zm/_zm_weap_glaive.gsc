@@ -158,6 +158,7 @@ function function_3f820ba7(var_9fd9c680)
 function function_762ff0b6(wpn_prev)
 {
 	self endon(#"hash_8a993396");
+	oldtime = gettime();
 	while(isdefined(self) && (isdefined(self.autokill_glaive_active) && self.autokill_glaive_active))
 	{
 		rate = 1.667;
@@ -272,7 +273,8 @@ private function watch_sword_equipped()
 	wpn_excalibur = self get_correct_sword_for_player_character_at_level(1);
 	wpn_autokill = self get_correct_sword_for_player_character_at_level(2);
 	self.sword_allowed = 1;
-	while(1)
+	self.usingsword = 0;
+	while(true)
 	{
 		self waittill(#"weapon_change", wpn_cur, wpn_prev);
 		self function_5c998ffc(wpn_excalibur, wpn_autokill, wpn_cur, wpn_prev);
@@ -347,7 +349,7 @@ private function excalibur_think(wpn_excalibur)
 	self endon(#"hash_b29853d8");
 	self endon(#"disconnect");
 	self endon(#"bled_out");
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_melee_power_left", weapon);
 		if(weapon == wpn_excalibur)
@@ -697,7 +699,7 @@ private function arc_attack_think(weapon, var_10ee11e)
 	self endon(#"hash_b29853d8");
 	self endon(#"disconnect");
 	self endon(#"bled_out");
-	while(1)
+	while(true)
 	{
 		self util::waittill_any("weapon_melee_power", "weapon_melee");
 		weapon thread swordarc_swipe(self, var_10ee11e);
@@ -718,7 +720,7 @@ private function autokill_think(wpn_autokill)
 	self endon(#"hash_b29853d8");
 	self endon(#"disconnect");
 	self endon(#"bled_out");
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_melee_power_left", weapon);
 		if(weapon == wpn_autokill && self.autokill_glaive_active == 0)
@@ -766,6 +768,7 @@ private function function_729af361(vh_glaive)
 	vh_glaive endon(#"returned_to_owner");
 	vh_glaive endon(#"disconnect");
 	self thread function_86ee93a8();
+	self.var_c0d25105._glaive_must_return_to_owner = 0;
 	while(isdefined(self) && self throwbuttonpressed())
 	{
 		wait(0.05);
@@ -836,7 +839,7 @@ private function send_autokill_sword(wpn_autokill)
 */
 function function_e97f78f0()
 {
-	while(1)
+	while(true)
 	{
 		foreach(var_5c9a375d, player in getplayers())
 		{

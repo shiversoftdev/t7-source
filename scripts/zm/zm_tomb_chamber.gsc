@@ -104,7 +104,7 @@ function chamber_devgui()
 function watch_chamber_wall()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			if(getdvarint("") != 5)
 			{
@@ -227,7 +227,8 @@ function chamber_wall_change_randomly()
 	level flag::wait_till("start_zombie_round_logic");
 	a_element_enums = array(1, 2, 3, 4);
 	level endon(#"stop_random_chamber_walls");
-	while(1)
+	n_elem_prev = undefined;
+	while(true)
 	{
 		while(!is_chamber_occupied())
 		{
@@ -439,7 +440,7 @@ function tomb_watch_chamber_player_activity()
 {
 	level flag::init("player_active_in_chamber");
 	level flag::wait_till("start_zombie_round_logic");
-	while(1)
+	while(true)
 	{
 		wait(1);
 		if(is_chamber_occupied())

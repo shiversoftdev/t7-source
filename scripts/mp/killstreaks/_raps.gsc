@@ -90,7 +90,8 @@ function onplayerconnect()
 function rapshelicopterdynamicavoidance()
 {
 	level endon(#"game_ended");
-	while(1)
+	index_to_update = 0;
+	while(true)
 	{
 		rapshelicopterdynamicavoidanceupdate(index_to_update);
 		index_to_update++;
@@ -288,7 +289,7 @@ function rapshelicopterdynamicavoidanceupdate(index_to_update)
 							debug_action_string = "";
 							break;
 						}
-						default
+						default:
 						{
 							debug_action_string = "";
 							break;
@@ -488,6 +489,7 @@ function inithelicopterpositions()
 	{
 		startsearchpoint = (startsearchpoint[0], startsearchpoint[1], 0);
 	}
+	remaining_attempts = 10;
 	while(!isdefined(mapcenter) && remaining_attempts > 0)
 	{
 		startsearchpoint = startsearchpoint + vectorscale((1, 1, 0), 100);
@@ -1156,6 +1158,7 @@ function helicopterthink()
 	self endon(#"raps_helicopter_shutdown");
 	for(i = 0; i < 3; i++)
 	{
+		self.targetdroplocation = picknextdroplocation(self, i, self.firstdropreferencepoint, self.assigned_fly_height, self.lastdroplocation);
 		while(distance2dsquared(self.origin, self.targetdroplocation) > 25)
 		{
 			self waitforstoppingmovetoexpire();
@@ -1207,6 +1210,7 @@ function helicopterthinkdebugvisitall()
 		{
 			for(j = 0; j < game[""].size; j++)
 			{
+				self.targetdroplocation = (game[""][j][0], game[""][j][1], self.assigned_fly_height);
 				while(distance2dsquared(self.origin, self.targetdroplocation) > 25)
 				{
 					self waitforstoppingmovetoexpire();
@@ -1220,6 +1224,7 @@ function helicopterthinkdebugvisitall()
 				{
 					if(j + 1 % 3 == 0)
 					{
+						self.targetdroplocation = getrandomhelicopterstartorigin(self.assigned_fly_height, self.origin);
 						while(distance2dsquared(self.origin, self.targetdroplocation) > 25)
 						{
 							self waitforstoppingmovetoexpire();
@@ -1384,6 +1389,7 @@ function helicopterleave()
 	self.isleaving = 1;
 	self killstreaks::play_pilot_dialog_on_owner("timeout", "raps");
 	self killstreaks::play_taacom_dialog_response_on_owner("timeoutConfirmed", "raps");
+	self.leavelocation = getrandomhelicopterleaveorigin(0, self.origin);
 	while(distance2dsquared(self.origin, self.leavelocation) > 360000)
 	{
 		self updatehelicopterspeed();
@@ -1576,7 +1582,7 @@ function watchrapskills(originalowner)
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		self waittill(#"killed", victim);
 		if(isdefined(victim) && isplayer(victim))
@@ -1607,7 +1613,7 @@ function watchrapstippedover(owner)
 {
 	owner endon(#"disconnect");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		wait(3.5);
 		if(abs(self.angles[2]) > 75)
@@ -1708,6 +1714,7 @@ function initenemyselection(owner)
 */
 function initialwaituntilsettled()
 {
+	waittime = 0;
 	while(abs(self.velocity[2]) > 0.1 && waittime < 5)
 	{
 		wait(0.2);

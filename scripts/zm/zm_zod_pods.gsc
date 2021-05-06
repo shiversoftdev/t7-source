@@ -201,7 +201,8 @@ function function_5c18476f()
 			str_id = a_keys[i];
 			adddebugcommand("" + str_id + "" + str_id + "");
 		}
-		while(1)
+		s_sword_rock = struct::get("", "");
+		while(true)
 		{
 			cmd = getdvarstring("");
 			if(cmd != "")
@@ -221,7 +222,7 @@ function function_5c18476f()
 						level.debug_pod_spawn_all = 0;
 						break;
 					}
-					default
+					default:
 					{
 						break;
 					}
@@ -309,12 +310,12 @@ private function pod_sprayer_pickup_msg(e_player)
 */
 private function pod_sprayer_think()
 {
-	while(1)
+	while(true)
 	{
 		self.model = util::spawn_model("p7_zm_zod_bug_sprayer", self.origin, self.angles);
 		self.model clientfield::set("pod_sprayer_glint", 1);
 		self.trigger = zm_zod_util::spawn_trigger_radius(self.origin, 50, 1, &pod_sprayer_pickup_msg);
-		while(1)
+		while(true)
 		{
 			self.trigger waittill(#"trigger", e_who);
 			if(e_who clientfield::get_to_player("pod_sprayer_held"))
@@ -428,7 +429,7 @@ function function_ab887f9d()
 function function_254faf4d()
 {
 	level endon(#"_zombie_game_over");
-	while(1)
+	while(true)
 	{
 		self.origin = self.origin - vectorscale((0, 0, 1), 5000);
 		level waittill("pod_" + self.script_int + "_hatched");
@@ -500,7 +501,7 @@ private function function_a7a6257b()
 	{
 		self function_cb4c560e(3);
 	}
-	while(1)
+	while(true)
 	{
 		level util::waittill_any("between_round_over", "debug_pod_spawn");
 		rounds_since_upgrade++;
@@ -542,7 +543,7 @@ private function function_42bd572d()
 {
 	self endon(#"harvested");
 	level flag::wait_till("all_players_spawned");
-	while(1)
+	while(true)
 	{
 		level waittill(#"kill_round");
 		if(self.var_8486ae6a == 3)
@@ -592,7 +593,7 @@ private function function_bf70a1ff()
 	}
 	n_pods = int(0.4 * level.var_6fa2f6ca.var_4042b27e.size);
 	function_d6abde0a(n_pods);
-	while(1)
+	while(true)
 	{
 		level util::waittill_any("between_round_over", "debug_pod_spawn");
 		if(level.round_number < 4 && !level flag::get("any_player_has_pod_sprayer") && (!(isdefined(level.debug_pod_spawn_all) && level.debug_pod_spawn_all)))
@@ -719,6 +720,7 @@ function function_7e428fa9(e_harvester)
 				}
 				case "powerup":
 				{
+					str_item = s_reward.item;
 					while(!isdefined(str_item) || (str_item === "full_ammo" && var_785a5f87 != 3))
 					{
 						str_item = zm_powerups::get_valid_powerup();
@@ -756,7 +758,7 @@ function function_7e428fa9(e_harvester)
 					var_7905adb2 thread function_92f587b4();
 					break;
 				}
-				default
+				default:
 				{
 					break;
 				}

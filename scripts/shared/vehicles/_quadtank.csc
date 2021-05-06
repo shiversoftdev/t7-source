@@ -157,6 +157,7 @@ function set_trophy_state(localclientnum, ison)
 	{
 		warmuptime = (isdefined(settings.trophywarmup) ? settings.trophywarmup : 0.1);
 		start = gettime();
+		interval = 0.3;
 		while(gettime() <= start + warmuptime * 1000)
 		{
 			if(isdefined(settings.trophylight_fx_1) && isdefined(settings.trophylight_tag_1))
@@ -177,6 +178,7 @@ function set_trophy_state(localclientnum, ison)
 		}
 		self.trophy_on = 1;
 		self playloopsound("wpn_trophy_spin_loop");
+		rate = 0;
 		while(isdefined(settings.trophyanim) && rate < 1)
 		{
 			rate = rate + 0.02;
@@ -220,7 +222,7 @@ function wait_for_bullet_impact(localclientnum)
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", attacker, impactpos, effectdir, partname);
 		if(partname == "tag_target_lower" || partname == "tag_target_upper" || partname == "tag_defense_active" || partname == "tag_body_animate")

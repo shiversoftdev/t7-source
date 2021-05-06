@@ -204,7 +204,7 @@ function craftables_watch_swipes()
 	self endon(#"disconnect");
 	self notify(#"craftables_watch_swipes");
 	self endon(#"craftables_watch_swipes");
-	while(1)
+	while(true)
 	{
 		self waittill(#"melee_swipe", zombie);
 		if(distancesquared(zombie.origin, self.origin) > zombie.meleeattackdist * zombie.meleeattackdist)
@@ -830,7 +830,7 @@ function piece_unitrigger_think()
 {
 	self endon(#"kill_trigger");
 	slot = self.stub.piece.inventory_slot;
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		self.stub notify(#"trigger", player);
@@ -894,6 +894,7 @@ function player_can_take_piece(piece)
 function dbline(from, to)
 {
 	/#
+		time = 20;
 		while(time > 0)
 		{
 			line(from, to, (0, 0, 1), 0, 1);
@@ -924,6 +925,7 @@ function player_throw_piece(piece, origin, dir, return_to_spawn, return_time, en
 		#/
 		pass = 0;
 		done = 0;
+		altmodel = undefined;
 		while(pass < 2 && !done)
 		{
 			grenade = self magicgrenadetype("buildable_piece", origin, dir, 30000);
@@ -1340,6 +1342,7 @@ function piece_pick_random_spawn()
 	self.current_spawn = 0;
 	if(self.spawns.size >= 1 && self.spawns.size > 1)
 	{
+		self.current_spawn = randomint(self.spawns.size);
 		while(isdefined(self.spawns[self.current_spawn].claim_location) && !claim_location(self.spawns[self.current_spawn].claim_location))
 		{
 			arrayremoveindex(self.spawns, self.current_spawn);
@@ -2745,6 +2748,7 @@ function choose_open_craftable(player)
 	{
 		self.opencraftablehudelem = [];
 	}
+	self.opencraftablehudelem[n_playernum] = hinttexthudelem;
 	while(isdefined(self.playertrigger[n_playernum]) && !self.crafted)
 	{
 		if(player actionslotonebuttonpressed())
@@ -2838,7 +2842,7 @@ function open_craftablestub_update_prompt(player, slot = 0)
 				self.equipname = self.a_uts_open_craftables_available[self.n_open_craftable_choice].equipname;
 				return 1;
 			}
-			default
+			default:
 			{
 				if(!self.b_open_craftable_checking_input)
 				{
@@ -3090,7 +3094,7 @@ function craftable_play_craft_fx(player)
 	self endon(#"kill_trigger");
 	self endon(#"craft_succeed");
 	self endon(#"craft_failed");
-	while(1)
+	while(true)
 	{
 		playfx(level._effect["building_dust"], player getplayercamerapos(), player.angles);
 		wait(0.5);
@@ -4687,7 +4691,7 @@ function run_craftables_devgui()
 		setdvar("", "");
 		setdvar("", "");
 		setdvar("", "");
-		while(1)
+		while(true)
 		{
 			craftable_id = getdvarstring("");
 			if(craftable_id != "")

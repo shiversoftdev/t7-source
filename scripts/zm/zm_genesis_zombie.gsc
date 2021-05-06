@@ -220,6 +220,7 @@ function function_dc84c8cc()
 	var_e274e0c3 = undefined;
 	var_a83e7943 = 900000;
 	var_320b8666 = 900000;
+	var_ed78383b = 7;
 	while(isdefined(self))
 	{
 		self.var_a3d40b8 = undefined;
@@ -578,7 +579,7 @@ private function function_379dfb9b(origin, players)
 private function update_closest_player()
 {
 	level waittill(#"start_of_round");
-	while(1)
+	while(true)
 	{
 		reset_closest_player = 1;
 		zombies = getactorteamarray(level.zombie_team);

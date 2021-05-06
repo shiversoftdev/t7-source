@@ -548,7 +548,7 @@ function function_adb2c149(e_player)
 				hintstring_areaname = &"ZM_GENESIS_AREA_NAME_TEMPLE";
 				break;
 			}
-			default
+			default:
 			{
 				hintstring_areaname = &"";
 				break;
@@ -599,7 +599,7 @@ function function_d6422d13()
 			exploder::exploder("lgtexp_keeper_protector_on");
 		}
 	}
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_player);
 		if(e_player zm_utility::in_revive_trigger())
@@ -665,7 +665,7 @@ function function_63fe1ddd()
 {
 	level endon(#"_zombie_game_over");
 	level flag::wait_till("companion_box_built");
-	while(1)
+	while(true)
 	{
 		level clientfield::set("kc_callbox_lights", 1);
 		level waittill(#"hash_31220443");
@@ -745,6 +745,7 @@ function function_ff7f239d(e_player, s_stub, s_start_pos)
 	{
 		return;
 	}
+	level.ai_companion.time_expired = 1;
 	while(isdefined(level.ai_companion) && (isdefined(level.ai_companion.var_57376ff1) && level.ai_companion.var_57376ff1))
 	{
 		util::wait_network_frame();
@@ -892,7 +893,7 @@ function function_91a820f6()
 {
 	self endon(#"death");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_1fe79fb5", who);
 		if(randomint(100) <= 30)
@@ -929,7 +930,7 @@ function function_a36616b8()
 {
 	self endon(#"death");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		wait(randomintrange(15, 25));
 		level thread function_83f1533a(level.ai_companion, "active");

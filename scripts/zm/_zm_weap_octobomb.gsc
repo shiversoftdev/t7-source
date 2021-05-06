@@ -147,7 +147,7 @@ function player_handle_octobomb()
 	{
 		max_attract_dist = 1024;
 	}
-	while(1)
+	while(true)
 	{
 		e_grenade = get_thrown_octobomb();
 		if(isdefined(e_grenade))
@@ -261,6 +261,7 @@ function fakelinkto(linkee)
 {
 	self notify(#"fakelinkto");
 	self endon(#"fakelinkto");
+	self.backlinked = 1;
 	while(isdefined(self) && isdefined(linkee))
 	{
 		self.origin = linkee.origin;
@@ -585,7 +586,7 @@ function grenade_stolen_by_sam(e_grenade)
 */
 function octobomb_cleanup()
 {
-	while(1)
+	while(true)
 	{
 		if(!isdefined(self))
 		{
@@ -652,7 +653,8 @@ function do_octobomb_sound()
 function do_tentacle_burst(e_player, is_upgraded)
 {
 	self endon(#"explode");
-	while(1)
+	n_time_started = gettime() / 1000;
+	while(true)
 	{
 		n_time_current = gettime() / 1000;
 		n_time_elapsed = n_time_current - n_time_started;
@@ -776,7 +778,7 @@ function do_tentacle_grab(e_player, is_upgraded)
 		n_time_min = 1.5;
 		n_time_max = 2.5;
 	}
-	while(1)
+	while(true)
 	{
 		if(b_fast_grab == 0)
 		{
@@ -866,7 +868,7 @@ function special_attractor_spawn(e_player, max_attract_dist)
 	self setmaxhealth(1000);
 	self setnormalhealth(1);
 	self thread parasite_attractor_grab(self);
-	while(1)
+	while(true)
 	{
 		a_ai_zombies = array::get_all_closest(self.origin, getaiteamarray(level.zombie_team), undefined, undefined, max_attract_dist * 1.5);
 		foreach(var_d99d9e5e, ai_zombie in a_ai_zombies)
@@ -934,6 +936,7 @@ function vehicle_attractor_damage(e_player)
 {
 	self endon(#"death");
 	self.octobomb_infected = 1;
+	n_infection_time = 0;
 	while(n_infection_time < 7)
 	{
 		self dodamage(600, self.origin, e_player);
@@ -1043,6 +1046,7 @@ function parasite_attractor(e_grenade)
 		}
 		self clearvehgoalpos();
 	}
+	i = 0;
 	while(self.b_parasite_attracted)
 	{
 		if(i == 4)
@@ -1078,7 +1082,8 @@ function parasite_attractor_grab(e_grenade)
 	e_grenade endon(#"death");
 	self endon(#"death");
 	b_fast_grab = 1;
-	while(1)
+	n_grabs = 0;
+	while(true)
 	{
 		if(b_fast_grab == 0)
 		{
@@ -1136,7 +1141,7 @@ function parasite_attractor_grab(e_grenade)
 function sndattackvox()
 {
 	self endon(#"explode");
-	while(1)
+	while(true)
 	{
 		self waittill(#"sndkillvox");
 		wait(0.25);
@@ -1158,7 +1163,7 @@ function get_thrown_octobomb()
 {
 	self endon(#"death");
 	self endon(#"starting_octobomb_watch");
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_fire", e_grenade, w_weapon);
 		if(w_weapon == level.w_octobomb || w_weapon == level.w_octobomb_upgraded)
@@ -1217,7 +1222,7 @@ private function setup_devgui_func(str_devgui_path, str_dvar, n_value, func, n_b
 {
 	setdvar(str_dvar, n_base_value);
 	adddebugcommand("devgui_cmd \"" + str_devgui_path + "\" \"" + str_dvar + " " + n_value + "\"\n");
-	while(1)
+	while(true)
 	{
 		n_dvar = getdvarint(str_dvar);
 		if(n_dvar > n_base_value)

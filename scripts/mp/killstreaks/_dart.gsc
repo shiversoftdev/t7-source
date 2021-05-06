@@ -373,7 +373,7 @@ function spawndart(grenade, killstreak_id, spawn_origin)
 function debug_origin()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		/#
 			sphere(self.origin, 5, (1, 0, 0), 1, 1, 2, 120);
@@ -561,7 +561,7 @@ function emp_damage_cb(attacker, weapon)
 function darpredictedcollision()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"veh_predictedcollision", velocity, normal, ent, stype);
 		self notify(#"veh_collision", velocity, normal, ent, stype);
@@ -591,7 +591,7 @@ function watchcollision()
 	dart endon(#"death");
 	dart.owner endon(#"disconnect");
 	dart thread darpredictedcollision();
-	while(1)
+	while(true)
 	{
 		dart waittill(#"veh_collision", velocity, normal, ent, stype);
 		if(stype === "glass")
@@ -707,7 +707,7 @@ function watchammo()
 		params.ksbladeendspreadradius = 1;
 	}
 	player clientfield::set_to_player("dart_update_ammo", params.ksdartshotcount);
-	while(1)
+	while(true)
 	{
 		dart waittill(#"weapon_fired");
 		shotcount++;

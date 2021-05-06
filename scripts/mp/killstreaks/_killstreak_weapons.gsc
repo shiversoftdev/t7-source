@@ -77,7 +77,7 @@ function watchkillstreakweapondelay()
 {
 	self endon(#"disconnect");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		currentweapon = self getcurrentweapon();
 		self waittill(#"weapon_change", newweapon);
@@ -308,7 +308,7 @@ function watchkillstreakweaponswitch(killstreakweapon, killstreak_id, isfrominve
 	noneweapon = getweapon("none");
 	minigunweapon = getweapon("minigun");
 	miniguninventoryweapon = getweapon("inventory_minigun");
-	while(1)
+	while(true)
 	{
 		currentweapon = self getcurrentweapon();
 		self waittill(#"weapon_change", newweapon);

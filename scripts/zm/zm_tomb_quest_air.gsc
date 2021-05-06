@@ -216,7 +216,8 @@ function ceiling_ring_run()
 	var_8218dfc8 = 120 * 120;
 	var_ad195647 = 180 * 180;
 	var_104a0542 = 240 * 240;
-	while(1)
+	var_9d64b269 = 300 * 300;
+	while(true)
 	{
 		self waittill(#"damage", damage, attacker, direction_vec, point, mod, tagname, modelname, partname, weaponname);
 		if(weaponname.name == "staff_air")
@@ -293,7 +294,8 @@ function air_puzzle_2_run()
 	{
 		s_smoke_pos thread air_puzzle_smoke();
 	}
-	while(1)
+	var_3481edfa = level.a_elemental_staffs["staff_air"].w_weapon;
+	while(true)
 	{
 		level waittill(#"air_puzzle_smoke_solved");
 		all_smoke_solved = 1;
@@ -366,7 +368,8 @@ function air_puzzle_run_smoke_direction()
 	f_min_dot = cos(self.script_int);
 	self.solved = 0;
 	self.detector_brush setcandamage(1);
-	while(1)
+	direction_failures = 0;
+	while(true)
 	{
 		self.detector_brush waittill(#"damage", damage, attacker, direction_vec, point, mod, tagname, modelname, partname, weaponname);
 		if(weaponname.name == "staff_air")

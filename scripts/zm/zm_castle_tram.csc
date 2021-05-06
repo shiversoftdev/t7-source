@@ -90,6 +90,7 @@ function function_2d89f1a7(var_e2026f3a, n_blink_rate)
 {
 	self endon(#"entityshutdown");
 	n_counter = 0;
+	n_timer = 0;
 	while(n_timer < var_e2026f3a)
 	{
 		if(n_counter % 2)
@@ -205,7 +206,7 @@ function function_58a73de9()
 */
 function function_60283937()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_dc18b3bb", duration);
 		if(duration == "long")

@@ -489,7 +489,7 @@ function givespecializedcrateweapon(weapon)
 			level weapons::add_limited_weapon(weapon, self, 3);
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}
@@ -564,7 +564,8 @@ function usesupplydropmarker(package_contents_id, context)
 		trigger_event = "weapon_fired";
 	}
 	self thread supplydropwatcher(package_contents_id, trigger_event, supplydropweapon, context);
-	while(1)
+	self.supplygrenadedeathdrop = 0;
+	while(true)
 	{
 		player allowmelee(0);
 		notifystring = self util::waittill_any_return("weapon_change", trigger_event, "disconnect", "spawned_player");
@@ -953,7 +954,7 @@ function markerupdatethread(context)
 	markermodel = spawn("script_model", (0, 0, 0));
 	context.marker = markermodel;
 	player thread markercleanupthread(context);
-	while(1)
+	while(true)
 	{
 		if(player flagsys::get("marking_done"))
 		{
@@ -1017,7 +1018,7 @@ function supplydropwatcher(package_contents_id, trigger_event, supplydropweapon,
 	self thread checkforemp();
 	self thread checkweaponchange(team, killstreak_id);
 	self thread cleanupwatcherondeath(team, killstreak_id);
-	while(1)
+	while(true)
 	{
 		self waittill(trigger_event, weapon_instance, weapon);
 		issupplydropweapon = 1;
@@ -1219,6 +1220,7 @@ function playerchangeweaponwaiter()
 	self endon(#"supply_drop_marker_done");
 	self endon(#"disconnect");
 	self endon(#"spawned_player");
+	currentweapon = self getcurrentweapon();
 	while(currentweapon.issupplydropweapon)
 	{
 		self waittill(#"weapon_change", currentweapon);
@@ -1287,7 +1289,7 @@ function geticonforcrate()
 					icon = "hud_mp40";
 					break;
 				}
-				default
+				default:
 				{
 					icon = "waypoint_recon_artillery_strike";
 					break;
@@ -1301,7 +1303,7 @@ function geticonforcrate()
 			icon = "hud_ammo_refill";
 			break;
 		}
-		default
+		default:
 		{
 			return undefined;
 			break;
@@ -1671,7 +1673,7 @@ function cratespawn(killstreak, killstreakid, owner, team, drop_origin, drop_ang
 			crate.cratetype = level.cratetypes[killstreak]["m32"];
 			break;
 		}
-		default
+		default:
 		{
 			crate.cratetype = getrandomcratetype("supplydrop");
 			break;
@@ -1913,6 +1915,7 @@ function update_crate_velocity()
 	self endon(#"entityshutdown");
 	self endon(#"stationary");
 	self.velocity = (0, 0, 0);
+	self.old_origin = self.origin;
 	while(isdefined(self))
 	{
 		self.velocity = self.origin - self.old_origin;
@@ -2149,6 +2152,7 @@ function unlinkonrotation(crate)
 	wait(waitbeforerotationcheck);
 	mincos = getdvarfloat("scr_supplydrop_killcam_max_rot", 0.999);
 	cosine = 1;
+	currentdirection = vectornormalize(anglestoforward(crate.angles));
 	while(cosine > mincos)
 	{
 		olddirection = currentdirection;
@@ -2280,7 +2284,7 @@ function watch_explosive_crate()
 function loop_sound(alias, interval)
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		playsoundatposition(alias, self.origin);
 		wait(interval);
@@ -2313,7 +2317,8 @@ function watchforcratekill(start_kill_watch_z_threshold)
 	stationarythreshold = 2;
 	killthreshold = 15;
 	maxframestillstationary = 20;
-	while(1)
+	numframesstationary = 0;
+	while(true)
 	{
 		vel = 0;
 		if(isdefined(self.velocity))
@@ -2356,7 +2361,8 @@ function cratekill()
 	stationarythreshold = 2;
 	killthreshold = 15;
 	maxframestillstationary = 20;
-	while(1)
+	numframesstationary = 0;
+	while(true)
 	{
 		vel = 0;
 		if(isdefined(self.velocity))
@@ -2841,6 +2847,7 @@ function useholdthinkloop(player)
 	level endon(#"game_ended");
 	self endon(#"disabled");
 	self.owner endon(#"crate_use_interrupt");
+	timedout = 0;
 	while(self continueholdthinkloop(player))
 	{
 		timedout = timedout + 0.05;
@@ -2938,6 +2945,7 @@ function personalusebar(object)
 		capturecratestate = 1;
 		self.is_capturing_own_supply_drop = object.owner === self && (!isdefined(object.originalowner) || object.originalowner == self);
 	}
+	lastrate = -1;
 	while(isalive(self) && isdefined(object) && object.inuse && !level.gameended)
 	{
 		if(lastrate != object.userate)
@@ -3212,6 +3220,7 @@ function supplydrophelistartpath(goal, goal_offset)
 	total_tries = 12;
 	tries = 0;
 	goalpath = spawnstruct();
+	drop_direction = getdropdirection();
 	while(tries < total_tries)
 	{
 		goalpath.start = gethelistart(goal, drop_direction);
@@ -3276,6 +3285,7 @@ function supplydropheliendpath(origin, drop_direction)
 {
 	total_tries = 5;
 	tries = 0;
+	goalpath = spawnstruct();
 	while(tries < total_tries)
 	{
 		goal = getheliend(origin, drop_direction);
@@ -3479,6 +3489,7 @@ function helidelivercrate(origin, weapon, owner, team, killstreak_id, package_co
 		supplydrophelistartpath_v2_part2(heli_drop_goal, goalpath, goal_world_offset);
 		goal_path_setup_needs_finishing = 0;
 	}
+	waitforonlyonedroplocation = 0;
 	while(level.droplocations.size > 1 && waitforonlyonedroplocation)
 	{
 		arrayremovevalue(level.droplocations, undefined);
@@ -3636,7 +3647,8 @@ function samturretwatcher(destination)
 	self endon(#"leaving");
 	self endon(#"helicopter_gone");
 	self endon(#"death");
-	while(1)
+	sam_turret_aquire_dist = 1500;
+	while(true)
 	{
 		if(distance(destination, self.origin) < sam_turret_aquire_dist)
 		{
@@ -3760,7 +3772,7 @@ function helidestroyed()
 	self endon(#"leaving");
 	self endon(#"helicopter_gone");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		if(self.damagetaken > self.maxhealth)
 		{
@@ -3856,7 +3868,7 @@ function supply_drop_dev_gui()
 {
 	/#
 		setdvar("", "");
-		while(1)
+		while(true)
 		{
 			wait(0.5);
 			devgui_string = getdvarstring("");

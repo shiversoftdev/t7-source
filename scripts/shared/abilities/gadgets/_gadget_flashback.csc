@@ -133,7 +133,8 @@ function clone_flashback_changed(localclientnum, oldval, newval, bnewent, biniti
 function clone_fade(localclientnum)
 {
 	self endon(#"entityshutdown");
-	while(1)
+	starttime = getservertime(localclientnum);
+	while(true)
 	{
 		currenttime = getservertime(localclientnum);
 		elapsedtime = currenttime - starttime;

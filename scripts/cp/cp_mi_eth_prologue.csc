@@ -286,9 +286,10 @@ function function_5f6dad34(localclientnum, b_on)
 	if(b_on)
 	{
 		level.var_4073afd6 setshaderconstant(localclientnum, 0, 1, 0, 0, 0);
-		while(1)
+		while(true)
 		{
 			starttime = gettime();
+			i = gettime() - starttime;
 			while(i < 2000 && isdefined(self))
 			{
 				st = i / 1000;
@@ -406,7 +407,7 @@ function function_8466bb27(localclientnum, oldval, newval, bnewent, binitialsnap
 			}
 			break;
 		}
-		default
+		default:
 		{
 			if(isdefined(self.loopid))
 			{
@@ -516,7 +517,7 @@ function function_cd98eb8d()
 	n_wait_time = 5;
 	self rotateto(self.angles + v_angles, n_move_time / 2);
 	wait(n_wait_time / 2);
-	while(1)
+	while(true)
 	{
 		v_angles = vectorscale((0, 1, 0), 40);
 		self rotateto(self.angles + v_angles, n_move_time);

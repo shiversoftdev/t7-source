@@ -131,6 +131,7 @@ function wait_for_host()
 	{
 		return;
 	}
+	host = util::gethostplayerforbots();
 	while(!isdefined(host))
 	{
 		wait(0.25);
@@ -275,7 +276,7 @@ function respawn()
 	self endon(#"spawned");
 	self endon(#"disconnect");
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		self tap_use_button();
 		wait(0.1);
@@ -425,7 +426,7 @@ function monitor_bot_team_population(maxallies, maxaxis)
 		return;
 	}
 	fill_balanced_teams(maxallies, maxaxis);
-	while(1)
+	while(true)
 	{
 		wait(3);
 		allies = getplayers("allies");
@@ -457,6 +458,7 @@ function monitor_bot_team_population(maxallies, maxaxis)
 function fill_balanced_teams(maxallies, maxaxis)
 {
 	allies = getplayers("allies");
+	axis = getplayers("axis");
 	while(allies.size < maxallies || axis.size < maxaxis && add_balanced_bot(allies, maxallies, axis, maxaxis))
 	{
 		wait(0.05);
@@ -504,13 +506,14 @@ function monitor_bot_population(maxfree)
 	{
 		return;
 	}
+	players = getplayers();
 	while(players.size < maxfree)
 	{
 		add_bot();
 		wait(0.05);
 		players = getplayers();
 	}
-	while(1)
+	while(true)
 	{
 		wait(3);
 		players = getplayers();
@@ -764,6 +767,7 @@ function set_rank()
 	{
 		human_ranks[human_ranks.size] = 10;
 	}
+	human_avg = math::array_average(human_ranks);
 	while(bot_ranks.size + human_ranks.size < 5)
 	{
 		r = human_avg + randomintrange(-5, 5);
@@ -773,6 +777,7 @@ function set_rank()
 	ranks = arraycombine(human_ranks, bot_ranks, 1, 0);
 	avg = math::array_average(ranks);
 	s = math::array_std_deviation(ranks, avg);
+	rank = int(math::random_normal_distribution(avg, s, 0, level.maxrank));
 	while(!isdefined(self.pers["codpoints"]))
 	{
 		wait(0.1);
@@ -890,7 +895,7 @@ function get_bot_settings()
 			break;
 		}
 		case 3:
-		default
+		default:
 		{
 			bundlename = "bot_mp_veteran";
 			break;
@@ -1159,7 +1164,8 @@ function fixed_spawn_override()
 	/#
 		self endon(#"disconnect");
 		spawnorigin = self.origin;
-		while(1)
+		spawnangles = self.angles;
+		while(true)
 		{
 			self waittill(#"spawned_player");
 			self setorigin(spawnorigin);

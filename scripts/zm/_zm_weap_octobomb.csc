@@ -118,7 +118,7 @@ function octobomb_fx(localclientnum, oldval, newval, bnewent, binitialsnap, fiel
 			playfxontag(localclientnum, fx_octobomb, self, "tag_origin");
 			break;
 		}
-		default
+		default:
 		{
 			fx_octobomb = level._effect["octobomb_spores"];
 			playfxontag(localclientnum, fx_octobomb, self, "tag_origin");

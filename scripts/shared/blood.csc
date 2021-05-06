@@ -241,7 +241,7 @@ function player_watch_blood(localclientnum)
 	self.lastbloodupdate = 0;
 	priorplayerhealth = renderhealthoverlayhealth(localclientnum);
 	self blood_in(localclientnum, priorplayerhealth);
-	while(1)
+	while(true)
 	{
 		if(renderhealthoverlay(localclientnum) && (!(isdefined(self.nobloodoverlay) && self.nobloodoverlay)))
 		{

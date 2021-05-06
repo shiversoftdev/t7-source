@@ -73,7 +73,8 @@ function monitortearusage()
 	{
 		return;
 	}
-	while(1)
+	prevammo = self getammocount(weapon);
+	while(true)
 	{
 		ammo = self getammocount(weapon);
 		if(ammo < prevammo)
@@ -141,7 +142,7 @@ function tear(pos)
 	starttime = gettime();
 	self thread teartimer();
 	self endon(#"tear_timeout");
-	while(1)
+	while(true)
 	{
 		trig waittill(#"trigger", player);
 		if(player.sessionstate != "playing")
@@ -207,7 +208,7 @@ function teargassuffering()
 	{
 		self shellshock("teargas", 60);
 	}
-	while(1)
+	while(true)
 	{
 		if(gettime() - self.teargasstarttime > level.tearsufferingduration * 1000)
 		{
@@ -234,7 +235,8 @@ function teargassuffering()
 function drawcylinder(pos, rad, height)
 {
 	/#
-		while(1)
+		time = 0;
+		while(true)
 		{
 			currad = rad;
 			curheight = height;

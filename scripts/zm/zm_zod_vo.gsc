@@ -452,6 +452,7 @@ function function_2426269b(v_pos, n_range = 1000)
 				var_d211180f.isspeaking = 0;
 			}
 		}
+		i = 0;
 		while(isdefined(level.a_e_speakers) && i < level.a_e_speakers.size)
 		{
 			if(isdefined(level.a_e_speakers[i].deleteme) && level.a_e_speakers[i].deleteme == 1)
@@ -914,7 +915,7 @@ function function_7884e6b8()
 	{
 		dude thread function_6bccb368();
 	}
-	while(1)
+	while(true)
 	{
 		var_4a606162 = 0;
 		if(level.round_number <= 4)
@@ -1491,6 +1492,7 @@ function function_f9003879(var_d3be01d9)
 	self endon(#"_zombie_game_over");
 	self endon(var_d3be01d9 + "_done");
 	e_trig = getent(var_d3be01d9, "targetname");
+	var_6afd6b = undefined;
 	while(!zombie_utility::is_player_valid(var_6afd6b))
 	{
 		e_trig waittill(#"trigger", var_6afd6b);
@@ -1665,7 +1667,7 @@ function function_335f3a81(var_13a31044 = 0, var_8df092ed = 0)
 				str_vo_line = level.var_fdb003be[level.var_9bc9c61f][var_5557a55d];
 				break;
 			}
-			default
+			default:
 			{
 				if(var_8df092ed)
 				{
@@ -1851,11 +1853,12 @@ function function_d33751d(n_delay = 0, b_wait_if_busy = 0)
 function function_2cc571f6()
 {
 	self endon(#"_zombie_game_over");
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_c484afcb");
 		if(isdefined(level.var_95981590))
 		{
+			var_d708b800 = undefined;
 			while(!zombie_utility::is_player_valid(var_d708b800))
 			{
 				wait(0.5);
@@ -1901,7 +1904,8 @@ function function_2cc571f6()
 function function_f8939df5()
 {
 	self endon(#"_zombie_game_over");
-	while(1)
+	var_25322547 = randomfloatrange(15, 20);
+	while(true)
 	{
 		level waittill(#"hash_aaa21b88");
 		while(level.var_6e63e659 > 0)
@@ -1934,6 +1938,7 @@ function function_43b03c7f(var_f30428a8)
 {
 	self endon(#"_zombie_game_over");
 	var_d8dc8b3c = 0;
+	var_e1b29e02 = undefined;
 	while(!var_d8dc8b3c)
 	{
 		var_60852196 = getaiarchetypearray("margwa");

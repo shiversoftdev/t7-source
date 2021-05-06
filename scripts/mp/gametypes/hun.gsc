@@ -379,7 +379,8 @@ function getcratedroporigin()
 function cratedropper()
 {
 	wait_time = level.helitime;
-	while(1)
+	time = 10000;
+	while(true)
 	{
 		wait(wait_time);
 		origin = getcratedroporigin();

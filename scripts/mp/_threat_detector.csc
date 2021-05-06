@@ -87,7 +87,7 @@ function sensorgrenadethink(sensorent, sensorhandle, localclientnum)
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		players = getplayers(localclientnum);
 		foreach(var_b20650e8, player in players)

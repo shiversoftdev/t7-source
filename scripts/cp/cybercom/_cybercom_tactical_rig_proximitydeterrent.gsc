@@ -132,7 +132,7 @@ function proximitydeterrentthink(type)
 	self endon(#"proximitydeterrentthink");
 	self endon(#"disconnect");
 	self endon("take_ability_" + type);
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", n_damage, e_attacker, v_vector, v_point, str_means_of_death, var_c4fe462, var_e64d69f9, var_c04aef90, w_weapon);
 		if(issubstr(str_means_of_death, "MOD_MELEE") && isdefined(e_attacker))
@@ -156,7 +156,7 @@ function proximitydeterrentthink(type)
 function function_f5590749()
 {
 	self endon(#"proximitydeterrenttake");
-	while(1)
+	while(true)
 	{
 		curtime = gettime();
 		var_f9459f98 = undefined;
@@ -349,7 +349,7 @@ private function _stunassailant(player, attacker, upgraded)
 			weapon = player.cybercom.var_a9774972;
 			break;
 		}
-		default
+		default:
 		{
 			var_36a3e6ad = "J_Wrist_LE";
 			tag = "tag_origin";
@@ -501,7 +501,7 @@ private function function_a38f70a1(player, target)
 			target dodamage(damage, player.origin, player, player, "none", "MOD_UNKNOWN", 0, player.cybercom.var_a9774972, -1, 1);
 			break;
 		}
-		default
+		default:
 		{
 			fx = level._effect["es_effect_generic"];
 			tag = "tag_body";

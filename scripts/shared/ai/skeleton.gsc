@@ -437,6 +437,7 @@ function get_closest_valid_player(origin, ignore_player)
 			arrayremovevalue(players, ignore_player[i]);
 		}
 	}
+	done = 0;
 	while(players.size && !done)
 	{
 		done = 1;

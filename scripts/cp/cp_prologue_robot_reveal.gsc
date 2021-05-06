@@ -363,6 +363,7 @@ function function_9fb290a5()
 {
 	struct = struct::get("sndRobotRattle", "targetname");
 	struct2 = struct::get(struct.target, "targetname");
+	ent = spawn("script_model", struct.origin);
 	while(!flag::get("players_in_garage"))
 	{
 		ent playsound("evt_robot_reveal_step");
@@ -498,7 +499,7 @@ function robot_horde()
 	self.goalradius = 32;
 	self thread function_e583f6c3();
 	self thread robot_stop();
-	self thread function_cea2a123();
+	self thread robot_speed();
 	self waittill(#"goal");
 	self.goalradius = 2048;
 	wait(3);
@@ -523,7 +524,7 @@ function robot_stop()
 }
 
 /*
-	Name: function_cea2a123
+	Name: robot_speed
 	Namespace: robot_horde
 	Checksum: 0x62EAF59B
 	Offset: 0x2520
@@ -531,7 +532,7 @@ function robot_stop()
 	Parameters: 0
 	Flags: Linked
 */
-function function_cea2a123()
+function robot_speed()
 {
 	self endon(#"death");
 	level flag::wait_till("garage_open");

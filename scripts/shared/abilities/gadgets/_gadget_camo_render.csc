@@ -84,6 +84,7 @@ function doreveal(local_client_num, direction)
 		self duplicate_render::update_dr_flag(local_client_num, "hide_model", 0);
 		self mapshaderconstant(local_client_num, 0, "scriptVector0", 0, 0, 0, 0);
 		model_hidden = 0;
+		currentvalue = 0;
 		while(currentvalue < 1)
 		{
 			self mapshaderconstant(local_client_num, 0, "scriptVector0", currentvalue, 0, 0, 0);
@@ -105,6 +106,7 @@ function doreveal(local_client_num, direction)
 		self duplicate_render::update_dr_flag(local_client_num, "hide_model", 1);
 		self mapshaderconstant(local_client_num, 0, "scriptVector0", 1, 0, 0, 0);
 		model_hidden = 1;
+		currentvalue = 1;
 		while(currentvalue > 0)
 		{
 			self mapshaderconstant(local_client_num, 0, "scriptVector0", currentvalue, 0, 0, 0);

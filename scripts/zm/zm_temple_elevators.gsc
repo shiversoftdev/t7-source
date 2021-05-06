@@ -106,7 +106,7 @@ function alternate_geysers()
 {
 	currentgeyser = undefined;
 	level waittill(#"geyser_enabled");
-	while(1)
+	while(true)
 	{
 		geysers = [];
 		for(i = 0; i < level.geysers.size; i++)
@@ -168,7 +168,7 @@ function geyser_start()
 function geyser_watch_for_zombies()
 {
 	self endon(#"geyser_end");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", who);
 		if(!self.geyser_active)
@@ -196,7 +196,7 @@ function geyser_watch_for_player()
 	self endon(#"geyser_end");
 	level endon(#"intermission");
 	level endon(#"fake_death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", who);
 		if(!isplayer(who))
@@ -221,7 +221,8 @@ function geyser_watch_for_player()
 		}
 		self playsound("evt_geyser_buildup");
 		starttime = gettime();
-		while(1)
+		players = getplayers();
+		while(true)
 		{
 			playerstouching = [];
 			for(i = 0; i < players.size; i++)
@@ -465,7 +466,7 @@ function geyser_fx()
 function geyser_earthquake()
 {
 	self endon(#"stop_geyser_fx");
-	while(1)
+	while(true)
 	{
 		earthquake(0.2, 0.1, self.origin, 100);
 		wait(0.1);
@@ -516,7 +517,7 @@ function geyser_blocker_think(blocker)
 			exploder::exploder("fxexp_9");
 			geyser_sounds("geyser01", "evt_water_spout01", "evt_geyser_amb", 1);
 		}
-		default
+		default:
 		{
 			break;
 		}
@@ -605,7 +606,7 @@ function geyser_trigger_dust_activate()
 */
 function geyser_trigger_dust_think()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(isdefined(player) && isdefined(player.geyser_dust_time) && player.geyser_dust_time > gettime())

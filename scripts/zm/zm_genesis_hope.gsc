@@ -174,7 +174,7 @@ function function_4903bec6(player)
 */
 function function_ed25d0f2()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_triggerer);
 		if(e_triggerer zm_utility::in_revive_trigger())
@@ -274,7 +274,7 @@ function function_2650d73f(player)
 */
 function function_46cfcb01()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_triggerer);
 		if(e_triggerer zm_utility::in_revive_trigger())

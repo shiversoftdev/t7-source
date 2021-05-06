@@ -189,7 +189,8 @@ function function_deeb696f()
 {
 	self endon(#"disconnect");
 	self endon(#"kill_fear_in_headlights");
-	while(1)
+	var_bd6badee = 1200 * 1200;
+	while(true)
 	{
 		allai = getaiarray();
 		foreach(var_a6459b26, ai in allai)

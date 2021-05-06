@@ -134,7 +134,8 @@ function watch_weapon_change()
 	self endon(#"death");
 	self endon(#"disconnect");
 	self.lastdroppableweapon = self getcurrentweapon();
-	while(1)
+	self.lastweaponchange = 0;
+	while(true)
 	{
 		previous_weapon = self getcurrentweapon();
 		self waittill(#"weapon_change", newweapon);
@@ -280,7 +281,8 @@ function track()
 {
 	currentweapon = self getcurrentweapon();
 	currenttime = gettime();
-	while(1)
+	spawnid = getplayerspawnid(self);
+	while(true)
 	{
 		event = self util::waittill_any_return("weapon_change", "death", "disconnect");
 		newtime = gettime();
@@ -602,7 +604,7 @@ function watch_usage()
 				self addweaponstat(curweapon, "shots", 1, self.class_num, 0);
 				break;
 			}
-			default
+			default:
 			{
 				break;
 			}
@@ -802,6 +804,7 @@ function watch_grenade_cancel()
 	self endon(#"disconnect");
 	self endon(#"grenade_fire");
 	waittillframeend();
+	weapon = level.weaponnone;
 	while(self isthrowinggrenade() && weapon == level.weaponnone)
 	{
 		self waittill(#"weapon_change", weapon);
@@ -1000,7 +1003,7 @@ function begin_other_grenade_tracking()
 				self addweaponstat(weapon, "used", 1);
 				break;
 			}
-			default
+			default:
 			{
 				break;
 			}
@@ -1068,7 +1071,8 @@ function stuck_to_player_team_change(player)
 {
 	self endon(#"death");
 	player endon(#"disconnect");
-	while(1)
+	originalteam = player.pers["team"];
+	while(true)
 	{
 		player waittill(#"joined_team");
 		if(player.pers["team"] != originalteam)
@@ -1193,7 +1197,7 @@ function watch_for_grenade_duds()
 {
 	self endon(#"spawned_player");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_fire", grenade, weapon);
 		grenade turn_grenade_into_a_dud(weapon, 1, self);
@@ -1213,7 +1217,7 @@ function watch_for_grenade_launcher_duds()
 {
 	self endon(#"spawned_player");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_launcher_fire", grenade, weapon);
 		grenade turn_grenade_into_a_dud(weapon, 0, self);
@@ -1506,7 +1510,7 @@ function on_damage(eattacker, einflictor, weapon, meansofdeath, damage)
 			}
 			break;
 		}
-		default
+		default:
 		{
 			if(isdefined(level.shellshockonplayerdamage))
 			{
@@ -1581,7 +1585,7 @@ function update_stowed_weapon()
 	self.tag_stowed_hip = undefined;
 	team = self.pers["team"];
 	playerclass = self.pers["class"];
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_change", newweapon);
 		if(self ismantling())
@@ -1604,7 +1608,7 @@ function update_stowed_weapon()
 				{
 					continue;
 				}
-				default
+				default:
 				{
 					break;
 				}

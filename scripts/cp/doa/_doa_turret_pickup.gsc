@@ -88,6 +88,7 @@ function missile_logic(fake)
 	missile endon(#"death");
 	fake thread doa_utility::function_981c685d(missile);
 	missile missile_settarget(fake);
+	uptime = gettime() + getdvarfloat("scr_doa_missile_upwardMax", 2) * 1000;
 	while(gettime() < uptime && isdefined(fake) && isdefined(missile))
 	{
 		if(getdvarfloat("scr_doa_missile_debug", 0))
@@ -224,7 +225,7 @@ function turret_fire(index, enemy)
 */
 function turretthink()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"hash_f843176e");
 		self sentry_turret::function_21af94b3();
@@ -250,7 +251,7 @@ function turret_target()
 	self endon(#"death");
 	self endon(#"hash_d3ef93e9");
 	self waittill(#"start_scan");
-	while(1)
+	while(true)
 	{
 		if(!isdefined(self.e_target))
 		{
@@ -467,7 +468,8 @@ function function_a0d09d25(player)
 	self endon(#"death");
 	self endon(#"hash_7a0ce382");
 	weapon = getweapon("zombietron_sprinkler_launcher");
-	while(1)
+	top = self.origin + vectorscale((0, 0, 1), 32);
+	while(true)
 	{
 		self rotateto(self.angles + vectorscale((0, 1, 0), 8), 0.1);
 		wait(0.1);

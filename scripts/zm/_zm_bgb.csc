@@ -216,7 +216,7 @@ private function function_78c4bfa(localclientnum, time)
 			color = (19, 244, 20) / 255;
 			break;
 		}
-		default
+		default:
 		{
 			return;
 		}

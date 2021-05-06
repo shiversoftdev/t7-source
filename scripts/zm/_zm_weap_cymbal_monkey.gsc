@@ -139,7 +139,7 @@ function player_handle_cymbal_monkey()
 	{
 		max_attract_dist = 1536;
 	}
-	while(1)
+	while(true)
 	{
 		grenade = get_thrown_monkey();
 		self player_throw_cymbal_monkey(grenade, num_attractors, max_attract_dist, attract_dist_diff);
@@ -198,7 +198,7 @@ function watch_for_emp(model, actor)
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		level waittill(#"emp_detonate", origin, radius);
 		if(distancesquared(origin, self.origin) < radius * radius)
@@ -413,6 +413,7 @@ function fakelinkto(linkee)
 {
 	self notify(#"fakelinkto");
 	self endon(#"fakelinkto");
+	self.backlinked = 1;
 	while(isdefined(self) && isdefined(linkee))
 	{
 		self.origin = linkee.origin;
@@ -648,7 +649,7 @@ function grenade_stolen_by_sam(ent_grenade, ent_model, ent_actor)
 */
 function monkey_cleanup(parent)
 {
-	while(1)
+	while(true)
 	{
 		if(!isdefined(parent))
 		{
@@ -681,7 +682,8 @@ function pulse_damage(e_owner, model)
 	self endon(#"explode");
 	util::wait_network_frame();
 	playfxontag(level._effect["monkey_bass"], model, "tag_origin_animate");
-	while(1)
+	n_damage_origin = self.origin + vectorscale((0, 0, 1), 12);
+	while(true)
 	{
 		a_ai_targets = getaiteamarray("axis");
 		foreach(var_48e2032, ai_target in a_ai_targets)
@@ -814,7 +816,7 @@ function get_thrown_monkey()
 {
 	self endon(#"disconnect");
 	self endon(#"starting_monkey_watch");
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_fire", grenade, weapon);
 		if(weapon == level.weaponzmcymbalmonkey || weapon == level.w_cymbal_monkey_upgraded)
@@ -840,7 +842,7 @@ function get_thrown_monkey()
 function monitor_zombie_groans(info)
 {
 	self endon(#"explode");
-	while(1)
+	while(true)
 	{
 		if(!isdefined(self))
 		{
@@ -890,7 +892,7 @@ function play_zombie_groans()
 {
 	self endon(#"death");
 	self endon(#"monkey_blown_up");
-	while(1)
+	while(true)
 	{
 		if(isdefined(self))
 		{

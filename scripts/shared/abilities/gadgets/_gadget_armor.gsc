@@ -203,7 +203,7 @@ function gadget_armor_flicker(slot, weapon)
 	}
 	eventtime = self._gadgets_player[slot].gadget_flickertime;
 	self set_gadget_status("Flickering", eventtime);
-	while(1)
+	while(true)
 	{
 		if(!self gadgetflickering(slot))
 		{
@@ -285,7 +285,7 @@ function armor_damage_type_multiplier(smeansofdeath)
 		case "MOD_BURNED":
 		case "MOD_TRIGGER_HURT":
 		case "MOD_UNKNOWN":
-		default
+		default:
 		{
 			return getdvarfloat("scr_armor_mod_misc_mult", 1);
 		}
@@ -310,7 +310,7 @@ function armor_damage_mod_allowed(weapon, smeansofdeath)
 		{
 			return 0;
 		}
-		default
+		default:
 		{
 			break;
 		}
@@ -348,7 +348,7 @@ function armor_damage_mod_allowed(weapon, smeansofdeath)
 			}
 			return 0;
 		}
-		default
+		default:
 		{
 			return 0;
 		}
@@ -474,6 +474,7 @@ function hitpoints_loss_event(val)
 function gadget_armor_status(slot, weapon)
 {
 	self endon(#"disconnect");
+	maxhitpoints = isdefined(weapon.gadget_max_hitpoints) && (weapon.gadget_max_hitpoints > 0 ? weapon.gadget_max_hitpoints : 100);
 	while(self flagsys::get("gadget_armor_on"))
 	{
 		if(isdefined(self.gadgethitpoints) && self.gadgethitpoints <= 0)

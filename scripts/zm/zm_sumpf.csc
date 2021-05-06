@@ -220,7 +220,7 @@ function function_4e327cec()
 */
 function function_938d448f()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", who);
 		if(who isplayer())

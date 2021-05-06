@@ -127,7 +127,7 @@ function update_nav_triggers()
 	{
 		level.navmesh_zones[trig.targetname] = 0;
 	}
-	while(1)
+	while(true)
 	{
 		updatenavtriggers();
 		level util::waittill_notify_or_timeout("update_nav_triggers", 1);
@@ -199,7 +199,7 @@ function global_ai_array()
 */
 function spawn_throttle_reset()
 {
-	while(1)
+	while(true)
 	{
 		util::wait_network_frame();
 		util::wait_network_frame();
@@ -1829,7 +1829,7 @@ function fallback_interrupt()
 	self endon(#"hash_1f355ad7");
 	self endon(#"fallback_notify");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		origin = self.origin;
 		wait(2);
@@ -1856,7 +1856,8 @@ function fallback_ai(num, node_array, ignorewhilefallingback)
 	self endon(#"stop_going_to_node");
 	self endon(#"hash_1f355ad7");
 	self endon(#"death");
-	while(1)
+	node = undefined;
+	while(true)
 	{
 		/#
 			assert(node_array.size >= level.current_fallbackers[num], "" + num + "");
@@ -1909,7 +1910,7 @@ function coverprint(org)
 		self endon(#"fallback_notify");
 		self endon(#"stop_coverprint");
 		self endon(#"death");
-		while(1)
+		while(true)
 		{
 			line(self.origin + vectorscale((0, 0, 1), 35), org, (0.2, 0.5, 0.8), 0.5);
 			print3d(self.origin + vectorscale((0, 0, 1), 70), "", (0.98, 0.4, 0.26), 0.85);
@@ -2586,7 +2587,7 @@ function spawn(b_force = 0, str_targetname, v_origin, v_angles, bignorespawningl
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		if(!(isdefined(bignorespawninglimit) && bignorespawninglimit) && (!(isdefined(self.ignorespawninglimit) && self.ignorespawninglimit)))
 		{
@@ -3605,6 +3606,7 @@ function show_number_popup(n_value, v_pos, string_prefix, string_suffix, color, 
 	/#
 		n_current_tick = 0;
 		n_current_alpha = n_alpha;
+		v_print_position = v_pos;
 		while(n_current_tick < 40)
 		{
 			v_print_position = v_print_position + (0, 0, 1.125);
@@ -3706,7 +3708,7 @@ function adddeadnpctolist(b_killed_by_player)
 function listenfornpcdeaths()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			checkfordeathtrackingreset();
 			if(getdvarint("") == 1)

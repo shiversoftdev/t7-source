@@ -158,6 +158,7 @@ function heli_path_graph()
 		for(j = 0; j < path_start.size; j++)
 		{
 			todest = 0;
+			currentnode = path_start[j];
 			while(isdefined(currentnode.target))
 			{
 				nextnode = getent(currentnode.target, "targetname");
@@ -503,6 +504,7 @@ function getvalidprotectlocationstart(random_path, protectlocation, destination)
 	{
 		protectlocation = (protectlocation[0], protectlocation[1], level.noflyzones[innofly].origin[2] + level.noflyzones[innofly].height);
 	}
+	noflyzone = airsupport::crossesnoflyzone(startnode.origin, protectlocation);
 	while(isdefined(noflyzone) && path_index != random_path)
 	{
 		startnode = level.heli_paths[destination][path_index];
@@ -539,6 +541,7 @@ function getvalidrandomleavenode(start)
 	leavenode = level.heli_leavenodes[random_leave_node];
 	path_index = random_leave_node + 1 % level.heli_leavenodes.size;
 	noflyzone = airsupport::crossesnoflyzone(leavenode.origin, start);
+	isprimary = leavenode.script_noteworthy === "primary";
 	while(isdefined(noflyzone) || isprimary && path_index != random_leave_node)
 	{
 		leavenode = level.heli_leavenodes[path_index];
@@ -595,6 +598,7 @@ function getvalidrandomcrashnode(start)
 	random_leave_node = randomint(level.heli_crash_paths.size);
 	leavenode = level.heli_crash_paths[random_leave_node];
 	path_index = random_leave_node + 1 % level.heli_crash_paths.size;
+	noflyzone = airsupport::crossesnoflyzone(leavenode.origin, start);
 	while(isdefined(noflyzone) && path_index != random_leave_node)
 	{
 		leavenode = level.heli_crash_paths[path_index];
@@ -1472,7 +1476,7 @@ function wait_for_killed()
 	self endon(#"crashing");
 	self endon(#"leaving");
 	self.bda = 0;
-	while(1)
+	while(true)
 	{
 		self waittill(#"killed", victim);
 		if(!isdefined(self.owner) || !isdefined(victim))
@@ -1659,7 +1663,7 @@ function heli_damage_monitor(hardpointtype)
 							}
 							break;
 						}
-						default
+						default:
 						{
 							if(isdefined(self.rocketdamageoneshot))
 							{
@@ -1723,7 +1727,7 @@ function heli_damage_monitor(hardpointtype)
 								event = "destroyed_helicopter_giunit_drop";
 								break;
 							}
-							default
+							default:
 							{
 								event = "destroyed_helicopter_supply_drop";
 								break;
@@ -2206,7 +2210,7 @@ function heli_crash(hardpointtype, player, playernotify)
 					crashtype = "";
 					break;
 				}
-				default
+				default:
 				{
 				}
 			}
@@ -2356,7 +2360,7 @@ function checkhelicoptertag(tagname)
 				{
 					return "tag_fx_tail";
 				}
-				default
+				default:
 				{
 					break;
 				}
@@ -2739,6 +2743,7 @@ function heli_get_protect_spot(protectdest, nodeheight)
 {
 	protect_spot = heli_random_point_in_radius(protectdest, nodeheight);
 	tries = 10;
+	noflyzone = airsupport::crossesnoflyzone(protectdest, protect_spot);
 	while(tries != 0 && isdefined(noflyzone))
 	{
 		protect_spot = heli_random_point_in_radius(protectdest, nodeheight);
@@ -2913,6 +2918,7 @@ function heli_protect(startnode, protectdest, hardpointtype, heli_team)
 	heli_speed = 30 + randomint(20);
 	heli_accel = 10 + randomint(5);
 	self thread updatetargetyaw();
+	mapenter = 1;
 	while(gettime() < self.endtime)
 	{
 		stop = 1;
@@ -3049,7 +3055,7 @@ function fire_missile(smissiletype, ishots = 1, etarget)
 			tags[0] = "tag_store_r_2";
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				assertmsg("");
@@ -3142,6 +3148,7 @@ function attack_secondary(hardpointtype)
 		{
 			self.secondarytarget.antithreat = undefined;
 			self.missiletarget = self.secondarytarget;
+			antithreat = 0;
 			while(isdefined(self.missiletarget) && isalive(self.missiletarget))
 			{
 				if(self target_cone_check(self.missiletarget, level.heli_missile_target_cone))
@@ -3317,12 +3324,14 @@ function attack_primary(hardpointtype)
 			self.primarytarget.antithreat = undefined;
 			self.turrettarget = self.primarytarget;
 			antithreat = 0;
+			last_pos = undefined;
 			while(isdefined(self.turrettarget) && isalive(self.turrettarget))
 			{
 				if(hardpointtype == "helicopter_comlink" || hardpointtype == "inventory_helicopter_comlink")
 				{
 					self setlookatent(self.turrettarget);
 				}
+				helicopterturretmaxangle = heli_get_dvar_int("scr_helicopterTurretMaxAngle", level.helicopterturretmaxangle);
 				while(isdefined(self.turrettarget) && isalive(self.turrettarget) && self turret_target_check(self.turrettarget, helicopterturretmaxangle) == 0)
 				{
 					wait(0.1);

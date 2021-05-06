@@ -959,7 +959,7 @@ function mechz_round_tracker()
 	}
 	level.next_mechz_round = level.round_number;
 	level thread debug_print_mechz_round();
-	while(1)
+	while(true)
 	{
 		if(level.num_mechz_spawned > 0)
 		{
@@ -1046,7 +1046,7 @@ function debug_print_mechz_round()
 function mechz_spawning_logic()
 {
 	level thread enable_mechz_rounds();
-	while(1)
+	while(true)
 	{
 		level waittill(#"spawn_mechz");
 		while(level.mechz_left_to_spawn)
@@ -1442,6 +1442,7 @@ function response_to_air_raid_siren_vo()
 				if(!isdefined(level.air_raid_siren_count))
 				{
 					player zm_audio::create_and_play_dialog("general", "siren_1st_time");
+					level.air_raid_siren_count = 1;
 					while(isdefined(player) && (isdefined(player.isspeaking) && player.isspeaking))
 					{
 						wait(0.1);
@@ -1511,7 +1512,7 @@ function player_looking_at_mechz_watcher(ai_mechz)
 	self endon(#"disconnect");
 	ai_mechz endon(#"death");
 	level endon(#"first_mech_zombie_seen");
-	while(1)
+	while(true)
 	{
 		if(distancesquared(self.origin, ai_mechz.origin) < 1000000)
 		{
@@ -1565,7 +1566,7 @@ function mechz_grabbed_played_vo(ai_mechz)
 function play_shoot_arm_hint_vo()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		if(!isdefined(self.e_grabbed))
 		{

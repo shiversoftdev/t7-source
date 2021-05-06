@@ -101,7 +101,7 @@ function function_63fe1ddd()
 {
 	level endon(#"_zombie_game_over");
 	level flag::wait_till("police_box_ready");
-	while(1)
+	while(true)
 	{
 		level clientfield::set("robot_lights", 1);
 		level waittill(#"hash_421e5b59");
@@ -250,7 +250,7 @@ function robot_callbox_trigger_visibility(player)
 */
 function robot_callbox_trigger_think()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player zm_utility::in_revive_trigger())
@@ -364,6 +364,7 @@ function spawn_robot(player, trig_stub, n_spawn_delay)
 	level.ai_robot thread function_677061ac();
 	level flag::clear("police_box_in_use");
 	function_490cbdf5();
+	level.ai_robot.time_expired = 1;
 	while(level.ai_robot.reviving_a_player == 1)
 	{
 		wait(0.05);
@@ -620,7 +621,7 @@ private function gib_head_check(damage_location)
 		{
 			return 1;
 		}
-		default
+		default:
 		{
 			return 0;
 		}
@@ -687,7 +688,7 @@ function function_be60a9fd()
 {
 	self endon(#"death");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"killed", who);
 		if(randomintrange(0, 101) <= 30)
@@ -710,7 +711,7 @@ function function_677061ac()
 {
 	self endon(#"death");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		wait(randomintrange(15, 25));
 		level thread function_f9a6039c(level.ai_robot, "active");

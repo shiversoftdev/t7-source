@@ -437,7 +437,8 @@ function function_3eb38d8d()
 	var_ab05eb1f = 50;
 	s_struct = struct::get("s_player_exits_tower", "targetname");
 	v_forward = anglestoforward(s_struct.angles);
-	while(1)
+	start_time = gettime();
+	while(true)
 	{
 		a_players = getplayers();
 		for(i = 0; i < a_players.size; i++)
@@ -487,6 +488,7 @@ function enter_tunnel_nag()
 	var_5f00f64d = 30;
 	nag1 = 0;
 	var_38fe7be4 = 50;
+	start_time = gettime();
 	while(level flag::get("player_entering_tunnel") == 0)
 	{
 		time = gettime();
@@ -1113,6 +1115,7 @@ function function_3f3cae8c()
 		wait(0.1);
 	}
 	self util::show_hint_text(&"CP_MI_ETH_PROLOGUE_TUTORIAL_CROUCH", 0, undefined, 10);
+	self.var_9db68ebf = 0;
 	while(!self.var_9db68ebf)
 	{
 		if(self stancebuttonpressed())
@@ -1540,7 +1543,7 @@ function function_927f3ae0(delete_delay)
 function function_3d9b2dbc()
 {
 	level endon(#"objective_take_out_guards_done");
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_25ea191a");
 		a_players = getplayers();

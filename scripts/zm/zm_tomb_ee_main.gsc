@@ -266,7 +266,7 @@ function get_step_announce_vox()
 		{
 			return "vox_sam_all_staff_raise_hell_0";
 		}
-		default
+		default:
 		{
 			return undefined;
 		}
@@ -515,7 +515,8 @@ function player_intermission_ee()
 	self.game_over_bg setshader("black", 640, 480);
 	self.game_over_bg.alpha = 1;
 	visionsetnaked("cheat_bw", 0.05);
-	while(1)
+	org = undefined;
+	while(true)
 	{
 		points = array::randomize(points);
 		for(i = 0; i < points.size; i++)
@@ -585,6 +586,7 @@ function setup_ee_main_devgui()
 {
 	/#
 		wait(5);
+		b_activated = 0;
 		while(!b_activated)
 		{
 			foreach(var_9f6a3af9, player in getplayers())
@@ -622,7 +624,7 @@ function setup_ee_main_devgui()
 function watch_devgui_ee_main()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			if(getdvarstring("") == "")
 			{
@@ -692,7 +694,7 @@ function watch_devgui_ee_main()
 						level waittill(#"little_girl_lost_step_8_over");
 						break;
 					}
-					default
+					default:
 					{
 						break;
 					}

@@ -65,7 +65,7 @@ function __init__()
 function function_f69ab75e()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			level flagsys::wait_till("");
 			foreach(var_622a73d9, var_4d881e03 in function_c4a37ed9())
@@ -113,7 +113,8 @@ function run_scene_tests()
 		level endon(#"run_scene_tests");
 		level.scene_test_struct = spawnstruct();
 		level.scene_test_struct.origin = (0, 0, 0);
-		while(1)
+		level.scene_test_struct.angles = (0, 0, 0);
+		while(true)
 		{
 			str_scene = getdvarstring("");
 			str_client_scene = getdvarstring("");
@@ -265,7 +266,8 @@ function toggle_scene_menu()
 {
 	/#
 		setdvar("", 0);
-		while(1)
+		n_scene_menu_last = -1;
+		while(true)
 		{
 			n_scene_menu = getdvarstring("");
 			if(n_scene_menu != "")
@@ -285,7 +287,7 @@ function toggle_scene_menu()
 							level thread display_scene_menu("");
 							break;
 						}
-						default
+						default:
 						{
 							level flagsys::clear("");
 							level notify(#"scene_menu_cleanup");
@@ -384,7 +386,7 @@ function display_scene_menu(str_type)
 		scene_list_settext(elems, names, selected);
 		old_selected = selected;
 		level thread scene_menu_cleanup(elems, title, hudelem);
-		while(1)
+		while(true)
 		{
 			scene_list_settext(elems, names, selected);
 			if(held)
@@ -734,7 +736,7 @@ function debug_display()
 		self notify(#"hash_87671d41");
 		self endon(#"hash_87671d41");
 		level endon(#"kill_anim_debug");
-		while(1)
+		while(true)
 		{
 			debug_frames = randomintrange(5, 15);
 			debug_time = debug_frames / 20;
@@ -860,7 +862,7 @@ function set_origin(v_origin)
 function toggle_postfx_igc_loop()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			if(getdvarint("", 0))
 			{

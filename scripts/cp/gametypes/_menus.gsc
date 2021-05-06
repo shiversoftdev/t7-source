@@ -238,7 +238,7 @@ function on_menu_response()
 					self [[level.spectator]]();
 					break;
 				}
-				default
+				default:
 				{
 					self [[level.teammenu]](response);
 					break;

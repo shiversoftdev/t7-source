@@ -106,7 +106,7 @@ function play_radio_eastereggs()
 	/#
 		self thread zm_utility::print3d_ent("", (0, 1, 0), 3, vectorscale((0, 0, 1), 24));
 	#/
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger_activated");
 		if(isdefined(self.script_noteworthy))
@@ -191,7 +191,7 @@ function waitfor_eightbit_use()
 		self thread zm_utility::print3d_ent("", (1, 0, 1), 3, vectorscale((0, 0, 1), 24));
 	#/
 	n_count = 0;
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger_activated");
 		if(!zm_audio_zhd::function_8090042c())
@@ -666,7 +666,7 @@ function function_c844cebe()
 function waitfor_forest_zone_entry()
 {
 	level waittill(#"forest_zone");
-	while(1)
+	while(true)
 	{
 		zone = level.zones["forest_zone"];
 		players = getplayers();
@@ -758,7 +758,7 @@ function play_maskon_vox()
 {
 	self endon(#"death");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"equip_gasmask_activate");
 		self waittill(#"weapon_change_complete");
@@ -781,7 +781,7 @@ function play_warning_vox()
 {
 	self endon(#"death");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		while(!self.in_low_gravity)
 		{
@@ -820,6 +820,7 @@ function function_45b4acf2()
 	array::thread_all(var_757351da, &function_1d6f553d);
 	level thread function_e091daa4();
 	var_22ee0088 = array(1, 2, 2, 3, 3, 2, 3, 4, 3, 4, 3, 2, 2, 4, 1);
+	var_c957db9f = 0;
 	while(var_c957db9f < var_22ee0088.size)
 	{
 		level waittill(#"hash_351576b1", var_333c1c87);
@@ -848,7 +849,7 @@ function function_1d6f553d()
 {
 	level endon(#"snd_zhdegg_activate");
 	self zm_unitrigger::create_unitrigger();
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger_activated");
 		playsoundatposition("zmb_zhdmoon_button_" + self.script_int, self.origin);
@@ -869,7 +870,8 @@ function function_1d6f553d()
 function function_e091daa4()
 {
 	level endon(#"snd_zhdegg_activate");
-	while(1)
+	var_924a65e5 = spawn("script_origin", (919, -303, -171));
+	while(true)
 	{
 		wait(randomfloatrange(60, 120));
 		var_924a65e5 playsoundwithnotify("zmb_zhdmoon_voices", "sounddone");

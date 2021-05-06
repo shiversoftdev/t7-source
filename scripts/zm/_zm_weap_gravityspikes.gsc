@@ -309,7 +309,7 @@ function unwield_gravityspikes(wpn_gravityspikes)
 function weapon_drop_watcher()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_switch_started", w_current);
 		if(zm_utility::is_hero_weapon(w_current))
@@ -331,7 +331,7 @@ function weapon_drop_watcher()
 function weapon_change_watcher()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_change", w_current, w_previous);
 		if(isdefined(w_previous) && zm_utility::is_hero_weapon(w_current))
@@ -357,7 +357,7 @@ function gravityspikes_attack_watcher(wpn_gravityspikes)
 	self endon(#"bled_out");
 	self endon(#"death");
 	self endon(#"gravity_spike_expired");
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_melee_power", weapon);
 		if(weapon == wpn_gravityspikes)
@@ -467,7 +467,7 @@ function gravityspikes_altfire_watcher(wpn_gravityspikes)
 	self endon(#"bled_out");
 	self endon(#"death");
 	self endon(#"gravity_spike_expired");
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_melee_power_left", weapon);
 		if(weapon == wpn_gravityspikes && self gravity_spike_position_valid())
@@ -612,7 +612,7 @@ function gravityspikes_swipe_watcher(wpn_gravityspikes)
 	self endon(#"bled_out");
 	self endon(#"death");
 	self endon(#"gravity_spike_expired");
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_melee", weapon);
 		weapon thread spikesarc_swipe(self);
@@ -811,7 +811,8 @@ function gravity_trap_loop(v_gravity_trap_pos, wpn_gravityspikes)
 	self endon(#"disconnect");
 	self endon(#"bled_out");
 	self endon(#"death");
-	while(1)
+	is_gravity_trap_fx_on = 1;
+	while(true)
 	{
 		if(self zm_hero_weapon::is_hero_weapon_in_use() && self.hero_power > 0)
 		{
@@ -1066,7 +1067,7 @@ function gravity_trap_trigger_visibility(player)
 */
 function gravity_trap_trigger_think()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player zm_utility::in_revive_trigger())
@@ -1340,7 +1341,7 @@ function zombie_lift_wacky_rotate(n_lift_time, player)
 {
 	player endon(#"gravityspikes_timer_end");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		negative_x = (randomintrange(0, 10) < 5 ? 1 : -1);
 		negative_z = (randomintrange(0, 10) < 5 ? 1 : -1);
@@ -1573,7 +1574,7 @@ function function_81889ac5()
 		adddebugcommand(str_cmd);
 		str_cmd = "" + equipment_id + "" + equipment_id + "";
 		adddebugcommand(str_cmd);
-		while(1)
+		while(true)
 		{
 			equipment_id = getdvarstring("");
 			if(equipment_id != "")

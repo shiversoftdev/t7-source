@@ -50,7 +50,7 @@ function plate_counter()
 			var_b4264aa6 = getplayers().size;
 		}
 	#/
-	while(1)
+	while(true)
 	{
 		if(level._on_plate >= var_b4264aa6 - 1 && !level flag::get("dgcwf_on_plate"))
 		{
@@ -106,7 +106,7 @@ function plate_debug()
 			level.on_plate_text.alpha = 1;
 			level.on_plate_text settext("");
 		}
-		while(1)
+		while(true)
 		{
 			if(isdefined(level._on_plate))
 			{
@@ -148,7 +148,7 @@ function plate_monitor(trig)
 	self endon(#"disconnect");
 	trig endon(#"death");
 	level endon(#"sq_dgcwf_over");
-	while(1)
+	while(true)
 	{
 		while(!self istouching(trig))
 		{
@@ -231,7 +231,7 @@ function plate_trigger()
 function begin_dgcwf_vox()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", who);
 		if(isplayer(who))
@@ -258,7 +258,7 @@ function begin_dgcwf_vox()
 function function_375f6cbc()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", who);
 		who thread zm_audio::create_and_play_dialog("eggs", "quest2", 3);
@@ -283,7 +283,8 @@ function function_3ab2e3c3()
 	self.off_pos = self.on_pos - anglestoright(self.angles) * 36;
 	self.origin = self.off_pos;
 	self.trigger triggerenable(0);
-	while(1)
+	self.pressed = 0;
+	while(true)
 	{
 		if(level flag::get("dgcwf_on_plate"))
 		{

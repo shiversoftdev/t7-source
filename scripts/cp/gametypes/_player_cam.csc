@@ -62,6 +62,7 @@ function function_db5afebe(localclientnum)
 {
 	self endon(#"disconnect");
 	self endon(#"hash_64e72e9d");
+	blur_level = 0.5;
 	while(blur_level <= 1)
 	{
 		blur_level = blur_level + 0.04;

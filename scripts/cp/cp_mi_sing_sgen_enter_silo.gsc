@@ -486,7 +486,7 @@ function dust_fx_follow()
 {
 	t_dust = getent("dust_fx", "targetname");
 	t_dust endon(#"death");
-	while(1)
+	while(true)
 	{
 		t_dust waittill(#"trigger", who);
 		if(isplayer(who))
@@ -512,6 +512,7 @@ function fish_swim_by()
 	level flag::wait_till("hendricks_follow1_wait2");
 	mdl_fish.angles = mdl_fish.angles + vectorscale((-1, 0, 0), 15);
 	n_time = 10;
+	s_target = mdl_fish;
 	while(isdefined(s_target.target))
 	{
 		s_target = struct::get(s_target.target, "targetname");
@@ -826,7 +827,7 @@ function gen_lab_sight_check()
 {
 	level endon(#"gen_lab_gone_hot");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		foreach(var_117fe172, player in level.activeplayers)
 		{

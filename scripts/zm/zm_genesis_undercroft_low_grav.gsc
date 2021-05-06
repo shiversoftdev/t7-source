@@ -161,7 +161,8 @@ function function_e49e9c09()
 	var_e3260cf enablelinkto();
 	var_e3260cf linkto(var_4de8678a);
 	var_2e8e2853 = var_4de8678a.origin - vectorscale((0, 0, 1), 2);
-	while(1)
+	var_93f2a402 = var_4de8678a.origin;
+	while(true)
 	{
 		self waittill(#"trigger", e_who);
 		var_4de8678a moveto(var_2e8e2853, 0.5);
@@ -169,6 +170,7 @@ function function_e49e9c09()
 		var_4de8678a waittill(#"movedone");
 		var_e3260cf clientfield::set("undercroft_emissives", 1);
 		n_start_time = gettime();
+		n_end_time = n_start_time + 3000;
 		while(e_who istouching(self))
 		{
 			n_time = gettime();
@@ -228,7 +230,7 @@ function function_5f1fa8cd(n_duration = 50)
 	var_8ff7104f = getentarray("pyramid", "targetname");
 	var_e31d98a1 = arraycombine(var_8ff7104f, var_e31d98a1, 0, 0);
 	level thread function_ba48ca38();
-	while(1)
+	while(true)
 	{
 		level flag::set("low_grav_on");
 		exploder::exploder("lgt_low_gravity_on");
@@ -286,7 +288,7 @@ function function_e1998cb5()
 function function_3ccd9604()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		if(self istouching(level.var_e3f239e5) && level flag::get("low_grav_on") && self.low_gravity == 0)
 		{
@@ -314,7 +316,7 @@ function function_3ccd9604()
 function function_f4766f6()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		if(self istouching(level.var_e3f239e5) && level flag::get("low_grav_on") && (!(isdefined(self.low_gravity) && self.low_gravity)))
 		{
@@ -344,7 +346,8 @@ function function_c3f6aa22()
 	self endon(#"death");
 	self endon(#"disconnect");
 	level flag::wait_till("low_grav_on");
-	while(1)
+	self.var_6921c563 = 0;
+	while(true)
 	{
 		while(self istouching(level.var_e3f239e5))
 		{
@@ -399,7 +402,7 @@ function function_e997f73a()
 	self endon(#"death");
 	self endon(#"disconnect");
 	self endon(#"hash_eb16fe00");
-	while(1)
+	while(true)
 	{
 		if(self isonground() || self iswallrunning())
 		{
@@ -450,7 +453,8 @@ function function_573a448e()
 */
 function function_ba48ca38()
 {
-	while(1)
+	e_trig = getent("low_grav_tp_return", "targetname");
+	while(true)
 	{
 		e_trig waittill(#"trigger", e_who);
 		if(!isdefined(e_who.var_ee422cb0))

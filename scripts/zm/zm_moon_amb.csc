@@ -72,7 +72,7 @@ function function_c9207335()
 */
 function function_60a32834()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", trigplayer);
 		if(trigplayer islocalplayer())
@@ -104,7 +104,8 @@ function function_d667714e()
 	level.var_b6342abd = "";
 	level.var_6d9d81aa = "";
 	level.var_eb526c90 = spawn(0, (0, 0, 0), "script_origin");
-	while(1)
+	level.var_9433cf5a = level.var_eb526c90 playloopsound(level.var_b6342abd, 2);
+	while(true)
 	{
 		level waittill(#"hash_51d7bc7c", location);
 		level.var_6d9d81aa = "mus_moon_underscore_" + location;
@@ -174,7 +175,7 @@ function ambience_randoms()
 */
 function play_random_beeps()
 {
-	while(1)
+	while(true)
 	{
 		playsound(0, "amb_random_beeps", self.origin);
 		wait(randomintrange(10, 30));
@@ -217,7 +218,7 @@ function play_zone_alarms()
 	level endon("Dz" + self.script_noteworthy + "e");
 	self thread reset_alarms();
 	level waittill("Dz" + self.script_noteworthy);
-	while(1)
+	while(true)
 	{
 		playsound(0, "evt_zone_alarm", self.origin);
 		wait(2.8);
@@ -238,7 +239,7 @@ function play_zone_shakes()
 	level endon("Dz" + self.script_noteworthy + "e");
 	self thread reset_shakes();
 	level waittill("Dz" + self.script_noteworthy);
-	while(1)
+	while(true)
 	{
 		playsound(0, "evt_digger_rattles_random", self.origin);
 		wait(randomfloatrange(1.2, 2.3));

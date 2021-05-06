@@ -54,7 +54,7 @@ function watch_for_replay_gun()
 	self endon(#"death");
 	self endon(#"spawned_player");
 	self endon(#"killreplaygunmonitor");
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_change_complete", weapon);
 		self weaponlockfree();
@@ -80,7 +80,7 @@ function watch_lockon(weapon)
 	self endon(#"death");
 	self endon(#"spawned_player");
 	self endon(#"weapon_change_complete");
-	while(1)
+	while(true)
 	{
 		wait(0.05);
 		if(!isdefined(self.lockonentity))

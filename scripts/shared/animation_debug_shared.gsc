@@ -19,7 +19,7 @@ autoexec function __init__()
 	/#
 		setdvar("", 0);
 		setdvar("", 0);
-		while(1)
+		while(true)
 		{
 			anim_debug = getdvarint("", 0) || getdvarint("", 0);
 			level flagsys::set_val("", anim_debug);
@@ -53,7 +53,7 @@ function anim_info_render_thread(animation, v_origin_or_ent, v_angles_or_tag, n_
 			v_origin_or_ent endon(#"death");
 		}
 		recordent(self);
-		while(1)
+		while(true)
 		{
 			level flagsys::wait_till("");
 			b_anim_debug_on = 1;

@@ -651,7 +651,7 @@ function function_dc541b6d()
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		level waittill(#"save_restore");
 		var_7fc849de = self getnoncheckpointdata("INCAPS");
@@ -714,7 +714,7 @@ function spectate_player_watcher()
 	}
 	self.watchingactiveclient = 1;
 	self.waitingforplayerstext = undefined;
-	while(1)
+	while(true)
 	{
 		if(self.pers["team"] != "spectator" || level.gameended)
 		{
@@ -2633,6 +2633,7 @@ function waittillkillstreakdone()
 	if(isdefined(self.killstreak_waitamount))
 	{
 		starttime = gettime();
+		waittime = self.killstreak_waitamount * 1000;
 		while(gettime() < starttime + waittime && isdefined(self.killstreak_waitamount))
 		{
 			wait(0.1);
@@ -2748,7 +2749,8 @@ function shouldteamkillkick(teamkilldelay)
 function reduceteamkillsovertime()
 {
 	timeperoneteamkillreduction = 20;
-	while(1)
+	reductionpersecond = 1 / timeperoneteamkillreduction;
+	while(true)
 	{
 		if(isalive(self))
 		{

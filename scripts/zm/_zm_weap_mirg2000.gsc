@@ -156,7 +156,7 @@ function is_wonder_weapon(weapon, str_type = "any")
 			}
 			break;
 		}
-		default
+		default:
 		{
 			if(weapon == level.var_5e75629a || weapon == level.var_a367ea52 || weapon == level.var_7d656fe9 || weapon == level.var_a4052592 || weapon == level.var_5c210a9a || weapon == level.var_361e9031)
 			{
@@ -285,7 +285,7 @@ function function_b926526f(mod, weapon)
 function watch_weapon_change()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		str_notify = self util::waittill_any_return("weapon_fired", "weapon_melee", "weapon_change", "reload", "reload_start", "disconnect");
 		w_current = self getcurrentweapon();
@@ -320,7 +320,7 @@ function watch_weapon_change()
 function function_3940d816()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		w_current = self getcurrentweapon();
 		if(is_wonder_weapon(w_current) && self.chargeshotlevel > 1)
@@ -354,7 +354,7 @@ function function_3940d816()
 					self notify(#"hash_be077d23");
 					break;
 				}
-				default
+				default:
 				{
 					self clientfield::set_to_player("mirg2000_charge_glow", 3);
 					break;
@@ -385,7 +385,8 @@ function function_3940d816()
 function function_9e09b719()
 {
 	self endon(#"disconnect");
-	while(1)
+	self.var_c654a75a = 0;
+	while(true)
 	{
 		if(self util::attack_button_held())
 		{
@@ -417,7 +418,7 @@ function function_9e09b719()
 function function_56c8d7bb()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_launcher_fire", grenade, weapon);
 		if(!is_wonder_weapon(weapon))
@@ -499,7 +500,7 @@ function function_74a68c49(player, var_d24bfa82)
 			player thread function_1e4094ac(v_position, var_d24bfa82);
 			break;
 		}
-		default
+		default:
 		{
 			player thread function_e0d7bd91(v_position);
 			break;
@@ -596,7 +597,7 @@ function function_d3b8fbb0(v_pos, var_31678178)
 	{
 		var_31678178.n_kills = 6;
 	}
-	while(1)
+	while(true)
 	{
 		a_ai_zombies = getaiteamarray(level.zombie_team);
 		foreach(var_80c111d8, ai_zombie in a_ai_zombies)
@@ -798,7 +799,7 @@ function function_4a1cb794(player)
 				}
 				break;
 			}
-			default
+			default:
 			{
 				if(var_6d5757ae)
 				{
@@ -975,7 +976,7 @@ function function_d150c3fe(ai_zombie)
 						ai_zombie thread function_dadca53(0.5);
 						break;
 					}
-					default
+					default:
 					{
 						ai_zombie dodamage(var_278bf215.maxhealth / 2, ai_zombie gettagorigin(var_278bf215.tag), self);
 						ai_zombie thread function_dadca53(1.5);

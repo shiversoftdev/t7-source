@@ -756,7 +756,7 @@ function box_think()
 {
 	self endon(#"kill_trigger");
 	s_team = level._challenges.s_team;
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(!zombie_utility::is_player_valid(player))
@@ -852,6 +852,7 @@ function get_reward_stat(s_category)
 */
 function open_box(player, ut_stub, fp_reward_override, param1)
 {
+	m_box = ut_stub.m_box;
 	while(ut_stub.b_busy)
 	{
 		wait(1);
@@ -1051,7 +1052,7 @@ function challenges_devgui()
 function watch_devgui_award_challenges()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			n_award_challenge = getdvarint("");
 			if(n_award_challenge != 0)

@@ -51,7 +51,7 @@ function function_bab3ea62()
 */
 function sndmusictrig()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", trigplayer);
 		if(trigplayer islocalplayer())
@@ -83,7 +83,8 @@ function function_53b9afad()
 	var_b6342abd = "mus_zod_underscore_default";
 	var_6d9d81aa = "mus_zod_underscore_default";
 	level.var_eb526c90 = spawn(0, (0, 0, 0), "script_origin");
-	while(1)
+	level.var_9433cf5a = level.var_eb526c90 playloopsound(var_b6342abd, 2);
+	while(true)
 	{
 		level waittill(#"hash_51d7bc7c", location);
 		var_6d9d81aa = "mus_zod_underscore_" + location;

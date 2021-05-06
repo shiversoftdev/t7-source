@@ -55,7 +55,8 @@ function dog_round_tracker()
 	level.dog_round_count = 1;
 	level.next_dog_round = level.round_number + randomintrange(4, 6);
 	old_spawn_func = level.round_spawn_func;
-	while(1)
+	old_wait_func = level.round_wait_func;
+	while(true)
 	{
 		level waittill(#"between_round_over");
 		/#

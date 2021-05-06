@@ -146,7 +146,7 @@ function function_b1c9999(var_59fe7f49)
 			var_59fe7f49.origin = (1536, 1504, 465.043);
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}
@@ -184,9 +184,10 @@ function function_f9f5dbb3(v_origin)
 	var_640a9eac = spawn("trigger_box", v_origin, 9, 100, 128, 128);
 	var_640a9eac.angles = vectorscale((0, 1, 0), 75.7984);
 	var_640a9eac setteamfortrigger(level.zombie_team);
-	while(1)
+	while(true)
 	{
 		var_640a9eac waittill(#"trigger", e_who);
+		e_who.no_powerups = 1;
 		while(isalive(e_who) && e_who istouching(var_640a9eac))
 		{
 			wait(1);

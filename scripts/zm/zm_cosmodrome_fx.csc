@@ -147,7 +147,7 @@ function trap_fx_monitor(name, loc, trap_type)
 			points[points.size] = structs[i];
 		}
 	}
-	while(1)
+	while(true)
 	{
 		level waittill(loc + "1");
 		for(i = 0; i < points.size; i++)
@@ -198,7 +198,7 @@ function trap_play_fx(loc, trap_type)
 				break;
 			}
 			case "fire":
-			default
+			default:
 			{
 				fx_name = "fire_trap";
 				break;

@@ -131,7 +131,8 @@ function function_d87a7dcc()
 	{
 		return;
 	}
-	while(1)
+	var_bd7ba30 = 0;
+	while(true)
 	{
 		if(!level clientfield::get("zombie_power_on"))
 		{
@@ -266,7 +267,7 @@ function flash_lights(clientnum, period)
 {
 	level notify("kill_box_light_threads_" + clientnum);
 	level endon("kill_box_light_threads_" + clientnum);
-	while(1)
+	while(true)
 	{
 		wait(period);
 		for(i = 0; i < level._box_locations.size; i++)
@@ -376,7 +377,7 @@ function theatre_zpo_listener()
 	{
 		level waittill(#"zpo");
 	}
-	while(1)
+	while(true)
 	{
 		level._power_on = 1;
 		if(level._box_indicator != level._box_indicator_no_lights)

@@ -147,7 +147,8 @@ function include_weapons()
 */
 function function_d87a7dcc()
 {
-	while(1)
+	var_bd7ba30 = 0;
+	while(true)
 	{
 		if(!level clientfield::get("zombie_power_on"))
 		{

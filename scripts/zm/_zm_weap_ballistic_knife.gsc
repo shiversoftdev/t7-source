@@ -189,7 +189,7 @@ function debug_print(endpos)
 {
 	/#
 		self endon(#"death");
-		while(1)
+		while(true)
 		{
 			print3d(endpos, "");
 			wait(0.05);
@@ -213,7 +213,7 @@ function watch_use_trigger(trigger, model, callback, weapon, playersoundonuse, n
 	level endon(#"game_ended");
 	max_ammo = weapon.maxammo + 1;
 	autorecover = isdefined(level.ballistic_knife_autorecover) && level.ballistic_knife_autorecover;
-	while(1)
+	while(true)
 	{
 		trigger waittill(#"trigger", player);
 		if(!isalive(player))

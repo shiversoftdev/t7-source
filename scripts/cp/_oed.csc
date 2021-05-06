@@ -667,7 +667,8 @@ function function_537efcea(localclientnum)
 	player endon(#"entityshutdown");
 	var_56f99f06 = 0;
 	var_56f99f06 = getdvarfloat("interactivePromptNearToDist", 8.4);
-	while(1)
+	var_56f99f06 = var_56f99f06 * 39.37;
+	while(true)
 	{
 		n_dist = distance(self.origin, player.origin);
 		var_98b6ad82 = level flag::get("activate_thermal");

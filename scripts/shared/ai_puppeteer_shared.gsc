@@ -51,7 +51,7 @@ function __init__()
 function ai_puppeteer_think()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			if(getdvarstring("") == "" && (!isdefined(level.ai_puppeteer_active) || level.ai_puppeteer_active == 0))
 			{
@@ -83,6 +83,7 @@ function ai_puppeteer_think()
 function ai_puppeteer()
 {
 	/#
+		player = undefined;
 		while(!isplayer(player))
 		{
 			player = getplayers()[0];
@@ -118,7 +119,7 @@ function ai_puppet_manager()
 	/#
 		level endon(#"hash_23dbb5b");
 		self endon(#"death");
-		while(1)
+		while(true)
 		{
 			if(isdefined(level.playercursor[""]) && isdefined(level.ai_puppet) && isdefined(level.ai_puppet.debuglookatenabled) && level.ai_puppet.debuglookatenabled == 1)
 			{
@@ -365,7 +366,7 @@ function ai_puppet_cursor_tracker()
 	/#
 		level endon(#"hash_23dbb5b");
 		self endon(#"death");
-		while(1)
+		while(true)
 		{
 			forward = anglestoforward(self getplayerangles());
 			forward_vector = vectorscale(forward, 4000);
@@ -575,6 +576,7 @@ function ai_puppeteer_highlight_point(point, normal, forward, color)
 		level endon(#"hash_23dbb5b");
 		self endon(#"death");
 		level.ai_puppet_highlighting = 1;
+		timer = 0;
 		while(timer < 0.7)
 		{
 			ai_puppeteer_render_point(point, normal, forward, color);
@@ -600,6 +602,7 @@ function ai_puppeteer_highlight_node(node)
 		level endon(#"hash_23dbb5b");
 		self endon(#"death");
 		level.ai_puppet_highlighting = 1;
+		timer = 0;
 		while(timer < 0.7)
 		{
 			ai_puppeteer_render_node(node, (0, 1, 0));
@@ -625,6 +628,7 @@ function ai_puppeteer_highlight_ai(ai, color)
 		level endon(#"hash_23dbb5b");
 		self endon(#"death");
 		level.ai_puppet_highlighting = 1;
+		timer = 0;
 		while(timer < 0.7 && isdefined(ai))
 		{
 			ai_puppeteer_render_ai(ai, color);

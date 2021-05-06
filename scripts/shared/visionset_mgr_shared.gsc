@@ -233,7 +233,7 @@ function duration_lerp_thread(duration, max_duration)
 	{
 		start_time = end_time - int(max_duration * 1000);
 	}
-	while(1)
+	while(true)
 	{
 		lerp = calc_remaining_duration_lerp(start_time, end_time);
 		if(0 >= lerp)
@@ -267,7 +267,7 @@ function duration_lerp_thread_per_player(player, duration, max_duration)
 	{
 		start_time = end_time - int(max_duration * 1000);
 	}
-	while(1)
+	while(true)
 	{
 		lerp = calc_remaining_duration_lerp(start_time, end_time);
 		if(0 >= lerp)
@@ -292,7 +292,8 @@ function duration_lerp_thread_per_player(player, duration, max_duration)
 function ramp_in_thread_per_player(player, duration)
 {
 	start_time = gettime();
-	while(1)
+	end_time = start_time + int(duration * 1000);
+	while(true)
 	{
 		lerp = calc_ramp_in_lerp(start_time, end_time);
 		if(1 <= lerp)
@@ -316,7 +317,7 @@ function ramp_in_thread_per_player(player, duration)
 function ramp_in_out_thread_hold_func()
 {
 	level endon(#"kill_ramp_in_out_thread_hold_func");
-	while(1)
+	while(true)
 	{
 		for(player_index = 0; player_index < level.players.size; player_index++)
 		{
@@ -338,7 +339,8 @@ function ramp_in_out_thread_hold_func()
 function ramp_in_out_thread(ramp_in, full_period, ramp_out)
 {
 	start_time = gettime();
-	while(1)
+	end_time = start_time + int(ramp_in * 1000);
+	while(true)
 	{
 		lerp = calc_ramp_in_lerp(start_time, end_time);
 		if(1 <= lerp)
@@ -363,7 +365,8 @@ function ramp_in_out_thread(ramp_in, full_period, ramp_out)
 	}
 	level notify(#"kill_ramp_in_out_thread_hold_func");
 	start_time = gettime();
-	while(1)
+	end_time = start_time + int(ramp_out * 1000);
+	while(true)
 	{
 		lerp = calc_remaining_duration_lerp(start_time, end_time);
 		if(0 >= lerp)
@@ -392,7 +395,8 @@ function ramp_in_out_thread(ramp_in, full_period, ramp_out)
 function ramp_in_out_thread_per_player_internal(player, ramp_in, full_period, ramp_out)
 {
 	start_time = gettime();
-	while(1)
+	end_time = start_time + int(ramp_in * 1000);
+	while(true)
 	{
 		lerp = calc_ramp_in_lerp(start_time, end_time);
 		if(1 <= lerp)
@@ -412,7 +416,8 @@ function ramp_in_out_thread_per_player_internal(player, ramp_in, full_period, ra
 		wait(full_period);
 	}
 	start_time = gettime();
-	while(1)
+	end_time = start_time + int(ramp_out * 1000);
+	while(true)
 	{
 		lerp = calc_remaining_duration_lerp(start_time, end_time);
 		if(0 >= lerp)
@@ -759,7 +764,8 @@ function monitor()
 	{
 		wait(0.05);
 	}
-	while(1)
+	typekeys = getarraykeys(level.vsmgr);
+	while(true)
 	{
 		wait(0.05);
 		waittillframeend();

@@ -41,7 +41,7 @@ function function_25b0085d()
 		return;
 	}
 	level flag::set("ambient_solar_flares_on");
-	while(1)
+	while(true)
 	{
 		wait(randomfloatrange(40, 60));
 		var_9a813858 = 0;

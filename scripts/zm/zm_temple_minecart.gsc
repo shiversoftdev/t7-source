@@ -150,7 +150,7 @@ function blocker_think(minecart)
 {
 	minecart endon(#"hash_76e3734");
 	minecart waittill(#"hash_4c5d405f");
-	while(1)
+	while(true)
 	{
 		if(self function_742e2b0d(minecart))
 		{
@@ -394,7 +394,7 @@ function function_3321eefe(activetime)
 	self endon(#"disconnect");
 	self endon(#"hash_aa83d93d");
 	self clientfield::set_to_player("minecart_rumble", 1);
-	while(1)
+	while(true)
 	{
 		earthquake(randomfloatrange(0.1, 0.2), randomfloatrange(1, 2), self.origin, 100, self);
 		wait(randomfloatrange(0.1, 0.3));
@@ -773,7 +773,7 @@ function function_f8358462()
 	}
 	wait(1);
 	level notify(#"hash_25007749");
-	while(1)
+	while(true)
 	{
 		self function_b02072a5(1);
 		if(isdefined(self.minecart.cage))
@@ -789,7 +789,7 @@ function function_f8358462()
 			self.minecart.front solid();
 		}
 		self sethintstring(&"ZM_TEMPLE_MINECART_COST", self.zombie_cost);
-		while(1)
+		while(true)
 		{
 			self waittill(#"trigger", player);
 			if(player zm_score::can_player_purchase(self.zombie_cost))
@@ -1266,7 +1266,7 @@ function function_7fec5b68()
 	}
 	scale.origin = scale.origin + vectorscale((0, 0, -1), 37);
 	level waittill(#"hash_25007749");
-	while(1)
+	while(true)
 	{
 		count = 0;
 		if(isdefined(self.minecart) && !self.minecart.away)
@@ -1315,6 +1315,7 @@ function function_7fec5b68()
 			drop = 0;
 			time = 0;
 			pop = 2;
+			dip = -1;
 			while(height > count)
 			{
 				if(height == 4)
@@ -1378,7 +1379,7 @@ function function_86d73e41()
 */
 function function_68c61932()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(isdefined(player) && isdefined(player.var_e4bd94c) && player.var_e4bd94c > gettime())

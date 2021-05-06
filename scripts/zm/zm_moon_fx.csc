@@ -214,7 +214,7 @@ function power_on_spinning_lights()
 */
 function trap_fx_monitor(name, side, trap_type)
 {
-	while(1)
+	while(true)
 	{
 		level waittill(name);
 		points = struct::get_array(name, "targetname");
@@ -320,7 +320,7 @@ function electric_trap_fx(name, side, trap_type)
 				break;
 			}
 			case "fire":
-			default
+			default:
 			{
 				self.loopfx[i] = spawnfx(i, level._effect["fire_trap_med"], self.origin, 0, forward, up);
 				break;
@@ -373,7 +373,7 @@ function moon_fog_triggers_init(localclientnum)
 */
 function fog_trigger(change_func)
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", who);
 		if(who islocalplayer())

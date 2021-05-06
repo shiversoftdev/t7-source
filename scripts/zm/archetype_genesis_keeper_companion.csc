@@ -75,7 +75,7 @@ function function_b945954d(localclientnum, oldval, newval, bnewent, binitialsnap
 			exploder::exploder("lgt_companion_callbox_yellow");
 			break;
 		}
-		default
+		default:
 		{
 			exploder::stop_exploder("lgt_companion_callbox_green");
 			exploder::stop_exploder("lgt_companion_callbox_red");

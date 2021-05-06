@@ -83,7 +83,7 @@ function function_7b627622()
 	self endon(#"disconnect");
 	self endon(#"bled_out");
 	self endon(#"bgb_update");
-	while(1)
+	while(true)
 	{
 		self waittill(#"boarding_window", s_window);
 		self bgb::do_one_shot_use();
@@ -104,7 +104,8 @@ function function_d5ed5165(s_window)
 {
 	carp_ent = spawn("script_origin", (0, 0, 0));
 	carp_ent playloopsound("evt_carpenter");
-	while(1)
+	num_chunks_checked = 0;
+	while(true)
 	{
 		if(zm_utility::all_chunks_intact(s_window, s_window.barrier_chunks))
 		{

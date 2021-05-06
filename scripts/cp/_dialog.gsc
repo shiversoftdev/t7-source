@@ -345,7 +345,7 @@ function remote(str_vo_line, n_delay, str_type = "dni", e_to_player, var_43937b2
 				str_who = &"CPUI_VTOL_PILOT";
 				break;
 			}
-			default
+			default:
 			{
 				str_who = undefined;
 				break;

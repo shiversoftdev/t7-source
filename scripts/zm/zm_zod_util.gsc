@@ -263,7 +263,7 @@ private function unitrigger_think()
 {
 	self endon(#"kill_trigger");
 	self.stub thread unitrigger_refresh_message();
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(isdefined(self.allow_beastmode) && self.allow_beastmode || (!(isdefined(player.beastmode) && player.beastmode)))
@@ -476,7 +476,7 @@ function add_zod_zombie_spawn_func(fn_zombie_spawned)
 function on_player_connect()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"bled_out");
 		if(isdefined(level.bled_out_callbacks))
@@ -714,7 +714,7 @@ function setup_devgui_func(str_devgui_path, str_dvar, n_value, func, n_base_valu
 {
 	setdvar(str_dvar, n_base_value);
 	adddebugcommand("devgui_cmd \"" + str_devgui_path + "\" \"" + str_dvar + " " + n_value + "\"\n");
-	while(1)
+	while(true)
 	{
 		n_dvar = getdvarint(str_dvar);
 		if(n_dvar > n_base_value)

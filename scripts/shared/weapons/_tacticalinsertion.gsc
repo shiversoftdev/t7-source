@@ -161,7 +161,7 @@ function watch(player)
 function watchusetrigger(trigger, callback, playersoundonuse, npcsoundonuse)
 {
 	self endon(#"delete");
-	while(1)
+	while(true)
 	{
 		trigger waittill(#"trigger", player);
 		if(!isalive(player))
@@ -366,7 +366,7 @@ function spawntacticalinsertion()
 	}
 	self.tacticalinsertion setcandamage(1);
 	self.tacticalinsertion.health = 1;
-	while(1)
+	while(true)
 	{
 		self.tacticalinsertion waittill(#"damage", damage, attacker, direction, point, type, tagname, modelname, partname, weapon, idflags);
 		if(level.teambased && (!isdefined(attacker) || !isplayer(attacker) || attacker.team == self.team) && attacker != self)
@@ -471,7 +471,7 @@ function cancel_button_press()
 	self endon(#"disconnect");
 	self endon(#"end_killcam");
 	self endon(#"abort_killcam");
-	while(1)
+	while(true)
 	{
 		wait(0.05);
 		if(self canceltackinsertionbutton())

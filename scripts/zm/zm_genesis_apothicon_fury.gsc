@@ -193,7 +193,7 @@ private function function_7ba80ea7()
 private function function_1be68e3f()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.zone_name))
 		{
@@ -226,7 +226,7 @@ function function_ab27e73a()
 	{
 		self.health = level.var_31c836af;
 	}
-	while(1)
+	while(true)
 	{
 		if(isdefined(level.var_2db0d4e8) && level.var_2db0d4e8)
 		{

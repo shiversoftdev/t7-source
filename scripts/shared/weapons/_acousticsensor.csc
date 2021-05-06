@@ -158,7 +158,7 @@ function updateacousticsensors()
 	localradarenabled = [];
 	previousacousticsensorcount = -1;
 	util::waitforclient(0);
-	while(1)
+	while(true)
 	{
 		localplayers = level.localplayers;
 		if(previousacousticsensorcount != 0 || level.acousticsensors.size != 0)

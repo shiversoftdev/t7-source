@@ -50,6 +50,7 @@ function function_c4e6a6fb(startscale, var_870d9a2 = 1, timems = 3000)
 	self endon(#"death");
 	curscale = startscale;
 	var_aa32d9f9 = var_870d9a2 - startscale / timems / 50;
+	endtime = gettime() + timems;
 	while(isdefined(self) && gettime() < endtime)
 	{
 		curscale = curscale + var_aa32d9f9;
@@ -121,7 +122,7 @@ function function_ca06d008(player, origin)
 private function function_963e13a0()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", guy);
 		if(isdefined(guy.var_bfd5bf9d) && guy.var_bfd5bf9d)
@@ -254,7 +255,7 @@ function timeshifterupdate(player, origin)
 private function function_78d20ce0()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", guy);
 		if(isdefined(guy.var_dd70dacd) && guy.var_dd70dacd)

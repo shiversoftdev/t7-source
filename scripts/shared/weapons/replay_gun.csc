@@ -69,7 +69,7 @@ function player_init()
 */
 function watch_lockon(localclientnum)
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"lockon_changed", state, target);
 		if(isdefined(self.replay_lock) && (!isdefined(target) || self.replay_lock != target))

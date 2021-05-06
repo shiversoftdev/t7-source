@@ -88,7 +88,7 @@ function pers_upgrades_monitor()
 		return;
 	}
 	level thread wait_for_game_end();
-	while(1)
+	while(true)
 	{
 		waittillframeend();
 		players = getplayers();

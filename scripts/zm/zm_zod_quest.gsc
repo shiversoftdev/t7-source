@@ -213,6 +213,7 @@ function function_70a7429b(var_25bc1c51)
 	self endon(#"disconnect");
 	a_str_names = array("boxer", "detective", "femme", "magician");
 	s_centerpoint = struct::get("defend_area_" + a_str_names[var_25bc1c51], "targetname");
+	var_33e67e27 = 0;
 	while(isdefined(self))
 	{
 		dist2 = distancesquared(self.origin, s_centerpoint.origin);
@@ -378,7 +379,7 @@ function quest_key_trigger_visibility(player)
 */
 function quest_key_trigger_think()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player zm_utility::in_revive_trigger())
@@ -638,6 +639,7 @@ function function_58fe842c()
 {
 	e_spawner = getent("ritual_zombie_spawner", "targetname");
 	var_eb09d2ff = getent("keeper_subway_welcome", "targetname");
+	var_594645f = 0;
 	while(!var_594645f)
 	{
 		var_eb09d2ff waittill(#"trigger", e_triggerer);
@@ -1119,7 +1121,8 @@ function ritual_think(str_name)
 	var_c468b46f = 0;
 	var_52614534 = 0;
 	var_7863bf9d = 0;
-	while(1)
+	var_8df092ed = function_5e98a0b6(str_name);
+	while(true)
 	{
 		ritual_current_progress = [[ level.a_o_defend_areas[str_name] ]]->get_current_progress();
 		ritual_current_progress = float(ritual_current_progress);
@@ -1574,7 +1577,8 @@ function pap_door_watch_for_explosion()
 {
 	level notify(#"pap_door_watch_for_explosion");
 	level endon(#"pap_door_watch_for_explosion");
-	while(1)
+	t_pap_door = getent("pap_door_trigger", "targetname");
+	while(true)
 	{
 		foreach(var_6f82ef13, player in level.activeplayers)
 		{
@@ -1892,6 +1896,7 @@ function function_7130d103(n_character_index)
 */
 function basin_trigger_thread()
 {
+	str_gateworm_held = undefined;
 	while(!level flag::get("ritual_pap_complete"))
 	{
 		self waittill(#"trigger", e_triggerer);
@@ -2013,7 +2018,7 @@ function watch_wallrun(var_e7fbc48, str_flag)
 	t_wallrun thread monitor_wallrun_trigger();
 	mdl_frieze = getent(str_model, "targetname");
 	mdl_frieze useanimtree($generic);
-	while(1)
+	while(true)
 	{
 		flag::wait_till(str_flag);
 		exploder::exploder("fx_exploder_ritual_" + str_flag + "_path");
@@ -2087,7 +2092,7 @@ function function_7107ea51(var_b12a7acb, var_4539ae4a)
 {
 	level notify(#"hash_7107ea51");
 	level endon(#"hash_7107ea51");
-	while(1)
+	while(true)
 	{
 		var_b12a7acb util::waittill_any("impact_rumble", "rumble_stop");
 		earthquake(0.5, 0.2, var_4539ae4a.origin, 512);
@@ -2218,7 +2223,7 @@ function update_chasm_awakening_vfx()
 */
 function monitor_wallrun_trigger(t_wallrun)
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_triggerer);
 		if(!(isdefined(e_triggerer.b_wall_run_enabled) && e_triggerer.b_wall_run_enabled))
@@ -2277,7 +2282,7 @@ function watch_island(var_f7225255, str_flag)
 	e_island ghost();
 	e_clip = getent("pap_chamber_middle_island_" + str_side + "_clip", "targetname");
 	e_clip setinvisibletoall();
-	while(1)
+	while(true)
 	{
 		flag::wait_till(str_flag);
 		gatestone_increment_power();
@@ -2347,7 +2352,8 @@ function watch_central_traversal(a_flags)
 	self endon(#"watch_central_traversal");
 	str_traversal = "pap_mid_jump_72";
 	nd_traversal = getnode(str_traversal, "targetname");
-	while(1)
+	e_monster_clip = getent("pap_chamber_middle_island_monster_clip", "targetname");
+	while(true)
 	{
 		flag::wait_till_all(a_flags);
 		e_monster_clip moveto(e_monster_clip.origin - vectorscale((0, 0, 1), 5000), 0.1);
@@ -2372,7 +2378,7 @@ function pap_chasm_killtrigger()
 	t_kill = getent("pap_chasm_killtrigger", "targetname");
 	level thread function_64cb1f9b("pap_chasm_side_far", 1);
 	level thread function_64cb1f9b("pap_chasm_side_near", 0);
-	while(1)
+	while(true)
 	{
 		t_kill waittill(#"trigger", e_triggerer);
 		if(isplayer(e_triggerer))
@@ -2407,7 +2413,8 @@ function pap_chasm_killtrigger()
 */
 function function_64cb1f9b(str_trigger_name, var_f8826470)
 {
-	while(1)
+	var_b354bc3b = getent(str_trigger_name, "targetname");
+	while(true)
 	{
 		var_b354bc3b waittill(#"trigger", e_triggerer);
 		if(isplayer(e_triggerer))

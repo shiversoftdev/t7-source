@@ -117,7 +117,7 @@ function precache_createfx_fx()
 */
 function trap_fx_monitor(name, side)
 {
-	while(1)
+	while(true)
 	{
 		level waittill(name);
 		fire_points = struct::get_array(name, "targetname");
@@ -184,7 +184,8 @@ function zapper_switch_fx(ent)
 	switch_forward = anglestoforward(switchfx.angles);
 	switch_up = anglestoup(switchfx.angles);
 	zapper_forward = anglestoforward(zapperfx.angles);
-	while(1)
+	zapper_up = anglestoup(zapperfx.angles);
+	while(true)
 	{
 		level waittill(ent);
 		if(isdefined(switchfx.loopfx))

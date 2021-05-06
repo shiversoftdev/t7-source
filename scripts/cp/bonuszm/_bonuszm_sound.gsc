@@ -273,7 +273,7 @@ function function_f46e57be()
 function function_b7efd00a()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"bhtn_action_notify", notify_string);
 		if(isdefined(level.bzm_worldpaused) && level.bzm_worldpaused)
@@ -304,7 +304,7 @@ function function_b7efd00a()
 				level thread function_dc28c71b(self, notify_string, 0);
 				break;
 			}
-			default
+			default:
 			{
 				if(isdefined(level.var_61e4e12e))
 				{
@@ -376,7 +376,7 @@ function function_f93398c4()
 {
 	self endon(#"death");
 	wait(randomfloatrange(1, 3));
-	while(1)
+	while(true)
 	{
 		type = "ambient";
 		if(!isdefined(self.zombie_move_speed))
@@ -441,7 +441,7 @@ function function_acd6c6f8()
 */
 function networksafereset()
 {
-	while(1)
+	while(true)
 	{
 		level.var_384c508a = 0;
 		util::wait_network_frame();
@@ -489,7 +489,7 @@ function function_b80a73a4()
 		level._zbv_vox_last_update_time = 0;
 		level._audio_zbv_shared_ent_list = getaiteamarray("axis");
 	}
-	while(1)
+	while(true)
 	{
 		wait(1);
 		t = gettime();

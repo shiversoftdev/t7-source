@@ -138,7 +138,8 @@ function function_e6cfa209()
 {
 	self endon(#"disconnect");
 	level endon(#"hash_e6cfa209");
-	while(1)
+	e_clip = getent("swamp_planter_skull_reveal", "targetname");
+	while(true)
 	{
 		if(self util::ads_button_held())
 		{
@@ -224,7 +225,7 @@ function function_4fd948c5(player)
 */
 function function_870bdfee()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player zm_utility::in_revive_trigger())
@@ -322,9 +323,10 @@ function function_152720d8(var_fc72ce0a)
 */
 function function_c2dab6c5()
 {
+	e_volume = getent("golden_bucket_ee_volume", "targetname");
 	while(!level flag::get("golden_bucket_ee_completed"))
 	{
-		while(1)
+		while(true)
 		{
 			if(function_9a2f5188(e_volume) && function_e630b27f())
 			{
@@ -372,7 +374,7 @@ function function_21bde96b()
 function function_64b86454()
 {
 	level endon(#"hash_4d1841e4");
-	while(1)
+	while(true)
 	{
 		if(!function_e630b27f())
 		{
@@ -415,8 +417,10 @@ function function_f0d8de1d()
 	level endon(#"hash_62e8dbc1");
 	level endon(#"hash_4d1841e4");
 	e_volume = getent("golden_bucket_ee_volume", "targetname");
-	while(1)
+	n_timeout = 120;
+	while(true)
 	{
+		n_counter = n_timeout;
 		while(!function_9a2f5188(e_volume))
 		{
 			n_counter = n_counter - 1;
@@ -570,7 +574,7 @@ function function_c1f64636(b_completed)
 			self notify(#"hash_4729ad2");
 		}
 		wait(3);
-		while(1)
+		while(true)
 		{
 			if(isdefined(self.var_f2a52ffa) && isdefined(self.var_f2a52ffa.var_b454101b))
 			{
@@ -673,7 +677,7 @@ function function_53296cde(player)
 */
 function function_30804104()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player zm_utility::in_revive_trigger())
@@ -703,7 +707,7 @@ function function_30804104()
 */
 function function_da9c118b()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player zm_utility::in_revive_trigger())
@@ -756,7 +760,7 @@ function function_da0bbc71()
 {
 	self endon(#"disconnect");
 	wait(3.75);
-	while(1)
+	while(true)
 	{
 		if(self meleebuttonpressed() && self sprintbuttonpressed())
 		{

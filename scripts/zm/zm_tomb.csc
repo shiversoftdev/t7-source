@@ -477,6 +477,7 @@ function function_5efb4f48(localclientnum, str_rumble)
 	self endon(#"hash_9c289640");
 	self endon(#"disconnect");
 	delta_time = 0.1;
+	n_max_time = 10;
 	while(isdefined(self))
 	{
 		self playrumbleonentity(localclientnum, str_rumble);
@@ -514,7 +515,7 @@ function function_35da9753(localclientnum, oldval, newval, bnewent, binitialsnap
 			str_rumble = "damage_heavy";
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}
@@ -745,7 +746,7 @@ function function_657fb719(localclientnum, light_on)
 				var_477f7b08 = 5;
 				break;
 			}
-			default
+			default:
 			{
 				var_477f7b08 = 0;
 				break;
@@ -872,7 +873,7 @@ function function_61fd4b0c(localclientnum, oldval, newval, bnewent, binitialsnap
 function function_bebc67a2(localclientnum)
 {
 	level endon(#"stop_cooldown_fx");
-	while(1)
+	while(true)
 	{
 		playfx(localclientnum, level._effect["cooldown_steam"], self.origin);
 		wait(0.1);
@@ -909,7 +910,7 @@ function teleporter_fx(localclientnum, enum)
 			break;
 		}
 		case 2:
-		default
+		default:
 		{
 			str_fx = "teleport_air";
 			break;
@@ -994,6 +995,7 @@ function function_eb515bc3(localclientnum, oldval, newval, bnewent, binitialsnap
 	if(newval)
 	{
 		self mapshaderconstant(localclientnum, 0, "ScriptVector3");
+		f = 0;
 		while(f <= 1)
 		{
 			self setshaderconstant(localclientnum, 0, f, f, f, f);
@@ -1137,7 +1139,7 @@ function player_continuous_rumble(localclientnum, rumble_level, shake_camera = 1
 	self notify(#"stop_rumble_and_shake");
 	self endon(#"disconnect");
 	self endon(#"stop_rumble_and_shake");
-	while(1)
+	while(true)
 	{
 		if(isdefined(self) && self islocalplayer() && isdefined(self))
 		{
@@ -1426,7 +1428,7 @@ function function_b5ac96ec(var_d8a51337, localclientnum)
 			exploder::exploder("fxexp_113", localclientnum);
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}
@@ -1501,7 +1503,7 @@ function _rain_thread(n_level, localclientnum)
 	{
 		n_wait = 0.15;
 	}
-	while(1)
+	while(true)
 	{
 		if(!isdefined(self))
 		{
@@ -1531,7 +1533,8 @@ function _snow_thread(n_level, localclientnum)
 	self endon(#"disconnect");
 	self endon(#"entityshutdown");
 	n_wait = 0.5 / n_level;
-	while(1)
+	self.b_lightning = 0;
+	while(true)
 	{
 		if(!isdefined(self))
 		{

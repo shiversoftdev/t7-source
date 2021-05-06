@@ -514,7 +514,7 @@ function handle_earthquakes()
 {
 	level endon(#"defend_time_expired");
 	level sgen_util::quake(0.5, 1.5, sgen_util::get_players_center(), 5000, 4, 7);
-	while(1)
+	while(true)
 	{
 		if(math::cointoss())
 		{
@@ -548,7 +548,8 @@ function handle_earthquakes()
 function handle_fallback_runners_cleanup()
 {
 	level endon(#"flood_combat_completed");
-	while(1)
+	t_exit = getent("flood_combat_flood_hall_cleanup_trig", "targetname");
+	while(true)
 	{
 		t_exit waittill(#"trigger", ai_runner);
 		level flag::set("flood_runner_escaped");
@@ -652,7 +653,7 @@ function issue_last_stand()
 	t_combat_zone endon(#"death");
 	t_last_stand_zone endon(#"death");
 	t_combat_zone setinvisibletoall();
-	while(1)
+	while(true)
 	{
 		t_combat_zone waittill(#"trigger", e_triggerer);
 		if(isalive(e_triggerer) && e_triggerer.script_noteworthy !== "ignore_last_stand")
@@ -944,7 +945,7 @@ function flooding_water_sheeting()
 	level endon(#"flood_defend_completed");
 	e_volume = getent("flood_combat_water_sheeting", "targetname");
 	e_volume endon(#"death");
-	while(1)
+	while(true)
 	{
 		foreach(var_e045ba45, player in level.players)
 		{
@@ -985,7 +986,7 @@ function water_spout_push()
 	v_org = str_water_fx_origins[0].origin;
 	v_length = 128;
 	array::thread_all(str_water_fx_origins, &loop_water_spout_fx, self);
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(!player isonground() && isdefined(player.last_air_push_time) && gettime() - player.last_air_push_time < 1000)
@@ -1083,7 +1084,7 @@ function surgical_room_entrance_close_resistance()
 function surgical_room_entrance_close_resistance_earthquake()
 {
 	level endon(#"floor_door_open");
-	while(1)
+	while(true)
 	{
 		level sgen_util::quake(0.35, randomfloatrange(0.8, 1.4), sgen_util::get_players_center(), 5000, 1, 2);
 		wait(randomintrange(8, 15));
@@ -1280,6 +1281,7 @@ function play_hendricks_defend_scene()
 	level.ai_hendricks setgoal(nd_goto.origin);
 	level flag::wait_till("defend_ready");
 	var_421ccb2d = getent("flood_defend_defend_room_zone_trig", "targetname");
+	var_a3eb613f = 1;
 	while(var_a3eb613f)
 	{
 		var_a3eb613f = 0;
@@ -1610,6 +1612,7 @@ function do_security_room_nag()
 	n_index = 0;
 	a_str_nags = [];
 	a_str_nags[0] = "hend_keep_moving_the_wh_0";
+	a_str_nags[1] = "hend_go_go_go_0";
 	while(n_index < a_str_nags.size)
 	{
 		trigger::wait_till("flood_combat_security_room_zone_trig");
@@ -1643,6 +1646,7 @@ function do_charging_room_nag()
 	a_str_nags = [];
 	a_str_nags[0] = "hend_get_through_them_we_0";
 	a_str_nags[1] = "hend_don_t_stop_move_m_0";
+	a_str_nags[2] = "hend_fucking_move_0";
 	while(n_index < a_str_nags.size)
 	{
 		n_nag_time = randomfloatrange(n_nag_min, n_nag_max);

@@ -99,7 +99,7 @@ function air_projectile_delete()
 function watch_staff_air_fired()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"missile_fire", e_projectile, w_weapon);
 		if(w_weapon.name == "staff_air_upgraded" || w_weapon.name == "staff_air")
@@ -125,7 +125,7 @@ function watch_staff_air_fired()
 function watch_staff_air_impact()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"projectile_impact", w_weapon, v_explode_point, n_radius, projectile);
 		if(w_weapon.name == "staff_air_upgraded2" || w_weapon.name == "staff_air_upgraded3")
@@ -257,7 +257,8 @@ function whirlwind_seek_zombies(n_level, w_weapon)
 {
 	self endon(#"death");
 	self.b_found_zombies = 0;
-	while(1)
+	n_range = get_air_blast_range(n_level);
+	while(true)
 	{
 		a_zombies = staff_air_zombie_range(self.origin, n_range);
 		if(a_zombies.size)
@@ -321,7 +322,8 @@ function whirlwind_kill_zombies(n_level, w_weapon)
 {
 	self endon(#"death");
 	n_range = get_air_blast_range(n_level);
-	while(1)
+	self.n_charge_level = n_level;
+	while(true)
 	{
 		a_zombies = staff_air_zombie_range(self.origin, n_range);
 		a_zombies = util::get_array_of_closest(self.origin, a_zombies);
@@ -416,6 +418,7 @@ function whirlwind_move_zombie(e_whirlwind)
 	{
 		n_dist_sq = distance2dsquared(e_whirlwind.origin, self.origin);
 	}
+	n_fling_range_sq = 900;
 	while(isalive(self) && n_dist_sq > n_fling_range_sq && isdefined(e_whirlwind) && level flag::get("whirlwind_active"))
 	{
 		n_dist_sq = distance2dsquared(e_whirlwind.origin, self.origin);
@@ -495,7 +498,7 @@ function get_air_blast_range(n_charge)
 			n_range = 100;
 			break;
 		}
-		default
+		default:
 		{
 			n_range = 250;
 			break;

@@ -320,6 +320,7 @@ function damageeffectarea(owner, position, radius, height, killcament)
 		owner thread [[level.rapsonburnraps]](fireeffectarea);
 	}
 	loopwaittime = level.incendiaryfiredamageticktime;
+	durationofincendiary = level.incendiaryfireduration;
 	while(durationofincendiary > 0)
 	{
 		durationofincendiary = durationofincendiary - loopwaittime;

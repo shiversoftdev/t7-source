@@ -157,7 +157,7 @@ function function_11571878()
 	level.var_97c56c3c waittill(#"movedone");
 	level.var_97c56c3c.angles = v_ang;
 	level.var_97c56c3c linkto(var_85b2b1ab, "mirg_cent_gun_tag_jnt");
-	while(1)
+	while(true)
 	{
 		self.trigger waittill(#"trigger", player);
 		if(zm_utility::is_player_valid(player))
@@ -234,7 +234,7 @@ private function function_5f3935a(e_player)
 function function_255b7efb()
 {
 	self.trigger = zm_island_util::spawn_trigger_radius(self.origin, 50, 1, &function_d23a4109);
-	while(1)
+	while(true)
 	{
 		self.trigger waittill(#"trigger", player);
 		if(player zm_hero_weapon::is_hero_weapon_in_use())
@@ -298,7 +298,7 @@ private function function_d23a4109(e_player)
 function function_2578c564(str_flag)
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self.trigger waittill(#"trigger", player);
 		if(zm_utility::is_player_valid(player))
@@ -378,7 +378,7 @@ function function_9279976b(player)
 */
 function function_9dd4723a()
 {
-	while(1)
+	while(true)
 	{
 		self util::waittill_any("bled_out", "weapon_change", "disconnect");
 		if(function_52193f1e() == 0)
@@ -426,7 +426,7 @@ function function_659c2324(a_keys)
 				n_chance = 60;
 				break;
 			}
-			default
+			default:
 			{
 				n_chance = 10;
 				break;
@@ -543,7 +543,7 @@ function function_6590511d()
 	level flag::wait_till("power_on");
 	level waittill(#"start_of_round");
 	wait(randomintrange(5, 8));
-	while(1)
+	while(true)
 	{
 		ai_carrier = function_1c683357();
 		if(isalive(ai_carrier))
@@ -803,7 +803,7 @@ function function_9faff60c()
 	self.trigger = zm_island_util::spawn_trigger_radius(self.origin, 16, 1, &function_a50aa078);
 	var_a78de5fc = getent("cage_entity", "targetname");
 	var_c120c3f6 = getent("clip_jungle_door", "targetname");
-	while(1)
+	while(true)
 	{
 		self.trigger waittill(#"trigger");
 		if(!level.var_1dbad94a && !level flag::get("power_on"))
@@ -963,7 +963,7 @@ function function_ebbb27ae()
 	level endon(#"hash_d8d0f829");
 	var_60532813 = getent("trigger_trap", "targetname");
 	var_799520c1 = struct::get("trap_pos");
-	while(1)
+	while(true)
 	{
 		var_60532813 waittill(#"trigger", ai_zombie);
 		if(!ai_zombie.var_3940f450)
@@ -1188,7 +1188,8 @@ function function_1228bd27()
 	self endon(#"death");
 	v_moveto = undefined;
 	v_org = (-1135, 367, -115);
-	while(1)
+	e_linkto = getent("cage_linkto", "targetname");
+	while(true)
 	{
 		foreach(var_b71aef99, player in level.activeplayers)
 		{
@@ -1243,7 +1244,7 @@ function function_cc882a46()
 	var_218752f9 hidepart("j_glow_red");
 	level flag::wait_till("ww_obtained");
 	self.trigger = zm_island_util::spawn_trigger_radius(self.origin, 50, 1, &function_5521d6b5);
-	while(1)
+	while(true)
 	{
 		self.trigger waittill(#"trigger", player);
 		if(level flag::get("wwup1_found"))
@@ -1333,7 +1334,7 @@ private function function_5521d6b5(player)
 function function_9f93c407(player)
 {
 	player endon(#"player_upgraded_ww");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_who);
 		if(e_who == player && !e_who zm_hero_weapon::is_hero_weapon_in_use())
@@ -1578,6 +1579,7 @@ function function_961485f0()
 	mdl_door linkto(level.var_326fd87);
 	level.var_ac769486 = getent("clip_swamp_cage_door", "targetname");
 	var_9620cdae = getent("clip_cage_swamp", "targetname");
+	var_ac769486 = getent("clip_cage_swamp_door", "targetname");
 	while(!isdefined(level.var_f353ae68))
 	{
 		wait(0.5);
@@ -1590,7 +1592,7 @@ function function_961485f0()
 		wait(0.1);
 	}
 	level.var_e48a6587 sethintstring(&"ZM_ISLAND_CAGE_LOWER");
-	while(1)
+	while(true)
 	{
 		while(level.var_f353ae68.is_moving)
 		{
@@ -1656,7 +1658,7 @@ function function_871dbb3a()
 {
 	level flag::wait_till("power_on");
 	level.var_9fce15de setvisibletoall();
-	while(1)
+	while(true)
 	{
 		level.var_9fce15de waittill(#"trigger", player);
 		if(level.var_f353ae68.is_moving)
@@ -1927,7 +1929,8 @@ function function_6a47d3d7()
 	self endon(#"death");
 	v_moveto = undefined;
 	v_org = (2671, 851, -687);
-	while(1)
+	e_linkto = getent("cage_linkto", "targetname");
+	while(true)
 	{
 		foreach(var_effd963f, player in level.activeplayers)
 		{
@@ -1977,7 +1980,7 @@ function function_bc717528()
 */
 function function_72c5554a(str_flag)
 {
-	while(1)
+	while(true)
 	{
 		self.var_1da52e7e waittill(#"trigger", player);
 		if(zm_utility::is_player_valid(player))

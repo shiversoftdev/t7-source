@@ -121,7 +121,7 @@ function function_e4ff383e(var_49e3dd2e, var_d16ec704)
 */
 function function_ff160813()
 {
-	while(1)
+	while(true)
 	{
 		if(level flag::get("power_on1") && level flag::get("power_on3") && level flag::get("power_on4"))
 		{
@@ -156,7 +156,8 @@ function create_portal(str_id, var_776628b2)
 	level thread function_53e2c53d(str_areaname);
 	level thread portal_open(str_areaname);
 	var_6bca29ec = "close_portal_" + str_id;
-	while(1)
+	var_2c5f1c2a = "open_portal_" + str_id;
+	while(true)
 	{
 		level util::waittill_any("close_all_portals", var_6bca29ec);
 		level thread function_7fa2f44(str_areaname);
@@ -180,7 +181,7 @@ function create_portal(str_id, var_776628b2)
 */
 function function_a90ab0d7()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player zm_utility::in_revive_trigger())
@@ -380,7 +381,7 @@ function portal_think(b_show_fx)
 	{
 		var_759fb311 = self.e_dest.script_noteworthy;
 	}
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_portee);
 		if(isdefined(level.var_ccae6720) && level.var_ccae6720)
@@ -518,6 +519,7 @@ function portal_teleport_player(show_fx = 1, a_s_port_locs, str_zone, var_6d359b
 	s_pos = array::random(a_s_port_locs);
 	if(a_players.size > 0)
 	{
+		var_cefa4b63 = 0;
 		while(!var_cefa4b63)
 		{
 			var_cefa4b63 = 1;
@@ -656,7 +658,7 @@ function function_483df985(s_pos)
 					}
 					break;
 				}
-				default
+				default:
 				{
 					ai kill();
 					break;
@@ -756,7 +758,8 @@ function function_cfc89ca()
 	self.var_fe12a779["prison"] = 0;
 	self.var_fe12a779["asylum"] = 0;
 	self.var_fe12a779["temple"] = 0;
-	while(1)
+	self.var_fe12a779["prototype"] = 0;
+	while(true)
 	{
 		if(isdefined(self.var_a3d40b8) && (!(isdefined(self.var_122a2dda) && self.var_122a2dda)))
 		{
@@ -852,7 +855,7 @@ function function_b64d33a7()
 {
 	level waittill(#"start_zombie_round_logic");
 	wait(120);
-	while(1)
+	while(true)
 	{
 		level clientfield::set("genesis_light_exposure", 1);
 		wait(5);

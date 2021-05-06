@@ -151,7 +151,7 @@ function function_f27a22c8(player, origin)
 function function_db948b3()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		pos = self getgunnertargetvec(0);
 		self setgunnertargetvec(pos, 1);
@@ -171,7 +171,8 @@ function function_db948b3()
 function function_569d8fe3()
 {
 	self endon(#"death");
-	while(1)
+	var_d22e1ab8 = self seatgetweapon(2);
+	while(true)
 	{
 		if(self isgunnerfiring(0))
 		{
@@ -197,7 +198,7 @@ function function_569d8fe3()
 function function_ee6962d9(player, chicken)
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"hash_e15b53df");
 		if(!level flag::get("doa_round_active"))
@@ -607,6 +608,7 @@ function function_cdfa9ce8(bird)
 	bird endon(#"hash_cf62504");
 	bird endon(#"death");
 	bird useanimtree($chicken_mech);
+	bird.animation = (randomint(2) ? %chicken_mech::a_chicken_mech_idle : %chicken_mech::a_chicken_mech_lay_egg);
 	while(isdefined(bird))
 	{
 		bird clientfield::set("runsiegechickenanim", 1);
@@ -615,7 +617,7 @@ function function_cdfa9ce8(bird)
 		{
 			bird clientfield::set("runsiegechickenanim", 2);
 			wait(1);
-			self notify(#"hash_e15b53df", (randomint(2) ? %chicken_mech::a_chicken_mech_idle : %chicken_mech::a_chicken_mech_lay_egg));
+			self notify(#"hash_e15b53df");
 		}
 	}
 }

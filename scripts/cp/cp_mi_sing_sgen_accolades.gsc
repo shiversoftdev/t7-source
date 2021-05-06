@@ -67,7 +67,7 @@ function function_66df416f()
 		{
 			function_f3915502();
 		}
-		default
+		default:
 		{
 			break;
 		}
@@ -675,7 +675,7 @@ function function_962154a7()
 {
 	self endon(#"death");
 	level endon(#"hash_1e73602d");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", damage, attacker);
 		if(isdefined(attacker.scoretype))

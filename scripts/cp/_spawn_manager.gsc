@@ -131,7 +131,8 @@ function spawn_manager_can_spawn(spawngroupsize)
 function spawn_manager_spawn(maxdelay)
 {
 	self endon(#"death");
-	while(1)
+	start = gettime();
+	while(true)
 	{
 		ai = self spawner::spawn();
 		if(isdefined(ai) || gettime() - start > 1000 * maxdelay)
@@ -868,6 +869,7 @@ function spawn_manager_get_spawners()
 	{
 		spawner_count = self.allspawners.size;
 	}
+	spawners = [];
 	while(spawners.size < spawner_count)
 	{
 		spawner = array::random(groupspawners);
@@ -1543,7 +1545,7 @@ function wait_till_spawned_count(spawn_manager_targetname, count)
 	/#
 		assert(spawn_manager.size == 1, "");
 	#/
-	while(1)
+	while(true)
 	{
 		if(isdefined(spawn_manager[0].spawncount) && spawn_manager[0].spawncount < count && !is_killed(spawn_manager_targetname))
 		{

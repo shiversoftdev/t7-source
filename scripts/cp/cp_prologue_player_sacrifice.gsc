@@ -102,7 +102,7 @@ function function_ae9ce6f0()
 	self endon(#"disconnect");
 	self endon(#"hash_99343b5f");
 	level endon(#"hash_9d83ef5");
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_fired", wpn_current);
 		if(wpn_current.weapclass !== "pistol")
@@ -196,7 +196,8 @@ function function_9716eddb()
 {
 	level endon(#"hash_2e90f258");
 	var_fccc406f = struct::get_array("rpg_begin");
-	while(1)
+	var_90911853 = getweapon("launcher_standard_magic_bullet");
+	while(true)
 	{
 		foreach(var_ffb6ee91, s_rpg in var_fccc406f)
 		{
@@ -411,6 +412,7 @@ function function_ff1a7b45()
 	vh_truck3 = getent("defend_truck_3_vh", "targetname");
 	var_413044a1 = getent("defend_truck_4_vh", "targetname");
 	var_977a939e = vh_truck3 vehicle::get_rider("gunner1");
+	var_d96e2f91 = var_413044a1 vehicle::get_rider("gunner1");
 	while(isalive(var_977a939e) || isalive(var_d96e2f91))
 	{
 		wait(1);
@@ -452,7 +454,8 @@ function function_40fd81b()
 	self.goalradius = 16;
 	wait(randomfloatrange(2, 3.5));
 	var_90911853 = getweapon("launcher_standard_magic_bullet");
-	while(1)
+	var_f8e04bb3 = self gettagorigin("tag_flash");
+	while(true)
 	{
 		var_5aebca26 = level.var_27b46342[randomint(level.var_27b46342.size)];
 		if(isdefined(var_5aebca26))
@@ -803,6 +806,7 @@ function function_9d374()
 	self ai::set_ignoreall(1);
 	self cp_prologue_util::set_robot_unarmed();
 	s_goal = struct::get("pod_pos");
+	a_v_points = [];
 	while(a_v_points.size == 0)
 	{
 		a_v_points = util::positionquery_pointarray(s_goal.origin, 64, 400, 70, 40);
@@ -1033,6 +1037,7 @@ function function_a950a3ec()
 	{
 		self thread function_cd56c2cf(player);
 	}
+	level.var_fc71d8f = 0;
 	while(level.var_fc71d8f < level.players.size)
 	{
 		wait(0.5);
@@ -1052,7 +1057,7 @@ function function_a950a3ec()
 function function_cd56c2cf(player)
 {
 	level endon(#"hash_2ef4a1f0");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_entity);
 		if(e_entity == player)
@@ -1716,7 +1721,8 @@ function function_947bfdac(einflictor, eattacker, idamage, idflags, smeansofdeat
 function function_45756e82(var_1fd9b48b = "chicken_zone")
 {
 	level endon(#"robot_defend_done");
-	while(1)
+	var_e512db80 = getent(var_1fd9b48b + "_trigger", "targetname");
+	while(true)
 	{
 		var_e512db80 waittill(#"trigger", e_who);
 		e_who function_d311c75a(var_1fd9b48b);
@@ -1743,7 +1749,8 @@ function function_d311c75a(var_1fd9b48b)
 	var_592faea1 = struct::get_array(var_1fd9b48b + "_src");
 	var_9a93fef1 = struct::get_array(var_1fd9b48b + "_src2");
 	a_s_targets = struct::get_array(str_target_name, "targetname");
-	while(1)
+	var_60057f63 = getweapon("launcher_standard");
+	while(true)
 	{
 		var_51b841d8 = array::random(var_9a93fef1);
 		magicbullet(var_60057f63, var_51b841d8.origin, self.origin);

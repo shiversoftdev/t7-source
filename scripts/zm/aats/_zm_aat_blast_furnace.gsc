@@ -140,6 +140,7 @@ function blast_furnace_zombie_burn(e_attacker, w_weapon)
 {
 	self endon(#"death");
 	n_damage = self.health / 6;
+	i = 0;
 	while(i <= 6)
 	{
 		if(self.health < n_damage)

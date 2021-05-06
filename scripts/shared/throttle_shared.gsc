@@ -102,6 +102,7 @@ function waitinqueue(entity)
 	if(self.processed_ >= self.processlimit_)
 	{
 		self.queue_[self.queue_.size] = entity;
+		firstinqueue = 0;
 		while(!firstinqueue)
 		{
 			if(!isdefined(entity))

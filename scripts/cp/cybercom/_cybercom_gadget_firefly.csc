@@ -179,7 +179,7 @@ function actor_firefly_state(localclientnum, oldval, newval, bnewent, binitialsn
 			}
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}

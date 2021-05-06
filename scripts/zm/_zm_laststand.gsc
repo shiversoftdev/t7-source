@@ -592,6 +592,7 @@ function laststand_bleedout(delay)
 	self.bleedout_time = delay;
 	n_default_bleedout_time = getdvarfloat("player_lastStandBleedoutTime");
 	n_bleedout_time = self.bleedout_time;
+	n_start_time = gettime();
 	while(self.bleedout_time > int(delay * 0.5))
 	{
 		if(n_bleedout_time > n_default_bleedout_time && !isdefined(self.n_bleedout_time_multiplier))
@@ -729,7 +730,7 @@ function suicide_trigger_think()
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		wait(0.1);
 		if(!isdefined(self.suicideprompt))
@@ -924,7 +925,7 @@ function revive_trigger_think(t_secondary)
 	self endon(#"stop_revive_trigger");
 	level endon(#"end_game");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		wait(0.05);
 		if(isdefined(t_secondary))
@@ -1378,7 +1379,7 @@ function auto_revive(reviver, dont_enable_weapons)
 		self.revivetrigger.auto_revive = 1;
 		if(self.revivetrigger.beingrevived == 1)
 		{
-			while(1)
+			while(true)
 			{
 				if(!isdefined(self.revivetrigger) || self.revivetrigger.beingrevived == 0)
 				{
@@ -1641,7 +1642,7 @@ function laststand_getup_damage_watcher()
 {
 	self endon(#"player_revived");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage");
 		self.laststand_info.getup_bar_value = self.laststand_info.getup_bar_value - level.const_laststand_getup_bar_damage;

@@ -351,6 +351,7 @@ function addrandomattachmenttoweaponname(baseweaponname, attachmentlist)
 function waitlongdurationwithhostmigrationpause(nextguncycletime, duration)
 {
 	endtime = gettime() + duration * 1000;
+	totaltimepassed = 0;
 	while(gettime() < endtime)
 	{
 		hostmigration::waittillhostmigrationstarts(endtime - gettime() / 1000);
@@ -436,7 +437,8 @@ function chooserandomguns()
 		level waittill(#"prematch_over");
 	}
 	guncycle = 1;
-	while(1)
+	numguncycles = int(level.timelimit * 60 / waittime + 0.5);
+	while(true)
 	{
 		nextguncycletime = gettime() + waittime * 1000;
 		ispenultimateround = 0;

@@ -51,6 +51,7 @@ function transition_shader(localclientnum)
 {
 	self endon(#"entityshutdown");
 	self endon(#"clone_shader_off");
+	rampinshader = 0;
 	while(rampinshader < 1)
 	{
 		if(isdefined(self))

@@ -277,7 +277,7 @@ function set_hudelem(text, x, y, scale, alpha, sort, debug_hudelem)
 function menu_input()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			level waittill(#"menu_button_pressed", keystring);
 			menu_name = level.menu_sys[""].menu_name;
@@ -498,7 +498,7 @@ function list_menu(list, x, y, scale, func, sort, start_num)
 		{
 			[[func]](list[current_num]);
 		}
-		while(1)
+		while(true)
 		{
 			level waittill(#"menu_button_pressed", key);
 			level.menu_list_selected = 1;
@@ -1068,7 +1068,8 @@ function dialog_text_box_input(cursor_x, cursor_y, word_length)
 		hud_word = new_hud("", "", cursor_x, cursor_y, 1.25);
 		hud_word.sort = 75;
 		hud_letters = [];
-		while(1)
+		word = "";
+		while(true)
 		{
 			level waittill(#"dialog_box_button_pressed", button);
 			if(button == "" || button == "")
@@ -1185,7 +1186,7 @@ function dialog_text_box_cursor()
 {
 	/#
 		level endon(#"stop_dialog_text_box_cursor");
-		while(1)
+		while(true)
 		{
 			level.dialog_box_cursor.alpha = 0;
 			wait(0.5);
@@ -1294,7 +1295,7 @@ function universal_input_loop(button_group, end_on, use_attackbutton, mod_button
 		notify_name = button_group + "";
 		buttons = level.u_buttons[button_group];
 		level.u_buttons_disable[button_group] = 0;
-		while(1)
+		while(true)
 		{
 			if(level.u_buttons_disable[button_group])
 			{

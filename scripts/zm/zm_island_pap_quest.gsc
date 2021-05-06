@@ -232,7 +232,7 @@ function function_4c046b1b()
 			level flag::set("pap_water_drained");
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}
@@ -287,7 +287,7 @@ function function_dd9ccb8(n_id)
 	{
 		self.trigger = zm_island_util::spawn_trigger_radius(self.origin, 50, 1, &function_578e801d);
 	}
-	while(1)
+	while(true)
 	{
 		self.trigger waittill(#"trigger", player);
 		if(zm_utility::is_player_valid(player) && level flag::get(self.script_noteworthy))
@@ -379,7 +379,7 @@ private function function_578e801d(e_player)
 */
 function function_1a519eae(str_flag)
 {
-	while(1)
+	while(true)
 	{
 		self.trigger waittill(#"trigger", player);
 		if(zm_utility::is_player_valid(player))
@@ -742,7 +742,7 @@ function function_3d4e00c()
 {
 	level endon(#"defend_over");
 	wait(5);
-	while(1)
+	while(true)
 	{
 		n_zombies = function_a3ebebe();
 		var_4cba8874 = function_2870b97d();
@@ -916,7 +916,7 @@ function function_318ec9ba()
 function function_83af0b87(t_water)
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		while(!self istouching(t_water))
 		{

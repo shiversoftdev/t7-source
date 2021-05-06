@@ -140,7 +140,7 @@ function randomize_gongs()
 function watch_for_respawn()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"spawned_player");
 		waittillframeend();
@@ -226,7 +226,7 @@ function gong_watcher()
 	}
 	level._gong_watcher_running = 1;
 	level thread watch_for_gongs_gone_bad();
-	while(1)
+	while(true)
 	{
 		level flag::wait_till("gongs_resonating");
 		for(i = 0; i < level._raised_crystals.size; i++)
@@ -262,7 +262,7 @@ function gong_watcher()
 */
 function watch_for_gongs_gone_bad()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"wrong_gong");
 		for(i = 0; i < level._raised_crystals.size; i++)
@@ -300,7 +300,7 @@ function force_eclipse_watcher()
 	level endon(#"end_game");
 	setdvar("scr_force_eclipse", 0);
 	level waittill(#"start_zombie_round_logic");
-	while(1)
+	while(true)
 	{
 		while(0 == getdvarint("scr_force_eclipse"))
 		{
@@ -337,7 +337,7 @@ function gong_trigger_handler()
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		self.owner_ent.var_4ba5f5f1 waittill(#"damage", amount, attacker, dir, point, mod);
 		if(isplayer(attacker) && mod == "MOD_MELEE")
@@ -434,6 +434,7 @@ function restart_sundial_monitor()
 */
 function spin_dial(duration = 2, multiplier = 1.3)
 {
+	spin_time = 0.1;
 	while(spin_time < duration)
 	{
 		self playloopsound("evt_sq_gen_sundial_spin", 0.5);
@@ -487,7 +488,7 @@ function sundial_monitor()
 	wait(0.05);
 	buttons = getentarray("sq_sundial_button", "targetname");
 	array::thread_all(buttons, &sundial_button);
-	while(1)
+	while(true)
 	{
 		while(level._sundial_buttons_pressed < 4)
 		{
@@ -607,7 +608,7 @@ function sundial_button()
 	self.trigger triggerignoreteam();
 	self.trigger.radius = 48;
 	self.trigger setcursorhint("HINT_NOICON");
-	while(1)
+	while(true)
 	{
 		self.trigger waittill(#"trigger", who);
 		if(sundial_button_already_pressed_by(who, buttons))
@@ -741,7 +742,7 @@ function pap_watcher()
 {
 	level notify(#"only_one_pap_watcher");
 	level endon(#"only_one_pap_watcher");
-	while(1)
+	while(true)
 	{
 		level flag::wait_till("pap_override");
 		while(level flag::get("pack_machine_in_use"))
@@ -769,7 +770,7 @@ function pap_watcher()
 function cheat_complete_stage()
 {
 	level endon(#"reset_sundial");
-	while(1)
+	while(true)
 	{
 		if(getdvarstring("cheat_sq") != "")
 		{
@@ -848,7 +849,7 @@ function complete_sidequest()
 function spin_115()
 {
 	self endon(#"picked_up");
-	while(1)
+	while(true)
 	{
 		self rotateyaw(180, 0.4);
 		wait(0.4);
@@ -877,7 +878,8 @@ function sidequest_done()
 	trigger triggerignoreteam();
 	trigger setcursorhint("HINT_NOICON");
 	trigger.radius = 48;
-	while(1)
+	trigger.height = 72;
+	while(true)
 	{
 		trigger waittill(#"trigger", who);
 		if(isplayer(who) && !isdefined(who._has_anti115))
@@ -901,6 +903,7 @@ function sidequest_done()
 	anti115 ghost();
 	exploder::stop_exploder("fxexp_520");
 	players_far = 0;
+	players = getplayers();
 	while(players_far < players.size)
 	{
 		players_far = 0;
@@ -1082,6 +1085,7 @@ function rotate_skydome(n_time)
 	{
 		var_3557d539 = 360;
 	}
+	n_change = var_3557d539 / n_time / 0.1;
 	while(var_3557d539 > 0)
 	{
 		level.var_9e9e4a20 = level.var_9e9e4a20 + n_change;
@@ -1310,7 +1314,7 @@ function crystal_handler()
 function play_loopsound_while_resonating()
 {
 	self.trigger endon(#"death");
-	while(1)
+	while(true)
 	{
 		level flag::wait_till("gongs_resonating");
 		self playloopsound("mus_sq_bag_crystal_loop", 2);
@@ -1555,7 +1559,7 @@ function crystal_shrink_logic(hotsauce)
 function crystal_shrink_thread()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"shrunk", hotsauce);
 		if(!level flag::get("gongs_resonating"))
@@ -1582,7 +1586,7 @@ function crystal_trigger_thread()
 {
 	self endon(#"death");
 	self thread crystal_shrink_thread();
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", amount, attacker, dir, point, type);
 	}

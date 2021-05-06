@@ -40,6 +40,7 @@ function init()
 	i = 0;
 	datalog_locs = struct::get_array("sq_datalog", "targetname");
 	player = struct::get("sq_reel_to_reel", "targetname");
+	datalog_locs = array::randomize(datalog_locs);
 	while(i < datalogs.size)
 	{
 		log_struct = datalog_locs[0];

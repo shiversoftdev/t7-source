@@ -2007,6 +2007,7 @@ private function function_9a821f95()
 {
 	self.owner util::waittill_any("shadow_margwa_skull_launched", "death");
 	self.owner.var_ed0c0558 = array::remove_undefined(self.owner.var_ed0c0558, 0);
+	margwa = self.owner;
 	while(isdefined(self) && isdefined(self.var_8002cc8a) && isalive(self.var_8002cc8a) && isdefined(self.owner) && isdefined(self.owner.var_ed0c0558) && self.owner.var_ed0c0558.size > 0)
 	{
 		eye_position = self.var_8002cc8a gettagorigin("tag_eye");
@@ -2384,6 +2385,7 @@ function function_2ab5f647(e_player, v_attack_source, n_push_away, n_lift_height
 		self clientfield::set("margwa_shock_fx", 1);
 		self playsound("zmb_talon_electrocute");
 		n_start_time = gettime();
+		n_total_time = 0;
 		while(10 > n_total_time && e_player.gravityspikes_state === 3)
 		{
 			util::wait_network_frame();
@@ -2476,7 +2478,7 @@ function function_15492d9b()
 		adddebugcommand(str_cmd);
 		str_cmd = "";
 		adddebugcommand(str_cmd);
-		while(1)
+		while(true)
 		{
 			string = getdvarstring("");
 			if(string === "")

@@ -92,7 +92,7 @@ function postfxbundledebuglisten()
 		setdvar("", "");
 		setdvar("", "");
 		setdvar("", "");
-		while(1)
+		while(true)
 		{
 			playbundlename = getdvarstring("");
 			if(playbundlename != "")
@@ -246,6 +246,7 @@ function playpostfxbundle(playbundlename)
 		enablethermaldraw(localclientnum, isdefined(thermal) && thermal);
 		loopingstage = looping && (!enterstage && stageidx == 0 || (enterstage && stageidx == 1));
 		accumtime = 0;
+		prevtime = self getclienttime();
 		while(loopingstage || accumtime < stagelength && !self.forcestoppostfxbundle)
 		{
 			gfx::setstage(localclientnum, bundle, filterid, stageprefix, stagelength, accumtime, totalaccumtime, &setfilterconstants);
@@ -376,6 +377,7 @@ function stoppostfxbundle()
 	self endon(#"stoppostfxbundle_singleton");
 	if(isdefined(self.playingpostfxbundle) && self.playingpostfxbundle != "")
 	{
+		self.forcestoppostfxbundle = 1;
 		while(self.playingpostfxbundle != "")
 		{
 			wait(0.016);

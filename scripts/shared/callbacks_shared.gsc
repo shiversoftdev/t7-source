@@ -1185,7 +1185,7 @@ function codecallback_menuresponse(action, arg)
 */
 function menu_response_queue_pump()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"menuresponse_queue");
 		do

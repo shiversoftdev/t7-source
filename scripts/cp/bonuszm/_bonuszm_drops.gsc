@@ -277,7 +277,7 @@ function function_b67e03f7()
 			var_638b7f73 = self function_95409c5("veh_t7_drone_raps", origin, vectorscale((0, 0, 1), 30), undefined, 0);
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				assertmsg("");
@@ -413,7 +413,7 @@ function function_8036f40b()
 	{
 		rotatetime = 0.7;
 	}
-	while(1)
+	while(true)
 	{
 		self rotateyaw(-180, rotatetime);
 		wait(rotatetime);
@@ -440,6 +440,7 @@ function function_b050d188()
 	n_flash_medium = n_section * 4;
 	n_flash_fast = n_section * 5;
 	b_show = 1;
+	i = 0;
 	while(i < n_frames)
 	{
 		if(i < n_flash_slow)
@@ -643,7 +644,7 @@ function function_da35c458(str_bonus, var_638b7f73)
 			self thread function_be188509();
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				assert("" + str_bonus + "");
@@ -1172,7 +1173,7 @@ function function_1dfabdfa()
 */
 function function_2a5eb705()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"scene_sequence_started");
 		function_1dfabdfa();

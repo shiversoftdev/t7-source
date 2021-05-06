@@ -146,7 +146,7 @@ function powerup_fx_callback(localclientnum, oldval, newval, bnewent, binitialsn
 			fx = level._effect["powerup_on_caution"];
 			break;
 		}
-		default
+		default:
 		{
 			return;
 		}

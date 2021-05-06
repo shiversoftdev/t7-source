@@ -64,7 +64,7 @@ function spawn_fx_loopers()
 */
 function play_minigun_loop()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"minis");
 		ent = spawn(0, (0, 0, 0), "script_origin");
@@ -123,7 +123,7 @@ function alarm_b_timer()
 function play_alarm_a()
 {
 	level endon(#"alarm_a_off");
-	while(1)
+	while(true)
 	{
 		playsound(0, "evt_alarm_a", self.origin);
 		wait(1.1);
@@ -229,6 +229,7 @@ function samantha_is_angry_earthquake_and_rumbles(localclientnum)
 function do_that_sam_rumble()
 {
 	self endon(#"disconnect");
+	count = 0;
 	while(count <= 4 && isdefined(self))
 	{
 		self playrumbleonentity(0, "damage_heavy");
@@ -265,7 +266,7 @@ function function_c9207335()
 */
 function function_60a32834()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", trigplayer);
 		if(trigplayer islocalplayer())
@@ -297,7 +298,8 @@ function function_d667714e()
 	level.var_b6342abd = "mus_cosmo_underscore_default";
 	level.var_6d9d81aa = "mus_cosmo_underscore_default";
 	level.var_eb526c90 = spawn(0, (0, 0, 0), "script_origin");
-	while(1)
+	level.var_9433cf5a = level.var_eb526c90 playloopsound(level.var_b6342abd, 2);
+	while(true)
 	{
 		level waittill(#"hash_51d7bc7c", location);
 		level.var_6d9d81aa = "mus_cosmo_underscore_" + location;

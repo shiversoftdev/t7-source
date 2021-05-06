@@ -203,7 +203,8 @@ function function_e38b964d()
 		level.var_a78effc7 = randomintrange(9, 12);
 	}
 	old_spawn_func = level.round_spawn_func;
-	while(1)
+	old_wait_func = level.round_wait_func;
+	while(true)
 	{
 		level waittill(#"between_round_over");
 		/#
@@ -329,7 +330,7 @@ function function_7766fb04()
 	level flag::set("sentinel_round_in_progress");
 	level endon(#"last_ai_down");
 	level thread function_53547f4d();
-	while(1)
+	while(true)
 	{
 		while(level.zombie_total > 0)
 		{
@@ -544,7 +545,7 @@ function function_d600cb9a()
 	self thread function_caadf4b1();
 	self flag::wait_till("completed_spawning");
 	var_4b9c276c = function_5b91ab3a();
-	while(1)
+	while(true)
 	{
 		level flag::wait_till_clear("sentinel_rez_in_progress");
 		while(zombie_utility::get_current_zombie_count() >= var_4b9c276c)
@@ -796,6 +797,7 @@ function function_fdd9c3df(var_4e5c415e)
 	self.health = int(level.zombie_health / 2);
 	self waittill(#"completed_emerging_into_playable_area");
 	self.no_powerups = 1;
+	n_timeout = gettime() + 60000;
 	while(!isdefined(self.enemy))
 	{
 		wait(0.1);
@@ -806,6 +808,7 @@ function function_fdd9c3df(var_4e5c415e)
 		self kill();
 		return;
 	}
+	n_dist_sq_max = randomfloatrange(1048448, 1048576);
 	while(gettime() < n_timeout)
 	{
 		n_dist_sq = distancesquared(self.origin, var_4e5c415e.origin);
@@ -850,7 +853,7 @@ function function_ea9730d8(var_4e5c415e)
 function function_cb2c6547()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", n_damage, e_attacker);
 		if(isdefined(e_attacker) && isplayer(e_attacker))
@@ -891,7 +894,7 @@ function function_e9be6289()
 			var_ebe16089 = 3;
 			break;
 		}
-		default
+		default:
 		{
 			n_wave_count = 15;
 			var_ebe16089 = 4;
@@ -928,7 +931,7 @@ function function_5b91ab3a()
 			n_count = 10;
 			break;
 		}
-		default
+		default:
 		{
 			n_count = 12;
 		}
@@ -964,7 +967,7 @@ function get_zombie_spawn_delay()
 			n_delay = 1.5;
 			break;
 		}
-		default
+		default:
 		{
 			n_delay = 1;
 		}
@@ -1123,7 +1126,7 @@ function function_20c64325()
 			n_default_wait = 1.25;
 			break;
 		}
-		default
+		default:
 		{
 			n_default_wait = 0.75;
 			break;
@@ -1374,7 +1377,8 @@ function function_acaa3ee4(origin)
 function function_6cb24476()
 {
 	self endon(#"death");
-	while(1)
+	v_compact_mode = getent("sentinel_compact", "targetname");
+	while(true)
 	{
 		if(self istouching(v_compact_mode))
 		{
@@ -1433,6 +1437,7 @@ function function_586ac2c3()
 */
 function function_19d0b055(n_to_spawn = 1, var_e41e673a, b_force_spawn = 0, var_b7959229 = undefined)
 {
+	n_spawned = 0;
 	while(n_spawned < n_to_spawn)
 	{
 		if(!b_force_spawn && !function_74ab7484())
@@ -1482,7 +1487,7 @@ function function_19d0b055(n_to_spawn = 1, var_e41e673a, b_force_spawn = 0, var_
 function function_9a59090e()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self playsound("zmb_hellhound_vocals_amb");
 		wait(randomfloatrange(3, 6));
@@ -1804,7 +1809,7 @@ function function_c630bba3(cmd)
 				setdvar("", curvalue);
 				return 1;
 			}
-			default
+			default:
 			{
 				return 0;
 			}

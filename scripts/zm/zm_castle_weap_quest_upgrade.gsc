@@ -286,7 +286,8 @@ function function_29c80ce1()
 			return;
 		}
 	#/
-	while(1)
+	var_3c91152b = getent("aq_rp_clock_wall_trig", "targetname");
+	while(true)
 	{
 		var_3c91152b waittill(#"damage", amount, attacker, direction, point, mod, tagname, modelname, partname, weapon);
 		if(function_51a90202(weapon, 1, point, var_3c91152b))
@@ -400,6 +401,7 @@ function rune_prison_obelisk()
 		}
 	#/
 	level thread function_d13d5192();
+	var_b4df6e91 = getent("aq_rp_obelisk_magma_trig", "targetname");
 	while(!level flag::get("rune_prison_obelisk"))
 	{
 		var_b4df6e91 waittill(#"damage", amount, attacker, direction, point, mod, tagname, modelname, partname, weapon);
@@ -431,7 +433,8 @@ function function_d13d5192()
 	level endon(#"rune_prison_obelisk");
 	var_94f11108 = getent("aq_rp_obelisk_top", "targetname");
 	var_8b1b34fc = getent("aq_rp_obelisk_reveal", "targetname");
-	while(1)
+	var_ca72ca5f = getent("aq_rp_obelisk_drain", "targetname");
+	while(true)
 	{
 		level flag::wait_till("rune_prison_obelisk_magma_enabled");
 		var_94f11108 clientfield::set("obelisk_magma_reveal", 0);
@@ -655,6 +658,7 @@ function function_1d529530()
 		}
 	#/
 	var_9c1f46d7 = getent(self.target, "targetname");
+	b_visible = 0;
 	while(!self flag::get("runic_circle_activated"))
 	{
 		if(!b_visible && isdefined(level.var_c62829c7) && (isdefined(level.var_c62829c7.var_122a2dda) && level.var_c62829c7.var_122a2dda))
@@ -692,7 +696,8 @@ function function_2ead3d64()
 	self function_f9027a91();
 	var_408c2634 = 0;
 	var_1eb04f04 = 1;
-	while(1)
+	var_9c1f46d7 = getent(self.target, "targetname");
+	while(true)
 	{
 		self waittill(#"killed");
 		var_408c2634++;
@@ -745,6 +750,7 @@ function function_f9027a91()
 		level endon(#"hash_6de95813");
 		level endon(#"hash_35cccade");
 	#/
+	var_c749603c = getent(self.target + "_trig", "targetname");
 	while(!self flag::get("runic_circle_activated"))
 	{
 		var_c749603c waittill(#"damage", amount, attacker, direction, point, mod, tagname, modelname, partname, weapon);
@@ -831,7 +837,8 @@ function function_8e83c9ed()
 	self endon(#"death");
 	self endon(#"quest_swap");
 	var_effd0eae = getentarray("aq_rp_runic_circle_volume", "script_noteworthy");
-	while(1)
+	var_8ed504dc = 0;
+	while(true)
 	{
 		var_f667032 = self array::get_touching(var_effd0eae);
 		if(!var_8ed504dc && isdefined(var_f667032[0]) && var_f667032[0] flag::get("runic_circle_activated") && !var_f667032[0] flag::get("runic_circle_charged"))
@@ -966,7 +973,7 @@ function function_fd254a35()
 	var_7a76a496 delete();
 	var_7f680434 function_e198b188(1);
 	var_7f680434 function_3313abd5();
-	while(1)
+	while(true)
 	{
 		var_7f680434.var_67b5dd94 waittill(#"trigger", e_who);
 		if(e_who === level.var_c62829c7)
@@ -1000,7 +1007,7 @@ function function_88082ccd()
 		level endon(#"hash_e09edb0");
 	#/
 	self function_3313abd5();
-	while(1)
+	while(true)
 	{
 		self.var_67b5dd94 waittill(#"trigger", e_who);
 		if(e_who === level.var_c62829c7)
@@ -1246,6 +1253,7 @@ function function_592f1ad2()
 	#/
 	self endon(#"death");
 	self endon(#"quest_swap");
+	var_8ed504dc = 0;
 	while(!level flag::get("rune_prison_golf"))
 	{
 		if(isdefined(level.var_2e55cb98))
@@ -1536,7 +1544,8 @@ function function_5f8f4823()
 		level endon(#"hash_e09edb0");
 	#/
 	v_start_position = self.origin;
-	while(1)
+	var_f36eb41b = self.origin + vectorscale((0, 0, -1), 464);
+	while(true)
 	{
 		str_notify = util::waittill_any_return("drop", "reset", "final");
 		if(str_notify == "drop")
@@ -1657,7 +1666,7 @@ function rune_prison_magma_ball()
 	#/
 	var_605e43a9 = struct::get("quest_reforge_rune_prison", "targetname");
 	var_605e43a9 function_3313abd5(undefined, undefined, var_605e43a9.origin + vectorscale((0, 0, 1), 30), 128);
-	while(1)
+	while(true)
 	{
 		var_605e43a9.var_67b5dd94 waittill(#"trigger", e_who);
 		if(e_who === level.var_c62829c7)
@@ -1676,7 +1685,7 @@ function rune_prison_magma_ball()
 	}
 	var_605e43a9.var_67b5dd94.prompt_and_visibility_func = &function_8c1fd619;
 	var_605e43a9.var_67b5dd94 unitrigger_refresh_message();
-	while(1)
+	while(true)
 	{
 		var_605e43a9.var_67b5dd94 waittill(#"trigger", e_who);
 		if(isdefined(level.var_c62829c7))
@@ -1973,7 +1982,8 @@ function function_d47f8f22()
 	/#
 		level endon(#"hash_4e281784");
 	#/
-	while(1)
+	var_e88abb1 = getent("aq_dg_gatehouse_symbol_trig", "targetname");
+	while(true)
 	{
 		var_e88abb1 waittill(#"damage", amount, attacker, direction, point, mod, tagname, modelname, partname, weapon);
 		if(function_51a90202(weapon, 1, point, var_e88abb1))
@@ -2129,7 +2139,7 @@ function function_bb59b66c()
 	#/
 	var_e1d12db4 = struct::get("aq_dg_urn_struct", "targetname");
 	var_e1d12db4 function_3313abd5();
-	while(1)
+	while(true)
 	{
 		var_e1d12db4.var_67b5dd94 waittill(#"trigger", e_who);
 		if(e_who === level.var_6e68c0d8)
@@ -2262,7 +2272,7 @@ function function_1353f9e3()
 		}
 	#/
 	self function_3313abd5();
-	while(1)
+	while(true)
 	{
 		self.var_67b5dd94 waittill(#"trigger", e_who);
 		if(e_who === level.var_6e68c0d8)
@@ -2386,7 +2396,8 @@ function function_10033c3()
 			return;
 		}
 	#/
-	while(1)
+	var_c199072a = getent("aq_dg_trophy_room_trig", "targetname");
+	while(true)
 	{
 		var_c199072a waittill(#"trigger", e_who);
 		if(e_who === level.var_6e68c0d8)
@@ -2417,7 +2428,8 @@ function function_f836dce1()
 			return;
 		}
 	#/
-	while(1)
+	var_83e3ae42 = getent("aq_dg_demonic_circle_volume", "targetname");
+	while(true)
 	{
 		a_ai_enemies = getaiteamarray(level.zombie_team);
 		var_f8df884a = var_83e3ae42 array::get_touching(a_ai_enemies);
@@ -2715,7 +2727,8 @@ function function_cf05b763()
 		}
 	#/
 	level endon(#"demon_gate_runes");
-	while(1)
+	var_42ba5d5d = getent("aq_dg_urn_damage_trig", "targetname");
+	while(true)
 	{
 		var_42ba5d5d waittill(#"damage", amount, attacker, direction, point, mod, tagname, modelname, partname, weapon);
 		if(function_51a90202(weapon, 1, point, var_42ba5d5d) && attacker === level.var_6e68c0d8 && !level flag::get("rune_sequence_failed") && (!(isdefined(level.var_f00f53e6) && level.var_f00f53e6)))
@@ -2739,7 +2752,8 @@ function function_f20a422b(var_25b51f6b, var_5a2492d5)
 {
 	level endon(#"demon_gate_runes");
 	self function_3313abd5();
-	while(1)
+	self.var_25b51f6b = var_25b51f6b;
+	while(true)
 	{
 		self.var_67b5dd94 waittill(#"trigger", e_who);
 		if(e_who === level.var_6e68c0d8)
@@ -2769,7 +2783,8 @@ function function_686645ab()
 {
 	level endon(#"demon_gate_runes");
 	var_c199072a = getent("aq_dg_trophy_room_trig", "targetname");
-	while(1)
+	var_cd45655b = getent("aq_dg_urn_position", "targetname");
+	while(true)
 	{
 		level waittill(#"hash_b24bc9eb");
 		var_c199072a waittill(#"trigger", e_who);
@@ -2816,7 +2831,7 @@ function function_afa0928d()
 		}
 	#/
 	level endon(#"demon_gate_runes");
-	while(1)
+	while(true)
 	{
 		str_notify = level util::waittill_any_return("demon_gate_runes", "demonic_rune_grabbed", "demonic_rune_timed_out");
 		if(str_notify == "demonic_rune_grabbed")
@@ -2898,7 +2913,7 @@ function function_80d54dff(e_attacker)
 function function_b08d39a1()
 {
 	level endon(#"demon_gate_runes");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", amount, attacker, direction, point, mod, tagname, modelname, partname, weapon);
 		if(function_51a90202(weapon, 1, point, self) && attacker === level.var_6e68c0d8 && !level flag::get("rune_sequence_failed") && level.var_ca3b8551 < 4)
@@ -3207,7 +3222,7 @@ function function_695d82fd()
 		level.var_a81ca85 = mdl_anchor;
 	#/
 	var_605e43a9 function_3313abd5();
-	while(1)
+	while(true)
 	{
 		var_605e43a9.var_67b5dd94 waittill(#"trigger", e_who);
 		if(e_who === level.var_6e68c0d8)
@@ -3229,7 +3244,7 @@ function function_695d82fd()
 	}
 	var_605e43a9.var_67b5dd94.prompt_and_visibility_func = &function_8c1fd619;
 	var_605e43a9.var_67b5dd94 unitrigger_refresh_message();
-	while(1)
+	while(true)
 	{
 		var_605e43a9.var_67b5dd94 waittill(#"trigger", e_who);
 		if(isdefined(level.var_6e68c0d8))
@@ -3591,7 +3606,8 @@ function function_2601ae75(var_c37a8358, var_18f50dca)
 		level endon(#"hash_2a8e7fe2");
 	#/
 	level endon(#"wolf_howl_paintings");
-	while(1)
+	var_e1041201 = getweapon("elemental_bow");
+	while(true)
 	{
 		self.var_67b5dd94 waittill(#"trigger", e_who);
 		if(e_who hasweapon(var_e1041201) || e_who function_fae23b43())
@@ -3816,7 +3832,8 @@ function function_15a6ff6a()
 	level.var_52978d72 endon(#"death");
 	level.var_52978d72 endon(#"quest_swap");
 	level.var_52978d72 thread function_d62aa556();
-	while(1)
+	var_f7019ef = getent("aq_wh_skull_shrine_trig", "targetname");
+	while(true)
 	{
 		level.var_52978d72 waittill(#"projectile_impact", weapon, point, radius, attacker, normal);
 		if(function_51a90202(weapon, 1, point, var_f7019ef))
@@ -3856,7 +3873,8 @@ function function_d62aa556()
 	var_c068b13 = getent("aq_wh_shrine_rumble_volume", "targetname");
 	var_55b8fc1d = getent("aq_wh_skull_shrine_trig", "targetname");
 	var_9fc43621 = var_55b8fc1d.origin;
-	while(1)
+	n_pulse_delay_range = 0.7;
+	while(true)
 	{
 		if(self istouching(var_c068b13))
 		{
@@ -3925,7 +3943,7 @@ function function_262d06db()
 	level.var_a1e95710 = undefined;
 	level scene::play("p7_fxanim_zm_castle_quest_wolf_skull_roll_down_bundle");
 	self function_3313abd5();
-	while(1)
+	while(true)
 	{
 		self.var_67b5dd94 waittill(#"trigger", e_who);
 		if(e_who === level.var_52978d72)
@@ -4021,7 +4039,7 @@ function function_b9485994()
 {
 	var_affd5bec = getent("aq_wh_skadi_skull", "targetname");
 	var_affd5bec function_3313abd5();
-	while(1)
+	while(true)
 	{
 		var_affd5bec.var_67b5dd94 waittill(#"trigger", e_who);
 		if(e_who === level.var_52978d72)
@@ -4294,7 +4312,7 @@ function function_75926d72()
 	level endon(#"player_found_skadi");
 	self endon(#"death");
 	self endon(#"quest_swap");
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.var_a9e7283f) && self.var_a9e7283f && !self util::is_looking_at(level.var_e6d07014, 0, 1))
 		{
@@ -4439,7 +4457,7 @@ function function_af36e4b0()
 	level.var_e6d07014 setgoal(var_5bd66bb5.origin, 0, 4);
 	var_f7d860a2 = getent("aq_wh_bones_" + self.script_label, "targetname");
 	var_f7d860a2 function_3313abd5(undefined, undefined, var_f7d860a2.origin + vectorscale((0, 0, 1), 30));
-	while(1)
+	while(true)
 	{
 		var_f7d860a2.var_67b5dd94 waittill(#"trigger", e_who);
 		if(e_who === level.var_52978d72)
@@ -4605,7 +4623,7 @@ function function_987776f3()
 	level endon(#"hash_b12ab80e");
 	level endon(#"wolf_howl_repaired");
 	var_dddbfe51 = getent("aq_wh_ledge_collision", "targetname");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", amount, attacker, direction, point, mod, tagname, modelname, partname, weapon);
 		/#
@@ -4702,7 +4720,8 @@ function function_7af16606()
 	self endon(#"death");
 	self endon(#"quest_swap");
 	self.var_374fd3ef = 0;
-	while(1)
+	var_d29c128e = getent("aq_wh_burial_chamber_symbol", "targetname");
+	while(true)
 	{
 		if(!self.var_374fd3ef)
 		{
@@ -4787,7 +4806,7 @@ function function_c57a36bb()
 	#/
 	var_605e43a9 = struct::get("quest_reforge_wolf_howl", "targetname");
 	var_605e43a9 function_3313abd5();
-	while(1)
+	while(true)
 	{
 		var_605e43a9.var_67b5dd94 waittill(#"trigger", e_who);
 		if(e_who === level.var_52978d72 && self flag::get("ledge_built"))
@@ -4803,7 +4822,7 @@ function function_c57a36bb()
 	}
 	var_605e43a9.var_67b5dd94.prompt_and_visibility_func = &function_8c1fd619;
 	var_605e43a9.var_67b5dd94 unitrigger_refresh_message();
-	while(1)
+	while(true)
 	{
 		var_605e43a9.var_67b5dd94 waittill(#"trigger", e_who);
 		if(isdefined(level.var_52978d72))
@@ -5112,7 +5131,8 @@ function function_cd986666()
 		level endon(#"hash_2db350be");
 	#/
 	var_6809935d = getent("aq_es_weather_vane_trig", "targetname");
-	while(1)
+	var_c5caf2d3 = getent("tower_break_fx_anchor", "targetname");
+	while(true)
 	{
 		var_6809935d waittill(#"damage", amount, attacker, direction, point, mod, tagname, modelname, partname, weapon);
 		if(function_51a90202(weapon, 1, point, var_6809935d))
@@ -5155,6 +5175,7 @@ function function_ac08423b(e_player)
 	level scene::play("p7_fxanim_zm_castle_weather_vane_spin_bundle");
 	level function_aaccdd61();
 	var_6a955d70 = getent("aq_es_roof_volume", "targetname");
+	var_16fe671f = getent("aq_es_weather_vane", "targetname");
 	while(e_player istouching(var_6a955d70))
 	{
 		var_933e0d32 = vectortoangles(var_16fe671f.origin - e_player.origin);
@@ -5345,7 +5366,8 @@ function function_6e3cfa55()
 	#/
 	level.var_f8d1dc16 endon(#"death");
 	level.var_f8d1dc16 endon(#"quest_swap");
-	while(1)
+	s_beacon = struct::get(self.target);
+	while(true)
 	{
 		level.var_f8d1dc16 waittill(#"projectile_impact", weapon, point, radius, attacker, normal);
 		if(function_51a90202(weapon, 1, point, self))
@@ -5489,7 +5511,7 @@ function function_cce911bb()
 	var_93e50579 = getent(self.target, "targetname");
 	var_e9dd177b = getent(var_93e50579.target, "targetname");
 	var_93e50579 clientfield::set("wallrun_fx", 1);
-	while(1)
+	while(true)
 	{
 		var_e9dd177b waittill(#"trigger");
 		if(!array::contains(level.var_49593fd9, self))
@@ -5582,6 +5604,7 @@ function function_ba8e8ad8(e_who)
 	e_who endon(#"quest_swap");
 	level endon(#"elemental_storm_wallrun");
 	e_who playrumbleonentity("damage_heavy");
+	var_968c3922 = 0;
 	while(var_968c3922 < 4)
 	{
 		while(e_who iswallrunning() || !e_who isonground() || e_who isinmovemode("ufo", "noclip"))
@@ -5734,7 +5757,8 @@ function function_43cb1d81()
 		level endon(#"hash_b1cac6d2");
 		level endon(#"hash_ae42a737");
 	#/
-	while(1)
+	var_d186cfae = struct::get(self.target, "targetname");
+	while(true)
 	{
 		self waittill(#"killed");
 		self.var_bb486f65++;
@@ -5854,7 +5878,8 @@ function function_1c758ab0()
 	#/
 	level.var_f8d1dc16 endon(#"death");
 	level.var_f8d1dc16 endon(#"quest_swap");
-	while(1)
+	s_beacon = struct::get(self.target);
+	while(true)
 	{
 		level.var_f8d1dc16 waittill(#"projectile_impact", weapon, point, radius, projectile, normal);
 		if(isdefined(projectile.var_e4594d27) && projectile.var_e4594d27)
@@ -5905,6 +5930,7 @@ function function_4688cd22()
 	self endon(#"death");
 	self endon(#"quest_swap");
 	var_54697048 = getentarray("aq_es_battery_volume_charged", "script_noteworthy");
+	var_e1041201 = getweapon("elemental_bow");
 	while(!level flag::get("elemental_storm_beacons_charged"))
 	{
 		if(self ischargeshotpending() && self.chargeshotlevel === 4)
@@ -6167,7 +6193,7 @@ function function_473ebf10()
 	/#
 		level.var_174d6fda = 1;
 	#/
-	while(1)
+	while(true)
 	{
 		var_605e43a9.var_67b5dd94 waittill(#"trigger", e_who);
 		if(e_who === level.var_f8d1dc16)
@@ -6185,7 +6211,7 @@ function function_473ebf10()
 	}
 	var_605e43a9.var_67b5dd94.prompt_and_visibility_func = &function_8c1fd619;
 	var_605e43a9.var_67b5dd94 unitrigger_refresh_message();
-	while(1)
+	while(true)
 	{
 		var_605e43a9.var_67b5dd94 waittill(#"trigger", e_who);
 		if(isdefined(level.var_f8d1dc16))
@@ -6537,7 +6563,7 @@ function function_f708e6b2()
 */
 function function_655cb8e()
 {
-	while(1)
+	while(true)
 	{
 		self.var_67b5dd94 waittill(#"trigger", e_who);
 		level function_e0db1fe7(e_who);
@@ -6965,7 +6991,7 @@ function function_14dd5ea5()
 	}
 	level function_f5e9876(var_5cdbaec4, 5);
 	self function_3313abd5();
-	while(1)
+	while(true)
 	{
 		self.var_67b5dd94 waittill(#"trigger", e_who);
 		e_target_player = level function_7b6fdb3e(self.script_label);
@@ -7017,7 +7043,7 @@ function function_14dd5ea5()
 	level flag::wait_till(var_7ceb9ac6);
 	zm_spawner::deregister_zombie_death_event_callback(var_febc5f71);
 	self function_3313abd5(&function_3bc663b);
-	while(1)
+	while(true)
 	{
 		self.var_67b5dd94 waittill(#"trigger", e_who);
 		if(e_who function_9dfa159b())
@@ -7273,7 +7299,7 @@ function function_fb704679(e_target_player = undefined)
 	}
 	level.var_e8a6b6f7[level.var_e8a6b6f7.size] = self.var_67b5dd94;
 	var_b4810425 = getweapon(self.script_label);
-	while(1)
+	while(true)
 	{
 		self.var_67b5dd94 waittill(#"trigger", e_who);
 		if(e_who function_9dfa159b() || e_who hasweapon(var_b4810425))
@@ -7396,7 +7422,7 @@ function function_a4861409(e_player, var_285c992d)
 	str_endon = var_285c992d.script_label + "_returned";
 	level endon(str_endon);
 	var_bbdf3539 = 0;
-	while(1)
+	while(true)
 	{
 		str_notify = e_player util::waittill_any_ex("death", "weapon_change", "bgb_about_to_take_on_bled_out", "bled_out", "player_revived", level, str_endon);
 		var_285c992d.var_67b5dd94 unitrigger_refresh_message();
@@ -7455,7 +7481,7 @@ function function_a4861409(e_player, var_285c992d)
 function function_b584c1e()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_change");
 		foreach(var_3d4dec5f, var_4e85a5a3 in level.var_e8a6b6f7)
@@ -7493,7 +7519,8 @@ function function_cdfce37d(var_87e87273)
 	self endon(#"death");
 	level endon(var_87e87273 + "_stop_tracking");
 	level endon(var_87e87273 + "_returned");
-	while(1)
+	var_48e2fc20 = getweapon(var_87e87273);
+	while(true)
 	{
 		self util::waittill_either("missile_fire", "zmb_max_ammo");
 		if(self hasweapon(var_48e2fc20))
@@ -7813,7 +7840,7 @@ function function_573ca470()
 {
 	self endon(#"kill_trigger");
 	self.stub thread unitrigger_refresh_message();
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_player);
 		if(e_player zm_utility::in_revive_trigger())

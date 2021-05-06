@@ -294,7 +294,8 @@ function quad_vox()
 {
 	self endon(#"death");
 	wait(5);
-	while(1)
+	quad_wait = 5;
+	while(true)
 	{
 		players = getplayers();
 		for(i = 0; i < players.size; i++)
@@ -437,6 +438,7 @@ function quad_gas_area_of_effect(origin, death_vars)
 {
 	effectarea = spawn("trigger_radius", origin, 0, death_vars["gas_radius"], 100);
 	playfx(level._effect["quad_explo_gas"], origin);
+	gas_time = 0;
 	while(gas_time <= death_vars["gas_time"])
 	{
 		players = getplayers();

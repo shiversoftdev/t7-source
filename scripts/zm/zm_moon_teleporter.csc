@@ -99,7 +99,7 @@ function teleporter_fx_init(clientnum, set, newent)
 */
 function teleporter_fx_cool_down(clientnum)
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"cool_fx", clientnum);
 		players = getlocalplayers();
@@ -201,7 +201,7 @@ function pack_cooldown_listener()
 */
 function wait_for_teleport_aftereffect()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"ae1", clientnum);
 		visionsetnaked(clientnum, "flare", 0.4);

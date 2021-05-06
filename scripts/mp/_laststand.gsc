@@ -152,7 +152,7 @@ function makesureswitchtoweapon()
 	self endon(#"player_input_revive");
 	self endon(#"player_input_suicide");
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		if(self getcurrentweapon() != self.resurrect_weapon)
 		{

@@ -252,6 +252,7 @@ function onovertime()
 	setmatchtalkflag("DeadHearTeamLiving", 0);
 	setmatchtalkflag("DeadHearAllLiving", 0);
 	setmatchtalkflag("EveryoneHearsEveryone", 0);
+	waittime = 0;
 	while(waittime < 90)
 	{
 		if(!level.bombplanted)

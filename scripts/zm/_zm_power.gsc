@@ -73,7 +73,7 @@ function __main__()
 function debug_powered_items()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			if(getdvarint(""))
 			{
@@ -214,7 +214,7 @@ function electric_switch(switch_array)
 */
 function watch_global_power()
 {
-	while(1)
+	while(true)
 	{
 		level flag::wait_till("power_on");
 		level thread set_global_power(1);
@@ -277,7 +277,7 @@ function standard_powered_items()
 */
 function zone_controlled_perk(zone)
 {
-	while(1)
+	while(true)
 	{
 		power_flag = "power_on" + zone;
 		level flag::wait_till(power_flag);

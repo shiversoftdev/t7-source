@@ -529,7 +529,7 @@ function handlenotetrack(note, flagname, customfunction, var1)
 			}
 			break;
 		}
-		default
+		default:
 		{
 			if(isdefined(customfunction))
 			{

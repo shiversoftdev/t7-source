@@ -79,7 +79,7 @@ function function_2a30e2ca(localclientnum)
 	self endon(#"entityshutdown");
 	self notify(#"hash_eb366021");
 	self endon(#"hash_eb366021");
-	while(1)
+	while(true)
 	{
 		self.var_dedf9511 = self playsound(localclientnum, "zmb_music_box", self.origin);
 		wait(4);

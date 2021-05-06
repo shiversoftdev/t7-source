@@ -325,7 +325,7 @@ function function_e48af0db()
 function function_43eea1de()
 {
 	level endon(#"hash_a881e3fa");
-	while(1)
+	while(true)
 	{
 		var_47364533 = randomfloatrange(self.var_e033b3aa, self.var_f5525b44);
 		wait(var_47364533);
@@ -373,7 +373,7 @@ function function_b6c7fd80()
 	var_bac4e70 = 0;
 	var_90530d3 = 0;
 	self.var_8abfb076 = 0;
-	while(1)
+	while(true)
 	{
 		self.var_93dad597.health = 1000000;
 		self.var_93dad597 waittill(#"damage", amount, attacker, direction_vec, point, type, tagname, modelname, partname, weapon);
@@ -1101,8 +1101,9 @@ function function_4ef376eb(s_spawnpoint)
 function function_33ddc9ed(n_location_index)
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
+		s_pod = undefined;
 		while(!isdefined(s_pod))
 		{
 			s_pod = function_479785a0(n_location_index);
@@ -1259,7 +1260,8 @@ function function_4a3d00d6(goal)
 function function_75c9aad2(var_8388cfbb, n_radius, var_9c795730 = 0)
 {
 	self endon(#"death");
-	while(1)
+	var_699d80d5 = n_radius * n_radius;
+	while(true)
 	{
 		if(distance2dsquared(self.origin, var_8388cfbb) <= var_699d80d5)
 		{
@@ -1470,7 +1472,8 @@ function function_6ceb834f()
 {
 	level notify(#"hash_6ceb834f");
 	level endon(#"hash_6ceb834f");
-	while(1)
+	var_c9a88def = struct::get_array("cursetrap_point", "targetname");
+	while(true)
 	{
 		foreach(var_5eb93477, var_c2099ecc in var_c9a88def)
 		{
@@ -1592,6 +1595,7 @@ private function function_d5ce1233(player)
 	level endon(#"hash_a881e3fa");
 	level endon(#"hash_82a23c03");
 	self endon(#"hash_37a7e986");
+	v_origin = self.origin;
 	while(isdefined(player))
 	{
 		angles = vectortoangles(player.origin - v_origin);

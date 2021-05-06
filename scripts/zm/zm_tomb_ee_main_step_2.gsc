@@ -208,7 +208,8 @@ function robot_head_trigger_think()
 	self endon(#"kill_trigger");
 	str_weap_staff = "staff_" + self.script_noteworthy;
 	var_5ec0aa73 = level.a_elemental_staffs[str_weap_staff].w_weapon;
-	while(1)
+	e_upgraded_staff = zm_tomb_craftables::get_staff_info_from_weapon_name(var_5ec0aa73, 0);
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player hasweapon(e_upgraded_staff.w_weapon))

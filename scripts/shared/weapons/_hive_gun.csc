@@ -379,7 +379,8 @@ function watch_for_gib_notetracks(localclientnum)
 		}
 	}
 	arm_gib = 0;
-	while(1)
+	leg_gib = 0;
+	while(true)
 	{
 		notetrack = self util::waittill_any_return("gib_leftarm", "gib_leftleg", "gib_rightarm", "gib_rightleg", "entityshutdown");
 		switch(notetrack)
@@ -416,7 +417,7 @@ function watch_for_gib_notetracks(localclientnum)
 				self setcorpsegibstate(leg_gib, arm_gib);
 				break;
 			}
-			default
+			default:
 			{
 				break;
 			}

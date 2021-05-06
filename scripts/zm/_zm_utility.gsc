@@ -729,7 +729,8 @@ function random_tan()
 function places_before_decimal(num)
 {
 	abs_num = abs(num);
-	while(1)
+	count = 0;
+	while(true)
 	{
 		abs_num = abs_num * 0.1;
 		count = count + 1;
@@ -837,7 +838,7 @@ function watch_for_poi_death()
 function debug_draw_new_attractor_positions()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		foreach(var_9156795c, attract in self.attractor_positions)
 		{
@@ -929,6 +930,7 @@ function generated_radius_attract_positions(forward, offset, num_positions, attr
 	epsilon = 1;
 	failed = 0;
 	degs_per_pos = 360 / num_positions;
+	i = offset;
 	while(i < 360 + offset)
 	{
 		altforward = forward * attract_radius;
@@ -1010,7 +1012,7 @@ function generated_radius_attract_positions(forward, offset, num_positions, attr
 function debug_draw_attractor_positions()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			while(!isdefined(self.attractor_positions))
 			{
@@ -1042,7 +1044,7 @@ function debug_draw_attractor_positions()
 function debug_draw_claimed_attractor_positions()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			while(!isdefined(self.claimed_attractor_positions))
 			{
@@ -1689,6 +1691,7 @@ function get_closest_valid_player(origin, ignore_player)
 			arrayremovevalue(players, ignore_player[i]);
 		}
 	}
+	done = 0;
 	while(players.size && !done)
 	{
 		done = 1;
@@ -1800,6 +1803,7 @@ function update_valid_players(origin, ignore_player)
 			arrayremovevalue(players, ignore_player[i]);
 		}
 	}
+	done = 0;
 	while(players.size && !done)
 	{
 		done = 1;
@@ -3493,7 +3497,8 @@ function hudelem_count()
 {
 	/#
 		max = 0;
-		while(1)
+		curr_total = 0;
+		while(true)
 		{
 			if(level.hudelem_count > max)
 			{
@@ -3517,7 +3522,7 @@ function hudelem_count()
 function debug_round_advancer()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			zombs = zombie_utility::get_round_enemy_array();
 			for(i = 0; i < zombs.size; i++)
@@ -3542,7 +3547,7 @@ function print_run_speed(speed)
 {
 	/#
 		self endon(#"death");
-		while(1)
+		while(true)
 		{
 			print3d(self.origin + vectorscale((0, 0, 1), 64), speed, (1, 1, 1));
 			wait(0.05);
@@ -3568,7 +3573,7 @@ function draw_line_ent_to_ent(ent1, ent2)
 		}
 		ent1 endon(#"death");
 		ent2 endon(#"death");
-		while(1)
+		while(true)
 		{
 			line(ent1.origin, ent2.origin);
 			wait(0.05);
@@ -3599,7 +3604,7 @@ function draw_line_ent_to_pos(ent, pos, end_on)
 		{
 			ent endon(end_on);
 		}
-		while(1)
+		while(true)
 		{
 			line(ent.origin, pos);
 			wait(0.05);
@@ -3699,7 +3704,7 @@ function print3d_at_pos(msg, pos, thread_endon, offset)
 		{
 			offset = (0, 0, 0);
 		}
-		while(1)
+		while(true)
 		{
 			print3d(self.origin + offset, msg);
 			wait(0.05);
@@ -3722,7 +3727,7 @@ function debug_breadcrumbs()
 		self endon(#"disconnect");
 		self notify(#"stop_debug_breadcrumbs");
 		self endon(#"stop_debug_breadcrumbs");
-		while(1)
+		while(true)
 		{
 			if(getdvarint("") != 1)
 			{
@@ -3752,7 +3757,7 @@ function debug_attack_spots_taken()
 	/#
 		self notify(#"stop_debug_breadcrumbs");
 		self endon(#"stop_debug_breadcrumbs");
-		while(1)
+		while(true)
 		{
 			if(getdvarint("") != 2)
 			{
@@ -3791,6 +3796,7 @@ function float_print3d(msg, time)
 	/#
 		self endon(#"death");
 		time = gettime() + time * 1000;
+		offset = vectorscale((0, 0, 1), 72);
 		while(gettime() < time)
 		{
 			offset = offset + vectorscale((0, 0, 1), 2);
@@ -4164,7 +4170,7 @@ function shock_onpain()
 	{
 		setdvar("blurpain", "on");
 	}
-	while(1)
+	while(true)
 	{
 		oldhealth = self.health;
 		self waittill(#"damage", damage, attacker, direction_vec, point, mod);
@@ -5548,7 +5554,8 @@ function waittill_not_moving()
 	}
 	else
 	{
-		while(1)
+		prevorigin = self.origin;
+		while(true)
 		{
 			wait(0.15);
 			if(self.origin == prevorigin)
@@ -5662,7 +5669,7 @@ function track_players_intersection_tracker()
 	self endon(#"death");
 	level endon(#"end_game");
 	wait(5);
-	while(1)
+	while(true)
 	{
 		killed_players = 0;
 		players = getplayers();
@@ -6346,7 +6353,8 @@ function place_navcard(str_model, str_stat, org, angles)
 	navcard_pickup_trig triggerignoreteam();
 	a_navcard_stats = array("navcard_held_zm_transit", "navcard_held_zm_highrise", "navcard_held_zm_buried");
 	is_holding_card = 0;
-	while(1)
+	str_placing_stat = undefined;
+	while(true)
 	{
 		navcard_pickup_trig waittill(#"trigger", who);
 		if(is_player_valid(who))

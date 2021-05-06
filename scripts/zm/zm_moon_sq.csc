@@ -83,7 +83,7 @@ function charge_tank_cleanup(localclientnum, oldval, newval, bnewent, binitialsn
 */
 function dest_debug(dest)
 {
-	while(1)
+	while(true)
 	{
 		/#
 			print3d(dest, "", vectorscale((1, 0, 0), 255), 30);
@@ -312,7 +312,8 @@ function sam_rise_and_bob(struct)
 	amplitude = 7;
 	frequency = 75;
 	t = 0;
-	while(1)
+	level._sam = self;
+	while(true)
 	{
 		normalized_wave_height = sin(frequency * t);
 		wave_height_z = amplitude * normalized_wave_height;
@@ -358,7 +359,8 @@ function bob_vg()
 	start_z = self.origin;
 	amplitude = 2;
 	frequency = 100;
-	while(1)
+	t = 0;
+	while(true)
 	{
 		normalized_wave_height = sin(frequency * t);
 		wave_height_z = amplitude * normalized_wave_height;
@@ -487,7 +489,8 @@ function sam_end_rumble(localclientnum, oldval, newval, bnewent, binitialsnap, f
 function do_sr_rumble(localclientnum)
 {
 	level endon(#"hash_f9b2abc9");
-	while(1)
+	var_845cd5d1 = struct::get("pyramid_walls_retract", "targetname");
+	while(true)
 	{
 		a_players = getlocalplayers();
 		for(i = 0; i < a_players.size; i++)
@@ -539,7 +542,7 @@ function function_9b1295b1(localclientnum)
 {
 	self endon(#"disconnect");
 	level endon(#"hash_306cf2d4");
-	while(1)
+	while(true)
 	{
 		self earthquake(randomfloatrange(0.2, 0.25), 5, self.origin, 100);
 		self playrumbleonentity(localclientnum, "slide_rumble");
@@ -575,7 +578,7 @@ function raise_rockets(localclientnum, oldval, newval, bnewent, binitialsnap, fi
 function do_rr_rumble()
 {
 	level endon(#"_stop_rr");
-	while(1)
+	while(true)
 	{
 		for(i = 0; i < level.localplayers.size; i++)
 		{
@@ -619,7 +622,7 @@ function rocket_launch(localclientnum, oldval, newval, bnewent, binitialsnap, fi
 function do_rl_rumble()
 {
 	level endon(#"_stop_rl");
-	while(1)
+	while(true)
 	{
 		for(i = 0; i < level.localplayers.size; i++)
 		{
@@ -676,7 +679,7 @@ function do_de_rumble()
 		player playrumbleonentity(i, "damage_heavy");
 	}
 	wait(0.2);
-	while(1)
+	while(true)
 	{
 		for(i = 0; i < level.localplayers.size; i++)
 		{

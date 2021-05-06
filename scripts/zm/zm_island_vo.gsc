@@ -379,6 +379,7 @@ function function_2426269b(v_pos, n_range = 1000)
 				var_d211180f.isspeaking = 0;
 			}
 		}
+		i = 0;
 		while(isdefined(level.a_e_speakers) && i < level.a_e_speakers.size)
 		{
 			if(isdefined(level.a_e_speakers[i].deleteme) && level.a_e_speakers[i].deleteme == 1)
@@ -637,7 +638,7 @@ function function_642e6aef(impact, mod, weapon, zombie, instakill, dist, player)
 function function_772aa229()
 {
 	self endon(#"_zombie_game_over");
-	while(1)
+	while(true)
 	{
 		level waittill(#"start_of_round");
 		if(function_70e6e39e() == 0)
@@ -1035,6 +1036,7 @@ function function_7fc6d0cd(a_str_zones, var_7a4c869a, var_87fad49a, var_142db61a
 	{
 		level flag::wait_till_any(var_7a4c869a);
 	}
+	var_b24c0d65 = undefined;
 	while(!isdefined(var_b24c0d65))
 	{
 		foreach(var_35b255c4, player in level.activeplayers)
@@ -1079,6 +1081,7 @@ function function_35fd7118(a_str_zones, var_7a4c869a, var_87fad49a, var_142db61a
 	self endon(#"hash_56cd6f57");
 	level flag::wait_till_any(var_7a4c869a);
 	t_pap_lookat = getent("t_pap_lookat", "targetname");
+	var_b24c0d65 = undefined;
 	while(!zm_utility::is_player_valid(var_b24c0d65))
 	{
 		t_pap_lookat waittill(#"trigger", var_b24c0d65);
@@ -1361,7 +1364,7 @@ function function_cdc8a72a(var_8d8f9222)
 */
 function function_c426b455()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_9c49b4a8");
 		if(!level flag::exists("first_spider_round"))
@@ -1398,6 +1401,7 @@ function function_5943b45()
 	self endon(#"death");
 	self endon(#"hash_cbca0f35");
 	var_e8356f9e = 2560000;
+	var_90d45ead = 0;
 	while(!(isdefined(var_90d45ead) && var_90d45ead))
 	{
 		wait(0.5);
@@ -1487,7 +1491,7 @@ function function_c57ccaa9()
 */
 function function_8eebdc4d()
 {
-	while(1)
+	while(true)
 	{
 		wait(1);
 		if(!level flag::get("vo_lock_thrasher_appear_roar"))
@@ -1540,7 +1544,7 @@ function function_5ca4424()
 {
 	var_1430cde = 640000;
 	level flag::wait_till("thrasher_spotted");
-	while(1)
+	while(true)
 	{
 		if(!level flag::get("vo_lock_thrasher_appear_roar"))
 		{
@@ -1579,7 +1583,7 @@ function function_a5b6f9c0()
 {
 	var_1430cde = 640000;
 	level flag::wait_till("thrasher_spotted");
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_49c2b21f", var_f363f596);
 		if(isalive(var_f363f596) && (!(isdefined(var_f363f596.var_36ba10fd) && var_f363f596.var_36ba10fd)))
@@ -1637,7 +1641,7 @@ function function_1e767f71(e_target, n_min_dist = 600, var_79d0b667, var_b03cc21
 {
 	e_target endon(#"hash_9ed7f404");
 	e_target endon(#"death");
-	while(1)
+	while(true)
 	{
 		var_45edf029 = arraysortclosest(level.players, e_target.origin);
 		foreach(var_e709b5d9, player in var_45edf029)
@@ -1703,7 +1707,7 @@ function function_81d644a1()
 	self endon(#"death");
 	array::add(self.var_bac3b790, "death");
 	array::add(self.var_bac3b790, "disconnect");
-	while(1)
+	while(true)
 	{
 		str_event = self util::waittill_any_array_return(self.var_bac3b790);
 		if(self.var_bc80de72[str_event] > 0)
@@ -1728,7 +1732,7 @@ function function_81d644a1()
 */
 function function_c261e8aa()
 {
-	while(1)
+	while(true)
 	{
 		str_event = level util::waittill_any_array_return(level.var_bac3b790);
 		if(level.var_bc80de72[str_event] > 0)
@@ -1887,7 +1891,7 @@ function function_11b41a76(n_player_index, str_type, var_f73f0bfc, var_69467b37 
 			str_vo = "vox_plr_" + n_player_index + "_round" + var_f73f0bfc + "_end_0";
 			break;
 		}
-		default
+		default:
 		{
 			str_vo = "vox_plr_" + n_player_index + "_" + str_type + var_f73f0bfc + "_" + var_69467b37;
 			break;

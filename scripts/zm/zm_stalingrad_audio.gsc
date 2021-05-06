@@ -104,7 +104,7 @@ function function_af4c67d()
 	level.var_c128c3f5 = 0;
 	level.var_9d74f1a7 = struct::get_array("side_ee_song_vodka", "targetname");
 	array::thread_all(level.var_9d74f1a7, &function_5583a127);
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_9727ab41");
 		if(level.var_c128c3f5 == level.var_9d74f1a7.size)
@@ -180,7 +180,7 @@ function function_41f49ee8()
 	level.var_62e63d78 = 0;
 	level.var_68982832 = struct::get_array("side_ee_song_card", "targetname");
 	array::thread_all(level.var_68982832, &function_f021c688);
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_ce64d360");
 		if(level.var_62e63d78 == level.var_68982832.size)
@@ -257,7 +257,8 @@ function function_8faf1d24(v_color, var_8882142e, n_scale, str_endon)
 		{
 			self endon(str_endon);
 		}
-		while(1)
+		origin = self.origin;
+		while(true)
 		{
 			print3d(origin, var_8882142e, v_color, n_scale);
 			wait(0.1);
@@ -296,7 +297,7 @@ function function_ae93bb6d()
 function function_d75eac4e()
 {
 	self zm_unitrigger::create_unitrigger(undefined, 50);
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger_activated");
 		playsoundatposition(self.script_sound, self.origin);
@@ -319,7 +320,7 @@ function function_e01c1b04(var_99ad39b9)
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		var_4237d65e = randomintrange(0, var_99ad39b9.size);
 		var_99ad39b9[var_4237d65e] zm_unitrigger::create_unitrigger(undefined, 24);
@@ -375,7 +376,7 @@ function function_5c7f73da()
 function function_ab32c346(var_2de8cf5e, var_bee8e45)
 {
 	var_2de8cf5e[0] zm_unitrigger::create_unitrigger();
-	while(1)
+	while(true)
 	{
 		var_2de8cf5e[0] waittill(#"trigger_activated", who);
 		if(!who zm_utility::is_player_looking_at(var_2de8cf5e[0].origin))
@@ -400,7 +401,7 @@ function function_ab32c346(var_2de8cf5e, var_bee8e45)
 function function_8c75c164(var_2de8cf5e, var_bee8e45)
 {
 	var_2de8cf5e[0].var_de6d4fc0 setcandamage(1);
-	while(1)
+	while(true)
 	{
 		var_2de8cf5e[0].var_de6d4fc0.health = 1000000;
 		var_2de8cf5e[0].var_de6d4fc0 waittill(#"damage", damage, attacker, dir, loc, type, model, tag, part, weapon, flags);
@@ -464,7 +465,7 @@ function function_ccdb680e(var_2de8cf5e, b_on)
 */
 function function_e464aa51()
 {
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.var_a02b0d5a) && self.var_a02b0d5a)
 		{
@@ -655,7 +656,7 @@ function function_663128e3()
 	level flag::wait_till("ballerina_ready");
 	wait(8);
 	level function_6b495bd6();
-	while(1)
+	while(true)
 	{
 		success = level function_4c503dc7();
 		if(!(isdefined(success) && success))
@@ -773,7 +774,7 @@ function function_631d8c1()
 	self endon(#"hash_636d801f");
 	self endon(#"ballerina_destroyed");
 	self endon(#"ballerina_timeout");
-	while(1)
+	while(true)
 	{
 		self.var_ac086ffb rotateyaw(360, 4);
 		wait(4);
@@ -794,7 +795,7 @@ function function_75442852()
 	self endon(#"ballerina_timeout");
 	self.var_ac086ffb setcandamage(1);
 	self.var_ac086ffb.health = 1000000;
-	while(1)
+	while(true)
 	{
 		self.var_ac086ffb waittill(#"damage", damage, attacker, dir, loc, type, model, tag, part, weapon, flags);
 		if(!isdefined(attacker) || !isplayer(attacker))

@@ -96,7 +96,7 @@ function function_ca1a937()
 */
 function function_87325d74()
 {
-	while(1)
+	while(true)
 	{
 		if(level flag::get("memento_detective_found"))
 		{

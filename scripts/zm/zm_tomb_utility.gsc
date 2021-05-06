@@ -181,7 +181,7 @@ function zombie_devgui_tomb(cmd)
 function function_23eb2509()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			if(getdvarstring("") != "")
 			{
@@ -212,7 +212,7 @@ function function_23eb2509()
 function function_6f935c89()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			if(getdvarstring("") == "")
 			{
@@ -236,7 +236,8 @@ function function_6f935c89()
 function watch_for_upgraded_staffs()
 {
 	/#
-		while(1)
+		cmd = "";
+		while(true)
 		{
 			wait(0.25);
 			if(!isdefined(level.zombie_devgui_gun) || level.zombie_devgui_gun != cmd)
@@ -275,7 +276,7 @@ function watch_for_upgraded_staffs()
 function function_d88b52e6()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			if(getdvarstring("") == "" || getdvarstring("") == "" || getdvarstring("") == "" || getdvarstring("") == "" || getdvarstring("") == "" || getdvarstring("") == "" || getdvarstring("") == "" || getdvarstring("") == "" || getdvarstring("") == "")
 			{
@@ -398,7 +399,7 @@ function function_d88b52e6()
 function watch_devgui_complete_puzzles()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			if(getdvarstring("") == "" || getdvarstring("") == "")
 			{
@@ -545,7 +546,7 @@ function get_teleport_fx_from_enum(n_enum)
 			return "teleport_elec";
 		}
 		case 2:
-		default
+		default:
 		{
 			return "teleport_air";
 		}
@@ -679,7 +680,8 @@ function player_slow_movement_speed_monitor()
 	n_movescale_delta_staminup = 0.25 / 6;
 	n_new_move_scale = 1;
 	n_move_scale_delta = 1;
-	while(1)
+	self.n_move_scale = n_new_move_scale;
+	while(true)
 	{
 		is_player_slowed = 0;
 		self.is_player_slowed = 0;
@@ -979,7 +981,7 @@ function dug_zombie_entered_playable()
 	{
 		level.playable_areas = getentarray("player_volume", "script_noteworthy");
 	}
-	while(1)
+	while(true)
 	{
 		foreach(var_50733fb3, area in level.playable_areas)
 		{
@@ -1115,7 +1117,7 @@ function is_weapon_upgraded_staff(w_weapon)
 		{
 			return 1;
 		}
-		default
+		default:
 		{
 			return 0;
 		}
@@ -1137,7 +1139,7 @@ function watch_staff_usage()
 	self endon(#"watch_staff_usage");
 	self endon(#"disconnect");
 	self clientfield::set_to_player("player_staff_charge", 0);
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_change", weapon);
 		has_upgraded_staff = 0;
@@ -1208,7 +1210,7 @@ function function_38af9e8e()
 	self endon(#"hash_38af9e8e");
 	self endon(#"hash_75edd128");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		ammo = self getammocount(level.var_2b2f83e5);
 		self clientfield::set_player_uimodel("hudItems.dpadLeftAmmo", ammo);
@@ -1235,7 +1237,8 @@ function staff_charge_watch()
 	{
 		wait(0.05);
 	}
-	while(1)
+	n_old_charge = 0;
+	while(true)
 	{
 		if(n_old_charge != self.chargeshotlevel)
 		{
@@ -1350,7 +1353,7 @@ function puzzle_debug_position(string_to_show, color, origin, str_dvar, n_show_t
 				wait(1);
 			}
 		}
-		while(1)
+		while(true)
 		{
 			if(isdefined(origin))
 			{
@@ -1402,7 +1405,7 @@ function placeholder_puzzle_delete_ent(str_flag_name)
 function placeholder_puzzle_spin_model()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self rotateyaw(360, 10, 0, 0);
 		wait(9.9);
@@ -1527,7 +1530,7 @@ function tomb_unitrigger_think()
 	{
 		self thread tomb_trigger_update_message(self.stub.func_update_msg);
 	}
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		self.stub notify(#"trigger", player);
@@ -1764,7 +1767,7 @@ function weather_manager()
 	level.last_snow_round = 0;
 	level.last_rain_round = 0;
 	level waittill(#"hash_149fa2ac");
-	while(1)
+	while(true)
 	{
 		randomize_weather();
 		level clientfield::set("rain_level", level.weather_rain);
@@ -1824,7 +1827,8 @@ function set_weather_to_player()
 */
 function rotate_skydome()
 {
-	while(1)
+	level.sky_rotation = 360;
+	while(true)
 	{
 		level.sky_rotation = level.sky_rotation - 0;
 		if(level.sky_rotation < 0)
@@ -1881,6 +1885,7 @@ function puzzle_orb_move(v_to_pos)
 */
 function puzzle_orb_follow_path(s_start)
 {
+	s_next_pos = s_start;
 	while(isdefined(s_next_pos))
 	{
 		self puzzle_orb_move(s_next_pos.origin);
@@ -1907,6 +1912,7 @@ function puzzle_orb_follow_path(s_start)
 function puzzle_orb_follow_return_path(s_start, n_element)
 {
 	a_path = [];
+	s_next = s_start;
 	while(isdefined(s_next))
 	{
 		a_path[a_path.size] = s_next;
@@ -2046,6 +2052,7 @@ function puzzle_orb_chamber_to_crypt(str_start_point, e_gem_pos)
 	str_zone = zm_zonemgr::get_zone_from_position(s_start.origin, 1);
 	time_looking_at_orb = 0;
 	min_lookat_dot = cos(30);
+	n_near_dist_sq = 32400;
 	while(time_looking_at_orb < 1)
 	{
 		wait(0.1);
@@ -2263,6 +2270,7 @@ function whirlwind_rumble_player(e_whirlwind, str_active_flag)
 	self clientfield::set_to_player("player_rumble_and_shake", 4);
 	dist_sq = distancesquared(self.origin, e_whirlwind.origin);
 	range_inner_sq = 10000;
+	range_sq = 90000;
 	while(dist_sq < range_sq)
 	{
 		wait(0.05);
@@ -2304,6 +2312,7 @@ function whirlwind_rumble_player(e_whirlwind, str_active_flag)
 */
 function whirlwind_rumble_nearby_players(str_active_flag)
 {
+	range_sq = 90000;
 	while(isdefined(self) && level flag::get(str_active_flag))
 	{
 		a_players = getplayers();
@@ -2424,7 +2433,7 @@ function change_weapon_cost(str_weapon, n_cost)
 */
 function zone_capture_powerup()
 {
-	while(1)
+	while(true)
 	{
 		level flag::wait_till("zone_capture_in_progress");
 		level flag::wait_till_clear("zone_capture_in_progress");
@@ -2486,6 +2495,7 @@ function traversal_blocker_disabler()
 	self endon(#"death");
 	pos1 = (-1509, 3912, -168);
 	pos2 = (672, 3720, -179);
+	b_too_close = 0;
 	while(level.round_number < 10 && !b_too_close)
 	{
 		a_players = getplayers();

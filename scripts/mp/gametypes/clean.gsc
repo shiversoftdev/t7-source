@@ -216,7 +216,7 @@ function function_7ae0a91b()
 function debug_print()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			iprintln("" + level.var_75f6aaa3);
 			iprintln("" + level.var_48919db8);
@@ -307,7 +307,7 @@ function function_d740a523()
 {
 	self endon(#"death");
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		self flagsys::wait_till("camo_suit_on");
 		self clientfield::set("taco_carry", 0);
@@ -328,7 +328,7 @@ function function_2b8b2197()
 {
 	self endon(#"death");
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		self flagsys::wait_till("camo_suit_on");
 		self flagsys::wait_till_clear("camo_suit_on");
@@ -349,7 +349,7 @@ function function_3063d818()
 {
 	self endon(#"death");
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		self flagsys::wait_till("clone_activated");
 		self clientfield::set("taco_carry", 0);
@@ -370,7 +370,7 @@ function function_f1188a86()
 {
 	self endon(#"death");
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		self flagsys::wait_till("clone_activated");
 		self flagsys::wait_till_clear("clone_activated");
@@ -391,7 +391,7 @@ function function_7858ab06()
 {
 	self endon(#"death");
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		self util::waittill_any("enter_vehicle", "exit_vehicle");
 		self function_65ae6452();
@@ -551,7 +551,7 @@ function function_31778038()
 	level endon(#"game_ended");
 	self endon(#"reset");
 	self.var_88b94427 endon(#"stationary");
-	while(1)
+	while(true)
 	{
 		if(!isdefined(self))
 		{
@@ -831,7 +831,8 @@ function function_5b1f87d2()
 	}
 	setbombtimer("A", 0);
 	setmatchflag("bomb_timer_a", 0);
-	while(1)
+	var_1bc0e62e = -1;
+	while(true)
 	{
 		if(level.var_c8a5fbc4 > 0)
 		{
@@ -1049,7 +1050,7 @@ function function_f6b1cbad(player)
 			player playlocalsound("mpl_fracture_deposit_4");
 			break;
 		}
-		default
+		default:
 		{
 			player playlocalsound("mpl_fracture_deposit_5");
 		}
@@ -1109,7 +1110,7 @@ function function_aaca5c8e(var_b9fd331)
 	level endon(#"hash_9c7ac0c3");
 	self thread function_cde390a2();
 	wait(0.1);
-	while(1)
+	while(true)
 	{
 		if(distance2dsquared(self.origin, var_b9fd331.origin) > 90 * 90)
 		{

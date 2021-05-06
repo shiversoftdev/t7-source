@@ -331,6 +331,7 @@ function function_10cd71b(decoy, potentialtargets)
 	var_6a0945f2 = var_b333c85b;
 	maxtries = 6;
 	var_539aaa1a = 0;
+	step = var_81ca05ac * getdvarint("scr_misdirection_decoy_spacing", 90);
 	while(maxtries > 0)
 	{
 		left = var_6a0945f2 + 6 - maxtries * step;

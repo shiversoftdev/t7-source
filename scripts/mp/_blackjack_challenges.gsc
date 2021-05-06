@@ -401,7 +401,7 @@ function get_hero_weapon_mask(attacker, weapon)
 			return 256;
 			break;
 		}
-		default
+		default:
 		{
 			return 0;
 		}
@@ -470,7 +470,7 @@ function get_hero_ability_mask(ability)
 			return 256;
 			break;
 		}
-		default
+		default:
 		{
 			return 0;
 		}

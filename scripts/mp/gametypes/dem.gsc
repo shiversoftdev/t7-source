@@ -666,7 +666,8 @@ function givelastattackerwarning()
 	self endon(#"death");
 	self endon(#"disconnect");
 	fullhealthtime = 0;
-	while(1)
+	interval = 0.05;
+	while(true)
 	{
 		if(self.health != self.maxhealth)
 		{
@@ -1415,6 +1416,7 @@ function waitlongdurationwithbombtimeupdate(whichbomb, duration)
 		assert(duration > 0);
 	#/
 	starttime = gettime();
+	endtime = gettime() + duration * 1000;
 	while(gettime() < endtime)
 	{
 		hostmigration::waittillhostmigrationstarts(endtime - gettime() / 1000);

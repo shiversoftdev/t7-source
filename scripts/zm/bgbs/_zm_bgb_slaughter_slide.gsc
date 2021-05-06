@@ -57,6 +57,7 @@ function event()
 	self endon(#"disconnect");
 	self endon(#"bled_out");
 	self endon(#"bgb_update");
+	self.var_abd23dd0 = 6;
 	while(self.var_abd23dd0 > 0)
 	{
 		var_2a23ce90 = self is_sliding(2);

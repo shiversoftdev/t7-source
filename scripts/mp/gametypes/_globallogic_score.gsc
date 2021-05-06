@@ -856,7 +856,7 @@ function setplayermomentumdebug()
 {
 	/#
 		setdvar("", 0);
-		while(1)
+		while(true)
 		{
 			wait(1);
 			momentumpercent = getdvarfloat("", 0);

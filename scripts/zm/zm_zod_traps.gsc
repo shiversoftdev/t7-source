@@ -231,7 +231,7 @@ function filter_areaname(e_entity, str_area_name)
 */
 function use_trig_think(o_trap)
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", who);
 		if(who zm_utility::in_revive_trigger())
@@ -535,7 +535,7 @@ function trap_damage()
 {
 	self endon(#"trap_done");
 	self.m_t_damage._trap_type = "chain";
-	while(1)
+	while(true)
 	{
 		self.m_t_damage waittill(#"trigger", ent);
 		self.m_t_damage.activated_by_player = self.m_e_who;

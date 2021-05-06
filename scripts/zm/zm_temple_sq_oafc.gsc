@@ -253,7 +253,7 @@ function tile_debug()
 			level.num_matched_text.alpha = 1;
 			level.num_matched_text settext("");
 		}
-		while(1)
+		while(true)
 		{
 			if(isdefined(level.var_66c77de0))
 			{
@@ -457,7 +457,7 @@ function oafc_trigger_thread(tiles, set)
 	self triggerenable(0);
 	level flag::wait_till("oafc_switch_pressed");
 	self triggerenable(1);
-	while(1)
+	while(true)
 	{
 		for(i = 0; i < tiles.size; i++)
 		{
@@ -644,7 +644,7 @@ function wait_for_first_stepon()
 {
 	self endon(#"death");
 	level endon(#"hash_be6d0796");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", who);
 		if(isdefined(who) && isplayer(who))

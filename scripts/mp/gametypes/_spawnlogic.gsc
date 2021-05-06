@@ -806,7 +806,7 @@ function read_spawn_data(desiredid, relativepos)
 		{
 			return;
 		}
-		while(1)
+		while(true)
 		{
 			if(freadln(file) <= 0)
 			{
@@ -995,7 +995,7 @@ function draw_spawn_data()
 		level notify(#"drawing_spawn_data");
 		level endon(#"drawing_spawn_data");
 		textoffset = vectorscale((0, 0, -1), 12);
-		while(1)
+		while(true)
 		{
 			if(!isdefined(level.curspawndata))
 			{
@@ -1373,9 +1373,9 @@ function begin()
 function watch_spawn_profile()
 {
 	/#
-		while(1)
+		while(true)
 		{
-			while(1)
+			while(true)
 			{
 				if(getdvarint("") > 0)
 				{
@@ -1384,7 +1384,7 @@ function watch_spawn_profile()
 				wait(0.05);
 			}
 			thread spawn_profile();
-			while(1)
+			while(true)
 			{
 				if(getdvarint("") <= 0)
 				{
@@ -1410,12 +1410,13 @@ function spawn_profile()
 {
 	/#
 		level endon(#"stop_spawn_profile");
-		while(1)
+		while(true)
 		{
 			if(level.players.size > 0 && level.spawnpoints.size > 0)
 			{
 				playernum = randomint(level.players.size);
 				player = level.players[playernum];
+				attempt = 1;
 				while(!isdefined(player) && attempt < level.players.size)
 				{
 					playernum = playernum + 1 % level.players.size;
@@ -1441,7 +1442,7 @@ function spawn_profile()
 function spawn_graph_check()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			wait(3);
 		}
@@ -1509,7 +1510,7 @@ function spawn_graph()
 			}
 		}
 		didweights = 0;
-		while(1)
+		while(true)
 		{
 			spawni = 0;
 			numiters = 5;
@@ -1522,6 +1523,7 @@ function spawn_graph()
 				endspawni = spawni + fakespawnpoints.size / numiters;
 				if(i == numiters - 1)
 				{
+					endspawni = fakespawnpoints.size;
 				}
 				while(spawni < endspawni)
 				{
@@ -1638,7 +1640,7 @@ function spawn_graph_line(s1, s2, weightscale)
 function loop_bot_spawns()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			if(getdvarint("") < 1)
 			{
@@ -1677,6 +1679,7 @@ function loop_bot_spawns()
 					for(index = 0; index < numkills; index++)
 					{
 						killer = bots[randomint(bots.size)];
+						victim = bots[randomint(bots.size)];
 						while(isdefined(lastvictim) && victim == lastvictim)
 						{
 							victim = bots[randomint(bots.size)];
@@ -1714,7 +1717,7 @@ function allow_spawn_data_reading()
 		prevval = getdvarstring("");
 		prevrelval = getdvarstring("");
 		readthistime = 0;
-		while(1)
+		while(true)
 		{
 			val = getdvarstring("");
 			relval = undefined;
@@ -1759,7 +1762,7 @@ function allow_spawn_data_reading()
 function show_deaths_debug()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			if(getdvarstring("") == "")
 			{
@@ -1832,7 +1835,7 @@ function show_deaths_debug()
 */
 function update_death_info_debug()
 {
-	while(1)
+	while(true)
 	{
 		if(getdvarstring("scr_spawnpointdebug") == "0")
 		{
@@ -1858,7 +1861,7 @@ function spawn_weight_debug(spawnpoints)
 	level notify(#"stop_spawn_weight_debug");
 	level endon(#"stop_spawn_weight_debug");
 	/#
-		while(1)
+		while(true)
 		{
 			if(getdvarstring("") == "")
 			{
@@ -1917,7 +1920,7 @@ function spawn_weight_debug(spawnpoints)
 */
 function profile_debug()
 {
-	while(1)
+	while(true)
 	{
 		if(getdvarstring("scr_spawnpointprofile") != "1")
 		{
@@ -1952,7 +1955,8 @@ function debug_nearby_players(players, origin)
 		{
 			return;
 		}
-		while(1)
+		starttime = gettime();
+		while(true)
 		{
 			for(i = 0; i < players.size; i++)
 			{
@@ -2127,7 +2131,8 @@ function avoid_weapon_damage(spawnpoints)
 */
 function spawn_per_frame_update()
 {
-	while(1)
+	spawnpointindex = 0;
+	while(true)
 	{
 		wait(0.05);
 		if(!isdefined(level.spawnpoints))

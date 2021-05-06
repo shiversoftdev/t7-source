@@ -575,7 +575,8 @@ function team_member_zoom_button_check(e_player)
 */
 function teleport_player_into_position(e_player)
 {
-	while(1)
+	a_players = get_players_playing();
+	while(true)
 	{
 		x_offset = randomfloatrange(210 - 42 * -1, 210 - 42);
 		y_offset = randomfloatrange(210 - 42 * -1, 210 - 42);
@@ -642,6 +643,7 @@ function display_hud_player_leader(e_player)
 	x_off = -45;
 	y_off = y_start + 130;
 	execute_hud_elem = e_player __create_client_hud_elem("left", "middle", "center", "top", x_off, y_off, self.n_font_scale, self.v_font_color, "");
+	a_time_remaining = array("0", &"TEAM_GATHER_TIME_REMAINING_1", &"TEAM_GATHER_TIME_REMAINING_2", &"TEAM_GATHER_TIME_REMAINING_3", &"TEAM_GATHER_TIME_REMAINING_4", &"TEAM_GATHER_TIME_REMAINING_5", &"TEAM_GATHER_TIME_REMAINING_6", &"TEAM_GATHER_TIME_REMAINING_7", &"TEAM_GATHER_TIME_REMAINING_8", &"TEAM_GATHER_TIME_REMAINING_9", &"TEAM_GATHER_TIME_REMAINING_10");
 	while(!is_teamgather_complete())
 	{
 		ready_hud_elem settext(&"TEAM_GATHER_PLAYERS_READY", self.m_num_players_ready, self.m_num_players);
@@ -680,6 +682,7 @@ function display_hud_player_team_member(e_player)
 	x_off = 0;
 	y_off = y_start + 80;
 	go_hud_elem = e_player __create_client_hud_elem("center", "middle", "center", "top", x_off, y_off, self.n_font_scale, self.v_font_color, "");
+	a_start_in = array("0", &"TEAM_GATHER_START_IN_1", &"TEAM_GATHER_START_IN_2", &"TEAM_GATHER_START_IN_3", &"TEAM_GATHER_START_IN_4", &"TEAM_GATHER_START_IN_5", &"TEAM_GATHER_START_IN_6", &"TEAM_GATHER_START_IN_7", &"TEAM_GATHER_START_IN_8", &"TEAM_GATHER_START_IN_9", &"TEAM_GATHER_START_IN_10");
 	while(!is_teamgather_complete())
 	{
 		gathered_hud_elem settext(&"TEAM_GATHER_NUM_PLAYERS", int(self.m_num_players_ready), int(self.m_num_players));
@@ -906,7 +909,7 @@ function mike_debug_line(v1, v2)
 {
 	level notify(#"hash_62ab67ff");
 	self endon(#"hash_62ab67ff");
-	while(1)
+	while(true)
 	{
 		/#
 			line(v1, v2, (0, 0, 1));

@@ -365,6 +365,7 @@ private function function_69246d49(attacker, loops, weapon)
 	self endon(#"death");
 	self.is_disabled = 1;
 	self.ignoreall = 1;
+	self.special_weapon = weapon;
 	while(loops)
 	{
 		self.allowpain = 1;

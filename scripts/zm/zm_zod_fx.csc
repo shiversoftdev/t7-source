@@ -98,6 +98,7 @@ function function_47ecaed4(localclientnum)
 {
 	level.var_ff4acd38 = [];
 	i = 0;
+	var_8c9a6a50 = getent(localclientnum, "lighthouse_light_ring_1", "targetname");
 	while(isdefined(var_8c9a6a50))
 	{
 		level.var_ff4acd38[i] = var_8c9a6a50;

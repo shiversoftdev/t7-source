@@ -141,7 +141,8 @@ function function_3ea85f63()
 	trigger = spawn("trigger_damage", self.origin, 0, 32, 32);
 	trigger.angles = self.angles + (0, 90, 90);
 	var_a4ff74b9 = getweapon("bouncingbetty");
-	while(1)
+	attacker = undefined;
+	while(true)
 	{
 		trigger waittill(#"damage", amount, attacker, dir, point, mod, tagname, modelname, partname, weaponname, dflags, inflictor, chargelevel);
 		if(weaponname == var_a4ff74b9 && !level.var_b19e3661)
@@ -209,7 +210,7 @@ function player_hint_line()
 	self endon(#"death");
 	level endon(#"sq_std_hint_given");
 	level waittill(#"sq_std_hint_line");
-	while(1)
+	while(true)
 	{
 		players = getplayers();
 		for(i = 0; i < players.size; i++)
@@ -238,7 +239,7 @@ function begin_std_story_vox()
 {
 	self endon(#"death");
 	level endon(#"sq_std_story_vox_begun");
-	while(1)
+	while(true)
 	{
 		players = getplayers();
 		for(i = 0; i < players.size; i++)
@@ -374,7 +375,8 @@ function std_story_vox(player)
 function std_story_vox_wait_for_finish()
 {
 	level endon(#"sq_std_over");
-	while(1)
+	count = 0;
+	while(true)
 	{
 		level waittill(#"waterfall");
 		if(!level flag::get("std_target_1") || !level flag::get("std_target_2") || !level flag::get("std_target_3") || !level flag::get("std_target_4"))

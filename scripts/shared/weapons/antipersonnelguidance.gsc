@@ -126,7 +126,7 @@ function apfirednotify()
 {
 	self endon(#"disconnect");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"missile_fire", missile, weapon);
 		if(weapon.lockontype == "AP Single")
@@ -160,6 +160,7 @@ function aptoggleloop()
 		self waittill(#"weapon_change", weapon);
 		while(weapon.lockontype == "AP Single")
 		{
+			abort = 0;
 			while(!self playerads() == 1)
 			{
 				wait(0.05);

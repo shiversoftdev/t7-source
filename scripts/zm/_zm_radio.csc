@@ -171,7 +171,7 @@ function fade(n_id, n_time)
 */
 function stop_radio_listener()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"ktr");
 		level.var_58522184 = 1;

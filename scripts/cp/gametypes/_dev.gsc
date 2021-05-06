@@ -1310,6 +1310,7 @@ function print_weapon_name()
 		if(self isswitchingweapons())
 		{
 			self waittill(#"weapon_change_complete", weapon);
+			fail_safe = 0;
 			while(weapon == level.weaponnone)
 			{
 				self waittill(#"weapon_change_complete", weapon);
@@ -1430,7 +1431,7 @@ function equipment_dev_gui()
 		set_equipment_list();
 		set_grenade_list();
 		setdvar("", "");
-		while(1)
+		while(true)
 		{
 			wait(0.5);
 			devgui_int = getdvarint("");
@@ -1462,7 +1463,7 @@ function grenade_dev_gui()
 		set_equipment_list();
 		set_grenade_list();
 		setdvar("", "");
-		while(1)
+		while(true)
 		{
 			wait(0.5);
 			devgui_int = getdvarint("");
@@ -1500,7 +1501,7 @@ function devstraferunpathdebugdraw()
 		drawtime = maxdrawtime;
 		origintextoffset = vectorscale((0, 0, -1), 50);
 		endonmsg = "";
-		while(1)
+		while(true)
 		{
 			if(getdvarint("") > 0)
 			{
@@ -1614,7 +1615,8 @@ function devhelipathdebugdraw()
 		maxdrawtime = 10;
 		drawtime = maxdrawtime;
 		origintextoffset = vectorscale((0, 0, -1), 50);
-		while(1)
+		endonmsg = "";
+		while(true)
 		{
 			if(getdvarint("") > 0)
 			{
@@ -1809,6 +1811,7 @@ function drawpath(linecolor, textcolor, textalpha, textscale, textoffset, drawti
 	/#
 		level endon(endonmsg);
 		ent = self;
+		entfirsttarget = ent.targetname;
 		while(isdefined(ent.target))
 		{
 			enttarget = getent(ent.target, "");
@@ -1985,6 +1988,7 @@ function dev_get_node_pair()
 {
 	/#
 		player = util::gethostplayer();
+		start = undefined;
 		while(!isdefined(start))
 		{
 			start = node_get(player);
@@ -1999,6 +2003,7 @@ function dev_get_node_pair()
 		{
 			wait(0.05);
 		}
+		end = undefined;
 		while(!isdefined(end))
 		{
 			end = node_get(player);
@@ -2080,6 +2085,7 @@ function dev_get_point_pair()
 	/#
 		player = util::gethostplayer();
 		start = undefined;
+		points = [];
 		while(!isdefined(start))
 		{
 			start = point_get(player);
@@ -2092,6 +2098,7 @@ function dev_get_point_pair()
 		{
 			wait(0.05);
 		}
+		end = undefined;
 		while(!isdefined(end))
 		{
 			end = point_get(player);

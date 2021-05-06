@@ -95,7 +95,7 @@ function function_8f95fde5()
 	self notify(#"hash_8f95fde5");
 	self endon(#"hash_8f95fde5");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_give", weapon);
 		weapon = zm_weapons::get_nonalternate_weapon(weapon);
@@ -130,7 +130,8 @@ function function_1402f75f()
 	self endon(#"hash_1402f75f");
 	self endon(#"hash_e3517683");
 	self endon(#"disconnect");
-	while(1)
+	self.var_db2418ce = 1;
+	while(true)
 	{
 		if(isdefined(self.var_59dcbbd4))
 		{

@@ -373,7 +373,7 @@ function radar_dish_init()
 function radar_dish_rotate()
 {
 	wait(0.1);
-	while(1)
+	while(true)
 	{
 		self rotateyaw(360, randomfloatrange(60, 120));
 		self waittill(#"rotatedone");
@@ -800,7 +800,7 @@ function show_destroyed_earth(localclientnum, oldval, newval, bnewent, binitials
 */
 function hide_destroyed_earth()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"hde");
 		level thread do_hide_destroyed_earth();
@@ -843,7 +843,8 @@ function do_hide_destroyed_earth()
 */
 function function_d87a7dcc()
 {
-	while(1)
+	var_bd7ba30 = 0;
+	while(true)
 	{
 		if(!level clientfield::get("zombie_power_on"))
 		{
@@ -931,7 +932,7 @@ function moon_nml_transition(localclientnum, oldval, newval, bnewent, binitialsn
 function function_fbf77a74(localclientnum)
 {
 	self endon(#"hash_d2b77ba2");
-	while(1)
+	while(true)
 	{
 		var_f4570d42 = randomint(5);
 		switch(var_f4570d42)
@@ -1068,7 +1069,7 @@ function function_fbf77a74(localclientnum)
 				wait(0.05);
 				break;
 			}
-			default
+			default:
 			{
 				break;
 			}

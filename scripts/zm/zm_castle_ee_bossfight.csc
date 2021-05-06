@@ -534,7 +534,7 @@ function function_92f90eb7(localclientnum)
 {
 	self endon(#"hash_f40e20dc");
 	self endon(#"entityshutdown");
-	while(1)
+	while(true)
 	{
 		self.var_b1fe1ee = playfx(localclientnum, level._effect["boss_rune_prison_erupt"], self.origin);
 		wait(1);

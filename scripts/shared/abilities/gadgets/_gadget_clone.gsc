@@ -427,7 +427,7 @@ function gadget_clone_on(slot, weapon)
 private function _updateclonepathing()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		if(getdvarint("tu1_gadgetCloneSwimming", 1))
 		{
@@ -850,7 +850,7 @@ function _clonebreakglass()
 	clone = self;
 	clone endon(#"clone_shutdown");
 	clone endon(#"death");
-	while(1)
+	while(true)
 	{
 		clone util::break_glass();
 		wait(0.25);
@@ -871,7 +871,7 @@ function _clonefakefire()
 	clone = self;
 	clone endon(#"clone_shutdown");
 	clone endon(#"death");
-	while(1)
+	while(true)
 	{
 		waittime = randomfloatrange(0.5, 3);
 		wait(waittime);

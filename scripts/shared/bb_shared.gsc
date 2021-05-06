@@ -223,7 +223,7 @@ function recordblackboxbreadcrumbdata(breadcrumb_table)
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		for(i = 0; i < level.players.size; i++)
 		{

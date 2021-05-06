@@ -152,9 +152,10 @@ function generaterandompoints(count)
 */
 function movementmanagerthink(teamorentnum)
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"counter_uav_updated");
+		activecount = 0;
 		while(level.activecounteruavs[teamorentnum] > 0)
 		{
 			if(activecount == 0)
@@ -162,6 +163,7 @@ function movementmanagerthink(teamorentnum)
 				activecount = level.activecounteruavs[teamorentnum];
 			}
 			currentindex = level.counter_uav_position_index[teamorentnum];
+			newindex = currentindex;
 			while(newindex == currentindex)
 			{
 				newindex = randomintrange(0, 20);
@@ -461,7 +463,7 @@ function listenformove()
 {
 	self endon(#"death");
 	self endon(#"leaving");
-	while(1)
+	while(true)
 	{
 		self thread counteruavmove();
 		level util::waittill_any("counter_uav_move_" + self.team, "counter_uav_move_" + self.ownerentnum);
@@ -874,7 +876,7 @@ function resetactivecounteruav()
 */
 function watchcounteruavs()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"counter_uav_updated");
 		foreach(var_5e66a5e, player in level.players)

@@ -248,7 +248,7 @@ function function_3f7430db()
 			break;
 		}
 		case "theater":
-		default
+		default:
 		{
 			self.var_b33065b0 = "p7_fxanim_zm_zod_chain_trap_footlight_start_bundle";
 			self.var_68a0b25 = "p7_fxanim_zm_zod_chain_trap_footlight_on_bundle";

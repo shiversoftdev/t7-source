@@ -354,7 +354,7 @@ function player_add_points(event, mod, hit_location, is_dog, zombie_team, damage
 				player_points = mod;
 				break;
 			}
-			default
+			default:
 			{
 				/#
 					assert(0, "");
@@ -525,7 +525,7 @@ function player_add_points_kill_bonus(mod, hit_location, weapon, player_points =
 				score = level.zombie_vars["zombie_score_bonus_torso"];
 				break;
 			}
-			default
+			default:
 			{
 				self score_cf_increment_info("death_normal");
 				break;
@@ -588,7 +588,7 @@ function player_reduce_points(event, n_amount)
 			self.score_lost_when_downed = zm_utility::round_up_to_ten(int(points));
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				assert(0, "");

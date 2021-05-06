@@ -144,6 +144,7 @@ function function_f50b1960()
 {
 	level endon(#"end_game");
 	self endon(#"disconnect");
+	var_a49e2257 = [];
 	while(var_a49e2257.size < 5)
 	{
 		self waittill(#"bgb_update");
@@ -178,6 +179,7 @@ function function_46ea87bb()
 {
 	level endon(#"end_game");
 	self endon(#"disconnect");
+	var_fce7f186 = 0;
 	while(var_fce7f186 < 10)
 	{
 		self waittill(#"zombie_death_params", var_7ef6d493, var_c3f7e0ed);
@@ -205,7 +207,7 @@ function function_b9e36150()
 {
 	level endon(#"end_game");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"hash_4438d786", var_c2faf069);
 		if(var_c2faf069 >= 10)
@@ -233,6 +235,7 @@ function function_f10a087d()
 	var_5c366274 = 0;
 	var_6ca52f65 = 0;
 	var_aa482c3 = 0;
+	var_2c8c3602 = 0;
 	while(var_edf7e9c1 < 4)
 	{
 		self waittill(#"hash_b7f8e77c");
@@ -274,6 +277,7 @@ function function_47cc3ddf()
 {
 	level endon(#"end_game");
 	self endon(#"disconnect");
+	var_fce7f186 = 0;
 	while(var_fce7f186 < 10)
 	{
 		self waittill(#"widows_wine_kill", var_190c9827);
@@ -298,7 +302,8 @@ function function_1f3cbfd1()
 {
 	level endon(#"end_game");
 	self endon(#"disconnect");
-	while(1)
+	var_b8ac8cce = 0;
+	while(true)
 	{
 		self waittill(#"margwa_kill");
 		if(var_b8ac8cce == 0)

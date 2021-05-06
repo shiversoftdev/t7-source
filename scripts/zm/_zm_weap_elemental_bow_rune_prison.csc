@@ -184,6 +184,7 @@ function function_79854312(localclientnum)
 	self endon(#"entityshutdown");
 	n_start_time = gettime();
 	n_end_time = n_start_time + 1633;
+	b_is_updating = 1;
 	while(b_is_updating)
 	{
 		n_time = gettime();
@@ -273,6 +274,7 @@ function runeprison_zombie_charring(localclientnum, oldval, newval, bnewent, bin
 	{
 		n_cur_time = gettime();
 		n_start_time = n_cur_time;
+		var_39255d08 = n_cur_time + 1200;
 		while(n_cur_time < var_39255d08)
 		{
 			var_dd5c416e = n_cur_time - n_start_time / 1200;

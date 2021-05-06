@@ -113,7 +113,7 @@ function damageeffectarea(owner, position, radius, height, killcament)
 function smokeblocksight(radius)
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		fxblocksight(self, radius);
 		/#

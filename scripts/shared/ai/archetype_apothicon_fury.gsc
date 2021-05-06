@@ -2050,7 +2050,7 @@ function movespeedattributecallback(entity, attribute, oldvalue, value)
 			blackboard::setblackboardattribute(entity, "_locomotion_speed", "locomotion_speed_super_sprint");
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}

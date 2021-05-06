@@ -103,7 +103,7 @@ function state_off_update(params)
 		wait(0.1);
 	}
 	self.parent endon(#"death");
-	while(1)
+	while(true)
 	{
 		self setspeed(400);
 		if(isdefined(self.inpain) && self.inpain)
@@ -266,7 +266,7 @@ function spawnflakrocket(missile, spawnpos, parent)
 		debug_draw = getdvarint("", 0);
 		debug_duration = getdvarint("", 400);
 	#/
-	while(1)
+	while(true)
 	{
 		wait(0.05);
 		prevdist = curdist;
@@ -410,6 +410,7 @@ function drone_pain_for_time(time, stablizeparam, restorelookpoint)
 	self.painstarttime = gettime();
 	if(!(isdefined(self.inpain) && self.inpain))
 	{
+		self.inpain = 1;
 		while(gettime() < self.painstarttime + time * 1000)
 		{
 			self setvehvelocity(self.velocity * stablizeparam);

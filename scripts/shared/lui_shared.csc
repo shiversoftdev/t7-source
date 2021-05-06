@@ -415,7 +415,7 @@ function client_menus(localclientnum)
 {
 	level endon(#"disconnect");
 	clientmenustack = array();
-	while(1)
+	while(true)
 	{
 		level waittill("menu_change" + localclientnum, menu_name, status, state);
 		menu_index = undefined;
@@ -630,7 +630,7 @@ private function _screen_fade(n_time, n_target_alpha, n_start_alpha, v_color, b_
 				v_color = (1, 1, 1);
 				break;
 			}
-			default
+			default:
 			{
 				/#
 					assertmsg("");

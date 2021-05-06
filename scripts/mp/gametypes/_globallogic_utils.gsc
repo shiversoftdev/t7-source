@@ -290,7 +290,8 @@ function playtickingsound(gametype_tick_sound)
 	self endon(#"death");
 	self endon(#"stop_ticking");
 	level endon(#"game_ended");
-	while(1)
+	time = level.bombtimer;
+	while(true)
 	{
 		self playsound(gametype_tick_sound);
 		if(time > 10)
@@ -351,6 +352,7 @@ function gametimer()
 		level.starttime = level.starttime - game["roundMillisecondsAlreadyPassed"];
 		game["roundMillisecondsAlreadyPassed"] = undefined;
 	}
+	prevtime = gettime() - 1000;
 	while(game["state"] == "playing")
 	{
 		if(!level.timerstopped)
@@ -610,7 +612,7 @@ function getestimatedtimeuntilscorelimit(team)
 function rumbler()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		wait(0.1);
 		self playrumbleonentity("damage_heavy");

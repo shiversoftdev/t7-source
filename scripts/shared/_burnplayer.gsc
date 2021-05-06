@@ -137,7 +137,7 @@ function watchburndamage(interval, damage, attacker, weapon)
 	self endon(#"death");
 	self endon(#"burnplayer_watchburntimer");
 	self endon(#"burn_finished");
-	while(1)
+	while(true)
 	{
 		wait(interval);
 		self.doing_scripted_burn_damage = 1;
@@ -160,7 +160,7 @@ function watchforwater()
 	self endon(#"disconnect");
 	self endon(#"death");
 	self endon(#"burn_finished");
-	while(1)
+	while(true)
 	{
 		if(self isplayerunderwater())
 		{

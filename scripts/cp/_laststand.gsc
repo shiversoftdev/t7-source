@@ -342,7 +342,7 @@ function laststand_watch_weapon_switch()
 	self endon(#"bled_out");
 	self endon(#"disconnect");
 	self endon(#"player_revived");
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_change", newweapon);
 		/#
@@ -611,7 +611,7 @@ function laststand_bleedout_damage()
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		self waittill(#"laststand_damage", amt);
 		if(!self.ignoreme)
@@ -801,7 +801,7 @@ function suicide_trigger_think()
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		wait(0.1);
 		if(!isdefined(self.suicideprompt))
@@ -990,7 +990,7 @@ function revive_trigger_think()
 	self endon(#"stop_revive_trigger");
 	level endon(#"game_ended");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		wait(0.1);
 		if(!isdefined(self.revivetrigger))
@@ -1342,7 +1342,7 @@ function auto_revive(reviver, dont_enable_weapons)
 		self.revivetrigger.auto_revive = 1;
 		if(self.revivetrigger.beingrevived == 1)
 		{
-			while(1)
+			while(true)
 			{
 				if(self.revivetrigger.beingrevived == 0)
 				{
@@ -1500,7 +1500,7 @@ function revive_force_revive(reviver)
 function revive_hud_think()
 {
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		wait(0.1);
 		if(!player_any_player_in_laststand())
@@ -1734,6 +1734,7 @@ function remote_revive_watch()
 {
 	self endon(#"death");
 	self endon(#"player_revived");
+	keep_checking = 1;
 	while(keep_checking)
 	{
 		self waittill(#"remote_revive", reviver);

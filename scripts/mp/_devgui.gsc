@@ -789,7 +789,7 @@ function devgui_give_weapon(weapon_name)
 		switch(split.size)
 		{
 			case 1:
-			default
+			default:
 			{
 				weapon = getweapon(split[0]);
 				break;
@@ -1057,7 +1057,8 @@ function watch_player_death()
 {
 	/#
 		self endon(#"death");
-		while(1)
+		vehicle = self;
+		while(true)
 		{
 			driver = self getseatoccupant(0);
 			if(isdefined(driver) && !isalive(driver))

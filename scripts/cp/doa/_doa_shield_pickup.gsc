@@ -148,7 +148,7 @@ function barrelupdate()
 private function function_80bf1f40(player, note, sfx, var_5e61e69d, mod = "MOD_CRUSH", var_aa78744e)
 {
 	player endon(note);
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", guy);
 		if(isplayer(guy))
@@ -413,7 +413,7 @@ private function function_5f0b5579(player)
 	player endon(#"hash_792240f4");
 	player endon(#"disconnect");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", guy);
 		if(isdefined(guy.var_d538832c) && guy.var_d538832c)
@@ -449,6 +449,7 @@ private function function_813e9dbd()
 	self endon(#"disconnect");
 	self endon(#"death");
 	level doa_utility::function_c8f4d63a();
+	self.doa.var_1a9bbba7 = gettime() + self doa_utility::function_1ded48e6(level.doa.rules.var_4f139db6) * 1000;
 	while(gettime() < self.doa.var_1a9bbba7)
 	{
 		wait(1);
@@ -601,7 +602,7 @@ private function function_92374630(player)
 {
 	player endon(#"hash_1d724bbf");
 	player endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", guy);
 		if(isplayer(guy))
@@ -647,6 +648,7 @@ private function function_f797c54(org, note)
 	self endon(note);
 	self endon(#"disconnect");
 	level doa_utility::function_c8f4d63a();
+	time_left = gettime() + self doa_utility::function_1ded48e6(level.doa.rules.var_fb13151a) * 1000;
 	while(gettime() < time_left)
 	{
 		wait(0.05);

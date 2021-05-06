@@ -221,7 +221,8 @@ function telepad_loop()
 */
 function teleportation_audio(pad)
 {
-	while(1)
+	teleport_delay = 2;
+	while(true)
 	{
 		level waittill("tpw" + pad);
 		if(isdefined(self.script_sound))
@@ -285,8 +286,8 @@ System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative
 Parameter name: index
    at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
    at System.Collections.Generic.List`1.get_Item(Int32 index)
-   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 606
-   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 210
+   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 649
+   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 211
 /*
 No Output
 */
@@ -338,7 +339,7 @@ function pa_countdown_success(pad)
 */
 function pa_teleport(pad)
 {
-	while(1)
+	while(true)
 	{
 		level waittill("tpc" + pad);
 		wait(1);
@@ -363,8 +364,8 @@ System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative
 Parameter name: index
    at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
    at System.Collections.Generic.List`1.get_Item(Int32 index)
-   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 606
-   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 210
+   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 649
+   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 211
 /*
 No Output
 */
@@ -404,6 +405,7 @@ function pa_play_dialog(alias)
 	if(self.pa_is_speaking != 1)
 	{
 		self.pa_is_speaking = 1;
+		self.pa_id = playsound(0, alias, self.origin);
 		while(soundplaying(self.pa_id))
 		{
 			wait(0.01);
@@ -423,7 +425,7 @@ function pa_play_dialog(alias)
 */
 function teleport_2d()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"t2d");
 		playsound(0, "evt_teleport_2d_fnt", (0, 0, 0));
@@ -557,7 +559,7 @@ function play_added_ambience()
 */
 function play_flux_whispers()
 {
-	while(1)
+	while(true)
 	{
 		playsound(0, "amb_creepy_whispers", (-339, 271, 207));
 		playsound(0, "amb_creepy_whispers", (234, 110, 310));
@@ -579,7 +581,7 @@ function play_flux_whispers()
 */
 function play_backwards_children()
 {
-	while(1)
+	while(true)
 	{
 		wait(60);
 		playsound(0, "amb_creepy_children", (-2637, -2403, 413));

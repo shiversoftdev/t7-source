@@ -73,7 +73,7 @@ function function_fec9fe59(localclientnum, str_tag)
 	sndent playsound(0, "zmb_tank_flame_start");
 	sndent.var_9bdbad77 = sndent playloopsound("zmb_tank_flame_loop", 0.6);
 	self thread function_a7df9920(sndent);
-	while(1)
+	while(true)
 	{
 		self.var_f53cfaa3 = playfxontag(localclientnum, level._effect["mech_wpn_flamethrower"], self, str_tag);
 		wait(0.1);
@@ -131,7 +131,7 @@ function function_de8b2ce1(localclientnum, oldval, newval, bnewent, binitialsnap
 			str_tag = "tag_flash_gunner2";
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}
@@ -166,7 +166,7 @@ function function_a2fe7f71(localclientnum, var_2bc319f0)
 	{
 		self thread function_64744406();
 	}
-	while(1)
+	while(true)
 	{
 		playfxontag(localclientnum, fx_id, self, "tag_origin");
 		wait(0.1);
@@ -271,7 +271,7 @@ function function_b809a3fd(localclientnum)
 {
 	self endon(#"hash_51963593");
 	self thread function_85886bc2();
-	while(1)
+	while(true)
 	{
 		self.var_f39aab64 = playfxontag(localclientnum, level._effect["tank_treads"], self, "tag_wheel_back_left");
 		self.var_50198d5b = playfxontag(localclientnum, level._effect["tank_treads"], self, "tag_wheel_back_right");

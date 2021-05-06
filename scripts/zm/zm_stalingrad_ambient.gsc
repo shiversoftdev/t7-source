@@ -113,7 +113,7 @@ function function_8c898920()
 	level flag::set("ambient_mortar_fire_on");
 	function_46a16b31();
 	wait(randomfloatrange(20, 30));
-	while(1)
+	while(true)
 	{
 		if(!level flag::get("ambient_mortar_fire_on"))
 		{
@@ -199,6 +199,7 @@ function function_7af373ba(str_zone)
 {
 	var_b8f2d177 = [];
 	var_d8f8470c = arraycopy(level.var_10752e7a[str_zone]);
+	b_all_points_used = 0;
 	while(!var_b8f2d177.size)
 	{
 		foreach(var_984e11ad, var_b058183b in var_d8f8470c)
@@ -233,6 +234,7 @@ function function_7af373ba(str_zone)
 */
 function function_8affee60(var_e3975fbf)
 {
+	i = 0;
 	while(level.var_2b8ea588[i].b_in_use == 1)
 	{
 		i++;

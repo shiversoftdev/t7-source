@@ -145,7 +145,7 @@ function clone_actor_animate(animtype)
 			break;
 		}
 		case "idle":
-		default
+		default:
 		{
 			self setanimstatefromasd("idle");
 			break;
@@ -188,7 +188,7 @@ function clone_mover_animate(animtype)
 			break;
 		}
 		case "idle":
-		default
+		default:
 		{
 			self setanim(%zm_ally::pb_stand_alert);
 			break;

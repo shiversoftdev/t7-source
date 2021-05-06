@@ -473,7 +473,8 @@ private function margwatraveltellupdate(localclientnum)
 	self notify(#"stop_margwatraveltell");
 	self endon(#"stop_margwatraveltell");
 	self endon(#"entityshutdown");
-	while(1)
+	player = getlocalplayer(localclientnum);
+	while(true)
 	{
 		if(isdefined(player))
 		{

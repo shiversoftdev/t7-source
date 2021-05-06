@@ -192,7 +192,7 @@ function watch_level_drops()
 {
 	level.item_drops_current = [];
 	level flag::wait_till("all_players_spawned");
-	while(1)
+	while(true)
 	{
 		wait(15);
 		if(level.item_drops_current.size < 1 && level.item_drops.size > 0)
@@ -265,6 +265,7 @@ function spin_it()
 function watch_player_pickup()
 {
 	trigger = spawn("trigger_radius", self.origin, 0, 60, 60);
+	self.pickuptrigger = trigger;
 	while(isdefined(self))
 	{
 		trigger waittill(#"trigger", player);

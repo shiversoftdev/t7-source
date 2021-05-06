@@ -103,7 +103,8 @@ function thundergun_fx_power_cell(localclientnum, w_weapon)
 	self endon(#"weapon_change");
 	self endon(#"entityshutdown");
 	n_old_ammo = -1;
-	while(1)
+	n_shader_val = 0;
+	while(true)
 	{
 		wait(0.1);
 		if(!isdefined(self))

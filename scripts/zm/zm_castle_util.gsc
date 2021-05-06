@@ -59,7 +59,7 @@ function unitrigger_prompt_and_visibility(player)
 function unitrigger_logic()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player zm_utility::in_revive_trigger())
@@ -94,6 +94,7 @@ function function_fa7da172()
 {
 	self endon(#"death");
 	var_82a4f07b = struct::get("keeper_end_loc");
+	var_77b9bd02 = 0;
 	while(isdefined(level.var_8ef26cd9) && level.var_8ef26cd9)
 	{
 		str_player_zone = self zm_zonemgr::get_player_zone();
@@ -156,7 +157,8 @@ function function_8faf1d24(v_color, var_8882142e, n_scale, str_endon)
 		{
 			self endon(str_endon);
 		}
-		while(1)
+		origin = self.origin;
+		while(true)
 		{
 			print3d(origin, var_8882142e, v_color, n_scale);
 			wait(0.1);
@@ -182,7 +184,7 @@ function setup_devgui_func(str_devgui_path, str_dvar, n_value, func, n_base_valu
 		}
 		setdvar(str_dvar, n_base_value);
 		adddebugcommand("" + str_devgui_path + "" + str_dvar + "" + n_value + "");
-		while(1)
+		while(true)
 		{
 			n_dvar = getdvarint(str_dvar);
 			if(n_dvar > n_base_value)

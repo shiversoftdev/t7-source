@@ -164,7 +164,7 @@ function function_79585675(var_19dc14f6)
 	self endon(#"disconnect");
 	self endon(#"bgb_update");
 	self endon(#"hash_5cefcc84");
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_change_complete");
 		if(!self zm_weapons::has_weapon_or_attachments(var_19dc14f6))

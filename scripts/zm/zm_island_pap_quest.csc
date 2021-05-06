@@ -91,6 +91,7 @@ function function_cc69986f(n_curr, var_e1344a83, n_time)
 	n_end = n_curr - var_e1344a83;
 	var_c1c93aba = 187.5;
 	n_delta = var_e1344a83 / var_c1c93aba;
+	var_c0b3756a = n_curr;
 	while(var_c0b3756a >= n_end)
 	{
 		var_c0b3756a = var_c0b3756a - n_delta;

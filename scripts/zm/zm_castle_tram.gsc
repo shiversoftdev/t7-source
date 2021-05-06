@@ -104,7 +104,7 @@ function function_e16148c8()
 	level._powerup_timeout_override = undefined;
 	level thread function_7b56c646();
 	level thread function_97f09efd();
-	while(1)
+	while(true)
 	{
 		level waittill(#"token_tram_moving", e_who);
 		level flag::set("tram_moving");
@@ -235,7 +235,7 @@ function function_427ee40c()
 	level flag::clear("tram_cooldown");
 	exploder::stop_exploder("lgt_tram_car_02_down");
 	exploder::exploder("lgt_tram_car_02_up");
-	while(1)
+	while(true)
 	{
 		level waittill(#"player_tram_moving", e_who);
 		level flag::set("tram_moving");
@@ -276,7 +276,8 @@ function function_38a21d48()
 {
 	level endon(#"tram_cooldown");
 	self setcandamage(1);
-	while(1)
+	self.health = 100000;
+	while(true)
 	{
 		self waittill(#"damage", n_amount, e_attacker, v_direction, v_point, str_type);
 		if(isplayer(e_attacker) && (str_type == "MOD_GRENADE" || str_type == "MOD_GRENADE_SPLASH"))
@@ -370,7 +371,7 @@ function function_7b56c646()
 		var_a6052bbf = struct::get(e_gate.target, "targetname");
 		e_gate.open_pos = var_a6052bbf.origin;
 	}
-	while(1)
+	while(true)
 	{
 		level flag::wait_till("tram_docked");
 		foreach(var_e3caefb, e_clip in var_b86004b6)
@@ -420,7 +421,7 @@ function function_3fb91800()
 	{
 		util::wait_network_frame();
 	}
-	while(1)
+	while(true)
 	{
 		level flag::wait_till("player_tram_docked");
 		foreach(var_457591cc, e_clip in var_b86004b6)
@@ -692,7 +693,7 @@ function function_97f09efd()
 	t_use.hint_string = &"ZM_CASTLE_TRAM_REQUIRES_TOKEN";
 	t_use.var_5be78056 = 0;
 	level thread function_8f0015e0();
-	while(1)
+	while(true)
 	{
 		t_use waittill(#"trigger", e_who);
 		if(zm_powerup_castle_tram_token::function_ed4d87a3(e_who))
@@ -745,7 +746,7 @@ function function_8f0015e0()
 	level flag::wait_till("tram_moving");
 	level.var_f0adc88a thread scene::play("p7_fxanim_zm_castle_tram_car_01_down_bundle", level.var_f0adc88a);
 	level.var_f0adc88a playsound("evt_tram_lever");
-	while(1)
+	while(true)
 	{
 		str_result = level util::waittill_any_return("token_tram_moving", "player_tram_moving");
 		if(str_result === "token_tram_moving")
@@ -885,7 +886,7 @@ function unitrigger_think()
 {
 	self endon(#"kill_trigger");
 	self.stub thread unitrigger_refresh_message();
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", var_4161ad80);
 		self.stub notify(#"trigger", var_4161ad80);

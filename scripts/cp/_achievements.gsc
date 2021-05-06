@@ -109,7 +109,7 @@ function on_player_connect()
 	self.var_75cf9e2e.var_43311285 = [];
 	self thread function_34eaa01b();
 	self thread function_e587e1f2();
-	while(1)
+	while(true)
 	{
 		self waittill(#"give_achievement", str_id);
 		give_achievement(str_id);
@@ -215,7 +215,7 @@ function function_733a6065(eplayer, levelname, difficulty, var_10c5a3ef)
 function function_34eaa01b()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"wallrun_begin");
 		v_start = self.origin;
@@ -688,7 +688,7 @@ private function function_9dab90e7(player)
 private function function_e587e1f2()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"gun_level_complete", rewardxp, attachmentindex, itemindex, rankid, islastrank);
 		if(islastrank && (itemindex >= 1 && itemindex <= 60))

@@ -174,6 +174,7 @@ function trigger_process(trigger)
 	gates = setup_script_gatetrigger(trigger);
 	script_vehicledetour = isdefined(trigger.script_vehicledetour) && (is_node_script_origin(trigger) || is_node_script_struct(trigger));
 	detoured = isdefined(trigger.detoured) && (!(is_node_script_origin(trigger) || is_node_script_struct(trigger)));
+	gotrigger = 1;
 	while(gotrigger)
 	{
 		trigger trigger::wait_till();
@@ -623,6 +624,7 @@ function paths(node)
 		self thread debug_vehicle_paths();
 	#/
 	self endon(#"newpath");
+	currentpoint = pathstart;
 	while(isdefined(currentpoint))
 	{
 		self waittill(#"reached_node", currentpoint);
@@ -1115,7 +1117,7 @@ function path_gate_wait_till_open(pathspot)
 */
 function _spawn_group(spawngroup)
 {
-	while(1)
+	while(true)
 	{
 		level waittill("spawnvehiclegroup" + spawngroup);
 		spawned_vehicles = [];
@@ -1509,6 +1511,7 @@ function _disconnect_paths_when_stopped()
 	self endon(#"death");
 	self endon(#"kill_disconnect_paths_forever");
 	wait(1);
+	threshold = 3;
 	while(isdefined(self))
 	{
 		if(lengthsquared(self.velocity) < threshold * threshold)
@@ -1568,7 +1571,7 @@ function debug_set_speed(speed, rate, msg)
 		self endon(#"hash_3790d3c8");
 		self endon(#"hash_eeaec2a0");
 		self endon(#"death");
-		while(1)
+		while(true)
 		{
 			while(getdvarstring("") != "")
 			{
@@ -2096,7 +2099,7 @@ function play_looped_fx_on_tag(effect, durration, tag)
 	effectorigin = sys::spawn("script_origin", emodel.origin);
 	self endon(#"fire_extinguish");
 	thread _play_looped_fx_on_tag_origin_update(tag, effectorigin);
-	while(1)
+	while(true)
 	{
 		playfx(effect, effectorigin.origin, effectorigin.upvec);
 		wait(durration);
@@ -2117,6 +2120,7 @@ function _play_looped_fx_on_tag_origin_update(tag, effectorigin)
 	effectorigin.angles = self gettagangles(tag);
 	effectorigin.origin = self gettagorigin(tag);
 	effectorigin.forwardvec = anglestoforward(effectorigin.angles);
+	effectorigin.upvec = anglestoup(effectorigin.angles);
 	while(isdefined(self) && self.classname == "script_vehicle" && self getspeedmph() > 0)
 	{
 		emodel = get_dummy();
@@ -2376,7 +2380,7 @@ function _vehicle_bad_place()
 		return;
 	}
 	hasturret = isdefined(self.turretweapon) && self.turretweapon != level.weaponnone;
-	while(1)
+	while(true)
 	{
 		if(!self.script_badplace)
 		{
@@ -2544,6 +2548,7 @@ function liftoff(height = 512)
 */
 function wait_till_stable()
 {
+	timer = gettime() + 400;
 	while(isdefined(self))
 	{
 		if(self.angles[0] > 12 || self.angles[0] < -1 * 12)
@@ -2951,7 +2956,7 @@ function maingun_fx()
 		return;
 	}
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_fired");
 		playfxontag(level.vehicle_deckdust[self.model], self, "tag_engine_exhaust");
@@ -3239,7 +3244,7 @@ function should_update_damage_fx_level(currenthealth, damage, maxhealth)
 				break;
 			}
 		}
-		default
+		default:
 		{
 		}
 	}
@@ -3511,7 +3516,7 @@ function debug_vehicle()
 		{
 			setdvar("", "");
 		}
-		while(1)
+		while(true)
 		{
 			if(getdvarint("") > 0)
 			{
@@ -3537,7 +3542,8 @@ function debug_vehicle_paths()
 		self endon(#"death");
 		self endon(#"newpath");
 		self endon(#"reached_dynamic_path_end");
-		while(1)
+		nextnode = self.currentnode;
+		while(true)
 		{
 			if(getdvarint("") > 0)
 			{
@@ -3848,7 +3854,7 @@ function add_hijack_function(veh_targetname, spawn_func, param1, param2, param3,
 */
 private function _watch_for_hijacked_vehicles()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"clonedentity", clone);
 		str_targetname = clone.targetname;
@@ -3972,7 +3978,7 @@ function monitor_missiles_locked_on_to_me(player, wait_time = 0.1)
 	player endon(#"stop_monitor_missile_locked_on_to_me");
 	player endon(#"disconnect");
 	player endon(#"joined_team");
-	while(1)
+	while(true)
 	{
 		closest_attacker = player get_closest_attacker_with_missile_locked_on_to_me(monitored_entity);
 		player setvehiclelockedonbyent(closest_attacker);
@@ -4125,7 +4131,7 @@ function monitor_damage_as_occupant(player)
 	}
 	wait(0.1);
 	player update_damage_as_occupant(self.maxhealth - self.health, self.maxhealth);
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage");
 		waittillframeend();
@@ -4228,7 +4234,8 @@ function vehicle_spawner_tool()
 		{
 			return;
 		}
-		while(1)
+		type_index = 0;
+		while(true)
 		{
 			if(getdvarint("") > 0)
 			{
@@ -4306,7 +4313,7 @@ function spline_debug()
 	/#
 		level flag::init("");
 		level thread _spline_debug();
-		while(1)
+		while(true)
 		{
 			level flag::set_val("", getdvarint(""));
 			wait(0.05);
@@ -4326,7 +4333,7 @@ function spline_debug()
 function _spline_debug()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			level flag::wait_till("");
 			foreach(var_f43f04ec, nd in getallvehiclenodes())

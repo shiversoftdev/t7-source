@@ -849,7 +849,7 @@ function updateoutcome(firsttitle, secondtitle, thirdtitle)
 {
 	self endon(#"disconnect");
 	self endon(#"reset_outcome");
-	while(1)
+	while(true)
 	{
 		self waittill(#"update_outcome");
 		players = level.placement["all"];
@@ -893,7 +893,7 @@ function updatewageroutcome(playernamehudelems, playercphudelems)
 {
 	self endon(#"disconnect");
 	self endon(#"reset_outcome");
-	while(1)
+	while(true)
 	{
 		self waittill(#"update_outcome");
 		players = level.placement["all"];

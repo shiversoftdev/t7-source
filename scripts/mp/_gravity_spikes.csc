@@ -55,7 +55,7 @@ function __init__()
 function updatedvars()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			level.dirt_enable_gravity_spikes = getdvarint("", level.dirt_enable_gravity_spikes);
 			wait(1);
@@ -79,7 +79,7 @@ function watchforgravityspikeexplosion()
 		return;
 	}
 	weapon_proximity = getweapon("hero_gravityspikes");
-	while(1)
+	while(true)
 	{
 		level waittill(#"explode", localclientnum, position, mod, weapon, owner_cent);
 		if(weapon.rootweapon != weapon_proximity)

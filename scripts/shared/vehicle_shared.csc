@@ -158,7 +158,7 @@ function rumble(localclientnum)
 	self.player_touching = 0;
 	radius_squared = self.rumbleradius * self.rumbleradius;
 	wait(2);
-	while(1)
+	while(true)
 	{
 		if(!isdefined(level.localplayers[localclientnum]) || distancesquared(self.origin, level.localplayers[localclientnum].origin) > radius_squared || self getspeed() == 0)
 		{
@@ -302,8 +302,8 @@ System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative
 Parameter name: index
    at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
    at System.Collections.Generic.List`1.get_Item(Int32 index)
-   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 606
-   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 210
+   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 649
+   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 211
 /*
 No Output
 */
@@ -343,7 +343,7 @@ No Output
 function weapon_fired()
 {
 	self endon(#"entityshutdown");
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_fired");
 		players = level.localplayers;
@@ -384,6 +384,7 @@ function weapon_fired()
 */
 function wait_for_dobj(localclientnum)
 {
+	count = 30;
 	while(!self hasdobj(localclientnum))
 	{
 		if(count < 0)

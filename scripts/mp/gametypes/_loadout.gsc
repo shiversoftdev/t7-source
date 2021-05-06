@@ -451,6 +451,7 @@ function on_damage_special_discgun(eattacker, einflictor, weapon, meansofdeath, 
 function create_class_exclusion_list()
 {
 	currentdvar = 0;
+	level.itemexclusions = [];
 	while(getdvarint("item_exclusion_" + currentdvar))
 	{
 		level.itemexclusions[currentdvar] = getdvarint("item_exclusion_" + currentdvar);

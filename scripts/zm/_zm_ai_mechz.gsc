@@ -504,7 +504,8 @@ function function_bbdc1f34(var_678a2319)
 	self endon(#"death");
 	self endon(#"hash_f93797a6");
 	self waittill(#"hash_3d18ed4f");
-	while(1)
+	var_f0dad551 = 9216;
+	while(true)
 	{
 		a_players = getplayers();
 		foreach(var_6c62ab1c, player in a_players)
@@ -586,6 +587,7 @@ function function_817c85eb(e_player, v_attack_source, n_push_away, n_lift_height
 		self clientfield::set("death_ray_shock_fx", 1);
 		self playsound("zmb_talon_electrocute");
 		n_start_time = gettime();
+		n_total_time = 0;
 		while(10 > n_total_time && e_player.gravityspikes_state === 3)
 		{
 			util::wait_network_frame();
@@ -874,7 +876,7 @@ function function_10d36217(mechz)
 function function_bb048b27()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		wait(randomintrange(9, 14));
 		self playsound("zmb_ai_mechz_vox_ambient");
@@ -894,7 +896,7 @@ function function_75a79bb5()
 {
 	self endon(#"death");
 	/#
-		while(1)
+		while(true)
 		{
 			if(isdefined(level.var_70068a8) && level.var_70068a8)
 			{

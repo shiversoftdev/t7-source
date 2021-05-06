@@ -111,6 +111,7 @@ function planeturn(localclientnum, plane, yaw, halflife, starttime, isturningrig
 	accumturn = 0;
 	looptime = 0.1;
 	waitamount = 0.1;
+	waitformovedone = 0;
 	while(looptime <= halflife)
 	{
 		if(plane.angles[1] == 360)
@@ -152,6 +153,7 @@ function planeturn(localclientnum, plane, yaw, halflife, starttime, isturningrig
 	y = getdvarfloat("scr_planey2", 0.6);
 	z = getdvarfloat("scr_planez2", -1.5);
 	maxy = getdvarfloat("scr_max_planey2", 90);
+	accumturn = 0;
 	while(looptime < halflife + halflife)
 	{
 		if(plane.angles[1] == 360)
@@ -214,6 +216,7 @@ function doabarrelroll(localclientnum, plane, endpoint, flytime, starttime)
 	loopheight = loopheight + randomfloatrange(0 - loopheightrand, loopheightrand);
 	waitformovedone = 0;
 	angles = plane.angles;
+	originalroll = plane.angles[2];
 	while(timeelapsed < flytime)
 	{
 		timeelapsed = timeelapsed + waitamount;

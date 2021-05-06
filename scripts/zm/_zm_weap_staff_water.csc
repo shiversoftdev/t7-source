@@ -86,6 +86,7 @@ function function_9a8e9819(localclientnum)
 	self endon(#"unfreeze");
 	var_5e5728a8 = 0.9;
 	rate = randomfloatrange(0.005, 0.01);
+	f = 0.6;
 	while(f <= var_5e5728a8)
 	{
 		self setshaderconstant(localclientnum, 0, f, 1, 0, 0);
@@ -107,6 +108,7 @@ function function_56ddd8d9(localclientnum)
 {
 	self endon(#"entityshutdown");
 	self notify(#"unfreeze");
+	f = 1;
 	while(f >= 0.6)
 	{
 		self setshaderconstant(localclientnum, 0, f, 1, 0, 0);

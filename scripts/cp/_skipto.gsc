@@ -1005,6 +1005,7 @@ function indicate(skipto, index)
 */
 function validate_skiptos(skiptos)
 {
+	done = 0;
 	while(isdefined(skiptos) && skiptos.size && !done)
 	{
 		done = 1;
@@ -1213,6 +1214,7 @@ function menu()
 {
 	/#
 		level flag::wait_till("");
+		player = getplayers()[0];
 		while(isdefined(player) && player buttonpressed(""))
 		{
 			wait(0.05);
@@ -1351,6 +1353,7 @@ function display()
 	selected = names.size - 1;
 	up_pressed = 0;
 	down_pressed = 0;
+	found_current_skipto = 0;
 	while(selected > 0)
 	{
 		if(names[selected] == level.skipto_point)
@@ -1860,6 +1863,7 @@ function convert_token(str, fromtok, totok)
 function load_mission_table(table, levelname, sublevel = "")
 {
 	index = 0;
+	row = tablelookuprow(table, index);
 	while(isdefined(row))
 	{
 		if(row[0] == levelname && row[1] == sublevel)
@@ -1933,7 +1937,7 @@ function on_player_spawn()
 function function_f2b024f8()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self function_a5a105e8();
 		wait(5);
@@ -2265,7 +2269,7 @@ private function function_87fe8621()
 	/#
 		assert(var_717810f.size >= 3, "");
 	#/
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", lead_player);
 		if(isplayer(lead_player))
@@ -2817,7 +2821,7 @@ function function_b0e512a3()
 */
 function function_2711019f()
 {
-	while(1)
+	while(true)
 	{
 		var_14bd4dfe = getlobbyclientcount();
 		if(var_14bd4dfe <= level.var_897126b5)
@@ -3386,7 +3390,7 @@ function level_completed(skipto, starting)
 function function_3d23f76a()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self freezecontrols(1);
 		wait(0.05);
@@ -4150,7 +4154,7 @@ function update_billboard()
 {
 	/#
 		self endon(#"death");
-		while(1)
+		while(true)
 		{
 			if(isdefined(level.billboards) && isdefined(level.billboards[level.current_skipto]))
 			{
@@ -4198,7 +4202,8 @@ function update_player_billboard()
 {
 	/#
 		self endon(#"death");
-		while(1)
+		lui_menu = undefined;
+		while(true)
 		{
 			if(isdefined(level.billboard_event))
 			{

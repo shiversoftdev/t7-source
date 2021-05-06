@@ -95,6 +95,7 @@ function quadrotor_medallions()
 	t_weapon_swap.require_look_at = 1;
 	t_weapon_swap.cursor_hint = "HINT_WEAPON";
 	t_weapon_swap.cursor_hint_weapon = var_67f03e82;
+	b_retrieved = 0;
 	while(!b_retrieved)
 	{
 		t_weapon_swap waittill(#"trigger", e_player);
@@ -115,6 +116,7 @@ function quadrotor_medallions()
 */
 function quadrotor_medallions_vo()
 {
+	n_vo_counter = 0;
 	while(n_vo_counter < 4)
 	{
 		level waittill(#"quadrotor_medallion_found", v_quadrotor);
@@ -180,7 +182,8 @@ function wall_hole_poster()
 	m_poster = getent("hole_poster", "targetname");
 	m_poster setcandamage(1);
 	m_poster.health = 1000;
-	while(1)
+	m_poster.maxhealth = m_poster.health;
+	while(true)
 	{
 		m_poster waittill(#"damage");
 		if(m_poster.health <= 0)
@@ -203,13 +206,14 @@ function wagon_fire_challenge()
 {
 	level flag::init("ee_wagon_timer_start");
 	level flag::init("ee_wagon_challenge_complete");
+	s_powerup = struct::get("wagon_powerup", "targetname");
 	while(!level flag::exists("start_zombie_round_logic"))
 	{
 		wait(0.5);
 	}
 	level flag::wait_till("start_zombie_round_logic");
 	wagon_fire_start();
-	while(1)
+	while(true)
 	{
 		level flag::wait_till("ee_wagon_timer_start");
 		level flag::wait_till_timeout(30, "ee_wagon_challenge_complete");
@@ -269,7 +273,8 @@ function wagon_fire_trigger_watch()
 	self notify(#"watch_reset");
 	self endon(#"watch_reset");
 	var_83560def = level.a_elemental_staffs["staff_water"].w_weapon;
-	while(1)
+	var_2499bc6a = level.a_elemental_staffs_upgraded["staff_water_upgraded"].w_weapon;
+	while(true)
 	{
 		self waittill(#"damage", damage, attacker, direction, point, type, tagname, modelname, partname, weapon);
 		if(isplayer(attacker) && (weapon == var_83560def || weapon == var_2499bc6a))
@@ -312,6 +317,7 @@ function onplayerconnect_ee_jump_scare()
 	}
 	while(!level.b_saw_jump_scare)
 	{
+		n_time = 0;
 		while(self adsbuttonpressed() && n_time < 25)
 		{
 			n_time++;
@@ -321,6 +327,7 @@ function onplayerconnect_ee_jump_scare()
 		{
 			self playsoundtoplayer("zmb_easteregg_scarydog", self);
 			self.var_92fcfed8 = self openluimenu("JumpScare-Tomb");
+			n_time = 0;
 			while(self adsbuttonpressed() && n_time < 5)
 			{
 				n_time++;
@@ -432,7 +439,7 @@ function sq_one_inch_punch()
 */
 function bunker_trigger_thread()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player.sq_one_inch_punch_stage == 0)
@@ -491,7 +498,7 @@ function bunker_trigger_thread()
 */
 function birdbath_trigger_thread()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player.sq_one_inch_punch_stage == 1)
@@ -789,7 +796,7 @@ function radio_ee_debug()
 {
 	/#
 		self endon(#"stop_display");
-		while(1)
+		while(true)
 		{
 			print3d(self.origin, "", vectorscale((1, 0, 1), 255), 1);
 			wait(0.05);
@@ -809,7 +816,7 @@ function radio_ee_debug()
 function radio_ee_think()
 {
 	self endon(#"kill_trigger");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(!zm_audio_zhd::function_8090042c())

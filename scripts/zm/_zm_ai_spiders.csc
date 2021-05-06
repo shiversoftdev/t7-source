@@ -193,6 +193,7 @@ function function_bea149a5(localclientnum, var_afc7cc94, var_b05b3457, b_on, n_a
 	if(b_on)
 	{
 		var_24fbb6c6 = 0;
+		i = 0;
 		while(var_24fbb6c6 <= n_alpha)
 		{
 			self transition_shader(localclientnum, var_24fbb6c6, var_afc7cc94);
@@ -219,6 +220,7 @@ function function_bea149a5(localclientnum, var_afc7cc94, var_b05b3457, b_on, n_a
 		var_bbfa5d7d = 1;
 	}
 	var_24fbb6c6 = var_bbfa5d7d;
+	i = var_bbfa5d7d;
 	while(var_24fbb6c6 >= 0)
 	{
 		self transition_shader(localclientnum, var_24fbb6c6, var_afc7cc94);
@@ -349,7 +351,7 @@ function play_spider_web_tear_fx(localclientnum, oldval, newval, bnewent, biniti
 			str_effect = "spider_web_doorbuy_tear";
 			break;
 		}
-		default
+		default:
 		{
 			return;
 		}
@@ -398,7 +400,7 @@ function play_spider_web_tear_complete_fx(localclientnum, oldval, newval, bnewen
 			str_effect = "spider_web_tear_explosive";
 			break;
 		}
-		default
+		default:
 		{
 			return;
 		}

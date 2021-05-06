@@ -369,7 +369,7 @@ function can_buy_perk()
 function perk_random_unitrigger_think(player)
 {
 	self endon(#"kill_trigger");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		self.stub.trigger_target notify(#"trigger", player);
@@ -418,7 +418,7 @@ function machine_think()
 	level.bottle_spawn_location setmodel("tag_origin");
 	level.bottle_spawn_location.angles = self.angles;
 	level.bottle_spawn_location.origin = level.bottle_spawn_location.origin + vectorscale((0, 0, 1), 65);
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		level flag::clear("machine_can_reset");
@@ -437,7 +437,7 @@ function machine_think()
 		{
 			player thread [[level.perk_random_vo_func_usemachine]]();
 		}
-		while(1)
+		while(true)
 		{
 			random_perk = get_weighted_random_perk(player);
 			self playsound("zmb_rand_perk_start");
@@ -726,7 +726,8 @@ function start_perk_bottle_cycling()
 {
 	self endon(#"done_cycling");
 	array_key = getarraykeys(level.perk_bottle_weapon_array);
-	while(1)
+	timer = 0;
+	while(true)
 	{
 		for(i = 0; i < array_key.size; i++)
 		{
@@ -795,6 +796,7 @@ function perk_random_vending()
 function perk_random_loop_anim(n_piece, s_anim_1, s_anim_2)
 {
 	self endon(#"zbarrier_state_change");
+	current_state = self.state;
 	while(self.state == current_state)
 	{
 		self setzbarrierpiecestate(n_piece, s_anim_1);
@@ -1006,7 +1008,7 @@ function process_perk_random_machine_state(state)
 			self.state = "initial";
 			break;
 		}
-		default
+		default:
 		{
 			if(isdefined(level.custom_perk_random_state_handler))
 			{
@@ -1029,7 +1031,7 @@ function process_perk_random_machine_state(state)
 function machine_sounds()
 {
 	level endon(#"machine_think");
-	while(1)
+	while(true)
 	{
 		level waittill(#"pmstrt");
 		rndprk_ent = spawn("script_origin", self.origin);

@@ -186,7 +186,7 @@ function spawn_manager_debug_spawn_manager()
 		level.test_player = getplayers()[0];
 		current_spawn_manager_index = -1;
 		old_spawn_manager_index = undefined;
-		while(1)
+		while(true)
 		{
 			if(getdvarstring("") != "")
 			{
@@ -272,7 +272,7 @@ function spawn_manager_debug_spawn_manager()
 function spawn_manager_debug_spawner_values()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			if(getdvarstring("") != "")
 			{
@@ -315,7 +315,7 @@ function ent_print(text)
 {
 	/#
 		self endon(#"death");
-		while(1)
+		while(true)
 		{
 			print3d(self.origin + vectorscale((0, 0, 1), 65), text, (0.48, 9.4, 0.76), 1, 1);
 			wait(0.05);

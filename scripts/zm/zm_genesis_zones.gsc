@@ -265,7 +265,7 @@ function function_9ce5da3b()
 */
 function function_fb8b5806()
 {
-	while(1)
+	while(true)
 	{
 		level flag::wait_till("test_activate_arena");
 		zm_genesis_util::function_342295d8("dark_arena2_zone");

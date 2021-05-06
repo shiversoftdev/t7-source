@@ -80,7 +80,8 @@ function __init__()
 function function_755b4548()
 {
 	level.var_b32a2aa0 = 0;
-	while(1)
+	level.var_ba0d6d40 = randomintrange(11, 13);
+	while(true)
 	{
 		level waittill(#"between_round_over");
 		if(level.round_number > level.var_ba0d6d40)
@@ -123,7 +124,7 @@ function function_c68599fd()
 			level thread spawn_boss("mechz");
 			break;
 		}
-		default
+		default:
 		{
 			if(math::cointoss())
 			{
@@ -182,7 +183,7 @@ function function_c68599fd()
 			}
 			break;
 		}
-		default
+		default:
 		{
 			if(a_players.size == 1)
 			{

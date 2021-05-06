@@ -234,6 +234,7 @@ function start_flashing()
 	{
 		return;
 	}
+	self.isflashing = 1;
 	while(self.isflashing)
 	{
 		self fadeovertime(0.75);

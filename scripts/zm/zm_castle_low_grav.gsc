@@ -160,7 +160,8 @@ function function_e49e9c09()
 	var_4f15c74f enablelinkto();
 	var_4f15c74f linkto(var_8ecbce0a);
 	var_2e8e2853 = var_8ecbce0a.origin - vectorscale((0, 0, 1), 2);
-	while(1)
+	var_93f2a402 = var_8ecbce0a.origin;
+	while(true)
 	{
 		self waittill(#"trigger", e_who);
 		var_8ecbce0a moveto(var_2e8e2853, 0.5);
@@ -168,6 +169,7 @@ function function_e49e9c09()
 		var_8ecbce0a waittill(#"movedone");
 		var_4f15c74f clientfield::set("undercroft_emissives", 1);
 		n_start_time = gettime();
+		n_end_time = n_start_time + 3000;
 		while(e_who istouching(self))
 		{
 			n_time = gettime();
@@ -225,7 +227,7 @@ function function_fceff7eb(n_duration = 50)
 		level endon(#"hash_9c3be857");
 	#/
 	level thread function_767bba0();
-	while(1)
+	while(true)
 	{
 		level flag::set("low_grav_on");
 		level thread function_2f712e07();
@@ -282,7 +284,7 @@ function function_e1998cb5()
 function function_3ccd9604()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		if(self istouching(level.var_a75d7260) && level flag::get("low_grav_on") && self.low_gravity == 0)
 		{
@@ -310,7 +312,7 @@ function function_3ccd9604()
 function function_f4766f6()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		if(self istouching(level.var_a75d7260) && level flag::get("low_grav_on") && (!(isdefined(self.low_gravity) && self.low_gravity)))
 		{
@@ -340,7 +342,8 @@ function function_c3f6aa22()
 	self endon(#"death");
 	self endon(#"disconnect");
 	level flag::wait_till("low_grav_on");
-	while(1)
+	self.var_7dd18a0 = 0;
+	while(true)
 	{
 		while(self istouching(level.var_a75d7260))
 		{
@@ -395,7 +398,7 @@ function function_e997f73a()
 	self endon(#"death");
 	self endon(#"disconnect");
 	self endon(#"hash_eb16fe00");
-	while(1)
+	while(true)
 	{
 		if(self isonground() || self iswallrunning())
 		{
@@ -452,7 +455,8 @@ function function_767bba0()
 	var_470f053a = struct::get_array("wall_buy_trigger", "targetname");
 	var_6ad23999 = getentarray("lowgrav_glow", "targetname");
 	var_8ff7104f = getentarray("pyramid", "targetname");
-	while(1)
+	var_6ad23999 = arraycombine(var_8ff7104f, var_6ad23999, 0, 0);
+	while(true)
 	{
 		level flag::wait_till("low_grav_on");
 		var_89ba571 = [];
@@ -517,6 +521,7 @@ function function_2f712e07()
 	var_29be1256 = 5;
 	var_2916f722 = int(var_3bebe64c / var_29be1256);
 	var_398a5cc1 = var_d1d3b1 / var_29be1256;
+	var_4603701d = array::randomize(var_4603701d);
 	while(var_4603701d.size > 0)
 	{
 		for(i = 0; i < var_2916f722; i++)
@@ -727,7 +732,7 @@ function function_d09bda12()
 	var_c5728235 enablelinkto();
 	var_c5728235 linkto(var_6b2a60d);
 	var_c5728235 thread trigger_damage();
-	while(1)
+	while(true)
 	{
 		var_60532813 waittill(#"trigger", e_player);
 		n_distance = distance2d(e_player.origin, self.origin);
@@ -848,7 +853,7 @@ function function_30b0d4ab(n_wait_time)
 */
 function trigger_damage()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_who);
 		if(isplayer(e_who) && (!(isdefined(e_who.var_c54a399c) && e_who.var_c54a399c)))
@@ -1016,7 +1021,7 @@ function function_42dee8e(var_7c68b1e, powerup, unitrigger_stub)
 */
 function function_34029460(var_7c68b1e, unitrigger_stub)
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"start_of_round");
 		if(level.round_number >= level.var_57c06a96)

@@ -69,7 +69,7 @@ function ambient_mortar_strike(localclientnum, oldval, newval, bnewent, binitial
 			var_df2299f9 = "ambient_mortar_large";
 			break;
 		}
-		default
+		default:
 		{
 			return;
 		}
@@ -105,7 +105,7 @@ function ambient_artillery_strike(localclientnum, oldval, newval, bnewent, binit
 			var_df2299f9 = "ambient_artillery_large";
 			break;
 		}
-		default
+		default:
 		{
 			return;
 		}

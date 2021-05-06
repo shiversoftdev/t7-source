@@ -52,7 +52,7 @@ private function function_d95d34bd(spawner)
 {
 	level notify(#"hash_d95d34bd");
 	level endon(#"hash_d95d34bd");
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_31b5dd0d");
 		if(!getdvarint("scr_boss_force_spawn", 0))
@@ -124,7 +124,8 @@ private function function_d95d34bd(spawner)
 private function function_555608c7()
 {
 	self endon(#"death");
-	while(1)
+	self.takedamage = 1;
+	while(true)
 	{
 		self waittill(#"damage", amount, attacker);
 		if(isdefined(attacker) && isplayer(attacker))
@@ -390,6 +391,7 @@ private function function_2ca4656()
 {
 	self endon(#"death");
 	wait(0.1);
+	timeout = gettime() + 10000;
 	while(isdefined(self.var_88168473) && self.var_88168473 && gettime() < timeout)
 	{
 		wait(0.05);
@@ -467,6 +469,7 @@ private function function_2ca4656()
 	self.favoriteenemy = undefined;
 	self clearentitytarget();
 	self.var_f4a5c4fe = self.var_f1eeb152;
+	tries = 0;
 	while(isdefined(self.var_f4a5c4fe) && self findpath(self.origin, self.var_f4a5c4fe, 1, 0))
 	{
 		distsq = distancesquared(self.origin, self.var_f1eeb152);
@@ -519,7 +522,7 @@ private function function_2ca4656()
 private function function_e5e28b1b()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		pickupsitems = getentarray("a_pickup_item", "script_noteworthy");
 		for(i = 0; i < pickupsitems.size; i++)
@@ -550,6 +553,7 @@ private function function_e5e28b1b()
 function function_76b30cc1()
 {
 	self endon(#"death");
+	amount = int(self.health * 0.15);
 	while(self.health > 0)
 	{
 		wait(3);

@@ -87,7 +87,7 @@ function function_5ecbd7cb()
 	zm_unitrigger::unitrigger_force_per_player_triggers(s_unitrigger_stub, 1);
 	var_3432399a = var_845e036a.target + "_spline";
 	nd_start = getvehiclenode(var_3432399a, "targetname");
-	while(1)
+	while(true)
 	{
 		s_unitrigger_stub waittill(#"trigger", e_who);
 		if(isdefined(e_who.var_8dbb72b1) && e_who.var_8dbb72b1[var_3cb25813.script_string] === 1)
@@ -136,7 +136,7 @@ function unitrigger_think()
 {
 	self endon(#"kill_trigger");
 	self.stub thread unitrigger_refresh_message();
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", var_4161ad80);
 		self.stub notify(#"trigger", var_4161ad80);
@@ -196,7 +196,7 @@ function function_a78c631a(val, var_8d88ae81)
 */
 function function_86ef1da5()
 {
-	while(1)
+	while(true)
 	{
 		foreach(var_cd41ef9, e_player in level.activeplayers)
 		{
@@ -394,7 +394,7 @@ function function_e9d3c391(var_a89f74ed, v_fling, nd_start, var_173065cc)
 */
 function cleanup_vehicle(var_413ea50f)
 {
-	while(1)
+	while(true)
 	{
 		if(!isdefined(self) || (isdefined(self.var_3298b25f) && self.var_3298b25f))
 		{
@@ -531,6 +531,7 @@ function function_3298b25f(var_a89f74ed)
 	self.var_3298b25f = 0;
 	var_a7d28374 = 0;
 	var_a05a47c7 = var_a89f74ed function_fbd80603();
+	var_16f5c370 = var_a05a47c7.origin;
 	while(positionwouldtelefrag(var_16f5c370))
 	{
 		util::wait_network_frame();
@@ -613,6 +614,7 @@ function function_fbd80603(var_24021c9d = 0)
 function function_b19e2d45(var_a89f74ed)
 {
 	var_2b58409e = struct::get(var_a89f74ed.script_noteworthy, "targetname");
+	str_zone = zm_zonemgr::get_zone_from_position(var_2b58409e.origin + vectorscale((0, 0, 1), 32), 1);
 	while(isdefined(self.var_122a2dda) && self.var_122a2dda)
 	{
 		level.zones[str_zone].is_active = 1;
@@ -826,7 +828,7 @@ function function_4029cf56()
 {
 	self endon(#"kill_trigger");
 	self.stub thread zm_unitrigger::run_visibility_function_for_all_triggers();
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", var_4161ad80);
 		self.stub notify(#"trigger", var_4161ad80);

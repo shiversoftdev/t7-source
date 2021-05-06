@@ -438,7 +438,8 @@ function prevent_stuck()
 	self endon(#"end_prevent_stuck");
 	wait(2);
 	count = 0;
-	while(1)
+	previous_origin = undefined;
+	while(true)
 	{
 		if(isdefined(previous_origin) && distancesquared(previous_origin, self.origin) < 0.1 * 0.1 && (!(isdefined(level.bzm_worldpaused) && level.bzm_worldpaused)))
 		{
@@ -498,6 +499,7 @@ function jump_detonate()
 	self launchvehicle((0, 0, 1) * self.jumpforce, (0, 0, 0), 1);
 	self.is_jumping = 1;
 	wait(0.4);
+	time_to_land = 0.6;
 	while(time_to_land > 0)
 	{
 		if(check_detonation_dist(self.origin, self.enemy))
@@ -571,7 +573,8 @@ function detonation_monitor()
 {
 	self endon(#"death");
 	self endon(#"change_state");
-	while(1)
+	lastenemy = undefined;
+	while(true)
 	{
 		try_detonate();
 		wait(0.2);
@@ -824,7 +827,7 @@ function path_update_interrupt()
 	self notify(#"clear_interrupt_threads");
 	self endon(#"clear_interrupt_threads");
 	wait(0.1);
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.current_pathto_pos))
 		{
@@ -924,7 +927,7 @@ function nudge_collision()
 	self endon(#"change_state");
 	self notify(#"end_nudge_collision");
 	self endon(#"end_nudge_collision");
-	while(1)
+	while(true)
 	{
 		self waittill(#"veh_collision", velocity, normal);
 		ang_vel = self getangularvelocity() * 0.8;
@@ -1029,7 +1032,7 @@ function raps_callback_damage(einflictor, eattacker, idamage, idflags, smeansofd
 function slow_raps_trigger()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", other);
 		if(isvehicle(other) && isdefined(other.archetype) && other.archetype == "raps")
@@ -1165,7 +1168,7 @@ function sndfunctions()
 function drivablerapsinair()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"veh_landed");
 		if(isdefined(self.sndalias["land"]))
@@ -1191,7 +1194,7 @@ function raps_in_air_audio()
 	{
 		self waittill(#"veh_landed");
 	}
-	while(1)
+	while(true)
 	{
 		self waittill(#"veh_inair");
 		if(isdefined(self.sndalias["inAir"]))

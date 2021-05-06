@@ -65,7 +65,7 @@ function set_difficulty(difficulty)
 					difficulty = "fu";
 					break;
 				}
-				default
+				default:
 				{
 					continue;
 				}
@@ -233,7 +233,7 @@ function burst_fire(turret, manual_target)
 	{
 		turret_burst_range = burst_fire_settings("burst_range");
 	}
-	while(1)
+	while(true)
 	{
 		turret startfiring();
 		if(isdefined(manual_target))
@@ -396,7 +396,8 @@ function random_spread(ent)
 	self endon(#"hash_d175a918");
 	self endon(#"stopfiring");
 	self settargetentity(ent);
-	while(1)
+	self.manual_target = ent;
+	while(true)
 	{
 		if(isplayer(ent))
 		{

@@ -61,6 +61,7 @@ function __init__()
 */
 function on_localclient_connect(localclientnum)
 {
+	objective_ids = [];
 	while(!isdefined(objective_ids["allies"]))
 	{
 		objective_ids["allies"] = serverobjective_getobjective(localclientnum, "ball_goal_allies");

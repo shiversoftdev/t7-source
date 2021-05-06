@@ -120,7 +120,7 @@ function gettweakabledvarvalue(category, name)
 			dvar = level.hudtweaks[name].dvar;
 			break;
 		}
-		default
+		default:
 		{
 			dvar = undefined;
 			break;
@@ -186,7 +186,7 @@ function gettweakabledvar(category, name)
 			value = level.hudtweaks[name].dvar;
 			break;
 		}
-		default
+		default:
 		{
 			value = undefined;
 			break;
@@ -251,7 +251,7 @@ function gettweakablevalue(category, name)
 			value = level.hudtweaks[name].value;
 			break;
 		}
-		default
+		default:
 		{
 			value = undefined;
 			break;
@@ -321,7 +321,7 @@ function gettweakablelastvalue(category, name)
 			value = level.hudtweaks[name].lastvalue;
 			break;
 		}
-		default
+		default:
 		{
 			value = undefined;
 			break;
@@ -386,7 +386,7 @@ function settweakablevalue(category, name, value)
 			dvar = level.hudtweaks[name].dvar;
 			break;
 		}
-		default
+		default:
 		{
 			dvar = undefined;
 			break;
@@ -448,7 +448,7 @@ function settweakablelastvalue(category, name, value)
 			level.hudtweaks[name].lastvalue = value;
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}

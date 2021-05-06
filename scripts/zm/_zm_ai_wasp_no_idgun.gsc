@@ -197,7 +197,7 @@ function wasp_round_spawning()
 	level flag::set("wasp_round_in_progress");
 	level endon(#"last_ai_down");
 	level thread wasp_round_aftermath();
-	while(1)
+	while(true)
 	{
 		while(level.zombie_total > 0)
 		{
@@ -231,12 +231,14 @@ function wasp_round_spawning()
 */
 function spawn_wasp()
 {
+	b_swarm_spawned = 0;
 	while(!b_swarm_spawned)
 	{
 		while(!ready_to_spawn_wasp())
 		{
 			wait(1);
 		}
+		spawn_point = undefined;
 		while(!isdefined(spawn_point))
 		{
 			favorite_enemy = get_favorite_enemy();
@@ -290,6 +292,7 @@ function spawn_wasp()
 		}
 		if(a_spawn_origins.size >= 1)
 		{
+			n_spawn = 0;
 			while(n_spawn < 1 && level.zombie_total > 0)
 			{
 				for(i = a_spawn_origins.size - 1; i >= 0; i--)
@@ -456,6 +459,7 @@ function parasite_drop_item(v_parasite_origin)
 				v_dir = vectornormalize(v_target - v_start);
 				n_step = 50;
 				n_distance_moved = 0;
+				v_position = v_start;
 				while(n_distance_moved <= n_distance_to_target)
 				{
 					v_position = v_position + v_dir * n_step;
@@ -665,7 +669,7 @@ function wasp_spawn_logic(favorite_enemy)
 			break;
 		}
 		case 1:
-		default
+		default:
 		{
 			spawn_dist_max = 1200;
 			break;
@@ -766,7 +770,8 @@ function wasp_round_tracker()
 	level.wasp_round_count = 1;
 	level.next_wasp_round = level.round_number + randomintrange(4, 6);
 	old_spawn_func = level.round_spawn_func;
-	while(1)
+	old_wait_func = level.round_wait_func;
+	while(true)
 	{
 		level waittill(#"between_round_over");
 		/#
@@ -966,7 +971,7 @@ function wasp_cleanup_failsafe()
 	n_wasp_created_time = gettime();
 	n_check_time = n_wasp_created_time;
 	v_check_position = self.origin;
-	while(1)
+	while(true)
 	{
 		n_current_time = gettime();
 		if(isdefined(level.bzm_worldpaused) && level.bzm_worldpaused)
@@ -1101,7 +1106,7 @@ function wasp_behind_audio()
 	self endon(#"death");
 	self util::waittill_any("wasp_running", "wasp_combat");
 	wait(3);
-	while(1)
+	while(true)
 	{
 		players = getplayers();
 		for(i = 0; i < players.size; i++)
@@ -1135,6 +1140,7 @@ function special_wasp_spawn(n_to_spawn = 1, spawn_point, n_radius = 32, n_half_h
 	{
 		return 0;
 	}
+	count = 0;
 	while(count < n_to_spawn)
 	{
 		players = getplayers();
@@ -1207,7 +1213,7 @@ function wasp_run_think()
 		self.maxhealth = level.wasp_health;
 		self.health = level.wasp_health;
 	}
-	while(1)
+	while(true)
 	{
 		wait(0.2);
 	}
@@ -1289,7 +1295,7 @@ function wasp_stalk_audio()
 	self endon(#"death");
 	self endon(#"wasp_running");
 	self endon(#"wasp_combat");
-	while(1)
+	while(true)
 	{
 		wait(randomfloatrange(3, 6));
 	}

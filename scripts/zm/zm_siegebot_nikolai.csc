@@ -77,7 +77,8 @@ function function_48c3fc7d(localclientnum)
 	self endon(#"entityshutdown");
 	self notify(#"hash_48c3fc7d");
 	self endon(#"hash_48c3fc7d");
-	while(1)
+	nikolai = undefined;
+	while(true)
 	{
 		level waittill(#"hash_eeba0c72");
 		if(!isdefined(nikolai))
@@ -150,7 +151,7 @@ function function_89d7e567(localclientnum)
 {
 	self endon(#"disconnect");
 	self endon(#"entityshutdown");
-	while(1)
+	while(true)
 	{
 		self waittill(#"gunner_weapon_fired");
 		self setanim("ai_zm_dlc3_russian_mech_shoot_gunbarrel", 1, 0, 1);

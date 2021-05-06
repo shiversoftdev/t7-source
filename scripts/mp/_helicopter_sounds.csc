@@ -141,7 +141,7 @@ function init_heli_sound_values(heli_type, part_type, max_speed_vol, min_vol, ma
 function command_parser()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			command = getdvarstring("");
 			if(command != "")
@@ -230,7 +230,7 @@ function command_parser()
 							println("" + value);
 							break;
 						}
-						default
+						default:
 						{
 							println("");
 						}
@@ -522,7 +522,7 @@ function start_helicopter_sounds(localclientnum)
 			{
 				break;
 			}
-			default
+			default:
 			{
 				/#
 					println("" + self.vehicletype + "");
@@ -595,7 +595,7 @@ function heli_sound_play(heli_bone)
 		{
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				println("" + heli_bone.type + "");
@@ -1205,7 +1205,7 @@ function drone_up_down_transition()
 	qr_ent_down linkto(self, tag);
 	qr_ent_either linkto(self, tag);
 	self thread drone_button_watch();
-	while(1)
+	while(true)
 	{
 		last_pos = self.origin[2];
 		wait(0.1);
@@ -1268,7 +1268,7 @@ function drone_rotate_angle(heli_type, heli_part)
 	setsoundvolume(angle, 0);
 	tag = "tag_body";
 	qr_ent_angle linkto(self, tag);
-	while(1)
+	while(true)
 	{
 		last_angle = abs(self.angles[1]);
 		wait(0.1);
@@ -1293,7 +1293,8 @@ function drone_button_watch()
 {
 	self endon(#"entityshutdown");
 	player = getlocalplayers()[0];
-	while(1)
+	return_to_zero = 1;
+	while(true)
 	{
 		if(abs(self.qrdrone_z_difference) > 5 && return_to_zero)
 		{

@@ -517,7 +517,8 @@ function castinganimationwatcher(localclientnum)
 	self endon(#"castinganimationwatcher");
 	self endon(#"disconnect");
 	self endon(#"entityshutdown");
-	while(1)
+	self.cybercom.lastcastat = 0;
+	while(true)
 	{
 		self waittill(#"gadget_casting_anim");
 		curtime = gettime();
@@ -706,7 +707,7 @@ function function_50dfd00b(localclientnum, oldval, newval, bnewent, binitialsnap
 				self.var_3949887b = playfxontag(localclientnum, "electric/fx_ability_elec_surge_short_wasp", self, "tag_body");
 				break;
 			}
-			default
+			default:
 			{
 				/#
 					assert(0, "");
@@ -744,7 +745,7 @@ function function_50dfd00b(localclientnum, oldval, newval, bnewent, binitialsnap
 				self.var_3949887b = playfxontag(localclientnum, "electric/fx_ability_elec_surge_short_upgrade_wasp", self, "tag_body");
 				break;
 			}
-			default
+			default:
 			{
 				/#
 					assert(0, "");
@@ -823,7 +824,7 @@ function function_6f88468d(localclientnum, oldval, newval, bnewent, binitialsnap
 				self.var_3e759796 = playfxontag(localclientnum, "electric/fx_ability_elec_surge_short_wasp", self, "tag_body");
 				break;
 			}
-			default
+			default:
 			{
 				/#
 					assert(0, "");
@@ -861,7 +862,7 @@ function function_6f88468d(localclientnum, oldval, newval, bnewent, binitialsnap
 				self.var_3e759796 = playfxontag(localclientnum, "electric/fx_ability_elec_surge_short_upgrade_wasp", self, "tag_body");
 				break;
 			}
-			default
+			default:
 			{
 				/#
 					assert(0, "");
@@ -992,7 +993,7 @@ private function function_13f09a6b()
 	self endon(#"entityshutdown");
 	self notify(#"hash_e0f9c098");
 	self endon(#"hash_e0f9c098");
-	while(1)
+	while(true)
 	{
 		wait(2);
 		self setdrawname(self.var_2b998b77, 2);
@@ -1132,6 +1133,7 @@ function function_38e32940()
 	var_191c13e8 = getdvarfloat("cybercom_hand_glow_start", 0.07);
 	var_266a1a59 = 690;
 	var_b608e411 = var_191c13e8;
+	total_time = var_266a1a59;
 	while(time_counter < total_time)
 	{
 		current_time = time_counter;
@@ -1261,6 +1263,7 @@ function function_2aa9d708(model, range, start)
 	self endon(#"hash_2aa9d708");
 	self endon(#"hash_14a1bc97");
 	starttime = getrealtime();
+	val = start / range;
 	while(val <= 1)
 	{
 		setuimodelvalue(model, val);

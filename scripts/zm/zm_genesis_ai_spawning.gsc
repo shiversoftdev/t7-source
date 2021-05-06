@@ -94,7 +94,7 @@ function __init__()
 function function_a70ab4c3()
 {
 	level.var_783db6ab = randomintrange(5, 7);
-	while(1)
+	while(true)
 	{
 		level waittill(#"between_round_over");
 		if(level.round_number > level.var_783db6ab)
@@ -171,7 +171,7 @@ function function_8e64e16a()
 	zm_spawner::register_zombie_death_event_callback(&function_8d6f4be5);
 	level thread function_a61de87c();
 	level endon(#"last_ai_down");
-	while(1)
+	while(true)
 	{
 		foreach(str_index, str_archetype in level.a_zombie_respawn_type)
 		{
@@ -326,7 +326,7 @@ function function_a61de87c()
 	level thread function_4a9010ae();
 	level thread function_66a5ce12(e_attacker);
 	zm_genesis_power::function_5003c1cd(0, 0);
-	while(1)
+	while(true)
 	{
 		var_720ddf8a = zombie_utility::get_current_zombie_count();
 		if(var_720ddf8a == 0)
@@ -450,7 +450,7 @@ function function_3cf05b99()
 			break;
 		}
 		case "parasite":
-		default
+		default:
 		{
 			if(zm_genesis_wasp::ready_to_spawn_wasp())
 			{

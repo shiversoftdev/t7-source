@@ -132,7 +132,7 @@ function first_damage()
 {
 	self endon(#"death");
 	self endon(#"first_damage_done");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", amount, attacker, direction, point, dmg_type, modelname, tagname);
 		if(isplayer(attacker) && (dmg_type == "MOD_PROJECTILE" || dmg_type == "MOD_PROJECTILE_SPLASH" || dmg_type == "MOD_EXPLOSIVE" || dmg_type == "MOD_EXPLOSIVE_SPLASH" || dmg_type == "MOD_GRENADE" || dmg_type == "MOD_GRENADE_SPLASH"))
@@ -161,7 +161,7 @@ function wait_for_player_to_get_close()
 {
 	self endon(#"death");
 	self endon(#"first_damage_done");
-	while(1)
+	while(true)
 	{
 		players = getplayers();
 		for(i = 0; i < players.size; i++)
@@ -189,7 +189,7 @@ function report_melee_early()
 {
 	self endon(#"death");
 	self endon(#"shrunk");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", amount, attacker, direction, point, dmg_type, modelname, tagname);
 		if(isplayer(attacker) && dmg_type == "MOD_MELEE")
@@ -212,7 +212,7 @@ function report_melee_early()
 function wait_for_melee()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", amount, attacker, direction, point, dmg_type, modelname, tagname);
 		if(isplayer(attacker) && dmg_type == "MOD_MELEE")
@@ -239,7 +239,7 @@ function check_for_closed_slide(ent)
 	{
 		self endon(#"death");
 		self endon(#"reached_end_node");
-		while(1)
+		while(true)
 		{
 			self waittill(#"reached_node", node);
 			if(isdefined(node.script_noteworthy) && node.script_noteworthy == "pre_gate")
@@ -282,7 +282,7 @@ function check_for_closed_slide(ent)
 function water_trail(ent)
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"reached_node", node);
 		if(isdefined(node.script_int))
@@ -348,6 +348,7 @@ function lgs_crystal()
 	self.trigger notify(#"first_damage_done");
 	exploder::stop_exploder("fxexp_602");
 	self playsound("evt_sq_lgs_crystal_pry");
+	target = self.target;
 	while(isdefined(target))
 	{
 		struct = struct::get(target, "targetname");
@@ -455,7 +456,7 @@ function crystal_spin()
 {
 	self endon(#"death");
 	self endon(#"kill_bobble");
-	while(1)
+	while(true)
 	{
 		t = randomfloatrange(0.2, 0.8);
 		self rotateto((180 + randomfloat(180), 300 + randomfloat(60), 180 + randomfloat(180)), t);
@@ -479,7 +480,8 @@ function crystal_bobble()
 	self thread crystal_spin();
 	node = getvehiclenode("crystal_end", "script_noteworthy");
 	bottom_pos = node.origin + vectorscale((0, 0, 1), 4);
-	while(1)
+	top_pos = bottom_pos + vectorscale((0, 0, 1), 3);
+	while(true)
 	{
 		self moveto(top_pos + (0, 0, randomfloat(3)), 0.2 + randomfloat(0.1), 0.1);
 		self waittill(#"movedone");

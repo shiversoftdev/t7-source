@@ -662,7 +662,7 @@ function kill_all_zombies()
 function prevent_round_ending()
 {
 	level endon(#"quad_round_can_end");
-	while(1)
+	while(true)
 	{
 		if(level.zombie_total < 1)
 		{
@@ -700,7 +700,7 @@ function intro_quad_spawn()
 			initial_spawners = getentarray("initial_theater_round_quad_spawner", "targetname");
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				assertmsg("");
@@ -715,7 +715,7 @@ function intro_quad_spawn()
 		#/
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		if(isdefined(level.delay_spawners))
 		{
@@ -744,7 +744,7 @@ function intro_quad_spawn()
 			second_spawners = getentarray("theater_round_quad_spawner_second_wave", "targetname");
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				assertmsg("");
@@ -759,7 +759,7 @@ function intro_quad_spawn()
 		#/
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		manage_zombie_spawn_delay(timer);
 		spawn_a_quad_zombie(second_spawners);
@@ -820,7 +820,8 @@ function manage_zombie_spawn_delay(start_timer)
 */
 function quad_lobby_roof_break()
 {
-	while(1)
+	zone = level.zones["foyer_zone"];
+	while(true)
 	{
 		if(zone.is_occupied)
 		{
@@ -850,7 +851,8 @@ function quad_lobby_roof_break()
 function quad_dining_roof_break()
 {
 	level endon(#"hash_e1db2a20");
-	while(1)
+	zone = level.zones["dining_zone"];
+	while(true)
 	{
 		if(zone.is_occupied)
 		{

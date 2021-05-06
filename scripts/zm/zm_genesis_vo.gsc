@@ -489,7 +489,7 @@ function function_7884e6b8()
 	level waittill(#"start_of_round");
 	wait(1.5);
 	function_6b96bf38();
-	while(1)
+	while(true)
 	{
 		level waittill(#"end_of_round");
 		wait(1.5);
@@ -522,6 +522,7 @@ function function_7884e6b8()
 				n_counter = 0;
 				var_261100d2 = undefined;
 				n_player_index = randomint(level.activeplayers.size);
+				var_e8669 = level.activeplayers[n_player_index];
 				while(!zm_utility::is_player_valid(var_e8669) && n_counter < level.activeplayers.size)
 				{
 					n_player_index = (n_player_index + 1 < level.activeplayers.size ? n_player_index + 1 : 0);
@@ -1025,6 +1026,7 @@ function function_2426269b(v_pos, n_range = 1000)
 				var_36ca1ecb.isspeaking = 0;
 			}
 		}
+		i = 0;
 		while(isdefined(level.a_e_speakers) && i < level.a_e_speakers.size)
 		{
 			if(isdefined(level.a_e_speakers[i].deleteme) && level.a_e_speakers[i].deleteme == 1)
@@ -1519,7 +1521,7 @@ function function_7091d990()
 */
 function function_edee8c1e()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"flogger_killed_zombie", e_zombie, var_ecf98bb6);
 		e_zombie function_52f36cdc("flogger", var_ecf98bb6);
@@ -1537,7 +1539,7 @@ function function_edee8c1e()
 */
 function function_5b684ae5()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"trap_kill", e_zombie, var_f1c4d54d);
 		var_ecf98bb6 = (isplayer(var_f1c4d54d) ? var_f1c4d54d : var_f1c4d54d.activated_by_player);
@@ -1679,7 +1681,7 @@ function function_20aa8fb0()
 */
 function function_3fecec4e()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"trap_activate", e_trap);
 		e_trap thread function_bc8dac38();
@@ -1910,7 +1912,7 @@ function function_59a4b1e6()
 function function_1af15c36()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"margwa_headshot", var_225347e1);
 		var_3c161673 = 0;
@@ -2098,7 +2100,7 @@ function function_cc2b9e13(var_2afa3837, var_8c599c54, var_b25c16bd)
 function function_8271d5e3(str_type, var_d3a8a61c = 50, var_fad05e6 = 3)
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		foreach(var_91632b60, player in level.activeplayers)
 		{
@@ -2263,7 +2265,7 @@ function function_5ebe7974()
 	var_9fce6d52["zm_tomb_ruins2_zone"] = "visit_tomb";
 	level thread function_a800aae9();
 	level waittill(#"start_zombie_round_logic");
-	while(1)
+	while(true)
 	{
 		while(!level flag::get("area_visit_new_round"))
 		{
@@ -2371,7 +2373,7 @@ function function_9926a1d1(var_d016ff72)
 */
 function function_a800aae9()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"end_of_round");
 		level flag::set("area_visit_new_round");
@@ -2450,7 +2452,8 @@ function function_c74d1a57()
 	var_30f9b5a1 = [];
 	var_30f9b5a1["chaos_round_spawn_apothicon"] = 50;
 	var_30f9b5a1["chaos_round_spawn_keeper"] = 50;
-	while(1)
+	var_30f9b5a1["chaos_round_spawn_parasite"] = 15;
+	while(true)
 	{
 		var_a91c725a = util::waittill_any_ex("chaos_round_spawn_keeper", "chaos_round_spawn_parasite", "chaos_round_spawn_apothicon", level, "chaos_round_complete");
 		var_be6a28e5 = randomint(100);
@@ -2610,7 +2613,7 @@ function function_e658d896()
 */
 function function_2b0fa0c0()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"player_bought", var_58aaa67b);
 		if(isdefined(var_58aaa67b) && isdefined(var_58aaa67b.name))
@@ -2803,7 +2806,7 @@ function function_60f0dfbc()
 function function_e6873e6a()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		str_notify = self util::waittill_any_return("disconnect", "gen_pickup", "player_got_keeper_companion_piece", "player_got_craftable_piece_for_craft_shield_zm");
 		self thread function_e5bc23b9("gen_pickup");
@@ -2823,7 +2826,7 @@ function function_e6873e6a()
 function function_f24af040()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"gen_pos");
 		self.var_f069d80e++;
@@ -2852,7 +2855,7 @@ function function_f24af040()
 function function_4eab9dac()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"gen_neg");
 		self thread function_e5bc23b9("gen_neg");
@@ -2873,6 +2876,7 @@ function function_a2bd8b29()
 {
 	level endon(#"final_boss_defeated");
 	level waittill(#"chaos_round_complete");
+	var_db6be061 = 100;
 	while(level.var_8c92b387["misc_abcd_encouragement"].size)
 	{
 		str_notify = util::waittill_any_ex("apotho_pack_freed", "time_attack_weapon_awarded", level, "final_boss_defeated");
@@ -2897,7 +2901,7 @@ function function_a2bd8b29()
 				var_db6be061 = 33;
 				break;
 			}
-			default
+			default:
 			{
 				var_db6be061 = 0;
 				break;
@@ -2954,7 +2958,7 @@ function function_a8d63dab(var_141eb752)
 function function_ee206f01()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		str_notify = self util::waittill_any_return("flag_player_completed_challenge_1", "flag_player_completed_challenge_2", "flag_player_completed_challenge_3", "changed_wearable");
 		switch(str_notify)

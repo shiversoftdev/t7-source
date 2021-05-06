@@ -328,7 +328,7 @@ private function function_fa513ca0()
 {
 	self endon(#"death");
 	self endon(#"hash_8225d137");
-	while(1)
+	while(true)
 	{
 		players = getplayers();
 		foreach(var_a6cf6d36, player in players)
@@ -422,7 +422,7 @@ private function function_5dfc412a()
 {
 	self endon(#"death");
 	self.m_claw_damage_trigger endon(#"death");
-	while(1)
+	while(true)
 	{
 		self.m_claw_damage_trigger waittill(#"damage", amount, inflictor, direction, point, type, tagname, modelname, partname, weaponname, idflags);
 		self.m_claw_damage_trigger.health = 10000;
@@ -660,7 +660,7 @@ private function function_5f5eaf3a(ai_mechz)
 private function play_shoot_arm_hint_vo()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		if(!isdefined(self.e_grabbed))
 		{
@@ -743,7 +743,7 @@ private function function_8b0a73b5(mechz)
 	mechz endon(#"death");
 	mechz endon(#"claw_complete");
 	mechz endon(#"kill_claw");
-	while(1)
+	while(true)
 	{
 		if(isdefined(self) && self laststand::player_is_in_laststand())
 		{
@@ -770,7 +770,7 @@ private function function_bed84b4(mechz)
 	mechz endon(#"death");
 	mechz endon(#"claw_complete");
 	mechz endon(#"kill_claw");
-	while(1)
+	while(true)
 	{
 		self waittill(#"bgb_activation_request");
 		if(isdefined(self) && self.bgb === "zm_bgb_anywhere_but_here")

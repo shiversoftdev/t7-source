@@ -493,7 +493,7 @@ function carry_object_use_think()
 {
 	level endon(#"game_ended");
 	self.trigger endon(#"destroyed");
-	while(1)
+	while(true)
 	{
 		self.trigger waittill(#"trigger", player);
 		if(self.isresetting)
@@ -561,7 +561,7 @@ function carry_object_prox_think()
 {
 	level endon(#"game_ended");
 	self.trigger endon(#"destroyed");
-	while(1)
+	while(true)
 	{
 		self.trigger waittill(#"trigger", player);
 		if(self.isresetting)
@@ -886,6 +886,7 @@ function give_object(object)
 		{
 			self thread [[object.carryweaponthink]]();
 		}
+		count = 0;
 		while(self ismeleeing() && count < 10)
 		{
 			count++;
@@ -1751,7 +1752,7 @@ function use_object_use_think(disableinitialholddelay, disableweaponcyclingdurin
 	{
 		self.trigger usetriggerignoreuseholdtime();
 	}
-	while(1)
+	while(true)
 	{
 		self.trigger waittill(#"trigger", player);
 		if(level.gameended)
@@ -1895,7 +1896,7 @@ function use_object_prox_think()
 	level endon(#"game_ended");
 	self.trigger endon(#"destroyed");
 	self thread prox_trigger_think();
-	while(1)
+	while(true)
 	{
 		if(self.usetime && self.curprogress >= self.usetime)
 		{
@@ -2109,7 +2110,7 @@ function prox_trigger_think()
 	{
 		self.trigger.remote_control_player_can_trigger = 0;
 	}
-	while(1)
+	while(true)
 	{
 		self.trigger waittill(#"trigger", player);
 		if(!isplayer(player))
@@ -2836,6 +2837,7 @@ function use_hold_think_loop(player)
 	useweapon = self.useweapon;
 	waitforweapon = 1;
 	timedout = 0;
+	usetime = self.usetime;
 	while(self continue_hold_think_loop(player, waitforweapon, timedout, usetime))
 	{
 		timedout = timedout + 0.05;
@@ -2897,6 +2899,7 @@ function personal_use_bar(object)
 	self.usebartext settext(object.usetext);
 	usetime = object.usetime;
 	lastrate = -1;
+	lasthostmigrationstate = isdefined(level.hostmigrationtimer);
 	while(isalive(self) && object.inuse && !level.gameended)
 	{
 		if(lastrate != object.userate || lasthostmigrationstate != isdefined(level.hostmigrationtimer))
@@ -3398,7 +3401,7 @@ function update_visibility_according_to_radar()
 {
 	self endon(#"death");
 	self endon(#"carrier_cleared");
-	while(1)
+	while(true)
 	{
 		level waittill(#"radar_status_change");
 		self update_compass_icons();
@@ -3639,7 +3642,7 @@ function make_solid()
 	self endon(#"death");
 	self notify(#"changing_solidness");
 	self endon(#"changing_solidness");
-	while(1)
+	while(true)
 	{
 		for(i = 0; i < level.players.size; i++)
 		{
@@ -3882,7 +3885,7 @@ function hide_icon_distance_and_los(v_color, hide_distance, los_check, ignore_en
 {
 	self endon(#"disabled");
 	self endon(#"destroyed_complete");
-	while(1)
+	while(true)
 	{
 		hide = 0;
 		if(isdefined(self.worldicons_disabled["friendly"]) && self.worldicons_disabled["friendly"] == 1)
@@ -4340,7 +4343,7 @@ function can_interact_with(player)
 				return 0;
 			}
 		}
-		default
+		default:
 		{
 			/#
 				assert(0, "");
@@ -4399,7 +4402,7 @@ function is_relative_team(relativeteam)
 			return 1;
 			break;
 		}
-		default
+		default:
 		{
 			return 0;
 			break;
@@ -4430,7 +4433,7 @@ function get_enemy_team(team)
 			return "axis";
 			break;
 		}
-		default
+		default:
 		{
 			return "allies";
 			break;

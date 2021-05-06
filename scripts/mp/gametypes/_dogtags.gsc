@@ -326,7 +326,7 @@ function team_updater(tags)
 {
 	level endon(#"game_ended");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"joined_team");
 		tags.victimteam = self.team;
@@ -374,7 +374,8 @@ function bounce()
 	level endon(#"game_ended");
 	self endon(#"reset");
 	bottompos = self.curorigin;
-	while(1)
+	toppos = self.curorigin + vectorscale((0, 0, 1), 12);
+	while(true)
 	{
 		self.visuals[0] moveto(toppos, 0.5, 0.15, 0.15);
 		self.visuals[0] rotateyaw(180, 0.5);

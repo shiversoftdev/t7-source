@@ -372,7 +372,8 @@ function blocker_update_prompt_visibility()
 	self endon(#"kill_door_think");
 	self endon(#"kill_debris_prompt_thread");
 	self endon(#"death");
-	while(1)
+	dist = 16384;
+	while(true)
 	{
 		players = level.players;
 		if(isdefined(players))
@@ -758,7 +759,7 @@ function wait_trigger_clear(trigger, more_triggers, end_on)
 function waittill_door_trigger_clear_local_power_off(trigger, all_trigs)
 {
 	self endon(#"trigger_clear");
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.local_power_on) && self.local_power_on)
 		{
@@ -783,7 +784,7 @@ function waittill_door_trigger_clear_local_power_off(trigger, all_trigs)
 function waittill_door_trigger_clear_global_power_off(trigger, all_trigs)
 {
 	self endon(#"trigger_clear");
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.power_on) && self.power_on)
 		{
@@ -865,7 +866,7 @@ function door_think()
 		cost = self.zombie_cost;
 	}
 	self sethintlowpriority(1);
-	while(1)
+	while(true)
 	{
 		switch(self.script_noteworthy)
 		{
@@ -965,7 +966,7 @@ function door_think()
 				self door_delay();
 				break;
 			}
-			default
+			default:
 			{
 				if(isdefined(level._default_door_custom_logic))
 				{
@@ -1190,7 +1191,7 @@ function door_solid_thread()
 {
 	self util::waittill_either("rotatedone", "movedone");
 	self.door_moving = undefined;
-	while(1)
+	while(true)
 	{
 		players = getplayers();
 		player_touching = 0;
@@ -1224,7 +1225,7 @@ function door_solid_thread_anim()
 {
 	self waittill_match(#"door_anim");
 	self.door_moving = undefined;
-	while(1)
+	while(true)
 	{
 		players = getplayers();
 		player_touching = 0;
@@ -1348,7 +1349,7 @@ function debris_think()
 			}
 		}
 	}
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", who, force);
 		if(getdvarint("zombie_unlock_all") > 0 || (isdefined(force) && force))
@@ -1842,7 +1843,7 @@ function blocker_choke()
 {
 	level._blocker_choke = 0;
 	level endon(#"stop_blocker_think");
-	while(1)
+	while(true)
 	{
 		wait(0.05);
 		level._blocker_choke = 0;
@@ -1870,7 +1871,7 @@ function blocker_think()
 	{
 		use_choke = 1;
 	}
-	while(1)
+	while(true)
 	{
 		wait(0.5);
 		if(use_choke)
@@ -2013,7 +2014,7 @@ function handle_post_board_repair_rewards(cost, zbarrier)
 function blocker_unitrigger_think()
 {
 	self endon(#"kill_trigger");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		self.stub.trigger_target notify(#"trigger", player);
@@ -2093,7 +2094,7 @@ function blocker_trigger_think()
 			thread zm_utility::debug_blocker(trigger_pos, radius, height);
 		}
 	#/
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		has_perk = player has_blocker_affecting_perk();
@@ -2114,7 +2115,7 @@ function blocker_trigger_think()
 				return;
 			}
 		}
-		while(1)
+		while(true)
 		{
 			players = getplayers();
 			trigger = self.unitrigger_stub zm_unitrigger::unitrigger_trigger(player);
@@ -2333,7 +2334,7 @@ function board_completion()
 */
 function trigger_delete_on_repair()
 {
-	while(1)
+	while(true)
 	{
 		self util::waittill_either("all_boards_repaired", "no valid boards");
 		zm_unitrigger::unregister_unitrigger(self.unitrigger_stub);

@@ -220,6 +220,7 @@ function moon_rb_dist_think()
 	level endon(#"stop_dist_think");
 	level._lid_close_sound = 0;
 	int_close = 0;
+	dist_struct = struct::get("struct_rb_dist_check", "targetname");
 	while(!level flag::get(level._osc_flags[1]))
 	{
 		level._osc_check = zm_utility::get_closest_player(dist_struct.origin);
@@ -723,7 +724,7 @@ function hacker_debug(msg, color)
 		{
 			color = (1, 1, 1);
 		}
-		while(1)
+		while(true)
 		{
 			print3d(self.origin, msg, color, 1, 2, 10);
 			wait(1);

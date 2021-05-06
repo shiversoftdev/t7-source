@@ -251,7 +251,7 @@ function function_86419da()
 				loc_000008B8:
 				break;
 			}
-			default
+			default:
 			{
 				break;
 			}

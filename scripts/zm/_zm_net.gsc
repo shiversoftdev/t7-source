@@ -36,7 +36,7 @@ function network_choke_init(id, max)
 */
 function network_choke_thread(id)
 {
-	while(1)
+	while(true)
 	{
 		util::wait_network_frame();
 		util::wait_network_frame();

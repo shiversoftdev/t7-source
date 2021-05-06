@@ -255,7 +255,7 @@ function armor_overlay_think()
 	/#
 		armorstatus = 0;
 		setdvar("", 0);
-		while(1)
+		while(true)
 		{
 			wait(0.1);
 			armorstatusnew = getdvarint("");

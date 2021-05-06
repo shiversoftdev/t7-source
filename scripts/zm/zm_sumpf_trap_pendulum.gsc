@@ -125,7 +125,7 @@ function penthink()
 	self setcursorhint("HINT_NOICON");
 	triggers = getentarray("pendulum_buy_trigger", "targetname");
 	array::thread_all(triggers, &hint_string, &"ZOMBIE_BUTTON_BUY_TRAP");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", who);
 		self.used_by = who;
@@ -290,7 +290,7 @@ function trap_sounds(motor_left, motor_right, wheel_left, wheel_right)
 function pendamage(parent, who)
 {
 	level thread customtimer();
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", ent);
 		if(parent.penactive == 1)
@@ -318,6 +318,7 @@ function pendamage(parent, who)
 */
 function customtimer()
 {
+	level.my_time = 0;
 	while(level.my_time <= 20)
 	{
 		wait(0.1);
@@ -417,7 +418,8 @@ function zombiependamage(parent, who)
 */
 function launch_monitor()
 {
-	while(1)
+	level.numlaunched = 0;
+	while(true)
 	{
 		util::wait_network_frame();
 		util::wait_network_frame();
@@ -436,6 +438,7 @@ function launch_monitor()
 */
 function do_launch(x, y, z, parent)
 {
+	self.flung = 1;
 	while(level.numlaunched > 4)
 	{
 		util::wait_network_frame();
@@ -463,7 +466,7 @@ function do_launch(x, y, z, parent)
 */
 function flogger_vocal_monitor()
 {
-	while(1)
+	while(true)
 	{
 		level.numfloggervox = 0;
 		util::wait_network_frame();

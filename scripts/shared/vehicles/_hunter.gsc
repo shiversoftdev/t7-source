@@ -414,7 +414,7 @@ function state_unaware_update(params)
 	self clearlookatent();
 	self disable_turrets();
 	self thread movement_thread_wander();
-	while(1)
+	while(true)
 	{
 		self waittill(#"enemy");
 		self vehicle_ai::set_state("combat");
@@ -457,7 +457,8 @@ function movement_thread_wander()
 	innerspacing = 80;
 	outerspacing = 50;
 	maxgoaltimeout = 15;
-	while(1)
+	timeatsameposition = 2.5 + randomfloat(1);
+	while(true)
 	{
 		queryresult = positionquery_source_navigation(self.origin, minsearchradius, maxsearchradius, halfheight, innerspacing, self, outerspacing);
 		positionquery_filter_distancetogoal(queryresult, self);
@@ -570,7 +571,7 @@ function state_combat_update(params)
 	self thread movement_thread_stayindistance();
 	self thread attack_thread_mainturret();
 	self thread attack_thread_rocket();
-	while(1)
+	while(true)
 	{
 		self waittill(#"no_enemy");
 		self vehicle_ai::set_state("unaware");
@@ -862,7 +863,7 @@ function movement_thread_stayindistance()
 	self endon(#"end_movement_thread");
 	maxgoaltimeout = 10;
 	stuckcount = 0;
-	while(1)
+	while(true)
 	{
 		enemy = self.enemy;
 		if(!isdefined(enemy))
@@ -1063,7 +1064,7 @@ function attack_thread_mainturret()
 	self endon(#"death");
 	self endon(#"change_state");
 	self endon(#"end_attack_thread");
-	while(1)
+	while(true)
 	{
 		enemy = self.enemy;
 		if(isdefined(enemy))
@@ -1114,7 +1115,7 @@ function attack_thread_rocket()
 	self endon(#"death");
 	self endon(#"change_state");
 	self endon(#"end_attack_thread");
-	while(1)
+	while(true)
 	{
 		enemy = self.enemy;
 		if(!isdefined(enemy))
@@ -1200,6 +1201,7 @@ function side_turret_get_best_target(a_potential_targets, n_index)
 		arrayremovevalue(a_potential_targets, main_turret_target);
 		arrayremovevalue(a_potential_targets, other_turret_target);
 	}
+	e_best_target = undefined;
 	while(!isdefined(e_best_target) && a_potential_targets.size > 0)
 	{
 		e_closest_target = arraygetclosest(self.origin, a_potential_targets);
@@ -1507,7 +1509,8 @@ function hunter_frontscanning()
 	yawstep = 3.141593;
 	pitchrange = 20;
 	yawrange = 45;
-	while(1)
+	scannerdirection = undefined;
+	while(true)
 	{
 		scannerorigin = self.frontscanner.origin;
 		if(isdefined(self.inpain) && self.inpain)
@@ -1633,7 +1636,8 @@ function player_fire_update_side_turret_1()
 	self endon(#"death");
 	self endon(#"exit_vehicle");
 	weapon = self seatgetweapon(1);
-	while(1)
+	firetime = weapon.firetime;
+	while(true)
 	{
 		self setgunnertargetvec(self getturrettargetvec(0), 0);
 		if(self isdriverfiring())
@@ -1658,7 +1662,8 @@ function player_fire_update_side_turret_2()
 	self endon(#"death");
 	self endon(#"exit_vehicle");
 	weapon = self seatgetweapon(2);
-	while(1)
+	firetime = weapon.firetime;
+	while(true)
 	{
 		self setgunnertargetvec(self getturrettargetvec(0), 1);
 		if(self isdriverfiring())
@@ -1684,7 +1689,8 @@ function player_fire_update_rocket()
 	self endon(#"exit_vehicle");
 	weapon = getweapon("hunter_rocket_turret_player");
 	firetime = weapon.firetime;
-	while(1)
+	driver = self getseatoccupant(0);
+	while(true)
 	{
 		if(driver buttonpressed("BUTTON_A"))
 		{
@@ -1715,7 +1721,7 @@ function hunter_collision_player()
 	self endon(#"change_state");
 	self endon(#"crash_done");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"veh_collision", velocity, normal);
 		driver = self getseatoccupant(0);
@@ -1740,7 +1746,7 @@ function hunter_update_rumble()
 {
 	self endon(#"death");
 	self endon(#"exit_vehicle");
-	while(1)
+	while(true)
 	{
 		vr = abs(self getspeed() / self getmaxspeed());
 		if(vr < 0.1)
@@ -1773,7 +1779,7 @@ function hunter_self_destruct()
 	self endon(#"exit_vehicle");
 	self_destruct = 0;
 	self_destruct_time = 0;
-	while(1)
+	while(true)
 	{
 		if(!self_destruct)
 		{
@@ -1864,6 +1870,7 @@ function hunter_pain_for_time(time, velocitystablizeparam, rotationstablizeparam
 	self.painstarttime = gettime();
 	if(!(isdefined(self.inpain) && self.inpain))
 	{
+		self.inpain = 1;
 		while(gettime() < self.painstarttime + time * 1000)
 		{
 			self setvehvelocity(self.velocity * velocitystablizeparam);

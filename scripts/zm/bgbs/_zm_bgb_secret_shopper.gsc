@@ -58,7 +58,7 @@ function enable()
 	self endon(#"bled_out");
 	self endon(#"bgb_update");
 	bgb::function_650ca64(7);
-	while(1)
+	while(true)
 	{
 		self waittill(#"zm_bgb_secret_shopper", var_2757208f);
 		var_2757208f thread function_127dc5ca(self);
@@ -95,7 +95,7 @@ function function_127dc5ca(player)
 	self endon(#"kill_trigger");
 	self endon(#"hash_a09e2c64");
 	player endon(#"bgb_update");
-	while(1)
+	while(true)
 	{
 		player waittill(#"bgb_activation_request");
 		if(player.useholdent !== self)

@@ -82,7 +82,7 @@ function on_localplayer_spawned(localclientnum)
 function watch_emped(localclientnum)
 {
 	self endon(#"entityshutdown");
-	while(1)
+	while(true)
 	{
 		if(self isempjammed())
 		{
@@ -155,6 +155,7 @@ function do_vision_world_pulse(localclientnum)
 	wait(0.016);
 	amount = 1;
 	irisamount = 0;
+	pulsemaxradius = 0;
 	while(getservertime(localclientnum) - starttime < 2000)
 	{
 		elapsedtime = getservertime(localclientnum) - starttime * 1;
@@ -252,6 +253,7 @@ function do_vision_local_pulse(localclientnum)
 	filter::set_filter_vision_pulse_constant(localclientnum, 3, 8, origin[0]);
 	filter::set_filter_vision_pulse_constant(localclientnum, 3, 9, origin[1]);
 	filter::set_filter_vision_pulse_constant(localclientnum, 3, 7, 1);
+	starttime = getservertime(localclientnum);
 	while(getservertime(localclientnum) - starttime < 4000)
 	{
 		if(getservertime(localclientnum) - starttime < 2000)

@@ -47,7 +47,7 @@ function unhackable_powerup(name)
 */
 function hack_powerups()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"powerup_dropped", powerup);
 		if(!unhackable_powerup(powerup.powerup_name))

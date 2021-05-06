@@ -182,7 +182,7 @@ function do_digger_moving_earthquake_rumble(localclientnum, quake_ent)
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		if(!isdefined(player))
 		{
@@ -216,7 +216,8 @@ function do_digger_digging_earthquake_rumble(localclientnum, quake_ent)
 		return;
 	}
 	count = 0;
-	while(1)
+	dist = 2250000;
+	while(true)
 	{
 		if(!isdefined(player))
 		{

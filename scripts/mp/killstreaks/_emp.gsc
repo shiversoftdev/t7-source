@@ -622,7 +622,7 @@ function emp_jamenemies(empent, hacked)
 function emptracker()
 {
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		level waittill(#"emp_updated");
 		foreach(var_12e32073, player in level.players)

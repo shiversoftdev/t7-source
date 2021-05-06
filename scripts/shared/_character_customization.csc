@@ -450,12 +450,14 @@ function set_showcase_weapon(data_struct, mode, localclientnum, xuid, characteri
 	attachmentnames = [];
 	attachmentindices = [];
 	tokenizedattachmentinfo = strtok(showcaseweaponattachmentinfo, ",");
+	index = 0;
 	while(index + 1 < tokenizedattachmentinfo.size)
 	{
 		attachmentnames[attachmentnames.size] = tokenizedattachmentinfo[index];
 		attachmentindices[attachmentindices.size] = int(tokenizedattachmentinfo[index + 1]);
 		index = index + 2;
 	}
+	index = tokenizedattachmentinfo.size;
 	while(index + 1 < 16)
 	{
 		attachmentnames[attachmentnames.size] = "none";
@@ -1388,7 +1390,7 @@ function update_locked_shader(localclientnum, params)
 */
 function updateeventthread(localclientnum, data_struct)
 {
-	while(1)
+	while(true)
 	{
 		level waittill("updateHero" + localclientnum, eventtype, param1, param2, param3, param4);
 		switch(eventtype)
@@ -1544,7 +1546,8 @@ function update_model_rotation_for_right_stick(localclientnum, data_struct, endo
 	/#
 		assert(isdefined(data_struct.charactermodel));
 	#/
-	while(1)
+	model = data_struct.charactermodel;
+	while(true)
 	{
 		data_lcn = (isdefined(data_struct.splitscreenclient) ? data_struct.splitscreenclient : localclientnum);
 		if(localclientactive(data_lcn) && (!(isdefined(data_struct.charactermodel.anglesoverride) && data_struct.charactermodel.anglesoverride)))
@@ -1697,7 +1700,7 @@ function setup_character_extracam_settings(localclientnum, data_struct, extracam
 function update_character_extracam(localclientnum, data_struct)
 {
 	level endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill("process_character_extracam" + localclientnum, extracam_data_struct);
 		setup_character_extracam_settings(localclientnum, data_struct, extracam_data_struct);

@@ -249,7 +249,7 @@ function tesla_engine_sweets()
 {
 	self endon(#"disconnect");
 	self endon(#"weap_away");
-	while(1)
+	while(true)
 	{
 		wait(randomintrange(7, 15));
 		self play_tesla_sound("wpn_tesla_sweeps_idle");

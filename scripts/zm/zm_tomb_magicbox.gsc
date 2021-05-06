@@ -229,7 +229,7 @@ function set_magic_box_zbarrier_state(state)
 			self.owner.is_locked = 0;
 			break;
 		}
-		default
+		default:
 		{
 			if(isdefined(level.custom_magicbox_state_handler))
 			{
@@ -364,7 +364,7 @@ function magic_box_open_idle()
 	self endon(#"stop_open_idle");
 	self hidezbarrierpiece(2);
 	self showzbarrierpiece(5);
-	while(1)
+	while(true)
 	{
 		self setzbarrierpiecestate(5, "opening");
 		while(self getzbarrierpiecestate(5) != "open")
@@ -439,7 +439,7 @@ function custom_magic_box_do_weapon_rise()
 */
 function handle_fire_sale()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"fire_sale_off");
 		for(i = 0; i < level.chests.size; i++)

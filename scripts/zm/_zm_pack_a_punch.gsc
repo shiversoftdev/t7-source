@@ -167,7 +167,7 @@ private function pap_trigger_hintstring_monitor()
 	level endon(#"pack_a_punch_off");
 	level waittill(#"pack_a_punch_on");
 	self thread pap_trigger_hintstring_monitor_reset();
-	while(1)
+	while(true)
 	{
 		foreach(var_c976e1e5, e_player in level.players)
 		{
@@ -343,7 +343,7 @@ private function pack_a_punch_machine_trigger_think()
 	self endon(#"pack_a_punch_off");
 	self notify(#"pack_a_punch_trigger_think");
 	self endon(#"pack_a_punch_trigger_think");
-	while(1)
+	while(true)
 	{
 		players = getplayers();
 		for(i = 0; i < players.size; i++)
@@ -543,7 +543,7 @@ private function vending_weapon_upgrade()
 */
 private function shutoffpapsounds(ent1, ent2, ent3)
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"pack_a_punch_off");
 		level thread turnonpapsounds(ent1);
@@ -580,7 +580,7 @@ private function turnonpapsounds(ent)
 private function vending_weapon_upgrade_cost()
 {
 	level endon(#"pack_a_punch_off");
-	while(1)
+	while(true)
 	{
 		self.cost = 5000;
 		self.aat_cost = 2500;
@@ -1089,7 +1089,7 @@ private function pap_powered()
 	{
 		self clientfield::set("pap_working_FX", 0);
 	}
-	while(1)
+	while(true)
 	{
 		wait(randomfloatrange(180, 1800));
 		self setzbarrierpiecestate(4, "opening");
@@ -1288,7 +1288,7 @@ private function process_pap_zbarrier_state(state)
 			self.state = "hidden";
 			break;
 		}
-		default
+		default:
 		{
 			if(isdefined(level.custom_pap_state_handler))
 			{

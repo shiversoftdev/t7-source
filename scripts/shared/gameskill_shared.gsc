@@ -242,9 +242,9 @@ function playerhealthdebug()
 	/#
 		setdvar("", "");
 		waittillframeend();
-		while(1)
+		while(true)
 		{
-			while(1)
+			while(true)
 			{
 				if(getdvarstring("") != "")
 				{
@@ -253,7 +253,7 @@ function playerhealthdebug()
 				wait(0.5);
 			}
 			thread printhealthdebug();
-			while(1)
+			while(true)
 			{
 				if(getdvarstring("") == "")
 				{
@@ -331,7 +331,7 @@ function printhealthdebug()
 		level.healthbarhudelems[key] = textelem;
 	}
 	level flag::wait_till("all_players_spawned");
-	while(1)
+	while(true)
 	{
 		wait(0.05);
 		players = level.players;
@@ -1040,6 +1040,7 @@ function cover_warning_check()
 		level.cover_warning_hud = coverwarning;
 		coverwarning endon(#"death");
 		stopflashingbadlytime = gettime() + level.longregentime;
+		yellow_fac = 0.7;
 		while(gettime() < stopflashingbadlytime && isalive(self))
 		{
 			for(i = 0; i < 7; i++)
@@ -1251,6 +1252,7 @@ function update_skill_level(skill_override)
 	level endon(#"update_skill_from_profile");
 	level.gameskilllowest = 9999;
 	level.gameskillhighest = 0;
+	n_last_gameskill = -1;
 	while(!isdefined(skill_override))
 	{
 		level.gameskill = getlocalprofileint("g_gameskill");
@@ -1412,7 +1414,7 @@ function coop_allies_accuracy_scaler()
 */
 function coop_player_threat_bias_adjuster()
 {
-	while(1)
+	while(true)
 	{
 		wait(5);
 		if(level.auto_adjust_threatbias)
@@ -1957,7 +1959,7 @@ function get_coop_friendly_accuracy_modifier()
 			}
 			break;
 		}
-		default
+		default:
 		{
 			return 1;
 		}
@@ -2030,7 +2032,7 @@ function get_coop_friendly_threat_bias_scalar()
 			}
 			break;
 		}
-		default
+		default:
 		{
 			return 1;
 		}
@@ -2103,7 +2105,7 @@ function get_coop_player_health_modifier()
 			}
 			break;
 		}
-		default
+		default:
 		{
 			return 1;
 		}
@@ -2176,7 +2178,7 @@ function get_coop_player_death_invulnerable_time_modifier()
 			}
 			break;
 		}
-		default
+		default:
 		{
 			return 1;
 		}
@@ -2464,7 +2466,7 @@ function accuracy_buildup_before_fire(ai)
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		if(isdefined(ai.enemy))
 		{

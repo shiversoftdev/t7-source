@@ -627,7 +627,7 @@ function givelastattackerwarning(team)
 	{
 		self.lastmansddefeat3enemies = 1;
 	}
-	while(1)
+	while(true)
 	{
 		if(self.health != self.maxhealth)
 		{

@@ -231,7 +231,7 @@ function thread_hacking_progress()
 	self.m_is_trigger_thread_active = 1;
 	self.m_e_hack_trigger sethintstring("");
 	self.m_e_hack_trigger sethintlowpriority(1);
-	while(1)
+	while(true)
 	{
 		self.m_e_hack_trigger waittill(#"trigger", e_triggerer);
 		if(!self.m_is_functional)
@@ -279,6 +279,7 @@ function thread_hacking_progress()
 		{
 			n_hack_range_sq = n_user_dist_sq;
 		}
+		b_looking = 1;
 		while(n_start_time < n_hack_time && e_triggerer usebuttonpressed() && n_user_dist_sq <= n_hack_range_sq && b_looking)
 		{
 			n_start_time = n_start_time + 0.05;

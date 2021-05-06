@@ -305,7 +305,7 @@ function function_3ae72e85(localclientnum)
 {
 	self endon(#"stop_all_tubes_eject_steam");
 	self thread function_caeb1b02("stop_all_tubes_eject_steam", self.origin);
-	while(1)
+	while(true)
 	{
 		self.var_d1c8c63f = playfx(localclientnum, level._effect["eject_steam"], self.origin, anglestoforward(self.angles), anglestoup(self.angles));
 		setfxignorepause(localclientnum, self.var_d1c8c63f, 1);

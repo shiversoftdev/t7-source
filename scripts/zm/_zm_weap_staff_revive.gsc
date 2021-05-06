@@ -69,7 +69,7 @@ function onplayerspawned()
 function watch_staff_revive_fired()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"missile_fire", e_projectile, str_weapon);
 		if(!str_weapon.name == "staff_revive")

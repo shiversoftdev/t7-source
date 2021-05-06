@@ -57,7 +57,7 @@ function init_shared()
 */
 function checkdvarupdates()
 {
-	while(1)
+	while(true)
 	{
 		level.tabungaspoisonradius = getdvarint("scr_tabun_effect_radius", level.tabungaspoisonradius);
 		level.tabungaspoisonheight = getdvarint("scr_tabun_shock_height", level.tabungaspoisonheight);
@@ -132,6 +132,7 @@ function damageeffectarea(owner, position, radius, height, killcament)
 		owner thread [[level.dogsonflashdogs]](gaseffectarea);
 	}
 	loopwaittime = 0.5;
+	durationoftabun = level.tabungasduration;
 	while(durationoftabun > 0)
 	{
 		players = getplayers();
@@ -205,6 +206,7 @@ function damageinpoisonarea(gaseffectarea, killcament, trace, position)
 	tabunshocksound.origin = position;
 	tabunshocksound playsound(level.sound_shock_tabun_start);
 	tabunshocksound playloopsound(level.sound_shock_tabun_loop);
+	timer = 0;
 	while(trace["fraction"] == 1 && isdefined(gaseffectarea) && self istouching(gaseffectarea) && self.sessionstate == "playing" && isdefined(self.lastpoisonedby))
 	{
 		damage = level.poisondamage;
@@ -227,7 +229,7 @@ function damageinpoisonarea(gaseffectarea, killcament, trace, position)
 					self shellshock("tabun_gas_nokick_mp", 1);
 					break;
 				}
-				default
+				default:
 				{
 					break;
 				}
@@ -468,7 +470,7 @@ function spawnalllocs(owner, startpos)
 				locations["radius"][i] = level.fx_tabun_radius3;
 				break;
 			}
-			default
+			default:
 			{
 				locations["fxtoplay"][i] = undefined;
 				locations["radius"][i] = 0;

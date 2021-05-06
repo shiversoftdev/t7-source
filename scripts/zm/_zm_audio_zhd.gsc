@@ -73,7 +73,7 @@ function snd_zhdegg_activate()
 {
 	level flag::wait_till("snd_zhdegg_activate");
 	level function_513f51e1();
-	while(1)
+	while(true)
 	{
 		if(isdefined(level.var_61f315ab))
 		{
@@ -218,7 +218,7 @@ function function_9d55fd08()
 	self endon(#"hash_636d801f");
 	self endon(#"ballerina_destroyed");
 	self endon(#"ballerina_timeout");
-	while(1)
+	while(true)
 	{
 		self.var_ac086ffb rotateyaw(360, 4);
 		wait(4);
@@ -239,7 +239,7 @@ function function_2fdaabf3()
 	self endon(#"ballerina_timeout");
 	self.var_ac086ffb setcandamage(1);
 	self.var_ac086ffb.health = 1000000;
-	while(1)
+	while(true)
 	{
 		self.var_ac086ffb waittill(#"damage", damage, attacker, dir, loc, type, model, tag, part, weapon, flags);
 		if(isdefined(level.var_252a085b) && level.var_252a085b)
@@ -350,7 +350,7 @@ function function_e753d4f()
 	level.var_2a0600f = 0;
 	var_8bd44282 = struct::get_array("songstructs", "targetname");
 	array::thread_all(var_8bd44282, &function_929c4dba);
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_9b53c751");
 		if(level.var_2a0600f == var_8bd44282.size)

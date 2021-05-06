@@ -183,7 +183,7 @@ function turn_revive_on()
 	{
 		level.solo_revive_init = 1;
 	}
-	while(1)
+	while(true)
 	{
 		machine = getentarray("vending_revive", "targetname");
 		machine_triggers = getentarray("vending_revive", "target");

@@ -42,6 +42,7 @@ function wait_network_frame(n_count = 1)
 		for(i = 0; i < n_count; i++)
 		{
 			snapshot_ids = getsnapshotindexarray();
+			acked = undefined;
 			while(!isdefined(acked))
 			{
 				level waittill(#"snapacknowledged");
@@ -1907,6 +1908,7 @@ function waittill_player_looking_at(origin, arc_angle_degrees = 90, do_trace, e_
 {
 	self endon(#"death");
 	arc_angle_degrees = absangleclamp360(arc_angle_degrees);
+	dot = cos(arc_angle_degrees * 0.5);
 	while(!is_player_looking_at(origin, dot, do_trace, e_ignore))
 	{
 		wait(0.05);
@@ -2649,7 +2651,8 @@ function button_held_think(which_button)
 		self._holding_button = [];
 	}
 	self._holding_button[which_button] = 0;
-	while(1)
+	time_started = 0;
+	while(true)
 	{
 		if(self._holding_button[which_button])
 		{
@@ -3263,7 +3266,8 @@ function waittillnotmoving()
 	}
 	else
 	{
-		while(1)
+		prevorigin = self.origin;
+		while(true)
 		{
 			wait(0.15);
 			if(self.origin == prevorigin)
@@ -3851,7 +3855,7 @@ function auto_delete(n_mode = 1, n_min_time_alive = 0, n_dist_horizontal = 0, n_
 		n_dot_check = 0.4;
 	}
 	n_test_count = 0;
-	while(1)
+	while(true)
 	{
 		do
 		{
@@ -4118,7 +4122,7 @@ function _query_ents_by_substring_helper(a_ents, str_value, str_key = "targetnam
 				}
 				break;
 			}
-			default
+			default:
 			{
 				/#
 					assert("" + str_key + "");
@@ -4144,7 +4148,7 @@ function get_weapon_by_name(weapon_name)
 	switch(split.size)
 	{
 		case 1:
-		default
+		default:
 		{
 			weapon = getweapon(split[0]);
 			break;
@@ -4875,7 +4879,7 @@ function get_next_safehouse(str_next_map)
 		{
 			return "cp_sh_cairo";
 		}
-		default
+		default:
 		{
 			return "cp_sh_mobile";
 		}
@@ -4930,7 +4934,7 @@ function is_new_cp_map()
 		{
 			return 1;
 		}
-		default
+		default:
 		{
 			return 0;
 		}
@@ -4978,7 +4982,7 @@ function queued_debug_commands()
 		{
 			level.dbg_cmd_queue = [];
 		}
-		while(1)
+		while(true)
 		{
 			wait(0.05);
 			if(level.dbg_cmd_queue.size == 0)
@@ -5375,7 +5379,8 @@ function trackwallrunningdistance()
 	self.movementtracking.wallrunning = spawnstruct();
 	self.movementtracking.wallrunning.distance = 0;
 	self.movementtracking.wallrunning.count = 0;
-	while(1)
+	self.movementtracking.wallrunning.time = 0;
+	while(true)
 	{
 		self waittill(#"wallrun_begin");
 		startpos = self.origin;
@@ -5402,7 +5407,8 @@ function tracksprintdistance()
 	self.movementtracking.sprinting = spawnstruct();
 	self.movementtracking.sprinting.distance = 0;
 	self.movementtracking.sprinting.count = 0;
-	while(1)
+	self.movementtracking.sprinting.time = 0;
+	while(true)
 	{
 		self waittill(#"sprint_begin");
 		startpos = self.origin;
@@ -5429,7 +5435,8 @@ function trackdoublejumpdistance()
 	self.movementtracking.doublejump = spawnstruct();
 	self.movementtracking.doublejump.distance = 0;
 	self.movementtracking.doublejump.count = 0;
-	while(1)
+	self.movementtracking.doublejump.time = 0;
+	while(true)
 	{
 		self waittill(#"doublejump_begin");
 		startpos = self.origin;

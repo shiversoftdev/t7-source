@@ -226,7 +226,7 @@ function show_infotext_for_duration(str_infotext, n_duration)
 */
 function function_f5b7f61a()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player zm_utility::in_revive_trigger())
@@ -270,7 +270,7 @@ function function_59a8fb49(trig_stub, player)
 */
 function function_d7eb8f21()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"shield_built", e_who);
 		if(e_who.characterindex == 0)

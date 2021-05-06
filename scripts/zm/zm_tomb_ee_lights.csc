@@ -52,7 +52,7 @@ function function_b6f5f7f5(localclientnum, oldval, newval, bnewent, binitialsnap
 			level.var_656c2f5 = (0.1, 0.5, 0.1);
 			break;
 		}
-		default
+		default:
 		{
 			level.var_fdb98849 = undefined;
 			level.var_656c2f5 = undefined;

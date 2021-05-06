@@ -108,12 +108,14 @@ function function_657b61e3(localclientnum, oldval, newval, bnewent, binitialsnap
 		var_2094128c = 0.6;
 		for(i = 0; i < 2; i++)
 		{
+			f = 0.6;
 			while(f <= 0.85)
 			{
 				util::server_wait(localclientnum, 0.05);
 				self setshaderconstant(localclientnum, 0, f, 0, 0, 0);
 				f = f + rate;
 			}
+			f = 0.85;
 			while(f >= 0.6)
 			{
 				util::server_wait(localclientnum, 0.05);
@@ -121,6 +123,7 @@ function function_657b61e3(localclientnum, oldval, newval, bnewent, binitialsnap
 				f = f - rate;
 			}
 		}
+		f = 0.6;
 		while(f <= 1)
 		{
 			util::server_wait(localclientnum, 0.05);

@@ -75,7 +75,7 @@ function tomb_challenges_add_stats()
 */
 function track_points_spent()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"spent_points", player, points);
 		player zm_challenges_tomb::increment_stat("zc_points_spent", points);
@@ -215,7 +215,7 @@ function box_footprint_think()
 function watch_for_foot_stomp()
 {
 	self endon(#"box_finished");
-	while(1)
+	while(true)
 	{
 		self waittill(#"robot_foot_stomp");
 		self scene::play("p7_fxanim_zm_ori_challenge_box_close_bundle", self);

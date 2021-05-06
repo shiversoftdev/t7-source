@@ -371,14 +371,14 @@ function getunownedflagneareststart(team, excludeflag)
 function domdebug()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			if(getdvarstring("") != "")
 			{
 				wait(2);
 				continue;
 			}
-			while(1)
+			while(true)
 			{
 				if(getdvarstring("") != "")
 				{
@@ -667,7 +667,7 @@ function getdomflagusestring(label, neutralized)
 				string = &"MP_DOM_FLAG_E_NEUTRALIZED_BY";
 				break;
 			}
-			default
+			default:
 			{
 				break;
 			}
@@ -702,7 +702,7 @@ function getdomflagusestring(label, neutralized)
 				string = &"MP_DOM_FLAG_E_CAPTURED_BY";
 				break;
 			}
-			default
+			default:
 			{
 				break;
 			}
@@ -1033,6 +1033,7 @@ function updatedomscores()
 	}
 	playednearendvo = 0;
 	alliesroundstartscore = [[level._getteamscore]]("allies");
+	axisroundstartscore = [[level._getteamscore]]("axis");
 	while(!level.gameended)
 	{
 		numownedflags = 0;

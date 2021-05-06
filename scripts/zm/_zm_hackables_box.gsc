@@ -94,6 +94,7 @@ function custom_box_move_logic()
 		return;
 	}
 	found_loc = 0;
+	original_spot = level.chest_index;
 	while(!found_loc)
 	{
 		level.chest_index++;

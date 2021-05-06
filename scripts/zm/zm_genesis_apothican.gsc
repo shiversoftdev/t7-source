@@ -209,7 +209,7 @@ function function_ea9e816a()
 	{
 		str_zone = self.script_string;
 	}
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_portee);
 		if(isdefined(e_portee.var_5aef0317) && e_portee.var_5aef0317)
@@ -360,6 +360,7 @@ private function function_3298b25f(s_stub)
 {
 	self endon(#"death");
 	a_s_spots = struct::get_array("apothican_exit_" + s_stub.name + "_pos", "targetname");
+	var_a05a47c7 = s_stub function_fbd80603(self);
 	while(positionwouldtelefrag(var_a05a47c7.origin))
 	{
 		util::wait_network_frame();
@@ -408,7 +409,7 @@ function function_d1338047()
 {
 	level.var_b8b48a73 = [];
 	level flag::wait_till_all(array("power_on1", "power_on2", "power_on3", "power_on4"));
-	while(1)
+	while(true)
 	{
 		a_players = level.activeplayers;
 		level.var_b8b48a73 = [];
@@ -493,7 +494,7 @@ function function_bb3f566()
 function function_6e5d600d()
 {
 	level waittill(#"start_zombie_round_logic");
-	while(1)
+	while(true)
 	{
 		a_players = level.activeplayers;
 		foreach(var_75028dbc, e_player in a_players)
@@ -539,7 +540,7 @@ function function_dd6ccbfc()
 {
 	level endon(#"apothicon_trapped");
 	level flag::wait_till_all(array("power_on1", "power_on2", "power_on3", "power_on4"));
-	while(1)
+	while(true)
 	{
 		foreach(var_c56cb562, e_player in level.activeplayers)
 		{
@@ -579,7 +580,8 @@ function function_21a5cf5e()
 {
 	level flag::wait_till_all(array("power_on1", "power_on2", "power_on3", "power_on4"));
 	function_9ccb8410(30);
-	while(1)
+	level.var_973d41cb = 0;
+	while(true)
 	{
 		var_22c7539e = function_1affd18d();
 		if(level.var_973d41cb < var_22c7539e)
@@ -626,6 +628,7 @@ function function_21a5cf5e()
 					}
 					if(a_spawn_origins.size >= 1)
 					{
+						n_spawn = 0;
 						while(n_spawn < 1)
 						{
 							for(i = a_spawn_origins.size - 1; i >= 0; i--)
@@ -701,7 +704,7 @@ function function_1affd18d()
 			break;
 		}
 		case 0:
-		default
+		default:
 		{
 			var_bd061860 = 0;
 			break;
@@ -828,7 +831,7 @@ function function_6119f23(e_attacker)
 function function_e45363e3()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		if(level.var_b8b48a73.size == 0)
 		{
@@ -853,7 +856,8 @@ function function_a2a299a1()
 	level.var_a3ad836b = 8;
 	level flag::wait_till_all(array("power_on1", "power_on2", "power_on3", "power_on4"));
 	function_9ccb8410(120);
-	while(1)
+	level.var_3013498 = level.round_number + 2;
+	while(true)
 	{
 		level waittill(#"between_round_over");
 		var_8a82d706 = 0;
@@ -922,7 +926,7 @@ function function_72e88a5f()
 */
 function function_e550951a()
 {
-	while(1)
+	while(true)
 	{
 		n_delay = randomfloatrange(360, 480);
 		function_9ccb8410(n_delay);
@@ -974,7 +978,7 @@ function function_fd1e5c6c()
 			}
 			break;
 		}
-		default
+		default:
 		{
 			if(level.var_89b9d07e == 0)
 			{
@@ -1056,7 +1060,7 @@ function function_cc6165b0(str_type = "random", var_6ac86802 = 0)
 			var_225347e1 = level thread namespace_3de4ab6f::function_26efbc37(undefined, self);
 			break;
 		}
-		default
+		default:
 		{
 			var_225347e1 = level thread zm_ai_margwa::function_8a0708c2(self);
 		}
@@ -1198,7 +1202,8 @@ function function_9ccb8410(n_delay)
 	#/
 	n_time = gettime();
 	var_47768568 = n_time;
-	while(1)
+	n_total_time = 0;
+	while(true)
 	{
 		n_time = gettime();
 		if(level.var_b8b48a73.size > 0)
@@ -1227,7 +1232,8 @@ function function_411feb6a()
 {
 	function_9ccb8410(10);
 	s_center = struct::get("apothicon_center", "targetname");
-	while(1)
+	b_first_time = 1;
+	while(true)
 	{
 		if(b_first_time == 1)
 		{

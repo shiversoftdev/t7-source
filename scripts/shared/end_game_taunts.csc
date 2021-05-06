@@ -75,7 +75,7 @@ function __init__()
 function check_force_taunt()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			setdvar("", "");
 			wait(0.05);
@@ -123,7 +123,7 @@ function check_force_taunt()
 function check_force_gesture()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			setdvar("", "");
 			wait(0.05);
@@ -155,7 +155,7 @@ function check_force_gesture()
 function draw_runner_up_bounds()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			wait(0.016);
 			if(!getdvarint("", 0))
@@ -418,7 +418,7 @@ function playtransitionanim(charactermodel, transitionanimname, blendintime = 0,
 function waitremoveweapon(charactermodel)
 {
 	charactermodel endon(#"weaponhidden");
-	while(1)
+	while(true)
 	{
 		charactermodel waittill(#"_anim_notify_", param1);
 		if(param1 == "remove_from_hand")
@@ -441,7 +441,7 @@ function waitremoveweapon(charactermodel)
 function waitappearweapon(charactermodel)
 {
 	charactermodel endon(#"weaponshown");
-	while(1)
+	while(true)
 	{
 		charactermodel waittill(#"_anim_notify_", param1);
 		if(param1 == "appear_in_hand")
@@ -1150,7 +1150,7 @@ function spawncameraglass(param)
 function updateglassposition()
 {
 	self endon(#"entityshutdown");
-	while(1)
+	while(true)
 	{
 		camangles = getcamanglesbylocalclientnum(self.localclientnum);
 		campos = getcamposbylocalclientnum(self.localclientnum);
@@ -1193,6 +1193,7 @@ function reaperbulletglass(param)
 {
 	waittillframeend();
 	minigun = getweapon("hero_minigun");
+	i = 30;
 	while(i > -30)
 	{
 		if(!isdefined(self))

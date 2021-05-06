@@ -453,6 +453,7 @@ function widows_wine_cocoon_zombie_score(e_player, duration, max_score)
 		self.ww_points_given = 0;
 	}
 	start_time = gettime();
+	end_time = start_time + duration * 1000;
 	while(gettime() < end_time && self.ww_points_given < max_score)
 	{
 		e_player zm_score::add_to_player_score(10);
@@ -587,7 +588,7 @@ function grenade_bounce_monitor()
 {
 	self endon(#"disconnect");
 	self endon(#"stop_widows_wine");
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_fire", e_grenade);
 		e_grenade thread grenade_bounces();

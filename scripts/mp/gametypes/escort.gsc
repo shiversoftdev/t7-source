@@ -108,7 +108,7 @@ function main()
 			level.escortrobotkillstreakbundle = "escort_robot_high";
 		}
 		case 0:
-		default
+		default:
 		{
 			level.shutdowndamage = 0;
 		}
@@ -132,7 +132,7 @@ function main()
 				break;
 			}
 			case 0:
-			default
+			default:
 			{
 				level.robotspeed = "";
 			}
@@ -751,7 +751,7 @@ function debug_draw_blocked_path_kill_radius(center, radius)
 function wait_robot_moving()
 {
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		self waittill(#"robot_moving");
 		self recordgameeventnonplayer("robot_start");
@@ -772,7 +772,7 @@ function wait_robot_moving()
 function wait_robot_stopped()
 {
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		self waittill(#"robot_stopped");
 		if(self.active)
@@ -796,7 +796,7 @@ function wait_robot_stopped()
 function wait_robot_shutdown()
 {
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		self waittill(#"robot_shutdown");
 		level.moveobject gameobjects::allow_use("none");
@@ -824,7 +824,7 @@ function wait_robot_shutdown()
 function wait_robot_reboot()
 {
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		self waittill(#"robot_reboot");
 		self recordgameeventnonplayer("robot_repair_complete");
@@ -860,6 +860,7 @@ function auto_reboot_robot(time)
 {
 	self endon(#"robot_reboot");
 	self endon(#"game_ended");
+	shutdowntime = 0;
 	while(shutdowntime < time)
 	{
 		rate = 0;
@@ -907,7 +908,7 @@ function auto_reboot_robot(time)
 function watch_robot_damaged()
 {
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		self waittill(#"robot_damaged");
 		percent = min(1, self.shutdowndamage / level.shutdowndamage);
@@ -965,6 +966,7 @@ function get_robot_path_array()
 	#/
 	patharray = [];
 	currnode = getnode("escort_robot_path_start", "targetname");
+	patharray[patharray.size] = currnode.origin;
 	while(isdefined(currnode.target))
 	{
 		currnode = getnode(currnode.target, "targetname");
@@ -1383,6 +1385,7 @@ function find_immediate_goal()
 	/#
 		debug_draw_find_immediate_goal(pathgoal);
 	#/
+	immediategoal = get_closest_point_on_nav_mesh(vectorlerp(currpos, pathgoal, 0.5));
 	while(self check_if_goal_is_blocked(currpos, immediategoal))
 	{
 		immediategoal = get_closest_point_on_nav_mesh(vectorlerp(currpos, immediategoal, 0.5));
@@ -1427,7 +1430,7 @@ function watch_goal_becoming_blocked(goal)
 	self endon(#"goal");
 	level endon(#"game_ended");
 	disttogoalsqr = 1E+09;
-	while(1)
+	while(true)
 	{
 		wait(0.1);
 		if(isdefined(self.traversestartnode))
@@ -1478,6 +1481,7 @@ function watch_becoming_blocked_at_goal()
 	self.watch_becoming_blocked_at_goal_established = 1;
 	startpos = self.origin;
 	atsameposcount = 0;
+	iterationcount = 0;
 	while(self.moving)
 	{
 		wait(0.1);
@@ -1568,7 +1572,7 @@ function update_stop_position()
 {
 	self endon(#"death");
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		self waittill(#"traverse_end");
 		if(!self.moving)
@@ -1592,7 +1596,7 @@ function robot_wait_next_point()
 	self endon(#"robot_stopped");
 	self endon(#"death");
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		self util::waittill_any("goal", "goal_blocked");
 		if(!isdefined(self.watch_becoming_blocked_at_goal_established) || self.watch_becoming_blocked_at_goal_established == 0)
@@ -1667,6 +1671,7 @@ function get_closest_point_on_nav_mesh(point)
 	if(!isdefined(closestpathpoint))
 	{
 		itercount = 0;
+		lowerpoint = point - vectorscale((0, 0, 1), 36);
 		while(!isdefined(closestpathpoint) && itercount < 5)
 		{
 			closestpathpoint = getclosestpointonnavmesh(lowerpoint, 48, 15);
@@ -1757,7 +1762,7 @@ function debug_reset_robot_to_start()
 {
 	/#
 		level endon(#"game_ended");
-		while(1)
+		while(true)
 		{
 			if((isdefined(getdvarint("")) ? getdvarint("") : 0) > 0)
 			{
@@ -1853,7 +1858,7 @@ function wait_robot_corpse()
 function robot_move_chatter()
 {
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		if(self.moving)
 		{
@@ -1950,7 +1955,7 @@ function track_escorting_players()
 {
 	level endon(#"game_ended");
 	self.robot endon(#"robot_stopped");
-	while(1)
+	while(true)
 	{
 		foreach(var_22900798, touch in self.touchlist[self.team])
 		{
@@ -1982,7 +1987,8 @@ function track_escort_time(player)
 	player recordgameevent("player_escort_start");
 	self thread wait_escort_death(player);
 	self thread wait_escort_shutdown(player);
-	while(1)
+	consecutiveescorts = 0;
+	while(true)
 	{
 		wait(1);
 		touching = 0;
@@ -2125,7 +2131,8 @@ function watch_robot_enter(robot)
 {
 	robot endon(#"death");
 	level endon(#"game_ended");
-	while(1)
+	radiussq = self.trigger.radius * self.trigger.radius;
+	while(true)
 	{
 		if(robot.moving === 1 && distance2dsquared(self.trigger.origin, robot.origin) < radiussq)
 		{

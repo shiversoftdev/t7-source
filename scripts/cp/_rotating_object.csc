@@ -84,7 +84,8 @@ function rotating_object_think()
 		direction = direction * -1;
 		rotate_time = rotate_time * -1;
 	}
-	while(1)
+	angles = self.angles;
+	while(true)
 	{
 		switch(axis)
 		{
@@ -99,7 +100,7 @@ function rotating_object_think()
 				break;
 			}
 			case "yaw":
-			default
+			default:
 			{
 				self rotateyaw(direction * revolutions, rotate_time * revolutions);
 				break;

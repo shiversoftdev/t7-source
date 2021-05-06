@@ -336,7 +336,7 @@ function periodic_lightning_strikes()
 {
 	self endon(#"disconnect");
 	util::wait_network_frame();
-	while(1)
+	while(true)
 	{
 		n_random_wait = randomintrange(12, 18);
 		if(isdefined(self) && isplayer(self))
@@ -1249,7 +1249,7 @@ function power_electric_switch()
 */
 function check_for_change()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player getstance() == "prone")
@@ -1304,6 +1304,7 @@ function flytrap()
 	level thread hide_and_seek_target("ee_perk_bear");
 	util::wait_network_frame();
 	trig_control_panel = getent("trig_ee_flytrap", "targetname");
+	upgrade_hit = 0;
 	while(!upgrade_hit)
 	{
 		trig_control_panel waittill(#"damage", amount, inflictor, direction, point, type, tagname, modelname, partname, weapon);
@@ -1578,7 +1579,7 @@ function factory_find_exit_point()
 	self notify(#"stop_find_flesh");
 	self notify(#"zombie_acquire_enemy");
 	self setgoal(locs[dest].origin);
-	while(1)
+	while(true)
 	{
 		if(!level flag::get("wait_and_revive"))
 		{
@@ -1799,7 +1800,7 @@ function sndconvo3()
 */
 function sndconvo4()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"start_of_round");
 		if(!(isdefined(level.first_round) && level.first_round))
@@ -2622,7 +2623,7 @@ function create_unitrigger(str_hint)
 function unitrigger_logic()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player zm_utility::in_revive_trigger())
@@ -2712,7 +2713,8 @@ function function_7cb67075()
 		return;
 	}
 	var_f1f15003 = getweapon("cymbal_monkey");
-	while(1)
+	var_230694a = getentarray("teleporter_radius_trigger", "targetname");
+	while(true)
 	{
 		self waittill(#"grenade_fire", e_grenade, w_weapon);
 		if(w_weapon == var_f1f15003)
@@ -3007,7 +3009,7 @@ function flytrap_prize()
 function function_45814329(var_3c100ea1)
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self rotateto(self.angles + vectorscale((0, 1, 0), 180), 2);
 		wait(1.9);
@@ -3025,7 +3027,8 @@ function function_45814329(var_3c100ea1)
 */
 function function_86e1c543()
 {
-	while(1)
+	var_957c9ba0 = getweapon("hero_annihilator");
+	while(true)
 	{
 		var_65af5e9c = trigger::wait_till("flytrap_prize");
 		if(!(isdefined(level.var_1cbe7756) && level.var_1cbe7756))
@@ -3282,7 +3285,7 @@ function setup_devgui_func(str_devgui_path, str_dvar, n_value, func, n_base_valu
 		}
 		setdvar(str_dvar, n_base_value);
 		adddebugcommand("" + str_devgui_path + "" + str_dvar + "" + n_value + "");
-		while(1)
+		while(true)
 		{
 			n_dvar = getdvarint(str_dvar);
 			if(n_dvar > n_base_value)

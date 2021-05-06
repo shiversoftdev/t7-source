@@ -351,6 +351,7 @@ function createline(org)
 function createlineconstantly(ent)
 {
 	/#
+		org = undefined;
 		while(isalive(ent))
 		{
 			org = ent.origin;
@@ -1034,6 +1035,7 @@ function getchain()
 {
 	/#
 		array = [];
+		ent = self;
 		while(isdefined(ent))
 		{
 			array[array.size] = ent;
@@ -2099,7 +2101,8 @@ function debug_show_viewpos()
 		hud_z.fontscale = 1.2;
 		hud_z setvalue(0);
 		setdvar("", "");
-		while(1)
+		players = getplayers();
+		while(true)
 		{
 			if(getdvarint("") > 0)
 			{
@@ -2143,7 +2146,8 @@ function number_before_decimal(num)
 {
 	/#
 		abs_num = abs(num);
-		while(1)
+		count = 0;
+		while(true)
 		{
 			abs_num = abs_num * 0.1;
 			count = count + 1;
@@ -2226,7 +2230,8 @@ function set_event_printname_thread(text, focus)
 			setdvar("", "");
 		}
 		level.event_hudelem settext(text);
-		while(1)
+		enabled = 1;
+		while(true)
 		{
 			toggle = 0;
 			if(getdvarint("") < 1)
@@ -2281,7 +2286,8 @@ function engagement_distance_debug_toggle()
 {
 	/#
 		level endon(#"kill_engage_dist_debug_toggle_watcher");
-		while(1)
+		laststate = getdvarint("");
+		while(true)
 		{
 			currentstate = getdvarint("");
 			if(dvar_turned_on(currentstate) && !dvar_turned_on(laststate))
@@ -2495,7 +2501,7 @@ function engage_dists_watcher()
 	/#
 		level endon(#"kill_all_engage_dist_debug");
 		level endon(#"kill_engage_dists_watcher");
-		while(1)
+		while(true)
 		{
 			player = get_playerone();
 			playerweapon = player getcurrentweapon();
@@ -2540,7 +2546,8 @@ function debug_realtime_engage_dist()
 		player = get_playerone();
 		hudobjarray = engagement_distance_debug_init(player);
 		level thread engage_dist_debug_hud_destroy(hudobjarray, "");
-		while(1)
+		level.debugrtengagedistcolor = (0, 1, 0);
+		while(true)
 		{
 			lasttracepos = (0, 0, 0);
 			direction = player getplayerangles();
@@ -2694,7 +2701,8 @@ function debug_ai_engage_dist()
 	/#
 		level endon(#"kill_all_engage_dist_debug");
 		level endon(#"kill_ai_engagement_distance_debug");
-		while(1)
+		player = get_playerone();
+		while(true)
 		{
 			axis = getaiteamarray("");
 			if(isdefined(axis) && axis.size > 0)
@@ -2813,7 +2821,8 @@ function debug_coop_bot_test()
 		{
 			wait(0.5);
 		}
-		while(1)
+		var_d49b0ff = 0;
+		while(true)
 		{
 			if(getdvarint("") > 0)
 			{
@@ -3004,7 +3013,7 @@ function spawn_guy_placement()
 		level.dynamic_spawn_hud settext("");
 		level.dynamic_spawn_dummy_model = spawn("", (0, 0, 0));
 		wait(0.1);
-		while(1)
+		while(true)
 		{
 			direction = self getplayerangles();
 			direction_vec = anglestoforward(direction);
@@ -3369,6 +3378,7 @@ function plot_points(plotpoints, r, g, b, timer)
 function draw_line_for_time(org1, org2, r, g, b, timer)
 {
 	/#
+		timer = gettime() + timer * 1000;
 		while(gettime() < timer)
 		{
 			line(org1, org2, (r, g, b), 1);
@@ -3437,7 +3447,7 @@ function _get_debug_color(str_color)
 				return (0, 0, 0);
 				break;
 			}
-			default
+			default:
 			{
 				println("" + str_color + "");
 				return (0, 0, 0);

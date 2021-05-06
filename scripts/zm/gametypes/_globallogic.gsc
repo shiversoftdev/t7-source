@@ -1584,6 +1584,7 @@ function bbplayermatchend(gamelength, endreasonstring, gameover)
 */
 function roundendwait(defaultdelay, matchbonus)
 {
+	notifiesdone = 0;
 	while(!notifiesdone)
 	{
 		players = level.players;
@@ -1607,6 +1608,7 @@ function roundendwait(defaultdelay, matchbonus)
 	wait(defaultdelay / 2);
 	level notify(#"give_match_bonus");
 	wait(defaultdelay / 2);
+	notifiesdone = 0;
 	while(!notifiesdone)
 	{
 		players = level.players;
@@ -2676,7 +2678,7 @@ function callback_startgametype()
 function forcedebughostmigration()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			hostmigration::waittillhostmigrationdone();
 			wait(60);

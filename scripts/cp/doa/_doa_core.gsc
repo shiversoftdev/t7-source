@@ -50,6 +50,7 @@ function main()
 	level.deadops = 1;
 	init();
 	level flagsys::wait_till("start_coop_logic");
+	firsttime = 1;
 	while(isloadingcinematicplaying())
 	{
 		wait(0.05);
@@ -59,7 +60,7 @@ function main()
 	{
 		player.hotjoin = undefined;
 	}
-	while(1)
+	while(true)
 	{
 		level thread function_3e351f83(firsttime);
 		level waittill(#"hash_24d3a44");
@@ -79,6 +80,7 @@ function main()
 */
 private function _load()
 {
+	timeout = gettime() + 5000;
 	while(getnumexpectedplayers() == 0 && gettime() < timeout)
 	{
 		wait(0.05);
@@ -329,7 +331,7 @@ function function_57863b20()
 {
 	self notify(#"hash_57863b20");
 	self endon(#"hash_57863b20");
-	while(1)
+	while(true)
 	{
 		level waittill(#"host_migration_begin");
 		level waittill(#"host_migration_end");
@@ -387,6 +389,7 @@ function function_437a340d(var_73419762)
 	self endon(#"hash_437a340d");
 	self.var_744a3931 = self openluimenu("DOA_PlayerReady");
 	currentround = level.doa.round_number;
+	timestart = gettime();
 	while(level.doa.round_number == currentround)
 	{
 		self.takedamage = 0;
@@ -899,7 +902,7 @@ function function_dc4ffe5c()
 	self notify(#"hash_dc4ffe5c");
 	self endon(#"hash_dc4ffe5c");
 	var_97e9dd7 = 0;
-	while(1)
+	while(true)
 	{
 		wait(0.05);
 		if(!level flag::get("doa_game_is_running"))

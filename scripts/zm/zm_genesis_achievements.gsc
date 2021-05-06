@@ -169,7 +169,8 @@ function function_817b1327()
 	level endon(#"end_game");
 	self endon(#"disconnect");
 	self endon(#"hash_720f4d71");
-	while(1)
+	var_ef6b3d38 = 0;
+	while(true)
 	{
 		level waittill(#"hash_98ea05", e_attacker);
 		if(e_attacker === self)
@@ -233,7 +234,7 @@ function function_935679b0()
 	}
 	var_e274e0c3 = self.var_a3d40b8;
 	self thread function_f17c9ba1();
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.var_a3d40b8) && var_e274e0c3 != self.var_a3d40b8)
 		{
@@ -289,7 +290,8 @@ function function_def0e284()
 {
 	level endon(#"end_game");
 	self endon(#"disconnect");
-	while(1)
+	var_fc2fd82c = [];
+	while(true)
 	{
 		self waittill(#"changed_wearable", var_475b0a4e);
 		array::add(var_fc2fd82c, var_475b0a4e, 0);

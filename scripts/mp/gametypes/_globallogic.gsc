@@ -1095,7 +1095,7 @@ function updategameevents()
 function mpintro_visionset_ramp_hold_func()
 {
 	level endon(#"mpintro_ramp_out_notify");
-	while(1)
+	while(true)
 	{
 		for(player_index = 0; player_index < level.players.size; player_index++)
 		{
@@ -2753,7 +2753,7 @@ function checkforgestures(topplayerindex)
 	fieldname = "playTop" + topplayerindex + "Gesture";
 	level clientfield::set(fieldname, 7);
 	wait(0.05);
-	while(1)
+	while(true)
 	{
 		if(isdefined(self))
 		{
@@ -2911,6 +2911,7 @@ function bbplayermatchend(gamelength, endreasonstring, gameover)
 */
 function roundendwait(defaultdelay, matchbonus)
 {
+	notifiesdone = 0;
 	while(!notifiesdone)
 	{
 		players = level.players;
@@ -2934,6 +2935,7 @@ function roundendwait(defaultdelay, matchbonus)
 	wait(defaultdelay / 2);
 	level notify(#"give_match_bonus");
 	wait(defaultdelay / 2);
+	notifiesdone = 0;
 	while(!notifiesdone)
 	{
 		players = level.players;
@@ -3817,6 +3819,7 @@ function timelimitclock()
 {
 	level endon(#"game_ended");
 	wait(0.05);
+	clockobject = spawn("script_origin", (0, 0, 0));
 	while(game["state"] == "playing")
 	{
 		if(!level.timerstopped && level.timelimit)
@@ -3905,7 +3908,7 @@ function timelimitclock_intermission(waittime)
 function recordbreadcrumbdata()
 {
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		for(i = 0; i < level.players.size; i++)
 		{
@@ -4105,6 +4108,7 @@ function waitforplayers()
 	accepttestclient = 0;
 	activeteamcount = [];
 	player_ready = [];
+	var_6b989ec4 = undefined;
 	while(!playerready || activeplayercount == 0 || !isprematchrequirementconditionmet(activeteamcount, var_6b989ec4))
 	{
 		activeplayercount = 0;
@@ -4171,7 +4175,7 @@ function waitforplayers()
 		if(level.rankedmatch && gettime() - starttime > 120000)
 		{
 			exit_level();
-			while(1)
+			while(true)
 			{
 				wait(10);
 			}
@@ -4232,7 +4236,7 @@ function function_53995bbb()
 {
 	level endon(#"game_ended");
 	level endon(#"hash_32c1c011");
-	while(1)
+	while(true)
 	{
 		level waittill(#"connected", player);
 		self thread function_d95d1608(player);
@@ -4253,7 +4257,7 @@ function function_d95d1608(player)
 	level endon(#"game_ended");
 	level endon(#"hash_32c1c011");
 	player endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		if(isdefined(player.hasspawned) && player.hasspawned)
 		{
@@ -4808,7 +4812,7 @@ function callback_startgametype()
 function forcedebughostmigration()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			hostmigration::waittillhostmigrationdone();
 			wait(60);
@@ -4886,7 +4890,7 @@ function checkroundswitch()
 */
 function function_aa9e547b()
 {
-	while(1)
+	while(true)
 	{
 		endmatch = getdvarint("sv_endmatch", 0);
 		if(isdefined(endmatch) && endmatch != 0)

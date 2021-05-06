@@ -69,7 +69,7 @@ function monitorempgrenade()
 	self endon(#"death");
 	self endon(#"killempmonitor");
 	self.empendtime = 0;
-	while(1)
+	while(true)
 	{
 		self waittill(#"emp_grenaded", attacker, explosionpoint);
 		if(!isalive(self) || self hasperk("specialty_immuneemp"))
@@ -283,6 +283,7 @@ function emprumbleloop(duration)
 {
 	self endon(#"emp_rumble_loop");
 	self notify(#"emp_rumble_loop");
+	goaltime = gettime() + duration * 1000;
 	while(gettime() < goaltime)
 	{
 		self playrumbleonentity("damage_heavy");

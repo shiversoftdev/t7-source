@@ -173,7 +173,7 @@ function watch_player_looking()
 {
 	level endon(#"game_ended");
 	level endon(#"mannequin_force_cleanup");
-	while(1)
+	while(true)
 	{
 		mannequins = getaiarchetypearray("mannequin");
 		foreach(var_a289c895, mannequin in mannequins)

@@ -73,7 +73,7 @@ function register()
 */
 function updatedvars()
 {
-	while(1)
+	while(true)
 	{
 		level.proximitygrenadedetectionradius = getdvarint("scr_proximityGrenadeDetectionRadius", level.proximitygrenadedetectionradius);
 		level.proximitygrenadeduration = getdvarfloat("scr_proximityGrenadeDuration", 1.5);
@@ -336,6 +336,7 @@ function chainisactive(chain)
 function cleanupproximitychainent()
 {
 	self.cleanup = 1;
+	any_active = 1;
 	while(any_active)
 	{
 		wait(1);
@@ -433,7 +434,7 @@ function proximitygrenadechain(eattacker, einflictor, killcament, weapon, meanso
 	{
 		proximitychain.proximitychainent thread cleanupproximitychainent();
 	}
-	while(1)
+	while(true)
 	{
 		currenttime = gettime();
 		if(endtime < currenttime)
@@ -573,7 +574,7 @@ function watchproximitygrenadehitplayer(owner)
 	self endon(#"death");
 	self setowner(owner);
 	self setteam(owner.team);
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_bounce", pos, normal, ent, surface);
 		if(isdefined(ent) && isplayer(ent) && surface != "riotshield")

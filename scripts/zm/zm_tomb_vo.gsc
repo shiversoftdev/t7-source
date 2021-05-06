@@ -441,7 +441,7 @@ function tomb_audio_get_mod_type_override(impact, mod, weapon, zombie, instakill
 function tomb_custom_zombie_oh_shit_vox()
 {
 	self endon(#"death_or_disconnect");
-	while(1)
+	while(true)
 	{
 		wait(1);
 		if(isdefined(self.oh_shit_vo_cooldown) && self.oh_shit_vo_cooldown)
@@ -678,7 +678,7 @@ function easter_egg_song_vo(player)
 	}
 	else
 	{
-		while(1)
+		while(true)
 		{
 			a_players = getplayers();
 			foreach(var_c84e1d89, player in a_players)
@@ -972,7 +972,7 @@ function discover_dig_site_vo()
 */
 function discover_dig_site_trigger_touch()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(isplayer(player))
@@ -1030,7 +1030,8 @@ function discover_pack_a_punch()
 	{
 		return;
 	}
-	while(1)
+	s_lookat = struct::get(t_pap_intro.target, "targetname");
+	while(true)
 	{
 		t_pap_intro waittill(#"trigger", e_player);
 		if(!isdefined(e_player.discover_pap_vo_played))
@@ -1304,7 +1305,7 @@ function start_narrative_vo()
 */
 function start_samantha_intro_vo()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"start_of_round");
 		if(level.round_number == 5)
@@ -1797,6 +1798,7 @@ function run_staff_crafted_vo(str_sam_line)
 function staff_craft_vo()
 {
 	staff_crafted = [];
+	lines = array("vox_sam_1st_staff_crafted_0", "vox_sam_2nd_staff_crafted_0", "vox_sam_3rd_staff_crafted_0");
 	while(staff_crafted.size < 4)
 	{
 		level waittill(#"staff_crafted_vo", e_crafter, n_element);
@@ -2307,7 +2309,7 @@ function wait_and_play_first_magic_box_seen_vo(struct)
 {
 	self endon(#"disconnect");
 	level endon(#"first_maigc_box_discovered");
-	while(1)
+	while(true)
 	{
 		if(distancesquared(self.origin, struct.origin) < 40000)
 		{
@@ -2720,7 +2722,7 @@ function watch_occasional_line(str_category, str_line, str_notify, n_time_betwee
 */
 function watch_one_shot_line(str_category, str_line, str_notify)
 {
-	while(1)
+	while(true)
 	{
 		level waittill(str_notify, e_player);
 		if(isdefined(e_player))
@@ -2742,7 +2744,7 @@ function watch_one_shot_line(str_category, str_line, str_notify)
 */
 function watch_one_shot_samantha_line(str_line, str_notify)
 {
-	while(1)
+	while(true)
 	{
 		level waittill(str_notify, e_play_on);
 		if(isdefined(e_play_on))
@@ -2777,7 +2779,7 @@ function watch_one_shot_samantha_clue(str_line, str_notify, str_endon)
 	{
 		level.next_samantha_clue_time = gettime();
 	}
-	while(1)
+	while(true)
 	{
 		level waittill(str_notify, e_player);
 		wait(10);
@@ -2858,7 +2860,7 @@ function samantha_discourage_reset()
 */
 function samantha_encourage_watch_good_lines()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"vo_puzzle_good", e_player);
 		wait(1);
@@ -2883,7 +2885,7 @@ function samantha_encourage_think()
 	n_max_time = 60000 * 10;
 	next_encouragement = 0;
 	level thread samantha_encourage_watch_good_lines();
-	while(1)
+	while(true)
 	{
 		if(available_list.size == 0)
 		{
@@ -2945,7 +2947,7 @@ function samantha_discourage_think()
 	original_list = array("vox_sam_generic_chastise_0", "vox_sam_generic_chastise_1", "vox_sam_generic_chastise_2", "vox_sam_generic_chastise_3", "vox_sam_generic_chastise_4", "vox_sam_generic_chastise_5", "vox_sam_generic_chastise_6");
 	available_list = [];
 	level flag::wait_till("samantha_intro_done");
-	while(1)
+	while(true)
 	{
 		if(available_list.size == 0)
 		{
@@ -2958,6 +2960,7 @@ function samantha_discourage_think()
 		}
 		line = array::random(available_list);
 		arrayremovevalue(available_list, line);
+		a_players = getplayers();
 		while(a_players.size > 0)
 		{
 			e_player = array::random(a_players);
@@ -3298,7 +3301,7 @@ function init_sam_promises()
 function sam_promises_watch()
 {
 	level flag::wait_till("samantha_intro_done");
-	while(1)
+	while(true)
 	{
 		level waittill(#"player_zombie_blood", e_player);
 		a_players = getplayers();
@@ -3459,7 +3462,7 @@ function function_a808bc8e()
 		}
 		level.var_450ee971 = array::randomize(level.var_450ee971);
 	}
-	while(1)
+	while(true)
 	{
 		if(!isdefined(level.var_450ee971[0]))
 		{

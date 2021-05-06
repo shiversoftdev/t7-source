@@ -55,6 +55,7 @@ function event()
 {
 	self endon(#"disconnect");
 	self endon(#"bgb_update");
+	self.var_76382430 = 5;
 	while(self.var_76382430 > 0)
 	{
 		self waittill(#"perk_purchased", str_perk);

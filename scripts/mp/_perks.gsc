@@ -83,6 +83,7 @@ function monitorflight()
 {
 	self endon(#"death");
 	self endon(#"disconnect");
+	self.flying = 0;
 	while(isdefined(self))
 	{
 		flying = !self isonground();
@@ -142,7 +143,8 @@ function monitorgpsjammer()
 	timepassed = 0;
 	timesincedistancecheck = 0;
 	previousorigin = self.origin;
-	while(1)
+	gpsjammerprotection = 0;
+	while(true)
 	{
 		/#
 			graceperiods = getdvarint("", graceperiods);
@@ -259,7 +261,8 @@ function monitorsengrenjammer()
 	timepassed = 0;
 	timesincedistancecheck = 0;
 	previousorigin = self.origin;
-	while(1)
+	sgjammerprotection = 0;
+	while(true)
 	{
 		/#
 			graceperiods = getdvarint("", graceperiods);

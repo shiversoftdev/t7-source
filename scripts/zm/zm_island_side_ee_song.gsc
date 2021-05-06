@@ -98,7 +98,7 @@ function function_553b8e23()
 	level.var_51d5c50c = 0;
 	level.var_c911c0a2 = struct::get_array("side_ee_song_bear", "targetname");
 	array::thread_all(level.var_c911c0a2, &function_4b02c768);
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_c3f82290");
 		if(level.var_51d5c50c == level.var_c911c0a2.size)
@@ -277,7 +277,8 @@ function function_76bcb530()
 	}
 	var_f918ed35 = struct::get("plantMusicPlay", "targetname");
 	var_f918ed35 zm_unitrigger::create_unitrigger(undefined, 24);
-	while(1)
+	var_be2a0077 = array(1, 3, 5, 6, 7, 5);
+	while(true)
 	{
 		var_f918ed35 waittill(#"trigger_activated");
 		playsoundatposition("zmb_pod_play", var_f918ed35.origin);
@@ -344,7 +345,7 @@ function function_cd6c47c5()
 	self.unitrigger_stub.require_look_at = 1;
 	self.unitrigger_stub.related_parent = self;
 	zm_unitrigger::register_static_unitrigger(self.unitrigger_stub, &zm_unitrigger::unitrigger_logic);
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger_activated", who);
 		if(isdefined(level.var_eeab4a07) && level.var_eeab4a07)
@@ -371,7 +372,7 @@ function function_cd6c47c5()
 */
 function function_f86f94db()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", damage, attacker, dir, loc, str_type, model, tag, part, weapon, flags);
 		if(!isdefined(attacker) || !isplayer(attacker))
@@ -428,6 +429,7 @@ function function_88572b8()
 	var_f59c3cb2 = getentarray("plantMusicPods", "targetname");
 	var_f59c3cb2 = array::sort_by_script_int(var_f59c3cb2, 1);
 	var_60000174 = 3;
+	n_waittime = 0.55;
 	while(var_60000174 > 0)
 	{
 		for(i = 0; i < var_1d1c464d.size; i++)
@@ -482,7 +484,7 @@ function function_ae93bb6d()
 function function_d75eac4e()
 {
 	self zm_unitrigger::create_unitrigger(undefined, 24);
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger_activated");
 		playsoundatposition(self.script_sound, self.origin);
@@ -505,7 +507,7 @@ function function_e01c1b04(var_f45614a)
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		var_4237d65e = randomintrange(0, var_f45614a.size);
 		var_f45614a[var_4237d65e] zm_unitrigger::create_unitrigger(undefined, 24);

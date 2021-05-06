@@ -219,7 +219,7 @@ function run_craftables_devgui()
 	/#
 		level thread autocraft_staffs();
 		setdvar("", "");
-		while(1)
+		while(true)
 		{
 			craftable_id = getdvarstring("");
 			if(craftable_id != "")
@@ -561,7 +561,8 @@ function tomb_staff_update_prompt(player, b_set_hint_string_now, trigger)
 */
 function init_craftable_choke()
 {
-	while(1)
+	level.craftables_spawned_this_frame = 0;
+	while(true)
 	{
 		util::wait_network_frame();
 		level.craftables_spawned_this_frame = 0;
@@ -1462,7 +1463,7 @@ function quadrotor_control_thread()
 	self endon(#"bled_out");
 	self endon(#"disconnect");
 	self endon(#"new_placeable_mine");
-	while(1)
+	while(true)
 	{
 		var_703e6a13 = getweapon("equip_dieseldrone");
 		if(self actionslotfourbuttonpressed() && self hasweapon(var_703e6a13))
@@ -1501,7 +1502,7 @@ function quadrotor_debug_send_home(player_owner)
 {
 	self endon(#"drone_should_return");
 	level endon(#"drone_available");
-	while(1)
+	while(true)
 	{
 		if(player_owner actionslotfourbuttonpressed())
 		{
@@ -1732,7 +1733,7 @@ function function_e8aad972(var_7ee6d8e6)
 {
 	self endon(#"death");
 	level endon(#"drone_available");
-	while(1)
+	while(true)
 	{
 		var_7ee6d8e6 util::waittill_any("teleport_finished", "gr_eject_sequence_complete");
 		self clientfield::increment("teleport_arrival_departure_fx");
@@ -2096,6 +2097,7 @@ function track_staff_weapon_respawn(player)
 		self.base_weaponname = s_elemental_staff.weapname;
 	}
 	level flag::clear(self.base_weaponname + "_zm_enabled");
+	has_weapon = 0;
 	while(isalive(player))
 	{
 		if(isdefined(s_elemental_staff.charger.is_inserted) && s_elemental_staff.charger.is_inserted || (isdefined(s_upgraded_staff.charger.is_inserted) && s_upgraded_staff.charger.is_inserted) || (isdefined(s_upgraded_staff.ee_in_use) && s_upgraded_staff.ee_in_use))

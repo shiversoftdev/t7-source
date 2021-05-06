@@ -255,7 +255,7 @@ private function _camo_killreactivateonnotify(slot, note, durationmin = 300, dur
 	self endon(#"disconnect");
 	self notify("_camo_killReActivateOnNotify" + slot + note);
 	self endon("_camo_killReActivateOnNotify" + slot + note);
-	while(1)
+	while(true)
 	{
 		self waittill(note, param);
 		self notify(#"kill_active_cammo_reactivate");
@@ -284,6 +284,7 @@ private function _camo_createfalsetarget()
 	self thread cybercom::deleteentonnote("active_camo_off", fakeme);
 	self thread cybercom::deleteentonnote("delete_false_target", fakeme);
 	self thread function_c51ef296(fakeme);
+	zmin = self.origin[2];
 	while(isdefined(fakeme))
 	{
 		fakeme.origin = fakeme.origin + (randomintrange(-50, 50), randomintrange(-50, 50), randomintrange(-5, 5));
@@ -308,7 +309,7 @@ private function function_c51ef296(fakeent)
 {
 	fakeent endon(#"death");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_fired", projectile);
 		fakeent.origin = self.origin;
@@ -330,7 +331,7 @@ private function _active_cammo_reactivate()
 	self endon(#"_active_cammo_reactivate");
 	self endon(#"active_camo_taken");
 	self endon(#"kill_active_cammo_reactivate");
-	while(1)
+	while(true)
 	{
 		self waittill(#"gadget_forced_off", slot, weapon);
 		if(isdefined(weapon) && weapon == level.cybercom.active_cammo_upgraded_weap)

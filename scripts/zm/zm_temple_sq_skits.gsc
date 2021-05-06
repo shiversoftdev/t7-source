@@ -108,7 +108,7 @@ function skit_interupt(fail_pos, group)
 	{
 		fail_pos = level._start_skit_pos;
 	}
-	while(1)
+	while(true)
 	{
 		players = getplayers();
 		if(isdefined(group))
@@ -282,6 +282,7 @@ function fail_skit(first_time)
 	}
 	players = getplayers();
 	player_index = 0;
+	proposed_group = undefined;
 	while(player_index != players.size)
 	{
 		proposed_group = [];

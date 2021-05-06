@@ -1622,7 +1622,7 @@ function player_contract_event(event_name, param1 = undefined, param2 = undefine
 	switch(param_count)
 	{
 		case 0:
-		default
+		default:
 		{
 			foreach(var_1859a1b1, event_func in level.player_contract_events[event_name].events)
 			{
@@ -1709,7 +1709,7 @@ function is_objective_game(game_type)
 			return 0;
 			break;
 		}
-		default
+		default:
 		{
 			return 1;
 		}

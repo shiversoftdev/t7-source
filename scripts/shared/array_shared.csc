@@ -1136,6 +1136,7 @@ function merge(left, right, func_sort, param)
 {
 	result = [];
 	li = 0;
+	ri = 0;
 	while(li < left.size && ri < right.size)
 	{
 		b_result = undefined;

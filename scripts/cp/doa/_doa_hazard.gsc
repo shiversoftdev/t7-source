@@ -176,7 +176,7 @@ function function_7b02a267()
 {
 	level notify(#"hash_7b02a267");
 	level endon(#"hash_7b02a267");
-	while(1)
+	while(true)
 	{
 		if(getdvarint("scr_doa_show_hazards", 0))
 		{
@@ -339,10 +339,12 @@ function function_1cb931df(def, var_3d19d2b1 = getdvarint("scr_doa_eggcount", 6)
 	{
 		var_3d19d2b1 = def.var_75f2c952;
 	}
+	spot = doa_utility::function_ada6d90();
 	while(isdefined(spot) && var_3d19d2b1)
 	{
 		baseorigin = spot.origin;
 		var_485dfece = 0;
+		angle = randomint(180);
 		while(var_3d19d2b1)
 		{
 			if(var_485dfece == 0)
@@ -387,6 +389,7 @@ private function function_fb78d226(var_6e476c41)
 {
 	self endon(#"death");
 	self asmsetanimationrate(0.8);
+	self.in_water = 1;
 	while(isdefined(var_6e476c41) && self istouching(var_6e476c41))
 	{
 		wait(0.25);
@@ -408,7 +411,7 @@ private function function_323a3e31()
 	self notify(#"hash_323a3e31");
 	self endon(#"hash_323a3e31");
 	self endon(#"hash_3c011e06");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", guy);
 		if(isdefined(guy) && isalive(guy) && (isdefined(guy.takedamage) && guy.takedamage) && (!(isdefined(guy.boss) && guy.boss)) && (!(isdefined(guy.in_water) && guy.in_water)))
@@ -440,7 +443,7 @@ private function function_6ec8176a()
 	self notify(#"hash_6ec8176a");
 	self endon(#"hash_6ec8176a");
 	self endon(#"hash_3c011e06");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", guy);
 		if(isdefined(guy) && isalive(guy) && (isdefined(guy.takedamage) && guy.takedamage) && (!(isdefined(guy.boss) && guy.boss)))
@@ -488,7 +491,7 @@ private function function_70dbf276()
 	self notify(#"hash_70dbf276");
 	self endon(#"hash_70dbf276");
 	self endon(#"hash_3c011e06");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", guy);
 		if(isdefined(guy))
@@ -513,7 +516,7 @@ private function function_70dbf276()
 					spot = doa_utility::getclosestto(guy.origin, level.doa.arenas[level.doa.current_arena].var_1d2ed40).origin;
 					break;
 				}
-				default
+				default:
 				{
 					spot = namespace_831a4a7c::function_68ece679(guy.entnum).origin;
 					break;
@@ -606,6 +609,7 @@ function function_3341776e(origin, var_891d7d80 = origin, var_ba2a535c = 85)
 	min_dist = 24;
 	min_dist_squared = min_dist * min_dist;
 	pushed = 1;
+	max_tries = 3;
 	while(pushed && max_tries > 0)
 	{
 		max_tries--;
@@ -676,7 +680,7 @@ function function_3341776e(origin, var_891d7d80 = origin, var_ba2a535c = 85)
 private function function_993013cd(trigger)
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.active) && self.active && isdefined(trigger))
 		{
@@ -699,7 +703,7 @@ private function function_8a97d2c0(trigger)
 {
 	self endon(#"death");
 	trigger endon(#"death");
-	while(1)
+	while(true)
 	{
 		trigger waittill(#"trigger", guy);
 		if(isdefined(guy) && (isdefined(self.active) && self.active))
@@ -768,7 +772,7 @@ function function_5d31907f()
 			}
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				assert(0);
@@ -796,7 +800,7 @@ function function_bf0f9f64()
 	self thread function_8a97d2c0(self.trigger);
 	self clientfield::set("hazard_activated", 1);
 	wait(randomfloatrange(2.1, 8));
-	while(1)
+	while(true)
 	{
 		self clientfield::set("hazard_activated", 2);
 		wait(1.2);
@@ -875,6 +879,7 @@ function function_d8d20160()
 		self.var_1a563349 = 1;
 		self.var_262e30aa = vectorscale((0, 0, 1), 42);
 		self.death_func = &function_193a95a6;
+		level.doa.hazards[level.doa.hazards.size] = self;
 		while(isdefined(self))
 		{
 			self waittill(#"damage", damage, attacker, direction_vec, point, meansofdeath, tagname, modelname, partname, weapon);
@@ -937,7 +942,7 @@ private function function_d8c94716()
 private function function_441547f1()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		pickupsitems = getentarray("a_pickup_item", "script_noteworthy");
 		var_f3646f56 = self.origin + (isdefined(self.var_262e30aa) ? self.var_262e30aa : (0, 0, 0));

@@ -1410,7 +1410,7 @@ function function_cd541d08()
 */
 function function_78c017aa()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trap_activate");
 		if(isdefined(self.activated_by_player))
@@ -1434,6 +1434,7 @@ function function_78c017aa()
 */
 function function_897d1ccc()
 {
+	n_start_time = undefined;
 	while(level.round_number < 4)
 	{
 		level waittill(#"start_of_round");
@@ -1600,7 +1601,7 @@ function function_df57d237()
 		level thread zm::print_zombie_counts();
 		level thread zm::sndmusiconkillround();
 	#/
-	while(1)
+	while(true)
 	{
 		if(level flag::get("ee_round"))
 		{
@@ -1817,7 +1818,7 @@ function function_52211d40(var_7afe5e99)
 				var_f329b7ad = "tag_eye_flatline_animate";
 				break;
 			}
-			default
+			default:
 			{
 				return;
 			}
@@ -1883,7 +1884,7 @@ function function_cde49635()
 	wait(0.75);
 	callback::on_spawned(&function_c2ad8318);
 	level thread function_a1369011();
-	while(1)
+	while(true)
 	{
 		e_player = arraygetclosest(level.var_a090a655.origin, level.activeplayers);
 		e_player function_a9536aec();
@@ -1903,6 +1904,7 @@ function function_cde49635()
 function function_a9536aec()
 {
 	self endon(#"death");
+	b_first_loop = 1;
 	while(zm_utility::is_player_valid(self) && zm_stalingrad_util::function_86b1188c(750, level.var_a090a655, self))
 	{
 		if(b_first_loop)

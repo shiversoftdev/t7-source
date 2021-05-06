@@ -46,7 +46,7 @@ function spawned(localclientnum)
 function watch_for_fake_fire(localclientnum)
 {
 	self endon(#"entityshutdown");
-	while(1)
+	while(true)
 	{
 		self waittill(#"fake_fire");
 		playfxontag(localclientnum, level._effect["decoy_fire"], self, "tag_origin");
@@ -64,7 +64,7 @@ function watch_for_fake_fire(localclientnum)
 */
 function level_watch_for_fake_fire()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"fake_fire", origin);
 	}

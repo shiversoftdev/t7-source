@@ -258,7 +258,7 @@ function run_crypt_gem_pos()
 			str_final_pos = "lightning_orb_plinth_final";
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				assertmsg("" + self.targetname);
@@ -272,7 +272,7 @@ function run_crypt_gem_pos()
 	str_targetname = self.targetname;
 	self delete();
 	e_gem_model setcandamage(1);
-	while(1)
+	while(true)
 	{
 		e_gem_model waittill(#"damage", damage, attacker, direction_vec, point, mod, tagname, modelname, partname, weapon);
 		if(weapon == w_weapon)
@@ -283,7 +283,7 @@ function run_crypt_gem_pos()
 	e_gem_model clientfield::set("element_glow_fx", n_element);
 	e_gem_model playsound("zmb_squest_crystal_charge");
 	e_gem_model playloopsound("zmb_squest_crystal_charge_loop", 2);
-	while(1)
+	while(true)
 	{
 		if(chamber_disc_gem_has_clearance(str_targetname))
 		{
@@ -511,7 +511,8 @@ function chamber_disc_trigger_run(e_disc, e_lever, b_clockwise)
 {
 	discs_to_rotate = array(e_disc);
 	e_lever useanimtree($generic);
-	while(1)
+	n_anim_time = getanimlength(%generic::p7_fxanim_zm_ori_puzzle_switch_anim);
+	while(true)
 	{
 		self waittill(#"trigger", e_triggerer);
 		if(!level flag::get("disc_rotation_active"))

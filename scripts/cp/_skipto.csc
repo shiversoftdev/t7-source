@@ -511,7 +511,7 @@ function handle()
 	run_initial_logic();
 	skiptos = get_current_skiptos();
 	set_level_objective(skiptos, 1);
-	while(1)
+	while(true)
 	{
 		level waittill(#"skiptos_changed");
 		skiptos = get_current_skiptos();
@@ -585,6 +585,7 @@ function convert_token(str, fromtok, totok)
 function load_mission_table(table, levelname, sublevel = "")
 {
 	index = 0;
+	row = tablelookuprow(table, index);
 	while(isdefined(row))
 	{
 		if(row[0] == levelname && row[1] == sublevel)

@@ -161,7 +161,8 @@ function function_a85eaca4()
 {
 	level endon(#"hash_448ca7a6");
 	players = function_4d8b6e1e();
-	while(1)
+	winner = players[0];
+	while(true)
 	{
 		if(!isdefined(winner))
 		{
@@ -362,6 +363,7 @@ function function_5e04bf78()
 	level.doa.var_799853ee thread function_4036d4c6();
 	msg = self util::waittill_any_timeout(1, "turret_on_target");
 	rounds = 40;
+	faketarget = undefined;
 	while(rounds)
 	{
 		mech fireweapon(2, level.doa.var_c12009c9, vectorscale((0, 0, -1), 15));
@@ -438,7 +440,7 @@ function function_f7e6e4b1(scale = 1, var_fb37ad89 = 9999)
 {
 	level endon(#"hash_448ca7a6");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_71c0bde9");
 		vector = (randomint(20), randomint(20), 30) * scale;
@@ -575,6 +577,7 @@ function function_2b20420b(podium)
 function function_1aaa038(droporigin)
 {
 	var_9f9a4e58 = array("zombietron_ruby", "zombietron_diamond", "zombietron_sapphire");
+	qty = 30;
 	while(qty)
 	{
 		if(mayspawnentity())
@@ -614,7 +617,7 @@ function fireworks()
 {
 	level endon(#"hash_448ca7a6");
 	level endon(#"hash_80a84385");
-	while(1)
+	while(true)
 	{
 		level clientfield::set("redinsExploder", 2);
 		wait(4);
@@ -708,7 +711,7 @@ function function_7206982b()
 	self endon(#"death");
 	self notify(#"hash_7206982b");
 	self endon(#"hash_7206982b");
-	while(1)
+	while(true)
 	{
 		idleanim = self.animarray[randomint(self.animarray.size)];
 		self animscripted("zombieanim", self.origin, self.angles, idleanim, "normal", %generic::body, 1, 0.3, 0.3);
@@ -729,7 +732,7 @@ function function_78713841()
 {
 	level endon(#"hash_448ca7a6");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		if(!isdefined(level.doa.var_63e2b87e))
 		{
@@ -760,7 +763,8 @@ function function_b8de7628()
 	var_2c143867 = array(%generic::ai_zombie_base_idle_ad_v1, %generic::ai_zombie_base_idle_au_v1, %generic::bo3_ai_zombie_attack_v1, %generic::bo3_ai_zombie_attack_v2, %generic::bo3_ai_zombie_attack_v3, %generic::bo3_ai_zombie_attack_v4, %generic::bo3_ai_zombie_attack_v6);
 	var_6ac65424 = array(%generic::ai_zombie_doa_cheer_v1, %generic::ai_zombie_doa_cheer_v2, %generic::ai_zombie_doa_cheer_v3);
 	self.animarray = var_2c143867;
-	while(1)
+	self.var_b2f6b3b7 = "zombie_outro_mood_angry";
+	while(true)
 	{
 		note = level util::waittill_any_return("zombie_outro_mood_angry", "zombie_outro_mood_happy", "zombie_outro_mood_lol");
 		self.var_b2f6b3b7 = note;
@@ -790,7 +794,8 @@ function function_fccfcf0c()
 	level endon(#"hash_448ca7a6");
 	self endon(#"death");
 	wait(randomfloatrange(0, 2));
-	while(1)
+	location = self.origin + vectorscale((0, 0, 1), 90);
+	while(true)
 	{
 		if(randomint(getdvarint("scr_doa_zombie_talk_chance", 50)) == 0)
 		{
@@ -831,7 +836,7 @@ function function_fb3b78fe()
 	level endon(#"hash_448ca7a6");
 	self endon(#"death");
 	self useanimtree($generic);
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.taunt) && self.taunt)
 		{
@@ -861,7 +866,7 @@ function function_4036d4c6()
 	self notify(#"hash_4036d4c6");
 	self endon(#"hash_4036d4c6");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage");
 		playrumbleonposition("explosion_generic", self.origin);
@@ -885,7 +890,7 @@ function function_e4d4b80(animation)
 	self notify(#"hash_e4d4b80");
 	self endon(#"hash_e4d4b80");
 	self useanimtree($generic);
-	while(1)
+	while(true)
 	{
 		self animscripted("podium", self.origin, self.angles, animation, "normal", %generic::body, 1, 0.5, 0.5);
 		self waittill_match(#"podium");

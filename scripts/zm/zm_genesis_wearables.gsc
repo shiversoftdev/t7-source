@@ -178,7 +178,7 @@ function function_24061b58(e_player)
 function function_7f0ec71c()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self trigger::wait_till();
 		e_player = self.who;
@@ -441,6 +441,7 @@ function function_9157236c()
 	var_687cab15 = getent("ee_grand_tour_undercroft", "targetname");
 	var_687cab15 setcandamage(1);
 	var_db04d156 = 9;
+	var_c52419ba = 1;
 	while(var_c52419ba)
 	{
 		var_687cab15 waittill(#"damage", damage, attacker, direction_vec, v_point, type, modelname, tagname, partname, weapon, idflags);
@@ -575,7 +576,8 @@ function function_edd475ab(var_dd087d43, var_33c3e058, var_e7d196cc)
 	self endon(#"hash_baf651e0");
 	self.var_adaec269 = 1;
 	n_start_time = undefined;
-	while(1)
+	var_fce7f186 = 0;
+	while(true)
 	{
 		self waittill(#"hash_ab106e77");
 		n_time = gettime();
@@ -739,7 +741,8 @@ function function_796904fd()
 function function_c489ad78(str_flag)
 {
 	var_3f709380 = struct::get("s_dire_wolf_coffin", "targetname");
-	while(1)
+	t_damage = spawn("trigger_damage", var_3f709380.origin, 0, 15, 10);
+	while(true)
 	{
 		t_damage waittill(#"damage", amount, attacker, dir, point, mod);
 		if(isdefined(mod) && mod == "MOD_GRENADE_SPLASH")
@@ -771,7 +774,8 @@ function function_f4caac35(str_flag)
 	var_3f709380 = struct::get("s_dire_wolf_coffin", "targetname");
 	var_affd5bec = util::spawn_model("tag_origin", var_3f709380.origin, (0, 0, 0));
 	var_affd5bec setmodel("p7_ban_north_tribe_lion_skull");
-	while(1)
+	s_path = struct::get("s_dire_wolf_path_start", "targetname");
+	while(true)
 	{
 		n_time = 0.4;
 		var_affd5bec moveto(s_path.origin, n_time);
@@ -814,7 +818,8 @@ function function_579caadc()
 	self endon(#"death");
 	v_ground_pos = self.origin;
 	n_move_time = 1.5;
-	while(1)
+	var_504ff975 = 1;
+	while(true)
 	{
 		if(level flag::get("low_grav_on") && var_504ff975)
 		{

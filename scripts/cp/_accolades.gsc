@@ -643,7 +643,8 @@ private function _increment_by_notify(str_accolade, str_notify)
 	{
 		return;
 	}
-	while(1)
+	self.var_4fbad7c0[str_notify] = 1;
+	while(true)
 	{
 		self waittill(str_notify, n_val);
 		self increment(str_accolade, n_val);
@@ -724,7 +725,7 @@ function function_673a5138()
 	self endon(#"disconnect");
 	self endon(#"death");
 	var_88d3591a = self function_4f9d8dec(level.var_f8718de3 + "COLLECTIBLE");
-	while(1)
+	while(true)
 	{
 		self waittill(#"hash_eb5cc7bc");
 		if(self function_3a7fd23a(var_88d3591a.index) != 0)
@@ -778,7 +779,7 @@ function function_39f05ec1()
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		self waittill(#"score_event");
 		last_score = var_7b12b16.current_value;
@@ -905,7 +906,7 @@ function function_8082e9f0()
 {
 	/#
 		self endon(#"disconnect");
-		while(1)
+		while(true)
 		{
 			cmd = getdvarstring("");
 			if(isdefined(cmd) && cmd != "")
@@ -1174,7 +1175,7 @@ function function_3b92459f()
 function function_4c436dfe()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill(#"save_restore");
 		if(function_3c63ee8())
@@ -1279,6 +1280,7 @@ function commit(map_name = level.script)
 			}
 			if(accolade.index == 2)
 			{
+				var_40a77a3a = self collectibles::function_ccb1e08d(getrootmapname());
 				while(accolade.current_value < var_40a77a3a)
 				{
 					self increment(str_accolade);

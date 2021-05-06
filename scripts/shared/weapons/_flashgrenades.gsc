@@ -38,6 +38,7 @@ function flashrumbleloop(duration)
 	self endon(#"stop_monitoring_flash");
 	self endon(#"flash_rumble_loop");
 	self notify(#"flash_rumble_loop");
+	goaltime = gettime() + duration * 1000;
 	while(gettime() < goaltime)
 	{
 		self playrumbleonentity("damage_heavy");
@@ -149,7 +150,7 @@ function monitorflash()
 	self endon(#"disconnect");
 	self endon(#"killflashmonitor");
 	self.flashendtime = 0;
-	while(1)
+	while(true)
 	{
 		self waittill(#"flashbang", amount_distance, amount_angle, attacker);
 		if(!isalive(self))
@@ -173,7 +174,7 @@ function monitorrcbombflash()
 {
 	self endon(#"death");
 	self.flashendtime = 0;
-	while(1)
+	while(true)
 	{
 		self waittill(#"flashbang", amount_distance, amount_angle, attacker);
 		driver = self getseatoccupant(0);

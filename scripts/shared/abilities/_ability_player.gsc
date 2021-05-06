@@ -1279,7 +1279,7 @@ function abilities_devgui_think()
 				{
 					break;
 				}
-				default
+				default:
 				{
 					break;
 				}

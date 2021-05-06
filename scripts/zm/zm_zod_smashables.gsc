@@ -467,7 +467,7 @@ function add_callback(fn_callback, param1, param2, param3)
 function watch_all_damage(e_clip)
 {
 	e_clip setcandamage(1);
-	while(1)
+	while(true)
 	{
 		e_clip waittill(#"damage", n_amt, e_attacker, v_dir, v_pos, str_type);
 		if(isdefined(e_attacker) && isplayer(e_attacker) && (isdefined(e_attacker.beastmode) && e_attacker.beastmode) && str_type === "MOD_MELEE")

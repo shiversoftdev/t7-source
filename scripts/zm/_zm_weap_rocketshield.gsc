@@ -365,7 +365,7 @@ function function_92debe0a()
 		foreach(var_ed697aa1, player in getplayers())
 		{
 		}
-		while(1)
+		while(true)
 		{
 			level waittill(#"start_of_round");
 			foreach(var_95a9c2b, player in getplayers())
@@ -535,7 +535,7 @@ function function_fc8bb1d(var_cde5eb87)
 	/#
 		level notify(#"hash_afd0dfa9");
 		level endon(#"hash_afd0dfa9");
-		while(1)
+		while(true)
 		{
 			n_debug = getdvarint("", 0);
 			if(n_debug > 0)
@@ -590,7 +590,7 @@ function bottle_trigger_visibility(player)
 */
 function shield_recharge_trigger_think()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player zm_utility::in_revive_trigger())

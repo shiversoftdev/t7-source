@@ -173,7 +173,7 @@ function function_e17a8f06(command, key)
 */
 function function_c6639fc9(var_33b64687, command)
 {
-	while(1)
+	while(true)
 	{
 		while(!self [[var_33b64687]]())
 		{
@@ -198,7 +198,7 @@ function function_c6639fc9(var_33b64687, command)
 */
 function function_b01c4bcb(var_33b64687, command)
 {
-	while(1)
+	while(true)
 	{
 		while(!self [[var_33b64687]]())
 		{
@@ -440,7 +440,8 @@ function updatetextongamepadchange()
 		return;
 	}
 	waittillframeend();
-	while(1)
+	var_85e0f0fe = self is_player_gamepad_enabled();
+	while(true)
 	{
 		var_521408c = self is_player_gamepad_enabled();
 		if(var_521408c != var_85e0f0fe)
@@ -496,7 +497,7 @@ function propinputwatch()
 	self thread propmoveunlock();
 	self thread propcamerazoom();
 	self.debugnextpropindex = 1;
-	while(1)
+	while(true)
 	{
 		msg = self util::waittill_any_return("lock", "spin", "changeProp", "setToSlope", "propAbility", "cloneProp", "hide");
 		if(!isdefined(msg))
@@ -1120,8 +1121,10 @@ function get_ground_normal(var_a84e1ffa, debug)
 	var_4f9e9c19 = array(self.origin);
 	if(getdvarint("scr_ph_useBoundsForGroundNormal", 1))
 	{
+		i = -1;
 		while(i <= 1)
 		{
+			j = -1;
 			while(j <= 1)
 			{
 				corner = ignore getpointinbounds(i, j, 0);
@@ -1194,7 +1197,7 @@ function propmoveunlock()
 	var_f98cbcda = 0;
 	var_bc31618a = 0;
 	var_449744f5 = 0;
-	while(1)
+	while(true)
 	{
 		wait(0.05);
 		movement = self getnormalizedmovement();
@@ -1505,7 +1508,7 @@ function propcamerazoom()
 	level endon(#"game_ended");
 	var_8ea3acea = 10;
 	self.thirdpersonrange = self.prop.info.proprange;
-	while(1)
+	while(true)
 	{
 		zoom = self util::waittill_any_return("zoomin", "zoomout");
 		if(!isdefined(zoom))
@@ -1552,7 +1555,7 @@ function setnewabilityhud()
 			self.abilitykey.label = &"MP_PH_FLASH";
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				assertmsg("");
@@ -1593,7 +1596,7 @@ function setnewabilitycount(var_9c968389, count)
 			propsetclonesleft(count);
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				assertmsg("" + var_9c968389);
@@ -2020,7 +2023,7 @@ function watchspecialgrenadethrow()
 	level endon(#"game_ended");
 	self notify(#"watchspecialgrenadethrow");
 	self endon(#"watchspecialgrenadethrow");
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_fire", grenade, weapon);
 		self thread function_899a39ec(grenade);
@@ -2617,7 +2620,7 @@ function function_1abcc66()
 		return;
 	}
 	prop::function_45c842e9();
-	while(1)
+	while(true)
 	{
 		msg = self util::waittill_any_return("ping");
 		if(!isdefined(msg))

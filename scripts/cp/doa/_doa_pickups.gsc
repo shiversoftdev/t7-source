@@ -727,6 +727,7 @@ function function_2d8cb175(name, origin, amount = 1, launch = 0, ondeath = 0, sc
 function spawnubertreasure(spawn_point, amount, radius = 85, launch = 0, ondeath = 0, scale, specific, interval = 0.35, shouldtimeout = 1, var_71b8054b = 1, var_5278d8d7 = 1)
 {
 	level endon(#"stop_spawning_pickups");
+	items = [];
 	while(amount)
 	{
 		amount--;
@@ -811,6 +812,7 @@ function function_68c8220(player)
 	ent = spawn("script_origin", (0, 0, 0));
 	ent playloopsound("zmb_pickup_umbrella_loop");
 	locations = doa_utility::function_308fa126(16);
+	amount = randomintrange(namespace_831a4a7c::function_5eb6e4d1().size * 3 + 4, namespace_831a4a7c::function_5eb6e4d1().size * 5 + 6);
 	while(amount)
 	{
 		item = spawnubertreasure(locations[randomint(locations.size)] + vectorscale((0, 0, 1), 2200), 1, 128, 1, 1, 1, level.doa.var_9bf7e61b, undefined, 1, 0, 0)[0];
@@ -992,7 +994,7 @@ function function_bfc8e78d()
 {
 	level notify(#"hash_bfc8e78d");
 	level endon(#"hash_bfc8e78d");
-	while(1)
+	while(true)
 	{
 		wait(randomfloatrange(10, 20));
 		if(!level flag::get("doa_round_spawning"))
@@ -1069,7 +1071,7 @@ function spawnitem(type = 0)
 {
 	level notify(#"spawnitem");
 	level endon(#"spawnitem");
-	while(1)
+	while(true)
 	{
 		pickup = function_51b3bbf6(type);
 		if(function_967df2b6(pickup))
@@ -1094,8 +1096,10 @@ function function_b8d3f901()
 {
 	self notify(#"hash_b8d3f901");
 	self endon(#"hash_b8d3f901");
-	while(1)
+	level.doa.var_cc2eacdf = [];
+	while(true)
 	{
+		var_2029adc7 = 0;
 		while(level.doa.var_cc2eacdf.size)
 		{
 			if(var_2029adc7 >= getdvarint("scr_doa_queue_items_pertick", 2))
@@ -1231,6 +1235,7 @@ function function_53347911(player)
 	self endon(#"death");
 	player endon(#"disconnect");
 	self.player = player;
+	var_42b46711 = gettime() + 1500;
 	while(isdefined(self) && gettime() < var_42b46711)
 	{
 		if(self.origin[2] < player.origin[2])
@@ -1265,6 +1270,7 @@ function function_30768f24(item, time)
 	{
 		time = 1;
 	}
+	intervals = time / 0.15;
 	while(isdefined(item) && time > 0.15)
 	{
 		dist = distance(self.origin, item.origin);
@@ -1333,7 +1339,7 @@ function function_2904bdc4()
 {
 	level notify(#"hash_2904bdc4");
 	level endon(#"hash_2904bdc4");
-	while(1)
+	while(true)
 	{
 		if(!level flag::get("doa_round_spawning"))
 		{
@@ -1403,7 +1409,7 @@ function function_5bb8e0d1(var_742d8fb5, location)
 {
 	level notify(#"hash_5bb8e0d1");
 	level endon(#"hash_5bb8e0d1");
-	while(1)
+	while(true)
 	{
 		waittime = randomfloatrange(level.doa.rules.var_be9a9995, level.doa.rules.var_ab729583);
 		while(waittime > 0)
@@ -1570,7 +1576,7 @@ function function_d526f0bb()
 	self endon(#"hash_d526f0bb");
 	self endon(#"death");
 	wait(0.4);
-	while(1)
+	while(true)
 	{
 		self.trigger waittill(#"trigger", player);
 		if(isdefined(self.player) && self.player != player)
@@ -1881,7 +1887,7 @@ function function_d526f0bb()
 					level thread namespace_4f1562f7::function_ca06d008(player, self.origin);
 					break;
 				}
-				default
+				default:
 				{
 					/#
 						assert(0);
@@ -1919,6 +1925,7 @@ function function_cb119fa6(timeinterval = 1)
 	self endon(#"disconnect");
 	self notify(#"hash_cb119fa6");
 	self endon(#"hash_cb119fa6");
+	var_f2801f2d = int(self.maxhealth * 0.1);
 	while(isdefined(self.doa.var_65f7f2a9) && self.doa.var_65f7f2a9)
 	{
 		wait(timeinterval);
@@ -2282,6 +2289,7 @@ function pickuprotate()
 		{
 			dir = -180;
 		}
+		time = randomfloatrange(3, 7);
 		while(isdefined(self))
 		{
 			self rotateto(self.angles + (0, dir, 0), time);
@@ -2600,7 +2608,7 @@ private function function_5441452b(maxdistsq)
 	self endon(#"hash_c42bb828");
 	self endon(#"picked_up");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		wait(0.05);
 		if(self.attractors.size == 0 && (isdefined(self.var_3033320e) && self.var_3033320e))
@@ -2666,7 +2674,7 @@ function function_b33393b3()
 	{
 		self [[self.var_25e9e2fe]]();
 	}
-	while(1)
+	while(true)
 	{
 		self.attractors = [];
 		if(isdefined(self.var_77ebedb))

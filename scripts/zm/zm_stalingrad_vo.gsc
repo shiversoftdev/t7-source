@@ -417,6 +417,7 @@ function function_2426269b(v_pos, n_range = 1000)
 			}
 		}
 		level.sndvoxoverride = 0;
+		i = 0;
 		while(isdefined(level.a_e_speakers) && i < level.a_e_speakers.size)
 		{
 			if(isdefined(level.a_e_speakers[i].deleteme) && level.a_e_speakers[i].deleteme == 1)
@@ -857,7 +858,7 @@ function function_a80e8dfb(var_9773d40e)
 			var_f329b7ad = "tag_eye_flatline_animate";
 			break;
 		}
-		default
+		default:
 		{
 			return;
 		}
@@ -908,7 +909,7 @@ function function_84afa6c(str_vo_alias, n_wait, b_wait_if_busy, var_a8564a44)
 function function_772aa229()
 {
 	self endon(#"_zombie_game_over");
-	while(1)
+	while(true)
 	{
 		level waittill(#"start_of_round");
 		if(level.activeplayers.size == 1)
@@ -1017,7 +1018,7 @@ function function_340dc03()
 				e_speaker thread function_9430edac();
 				break;
 			}
-			default
+			default:
 			{
 				var_380dee9e = function_11b41a76(e_speaker.characterindex, "round_end_solo", var_5df8c4ee);
 				e_speaker function_e4acaa37(var_380dee9e);
@@ -1851,7 +1852,7 @@ function function_e068138()
 function function_9bdbe3a4()
 {
 	level endon(#"_zombie_game_over");
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_give", w_weapon);
 		if(w_weapon == self.var_207d01be)
@@ -2581,7 +2582,7 @@ function function_13ea746c()
 		level endon(#"hash_2b2c1420");
 	#/
 	level endon(#"_zombie_game_over");
-	while(1)
+	while(true)
 	{
 		level waittill(#"end_of_round");
 		if(level.round_number >= 14)
@@ -2615,7 +2616,7 @@ function function_d5f6780()
 		iprintlnbold("");
 	#/
 	level endon(#"_zombie_game_over");
-	while(1)
+	while(true)
 	{
 		level waittill(#"end_of_round");
 		if(isdefined(level.var_49d419a3) && level.var_49d419a3)
@@ -3006,6 +3007,7 @@ function function_df1536ac()
 {
 	self endon(#"death");
 	level endon(#"hash_df1536ac");
+	e_speaker = undefined;
 	while(!isdefined(e_speaker))
 	{
 		foreach(var_f9777097, e_player in level.activeplayers)
@@ -3535,7 +3537,7 @@ function function_1e767f71(e_target, n_min_dist = 600, var_79d0b667, var_b03cc21
 {
 	e_target endon(#"hash_9ed7f404");
 	e_target endon(#"death");
-	while(1)
+	while(true)
 	{
 		var_45edf029 = arraysortclosest(level.players, e_target.origin);
 		foreach(var_cbe2f97a, player in var_45edf029)
@@ -3601,7 +3603,7 @@ function function_81d644a1()
 	self endon(#"death");
 	array::add(self.var_bac3b790, "death");
 	array::add(self.var_bac3b790, "disconnect");
-	while(1)
+	while(true)
 	{
 		str_event = self util::waittill_any_array_return(self.var_bac3b790);
 		if(self.var_bc80de72[str_event] > 0)
@@ -3626,7 +3628,7 @@ function function_81d644a1()
 */
 function function_c261e8aa()
 {
-	while(1)
+	while(true)
 	{
 		str_event = level util::waittill_any_array_return(level.var_bac3b790);
 		if(level.var_bc80de72[str_event] > 0)
@@ -3766,7 +3768,7 @@ function function_11b41a76(n_player_index, str_type, var_f73f0bfc, var_69467b37 
 			str_vo = "vox_plr_" + n_player_index + "_response_negative_" + var_f73f0bfc;
 			break;
 		}
-		default
+		default:
 		{
 			str_vo = "vox_plr_" + n_player_index + "_" + str_type + var_f73f0bfc + "_" + var_69467b37;
 			break;

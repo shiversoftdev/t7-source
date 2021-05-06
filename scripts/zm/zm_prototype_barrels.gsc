@@ -154,6 +154,7 @@ function explodable_barrel_think()
 function explodable_barrel_burn()
 {
 	count = 0;
+	startedfx = 0;
 	while(self.damagetaken < level.barrelhealth)
 	{
 		if(!startedfx)

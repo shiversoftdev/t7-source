@@ -85,7 +85,7 @@ function __init__()
 function updatedvars()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			wait(1);
 		}
@@ -342,7 +342,7 @@ function watchrespin(weapon)
 	self thread watchrespingadgetactivated();
 	self clientfield::set_to_player("roulette_state", 1);
 	wait(getdvarfloat("scr_roulette_pre_respin_wait_time", 1.3));
-	while(1)
+	while(true)
 	{
 		if(!isdefined(self))
 		{
@@ -451,6 +451,7 @@ function giverandomweapon(weapon, isprimaryroll)
 	}
 	else if(isdefined(self.pers[#"hash_cbcfa831"]) || isdefined(self.pers[#"hash_cbcfa832"]))
 	{
+		randomweapon = getrandomgadget(isprimaryroll);
 		while(randomweapon == self.pers[#"hash_cbcfa831"] || (isdefined(self.pers[#"hash_cbcfa832"]) && randomweapon == self.pers[#"hash_cbcfa832"]))
 		{
 			randomweapon = getrandomgadget(isprimaryroll);

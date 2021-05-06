@@ -70,7 +70,7 @@ private function handlesurfacenotetrackfx(localclientnum, notetrack, surfacetabl
 {
 	entity = self;
 	entity endon(#"entityshutdown");
-	while(1)
+	while(true)
 	{
 		entity waittill(notetrack);
 		fxname = entity getaifxname(localclientnum, surfacetable);

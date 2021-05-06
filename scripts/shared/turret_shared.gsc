@@ -126,7 +126,7 @@ function watch_for_flash()
 {
 	self endon(#"watch_for_flash_and_stun");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"flashbang", pct_dist, pct_angle, attacker, team);
 		self notify(#"damage", 1, attacker, undefined, undefined, undefined, undefined, undefined, undefined, "flash_grenade");
@@ -148,7 +148,7 @@ function watch_for_flash_and_stun(n_index)
 	self endon(#"watch_for_flash_and_stun");
 	self endon(#"death");
 	self thread watch_for_flash();
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", damage, attacker, direction, point, type, tagname, modelname, partname, weapon);
 		if(weapon.dostun)
@@ -179,7 +179,7 @@ function emp_watcher(n_index)
 	self notify(#"emp_thread_stop");
 	self endon(#"emp_thread_stop");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", damage, attacker, direction, point, type, tagname, modelname, partname, weapon);
 		if(weapon.isemp)
@@ -1108,7 +1108,7 @@ function _turret_think(n_index, v_offset)
 	{
 		self laseron();
 	}
-	while(1)
+	while(true)
 	{
 		s_turret flag::wait_till_clear("turret manual");
 		n_time_now = gettime();
@@ -1263,7 +1263,7 @@ function _turret_user_think(n_index)
 	{
 		self thread _listen_for_damage_on_actor(ai_user, n_index);
 	}
-	while(1)
+	while(true)
 	{
 		_waittill_user_change(n_index);
 		if(!_user_check(n_index))
@@ -1297,7 +1297,7 @@ function _listen_for_damage_on_actor(ai_user, n_index)
 	self endon("turret_disabled" + _index(n_index));
 	self endon("_turret_think" + _index(n_index));
 	self endon(#"exit_vehicle");
-	while(1)
+	while(true)
 	{
 		ai_user waittill(#"damage", n_amount, e_attacker, v_org, v_dir, str_mod);
 		s_turret = _get_turret_data(n_index);
@@ -1349,6 +1349,7 @@ function _waittill_user_change(n_index)
 function _check_for_paused(n_index)
 {
 	s_turret = _get_turret_data(n_index);
+	s_turret.pause_start_time = gettime();
 	while(isdefined(s_turret.pause))
 	{
 		if(s_turret.pause_time > 0)
@@ -1407,7 +1408,7 @@ function _turret_new_user_think(n_index)
 	{
 		str_gunner_pos = "gunner" + n_index;
 	}
-	while(1)
+	while(true)
 	{
 		wait(3);
 		if(does_have_target(n_index) && !_user_check(n_index) && (isdefined(self.script_auto_use) && self.script_auto_use))
@@ -1514,7 +1515,7 @@ function _debug_turret_think(n_index)
 		self endon("" + _index(n_index));
 		s_turret = _get_turret_data(n_index);
 		v_color = (0, 0, 1);
-		while(1)
+		while(true)
 		{
 			if(!getdvarint(""))
 			{
@@ -1717,7 +1718,7 @@ function set_best_target_func_from_weapon_type(n_index)
 			set_best_target_func(&_get_best_target_projectile, n_index);
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				assertmsg("");
@@ -1852,6 +1853,7 @@ function _burst_fire(n_max_time, n_index)
 	}
 	w_weapon = get_weapon(n_index);
 	n_fire_time = w_weapon.firetime;
+	n_total_time = 0;
 	while(n_total_time < n_burst_time)
 	{
 		fire(n_index);
@@ -2065,7 +2067,7 @@ function _get_potential_targets(n_index)
 	a_targets = a_potential_targets;
 	if(isdefined(s_turret) && isdefined(s_turret.a_ignore_target_array))
 	{
-		while(1)
+		while(true)
 		{
 			found_bad_target = 0;
 			a_targets = a_potential_targets;
@@ -2137,7 +2139,7 @@ function _get_any_priority_targets(n_index)
 	s_turret = _get_turret_data(n_index);
 	if(isdefined(s_turret.priority_target_array))
 	{
-		while(1)
+		while(true)
 		{
 			found_bad_target = 0;
 			a_targets = s_turret.priority_target_array;
@@ -2210,6 +2212,7 @@ function _get_best_target_from_potential(a_potential_targets, n_index)
 */
 function _get_best_target_bullet(a_potential_targets, n_index)
 {
+	e_best_target = undefined;
 	while(!isdefined(e_best_target) && a_potential_targets.size > 0)
 	{
 		e_closest_target = arraygetclosest(self.origin, a_potential_targets);
@@ -2465,7 +2468,7 @@ function track_lens_flare()
 	self endon(#"death");
 	self notify(#"disable_lens_flare");
 	self endon(#"disable_lens_flare");
-	while(1)
+	while(true)
 	{
 		e_target = self gettargetentity();
 		if(self.turretontarget && (isdefined(e_target) && isplayer(e_target)))
@@ -2514,7 +2517,7 @@ function _get_gunner_tag_for_turret_index(n_index)
 		{
 			return "tag_gunner4";
 		}
-		default
+		default:
 		{
 			/#
 				assertmsg("");

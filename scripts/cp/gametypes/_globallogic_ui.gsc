@@ -142,7 +142,7 @@ function watch_player_in_combat()
 {
 	self endon(#"kill_watch_player_in_combat");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		if(isplayerhurt(self) || isanyaiattackingtheplayer(self))
 		{
@@ -968,7 +968,7 @@ function weakpoint_anim_watch(precachedbonename)
 {
 	self endon(#"death");
 	self endon(#"weakpoint_destroyed");
-	while(1)
+	while(true)
 	{
 		self waittill(#"weakpoint_update", bonename, event);
 		if(bonename == precachedbonename)

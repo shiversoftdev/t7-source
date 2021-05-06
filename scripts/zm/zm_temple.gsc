@@ -771,7 +771,8 @@ function add_powerups_after_round_1()
 		}
 	#/
 	level.zombie_powerup_array = array_remove(level.zombie_powerup_array, "nuke");
-	while(1)
+	level.zombie_powerup_array = array_remove(level.zombie_powerup_array, "fire_sale");
+	while(true)
 	{
 		if(level.round_number > 1)
 		{
@@ -861,6 +862,7 @@ function merge(left, right, less_than)
 {
 	result = [];
 	li = 0;
+	ri = 0;
 	while(li < left.size && ri < right.size)
 	{
 		if([[less_than]](left[li], right[ri]))
@@ -1168,7 +1170,7 @@ function random_node_toggle(minon, maxon, minoff, maxoff)
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		wait(randomfloatrange(minon, maxoff));
 		unlinknodes(self, target);

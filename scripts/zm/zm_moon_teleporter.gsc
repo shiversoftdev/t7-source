@@ -41,7 +41,7 @@ function teleporter_function(name)
 	str = name + "_top_name";
 	fx_top = struct::get(str, "targetname");
 	teleport_state = "Waiting for Players";
-	while(1)
+	while(true)
 	{
 		players = getplayers();
 		/#
@@ -192,7 +192,8 @@ function function_78f5cb79()
 */
 function function_6454df1b()
 {
-	while(1)
+	var_c35f7190 = getent("t_stream_hint_nml_player", "targetname");
+	while(true)
 	{
 		var_c35f7190 waittill(#"trigger", e_player);
 		if(!(isdefined(e_player.var_a31e4590) && e_player.var_a31e4590))
@@ -811,6 +812,7 @@ function teleporter_to_nml_power_down()
 	time0 = time + dt / 4;
 	time1 = time + dt / 2;
 	time2 = time + 3 * dt / 4;
+	time3 = open_door_time - 0.75;
 	while(time < open_door_time)
 	{
 		time = gettime();
@@ -853,7 +855,7 @@ function teleporter_to_nml_power_down()
 				}
 				break;
 			}
-			default
+			default:
 			{
 				wait(0.1);
 				break;
@@ -876,7 +878,7 @@ function teleporter_exit_nml_think()
 {
 	wait(3);
 	level thread teleporter_exit_nml_gate_move(0);
-	while(1)
+	while(true)
 	{
 		level flag::wait_till("enter_nml");
 		if(level.on_the_moon == 0)

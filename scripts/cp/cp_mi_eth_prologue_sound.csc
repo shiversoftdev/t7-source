@@ -140,7 +140,8 @@ function function_9806d032()
 	location1 = (15816, -749, 454);
 	location2 = (15248, -749, 463);
 	location3 = (15807, -1927, 478);
-	while(1)
+	count = 0;
+	while(true)
 	{
 		level thread function_ab91e7b9(location1);
 		if(count > 5)

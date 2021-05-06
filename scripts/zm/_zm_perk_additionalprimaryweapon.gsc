@@ -197,6 +197,7 @@ function take_additionalprimaryweapon()
 		}
 	}
 	self.weapons_taken_by_losing_specialty_additionalprimaryweapon = [];
+	pwtcbt = primary_weapons_that_can_be_taken.size;
 	while(pwtcbt >= 3)
 	{
 		weapon_to_take = primary_weapons_that_can_be_taken[pwtcbt - 1];

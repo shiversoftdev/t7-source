@@ -121,7 +121,7 @@ function player_handle_black_hole_bomb()
 	{
 		max_attract_dist = 2056;
 	}
-	while(1)
+	while(true)
 	{
 		grenade = get_thrown_black_hole_bomb();
 		if(isdefined(grenade))
@@ -139,6 +139,7 @@ function player_handle_black_hole_bomb()
 			info.sound_attractors = [];
 			grenade thread monitor_zombie_groans(info);
 			velocitysq = 100000000;
+			oldpos = grenade.origin;
 			while(velocitysq != 0)
 			{
 				wait(0.05);
@@ -219,7 +220,7 @@ function function_e877695e()
 	self notify(#"hash_e877695e");
 	self endon(#"disconnect");
 	self endon(#"hash_e877695e");
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_pullback", var_f4612f93);
 		var_fe9168ca = 0.75;
@@ -354,7 +355,8 @@ function wait_for_attractor_positions_complete()
 function black_hole_bomb_cleanup(parent, model)
 {
 	model endon(#"sam_stole_it");
-	while(1)
+	grenade_org = parent.origin;
+	while(true)
 	{
 		if(!isdefined(parent))
 		{
@@ -419,7 +421,7 @@ function get_thrown_black_hole_bomb()
 {
 	self endon(#"disconnect");
 	self endon(#"starting_black_hole_bomb");
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_fire", grenade, weapon);
 		if(weapon == level.var_453e74a0)
@@ -443,7 +445,7 @@ function get_thrown_black_hole_bomb()
 function monitor_zombie_groans(info)
 {
 	self endon(#"explode");
-	while(1)
+	while(true)
 	{
 		if(!isdefined(self))
 		{
@@ -493,7 +495,7 @@ function play_zombie_groans()
 {
 	self endon(#"death");
 	self endon(#"black_hole_bomb_blown_up");
-	while(1)
+	while(true)
 	{
 		if(isdefined(self))
 		{
@@ -690,7 +692,7 @@ function black_hole_bomb_teleport_init(ent_grenade)
 function black_hole_bomb_trigger_monitor(ent_trigger)
 {
 	ent_trigger endon(#"black_hole_complete");
-	while(1)
+	while(true)
 	{
 		ent_trigger waittill(#"trigger", ent_player);
 		if(isplayer(ent_player) && !ent_player isonground() && (!(isdefined(ent_player.lander) && ent_player.lander)))

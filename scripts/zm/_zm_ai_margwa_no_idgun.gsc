@@ -964,7 +964,7 @@ function function_618bf323()
 {
 	self endon(#"death");
 	/#
-		while(1)
+		while(true)
 		{
 			if(isdefined(self.debughealth) && self.debughealth)
 			{

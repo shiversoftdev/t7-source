@@ -140,7 +140,7 @@ function main()
 function function_1c53c4e1(a_ents)
 {
 	level endon(#"zesn");
-	while(1)
+	while(true)
 	{
 		while(!isdefined(level.localplayers[0]) || !isigcactive(level.localplayers[0].localclientnum))
 		{
@@ -433,7 +433,7 @@ function water_sheeting_toggle(localclientnum, oldval, newval, bnewent, binitial
 function function_da4ab728(localclientnum, var_b81de649)
 {
 	self endon(#"hash_e7cca3ce");
-	while(1)
+	while(true)
 	{
 		var_b81de649 waittill(#"trigger", who);
 		if(who islocalplayer())

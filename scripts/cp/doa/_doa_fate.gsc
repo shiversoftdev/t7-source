@@ -91,6 +91,7 @@ private function function_6162a853(var_26fc4461 = 0)
 	level endon(#"hash_7b036079");
 	time_left = gettime() + level.doa.rules.fate_wait * 1000 + 10000;
 	diff = time_left - gettime();
+	var_4af4d74c = 0;
 	while(diff > 0)
 	{
 		if(diff < 8000 && !var_4af4d74c)
@@ -328,7 +329,7 @@ private function function_271ba816(var_26fc4461 = 0)
 	self.rock thread namespace_1a381543::function_90118d8c("zmb_fate_rock_imp");
 	objective_add(self.id, "active", self.origin);
 	objective_set3d(self.id, 1, "default", "*");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", guy);
 		objective_state(self.id, "done");
@@ -714,7 +715,7 @@ function awardfate(type, rock)
 			level thread function_17fb777b(self, "zombietron_statue_force", 1, &function_c8508847);
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				assert(0);
@@ -1059,7 +1060,7 @@ private function function_5aaa5a64(shield)
 {
 	self endon(#"death");
 	level endon(#"hash_cb54277d");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", guy);
 		if(!isalive(guy))
@@ -1132,7 +1133,7 @@ private function function_60a14daa(boss)
 {
 	self.boss = boss;
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self rotateto(self.angles + vectorscale((0, 1, 0), 180), 2);
 		wait(2);
@@ -1162,6 +1163,7 @@ private function function_b1d23a45(boss)
 	self.maxhealth = self.health;
 	self.takedamage = 1;
 	stage1 = int(self.maxhealth * 0.75);
+	stage2 = int(self.maxhealth * 0.25);
 	while(self.health > 0)
 	{
 		lasthealth = self.health;
@@ -1330,7 +1332,7 @@ private function function_51f0dd2c()
 		self.shields[self.shields.size] = shield;
 		wait(0.2);
 	}
-	while(1)
+	while(true)
 	{
 		self waittill(#"hash_d57cf5a3", org);
 		self thread function_4d69c061(org);
@@ -1350,7 +1352,7 @@ private function function_cb98790d()
 {
 	level endon(#"hash_d1f5acf7");
 	level endon(#"hash_cb54277d");
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_8817f58");
 		foreach(var_9ee69e19, ball in self.shields)
@@ -1482,7 +1484,7 @@ private function function_ae21464b()
 {
 	level endon(#"hash_d1f5acf7");
 	level endon(#"hash_cb54277d");
-	while(1)
+	while(true)
 	{
 		wait(randomintrange(10, 20) - getplayers().size * 1.2);
 		self thread namespace_1a381543::function_90118d8c("zmb_boss_sound_minion_summon");
@@ -1511,7 +1513,8 @@ private function function_5c819284()
 	level endon(#"hash_cb54277d");
 	spawn_set = level.doa.arenas[level.doa.current_arena].name + "_enemy_spawn";
 	level.doa.current_spawners = level.doa.spawners[spawn_set];
-	while(1)
+	level.doa.var_3706f843 = [];
+	while(true)
 	{
 		for(wave = 0; wave < level.doa.spawn_sequence.size; wave++)
 		{

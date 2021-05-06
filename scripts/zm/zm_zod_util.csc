@@ -73,6 +73,7 @@ function player_continuous_rumble(localclientnum, rumble_level, shake_camera = 1
 	self notify(#"stop_rumble_and_shake");
 	self endon(#"disconnect");
 	self endon(#"stop_rumble_and_shake");
+	start_time = gettime();
 	while(gettime() - start_time < 120000)
 	{
 		if(isdefined(self) && self islocalplayer() && isdefined(self))

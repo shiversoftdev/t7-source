@@ -315,7 +315,7 @@ function player_monitor_travel_dist()
 	wait(4);
 	prevpos = self.origin;
 	positionptm = self.origin;
-	while(1)
+	while(true)
 	{
 		wait(waittime);
 		if(self util::isusingremote())
@@ -393,7 +393,8 @@ function player_monitor_wall_run()
 	self notify(#"stop_player_monitor_wall_run");
 	self endon(#"stop_player_monitor_wall_run");
 	self.lastwallrunstarttime = 0;
-	while(1)
+	self.timespentwallrunninginlife = 0;
+	while(true)
 	{
 		notification = self util::waittill_any_return("wallrun_begin", "death", "disconnect", "stop_player_monitor_wall_run");
 		if(notification == "death")
@@ -425,7 +426,8 @@ function player_monitor_swimming()
 	self notify(#"stop_player_monitor_swimming");
 	self endon(#"stop_player_monitor_swimming");
 	self.lastswimmingstarttime = 0;
-	while(1)
+	self.timespentswimminginlife = 0;
+	while(true)
 	{
 		notification = self util::waittill_any_return("swimming_begin", "death", "disconnect", "stop_player_monitor_swimming");
 		if(notification == "death")
@@ -457,7 +459,8 @@ function player_monitor_slide()
 	self notify(#"stop_player_monitor_slide");
 	self endon(#"stop_player_monitor_slide");
 	self.lastslidestarttime = 0;
-	while(1)
+	self.numberofslidesinlife = 0;
+	while(true)
 	{
 		notification = self util::waittill_any_return("slide_begin", "death", "disconnect", "stop_player_monitor_slide");
 		if(notification == "death")
@@ -489,7 +492,8 @@ function player_monitor_doublejump()
 	self notify(#"stop_player_monitor_doublejump");
 	self endon(#"stop_player_monitor_doublejump");
 	self.lastdoublejumpstarttime = 0;
-	while(1)
+	self.numberofdoublejumpsinlife = 0;
+	while(true)
 	{
 		notification = self util::waittill_any_return("doublejump_begin", "death", "disconnect", "stop_player_monitor_doublejump");
 		if(notification == "death")
@@ -521,7 +525,7 @@ function player_monitor_inactivity()
 	self notify(#"player_monitor_inactivity");
 	self endon(#"player_monitor_inactivity");
 	wait(10);
-	while(1)
+	while(true)
 	{
 		if(isdefined(self))
 		{
@@ -1166,7 +1170,7 @@ function spectate_player_watcher()
 	}
 	self.watchingactiveclient = 1;
 	self.waitingforplayerstext = undefined;
-	while(1)
+	while(true)
 	{
 		if(self.pers["team"] != "spectator" || level.gameended)
 		{
@@ -4029,7 +4033,8 @@ function shouldteamkillkick(teamkilldelay)
 function reduceteamkillsovertime()
 {
 	timeperoneteamkillreduction = 20;
-	while(1)
+	reductionpersecond = 1 / timeperoneteamkillreduction;
+	while(true)
 	{
 		if(isalive(self))
 		{

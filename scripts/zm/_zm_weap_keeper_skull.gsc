@@ -125,7 +125,7 @@ function function_3028b9ff()
 function watch_player_death()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"bled_out");
 		if(self flag::get("has_skull"))
@@ -147,7 +147,7 @@ function watch_player_death()
 function function_6b7bd037()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		if(self hasweapon(level.var_c003f5b))
 		{
@@ -177,7 +177,8 @@ function function_2dda41f5()
 	{
 		self flag::wait_till("has_skull");
 	}
-	while(1)
+	var_18e42304 = 1;
+	while(true)
 	{
 		var_e18bd995 = self gadgetpowerget(0);
 		if(var_e18bd995 == 100 && var_18e42304 == 0)
@@ -213,7 +214,7 @@ function function_de235a27()
 	{
 		self flag::wait_till("has_skull");
 	}
-	while(1)
+	while(true)
 	{
 		self util::waittill_attack_button_pressed();
 		if(self function_97d08b97())
@@ -361,6 +362,7 @@ function function_32afe89a(ai_zombie)
 			ai_zombie thread function_f51dbd0a();
 		}
 	}
+	var_9ae6d5f2 = 0;
 	while(self util::attack_button_held() && self function_97d08b97() && !self.var_e1f8edd6 && self.var_118ab24e)
 	{
 		if(isdefined(ai_zombie.var_3940f450) && ai_zombie.var_3940f450)
@@ -481,7 +483,7 @@ function function_e703c25f()
 	{
 		self flag::wait_till("has_skull");
 	}
-	while(1)
+	while(true)
 	{
 		if(self util::ads_button_held())
 		{
@@ -635,7 +637,8 @@ function function_3fca87eb()
 {
 	self endon(#"death");
 	self endon(#"hash_11c32d95");
-	while(1)
+	n_index = randomintrange(1, 7);
+	while(true)
 	{
 		self thread animation::play("ai_zm_dlc2_zombie_pacified_by_skullgun_" + n_index, self);
 		wait(getanimlength("ai_zm_dlc2_zombie_pacified_by_skullgun_" + n_index));
@@ -717,7 +720,7 @@ function function_3f3f64e9(e_prop)
 function function_6a46a0e0()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		if(!self function_97d08b97())
 		{
@@ -770,7 +773,7 @@ function function_6a46a0e0()
 function function_79e34741()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		if(self weaponswitchbuttonpressed())
 		{
@@ -815,7 +818,7 @@ function function_97d08b97()
 function watch_weapon_change()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		if(self weaponswitchbuttonpressed() || self.var_118ab24e < 1)
 		{
@@ -837,7 +840,7 @@ function watch_weapon_change()
 function function_eadaeb18()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_change_complete");
 		self function_e00bc70a();

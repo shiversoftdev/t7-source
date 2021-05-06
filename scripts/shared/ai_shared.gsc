@@ -460,6 +460,7 @@ function shoot_at_target(mode, target, tag, duration, sethealth, ignorefirstshot
 	{
 		if(duration >= 0)
 		{
+			elapsed = 0;
 			while(isdefined(target) && target.health > 0 && elapsed <= duration)
 			{
 				elapsed = elapsed + 0.05;
@@ -752,7 +753,8 @@ function patrol(start_path_node)
 	self.old_goal_radius = self.goalradius;
 	self thread end_patrol_on_enemy_targetting();
 	self.currentgoal = start_path_node;
-	while(1)
+	self.patroller = 1;
+	while(true)
 	{
 		if(isdefined(self.currentgoal.type) && self.currentgoal.type == "Path")
 		{
@@ -852,7 +854,7 @@ function end_patrol_on_enemy_targetting()
 {
 	self endon(#"death");
 	self endon(#"stop_patrolling");
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.enemy) || self.should_stop_patrolling === 1)
 		{

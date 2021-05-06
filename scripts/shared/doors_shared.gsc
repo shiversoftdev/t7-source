@@ -370,7 +370,8 @@ function run_lock_fx()
 	}
 	e_fx = undefined;
 	v_pos = get_hack_pos();
-	while(1)
+	v_angles = get_hack_angles();
+	while(true)
 	{
 		self flag::wait_till("locked");
 		if(isdefined(e_fx))
@@ -421,7 +422,7 @@ function process_hint_trigger_message()
 	{
 		str_hint = "This door is electronically locked";
 	}
-	while(1)
+	while(true)
 	{
 		self.m_e_hint_trigger sethintstring(str_hint);
 		if(isdefined(self.m_s_bundle.door_trigger_at_target) && self.m_s_bundle.door_trigger_at_target)
@@ -855,6 +856,16 @@ function setup_door_scriptbundle(s_door_bundle, s_door_instance)
 	Parameters: 1
 	Flags: Linked
 */
+function door_open_update()
+{
+System.InvalidOperationException: Stack empty.
+   at System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+   at System.Collections.Generic.Stack`1.Pop()
+   at Cerberus.Logic.Decompiler.BuildExpression(ScriptOp startOp) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 1185
+   at Cerberus.Logic.Decompiler.ProcessInstruction(ScriptOp operation, DecompilerBlock block) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 2343
+   at Cerberus.Logic.Decompiler.DecompileBlock(DecompilerBlock decompilerBlock, Int32 tabs) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 998
+   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 222
+/*
 function door_open_update(c_door)
 {
 	str_unlock_method = "default";
@@ -864,57 +875,34 @@ function door_open_update(c_door)
 	}
 	b_auto_close = isdefined(c_door.m_s_bundle.door_closes) && c_door.m_s_bundle.door_closes && (!(isdefined(c_door.m_s_bundle.door_use_trigger) && c_door.m_s_bundle.door_use_trigger));
 	b_hold_open = isdefined(c_door.m_s_bundle.door_use_hold) && c_door.m_s_bundle.door_use_hold;
-	while(1)
-	{
-		c_door.m_e_trigger waittill(#"trigger", e_who);
-		c_door.m_e_trigger_player = e_who;
-		if(!c_door flag::get("open"))
-		{
-			if(!c_door flag::get("locked"))
-			{
-				if(b_hold_open || b_auto_close)
-				{
-					[[ c_door ]]->open();
-					if(b_hold_open)
-					{
-						e_who player_freeze_in_place(1);
-						e_who disableweapons();
-						e_who disableoffhandweapons();
-					}
-					door_wait_until_clear(c_door, e_who);
-					[[ c_door ]]->close();
-					if(b_hold_open)
-					{
-						wait(0.05);
-						c_door flag::wait_till_clear("animating");
-						e_who player_freeze_in_place(0);
-						e_who enableweapons();
-						e_who enableoffhandweapons();
-					}
-				}
-				else if(str_unlock_method == "key")
-				{
-					if(e_who player_has_key("door"))
-					{
-						e_who player_take_key("door");
-						[[ c_door ]]->open();
-					}
-					else
-					{
-						iprintlnbold("You need a key.");
-					}
-				}
-				else
-				{
-					[[ c_door ]]->open();
-				}
-			}
-		}
-		else if(b_manual_close)
-		{
-			[[ c_door ]]->close();
-		}
-	}
+
+*/
+
+	/* ======== */
+
+/* 
+	Stack: 
+*/
+	/* ======== */
+
+/* 
+	Blocks: 
+	Cerberus.Logic.BasicBlock at 0x2728, end at 0x2AF1
+	Cerberus.Logic.IfBlock at 0x2766, end at 0x279E
+	Cerberus.Logic.WhileLoop at 0x28AE, end at 0x2AEA
+	Cerberus.Logic.IfBlock at 0x28E2, end at 0x2AD2
+	Cerberus.Logic.IfBlock at 0x2904, end at 0x2ACE
+	Cerberus.Logic.IfBlock at 0x2924, end at 0x2A3E
+	Cerberus.Logic.IfBlock at 0x2946, end at 0x299A
+	Cerberus.Logic.IfBlock at 0x29C2, end at 0x2A3A
+	Cerberus.Logic.ElseIfBlock at 0x2A3E, end at 0x2ABE
+	Cerberus.Logic.IfBlock at 0x2A4E, end at 0x2A9E
+	Cerberus.Logic.ElseBlock at 0x2A9E, end at 0x2ABA
+	Cerberus.Logic.ElseBlock at 0x2ABE, end at 0x2ACE
+	Cerberus.Logic.ElseIfBlock at 0x2AD2, end at 0x2AEA
+*/
+	/* ======== */
+
 }
 
 /*
@@ -943,7 +931,7 @@ function door_update(c_door)
 	}
 	thread door_open_update(c_door);
 	[[ c_door ]]->update_use_message();
-	while(1)
+	while(true)
 	{
 		if(c_door flag::get("locked"))
 		{
@@ -980,7 +968,8 @@ function door_update(c_door)
 function door_update_lock_scripted(c_door)
 {
 	door_str = c_door.m_str_targetname;
-	while(1)
+	c_door.m_e_trigger.targetname = door_str + "_trig";
+	while(true)
 	{
 		c_door.m_e_trigger waittill(#"unlocked");
 		[[ c_door ]]->unlock();
@@ -1032,7 +1021,7 @@ function trigger_wait_until_clear(c_door)
 	self.ents_in_trigger = 1;
 	str_kill_trigger_notify = "trigger_now_clear";
 	self thread trigger_check_for_ents_touching(str_kill_trigger_notify);
-	while(1)
+	while(true)
 	{
 		time = gettime();
 		if(self.ents_in_trigger == 1)
@@ -1125,7 +1114,7 @@ function trigger_check_for_ents_touching(str_kill_trigger_notify)
 {
 	self endon(#"death");
 	self endon(str_kill_trigger_notify);
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_who);
 		self.ents_in_trigger = 1;
@@ -1144,7 +1133,7 @@ function trigger_check_for_ents_touching(str_kill_trigger_notify)
 function door_debug_line(v_origin)
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		v_start = v_origin;
 		v_end = v_start + vectorscale((0, 0, 1), 1000);
@@ -1213,7 +1202,7 @@ function player_take_key(str_key_type)
 function rotate_key_forever()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self rotateyaw(180, 3);
 		wait(2.5);
@@ -1239,6 +1228,7 @@ function key_process_timeout(n_timeout_sec, e_trigger, e_model)
 	wait(n_timeout_sec - 5);
 	n_stepsize = 0.5;
 	b_on = 1;
+	f = 0;
 	while(f < 5)
 	{
 		if(b_on)
@@ -1296,7 +1286,7 @@ function give_ai_key_internal(n_timeout_sec, str_key_type)
 		level thread key_process_timeout(n_timeout_sec, e_trigger, e_model);
 	}
 	e_trigger endon(#"death");
-	while(1)
+	while(true)
 	{
 		e_trigger waittill(#"trigger", e_who);
 		if(isplayer(e_who))

@@ -231,7 +231,7 @@ function menuautoassign(comingfrommenu)
 							return;
 						}
 					}
-					default
+					default:
 					{
 						assignment = "";
 						if(isdefined(level.teams[team]))

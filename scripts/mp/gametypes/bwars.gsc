@@ -334,7 +334,8 @@ function player_hud_update(names, scores)
 */
 function bubblesort_players()
 {
-	while(1)
+	players = getplayers();
+	while(true)
 	{
 		swapped = 0;
 		for(i = 1; i < players.size; i++)

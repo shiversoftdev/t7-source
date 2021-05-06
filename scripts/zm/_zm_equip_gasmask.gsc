@@ -145,7 +145,7 @@ function gasmask_activation_watcher_thread()
 		ent_num = self.characterindex;
 		self [[level.zombiemode_gasmask_reset_player_model]](ent_num);
 	}
-	while(1)
+	while(true)
 	{
 		str_notify = self util::waittill_any_return("equip_gasmask_activate", "equip_gasmask_deactivate", "disconnect");
 		if(!self zm_equipment::has_player_equipment(level.var_f486078e))
@@ -232,7 +232,7 @@ function function_4933258e()
 	self notify(#"hash_17dade16");
 	self endon(#"hash_17dade16");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"player_given", equipment);
 		if(equipment == level.var_f486078e)
@@ -264,7 +264,7 @@ function function_4933258e()
 function remove_gasmask_on_player_bleedout()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"bled_out");
 		self clientfield::set_player_uimodel("hudItems.showDpadDown_PES", 0);

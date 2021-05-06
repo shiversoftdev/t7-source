@@ -62,7 +62,7 @@ function __init__()
 function updatedvars()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			level.debug_heat_wave_traces = getdvarint("", level.debug_heat_wave_traces);
 			wait(1);

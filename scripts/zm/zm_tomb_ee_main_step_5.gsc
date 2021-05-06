@@ -171,6 +171,7 @@ function zombie_pilot_sound(ai_pilot)
 function pilot_loop_logic(s_start)
 {
 	self endon(#"death");
+	s_goal = s_start;
 	while(isalive(self))
 	{
 		self setgoalpos(s_goal.origin);
@@ -241,7 +242,8 @@ function spawn_quadrotor_pickup(v_origin, v_angles)
 function quadrotor_pickup_think()
 {
 	self endon(#"kill_trigger");
-	while(1)
+	m_quadrotor = getent("quadrotor_pickup", "targetname");
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		player playsound("vox_maxi_drone_upgraded_0");

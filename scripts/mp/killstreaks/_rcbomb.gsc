@@ -345,6 +345,7 @@ function watchdetonation()
 function watchwater()
 {
 	self endon(#"rcbomb_shutdown");
+	inwater = 0;
 	while(!inwater)
 	{
 		wait(0.5);
@@ -445,7 +446,7 @@ function watchhurttriggers()
 {
 	rcbomb = self;
 	rcbomb endon(#"rcbomb_shutdown");
-	while(1)
+	while(true)
 	{
 		rcbomb waittill(#"touch", ent);
 		if(isdefined(ent.classname) && (ent.classname == "trigger_hurt" || ent.classname == "trigger_out_of_bounds"))

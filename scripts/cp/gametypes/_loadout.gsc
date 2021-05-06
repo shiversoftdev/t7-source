@@ -242,6 +242,7 @@ function function_ef129246()
 function create_class_exclusion_list()
 {
 	currentdvar = 0;
+	level.itemexclusions = [];
 	while(getdvarint("item_exclusion_" + currentdvar))
 	{
 		level.itemexclusions[currentdvar] = getdvarint("item_exclusion_" + currentdvar);

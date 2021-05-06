@@ -49,7 +49,7 @@ function function_6dd507bc()
 {
 	self endon(#"death");
 	level endon(#"apothicon_trapped");
-	while(1)
+	while(true)
 	{
 		if(isdefined(level.hostmigrationtimer) && level.hostmigrationtimer)
 		{
@@ -419,7 +419,8 @@ function function_b89b1260()
 	level endon(#"hash_b89b1260");
 	level endon(#"apothicon_trapped");
 	var_217ba6c8 = struct::get("apothicon_approach_tesla", "targetname");
-	while(1)
+	var_329d83b2 = getent("tesla_trap_console", "targetname");
+	while(true)
 	{
 		level waittill(#"hash_864571db");
 		playsoundatposition("evt_apothicon_alarm", (714, 303, 91));
@@ -449,7 +450,7 @@ function function_b89b1260()
 function function_3187e8a6()
 {
 	level endon(#"apothicon_trapped");
-	while(1)
+	while(true)
 	{
 		level scene::play("cin_genesis_apothicon_flightpath", self);
 		level function_1ff56fb0("cin_genesis_apothicon_flightpath");

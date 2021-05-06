@@ -87,7 +87,7 @@ function security_camera_main()
 	level.ai_hendricks thread hendricks_security_camera();
 	level thread setup_security_cameras();
 	level waittill(#"hash_81d6c615");
-	while(1)
+	while(true)
 	{
 		var_d62d9e75 = function_e1a52cb4();
 		if(!var_d62d9e75)
@@ -450,11 +450,13 @@ function function_c41806ee(a_ents, n_index)
 	{
 		return;
 	}
+	var_a668bada = n_index - 1;
 	while(!isdefined(level.var_d658503a) || level.var_d658503a < var_a668bada)
 	{
 		wait(0.05);
 	}
 	a_ents["prisoner"] sethighdetail(1);
+	a_ents["prisoner"].e_streamer = createstreamerhint(a_ents["prisoner"].origin, 1);
 	while(level.var_d658503a <= n_index)
 	{
 		wait(0.05);
@@ -656,7 +658,7 @@ function function_2e16b263(scenename)
 			}
 			break;
 		}
-		default
+		default:
 		{
 			level.var_cc008929 stoploopsound(0.1);
 			level.var_cc008929 stopsounds();
@@ -778,7 +780,7 @@ function function_a4090f73(n_cam_index)
 			level.ai_hendricks dialog::say("hend_we_have_to_find_out_0", 0.5);
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}

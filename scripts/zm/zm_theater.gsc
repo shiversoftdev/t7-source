@@ -558,7 +558,7 @@ function add_powerups_after_round_1()
 {
 	arrayremovevalue(level.zombie_powerup_array, "nuke", 0);
 	arrayremovevalue(level.zombie_powerup_array, "fire_sale", 0);
-	while(1)
+	while(true)
 	{
 		if(level.round_number > 1)
 		{
@@ -916,7 +916,7 @@ function function_27cb39f1()
 function debug_display()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			print3d(self.origin, self.animscript, (1, 0, 0), 1, 0.2, 1);
 			wait(0.05);

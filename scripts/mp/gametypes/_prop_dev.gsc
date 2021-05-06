@@ -130,7 +130,7 @@ function function_6c015e54()
 		function_6edad947("", "");
 		function_6edad947("", "");
 		function_6edad947("", "");
-		while(1)
+		while(true)
 		{
 			if(isdefined(level.prematch_over) && level.prematch_over)
 			{
@@ -555,7 +555,7 @@ function function_d8d922ad()
 {
 	/#
 		self endon(#"hash_bff3e3c5");
-		while(1)
+		while(true)
 		{
 			debugaxis(self.origin, self.angles, 100, 1, 0, 1);
 			box(self.origin, self getmins(), self getmaxs(), self.angles[1], (1, 0, 1), 1, 0, 1);
@@ -578,7 +578,7 @@ function function_18a45f58()
 	/#
 		self endon(#"hash_bff3e3c5");
 		self function_9c8c6fe4(0);
-		while(1)
+		while(true)
 		{
 			msg = self util::waittill_any_return("", "", "", "", "");
 			if(!isdefined(msg))
@@ -624,7 +624,7 @@ function function_6049bca3(val)
 		self endon(#"hash_c1452ba");
 		function_9c8c6fe4(val);
 		wait(0.5);
-		while(1)
+		while(true)
 		{
 			function_9c8c6fe4(val);
 			wait(0.05);
@@ -677,7 +677,7 @@ function function_a24562f8(val)
 		self endon(#"hash_c1452ba");
 		function_8bdc662f(val);
 		wait(0.5);
-		while(1)
+		while(true)
 		{
 			function_8bdc662f(val);
 			wait(0.05);

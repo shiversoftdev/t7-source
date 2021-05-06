@@ -179,7 +179,7 @@ function spider_lair_entrance_webs()
 function function_83953ff7()
 {
 	level endon(#"spider_lair_webs_destroyed");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", damage, attacker, direction_vec, point, type, modelname, tagname, partname, weapon, idflags);
 		if(mirg2000::is_wonder_weapon(weapon))
@@ -478,7 +478,8 @@ function function_7b31e716()
 function function_e949d1d7()
 {
 	level endon(#"hash_2dc546da");
-	while(1)
+	var_297c6282 = getent("spider_queen_start_fight", "targetname");
+	while(true)
 	{
 		var_c0d42e55 = [];
 		foreach(var_c237ba29, player in level.players)
@@ -615,7 +616,8 @@ function function_f0c6c167()
 function function_a38800f6()
 {
 	self endon(#"hash_aaf78b5");
-	while(1)
+	var_297c6282 = getent("spider_queen_start_fight", "targetname");
+	while(true)
 	{
 		foreach(var_a97b93d8, player in level.players)
 		{
@@ -658,7 +660,7 @@ function function_5a50e7f()
 {
 	level endon(#"hash_2dc546da");
 	self setcandamage(1);
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", n_damage, attacker, direction_vec, point, type, modelname, tagname, partname, weapon, idflags);
 		if(partname == "tag_mouth_hit")
@@ -750,7 +752,7 @@ function function_291b262e(var_a857d88e, var_27730eaa)
 	array::add(var_90035165, "cin_t7_ai_zm_dlc2_spider_queen_arm_attack_phase_c_3_1_2_4");
 	array::add(var_90035165, "cin_t7_ai_zm_dlc2_spider_queen_arm_attack_phase_c_4_1_3_2");
 	array::add(var_90035165, "cin_t7_ai_zm_dlc2_spider_queen_arm_attack_phase_c_4_2_1_3");
-	while(1)
+	while(true)
 	{
 		level flag::wait_till("spider_queen_perform_leg_attack");
 		level scene::play("cin_t7_ai_zm_dlc2_spider_queen_arm_attack_intro", self);
@@ -791,7 +793,7 @@ function function_291b262e(var_a857d88e, var_27730eaa)
 function function_9d6e8018()
 {
 	level endon(#"hash_2dc546da");
-	while(1)
+	while(true)
 	{
 		level waittill(self.script_noteworthy + "_hitground");
 		self thread function_9d331ff6();
@@ -850,7 +852,7 @@ function function_e2b5f12f()
 	array::add(level.var_1bf7f6a1, "cin_t7_ai_zm_dlc2_spider_queen_attack_spit_straight");
 	array::add(level.var_1bf7f6a1, "cin_t7_ai_zm_dlc2_spider_queen_attack_spit_left");
 	array::add(level.var_1bf7f6a1, "cin_t7_ai_zm_dlc2_spider_queen_attack_spit_right");
-	while(1)
+	while(true)
 	{
 		level flag::wait_till("spider_queen_perform_spit_attack");
 		level flag::set("spider_queen_weak_spot_exposed");
@@ -896,7 +898,7 @@ function function_29454161(var_e2556d9e)
 function function_1b11ad0()
 {
 	level endon(#"hash_2dc546da");
-	while(1)
+	while(true)
 	{
 		var_4c01b049 = 8;
 		level waittill(self.script_noteworthy + "_spit");
@@ -925,7 +927,8 @@ function function_9ee2204c(var_85683d05)
 	level endon(#"hash_2dc546da");
 	s_left = struct::get("spider_spit_org_left");
 	s_center = struct::get("spider_spit_org_center");
-	while(1)
+	s_right = struct::get("spider_spit_org_right");
+	while(true)
 	{
 		level waittill(self.script_noteworthy + "_spit");
 		if(self.script_noteworthy == "left")
@@ -1019,7 +1022,7 @@ function function_b6ea5d0d()
 	level endon(#"hash_2dc546da");
 	level endon(#"hash_c69c8ddc");
 	level thread function_9a7e7358();
-	while(1)
+	while(true)
 	{
 		level flag::wait_till("spider_queen_spawn_babies");
 		level scene::play("cin_t7_ai_zm_dlc2_spider_queen_baby_drop_intro", self);
@@ -1084,7 +1087,8 @@ function function_b6ea5d0d()
 function function_9a7e7358()
 {
 	level endon(#"hash_2dc546da");
-	while(1)
+	level.var_e18ab0f2 = 0;
+	while(true)
 	{
 		level waittill(#"hash_7e0a837a");
 		level.var_e18ab0f2--;
@@ -1104,7 +1108,7 @@ function function_dd902934()
 {
 	level endon(#"spider_baby_round_timeout");
 	level endon(#"spider_baby_round_done");
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_7e0a837a");
 		if(level flag::get("spider_baby_hit_react"))
@@ -1130,6 +1134,7 @@ function function_fb907799(n_count)
 {
 	level endon(#"spider_baby_round_timeout");
 	level endon(#"hash_c69c8ddc");
+	var_d67f0d95 = 0;
 	while(var_d67f0d95 != n_count)
 	{
 		level waittill(#"hash_7e0a837a");
@@ -1259,7 +1264,7 @@ function function_2ff7183()
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		trigger waittill(#"trigger", who);
 		if(isdefined(who) && isplayer(who))
@@ -1427,7 +1432,7 @@ function function_bd62f75b()
 	/#
 		level endon(#"hash_2dc546da");
 		level endon(#"hash_9a8b82c3");
-		while(1)
+		while(true)
 		{
 			function_f033c56a();
 		}
@@ -1448,7 +1453,7 @@ function function_11d7e2b1()
 	/#
 		level endon(#"hash_2dc546da");
 		level endon(#"hash_9a8b82c3");
-		while(1)
+		while(true)
 		{
 			function_3f6b6cb4();
 		}
@@ -1469,7 +1474,7 @@ function function_31e22463()
 	/#
 		level endon(#"hash_2dc546da");
 		level endon(#"hash_9a8b82c3");
-		while(1)
+		while(true)
 		{
 			function_57b6770a();
 		}
@@ -1490,7 +1495,7 @@ function function_14f05ea8()
 	/#
 		level endon(#"hash_2dc546da");
 		level endon(#"hash_9a8b82c3");
-		while(1)
+		while(true)
 		{
 			function_f033c56a();
 			function_3f6b6cb4();
@@ -1712,7 +1717,7 @@ function function_65f4b50(player)
 */
 function function_3039a61d()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(zm_utility::is_player_valid(player))

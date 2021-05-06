@@ -83,7 +83,7 @@ function monitor_raygun_mark3(n_local_client)
 {
 	player = getlocalplayer(n_local_client);
 	player endon(#"death");
-	while(1)
+	while(true)
 	{
 		player waittill(#"weapon_change", weapon);
 		if(is_beam_raygun(weapon))
@@ -113,7 +113,7 @@ function glow_monitor(n_local_client)
 	self notify(#"glow_monitor");
 	self endon(#"glow_monitor");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill_notetrack("clamps_open");
 		self mapshaderconstant(n_local_client, 0, "scriptVector2", 0, 0, 0, 0);
@@ -135,7 +135,7 @@ function waittill_notetrack(str_notetrack)
 {
 	self endon(#"glow_monitor");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"notetrack", str_note);
 		if(str_note == str_notetrack)
@@ -285,6 +285,7 @@ function ai_disintegrate(n_local_client, n_old, n_new, b_new_ent, b_initial_snap
 	self endon(#"entity_shutdown");
 	self duplicate_render::set_dr_flag("dissolve_on", n_new);
 	self duplicate_render::update_dr_filters(n_local_client);
+	self.n_dissolve = 1;
 	while(isdefined(self) && self.n_dissolve > 0)
 	{
 		self mapshaderconstant(n_local_client, 0, "scriptVector0", self.n_dissolve);

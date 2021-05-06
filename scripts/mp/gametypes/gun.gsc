@@ -584,7 +584,7 @@ function infiniteammo()
 {
 	self endon(#"death");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		wait(0.1);
 		weapon = self getcurrentweapon();

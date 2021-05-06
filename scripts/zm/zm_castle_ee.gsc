@@ -160,6 +160,7 @@ function dempsey_rocket_twinkle()
 	level waittill(#"hash_59e5a3dd");
 	wait(60);
 	var_effa4ac5 = struct::get("dempsey_rocket_twinkle");
+	var_bfa03783 = fx::play("dempsey_rocket_twinkle", var_effa4ac5.origin, var_effa4ac5.angles, "delete_fx", 0, undefined, 1);
 	while(!level flag::get("dimension_set"))
 	{
 		var_bcfda8b9 = struct::get(var_effa4ac5.target, "targetname");
@@ -769,7 +770,7 @@ function function_d1963bbd()
 {
 	self endon(#"death");
 	self endon(#"entityshutdown");
-	while(1)
+	while(true)
 	{
 		self.knockdown = 0;
 		wait(0.2);
@@ -858,7 +859,7 @@ function function_6fc08711()
 			var_25c1c42e = "wolf";
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}
@@ -900,7 +901,7 @@ function function_ac7d9299()
 			str_exploder = "fxexp_633";
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}
@@ -980,6 +981,7 @@ function function_4ce3eea5(var_bda73276)
 		if(var_bda73276 >= n_players)
 		{
 			n_index = var_bda73276 - n_players;
+			var_61bcec7 = level.a_elements[n_index];
 			while(!isdefined(var_61bcec7))
 			{
 				n_index = n_index - n_players;
@@ -1115,6 +1117,7 @@ function function_6ff05666()
 {
 	self endon(#"death");
 	var_747532f4 = getent("keeper_archon_ai", "targetname");
+	str_player_zone = self zm_zonemgr::get_player_zone();
 	while(!zm_utility::is_player_valid(self) || str_player_zone !== "zone_undercroft")
 	{
 		wait(0.15);
@@ -1164,7 +1167,8 @@ function function_99ac27a()
 	var_4a9aea8a = getent("cs_glow_" + level.var_f1b0baba, "targetname");
 	var_4a9aea8a show();
 	level thread function_6bfbde41();
-	while(1)
+	var_dd155127 = function_f507c094();
+	while(true)
 	{
 		if(function_1f8ca830())
 		{
@@ -1213,7 +1217,7 @@ function function_4400f882()
 			var_dd155127 = 18;
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}
@@ -1258,7 +1262,7 @@ function function_f507c094()
 function function_6bfbde41()
 {
 	level endon(#"next_channeling_stone");
-	while(1)
+	while(true)
 	{
 		level.var_f91118d9 = undefined;
 		level waittill(#"end_of_round");
@@ -1306,7 +1310,7 @@ function function_812faaaf()
 {
 	self endon(#"death");
 	level endon(#"next_channeling_stone");
-	while(1)
+	while(true)
 	{
 		self waittill(#"missile_fire", var_3fee16b8, var_e1041201);
 		if(zm_utility::is_player_valid(self) && (isdefined(self.var_507ad4a9) && self.var_507ad4a9))
@@ -1355,6 +1359,7 @@ function function_4f8445d7(n_zone)
 	var_87367d4f = array::random(var_1acc807d);
 	var_fcfee273 = "lgt_channel_stones_" + n_zone + a_circles[var_d139aee0];
 	exploder::exploder(var_fcfee273);
+	var_bffe8a31 = 0;
 	while(!level flag::get("next_channeling_stone"))
 	{
 		var_470f6bc3 = 0;
@@ -1450,6 +1455,7 @@ function function_c460669e()
 	level flag::wait_till("ee_golden_key");
 	var_e7113aa6 = 0;
 	level.var_cf5a713 = undefined;
+	var_18b93ed0 = struct::get_array("golden_key_slot");
 	while(var_e7113aa6 < 2)
 	{
 		var_18b93ed0[0] thread function_bb8e762c(var_18b93ed0[1]);
@@ -1487,6 +1493,7 @@ function function_c460669e()
 */
 function function_6cd00f33()
 {
+	var_37c17be6 = undefined;
 	while(!isdefined(var_37c17be6))
 	{
 		wait(0.5);
@@ -1513,7 +1520,7 @@ function function_c7c38164(str_endon = undefined)
 	{
 		self endon(str_endon);
 	}
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", n_amount, e_attacker);
 		if(isplayer(e_attacker))
@@ -1647,7 +1654,8 @@ function function_35c1d14d()
 {
 	self endon(#"death");
 	level endon(#"ee_outro");
-	while(1)
+	var_6326f93a = getent("cryo_chamber_shock_volume", "targetname");
+	while(true)
 	{
 		if(self istouching(var_6326f93a))
 		{
@@ -1702,7 +1710,7 @@ function function_19abb192(var_e7113aa6)
 			var_b5aa6f14 = 8;
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}
@@ -1769,6 +1777,7 @@ function function_15752140(var_b5aa6f14)
 	level waittill(#"hash_706f7f9a");
 	level thread function_fb090902(1);
 	var_1a972685 = spawnstruct();
+	level.var_521b0bd1 = 0;
 	while(!level flag::get("end_simon"))
 	{
 		var_2fe972c1 = array::random(var_c5ea7ad8);
@@ -1868,7 +1877,7 @@ function function_b76d0c45(var_9ed14cca, var_2fe972c1, var_8d53d8ef)
 	var_4d74106b = getent("symbols_" + level.var_cf5a713.script_noteworthy, "targetname");
 	var_4d74106b hidepart(var_2fe972c1);
 	level notify(#"hash_706f7f9a");
-	while(1)
+	while(true)
 	{
 		var_9ed14cca waittill(#"trigger_activated");
 		if(!level flag::get("simon_press_check"))
@@ -2005,7 +2014,8 @@ function function_1ab64038()
 {
 	level endon(#"dimension_set");
 	var_cf2f0df8 = struct::get("ee_lab_fuse");
-	while(1)
+	var_7698e9a4 = getent("fuse_box", "targetname");
+	while(true)
 	{
 		var_7698e9a4 hidepart("j_chip01");
 		var_7698e9a4 hidepart("j_chip02");
@@ -2050,7 +2060,7 @@ function function_71568f8()
 	var_367b15e7 rotatepitch(-180, 0.25);
 	level flag::wait_till("ee_fuse_placed");
 	var_367b15e7 zm_castle_util::create_unitrigger(undefined, 32);
-	while(1)
+	while(true)
 	{
 		while(!level flag::get("switch_to_death_ray"))
 		{
@@ -2088,6 +2098,7 @@ function function_71568f8()
 */
 function function_d2c78092()
 {
+	var_c5ea7ad8 = array(1, 2, 3, 4);
 	while(!level flag::get("ee_safe_open"))
 	{
 		level flag::wait_till("ee_fuse_placed");
@@ -2200,7 +2211,8 @@ function function_96ca12f5(var_2bfe2eca)
 {
 	level endon(#"hash_a126360f");
 	var_6589e15e = getent("symbols_lower_tower", "targetname");
-	while(1)
+	var_d665b72a = getent("symbols_launch_platform", "targetname");
+	while(true)
 	{
 		var_2bfe2eca waittill(#"trigger_activated");
 		playsoundatposition("zmb_ee_simonsays_button", var_2bfe2eca.origin);
@@ -2541,6 +2553,7 @@ function function_821a61ed()
 function function_ca73b878(var_6ec25e68, str_zone)
 {
 	self endon(#"death");
+	var_77b9bd02 = 0;
 	while(isdefined(level.var_758b41e) && level.var_758b41e)
 	{
 		str_player_zone = self zm_zonemgr::get_player_zone();
@@ -2900,6 +2913,7 @@ function function_3fade785(var_6cbdc65)
 	level flag::wait_till("spawn_zombies");
 	for(i = 0; i < var_6cbdc65.size; i++)
 	{
+		e_target = array::random(level.players);
 		while(!zm_utility::is_player_valid(e_target))
 		{
 			wait(0.05);
@@ -2984,6 +2998,7 @@ function function_fb090902(var_f3afc16d)
 	level notify(#"hash_dbc0b10c");
 	level endon(#"hash_dbc0b10c");
 	level.var_cc2ea6e8 = 1;
+	var_fe586166 = 0;
 	while(isdefined(level.var_cc2ea6e8) && level.var_cc2ea6e8)
 	{
 		if(function_dd1b044(var_f3afc16d))
@@ -3073,7 +3088,8 @@ function function_e5803575()
 {
 	self endon(#"death");
 	v_start_pos = self.origin;
-	while(1)
+	var_20a609dc = 0;
+	while(true)
 	{
 		wait(5);
 		if(v_start_pos === self.origin)
@@ -3307,7 +3323,7 @@ function function_ef5eaa6e()
 		level waittill(#"start_zombie_round_logic");
 		var_1bdfdb3b = array("", "", "", "");
 		level flag::wait_till_any(var_1bdfdb3b);
-		while(1)
+		while(true)
 		{
 			if(getdvarint("") == 1 && isdefined(level.var_a0ef3c5e) && level.var_a0ef3c5e.var_ebeea021)
 			{
@@ -3408,7 +3424,7 @@ function function_f62f3c89(n_val)
 function function_dd0c3214()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			level.var_b5231dfb = getdvarint("");
 			wait(0.15);
@@ -3428,7 +3444,7 @@ function function_dd0c3214()
 function function_b38b0751()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			if(getdvarint("") == 1)
 			{
@@ -3496,7 +3512,7 @@ function setup_devgui_func(str_devgui_path, str_dvar, n_value, func, n_base_valu
 		}
 		setdvar(str_dvar, n_base_value);
 		adddebugcommand("" + str_devgui_path + "" + str_dvar + "" + n_value + "");
-		while(1)
+		while(true)
 		{
 			n_dvar = getdvarint(str_dvar);
 			if(n_dvar > n_base_value)

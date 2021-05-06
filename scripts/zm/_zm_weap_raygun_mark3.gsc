@@ -141,7 +141,7 @@ function raygun_vortex_reposition(v_impact_origin)
 function watch_raygun_impact()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"projectile_impact", w_weapon, v_pos, n_radius, e_projectile, v_normal);
 		v_pos_final = raygun_vortex_reposition(v_pos + v_normal * 32);
@@ -300,7 +300,7 @@ function wait_for_beam_damage()
 {
 	self endon(#"death");
 	self playloopsound("wpn_mk3_orb_loop");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", n_damage, e_attacker, v_direction, v_point, str_means_of_death, str_tag_name, str_model_name, str_part_name, w_weapon);
 		if(is_beam_raygun(w_weapon))

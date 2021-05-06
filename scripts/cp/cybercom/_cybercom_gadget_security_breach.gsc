@@ -681,7 +681,8 @@ private function _anchor_to_location(player, anchor)
 	player waittill(#"transition_done");
 	wait(0.1);
 	maxstatic = 0.95;
-	while(1)
+	lastoutofrangewarningvalue = undefined;
+	while(true)
 	{
 		distcheck = 1;
 		losecontactdistsq = getdvarint("scr_security_breach_lose_contact_distanceSQ", getdvarint("scr_security_breach_lose_contact_distance", 1200) * getdvarint("scr_security_breach_lose_contact_distance", 1200));
@@ -975,7 +976,7 @@ function setusingremote(remotename)
 */
 function function_43b801ea(onoff, entnum)
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"clonedentity", clone, vehentnum);
 		if(vehentnum == entnum)

@@ -213,7 +213,7 @@ function get_gib_ref(direction)
 				gib_ref = get_random(refs);
 				break;
 			}
-			default
+			default:
 			{
 				refs[refs.size] = "right_arm";
 				refs[refs.size] = "left_arm";
@@ -302,7 +302,7 @@ function do_gib()
 		{
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				assertmsg("" + self.a.gib_ref + "");

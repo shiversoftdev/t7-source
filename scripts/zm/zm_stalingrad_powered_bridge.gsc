@@ -104,7 +104,7 @@ function function_87d1b410(e_player)
 */
 function function_5156e4d8()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_player);
 		if(!level flag::get("bridge_in_use"))
@@ -240,6 +240,7 @@ function function_40ac3c12(e_player)
 	array::run_all(var_da999e54, &hide);
 	level thread exploder::exploder("bridge_lights_exploder");
 	var_fa30b172 = getent("bridge_left", "targetname");
+	var_c83a1961 = getent("bridge_right", "targetname");
 	while(!level flag::get("bridge_jitter_stop"))
 	{
 		var_fa30b172 movez(2 * -1, 0.05);

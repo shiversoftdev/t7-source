@@ -114,7 +114,7 @@ function tesla_coil_activate()
 */
 function function_66bab678()
 {
-	while(1)
+	while(true)
 	{
 		level flag::wait_till("tesla_coil_on");
 		self playsound("zmb_deathray_on");
@@ -137,7 +137,8 @@ function function_66bab678()
 function function_40bac98d()
 {
 	level thread function_79ce76bb();
-	while(1)
+	var_95e2b9fb = getent("tesla_coil_panel", "targetname");
+	while(true)
 	{
 		var_95e2b9fb clientfield::set("death_ray_status_light", 1);
 		level flag::wait_till("tesla_coil_on");
@@ -224,7 +225,7 @@ function function_1b068db6(player)
 */
 function function_3d3feaa2()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_who);
 		self setinvisibletoall();
@@ -296,6 +297,7 @@ function function_65680b09(player)
 	n_total_time = 0;
 	var_c998e88a = 0;
 	self._trap_type = "death_ray";
+	self.activated_by_player = player;
 	while(n_total_time < 15)
 	{
 		if(var_c998e88a > 0)
@@ -426,6 +428,7 @@ function function_383d6ca4(var_9ffdb9e2, var_2c11866b)
 			return;
 		}
 	#/
+	n_damage = self.maxhealth / 4;
 	while(zm_utility::is_player_valid(self) && self function_55b881b7(var_2c11866b))
 	{
 		n_cur_time = gettime();
@@ -585,6 +588,7 @@ function function_41ecbdf9()
 {
 	self endon(#"death");
 	self.var_bce6e774 = 1;
+	self.zombie_tesla_hit = 1;
 	while(isdefined(self.var_bce6e774) && self.var_bce6e774)
 	{
 		if(!self.zombie_tesla_hit)
@@ -663,6 +667,7 @@ function function_90df19()
 function debug_line(v_start, v_end)
 {
 	/#
+		n_timer = 0;
 		while(n_timer < 10)
 		{
 			line(v_start, v_end, (1, 0, 0));

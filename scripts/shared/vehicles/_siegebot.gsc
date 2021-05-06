@@ -192,7 +192,7 @@ function state_death_update(params)
 	self vehicle_death::set_death_model(self.deathmodel, self.modelswapdelay);
 	self vehicle::do_death_dynents();
 	self vehicle_death::death_radius_damage();
-	self waittill(#"hash_fcd109c7");
+	self waittill(#"bodyfall large");
 	self radiusdamage(self.origin + vectorscale((0, 0, 1), 10), self.radius * 0.8, 150, 60, self, "MOD_CRUSH");
 	vehicle_ai::waittill_asm_complete("death@stationary", 3);
 	self thread vehicle_death::cleanup();
@@ -230,7 +230,8 @@ function siegebot_kill_on_tilting()
 {
 	self endon(#"death");
 	self endon(#"exit_vehicle");
-	while(1)
+	tilecount = 0;
+	while(true)
 	{
 		selfup = anglestoup(self.angles);
 		worldup = (0, 0, 1);
@@ -268,7 +269,7 @@ function siegebot_player_fireupdate()
 	firetime = weapon.firetime;
 	driver = self getseatoccupant(0);
 	self thread siegebot_player_aimupdate();
-	while(1)
+	while(true)
 	{
 		if(driver attackbuttonpressed())
 		{
@@ -295,7 +296,7 @@ function siegebot_player_aimupdate()
 {
 	self endon(#"death");
 	self endon(#"exit_vehicle");
-	while(1)
+	while(true)
 	{
 		self setgunnertargetvec(self getgunnertargetvec(0), 1);
 		wait(0.05);
@@ -437,7 +438,7 @@ function state_unaware_update(params)
 	self setturrettargetrelativeangles(vectorscale((0, 1, 0), 90), 1);
 	self setturrettargetrelativeangles(vectorscale((0, 1, 0), 90), 2);
 	self thread movement_thread_unaware();
-	while(1)
+	while(true)
 	{
 		self vehicle_ai::evaluate_connections();
 		wait(1);
@@ -459,7 +460,7 @@ function movement_thread_unaware()
 	self endon(#"change_state");
 	self notify(#"end_movement_thread");
 	self endon(#"end_movement_thread");
-	while(1)
+	while(true)
 	{
 		self.current_pathto_pos = self getnextmoveposition_unaware();
 		foundpath = self setvehgoalpos(self.current_pathto_pos, 0, 1);
@@ -732,7 +733,7 @@ function state_jump_update(params)
 	self vehicle::impact_fx(self.settings.startupfx1);
 	self waittill(#"leave_ground");
 	self vehicle::impact_fx(self.settings.takeofffx1);
-	while(1)
+	while(true)
 	{
 		distancetogoal = distance2d(self.jump.linkent.origin, goal);
 		antigravityscaleup = 1;
@@ -984,7 +985,7 @@ function path_update_interrupt()
 	old_origin = self.origin;
 	move_dist = 300;
 	wait(1.5);
-	while(1)
+	while(true)
 	{
 		self setmaxspeedscale(1);
 		self setmaxaccelerationscale(1);
@@ -1079,7 +1080,7 @@ function movement_thread()
 	self endon(#"change_state");
 	self notify(#"end_movement_thread");
 	self endon(#"end_movement_thread");
-	while(1)
+	while(true)
 	{
 		self.current_pathto_pos = self getnextmoveposition_tactical();
 		if(self.vehicletype === "spawner_enemy_boss_siegebot_zombietron")
@@ -1114,6 +1115,7 @@ function movement_thread()
 			}
 		}
 		wait(1);
+		startadditionalwaiting = gettime();
 		while(isdefined(self.enemy) && self vehcansee(self.enemy) && vehicle_ai::timesince(startadditionalwaiting) < 1.5)
 		{
 			wait(0.4);
@@ -1163,6 +1165,7 @@ function face_target(position, targetanglediff = 30)
 	self setlookatorigin(position);
 	self setturrettargetvec(position);
 	self locomotion_start();
+	angleadjustingstart = gettime();
 	while(anglediff > targetanglediff && vehicle_ai::timesince(angleadjustingstart) < 4)
 	{
 		anglediff = absangleclamp180(self.angles[1] - goalangles[1]);
@@ -1187,6 +1190,7 @@ function scan()
 {
 	angles = self gettagangles("tag_barrel");
 	angles = (0, angles[1], 0);
+	rotate = 360;
 	while(rotate > 0)
 	{
 		angles = angles + vectorscale((0, 1, 0), 30);
@@ -1229,7 +1233,7 @@ function attack_thread_machinegun()
 	self endon(#"end_machinegun_attack_thread");
 	self.turretrotscale = 1 * self.difficulty_scale_up;
 	spinning = 0;
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.enemy) && self vehcansee(self.enemy))
 		{
@@ -1303,7 +1307,7 @@ function attack_thread_rocket()
 	self notify(#"end_rocket_attack_thread");
 	self endon(#"end_rocket_attack_thread");
 	vehicle_ai::cooldown("rocket", 3);
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.enemy) && self vehseenrecently(self.enemy, 3) && vehicle_ai::iscooldownready("rocket", 1.5))
 		{

@@ -597,7 +597,7 @@ function function_d06c7b0a(player)
 */
 function function_f270a7f6()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(isdefined(self.stub.usable) && self.stub.usable)
@@ -689,6 +689,7 @@ function trigger_monitor_visibility(name, whenvisible)
 	level flagsys::wait_till("start_zombie_round_logic");
 	self setvisibletoall();
 	pid = 0;
+	self.is_unlocked = 1;
 	while(isdefined(self))
 	{
 		players = level.players;

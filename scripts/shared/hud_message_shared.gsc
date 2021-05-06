@@ -496,6 +496,7 @@ function shownotifymessage(notifydata, duration)
 */
 function waitrequirevisibility(waittime)
 {
+	interval = 0.05;
 	while(!self canreadtext())
 	{
 		wait(interval);
@@ -749,6 +750,7 @@ function clearshoutcasterwaitingmessage()
 function waittillnotifiesdone()
 {
 	pendingnotifies = 1;
+	timewaited = 0;
 	while(pendingnotifies && timewaited < 12)
 	{
 		pendingnotifies = 0;

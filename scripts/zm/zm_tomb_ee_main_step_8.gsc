@@ -120,7 +120,7 @@ function exit_stage(success)
 */
 function waittill_player_activates()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		level flag::set("ee_samantha_released");

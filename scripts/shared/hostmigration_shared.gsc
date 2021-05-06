@@ -258,6 +258,7 @@ function hostmigrationtimerthink_internal()
 {
 	level endon(#"host_migration_begin");
 	level endon(#"host_migration_end");
+	self.hostmigrationcontrolsfrozen = 0;
 	while(!isalive(self))
 	{
 		self waittill(#"spawned");
@@ -345,6 +346,7 @@ function waitlongdurationwithhostmigrationpause(duration)
 		assert(duration > 0);
 	#/
 	starttime = gettime();
+	endtime = gettime() + duration * 1000;
 	while(gettime() < endtime)
 	{
 		waittillhostmigrationstarts(endtime - gettime() / 1000);
@@ -384,6 +386,7 @@ function waitlongdurationwithhostmigrationpauseemp(duration)
 	#/
 	starttime = gettime();
 	empendtime = gettime() + duration * 1000;
+	level.empendtime = empendtime;
 	while(gettime() < empendtime)
 	{
 		waittillhostmigrationstarts(empendtime - gettime() / 1000);
@@ -426,6 +429,7 @@ function waitlongdurationwithgameendtimeupdate(duration)
 		assert(duration > 0);
 	#/
 	starttime = gettime();
+	endtime = gettime() + duration * 1000;
 	while(gettime() < endtime)
 	{
 		waittillhostmigrationstarts(endtime - gettime() / 1000);
@@ -464,7 +468,8 @@ function migrationawarewait(durationms)
 {
 	waittillhostmigrationdone();
 	endtime = gettime() + durationms;
-	while(1)
+	timeremaining = durationms;
+	while(true)
 	{
 		event = level util::waittill_level_any_timeout(timeremaining / 1000, self, "game_ended", "host_migration_begin");
 		if(!isdefined(event))

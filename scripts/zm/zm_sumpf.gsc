@@ -224,7 +224,8 @@ function function_5b94e922()
 {
 	level endon(#"end_game");
 	var_6c4e714 = struct::get_array("hanging_dead_guy_force", "targetname");
-	while(1)
+	n_index = 0;
+	while(true)
 	{
 		while(!(isdefined(zm_zonemgr::any_player_in_zone("center_building_upstairs")) && zm_zonemgr::any_player_in_zone("center_building_upstairs")))
 		{
@@ -306,7 +307,7 @@ function function_39a5be7e()
 */
 function function_c283498()
 {
-	while(1)
+	while(true)
 	{
 		level flag::wait_till("dog_round");
 		level clientfield::set("SUMPF_VISIONSET_DOGS", 1);
@@ -965,7 +966,7 @@ function meteor_trigger()
 	/#
 		level thread function_620401c0((11260.5, -2091, -634), "", dmgtrig, "", 3);
 	#/
-	while(1)
+	while(true)
 	{
 		dmgtrig waittill(#"trigger", player);
 		if(distancesquared(player.origin, dmgtrig.origin) < 100000000)
@@ -1056,7 +1057,7 @@ function function_920754d(cmd)
 				function_c54ccb33();
 				break;
 			}
-			default
+			default:
 			{
 				break;
 			}
@@ -1151,7 +1152,7 @@ function function_27cb39f1()
 function debug_display()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			print3d(self.origin, self.animscript, (1, 0, 0), 1, 0.2, 1);
 			wait(0.05);
@@ -1177,7 +1178,8 @@ function function_620401c0(v_org, str_msg, var_5d64a595, str_ender, n_scale)
 		}
 		var_5d64a595 endon(str_ender);
 		level thread function_9a889da5(str_msg, var_5d64a595, str_ender);
-		while(1)
+		var_ded2b0d1 = v_org - vectorscale((0, 0, 1), 16);
+		while(true)
 		{
 			print3d(var_ded2b0d1, "", vectorscale((0, 1, 0), 255), 1, n_scale, 1);
 			wait(0.1);
@@ -1242,7 +1244,7 @@ function function_d166ac07()
 */
 function function_4bb6626e()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", damage, attacker, dir, loc, str_type, model, tag, part, weapon, flags);
 		if(!isplayer(attacker))

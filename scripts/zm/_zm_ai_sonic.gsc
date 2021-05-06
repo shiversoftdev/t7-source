@@ -179,7 +179,7 @@ function function_1ebbce9b()
 function function_1249f13c()
 {
 	level waittill(#"start_of_round");
-	while(1)
+	while(true)
 	{
 		if(function_89ce0aca())
 		{
@@ -412,7 +412,7 @@ function _zombie_death_watch()
 function _zombie_ambient_sounds()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 	}
 }
@@ -606,7 +606,8 @@ function _player_screamattackwatch(sonic_zombie)
 	self endon(#"death");
 	self endon(#"scream_watch_done");
 	sonic_zombie endon(#"death");
-	while(1)
+	self.screamattackblur = 0;
+	while(true)
 	{
 		if(self _player_in_blur_area(sonic_zombie))
 		{

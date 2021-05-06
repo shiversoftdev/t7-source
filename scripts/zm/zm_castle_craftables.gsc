@@ -141,7 +141,7 @@ function function_38b275a8(var_d97c08b2)
 {
 	self endon(#"hash_92009fcb");
 	self function_9980920d(var_d97c08b2);
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_b650259c", v_pos);
 		self function_2742ffd4(var_d97c08b2, 0, v_pos);
@@ -177,7 +177,7 @@ function function_1e020746(var_d97c08b2)
 {
 	self endon(#"hash_92009fcb");
 	self function_9980920d(var_d97c08b2);
-	while(1)
+	while(true)
 	{
 		level flag::wait_till("tesla_coil_on");
 		level flag::wait_till_clear("tesla_coil_on");
@@ -201,6 +201,7 @@ function function_31bdb575(var_6aeefdcb)
 {
 	var_6aeefdcb endon(#"hash_92009fcb");
 	var_6aeefdcb endon(#"hash_750017bb");
+	n_distance_sq = 16384;
 	while(isdefined(self) && isdefined(var_6aeefdcb.model))
 	{
 		var_317739a1 = distancesquared(self.origin, var_6aeefdcb.model.origin);
@@ -312,6 +313,7 @@ function function_bf54e556(var_d97c08b2, var_85a409cc)
 {
 	var_85a409cc playsound("evt_tram_lever");
 	exploder::exploder("lgt_gs_console_red_0");
+	var_d5793a57 = getent("spike_quest_wall_door", "targetname");
 	while(!level flag::get("gravityspike_part_guards_found"))
 	{
 		level flag::wait_till("rocket_firing");
@@ -423,6 +425,7 @@ function function_cecf7412(var_d97c08b2, var_309c2973)
 function function_ff4c7ead(str_exploder)
 {
 	n_start_time = gettime();
+	n_total_time = 0;
 	while(n_total_time < 11)
 	{
 		exploder::exploder(str_exploder);
@@ -491,7 +494,7 @@ function function_f387f091()
 {
 	level endon(#"a10_switch_activated");
 	level endon(#"open_a10_doors");
-	while(1)
+	while(true)
 	{
 		n_round_zombies = zombie_utility::get_current_zombie_count();
 		var_bf9f0aee = 0;
@@ -821,7 +824,7 @@ function play_vo_if_newly_found()
 			{
 				break;
 			}
-			default
+			default:
 			{
 				break;
 			}
@@ -851,7 +854,7 @@ function function_9708cb71(piecename)
 			var_983a0e9b = "zmb_zod_idgunpiece_pickup";
 			break;
 		}
-		default
+		default:
 		{
 			var_983a0e9b = "zmb_zod_craftable_pickup";
 			break;
@@ -1013,7 +1016,7 @@ function function_4ae7dabf(player)
 */
 function function_f2c00181()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player zm_utility::in_revive_trigger())
@@ -1067,7 +1070,8 @@ function function_adbf2990(trig_stub, player)
 */
 function init_craftable_choke()
 {
-	while(1)
+	level.craftables_spawned_this_frame = 0;
+	while(true)
 	{
 		util::wait_network_frame();
 		level.craftables_spawned_this_frame = 0;

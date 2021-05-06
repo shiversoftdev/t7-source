@@ -66,7 +66,7 @@ function event()
 	level zm_utility::increment_no_end_game_check();
 	self thread function_5816d71a();
 	self thread function_cfc2c8d5();
-	while(1)
+	while(true)
 	{
 		self waittill(#"player_downed");
 		self thread function_a8fd61f4();
@@ -142,7 +142,7 @@ function function_cfc2c8d5()
 {
 	self endon(#"disconnect");
 	self endon(#"bgb_update");
-	while(1)
+	while(true)
 	{
 		self waittill(#"hash_935cc366");
 		while(self getcurrentweapon() !== self.laststandpistol)

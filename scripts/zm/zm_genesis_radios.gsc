@@ -163,7 +163,7 @@ function function_2c776a2a(e_player)
 function function_795f4e6()
 {
 	self endon(#"hash_e37d497d");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger_activated", e_user);
 		if(isplayer(e_user) && !level flag::get("abcd_speaking") && !level flag::get("sophia_speaking") && !level flag::get("shadowman_speaking") && !self function_94b3b616())
@@ -188,6 +188,7 @@ function function_35f4f25f()
 	self endon(#"hash_e37d497d");
 	self endon(#"hash_27f23694");
 	self.clip setcandamage(1);
+	var_b1c8a081 = 0;
 	while(!var_b1c8a081)
 	{
 		self.clip waittill(#"damage", n_amount, e_attacker, v_org, v_dir, str_mod);

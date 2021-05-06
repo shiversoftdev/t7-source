@@ -240,7 +240,7 @@ private function unitrigger_think()
 {
 	self endon(#"kill_trigger");
 	self.stub thread unitrigger_refresh_message();
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(isdefined(self.allow_beastmode) && self.allow_beastmode || (!(isdefined(player.beastmode) && player.beastmode)))
@@ -616,7 +616,7 @@ function function_5d940bdb(var_216e90fd, var_8a2d164)
 function function_1f629fb(var_216e90fd)
 {
 	self endon(#"deactivate_fire_trap");
-	while(1)
+	while(true)
 	{
 		a_ai_enemies = getaiteamarray(level.zombie_team);
 		var_f7c98a7 = arraysortclosest(a_ai_enemies, self.origin, a_ai_enemies.size, 0, 96);
@@ -809,7 +809,7 @@ function setup_devgui_func(str_devgui_path, str_dvar, n_value, func, n_base_valu
 {
 	setdvar(str_dvar, n_base_value);
 	adddebugcommand("devgui_cmd \"" + str_devgui_path + "\" \"" + str_dvar + " " + n_value + "\"\n");
-	while(1)
+	while(true)
 	{
 		n_dvar = getdvarint(str_dvar);
 		if(n_dvar > n_base_value)
@@ -1111,7 +1111,7 @@ function monitor_wallrun_trigger(str_trigger, str_flag)
 {
 	t_trigger = getent(str_trigger, "targetname");
 	level flag::init(str_flag);
-	while(1)
+	while(true)
 	{
 		t_trigger waittill(#"trigger", e_triggerer);
 		if(!(isdefined(e_triggerer.b_wall_run_enabled) && e_triggerer.b_wall_run_enabled) && level flag::get(str_flag))
@@ -1134,7 +1134,7 @@ function function_88777efd(str_trigger, str_flag)
 {
 	t_trigger = getent(str_trigger, "targetname");
 	level flag::init(str_flag);
-	while(1)
+	while(true)
 	{
 		t_trigger waittill(#"trigger", e_triggerer);
 		if(!isplayer(e_triggerer))
@@ -1186,6 +1186,7 @@ function function_36bd06cd(t_trigger, str_flag)
 	self endon(#"death");
 	self allowdoublejump(1);
 	self setperk("specialty_lowgravity");
+	self.var_7dd18a0 = 1;
 	while(self istouching(t_trigger) && level flag::get(str_flag))
 	{
 		wait(0.05);
@@ -1707,6 +1708,7 @@ function function_15e7a0c8(var_7b429b7d, var_6908e64b, var_4162ae69)
 	v_pos = self.origin;
 	v_angles = self.angles;
 	level thread function_83fe94ad(v_pos, var_7b429b7d);
+	s_unitrigger_stub = spawn_trigger_radius(v_pos, 72, 1, &function_e0596480);
 	while(!level flag::get(var_7b429b7d))
 	{
 		s_unitrigger_stub waittill(#"trigger", e_who);
@@ -1958,7 +1960,7 @@ function function_f3a1c8c5(var_e4342d5d, s_pos)
 	{
 		var_7b98b639.origin = v_pos;
 	}
-	while(1)
+	while(true)
 	{
 		s_unitrigger_stub waittill(#"trigger", e_who);
 		if(zm_utility::is_player_valid(e_who) && (e_who == level.var_94994361[var_e4342d5d] || !isdefined(level.var_94994361[var_e4342d5d])))
@@ -2150,7 +2152,8 @@ function function_ae4d938c(v_target_pos, var_e57941b7, var_ca841609, str_endon_n
 	n_time_before_next_pulse = undefined;
 	n_scale = undefined;
 	var_887c2fcb = undefined;
-	while(1)
+	var_55ae5d19 = 1000;
+	while(true)
 	{
 		n_z_diff = abs(v_target_pos[2] - self.origin[2]);
 		n_dist_sq = distance2dsquared(self.origin, v_target_pos);
@@ -2315,7 +2318,8 @@ function function_8faf1d24(v_color, var_8882142e, n_scale, str_endon)
 		{
 			self endon(str_endon);
 		}
-		while(1)
+		origin = self.origin;
+		while(true)
 		{
 			print3d(origin, var_8882142e, v_color, n_scale);
 			wait(0.1);
@@ -2349,7 +2353,7 @@ function debug_draw_line(v_start, v_end, str_endon, v_color, str_endon2)
 		}
 		self endon(str_endon);
 		self endon(str_endon2);
-		while(1)
+		while(true)
 		{
 			recordline(v_start, v_end, v_color, "", self);
 			wait(0.05);
@@ -2617,7 +2621,7 @@ function function_ba547024()
 			n_radius = 16;
 		}
 		self thread function_ea73a995(v_color, "");
-		while(1)
+		while(true)
 		{
 			circle(self.origin, n_radius, v_color);
 			wait(0.05);
@@ -2888,7 +2892,7 @@ function function_835d6248()
 		level endon(#"hash_3e617e39");
 		if(self.script_noteworthy == "")
 		{
-			while(1)
+			while(true)
 			{
 				if(!isdefined(self.var_640b69b2))
 				{
@@ -2988,7 +2992,7 @@ function function_ed69d7f4()
 		if(!ispointonnavmesh(self.origin, 61.88) || function_4086bd17(self.origin))
 		{
 			print("" + self.origin + "");
-			while(1)
+			while(true)
 			{
 				sphere(self.origin, 61.88, (1, 1, 0));
 				print3d(self.origin + vectorscale((0, 0, 1), 16), self.origin + "", (1, 1, 0));
@@ -3126,7 +3130,7 @@ function function_bc81bb3b()
 		{
 			if(isdefined(self.script_noteworthy))
 			{
-				while(1)
+				while(true)
 				{
 					print3d(self.origin + vectorscale((0, 0, 1), 64), "" + self.script_noteworthy, (0, 0, 1), 1, 0.5);
 					wait(0.05);
@@ -3134,7 +3138,7 @@ function function_bc81bb3b()
 			}
 			return;
 		}
-		while(1)
+		while(true)
 		{
 			n_offset = 0;
 			var_3b72f06c = [];
@@ -3361,7 +3365,7 @@ function function_dbc092aa(cmd)
 				}
 				break;
 			}
-			default
+			default:
 			{
 			}
 		}
@@ -3474,7 +3478,8 @@ function function_30672281()
 {
 	/#
 		var_2f06ca53 = 0;
-		while(1)
+		var_f1ef8e43 = [];
+		while(true)
 		{
 			for(i = 0; i < level.activeplayers.size; i++)
 			{

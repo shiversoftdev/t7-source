@@ -243,7 +243,7 @@ function function_ee24bc2e()
 private function update_trigger_visibility()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		for(i = 0; i < level.players.size; i++)
 		{
@@ -295,7 +295,7 @@ function teleport_pad_active_think()
 	e_player = undefined;
 	self sethintstring(&"ZM_CASTLE_TELEPORT_USE", 500);
 	exploder::exploder("fxexp_100");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_player);
 		if(zm_utility::is_player_valid(e_player) && !level.is_cooldown && !level flag::get("rocket_firing") && level flag::get("time_travel_teleporter_ready"))
@@ -577,6 +577,7 @@ function teleport_pad_player_fx(var_7d7ca0ea, n_duration)
 {
 	var_7d7ca0ea endon(#"fx_done");
 	n_start_time = gettime();
+	n_total_time = 0;
 	while(n_total_time < n_duration)
 	{
 		if(var_7d7ca0ea player_is_near_pad(self))
@@ -776,7 +777,7 @@ function function_4a0d1595()
 function teleport_2d_audio()
 {
 	self endon(#"fx_done");
-	while(1)
+	while(true)
 	{
 		players = getplayers();
 		wait(1.7);

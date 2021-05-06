@@ -402,6 +402,7 @@ function function_b18c6347()
 	self endon(#"death");
 	self thread namespace_eaa992c::function_285a2999("player_shield_short");
 	self thread namespace_eaa992c::function_285a2999("electrical_surge");
+	invultime = gettime() + 3000;
 	while(gettime() < invultime)
 	{
 		self.takedamage = 0;
@@ -537,6 +538,7 @@ function function_b3a0f63()
 {
 	self endon(#"death");
 	self endon(#"movedone");
+	timeout = gettime() + 2100;
 	while(gettime() < timeout)
 	{
 		self thread namespace_eaa992c::function_285a2999("tesla_shock");
@@ -1054,7 +1056,8 @@ function function_deb6cf13()
 {
 	self endon(#"death");
 	origin = self.origin;
-	while(1)
+	self.takedamage = 1;
+	while(true)
 	{
 		self waittill(#"damage", damage);
 		/#
@@ -1133,7 +1136,7 @@ function function_e0df2a3e()
 function function_8fe0340c()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_842cebcb", origin);
 		distsq = distancesquared(self.origin, origin);
@@ -1712,8 +1715,10 @@ private function function_28cdab69(def)
 {
 	def.initialized = 1;
 	def.var_40c7a009 = 0;
+	targetsize = level.doa.var_e0d67a74.size;
 	while(level flag::get("doa_round_spawning") && !level flag::get("doa_game_is_over"))
 	{
+		maxwait = 10000 + gettime();
 		while(gettime() < maxwait && def.var_40c7a009 < targetsize && !level flag::get("doa_game_is_over") && flag::get("doa_round_spawning"))
 		{
 			wait(0.1);
@@ -2272,7 +2277,7 @@ function function_4ce6d0ea()
 private function function_e8a17069()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		if(getdvarint("scr_doa_soak_think", 0))
 		{
@@ -2319,7 +2324,7 @@ function function_62d794a5()
 private function function_13109fad()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"hash_2f07c48c");
 		level thread function_62d794a5();
@@ -2519,7 +2524,7 @@ function function_771e3915()
 	level endon(#"hash_93296b5");
 	level endon(#"doa_game_is_over");
 	extrawait = 0;
-	while(1)
+	while(true)
 	{
 		wait(90 + extrawait);
 		extrawait = 0;

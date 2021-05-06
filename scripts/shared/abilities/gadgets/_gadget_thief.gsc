@@ -77,7 +77,7 @@ function __init__()
 function updatedvars()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			level.gadgetthieftimecharge = getdvarint("", 0);
 			wait(1);
@@ -709,7 +709,7 @@ function handlestolenscoreevent(heroweapon)
 			label = "SCORE_ANNIHILATOR_STOLEN";
 			break;
 		}
-		default
+		default:
 		{
 			return;
 		}
@@ -730,7 +730,8 @@ function watchforherokill(slot)
 {
 	self notify(#"watchforthiefkill_singleton");
 	self endon(#"watchforthiefkill_singleton");
-	while(1)
+	self.gadgetthiefactive = 1;
+	while(true)
 	{
 		self waittill(#"hero_shutdown_gadget", herogadget, victim);
 		stolenheroweapon = getstolenheroweapon(herogadget);
@@ -784,7 +785,7 @@ function spawnthiefbeameffect(origin)
 function watchforallkillsdebug()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			self waittill(#"killed_enemy_player", victim);
 			self spawnthiefbeameffect(victim.origin);
@@ -883,7 +884,7 @@ function watchforoptionuse(slot, victimbodyindex, justspawned)
 		self enableoffhandspecial();
 		self notify(#"end_failsafe_reenable_offhand_special");
 	}
-	while(1)
+	while(true)
 	{
 		if(self dpad_left_pressed())
 		{
@@ -932,7 +933,7 @@ function watchheroweaponchanged()
 	self endon(#"watchheroweaponchanged_singleton");
 	self endon(#"death");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"thief_hero_weapon_changed", justspawned, newweapon);
 		if(justspawned)
@@ -1102,7 +1103,7 @@ function getvictimbodyindex(victim, heroweapon)
 				break;
 			}
 			case "hero_annihilator":
-			default
+			default:
 			{
 				bodyindex = 4;
 				break;

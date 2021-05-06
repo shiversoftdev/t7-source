@@ -59,7 +59,8 @@ function function_f336ce55(localclientnum)
 {
 	level notify("localPlayerSpectating" + localclientnum);
 	level endon("localPlayerSpectatingEnd" + localclientnum);
-	while(1)
+	var_cfcb9b39 = playerbeingspectated(localclientnum);
+	while(true)
 	{
 		player = playerbeingspectated(localclientnum);
 		if(player != var_cfcb9b39)
@@ -81,7 +82,7 @@ function function_f336ce55(localclientnum)
 */
 function function_576e8126()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"team_changed", localclientnum);
 		level notify("team_changed" + localclientnum);
@@ -99,6 +100,7 @@ function function_576e8126()
 */
 function function_c5c7c3ef(player)
 {
+	parent = self getlinkedent();
 	while(isdefined(parent))
 	{
 		if(parent == player)
@@ -148,7 +150,7 @@ function function_2bb59404(localclientnum)
 {
 	level notify("setupPropPlayerNames" + localclientnum);
 	level endon("setupPropPlayerNames" + localclientnum);
-	while(1)
+	while(true)
 	{
 		localplayer = getlocalplayer(localclientnum);
 		spectating = isspectating(localclientnum, 0);
@@ -220,7 +222,7 @@ function function_e622a96b(localclientnum, var_2300871f)
 	level endon(#"disconnect");
 	self notify(#"hash_e622a96b");
 	self endon(#"hash_e622a96b");
-	while(1)
+	while(true)
 	{
 		localplayer = getlocalplayer(localclientnum);
 		spectating = isspectating(localclientnum, 0) && !getinkillcam(localclientnum);
@@ -276,7 +278,7 @@ function function_b001ad83(localclientnum, var_2300871f)
 	self endon(#"entityshutdown");
 	self notify(#"hash_b001ad83");
 	self endon(#"hash_b001ad83");
-	while(1)
+	while(true)
 	{
 		localplayer = getlocalplayer(localclientnum);
 		var_9d961790 = self != localplayer && isdefined(self.team) && isdefined(localplayer.team) && self.team == localplayer.team;
@@ -386,7 +388,7 @@ function function_4bf4d3e1(localclientnum, var_1c61204d)
 	{
 		team = "axis";
 	}
-	while(1)
+	while(true)
 	{
 		localplayer = getlocalplayer(localclientnum);
 		ishidden = isdefined(localplayer.team) && team == localplayer.team && !isspectating(localclientnum);

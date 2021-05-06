@@ -326,6 +326,7 @@ function state_combat_update(params)
 {
 	self endon(#"change_state");
 	self endon(#"death");
+	pathfailcount = 0;
 	while(!isdefined(self.owner))
 	{
 		wait(0.1);
@@ -465,6 +466,7 @@ function check_glaive_playable_area_conditions()
 function go_back_on_navvolume()
 {
 	queryresult = positionquery_source_navigation(self.origin, 0, 100, 64, 8, self);
+	multiplier = 2;
 	while(queryresult.data.size < 1)
 	{
 		queryresult = positionquery_source_navigation(self.origin, 0, 100 * multiplier, 64 * multiplier, 20 * multiplier, self);

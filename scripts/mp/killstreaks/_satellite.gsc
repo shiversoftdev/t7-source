@@ -207,7 +207,7 @@ function configureteampost(owner, ishacked)
 function rotate(duration)
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self rotateyaw(-360, duration);
 		wait(duration);
@@ -427,7 +427,7 @@ function resetactivesatellite()
 function satellitetracker()
 {
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		level waittill(#"satellite_update");
 		if(level.teambased)

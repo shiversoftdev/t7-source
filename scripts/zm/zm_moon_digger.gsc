@@ -215,7 +215,7 @@ function digger_round_logic()
 		}
 		rnd++;
 	}
-	while(1)
+	while(true)
 	{
 		level waittill(#"between_round_over");
 		if(level flag::exists("teleporter_used") && level flag::get("teleporter_used"))
@@ -493,7 +493,7 @@ function wait_for_digger_hack_digging(arm, blade_center, tracks)
 function wait_for_digger_hack_moving(arm, blade_center, tracks)
 {
 	self endon(#"arm_lower");
-	while(1)
+	while(true)
 	{
 		level waittill(#"digger_hacked", digger_name);
 		if(digger_name == self.digger_name)
@@ -751,7 +751,7 @@ function digger_think_panel(blocker_name, trig_name, start_flag, hacked_flag, ha
 */
 function set_hint_on_digger_trig(start_flag, hacked_flag, struct)
 {
-	while(1)
+	while(true)
 	{
 		if(!level flag::get(start_flag))
 		{
@@ -828,7 +828,7 @@ function digger_hack_func(hacker)
 		level flag::set(self.hacked_before_breached_flag);
 	}
 	level notify(self.digger_name + "_vox_timer_stop");
-	while(1)
+	while(true)
 	{
 		level waittill(#"digger_reached_end", digger_name);
 		if(digger_name == self.digger_name)
@@ -883,7 +883,7 @@ function digger_hack_qualifer(player)
 */
 function digger_think_biodome(digger_name)
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"digger_arm_smash", name, zones);
 		if(name == digger_name)
@@ -936,7 +936,7 @@ function digger_think_blocker(blocker, digger_name, dmg_trig)
 	dmg_trig triggerenable(0);
 	dmg_trig thread digger_damage_player();
 	level thread digger_think_blocker_remove(blocker, digger_name, dmg_trig);
-	while(1)
+	while(true)
 	{
 		level waittill(#"digger_arm_smash", name, zones);
 		if(name == digger_name)
@@ -971,7 +971,7 @@ function digger_think_blocker(blocker, digger_name, dmg_trig)
 */
 function digger_damage_player()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(!zombie_utility::is_player_valid(player) && (!(isdefined(player._pushed) && player._pushed)))
@@ -1037,7 +1037,7 @@ function digger_push_player(trig, player)
 function kill_anyone_touching_blocker()
 {
 	self endon(#"stop_check");
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.trigger_off))
 		{
@@ -1113,7 +1113,7 @@ function zombie_ragdoll_death()
 */
 function digger_think_blocker_remove(blocker, digger_name, dmg_trig)
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"digger_arm_lift", name);
 		if(name == digger_name)
@@ -1138,7 +1138,8 @@ function digger_think_blocker_remove(blocker, digger_name, dmg_trig)
 function diggers_think_no_mans_land()
 {
 	level endon(#"intermission");
-	while(1)
+	diggers = getentarray("digger_body", "targetname");
+	while(true)
 	{
 		level flag::wait_till("enter_nml");
 		array::thread_all(diggers, &diggers_visible, 0);
@@ -1234,6 +1235,7 @@ function play_timer_vox(digger_name)
 	played120sec = 0;
 	played60sec = 0;
 	played30sec = 0;
+	digger_start_time = gettime();
 	while(time_left > 0)
 	{
 		curr_time = gettime();
@@ -1293,7 +1295,7 @@ function get_correct_times(digger)
 */
 function waitfor_smash()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"digger_arm_smash", digger, zones);
 		level thread play_delayed_breach_vox(digger);
@@ -1420,7 +1422,8 @@ function link_vehicle_nodes(start_node)
 	start_node.previous_node = undefined;
 	linked_nodes = [];
 	linked_nodes[linked_nodes.size] = start_node;
-	while(1)
+	cur_node = start_node;
+	while(true)
 	{
 		if(isdefined(cur_node.target))
 		{
@@ -1477,6 +1480,7 @@ function digger_follow_path_calc_speed()
 	path_start_node = getvehiclenode(self.target, "targetname");
 	number_nodes = 0;
 	self.path_length = 0;
+	start_node = path_start_node;
 	while(isdefined(start_node.target))
 	{
 		next_node = getvehiclenode(start_node.target, "targetname");
@@ -1505,6 +1509,7 @@ function digger_follow_path_recalc_speed(path_start_node)
 {
 	number_nodes = 0;
 	self.path_length = 0;
+	start_node = path_start_node;
 	while(isdefined(start_node.target))
 	{
 		next_node = getvehiclenode(start_node.target, "targetname");

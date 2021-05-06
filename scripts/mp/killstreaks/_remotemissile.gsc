@@ -907,7 +907,8 @@ function targeting_hud_think(rocket)
 	rocket endon(#"death");
 	level endon(#"game_ended");
 	targets = self getvalidtargets(rocket, 1, 6);
-	while(1)
+	framessincetargetscan = 0;
+	while(true)
 	{
 		foreach(var_8946caec, icon in self.missile_target_icons)
 		{
@@ -976,7 +977,7 @@ function missile_deploy_watch(rocket)
 	level endon(#"game_ended");
 	wait(0.25);
 	self thread create_missile_hud(rocket);
-	while(1)
+	while(true)
 	{
 		if(self attackbuttonpressed())
 		{

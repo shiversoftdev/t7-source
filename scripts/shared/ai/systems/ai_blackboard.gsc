@@ -42,7 +42,8 @@ private function _initializeblackboard()
 private function _updateevents()
 {
 	waittime = 0.05;
-	while(1)
+	updatemillis = waittime * 1000;
+	while(true)
 	{
 		foreach(eventname, events in level.__ai_blackboard)
 		{

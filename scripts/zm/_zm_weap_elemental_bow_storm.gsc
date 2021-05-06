@@ -513,7 +513,8 @@ function function_ef25be5(var_337b3336)
 	var_337b3336 endon(#"elem_storm_whirlwind_done");
 	var_afc016d4 = distance(self.origin, var_337b3336.origin) + 200;
 	var_2341c130 = (var_afc016d4 > 320 ? 320 : var_afc016d4);
-	while(1)
+	var_f33cfd13 = var_2341c130 * var_2341c130;
+	while(true)
 	{
 		if(distancesquared(self.origin, var_337b3336.origin) > var_f33cfd13)
 		{
@@ -542,7 +543,7 @@ function function_bffbed67(e_player, var_337b3336)
 	{
 		var_337b3336.var_627f5ce9 = util::spawn_model("tag_origin", self.origin);
 	}
-	while(1)
+	while(true)
 	{
 		wait(1.4);
 		self thread function_2d3e3c1b(e_player, var_337b3336, var_337b3336.var_627f5ce9, 1);
@@ -650,7 +651,7 @@ function function_3f099cfa()
 function function_50d5f4ab(e_player)
 {
 	self endon(#"elem_storm_whirlwind_done");
-	while(1)
+	while(true)
 	{
 		v_ground_pos = util::ground_position(self.origin + (0, 0, 1), 1000, vectorscale((0, 0, 1), 16)[2]);
 		n_z_diff = abs(self.origin[2] - v_ground_pos[2]);
@@ -722,7 +723,7 @@ function function_50d5f4ab(e_player)
 function function_2f036bd6()
 {
 	self endon(#"elem_storm_whirlwind_done");
-	while(1)
+	while(true)
 	{
 		foreach(var_53c8103d, e_player in level.activeplayers)
 		{

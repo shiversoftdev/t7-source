@@ -557,7 +557,7 @@ function turretthink()
 	turret.trigger endon(#"death");
 	turret.trigger endon(#"delete");
 	turret.turret_vehicle_entnum = turret.vehicle getentitynumber();
-	while(1)
+	while(true)
 	{
 		turret.trigger waittill(#"trigger", ent);
 		if(ent == turret)
@@ -633,7 +633,8 @@ function microwaveentity(entity)
 		viewkickscalar = getdvarfloat("specialty_microwaveprotection_viewkick_scalar", 0.5);
 		damagescalar = getdvarfloat("specialty_microwaveprotection_damage_scalar", 0.5);
 	}
-	while(1)
+	turretweapon = getweapon("microwave_turret");
+	while(true)
 	{
 		if(!isdefined(turret) || !turret microwaveturretaffectsentity(entity) || !isdefined(turret.trigger))
 		{

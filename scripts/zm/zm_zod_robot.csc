@@ -108,7 +108,7 @@ function robot_lights(localclientnum, oldval, newval, bnewent, binitialsnap, fie
 			exploder::exploder("lgt_robot_callbox_yellow");
 			break;
 		}
-		default
+		default:
 		{
 			exploder::stop_exploder("lgt_robot_callbox_green");
 			exploder::stop_exploder("lgt_robot_callbox_red");

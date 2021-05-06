@@ -67,7 +67,7 @@ function watchforproximityexplosion()
 		return;
 	}
 	weapon_proximity = getweapon("proximity_grenade");
-	while(1)
+	while(true)
 	{
 		level waittill(#"explode", localclientnum, position, mod, weapon, owner_cent);
 		if(weapon.rootweapon != weapon_proximity)

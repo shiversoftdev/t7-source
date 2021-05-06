@@ -119,7 +119,7 @@ function stringtofloat(string)
 */
 function function_124b9a08()
 {
-	while(1)
+	while(true)
 	{
 		if(level flag::get("doa_round_active"))
 		{
@@ -321,6 +321,7 @@ function function_d0c69425(var_30d383f5)
 	{
 		wait(0.05);
 	}
+	timeout = gettime() + var_30d383f5 * 1000;
 	while(isdefined(level.var_a7749866) && gettime() < timeout)
 	{
 		wait(0.05);
@@ -1166,6 +1167,7 @@ function function_a98c85b2(location, timesec = 1)
 		timesec = 1;
 	}
 	increment = self.origin - location / timesec * 20;
+	var_afc5c189 = gettime() + timesec * 1000;
 	while(gettime() < var_afc5c189)
 	{
 		self.origin = self.origin - increment;
@@ -1187,7 +1189,7 @@ function function_89a258a7()
 {
 	self endon(#"death");
 	self endon(#"hash_3d81b494");
-	while(1)
+	while(true)
 	{
 		wait(0.5);
 		if(isdefined(self.var_111c7bbb))
@@ -1291,7 +1293,7 @@ function function_5f54cafa(waittime)
 {
 	level notify(#"hash_5f54cafa");
 	level endon(#"hash_5f54cafa");
-	while(1)
+	while(true)
 	{
 		clearallcorpses();
 		wait(waittime);
@@ -1671,6 +1673,7 @@ function function_a0e51d80(point, timesec, size, color)
 		var_5e2b69e1 = point + (0, halfwidth * -1, 0);
 		var_842de44a = point + (0, halfwidth, 0);
 		h1 = point + (0, 0, halfwidth * -1);
+		h2 = point + (0, 0, halfwidth);
 		while(end > gettime())
 		{
 			line(l1, l2, color, 1, 0, 1);
@@ -1695,6 +1698,7 @@ function debugorigin(timesec, size, color)
 	/#
 		self endon(#"hash_c32e3b78");
 		end = gettime() + timesec * 1000;
+		halfwidth = int(size / 2);
 		while(end > gettime())
 		{
 			point = self.origin;

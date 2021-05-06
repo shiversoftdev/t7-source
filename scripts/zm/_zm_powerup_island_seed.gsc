@@ -248,7 +248,7 @@ function function_f766ae15()
 */
 function function_68329bc5()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"between_round_over");
 		level.var_9895ed0d = 0;
@@ -356,7 +356,8 @@ function function_af95a19e()
 	level endon(#"unloaded");
 	players = level.players;
 	level.var_e4f2021b = 2000;
-	while(1)
+	score_to_drop = players.size * level.zombie_vars["zombie_score_start_" + players.size + "p"] + level.var_e4f2021b;
+	while(true)
 	{
 		players = level.players;
 		curr_total_score = 0;

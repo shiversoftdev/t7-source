@@ -192,7 +192,8 @@ private function function_4cf5760d(localclientnum, thrasher, player)
 	var_7b5d5a9 = 2;
 	var_11a41486 = 0.1;
 	var_3c524399 = var_7b5d5a9 * var_7b5d5a9;
-	while(1)
+	var_dadc8424 = var_11a41486 * var_11a41486;
+	while(true)
 	{
 		forwardoffset = anglestoforward(thrasher.var_18fd72ff.angles) * var_8cfe2065;
 		desiredposition = thrasher gettagorigin("tag_camera_thrasher") + eyeoffset - forwardoffset;
@@ -241,6 +242,7 @@ private function function_785afcbe(localclientnum, thrasher, player)
 		currenttime = player getclienttime() / 1000;
 		timedelta = currenttime - lasttime;
 		var_50a8bb46 = thrasher.var_18fd72ff.angles[1];
+		newyaw = getcamanglesbylocalclientnum(player.localclientnum)[1];
 		while(timedelta > interpolate)
 		{
 			var_50a8bb46 = angleclamp180(anglelerp(var_50a8bb46, newyaw, 0.15));

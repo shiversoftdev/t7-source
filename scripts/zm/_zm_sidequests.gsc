@@ -69,7 +69,7 @@ function sidequest_debug()
 		{
 			return;
 		}
-		while(1)
+		while(true)
 		{
 			wait(1);
 		}
@@ -87,7 +87,7 @@ function sidequest_debug()
 */
 function damager_trigger_thread(dam_types, trigger_func)
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", amount, attacker, dir, point, type);
 		self.dam_amount = amount;
@@ -122,7 +122,7 @@ function damager_trigger_thread(dam_types, trigger_func)
 function damage_trigger_thread()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage");
 		self.owner_ent notify(#"triggered");
@@ -141,7 +141,7 @@ function damage_trigger_thread()
 function function_e4084aab()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage");
 		self.owner_ent notify(#"triggered");
@@ -659,7 +659,7 @@ function build_assets()
 				self.active_assets[self.active_assets.size] = asset;
 				break;
 			}
-			default
+			default:
 			{
 				/#
 					println("" + self.assets.type);
@@ -786,7 +786,7 @@ function build_assets()
 function radius_trigger_thread()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(!isplayer(player))
@@ -1242,7 +1242,8 @@ function get_damage_trigger(radius, origin, damage_types)
 function dam_trigger_thread(damage_types)
 {
 	self endon(#"death");
-	while(1)
+	damage_type = "NONE";
+	while(true)
 	{
 		self waittill(#"damage", amount, attacker, dir, point, mod);
 		for(i = 0; i < damage_types.size; i++)
@@ -1267,7 +1268,7 @@ function dam_trigger_thread(damage_types)
 function use_trigger_thread()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		self.owner_ent notify(#"triggered", player);

@@ -393,6 +393,7 @@ function do_ranged_attack(enemy)
 	v_to_enemy = (enemy.origin - self.origin[0], enemy.origin - self.origin[1], 0);
 	goalangles = vectortoangles(v_to_enemy);
 	anglediff = absangleclamp180(self.angles[1] - goalangles[1]);
+	angleadjustingstart = gettime();
 	while(anglediff > targetanglediff && vehicle_ai::timesince(angleadjustingstart) < 0.8)
 	{
 		anglediff = absangleclamp180(self.angles[1] - goalangles[1]);
@@ -727,7 +728,8 @@ function prevent_stuck()
 	self endon(#"end_prevent_stuck");
 	wait(2);
 	count = 0;
-	while(1)
+	previous_origin = undefined;
+	while(true)
 	{
 		if(isdefined(previous_origin) && distancesquared(previous_origin, self.origin) < 0.1 * 0.1 && (!(isdefined(level.bzm_worldpaused) && level.bzm_worldpaused)))
 		{
@@ -844,7 +846,7 @@ function path_update_interrupt_melee()
 	self notify(#"clear_interrupt_threads");
 	self endon(#"clear_interrupt_threads");
 	wait(0.1);
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.current_pathto_pos))
 		{
@@ -913,7 +915,7 @@ function nudge_collision()
 	self endon(#"change_state");
 	self notify(#"end_nudge_collision");
 	self endon(#"end_nudge_collision");
-	while(1)
+	while(true)
 	{
 		self waittill(#"veh_collision", velocity, normal);
 		ang_vel = self getangularvelocity() * 0.8;

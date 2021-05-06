@@ -340,7 +340,7 @@ function function_23c9ffd3(player)
 {
 	self notify(#"hash_23c9ffd3");
 	self endon(#"hash_23c9ffd3");
-	while(1)
+	while(true)
 	{
 		wait(0.5);
 		if(!isdefined(player))
@@ -450,7 +450,7 @@ function function_3f67a723(origin, arc_angle_degrees = 90, do_trace, e_ignore)
 function function_a00e23d0()
 {
 	self endon(#"kill_trigger");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_who);
 		if(e_who getentitynumber() == self.stub.var_a879fa43)
@@ -770,7 +770,7 @@ function function_6d42affc(player)
 function function_1e314338()
 {
 	self endon(#"kill_trigger");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		w_current = player getcurrentweapon();
@@ -1004,7 +1004,7 @@ function function_905d9544(e_attacker)
 function function_26c58398()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"destroyed_thrasher_head");
 		self notify(#"update_challenge_3_5");
@@ -1035,6 +1035,7 @@ function function_2ce855f3(n_challenge_index, var_d675d6d8, var_80792f67, str_ch
 		self.var_873a3e27 = [];
 	}
 	self.var_873a3e27[n_challenge_index] = 0;
+	var_ea184c3d = var_80792f67;
 	while(var_80792f67 > 0)
 	{
 		self waittill(str_challenge_notify);
@@ -1074,7 +1075,7 @@ function all_challenges_completed()
 {
 	level.var_c28313cd = 0;
 	callback::on_disconnect(&function_b1cd865a);
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_41370469");
 		level.var_c28313cd++;

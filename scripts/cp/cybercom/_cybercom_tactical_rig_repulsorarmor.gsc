@@ -143,7 +143,8 @@ private function _threatmonitor(weapon)
 		self.missile_repulsor = missile_createrepulsorent(self, 4000, getdvarint("scr_repulsorarmor_dist", 200), isupgraded);
 	}
 	cooldown = 0.5;
-	while(1)
+	var_6d621232 = gettime();
+	while(true)
 	{
 		self waittill(#"projectile_applyattractor", missile);
 		if(gettime() > var_6d621232 + cooldown * 1000)
@@ -173,7 +174,7 @@ private function function_170e07a2()
 	self endon(#"repulsorarmorshieldtake");
 	self endon(#"death");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		curtime = gettime();
 		var_f9459f98 = undefined;

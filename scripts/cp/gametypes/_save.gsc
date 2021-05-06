@@ -564,7 +564,7 @@ private function function_1add9d4a(var_c36855a9)
 	level endon(#"kill_save");
 	level endon(#"save_restore");
 	wait(0.1);
-	while(1)
+	while(true)
 	{
 		if(function_147f4ca3())
 		{

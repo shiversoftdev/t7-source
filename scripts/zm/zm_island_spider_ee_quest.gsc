@@ -176,7 +176,8 @@ function function_241013f7()
 {
 	self endon(#"death");
 	self flag::wait_till("spider_from_mars_identified");
-	while(1)
+	self.var_75bf845a = [];
+	while(true)
 	{
 		foreach(var_b4699140, t_water in level.var_4a0060c0)
 		{
@@ -296,7 +297,7 @@ function function_89826011()
 	e_clip setcandamage(1);
 	e_clip.health = 100000;
 	var_a2176993 = getent("jungle_lab_ee_control_panel_elf", "targetname");
-	while(1)
+	while(true)
 	{
 		e_clip waittill(#"damage", n_damage, e_attacker, v_direction, v_point, str_mod, str_tag_name, str_model_name, str_part_name, w_weapon);
 		if(!level.var_1dbad94a && !level flag::get("power_on"))
@@ -428,7 +429,7 @@ function spiders_from_mars_round()
 	{
 		level.var_3013498 = level.round_number + 1;
 	}
-	while(1)
+	while(true)
 	{
 		level flag::wait_till("spider_round_in_progress");
 		if(level flag::get("spider_round"))
@@ -543,7 +544,7 @@ function function_bf0f2293(player)
 */
 function function_2818665b()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_who);
 		if(e_who zm_utility::in_revive_trigger())

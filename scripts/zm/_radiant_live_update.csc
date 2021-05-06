@@ -48,7 +48,7 @@ function __init__()
 function scriptstruct_debug_render()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			level waittill(#"liveupdate", selected_struct);
 			if(isdefined(selected_struct))

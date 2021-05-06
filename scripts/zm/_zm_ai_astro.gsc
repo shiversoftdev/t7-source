@@ -427,7 +427,7 @@ function astro_zombie_headbutt_think()
 	self endon(#"death");
 	self.is_headbutt = 0;
 	self.next_headbutt_time = gettime() + level.astro_headbutt_delay;
-	while(1)
+	while(true)
 	{
 		if(!isdefined(self.enemy))
 		{
@@ -1074,7 +1074,7 @@ function astro_damage_callback(mod, hit_location, hit_origin, player, amount, we
 function _debug_astro_health_watch()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		/#
 			iprintln("" + self.health);

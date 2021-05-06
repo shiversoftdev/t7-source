@@ -516,7 +516,8 @@ function function_2e229297()
 	self endon(#"change_state");
 	cant_see_enemy_count = 0;
 	wait(0.2);
-	while(1)
+	origin = self gettagorigin("tag_barrel");
+	while(true)
 	{
 		if(isdefined(self.enemy) && self vehcansee(self.enemy) && self function_e7857e05(self.enemy))
 		{
@@ -976,7 +977,8 @@ function cic_overheat_hud(turret)
 	turret endon(#"turret_exited");
 	level endon(#"player_using_turret");
 	heat = 0;
-	while(1)
+	overheat = 0;
+	while(true)
 	{
 		if(isdefined(self.viewlockedentity))
 		{

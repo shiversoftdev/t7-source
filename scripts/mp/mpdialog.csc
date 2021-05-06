@@ -298,7 +298,7 @@ function play_dialog(dialogkey, localclientnum)
 */
 function update_voice_origin(voicebox)
 {
-	while(1)
+	while(true)
 	{
 		wait(0.1);
 		if(!isdefined(self) || !isdefined(voicebox))

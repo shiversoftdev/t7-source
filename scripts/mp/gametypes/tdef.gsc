@@ -482,7 +482,7 @@ function createflag(victim)
 function updatebaseposition()
 {
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.safeorigin))
 		{
@@ -554,7 +554,7 @@ function getflagradarowner(team)
 {
 	level endon(#"game_ended");
 	self endon(#"dropped");
-	while(1)
+	while(true)
 	{
 		foreach(var_d921bbdb, player in level.players)
 		{

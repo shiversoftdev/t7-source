@@ -3712,7 +3712,8 @@ function preshootlaserandglinton(ai)
 	{
 		ai.laserstatus = 0;
 	}
-	while(1)
+	sniper_glint = "lensflares/fx_lensflare_sniper_glint";
+	while(true)
 	{
 		self waittill(#"about_to_fire");
 		if(ai.laserstatus !== 1)
@@ -3751,7 +3752,7 @@ function preshootlaserandglinton(ai)
 function postshootlaserandglintoff(ai)
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"stopped_firing");
 		if(ai.laserstatus === 1)

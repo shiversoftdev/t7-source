@@ -170,7 +170,7 @@ function function_16fca6d(player)
 */
 function function_a90ab0d7()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player zm_utility::in_revive_trigger())
@@ -263,7 +263,7 @@ function portal_think()
 		return;
 	}
 	self.a_s_port_locs = struct::get_array(self.target, "targetname");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_portee);
 		level clientfield::increment("pulse_" + self.script_noteworthy);
@@ -351,6 +351,7 @@ function portal_teleport_player(player, show_fx = 1)
 	s_pos = array::random(self.a_s_port_locs);
 	if(a_players.size > 0)
 	{
+		var_cefa4b63 = 0;
 		while(!var_cefa4b63)
 		{
 			var_cefa4b63 = 1;

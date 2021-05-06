@@ -95,6 +95,7 @@ function ruins_fist_glow_monitor()
 	{
 		wait(0.1);
 		self clientfield::set("ee_zombie_fist_fx", 1);
+		self.has_soul = 1;
 		while(isalive(self))
 		{
 			self waittill(#"damage", amount, inflictor, direction, point, type, tagname, modelname, partname, weapon, idflags);
@@ -199,7 +200,7 @@ function spawn_punch_upgrade_tablet(v_origin, e_player)
 function rotate_punch_upgrade_tablet()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self rotateyaw(360, 5);
 		self waittill(#"rotatedone");

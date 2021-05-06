@@ -72,7 +72,8 @@ function function_1a9a4375()
 {
 	self endon(#"disconnect");
 	self.var_df4182b1 = 0;
-	while(1)
+	self.var_4d1c77e5 = 0;
+	while(true)
 	{
 		self waittill(#"player_has_gasmask");
 		self thread function_2cc6bcea();

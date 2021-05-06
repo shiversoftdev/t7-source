@@ -175,6 +175,7 @@ function player_enter_beastmode(localclientnum)
 function function_5d7a94fa(localclientnum)
 {
 	self endon(#"beast_mode_exit");
+	var_3f39d2cc = getdvarint("scr_beast_no_visionset") > 0;
 	while(isdefined(self))
 	{
 		scr_beast_no_visionset = getdvarint("scr_beast_no_visionset") > 0;
@@ -232,6 +233,7 @@ function function_cb236f81(localclientnum)
 	{
 		return;
 	}
+	var_af2f137b = function_faf41e73(localclientnum);
 	while(isdefined(self))
 	{
 		var_26495de5 = function_faf41e73(localclientnum);
@@ -447,6 +449,7 @@ function function_ef4c8536(localclientnum, var_2646032, var_72af98b3)
 		self.var_90b6339d = 0;
 	}
 	filter::set_filter_blood_spatter_reveal(self, 5, 0, 0);
+	t = 0;
 	while(t <= var_2646032 && isdefined(self))
 	{
 		self.var_90b6339d = max(self.var_90b6339d, t / var_2646032);
@@ -456,6 +459,7 @@ function function_ef4c8536(localclientnum, var_2646032, var_72af98b3)
 	}
 	self.var_90b6339d = 1;
 	filter::set_filter_blood_spatter_reveal(self, 5, self.var_90b6339d, 0);
+	t = 0;
 	while(t <= var_72af98b3 && isdefined(self))
 	{
 		self.var_90b6339d = min(self.var_90b6339d, 1 - t / var_72af98b3);
@@ -678,6 +682,7 @@ function add_remove_list(a = [], on_off)
 */
 function clean_deleted(array)
 {
+	done = 0;
 	while(!done && array.size > 0)
 	{
 		done = 1;
@@ -1001,7 +1006,7 @@ function sndbeastmode_manastart()
 		soundid = level.sndbeastmodeent playloopsound("zmb_beastmode_mana_looper", 2);
 		setsoundvolume(soundid, 0);
 	}
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.mana))
 		{
@@ -1091,7 +1096,7 @@ function function_2a7bb7b3(localclientnum, on_off)
 						break;
 					}
 					case 1:
-					default
+					default:
 					{
 						self.var_a4e22c06 = playviewmodelfx(localclientnum, level._effect["beast_fork_1"], "tag_flash_le");
 						break;
@@ -1123,7 +1128,7 @@ function function_2d565c0(localclientnum, charge)
 	var_49d2fa23 = 1;
 	switch(charge)
 	{
-		default
+		default:
 		{
 			time = 2;
 			break;
@@ -1376,6 +1381,7 @@ function function_89d6f49a(localclientnum, onoff)
 	var_ec055171 = 0.25;
 	cycle_time = var_d7805253;
 	old_color = function_4778b020(var_781fc232, var_27745be8);
+	new_color = old_color;
 	while(isdefined(self))
 	{
 		if(cycle_time >= var_d7805253)

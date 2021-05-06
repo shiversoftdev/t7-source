@@ -146,7 +146,7 @@ function init()
 function function_10d1beae()
 {
 	level endon(#"end_game");
-	while(1)
+	while(true)
 	{
 		level waittill(#"end_of_round");
 		level.var_2f83d088 = 0;
@@ -217,7 +217,7 @@ function function_8aac3fe()
 	level.var_175273f2 = 1;
 	level.var_e51f5b82 = 0;
 	level.var_ebc4830 = level.round_number + randomintrange(4, 7);
-	while(1)
+	while(true)
 	{
 		level waittill(#"between_round_over");
 		level.var_e51f5b82 = 0;
@@ -266,7 +266,8 @@ function function_8aac3fe()
 function function_8b7e4b15()
 {
 	level endon(#"end_of_round");
-	while(1)
+	var_d1cba433 = [];
+	while(true)
 	{
 		var_d1cba433 = zombie_utility::get_zombie_array();
 		if(var_d1cba433.size >= 4)
@@ -297,7 +298,7 @@ function function_8b7e4b15()
 			var_30227ea9 = 4;
 			break;
 		}
-		default
+		default:
 		{
 			var_30227ea9 = 2;
 			break;
@@ -402,7 +403,7 @@ function function_6d24956b(v_origin)
 			}
 			break;
 		}
-		default
+		default:
 		{
 			return 0;
 			break;
@@ -428,6 +429,7 @@ function function_68ee76ee(var_d1cba433, var_48cf4a3d = 1)
 	#/
 	for(i = 0; i < var_48cf4a3d; i++)
 	{
+		var_a4ef4373 = undefined;
 		while(!isdefined(var_a4ef4373))
 		{
 			foreach(var_c4618acf, ai in var_d1cba433)
@@ -578,6 +580,7 @@ function function_bf8a850e(v_origin, weapon, e_attacker)
 		var_d454b8fe = 0;
 		var_29d3165e = gettime();
 		var_94f86cd2 = 60 * 60;
+		var_5ce805c5 = 36;
 		while(var_29d3165e + 5000 > gettime())
 		{
 			if(level.var_e51f5b82 < 2)
@@ -1230,7 +1233,7 @@ function function_632dead()
 	self endon(#"death");
 	self playloopsound("zmb_thrasher_lp_close", 2);
 	wait(randomintrange(2, 5));
-	while(1)
+	while(true)
 	{
 		self playsoundontag("zmb_vocals_thrash_ambient", "j_head");
 		level notify(#"hash_9b1446c2", self);
@@ -1300,7 +1303,8 @@ function function_11d343a5(thrasher)
 		thrasher notify(#"hash_eafe225a");
 		thrasher endon(#"hash_eafe225a");
 		thrasher endon(#"death");
-		while(1)
+		thrasher.ignoreall = 1;
+		while(true)
 		{
 			queryresult = positionquery_source_navigation(thrasher.origin, 1024, 2024, 128, 20, thrasher);
 			var_46b60716 = thrasher.origin;

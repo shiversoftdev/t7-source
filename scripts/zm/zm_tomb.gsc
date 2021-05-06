@@ -773,7 +773,7 @@ function on_player_connect()
 function revive_watcher()
 {
 	self endon(#"death_or_disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"do_revive_ended_normally");
 		if(self hasperk("specialty_quickrevive"))
@@ -902,7 +902,7 @@ function tomb_round_spawn_failsafe()
 {
 	self endon(#"death");
 	prevorigin = self.origin;
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.ignore_round_spawn_failsafe) && self.ignore_round_spawn_failsafe)
 		{
@@ -1496,7 +1496,7 @@ function setup_oneinchpunch_devgui()
 function watch_devgui_oneinchpunch()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			if(getdvarstring("") == "")
 			{
@@ -1593,7 +1593,7 @@ function setup_tablet_devgui()
 function watch_devgui_tablet()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			if(getdvarstring("") != "")
 			{
@@ -1619,7 +1619,7 @@ function watch_devgui_tablet()
 function watch_devgui_zombie_blood()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			if(getdvarstring("") == "")
 			{
@@ -1643,7 +1643,7 @@ function watch_devgui_zombie_blood()
 function watch_devgui_double_points()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			if(getdvarstring("") == "")
 			{
@@ -1898,7 +1898,7 @@ function activate_zone_trig(str_name, str_zone1, str_zone2)
 */
 function check_tank_platform_zone()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"newzoneactive", activezone);
 		if(activezone == "zone_bunker_3")
@@ -2123,7 +2123,7 @@ function show_zombie_count()
 {
 	self endon(#"death_or_disconnect");
 	level flag::wait_till("start_zombie_round_logic");
-	while(1)
+	while(true)
 	{
 		n_round_zombies = zombie_utility::get_current_zombie_count();
 		str_hint = "Alive: " + n_round_zombies + ". To Spawn: " + level.zombie_total;
@@ -2196,7 +2196,7 @@ function tomb_custom_electric_cherry_reload_attack()
 	self endon(#"stop_electric_cherry_reload_attack");
 	self.wait_on_reload = [];
 	self.consecutive_electric_cherry_attacks = 0;
-	while(1)
+	while(true)
 	{
 		self waittill(#"reload_start");
 		w_current_weapon = self getcurrentweapon();
@@ -2237,7 +2237,7 @@ function tomb_custom_electric_cherry_reload_attack()
 					n_zombie_limit = 2;
 					break;
 				}
-				default
+				default:
 				{
 					n_zombie_limit = 0;
 				}
@@ -2310,7 +2310,7 @@ function tomb_custom_player_track_ammo_count()
 	self endon(#"stop_ammo_tracking");
 	ammolowcount = 0;
 	ammooutcount = 0;
-	while(1)
+	while(true)
 	{
 		wait(0.5);
 		weap = self getcurrentweapon();
@@ -2382,7 +2382,7 @@ function tomb_can_track_ammo_custom(weap)
 		{
 			return 0;
 		}
-		default
+		default:
 		{
 			if(weap.isperkbottle || zm_utility::is_placeable_mine(weap) || zm_equipment::is_equipment(weap) || issubstr(weap.name, "knife_ballistic_") || getsubstr(weap.name, 0, 3) == "gl_")
 			{

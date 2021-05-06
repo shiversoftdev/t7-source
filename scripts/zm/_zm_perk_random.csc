@@ -100,7 +100,7 @@ function lightning_bolt_fx_toggle(localclientnum, oldval, newval, bnewent, binit
 	{
 		self._location_indicator = [];
 	}
-	while(1)
+	while(true)
 	{
 		if(newval == 1 && !isigcactive(localclientnum))
 		{
@@ -200,6 +200,7 @@ function rock_emissive_fade(localclientnum, n_max_val, n_min_val)
 {
 	n_start_time = gettime();
 	n_end_time = n_start_time + 0.5 * 1000;
+	b_is_updating = 1;
 	while(b_is_updating)
 	{
 		n_time = gettime();
@@ -455,7 +456,7 @@ function fx_activation_electric_loop(localclientnum)
 {
 	self endon(#"activation_electricity_finished");
 	self endon(#"entityshutdown");
-	while(1)
+	while(true)
 	{
 		wait(0.1);
 	}
@@ -473,7 +474,7 @@ function fx_activation_electric_loop(localclientnum)
 function fx_bottle_cycling(localclientnum)
 {
 	self endon(#"bottle_cycling_finished");
-	while(1)
+	while(true)
 	{
 		wait(0.1);
 	}

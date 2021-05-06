@@ -93,7 +93,7 @@ function function_5ecbd7cb()
 	var_df826fd8 = nd_start function_53f4df();
 	level flag::wait_till(var_81b99a73);
 	var_845e036a thread function_2f34da41();
-	while(1)
+	while(true)
 	{
 		var_845e036a setmodel("p7_zm_ctl_jumpsphere_combined_snow_blue");
 		var_845e036a thread function_cc3a384b(1);
@@ -204,7 +204,7 @@ function function_52d18d43(var_81b99a73, n_cost)
 {
 	self function_e2ae5aa6(&"ZM_CASTLE_FLING_LOCKED");
 	level flag::wait_till(var_81b99a73);
-	while(1)
+	while(true)
 	{
 		self function_e2ae5aa6(&"ZM_CASTLE_FLING_AVAILABLE", n_cost);
 		self waittill(#"hash_4baa9cb4");
@@ -243,7 +243,7 @@ function unitrigger_think()
 {
 	self endon(#"kill_trigger");
 	self.stub thread unitrigger_refresh_message();
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", var_4161ad80);
 		self.stub notify(#"trigger", var_4161ad80);
@@ -466,6 +466,7 @@ function function_e9d3c391(var_ca34f349, v_fling, nd_start, var_173065cc, var_df
 	{
 		self thread function_149a5187();
 		self enableinvulnerability();
+		self.var_122a2dda = 1;
 		while(self isslamming())
 		{
 			util::wait_network_frame();
@@ -603,6 +604,7 @@ function function_d1736cb5()
 {
 	if(!isdefined(level.var_d69af29) || gettime() - level.var_d69af29 > 30000)
 	{
+		var_323d1645 = randomint(5);
 		while(var_323d1645 === self.var_9a3fa33b)
 		{
 			var_323d1645 = randomint(5);
@@ -657,6 +659,7 @@ function function_74d2bb99(nd_start)
 {
 	self endon(#"death");
 	self endon(#"reached_end_node");
+	var_5f7e3f41 = nd_start;
 	while(isdefined(var_5f7e3f41))
 	{
 		self waittill(#"reached_node", var_5f7e3f41);
@@ -706,6 +709,7 @@ function function_c1f1756a()
 function function_3298b25f(nd_start)
 {
 	var_a05a47c7 = nd_start function_fbd80603();
+	var_16f5c370 = var_a05a47c7.origin;
 	while(positionwouldtelefrag(var_16f5c370))
 	{
 		util::wait_network_frame();
@@ -1003,7 +1007,7 @@ function function_4029cf56()
 {
 	self endon(#"kill_trigger");
 	self.stub thread zm_unitrigger::run_visibility_function_for_all_triggers();
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", var_4161ad80);
 		self.stub notify(#"trigger", var_4161ad80);
@@ -1058,7 +1062,8 @@ function function_cc8f94df()
 function function_979004a()
 {
 	level waittill(#"start_zombie_round_logic");
-	while(1)
+	var_7d3b9ef4 = getent("trig_115_lift", "targetname");
+	while(true)
 	{
 		var_7d3b9ef4 waittill(#"trigger", e_player);
 		if(zm_utility::is_player_valid(e_player))

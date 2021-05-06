@@ -268,7 +268,7 @@ function gettagforpos(position)
 		{
 			return "tag_inhand";
 		}
-		default
+		default:
 		{
 			/#
 				assertmsg("" + position);

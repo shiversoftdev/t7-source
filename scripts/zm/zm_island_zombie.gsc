@@ -412,7 +412,7 @@ private function function_c3d4cc46(origin, players)
 private function update_closest_player()
 {
 	level waittill(#"start_of_round");
-	while(1)
+	while(true)
 	{
 		reset_closest_player = 1;
 		zombies = zombie_utility::get_round_enemy_array();

@@ -177,7 +177,7 @@ function debugdvars()
 		{
 			setdvar("", "");
 		}
-		while(1)
+		while(true)
 		{
 			if(getdvarint("") > 0)
 			{
@@ -309,7 +309,7 @@ function _get_debug_color(str_color)
 				return (1, 0, 1);
 				break;
 			}
-			default
+			default:
 			{
 				println("" + str_color + "");
 				return (0, 0, 0);
@@ -433,7 +433,8 @@ function debugcolorfriendliestogglewatch()
 {
 	/#
 		just_turned_on = 0;
-		while(1)
+		just_turned_off = 0;
+		while(true)
 		{
 			if(getdvarstring("") == "" && !just_turned_on)
 			{
@@ -884,7 +885,8 @@ function hero_catch_up_teleport(s_teleport, n_min_dist_from_player = 400, b_disa
 	{
 		a_teleport = array(a_teleport);
 	}
-	while(1)
+	a_teleport = array::randomize(a_teleport);
+	while(true)
 	{
 		b_player_nearby = 0;
 		foreach(var_cef63970, player in level.players)
@@ -2090,6 +2092,7 @@ function add_path_node(type)
 function colornode_spawn_reinforcement(classname, fromcolor)
 {
 	level endon(#"kill_color_replacements");
+	friendly_spawners_type = getclasscolorhash(classname, fromcolor);
 	while(level.friendly_spawners_types[friendly_spawners_type] > 0)
 	{
 		spawn = undefined;

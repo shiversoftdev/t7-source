@@ -1282,6 +1282,7 @@ function merge(left, right, func_sort, param)
 {
 	result = [];
 	li = 0;
+	ri = 0;
 	while(li < left.size && ri < right.size)
 	{
 		b_result = undefined;
@@ -1504,6 +1505,7 @@ function quicksortmid(array, start, end, compare_func)
 	}
 	if(end - start >= 1)
 	{
+		pivot = array[start];
 		while(k > i)
 		{
 			while([[compare_func]](array[i], pivot) && i <= end && k > i)

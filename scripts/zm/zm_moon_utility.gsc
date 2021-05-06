@@ -197,7 +197,7 @@ function airlock_buy_think()
 	{
 		cost = self.zombie_cost;
 	}
-	while(1)
+	while(true)
 	{
 		switch(self.script_noteworthy)
 		{
@@ -216,7 +216,7 @@ function airlock_buy_think()
 				}
 				break;
 			}
-			default
+			default:
 			{
 				self zm_utility::set_hint_string(self, "default_buy_door", cost);
 				if(!self airlock_buy())
@@ -410,7 +410,7 @@ function airlock_init()
 */
 function airlock_think()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", who);
 		if(isdefined(self.doors[0].startpos) && self.doors[0].startpos != self.doors[0].origin)
@@ -421,6 +421,7 @@ function airlock_think()
 		{
 			self.doors[i] thread airlock_activate(0.25, 1);
 		}
+		self._door_open = 1;
 		while(self moon_airlock_occupied() || (isdefined(self.doors[0].door_moving) && self.doors[0].door_moving == 1))
 		{
 			wait(0.1);
@@ -687,7 +688,8 @@ function moon_intermission()
 	self.game_over_bg.vertalign = "fullscreen";
 	self.game_over_bg setshader("black", 640, 480);
 	self.game_over_bg.alpha = 1;
-	while(1)
+	org = undefined;
+	while(true)
 	{
 		points = array::randomize(points);
 		for(i = 0; i < points.size; i++)
@@ -962,7 +964,7 @@ function check_for_grenade_damage_on_window(grenade_origin)
 */
 function check_for_grenade_throw()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_fire", grenade, weapname);
 		grenade thread wait_for_grenade_explode(self);
@@ -988,7 +990,8 @@ function glass_breach_think()
 		self.fxpos_array = struct::get_array(self.target, "targetname");
 	}
 	self.health = 99999;
-	while(1)
+	self.damage_state = 0;
+	while(true)
 	{
 		self waittill(#"damage", amount, attacker, direction, point, dmg_type);
 		if(isplayer(attacker) && (dmg_type == "MOD_PROJECTILE" || dmg_type == "MOD_PROJECTILE_SPLASH"))

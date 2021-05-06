@@ -116,7 +116,7 @@ function zombie_caveslide_anim_failsafe()
 	trig = getent("zombie_cave_slide_failsafe", "targetname");
 	if(isdefined(trig))
 	{
-		while(1)
+		while(true)
 		{
 			trig waittill(#"trigger", who);
 			if(isdefined(who.sliding) && who.sliding)
@@ -147,7 +147,7 @@ function slide_trig_watch()
 	self triggerenable(0);
 	level waittill(#"slide_open");
 	self triggerenable(1);
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", who);
 		if(who.animname == "zombie" || who.animname == "sonic_zombie" || who.animname == "napalm_zombie")
@@ -204,6 +204,7 @@ function zombie_sliding(slide_node)
 		self setphysparams(15, 0, 24);
 	}
 	self setgoalnode(slide_node);
+	check_dist_squared = 3600;
 	while(distancesquared(self.origin, slide_node.origin) > check_dist_squared)
 	{
 		wait(0.01);
@@ -425,7 +426,8 @@ function array_remove(array, object)
 function slide_player_enter_watch()
 {
 	level endon(#"fake_death");
-	while(1)
+	trig = getent("cave_slide_force_crouch", "targetname");
+	while(true)
 	{
 		trig waittill(#"trigger", who);
 		if(isdefined(who) && isplayer(who) && who.sessionstate != "spectator" && (!(isdefined(who.on_slide) && who.on_slide)))
@@ -448,7 +450,8 @@ function slide_player_enter_watch()
 */
 function slide_player_exit_watch()
 {
-	while(1)
+	trig = getent("cave_slide_force_stand", "targetname");
+	while(true)
 	{
 		trig waittill(#"trigger", who);
 		if(isdefined(who) && isplayer(who) && who.sessionstate != "spectator" && (isdefined(who.on_slide) && who.on_slide))

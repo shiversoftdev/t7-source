@@ -227,7 +227,7 @@ function function_19575106(weapon, position, attacker, normal)
 function function_292e5297()
 {
 	self endon(#"hash_d6e52217");
-	while(1)
+	while(true)
 	{
 		foreach(var_bc6b0872, e_player in level.activeplayers)
 		{
@@ -386,6 +386,7 @@ function function_308e6c6f()
 function function_1d3c583d()
 {
 	self endon(#"demongate_chomper_despawning");
+	self.n_timer = 0;
 	while(self.n_timer < 3)
 	{
 		if(!self flag::get("chomper_attacking") && (!(isdefined(self.var_e3146903) && self.var_e3146903)))
@@ -607,7 +608,7 @@ function function_3a5a56c7()
 	self endon(#"hash_368634cd");
 	if(self.target_enemy.archetype === "mechz")
 	{
-		while(1)
+		while(true)
 		{
 			self clientfield::increment("demongate_chomper_bite_fx", 1);
 			wait(1);
@@ -615,7 +616,7 @@ function function_3a5a56c7()
 	}
 	else
 	{
-		while(1)
+		while(true)
 		{
 			self waittill(#"hash_48e4a902");
 			self clientfield::increment("demongate_chomper_bite_fx", 1);
@@ -673,7 +674,7 @@ function function_c5e710f7()
 	self endon(#"death");
 	self endon(#"hash_368634cd");
 	var_f1d8a1fc endon(#"death");
-	while(1)
+	while(true)
 	{
 		var_e388672 = isdefined(var_f1d8a1fc.has_faceplate) && (var_f1d8a1fc.has_faceplate ? 6 : 1);
 		var_85b50675 = anglestoforward(self.target_enemy.angles) * var_e388672;

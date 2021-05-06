@@ -309,7 +309,7 @@ function monitorreloads()
 {
 	self endon(#"disconnect");
 	self endon(#"killmonitorreloads");
-	while(1)
+	while(true)
 	{
 		self waittill(#"reload");
 		currentweapon = self getcurrentweapon();
@@ -737,7 +737,8 @@ function spawnwatcher()
 	self.pers["stickExplosiveKill"] = 0;
 	self.pers["pistolHeadshot"] = 0;
 	self.pers["assaultRifleHeadshot"] = 0;
-	while(1)
+	self.pers["killNemesis"] = 0;
+	while(true)
 	{
 		self waittill(#"spawned_player");
 		self.pers["longshotsPerLife"] = 0;
@@ -767,7 +768,8 @@ function watchfordtp()
 	self endon(#"disconnect");
 	self endon(#"death");
 	self endon(#"killdtpmonitor");
-	while(1)
+	self.dtptime = 0;
+	while(true)
 	{
 		self waittill(#"dtp_end");
 		self.dtptime = gettime() + 4000;
@@ -788,7 +790,8 @@ function watchformantle()
 	self endon(#"disconnect");
 	self endon(#"death");
 	self endon(#"killmantlemonitor");
-	while(1)
+	self.mantletime = 0;
+	while(true)
 	{
 		self waittill(#"mantle_start", mantleendtime);
 		self.mantletime = mantleendtime;
@@ -946,7 +949,7 @@ function challengeroundend(data)
 			}
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}
@@ -1642,7 +1645,7 @@ function challengegameend(data)
 				}
 			}
 		}
-		default
+		default:
 		{
 			break;
 		}
@@ -1740,7 +1743,7 @@ function holdflagentirematch(team, label)
 			event = "hold_c_entire_match";
 			break;
 		}
-		default
+		default:
 		{
 			return;
 		}
@@ -2625,7 +2628,7 @@ function eventreceived(eventname)
 			}
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}
@@ -2647,7 +2650,7 @@ function monitor_player_sprint()
 	self endon(#"killplayersprintmonitor");
 	self endon(#"death");
 	self.lastsprinttime = undefined;
-	while(1)
+	while(true)
 	{
 		self waittill(#"sprint_begin");
 		self waittill(#"sprint_end");

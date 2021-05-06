@@ -403,7 +403,7 @@ private function function_bd5d4573()
 private function function_98f178fc(entity)
 {
 	entity endon(#"death");
-	while(1)
+	while(true)
 	{
 		/#
 			recordcircle(entity.origin, 700, (1, 0, 0), "", entity);
@@ -918,7 +918,7 @@ function function_95adf61c(player)
 function function_f95febaf(player)
 {
 	self endon(#"revive_terminated");
-	while(1)
+	while(true)
 	{
 		if(isdefined(player.revivetrigger) && player.revivetrigger.beingrevived === 1 && player.var_c35d3027 !== 1)
 		{
@@ -1001,7 +1001,7 @@ private function function_36af0313(entity, var_109b8552)
 	entity notify(#"hash_36af0313");
 	entity endon(#"hash_36af0313");
 	entity.var_92aa697 = 1;
-	while(1)
+	while(true)
 	{
 		if(!isdefined(entity.var_8cf1ff79))
 		{

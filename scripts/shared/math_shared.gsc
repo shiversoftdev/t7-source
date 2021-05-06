@@ -311,7 +311,7 @@ function get_dot_direction(v_point, b_ignore_z, b_normalize, str_direction, b_us
 			v_direction = anglestoup(v_angles) * -1;
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				assertmsg(str_direction + "");
@@ -473,6 +473,7 @@ function random_normal_distribution(mean, std_deviation, lower_bound, upper_boun
 	x1 = 0;
 	x2 = 0;
 	w = 1;
+	y1 = 0;
 	while(w >= 1)
 	{
 		x1 = 2 * randomfloatrange(0, 1) - 1;

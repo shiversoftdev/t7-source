@@ -94,7 +94,7 @@ function function_fa12cef4()
 */
 function hacker_round_reward()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"end_of_round");
 		if(!isdefined(level._from_nml))
@@ -137,7 +137,7 @@ function hacker_round_reward()
 */
 function hacker_debug()
 {
-	while(1)
+	while(true)
 	{
 		for(i = 0; i < level._hackable_objects.size; i++)
 		{
@@ -182,7 +182,8 @@ function hacker_trigger_pool_think()
 		level._zombie_hacker_trigger_pool_size = 8;
 	}
 	pool_active = 0;
-	while(1)
+	level._hacker_pool = [];
+	while(true)
 	{
 		if(pool_active)
 		{
@@ -573,7 +574,7 @@ function deregister_hackable(noteworthy)
 */
 function hack_trigger_think()
 {
-	while(1)
+	while(true)
 	{
 		players = getplayers();
 		for(i = 0; i < players.size; i++)
@@ -925,7 +926,7 @@ function hackable_object_thread()
 	{
 		duration = self.script_float;
 	}
-	while(1)
+	while(true)
 	{
 		wait(0.1);
 		if(!isdefined(self._trigger))
@@ -1049,7 +1050,7 @@ function function_b743c597()
 	self notify(#"hash_36caa6f");
 	self endon(#"hash_36caa6f");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"player_given", equipment);
 		if(equipment == level.var_bbd4901d)
@@ -1073,7 +1074,7 @@ function function_778301bd()
 	self notify(#"hash_b90a8375");
 	self endon(#"hash_b90a8375");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"hash_e15d5390");
 		self clientfield::set_player_uimodel("hudItems.showDpadDown_HackTool", 0);
@@ -1142,7 +1143,8 @@ function player_qualifier(player)
 */
 function hide_hint_when_hackers_active(custom_logic_func, custom_logic_func_param)
 {
-	while(1)
+	invis_to_any = 0;
+	while(true)
 	{
 		if(isdefined(custom_logic_func))
 		{

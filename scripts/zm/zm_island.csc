@@ -566,6 +566,7 @@ function set_heavy_web_fade_material(localclientnum, oldval, newval, bnewent, bi
 		var_b05b3457 = 0.01;
 		var_bbfa5d7d = newval;
 		self playsound(0, "zmb_spider_web_hero_destroy");
+		i = 1;
 		while(i > var_bbfa5d7d)
 		{
 			if(isdefined(self))

@@ -126,7 +126,8 @@ function function_5e93cd08()
 function function_4575bd06()
 {
 	level.var_bf361dc0 = randomintrange(8, 9);
-	while(1)
+	level.var_6e63e659 = 0;
+	while(true)
 	{
 		while(level.round_number < level.var_bf361dc0)
 		{

@@ -119,7 +119,8 @@ function channeling_stone_glow(localclientnum, oldval, newval, bnewent, binitial
 		var_b1382f05 = n_start_time + 0.85 * 1000;
 		var_c8a6e70a = 0;
 		var_2be3abbd = 1;
-		while(1)
+		n_shader_value = 0;
+		while(true)
 		{
 			n_time = gettime();
 			if(n_time >= var_b1382f05)

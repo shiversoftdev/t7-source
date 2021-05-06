@@ -99,6 +99,7 @@ function function_7892610e()
 {
 	wait(0.05);
 	n_start_time = gettime();
+	n_total_time = 0;
 	while(isdefined(level.active_powerups) && level.active_powerups.size)
 	{
 		wait(0.5);
@@ -174,7 +175,7 @@ function function_ed573cc2(var_d858aeb5)
 			v_origin = var_682b51de + anglestoright(self.angles) * 60 + v_up;
 			break;
 		}
-		default
+		default:
 		{
 			v_origin = var_7ec6c170;
 			break;

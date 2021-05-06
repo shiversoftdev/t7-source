@@ -345,6 +345,7 @@ function function_c7ac59e(roundwinner, var_6ea8eea4)
 */
 function onscoreclosemusic()
 {
+	teamscores = [];
 	while(!level.gameended)
 	{
 		scorelimit = level.scorelimit;
@@ -388,7 +389,7 @@ function onscoreclosemusic()
 */
 function onplayerconnect()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"connected", player);
 		player.var_d1d70226 = 1;
@@ -843,7 +844,7 @@ function setuproundstarthud()
 function eliminatedhudmonitor()
 {
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		props = get_alive_nonspecating_players(game["defenders"]);
 		level.elim_hud setvalue(props.size);
@@ -1055,7 +1056,8 @@ function function_cdee7177()
 	level endon(#"game_ended");
 	level endon(#"props_hide_over");
 	var_8cbf9eb6 = int(level.phsettings.prophidetime + gettime() / 1000);
-	while(1)
+	totaltimepassed = 0;
+	while(true)
 	{
 		level waittill(#"host_migration_begin");
 		level.phcountdowntimer.alpha = 0;
@@ -1154,7 +1156,7 @@ function getthirdpersonrangeforsize(propsize)
 		{
 			return 320;
 		}
-		default
+		default:
 		{
 			/#
 				assertmsg("" + propsize);
@@ -1198,7 +1200,7 @@ function getthirdpersonheightoffsetforsize(propsize)
 		{
 			return 40;
 		}
-		default
+		default:
 		{
 			/#
 				assertmsg("" + propsize);
@@ -1280,7 +1282,7 @@ function propwhistle()
 		var_1bb1b603 = var_170a102c[0].origin;
 	}
 	hostmigration::waitlongdurationwithhostmigrationpause(level.phsettings.prophidetime + level.phsettings.propwhistletime);
-	while(1)
+	while(true)
 	{
 		if(time + var_33840fb2 - var_defcb34f < gettime())
 		{
@@ -1400,7 +1402,7 @@ function function_500dc7d9(damagecallback)
 {
 	level endon(#"game_ended");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", damage, attacker, direction_vec, point, meansofdeath, modelname, tagname, partname, weapon, idflags);
 		self thread [[damagecallback]](damage, attacker, direction_vec, point, meansofdeath, modelname, tagname, partname, weapon, idflags);
@@ -1933,7 +1935,7 @@ function getpropsize(propsizetext)
 			propsize = 550;
 			break;
 		}
-		default
+		default:
 		{
 			mapname = getmapname();
 			var_8c6b47e7 = "gamedata/tables/mp/" + mapname + "_ph.csv";
@@ -2139,7 +2141,7 @@ function waittillrecoveredhealth(time, interval)
 	{
 		time = 0;
 	}
-	while(1)
+	while(true)
 	{
 		if(self.health != self.maxhealth)
 		{
@@ -2394,7 +2396,7 @@ function function_a8e0199(team)
 	level endon(#"game_ended");
 	self endon(#"disconnect");
 	self endon(#"hash_fe365ac1");
-	while(1)
+	while(true)
 	{
 		level waittill(#"connected", player);
 		self thread function_cb3d2d31(player, team);
@@ -2416,7 +2418,7 @@ function function_cb3d2d31(player, team)
 	self endon(#"disconnect");
 	self endon(#"hash_fe365ac1");
 	player endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		if(isdefined(player.hasspawned) && player.hasspawned && player.team != team)
 		{
@@ -2474,7 +2476,7 @@ function stillalivexp()
 	level endon(#"game_ended");
 	level.var_3c96f157["kill"]["value"] = 300;
 	level waittill(#"props_hide_over");
-	while(1)
+	while(true)
 	{
 		hostmigration::waitlongdurationwithhostmigrationpause(10);
 		/#
@@ -2519,7 +2521,7 @@ function stillalivexp()
 					scoreevents::processscoreevent("still_alive_extra_large_bonus", player);
 					break;
 				}
-				default
+				default:
 				{
 					break;
 				}
@@ -2541,7 +2543,7 @@ function tracktimealive()
 {
 	level endon(#"game_ended");
 	function_45c842e9();
-	while(1)
+	while(true)
 	{
 		foreach(var_a0c3a634, player in level.players)
 		{
@@ -2761,7 +2763,8 @@ function function_d9c4b3d0()
 */
 function function_1edf732a()
 {
-	while(1)
+	level.var_f2aa1432 = 0;
+	while(true)
 	{
 		level waittill(#"host_migration_begin");
 		starttime = gettime();
@@ -2930,7 +2933,7 @@ function attackerregenammo()
 	self notify(#"attackerregenammo");
 	self endon(#"attackerregenammo");
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		self waittill(#"reload");
 		primaryweapon = self getcurrentweapon();
@@ -3573,7 +3576,7 @@ function function_b37cf698(eattacker, einflictor, weapon, meansofdeath, damage, 
 			}
 			break;
 		}
-		default
+		default:
 		{
 			if(isdefined(level.shellshockonplayerdamage))
 			{
@@ -4198,6 +4201,7 @@ function function_8e704405()
 		}
 		attempts = 9;
 		newlocation = location.origin;
+		rand = randomfloat(1);
 		while(attempts > 0)
 		{
 			var_911938e0 = dist * rand;
@@ -4605,7 +4609,7 @@ function _updateclonepathing()
 	{
 		level.var_e5ad813f.var_dffd326e = 0;
 	}
-	while(1)
+	while(true)
 	{
 		if(!isdefined(self.lastknownpos))
 		{

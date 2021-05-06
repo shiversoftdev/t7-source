@@ -243,7 +243,7 @@ function airsupport(localclientnum, x, y, z, type, yaw, team, teamfaction, owner
 			teamfaction = "russian";
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				println("");
@@ -272,7 +272,7 @@ function airsupport(localclientnum, x, y, z, type, yaw, team, teamfaction, owner
 			team = "free";
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				println("" + team + "");

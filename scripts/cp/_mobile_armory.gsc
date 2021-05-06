@@ -427,7 +427,7 @@ function function_e76edd0b(var_ab455203)
 {
 	self endon(#"death");
 	var_ab455203 endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", entity);
 		if(!isdefined(var_ab455203))
@@ -463,6 +463,7 @@ function function_69cca2a0(var_ab455203)
 	var_ab455203 showpart("tag_weapons_04_jnt");
 	var_ab455203 scene::play("p7_fxanim_gp_mobile_armory_open_bundle", var_ab455203);
 	wait(1);
+	var_d3571721 = 1;
 	while(var_d3571721 > 0)
 	{
 		var_d3571721 = 0;

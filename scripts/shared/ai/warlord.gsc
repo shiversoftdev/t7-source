@@ -1715,7 +1715,7 @@ function warlordspawnsetup()
 			clientfield::set("warlord_type", 2);
 			break;
 		}
-		default
+		default:
 		{
 			clientfield::set("warlord_type", 1);
 			break;
@@ -1778,7 +1778,7 @@ function repulsor_fx()
 {
 	self endon(#"death");
 	self endon(#"killing_repulsor");
-	while(1)
+	while(true)
 	{
 		self util::waittill_any("projectile_applyattractor", "play_meleefx");
 		playfxontag("vehicle/fx_quadtank_airburst", self, "tag_origin");

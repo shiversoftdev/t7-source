@@ -94,7 +94,7 @@ function tank_discovery_vo()
 {
 	max_dist_sq = 640000;
 	level flag::wait_till("activate_zone_village_0");
-	while(1)
+	while(true)
 	{
 		a_players = getplayers();
 		foreach(var_b41743b4, e_player in a_players)
@@ -132,7 +132,8 @@ function tank_drop_powerups()
 		s_drop = struct::get("tank_powerup_drop_" + drop_num, "targetname");
 		a_drop_nodes[i].drop_pos = s_drop.origin;
 	}
-	while(1)
+	a_possible_powerups = array("nuke", "full_ammo", "zombie_blood", "insta_kill", "fire_sale", "double_points");
+	while(true)
 	{
 		self flag::wait_till("tank_moving");
 		foreach(var_9d8c8c73, node in a_drop_nodes)
@@ -177,7 +178,7 @@ function zm_mantle_over_40_move_speed_override()
 			traversealias = "barrier_sprint";
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				assertmsg("" + self.zombie_move_speed + "");
@@ -262,7 +263,8 @@ function tank_debug_tags()
 		setdvar("", "");
 		adddebugcommand("");
 		level flag::wait_till("");
-		while(1)
+		a_spots = struct::get_array("", "");
+		while(true)
 		{
 			if(getdvarstring("") == "")
 			{
@@ -521,7 +523,7 @@ function do_cooldown_fx()
 {
 	self endon(#"death");
 	level flag::wait_till("start_zombie_round_logic");
-	while(1)
+	while(true)
 	{
 		self clientfield::set("tank_cooldown_fx", 2);
 		self flag::wait_till("tank_moving");
@@ -544,7 +546,7 @@ function do_cooldown_fx()
 function do_treadfx()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self flag::wait_till("tank_moving");
 		self clientfield::set("tank_tread_fx", 1);
@@ -566,7 +568,7 @@ function function_118e38b5()
 {
 	self endon(#"death");
 	self vehicle::lights_off();
-	while(1)
+	while(true)
 	{
 		self flag::wait_till("tank_moving");
 		self vehicle::lights_on();
@@ -587,7 +589,7 @@ function function_118e38b5()
 function disconnect_reconnect_paths(vh_tank)
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self disconnectpaths();
 		wait(1);
@@ -639,7 +641,7 @@ function players_on_tank_update()
 {
 	level flag::wait_till("start_zombie_round_logic");
 	self thread tank_disconnect_paths();
-	while(1)
+	while(true)
 	{
 		a_players = getplayers();
 		foreach(var_3774249d, e_player in a_players)
@@ -859,7 +861,7 @@ function tank_left_behind()
 */
 function tank_watch_use()
 {
-	while(1)
+	while(true)
 	{
 		self.t_use waittill(#"trigger", e_player);
 		cooling_down = self flag::get("tank_cooldown");
@@ -914,7 +916,7 @@ function activate_tank_wait_with_no_cost()
 */
 function tank_call_box()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_player);
 		cooling_down = level.vh_tank flag::get("tank_cooldown");
@@ -994,7 +996,7 @@ function tank_movement()
 	n_location_index = 0;
 	self.str_location_current = self.a_locations[n_location_index];
 	tank_call_boxes_update();
-	while(1)
+	while(true)
 	{
 		self flag::wait_till("tank_activated");
 		if(!self.var_78665041)
@@ -1095,7 +1097,7 @@ function tank_kill_players()
 	{
 		player.var_32857832 = 0;
 	}
-	while(1)
+	while(true)
 	{
 		self.t_kill waittill(#"trigger", player);
 		if(!(isdefined(player.b_already_on_tank) && player.b_already_on_tank) && (!(isdefined(player.var_d0cd73ec) && player.var_d0cd73ec)))
@@ -1266,6 +1268,7 @@ function follow_path(n_path_start)
 	#/
 	self notify(#"newpath");
 	self endon(#"newpath");
+	n_next_point = n_path_start;
 	while(isdefined(n_next_point))
 	{
 		self.n_next_node = getvehiclenode(n_next_point.target, "targetname");
@@ -1533,7 +1536,8 @@ function zombies_watch_tank()
 	a_tank_tags = tank_tag_array_setup();
 	self.a_tank_tags = a_tank_tags;
 	a_mechz_tags = mechz_tag_array_setup();
-	while(1)
+	self.a_mechz_tags = a_mechz_tags;
+	while(true)
 	{
 		a_zombies = zombie_utility::get_round_enemy_array();
 		foreach(var_aaa41116, e_zombie in a_zombies)
@@ -1737,7 +1741,7 @@ function jump_down_tag()
 function watch_zombie_fall_off_tank()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		if(self.tank_state == "on_tank" || self.tank_state == "exit_tank")
 		{
@@ -1791,7 +1795,8 @@ function tank_zombie_think()
 	self endon(#"death");
 	self.tank_state = "none";
 	self thread watch_zombie_fall_off_tank();
-	while(1)
+	think_time = 0.5;
+	while(true)
 	{
 		a_players_on_tank = get_players_on_tank(1);
 		tag_range = 32;
@@ -1986,6 +1991,7 @@ function update_zombie_goal_pos(str_position, stop_notify)
 	{
 		self endon(stop_notify);
 	}
+	s_script_origin = struct::get(str_position, "targetname");
 	while(self.tank_state != "none")
 	{
 		if(isdefined(s_script_origin))
@@ -2156,7 +2162,7 @@ function get_closest_valid_tank_tag(jumping_down = 0)
 function zombieanimnotetrackthink(str_anim_notetrack_notify, chunk, node)
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(str_anim_notetrack_notify, str_notetrack);
 		if(str_notetrack == "end")
@@ -2246,7 +2252,7 @@ function tank_flamethrower_get_targets(str_tag, n_flamethrower_id)
 function tank_flamethrower_cycle_targets(str_tag, n_flamethrower_id)
 {
 	self endon("flamethrower_stop_" + n_flamethrower_id);
-	while(1)
+	while(true)
 	{
 		a_targets = tank_flamethrower_get_targets(str_tag, n_flamethrower_id);
 		foreach(var_e78d576, ai in a_targets)
@@ -2273,7 +2279,8 @@ function tank_flamethrower_cycle_targets(str_tag, n_flamethrower_id)
 function tank_flamethrower(str_tag, n_flamethrower_id)
 {
 	zombieless_waits = 0;
-	while(1)
+	time_between_flames = randomfloatrange(3, 6);
+	while(true)
 	{
 		wait(1);
 		if(n_flamethrower_id == 1)
@@ -2322,7 +2329,7 @@ function tank_flamethrower(str_tag, n_flamethrower_id)
 function flamethrower_damage_zombies(n_flamethrower_id, str_tag)
 {
 	self endon("flamethrower_stop_" + n_flamethrower_id);
-	while(1)
+	while(true)
 	{
 		a_targets = tank_flamethrower_get_targets(str_tag, n_flamethrower_id);
 		foreach(var_ea17571c, ai_zombie in a_targets)

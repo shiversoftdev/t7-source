@@ -23,7 +23,7 @@
 function function_40206fdf()
 {
 	level endon(#"hash_1684cf71");
-	while(1)
+	while(true)
 	{
 		player = getplayers()[0];
 		wait(0.05);
@@ -183,7 +183,7 @@ function function_92c840a6(delay = 0.1)
 	level endon(#"hash_a291d1ee");
 	self endon(#"disconnect");
 	wait(delay);
-	while(1)
+	while(true)
 	{
 		if(self.doa.lives <= 3)
 		{
@@ -459,7 +459,8 @@ function function_a3bba13d()
 function function_f24eee41()
 {
 	level endon(#"hash_da8786df");
-	while(1)
+	lockspot = self.origin;
+	while(true)
 	{
 		self setorigin(lockspot);
 		wait(0.05);
@@ -481,7 +482,7 @@ function devguithink()
 	setdvar("scr_spawn_pickup", "");
 	setdvar("scr_spawn_room_name", "");
 	setdvar("scr_spawn_room", "");
-	while(1)
+	while(true)
 	{
 		if(getdvarint("scr_doa_kingme_soak_think", 0))
 		{
@@ -746,6 +747,7 @@ function devguithink()
 						room.var_57ce7582[room.var_57ce7582.size] = round_number;
 					}
 				}
+				var_7dce6dce = 1;
 				while(var_7dce6dce)
 				{
 					var_7dce6dce = 0;
@@ -866,6 +868,7 @@ function function_5e6b8376(origin, radius, time, color = (0, 1, 0))
 		hemires = circleres / 2;
 		circleinc = 360 / circleres;
 		circleres++;
+		timer = gettime() + time * 1000;
 		while(gettime() < timer)
 		{
 			plotpoints = [];
@@ -992,6 +995,7 @@ function function_a0e51d80(point, timesec, size, color)
 	var_5e2b69e1 = point + (0, halfwidth * -1, 0);
 	var_842de44a = point + (0, halfwidth, 0);
 	h1 = point + (0, 0, halfwidth * -1);
+	h2 = point + (0, 0, halfwidth);
 	while(end > gettime())
 	{
 		/#
@@ -1014,6 +1018,7 @@ function function_a0e51d80(point, timesec, size, color)
 */
 function debugline(p1, p2, timesec, color)
 {
+	end = gettime() + timesec * 1000;
 	while(end > gettime())
 	{
 		/#

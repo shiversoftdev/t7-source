@@ -207,6 +207,7 @@ function onroundendgame(roundwinner)
 */
 function onscoreclosemusic()
 {
+	teamscores = [];
 	while(!level.gameended)
 	{
 		scorelimit = level.scorelimit;

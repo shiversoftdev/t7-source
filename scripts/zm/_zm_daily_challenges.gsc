@@ -113,7 +113,7 @@ function on_spawned()
 function round_tracking()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill(#"end_of_round");
 		self.a_daily_challenges[3]++;
@@ -408,7 +408,7 @@ function death_check_for_challenge_updates(e_attacker)
 function spent_points_tracking()
 {
 	level endon(#"end_game");
-	while(1)
+	while(true)
 	{
 		level waittill(#"spent_points", player, n_points);
 		player.a_daily_challenges[1] = player.a_daily_challenges[1] + n_points;
@@ -432,7 +432,7 @@ function spent_points_tracking()
 function earned_points_tracking()
 {
 	level endon(#"end_game");
-	while(1)
+	while(true)
 	{
 		level waittill(#"earned_points", player, n_points);
 		if(level.zombie_vars[player.team]["zombie_point_scalar"] == 2)
@@ -588,7 +588,7 @@ function increment_nuked_zombie()
 function perk_purchase_tracking()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"perk_purchased", str_perk);
 		self zm_stats::increment_challenge_stat("ZM_DAILY_PURCHASE_PERKS");
@@ -610,7 +610,7 @@ function perk_purchase_tracking()
 function perk_drink_tracking()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"perk_bought");
 		self zm_stats::increment_challenge_stat("ZM_DAILY_DRINK_PERKS");

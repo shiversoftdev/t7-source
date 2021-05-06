@@ -172,7 +172,7 @@ function function_f7b738bf(e_player)
 */
 function function_5f435187()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger_activated", e_who);
 		if(level flag::get("special_round") || level flag::get("ee_round"))
@@ -402,7 +402,7 @@ function function_6b964717()
 function function_855f59cb()
 {
 	level endon(#"end_game");
-	while(1)
+	while(true)
 	{
 		level waittill(#"end_of_round");
 		level flag::set("between_rounds");
@@ -807,7 +807,8 @@ function function_306f40e1(str_location)
 		var_8da17f38 = function_5cf8b853(str_location);
 		wait(var_8da17f38);
 	}
-	while(1)
+	level.var_8cc024f2.n_round_zombies = zombie_utility::get_current_zombie_count() + level.zombie_total + level.zombie_respawns;
+	while(true)
 	{
 		if(level.var_8cc024f2.var_d2e1ce53 < var_a42f2fa9)
 		{
@@ -924,7 +925,8 @@ function function_e677d12()
 	var_165d49f6 showpart("tag_health_green");
 	var_165d49f6 hidepart("tag_health_yellow");
 	var_165d49f6 hidepart("tag_health_red");
-	while(1)
+	var_603f1f19 = 1;
+	while(true)
 	{
 		self waittill(#"attackable_damaged");
 		if(var_603f1f19)
@@ -1003,7 +1005,7 @@ function function_cdc52f02()
 	var_b454101b = level.var_8cc024f2.var_b454101b;
 	var_e975a0cb = 0;
 	self thread function_1ce76e16();
-	while(1)
+	while(true)
 	{
 		n_health_percent = var_b454101b.health / level.var_8cc024f2.n_health_max;
 		if(n_health_percent > 0.15)
@@ -1348,7 +1350,7 @@ function function_4843856e()
 function function_ba5071c4()
 {
 	level endon(#"hash_94bb84a1");
-	while(1)
+	while(true)
 	{
 		var_9b6a75aa = 1;
 		foreach(var_cf3dfb7d, e_player in level.players)
@@ -1514,7 +1516,7 @@ function function_8df46779(var_304415d7, var_57a3fb53)
 			self.var_9e067339 settext(&"ZM_STALINGRAD_DROP_POD_CYLINDER_ACQUIRED_BLUE");
 			break;
 		}
-		default
+		default:
 		{
 			self.var_9e067339 settext("");
 		}

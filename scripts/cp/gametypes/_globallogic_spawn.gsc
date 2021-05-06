@@ -207,7 +207,7 @@ function spawnplayerprediction()
 	self endon(#"game_ended");
 	self endon(#"joined_spectators");
 	self endon(#"spawned");
-	while(1)
+	while(true)
 	{
 		wait(0.5);
 		self [[level.onspawnplayer]](1);
@@ -440,7 +440,7 @@ function vehicledeathwaiter()
 	self notify(#"vehicledeathwaiter");
 	self endon(#"vehicledeathwaiter");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"vehicle_death", vehicle_died);
 		if(vehicle_died)
@@ -1111,7 +1111,7 @@ function waitrespawnorsafespawnbutton()
 {
 	self endon(#"disconnect");
 	self endon(#"end_respawn");
-	while(1)
+	while(true)
 	{
 		if(self usebuttonpressed())
 		{

@@ -243,6 +243,7 @@ function function_c003e53f(vdir, var_f120d111, var_f40ed68d, var_9aadeff9, var_9
 		var_582dff76 = 1;
 	}
 	forwardvec = (vdir[0], vdir[1], 0);
+	forwardvec = vectornormalize(forwardvec);
 	while(!(isdefined(var_505f8faa) && var_505f8faa && (isdefined(var_582dff76) && var_582dff76)))
 	{
 		if(!(isdefined(var_505f8faa) && var_505f8faa))

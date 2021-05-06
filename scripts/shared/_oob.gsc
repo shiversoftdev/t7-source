@@ -195,7 +195,7 @@ function resetoobtimer(is_host_migrating, b_disable_timekeep)
 function waitforclonetouch()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", clone);
 		if(isactor(clone) && isdefined(clone.isaiclone) && clone.isaiclone && !clone isplayinganimscripted())
@@ -235,7 +235,7 @@ function getadjusedplayer(player)
 function waitforplayertouch()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		if(sessionmodeismultiplayergame())
 		{
@@ -394,7 +394,7 @@ function watchforleave(trigger, entity)
 {
 	self endon(#"oob_exit");
 	entity endon(#"death");
-	while(1)
+	while(true)
 	{
 		if(entity istouchinganyoobtrigger())
 		{

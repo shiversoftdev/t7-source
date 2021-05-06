@@ -67,7 +67,7 @@ function parasite_damage()
 	self notify(#"parasite_damage_thread");
 	self endon(#"parasite_damage_thread");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", n_ammount, e_attacker);
 		if(isdefined(e_attacker) && (isdefined(e_attacker.is_parasite) && e_attacker.is_parasite) && (!(isdefined(e_attacker.squelch_damage_overlay) && e_attacker.squelch_damage_overlay)))
@@ -727,7 +727,7 @@ function path_update_interrupt()
 	self endon(#"near_goal");
 	self endon(#"reached_end_node");
 	wait(1);
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.current_pathto_pos))
 		{

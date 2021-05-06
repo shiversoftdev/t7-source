@@ -95,7 +95,7 @@ function _ammo_refill_think()
 	}
 	t_ammo_cache sethintstring(&"SCRIPT_AMMO_REFILL");
 	t_ammo_cache setcursorhint("HINT_NOICON");
-	while(1)
+	while(true)
 	{
 		t_ammo_cache waittill(#"trigger", e_player);
 		e_player disableweapons();
@@ -173,7 +173,7 @@ function _place_player_loadout()
 			n_offset_multiplier = -3;
 			break;
 		}
-		default
+		default:
 		{
 			n_offset_multiplier = -4;
 			break;
@@ -215,7 +215,7 @@ function _check_extra_slots()
 		#/
 		switch(self.model)
 		{
-			default
+			default:
 			{
 				tmp_offset = anglestoright(self gettagangles("auxilary_A")) * 5;
 				break;
@@ -278,7 +278,7 @@ function _debug_tags()
 function _loop_text(tag)
 {
 	/#
-		while(1)
+		while(true)
 		{
 			if(isdefined(self gettagorigin(tag)))
 			{

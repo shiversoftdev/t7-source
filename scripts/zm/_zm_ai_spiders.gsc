@@ -150,7 +150,7 @@ function function_3a14f1bc()
 function function_83a70ec3()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"bled_out");
 		if(level flag::get("spider_round_in_progress"))
@@ -244,7 +244,8 @@ function function_5c48d276()
 function function_fd32a77c()
 {
 	clips_on = 0;
-	while(1)
+	level.spider_clips = getentarray("spider_clips", "targetname");
+	while(true)
 	{
 		for(i = 0; i < level.spider_clips.size; i++)
 		{
@@ -260,6 +261,7 @@ function function_fd32a77c()
 			level.spider_clips[i] disconnectpaths();
 			util::wait_network_frame();
 		}
+		var_26b8af54 = 1;
 		while(var_26b8af54 || level flag::get("spider_round"))
 		{
 			var_26b8af54 = 0;
@@ -374,7 +376,7 @@ function function_7c1ef59b()
 function function_747a2fea()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", n_amount, e_attacker, v_direction, v_hit_location, str_mod);
 		if(isplayer(e_attacker))
@@ -427,7 +429,7 @@ function function_eebdfab2()
 {
 	self endon(#"death");
 	wait(randomfloatrange(3, 6));
-	while(1)
+	while(true)
 	{
 		self playsoundontag("zmb_spider_vocals_ambient", "tag_eye");
 		wait(randomfloatrange(2, 6));
@@ -507,7 +509,8 @@ function function_2a424152()
 	level.var_3013498 = level.round_number + randomintrange(4, 7);
 	level.var_5ccd3661 = level.var_3013498;
 	old_spawn_func = level.round_spawn_func;
-	while(1)
+	old_wait_func = level.round_wait_func;
+	while(true)
 	{
 		level waittill(#"between_round_over");
 		/#
@@ -615,7 +618,8 @@ function function_a2a299a1()
 			var_c15d44e9 = getdvarint("");
 		}
 	#/
-	while(1)
+	level.zombie_total = var_c15d44e9;
+	while(true)
 	{
 		while(level.zombie_total > 0)
 		{
@@ -860,7 +864,7 @@ function function_1abf8192()
 			n_default_wait = 1.75;
 			break;
 		}
-		default
+		default:
 		{
 			n_default_wait = 1.5;
 			break;
@@ -903,7 +907,7 @@ function function_6e19aa86()
 				level.var_fda270a4 = 1300;
 				break;
 			}
-			default
+			default:
 			{
 				level.var_fda270a4 = 1600;
 				break;
@@ -954,7 +958,7 @@ function function_570247b9(var_19764360)
 			var_e27d607a = 1000000;
 			break;
 		}
-		default
+		default:
 		{
 			var_3a613778 = 2500;
 			var_e27d607a = 490000;
@@ -1134,6 +1138,7 @@ function function_f4bd92a2(n_to_spawn, s_spawn_point)
 	{
 		n_to_spawn = 1;
 	}
+	var_c46ed637 = 0;
 	while(var_c46ed637 < n_to_spawn)
 	{
 		var_19764360 = get_favorite_enemy();
@@ -1496,7 +1501,7 @@ function function_d002d19c()
 			self.var_1e831600.angles = self.e_bgb_machine.angles;
 		}
 	}
-	while(1)
+	while(true)
 	{
 		if(function_f67965ad(self.origin))
 		{
@@ -1533,7 +1538,7 @@ function function_8c3397a()
 		self waittill(#"web_torn");
 		self.e_bgb_machine thread zm_unitrigger::register_static_unitrigger(self.e_bgb_machine.unitrigger_stub, &bgb_machine::function_ededc488);
 	}
-	while(1)
+	while(true)
 	{
 		self.e_bgb_machine waittill(#"zbarrier_state_change");
 		if(isdefined(self.var_f83345c7) && self.var_f83345c7)
@@ -1564,7 +1569,7 @@ function function_a96551fe()
 	{
 		wait(0.5);
 	}
-	while(1)
+	while(true)
 	{
 		self trigger::wait_till();
 		if(isdefined(self.who.var_3940f450) && self.who.var_3940f450 || (isdefined(level.var_f618f3e1) && level.var_f618f3e1))
@@ -1761,6 +1766,7 @@ function function_7be01d65(str_zone)
 function function_cb33362d()
 {
 	self endon(#"web_torn");
+	str_zone = self.volumes[0].targetname;
 	while(!(isdefined(function_7be01d65(str_zone)) && function_7be01d65(str_zone)))
 	{
 		wait(1);
@@ -1781,7 +1787,7 @@ function function_e96bd0d2()
 {
 	self endon(#"web_torn");
 	self thread function_e85225c8();
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_who);
 		if(!(isdefined(e_who.var_3940f450) && e_who.var_3940f450) && (!(isdefined(e_who.var_93100ec2) && e_who.var_93100ec2)) && isai(e_who))
@@ -1810,7 +1816,8 @@ function function_e85225c8()
 	var_e08b3d94 = spawn("trigger_radius", self.origin, 1, 50, 50);
 	var_e08b3d94 endon(#"death");
 	self thread function_d1835ae4(var_e08b3d94);
-	while(1)
+	self.var_82b5ff7a = 0;
+	while(true)
 	{
 		var_e08b3d94 waittill(#"trigger", e_who);
 		if(e_who.archetype === "thrasher")
@@ -1920,7 +1927,7 @@ function function_9b4a5d94(var_e08b3d94)
 	self.var_a56241ac = 1;
 	self fx::play("spider_web_spider_enter", self.origin, self.angles, "stop_spider_web_enter", 0, "tag_body");
 	var_e08b3d94 thread function_6c15e157(1);
-	while(1)
+	while(true)
 	{
 		wait(0.05);
 		if(self istouching(var_e08b3d94) && (isdefined(var_e08b3d94.var_f83345c7) && var_e08b3d94.var_f83345c7))
@@ -2128,7 +2135,7 @@ function function_c915f7a9()
 {
 	var_a6a648f0 = self.stub.var_a6a648f0;
 	var_a6a648f0 endon(#"web_torn");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_who);
 		e_who.var_77f9de0d = self.stub.var_a6a648f0;
@@ -2211,7 +2218,7 @@ function function_8cf6fed9()
 function function_d3c8090f()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_fire", e_grenade, weapon);
 		e_grenade thread function_a5ee3628(weapon, self);
@@ -2230,7 +2237,7 @@ function function_d3c8090f()
 function function_eb951410()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_launcher_fire", e_grenade, weapon);
 		e_grenade thread function_a5ee3628(weapon, self);
@@ -2249,7 +2256,7 @@ function function_eb951410()
 function function_7d50634d()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"missile_fire", e_projectile, weapon);
 		e_projectile thread function_5165d3f2(weapon, self);
@@ -2340,7 +2347,7 @@ function function_1a393131()
 {
 	self endon(#"death");
 	self endon(#"web_torn");
-	while(1)
+	while(true)
 	{
 		self.var_1e831600 waittill(#"grenade_stuck", e_grenade);
 	}
@@ -2472,6 +2479,7 @@ function function_eca55d4c()
 	self endon(#"web_torn");
 	self.e_destructible setcandamage(1);
 	self.b_destroyed = 0;
+	var_50f39d2b = level.players[0];
 	while(!self.b_destroyed)
 	{
 		self.e_destructible waittill(#"damage", n_damage, e_attacker, v_vector, v_point, str_means_of_death, var_c4fe462, var_e64d69f9, var_c04aef90, w_weapon);
@@ -2629,7 +2637,7 @@ function function_9b41e249(var_eddcecaa = 1, str_type, b_completed = 0)
 			self clientfield::set("play_spider_web_tear_complete_fx", 4);
 			break;
 		}
-		default
+		default:
 		{
 			if(!b_completed)
 			{
@@ -2656,7 +2664,8 @@ function function_9b41e249(var_eddcecaa = 1, str_type, b_completed = 0)
 function function_d717ef02()
 {
 	self endon(#"death");
-	while(1)
+	self.var_255c77dc = 0;
+	while(true)
 	{
 		level waittill(#"end_of_round");
 		self.var_255c77dc = 0;

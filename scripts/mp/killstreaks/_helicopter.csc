@@ -172,6 +172,7 @@ function doreveal(local_client_num, direction)
 		startval = 1;
 		endval = 0;
 	}
+	priorvalue = startval;
 	while(startval >= 0 && startval <= 1)
 	{
 		self mapshaderconstant(local_client_num, 0, "scriptVector0", startval, 0, 0, 0);
@@ -466,6 +467,7 @@ function startfx_loop(localclientnum)
 	self thread helicopter_sounds::aircraft_dustkick(localclientnum);
 	startfx(localclientnum);
 	servertime = getservertime(0);
+	lastservertime = servertime;
 	while(isdefined(self))
 	{
 		if(servertime < lastservertime)
@@ -622,6 +624,7 @@ function updatemarkerthread(localclientnum)
 {
 	self endon(#"entityshutdown");
 	player = self;
+	killstreakcorebundle = struct::get_script_bundle("killstreak", "killstreak_core");
 	while(isdefined(player.markerobj))
 	{
 		viewangles = getlocalclientangles(localclientnum);

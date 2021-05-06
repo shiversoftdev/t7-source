@@ -49,9 +49,10 @@ function pack_trigger_think()
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		level flag::wait_till("enter_nml");
+		self.script_int = -1000;
 		while(level flag::get("enter_nml"))
 		{
 			wait(1);

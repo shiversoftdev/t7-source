@@ -141,7 +141,8 @@ function function_b018f2a7()
 */
 function count_network_frames()
 {
-	while(1)
+	level.network_frame = 0;
+	while(true)
 	{
 		util::wait_network_frame();
 		level.network_frame++;
@@ -159,7 +160,7 @@ function count_network_frames()
 */
 function keep_time()
 {
-	while(1)
+	while(true)
 	{
 		level.time = gettime();
 		wait(0.05);
@@ -225,7 +226,7 @@ function t7_cleanup_output()
 function level_notify_listener()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			val = getdvarstring("");
 			if(val != "")
@@ -262,7 +263,7 @@ function level_notify_listener()
 function client_notify_listener()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			val = getdvarstring("");
 			if(val != "")
@@ -287,7 +288,7 @@ function client_notify_listener()
 function load_checkpoint_on_notify()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			level waittill(#"save");
 			checkpointcreate();
@@ -308,7 +309,7 @@ function load_checkpoint_on_notify()
 function save_checkpoint_on_notify()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			level waittill(#"load");
 			checkpointrestore();
@@ -397,7 +398,7 @@ function badplace_think(badplace)
 */
 function playerdamagerumble()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", amount);
 		if(isdefined(self.specialdamage))
@@ -447,12 +448,14 @@ function player_throwgrenade_timer()
 {
 	self endon(#"death");
 	self endon(#"disconnect");
-	while(1)
+	self.lastgrenadetime = 0;
+	while(true)
 	{
 		while(!self isthrowinggrenade())
 		{
 			wait(0.05);
 		}
+		self.lastgrenadetime = gettime();
 		while(self isthrowinggrenade())
 		{
 			wait(0.05);
@@ -883,7 +886,7 @@ function water_think()
 	level.depth_allow_prone = 8;
 	level.depth_allow_crouch = 33;
 	level.depth_allow_stand = 50;
-	while(1)
+	while(true)
 	{
 		wait(0.05);
 		players = getplayers();
@@ -901,7 +904,7 @@ function water_think()
 		{
 			continue;
 		}
-		while(1)
+		while(true)
 		{
 			players = getplayers();
 			players_in_water_count = 0;
@@ -1127,7 +1130,7 @@ function all_players_spawned()
 	level flag::wait_till("all_players_connected");
 	waittillframeend();
 	level.host = util::gethostplayer();
-	while(1)
+	while(true)
 	{
 		if(getnumconnectedplayers() == 0)
 		{
@@ -1174,7 +1177,7 @@ function shock_onpain()
 	{
 		setdvar("blurpain", "on");
 	}
-	while(1)
+	while(true)
 	{
 		oldhealth = self.health;
 		self waittill(#"damage", damage, attacker, direction_vec, point, mod);

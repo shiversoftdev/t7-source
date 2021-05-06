@@ -344,7 +344,8 @@ function camo_bread_crumb_wait(slot, weapon)
 	self endon(#"death");
 	self endon(#"camo_off");
 	self endon(#"camo_bread_crumb");
-	while(1)
+	starttime = gettime();
+	while(true)
 	{
 		currenttime = gettime();
 		if(currenttime - starttime > self._gadgets_player[slot].gadget_breadcrumbduration)
@@ -386,7 +387,7 @@ function camo_takedown_watch(slot, weapon)
 {
 	self endon(#"disconnect");
 	self endon(#"camo_off");
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_assassination");
 		if(self camo_is_inuse())
@@ -442,7 +443,7 @@ function camo_temporary_dont_ignore_wait(slot)
 	self endon(#"death");
 	self endon(#"camo_off");
 	self endon(#"temporary_dont_ignore");
-	while(1)
+	while(true)
 	{
 		if(!self camo_is_flickering(slot))
 		{
@@ -472,7 +473,7 @@ function camo_suit_flicker(slot, weapon)
 	}
 	self thread camo_temporary_dont_ignore(slot);
 	self thread suspend_camo_suit(slot, weapon);
-	while(1)
+	while(true)
 	{
 		if(!self camo_is_flickering(slot))
 		{

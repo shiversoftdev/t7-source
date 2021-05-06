@@ -40,7 +40,7 @@ function main()
 		}
 	}
 	level flag::wait_till_any(array("ee_all_staffs_upgraded", "show_morse_code"));
-	while(1)
+	while(true)
 	{
 		clientfield::set("light_show", 1);
 		if(randomint(100) < 10)

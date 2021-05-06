@@ -593,7 +593,7 @@ function turret_laser_watch()
 {
 	turretvehicle = self;
 	turretvehicle endon(#"death");
-	while(1)
+	while(true)
 	{
 		laser_should_be_on = !turretvehicle.controlled && turretvehicle does_have_target(0);
 		if(laser_should_be_on)
@@ -624,7 +624,8 @@ function setup_death_watch_for_new_targets()
 {
 	turretvehicle = self;
 	turretvehicle endon(#"death");
-	while(1)
+	old_target = undefined;
+	while(true)
 	{
 		turretvehicle waittill(#"has_new_target", new_target);
 		if(isdefined(old_target))
@@ -671,7 +672,7 @@ function turretscanning()
 	turret_data = turretvehicle _get_turret_data(0);
 	turretvehicle.do_not_clear_targets_during_think = 1;
 	wait(0.8);
-	while(1)
+	while(true)
 	{
 		if(turretvehicle.controlled)
 		{

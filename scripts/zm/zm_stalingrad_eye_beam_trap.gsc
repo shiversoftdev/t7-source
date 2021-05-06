@@ -112,7 +112,8 @@ function function_a2abac9c(e_player)
 */
 function function_fd8775a2()
 {
-	while(1)
+	var_9bafc533 = struct::get_array(self.stub.var_4ae7f8db.target, "targetname");
+	while(true)
 	{
 		if(self.stub flag::get("beam_cooldown"))
 		{
@@ -176,6 +177,7 @@ function function_8bc8cc13(var_f2bd831, var_9bafc533)
 	var_f2bd831 thread zm_stalingrad_vo::function_176ac3fa();
 	level clientfield::set("eye_beam_rumble_" + e_kill_zone.script_string, 1);
 	level thread function_78f79e79(1);
+	n_total_kills = 0;
 	while(30 > n_total_time)
 	{
 		var_910826d7 = e_kill_zone array::get_touching(level.players);

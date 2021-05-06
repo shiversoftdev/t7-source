@@ -115,7 +115,7 @@ function trap_init()
 					self._trap_activate_func = &trap_activate_flipper;
 					break;
 				}
-				default
+				default:
 				{
 					self._trap_activate_func = &trap_activate_fire;
 				}
@@ -318,7 +318,7 @@ function trap_main()
 */
 function trap_use_think(trap)
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", who);
 		if(who zm_utility::in_revive_trigger())
@@ -393,7 +393,7 @@ function trap_use_think(trap)
 private function update_trigger_visibility()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		for(i = 0; i < level.players.size; i++)
 		{
@@ -564,6 +564,7 @@ function trap_activate_rotating()
 	}
 	wait(5);
 	step = 1.5;
+	t = 0;
 	while(t < self._trap_duration)
 	{
 		for(i = 0; i < self._trap_movers.size; i++)
@@ -639,7 +640,7 @@ function trap_audio_fx(trap)
 function trap_damage()
 {
 	self endon(#"trap_done");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", ent);
 		if(isplayer(ent))
@@ -691,7 +692,7 @@ function trap_damage()
 						ent thread zombie_trap_death(self, 200);
 						break;
 					}
-					default
+					default:
 					{
 						ent thread zombie_trap_death(self, randomint(100));
 						break;
@@ -714,7 +715,8 @@ function trap_damage()
 function trig_update(parent)
 {
 	self endon(#"trap_done");
-	while(1)
+	start_angles = self.angles;
+	while(true)
 	{
 		self.angles = parent.angles;
 		wait(0.05);
@@ -1025,7 +1027,8 @@ function trap_dialog()
 {
 	self endon(#"warning_dialog");
 	level endon(#"switch_flipped");
-	while(1)
+	timer = 0;
+	while(true)
 	{
 		wait(0.5);
 		players = getplayers();
@@ -1144,7 +1147,7 @@ function trap_model_type_init()
 			break;
 		}
 		case "default":
-		default
+		default:
 		{
 			self._trap_light_model_off = "zombie_zapper_cagelight";
 			self._trap_light_model_green = "zombie_zapper_cagelight";

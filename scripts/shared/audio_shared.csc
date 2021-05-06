@@ -133,7 +133,7 @@ function player_init(localclientnum)
 function snddoublejump_watcher()
 {
 	self endon(#"entityshutdown");
-	while(1)
+	while(true)
 	{
 		self waittill(#"doublejump_start");
 		trace = tracepoint(self.origin, self.origin - vectorscale((0, 0, 1), 100000));
@@ -329,7 +329,7 @@ function soundrandom_thread(localclientnum, randsound)
 	}
 	randsound.playing = 1;
 	level thread soundrandom_notifywait(notify_name, randsound);
-	while(1)
+	while(true)
 	{
 		wait(randomfloatrange(randsound.script_wait_min, randsound.script_wait_max));
 		if(isdefined(randsound.script_sound) && (isdefined(randsound.playing) && randsound.playing))
@@ -356,7 +356,7 @@ function soundrandom_thread(localclientnum, randsound)
 */
 function soundrandom_notifywait(notify_name, randsound)
 {
-	while(1)
+	while(true)
 	{
 		level waittill(notify_name);
 		if(isdefined(randsound.playing) && randsound.playing)
@@ -1103,7 +1103,7 @@ function snd_print_fx_id(fxid, type, ent)
 */
 function debug_line_emitter()
 {
-	while(1)
+	while(true)
 	{
 		/#
 			if(getdvarint("") > 0)
@@ -1133,7 +1133,7 @@ function move_sound_along_line()
 	/#
 		self thread debug_line_emitter();
 	#/
-	while(1)
+	while(true)
 	{
 		self closest_point_on_line_to_point(getlocalclientpos(0), self.start, self.end);
 		if(isdefined(self.fake_ent))
@@ -1249,7 +1249,7 @@ function snd_underwater(localclientnum)
 			self underwaterend();
 		}
 	}
-	while(1)
+	while(true)
 	{
 		underwaternotify = self util::waittill_any_ex("underwater_begin", "underwater_end", "swimming_begin", "swimming_end", "death", "entityshutdown", "sndEndUWWatcher", level, "demo_jump", "killcam_begin" + localclientnum, "killcam_end" + localclientnum);
 		if(underwaternotify == "death")
@@ -1487,7 +1487,7 @@ function isplayerinfected()
 				setsoundcontext("healthstate", "human");
 				break;
 			}
-			default
+			default:
 			{
 				self.isinfected = 0;
 				setsoundcontext("healthstate", "cyber");
@@ -1677,7 +1677,7 @@ function sndrattle_server(localclientnum, oldval, newval, bnewent, binitialsnap,
 */
 function sndrattle_grenade_client()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"explode", localclientnum, position, mod, weapon, owner_cent);
 		level thread dorattle(position, weapon.soundrattlerangemin, weapon.soundrattlerangemax);
@@ -1805,7 +1805,7 @@ function sndkillcam()
 */
 function snddeath_activate()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"sndded");
 		snd_set_snapshot("mpl_death");
@@ -1823,7 +1823,7 @@ function snddeath_activate()
 */
 function snddeath_deactivate()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"snddede");
 		snd_set_snapshot("default");
@@ -1841,7 +1841,7 @@ function snddeath_deactivate()
 */
 function sndfinalkillcam_activate()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"sndfks");
 		playsound(0, "mpl_final_killcam_enter", (0, 0, 0));
@@ -1860,7 +1860,7 @@ function sndfinalkillcam_activate()
 */
 function sndfinalkillcam_slowdown()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"sndfksl");
 		playsound(0, "mpl_final_killcam_enter", (0, 0, 0));
@@ -1880,7 +1880,7 @@ function sndfinalkillcam_slowdown()
 */
 function sndfinalkillcam_deactivate()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"sndfke");
 		snd_set_snapshot("default");

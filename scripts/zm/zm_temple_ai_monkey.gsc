@@ -171,6 +171,7 @@ function monkey_getmonkeyspawnlocation(mindist, checkvisible, skipstartarea)
 	needtovisit = [];
 	startzone = self _ent_getzonename();
 	needtovisit[0] = startzone;
+	zonecounter = 0;
 	while(needtovisit.size > 0)
 	{
 		zonecounter++;
@@ -331,7 +332,7 @@ function printtext(text, red)
 	{
 		color = (1, 0, 0);
 	}
-	while(1)
+	while(true)
 	{
 		/#
 			print3d(self.origin + offset, text, color, 0.85);
@@ -434,7 +435,7 @@ function player_can_see_me(player)
 */
 function function_16882cf8(loc, color)
 {
-	while(1)
+	while(true)
 	{
 		/#
 			circle(loc, 16, color, 0, 1, 800);
@@ -651,7 +652,7 @@ function _monkey_gotoboards()
 		self setgoalpos(location);
 		self waittill(#"goal");
 		self setgoalpos(self.origin);
-		while(1)
+		while(true)
 		{
 			chunk = _find_chunk(barrier.barrier_chunks);
 			if(!isdefined(chunk))
@@ -748,7 +749,7 @@ function _watch_for_powerups()
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		level waittill(#"powerup_dropped", powerup);
 		if(!isdefined(powerup))
@@ -840,7 +841,7 @@ function _monkey_play_stolen_loop()
 {
 	self endon(#"death");
 	self endon(#"powerup_dropped");
-	while(1)
+	while(true)
 	{
 		playsoundatposition("zmb_stealer_stolen", self.origin);
 		wait(0.845);
@@ -1157,7 +1158,8 @@ function _monkey_checkplayablearea()
 {
 	self endon(#"death");
 	candamage = 1;
-	while(1)
+	areas = getentarray("player_volume", "script_noteworthy");
+	while(true)
 	{
 		inarea = 0;
 		for(i = 0; i < areas.size && !inarea; i++)
@@ -1463,7 +1465,8 @@ function _powerup_randomize(monkey)
 		arrayinsert(powerup_cycle, "free_perk", index);
 	}
 	wait(1);
-	while(1)
+	index = 1;
+	while(true)
 	{
 		powerupname = powerup_cycle[index];
 		index++;
@@ -1496,6 +1499,7 @@ function _powerup_randomize(monkey)
 */
 function array_randomize_knuth(array)
 {
+	n = array.size;
 	while(n > 0)
 	{
 		index = randomint(n);
@@ -1580,6 +1584,7 @@ function _monkey_templesliding(slide_node)
 	self.ignoreall = 1;
 	self thread set_monkey_slide_anim();
 	self setgoalnode(slide_node);
+	check_dist_squared = 3600;
 	while(distancesquared(self.origin, slide_node.origin) > check_dist_squared)
 	{
 		wait(0.01);
@@ -1655,7 +1660,7 @@ function monkey_crowd_noise()
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		level flag::wait_till("monkey_ambient_excited");
 		origin1 playloopsound("evt_monkey_crowd01", 2);
@@ -1683,7 +1688,8 @@ function manage_ambient_monkeys(max_monkeys)
 	checkzone = "temple_start_zone";
 	level.active_monkeys = [];
 	playerinzone = 0;
-	while(1)
+	hacktofixstart = 1;
+	while(true)
 	{
 		if(!hacktofixstart)
 		{
@@ -1850,7 +1856,7 @@ function monkey_ambient_drops_add_array()
 {
 	self endon(#"monkey_cleanup");
 	self endon(#"monkey_killed");
-	while(1)
+	while(true)
 	{
 		level waittill(#"powerup_dropped", powerup);
 		level flag::set("monkey_ambient_excited");
@@ -1918,7 +1924,7 @@ function monkey_ambient_watch_for_power_up()
 		}
 		self.var_188503aa[self.var_188503aa.size] = "rtrg_ai_zm_dlc5_monkey_freaked_01c";
 	}
-	while(1)
+	while(true)
 	{
 		self.var_188503aa = array::randomize(self.var_188503aa);
 		level flag::wait_till("monkey_ambient_excited");
@@ -1926,7 +1932,8 @@ function monkey_ambient_watch_for_power_up()
 		self.excited = 1;
 		self thread monkey_ambient_excited_noise();
 		self.anim_spot notify(#"monkey_stop_loop");
-		while(1)
+		n_index = 0;
+		while(true)
 		{
 			self animation::stop(0.2);
 			self animation::play(self.var_188503aa[n_index], self.v_starting_origin, self.var_2e8d47d3);
@@ -2011,7 +2018,7 @@ function monkey_ambient_noise()
 {
 	self endon(#"monkey_killed");
 	self endon(#"monkey_cleanup");
-	while(1)
+	while(true)
 	{
 		if(self monkey_ambient_can_make_sound())
 		{
@@ -2114,7 +2121,7 @@ function _monkey_zombie_grenade_watcher()
 {
 	self endon(#"death");
 	grenade_respond_dist_sq = 14400;
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.monkey_grenade) && self.monkey_grenade)
 		{
@@ -2180,6 +2187,7 @@ function monkey_zombie_grenade_pickup()
 {
 	self endon(#"death");
 	pickup_dist_sq = 1024;
+	picked_up = 0;
 	while(isdefined(self.monkey_grenade))
 	{
 		self setgoalpos(self.monkey_grenade.origin);
@@ -2195,7 +2203,7 @@ function monkey_zombie_grenade_pickup()
 	}
 	if(picked_up)
 	{
-		while(1)
+		while(true)
 		{
 			self setgoalpos(self.monkey_thrower.origin);
 			target_dir = self.monkey_thrower.origin - self.origin;
@@ -2310,6 +2318,7 @@ function monkey_attack_player_wait(player)
 {
 	self endon(#"death");
 	self endon(#"end_monkey_steal");
+	attacktimeend = gettime() + 20000;
 	while(attacktimeend > gettime())
 	{
 		if(!zombie_utility::is_player_valid(player))
@@ -2358,6 +2367,7 @@ function monkey_pathing()
 	self endon(#"death");
 	self endon(#"end_monkey_attacks");
 	self.ignoreall = 0;
+	self.meleeattackdist = 64;
 	while(isdefined(self.favoriteenemy))
 	{
 		self.goalradius = 32;
@@ -2406,7 +2416,7 @@ function monkey_obvious_vox()
 {
 	self endon(#"death");
 	self endon(#"end_monkey_attacks");
-	while(1)
+	while(true)
 	{
 		self playsound("zmb_stealer_attack");
 		wait(randomfloatrange(2, 4));

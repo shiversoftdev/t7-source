@@ -93,7 +93,7 @@ function function_c9207335()
 */
 function function_60a32834()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", trigplayer);
 		if(trigplayer islocalplayer())
@@ -127,7 +127,8 @@ function function_d667714e()
 	level.var_b6342abd = "mus_tomb_underscore_null";
 	level.var_6d9d81aa = "mus_tomb_underscore_null";
 	level.var_eb526c90 = spawn(0, (0, 0, 0), "script_origin");
-	while(1)
+	level.var_9433cf5a = level.var_eb526c90 playloopsound(level.var_b6342abd, 2);
+	while(true)
 	{
 		level waittill(#"hash_51d7bc7c", location);
 		level.var_6d9d81aa = "mus_tomb_underscore_" + location;
@@ -186,7 +187,7 @@ function function_b234849(var_6d9d81aa)
 */
 function function_c052f9b8()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_f099c69d");
 		if(isdefined(level.var_1c69bb12.var_b13d6dfb) && level.var_1c69bb12.var_b13d6dfb)
@@ -241,7 +242,7 @@ function function_da1a3c87(room, player)
 			setsoundcontext("grass", "in_grass");
 			break;
 		}
-		default
+		default:
 		{
 			setsoundcontext("grass", "no_grass");
 			break;
@@ -284,7 +285,7 @@ function function_6fae68d7()
 function function_6576aaa4()
 {
 	self thread function_74c85975();
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", who);
 		if(who isplayer() && (!(isdefined(who.var_c7721e47) && who.var_c7721e47)))
@@ -355,7 +356,7 @@ function function_3abd927c()
 */
 function function_74c85975()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"hash_961b140e");
 		if(self.players <= 0)
@@ -498,7 +499,7 @@ function snd_start_autofx_audio()
 */
 function flyovers()
 {
-	while(1)
+	while(true)
 	{
 		playsound(0, "amb_flyover", (1310, 859, 3064));
 		wait(randomintrange(2, 8));
@@ -562,7 +563,8 @@ function function_c85630a7()
 		self.var_29fe0572 = spawn(0, self.origin, "script_origin");
 		self.var_29fe0572 linkto(self, "tag_origin");
 	}
-	while(1)
+	self.var_29fe0572.var_8d8259d3 = self.var_29fe0572 playloopsound("zmb_tomb_slowed_movement_loop", 1);
+	while(true)
 	{
 		if(!isdefined(self))
 		{
@@ -668,7 +670,7 @@ function init_heli_sound_values(heli_type, part_type, max_speed_vol, min_vol, ma
 function command_parser()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			command = getdvarstring("");
 			if(command != "")
@@ -757,7 +759,7 @@ function command_parser()
 							println("" + value);
 							break;
 						}
-						default
+						default:
 						{
 							println("");
 						}
@@ -926,7 +928,7 @@ function heli_sound_play(heli_bone)
 		{
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				println("" + heli_bone.type + "");
@@ -1118,7 +1120,7 @@ function drone_up_down_transition()
 	qr_ent_down linkto(self, tag);
 	qr_ent_either linkto(self, tag);
 	self thread drone_button_watch();
-	while(1)
+	while(true)
 	{
 		last_pos = self.origin[2];
 		wait(0.1);
@@ -1181,7 +1183,7 @@ function drone_rotate_angle(heli_type, heli_part)
 	setsoundvolume(angle, 0);
 	tag = "tag_body";
 	qr_ent_angle linkto(self, tag);
-	while(1)
+	while(true)
 	{
 		last_angle = abs(self.angles[1]);
 		wait(0.1);
@@ -1206,7 +1208,8 @@ function drone_button_watch()
 {
 	self endon(#"entityshutdown");
 	player = getlocalplayers()[0];
-	while(1)
+	return_to_zero = 1;
+	while(true)
 	{
 		if(abs(self.qrdrone_z_difference) > 5 && return_to_zero)
 		{
@@ -1360,7 +1363,8 @@ function function_8b8dd551(localclientnum)
 	self endon(#"disconnect");
 	self.sndent = spawn(0, (0, 0, 0), "script_origin");
 	self.var_c5cda021 = "mus_underscore_default";
-	while(1)
+	self.var_a15dcd51 = "null";
+	while(true)
 	{
 		if(self.var_a15dcd51 != self.var_c5cda021)
 		{
@@ -1385,7 +1389,7 @@ function function_4ff80996(localclientnum)
 {
 	self endon(#"disconnect");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", who);
 		if(isdefined(who) && who islocalplayer())

@@ -108,7 +108,7 @@ function function_7884e6b8()
 	var_22f40782 = 0;
 	level waittill(#"all_players_spawned");
 	wait(1);
-	while(1)
+	while(true)
 	{
 		if(level.round_number > 4)
 		{

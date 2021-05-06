@@ -149,8 +149,10 @@ function function_53f54d29()
 {
 	level endon(#"end_game");
 	self endon(#"disconnect");
+	b_done = 0;
 	while(!b_done)
 	{
+		var_8379db89 = 0;
 		while(!self laststand::player_is_in_laststand() && self isplayerunderwater() && zombie_utility::is_player_valid(self) && !b_done)
 		{
 			wait(1);

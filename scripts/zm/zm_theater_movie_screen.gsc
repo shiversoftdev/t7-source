@@ -59,6 +59,7 @@ function setupcurtains()
 */
 function monitorcurtain(curtorg)
 {
+	clip = getent(self.target, "targetname");
 	while(isdefined(clip))
 	{
 		if(abs(curtorg[0] - self.origin[0]) >= 38)
@@ -296,7 +297,7 @@ function movie_projector_reel_change()
 	{
 		screen_struct.script_string = "ps0";
 	}
-	while(1)
+	while(true)
 	{
 		projector_trigger waittill(#"trigger", who);
 		if(isdefined(who.reel) && isstring(who.reel))

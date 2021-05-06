@@ -334,7 +334,7 @@ function call_notetrack_handler(str_note)
 					self [[func]]();
 					break;
 				}
-				default
+				default:
 				{
 					/#
 						assertmsg("");
@@ -383,7 +383,7 @@ function handle_notetracks()
 {
 	level endon(#"demo_jump");
 	self endon(#"entityshutdown");
-	while(1)
+	while(true)
 	{
 		self waittill(#"_anim_notify_", str_note);
 		if(str_note != "end" && str_note != "loop_end")

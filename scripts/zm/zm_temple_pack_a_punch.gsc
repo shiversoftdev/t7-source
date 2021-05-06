@@ -224,7 +224,8 @@ function _setup_simultaneous_pap_triggers()
 	array::thread_all(triggers, &_pap_pressure_plate_move);
 	wait(1);
 	last_num_plates_active = -1;
-	while(1)
+	last_plate_state = -1;
+	while(true)
 	{
 		players = getplayers();
 		num_plates_needed = players.size;
@@ -358,7 +359,8 @@ function _pap_pressure_plate_move()
 	plate.up_origin = plate.origin + plate.movedist;
 	plate.origin = plate.down_origin;
 	plate.state = "down";
-	while(1)
+	movespeed = 10;
+	while(true)
 	{
 		while(!self _pap_pressure_plate_move_enabled())
 		{
@@ -759,7 +761,8 @@ function _wait_for_all_stairs(state)
 {
 	for(i = 0; i < level.pap_stairs.size; i++)
 	{
-		while(1)
+		stair = level.pap_stairs[i];
+		while(true)
 		{
 			if(stair.state == state)
 			{
@@ -953,7 +956,8 @@ function _pap_ramp()
 */
 function playerclip_restore()
 {
-	while(1)
+	volume = getent("pap_target_finder", "targetname");
+	while(true)
 	{
 		touching = 0;
 		players = getplayers();
@@ -1128,7 +1132,7 @@ function _player_flushed_out(volume)
 	scale_dist = dist / max_dist;
 	time = time * scale_dist;
 	wait(time);
-	while(1)
+	while(true)
 	{
 		if(!self istouching(volume))
 		{
@@ -1198,6 +1202,7 @@ function _player_flush(index)
 	useaccel = 1;
 	flushspeed = level.flushspeed - 30 * index;
 	wait(index * 0.1);
+	nexttarget = self _ent_getnextflushtarget();
 	while(isdefined(nexttarget))
 	{
 		movetarget = (self.origin[0], nexttarget.origin[1], nexttarget.origin[2]);
@@ -1254,7 +1259,7 @@ function _player_flush(index)
 function pap_flush_screen_shake(activetime)
 {
 	self endon(#"pap_flush_done");
-	while(1)
+	while(true)
 	{
 		earthquake(randomfloatrange(0.2, 0.4), randomfloatrange(1, 2), self.origin, 100, self);
 		wait(randomfloatrange(0.1, 0.3));
@@ -1323,7 +1328,8 @@ function _zombie_flush()
 */
 function _ent_getnextflushtarget()
 {
-	while(1)
+	current_node = level.flush_path;
+	while(true)
 	{
 		if(self.origin[1] >= current_node.origin[1])
 		{
@@ -1366,6 +1372,7 @@ function _setup_pap_timer()
 	{
 		timer = level.pap_timers[i];
 		timer.path = [];
+		targetname = timer.target;
 		while(isdefined(targetname))
 		{
 			s = struct::get(targetname, "targetname");
@@ -1499,7 +1506,8 @@ function _travel_path_reverse(speed, reversespin)
 function _setup_pap_path()
 {
 	level.flush_path = struct::get("pap_flush_path", "targetname");
-	while(1)
+	current_node = level.flush_path;
+	while(true)
 	{
 		if(!isdefined(current_node.target))
 		{

@@ -374,7 +374,7 @@ function function_e0836624()
 	level endon(#"end_game");
 	level notify(#"hash_a3369c1f");
 	level endon(#"hash_a3369c1f");
-	while(1)
+	while(true)
 	{
 		level waittill(#"host_migration_end");
 		setdvar("doublejump_enabled", 1);
@@ -707,7 +707,7 @@ function setupmusic()
 */
 function function_44dc3fb4()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", trigplayer);
 		if(isplayer(trigplayer))
@@ -1427,7 +1427,7 @@ function function_a8aef7fe()
 	self endon(#"damage");
 	self endon(#"death");
 	wait(randomintrange(3, 9));
-	while(1)
+	while(true)
 	{
 		self playsound("amb_castle_raven_caw");
 		wait(randomintrange(11, 21));
@@ -1620,7 +1620,7 @@ function function_a6477691()
 	level waittill(#"start_zombie_round_logic");
 	sndent = spawn("script_origin", (611, 3496, 699));
 	sndent playloopsound("zmb_projector_hum", 0.25);
-	while(1)
+	while(true)
 	{
 		exploder::exploder("lgt_castle_slide_one");
 		sndent playsound("zmb_projector_slide");
@@ -1703,7 +1703,8 @@ function function_555e8704()
 */
 function function_9be4ecd1()
 {
-	while(1)
+	n_start_time = undefined;
+	while(true)
 	{
 		if(level.zombie_total <= 0)
 		{

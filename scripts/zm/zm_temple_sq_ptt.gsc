@@ -44,6 +44,7 @@ function debug_jet()
 	/#
 		self endon(#"death");
 		struct = struct::get(self.target, "");
+		dir = anglestoforward(struct.angles);
 		while(!(isdefined(level.disable_print3d_ent) && level.disable_print3d_ent))
 		{
 			scale = 0.1;
@@ -93,7 +94,7 @@ function gas_volume()
 	self.jet_color = vectorscale((0, 1, 0), 255);
 	level flag::wait_till("sq_ptt_dial_dialed");
 	exploder::exploder("fxexp_" + self.script_int);
-	while(1)
+	while(true)
 	{
 		level waittill(#"napalm_death", volume);
 		if(volume == self.script_int)
@@ -143,7 +144,7 @@ function function_d9c0ed6()
 {
 	self endon(#"death");
 	self triggerignoreteam();
-	while(1)
+	while(true)
 	{
 		while(level.var_4e4c9791.size == 0)
 		{
@@ -207,7 +208,7 @@ function player_line_thread()
 {
 	self endon(#"death");
 	self endon(#"lit");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", who);
 		if(isplayer(who))
@@ -305,6 +306,7 @@ function ptt_lever()
 	{
 		self.original_angles = self.angles;
 	}
+	self.angles = self.original_angles;
 	while(level._ptt_num_lit < level._ptt_jets)
 	{
 		level waittill(#"lit");
@@ -385,6 +387,7 @@ function ptt_story_reminder_vox(waittime)
 {
 	level endon(#"sq_ptt_over");
 	wait(waittime);
+	count = 4;
 	while(!level flag::get("sq_ptt_level_pulled") && count <= 7)
 	{
 		level._ptt_sound_ent playsoundwithnotify("vox_egg_story_3_" + count, "sounddone");
@@ -509,7 +512,7 @@ function dial_trigger()
 {
 	level endon(#"ptt_start");
 	level endon(#"sq_ptt_over");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", who);
 		self.owner_ent notify(#"triggered", who);
@@ -561,7 +564,7 @@ function dud_dial_handler()
 	level endon(#"ptt_start");
 	self.trigger triggerignoreteam();
 	self.trigger thread dial_trigger();
-	while(1)
+	while(true)
 	{
 		self waittill(#"triggered");
 		self playsound("evt_sq_ptt_valve");

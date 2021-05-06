@@ -379,7 +379,7 @@ function bot_think_loop()
 {
 	self endon(#"death");
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		self bot_think();
 		wait(level.botsettings.thinkinterval);
@@ -932,7 +932,7 @@ function wait_bot_path_failed_loop()
 {
 	self endon(#"death");
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		self waittill(#"bot_path_failed", reason);
 		/#
@@ -962,7 +962,7 @@ function wait_bot_goal_reached_loop()
 {
 	self endon(#"death");
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		self waittill(#"bot_goal_reached", reason);
 		self clear_stuck();
@@ -1460,7 +1460,7 @@ function watch_bot_corner(startcornerdist, cornerdist)
 	}
 	startcornerdistsq = cornerdist * cornerdist;
 	cornerdistsq = cornerdist * cornerdist;
-	while(1)
+	while(true)
 	{
 		self waittill(#"bot_corner", centerpoint, enterpoint, leavepoint, angle, nextenterpoint);
 		if(self bot_combat::has_threat())
@@ -1716,7 +1716,8 @@ function get_nav_points()
 		iprintln("");
 		iprintln("");
 		iprintln("");
-		while(1)
+		points = [];
+		while(true)
 		{
 			wait(0.05);
 			point = self eye_trace()[""];
@@ -1766,7 +1767,8 @@ function debug_patrol(points)
 		self notify(#"debug_patrol");
 		self endon(#"death");
 		self endon(#"debug_patrol");
-		while(1)
+		i = 0;
+		while(true)
 		{
 			self botsetgoal(points[i], 24);
 			self sprint_to_goal();
@@ -1788,7 +1790,7 @@ function debug_patrol(points)
 function bot_devgui_think()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			wait(0.25);
 			cmd = getdvarstring("", "");
@@ -1812,7 +1814,7 @@ function bot_devgui_think()
 						host devgui_debug_route();
 						break;
 					}
-					default
+					default:
 					{
 						break;
 					}

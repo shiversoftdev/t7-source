@@ -81,7 +81,7 @@ function watch_staff_fire_fired()
 	self notify(#"watch_staff_fired");
 	self endon(#"disconnect");
 	self endon(#"watch_staff_fired");
-	while(1)
+	while(true)
 	{
 		self waittill(#"missile_fire", e_projectile, w_weapon);
 		if(isdefined(e_projectile.additional_shot) && e_projectile.additional_shot)
@@ -109,7 +109,7 @@ function watch_staff_fire_upgrade_fired()
 	self notify(#"watch_staff_upgrade_fired");
 	self endon(#"disconnect");
 	self endon(#"watch_staff_upgrade_fired");
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_fire", e_projectile, w_weapon);
 		if(isdefined(e_projectile.additional_shot) && e_projectile.additional_shot)
@@ -185,6 +185,7 @@ function fire_staff_area_of_effect(e_attacker, w_weapon)
 	{
 		aoe_radius = 100;
 	}
+	n_step_size = 0.2;
 	while(n_alive_time > 0)
 	{
 		if(n_alive_time - n_step_size <= 0)
@@ -528,7 +529,7 @@ function get_impact_damage(damageweapon)
 		{
 			return 0;
 		}
-		default
+		default:
 		{
 			return 0;
 		}
@@ -569,7 +570,7 @@ function get_damage_per_second(damageweapon)
 		{
 			return 250;
 		}
-		default
+		default:
 		{
 			return self.health;
 		}
@@ -610,7 +611,7 @@ function get_damage_duration(damageweapon)
 		{
 			return 8;
 		}
-		default
+		default:
 		{
 			return 8;
 		}
@@ -635,7 +636,7 @@ function flame_damage_over_time(e_attacker, damageweapon, pct_damage)
 	n_duration = get_damage_duration(damageweapon);
 	n_damage = n_damage * pct_damage;
 	self thread on_fire_timeout(n_duration);
-	while(1)
+	while(true)
 	{
 		if(isdefined(e_attacker) && isplayer(e_attacker))
 		{

@@ -491,7 +491,7 @@ function helicopter_crash_rotation(point, dir)
 			torque = (0, torque[2] * 180, 0);
 		}
 	}
-	while(1)
+	while(true)
 	{
 		ang_vel = self getangularvelocity();
 		ang_vel = ang_vel + torque * 0.05;
@@ -608,7 +608,7 @@ function helicopter_crash_zone_accel(dir)
 function helicopter_collision()
 {
 	self endon(#"crash_done");
-	while(1)
+	while(true)
 	{
 		self waittill(#"veh_collision", velocity, normal);
 		ang_vel = self getangularvelocity() * 0.5;
@@ -684,7 +684,7 @@ function aircraft_crash_move(point, dir)
 		b_custom_deathmodel_setup = 1;
 		switch(self.vehicletype)
 		{
-			default
+			default:
 			{
 				b_custom_deathmodel_setup = 0;
 				break;
@@ -813,7 +813,7 @@ function helicopter_crash_move(point, dir)
 			torque = (0, torque[2] * 180, 0);
 		}
 	}
-	while(1)
+	while(true)
 	{
 		ang_vel = self getangularvelocity();
 		ang_vel = ang_vel + torque * 0.05;
@@ -879,7 +879,7 @@ function boat_crash_movement(point, dir)
 	self setangularvelocity(ang_vel);
 	torque = (randomintrange(-5, -3), 0, (randomintrange(0, 100) < 50 ? -5 : 5));
 	self thread boat_crash_monitor(point, dir, 4);
-	while(1)
+	while(true)
 	{
 		ang_vel = self getangularvelocity();
 		ang_vel = ang_vel + torque * 0.05;
@@ -932,6 +932,7 @@ function crash_stop()
 	self endon(#"death");
 	self setphysacceleration((0, 0, 0));
 	self setrotorspeed(0);
+	speed = self getspeedmph();
 	while(speed > 2)
 	{
 		velocity = self.velocity;
@@ -1419,6 +1420,7 @@ function waittill_crash_done_or_stopped()
 		{
 			self clearvehgoalpos();
 			self cancelaimove();
+			stable_count = 0;
 			while(stable_count < 3)
 			{
 				if(isdefined(self.velocity) && lengthsquared(self.velocity) > 1)
@@ -1461,7 +1463,7 @@ function vehicle_damage_filter_damage_watcher(driver, heavy_damage_threshold)
 	{
 		heavy_damage_threshold = 100;
 	}
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", damage, attacker, direction, point, type, tagname, modelname, partname, weapon);
 		earthquake(0.25, 0.15, self.origin, 512, self);
@@ -1521,7 +1523,7 @@ function vehicle_damage_filter(vision_set, heavy_damage_threshold, filterid = 0,
 	damagee = isdefined(b_use_player_damage) && (b_use_player_damage ? driver : self);
 	damagee thread vehicle_damage_filter_damage_watcher(driver, heavy_damage_threshold);
 	damagee thread vehicle_damage_filter_exit_watcher(driver);
-	while(1)
+	while(true)
 	{
 		if(isdefined(level.n_hud_damage) && level.n_hud_damage)
 		{
@@ -1765,7 +1767,7 @@ function flipping_shooting_crash_movement(attacker, hitdir)
 			plane_crash();
 			break;
 		}
-		default
+		default:
 		{
 			random_crash(hitdir);
 		}
@@ -1812,7 +1814,7 @@ function flipping_shooting_crash_accel()
 	{
 		prev_forward_vel = 0;
 	}
-	while(1)
+	while(true)
 	{
 		self setvehvelocity(self.velocity + anglestoup(self.angles) * self.crash_accel);
 		self.crash_accel = self.crash_accel * 0.98;

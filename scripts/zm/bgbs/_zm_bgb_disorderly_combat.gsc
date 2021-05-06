@@ -190,7 +190,8 @@ function function_7039f685()
 		self.aat = [];
 	}
 	n_index = 0;
-	while(1)
+	var_1ff6fb34 = 0;
+	while(true)
 	{
 		self bgb::function_378bff5d();
 		self function_8a5ef15f();
@@ -259,7 +260,7 @@ function disable_weapons()
 	self endon(#"disconnect");
 	self endon(#"bled_out");
 	self endon(#"bgb_update");
-	while(1)
+	while(true)
 	{
 		waittillframeend();
 		self disableweaponcycling();

@@ -151,7 +151,8 @@ function function_21d887cd()
 	/#
 		assert(ispointonnavmesh(self.origin), "" + self.origin + "");
 	#/
-	while(1)
+	s_stub = level zm_genesis_util::spawn_trigger_radius(self.origin, 256, undefined, &function_f8c1234b);
+	while(true)
 	{
 		s_stub waittill(#"trigger", e_player);
 		e_player thread function_4ab898f4(self);
@@ -295,7 +296,7 @@ function function_4ab898f4(nd_start)
 */
 function cleanup_vehicle(var_413ea50f)
 {
-	while(1)
+	while(true)
 	{
 		if(!isdefined(self) || (isdefined(self.var_3298b25f) && self.var_3298b25f))
 		{
@@ -360,6 +361,7 @@ function function_3298b25f()
 {
 	self.var_3298b25f = 0;
 	var_6b138e28 = groundtrace(self.origin, self.origin + vectorscale((0, 0, -1), 10000), 0, undefined)["position"];
+	var_16f5c370 = var_6b138e28;
 	while(positionwouldtelefrag(var_16f5c370) || !ispointonnavmesh(var_16f5c370))
 	{
 		util::wait_network_frame();
@@ -413,7 +415,8 @@ function function_9278bc8a(var_181e2689)
 {
 	self setcandamage(1);
 	self.health = 6000;
-	while(1)
+	self.n_damage = 0;
+	while(true)
 	{
 		self waittill(#"damage", damage, attacker, direction_vec, point, type, modelname, tagname, partname, weapon, idflags);
 		playfx(level._effect["pap_cord_impact"], point, (0, 0, -1));

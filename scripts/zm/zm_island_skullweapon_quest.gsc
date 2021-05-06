@@ -407,7 +407,7 @@ function function_d15f7b3d()
 {
 	self endon(#"skulltar_attractors_off");
 	level endon("skullquest_ritual_ended" + self.script_special);
-	while(1)
+	while(true)
 	{
 		a_enemy_ai = self.var_41335b73;
 		if(isdefined(a_enemy_ai))
@@ -630,7 +630,8 @@ function function_c3360ba8(n_step_time = 0.1)
 {
 	self endon(#"hash_52ad0df5");
 	var_da791f1d = 30 / n_step_time;
-	while(1)
+	n_steps = 0;
+	while(true)
 	{
 		var_a747f278 = n_steps / var_da791f1d;
 		var_9bcf211d = 1 - var_a747f278;
@@ -1024,11 +1025,13 @@ function function_ff1550bd()
 	var_d94cc36a = array(0, 1, 1, 1, 1);
 	var_44da5f74 = var_d94cc36a[level.activeplayers.size];
 	self.a_s_spawnpts = array::randomize(self.a_s_spawnpts);
+	self.var_d8cdf3a = 1;
 	while(!level flag::get("skullquest_ritual_complete" + self.script_special))
 	{
 		for(i = 0; i < self.a_s_spawnpts.size; i++)
 		{
 			level.var_a576e0b9[var_f2e38849].var_41335b73 = array::remove_undefined(level.var_a576e0b9[var_f2e38849].var_41335b73);
+			level.var_a576e0b9[var_f2e38849].var_d38f69da = array::remove_undefined(level.var_a576e0b9[var_f2e38849].var_d38f69da);
 			while(getfreeactorcount() < 1)
 			{
 				wait(0.05);
@@ -1264,6 +1267,7 @@ function function_1cbe53ee(var_5e9499e0)
 	{
 		var_b6bec422 = undefined;
 		var_4800ca35 = arraycopy(var_5e9499e0.var_ed98dfad);
+		var_8432e700 = arraygetclosest(self.origin, var_4800ca35);
 		while(!isdefined(var_b6bec422) && var_4800ca35.size > 0)
 		{
 			arrayremovevalue(var_4800ca35, var_8432e700);
@@ -1399,7 +1403,7 @@ function function_f94079c3(var_84c62227)
 			n_value = 50;
 			break;
 		}
-		default
+		default:
 		{
 			n_value = 50;
 			break;
@@ -1604,7 +1608,7 @@ function function_d3554921(player)
 */
 function function_c8ef1118()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", ent);
 		if(ent function_9e2f0e52() && !level flag::get("skullroom_defend_inprogress"))
@@ -1691,6 +1695,7 @@ function function_ef5b1df5()
 	level flag::clear("skullroom_empty_of_players");
 	var_2241a147 = [];
 	level thread function_d91adba6();
+	a_spawn_points = array::randomize(a_spawn_points);
 	while(level.var_9bc0cd6e < level.var_49c6fb1c && !level flag::get("skullroom_empty_of_players") && (!(isdefined(level.var_d9d19dae) && level.var_d9d19dae)))
 	{
 		foreach(var_89f99442, s_spawn_point in a_spawn_points)
@@ -1762,6 +1767,7 @@ function function_ef5b1df5()
 function function_d91adba6()
 {
 	t_inside_skullroom = getent("t_inside_skullroom", "targetname");
+	level.var_d9d19dae = 0;
 	while(level flag::get("skullroom_defend_inprogress"))
 	{
 		var_f66cf9d4 = [];
@@ -2264,7 +2270,7 @@ function on_player_spawned()
 	self.var_335e6491 = [];
 	self.var_335e6491[0] = undefined;
 	self.var_335e6491[1] = undefined;
-	while(1)
+	while(true)
 	{
 		self waittill(#"bled_out");
 		self thread function_c7cd5585();
@@ -2763,7 +2769,7 @@ function function_8c6a13d0(player)
 					return 0;
 				}
 			}
-			default
+			default:
 			{
 				self sethintstringforplayer(player, "");
 				return 0;
@@ -2788,7 +2794,7 @@ function function_8c6a13d0(player)
 */
 function function_dc9fe8fe()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player function_9e2f0e52())
@@ -2881,7 +2887,7 @@ function function_3cd83908(player)
 				return 1;
 			}
 		}
-		default
+		default:
 		{
 			self sethintstringforplayer(player, "");
 			return 0;
@@ -2900,7 +2906,7 @@ function function_3cd83908(player)
 */
 function function_d757eab6()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player function_9e2f0e52())
@@ -3071,6 +3077,7 @@ function function_71593151()
 function function_5d65695d()
 {
 	self endon(#"disconnect");
+	self.var_1ff2320b = 0;
 	while(!self.var_1ff2320b)
 	{
 		self waittill(#"weapon_change");

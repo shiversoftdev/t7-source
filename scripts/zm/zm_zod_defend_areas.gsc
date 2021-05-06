@@ -236,7 +236,7 @@ function ritual_start_message_internal(player)
 		{
 			return self.m_str_area_defend_available;
 		}
-		default
+		default:
 		{
 			return &"";
 		}
@@ -271,7 +271,7 @@ function ritual_start_visible_internal(player)
 			{
 				return 1;
 			}
-			default
+			default:
 			{
 				break;
 			}
@@ -360,7 +360,7 @@ function update_usetrigger_hintstring()
 function usetrigger_think()
 {
 	self endon(#"area_defend_completed");
-	while(1)
+	while(true)
 	{
 		self.m_t_use waittill(#"trigger", e_triggerer);
 		if(e_triggerer zm_utility::in_revive_trigger())
@@ -413,6 +413,7 @@ function progress_think()
 	a_players_in_defend_area = get_players_in_defend_area();
 	n_players_in_defend_area = a_players_in_defend_area.size;
 	self.m_n_defend_duration = function_d9a5609b(var_db69778c, n_players_in_defend_area);
+	self.m_n_defend_progress_per_update_interval = 100 / self.m_n_defend_duration * 0.1;
 	while(self.m_n_defend_current_progress < 100 && self.m_n_defend_grace_remaining > 0)
 	{
 		a_players_in_defend_area = get_players_in_defend_area();
@@ -598,7 +599,7 @@ function function_df5ae14e(ai_zombie)
 function function_877a7365()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		var_c7ca004c = [];
 		foreach(var_7967c090, player in level.activeplayers)
@@ -616,6 +617,7 @@ function function_877a7365()
 				var_c7ca004c[var_c7ca004c.size] = player;
 			}
 		}
+		e_target_player = array::random(var_c7ca004c);
 		while(isalive(e_target_player) && (!(isdefined(e_target_player.beastmode) && e_target_player.beastmode)) && !e_target_player laststand::player_is_in_laststand())
 		{
 			self setgoal(e_target_player);
@@ -637,6 +639,7 @@ function function_877a7365()
 function get_unused_spawn_point()
 {
 	a_valid_spawn_points = [];
+	b_all_points_used = 0;
 	while(!a_valid_spawn_points.size)
 	{
 		foreach(var_a7e794ae, s_spawn_point in self.m_e_spawn_points)
@@ -1031,6 +1034,7 @@ function function_a5e2032d()
 	}
 	a_ai_zombies = getaiteamarray(level.zombie_team);
 	a_ai_zombies = arraysort(a_ai_zombies, self.m_s_centerpoint.origin);
+	i = 0;
 	while(i < a_ai_zombies.size)
 	{
 		var_31a4faf3 = 0;

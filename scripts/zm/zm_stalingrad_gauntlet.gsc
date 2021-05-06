@@ -172,7 +172,8 @@ function function_61ab1070(player)
 */
 function function_cee6cb2a()
 {
-	while(1)
+	var_1b0f69b9 = 0;
+	while(true)
 	{
 		self trigger::wait_till();
 		if(!var_1b0f69b9)
@@ -274,7 +275,7 @@ function function_3e93cfea(e_player)
 */
 function function_48a9eab7()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_player);
 		if(!level flag::get("egg_placed_in_hazard"))
@@ -566,6 +567,7 @@ function function_cf2a342(player)
 */
 function function_16907a63()
 {
+	var_ad33206 = 0;
 	while(!level flag::get("lockdown_active"))
 	{
 		self trigger::wait_till();

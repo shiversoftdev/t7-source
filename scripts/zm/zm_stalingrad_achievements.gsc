@@ -164,7 +164,7 @@ function function_77f84ddb()
 function function_3a3c9cc6()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"hash_c925c266", n_kill_count);
 		if(n_kill_count >= 20)
@@ -187,7 +187,7 @@ function function_3a3c9cc6()
 function function_b6e817dd()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"hash_ddb84fad", n_kill_count);
 		if(n_kill_count >= 8)
@@ -210,7 +210,7 @@ function function_b6e817dd()
 function function_bdcf8e90()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"hash_8c80a390", n_kill_count);
 		if(n_kill_count >= 10)
@@ -249,7 +249,7 @@ function function_99a5ed1a(n_target_kills)
 {
 	self endon(#"death");
 	self endon(#"hash_c43b59a6");
-	while(1)
+	while(true)
 	{
 		self waittill(#"hash_e442448", n_kill_count);
 		if(n_kill_count >= n_target_kills)
@@ -273,7 +273,7 @@ function function_60593db9(n_target_kills)
 {
 	self endon(#"death");
 	self endon(#"hash_c43b59a6");
-	while(1)
+	while(true)
 	{
 		self waittill(#"hash_f7608efe", n_kill_count);
 		if(n_kill_count >= n_target_kills)

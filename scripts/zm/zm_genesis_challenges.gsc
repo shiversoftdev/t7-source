@@ -240,7 +240,7 @@ function function_188466cb()
 function function_a235a040()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self function_2983de0c();
 		level waittill(#"end_of_round");
@@ -341,7 +341,7 @@ function function_23c9ffd3(trigger)
 {
 	self notify(#"hash_23c9ffd3");
 	self endon(#"hash_23c9ffd3");
-	while(1)
+	while(true)
 	{
 		wait(0.5);
 		if(!isdefined(self))
@@ -476,7 +476,7 @@ function function_4e61a018(var_e01fcddc, var_8e2d9e6f)
 */
 function function_424b6fe8()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger_activated", e_who);
 		n_entity = e_who getentitynumber();
@@ -676,7 +676,7 @@ function function_b1f54cb4(e_player, s_reward, var_17b3dc96, var_21d0cf95)
 			self.var_30ff0d6c.str_weapon_name = var_17b3dc96;
 			break;
 		}
-		default
+		default:
 		{
 			self.var_30ff0d6c = util::spawn_model(var_17b3dc96, var_51a2f105, var_9ef5a0dc);
 			break;
@@ -747,7 +747,7 @@ function function_94a89297(var_15fa438f)
 			return "tag_medal_med";
 			break;
 		}
-		default
+		default:
 		{
 			return "tag_medal_hard";
 			break;
@@ -1082,7 +1082,7 @@ function function_9b1e43e5()
 {
 	self endon(#"flag_player_completed_challenge_1");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill(#"flogger_killed_zombie", ai_zombie, e_attacker);
 		if(e_attacker === self && self.var_11e81afa < 5)
@@ -1106,7 +1106,7 @@ function function_c120be4e()
 {
 	self endon(#"flag_player_completed_challenge_1");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"zombie_zapped");
 		if(self.var_ca877c33 < 5)
@@ -1130,7 +1130,7 @@ function function_8eeff46f()
 {
 	self endon(#"flag_player_completed_challenge_1");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_98ea05", e_attacker);
 		if(e_attacker === self)
@@ -1153,7 +1153,7 @@ function function_68ed7a06()
 {
 	self endon(#"flag_player_completed_challenge_1");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		str_result = level util::waittill_any("all_rifts_destroyed", "chaos_round_timeout");
 		if(str_result === "all_rifts_destroyed")
@@ -1176,7 +1176,7 @@ function function_aae115f9()
 {
 	self endon(#"flag_player_completed_challenge_1");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_10ed65db", e_attacker);
 		if(e_attacker === self)
@@ -1199,7 +1199,7 @@ function function_84de9b90()
 {
 	self endon(#"flag_player_completed_challenge_1");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_646a26b1", e_attacker);
 		if(e_attacker === self)
@@ -1222,7 +1222,7 @@ function function_f6e60acb()
 {
 	self endon(#"flag_player_completed_challenge_1");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_944787dd", e_attacker);
 		if(e_attacker === self)
@@ -1245,7 +1245,7 @@ function function_d0e39062()
 {
 	self endon(#"flag_player_completed_challenge_1");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_b1d69866", e_attacker);
 		if(e_attacker === self)
@@ -1268,7 +1268,7 @@ function function_72fed2e5()
 {
 	self endon(#"flag_player_completed_challenge_1");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"new_equipment", weapon);
 		if(weapon === level.weaponriotshield)
@@ -1291,7 +1291,7 @@ function function_4cfc587c()
 {
 	self endon(#"flag_player_completed_challenge_2");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_92ad8590", e_attacker);
 		if(e_attacker === self)
@@ -1314,7 +1314,7 @@ function function_9592bd2c()
 {
 	self endon(#"flag_player_completed_challenge_1");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_7e8efe7c");
 		self notify(#"update_challenge_1_10");
@@ -1334,7 +1334,7 @@ function function_56b65fd3()
 {
 	self endon(#"flag_player_completed_challenge_2");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_11ab530d", e_attacker);
 		if(e_attacker === self)
@@ -1357,7 +1357,7 @@ function function_e4aef098()
 {
 	self endon(#"flag_player_completed_challenge_2");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_b1a8571a", e_attacker);
 		if(e_attacker === self)
@@ -1383,9 +1383,10 @@ function function_ab16b01()
 	self endon(#"disconnect");
 	var_259ad2d8 = getent("apothicon_island", "targetname");
 	level flag::wait_till_all(array("power_on1", "power_on2", "power_on3", "power_on4"));
-	while(1)
+	while(true)
 	{
 		self waittill(#"hash_a8c34632");
+		start_round = level.round_number;
 		while(self istouching(var_259ad2d8) && level.round_number - start_round < 3)
 		{
 			wait(1);
@@ -1410,7 +1411,7 @@ function function_c8bdcf0e()
 {
 	self endon(#"flag_player_completed_challenge_2");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill(#"chaos_round_start");
 		n_start_time = gettime();
@@ -1436,6 +1437,7 @@ function function_ac2bad00(n_start_time, var_8d05fd02)
 	level endon(#"chaos_round_complete");
 	level endon(#"kill_round");
 	level endon(#"chaos_round_timeout");
+	n_total_time = 0;
 	while(n_total_time < var_8d05fd02)
 	{
 		n_current_time = gettime();
@@ -1457,7 +1459,7 @@ function function_eec04977()
 {
 	self endon(#"flag_player_completed_challenge_2");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_661aa774");
 		str_result = level util::waittill_any("power_ritual_aborted", "power_ritual_completed", "non_melee_damage");
@@ -1481,7 +1483,7 @@ function function_7cb8da3c()
 {
 	self endon(#"flag_player_completed_challenge_2");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_1c04ac7f", e_attacker);
 		if(e_attacker === self)
@@ -1504,7 +1506,7 @@ function function_a2bb54a5()
 {
 	self endon(#"flag_player_completed_challenge_2");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_e15c8839", e_attacker);
 		if(e_attacker === self)
@@ -1527,7 +1529,7 @@ function function_a01222()
 {
 	self endon(#"flag_player_completed_challenge_2");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"player_killed_spider");
 		self notify(#"update_challenge_2_8");
@@ -1547,7 +1549,7 @@ function function_26a28c8b()
 {
 	self endon(#"flag_player_completed_challenge_3");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_8dbe1895", e_attacker);
 		if(e_attacker === self)
@@ -1570,7 +1572,7 @@ function function_748fccd9()
 {
 	self endon(#"flag_player_completed_challenge_2");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"hash_21c74868");
 		self notify(#"update_challenge_2_10");
@@ -1590,7 +1592,7 @@ function function_4e8d5270()
 {
 	self endon(#"flag_player_completed_challenge_2");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"hash_36abd341");
 		self notify(#"update_challenge_2_11");
@@ -1610,7 +1612,7 @@ function function_17664372()
 {
 	self endon(#"flag_player_completed_challenge_3");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_f312481d", e_attacker);
 		if(e_attacker === self)
@@ -1670,7 +1672,7 @@ function function_78a15a9()
 	self endon(#"flag_player_completed_challenge_3");
 	self endon(#"disconnect");
 	self endon(#"update_challenge_3_2");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", n_damage, e_attacker);
 		if(e_attacker.archetype === "mechz" || e_attacker.archetype === "margwa")
@@ -1693,7 +1695,7 @@ function function_cb614ea0()
 {
 	self endon(#"flag_player_completed_challenge_3");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"hash_bf458b1e");
 		self notify(#"update_challenge_3_3");
@@ -1714,7 +1716,8 @@ function function_d572a77f()
 	self endon(#"flag_player_completed_challenge_3");
 	self endon(#"disconnect");
 	var_f434985b = 0;
-	while(1)
+	var_2576a2b = 0;
+	while(true)
 	{
 		str_result = self util::waittill_any_return("flag_player_completed_challenge_3", "disconnect", "fire_margwa_death", "shadow_margwa_death");
 		if(str_result == "fire_margwa_death")
@@ -1766,7 +1769,7 @@ function function_896db2ad()
 {
 	self endon(#"flag_player_completed_challenge_1");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_9a954bfc", e_attacker);
 		if(e_attacker === self)
@@ -1789,7 +1792,7 @@ function function_636b3844()
 {
 	self endon(#"flag_player_completed_challenge_3");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_22e3a570", e_attacker);
 		if(e_attacker === self)
@@ -1812,7 +1815,7 @@ function function_6d7c9123()
 {
 	self endon(#"flag_player_completed_challenge_3");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_d290d94f", e_attacker);
 		if(e_attacker === self)
@@ -1835,7 +1838,7 @@ function function_477a16ba()
 {
 	self endon(#"flag_player_completed_challenge_3");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"hash_7b1b2d");
 		self notify(#"update_challenge_3_9");
@@ -2001,6 +2004,7 @@ function function_2ce855f3(s_challenge)
 		self.var_5315d90d = [];
 	}
 	self.var_5315d90d[s_challenge.n_index] = 0;
+	var_ea184c3d = var_80792f67;
 	while(var_80792f67 > 0)
 	{
 		self waittill(s_challenge.str_notify);
@@ -2041,7 +2045,7 @@ function all_challenges_completed()
 {
 	level.var_c28313cd = 0;
 	callback::on_disconnect(&function_b1cd865a);
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_41370469");
 		level.var_c28313cd++;

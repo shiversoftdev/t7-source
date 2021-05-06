@@ -173,7 +173,7 @@ function onteamchange()
 	self endon(#"disconnect");
 	level endon(#"game_ended");
 	self endon(#"killteamchangemonitor");
-	while(1)
+	while(true)
 	{
 		self waittill(#"joined_team");
 		self player_influencers_set_team();
@@ -195,7 +195,7 @@ function ongrenadethrow()
 	self endon(#"disconnect");
 	self endon(#"killgrenademonitor");
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_fire", grenade, weapon);
 		level thread create_grenade_influencers(self.pers["team"], weapon, grenade);

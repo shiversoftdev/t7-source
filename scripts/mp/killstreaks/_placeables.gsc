@@ -189,7 +189,8 @@ function watchplacement(placeable)
 	player thread watchcarrycancelevents(placeable);
 	lastattempt = -1;
 	placeable.canbeplaced = 0;
-	while(1)
+	waitingforattackbuttonrelease = 1;
+	while(true)
 	{
 		placement = player canplayerplaceturret();
 		placeable.origin = placement["origin"];
@@ -469,7 +470,7 @@ function watchpickup(player)
 		assert(isdefined(placeable.pickuptrigger));
 	#/
 	trigger = placeable.pickuptrigger;
-	while(1)
+	while(true)
 	{
 		trigger waittill(#"trigger", player);
 		if(!isalive(player))

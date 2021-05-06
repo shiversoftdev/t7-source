@@ -150,7 +150,7 @@ function robot_state_changed(localclientnum, oldval, newval, bnewent, binitialsn
 */
 function wait_team_changed(localclientnum)
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"team_changed");
 		while(!isdefined(getnonpredictedlocalplayer(localclientnum)))

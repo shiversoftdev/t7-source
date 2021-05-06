@@ -238,6 +238,7 @@ function function_8ef347b3(v_location)
 		return;
 	}
 	self util::delay_notify(2, "stop_catching_immolation_secondaries");
+	n_start_time = gettime();
 	while(gettime() - n_start_time < 2)
 	{
 		self waittill(#"hash_a15c319", e_enemy);
@@ -270,6 +271,7 @@ function function_4c17acc8()
 	self endon(#"death");
 	self endon(#"hash_534b9c4b");
 	self util::delay_notify(2, "stop_catching_rapid_strike_attacks");
+	n_start_time = gettime();
 	while(gettime() - n_start_time < 2)
 	{
 		self waittill(#"hash_e11b0770");
@@ -654,7 +656,7 @@ function function_5bb05b72()
 function function_4f96d6bd()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			if(getdvarint("", 0) == 1)
 			{

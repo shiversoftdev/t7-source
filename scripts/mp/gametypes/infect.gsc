@@ -527,6 +527,7 @@ function function_485556b(player, comingfrommenu)
 */
 function function_dc5fbf33()
 {
+	started_waiting = gettime();
 	while(!self isstreamerready(-1, 1) && started_waiting + 90000 > gettime())
 	{
 		wait(0.05);
@@ -823,7 +824,8 @@ function finalsurvivoruav(var_53fb74fd)
 	level thread enduavonlatejoiner(var_53fb74fd);
 	setteamspyplane(game["attackers"], 1);
 	util::set_team_radar(game["attackers"], 1);
-	while(1)
+	removeuav = 0;
+	while(true)
 	{
 		prevpos = var_53fb74fd.origin;
 		wait(4);
@@ -861,7 +863,7 @@ function enduavonlatejoiner(var_53fb74fd)
 	level endon(#"game_ended");
 	var_53fb74fd endon(#"disconnect");
 	var_53fb74fd endon(#"death");
-	while(1)
+	while(true)
 	{
 		var_7dc99dab = [[level._getteamscore]](game["defenders"]);
 		if(var_7dc99dab > 1)
@@ -1238,7 +1240,7 @@ function choosefirstinfected()
 */
 function function_d07961fd()
 {
-	while(1)
+	while(true)
 	{
 		event = level util::waittill_any_return("game_ended", "infect_stopCountdown");
 		if(isdefined(level.var_796fada2))
@@ -1268,6 +1270,7 @@ function function_34c8bd01()
 	level endon(#"game_ended");
 	level endon(#"infect_stoptimeextended");
 	level endon(#"hash_14015a9");
+	timeout = 0;
 	while(isdefined(level.var_796fada2) && level.var_796fada2.alpha > 0)
 	{
 		hostmigration::waitlongdurationwithhostmigrationpause(0.5);
@@ -1294,7 +1297,7 @@ function function_34c8bd01()
 */
 function function_938d075f()
 {
-	while(1)
+	while(true)
 	{
 		event = level util::waittill_any_return("game_ended", "infect_stopTimeExtended");
 		if(isdefined(level.var_a3c7456d))
@@ -1352,6 +1355,7 @@ function function_d418a8fd(team)
 function setfirstinfected()
 {
 	self endon(#"disconnect");
+	self.infect_isbeingchosen = 1;
 	while(!isalive(self) || self util::isusingremote())
 	{
 		wait(0.05);
@@ -1884,7 +1888,7 @@ function function_fb550fe9(dvarname, var_c0c93d2)
 {
 	/#
 		setdvar(dvarname, "");
-		while(1)
+		while(true)
 		{
 			wait(0.05);
 			dvarvalue = getdvarstring(dvarname);
@@ -1930,7 +1934,7 @@ function function_27ccd53(command, args)
 				}
 				break;
 			}
-			default
+			default:
 			{
 				break;
 			}

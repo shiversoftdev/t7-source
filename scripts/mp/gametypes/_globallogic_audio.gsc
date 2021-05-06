@@ -1044,7 +1044,7 @@ function get_round_switch_dialog(switchtype)
 		{
 			return "roundOvertime";
 		}
-		default
+		default:
 		{
 			return "roundSwitchSides";
 		}
@@ -1254,7 +1254,8 @@ function sndmusictimelimitwatcher()
 	{
 		return;
 	}
-	while(1)
+	halfway = level.timelimit * 60 * 0.5;
+	while(true)
 	{
 		timeleft = globallogic_utils::gettimeremaining() / 1000;
 		if(timeleft <= halfway)

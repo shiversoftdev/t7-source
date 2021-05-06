@@ -172,7 +172,7 @@ function shock_field_think(slot, weapon)
 	self endon(#"shock_field_off");
 	self notify(#"shock_field_on");
 	self endon(#"shock_field_on");
-	while(1)
+	while(true)
 	{
 		wait(0.25);
 		if(!self gadget_shock_field_is_inuse(slot))

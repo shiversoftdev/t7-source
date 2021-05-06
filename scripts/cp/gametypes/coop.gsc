@@ -167,7 +167,7 @@ function function_642c1545()
 */
 function function_a67d9d08()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"save_restore");
 		music::setmusicstate("death");
@@ -319,6 +319,7 @@ function onspawnplayer(predictedspawn = 0, question)
 */
 function onscoreclosemusic()
 {
+	teamscores = [];
 	while(!level.gameended)
 	{
 		scorelimit = level.scorelimit;
@@ -765,7 +766,7 @@ function wait_to_spawn()
 function respawn_spectators_on_objective_change()
 {
 	level flag::wait_till("all_players_spawned");
-	while(1)
+	while(true)
 	{
 		level waittill(#"objective_changed");
 		foreach(var_da9b9179, player in level.players)
@@ -886,7 +887,8 @@ function function_51525e38()
 	self notify(#"hash_dc0f8e82");
 	self endon(#"death");
 	self endon(#"hash_dc0f8e82");
-	while(1)
+	var_a151e229 = 0;
+	while(true)
 	{
 		self waittill(#"weapon_change", e_weapon);
 		if(isdefined(e_weapon))
@@ -923,7 +925,7 @@ function function_e9b4a63b()
 {
 	self endon(#"death");
 	self endon(#"hash_79135cb3");
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_fired", e_weapon);
 		if(isdefined(e_weapon.isheroweapon) && e_weapon.isheroweapon)

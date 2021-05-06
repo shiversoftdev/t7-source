@@ -88,7 +88,7 @@ function amb_0_zombie()
 	var_64ab0444 = getent("amb_0_zombie", "targetname");
 	var_64ab0444 playloopsound(var_64ab0444.script_label);
 	wait(35);
-	while(1)
+	while(true)
 	{
 		int = randomintrange(0, 40);
 		if(int == 10)
@@ -239,7 +239,7 @@ function setup_meteor_audio()
 */
 function function_1da885f0()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_9b53c751", e_player);
 		var_c661f4ef = level.var_2a0600f - 1;
@@ -289,7 +289,7 @@ function portrait_egg_vox()
 	}
 	self usetriggerrequirelookat();
 	self setcursorhint("HINT_NOICON");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(!(isdefined(player.isspeaking) && player.isspeaking))
@@ -411,7 +411,8 @@ function function_8d1c7be1()
 function function_57a1070b()
 {
 	level flag::wait_till("power_on");
-	while(1)
+	str_exploder_name = self.target + "_flashes";
+	while(true)
 	{
 		self waittill(#"trap_done");
 		exploder::exploder(str_exploder_name);
@@ -457,7 +458,7 @@ function sndzhd_knocker()
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		wait(randomintrange(60, 180));
 		var_adc6a71a = level function_57f2b10e(var_8e7ce497);
@@ -597,6 +598,7 @@ function function_e497b291(n_max)
 	level endon(#"zhd_knocker_timeout");
 	level endon(#"zhd_knocker_success");
 	var_c9cd8e88 = gettime();
+	n_max = n_max + var_c9cd8e88;
 	while(gettime() < n_max)
 	{
 		wait(0.05);

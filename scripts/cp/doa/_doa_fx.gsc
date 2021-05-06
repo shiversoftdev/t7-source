@@ -517,6 +517,7 @@ function function_32bcda58(var_7aac5112, attacker)
 	{
 		self.var_a27665f9 = 0;
 	}
+	var_1b22f058 = getdvarint("scr_doa_dot_max_inc", 3);
 	while(isalive(self))
 	{
 		self dodamage(dmg, self.origin, attacker);

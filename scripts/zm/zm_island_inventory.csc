@@ -105,6 +105,7 @@ function function_63119d2(var_1b778cf0, var_6e653641, n_new_value)
 	self notify(#"hash_63119d2");
 	self endon(#"hash_63119d2");
 	n_start_time = getrealtime();
+	var_1c9f31e1 = 0;
 	while(var_1c9f31e1 <= 1)
 	{
 		var_1c9f31e1 = getrealtime() - n_start_time / 1000;

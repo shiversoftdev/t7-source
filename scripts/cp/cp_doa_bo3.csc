@@ -241,7 +241,7 @@ function function_62423327(arena)
 			arena.var_bfa5d6ae = 1;
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}
@@ -330,7 +330,7 @@ function function_99e9c8d(localclientnum, oldval, newval, bnewent, binitialsnap,
 			setuimodelvalue(getuimodel(level.var_7e2a814c, "grgb3"), "255 255 0");
 			break;
 		}
-		default
+		default:
 		{
 			setuimodelvalue(createuimodel(level.var_7e2a814c, "gbanner"), "");
 			setuimodelvalue(getuimodel(level.var_7e2a814c, "gpr0"), 0);
@@ -428,7 +428,7 @@ function function_7183a31d(fieldname, diff)
 function function_ec984567()
 {
 	level endon(#"hash_ec7ca67b");
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_48152b36", fieldname, diff);
 		if(diff > 0)
@@ -517,7 +517,7 @@ function function_c7163a08(localclientnum, oldval, newval, bnewent, binitialsnap
 			level.var_f64ff200 = 1;
 			string = "CP_DOA_BO3_REDINS_HINT" + randomint(8);
 			setuimodelvalue(createuimodel(level.var_7e2a814c, "hint"), istring(string));
-			while(1)
+			while(true)
 			{
 				level waittill(#"countdown", val);
 				if(val <= 1)
@@ -591,7 +591,7 @@ function function_787f2b69(localclientnum)
 	setuimodelvalue(createuimodel(level.var_7e2a814c, "driving"), 1);
 	setdvar("doa_redins_rally", 1);
 	level thread function_ec984567();
-	while(1)
+	while(true)
 	{
 		for(i = 0; i < 4; i++)
 		{
@@ -681,7 +681,7 @@ function function_27542390(localclientnum, state)
 	self endon(#"animstate");
 	self.animstate = state;
 	self useanimtree($chicken_mech);
-	while(1)
+	while(true)
 	{
 		switch(self.animstate)
 		{

@@ -113,7 +113,7 @@ function on_player_connect(localclientnum)
 */
 function wait_team_changed(localclientnum)
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"team_changed");
 		while(!isdefined(getlocalplayer(localclientnum)))

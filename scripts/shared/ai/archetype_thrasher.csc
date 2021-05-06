@@ -109,7 +109,7 @@ private function thrasherspawn(localclientnum)
 */
 private function thrasherfxcleanup()
 {
-	while(1)
+	while(true)
 	{
 		pustules = level.thrasherpustules;
 		level.thrasherpustules = [];

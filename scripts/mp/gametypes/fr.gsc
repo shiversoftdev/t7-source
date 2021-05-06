@@ -353,7 +353,7 @@ function on_player_damage(einflictor, eattacker, idamage, idflags, smeansofdeath
 function trackplayerorigin()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self.prev_origin = self.origin;
 		self.prev_time = gettime();
@@ -595,7 +595,7 @@ function watchcheckpointtrigger()
 */
 function watchdeathtrigger()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(isplayer(player))
@@ -810,7 +810,7 @@ function setup_weapon_targets()
 function watch_target_trigger_thread(weaponobject)
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", damage, attacker, direction_vec, point, type, modelname, tagname, partname, weapon, idflags);
 		if(level.frgame.activespawnpoint != self.checkpoint)
@@ -1089,7 +1089,7 @@ function end_game_state()
 function watchtrackswitch()
 {
 	track_count = level.frgame.tracks.size;
-	while(1)
+	while(true)
 	{
 		wait(0.05);
 		switch_track = 0;
@@ -1129,7 +1129,7 @@ function watchtrackswitch()
 			}
 			self playsoundtoplayer("uin_freerun_reset", self);
 			activatetrack(curr_track_index);
-			while(1)
+			while(true)
 			{
 				wait(0.05);
 				if(!(self dpad_right_pressed() || self dpad_left_pressed() || self dpad_up_pressed()))
@@ -1157,7 +1157,7 @@ function watchuserrespawn()
 	/#
 		wasinnoclip = 0;
 	#/
-	while(1)
+	while(true)
 	{
 		wait(0.05);
 		if(end_game_state())
@@ -1183,7 +1183,7 @@ function watchuserrespawn()
 			level clientfield::set("freerun_retries", level.frgame.userspawns);
 			self playsoundtoplayer("uin_freerun_reset", self);
 			self respawnatactivecheckpoint();
-			while(1)
+			while(true)
 			{
 				wait(0.05);
 				if(!self dpad_down_pressed())
@@ -1241,7 +1241,7 @@ function ignorebulletsfired(weapon)
 function watchweaponfire()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_fired", weapon);
 		if(weapon == level.weaponbasemeleeheld)
@@ -1709,7 +1709,7 @@ function setup_tutorial()
 function watchtutorialtrigger()
 {
 	level endon(#"stop_tutorials");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(isplayer(player))

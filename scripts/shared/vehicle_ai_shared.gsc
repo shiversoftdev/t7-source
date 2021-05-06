@@ -473,6 +473,7 @@ function waittill_asm_complete(substate_to_wait, timeout = 10)
 	self endon(#"death");
 	self thread waittill_asm_terminated();
 	self thread waittill_asm_timeout(timeout);
+	substate = undefined;
 	while(!isdefined(substate) || (substate != substate_to_wait && substate != "__terminated__" && substate != "__timeout__"))
 	{
 		self waittill(#"asm_complete", substate);
@@ -522,7 +523,7 @@ function predicted_collision()
 {
 	self endon(#"crash_done");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"veh_predictedcollision", velocity, normal);
 		if(normal[2] >= 0.6)
@@ -568,7 +569,7 @@ function nudge_collision()
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		self waittill(#"veh_collision", velocity, normal);
 		ang_vel = self getangularvelocity() * 0.5;
@@ -629,7 +630,7 @@ function level_out_for_landing()
 	self endon(#"death");
 	self endon(#"change_state");
 	self endon(#"landed");
-	while(1)
+	while(true)
 	{
 		velocity = self.velocity;
 		self.angles = (self.angles[0] * 0.85, self.angles[1], self.angles[2] * 0.85);
@@ -693,6 +694,7 @@ function burning_thread(attacker, inflictor)
 	}
 	starttime = gettime();
 	interval = max(secondsperonedamage, 0.5);
+	damage = 0;
 	while(timesince(starttime) < lastingtime)
 	{
 		previoustime = gettime();
@@ -1717,7 +1719,7 @@ function defaultstate_death_update(params)
 				gibbed_death(params);
 				break;
 			}
-			default
+			default:
 			{
 				default_death(params);
 				break;
@@ -2112,7 +2114,7 @@ function flash_team_switching_lights()
 {
 	self endon(#"death");
 	self endon(#"change_state");
-	while(1)
+	while(true)
 	{
 		self vehicle::lights_off();
 		wait(0.1);
@@ -3050,7 +3052,7 @@ function updatepersonalthreatbias_bots(var_9f84050f, var_1e08b2fd)
 function target_hijackers()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"ccom_lock_being_targeted", hijackingplayer);
 		self getperfectinfo(hijackingplayer, 1);

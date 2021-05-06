@@ -407,7 +407,7 @@ function trigger_visible_to_player(player)
 function magicbox_unitrigger_think()
 {
 	self endon(#"kill_trigger");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		self.stub.trigger_target notify(#"trigger", player);
@@ -594,7 +594,7 @@ function treasure_chest_think()
 	self.box_rerespun = undefined;
 	self.weapon_out = undefined;
 	self thread unregister_unitrigger_on_kill_think();
-	while(1)
+	while(true)
 	{
 		if(!isdefined(self.forced_user))
 		{
@@ -873,7 +873,7 @@ function watch_for_emp_close()
 	{
 		self.zbarrier.closed_by_emp = 0;
 	}
-	while(1)
+	while(true)
 	{
 		level waittill(#"emp_detonate", origin, radius);
 		if(distancesquared(origin, self.origin) < radius * radius)
@@ -1012,6 +1012,7 @@ function treasure_chest_move(player_vox)
 		current_sale_time = level.zombie_vars["zombie_powerup_fire_sale_time"];
 		util::wait_network_frame();
 		self thread fire_sale_fix();
+		level.zombie_vars["zombie_powerup_fire_sale_time"] = current_sale_time;
 		while(level.zombie_vars["zombie_powerup_fire_sale_time"] > 0)
 		{
 			wait(0.1);
@@ -1120,6 +1121,7 @@ function check_for_desirable_chest_location()
 function rotateroll_box()
 {
 	angles = 40;
+	angles2 = 0;
 	while(isdefined(self))
 	{
 		self rotateroll(angles + angles2, 0.5);
@@ -1310,7 +1312,8 @@ function treasure_chest_chooseweightedrandomweapon(player)
 */
 function weapon_show_hint_choke()
 {
-	while(1)
+	level._weapon_show_hint_choke = 0;
+	while(true)
 	{
 		wait(0.05);
 		level._weapon_show_hint_choke = 0;
@@ -1346,7 +1349,7 @@ function decide_hide_show_hint(endon_notify, second_endon_notify, onlyplayer, ca
 	{
 		use_choke = 1;
 	}
-	while(1)
+	while(true)
 	{
 		last_update = gettime();
 		if(isdefined(self.chest_user) && !isdefined(self.box_rerespun))
@@ -2011,7 +2014,7 @@ function magic_box_teddy_twitches()
 {
 	self endon(#"zbarrier_state_change");
 	self setzbarrierpiecestate(0, "closed");
-	while(1)
+	while(true)
 	{
 		wait(randomfloatrange(180, 1800));
 		self setzbarrierpiecestate(0, "opening");
@@ -2267,7 +2270,7 @@ function process_magic_box_zbarrier_state(state)
 			self.state = "leaving";
 			break;
 		}
-		default
+		default:
 		{
 			if(isdefined(level.custom_magicbox_state_handler))
 			{
@@ -2292,7 +2295,7 @@ function magicbox_host_migration()
 	level endon(#"end_game");
 	level notify(#"mb_hostmigration");
 	level endon(#"mb_hostmigration");
-	while(1)
+	while(true)
 	{
 		level waittill(#"host_migration_end");
 		if(!isdefined(level.chests))
@@ -2326,7 +2329,7 @@ function box_encounter_vo()
 {
 	level flag::wait_till("initial_blackscreen_passed");
 	self endon(#"left");
-	while(1)
+	while(true)
 	{
 		foreach(var_e592e44e, player in getplayers())
 		{

@@ -221,7 +221,7 @@ function function_5ee7262b(def)
 		{
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				assert(0);
@@ -344,7 +344,7 @@ function function_e1cd643e(projectile, weapon, player)
 function function_8e619e60(player)
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"missile_fire", projectile, weapon);
 		trigger = spawn("trigger_radius", projectile.origin, 9, 16, 24);
@@ -490,6 +490,7 @@ function function_cef7f9fd()
 	self clientfield::increment("burnZombie");
 	self.ignoreall = 1;
 	self namespace_1a381543::function_90118d8c("gdt_immolation_robot_countdown");
+	var_989e36b3 = 2000 + gettime();
 	while(gettime() < var_989e36b3)
 	{
 		self dodamage(5, self.origin, undefined, undefined, "none", "MOD_RIFLE_BULLET", 0, getweapon("gadget_immolation"), -1, 1);
@@ -885,7 +886,7 @@ function function_957373c6(def)
 			level.doa.var_afdb45da = def;
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				assert(0);
@@ -1062,6 +1063,7 @@ function function_2fb9e83f()
 	level endon(#"hash_ec7ca67b");
 	wait(60);
 	var_2c8bf5cd = math::clamp(level.doa.var_da96f13c + 1, 0, 3);
+	level.doa.var_2c8bf5cd = [];
 	while(var_2c8bf5cd > 0)
 	{
 		loc = doa_utility::function_ada6d90();

@@ -100,7 +100,7 @@ function __main__()
 */
 function function_b6d07c17()
 {
-	while(1)
+	while(true)
 	{
 		self.var_d0866ff4 = [];
 		foreach(var_b41743b4, e_player in level.activeplayers)
@@ -137,7 +137,7 @@ function teleport_pad_think()
 	self sethintstring(&"");
 	level waittill(#"sophia_at_teleporter");
 	self thread teleport_pad_active_think();
-	while(1)
+	while(true)
 	{
 		self sethintstring(&"");
 		level flag::wait_till("teleporter_on");
@@ -161,7 +161,7 @@ function teleport_pad_think()
 function teleport_pad_active_think()
 {
 	level thread zm_genesis_vo::function_14ee80c6();
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_player);
 		if(zm_utility::is_player_valid(e_player) && !level.var_18879020)
@@ -365,6 +365,7 @@ function teleport_pad_player_fx(var_7d7ca0ea, n_duration)
 {
 	var_7d7ca0ea endon(#"fx_done");
 	n_start_time = gettime();
+	n_total_time = 0;
 	while(n_total_time < n_duration)
 	{
 		if(array::contains(var_7d7ca0ea.var_d0866ff4, self))
@@ -630,7 +631,7 @@ function teleport_nuke(n_max_zombies, n_range)
 function teleport_2d_audio()
 {
 	self endon(#"fx_done");
-	while(1)
+	while(true)
 	{
 		wait(1.7);
 		for(i = 0; i < level.players.size; i++)

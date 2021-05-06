@@ -205,7 +205,7 @@ function add_actor_bookmark_kill_time()
 */
 function watch_actor_bookmarks()
 {
-	while(1)
+	while(true)
 	{
 		if(!isdefined(level.actorbookmarkparamsinitialized))
 		{

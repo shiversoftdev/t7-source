@@ -551,6 +551,7 @@ function load_weapon_spec_from_table(table, first_row)
 {
 	gametype = getdvarstring("ui_gametype");
 	index = 1;
+	row = tablelookuprow(table, index);
 	while(isdefined(row))
 	{
 		weapon_name = checkstringvalid(row[0]);

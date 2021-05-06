@@ -549,7 +549,7 @@ function _cybercom_notify_toggle_on()
 {
 	level notify(#"_cybercom_notify_toggle_on");
 	level endon(#"_cybercom_notify_toggle_on");
-	while(1)
+	while(true)
 	{
 		level waittill(#"enable_cybercom", player);
 		if(isdefined(player))
@@ -581,7 +581,7 @@ function _cybercom_notify_toggle_off()
 {
 	level notify(#"_cybercom_notify_toggle_off");
 	level endon(#"_cybercom_notify_toggle_off");
-	while(1)
+	while(true)
 	{
 		level waittill(#"disable_cybercom", player, var_1e41d598);
 		if(isdefined(player))
@@ -704,7 +704,7 @@ function function_d240e350(var_7872e02, target, var_9bc2efcb = 1, upgraded = 0)
 			cybercom_gadget_electrostatic_strike::ai_activateelectrostaticstrike(upgraded);
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				assert(0, "");

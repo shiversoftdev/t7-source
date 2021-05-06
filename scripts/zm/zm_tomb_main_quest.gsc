@@ -264,7 +264,7 @@ function chambers_init()
 */
 function monitor_chamber_death_trigs()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", ent);
 		if(isplayer(ent))
@@ -310,7 +310,7 @@ function watch_gramophone_vinyl_pickup()
 			str_vinyl_record = "vinyl_ice";
 			break;
 		}
-		default
+		default:
 		{
 			str_vinyl_record = "vinyl_master";
 			break;
@@ -353,7 +353,7 @@ function get_gramophone_song()
 			return "mus_gramophone_ice";
 			break;
 		}
-		default
+		default:
 		{
 			return "mus_gramophone_electric";
 			break;
@@ -385,7 +385,7 @@ function run_gramophone_teleporter(str_vinyl_record)
 		wait(0.05);
 	}
 	t_gramophone zm_tomb_utility::set_unitrigger_hint_string(&"ZM_TOMB_PLGR");
-	while(1)
+	while(true)
 	{
 		t_gramophone waittill(#"trigger", player);
 		if(!isdefined(self.gramophone_model))
@@ -474,12 +474,13 @@ function run_gramophone_door(str_vinyl_record, var_ac769486)
 	level util::waittill_any("gramophone_vinyl_player_picked_up", "open_sesame", "open_all_gramophone_doors");
 	str_craftablename = "gramophone";
 	t_door zm_tomb_utility::set_unitrigger_hint_string(&"ZM_TOMB_RU");
+	trig_position.trigger = t_door;
 	while(!trig_position.has_vinyl)
 	{
 		wait(0.05);
 	}
 	t_door zm_tomb_utility::set_unitrigger_hint_string(&"ZM_TOMB_PLGR");
-	while(1)
+	while(true)
 	{
 		t_door waittill(#"trigger", player);
 		if(!isdefined(trig_position.gramophone_model))
@@ -769,7 +770,7 @@ function watch_for_player_pickup_staff()
 function watch_staff_ammo_reload()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"zmb_max_ammo");
 		a_weapons = self getweaponslistprimaries();
@@ -795,7 +796,7 @@ function watch_staff_ammo_reload()
 function rotate_forever(rotate_time = 20)
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self rotateyaw(360, 20, 0, 0);
 		self waittill(#"rotatedone");
@@ -825,7 +826,7 @@ function staff_crystal_wait_for_teleport(n_element_enum)
 	e_plinth.v_staff = e_plinth.origin;
 	e_plinth.v_staff = (e_plinth.v_staff[0], e_plinth.v_staff[1], e_plinth.origin[2] + 110);
 	e_plinth moveto(e_plinth.v_start, 0.05);
-	while(1)
+	while(true)
 	{
 		level waittill(#"player_teleported", e_player, n_teleport_enum);
 		if(n_teleport_enum == n_element_enum)
@@ -837,6 +838,7 @@ function staff_crystal_wait_for_teleport(n_element_enum)
 	e_plinth thread sndmoveplinth(6);
 	lookat_dot = cos(90);
 	dist_sq = 250000;
+	lookat_time = 0;
 	while(lookat_time < 1 && isdefined(self.piecespawn.model))
 	{
 		wait(0.1);
@@ -935,7 +937,7 @@ function mechz_staff_piece_failsafe()
 	min_dist_sq = 1000000;
 	self endon(#"death");
 	wait(120);
-	while(1)
+	while(true)
 	{
 		a_players = getplayers();
 		b_anyone_near = 0;
@@ -971,8 +973,9 @@ function biplane_clue()
 {
 	self endon(#"death");
 	level endon(#"biplane_down");
-	while(1)
+	while(true)
 	{
+		cur_round = level.round_number;
 		while(level.round_number == cur_round)
 		{
 			wait(1);
@@ -1005,6 +1008,7 @@ function staff_biplane_drop_pieces(a_staff_pieces)
 		staff_piece.piecespawn.model movez(-500, 0.05);
 	}
 	level flag::wait_till("activate_zone_village_0");
+	cur_round = level.round_number;
 	while(level.round_number == cur_round)
 	{
 		wait(1);
@@ -1080,7 +1084,7 @@ function aircrystalbiplanecallback_vehicledamage(e_inflictor, e_attacker, n_dama
 function zone_capture_clue(str_zone)
 {
 	level endon(#"staff_piece_capture_complete");
-	while(1)
+	while(true)
 	{
 		wait(5);
 		while(!level.zones[str_zone].is_occupied)
@@ -1117,7 +1121,7 @@ function staff_unlock_with_zone_capture(s_staff_piece)
 	}
 	level thread zone_capture_clue(str_zone);
 	s_staff_piece.piecespawn.model ghost();
-	while(1)
+	while(true)
 	{
 		level waittill(#"zone_captured_by_player", str_captured_zone);
 		if(str_captured_zone == str_zone)
@@ -1435,7 +1439,7 @@ function debug_staff_charge()
 */
 function waittill_staff_inserted()
 {
-	while(1)
+	while(true)
 	{
 		self.charge_trigger waittill(#"trigger", player);
 		weapon_available = 1;
@@ -1572,7 +1576,7 @@ function staff_charger_check()
 	self.charger.is_charged = 0;
 	level flag::wait_till(self.weapname + "_upgrade_unlocked");
 	self showallparts();
-	while(1)
+	while(true)
 	{
 		if(self.charger.charges_received >= 20 || (getdvarint("zombie_cheat") >= 2 && self.charger.is_inserted))
 		{
@@ -1681,7 +1685,7 @@ function spawn_upgraded_staff_triggers(n_index)
 	e_staff_standard_upgraded watch_for_player_pickup_staff();
 	player = e_staff_standard_upgraded.owner;
 	e_fx delete();
-	while(1)
+	while(true)
 	{
 		if(e_staff_standard.charger.is_charged)
 		{
@@ -1705,7 +1709,7 @@ function staff_upgraded_reload_monitor()
 {
 	self.weaponname = self.weapname;
 	self thread zm_tomb_craftables::track_staff_weapon_respawn(self.owner);
-	while(1)
+	while(true)
 	{
 		place_staff_in_charger();
 		self thread staff_upgraded_reload();
@@ -1736,7 +1740,8 @@ function staff_upgraded_reload()
 	self endon(#"staff_equip");
 	max_ammo = self.w_weapon.maxammo;
 	n_count = int(max_ammo / 20);
-	while(1)
+	b_reloaded = 0;
+	while(true)
 	{
 		self.charger waittill(#"soul_received");
 		self.prev_ammo_stock = self.prev_ammo_stock + n_count;

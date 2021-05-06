@@ -167,7 +167,7 @@ function function_d5eb029a()
 {
 	level notify(#"hash_d5eb029a");
 	level endon(#"hash_d5eb029a");
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_aae01d5a", playernum, newstate);
 		players = getplayers(0);
@@ -227,7 +227,7 @@ function function_d5eb029a()
 					}
 					break;
 				}
-				default
+				default:
 				{
 					/#
 						assert(0);
@@ -251,7 +251,7 @@ function function_ae0a4fc5()
 {
 	self notify(#"hash_ae0a4fc5");
 	self endon(#"hash_ae0a4fc5");
-	while(1)
+	while(true)
 	{
 		players = getplayers(0);
 		foreach(var_5474f216, player in players)
@@ -771,7 +771,7 @@ function function_ee495f41(num)
 		{
 			return "yellow";
 		}
-		default
+		default:
 		{
 			/#
 				assert(0);
@@ -1061,6 +1061,7 @@ function rise_dust_fx(localclientnum, type, billow_fx, burst_fx, var_cf929ddb)
 	dust_time = 5.5;
 	dust_interval = 0.3;
 	self util::waittill_dobj(localclientnum);
+	t = 0;
 	while(t < dust_time)
 	{
 		if(self hasdobj(localclientnum))
@@ -1608,6 +1609,7 @@ function zombie_wait_explode(localclientnum)
 	{
 		where = self.origin;
 	}
+	start = gettime();
 	while(gettime() - start < 2000)
 	{
 		if(isdefined(self))
@@ -1644,8 +1646,10 @@ function function_36c61ba6(localclientnum, var_4faf5231 = 1, var_ad5de66e = 1)
 	var_fa7c415 = 0.002;
 	var_ba7af42 = var_711842d8;
 	baseangles = self.angles;
+	self.rate = 1;
 	while(isdefined(self))
 	{
+		var_ba7af42 = var_711842d8;
 		while(currentscale < var_c316c8b8)
 		{
 			currentscale = currentscale + var_ba7af42;
@@ -2168,7 +2172,7 @@ function function_c33d3992(localclientnum)
 function function_5c2a88d5()
 {
 	level endon(#"hash_a2a24535");
-	while(1)
+	while(true)
 	{
 		setsoundcontext("water", "over");
 		foreach(var_e06199f2, player in getlocalplayers())

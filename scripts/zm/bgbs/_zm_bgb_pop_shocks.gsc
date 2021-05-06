@@ -59,6 +59,7 @@ function event()
 	self endon(#"disconnect");
 	self endon(#"death");
 	self endon(#"bgb_update");
+	self.var_69d5dd7c = 5;
 	while(self.var_69d5dd7c > 0)
 	{
 		wait(0.1);

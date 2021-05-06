@@ -141,7 +141,7 @@ function wait_for_close_player()
 	level endon(#"be2_validation");
 	self endon(#"death");
 	wait(25);
-	while(1)
+	while(true)
 	{
 		players = getplayers();
 		for(i = 0; i < players.size; i++)
@@ -346,6 +346,7 @@ function moon_be_activate()
 	level._be_origin_animate = origin_animate;
 	level._be_vehicle attachpath(road_start);
 	d_trig = spawn("trigger_damage", level._be_vehicle.origin, 0, 32, 72);
+	start = 0;
 	while(!start)
 	{
 		d_trig waittill(#"damage", amount, attacker, direction, point, dmg_type, modelname, tagname);
@@ -403,6 +404,7 @@ function moon_be_think()
 			level._be playsound("evt_sq_blackegg_stop");
 			self thread moon_be_stop_anim();
 			d_trig = spawn("trigger_damage", self.origin, 0, 32, 72);
+			motivation = 0;
 			while(!motivation)
 			{
 				if(isdefined(node.script_string) && node.script_string == "zap")
@@ -500,7 +502,7 @@ function moon_be_think()
 					self notify(#"finished_path");
 					break;
 				}
-				default
+				default:
 				{
 					level.var_e9ab794e = int(node.script_noteworthy);
 					break;
@@ -525,6 +527,7 @@ function moon_be_think()
 			if(isdefined(next_chain_start.script_string))
 			{
 				d_trig = spawn("trigger_damage", self.origin, 0, 32, 72);
+				motivation = 0;
 				while(!motivation)
 				{
 					if(isdefined(next_chain_start.script_string) && next_chain_start.script_string == "zap")
@@ -722,7 +725,7 @@ function moon_be_resume_anim()
 */
 function waittill_player_is_close()
 {
-	while(1)
+	while(true)
 	{
 		players = getplayers();
 		for(i = 0; i < players.size; i++)

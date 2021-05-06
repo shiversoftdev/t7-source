@@ -223,7 +223,7 @@ function function_7884e6b8()
 	level waittill(#"all_players_spawned");
 	level waittill(#"start_of_round");
 	function_6b96bf38();
-	while(1)
+	while(true)
 	{
 		level waittill(#"end_of_round");
 		if(level.round_number == 2)
@@ -243,6 +243,7 @@ function function_7884e6b8()
 			n_counter = 0;
 			var_261100d2 = undefined;
 			n_player_index = randomint(level.activeplayers.size);
+			var_e8669 = level.activeplayers[n_player_index];
 			while(!zm_utility::is_player_valid(var_e8669) && n_counter < level.activeplayers.size)
 			{
 				n_player_index = (n_player_index + 1 < level.activeplayers.size ? n_player_index + 1 : 0);
@@ -383,6 +384,7 @@ function function_cf8fccfe(var_eca8128e)
 */
 function function_ff6cc972()
 {
+	var_ceb8ae25 = array::random(level.activeplayers);
 	while(level.activeplayers.size > 1 && var_ceb8ae25.characterindex == 2)
 	{
 		var_ceb8ae25 = array::random(level.activeplayers);
@@ -1190,6 +1192,7 @@ function function_2426269b(v_pos, n_range = 1000)
 				var_d211180f.isspeaking = 0;
 			}
 		}
+		i = 0;
 		while(isdefined(level.a_e_speakers) && i < level.a_e_speakers.size)
 		{
 			if(isdefined(level.a_e_speakers[i].deleteme) && level.a_e_speakers[i].deleteme == 1)
@@ -1714,7 +1717,7 @@ function function_65c13c89()
 */
 function function_1d8b909c()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"left");
 		var_bbced690 = undefined;
@@ -1750,7 +1753,8 @@ function function_a1e1ab31()
 	level.var_aea601e7[0] = 6;
 	level.var_aea601e7[1] = 6;
 	level.var_aea601e7[2] = 5;
-	while(1)
+	level.var_aea601e7[3] = 5;
+	while(true)
 	{
 		level flag::wait_till("low_grav_on");
 		zm_spawner::register_zombie_death_event_callback(&function_e58d3756);
@@ -1852,7 +1856,7 @@ function function_7091d990()
 */
 function function_24854f68()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_de71acc2", e_zombie, var_ecf98bb6);
 		e_zombie function_52f36cdc("masher", var_ecf98bb6);
@@ -1870,7 +1874,7 @@ function function_24854f68()
 */
 function function_5b684ae5()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"trap_kill", e_zombie, var_f1c4d54d);
 		var_ecf98bb6 = (isplayer(var_f1c4d54d) ? var_f1c4d54d : var_f1c4d54d.activated_by_player);
@@ -2097,7 +2101,7 @@ function function_2f2899c1(e_attacker)
 				n_cooldown_time = 20000;
 				break;
 			}
-			default
+			default:
 			{
 				var_25c1c42e = "bow_";
 				var_a1235bb2 = "bow";
@@ -2298,7 +2302,7 @@ function function_4e11dfdc()
 */
 function function_604361f()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"shield_built", e_player);
 		e_player thread function_7b697614("vox_plr_" + e_player.characterindex + "_pickup_rocket_" + randomint(5), 1);
@@ -2456,6 +2460,7 @@ function function_894d806e(s_spawn_loc)
 		return;
 	}
 	a_speakers = array::get_all_closest(s_spawn_loc.origin, level.activeplayers);
+	e_speaker = a_speakers[0];
 	while(!zm_utility::is_player_valid(e_speaker) || (isdefined(level.var_7eb6d8cb) && isdefined(level.var_7eb6d8cb[e_speaker.characterindex]) && gettime() - level.var_7eb6d8cb[e_speaker.characterindex] < 20000))
 	{
 		a_speakers = array::exclude(a_speakers, e_speaker);
@@ -2507,6 +2512,7 @@ function function_e8a09e6e()
 		return;
 	}
 	self thread function_6d7d2595();
+	n_counter = 0;
 	while(isdefined(self.has_faceplate) && self.has_faceplate && n_counter < 90)
 	{
 		wait(0.2);
@@ -2522,6 +2528,7 @@ function function_e8a09e6e()
 	}
 	else
 	{
+		e_attacker = undefined;
 		while(!isdefined(e_attacker))
 		{
 			self waittill(#"damage", n_damage, e_attacker);
@@ -2694,7 +2701,7 @@ function function_59fdea16()
 function function_88db2665()
 {
 	self endon(#"kill_trigger");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_player);
 		self thread function_4b5f8d2e(e_player);
@@ -2759,7 +2766,8 @@ function function_91db1c0b(str_vo_alias, s_unitrigger_stub)
 function function_fbe2f6cb()
 {
 	level waittill(#"start_zombie_round_logic");
-	while(1)
+	var_1b10157c = 0;
+	while(true)
 	{
 		str_result = level util::waittill_any_return("pap_reformed", "base_bow_picked_up");
 		if(str_result == "pap_reformed")

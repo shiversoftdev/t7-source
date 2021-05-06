@@ -206,7 +206,7 @@ private function aat_debug_text_display_monitor()
 {
 	/#
 		self endon(#"disconnect");
-		while(1)
+		while(true)
 		{
 			self waittill(#"weapon_change", weapon);
 			name = "";

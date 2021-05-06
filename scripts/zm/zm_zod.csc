@@ -233,7 +233,7 @@ function player_rain_thread(localclientnum)
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		if(!isdefined(self))
 		{

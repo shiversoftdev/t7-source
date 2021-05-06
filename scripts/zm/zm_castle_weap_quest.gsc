@@ -389,7 +389,8 @@ function which_eating_anim()
 */
 function soul_catcher_check()
 {
-	while(1)
+	self.is_charged = 0;
+	while(true)
 	{
 		if(self.var_98730ffa >= 8)
 		{
@@ -529,7 +530,8 @@ function function_9376cff9()
 	self endon(#"death");
 	level endon(#"hash_1deaef05");
 	self clientfield::set_to_player("bow_pickup_fx", 1);
-	while(1)
+	var_14ea0734 = struct::get("base_bow_pickup_struct", "targetname");
+	while(true)
 	{
 		self util::waittill_either("weapon_change", "show_base_bow");
 		if(!self function_e464049a())
@@ -582,7 +584,8 @@ function function_fb853e2c()
 	self endon(#"death");
 	self endon(#"hash_99ff6d52");
 	level endon(#"hash_1deaef05");
-	while(1)
+	var_890bca07 = getweapon("elemental_bow");
+	while(true)
 	{
 		self util::waittill_either("projectile_impact", "zmb_max_ammo");
 		if(self hasweapon(var_890bca07))
@@ -609,6 +612,7 @@ function function_71d4f620()
 	self endon(#"hash_a1f46392");
 	level endon(#"hash_1deaef05");
 	var_890bca07 = getweapon("elemental_bow");
+	var_d95a0cf3 = -1;
 	while(var_d95a0cf3 != self.characterindex)
 	{
 		level waittill(#"bleed_out", var_d95a0cf3);
@@ -689,7 +693,7 @@ function function_26e22a99()
 	self endon(#"kill_trigger");
 	level endon(#"hash_1deaef05");
 	self.stub thread zm_unitrigger::run_visibility_function_for_all_triggers();
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_who);
 		if(e_who function_e464049a() || e_who function_9dfa159b())

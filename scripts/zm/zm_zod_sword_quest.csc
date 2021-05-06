@@ -386,7 +386,7 @@ function function_274ba0e6(str_animname)
 {
 	self notify(#"hash_274ba0e6");
 	self endon(#"hash_274ba0e6");
-	while(1)
+	while(true)
 	{
 		self animation::play(str_animname, undefined, undefined, 1);
 	}

@@ -362,7 +362,8 @@ function power_consume_timer_think(slot, weapon)
 {
 	self endon(#"disconnect");
 	self endon(#"death");
-	while(1)
+	time = gettime();
+	while(true)
 	{
 		wait(0.1);
 		if(!isdefined(self._gadgets_player[slot]))

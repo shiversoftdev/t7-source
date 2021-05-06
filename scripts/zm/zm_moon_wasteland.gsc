@@ -168,7 +168,7 @@ function num_players_touching_volume(volume)
 */
 function check_players_in_nml_dogs_volume()
 {
-	while(1)
+	while(true)
 	{
 		level.num_nml_dog_targets = num_players_touching_volume(self);
 		wait(1.3);
@@ -383,10 +383,11 @@ function nml_round_manager()
 	mode = "normal_spawning";
 	area = 1;
 	level thread nml_round_never_ends();
-	while(1)
+	while(true)
 	{
 		current_time = gettime();
 		wait_override = 0;
+		zombies = getaispeciesarray(level.zombie_team, "all");
 		while(zombies.size >= max_zombies)
 		{
 			zombies = getaispeciesarray(level.zombie_team, "all");
@@ -574,7 +575,8 @@ function nml_round_manager()
 function function_3eb8ebf9(move_speed)
 {
 	self endon(#"death");
-	while(1)
+	time = gettime();
+	while(true)
 	{
 		if(isdefined(self.zombie_init_done) && self.zombie_init_done)
 		{
@@ -602,7 +604,7 @@ function nml_wave_attack(num_in_wave, var_c194e88d)
 {
 	level endon(#"wave_attack_finished");
 	level endon(#"restart_round");
-	while(1)
+	while(true)
 	{
 		zombies = getaispeciesarray(level.zombie_team, "all");
 		if(zombies.size < num_in_wave)
@@ -676,6 +678,7 @@ function screen_shake_manager(next_round_time)
 {
 	level endon(#"nml_attack_wave");
 	level endon(#"restart_round");
+	time = 0;
 	while(time < next_round_time)
 	{
 		level thread attack_wave_screen_shake();
@@ -1023,6 +1026,7 @@ function nml_ramp_up_zombies()
 {
 	self endon(#"stop_ramp");
 	level waittill(#"start_nml_ramp");
+	level.nml_timer = level.nml_last_round;
 	while(level flag::get("enter_nml"))
 	{
 		if(!level.on_the_moon)

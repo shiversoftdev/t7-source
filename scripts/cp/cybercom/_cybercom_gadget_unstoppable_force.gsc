@@ -458,7 +458,7 @@ function watch_collisions(weapon)
 	self endon(#"unstoppable_watch_collisions");
 	self endon(#"death");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		enemies = function_518996b3();
 		hit = 0;

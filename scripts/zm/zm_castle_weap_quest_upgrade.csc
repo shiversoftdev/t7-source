@@ -139,6 +139,7 @@ function function_9de15a4d(localclientnum, oldval, newval, bnewent, binitialsnap
 	{
 		n_start_time = gettime();
 		n_end_time = n_start_time + 2 * 1000;
+		b_is_updating = 1;
 		while(b_is_updating)
 		{
 			n_time = gettime();
@@ -159,6 +160,7 @@ function function_9de15a4d(localclientnum, oldval, newval, bnewent, binitialsnap
 	{
 		n_start_time = gettime();
 		n_end_time = n_start_time + 2 * 1000;
+		b_is_updating = 1;
 		while(b_is_updating)
 		{
 			n_time = gettime();
@@ -225,6 +227,7 @@ function function_1c4fc326(localclientnum, b_show, var_ad3c7eb7 = 1)
 	{
 		n_start_time = gettime();
 		n_end_time = n_start_time + 1 * 1000;
+		b_is_updating = 1;
 		while(b_is_updating)
 		{
 			n_time = gettime();
@@ -258,6 +261,7 @@ function function_1c4fc326(localclientnum, b_show, var_ad3c7eb7 = 1)
 		{
 			deletefx(localclientnum, self.n_fx_id, 1);
 		}
+		b_is_updating = 1;
 		while(b_is_updating)
 		{
 			n_time = gettime();
@@ -836,7 +840,8 @@ function function_6103d0f7(localclientnum, oldval, newval, bnewent, binitialsnap
 		n_start_time = gettime();
 		var_b1382f05 = n_start_time + randomfloatrange(0.2, 1.2) * 1000;
 		var_c8a6e70a = self.n_shader_value;
-		while(1)
+		var_2be3abbd = 0.35;
+		while(true)
 		{
 			n_time = gettime();
 			if(n_time >= var_b1382f05)
@@ -860,6 +865,7 @@ function function_6103d0f7(localclientnum, oldval, newval, bnewent, binitialsnap
 		n_start_time = gettime();
 		n_end_time = n_start_time + 0.2 * 1000;
 		var_c8a6e70a = self.n_shader_value;
+		b_is_updating = 1;
 		while(b_is_updating)
 		{
 			n_time = gettime();
@@ -881,6 +887,7 @@ function function_6103d0f7(localclientnum, oldval, newval, bnewent, binitialsnap
 		n_start_time = gettime();
 		n_end_time = n_start_time + 0.2 * 1000;
 		var_c8a6e70a = self.n_shader_value;
+		b_is_updating = 1;
 		while(b_is_updating)
 		{
 			n_time = gettime();
@@ -1056,6 +1063,7 @@ function function_64bc7af0(localclientnum, oldval, newval, bnewent, binitialsnap
 	{
 		n_start_time = gettime();
 		n_end_time = n_start_time + 1 * 1000;
+		b_is_updating = 1;
 		while(b_is_updating)
 		{
 			n_time = gettime();
@@ -1073,6 +1081,7 @@ function function_64bc7af0(localclientnum, oldval, newval, bnewent, binitialsnap
 		}
 		n_start_time = gettime();
 		n_end_time = n_start_time + var_82acb0d9 * 1000;
+		b_is_updating = 1;
 		while(b_is_updating)
 		{
 			n_time = gettime();
@@ -1112,6 +1121,7 @@ function function_febf0bf4(localclientnum, oldval, newval, bnewent, binitialsnap
 	{
 		n_start_time = gettime();
 		n_end_time = n_start_time + var_82acb0d9 * 1000;
+		b_is_updating = 1;
 		while(b_is_updating)
 		{
 			n_time = gettime();
@@ -1150,6 +1160,7 @@ function function_5063c4f7(localclientnum, oldval, newval, bnewent, binitialsnap
 	{
 		n_start_time = gettime();
 		n_end_time = n_start_time + 30 * 1000;
+		b_is_updating = 1;
 		while(b_is_updating)
 		{
 			n_time = gettime();
@@ -1184,6 +1195,7 @@ function function_f32932c3(localclientnum, oldval, newval, bnewent, binitialsnap
 	{
 		n_start_time = gettime();
 		n_end_time = n_start_time + 0.5 * 1000;
+		b_is_updating = 1;
 		while(b_is_updating)
 		{
 			n_time = gettime();
@@ -1204,6 +1216,7 @@ function function_f32932c3(localclientnum, oldval, newval, bnewent, binitialsnap
 	{
 		n_start_time = gettime();
 		n_end_time = n_start_time + 0.5 * 1000;
+		b_is_updating = 1;
 		while(b_is_updating)
 		{
 			n_time = gettime();
@@ -1324,6 +1337,7 @@ function function_46f52afa(localclientnum, oldval, newval, bnewent, binitialsnap
 	{
 		n_start_time = gettime();
 		n_end_time = n_start_time + 0.5 * 1000;
+		b_is_updating = 1;
 		while(b_is_updating)
 		{
 			n_time = gettime();
@@ -1344,6 +1358,7 @@ function function_46f52afa(localclientnum, oldval, newval, bnewent, binitialsnap
 	{
 		n_start_time = gettime();
 		n_end_time = n_start_time + 0.5 * 1000;
+		b_is_updating = 1;
 		while(b_is_updating)
 		{
 			n_time = gettime();
@@ -1376,6 +1391,7 @@ function function_6f66f54d(localclientnum, oldval, newval, bnewent, binitialsnap
 	self endon(#"entityshutdown");
 	n_start_time = gettime();
 	n_end_time = n_start_time + 0.5 * 1000;
+	b_is_updating = 1;
 	while(b_is_updating)
 	{
 		n_time = gettime();
@@ -1393,6 +1409,7 @@ function function_6f66f54d(localclientnum, oldval, newval, bnewent, binitialsnap
 	}
 	n_start_time = gettime();
 	n_end_time = n_start_time + 0.5 * 1000;
+	b_is_updating = 1;
 	while(b_is_updating)
 	{
 		n_time = gettime();
@@ -1519,6 +1536,7 @@ function function_a783453f(localclientnum, var_3a9e6062)
 	var_3a9e6062 endon(#"entityshutdown");
 	var_3a9e6062 endon(#"hash_5ad4a160");
 	b_left_side = 1;
+	var_cc9030a = var_3a9e6062.origin;
 	while(isdefined(var_3a9e6062))
 	{
 		wait(0.15);
@@ -1561,6 +1579,7 @@ function function_ccf12771(localclientnum, oldval, newval, bnewent, binitialsnap
 	{
 		n_start_time = gettime();
 		n_end_time = n_start_time + 2.5 * 1000;
+		b_is_updating = 1;
 		while(b_is_updating)
 		{
 			n_time = gettime();
@@ -1583,6 +1602,7 @@ function function_ccf12771(localclientnum, oldval, newval, bnewent, binitialsnap
 	{
 		n_start_time = gettime();
 		n_end_time = n_start_time + 2.5 * 1000;
+		b_is_updating = 1;
 		while(b_is_updating)
 		{
 			n_time = gettime();

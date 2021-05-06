@@ -674,7 +674,7 @@ function packapunch_hack_think()
 	{
 		pack_gates[i].startpos = pack_gates[i].origin;
 	}
-	while(1)
+	while(true)
 	{
 		level waittill(#"packapunch_hacked");
 		level flag::clear("packapunch_hacked");
@@ -788,6 +788,7 @@ function switch_between_zland_poi()
 			self zm_utility::add_poi_to_ignore_list(poi_array[x]);
 		}
 	}
+	poi_array = array::randomize(poi_array);
 	while(!level flag::get("packapunch_hacked"))
 	{
 		for(i = 0; i < poi_array.size; i++)
@@ -977,7 +978,7 @@ function pack_gate_closed()
 {
 	self waittill(#"movedone");
 	self.door_moving = undefined;
-	while(1)
+	while(true)
 	{
 		players = getplayers();
 		player_touching = 0;
@@ -1288,6 +1289,7 @@ function moon_round_think_func(restart = 0)
 		/#
 			println("" + level.round_number + "" + players.size);
 		#/
+		level.round_start_time = gettime();
 		while(level.zm_loc_types["zombie_location"].size <= 0)
 		{
 			wait(0.1);
@@ -2149,7 +2151,7 @@ function cliff_fall_death()
 	trig = getent("cliff_fall_death", "targetname");
 	if(isdefined(trig))
 	{
-		while(1)
+		while(true)
 		{
 			trig waittill(#"trigger", who);
 			if(!(isdefined(who.insta_killed) && who.insta_killed))
@@ -2433,7 +2435,7 @@ function blackhole_bomb_area_check()
 					}
 					break;
 				}
-				default
+				default:
 				{
 					break;
 				}
@@ -2831,7 +2833,7 @@ function function_35a61719()
 function function_cc87f235(player)
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_who);
 		if(e_who == player)
@@ -2854,7 +2856,7 @@ function function_cc87f235(player)
 function function_ff7d5f3b(player)
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_who);
 		if(e_who == player)

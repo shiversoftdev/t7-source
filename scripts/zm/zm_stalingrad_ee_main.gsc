@@ -310,6 +310,7 @@ function function_851880c()
 	{
 		var_f5badf05[i] = "vox_soph_sophia_observes_" + i;
 	}
+	var_5dac1aa3 = 0;
 	while(var_5dac1aa3 < 9)
 	{
 		wait(50);
@@ -351,6 +352,7 @@ function function_811523a8()
 	{
 		var_68a6b7a1[i] = "vox_soph_richtofen_trust_" + i;
 	}
+	var_983c388b = 0;
 	while(var_983c388b < 6)
 	{
 		wait(50);
@@ -438,6 +440,7 @@ function function_957ac17d()
 	level endon(#"weapon_cores_delivered");
 	var_1f76714 = array("vox_soph_help_nikolai_sophia_attempt_1_0", "vox_soph_help_nikolai_sophia_attempt_2_0", "vox_soph_help_nikolai_sophia_attempt_3_0", "vox_soph_help_nikolai_sophia_attempt_4_0", "vox_soph_help_nikolai_sophia_attempt_5_0", "vox_soph_help_nikolai_sophia_attempt_6_0");
 	n_current_line = 0;
+	var_af8a18df = struct::get("ee_sophia_struct", "targetname");
 	while(n_current_line < 6)
 	{
 		level function_fa7fbd4c(1);
@@ -643,7 +646,8 @@ function function_c78227f6()
 	s_generator = struct::get("ee_generator", "targetname");
 	s_generator.var_efb73168 = 0;
 	s_generator zm_unitrigger::create_unitrigger("", 100, &function_a5764a2e);
-	while(1)
+	var_c1a6445a = getent("generator_tarp", "targetname");
+	while(true)
 	{
 		level flag::set("generator_on");
 		level thread scene::play("p7_fxanim_zm_stal_generator_start_tarp_bundle");
@@ -745,7 +749,7 @@ function function_60619737()
 	var_4ae0fc9f = struct::get("ee_tube_use_" + self.script_label, "targetname");
 	var_4ae0fc9f zm_unitrigger::create_unitrigger("");
 	var_367b15e7 = getent(self.target, "targetname");
-	while(1)
+	while(true)
 	{
 		var_4ae0fc9f waittill(#"trigger_activated", e_who);
 		if(!level flag::get("generator_on"))
@@ -1064,7 +1068,7 @@ function function_c6d84fe1()
 	{
 		var_82fe6472 thread function_604cfbfb();
 	}
-	while(1)
+	while(true)
 	{
 		var_2200eb08.s_unitrigger function_527f47cc(&"ZM_STALINGRAD_MASTER_PASSWORD");
 		var_2200eb08 waittill(#"trigger_activated", e_who);
@@ -1100,7 +1104,7 @@ function function_c6d84fe1()
 function function_604cfbfb()
 {
 	level endon(#"hash_e84299b0");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", amount, attacker, direction, point, mod, tagname, modelname, partname, weapon);
 		if(isplayer(attacker) && mod != "MOD_EXPLOSIVE")
@@ -1176,7 +1180,8 @@ function function_928d903a()
 */
 function function_316026e4()
 {
-	while(1)
+	t_damage = getent("ee_keys_anomaly_damage_trig", "targetname");
+	while(true)
 	{
 		t_damage waittill(#"damage", amount, attacker, direction, point, mod, tagname, modelname, partname, weapon);
 		if(isplayer(attacker))
@@ -1202,7 +1207,8 @@ function function_316026e4()
 */
 function function_a1e863ea()
 {
-	while(1)
+	t_damage = getent("ee_keys_puddle_damage_trig", "targetname");
+	while(true)
 	{
 		t_damage waittill(#"damage", amount, attacker, direction, point, mod, tagname, modelname, partname, weapon);
 		if(weapon === getweapon("launcher_dragon_fire") || weapon === getweapon("launcher_dragon_fire_upgraded"))
@@ -1229,7 +1235,8 @@ function function_a1e863ea()
 */
 function function_b96348ee()
 {
-	while(1)
+	t_damage = getent("ee_keys_safe_damage_trig", "targetname");
+	while(true)
 	{
 		t_damage waittill(#"damage", amount, attacker, direction, point, mod, tagname, modelname, partname, weapon);
 		if(isdefined(attacker) && weapon === attacker.var_ae0fff53 && mod == "MOD_MELEE")
@@ -1355,7 +1362,7 @@ function function_71e9014a()
 function function_2433fbc0()
 {
 	level endon(#"stop_swirly");
-	while(1)
+	while(true)
 	{
 		exploder::exploder("fxexp_707");
 		wait(6.5);
@@ -1373,7 +1380,7 @@ function function_2433fbc0()
 */
 function function_87bac664()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_278aa663", str_exploder);
 		if(str_exploder == "fxexp_200")
@@ -1464,7 +1471,7 @@ function function_469f74c5()
 	var_66919a0f = getent("ee_map_shelf", "targetname");
 	var_385ae3a2 = struct::get("ee_map_button_struct", "targetname");
 	var_385ae3a2 zm_unitrigger::create_unitrigger("");
-	while(1)
+	while(true)
 	{
 		var_385ae3a2 waittill(#"trigger_activated", e_who);
 		if(level.var_ab1ca2f9.size)
@@ -1685,7 +1692,8 @@ function function_3d77d2aa()
 function function_478d8886()
 {
 	level endon(#"scenarios_complete");
-	while(1)
+	var_7f5d5c6 = array("special_round", "lockdown_active");
+	while(true)
 	{
 		level flag::wait_till_any(var_7f5d5c6);
 		level function_67cef48(0);
@@ -1896,7 +1904,7 @@ function function_b09a54a3()
 */
 function function_c324c7f6()
 {
-	while(1)
+	while(true)
 	{
 		s_pod = array::random(level.var_583e4a97.var_4dfc9f38);
 		var_181d95e = dragon::function_9a5142a();
@@ -1996,7 +2004,7 @@ function function_f858a27e()
 function function_5b047f3f()
 {
 	level endon(#"hash_94bb84a1");
-	while(1)
+	while(true)
 	{
 		level waittill(#"nuke_complete");
 		level flag::set("spawn_ee_harassers");
@@ -2185,7 +2193,7 @@ function function_e085d31()
 function function_6cacaae5()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		n_wait_time = randomfloatrange(2.5, 5);
 		n_yaw = randomint(360);
@@ -2335,6 +2343,7 @@ function function_a6093653()
 		level endon(#"hash_9546144d");
 	#/
 	level endon(#"ee_escort_failed");
+	var_fe8b6de3 = getvehiclenode("ee_escort_entrance", "targetname");
 	while(!zm_zonemgr::any_player_in_zone("start_A_zone") && !zm_zonemgr::any_player_in_zone("start_B_zone") && !zm_zonemgr::any_player_in_zone("start_C_zone"))
 	{
 		wait(1);
@@ -2399,7 +2408,8 @@ function function_a9a92838()
 {
 	self endon(#"death");
 	self endon(#"reached_end_node");
-	while(1)
+	b_moving = 0;
+	while(true)
 	{
 		var_6de069e0 = self zm_stalingrad_util::function_1af75b1b(200);
 		if(var_6de069e0 && !b_moving)
@@ -2607,7 +2617,8 @@ function function_c54a2f4c(var_6f4b86fb)
 	level endon(#"ee_kite_complete");
 	level endon(#"ee_kite_failed");
 	self thread function_ceeaf112();
-	while(1)
+	var_4cdb4f77 = undefined;
+	while(true)
 	{
 		wait(1);
 		var_6de069e0 = self zm_stalingrad_util::function_1af75b1b(450);
@@ -2670,7 +2681,8 @@ function function_ceeaf112()
 		level endon(#"hash_9546144d");
 	#/
 	level endon(#"ee_kite_failed");
-	while(1)
+	var_f80d6608 = getent("ee_raz_capture", "targetname");
+	while(true)
 	{
 		var_f80d6608 waittill(#"trigger", e_who);
 		if(e_who == self)
@@ -3123,7 +3135,7 @@ function function_cfa09312(var_cffe61ab = 0)
 	level endon(#"ee_pursue_failed");
 	var_2e4b6485 = 0;
 	self thread function_77e01bd0();
-	while(1)
+	while(true)
 	{
 		var_6db1518a = function_4981184b();
 		self.var_98b48961 = self.var_2b3fc782;
@@ -3183,7 +3195,7 @@ function function_4981184b()
 		level.var_7f02c954 = struct::get_array("ee_pursue_position", "targetname");
 		level.var_7f02c954 = array::randomize(level.var_7f02c954);
 	}
-	while(1)
+	while(true)
 	{
 		if(level.var_bce5f17f >= level.var_7f02c954.size)
 		{
@@ -3322,7 +3334,7 @@ function function_77e01bd0()
 	{
 		wait(randomintrange(5, 10));
 	}
-	while(1)
+	while(true)
 	{
 		if(self.var_5149ab6f >= 7)
 		{
@@ -3361,7 +3373,8 @@ function function_27541a6d()
 		}
 	#/
 	n_current_health = n_damage_threshold;
-	while(1)
+	n_step = 0;
+	while(true)
 	{
 		self.var_44b9cab5 = 0;
 		self thread function_182fe200();
@@ -3671,7 +3684,8 @@ function function_20cd9521(e_player)
 function function_8e92625b()
 {
 	self endon(#"death");
-	while(1)
+	var_46273a16 = self.stub.related_parent;
+	while(true)
 	{
 		self waittill(#"trigger", e_who);
 		if(isdefined(var_46273a16.var_ef53764e) && var_46273a16.var_ef53764e)
@@ -3700,7 +3714,8 @@ function function_3f204480(s_unitrigger)
 {
 	self endon(#"death");
 	self endon(#"hash_8cc49f44");
-	while(1)
+	var_a0411846 = getent("ee_koth_terminal_volume", "targetname");
+	while(true)
 	{
 		if(!self istouching(var_a0411846))
 		{
@@ -3728,7 +3743,7 @@ function function_1a5b6f26()
 		self clientfield::set("ee_koth_light_" + i, 1);
 	}
 	util::wait_network_frame();
-	while(1)
+	while(true)
 	{
 		var_693be8d4 = 4 - level.players.size;
 		var_cb91e1e5 = 0;
@@ -3924,7 +3939,7 @@ function function_6199ca7e()
 	self endon(#"death");
 	level endon(#"ee_lockdown_complete");
 	level endon(#"end_game");
-	while(1)
+	while(true)
 	{
 		n_progress = level.var_cd867f7a / level.var_2cd0f4a0;
 		if(n_progress < 0)
@@ -4162,6 +4177,7 @@ function function_d47c68fb()
 	var_47ee7db6 = getent("ee_veh_sewer_cam", "targetname");
 	nd_path_start = getvehiclenode("ee_sewer_rail_start", "targetname");
 	var_a9352214 = getent("ee_sewer_to_arena_trig", "targetname");
+	var_a9352214.var_9469fd43 = 0;
 	while(var_a9352214.var_9469fd43 < level.players.size)
 	{
 		var_a9352214 waittill(#"trigger", e_who);
@@ -4196,7 +4212,8 @@ function function_d47c68fb()
 */
 function function_a9e72613()
 {
-	while(1)
+	var_af81398 = getent("ee_sewer_hatch_trig", "targetname");
+	while(true)
 	{
 		if(var_af81398 function_2b042a95())
 		{
@@ -4724,7 +4741,7 @@ function function_9c8afe2b()
 */
 function function_eaf82313()
 {
-	while(1)
+	while(true)
 	{
 		if(function_92de7ae0())
 		{
@@ -5705,7 +5722,7 @@ function function_a1f6ef06(str_devgui_path, str_dvar, n_value, func, n_base_valu
 		setdvar(str_dvar, n_base_value);
 		str_devgui_path = "" + str_devgui_path;
 		adddebugcommand("" + str_devgui_path + "" + str_dvar + "" + n_value + "");
-		while(1)
+		while(true)
 		{
 			n_dvar = getdvarint(str_dvar);
 			if(n_dvar > n_base_value)

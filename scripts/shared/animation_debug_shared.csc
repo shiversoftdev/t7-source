@@ -19,7 +19,7 @@ autoexec function __init__()
 	/#
 		setdvar("", 0);
 		setdvar("", 0);
-		while(1)
+		while(true)
 		{
 			anim_debug = getdvarint("", 0) || getdvarint("", 0);
 			level flagsys::set_val("", anim_debug);
@@ -48,7 +48,7 @@ function anim_info_render_thread(animation, v_origin_or_ent, v_angles_or_tag, n_
 		self endon(#"scriptedanim");
 		self notify(#"_anim_info_render_thread_");
 		self endon(#"_anim_info_render_thread_");
-		while(1)
+		while(true)
 		{
 			level flagsys::wait_till("");
 			_init_frame();

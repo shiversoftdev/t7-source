@@ -174,7 +174,7 @@ function function_53848c29()
 */
 function function_e92dbdce()
 {
-	while(1)
+	while(true)
 	{
 		self thread function_3dc43cc5();
 		self waittill(#"hash_dcef79ff");
@@ -193,7 +193,7 @@ function function_e92dbdce()
 function function_15e20abb()
 {
 	self endon(#"hash_dcef79ff");
-	while(1)
+	while(true)
 	{
 		self.t_spore_explode waittill(#"touch", e_who);
 		if(isai(e_who))
@@ -220,6 +220,7 @@ function function_3dc43cc5()
 		self.var_4448f463 = 0;
 	}
 	self.var_4448f463 = randomintrange(3, 5);
+	self.var_f9f788a6 = 0;
 	while(self.var_4448f463 > 0)
 	{
 		level waittill(#"end_of_round");
@@ -351,6 +352,7 @@ function function_4c6beece(var_f9f788a6, var_8963ba33, e_attacker)
 	}
 	self thread spore_cloud_fx(var_8963ba33, var_f9f788a6);
 	playsoundatposition("zmb_spore_eject", self.origin);
+	var_6d602035 = self function_cc07e4ad(var_66bbb0c0, s_org);
 	while(var_d7bb540a > 0)
 	{
 		var_d7bb540a = var_d7bb540a - 0.25;
@@ -592,7 +594,7 @@ function function_94e2552f()
 {
 	self endon(#"hash_ab24308c");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self dodamage(self.health / 10, self.origin);
 		wait(1);

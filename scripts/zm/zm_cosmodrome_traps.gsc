@@ -258,6 +258,7 @@ function centrifuge_activate()
 	wait(3);
 	self playloopsound("zmb_cent_mach_loop", 0.6);
 	step = 3;
+	t = 0;
 	while(t < self._trap_duration)
 	{
 		for(i = 0; i < self._trap_movers.size; i++)
@@ -313,7 +314,8 @@ function centrifuge_random()
 {
 	centrifuge_model = getent("rotating_trap_group1", "targetname");
 	centrifuge_damage_trigger = getent("trigger_centrifuge_damage", "targetname");
-	while(1)
+	centrifuge_start_angles = centrifuge_model.angles;
+	while(true)
 	{
 		if(!isdefined(level.var_6708aa9c) || !level.var_6708aa9c)
 		{
@@ -380,7 +382,8 @@ function centrifuge_damage()
 {
 	self endon(#"trap_done");
 	self._trap_type = self.script_noteworthy;
-	while(1)
+	players = getplayers();
+	while(true)
 	{
 		self waittill(#"trigger", ent);
 		if(isplayer(ent) && ent.health > 1)
@@ -430,7 +433,7 @@ function centrifuge_spinning_edge_sounds()
 		return;
 	}
 	self linkto(getent(self.target, "targetname"));
-	while(1)
+	while(true)
 	{
 		level flag::wait_till("fuge_spining");
 		self playloopsound("zmb_cent_close_loop", 0.5);

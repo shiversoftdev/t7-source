@@ -165,7 +165,7 @@ function function_d32eac7f()
 		{
 			return "part_map";
 		}
-		default
+		default:
 		{
 			/#
 				assert(level.var_583e4a97.var_365bcb3c > 2, "");
@@ -233,7 +233,8 @@ function function_a0a37968(var_db0ac3dc)
 */
 function transport_pavlovs_to_fountain()
 {
-	while(1)
+	var_63979061 = getent("transport_pavlovs_to_fountain", "targetname");
+	while(true)
 	{
 		var_63979061 waittill(#"trigger", e_who);
 		if(!(isdefined(e_who.var_a0a9409e) && e_who.var_a0a9409e))
@@ -1004,6 +1005,7 @@ function function_1a7c9b89(var_a48df19e)
 function function_f4ceb3f8()
 {
 	var_fa54dca5 = gettime() / 1000;
+	n_time_elapsed = 0;
 	while(n_time_elapsed <= 3)
 	{
 		n_time_current = gettime() / 1000;

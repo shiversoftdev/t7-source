@@ -1100,7 +1100,7 @@ function create_temp_icon(str_obj_type, str_obj_name, v_pos, v_offset = (0, 0, 0
 			str_shader = "waypoint_return";
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				assertmsg("" + str_obj_type + "");

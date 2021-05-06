@@ -71,7 +71,7 @@ function proximityweaponobjectdetonation_override(watcher)
 	{
 		self thread [[level._bouncingbettywatchfortrigger]](watcher);
 	}
-	while(1)
+	while(true)
 	{
 		damagearea waittill(#"trigger", ent);
 		if(!weaponobjects::proximityweaponobject_validtriggerentity(watcher, ent))

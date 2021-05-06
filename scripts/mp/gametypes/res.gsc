@@ -925,7 +925,7 @@ function onuse(player, team)
 				string = &"MP_DOM_FLAG_E_CAPTURED_BY";
 				break;
 			}
-			default
+			default:
 			{
 				break;
 			}

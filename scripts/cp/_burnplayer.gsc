@@ -394,6 +394,7 @@ function watchforwater(time)
 	self notify(#"hash_bbb80fa");
 	self endon(#"hash_bbb80fa");
 	wait(0.1);
+	looptime = 0.1;
 	while(time > 0)
 	{
 		wait(looptime);
@@ -624,6 +625,7 @@ function doflamedamage(attacker, inflictor, weapon, time)
 	self endon(#"hash_3e41273b");
 	self thread doburningsound();
 	self notify(#"snd_burn_scream");
+	wait_time = 1;
 	while(isdefined(level.flamedamage) && isdefined(self) && self depthofplayerinwater() < 1 && time > 0)
 	{
 		if(isdefined(attacker) && isdefined(inflictor) && isdefined(weapon))
@@ -663,6 +665,7 @@ function dodogflamedamage(attacker, inflictor, weapon, time)
 	self endon(#"death");
 	self endon(#"hash_3e41273b");
 	self thread doburningsound();
+	wait_time = 1;
 	while(isdefined(level.flamedamage) && isdefined(self) && time > 0)
 	{
 		self dodamage(level.flamedamage, self.origin, attacker, inflictor, "none", "MOD_BURNED", 0, weapon);

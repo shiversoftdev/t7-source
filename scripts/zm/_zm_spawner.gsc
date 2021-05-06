@@ -98,7 +98,7 @@ function init()
 function debug_show_exterior_goals()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			if(isdefined(level.toggle_show_exterior_goals) && level.toggle_show_exterior_goals)
 			{
@@ -434,7 +434,7 @@ function zombie_damage_failsafe()
 {
 	self endon(#"death");
 	continue_failsafe_damage = 0;
-	while(1)
+	while(true)
 	{
 		wait(0.5);
 		if(!isdefined(self.enemy) || !isplayer(self.enemy))
@@ -635,7 +635,7 @@ function zombie_entered_playable()
 	{
 		level.playable_areas = getentarray("player_volume", "script_noteworthy");
 	}
-	while(1)
+	while(true)
 	{
 		foreach(var_ea30fdd2, area in level.playable_areas)
 		{
@@ -833,7 +833,7 @@ function tear_into_building()
 	self endon(#"death");
 	self endon(#"teleporting");
 	self zombie_history("tear_into_building -> start");
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.first_node.script_noteworthy))
 		{
@@ -888,7 +888,7 @@ function tear_into_building()
 			}
 			return;
 		}
-		while(1)
+		while(true)
 		{
 			if(isdefined(self.zombie_board_tear_down_callback))
 			{
@@ -1002,7 +1002,7 @@ function do_a_taunt()
 function taunt_notetracks(msg)
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(msg, notetrack);
 		if(notetrack == "end")
@@ -1079,7 +1079,7 @@ function should_attack_player_thru_boards()
 function window_notetracks(msg)
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(msg, notetrack);
 		if(notetrack == "end")
@@ -1197,7 +1197,7 @@ function get_attack_spot_index(node)
 function zombie_tear_notetracks(msg, chunk, node)
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(msg, notetrack);
 		if(notetrack == "end")
@@ -1544,7 +1544,7 @@ function check_zbarrier_piece_for_zombie_inert(chunk_index, zbarrier, zombie)
 */
 function check_zbarrier_piece_for_zombie_death(chunk_index, zbarrier, zombie)
 {
-	while(1)
+	while(true)
 	{
 		if(zbarrier getzbarrierpiecestate(chunk_index) != "targetted_by_zombie")
 		{
@@ -2688,7 +2688,8 @@ function zombie_pathing()
 		}
 	}
 	crumb_list = self.favoriteenemy.zombie_breadcrumbs;
-	while(1)
+	bad_crumbs = [];
+	while(true)
 	{
 		if(!zm_utility::is_player_valid(self.favoriteenemy, 1))
 		{
@@ -2842,7 +2843,7 @@ function zombie_repath_notifier()
 	{
 		notes[notes.size] = "zombie_repath_notify_" + i;
 	}
-	while(1)
+	while(true)
 	{
 		level notify(notes[note]);
 		note = note + 1 % 4;
@@ -2874,7 +2875,7 @@ function zombie_follow_enemy()
 	{
 		self.zombie_repath_notify = "zombie_repath_notify_" + self getentitynumber() % 4;
 	}
-	while(1)
+	while(true)
 	{
 		if(!isdefined(self._skip_pathing_first_delay))
 		{
@@ -3103,7 +3104,7 @@ function draw_zone_spawned_from()
 {
 	/#
 		self endon(#"death");
-		while(1)
+		while(true)
 		{
 			print3d(self.origin + vectorscale((0, 0, 1), 64), self.zone_spawned_from, (1, 1, 1));
 			wait(0.05);
@@ -3280,6 +3281,7 @@ function zombie_rise_dust_fx(zombie)
 	dust_interval = 0.3;
 	if(isdefined(self.script_parameters) && self.script_parameters == "in_water")
 	{
+		t = 0;
 		while(t < dust_time)
 		{
 			playfxontag(level._effect["rise_dust_water"], zombie, dust_tag);
@@ -3289,6 +3291,7 @@ function zombie_rise_dust_fx(zombie)
 	}
 	else if(isdefined(self.script_parameters) && self.script_parameters == "in_snow")
 	{
+		t = 0;
 		while(t < dust_time)
 		{
 			playfxontag(level._effect["rise_dust_snow"], zombie, dust_tag);
@@ -3298,6 +3301,7 @@ function zombie_rise_dust_fx(zombie)
 	}
 	else if(isdefined(self.script_parameters) && self.script_parameters == "in_foliage")
 	{
+		t = 0;
 		while(t < dust_time)
 		{
 			playfxontag(level._effect["rise_dust_foliage"], zombie, dust_tag);
@@ -3307,6 +3311,7 @@ function zombie_rise_dust_fx(zombie)
 	}
 	else
 	{
+		t = 0;
 		while(t < dust_time)
 		{
 			playfxontag(level._effect["rise_dust"], zombie, dust_tag);
@@ -3370,7 +3375,7 @@ function zombie_tesla_head_gib()
 function play_ambient_zombie_vocals()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		type = "ambient";
 		float = 4;

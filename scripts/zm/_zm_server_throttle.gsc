@@ -36,7 +36,7 @@ function server_choke_init(id, max)
 */
 function server_choke_thread(id)
 {
-	while(1)
+	while(true)
 	{
 		wait(0.05);
 		level.zombie_server_choke_ids_count[id] = 0;

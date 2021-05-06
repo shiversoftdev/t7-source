@@ -95,6 +95,7 @@ function activation()
 	self util::waittill_any_timeout(1, "weapon_change_complete", "death", "disconnect");
 	current_weapon = self getcurrentweapon();
 	current_weapon = self zm_weapons::switch_from_alt_weapon(current_weapon);
+	var_3a5329e8 = 0;
 	while(current_weapon === level.weaponnone || !zm_weapons::weapon_supports_aat(current_weapon))
 	{
 		wait(0.05);

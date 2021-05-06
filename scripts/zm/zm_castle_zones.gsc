@@ -136,7 +136,7 @@ function function_e9579b3e()
 			e_spawner.is_enabled = 0;
 		}
 	}
-	while(1)
+	while(true)
 	{
 		level waittill(#"end_of_round");
 		if(level.round_number >= 5)
@@ -191,7 +191,7 @@ function function_8ead5cf5()
 function function_affecb53(var_405e4f24)
 {
 	level flag::wait_till("zones_initialized");
-	while(1)
+	while(true)
 	{
 		level flag::wait_till("tesla_coil_on");
 		foreach(var_18d6dc71, e_spawner in var_405e4f24)

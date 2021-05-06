@@ -161,7 +161,7 @@ function trigger_unlock(trigger)
 	}
 	target_triggers = getentarray(trigger.target, "targetname");
 	trigger thread trigger_unlock_death(trigger.target);
-	while(1)
+	while(true)
 	{
 		array::run_all(target_triggers, &triggerenable, 0);
 		trigger waittill(#"trigger");
@@ -294,7 +294,8 @@ function trigger_look(trigger)
 	{
 		a_parameters = strtok(trigger.script_parameters, ",; ");
 	}
-	while(1)
+	b_ads_check = isinarray(a_parameters, "check_ads");
+	while(true)
 	{
 		trigger waittill(#"trigger", e_other);
 		if(isplayer(e_other))
@@ -411,7 +412,7 @@ function flag_set_trigger(trigger, str_flag)
 	{
 		level flag::init(str_flag, undefined, 1);
 	}
-	while(1)
+	while(true)
 	{
 		trigger wait_till();
 		if(isdefined(trigger.targetname) && trigger.targetname == "flag_set")
@@ -442,7 +443,7 @@ function flag_clear_trigger(trigger, str_flag)
 	{
 		level flag::init(str_flag, undefined, 1);
 	}
-	while(1)
+	while(true)
 	{
 		trigger wait_till();
 		if(isdefined(trigger.targetname) && trigger.targetname == "flag_clear")
@@ -529,7 +530,7 @@ function friendly_respawn_trigger(trigger)
 	#/
 	spawners = undefined;
 	spawner endon(#"death");
-	while(1)
+	while(true)
 	{
 		trigger waittill(#"trigger");
 		if(isdefined(trigger.script_forcecolor))
@@ -557,7 +558,7 @@ function friendly_respawn_trigger(trigger)
 function friendly_respawn_clear(trigger)
 {
 	trigger endon(#"death");
-	while(1)
+	while(true)
 	{
 		trigger waittill(#"trigger");
 		level flag::clear("respawn_friendlies");
@@ -610,7 +611,7 @@ function script_flag_set_touching(trigger)
 		level flag::init(trigger.script_flag_set_on_cleared, undefined, 1);
 	}
 	trigger thread _detect_touched();
-	while(1)
+	while(true)
 	{
 		trigger.script_touched = 0;
 		wait(0.05);
@@ -654,7 +655,7 @@ function script_flag_set_touching(trigger)
 function _detect_touched()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger");
 		self.script_touched = 1;
@@ -672,7 +673,7 @@ function _detect_touched()
 */
 function trigger_delete_on_touch(trigger)
 {
-	while(1)
+	while(true)
 	{
 		trigger waittill(#"trigger", other);
 		if(isdefined(other))
@@ -698,7 +699,7 @@ function flag_set_touching(trigger)
 	{
 		level flag::init(str_flag, undefined, 1);
 	}
-	while(1)
+	while(true)
 	{
 		trigger waittill(#"trigger", other);
 		level flag::set(str_flag);
@@ -790,7 +791,7 @@ function trigger_hint(trigger)
 function trigger_exploder(trigger)
 {
 	trigger endon(#"death");
-	while(1)
+	while(true)
 	{
 		trigger waittill(#"trigger");
 		if(isdefined(trigger.target))
@@ -1041,7 +1042,7 @@ function _is_valid_trigger_type(type)
 			return 1;
 			break;
 		}
-		default
+		default:
 		{
 			return 0;
 		}
@@ -1127,7 +1128,7 @@ function _trigger_wait(e_entity)
 			#/
 		}
 	#/
-	while(1)
+	while(true)
 	{
 		if(is_look_trigger(self))
 		{
@@ -1495,7 +1496,7 @@ function _do_trigger_function(trigger, str_remove_on, func, param_1, param_2, pa
 	{
 		trigger endon(str_remove_on);
 	}
-	while(1)
+	while(true)
 	{
 		if(isstring(trigger))
 		{
@@ -1608,7 +1609,7 @@ function delete_links_then_self()
 */
 function no_crouch_or_prone_think(trigger)
 {
-	while(1)
+	while(true)
 	{
 		trigger waittill(#"trigger", other);
 		if(!isplayer(other))
@@ -1637,7 +1638,7 @@ function no_crouch_or_prone_think(trigger)
 */
 function no_prone_think(trigger)
 {
-	while(1)
+	while(true)
 	{
 		trigger waittill(#"trigger", other);
 		if(!isplayer(other))

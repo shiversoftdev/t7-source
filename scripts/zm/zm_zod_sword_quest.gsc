@@ -258,7 +258,7 @@ function second_sword_quest()
 */
 function function_e9bb9efa()
 {
-	while(1)
+	while(true)
 	{
 		level util::waittill_any("between_round_over", "magic_circle_failed");
 		foreach(var_96688e09, player in level.players)
@@ -447,7 +447,7 @@ function function_4a703d7c(player)
 */
 function function_4a3c552c()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player zm_utility::in_revive_trigger())
@@ -609,7 +609,7 @@ function function_74e5c19(player)
 */
 function magic_circle_trigger_think()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player zm_utility::in_revive_trigger())
@@ -688,10 +688,11 @@ function magic_circle_trigger_activate(trig_stub, player)
 	player clientfield::set_player_uimodel("zmhud.swordEnergy", player.sword_power);
 	player gadgetpowerset(0, 100);
 	player clientfield::increment_uimodel("zmhud.swordChargeUpdate");
-	while(1)
+	while(true)
 	{
 		trig_stub.ai_defender = [];
 		trig_stub.var_2330d68c = array::filter(var_fb35e9c2, 0, &function_ed69c2a1, var_181b74a5);
+		var_90e5cd72 = 0;
 		while(var_90e5cd72 < 2 && var_73fc403f < n_kills_needed)
 		{
 			trig_stub.var_87b7360++;
@@ -746,7 +747,8 @@ function function_7922af5f(player, trig_stub, index, str_endon)
 {
 	level endon(str_endon);
 	level endon(#"magic_circle_failed");
-	while(1)
+	var_181b74a5 = trig_stub.n_char_index;
+	while(true)
 	{
 		var_cf8830de = array::random(trig_stub.var_2330d68c);
 		arrayremovevalue(trig_stub.var_2330d68c, var_cf8830de);
@@ -843,7 +845,8 @@ function function_278154b(var_a246d2ec, var_181b74a5, n_radius, n_rate, str_endo
 	level notify(#"hash_278154b");
 	level endon(#"hash_278154b");
 	level endon(str_endon);
-	while(1)
+	n_dist_max = n_radius * n_radius;
+	while(true)
 	{
 		var_2108630b = 0;
 		if(isdefined(self.sword_power))
@@ -1099,7 +1102,7 @@ function function_c722bbbb(player)
 */
 function function_2bca570()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player zm_utility::in_revive_trigger())
@@ -1772,6 +1775,7 @@ function give_sword(n_sword_level, var_74719138 = 0)
 function function_40f1b35b(wpn_sword, n_sword_level)
 {
 	self endon(#"disconnect");
+	var_6f140d05 = 0;
 	while(!var_6f140d05)
 	{
 		self waittill(#"weapon_change_complete");
@@ -1898,7 +1902,7 @@ function function_2c009d2e(e_statue)
 	s_trigger_pos = struct::get(e_statue.target, "targetname");
 	e_statue.trigger = zm_zod_util::spawn_trigger_radius(s_trigger_pos.origin, 64, 1, &function_2f31f931);
 	e_statue.trigger.statue_id = e_statue.statue_id;
-	while(1)
+	while(true)
 	{
 		e_statue.trigger zm_zod_util::unitrigger_refresh_message();
 		e_statue.trigger waittill(#"trigger", e_who);
@@ -2044,7 +2048,8 @@ function sword_devgui()
 		level thread zm_zod_util::setup_devgui_func("", "", 4, &function_b3babd8c);
 		n_sword_level = 0;
 		var_47719d0d = 0;
-		while(1)
+		s_sword_rock = getent("", "");
+		while(true)
 		{
 			n_level = getdvarint("");
 			if(n_level == 1)
@@ -2091,7 +2096,7 @@ function sword_devgui()
 					}
 					break;
 				}
-				default
+				default:
 				{
 					break;
 				}
@@ -2112,7 +2117,7 @@ function sword_devgui()
 					}
 					break;
 				}
-				default
+				default:
 				{
 					break;
 				}

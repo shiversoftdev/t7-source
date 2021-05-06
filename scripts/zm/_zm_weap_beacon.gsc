@@ -86,7 +86,7 @@ function player_handle_beacon()
 	{
 		max_attract_dist = 1536;
 	}
-	while(1)
+	while(true)
 	{
 		grenade = get_thrown_beacon();
 		self thread player_throw_beacon(grenade, num_attractors, max_attract_dist, attract_dist_diff);
@@ -144,7 +144,7 @@ function watch_for_emp(model, actor)
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		level waittill(#"emp_detonate", origin, radius);
 		if(distancesquared(origin, self.origin) < radius * radius)
@@ -567,7 +567,7 @@ function wait_for_attractor_positions_complete()
 */
 function beacon_cleanup(parent)
 {
-	while(1)
+	while(true)
 	{
 		if(!isdefined(parent))
 		{
@@ -672,7 +672,7 @@ function get_thrown_beacon()
 {
 	self endon(#"disconnect");
 	self endon(#"starting_beacon_watch");
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_fire", grenade, weapon);
 		if(weapon == level.var_25ef5fab)
@@ -717,6 +717,7 @@ function wait_and_explode(grenade)
 function start_artillery_launch_normal(grenade)
 {
 	self endon(#"weapon_beacon_timeout");
+	sp_giant_robot = undefined;
 	while(!isdefined(sp_giant_robot))
 	{
 		for(i = 0; i < 3; i++)
@@ -757,6 +758,7 @@ function start_artillery_launch_ee(grenade)
 	a_robot_index = [];
 	a_robot_index[0] = 1;
 	a_robot_index[1] = 0;
+	a_robot_index[2] = 2;
 	while(n_index < a_robot_index.size)
 	{
 		n_robot_num = a_robot_index[n_index];
@@ -766,7 +768,7 @@ function start_artillery_launch_ee(grenade)
 			{
 				sp_giant_robot = level.a_giant_robots[n_robot_num];
 				self thread artillery_fx_logic_ee(sp_giant_robot, grenade);
-				self notify(#"beacon_missile_launch", 2);
+				self notify(#"beacon_missile_launch");
 				level.weapon_beacon_busy = 1;
 				grenade.fuse_reset = 1;
 				grenade.fuse_time = 100;
@@ -1252,7 +1254,7 @@ private function setup_devgui_func(str_devgui_path, str_dvar, n_value, func, n_b
 {
 	setdvar(str_dvar, n_base_value);
 	adddebugcommand("devgui_cmd \"" + str_devgui_path + "\" \"" + str_dvar + " " + n_value + "\"\n");
-	while(1)
+	while(true)
 	{
 		n_dvar = getdvarint(str_dvar);
 		if(n_dvar > n_base_value)

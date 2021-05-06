@@ -224,6 +224,7 @@ function function_e56b0a04()
 function function_f85863e2()
 {
 	level endon(#"hash_dfaade1d");
+	level.var_de98a8ad = 0;
 	while(level.round_number <= 4)
 	{
 		level waittill(#"between_round_over");
@@ -464,7 +465,7 @@ function function_851889a0(var_2e1f54d4, var_777ffc66)
 			}
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}
@@ -485,7 +486,7 @@ function function_851889a0(var_2e1f54d4, var_777ffc66)
 			level thread scene::init("p7_fxanim_zm_stal_dragon_hazard_judicial_bundle");
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}
@@ -554,7 +555,7 @@ function function_4dfd2088(a_ents)
 			}
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}
@@ -668,7 +669,8 @@ function function_b4d22afe()
 	level.var_2ed06b05 = [];
 	level.var_2ed06b05[0] = "cin_t7_ai_zm_dlc3_dragon_flight_idle_a_1";
 	level.var_2ed06b05[1] = "cin_t7_ai_zm_dlc3_dragon_flight_idle_b_1";
-	while(1)
+	n_path = 0;
+	while(true)
 	{
 		level scene::play(level.var_2ed06b05[n_path]);
 		n_path = randomintrange(0, level.var_2ed06b05.size);
@@ -857,7 +859,7 @@ function function_40dbf71()
 {
 	/#
 		level endon(#"hash_803aa6bf");
-		while(1)
+		while(true)
 		{
 			if(isdefined(level.var_e29dd7ca))
 			{
@@ -984,7 +986,7 @@ function function_ca29ccc4(var_2e1f54d4, var_777ffc66)
 		}
 		case "opera_street":
 		case "start":
-		default
+		default:
 		{
 			weaponname = "turret_dragon_flame_l";
 			break;
@@ -992,6 +994,7 @@ function function_ca29ccc4(var_2e1f54d4, var_777ffc66)
 	}
 	weapon = getweapon(weaponname);
 	var_2e1f54d4.var_caa5308f setvehweapon(weapon);
+	var_2e1f54d4.var_caa5308f.firing = 1;
 	while(var_2e1f54d4.var_caa5308f.firing)
 	{
 		var_2e1f54d4.var_caa5308f fireweapon();
@@ -1022,7 +1025,7 @@ function function_d4556285(var_2e1f54d4, var_777ffc66)
 			exploder::stop_exploder("fxexp_403");
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}
@@ -1067,7 +1070,7 @@ function function_c4860ff6()
 function function_2d3f510e(var_c3052a58)
 {
 	level endon(#"breathe_fire");
-	while(1)
+	while(true)
 	{
 		foreach(var_6024a0b, player in level.activeplayers)
 		{
@@ -1286,7 +1289,7 @@ function function_2dcfeeb9(var_777ffc66, n_duration)
 			exploder::exploder("fxexp_403");
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}
@@ -1323,7 +1326,7 @@ function function_2dcfeeb9(var_777ffc66, n_duration)
 */
 function function_70d68a42()
 {
-	while(1)
+	while(true)
 	{
 		level flag::wait_till("dragon_console_triggered");
 		level function_83dd194d();
@@ -1412,7 +1415,7 @@ function function_517c3b8c()
 					var_89bbe661 = "yellow";
 					break;
 				}
-				default
+				default:
 				{
 					var_89bbe661 = undefined;
 					break;
@@ -1430,6 +1433,7 @@ function function_517c3b8c()
 			var_4752d17a[n_index]++;
 		}
 	}
+	var_44faa778 = 1;
 	while(var_44faa778)
 	{
 		var_44faa778 = 0;
@@ -1493,7 +1497,8 @@ function function_71776fa5(var_19b50ade)
 */
 function function_5bafaddd(var_5f982950, var_b1c60ae7)
 {
-	while(1)
+	var_cc373138 = getent("mdl_dragon_console_" + var_5f982950, "targetname");
+	while(true)
 	{
 		level.var_67881099[var_5f982950] waittill(#"hash_9c0a67f3");
 		foreach(var_acc4fb7f, var_fbb61447 in var_b1c60ae7)
@@ -1656,6 +1661,7 @@ function function_7ee20edb(var_5f982950)
 	var_cc373138 hidepart("tag_screen_green_animate");
 	var_cc373138 hidepart("tag_screen_red_animate");
 	var_cc373138.var_a3338832 = 0;
+	level.var_f5464041[var_5f982950] = 1;
 	while(!level flag::exists("power_on"))
 	{
 		wait(1);
@@ -1804,7 +1810,7 @@ function function_bd21006c(player)
 			self sethintstring(&"ZM_STALINGRAD_CONSOLE_DRAGON_ENROUTE_PAVLOVS");
 			break;
 		}
-		default
+		default:
 		{
 			self sethintstring("");
 			break;
@@ -1826,7 +1832,7 @@ function function_8b508a1b()
 {
 	self endon(#"kill_trigger");
 	self.stub thread zm_unitrigger::run_visibility_function_for_all_triggers();
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		var_422cea21 = level.var_f5464041[self.targetname];
@@ -1966,7 +1972,7 @@ function function_d21f20fe()
 					function_496d5723("library");
 					break;
 				}
-				default
+				default:
 				{
 					break;
 				}
@@ -2016,7 +2022,7 @@ function dragon_console_global_disable()
 				function_9fa4f2a3("library");
 				break;
 			}
-			default
+			default:
 			{
 				function_9fa4f2a3("library");
 				function_9fa4f2a3("factory");
@@ -2365,7 +2371,7 @@ function function_69f9b2b8()
 {
 	self endon(#"kill_trigger");
 	self.stub thread zm_unitrigger::run_visibility_function_for_all_triggers();
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		var_422cea21 = level.var_f5464041[self.targetname];
@@ -2893,6 +2899,7 @@ function function_7aaaf6eb()
 			self.var_d38bf7e6[2][self.var_d38bf7e6[2].size] = str_vo_alias + i;
 		}
 		self.var_d38bf7e6[1] = [];
+		j = 3;
 		while(i < 6)
 		{
 			if(!isdefined(self.var_d38bf7e6[1]))
@@ -2920,7 +2927,7 @@ function function_7aaaf6eb()
 			self.var_d38bf7e6[3][self.var_d38bf7e6[3].size] = str_vo_alias + i;
 		}
 	}
-	while(1)
+	while(true)
 	{
 		wait(randomfloatrange(15, 25));
 		var_448853df = array::random(self.var_d38bf7e6[level.var_ef6a691]);
@@ -3041,7 +3048,7 @@ function dragon_boss_init()
 function function_b1bbbd8f()
 {
 	level endon(#"hash_a35dee4e");
-	while(1)
+	while(true)
 	{
 		level flag::wait_till("dragon_boss_vignette");
 		while(!dragon_boss_vignette_ready() || !function_1a2d9dc9())
@@ -3553,6 +3560,7 @@ function function_3b09a8e3(a_ents)
 	{
 		level.var_81fa8ec0 = 0;
 		level.var_62ebede = 0;
+		level.var_cbe80f3e = 0;
 		while(level.var_b04a9a70 == 4)
 		{
 			level.var_b04a9a70 = function_cf6274b2();
@@ -4122,7 +4130,7 @@ function function_c40e4649(var_94bcf41e)
 						}
 						break;
 					}
-					default
+					default:
 					{
 						break;
 					}
@@ -4162,7 +4170,7 @@ function function_c40e4649(var_94bcf41e)
 			}
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}
@@ -4248,7 +4256,7 @@ function function_262689b5()
 function function_2ce58010()
 {
 	level endon(#"hash_a35dee4e");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", n_damage, attacker, direction_vec, point, type, modelname, tagname, partname, weapon, idflags);
 		if(isplayer(attacker) && level flag::get("dragon_boss_takedamage") && !level flag::get("world_is_paused"))
@@ -4512,7 +4520,7 @@ function attack_thread_gun()
 	self endon(#"end_attack_thread_gun");
 	self endon(#"stop_dragon_nikolai_think");
 	count = 0;
-	while(1)
+	while(true)
 	{
 		if(count < 5)
 		{
@@ -4607,7 +4615,7 @@ function function_32faa6e1(no_delay = 0)
 		wait(1);
 	}
 	self.var_11643dca = undefined;
-	while(1)
+	while(true)
 	{
 		if(level flag::get("dragon_boss_vignette") && self.var_a079fbeb !== 1)
 		{
@@ -4635,7 +4643,7 @@ function function_32faa6e1(no_delay = 0)
 					var_90863f97 = "west";
 					break;
 				}
-				default
+				default:
 				{
 					break;
 				}
@@ -4746,7 +4754,8 @@ function function_5b3d5084(var_8a585abc)
 function function_4e639a6a()
 {
 	level endon(#"dragon_boss_dead");
-	while(1)
+	s_dragon_boss_full_ammo = struct::get("s_dragon_boss_full_ammo", "targetname");
+	while(true)
 	{
 		level waittill(#"hash_2425bb5b");
 		var_93eb638b = zm_powerups::specific_powerup_drop("full_ammo", s_dragon_boss_full_ammo.origin);
@@ -4788,7 +4797,7 @@ function function_9f54bfc4()
 {
 	level endon(#"hash_a35dee4e");
 	level thread function_b1bbbd8f();
-	while(1)
+	while(true)
 	{
 		wait(level.var_299d7581[level.var_7a29ed06]);
 		level flag::set("dragon_boss_vignette");
@@ -4811,7 +4820,7 @@ function function_9f54bfc4()
 				level.var_ef9c43d7 function_a08562dc("cin_t7_ai_zm_dlc3_dragon_boss_fight_lance_pain_neck_b", "lance_neck@stationary", "o_zm_dlc3_dragon_boss_fight_lance_pain_neck_b");
 				break;
 			}
-			default
+			default:
 			{
 				break;
 			}
@@ -4840,7 +4849,8 @@ function function_f3810a1d(var_2443f661)
 {
 	self notify(#"hash_f3810a1d");
 	self endon(#"hash_f3810a1d");
-	while(1)
+	var_9e426197 = level.var_1564d2c8[var_2443f661];
+	while(true)
 	{
 		if(distance2dsquared(level.var_357a65b.origin, var_9e426197.origin) < 300 * 300)
 		{
@@ -4922,6 +4932,7 @@ function function_719d5095(animname)
 function function_c4fdcc57(harpoon)
 {
 	start = gettime();
+	oldorigin = harpoon.origin;
 	while(isdefined(harpoon))
 	{
 		/#

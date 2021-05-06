@@ -229,7 +229,7 @@ function showtopthreeplayers(localclientnum)
 */
 function spamuimodelvalue(localclientnum)
 {
-	while(1)
+	while(true)
 	{
 		wait(0.25);
 		setuimodelvalue(createuimodel(getuimodelforcontroller(localclientnum), "displayTop3Players"), 1);
@@ -377,7 +377,7 @@ function handleplaygesture(localclientnum, topplayerindex, gesturetype)
 */
 function streamerwatcher()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"streamfksl", localclientnum);
 		preparetopthreeplayers(localclientnum);

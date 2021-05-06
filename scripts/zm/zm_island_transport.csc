@@ -63,7 +63,7 @@ function sewer_current_fx(localclientnum, oldval, newval, bnewent, binitialsnap,
 function function_a39e4663(localclientnum)
 {
 	self endon(#"hash_ab837d11");
-	while(1)
+	while(true)
 	{
 		self.var_7e61ace3[localclientnum] = playfxontag(localclientnum, level._effect["current_effect"], self, "tag_origin");
 		wait(0.05);

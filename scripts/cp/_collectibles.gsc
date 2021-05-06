@@ -195,7 +195,7 @@ function function_6ba0709f()
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		level util::waittill_any("checkpoint_save", "_checkpoint_save_safe");
 		self function_d100c544();
@@ -218,7 +218,7 @@ function function_332e2cfd()
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		level waittill(#"save_restore");
 		if(!isdefined(self.var_b3dc8451))

@@ -153,7 +153,7 @@ function function_aeaa2ee6()
 	s_unitrigger.script_int = s_trigger.script_int;
 	self thread function_838f52ad(s_trigger.script_int);
 	self thread fire_beam();
-	while(1)
+	while(true)
 	{
 		s_trigger waittill(#"trigger_activated", e_player);
 		if(e_player zm_hero_weapon::is_hero_weapon_in_use())
@@ -418,7 +418,7 @@ function function_f8f61ccb(d, n)
 function function_f2c7fc31()
 {
 	self endon(#"stop_damage");
-	while(1)
+	while(true)
 	{
 		e_player = self getvehicleowner();
 		var_c18b4417 = 1;
@@ -560,7 +560,7 @@ function function_b859045(var_9449eaa2, var_6e477039)
 */
 function fire_beam()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_fired");
 		self function_3d36386();
@@ -732,7 +732,7 @@ function function_7fd518ea()
 */
 function function_13eaa39c()
 {
-	while(1)
+	while(true)
 	{
 		n_random = randomfloatrange(5, 7);
 		self rotateto((randomintrange(-90, 90), randomintrange(-90, 90), randomintrange(-90, 90)), n_random);
@@ -763,12 +763,13 @@ function function_c4a9de44()
 		self thread function_b52693fa();
 	#/
 	level flag::wait_till("phased_sophia_start");
-	while(1)
+	while(true)
 	{
 		self waittill(#"hash_f79a1db0", w_weapon, e_player);
 		if(isdefined(w_weapon) && isdefined(e_player))
 		{
 			n_start_time = gettime();
+			n_total_time = 0;
 			while(e_player attackbuttonpressed() && n_total_time < 0.15 && e_player function_1d6baeec(self))
 			{
 				n_current_time = gettime();

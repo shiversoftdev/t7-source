@@ -97,6 +97,7 @@ function function_c4641d12(var_44b25b5c)
 	var_e98af28a = [];
 	var_e98af28a[0] = "fxexp_801";
 	var_e98af28a[1] = "fxexp_802";
+	var_e98af28a[2] = "fxexp_800";
 	while(level.var_1e4d46e3 < level.var_164e92cf)
 	{
 		wait(0.05);
@@ -108,7 +109,8 @@ function function_c4641d12(var_44b25b5c)
 	level waittill(#"pack_machine_in_use");
 	level.var_9b1767c1 = level.round_number + randomintrange(2, 4);
 	var_94e7d6ca = undefined;
-	while(1)
+	var_3c7c9ebd = undefined;
+	while(true)
 	{
 		level waittill(#"end_of_round");
 		if(isdefined(var_94e7d6ca))
@@ -205,6 +207,7 @@ function function_88c193db()
 */
 function function_2209afdf()
 {
+	b_touching = util::any_player_is_touching(self, "allies");
 	while(b_touching)
 	{
 		wait(0.05);
@@ -306,6 +309,7 @@ function function_53bc4f86(pap_machine)
 	if(level.var_1e4d46e3 >= level.var_164e92cf)
 	{
 		level.var_1c602ba8[0].activated = 1;
+		level.var_54cd8d06 = level.var_1c602ba8[0];
 		while(level.var_e1ee8457)
 		{
 			wait(0.05);
@@ -354,7 +358,7 @@ function function_23193d81(str_location)
 			v_angles = (359.785, 136.597, 0.976539);
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}
@@ -380,7 +384,8 @@ function function_b9cca08f()
 	self endon(#"death");
 	self endon(#"disconnect");
 	level flag::wait_till("pap_reform_available");
-	while(1)
+	s_pap_location = level.var_54cd8d06;
+	while(true)
 	{
 		self util::waittill_player_looking_at(s_pap_location.origin + vectorscale((0, 0, 1), 50), 90);
 		if(distance(self.origin, s_pap_location.origin) < 400)
@@ -536,7 +541,8 @@ function function_a8c41b9()
 	var_40cae301 = [];
 	var_40cae301[0] = "fxexp_801";
 	var_40cae301[1] = "fxexp_802";
-	while(1)
+	var_40cae301[2] = "fxexp_800";
+	while(true)
 	{
 		while(self.state != "take_gun" && self.state != "eject_gun")
 		{

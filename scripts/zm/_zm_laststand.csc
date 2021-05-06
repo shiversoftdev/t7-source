@@ -57,7 +57,7 @@ function __init__()
 */
 function wait_and_set_revive_shader_constant()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"notetrack", localclientnum, note);
 		if(note == "revive_shader_constant")

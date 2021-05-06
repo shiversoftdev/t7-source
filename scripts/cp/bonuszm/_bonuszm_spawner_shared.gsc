@@ -246,7 +246,7 @@ function bonuzm_spawn(b_force = 0, str_targetname, v_origin, v_angles, bignoresp
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		if(!(isdefined(bignorespawninglimit) && bignorespawninglimit))
 		{

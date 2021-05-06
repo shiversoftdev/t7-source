@@ -177,7 +177,8 @@ function function_7fba300(e_player, var_289e02fc)
 function function_982419bb(var_6ab83514)
 {
 	self endon(#"death");
-	while(1)
+	var_e1041201 = getweapon(var_6ab83514);
+	while(true)
 	{
 		self waittill(#"weapon_change", wpn_new, var_6de65145);
 		if(wpn_new === var_e1041201)
@@ -230,7 +231,7 @@ function function_ececa597(var_6ab83514, var_8f9bdf29, var_5759faa5 = undefined)
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		self waittill(#"missile_fire", projectile, weapon);
 		if(issubstr(weapon.name, var_6ab83514))
@@ -341,7 +342,7 @@ function function_b252290e(str_weapon_name, var_93fff756)
 			}
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				assert(0, "");
@@ -386,7 +387,7 @@ function function_ea37b2fe(str_weapon_name)
 function function_7bc6b9d(var_6ab83514, var_8f9bdf29, var_332bb697 = undefined)
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"projectile_impact", weapon, v_position, radius, e_projectile, normal);
 		var_48369d98 = function_1796e73(weapon.name);

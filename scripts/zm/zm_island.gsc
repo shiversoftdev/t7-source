@@ -643,7 +643,8 @@ function function_b487bafd()
 function function_708908ca()
 {
 	self endon(#"disconnect");
-	while(1)
+	self.var_b5f30643 = 0;
+	while(true)
 	{
 		str_notify = self util::waittill_any_array_return(array("perk_acquired", "perk_lost", "disconnect"));
 		if(str_notify == "perk_acquired" && self hasperk("specialty_staminup") && !self.var_b5f30643)
@@ -676,7 +677,7 @@ function function_3363c147()
 	{
 		self.var_e2632fb2 = 0;
 	}
-	while(1)
+	while(true)
 	{
 		if(self isplayerunderwater())
 		{
@@ -730,7 +731,7 @@ function function_3363c147()
 function function_94ed46a2()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"entering_last_stand");
 		self.laststandstarttime = gettime();
@@ -752,7 +753,8 @@ function function_dd7044da()
 	var_d34e298b = 10;
 	var_d64fdaf3 = 20;
 	var_7bc01af9 = 30;
-	while(1)
+	self.drown_damage_after_time = var_d34e298b * 1000;
+	while(true)
 	{
 		self util::waittill_any("player_has_gasmask", "player_lost_gasmask", "player_has_staminup", "player_lost_staminup");
 		if(isdefined(self.var_b5f30643) && self.var_b5f30643 && (isdefined(self.var_df4182b1) && self.var_df4182b1))
@@ -1434,7 +1436,7 @@ function function_726351cf()
 	self setcandamage(1);
 	e_clip = getent(self.target, "targetname");
 	self clientfield::set("set_heavy_web_fade_material", 1);
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", damage, attacker, direction_vec, point, type, modelname, tagname, partname, weapon, idflags);
 		if(mirg2000::is_wonder_weapon(weapon))
@@ -1479,7 +1481,7 @@ function function_1f00b569()
 	e_player = array::random(level.activeplayers);
 	e_player playsound("zmb_island_lightning_first");
 	wait(8);
-	while(1)
+	while(true)
 	{
 		e_player = array::random(level.activeplayers);
 		e_player thread function_37f2c48b();
@@ -1584,7 +1586,7 @@ function function_6ca6d73d()
 {
 	self endon(#"disconnect");
 	self flag::wait_till("has_skull");
-	while(1)
+	while(true)
 	{
 		if(self util::attack_button_held() && self keeper_skull::function_97d08b97())
 		{
@@ -1695,7 +1697,7 @@ function function_5a24e391(var_5ef5ba1)
 function function_cdab50cc()
 {
 	self setteamfortrigger("allies");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_player);
 		if(!(isdefined(e_player.var_32ad034f) && e_player.var_32ad034f))
@@ -1753,7 +1755,7 @@ function function_8a2a48bb()
 	var_771ec2b = spawn("trigger_box", (-3917, 875.5, -247.5), 0, 128, 256, 64);
 	var_771ec2b.angles = vectorscale((0, 1, 0), 342.397);
 	var_771ec2b setteamfortrigger("allies");
-	while(1)
+	while(true)
 	{
 		var_771ec2b waittill(#"trigger", e_player);
 		if(!(isdefined(e_player.var_66064486) && e_player.var_66064486))

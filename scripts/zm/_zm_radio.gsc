@@ -84,7 +84,7 @@ function function_8554d5da()
 	level thread function_4b776d12();
 	self thread function_2d4f4459();
 	self thread function_f184004e();
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", damage, attacker, dir, loc, type, model, tag, part, weapon, flags);
 		if(!isdefined(attacker) || !isplayer(attacker))
@@ -118,7 +118,8 @@ function function_8554d5da()
 function function_2d4f4459()
 {
 	self.trackname = undefined;
-	while(1)
+	self.tracknum = 0;
+	while(true)
 	{
 		self waittill(#"hash_34d24635");
 		if(isdefined(self.var_175c09e5))
@@ -167,7 +168,7 @@ function function_c62f1c37()
 */
 function function_f184004e()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"hash_dec13539");
 		self playsoundwithnotify("zmb_musicradio_off", "sounddone");

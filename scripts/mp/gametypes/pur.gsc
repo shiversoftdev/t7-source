@@ -297,6 +297,7 @@ function onroundendgame(roundwinner)
 */
 function onscoreclosemusic()
 {
+	teamscores = [];
 	while(!level.gameended)
 	{
 		scorelimit = level.scorelimit;
@@ -423,7 +424,7 @@ function updateplayerhud()
 {
 	self endon(#"disconnect");
 	level endon(#"end_game");
-	while(1)
+	while(true)
 	{
 		if(self.team != "spectator")
 		{

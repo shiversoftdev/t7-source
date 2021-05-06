@@ -145,6 +145,7 @@ function minigun_weapon_powerup(ent_player, time)
 	{
 		ent_player allowcrouch(0);
 		ent_player allowprone(0);
+		stance_disabled = 1;
 		while(ent_player getstance() != "stand")
 		{
 			wait(0.05);

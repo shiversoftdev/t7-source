@@ -1645,7 +1645,7 @@ function addtestcarepackage()
 					break;
 				}
 				case 1:
-				default
+				default:
 				{
 					team = player.pers[""];
 					break;
@@ -1905,7 +1905,8 @@ function engagement_distance_debug_toggle()
 		{
 			setdvar("", "");
 		}
-		while(1)
+		laststate = getdvarint("", 0);
+		while(true)
 		{
 			currentstate = getdvarint("", 0);
 			if(dvar_turned_on(currentstate) && !dvar_turned_on(laststate))
@@ -2172,7 +2173,7 @@ function engage_dists_watcher()
 	/#
 		level endon(#"kill_all_engage_dist_debug");
 		level endon(#"kill_engage_dists_watcher");
-		while(1)
+		while(true)
 		{
 			player = util::gethostplayer();
 			playerweapon = player getcurrentweapon();
@@ -2217,7 +2218,8 @@ function debug_realtime_engage_dist()
 		hudobjarray = engagement_distance_debug_init();
 		level thread engage_dist_debug_hud_destroy(hudobjarray, "");
 		level.debugrtengagedistcolor = level.green;
-		while(1)
+		player = util::gethostplayer();
+		while(true)
 		{
 			lasttracepos = (0, 0, 0);
 			direction = player getplayerangles();
@@ -2382,6 +2384,7 @@ function plot_circle_fortime(radius1, radius2, time, color, origin, normal)
 		plotpoints = [];
 		rad = 0;
 		timer = gettime() + time * 1000;
+		radius = radius1;
 		while(gettime() < timer)
 		{
 			radius = radius2;
@@ -2760,7 +2763,8 @@ function watch_botsdvars()
 	/#
 		hasplayerweaponprev = getdvarint("");
 		grenadesonlyprev = getdvarint("");
-		while(1)
+		secondarygrenadesonlyprev = getdvarint("");
+		while(true)
 		{
 			if(hasplayerweaponprev != getdvarint(""))
 			{
@@ -2921,6 +2925,7 @@ function print_weapon_name()
 		if(self isswitchingweapons())
 		{
 			self waittill(#"weapon_change_complete", weapon);
+			fail_safe = 0;
 			while(weapon == level.weaponnone)
 			{
 				self waittill(#"weapon_change_complete", weapon);
@@ -3043,7 +3048,7 @@ function equipment_dev_gui()
 		set_equipment_list();
 		set_grenade_list();
 		setdvar("", "");
-		while(1)
+		while(true)
 		{
 			wait(0.5);
 			devgui_int = getdvarint("");
@@ -3075,7 +3080,7 @@ function grenade_dev_gui()
 		set_equipment_list();
 		set_grenade_list();
 		setdvar("", "");
-		while(1)
+		while(true)
 		{
 			wait(0.5);
 			devgui_int = getdvarint("");
@@ -3156,6 +3161,7 @@ function bot_dpad_think()
 		{
 			level.bot_index = 0;
 		}
+		host = util::gethostplayer();
 		while(!isdefined(host))
 		{
 			wait(0.5);
@@ -3363,7 +3369,7 @@ function devstraferunpathdebugdraw()
 		drawtime = maxdrawtime;
 		origintextoffset = vectorscale((0, 0, -1), 50);
 		endonmsg = "";
-		while(1)
+		while(true)
 		{
 			if(killstreaks::should_draw_debug("") > 0)
 			{
@@ -3477,7 +3483,8 @@ function devhelipathdebugdraw()
 		maxdrawtime = 10;
 		drawtime = maxdrawtime;
 		origintextoffset = vectorscale((0, 0, -1), 50);
-		while(1)
+		endonmsg = "";
+		while(true)
 		{
 			if(getdvarint("") > 0)
 			{
@@ -3672,6 +3679,7 @@ function drawpath(linecolor, textcolor, textalpha, textscale, textoffset, drawti
 	/#
 		level endon(endonmsg);
 		ent = self;
+		entfirsttarget = ent.targetname;
 		while(isdefined(ent.target))
 		{
 			enttarget = getent(ent.target, "");
@@ -3848,6 +3856,7 @@ function dev_get_node_pair()
 {
 	/#
 		player = util::gethostplayer();
+		start = undefined;
 		while(!isdefined(start))
 		{
 			start = node_get(player);
@@ -3862,6 +3871,7 @@ function dev_get_node_pair()
 		{
 			wait(0.05);
 		}
+		end = undefined;
 		while(!isdefined(end))
 		{
 			end = node_get(player);
@@ -3943,6 +3953,7 @@ function dev_get_point_pair()
 	/#
 		player = util::gethostplayer();
 		start = undefined;
+		points = [];
 		while(!isdefined(start))
 		{
 			start = point_get(player);
@@ -3955,6 +3966,7 @@ function dev_get_point_pair()
 		{
 			wait(0.05);
 		}
+		end = undefined;
 		while(!isdefined(end))
 		{
 			end = point_get(player);

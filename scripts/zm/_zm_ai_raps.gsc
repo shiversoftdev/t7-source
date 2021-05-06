@@ -134,7 +134,8 @@ function raps_round_tracker()
 	level.raps_round_count = 1;
 	level.n_next_raps_round = randomintrange(9, 11);
 	old_spawn_func = level.round_spawn_func;
-	while(1)
+	old_wait_func = level.round_wait_func;
+	while(true)
 	{
 		level waittill(#"between_round_over");
 		/#
@@ -277,7 +278,7 @@ function raps_round_spawning()
 	level flag::set("raps_round_in_progress");
 	level endon(#"last_ai_down");
 	level thread raps_round_aftermath();
-	while(1)
+	while(true)
 	{
 		while(level.zombie_total > 0)
 		{
@@ -375,7 +376,7 @@ function get_raps_spawn_total()
 			break;
 		}
 		case 4:
-		default
+		default:
 		{
 			n_wave_count = 34;
 			break;
@@ -533,7 +534,7 @@ function waiting_for_next_raps_spawn()
 			n_default_wait = 1.25;
 			break;
 		}
-		default
+		default:
 		{
 			n_default_wait = 0.75;
 			break;
@@ -1191,7 +1192,7 @@ function raps_run_think()
 		self.maxhealth = level.n_raps_health;
 		self.health = level.n_raps_health;
 	}
-	while(1)
+	while(true)
 	{
 		if(!zm_utility::is_player_valid(self.favoriteenemy) && self.b_attracted_to_octobomb !== 1 || self should_raps_giveup_inaccessible_player(self.favoriteenemy))
 		{
@@ -1245,7 +1246,7 @@ function should_raps_giveup_inaccessible_player(player)
 function raps_stalk_audio()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self playsound("zmb_hellhound_vocals_amb");
 		wait(randomfloatrange(3, 6));

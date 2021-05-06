@@ -356,7 +356,8 @@ function function_43128d49(weaponinfo, var_fe7b5ca3 = 1)
 */
 function function_7e774306()
 {
-	while(1)
+	level.var_3d2f81f1 = getweapon("ar_standard");
+	while(true)
 	{
 		level waittill(#"scene_sequence_started");
 		foreach(var_a919c988, player in level.activeplayers)

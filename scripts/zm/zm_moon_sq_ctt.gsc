@@ -128,6 +128,7 @@ function stage_logic()
 	if(level._cur_stage_name == "ctt2")
 	{
 		s = struct::get("sq_vg_final", "targetname");
+		r_close = 0;
 		while(!r_close)
 		{
 			players = getplayers();
@@ -156,7 +157,7 @@ function stage_logic()
 		level thread setup_and_play_ctt2_vox();
 		level thread hit_sam();
 	}
-	while(1)
+	while(true)
 	{
 		if(all_tanks_full())
 		{
@@ -260,8 +261,10 @@ function hit_sam()
 	stages = array(build_sam_stage(0.1, "vox_plr_4_quest_step6_1"), build_sam_stage(0.2, "vox_plr_4_quest_step6_1a"), build_sam_stage(0.3, "vox_plr_4_quest_step6_2"), build_sam_stage(0.4, "vox_plr_4_quest_step6_2a"), build_sam_stage(0.5, "vox_plr_4_quest_step6_3"), build_sam_stage(0.6, "vox_plr_4_quest_step6_3a"), build_sam_stage(0.7, "vox_plr_4_quest_step6_4"), build_sam_stage(0.9, "vox_plr_4_quest_step6_5"));
 	index = 0;
 	targ = struct::get("sq_sam", "targetname");
+	targ = struct::get(targ.target, "targetname");
 	while(index < stages.size)
 	{
+		stage = stages[index];
 		while(percent_full() < stage.percent)
 		{
 			wait(0.1);

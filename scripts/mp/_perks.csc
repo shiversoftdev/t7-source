@@ -71,7 +71,7 @@ function __init__()
 function updatesitrepscan()
 {
 	self endon(#"entityshutdown");
-	while(1)
+	while(true)
 	{
 		self oed_sitrepscan_enable(level.sitrepscan1_enable);
 		self oed_sitrepscan_setoutline(level.sitrepscan1_setoutline);
@@ -103,7 +103,7 @@ function updatesitrepscan()
 function updatedvars()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			level.sitrepscan1_enable = getdvarint("", level.sitrepscan1_enable);
 			level.sitrepscan1_setoutline = getdvarint("", level.sitrepscan1_setoutline);
@@ -247,6 +247,7 @@ function watch_perks_change(local_client_num)
 		self endon(#"watch_perks_change");
 		self endon(#"death");
 		self endon(#"disconnect");
+		self.last_perks = self getperks(local_client_num);
 		while(isdefined(self))
 		{
 			perks = self getperks(local_client_num);
@@ -391,6 +392,7 @@ function monitor_tracker_perk(local_client_num)
 	self.tracker_flying = 0;
 	self.tracker_last_pos = self.origin;
 	offset = (0, 0, getdvarfloat("perk_tracker_fx_foot_height", 0));
+	dist2 = 1024;
 	while(isdefined(self))
 	{
 		wait(0.05);
@@ -648,7 +650,7 @@ function monitor_detectnearbyenemies(local_client_num)
 	enemylosttime = 0;
 	previousenemydetectedbitfield = 0;
 	setuimodelvalue(sixthsensemodel, 0);
-	while(1)
+	while(true)
 	{
 		localplayer = getlocalplayer(local_client_num);
 		if(!localplayer isplayer() || localplayer hasperk(local_client_num, "specialty_detectnearbyenemies") == 0 || (localplayer getinkillcam(local_client_num) == 1 || isalive(localplayer) == 0))

@@ -189,7 +189,7 @@ function dial_trigger()
 {
 	level endon(#"hash_d146ae8a");
 	level endon(#"hash_1ee44755");
-	while(1)
+	while(true)
 	{
 		self waittill(#"triggered", who);
 		self.owner_ent notify(#"triggered", who);
@@ -219,6 +219,7 @@ function function_5ac3fada()
 		pos = pos + 1 % 4;
 	}
 	self rotatepitch(90 * pos, 0.01);
+	correct = 0;
 	while(!(isdefined(level.disable_print3d_ent) && level.disable_print3d_ent))
 	{
 		self waittill(#"triggered", who);
@@ -270,7 +271,7 @@ function dud_dial_handler(var_10be97cb)
 	self.angles = self.original_angles;
 	rot = randomintrange(0, 3);
 	self rotatepitch(rot * 90, 0.01);
-	while(1)
+	while(true)
 	{
 		self waittill(#"triggered");
 		self playsound("evt_sq_bttp2_wheel_turn");

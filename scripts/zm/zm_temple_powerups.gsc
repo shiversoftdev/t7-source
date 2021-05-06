@@ -70,7 +70,7 @@ function temple_powerup_grab(powerup)
 			level thread monkey_swarm(powerup);
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}
@@ -217,6 +217,7 @@ function player_monkey_think(nummonkeys)
 function monkey_powerup_timeout()
 {
 	wait(60);
+	self.timeout = 1;
 	while(self.attacking_zombie)
 	{
 		wait(0.1);
@@ -244,7 +245,7 @@ function monkey_protect_player(player)
 {
 	self endon(#"timeout");
 	wait(0.5);
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.timeout) && self.timeout)
 		{
@@ -294,7 +295,8 @@ function monkey_attack_zombie(zombie)
 	zombie.monkey_claimed = 1;
 	self.goalradius = 32;
 	self setgoalpos(zombie.origin);
-	while(1)
+	checkdist2 = self.goalradius * self.goalradius;
+	while(true)
 	{
 		if(!isdefined(zombie) || !isalive(zombie))
 		{

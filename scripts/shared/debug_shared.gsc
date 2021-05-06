@@ -51,8 +51,10 @@ function debug_draw_tuning_sphere()
 	/#
 		n_sphere_radius = 0;
 		v_text_position = (0, 0, 0);
-		while(1)
+		n_text_scale = 1;
+		while(true)
 		{
+			n_sphere_radius = getdvarfloat("", 0);
 			while(n_sphere_radius >= 1)
 			{
 				players = getplayers();

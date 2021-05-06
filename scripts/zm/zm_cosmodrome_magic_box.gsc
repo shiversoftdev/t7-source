@@ -68,7 +68,8 @@ function magic_box_update()
 {
 	wait(2);
 	util::setclientsysstate("box_indicator", level._cosmodrome_no_power);
-	while(1)
+	box_mode = "no_power";
+	while(true)
 	{
 		if(!level flag::get("power_on") || level flag::get("moving_chest_now") && level.zombie_vars["zombie_powerup_fire_sale_on"] == 0)
 		{
@@ -111,7 +112,7 @@ function magic_box_update()
 				}
 				break;
 			}
-			default
+			default:
 			{
 				util::setclientsysstate("box_indicator", level._cosmodrome_no_power);
 				break;

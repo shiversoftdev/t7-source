@@ -404,7 +404,7 @@ function zone_init(zone_name, zone_tag)
 						zone.a_loc_types["zombie_location"][zone.a_loc_types["zombie_location"].size] = spot;
 						break;
 					}
-					default
+					default:
 					{
 						if(!isdefined(zone.a_loc_types[token]))
 						{
@@ -532,7 +532,7 @@ function reinit_zone_spawners()
 							zone.a_loc_types["zombie_location"][zone.a_loc_types["zombie_location"].size] = spot;
 							break;
 						}
-						default
+						default:
 						{
 							if(!isdefined(zone.a_a_locs[token]))
 							{
@@ -1254,7 +1254,7 @@ function create_spawner_list(zkeys)
 								array::add(level.zm_loc_types["zombie_location"], loc, 0);
 								break;
 							}
-							default
+							default:
 							{
 								if(!isdefined(level.zm_loc_types[token]))
 								{
@@ -1458,7 +1458,7 @@ function _debug_zones()
 		zone = level.zones[zonename];
 		_debug_show_zone(zone, (randomfloatrange(0, 1), randomfloatrange(0, 1), randomfloatrange(0, 1)), 0.2);
 	}
-	while(1)
+	while(true)
 	{
 		wasenabled = enabled;
 		enabled = getdvarint("zombiemode_debug_zones");

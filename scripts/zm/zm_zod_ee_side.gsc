@@ -296,7 +296,7 @@ function function_1a99877f()
 function function_63d2d60e(e_player)
 {
 	self endon(#"hash_a881e3fa");
-	while(1)
+	while(true)
 	{
 		if(isdefined(e_player) && e_player zm_zod_vo::function_2d942575(self.var_93dad597, 1500))
 		{
@@ -319,7 +319,7 @@ function function_63d2d60e(e_player)
 function function_82d8ec58()
 {
 	self endon(#"hash_a881e3fa");
-	while(1)
+	while(true)
 	{
 		foreach(var_59ec99a, player in level.players)
 		{
@@ -377,7 +377,7 @@ function function_188b8017()
 	{
 		self endon(var_bc9ce2d0);
 	}
-	while(1)
+	while(true)
 	{
 		foreach(var_cf1c43f1, e_player in level.activeplayers)
 		{
@@ -406,6 +406,7 @@ function function_cd7431a8()
 	self zm_zod_shadowman::function_12e7164a(0, 1);
 	self zm_zod_shadowman::function_8888a532(0, 1, 0);
 	self notify(#"hash_42d111a0");
+	var_bc9ce2d0 = zm_zonemgr::get_zone_from_position(self.origin, 1);
 	while(!self.var_93dad597 zm_zonemgr::entity_in_zone(var_bc9ce2d0, 0))
 	{
 		wait(0.05);
@@ -513,7 +514,7 @@ function function_b066a053()
 function function_98c5d1e5()
 {
 	self endon(#"hash_a881e3fa");
-	while(1)
+	while(true)
 	{
 		playrumbleonposition("zod_shadowman_transformed", self.origin);
 		wait(0.1);
@@ -533,7 +534,7 @@ function function_724b1463()
 {
 	level endon(#"_zombie_game_over");
 	self endon(#"hash_a881e3fa");
-	while(1)
+	while(true)
 	{
 		foreach(var_205db64a, player in level.players)
 		{
@@ -605,10 +606,11 @@ function function_1b5affd(player)
 	self waittill(#"hash_42d111a0");
 	self.var_93dad597 setvisibletoplayer(player);
 	self.var_5afdc7fe setinvisibletoplayer(player);
-	while(1)
+	while(true)
 	{
 		var_85e18920 = 0;
 		player waittill(#"lightning_strike");
+		n_time_started = gettime() / 1000;
 		while(player.beastmode === 1)
 		{
 			n_time_current = gettime() / 1000;
@@ -700,7 +702,7 @@ function audio_recording()
 			var_a288248d = "zmb_zod_ee_phonebooth_ring";
 			break;
 		}
-		default
+		default:
 		{
 			n_delay = 2;
 			var_39fccb95 = 1;
@@ -852,7 +854,7 @@ function function_a59032c3()
 	level.var_89ad28cd = 0;
 	var_e3c08ace = getentarray("hs_radio", "targetname");
 	array::thread_all(var_e3c08ace, &function_68e137c8);
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_da6d056e");
 		if(level.var_89ad28cd == var_e3c08ace.size)
@@ -920,7 +922,7 @@ function function_e947749a()
 	level.var_d98fa1f1 = 0;
 	a_items = getentarray("hs_item", "targetname");
 	array::thread_all(a_items, &function_47965455);
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_bcead67a");
 		if(level.var_d98fa1f1 == a_items.size)
@@ -972,7 +974,7 @@ function function_47965455()
 function function_b6296b8b()
 {
 	self create_unitrigger();
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger_activated");
 		if(isdefined(level.musicsystem.currentplaytype) && level.musicsystem.currentplaytype >= 4 || (isdefined(level.musicsystemoverride) && level.musicsystemoverride))
@@ -1057,7 +1059,8 @@ function picture_cipher()
 function function_7e754365()
 {
 	self setcandamage(1);
-	while(1)
+	var_face7c14 = getweapon("smg_standard_upgraded");
+	while(true)
 	{
 		self waittill(#"damage", n_damage, e_attacker, v_dir, v_loc, str_type, str_model, str_tag, str_part, w_weapon, n_flags);
 		if(w_weapon.rootweapon == var_face7c14)
@@ -1121,7 +1124,7 @@ function function_523509c2()
 			level.var_e0133c46[level.var_e0133c46.size] = var_779fea3;
 		}
 		level thread function_51b665f0();
-		while(1)
+		while(true)
 		{
 			var_9094458d = 0;
 			foreach(var_e15819ce, var_779fea3 in level.var_e0133c46)
@@ -1167,7 +1170,8 @@ function function_9a436d7f()
 {
 	level endon(#"hash_e87ace62");
 	self setcandamage(1);
-	while(1)
+	self.var_168e6657 = 1;
+	while(true)
 	{
 		self waittill(#"damage", n_damage, e_attacker);
 		if(isdefined(e_attacker.on_train) && e_attacker.on_train && level.o_zod_train flag::get("moving"))
@@ -1202,7 +1206,7 @@ function function_9a436d7f()
 function function_51b665f0()
 {
 	level endon(#"hash_e87ace62");
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_34141bc5");
 		for(i = 0; i < 2; i++)
@@ -1288,7 +1292,7 @@ function function_68f6dbc2()
 function function_4d249743()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self attach("p7_zm_zod_margwa_head", "j_head");
 		self flag::wait_till("in_beastmode");
@@ -1310,7 +1314,8 @@ function laundry_ticket()
 {
 	var_43af12b1 = getent("laundry_ticket", "targetname");
 	var_43af12b1 setcandamage(1);
-	while(1)
+	var_43af12b1.health = 999999;
+	while(true)
 	{
 		var_43af12b1 waittill(#"damage", n_damage, e_attacker, v_dir, v_loc, str_type, str_model, str_tag, str_part, w_weapon);
 		if(str_type == "MOD_GRENADE_SPLASH" && distancesquared(var_43af12b1.origin, v_loc) < 4096)
@@ -1507,7 +1512,7 @@ function function_41ecaace()
 function function_8cffc675()
 {
 	level endon(#"hash_b94b6391");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(zm_utility::is_player_valid(player) && function_12b65d38(player getcurrentweapon(), "sniper") && player util::is_ads())
@@ -1577,7 +1582,7 @@ function spare_change()
 */
 function check_for_change()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_player);
 		if(e_player getstance() == "prone")
@@ -1604,7 +1609,7 @@ function function_7a56bf90()
 	self endon(#"death");
 	self.var_c2faf069 = 0;
 	self.var_e20230e3 = 0;
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_melee_juke");
 		if(isdefined(self.b_has_upgraded_shield) && self.b_has_upgraded_shield)
@@ -1778,7 +1783,7 @@ function function_b3430866()
 {
 	self endon(#"death");
 	self thread function_f11d743f();
-	while(1)
+	while(true)
 	{
 		var_e66e7864 = 1;
 		foreach(var_fb2c6797, player in level.players)
@@ -1812,7 +1817,7 @@ function function_f11d743f()
 {
 	self endon(#"death");
 	self endon(#"hash_dc49142d");
-	while(1)
+	while(true)
 	{
 		self.trigger waittill(#"damage", n_damage, e_attacker);
 		if(!(isdefined(e_attacker.var_8c06218) && e_attacker.var_8c06218))
@@ -2110,7 +2115,7 @@ function function_78758203()
 	var_45be765 = struct::get("gum_bank");
 	var_45be765 create_unitrigger();
 	var_45be765.var_ab341779 = [];
-	while(1)
+	while(true)
 	{
 		var_45be765 waittill(#"trigger_activated", e_user);
 		n_index = zm_utility::get_player_index(e_user) + 1;
@@ -2179,7 +2184,8 @@ function function_7784eba6()
 	self endon(#"death");
 	n_index = zm_utility::get_player_index(self) + 1;
 	level endon("awarded_lion_gumball" + n_index);
-	while(1)
+	self.var_fc66e122 = [];
+	while(true)
 	{
 		self waittill(#"grenade_fire", e_grenade, w_weapon);
 		if(w_weapon == level.w_widows_wine_grenade)
@@ -2259,7 +2265,7 @@ function function_edf5d07()
 	var_ab341779 = util::spawn_model("p7_zm_zod_bubblegum_machine_gumball_white", var_251c3637.origin);
 	var_ab341779 create_unitrigger();
 	var_ab341779 playsound("zmb_zod_ee_liontamer_roar");
-	while(1)
+	while(true)
 	{
 		var_ab341779 waittill(#"trigger_activated", e_user);
 		if(e_user == self)
@@ -2318,7 +2324,8 @@ function function_8faf1d24(v_color = vectorscale((0, 0, 1), 255), var_8882142e =
 		{
 			self endon(str_endon);
 		}
-		while(1)
+		origin = self.origin;
+		while(true)
 		{
 			print3d(origin, var_8882142e, v_color, n_scale);
 			wait(0.1);
@@ -2385,7 +2392,7 @@ function unitrigger_prompt_and_visibility(player)
 function unitrigger_logic()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player zm_utility::in_revive_trigger())

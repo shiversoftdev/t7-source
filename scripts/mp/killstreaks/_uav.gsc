@@ -505,7 +505,7 @@ function resetactiveuav()
 function uavtracker()
 {
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		level waittill(#"uav_update");
 		if(level.teambased)

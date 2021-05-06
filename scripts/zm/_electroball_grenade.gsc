@@ -197,7 +197,7 @@ function watchproximitygrenadehitplayer(owner)
 {
 	self endon(#"death");
 	self setteam(owner.team);
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_bounce", pos, normal, ent, surface);
 		if(isdefined(ent) && isplayer(ent) && surface != "riotshield")
@@ -245,7 +245,7 @@ function function_62ffcc2c()
 {
 	self endon(#"death");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", damage, eattacker, dir, point, type, model, tag, part, weapon, flags);
 		if(weapon.name == "electroball_grenade")
@@ -463,7 +463,7 @@ function function_cb55123a()
 	self endon(#"disconnect");
 	self endon(#"delete");
 	self waittill(#"grenade_bounce");
-	while(1)
+	while(true)
 	{
 		var_82aacc64 = zm_elemental_zombie::function_d41418b8();
 		var_82aacc64 = arraysortclosest(var_82aacc64, self.origin);

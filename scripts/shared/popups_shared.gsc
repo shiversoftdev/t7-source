@@ -252,7 +252,7 @@ function function_9a14a686()
 		}
 		var_deda26ca = "";
 		util::function_e2ac06bb(var_deda26ca + "", "" + "" + "");
-		while(1)
+		while(true)
 		{
 			if(getdvarint("", 0) > 0)
 			{
@@ -452,7 +452,7 @@ function notif_devgui_gun_rank()
 					arrayinsert(a_weapons[""], gun, 0);
 					break;
 				}
-				default
+				default:
 				{
 					break;
 				}
@@ -632,7 +632,7 @@ function notif_devgui_challenges_think()
 function popupsfromconsole()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			timeout = getdvarfloat("", 1);
 			if(timeout == 0)
@@ -944,6 +944,7 @@ function displaypopupswaiter()
 	}
 	self.messagenotifyqueue = [];
 	self.startmessagenotifyqueue = [];
+	self.wagernotifyqueue = [];
 	while(isdefined(level) && isdefined(level.gameended) && !level.gameended)
 	{
 		if(!isdefined(self) || !isdefined(self.startmessagenotifyqueue) || !isdefined(self.messagenotifyqueue))

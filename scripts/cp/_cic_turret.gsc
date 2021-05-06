@@ -253,7 +253,8 @@ function cic_turret_fireupdate()
 	wait(0.2);
 	origin = self gettagorigin("tag_barrel");
 	left_look_at_pt = origin + anglestoforward(self.angles + (self.default_pitch, self.scanning_arc, 0)) * 1000;
-	while(1)
+	right_look_at_pt = origin + anglestoforward(self.angles + (self.default_pitch, self.scanning_arc * -1, 0)) * 1000;
+	while(true)
 	{
 		if(isdefined(self.enemy) && self vehcansee(self.enemy))
 		{
@@ -302,6 +303,7 @@ function cic_turret_fireupdate()
 			wait(1);
 			if(cant_see_enemy_count > 1)
 			{
+				self.turret_state = 0;
 				while(!isdefined(self.enemy) || !self vehcansee(self.enemy))
 				{
 					if(self.turretontarget)
@@ -564,6 +566,7 @@ function cic_turret_fire_for_time(totalfiretime)
 	{
 		firechance = 1;
 	}
+	firecount = 1;
 	while(time < totalfiretime)
 	{
 		if(isdefined(self.enemy) && isdefined(self.enemy.attackeraccuracy) && self.enemy.attackeraccuracy == 0)
@@ -721,7 +724,8 @@ function cic_overheat_hud(turret)
 	turret endon(#"turret_exited");
 	level endon(#"player_using_turret");
 	heat = 0;
-	while(1)
+	overheat = 0;
+	while(true)
 	{
 		if(isdefined(self.viewlockedentity))
 		{

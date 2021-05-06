@@ -154,7 +154,7 @@ function function_bab3ea62()
 */
 function sndmusictrig()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", trigplayer);
 		if(trigplayer islocalplayer())
@@ -193,7 +193,8 @@ function function_53b9afad()
 	level.var_b6342abd = "mus_stalingrad_underscore_outdoor";
 	level.var_6d9d81aa = "mus_stalingrad_underscore_outdoor";
 	level.var_eb526c90 = spawn(0, (0, 0, 0), "script_origin");
-	while(1)
+	level.var_9433cf5a = level.var_eb526c90 playloopsound(level.var_b6342abd, 2);
+	while(true)
 	{
 		level waittill(#"hash_51d7bc7c", location);
 		level.var_6d9d81aa = "mus_stalingrad_underscore_" + location;
@@ -233,7 +234,7 @@ function function_51d7bc7c(var_6d9d81aa)
 */
 function function_8620d917()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"sndpd");
 		if(level.var_98f2b64e == "pavlov")
@@ -262,7 +263,7 @@ function function_8620d917()
 */
 function function_a2a905a5()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"sndeed");
 		if(level.var_98f2b64e == "pavlov" || level.var_98f2b64e == "pavlov_defend")
@@ -287,7 +288,7 @@ function function_a2a905a5()
 */
 function function_b21d9845()
 {
-	while(1)
+	while(true)
 	{
 		wait(randomintrange(4, 10));
 		playsound(0, "amb_comp_sweets", (-3157, 21574, -85));
@@ -321,7 +322,7 @@ function function_d4a3f122()
 */
 function function_daa9b420()
 {
-	while(1)
+	while(true)
 	{
 		wait(randomintrange(10, 40));
 		playsound(0, "amb_banging", (-3319, 21151, -103));
@@ -339,7 +340,7 @@ function function_daa9b420()
 */
 function play_flux_whispers()
 {
-	while(1)
+	while(true)
 	{
 		wait(randomintrange(4, 10));
 		playsound(0, "amb_whispers", (-3414, 21402, 63));
@@ -377,7 +378,7 @@ function function_157aa38()
 */
 function function_1e68a892()
 {
-	while(1)
+	while(true)
 	{
 		wait(randomintrange(1, 2));
 		playsound(0, "amb_light_flicker_flour", (-2956, 21337, 125));

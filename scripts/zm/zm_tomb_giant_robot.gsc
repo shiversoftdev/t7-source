@@ -253,7 +253,7 @@ function robot_cycling()
 	last_robot = -1;
 	level thread giant_robot_intro_walk(1);
 	level waittill(#"giant_robot_intro_complete");
-	while(1)
+	while(true)
 	{
 		if(!level.round_number % 4 && three_robot_round != level.round_number)
 		{
@@ -455,7 +455,7 @@ function giant_robot_think(trig_stomp_kill_right, trig_stomp_kill_left, clip_foo
 				self clientfield::set("light_foot_fx_robot", 2);
 				break;
 			}
-			default
+			default:
 			{
 				self clientfield::set("light_foot_fx_robot", 0);
 				break;
@@ -677,7 +677,7 @@ function sndrobot(notetrack, alias, side)
 	{
 		str_tag = "TAG_ATTACH_HATCH_LE";
 	}
-	while(1)
+	while(true)
 	{
 		self waittill(notetrack);
 		if(notetrack == "soundfootstart_left" || notetrack == "soundfootstart_right")
@@ -737,7 +737,8 @@ function monitor_footsteps(trig_stomp_kill, foot_side)
 	self endon(#"death");
 	self endon(#"giant_robot_stop");
 	str_start_stomp = "kill_zombies_" + foot_side + "foot_1";
-	while(1)
+	str_end_stomp = "footstep_" + foot_side + "_large";
+	while(true)
 	{
 		self waittill_match(str_start_stomp);
 		self thread toggle_kill_trigger_flag(trig_stomp_kill, 1, foot_side);
@@ -768,7 +769,8 @@ function monitor_footsteps_fx(trig_stomp_kill, foot_side)
 {
 	self endon(#"death");
 	self endon(#"giant_robot_stop");
-	while(1)
+	str_end_stomp = "footstep_" + foot_side + "_large";
+	while(true)
 	{
 		level clientfield::set("play_foot_stomp_fx_robot_" + self.giant_robot_id, 0);
 		self waittill_match(str_end_stomp);
@@ -806,7 +808,7 @@ function monitor_shadow_notetracks(foot_side)
 {
 	self endon(#"death");
 	self endon(#"giant_robot_stop");
-	while(1)
+	while(true)
 	{
 		self waittill_match("shadow_" + foot_side);
 		start_robot_stomp_warning_vo(foot_side);
@@ -1280,7 +1282,7 @@ function handle_wind_tunnel_bunker_collision()
 	e_collision = getent("clip_foot_bottom_wind", "targetname");
 	e_collision notsolid();
 	e_collision connectpaths();
-	while(1)
+	while(true)
 	{
 		level waittill(#"wind_bunker_collision_on");
 		wait(0.1);
@@ -1306,7 +1308,7 @@ function handle_tank_bunker_collision()
 	e_collision = getent("clip_foot_bottom_tank", "targetname");
 	e_collision notsolid();
 	e_collision connectpaths();
-	while(1)
+	while(true)
 	{
 		level waittill(#"tank_bunker_collision_on");
 		wait(0.1);
@@ -1500,7 +1502,7 @@ function reset_gr_head_unitriggers()
 function player_exits_giant_robot_head_trigger_think()
 {
 	self endon(#"tube_used_for_timeout");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(!(isdefined(self.stub.is_available) && self.stub.is_available))
@@ -1706,7 +1708,7 @@ function in_tube_manual_looping_rumble()
 	self endon(#"end_in_tube_rumble");
 	self endon(#"death");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self clientfield::set_to_player("giant_robot_rumble_and_shake", 1);
 		util::wait_network_frame();
@@ -1730,7 +1732,7 @@ function exit_gr_manual_looping_rumble()
 	self endon(#"end_exit_gr_rumble");
 	self endon(#"death");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self clientfield::set_to_player("giant_robot_rumble_and_shake", 1);
 		util::wait_network_frame();
@@ -2202,7 +2204,7 @@ function giant_robot_discovered_vo(ai_giant_robot)
 	ai_giant_robot endon(#"giant_robot_stop");
 	self endon(#"disconnect");
 	level endon(#"giant_robot_discovered");
-	while(1)
+	while(true)
 	{
 		if(distance2dsquared(self.origin, ai_giant_robot.origin) < 16000000)
 		{
@@ -2235,7 +2237,7 @@ function three_robot_round_vo(ai_giant_robot)
 	ai_giant_robot endon(#"giant_robot_stop");
 	self endon(#"disconnect");
 	level endon(#"three_robot_round_vo");
-	while(1)
+	while(true)
 	{
 		if(distance2dsquared(self.origin, ai_giant_robot.origin) < 16000000)
 		{
@@ -2268,7 +2270,7 @@ function shoot_at_giant_robot_vo(ai_giant_robot)
 	ai_giant_robot endon(#"giant_robot_stop");
 	self endon(#"disconnect");
 	level endon(#"shoot_robot_vo");
-	while(1)
+	while(true)
 	{
 		while(distance2dsquared(self.origin, ai_giant_robot.origin) < 16000000 && self zm_utility::is_player_looking_at(ai_giant_robot.origin + vectorscale((0, 0, 1), 2000), 0.7))
 		{
@@ -2518,7 +2520,7 @@ function footprint_check_for_nearby_players(ai_giant_robot)
 {
 	level endon(#"footprint_warning_vo");
 	ai_giant_robot endon(#"giant_robot_stop");
-	while(1)
+	while(true)
 	{
 		a_players = getplayers();
 		foreach(var_acb23ae7, player in a_players)
@@ -2586,7 +2588,7 @@ function setup_giant_robot_devgui()
 function watch_for_force_giant_robot()
 {
 	/#
-		while(1)
+		while(true)
 		{
 			if(getdvarstring("") == "")
 			{

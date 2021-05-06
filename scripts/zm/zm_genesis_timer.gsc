@@ -223,7 +223,7 @@ function function_86419da()
 				loc_0000082C:
 				break;
 			}
-			default
+			default:
 			{
 				break;
 			}

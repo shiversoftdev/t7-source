@@ -90,7 +90,7 @@ function waitfor_flag_open_chest_location(which)
 			level flag::wait_till("start_zombie_round_logic");
 			break;
 		}
-		default
+		default:
 		{
 			return;
 		}

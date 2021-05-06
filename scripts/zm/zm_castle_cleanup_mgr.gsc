@@ -79,7 +79,7 @@ function force_check_now()
 private function cleanup_main()
 {
 	n_next_eval = 0;
-	while(1)
+	while(true)
 	{
 		util::wait_network_frame();
 		n_time = gettime();

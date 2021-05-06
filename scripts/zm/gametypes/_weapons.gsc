@@ -112,7 +112,8 @@ function watchweaponchange()
 {
 	self endon(#"death");
 	self endon(#"disconnect");
-	while(1)
+	self.lastdroppableweapon = self getcurrentweapon();
+	while(true)
 	{
 		previous_weapon = self getcurrentweapon();
 		self waittill(#"weapon_change", newweapon);
@@ -256,7 +257,8 @@ function trackweapon()
 {
 	currentweapon = self getcurrentweapon();
 	currenttime = gettime();
-	while(1)
+	spawnid = getplayerspawnid(self);
+	while(true)
 	{
 		event = self util::waittill_any_return("weapon_change", "death", "disconnect");
 		newtime = gettime();
@@ -443,7 +445,8 @@ function deletepickupafterawhile()
 function watchpickup()
 {
 	self endon(#"death");
-	while(1)
+	weapon = self.item;
+	while(true)
 	{
 		self waittill(#"trigger", player, droppeditem);
 		if(isdefined(droppeditem))
@@ -542,7 +545,7 @@ function watchweaponusage()
 				self addweaponstat(curweapon, "shots", 1);
 				break;
 			}
-			default
+			default:
 			{
 				break;
 			}
@@ -731,6 +734,7 @@ function watchgrenadecancel()
 	self endon(#"disconnect");
 	self endon(#"grenade_fire");
 	waittillframeend();
+	weapon = level.weaponnone;
 	while(self isthrowinggrenade() && weapon == level.weaponnone)
 	{
 		self waittill(#"weapon_change", weapon);
@@ -901,7 +905,8 @@ function stucktoplayerteamchange(player)
 {
 	self endon(#"death");
 	player endon(#"disconnect");
-	while(1)
+	originalteam = player.pers["team"];
+	while(true)
 	{
 		player waittill(#"joined_team");
 		if(player.pers["team"] != originalteam)
@@ -1075,7 +1080,7 @@ function watchforgrenadeduds()
 {
 	self endon(#"spawned_player");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_fire", grenade, weapon);
 		grenade turngrenadeintoadud(weapon, 1, self);
@@ -1095,7 +1100,7 @@ function watchforgrenadelauncherduds()
 {
 	self endon(#"spawned_player");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_launcher_fire", grenade, weapon);
 		grenade turngrenadeintoadud(weapon, 0, self);
@@ -1298,7 +1303,7 @@ function onweapondamage(eattacker, einflictor, weapon, meansofdeath, damage)
 			self.concussionendtime = gettime() + time * 1000;
 			break;
 		}
-		default
+		default:
 		{
 			if(isdefined(level.shellshockonplayerdamage))
 			{
@@ -1372,7 +1377,8 @@ function updatestowedweapon()
 	self.tag_stowed_back = undefined;
 	self.tag_stowed_hip = undefined;
 	team = self.pers["team"];
-	while(1)
+	curclass = self.pers["class"];
+	while(true)
 	{
 		self waittill(#"weapon_change", newweapon);
 		self.weapon_array_primary = [];
@@ -1393,7 +1399,7 @@ function updatestowedweapon()
 				{
 					continue;
 				}
-				default
+				default:
 				{
 					break;
 				}
@@ -1616,7 +1622,7 @@ function scavenger_think()
 				}
 				break;
 			}
-			default
+			default:
 			{
 				if(weapon.islauncherweapon)
 				{

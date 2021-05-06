@@ -208,6 +208,7 @@ function function_d9de7eb6(var_a3612ddd)
 	var_75f5a225 = getent("clip_player_" + var_a3612ddd, "targetname");
 	self thread scene::play("p7_fxanim_zm_island_takeo_arm_gate" + var_a3612ddd + "_bundle", self);
 	var_2b128827 = 1;
+	var_b538c87 = 0;
 	while(isdefined(var_2b128827) && var_2b128827)
 	{
 		e_clip waittill(#"damage", n_damage, e_attacker, v_direction, v_point, str_mod, str_tag_name, str_model_name, str_part_name, w_weapon);
@@ -263,7 +264,8 @@ function function_df4d1d4()
 	self endon(#"death");
 	level endon(#"flag_play_outro_cutscene");
 	level flag::wait_till("trilogy_released");
-	while(1)
+	var_af8f5b69 = getent("trigger_gas_hurt", "targetname");
+	while(true)
 	{
 		trigger::wait_till("trigger_gas_hurt", "targetname", self);
 		if(!self.var_df4182b1 && zm_utility::is_player_valid(self))
@@ -286,7 +288,8 @@ function function_df4d1d4()
 function function_75e5527f()
 {
 	level endon(#"hash_5790f552");
-	while(1)
+	var_af8f5b69 = getent("trigger_gas_chamber", "targetname");
+	while(true)
 	{
 		var_af8f5b69 waittill(#"trigger");
 		a_talkers = [];
@@ -353,7 +356,8 @@ function function_d6bb2a6c()
 */
 function function_2fae2796()
 {
-	while(1)
+	var_664f35bb = struct::get_array("ee_gear_teleport_spot", "targetname");
+	while(true)
 	{
 		foreach(var_2995431, s_spot in var_664f35bb)
 		{
@@ -395,7 +399,8 @@ function function_5b0b2b3d()
 	level flag::wait_till("all_challenges_completed");
 	self setcandamage(1);
 	self.health = 100000;
-	while(1)
+	var_fae0d733 = struct::get_array("transport_zip_line", "targetname");
+	while(true)
 	{
 		self waittill(#"damage", n_damage, e_attacker, v_direction, v_point, str_mod, str_tag_name, str_model_name, str_part_name, w_weapon);
 		if(w_weapon.name === "island_riotshield" && (isdefined(e_attacker.var_36c3d64a) && e_attacker.var_36c3d64a))
@@ -463,7 +468,8 @@ function function_e9ec0fdf()
 	level flag::wait_till("all_challenges_completed");
 	self setcandamage(1);
 	self.health = 100000;
-	while(1)
+	s_loc = struct::get("transport_sewer_" + self.script_noteworthy);
+	while(true)
 	{
 		self waittill(#"damage", n_damage, e_attacker, v_direction, v_point, str_mod, str_tag_name, str_model_name, str_part_name, w_weapon);
 		if(isdefined(w_weapon.isriotshield) && w_weapon.isriotshield && (isdefined(e_attacker.var_36c3d64a) && e_attacker.var_36c3d64a))
@@ -508,7 +514,8 @@ function function_4d23baa6(v_origin, v_angles, var_b6c00097 = 5, var_5588387b)
 {
 	self endon(#"death");
 	self setcandamage(1);
-	while(1)
+	self.health = 100000;
+	while(true)
 	{
 		self waittill(#"damage", n_damage, e_attacker, v_direction, v_point, str_mod, str_tag_name, str_model_name, str_part_name, w_weapon);
 		if(isdefined(w_weapon.isriotshield) && w_weapon.isriotshield && (isdefined(e_attacker.var_36c3d64a) && e_attacker.var_36c3d64a))
@@ -572,7 +579,8 @@ function function_426caba9()
 */
 function function_6e38e085()
 {
-	while(1)
+	var_d93f9cb8 = getent("boat_death", "targetname");
+	while(true)
 	{
 		var_d93f9cb8 waittill(#"trigger", e_who);
 		if(isplayer(e_who) && (!(isdefined(e_who.var_a98632dd) && e_who.var_a98632dd)))
@@ -728,6 +736,7 @@ function aa_gun_think()
 	var_16bdbe0a.script_unitrigger_type = "unitrigger_box_use";
 	var_16bdbe0a.radius = 64;
 	var_16bdbe0a.cursor_hint = "HINT_NOICON";
+	var_16bdbe0a.require_look_at = 1;
 	while(!level flag::get("aa_gun_ee_complete"))
 	{
 		var_16bdbe0a.prompt_and_visibility_func = &function_9c02ad1;
@@ -992,7 +1001,7 @@ function function_4280e890()
 */
 function function_d81e5824(str_flag)
 {
-	while(1)
+	while(true)
 	{
 		self.trigger waittill(#"trigger", player);
 		if(zm_utility::is_player_valid(player))
@@ -1130,7 +1139,7 @@ function function_6cc2e374()
 	var_f022cb65 sethintstring("");
 	var_66bf6df = getent("elevator_gears", "targetname");
 	var_66bf6df thread elevator_gears();
-	while(1)
+	while(true)
 	{
 		var_f022cb65 waittill(#"trigger", e_who);
 		if(level flag::get("elevator_part_gear1_found") && !level flag::get("elevator_part_gear1_placed"))
@@ -1176,7 +1185,8 @@ function function_6cc2e374()
 */
 function elevator_gears()
 {
-	while(1)
+	var_17b2dca3 = getentarray("easter_egg_elevator_cage", "targetname");
+	while(true)
 	{
 		level flag::wait_till("elevator_in_use");
 		wait(0.1);
@@ -1302,7 +1312,7 @@ function function_d93c8e95(player)
 */
 function function_8f599d4f()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player zm_utility::in_revive_trigger())
@@ -1366,7 +1376,7 @@ function function_ee748266(player)
 */
 function function_66070c12()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", player);
 		if(player zm_utility::in_revive_trigger())
@@ -1576,7 +1586,7 @@ function elevator_move()
 function function_7b8e6e93()
 {
 	self endon(#"movedone");
-	while(1)
+	while(true)
 	{
 		foreach(var_66fa774f, player in level.players)
 		{
@@ -1628,7 +1638,8 @@ function function_f818f5b5()
 	level flag::wait_till("all_challenges_completed");
 	zm::register_actor_damage_callback(&function_16155679);
 	zm::register_vehicle_damage_callback(&function_a7a11020);
-	while(1)
+	var_8d943e64 = getent("ruins_lightning_trigger", "targetname");
+	while(true)
 	{
 		wait(randomfloatrange(60, 90));
 		exploder::exploder("fxexp_510");
@@ -1668,7 +1679,7 @@ function function_51f6829f(var_8d943e64)
 {
 	level endon(#"hash_6d764fa3");
 	wait(1);
-	while(1)
+	while(true)
 	{
 		foreach(var_5353a814, player in level.players)
 		{
@@ -1781,7 +1792,7 @@ function function_f295a467()
 	self endon(#"death");
 	self.var_bf47c5ef = 0;
 	self.machine setcandamage(1);
-	while(1)
+	while(true)
 	{
 		self.machine waittill(#"damage", n_damage, e_attacker, v_direction, v_point, str_mod, str_tag_name, str_model_name, str_part_name, w_weapon);
 		n_damage = 0;
@@ -1854,7 +1865,7 @@ function function_b83e4b61(str_perk, b_on)
 				self clientfield::set("perk_lightning_fx", 6);
 				break;
 			}
-			default
+			default:
 			{
 				self clientfield::set("perk_lightning_fx", 1);
 				break;
@@ -1908,7 +1919,7 @@ function function_e20ecfa4()
 	self.var_bf47c5ef = 0;
 	self.var_9e209773 setcandamage(1);
 	self.var_9e209773.health = 99999;
-	while(1)
+	while(true)
 	{
 		self.var_9e209773 waittill(#"damage", n_damage, e_attacker, v_direction, v_point, str_mod, str_tag_name, str_model_name, str_part_name, w_weapon);
 		n_damage = 0;

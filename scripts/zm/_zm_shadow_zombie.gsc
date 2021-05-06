@@ -116,7 +116,7 @@ function shadow_zombie_damage_fx()
 {
 	self endon(#"entityshutdown");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage");
 		if(randomint(100) < 50)
@@ -288,7 +288,7 @@ function function_71c88f2b()
 		adddebugcommand(str_cmd);
 		str_cmd = "";
 		adddebugcommand(str_cmd);
-		while(1)
+		while(true)
 		{
 			string = getdvarstring("");
 			if(string == "")

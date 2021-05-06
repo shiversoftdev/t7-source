@@ -90,7 +90,7 @@ function board_hack(hacker)
 			hacker zm_score::minus_to_player_score(cost);
 		}
 	}
-	while(1)
+	while(true)
 	{
 		if(zm_utility::all_chunks_intact(self.window, self.window.barrier_chunks))
 		{

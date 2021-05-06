@@ -189,7 +189,7 @@ function function_e6707d5e()
 				var_3eeea260 = "gadget_roulette";
 				break;
 			}
-			default
+			default:
 			{
 				break;
 			}
@@ -402,7 +402,7 @@ function function_2d46be95(var_13f5941c)
 function function_b5214454()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		level waittill(#"game_ended");
 		self.var_ea382ca4.alpha = 0;

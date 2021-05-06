@@ -83,7 +83,7 @@ function magic_box_update()
 	level flag::wait_till("power_on");
 	box_mode = "Box Available";
 	util::setclientsysstate("box_indicator", get_location_from_chest_index(level.chest_index));
-	while(1)
+	while(true)
 	{
 		switch(box_mode)
 		{
@@ -122,7 +122,7 @@ function magic_box_update()
 */
 function watch_fire_sale()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_3b3c2756");
 		util::setclientsysstate("box_indicator", level._box_indicator_flash_lights_fire_sale);

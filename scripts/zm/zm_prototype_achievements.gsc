@@ -187,6 +187,7 @@ function function_405cf907()
 {
 	level endon(#"end_game");
 	self endon(#"disconnect");
+	self.var_dc48525e = 0;
 	while(self.var_dc48525e < 5)
 	{
 		self thread function_b32b243f();

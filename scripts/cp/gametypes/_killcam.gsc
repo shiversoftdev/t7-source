@@ -587,7 +587,7 @@ function check_for_abrupt_end()
 {
 	self endon(#"disconnect");
 	self endon(#"end_killcam");
-	while(1)
+	while(true)
 	{
 		if(self.archivetime <= 0)
 		{
@@ -761,6 +761,7 @@ function cancel_on_use_specific_button(pressingbuttonfunc, finishedfunc)
 			wait(0.05);
 			continue;
 		}
+		buttontime = 0;
 		while(self [[pressingbuttonfunc]]())
 		{
 			buttontime = buttontime + 0.05;
@@ -770,6 +771,7 @@ function cancel_on_use_specific_button(pressingbuttonfunc, finishedfunc)
 		{
 			continue;
 		}
+		buttontime = 0;
 		while(!self [[pressingbuttonfunc]]() && buttontime < 0.5)
 		{
 			buttontime = buttontime + 0.05;

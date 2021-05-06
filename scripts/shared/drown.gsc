@@ -126,7 +126,7 @@ function watch_player_drowning()
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		if(self isplayerunderwater() && self isplayerswimming())
 		{

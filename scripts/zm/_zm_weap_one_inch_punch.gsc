@@ -157,7 +157,7 @@ function monitor_melee_swipe()
 	self endon(#"stop_monitor_melee_swipe");
 	self endon(#"bled_out");
 	var_ac486a40 = getweapon("tomb_shield");
-	while(1)
+	while(true)
 	{
 		while(!self ismeleeing())
 		{
@@ -416,7 +416,7 @@ function handle_punch_pain_notetracks(note)
 function one_inch_punch_take_think()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"bled_out");
 		self.one_inch_punch_flag_has_been_init = 0;

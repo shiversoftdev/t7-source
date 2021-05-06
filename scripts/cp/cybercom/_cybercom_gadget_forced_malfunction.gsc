@@ -342,6 +342,7 @@ private function function_609fcb0a(attacker, disablefor, weapon)
 	}
 	self clientfield::set("forced_malfunction", 1);
 	self.is_disabled = 1;
+	miss = 100;
 	while(isalive(self) && gettime() < disablefor)
 	{
 		if(getdvarint("scr_malfunction_rate_of_failure", 25) + miss > randomint(100))
@@ -428,6 +429,7 @@ private function _force_malfunction(attacker, disabletimemsec)
 		self thread cybercom::stopanimscriptedonnotify("notify_melee_damage", "malfunction_intro_anim", 1, attacker, weapon);
 		self waittill_match(#"malfunction_intro_anim");
 	}
+	var_ac712236 = 0;
 	while(isalive(self) && gettime() < disablefor)
 	{
 		if(gettime() > var_ac712236)

@@ -122,7 +122,7 @@ function function_b2a01f79()
 	self endon(#"disconnect");
 	var_97cffdb4 = "zone_bunker_interior_elevator";
 	var_be85f81a = "zone_bunker_prison_entrance";
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_change", w_current, w_previous);
 		if(w_current === level.var_99f2368e)
@@ -230,7 +230,8 @@ function function_5ce6002e(e_player, w_previous)
 	e_player setorigin(var_f1c825f6);
 	e_player.angles = e_player.old_angles;
 	e_player switchtoweaponimmediate(w_previous);
-	while(1)
+	e_player.ignoreme = 0;
+	while(true)
 	{
 		e_player waittill(#"weapon_change", w_current);
 		if(w_current == w_previous)
@@ -311,7 +312,7 @@ function function_a21f0b74()
 {
 	self.var_59bd3c5a endon(#"death");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		if(self util::use_button_held())
 		{

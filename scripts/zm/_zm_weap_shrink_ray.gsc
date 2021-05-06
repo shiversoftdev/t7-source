@@ -110,7 +110,7 @@ function remove_shrinkable_object(ent)
 */
 function function_ebf92008()
 {
-	while(1)
+	while(true)
 	{
 		level.var_1b24c8b0 = 0;
 		util::wait_network_frame();
@@ -491,7 +491,7 @@ function function_6d284e94()
 	self endon(#"kicked");
 	self endon(#"death");
 	wait(randomfloatrange(0.2, 0.5));
-	while(1)
+	while(true)
 	{
 		self playsound("zmb_mini_ambient");
 		wait(randomfloatrange(1, 2.25));
@@ -548,7 +548,7 @@ function function_643fa9c8()
 	self.var_f0dec186 linkto(self);
 	self.var_f0dec186 thread function_2c318bd(self);
 	self.var_f0dec186 endon(#"death");
-	while(1)
+	while(true)
 	{
 		self.var_f0dec186 waittill(#"trigger", who);
 		if(!isplayer(who))
@@ -867,7 +867,7 @@ function function_8b44a1f8()
 {
 	self endon(#"death");
 	self endon(#"unshrink");
-	while(1)
+	while(true)
 	{
 		taunt_anim = array::random(level._zombie_board_taunt["zombie"]);
 	}

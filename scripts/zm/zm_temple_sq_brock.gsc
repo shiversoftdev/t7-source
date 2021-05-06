@@ -73,7 +73,7 @@ function delete_radio()
 function trig_thread()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger");
 		self.owner_ent notify(#"triggered");
@@ -125,6 +125,7 @@ function radio9_override(struct)
 	level waittill(#"picked_up");
 	level waittill(#"flush_done");
 	self show();
+	target = struct.target;
 	while(isdefined(target))
 	{
 		struct = struct::get(target, "targetname");

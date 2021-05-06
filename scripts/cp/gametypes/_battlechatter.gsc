@@ -68,7 +68,7 @@ function init()
 */
 function sndvehiclehijackwatcher()
 {
-	while(1)
+	while(true)
 	{
 		level waittill(#"clonedentity", clone, vehentnum);
 		if(isdefined(clone) && isdefined(clone.archetype))
@@ -181,7 +181,7 @@ function function_c8397d24()
 	self endon(#"death");
 	self endon(#"disconnect");
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		wait(randomintrange(6, 14));
 		if(isdefined(self))
@@ -207,7 +207,7 @@ function bc_ainotifyconvert()
 	self endon(#"death");
 	self endon(#"disconnect");
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		self waittill(#"bhtn_action_notify", notify_string);
 		switch(notify_string)
@@ -508,7 +508,7 @@ function bc_ainotifyconvert()
 				level thread bc_makeline(self, "exert_body_blow", undefined, undefined, 1);
 				break;
 			}
-			default
+			default:
 			{
 				break;
 			}
@@ -530,7 +530,7 @@ function bc_scriptedline()
 	self endon(#"death");
 	self endon(#"disconnect");
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		self waittill(#"scriptedbc", alias_suffix);
 		level thread bc_makeline(self, alias_suffix);
@@ -589,7 +589,7 @@ function bc_grenadewatcher()
 {
 	self endon(#"death");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_fire", grenade, weapon);
 		if(weapon.name == "frag_grenade" || weapon.name == "frag_grenade_invisible")
@@ -648,7 +648,7 @@ function bc_stickygrenadewatcher()
 	self endon(#"death");
 	self endon(#"disconnect");
 	self endon(#"sticky_explode");
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_stuck", grenade);
 		if(isdefined(grenade))
@@ -814,7 +814,7 @@ function bc_robotbehindvox()
 			}
 		}
 	}
-	while(1)
+	while(true)
 	{
 		wait(1);
 		t = gettime();
@@ -1042,7 +1042,7 @@ function function_20dcacc5()
 */
 function function_1af43712()
 {
-	while(1)
+	while(true)
 	{
 		level.var_769cc2b1 = 0;
 		util::wait_network_frame();
@@ -1108,7 +1108,7 @@ function bc_plrnotifyconvert()
 	self endon(#"death");
 	self endon(#"disconnect");
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		self waittill(#"bhtn_action_notify", notify_string);
 		switch(notify_string)
@@ -1121,7 +1121,7 @@ function bc_plrnotifyconvert()
 			{
 				break;
 			}
-			default
+			default:
 			{
 				break;
 			}
@@ -1161,7 +1161,7 @@ function pain_vox()
 {
 	self endon(#"death");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"snd_pain_player", meansofdeath);
 		if(randomintrange(0, 100) <= 100)
@@ -1200,7 +1200,8 @@ function water_gasp()
 	self endon(#"disconnect");
 	self endon(#"snd_gasp");
 	level endon(#"game_ended");
-	while(1)
+	self.voxshouldgasploop = 0;
+	while(true)
 	{
 		if(!self isplayerunderwater() && self.voxshouldgasp)
 		{
@@ -1227,7 +1228,7 @@ function cybercoremeleewatcher()
 	self endon(#"death");
 	self endon(#"disconnect");
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		self waittill(#"melee_cybercom");
 		self thread sndcybercoremeleeresponse();

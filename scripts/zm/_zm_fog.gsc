@@ -168,7 +168,7 @@ function setup_devgui_func(str_devgui_path, str_dvar, n_value, func, n_base_valu
 {
 	setdvar(str_dvar, n_base_value);
 	adddebugcommand("devgui_cmd \"" + str_devgui_path + "\" \"" + str_dvar + " " + n_value + "\"\n");
-	while(1)
+	while(true)
 	{
 		n_dvar = getdvarint(str_dvar);
 		if(n_dvar > n_base_value)

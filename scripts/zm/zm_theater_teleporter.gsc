@@ -140,7 +140,7 @@ function init_player()
 */
 function function_9272aa0()
 {
-	while(1)
+	while(true)
 	{
 		level zombietheaterteleporterseeklogic();
 		wait(0.05);
@@ -212,7 +212,8 @@ function teleport_link_think()
 {
 	trigger_name = "trigger_teleport_pad_0";
 	core = getent(trigger_name, "targetname");
-	while(1)
+	user = undefined;
+	while(true)
 	{
 		if(!level flag::get("core_linked"))
 		{
@@ -263,7 +264,8 @@ function teleport_pad_think()
 	trigger_name = "trigger_teleport_pad_0";
 	core = getent(trigger_name, "targetname");
 	pad = getent(core.target, "targetname");
-	while(1)
+	user = undefined;
+	while(true)
 	{
 		if(!level flag::get("teleporter_linked") && level flag::get("core_linked"))
 		{
@@ -405,7 +407,7 @@ function teleport_pad_player_fx(players)
 	{
 		inprojroom = 1;
 	}
-	while(1)
+	while(true)
 	{
 		for(i = 0; i < players.size; i++)
 		{
@@ -487,6 +489,7 @@ function teleport_players(var_1bea176e, loc)
 			players[i] disableoffhandweapons();
 			util::wait_network_frame();
 			slot = i;
+			start = 0;
 			while(dest_room[slot].occupied && start < 4)
 			{
 				start++;
@@ -557,6 +560,7 @@ function teleport_players(var_1bea176e, loc)
 		if(isdefined(var_1bea176e[i]))
 		{
 			slot = randomintrange(0, 4);
+			start = 0;
 			while(dest_room[slot].occupied && start < 4)
 			{
 				start++;
@@ -907,6 +911,7 @@ function teleport_aftereffect_fov()
 	start_fov = 30;
 	end_fov = 65;
 	duration = 0.5;
+	i = 0;
 	while(i < duration)
 	{
 		fov = start_fov + end_fov - start_fov * i / duration;
@@ -1148,7 +1153,7 @@ function function_2cdd3a26()
 {
 	self endon(#"death");
 	self.a_e_players = [];
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", e_player);
 		if(isinarray(self.a_e_players, e_player))

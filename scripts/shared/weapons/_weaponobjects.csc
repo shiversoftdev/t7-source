@@ -437,7 +437,8 @@ function equipmentwatchplayerteamchanged(localclientnum, fxhandle)
 	self endon(#"entityshutdown");
 	self notify(#"team_changed_watcher");
 	self endon(#"team_changed_watcher");
-	while(1)
+	watcherplayer = getlocalplayer(localclientnum);
+	while(true)
 	{
 		level waittill(#"team_changed", clientnum);
 		player = getlocalplayer(clientnum);

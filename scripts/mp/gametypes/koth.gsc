@@ -411,7 +411,7 @@ function kothcaptureloop()
 	level endon(#"game_ended");
 	level endon(#"zone_moved");
 	level.kothstarttime = gettime();
-	while(1)
+	while(true)
 	{
 		level.zone.gameobject gameobjects::allow_use("any");
 		level.zone.gameobject gameobjects::set_use_time(level.capturetime);
@@ -491,7 +491,7 @@ function kothmainloop()
 	setbombtimer("A", 0);
 	setmatchflag("bomb_timer_a", 0);
 	thread hidetimerdisplayongameend();
-	while(1)
+	while(true)
 	{
 		resume_time();
 		sound::play_on_players("mp_suitcase_pickup");
@@ -986,6 +986,7 @@ function awardcapturepoints(team, lastcaptureteam)
 	level notify(#"awardcapturepointsrunning");
 	level endon(#"awardcapturepointsrunning");
 	seconds = 1;
+	score = 1;
 	while(!level.gameended)
 	{
 		wait(seconds);
@@ -1084,6 +1085,7 @@ function getzonearray()
 		return undefined;
 	}
 	swapped = 1;
+	n = zones.size;
 	while(swapped)
 	{
 		swapped = 0;
@@ -1476,6 +1478,7 @@ function pickzonetospawn()
 	}
 	if(getcountofteamswithplayers(num) <= 1)
 	{
+		zone = level.zones[randomint(level.zones.size)];
 		while(isdefined(level.prevzone) && zone == level.prevzone)
 		{
 			zone = level.zones[randomint(level.zones.size)];

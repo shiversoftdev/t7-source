@@ -216,13 +216,15 @@ function dog_round_spawning()
 	#/
 	level.zombie_total = max;
 	dog_health_increase();
-	while(1)
+	count = 0;
+	while(true)
 	{
 		level flag::wait_till("spawn_zombies");
 		while(zombie_utility::get_current_zombie_count() >= level.zombie_ai_limit || level.zombie_total <= 0)
 		{
 			wait(0.1);
 		}
+		num_player_valid = zm_utility::get_number_of_valid_players();
 		while(zombie_utility::get_current_zombie_count() >= num_player_valid * 2)
 		{
 			wait(2);
@@ -514,7 +516,8 @@ function dog_round_tracker()
 	level.dog_round_count = 1;
 	level.next_dog_round = level.round_number + randomintrange(4, 7);
 	old_spawn_func = level.round_spawn_func;
-	while(1)
+	old_wait_func = level.round_wait_func;
+	while(true)
 	{
 		level waittill(#"between_round_over");
 		/#
@@ -821,7 +824,7 @@ function dog_behind_audio()
 	self util::waittill_any("dog_running", "dog_combat");
 	self notify(#"bhtn_action_notify", "close");
 	wait(3);
-	while(1)
+	while(true)
 	{
 		players = getplayers();
 		for(i = 0; i < players.size; i++)
@@ -852,7 +855,8 @@ function dog_behind_audio()
 function dog_clip_monitor()
 {
 	clips_on = 0;
-	while(1)
+	level.dog_clips = getentarray("dog_clips", "targetname");
+	while(true)
 	{
 		for(i = 0; i < level.dog_clips.size; i++)
 		{
@@ -868,6 +872,7 @@ function dog_clip_monitor()
 			level.dog_clips[i] disconnectpaths();
 			util::wait_network_frame();
 		}
+		dog_is_alive = 1;
 		while(dog_is_alive || level flag::get("dog_round"))
 		{
 			dog_is_alive = 0;
@@ -907,6 +912,7 @@ function special_dog_spawn(num_to_spawn, spawners, spawn_point)
 		num_to_spawn = 1;
 	}
 	spawn_point = undefined;
+	count = 0;
 	while(count < num_to_spawn)
 	{
 		players = getplayers();
@@ -975,7 +981,7 @@ function dog_run_think()
 	}
 	self clientfield::set("dog_fx", 1);
 	self playloopsound("zmb_hellhound_loop_fire");
-	while(1)
+	while(true)
 	{
 		if(!zm_utility::is_player_valid(self.favoriteenemy))
 		{
@@ -1003,7 +1009,7 @@ function dog_stalk_audio()
 	self endon(#"death");
 	self endon(#"dog_running");
 	self endon(#"dog_combat");
-	while(1)
+	while(true)
 	{
 		self notify(#"bhtn_action_notify", "ambient");
 		wait(randomfloatrange(2, 4));

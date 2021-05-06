@@ -130,7 +130,8 @@ function trackriotshield()
 	currentweapon = self getcurrentweapon();
 	self.hasriotshield = self hasriotshield();
 	self.hasriotshieldequipped = currentweapon.isriotshield;
-	while(1)
+	self.lastnonshieldweapon = level.weaponnone;
+	while(true)
 	{
 		self thread watchriotshieldpickup();
 		currentweapon = self getcurrentweapon();
@@ -511,7 +512,7 @@ function watchdeployedriotshielddamage()
 	self endon(#"death");
 	damagemax = getdvarint("riotshield_deployed_health");
 	self.damagetaken = 0;
-	while(1)
+	while(true)
 	{
 		self.maxhealth = 100000;
 		self.health = self.maxhealth;

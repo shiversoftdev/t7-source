@@ -156,7 +156,7 @@ function _napalm_zombie_runsteameffects(client_num)
 	self endon(#"napalm_killed");
 	self endon(#"death");
 	self endon(#"entityshutdown");
-	while(1)
+	while(true)
 	{
 		waterheight = -15000;
 		underwater = waterheight > self.origin[2];
@@ -359,7 +359,8 @@ function player_napalm_radius_overlay_fade()
 	self endon(#"death");
 	self endon(#"disconnect");
 	self endon(#"entityshutdown");
-	while(1)
+	prevfrac = 0;
+	while(true)
 	{
 		frac = 0;
 		if(!isdefined(level.napalm_zombie) || (isdefined(level.napalm_zombie.wet) && level.napalm_zombie.wet) || player_can_see_napalm(level.napalm_zombie))
@@ -539,8 +540,8 @@ System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative
 Parameter name: index
    at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
    at System.Collections.Generic.List`1.get_Item(Int32 index)
-   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 606
-   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 210
+   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 649
+   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 211
 /*
 No Output
 */

@@ -143,7 +143,7 @@ function function_cec8e852()
 {
 	self endon(#"death");
 	self endon(#"killoedmonitor");
-	while(1)
+	while(true)
 	{
 		/#
 			level flagsys::wait_till_clear("");

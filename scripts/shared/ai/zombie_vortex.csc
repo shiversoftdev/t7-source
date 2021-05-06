@@ -90,7 +90,7 @@ function function_49c8460a(localclientnum, oldval, newval, bnewent, binitialsnap
 function vortex_shake_and_rumble(localclientnum, v_vortex_origin)
 {
 	self endon(#"vortex_stop");
-	while(1)
+	while(true)
 	{
 		self playrumbleonentity(localclientnum, "zod_idgun_vortex_interior");
 		wait(0.075);
@@ -132,6 +132,7 @@ function function_69096485(localclientnum, vortex_fx_handle, var_3ea33288, var_8
 	e_player = getlocalplayer(localclientnum);
 	n_starttime = e_player getclienttime();
 	n_currtime = e_player getclienttime() - n_starttime;
+	n_vortex_time = n_vortex_time * 1000;
 	while(isdefined(e_player) && n_currtime < n_vortex_time)
 	{
 		wait(0.05);

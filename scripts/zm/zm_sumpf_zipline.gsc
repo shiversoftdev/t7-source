@@ -169,7 +169,7 @@ function zip_line_audio()
 function rope_sounds()
 {
 	level endon(#"machine_off");
-	while(1)
+	while(true)
 	{
 		wait(randomfloatrange(0.5, 1.5));
 		self playsound(self.script_sound);
@@ -257,7 +257,7 @@ function function_73a6adde()
 	{
 		self setinvisibletoplayer(player);
 	}
-	while(1)
+	while(true)
 	{
 		foreach(var_ccd1e79f, player in level.players)
 		{
@@ -347,7 +347,7 @@ function zipthink()
 		self unlink();
 		self thread monitorziphint();
 	}
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", who);
 		if(who zm_utility::in_revive_trigger())
@@ -481,7 +481,7 @@ function triggeroffsumpf()
 function monitorziphint()
 {
 	self endon(#"stopstringmonitor");
-	while(1)
+	while(true)
 	{
 		players = getplayers();
 		downedplayers = [];
@@ -697,7 +697,7 @@ function function_58047fdd()
 */
 function zipdamage(parent)
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", ent);
 		if(parent.zipactive == 1 && isdefined(ent) && isalive(ent))
@@ -779,7 +779,7 @@ function zombiezipdamage()
 function objectsolid()
 {
 	self endon(#"stopmonitorsolid");
-	while(1)
+	while(true)
 	{
 		players = getplayers();
 		player_touching = 0;

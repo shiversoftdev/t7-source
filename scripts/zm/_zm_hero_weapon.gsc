@@ -337,7 +337,7 @@ function watch_hero_weapon_give()
 	self notify(#"watch_hero_weapon_give");
 	self endon(#"watch_hero_weapon_give");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_give", w_weapon);
 		if(isdefined(w_weapon) && zm_utility::is_hero_weapon(w_weapon))
@@ -362,7 +362,7 @@ function watch_hero_weapon_take()
 	self notify(#"watch_hero_weapon_take");
 	self endon(#"watch_hero_weapon_take");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_take", w_weapon);
 		if(isdefined(w_weapon) && zm_utility::is_hero_weapon(w_weapon))
@@ -387,7 +387,7 @@ function watch_hero_weapon_change()
 	self notify(#"watch_hero_weapon_change");
 	self endon(#"watch_hero_weapon_change");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_change", w_current, w_previous);
 		if(self.sessionstate != "spectator")
@@ -431,7 +431,7 @@ function watch_hero_power(w_weapon)
 	{
 		self.hero_power_prev = -1;
 	}
-	while(1)
+	while(true)
 	{
 		self.hero_power = self gadgetpowerget(0);
 		self clientfield::set_player_uimodel("zmhud.swordEnergy", self.hero_power / 100);

@@ -456,7 +456,7 @@ function vignettemodecallback(entity, attribute, oldvalue, value)
 			entity setsteeringmode("vignette steering");
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}

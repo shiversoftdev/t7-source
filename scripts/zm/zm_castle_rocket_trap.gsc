@@ -70,7 +70,7 @@ function function_6827f93b()
 	level.zones["zone_v10_pad_door"].is_spawning_allowed = 1;
 	level.zones["zone_v10_pad"].adjacent_zones["zone_v10_pad_door"].is_connected = 1;
 	wait(60);
-	while(1)
+	while(true)
 	{
 		level util::waittill_any_timeout(n_timeout, "rocket_blast", "powerup_dropped");
 		function_713600fe();
@@ -185,7 +185,7 @@ function function_e52f317f(is_left_door, n_time)
 		n_move_x = 25.5;
 		var_80b1884b = 92.5;
 	}
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_d6ba1e76");
 		self moveto(self.origin + (n_move_x, var_80b1884b, 0), n_time);
@@ -300,7 +300,8 @@ function function_92008f69(var_ec7cc126)
 {
 	level endon(#"hash_1b4db1d1");
 	var_5f1ce845 = getent("rocket_trap_blast_damage_vol", "targetname");
-	while(1)
+	var_f38730c7 = getent("rocket_trap_side_blast_damage_vol", "targetname");
+	while(true)
 	{
 		if(var_ec7cc126)
 		{
@@ -453,7 +454,7 @@ function function_76de618f(vol_area, var_ec7cc126 = 0)
 function function_fe2fe879(str_rumble, v_rumble_origin, n_duration)
 {
 	level endon(#"hash_1b4db1d1");
-	while(1)
+	while(true)
 	{
 		playrumbleonposition(str_rumble, v_rumble_origin);
 		wait(n_duration);
@@ -558,7 +559,7 @@ function function_65b37e40()
 		wait(0.05);
 		setdvar("", 0);
 		adddebugcommand("");
-		while(1)
+		while(true)
 		{
 			if(getdvarint(""))
 			{

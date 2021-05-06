@@ -228,6 +228,7 @@ function function_7b01cb74()
 		}
 		rankid = tablelookupcolumnforrow("gamedata/weapons/cp/cp_gunlevels.csv", var_f41ce74f, 0);
 		var_f554224b = tablelookupcolumnforrow("gamedata/weapons/cp/cp_gunlevels.csv", var_f41ce74f, 2);
+		var_3f3ab3c1 = var_f41ce74f;
 		while(var_f554224b == var_1976a117)
 		{
 			rankid = tablelookupcolumnforrow("gamedata/weapons/cp/cp_gunlevels.csv", var_3f3ab3c1, 0);

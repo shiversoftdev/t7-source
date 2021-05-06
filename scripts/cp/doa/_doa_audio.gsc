@@ -40,7 +40,7 @@ function init()
 function musicsystem()
 {
 	musicent = spawn("script_origin", (0, 0, 0));
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_ba37290e", type);
 		if(!isdefined(type))

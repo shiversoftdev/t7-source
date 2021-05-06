@@ -316,7 +316,7 @@ function function_d75eac4e()
 		return;
 	}
 	self zm_unitrigger::create_unitrigger(undefined, 35);
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger_activated");
 		playsoundatposition(self.script_sound, self.origin);
@@ -381,7 +381,7 @@ function function_8554d5da()
 	var_99ff4537 setcandamage(1);
 	var_99ff4537 thread function_2d4f4459();
 	var_99ff4537 thread function_f184004e();
-	while(1)
+	while(true)
 	{
 		var_99ff4537.health = 1000000;
 		var_99ff4537 waittill(#"damage", damage, attacker, dir, loc, type, model, tag, part, weapon, flags);
@@ -416,7 +416,8 @@ function function_8554d5da()
 function function_2d4f4459()
 {
 	self.trackname = undefined;
-	while(1)
+	self.tracknum = 0;
+	while(true)
 	{
 		self waittill(#"hash_34d24635");
 		if(isdefined(self.var_175c09e5))
@@ -465,7 +466,7 @@ function function_c62f1c37()
 */
 function function_f184004e()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"hash_dec13539");
 		self playsoundwithnotify("zmb_minor_skool_radio_off", "sounddone");
@@ -504,7 +505,7 @@ function function_7624a208()
 	level.var_51d5c50c = 0;
 	level.var_c911c0a2 = struct::get_array("side_ee_song_bear", "targetname");
 	array::thread_all(level.var_c911c0a2, &function_4b02c768);
-	while(1)
+	while(true)
 	{
 		level waittill(#"hash_c3f82290");
 		if(level.var_51d5c50c == level.var_c911c0a2.size)

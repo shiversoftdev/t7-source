@@ -177,7 +177,7 @@ function update_ternary_display()
 {
 	a_ice_ternary_digit_brushes = getentarray("ice_chamber_digit", "targetname");
 	level endon(#"ice_puzzle_1_complete");
-	while(1)
+	while(true)
 	{
 		level waittill(#"update_ice_chamber_digits", newval);
 		foreach(var_96e4708c, digit in a_ice_ternary_digit_brushes)
@@ -236,7 +236,8 @@ function process_gem_shooting()
 	ice_gem = getent("ice_chamber_gem", "targetname");
 	ice_gem.value = -1;
 	ice_gem setcandamage(1);
-	while(1)
+	var_83560def = level.a_elemental_staffs["staff_water"].w_weapon;
+	while(true)
 	{
 		self waittill(#"damage", damage, attacker, direction_vec, point, mod, tagname, modelname, partname, weapon);
 		if(weapon.name == var_83560def)
@@ -310,7 +311,7 @@ function ceiling_tile_process_damage()
 	ice_gem = getent("ice_chamber_gem", "targetname");
 	self setcandamage(1);
 	ice_gem setcandamage(1);
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", damage, attacker, direction_vec, point, mod, tagname, modelname, partname, weaponname);
 		var_f1415f17 = arraygetclosest(point, level.unsolved_tiles);
@@ -398,6 +399,7 @@ function ice_stone_run()
 	playfx(level._effect["digging"], self.origin);
 	self.e_model setcandamage(1);
 	self.e_model playloopsound("zmb_squest_ice_stone_flow", 2);
+	has_tried = 0;
 	while(!level flag::get("ice_puzzle_2_complete"))
 	{
 		self.e_model waittill(#"damage", amount, inflictor, direction, point, type, tagname, modelname, partname, weaponname, idflags);

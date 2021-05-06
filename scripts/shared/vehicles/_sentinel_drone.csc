@@ -842,6 +842,7 @@ function sentinel_launch_piece(localclientnum, model, pos, angles, hitpos, force
 		return 0;
 	}
 	count = 0;
+	old_pos = dynent.origin;
 	while(isdefined(dynent) && isdynentvalid(dynent))
 	{
 		if(old_pos == dynent.origin)

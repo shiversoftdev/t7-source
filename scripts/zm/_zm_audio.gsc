@@ -208,7 +208,7 @@ function zombie_behind_vox()
 		level._zbv_vox_last_update_time = 0;
 		level._audio_zbv_shared_ent_list = zombie_utility::get_zombie_array();
 	}
-	while(1)
+	while(true)
 	{
 		wait(1);
 		t = gettime();
@@ -284,7 +284,7 @@ function zombie_behind_vox()
 function oh_shit_vox()
 {
 	self endon(#"death_or_disconnect");
-	while(1)
+	while(true)
 	{
 		wait(1);
 		players = getplayers();
@@ -339,7 +339,7 @@ function player_killstreak_timer()
 		self.timerisrunning = 0;
 		self.killcounter = 0;
 	}
-	while(1)
+	while(true)
 	{
 		self waittill(#"zom_kill", zomb);
 		if(isdefined(zomb._black_hole_bomb_collapse_death) && zomb._black_hole_bomb_collapse_death == 1)
@@ -522,6 +522,7 @@ function timer_actual(kills, time)
 {
 	self endon(#"disconnect");
 	self endon(#"death");
+	timer = gettime() + time * 1000;
 	while(gettime() < timer)
 	{
 		if(self.killcounter > kills)
@@ -608,6 +609,7 @@ function loadplayervoicecategories(table)
 	level.votimer = [];
 	level.sndplayervox = [];
 	index = 0;
+	row = tablelookuprow(table, index);
 	while(isdefined(row))
 	{
 		category = checkstringvalid(row[0]);
@@ -1373,6 +1375,7 @@ function sndmusicsystem_queuestate(state)
 	{
 		return;
 	}
+	m.queue = 1;
 	while(m.currentplaytype > 0)
 	{
 		wait(0.5);
@@ -1464,7 +1467,7 @@ function sndmusicsystem_locations(locationarray)
 	numcut = 0;
 	level.sndlastzone = undefined;
 	m = level.musicsystem;
-	while(1)
+	while(true)
 	{
 		level waittill(#"newzoneactive", activezone);
 		wait(0.1);
@@ -1710,7 +1713,7 @@ function sndmusicsystem_eeoverride(arg1, arg2)
 function secretuse(notify_string, color, qualifier_func, arg1, arg2)
 {
 	waittillframeend();
-	while(1)
+	while(true)
 	{
 		if(!isdefined(self))
 		{
@@ -1839,7 +1842,7 @@ function zmbaivox_notifyconvert()
 	level endon(#"game_ended");
 	self thread zmbaivox_playdeath();
 	self thread zmbaivox_playelectrocution();
-	while(1)
+	while(true)
 	{
 		self waittill(#"bhtn_action_notify", notify_string);
 		switch(notify_string)
@@ -1898,7 +1901,7 @@ function zmbaivox_notifyconvert()
 				level thread zmbaivox_playvox(self, notify_string, 0);
 				break;
 			}
-			default
+			default:
 			{
 				if(isdefined(level._zmbaivox_specialtype))
 				{
@@ -2040,7 +2043,7 @@ function zmbaivox_playelectrocution()
 {
 	self endon(#"disconnect");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", amount, attacker, direction_vec, point, type, tagname, modelname, partname, weapon);
 		if(weapon.name == "zombie_beast_lightning_dwl" || weapon.name == "zombie_beast_lightning_dwl2" || weapon.name == "zombie_beast_lightning_dwl3")
@@ -2080,7 +2083,7 @@ function zmbaivox_ambientdelay()
 */
 function networksafereset()
 {
-	while(1)
+	while(true)
 	{
 		level._numzmbaivox = 0;
 		util::wait_network_frame();
@@ -2298,7 +2301,7 @@ function sndperksjingles_timer()
 	{
 		self.sndjinglecooldown = 0;
 	}
-	while(1)
+	while(true)
 	{
 		wait(randomfloatrange(30, 60));
 		if(randomintrange(0, 100) <= 10 && (!(isdefined(self.sndjinglecooldown) && self.sndjinglecooldown)))
@@ -2668,7 +2671,7 @@ function isanyonetalking()
 function sndconvointerrupt()
 {
 	level endon(#"sndconvolinedone");
-	while(1)
+	while(true)
 	{
 		if(!isdefined(self))
 		{
@@ -2713,7 +2716,8 @@ function water_vox()
 	level endon(#"end_game");
 	self.voxunderwatertime = 0;
 	self.voxemergebreath = 0;
-	while(1)
+	self.voxdrowning = 0;
+	while(true)
 	{
 		if(self isplayerunderwater())
 		{

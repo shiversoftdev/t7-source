@@ -346,7 +346,7 @@ function laststand_getup_damage_watcher()
 {
 	self endon(#"player_revived");
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage");
 		self.laststand_info.getup_bar_value = self.laststand_info.getup_bar_value - 0.1;
@@ -385,7 +385,7 @@ function laststand_getup_hud()
 	hudelem.sort = 2;
 	hudelem.label = &"SO_WAR_LASTSTAND_GETUP_BAR";
 	self thread laststand_getup_hud_destroy(hudelem);
-	while(1)
+	while(true)
 	{
 		hudelem setvalue(self.laststand_info.getup_bar_value);
 		wait(0.05);

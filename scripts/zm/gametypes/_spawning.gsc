@@ -156,7 +156,7 @@ function ongrenadethrow()
 {
 	self endon(#"disconnect");
 	level endon(#"game_ended");
-	while(1)
+	while(true)
 	{
 		self waittill(#"grenade_fire", grenade, weapon);
 		level thread create_grenade_influencers(self.pers["team"], weapon, grenade);

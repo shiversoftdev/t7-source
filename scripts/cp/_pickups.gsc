@@ -115,7 +115,7 @@ function spawn_at_position(v_pos, v_angles)
 */
 function respawn_loop(v_pos, v_angles)
 {
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.m_custom_spawn_func))
 		{
@@ -223,6 +223,7 @@ function pickupitem_despawn_timer()
 function debug_despawn_timer()
 {
 	self endon(#"cancel_despawn");
+	n_time_remaining = self.m_n_despawn_wait;
 	while(n_time_remaining >= 0 && isdefined(self.m_e_model))
 	{
 		/#
@@ -463,7 +464,7 @@ function repair_completed(player)
 function repair_trigger()
 {
 	self endon(#"unmake");
-	while(1)
+	while(true)
 	{
 		self.m_e_body_trigger waittill(#"trigger", player);
 		if(isdefined(player.is_carrying_pickupitem) && player.is_carrying_pickupitem && player.o_pickupitem.m_str_itemname == "Toolbox")
@@ -680,7 +681,7 @@ function flash_drop_prompt(player)
 	self endon(#"death");
 	player endon(#"death");
 	player endon(#"stop_flashing_drop_prompt");
-	while(1)
+	while(true)
 	{
 		player util::screen_message_create_client(get_drop_prompt(), undefined, undefined, 0, 0.35);
 		wait(0.35);

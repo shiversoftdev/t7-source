@@ -199,7 +199,7 @@ function watch_contract_debug()
 		level notify(#"watch_contract_debug_singleton");
 		level endon(#"watch_contract_debug_singleton");
 		level endon(#"game_ended");
-		while(1)
+		while(true)
 		{
 			if(getdvarint("") > 0)
 			{
@@ -519,7 +519,7 @@ function contract_kills(data)
 				player add_stat(3005);
 				break;
 			}
-			default
+			default:
 			{
 				break;
 			}
@@ -784,7 +784,7 @@ function set_contract_award_stat_from_path(stat_path, stat_value)
 			return self setdstat(string_path_1, string_path_2, string_path_3, string_path_4, string_path_5, stat_value);
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				assertmsg("" + stat_path_array.size + "");
@@ -891,7 +891,7 @@ function get_hero_weapon_mask(attacker, weapon)
 			return 256;
 			break;
 		}
-		default
+		default:
 		{
 			return 0;
 		}
@@ -960,7 +960,7 @@ function get_hero_ability_mask(ability)
 			return 256;
 			break;
 		}
-		default
+		default:
 		{
 			return 0;
 		}
@@ -1094,7 +1094,7 @@ function gametype_win(winner)
 			winner add_stat(1029);
 			break;
 		}
-		default
+		default:
 		{
 			break;
 		}

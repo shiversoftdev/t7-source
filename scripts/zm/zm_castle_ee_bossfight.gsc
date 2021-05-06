@@ -134,6 +134,7 @@ function init()
 function function_dc2735aa()
 {
 	var_7ead9349 = getent("boss_skeleton_spawner", "targetname");
+	var_7ead9349.script_noteworthy = "zombie_spawner";
 	while(!isdefined(level.zombie_spawners))
 	{
 		wait(0.05);
@@ -146,6 +147,7 @@ function function_dc2735aa()
 			arrayremovevalue(level.zombie_spawners, level.zombie_spawners[i]);
 		}
 	}
+	level.zombie_spawners = array::remove_undefined(level.zombie_spawners, 0);
 	while(!isdefined(level.var_a70b4aef))
 	{
 		wait(0.05);
@@ -625,7 +627,7 @@ function boss_fight_ready()
 function function_1c249965()
 {
 	level endon(#"boss_fight_begin");
-	while(1)
+	while(true)
 	{
 		foreach(var_dd5b6e2e, player in level.players)
 		{
@@ -657,7 +659,7 @@ function function_73c15b91(player)
 {
 	player endon("boss_fight_ready_gravity_trap_tracker_end" + self.script_int);
 	level endon(#"boss_fight_begin");
-	while(1)
+	while(true)
 	{
 		player waittill(#"gravity_trap_planted");
 		/#
@@ -974,7 +976,7 @@ function function_1466b3f1()
 				var_df15467c[i].origin = var_df15467c[i].origin + vectorscale((0, 0, 1), 7);
 				break;
 			}
-			default
+			default:
 			{
 				break;
 			}
@@ -998,6 +1000,7 @@ function function_4bea595()
 	level endon(#"_zombie_game_over");
 	self endon(#"bleed_out");
 	self endon(#"disconnect");
+	var_67f6c267 = getent("boss_dot_area", "targetname");
 	while(!level flag::get("boss_fight_completed"))
 	{
 		if(self istouching(var_67f6c267) && !self laststand::player_is_in_laststand())
@@ -1278,6 +1281,7 @@ function function_1261fd50()
 	self.var_40b46e43 playsound("vox_keeper_round_1");
 	self function_ca8445e1();
 	wait(3);
+	self.var_7e383b58 = 1;
 	while(self.var_7e383b58 < 6)
 	{
 		/#
@@ -1498,6 +1502,7 @@ function function_28bb5727(var_4a14cd40)
 	self.var_42433bc = 0;
 	var_19427a0d = self.var_41c1a53f.size;
 	var_bb2bcd1a = self.var_41c1a53f.size;
+	var_48d25fcc = 0;
 	while(!var_48d25fcc)
 	{
 		for(i = 0; i < var_e516b508; i++)
@@ -1626,7 +1631,7 @@ function function_96db213f()
 	self endon(#"hash_ed87af95");
 	self.var_40b46e43 endon(#"death");
 	wait(randomintrange(7, 20));
-	while(1)
+	while(true)
 	{
 		self.var_40b46e43 playsound("vox_keeper_amb");
 		wait(randomintrange(18, 40));
@@ -1677,9 +1682,10 @@ function function_e2f41bf2()
 			break;
 		}
 	}
-	while(1)
+	while(true)
 	{
 		self.var_8016f006 = array::remove_dead(self.var_8016f006, 0);
+		self.var_8016f006 = array::remove_undefined(self.var_8016f006, 0);
 		while(self.var_8016f006.size < var_67536a25)
 		{
 			s_spawn_point = self get_unused_spawn_point(1);
@@ -1722,6 +1728,7 @@ function function_5e437060(n_time)
 function function_5faafe36()
 {
 	var_731b9e03 = randomint(self.var_41c1a53f.size);
+	var_fc76d161 = var_731b9e03;
 	while(var_fc76d161 == var_731b9e03 || (var_731b9e03 == 1 && var_fc76d161 == 2) || (var_fc76d161 == 1 && var_731b9e03 == 2))
 	{
 		var_fc76d161 = randomint(self.var_41c1a53f.size);
@@ -1796,7 +1803,8 @@ function function_1dddcbf0()
 	}
 	self thread function_10739686(var_466a9f43);
 	var_bd3370a1 = gettime() / 1000;
-	while(1)
+	var_5f67a965 = 0;
+	while(true)
 	{
 		n_time_current = gettime() / 1000;
 		var_5f67a965 = n_time_current - var_bd3370a1;
@@ -1851,9 +1859,10 @@ function function_10739686(var_466a9f43)
 	{
 		var_f9b87179 = var_f9b87179 - 3;
 	}
-	while(1)
+	while(true)
 	{
 		self.var_c660deed = array::remove_dead(self.var_c660deed, 0);
+		self.var_c660deed = array::remove_undefined(self.var_c660deed, 0);
 		while(self.var_c660deed.size < var_f9b87179)
 		{
 			s_spawn_point = self get_unused_spawn_point();
@@ -1979,6 +1988,7 @@ function boss_stunned()
 	self.var_e3d9917e solid();
 	self thread function_eda57e8b();
 	n_time_started = gettime() / 1000;
+	n_time_elapsed = 0;
 	while(n_time_elapsed < 8 || (level flag::exists("world_is_paused") && level flag::get("world_is_paused")))
 	{
 		n_time_current = gettime() / 1000;
@@ -2055,6 +2065,7 @@ function function_39a8c4bd()
 	self.var_40b46e43 playsound("zmb_keeper_storm_explo");
 	var_9a7102d5 = getentarray("boss_elemental_storm_safe_area", "targetname");
 	n_time_started = gettime() / 1000;
+	n_time_elapsed = 0;
 	while(n_time_elapsed < 2)
 	{
 		n_time_current = gettime() / 1000;
@@ -2161,6 +2172,7 @@ function function_74d4ae55(var_70f504b7 = 0)
 	var_ea42537d = 0;
 	for(i = 0; i < level.activeplayers.size; i++)
 	{
+		var_76ecb142 = 0;
 		while(var_76ecb142 < var_33efb6fa)
 		{
 			if(!isdefined(self.var_29204bf[var_ea42537d]))
@@ -2217,6 +2229,7 @@ function function_a77c2ade(var_70f504b7 = 0)
 	var_c4ceda7e = self.var_40b46e43 gettagorigin("tag_weapon_right");
 	var_ea42537d = 0;
 	var_76ecb142 = 0;
+	var_91930983 = array::random(level.activeplayers);
 	while(var_76ecb142 < var_33efb6fa)
 	{
 		if(!isdefined(self.var_29204bf[var_ea42537d]))
@@ -2348,6 +2361,7 @@ function function_7574c93e()
 	var_237d778f = arraysortclosest(level.players, self.origin, level.players.size);
 	if(var_237d778f.size)
 	{
+		n_index = 0;
 		while(!isdefined(self.target_enemy) && n_index < var_237d778f.size)
 		{
 			if(isdefined(var_237d778f[n_index]) && (!(isdefined(var_237d778f[n_index] laststand::player_is_in_laststand()) && var_237d778f[n_index] laststand::player_is_in_laststand())) && isalive(var_237d778f[n_index]))
@@ -2413,6 +2427,7 @@ function function_9a0bf5f4()
 	n_dist = distancesquared(self.origin, var_b710c4e5);
 	n_loop_count = 1;
 	var_4e26e12a = (math::cointoss() ? 1 : -1);
+	var_ba9ce66e = self.e_mover;
 	while(n_dist > 2304 && isdefined(self.target_enemy) && isalive(self.target_enemy) && (!(isdefined(self.target_enemy laststand::player_is_in_laststand()) && self.target_enemy laststand::player_is_in_laststand())))
 	{
 		var_b710c4e5 = self.target_enemy geteye();
@@ -2450,6 +2465,7 @@ function function_2cef3631()
 {
 	level endon(#"_zombie_game_over");
 	self endon(#"hash_38c87755");
+	var_b5f846f3 = 0;
 	while(var_b5f846f3 < level.var_de21b83b)
 	{
 		self waittill(#"damage", n_damage, e_attacker);
@@ -2704,6 +2720,7 @@ function function_ad721cc0()
 	self thread function_49bf49de();
 	wait(0.2);
 	n_time_started = gettime() / 1000;
+	n_time_elapsed = 0;
 	while(n_time_elapsed < 5)
 	{
 		n_time_current = gettime() / 1000;
@@ -2771,6 +2788,7 @@ function function_49bf49de()
 	level endon(#"_zombie_game_over");
 	self endon(#"hash_a2b2e823");
 	self.is_destroyed = 0;
+	var_b5f846f3 = 0;
 	while(var_b5f846f3 < level.var_de21b83b)
 	{
 		self waittill(#"damage", n_damage, e_attacker);
@@ -2861,10 +2879,12 @@ function function_db1c6f68(var_70f504b7 = 0)
 		self.var_40b46e43 function_a1658f19("ai_zm_dlc1_archon_float_spell_wolfhowl_deploy");
 	}
 	self.var_77e69b0f = array::remove_dead(self.var_77e69b0f, 0);
+	self.var_77e69b0f = array::remove_undefined(self.var_77e69b0f, 0);
 	while(var_ab34fc8e < var_3cf40dd7 && self.var_77e69b0f.size < var_90aa6e9)
 	{
 		self.var_77e69b0f = array::remove_dead(self.var_77e69b0f, 0);
 		self.var_77e69b0f = array::remove_undefined(self.var_77e69b0f, 0);
+		var_eabadcb5 = 0;
 		while(var_eabadcb5 < 4 && self.var_77e69b0f.size < var_90aa6e9)
 		{
 			self.var_77e69b0f = array::remove_dead(self.var_77e69b0f, 0);
@@ -3082,7 +3102,7 @@ function function_512742d3()
 {
 	self endon(#"death");
 	level endon(#"_zombie_game_over");
-	while(1)
+	while(true)
 	{
 		wait(7.5);
 		if(self zm_zonemgr::entity_in_zone("zone_boss_arena", 0) == 0)

@@ -167,6 +167,7 @@ function powerup_hud_monitor()
 	flashing_delta_time = 0;
 	flashing_is_on = 0;
 	flashing_value = 3;
+	flashing_min_timer = 0.15;
 	while(flashing_timer >= flashing_min_timer)
 	{
 		if(flashing_timer < 5)
@@ -205,7 +206,8 @@ function powerup_hud_monitor()
 			client_fields[powerup_name].on_name = level.zombie_powerups[powerup_name].on_name;
 		}
 	}
-	while(1)
+	client_field_keys = getarraykeys(client_fields);
+	while(true)
 	{
 		wait(0.05);
 		waittillframeend();
@@ -371,7 +373,8 @@ function get_valid_powerup()
 		level.zombie_powerup_ape = undefined;
 		return powerup;
 	}
-	while(1)
+	powerup = get_next_powerup();
+	while(true)
 	{
 		powerup = get_next_powerup();
 	}
@@ -433,7 +436,8 @@ function watch_for_drop()
 	level flag::wait_till("begin_spawning");
 	wait(0.05);
 	players = getplayers();
-	while(1)
+	score_to_drop = players.size * level.zombie_vars["zombie_score_start_" + players.size + "p"] + level.zombie_vars["zombie_powerup_drop_increment"];
+	while(true)
 	{
 		level flag::wait_till("zombie_drop_powerups");
 		players = getplayers();
@@ -1035,6 +1039,7 @@ function powerup_grab(powerup_team)
 	}
 	self endon(#"powerup_timedout");
 	self endon(#"powerup_grabbed");
+	range_squared = 4096;
 	while(isdefined(self))
 	{
 		if(isdefined(self.powerup_player))
@@ -1109,7 +1114,7 @@ function powerup_grab(powerup_team)
 							level thread teller_withdrawl(self, player);
 							break;
 						}
-						default
+						default:
 						{
 							if(isdefined(level._zombiemode_powerup_grab))
 							{
@@ -1790,7 +1795,8 @@ function powerup_move()
 {
 	self endon(#"powerup_timedout");
 	self endon(#"powerup_grabbed");
-	while(1)
+	drag_speed = 75;
+	while(true)
 	{
 		self waittill(#"move_powerup", moveto, distance);
 		drag_vector = moveto - self.origin;
@@ -1822,7 +1828,7 @@ function powerup_emp()
 	{
 		return;
 	}
-	while(1)
+	while(true)
 	{
 		level waittill(#"emp_detonate", origin, radius);
 		if(distancesquared(origin, self.origin) < radius * radius)
@@ -2003,7 +2009,7 @@ function weapon_powerup_change(ent_player, str_gun_return_notify, str_weapon)
 	ent_player endon(#"player_downed");
 	ent_player endon(str_gun_return_notify);
 	ent_player endon(#"replace_weapon_powerup");
-	while(1)
+	while(true)
 	{
 		ent_player waittill(#"weapon_change", newweapon, oldweapon);
 		if(newweapon != level.weaponnone && newweapon != level.zombie_powerup_weapon[str_weapon])

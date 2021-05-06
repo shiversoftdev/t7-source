@@ -95,7 +95,7 @@ function riotshield_deploy_anim(localclientnum, instant)
 function watch_riotshield_damage()
 {
 	self endon(#"entityshutdown");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", damage_loc, damage_type);
 		self useanimtree($mp_riotshield);

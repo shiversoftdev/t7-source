@@ -123,7 +123,7 @@ function register_clientfields()
 function function_83a70ec3()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"bled_out");
 		if(level flag::get("spider_round_in_progress"))
@@ -207,7 +207,8 @@ function function_5c48d276()
 function function_fd32a77c()
 {
 	clips_on = 0;
-	while(1)
+	level.spider_clips = getentarray("spider_clips", "targetname");
+	while(true)
 	{
 		for(i = 0; i < level.spider_clips.size; i++)
 		{
@@ -223,6 +224,7 @@ function function_fd32a77c()
 			level.spider_clips[i] disconnectpaths();
 			util::wait_network_frame();
 		}
+		var_26b8af54 = 1;
 		while(var_26b8af54 || level flag::get("spider_round"))
 		{
 			var_26b8af54 = 0;
@@ -335,7 +337,7 @@ function function_7c1ef59b()
 function function_747a2fea()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"damage", n_amount, e_attacker, v_direction, v_hit_location, str_mod);
 		if(isplayer(e_attacker))
@@ -388,7 +390,7 @@ function function_eebdfab2()
 {
 	self endon(#"death");
 	wait(randomfloatrange(3, 6));
-	while(1)
+	while(true)
 	{
 		self playsoundontag("zmb_spider_vocals_ambient", "tag_eye");
 		wait(randomfloatrange(2, 6));
@@ -476,7 +478,8 @@ function function_2a424152()
 	level.var_3013498 = level.round_number + randomintrange(4, 7);
 	level.var_5ccd3661 = level.var_3013498;
 	old_spawn_func = level.round_spawn_func;
-	while(1)
+	old_wait_func = level.round_wait_func;
+	while(true)
 	{
 		level waittill(#"between_round_over");
 		/#
@@ -583,7 +586,8 @@ function function_a2a299a1()
 			var_c15d44e9 = getdvarint("");
 		}
 	#/
-	while(1)
+	level.zombie_total = var_c15d44e9;
+	while(true)
 	{
 		while(level.zombie_total > 0)
 		{
@@ -824,7 +828,7 @@ function function_1abf8192()
 			n_default_wait = 1.75;
 			break;
 		}
-		default
+		default:
 		{
 			n_default_wait = 1.5;
 			break;
@@ -867,7 +871,7 @@ function function_6e19aa86()
 				level.var_fda270a4 = 1300;
 				break;
 			}
-			default
+			default:
 			{
 				level.var_fda270a4 = 1600;
 				break;
@@ -918,7 +922,7 @@ function function_570247b9(var_19764360)
 			var_e27d607a = 1000000;
 			break;
 		}
-		default
+		default:
 		{
 			var_3a613778 = 2500;
 			var_e27d607a = 490000;
@@ -1098,6 +1102,7 @@ function function_f4bd92a2(n_to_spawn, s_spawn_point)
 	{
 		n_to_spawn = 1;
 	}
+	var_c46ed637 = 0;
 	while(var_c46ed637 < n_to_spawn)
 	{
 		var_19764360 = get_favorite_enemy();

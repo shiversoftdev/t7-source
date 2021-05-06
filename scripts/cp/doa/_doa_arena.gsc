@@ -725,7 +725,7 @@ private function function_9b67513c(name)
 		{
 			return 16;
 		}
-		default
+		default:
 		{
 			break;
 		}
@@ -1237,7 +1237,7 @@ function function_573ad24e()
 			/#
 				assert(isdefined(target));
 			#/
-			while(1)
+			while(true)
 			{
 				self moveto(target.origin, self.script_parameters);
 				self util::waittill_any_timeout(self.script_parameters + 2, "movedone");
@@ -1491,7 +1491,7 @@ function function_a8b0c139(trigger, objective_id)
 	{
 		blocker.origin = blocker.origin - vectorscale((0, 0, 1), 5000);
 	}
-	while(1)
+	while(true)
 	{
 		trigger waittill(#"trigger", guy);
 		if(isdefined(guy) && !isplayer(guy))
@@ -1527,7 +1527,7 @@ function function_a8b0c139(trigger, objective_id)
 function rotate()
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self rotateto(self.angles + vectorscale((0, 1, 0), 180), 4);
 		wait(4);

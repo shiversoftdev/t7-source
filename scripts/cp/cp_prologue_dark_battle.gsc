@@ -278,6 +278,7 @@ function function_4d2734fa()
 	spawn_manager::enable("sm_darkroom_spawner");
 	spawn_manager::wait_till_complete("sm_darkroom_spawner");
 	var_5ca9a217 = getent("outside_dark_battle_room", "targetname");
+	b_clear = 0;
 	while(!b_clear)
 	{
 		b_clear = 1;
@@ -715,7 +716,7 @@ function dark_battle_spawner_init()
 			str_anim = "cin_gen_vign_confusion_03";
 			break;
 		}
-		default
+		default:
 		{
 			/#
 				assert(0, "");
@@ -766,7 +767,7 @@ function dark_battle_player_firing_check()
 {
 	self endon(#"hash_bd74d007");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_fired");
 		self thread dark_battle_shots_fired(1);
@@ -787,7 +788,7 @@ function dark_battle_ai_firing_check()
 {
 	self endon(#"hash_bd74d007");
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"about_to_fire");
 		self thread dark_battle_shots_fired(0.25);
@@ -879,6 +880,7 @@ function move_target(e_target, e_shooter)
 	var_a0d5e21e = var_7dad3ff1 + e_target.origin;
 	var_58670eab = var_7dad3ff1 * -1 + e_target.origin;
 	var_67766dec = e_target.origin;
+	var_20b9665f = e_target.origin + vectorscale((0, 0, 1), 50);
 	while(isdefined(e_shooter) && e_shooter.firing_at_something == 1)
 	{
 		self moveto(var_58670eab, 0.5);
@@ -1406,7 +1408,7 @@ function function_ecf2e565()
 {
 	level endon(#"hash_51bc43cb");
 	veh_vtol = getent("vtol", "animname");
-	while(1)
+	while(true)
 	{
 		if(!isdefined(veh_vtol))
 		{

@@ -681,7 +681,8 @@ function demo_jump_monitor()
 		return;
 	}
 	typekeys = getarraykeys(level.vsmgr);
-	while(1)
+	oldlerps = [];
+	while(true)
 	{
 		level util::waittill_any("demo_jump", "demo_player_switch", "visionset_mgr_reset");
 		for(type_index = 0; type_index < typekeys.size; type_index++)
@@ -711,7 +712,8 @@ function demo_spectate_monitor()
 	{
 		return;
 	}
-	while(1)
+	typekeys = getarraykeys(level.vsmgr);
+	while(true)
 	{
 		if(isspectating(0, 0))
 		{
@@ -751,7 +753,8 @@ function monitor()
 		level thread demo_spectate_monitor();
 		level thread demo_jump_monitor();
 	}
-	while(1)
+	typekeys = getarraykeys(level.vsmgr);
+	while(true)
 	{
 		for(type_index = 0; type_index < typekeys.size; type_index++)
 		{
@@ -1217,7 +1220,7 @@ function fog_vol_to_visionset_instant_transition_monitor()
 {
 	level endon(#"hmo");
 	level thread fog_vol_to_visionset_hostmigration_monitor();
-	while(1)
+	while(true)
 	{
 		level util::waittill_any("demo_jump", "demo_player_switch");
 		/#
@@ -1267,7 +1270,8 @@ function fog_vol_to_visionset_monitor()
 	was_not_in_default_type[0] = 0;
 	was_not_in_default_type[1] = 0;
 	was_not_in_default_type[2] = 0;
-	while(1)
+	was_not_in_default_type[3] = 0;
+	while(true)
 	{
 		wait(0.016);
 		waittillframeend();
@@ -1317,7 +1321,7 @@ function fog_vol_to_visionset_monitor()
 function reset_player_fv2vs_infos_on_respawn()
 {
 	level endon(#"hmo");
-	while(1)
+	while(true)
 	{
 		level waittill(#"respawn");
 		players = getlocalplayers();

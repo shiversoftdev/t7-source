@@ -187,7 +187,7 @@ private function secondaryfacialanimationthink(localclientnum)
 	self endon(#"entityshutdown");
 	self endon(#"stopfacialthread");
 	self._currentfacestate = "inactive";
-	while(1)
+	while(true)
 	{
 		if(self.archetype == "human" && self clientfield::get("facial_dial"))
 		{

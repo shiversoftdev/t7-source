@@ -603,7 +603,8 @@ function chair_useage()
 	{
 		chair_trig setcursorhint("HINT_NOICON");
 		chair_trig usetriggerrequirelookat();
-		while(1)
+		players = getplayers();
+		while(true)
 		{
 			chair_trig waittill(#"trigger", players);
 			playsoundatposition("evt_chair", chair_trig.origin);
@@ -970,11 +971,12 @@ function function_463cb1c6()
 function electric_trap_wire_sparks(side)
 {
 	self endon(#"elec_done");
-	while(1)
+	while(true)
 	{
 		sparks = struct::get("trap_wire_sparks_" + side, "targetname");
 		self.fx_org = util::spawn_model("tag_origin", sparks.origin, sparks.angles);
 		playfxontag(level._effect["electric_current"], self.fx_org, "tag_origin");
+		targ = struct::get(sparks.target, "targetname");
 		while(isdefined(targ))
 		{
 			self.fx_org moveto(targ.origin, 0.15);
@@ -1010,6 +1012,7 @@ function electric_current_open_middle_door()
 	sparks = struct::get("electric_middle_door", "targetname");
 	fx_org = util::spawn_model("script_model", sparks.origin, sparks.angles);
 	playfxontag(level._effect["electric_current"], fx_org, "tag_origin");
+	targ = struct::get(sparks.target, "targetname");
 	while(isdefined(targ))
 	{
 		fx_org moveto(targ.origin, 0.075);
@@ -1047,7 +1050,7 @@ function electric_current_open_middle_door()
 function play_the_numbers()
 {
 	level thread function_9a0695b3();
-	while(1)
+	while(true)
 	{
 		wait(randomintrange(15, 20));
 		playsoundatposition("evt_the_numbers", (-758, -310, 125));
@@ -1066,7 +1069,7 @@ function play_the_numbers()
 */
 function function_9a0695b3()
 {
-	while(1)
+	while(true)
 	{
 		wait(randomintrange(3, 8));
 		playsoundatposition("zmb_elec_room_sweets", (-758, -310, 125));
@@ -1142,7 +1145,7 @@ function waitfor_flag_open_chest_location(which)
 			level.open_chest_location[1] = "magic_box_bathroom";
 			break;
 		}
-		default
+		default:
 		{
 			return;
 		}
@@ -1160,7 +1163,7 @@ function waitfor_flag_open_chest_location(which)
 */
 function watersheet_on_trigger()
 {
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", who);
 		if(isdefined(who) && isplayer(who) && isalive(who) && who.sessionstate != "spectator")
@@ -1388,6 +1391,7 @@ function function_aeabaa98(zbarrier)
 function function_ee8a2035(piece_index, zbarrier)
 {
 	self endon(#"damage");
+	var_31410ef7 = "closed";
 	while(var_31410ef7 != "open" && var_31410ef7 != "opening")
 	{
 		wait(0.05);
@@ -1523,7 +1527,7 @@ function function_db379af2()
 	{
 		self zm_unitrigger::create_unitrigger();
 	}
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger_activated");
 		self.var_46907f23++;
@@ -1589,7 +1593,8 @@ function function_dffe609d(player)
 function function_fa408417()
 {
 	level endon(#"hash_137fb152");
-	while(1)
+	var_f0a0f84f = struct::get_array("s_toilet_zhd", "targetname");
+	while(true)
 	{
 		level waittill(#"hash_b280e2e");
 		foreach(var_ef83f65f, struct in var_f0a0f84f)

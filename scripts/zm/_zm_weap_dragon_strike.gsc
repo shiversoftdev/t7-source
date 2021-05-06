@@ -292,7 +292,7 @@ function function_2d8749cd()
 function function_d5acc054()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"weapon_change", weapon, previous_weapon);
 		if(function_9e0c324b(weapon))
@@ -329,7 +329,7 @@ function function_d5acc054()
 function function_3e8c94e3()
 {
 	self endon(#"disconnect");
-	while(1)
+	while(true)
 	{
 		self waittill(#"specify_weapon_request", weapon);
 		if(function_9e0c324b(weapon) && (self getammocount(weapon) == 0 || self.var_8660deae === 0))
@@ -733,6 +733,7 @@ function function_c7832a90(v_loc)
 	v_angles = vectortoangles(v_forward);
 	v_angles = (v_angles[0], v_angles[1], 0);
 	var_1ccc854e = anglestoforward(v_angles);
+	var_53d81d57 = (v_loc[0] + var_1ccc854e[0] * 1000, v_loc[1] + var_1ccc854e[1] * 1000, v_loc[2] + 2000);
 	while(var_feed8b5b < 360)
 	{
 		if(bullettracepassed(var_53d81d57, v_loc + (0, 0, 96), 0, self.mdl_target))

@@ -1473,7 +1473,7 @@ private function margwaheadupdate(headinfo)
 	self endon(#"stop_head_update");
 	headinfo notify(#"stop_head_update");
 	headinfo endon(#"stop_head_update");
-	while(1)
+	while(true)
 	{
 		if(self ispaused())
 		{
@@ -1504,7 +1504,7 @@ private function margwaheadupdate(headinfo)
 		self margwaheaddamagedelay(headinfo, 1);
 		self clientfield::set(headinfo.cf, headinfo.open);
 		self playsoundontag("zmb_vocals_margwa_ambient", headinfo.tag);
-		while(1)
+		while(true)
 		{
 			if(!isdefined(headinfo.opentime))
 			{

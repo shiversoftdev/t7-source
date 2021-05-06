@@ -263,7 +263,7 @@ private function _cloudcreate(origin, weapon, createionfield)
 		level thread cybercom_dev::function_a0e51d80(cloud.origin, getdvarint("scr_smokescreen_duration", 7), 16, (1, 0, 0));
 	}
 	cloud endon(#"death");
-	while(1)
+	while(true)
 	{
 		fxblocksight(cloud, cloud.currentradius);
 		wait(timestep);
@@ -287,7 +287,7 @@ private function _cloudcreate(origin, weapon, createionfield)
 private function _ionizedhazard(player, timestep)
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		if(isdefined(self.trigger))
 		{
@@ -311,7 +311,7 @@ private function _ionizedhazard(player, timestep)
 private function _ionizedhazardthink(player, cloud)
 {
 	self endon(#"death");
-	while(1)
+	while(true)
 	{
 		self waittill(#"trigger", guy);
 		if(!isdefined(cloud))
@@ -402,6 +402,7 @@ private function _moveindirection(dir, unitstomove, seconds)
 {
 	self endon(#"death");
 	ticks = seconds * 20;
+	dxstep = unitstomove / ticks * vectornormalize(dir);
 	while(ticks)
 	{
 		ticks--;
@@ -504,6 +505,7 @@ private function _scaleovertime(time, startscale, maxscale)
 private function _debug_cloud(time)
 {
 	self endon(#"death");
+	serverticks = time * 20;
 	while(serverticks)
 	{
 		serverticks--;
@@ -546,6 +548,7 @@ private function function_e52895b(origin)
 {
 	self endon(#"death");
 	var_9f9fc36f = 1;
+	timeleft = getdvarint("scr_smokescreen_duration", 7);
 	while(timeleft > 0)
 	{
 		resetvisibilitycachewithinradius(origin, 1000);

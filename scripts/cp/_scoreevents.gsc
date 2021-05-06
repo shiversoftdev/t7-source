@@ -699,7 +699,7 @@ function get_distance_for_weapon(weapon, weaponclass)
 			}
 			break;
 		}
-		default
+		default:
 		{
 			distance = 0;
 			break;

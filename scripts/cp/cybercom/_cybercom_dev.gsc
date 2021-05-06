@@ -27,6 +27,7 @@ function function_a0e51d80(point, timesec, size, color)
 	var_5e2b69e1 = point + (0, halfwidth * -1, 0);
 	var_842de44a = point + (0, halfwidth, 0);
 	h1 = point + (0, 0, halfwidth * -1);
+	h2 = point + (0, 0, halfwidth);
 	while(end > gettime())
 	{
 		/#
@@ -70,7 +71,7 @@ function constantjuice()
 	self endon(#"constantjuice");
 	self endon(#"disconnect");
 	self endon(#"spawned");
-	while(1)
+	while(true)
 	{
 		wait(1);
 		if(isdefined(self.cybercom.var_ebeecfd5) && self.cybercom.var_ebeecfd5)
@@ -102,7 +103,7 @@ function cybercom_devguithink()
 {
 	setdvar("devgui_cybercore", "");
 	setdvar("devgui_cybercore_upgrade", "");
-	while(1)
+	while(true)
 	{
 		cmd = getdvarstring("devgui_cybercore");
 		if(cmd == "")

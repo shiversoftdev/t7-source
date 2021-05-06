@@ -887,7 +887,7 @@ function heroweaponkill(attacker, victim, weapon)
 			event = "annihilator_kill";
 			break;
 		}
-		default
+		default:
 		{
 			return;
 		}
@@ -961,7 +961,7 @@ function killedheroweaponenemy(attacker, victim, weapon, victim_weapon, victim_g
 			event = "killed_annihilator_enemy";
 			break;
 		}
-		default
+		default:
 		{
 			if(isdefined(victim.heroweapon) && victim.heroweapon.name == "hero_armblade" && victimgadgetwasactivelastdamage)
 			{
@@ -1092,7 +1092,7 @@ function specificweaponkill(attacker, victim, weapon, killstreak, inflictor)
 			event = "dart_kill";
 			break;
 		}
-		default
+		default:
 		{
 			return;
 		}
@@ -1726,7 +1726,7 @@ function get_distance_for_weapon(weapon, weaponclass)
 			}
 			break;
 		}
-		default
+		default:
 		{
 			distance = 0;
 			break;
