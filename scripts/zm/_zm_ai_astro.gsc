@@ -50,7 +50,7 @@ autoexec function init()
 	level.min_astro_round_wait = 1;
 	level.max_astro_round_wait = 2;
 	level.astro_round_start = 1;
-	level.next_astro_round = level.astro_round_start + randomintrange(0, level.max_astro_round_wait + 1);
+	level.next_astro_round = level.astro_round_start + (randomintrange(0, level.max_astro_round_wait + 1));
 	level.zombies_left_before_astro_spawn = 1;
 	level.zombie_left_before_spawn = 0;
 	level.astro_explode_radius = 400;
@@ -383,7 +383,7 @@ function astro_zombie_total_update()
 		level.zombies_left_before_astro_spawn = randomintrange(int(level.zombie_total * 0.25), int(level.zombie_total * 0.75));
 	}
 	_debug_astro_print("next astro round = " + level.next_astro_round);
-	_debug_astro_print("zombies to kill = " + level.zombie_total - level.zombies_left_before_astro_spawn);
+	_debug_astro_print("zombies to kill = " + (level.zombie_total - level.zombies_left_before_astro_spawn));
 }
 
 /*
@@ -400,7 +400,7 @@ function astro_zombie_think()
 	self endon(#"death");
 	self.entered_level = 0;
 	self.ignoreall = 0;
-	self.maxhealth = level.zombie_health * getplayers().size * level.astro_zombie_health_mult;
+	self.maxhealth = (level.zombie_health * getplayers().size) * level.astro_zombie_health_mult;
 	self.health = self.maxhealth;
 	self.maxsightdistsqrd = 9216;
 	self.zombie_move_speed = "walk";
@@ -543,7 +543,7 @@ function astro_turn_player()
 	}
 	lerp_time = 0.2;
 	enemy_to_player = vectornormalize(player.origin - self.origin);
-	link_org = self.origin + 40 * enemy_to_player;
+	link_org = self.origin + (40 * enemy_to_player);
 	player lerp_player_view_to_position(link_org, facing_astro, lerp_time, 1);
 	wait(lerp_time);
 	player freezecontrols(0);
@@ -856,7 +856,7 @@ function astro_zombie_die(einflictor, attacker, idamage, smeansofdeath, weapon, 
 	self thread astro_delay_delete();
 	self thread astro_player_pulse();
 	level.num_astro_zombies--;
-	level.next_astro_round = level.round_number + randomintrange(level.min_astro_round_wait, level.max_astro_round_wait + 1);
+	level.next_astro_round = level.round_number + (randomintrange(level.min_astro_round_wait, level.max_astro_round_wait + 1));
 	level.zombie_total_update = 0;
 	_debug_astro_print("astro killed in " + level.round_number);
 	return self zm_spawner::zombie_death_animscript();
@@ -895,7 +895,7 @@ function astro_player_pulse()
 {
 	eye_org = self geteye();
 	foot_org = self.origin + vectorscale((0, 0, 1), 8);
-	mid_org = (foot_org[0], foot_org[1], foot_org[2] + eye_org[2] / 2);
+	mid_org = (foot_org[0], foot_org[1], (foot_org[2] + eye_org[2]) / 2);
 	astro_org = self.origin;
 	if(isdefined(self.player_to_headbutt))
 	{
@@ -916,12 +916,12 @@ function astro_player_pulse()
 		}
 		test_org = player geteye();
 		explode_radius = level.astro_explode_radius;
-		if(distancesquared(eye_org, test_org) > explode_radius * explode_radius)
+		if(distancesquared(eye_org, test_org) > (explode_radius * explode_radius))
 		{
 			continue;
 		}
 		test_org_foot = player.origin + vectorscale((0, 0, 1), 8);
-		test_org_mid = (test_org_foot[0], test_org_foot[1], test_org_foot[2] + test_org[2] / 2);
+		test_org_mid = (test_org_foot[0], test_org_foot[1], (test_org_foot[2] + test_org[2]) / 2);
 		if(!bullettracepassed(eye_org, test_org, 0, undefined))
 		{
 			if(!bullettracepassed(mid_org, test_org_mid, 0, undefined))
@@ -933,12 +933,12 @@ function astro_player_pulse()
 			}
 		}
 		dist = distance(eye_org, test_org);
-		scale = 1 - dist / explode_radius;
+		scale = 1 - (dist / explode_radius);
 		if(scale < 0)
 		{
 			scale = 0;
 		}
-		bonus = level.astro_explode_pulse_max - level.astro_explode_pulse_min * scale;
+		bonus = (level.astro_explode_pulse_max - level.astro_explode_pulse_min) * scale;
 		pulse = level.astro_explode_pulse_min + bonus;
 		dir = (player.origin[0] - astro_org[0], player.origin[1] - astro_org[1], 0);
 		dir = vectornormalize(dir);

@@ -34,12 +34,12 @@ function __init__()
 {
 	visionset_mgr::register_visionset_info("zm_idgun_vortex" + "_visionset", 1, 30, undefined, "zm_idgun_vortex");
 	visionset_mgr::register_overlay_info_style_speed_blur("zm_idgun_vortex" + "_blur", 1, 1, 0.08, 0.75, 0.9);
-	clientfield::register("scriptmover", "vortex_start", 1, 2, "counter", &function_49c8460a, 0, 0);
+	clientfield::register("scriptmover", "vortex_start", 1, 2, "counter", &start_vortex, 0, 0);
 	clientfield::register("allplayers", "vision_blur", 1, 1, "int", &vision_blur, 0, 0);
 }
 
 /*
-	Name: function_49c8460a
+	Name: start_vortex
 	Namespace: zombie_vortex
 	Checksum: 0xE77BF14D
 	Offset: 0x408
@@ -47,7 +47,7 @@ function __init__()
 	Parameters: 7
 	Flags: Linked
 */
-function function_49c8460a(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
+function start_vortex(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
 	self endon(#"entityshutdown");
 	self endon(#"disconnect");

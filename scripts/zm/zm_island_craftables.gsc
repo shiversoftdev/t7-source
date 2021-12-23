@@ -35,9 +35,9 @@ function include_craftables()
 	level.craftable_piece_swap_allowed = 0;
 	shared_pieces = getnumexpectedplayers() == 1;
 	craftable_name = "gasmask";
-	var_a2709918 = zm_craftables::generate_zombie_craftable_piece(craftable_name, "part_visor", 32, 64, 0, undefined, &function_aef4c63, undefined, &function_3e3b2e02, undefined, undefined, undefined, "gasmask" + "_" + "part_visor", 1, undefined, undefined, &"ZOMBIE_BUILD_PIECE_GRAB", 0);
-	var_f113dd3d = zm_craftables::generate_zombie_craftable_piece(craftable_name, "part_filter", 32, 64, 0, undefined, &function_aef4c63, undefined, &function_3e3b2e02, undefined, undefined, undefined, "gasmask" + "_" + "part_filter", 1, undefined, undefined, &"ZOMBIE_BUILD_PIECE_GRAB", 0);
-	var_c4ee7b63 = zm_craftables::generate_zombie_craftable_piece(craftable_name, "part_strap", 32, 64, 0, undefined, &function_aef4c63, undefined, &function_3e3b2e02, undefined, undefined, undefined, "gasmask" + "_" + "part_strap", 1, undefined, undefined, &"ZOMBIE_BUILD_PIECE_GRAB", 0);
+	var_a2709918 = zm_craftables::generate_zombie_craftable_piece(craftable_name, "part_visor", 32, 64, 0, undefined, &function_aef4c63, undefined, &function_3e3b2e02, undefined, undefined, undefined, ("gasmask" + "_") + "part_visor", 1, undefined, undefined, &"ZOMBIE_BUILD_PIECE_GRAB", 0);
+	var_f113dd3d = zm_craftables::generate_zombie_craftable_piece(craftable_name, "part_filter", 32, 64, 0, undefined, &function_aef4c63, undefined, &function_3e3b2e02, undefined, undefined, undefined, ("gasmask" + "_") + "part_filter", 1, undefined, undefined, &"ZOMBIE_BUILD_PIECE_GRAB", 0);
+	var_c4ee7b63 = zm_craftables::generate_zombie_craftable_piece(craftable_name, "part_strap", 32, 64, 0, undefined, &function_aef4c63, undefined, &function_3e3b2e02, undefined, undefined, undefined, ("gasmask" + "_") + "part_strap", 1, undefined, undefined, &"ZOMBIE_BUILD_PIECE_GRAB", 0);
 	var_a2709918.client_field_state = undefined;
 	var_f113dd3d.client_field_state = undefined;
 	var_c4ee7b63.client_field_state = undefined;
@@ -49,9 +49,9 @@ function include_craftables()
 	gasmask.triggerthink = &function_d2d29a1b;
 	gasmask.no_challenge_stat = 1;
 	zm_craftables::include_zombie_craftable(gasmask);
-	level flag::init(craftable_name + "_" + "part_visor" + "_found");
-	level flag::init(craftable_name + "_" + "part_filter" + "_found");
-	level flag::init(craftable_name + "_" + "part_strap" + "_found");
+	level flag::init(((craftable_name + "_") + "part_visor") + "_found");
+	level flag::init(((craftable_name + "_") + "part_filter") + "_found");
+	level flag::init(((craftable_name + "_") + "part_strap") + "_found");
 }
 
 /*
@@ -82,9 +82,9 @@ function init_craftables()
 function register_clientfields()
 {
 	shared_bits = 1;
-	registerclientfield("world", "gasmask" + "_" + "part_visor", 9000, shared_bits, "int", undefined, 0);
-	registerclientfield("world", "gasmask" + "_" + "part_filter", 9000, shared_bits, "int", undefined, 0);
-	registerclientfield("world", "gasmask" + "_" + "part_strap", 9000, shared_bits, "int", undefined, 0);
+	registerclientfield("world", ("gasmask" + "_") + "part_visor", 9000, shared_bits, "int", undefined, 0);
+	registerclientfield("world", ("gasmask" + "_") + "part_filter", 9000, shared_bits, "int", undefined, 0);
+	registerclientfield("world", ("gasmask" + "_") + "part_strap", 9000, shared_bits, "int", undefined, 0);
 	clientfield::register("toplayer", "ZMUI_GRAVITYSPIKE_PART_PICKUP", 9000, 1, "int");
 	clientfield::register("toplayer", "ZMUI_GRAVITYSPIKE_CRAFTED", 9000, 1, "int");
 }
@@ -168,7 +168,7 @@ function show_infotext_for_duration(str_infotext, n_duration)
 */
 function function_aef4c63(player)
 {
-	str_piece = self.craftablename + "_" + self.piecename;
+	str_piece = (self.craftablename + "_") + self.piecename;
 	level flag::set(str_piece + "_found");
 	player thread function_9708cb71(self.piecename);
 	player notify(#"player_got_gasmask_part");
@@ -242,7 +242,7 @@ function function_f34bd805(str_piece)
 */
 function function_3e3b2e02(player)
 {
-	iprintlnbold(self.craftablename + "_" + self.piecename + "_crafted");
+	iprintlnbold(((self.craftablename + "_") + self.piecename) + "_crafted");
 }
 
 /*
@@ -259,7 +259,7 @@ function function_4e02c665(player)
 	function_aa4f440c(self.origin, self.angles);
 	var_6796a7a4 = getent("mask_display", "targetname");
 	var_6796a7a4 setscale(1.5);
-	var_6796a7a4 moveto(self.origin + anglestoforward(self.angles) + (-5, 0, -105), 0.05);
+	var_6796a7a4 moveto((self.origin + anglestoforward(self.angles)) + (-5, 0, -105), 0.05);
 	var_6796a7a4 rotateto(self.angles + vectorscale((0, 1, 0), 90), 0.05);
 	var_6796a7a4 waittill(#"movedone");
 	return 1;

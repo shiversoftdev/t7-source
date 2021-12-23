@@ -1155,7 +1155,7 @@ function updateglassposition()
 		camangles = getcamanglesbylocalclientnum(self.localclientnum);
 		campos = getcamposbylocalclientnum(self.localclientnum);
 		fwd = anglestoforward(camangles);
-		self.origin = campos + fwd * 60;
+		self.origin = campos + (fwd * 60);
 		self.angles = camangles + vectorscale((0, 1, 0), 180);
 		wait(0.016);
 	}

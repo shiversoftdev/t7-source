@@ -1671,10 +1671,10 @@ function getoriginoffsets(goalnode)
 	maxtraces = 40;
 	traceoffset = vectorscale((0, 0, -1), 196);
 	traceorigin = bullettrace(startorigin + traceoffset, endorigin + traceoffset, 0, self);
-	while(distancesquared(traceorigin["position"], endorigin + traceoffset) > 10 && numtraces < maxtraces)
+	while((distancesquared(traceorigin["position"], endorigin + traceoffset)) > 10 && numtraces < maxtraces)
 	{
 		/#
-			println("" + distancesquared(traceorigin[""], endorigin + traceoffset));
+			println("" + (distancesquared(traceorigin[""], endorigin + traceoffset)));
 		#/
 		if(startorigin[2] < endorigin[2])
 		{

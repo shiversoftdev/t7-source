@@ -300,7 +300,7 @@ function riotshield_melee_juke(weapon)
 	{
 		level.riotshield_fling_vecs = [];
 	}
-	while(start_time + 3000 > gettime())
+	while((start_time + 3000) > gettime())
 	{
 		self playrumbleonentity("zod_shield_juke");
 		forward = anglestoforward(self getplayerangles());
@@ -382,8 +382,8 @@ function riotshield_get_juke_enemies_in_range()
 	}
 	forward = anglestoforward(self getplayerangles());
 	up = anglestoup(self getplayerangles());
-	segment_start = view_pos + 36 * forward;
-	segment_end = segment_start + 120 - 36 * forward;
+	segment_start = view_pos + (36 * forward);
+	segment_end = segment_start + ((120 - 36) * forward);
 	fling_force = level.zombie_vars["riotshield_fling_force_juke"];
 	fling_force_vlo = fling_force * 0.5;
 	fling_force_vhi = fling_force * 0.6;
@@ -412,7 +412,7 @@ function riotshield_get_juke_enemies_in_range()
 			continue;
 		}
 		lateral = (lateral[0], lateral[1], 0);
-		zombies[i].fling_vec = fling_force * forward + randomfloatrange(fling_force_vlo, fling_force_vhi) * up;
+		zombies[i].fling_vec = (fling_force * forward) + (randomfloatrange(fling_force_vlo, fling_force_vhi) * up);
 		enemies[enemies.size] = zombies[i];
 	}
 	return enemies;
@@ -514,7 +514,7 @@ function create_bottle_unitrigger(v_origin, v_angles)
 	Parameters: 1
 	Flags: Linked
 */
-function function_fc8bb1d(var_cde5eb87)
+function function_fc8bb1d(a_spawnpoints)
 {
 	/#
 		level notify(#"hash_afd0dfa9");
@@ -524,7 +524,7 @@ function function_fc8bb1d(var_cde5eb87)
 			n_debug = getdvarint("", 0);
 			if(n_debug > 0)
 			{
-				foreach(var_d7450ace, spawnpoint in var_cde5eb87)
+				foreach(var_d7450ace, spawnpoint in a_spawnpoints)
 				{
 					v_color = (1, 1, 1);
 					if(isdefined(spawnpoint.spawned) && spawnpoint.spawned)

@@ -398,7 +398,7 @@ function zombie_spawn_init(animname_set = 0)
 	self.flame_damage_time = 0;
 	self.meleedamage = 60;
 	self.no_powerups = 1;
-	self zombie_history("zombie_spawn_init -> Spawned = " + self.origin);
+	self zombie_history(("zombie_spawn_init -> Spawned = ") + self.origin);
 	self.thundergun_knockdown_func = level.basic_zombie_thundergun_knockdown;
 	self.tesla_head_gib_func = &zombie_tesla_head_gib;
 	self.team = level.zombie_team;
@@ -516,12 +516,12 @@ function zombie_findnodes()
 	{
 		desired_origin = zombie_utility::get_desired_origin();
 		/#
-			assert(isdefined(desired_origin), "" + self.origin + "");
+			assert(isdefined(desired_origin), ("" + self.origin) + "");
 		#/
 		origin = desired_origin;
 		node = arraygetclosest(origin, level.exterior_goals);
 		self.entrance_nodes[self.entrance_nodes.size] = node;
-		self zombie_history("zombie_think -> #1 entrance (script_forcegoal) origin = " + self.entrance_nodes[0].origin);
+		self zombie_history(("zombie_think -> #1 entrance (script_forcegoal) origin = ") + self.entrance_nodes[0].origin);
 	}
 	else if(self should_skip_teardown(self.find_flesh_struct_string))
 	{
@@ -561,7 +561,7 @@ function zombie_findnodes()
 			}
 		}
 		self.entrance_nodes[self.entrance_nodes.size] = node;
-		self zombie_history("zombie_think -> #1 entrance origin = " + node.origin);
+		self zombie_history(("zombie_think -> #1 entrance origin = ") + node.origin);
 		self thread zombie_assure_node();
 	}
 	/#
@@ -671,13 +671,13 @@ function zombie_goto_entrance(node, endon_bad_path)
 	{
 		self endon(#"bad_path");
 	}
-	self zombie_history("zombie_goto_entrance -> start goto entrance " + node.origin);
+	self zombie_history(("zombie_goto_entrance -> start goto entrance ") + node.origin);
 	self.got_to_entrance = 0;
 	self.goalradius = 128;
 	self setgoal(node.origin);
 	self waittill(#"goal");
 	self.got_to_entrance = 1;
-	self zombie_history("zombie_goto_entrance -> reached goto entrance " + node.origin);
+	self zombie_history(("zombie_goto_entrance -> reached goto entrance ") + node.origin);
 	self tear_into_building();
 	if(isdefined(level.pre_aggro_pathfinding_func))
 	{
@@ -717,9 +717,9 @@ function zombie_assure_node()
 		{
 			if(self zombie_bad_path())
 			{
-				self zombie_history("zombie_assure_node -> assigned assured node = " + self.entrance_nodes[i].origin);
+				self zombie_history(("zombie_assure_node -> assigned assured node = ") + self.entrance_nodes[i].origin);
 				/#
-					println("" + self.origin + "" + self.entrance_nodes[i].origin);
+					println((("" + self.origin) + "") + self.entrance_nodes[i].origin);
 				#/
 				level thread zm_utility::draw_line_ent_to_pos(self, self.entrance_nodes[i].origin, "goal");
 				self.first_node = self.entrance_nodes[i];
@@ -738,9 +738,9 @@ function zombie_assure_node()
 		{
 			if(self zombie_bad_path())
 			{
-				self zombie_history("zombie_assure_node -> assigned assured node = " + self.entrance_nodes[i].origin);
+				self zombie_history(("zombie_assure_node -> assigned assured node = ") + self.entrance_nodes[i].origin);
 				/#
-					println("" + self.origin + "" + self.entrance_nodes[i].origin);
+					println((("" + self.origin) + "") + self.entrance_nodes[i].origin);
 				#/
 				level thread zm_utility::draw_line_ent_to_pos(self, self.entrance_nodes[i].origin, "goal");
 				self.first_node = self.entrance_nodes[i];
@@ -1105,11 +1105,11 @@ function window_notetracks(msg)
 				{
 					playerdistsq = distance2dsquared(self.player_targets[i].origin, self.origin);
 					heightdiff = abs(self.player_targets[i].origin[2] - self.origin[2]);
-					if(playerdistsq < _melee_dist_sq && heightdiff * heightdiff < _melee_dist_sq)
+					if(playerdistsq < _melee_dist_sq && (heightdiff * heightdiff) < _melee_dist_sq)
 					{
 						triggerdistsq = distance2dsquared(self.player_targets[i].origin, self.first_node.trigger_location.origin);
 						heightdiff = abs(self.player_targets[i].origin[2] - self.first_node.trigger_location.origin[2]);
-						if(triggerdistsq < _trigger_dist_sq && heightdiff * heightdiff < _trigger_dist_sq)
+						if(triggerdistsq < _trigger_dist_sq && (heightdiff * heightdiff) < _trigger_dist_sq)
 						{
 							self.player_targets[i] dodamage(self.meleedamage, self.origin, self, self, "none", "MOD_MELEE");
 							break;
@@ -1669,13 +1669,13 @@ function zombie_death_points(origin, mod, hit_location, attacker, zombie, team)
 	{
 		if(isdefined(zombie.in_the_ground) && zombie.in_the_ground == 1)
 		{
-			trace = bullettrace(zombie.origin + vectorscale((0, 0, 1), 100), zombie.origin + vectorscale((0, 0, -1), 100), 0, undefined);
+			trace = bullettrace(zombie.origin + vectorscale((0, 0, 1), 100), zombie.origin + (vectorscale((0, 0, -1), 100)), 0, undefined);
 			origin = trace["position"];
 			level thread zombie_delay_powerup_drop(origin);
 		}
 		else
 		{
-			trace = groundtrace(zombie.origin + vectorscale((0, 0, 1), 5), zombie.origin + vectorscale((0, 0, -1), 300), 0, undefined);
+			trace = groundtrace(zombie.origin + vectorscale((0, 0, 1), 5), zombie.origin + (vectorscale((0, 0, -1), 300)), 0, undefined);
 			origin = trace["position"];
 			level thread zombie_delay_powerup_drop(origin);
 		}
@@ -1723,7 +1723,7 @@ function get_number_variants(aliasprefix)
 {
 	for(i = 0; i < 100; i++)
 	{
-		if(!soundexists(aliasprefix + "_" + i))
+		if(!soundexists((aliasprefix + "_") + i))
 		{
 			return i;
 		}
@@ -1850,13 +1850,13 @@ function zombie_death_animscript(einflictor, attacker, idamage, smeansofdeath, w
 		{
 			if(isdefined(self.in_the_ground) && self.in_the_ground == 1)
 			{
-				trace = bullettrace(self.origin + vectorscale((0, 0, 1), 100), self.origin + vectorscale((0, 0, -1), 100), 0, undefined);
+				trace = bullettrace(self.origin + vectorscale((0, 0, 1), 100), self.origin + (vectorscale((0, 0, -1), 100)), 0, undefined);
 				origin = trace["position"];
 				level thread zombie_delay_powerup_drop(origin);
 			}
 			else
 			{
-				trace = groundtrace(self.origin + vectorscale((0, 0, 1), 5), self.origin + vectorscale((0, 0, -1), 300), 0, undefined);
+				trace = groundtrace(self.origin + vectorscale((0, 0, 1), 5), self.origin + (vectorscale((0, 0, -1), 300)), 0, undefined);
 				origin = trace["position"];
 				level thread zombie_delay_powerup_drop(self.origin);
 			}
@@ -2473,7 +2473,7 @@ function zombie_death_event(zombie)
 		else if(is_weapon_shotgun(zombie.damageweapon) && zm_weapons::is_weapon_upgraded(zombie.damageweapon) || zm_utility::is_placeable_mine(zombie.damageweapon) || (zombie.damagemod === "MOD_GRENADE" || zombie.damagemod === "MOD_GRENADE_SPLASH" || zombie.damagemod === "MOD_EXPLOSIVE" || force_explode == 1))
 		{
 			splode_dist = 180;
-			if(isdefined(zombie.damagehit_origin) && distancesquared(zombie.origin, zombie.damagehit_origin) < splode_dist * splode_dist)
+			if(isdefined(zombie.damagehit_origin) && distancesquared(zombie.origin, zombie.damagehit_origin) < (splode_dist * splode_dist))
 			{
 				tag = "J_SpineLower";
 				if(isdefined(zombie.isdog) && zombie.isdog)
@@ -2639,7 +2639,7 @@ function zombie_pathing()
 	level.zombie_pathing_failed++;
 	if(isdefined(self.enemyoverride))
 	{
-		zm_utility::debug_print("Zombie couldn't path to point of interest at origin: " + self.enemyoverride[0] + " Falling back to breadcrumb system");
+		zm_utility::debug_print(("Zombie couldn't path to point of interest at origin: " + self.enemyoverride[0]) + " Falling back to breadcrumb system");
 		if(isdefined(self.enemyoverride[1]))
 		{
 			self.enemyoverride = self.enemyoverride[1] zm_utility::invalidate_attractor_pos(self.enemyoverride, self);
@@ -2649,7 +2649,7 @@ function zombie_pathing()
 	}
 	else if(isdefined(self.favoriteenemy))
 	{
-		zm_utility::debug_print("Zombie couldn't path to player at origin: " + self.favoriteenemy.origin + " Falling back to breadcrumb system");
+		zm_utility::debug_print(("Zombie couldn't path to player at origin: " + self.favoriteenemy.origin) + " Falling back to breadcrumb system");
 	}
 	else
 	{
@@ -2707,7 +2707,7 @@ function zombie_pathing()
 		self.zombie_path_timer = self.zombie_path_timer + 100;
 		self setgoal(goal);
 		self waittill(#"bad_path");
-		zm_utility::debug_print("Zombie couldn't path to breadcrumb at " + goal + " Finding next breadcrumb");
+		zm_utility::debug_print(("Zombie couldn't path to breadcrumb at " + goal) + " Finding next breadcrumb");
 		for(i = 0; i < crumb_list.size; i++)
 		{
 			if(goal == crumb_list[i])
@@ -2846,7 +2846,7 @@ function zombie_repath_notifier()
 	while(true)
 	{
 		level notify(notes[note]);
-		note = note + 1 % 4;
+		note = (note + 1) % 4;
 		wait(0.05);
 	}
 }
@@ -2873,7 +2873,7 @@ function zombie_follow_enemy()
 	}
 	if(!isdefined(self.zombie_repath_notify))
 	{
-		self.zombie_repath_notify = "zombie_repath_notify_" + self getentitynumber() % 4;
+		self.zombie_repath_notify = "zombie_repath_notify_" + (self getentitynumber() % 4);
 	}
 	while(true)
 	{
@@ -3085,7 +3085,7 @@ function do_zombie_spawn()
 			debugstar(spot.origin, getdvarint(""), (0, 1, 0));
 			host_player = util::gethostplayer();
 			distance = distance(spot.origin, host_player.origin);
-			iprintln("" + distance / 12 + "");
+			iprintln(("" + (distance / 12)) + "");
 		}
 	#/
 	self thread [[level.move_spawn_func]](spot);

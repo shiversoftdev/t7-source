@@ -376,7 +376,7 @@ function chamber_discs_move_all_to_position(discs = getentarray("chamber_puzzle_
 function chamber_disc_get_gem_position(gem_name)
 {
 	disc = getent("crypt_puzzle_disc_main", "targetname");
-	return disc.position + level.gem_start_pos[gem_name] % 4;
+	return (disc.position + level.gem_start_pos[gem_name]) % 4;
 }
 
 /*
@@ -419,11 +419,11 @@ function chamber_disc_rotate(b_clockwise)
 {
 	if(b_clockwise)
 	{
-		self.position = self.position + 1 % 4;
+		self.position = (self.position + 1) % 4;
 	}
 	else
 	{
-		self.position = self.position + 3 % 4;
+		self.position = (self.position + 3) % 4;
 	}
 	self chamber_disc_move_to_position();
 }
@@ -445,7 +445,7 @@ function bryce_cake_light_update(b_on = 1)
 	}
 	if(!b_on)
 	{
-		self.n_bryce_cake = self.n_bryce_cake + 1 % 2;
+		self.n_bryce_cake = (self.n_bryce_cake + 1) % 2;
 	}
 	else
 	{
@@ -476,7 +476,7 @@ function chamber_discs_randomize()
 		{
 			continue;
 		}
-		disc.position = prev_disc_pos + randomintrange(1, 3) % 4;
+		disc.position = (prev_disc_pos + randomintrange(1, 3)) % 4;
 		prev_disc_pos = disc.position;
 	}
 	chamber_discs_move_all_to_position(discs);

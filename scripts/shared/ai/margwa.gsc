@@ -1446,7 +1446,7 @@ private function margwaheadcanopen()
 {
 	if(self.headattached > 1)
 	{
-		if(self.headopen < self.headattached - 1)
+		if(self.headopen < (self.headattached - 1))
 		{
 			return 1;
 		}
@@ -1835,7 +1835,7 @@ function margwadamage(inflictor, attacker, damage, dflags, mod, weapon, point, d
 		/#
 			if(isdefined(self.debughitloc) && self.debughitloc)
 			{
-				printtoprightln(partname + "" + damage);
+				printtoprightln((partname + "") + damage);
 			}
 		#/
 		modelhit = self margwaheadhit(self, partname);

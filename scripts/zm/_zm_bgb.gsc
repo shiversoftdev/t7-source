@@ -295,14 +295,14 @@ private function setup_devgui()
 		keys = getarraykeys(level.bgb);
 		foreach(var_7cf60a90, key in keys)
 		{
-			adddebugcommand(bgb_devgui_base + key + "" + "" + "" + key + "");
+			adddebugcommand((((((bgb_devgui_base + key) + "") + "") + "") + key) + "");
 		}
-		adddebugcommand(bgb_devgui_base + "" + "" + "" + "" + "");
-		adddebugcommand(bgb_devgui_base + "" + "" + "" + "" + "");
+		adddebugcommand(((((bgb_devgui_base + "") + "") + "") + "") + "");
+		adddebugcommand(((((bgb_devgui_base + "") + "") + "") + "") + "");
 		for(i = 0; i < 4; i++)
 		{
 			playernum = i + 1;
-			adddebugcommand(bgb_devgui_base + "" + playernum + "" + "" + "" + i + "");
+			adddebugcommand(((((((bgb_devgui_base + "") + playernum) + "") + "") + "") + i) + "");
 		}
 		level thread bgb_devgui_think();
 	#/
@@ -431,7 +431,7 @@ private function bgb_set_debug_text(name, activations_remaining)
 		}
 		if(isdefined(activations_remaining))
 		{
-			self.bgb_debug_text settext("" + short_name + "" + activations_remaining + "");
+			self.bgb_debug_text settext(((("" + short_name) + "") + activations_remaining) + "");
 		}
 		else
 		{
@@ -458,10 +458,10 @@ private function bgb_set_debug_text(name, activations_remaining)
 function function_47db72b6(bgb)
 {
 	/#
-		printtoprightln(bgb + "" + self.var_e610f362[bgb].var_e0b06b47, (1, 1, 1));
-		printtoprightln(bgb + "" + self.var_e610f362[bgb].var_b75c376, (1, 1, 1));
-		var_e4140345 = self.var_e610f362[bgb].var_e0b06b47 - self.var_e610f362[bgb].var_b75c376;
-		printtoprightln(bgb + "" + var_e4140345, (1, 1, 1));
+		printtoprightln((bgb + "") + self.var_e610f362[bgb].var_e0b06b47, (1, 1, 1));
+		printtoprightln((bgb + "") + self.var_e610f362[bgb].var_b75c376, (1, 1, 1));
+		n_available = self.var_e610f362[bgb].var_e0b06b47 - self.var_e610f362[bgb].var_b75c376;
+		printtoprightln((bgb + "") + n_available, (1, 1, 1));
 	#/
 }
 
@@ -644,7 +644,7 @@ private function function_eb4b1160(bgb)
 	self notify(#"bgb_bubble_blow_complete");
 	self [[level.bgb[bgb].activation_func]]();
 	self set_active(0);
-	self function_1565b2f5();
+	self activation_complete();
 }
 
 /*
@@ -844,7 +844,7 @@ private function bgb_limit_monitor()
 		default:
 		{
 			/#
-				assert(0, "" + self.bgb + "" + level.bgb[self.bgb].limit_type + "");
+				assert(0, ((("" + self.bgb) + "") + level.bgb[self.bgb].limit_type) + "");
 			#/
 		}
 	}
@@ -1028,7 +1028,7 @@ private function function_103ebe74()
 }
 
 /*
-	Name: function_1565b2f5
+	Name: activation_complete
 	Namespace: bgb
 	Checksum: 0x3430D9A
 	Offset: 0x3160
@@ -1036,10 +1036,10 @@ private function function_103ebe74()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_1565b2f5()
+private function activation_complete()
 {
 	self.var_aa1915a5 = 0;
-	self notify(#"hash_1565b2f5");
+	self notify(#"activation_complete");
 }
 
 /*
@@ -1159,12 +1159,12 @@ function function_72936116(name)
 */
 private function calc_remaining_duration_lerp(start_time, end_time)
 {
-	if(0 >= end_time - start_time)
+	if(0 >= (end_time - start_time))
 	{
 		return 0;
 	}
 	now = gettime();
-	frac = float(end_time - now) / float(end_time - start_time);
+	frac = (float(end_time - now)) / (float(end_time - start_time));
 	return math::clamp(frac, 0, 1);
 }
 
@@ -1205,7 +1205,7 @@ private function function_63a399b7(percent)
 {
 	self notify(#"hash_f9fad8b3");
 	var_eeab9300 = self clientfield::get_player_uimodel("bgb_timer");
-	if(percent < var_eeab9300 && 0.1 <= var_eeab9300 - percent)
+	if(percent < var_eeab9300 && 0.1 <= (var_eeab9300 - percent))
 	{
 		self thread function_f9fad8b3(var_eeab9300, percent);
 	}
@@ -1297,56 +1297,56 @@ function register(name, limit_type, limit, enable_func, disable_func, validation
 		assert(isdefined(name), "");
 	#/
 	/#
-		assert("" != name, "" + "" + "");
+		assert("" != name, ("" + "") + "");
 	#/
 	/#
-		assert(!isdefined(level.bgb[name]), "" + name + "");
+		assert(!isdefined(level.bgb[name]), ("" + name) + "");
 	#/
 	/#
-		assert(isdefined(limit_type), "" + name + "");
+		assert(isdefined(limit_type), ("" + name) + "");
 	#/
 	/#
-		assert(isdefined(limit), "" + name + "");
+		assert(isdefined(limit), ("" + name) + "");
 	#/
 	/#
-		assert(!isdefined(enable_func) || isfunctionptr(enable_func), "" + name + "");
+		assert(!isdefined(enable_func) || isfunctionptr(enable_func), ("" + name) + "");
 	#/
 	/#
-		assert(!isdefined(disable_func) || isfunctionptr(disable_func), "" + name + "");
+		assert(!isdefined(disable_func) || isfunctionptr(disable_func), ("" + name) + "");
 	#/
 	switch(limit_type)
 	{
 		case "activated":
 		{
 			/#
-				assert(!isdefined(validation_func) || isfunctionptr(validation_func), "" + name + "" + limit_type + "");
+				assert(!isdefined(validation_func) || isfunctionptr(validation_func), ((("" + name) + "") + limit_type) + "");
 			#/
 			/#
-				assert(isdefined(activation_func), "" + name + "" + limit_type + "");
+				assert(isdefined(activation_func), ((("" + name) + "") + limit_type) + "");
 			#/
 			/#
-				assert(isfunctionptr(activation_func), "" + name + "" + limit_type + "");
+				assert(isfunctionptr(activation_func), ((("" + name) + "") + limit_type) + "");
 			#/
 		}
 		case "rounds":
 		case "time":
 		{
 			/#
-				assert(isint(limit), "" + name + "" + limit + "" + limit_type + "");
+				assert(isint(limit), ((((("" + name) + "") + limit) + "") + limit_type) + "");
 			#/
 			break;
 		}
 		case "event":
 		{
 			/#
-				assert(isfunctionptr(limit), "" + name + "" + limit_type + "");
+				assert(isfunctionptr(limit), ((("" + name) + "") + limit_type) + "");
 			#/
 			break;
 		}
 		default:
 		{
 			/#
-				assert(0, "" + name + "" + limit_type + "");
+				assert(0, ((("" + name) + "") + limit_type) + "");
 			#/
 		}
 	}
@@ -1377,7 +1377,7 @@ function register(name, limit_type, limit, enable_func, disable_func, validation
 function function_3422638b(name, var_d99aa464)
 {
 	/#
-		assert(isdefined(level.bgb[name]), "" + name + "");
+		assert(isdefined(level.bgb[name]), ("" + name) + "");
 	#/
 	level.bgb[name].var_d99aa464 = var_d99aa464;
 }
@@ -1394,7 +1394,7 @@ function function_3422638b(name, var_d99aa464)
 function function_e22c6124(name, var_bfbb61c1)
 {
 	/#
-		assert(isdefined(level.bgb[name]), "" + name + "");
+		assert(isdefined(level.bgb[name]), ("" + name) + "");
 	#/
 	level.bgb[name].var_bfbb61c1 = var_bfbb61c1;
 }
@@ -1411,7 +1411,7 @@ function function_e22c6124(name, var_bfbb61c1)
 function function_2b341a2e(name, var_5c0ccc6f)
 {
 	/#
-		assert(isdefined(level.bgb[name]), "" + name + "");
+		assert(isdefined(level.bgb[name]), ("" + name) + "");
 	#/
 	level.bgb[name].var_5c0ccc6f = var_5c0ccc6f;
 }
@@ -1428,7 +1428,7 @@ function function_2b341a2e(name, var_5c0ccc6f)
 function register_lost_perk_override(name, lost_perk_override_func, lost_perk_override_func_always_run)
 {
 	/#
-		assert(isdefined(level.bgb[name]), "" + name + "");
+		assert(isdefined(level.bgb[name]), ("" + name) + "");
 	#/
 	level.bgb[name].lost_perk_override_func = lost_perk_override_func;
 	level.bgb[name].lost_perk_override_func_always_run = lost_perk_override_func_always_run;
@@ -1446,7 +1446,7 @@ function register_lost_perk_override(name, lost_perk_override_func, lost_perk_ov
 function function_ff4b2998(name, var_e25efdfd, var_cdcc8fcd)
 {
 	/#
-		assert(isdefined(level.bgb[name]), "" + name + "");
+		assert(isdefined(level.bgb[name]), ("" + name) + "");
 	#/
 	level.bgb[name].var_e25efdfd = var_e25efdfd;
 	level.bgb[name].var_cdcc8fcd = var_cdcc8fcd;
@@ -1464,7 +1464,7 @@ function function_ff4b2998(name, var_e25efdfd, var_cdcc8fcd)
 function function_4cda71bf(name, var_7ca0e2a7)
 {
 	/#
-		assert(isdefined(level.bgb[name]), "" + name + "");
+		assert(isdefined(level.bgb[name]), ("" + name) + "");
 	#/
 	level.bgb[name].var_7ca0e2a7 = var_7ca0e2a7;
 }
@@ -1481,7 +1481,7 @@ function function_4cda71bf(name, var_7ca0e2a7)
 function function_93da425(name, var_35e23ba2)
 {
 	/#
-		assert(isdefined(level.bgb[name]), "" + name + "");
+		assert(isdefined(level.bgb[name]), ("" + name) + "");
 	#/
 	level.bgb[name].var_35e23ba2 = var_35e23ba2;
 }
@@ -1498,7 +1498,7 @@ function function_93da425(name, var_35e23ba2)
 function function_2060b89(name)
 {
 	/#
-		assert(isdefined(level.bgb[name]), "" + name + "");
+		assert(isdefined(level.bgb[name]), ("" + name) + "");
 	#/
 	level.bgb[name].var_50fe45f6 = 1;
 }
@@ -1515,7 +1515,7 @@ function function_2060b89(name)
 function function_f132da9c(name)
 {
 	/#
-		assert(isdefined(level.bgb[name]), "" + name + "");
+		assert(isdefined(level.bgb[name]), ("" + name) + "");
 	#/
 	level.bgb[name].var_7ea552f4 = 1;
 }
@@ -1555,7 +1555,7 @@ function give(name)
 		return;
 	}
 	/#
-		assert(isdefined(level.bgb[name]), "" + name + "");
+		assert(isdefined(level.bgb[name]), ("" + name) + "");
 	#/
 	self notify(#"bgb_update", name, self.bgb);
 	self notify("bgb_update_give_" + name);
@@ -1684,7 +1684,7 @@ function is_team_enabled(str_name)
 */
 function function_c219b050()
 {
-	var_587cd8a0 = self.origin + vectorscale(anglestoforward((0, self getplayerangles()[1], 0)), 60) + vectorscale((0, 0, 1), 5);
+	var_587cd8a0 = (self.origin + vectorscale(anglestoforward((0, self getplayerangles()[1], 0)), 60)) + vectorscale((0, 0, 1), 5);
 	self zm_stats::increment_challenge_stat("GUM_GOBBLER_POWERUPS");
 	return var_587cd8a0;
 }
@@ -2134,7 +2134,7 @@ function revive_and_return_perk_on_bgb_activation(perk)
 }
 
 /*
-	Name: function_7d63d2eb
+	Name: bgb_revive_watcher
 	Namespace: bgb
 	Checksum: 0x37E45910
 	Offset: 0x5848
@@ -2142,7 +2142,7 @@ function revive_and_return_perk_on_bgb_activation(perk)
 	Parameters: 0
 	Flags: Linked
 */
-function function_7d63d2eb()
+function bgb_revive_watcher()
 {
 	self endon(#"disconnect");
 	self endon(#"death");

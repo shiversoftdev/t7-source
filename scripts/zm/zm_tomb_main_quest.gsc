@@ -316,7 +316,7 @@ function watch_gramophone_vinyl_pickup()
 			break;
 		}
 	}
-	level waittill("gramophone_" + str_vinyl_record + "_picked_up");
+	level waittill(("gramophone_" + str_vinyl_record) + "_picked_up");
 	self.has_vinyl = 1;
 }
 
@@ -1195,7 +1195,7 @@ function dig_spot_get_staff_piece(e_player)
 		}
 		if(issubstr(str_zone, s_staff.zone_substr))
 		{
-			miss_chance = 100 / s_staff.num_misses + 1;
+			miss_chance = 100 / (s_staff.num_misses + 1);
 			if(level.weather_snow <= 0)
 			{
 				miss_chance = 101;
@@ -1417,11 +1417,11 @@ function debug_staff_charge()
 				{
 					self.prev_ammo_stock = maxammo;
 				}
-				print3d(self.origin, self.prev_ammo_stock + "" + maxammo, vectorscale((1, 1, 1), 255), 1);
+				print3d(self.origin, (self.prev_ammo_stock + "") + maxammo, vectorscale((1, 1, 1), 255), 1);
 			}
 			else
 			{
-				print3d(self.origin, self.charger.charges_received + "" + 20, vectorscale((1, 1, 1), 255), 1);
+				print3d(self.origin, (self.charger.charges_received + "") + 20, vectorscale((1, 1, 1), 255), 1);
 			}
 			wait(0.05);
 		}
@@ -1589,7 +1589,7 @@ function staff_charger_check()
 			level clientfield::set(self.quest_clientfield, 4);
 			foreach(var_50743d2c, player in level.players)
 			{
-				player thread zm_craftables::player_show_craftable_parts_ui(undefined, "zmInventory." + self.element + "_staff.visible", 0);
+				player thread zm_craftables::player_show_craftable_parts_ui(undefined, ("zmInventory." + self.element) + "_staff.visible", 0);
 			}
 			level thread spawn_upgraded_staff_triggers(self.enum);
 			level.staffs_charged++;

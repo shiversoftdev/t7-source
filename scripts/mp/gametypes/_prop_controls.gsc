@@ -54,7 +54,7 @@ function notifyonplayercommand(command, key)
 */
 function notifyonplayercommandremove(command, key)
 {
-	self notify(command + "_" + key);
+	self notify((command + "_") + key);
 }
 
 /*
@@ -70,8 +70,8 @@ function function_e17a8f06(command, key)
 {
 	self endon(#"disconnect");
 	level endon(#"game_ended");
-	self notify(command + "_" + key);
-	self endon(command + "_" + key);
+	self notify((command + "_") + key);
+	self endon((command + "_") + key);
 	switch(key)
 	{
 		case "+attack":
@@ -624,7 +624,7 @@ function propchange()
 	if(!level.console)
 	{
 		var_6f5743e8 = 300;
-		if(isdefined(self.lastpropchangetime) && gettime() - self.lastpropchangetime < var_6f5743e8)
+		if(isdefined(self.lastpropchangetime) && (gettime() - self.lastpropchangetime) < var_6f5743e8)
 		{
 			return;
 		}
@@ -1039,7 +1039,7 @@ function set_pitch_roll_for_ground_normal(var_a84e1ffa)
 	}
 	dot = vectordot(var_7001e881, var_a8f94d84);
 	var_4ef8701 = dot * pitch;
-	var_676ea8f0 = 1 - abs(dot) * pitch * mod;
+	var_676ea8f0 = ((1 - abs(dot)) * pitch) * mod;
 	self.angles = (var_4ef8701, self.angles[1], var_676ea8f0);
 }
 
@@ -1140,7 +1140,7 @@ function get_ground_normal(var_a84e1ffa, debug)
 	var_6146aef8 = 0;
 	foreach(var_72a57b1d, point in var_4f9e9c19)
 	{
-		trace = bullettrace(point + vectorscale((0, 0, 1), 4), point + vectorscale((0, 0, -1), 16), 0, ignore);
+		trace = bullettrace(point + vectorscale((0, 0, 1), 4), point + (vectorscale((0, 0, -1), 16)), 0, ignore);
 		tracehit = trace["fraction"] > 0 && trace["fraction"] < 1;
 		if(tracehit)
 		{
@@ -1152,7 +1152,7 @@ function get_ground_normal(var_a84e1ffa, debug)
 			{
 				if(tracehit)
 				{
-					line(point, point + trace[""] * 30, (0, 1, 0));
+					line(point, point + (trace[""] * 30), (0, 1, 0));
 					continue;
 				}
 				sphere(point, 3, (1, 0, 0));
@@ -1166,7 +1166,7 @@ function get_ground_normal(var_a84e1ffa, debug)
 		/#
 			if(debug)
 			{
-				line(self.origin, self.origin + var_d54ec402 * 20, (1, 1, 1));
+				line(self.origin, self.origin + (var_d54ec402 * 20), (1, 1, 1));
 			}
 		#/
 		return var_d54ec402;
@@ -1329,7 +1329,7 @@ function function_fd824ee5()
 		assert(isplayer(self));
 	#/
 	start = self.origin;
-	end = start + vectorscale((0, 0, -1), 2000);
+	end = start + (vectorscale((0, 0, -1), 2000));
 	return playerphysicstrace(start, end);
 }
 
@@ -1348,7 +1348,7 @@ function function_b9733d59()
 		assert(isplayer(self));
 	#/
 	start = self.origin;
-	end = start + vectorscale((0, 0, -1), 2000);
+	end = start + (vectorscale((0, 0, -1), 2000));
 	trace = bullettrace(start, end, 0, self.prop);
 	return trace;
 }
@@ -1517,7 +1517,7 @@ function propcamerazoom()
 		}
 		if(zoom == "zoomin")
 		{
-			if(self.thirdpersonrange - var_8ea3acea < 50)
+			if((self.thirdpersonrange - var_8ea3acea) < 50)
 			{
 				continue;
 			}
@@ -1527,7 +1527,7 @@ function propcamerazoom()
 		else if(zoom == "zoomout")
 		{
 			var_b751fa63 = math::clamp(self.prop.info.proprange + 50, 50, 360);
-			if(self.thirdpersonrange + var_8ea3acea > var_b751fa63)
+			if((self.thirdpersonrange + var_8ea3acea) > var_b751fa63)
 			{
 				continue;
 			}
@@ -1672,7 +1672,7 @@ function flashenemies(var_e967d644 = self, position = self.origin)
 		{
 			continue;
 		}
-		vec = position + vectorscale((0, 0, 1), 4) - otherplayer geteye();
+		vec = (position + vectorscale((0, 0, 1), 4)) - otherplayer geteye();
 		dist = length(vec);
 		var_6df9e8b8 = 500;
 		var_88ef1466 = 150;
@@ -1684,7 +1684,7 @@ function flashenemies(var_e967d644 = self, position = self.origin)
 			}
 			else
 			{
-				var_bdf6b2ee = 1 - dist - var_88ef1466 / var_6df9e8b8 - var_88ef1466;
+				var_bdf6b2ee = 1 - (dist - var_88ef1466) / (var_6df9e8b8 - var_88ef1466);
 			}
 			dir = vectornormalize(vec);
 			fwd = anglestoforward(otherplayer getplayerangles());
@@ -1711,7 +1711,7 @@ function deletepropsifatmax()
 	{
 		var_b793211e = 27;
 	}
-	if(self.propclones.size + 1 <= var_b793211e)
+	if((self.propclones.size + 1) <= var_b793211e)
 	{
 		return;
 	}
@@ -1723,7 +1723,7 @@ function deletepropsifatmax()
 			var_b76d0af5++;
 		}
 	}
-	if(var_b76d0af5 + 1 <= var_b793211e)
+	if((var_b76d0af5 + 1) <= var_b793211e)
 	{
 		return;
 	}
@@ -1971,7 +1971,7 @@ function function_7244ebc6(var_ad5f9a75, fade_in_time, fade_out_time)
 		fade_out_time = 1;
 	}
 	/#
-		assert(fade_out_time + fade_in_time < var_ad5f9a75);
+		assert((fade_out_time + fade_in_time) < var_ad5f9a75);
 	#/
 	overlay = newclienthudelem(self);
 	overlay.foreground = 0;
@@ -1993,7 +1993,7 @@ function function_7244ebc6(var_ad5f9a75, fade_in_time, fade_out_time)
 	self prop::function_da184fd(fade_in_time);
 	self useservervisionset(1);
 	self setvisionsetforplayer("blackout_ph", fade_in_time);
-	self prop::function_da184fd(var_ad5f9a75 - fade_out_time - fade_in_time);
+	self prop::function_da184fd((var_ad5f9a75 - fade_out_time) - fade_in_time);
 	if(fade_out_time > 0)
 	{
 		overlay fadeovertime(fade_out_time);

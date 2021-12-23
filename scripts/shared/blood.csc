@@ -139,7 +139,7 @@ function blood_in(localclientnum, playerhealth)
 {
 	if(playerhealth < level.bloodstage3)
 	{
-		self.stage3amount = level.bloodstage3 - playerhealth / level.bloodstage3;
+		self.stage3amount = (level.bloodstage3 - playerhealth) / level.bloodstage3;
 	}
 	else
 	{
@@ -147,7 +147,7 @@ function blood_in(localclientnum, playerhealth)
 	}
 	if(playerhealth < level.bloodstage2)
 	{
-		self.stage2amount = level.bloodstage2 - playerhealth / level.bloodstage2;
+		self.stage2amount = (level.bloodstage2 - playerhealth) / level.bloodstage2;
 	}
 	else
 	{
@@ -166,7 +166,7 @@ function blood_in(localclientnum, playerhealth)
 		{
 			stagehealth = 0;
 		}
-		self.stage1amount = 1 - stagehealth / level.bloodstage1 - minstage1health;
+		self.stage1amount = 1 - (stagehealth / (level.bloodstage1 - minstage1health));
 	}
 	else
 	{
@@ -315,12 +315,12 @@ function player_watch_blood(localclientnum)
 function setcontrollerlightbarcolorpulsing(localclientnum, color, pulserate)
 {
 	curcolor = color * 0.2;
-	scale = gettime() % pulserate / pulserate * 0.5;
+	scale = (gettime() % pulserate) / (pulserate * 0.5);
 	if(scale > 1)
 	{
-		scale = scale - 2 * -1;
+		scale = (scale - 2) * -1;
 	}
-	curcolor = curcolor + color * 0.8 * scale;
+	curcolor = curcolor + ((color * 0.8) * scale);
 	setcontrollerlightbarcolor(localclientnum, curcolor);
 }
 

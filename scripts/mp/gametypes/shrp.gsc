@@ -33,7 +33,7 @@ function main()
 	level.pointspermeleekill = getgametypesetting("pointsPerMeleeKill");
 	level.shrpweapontimer = getgametypesetting("weaponTimer");
 	level.shrpweaponnumber = getgametypesetting("weaponCount");
-	util::registertimelimit(level.shrpweaponnumber * level.shrpweapontimer / 60, level.shrpweaponnumber * level.shrpweapontimer / 60);
+	util::registertimelimit((level.shrpweaponnumber * level.shrpweapontimer) / 60, (level.shrpweaponnumber * level.shrpweapontimer) / 60);
 	util::registerscorelimit(0, 50000);
 	util::registerroundlimit(0, 10);
 	util::registerroundwinlimit(0, 10);
@@ -331,9 +331,9 @@ function addrandomattachmenttoweaponname(baseweaponname, attachmentlist)
 		{
 			if(attachment < attachment2)
 			{
-				return baseweaponname + attachment + "+" + attachment2;
+				return (baseweaponname + attachment) + ("+") + attachment2;
 			}
-			return baseweaponname + attachment2 + "+" + attachment;
+			return (baseweaponname + attachment2) + ("+") + attachment;
 		}
 	}
 	return baseweaponname + attachment;
@@ -350,11 +350,11 @@ function addrandomattachmenttoweaponname(baseweaponname, attachmentlist)
 */
 function waitlongdurationwithhostmigrationpause(nextguncycletime, duration)
 {
-	endtime = gettime() + duration * 1000;
+	endtime = gettime() + (duration * 1000);
 	totaltimepassed = 0;
 	while(gettime() < endtime)
 	{
-		hostmigration::waittillhostmigrationstarts(endtime - gettime() / 1000);
+		hostmigration::waittillhostmigrationstarts((endtime - gettime()) / 1000);
 		if(isdefined(level.hostmigrationtimer))
 		{
 			setdvar("ui_guncycle", 0);
@@ -388,7 +388,7 @@ function guncyclewaiter(nextguncycletime, waittime)
 	setdvar("ui_guncycle", nextguncycletime);
 	level.guncycletimer settimer(waittime);
 	level.guncycletimer.alpha = 1;
-	timepassed = waitlongdurationwithhostmigrationpause(nextguncycletime, nextguncycletime - gettime() / 1000 - 6);
+	timepassed = waitlongdurationwithhostmigrationpause(nextguncycletime, ((nextguncycletime - gettime()) / 1000) - 6);
 	nextguncycletime = nextguncycletime + timepassed;
 	for(i = 6; i > 1; i--)
 	{
@@ -396,16 +396,16 @@ function guncyclewaiter(nextguncycletime, waittime)
 		{
 			level.players[j] playlocalsound("uin_timer_wager_beep");
 		}
-		timepassed = waitlongdurationwithhostmigrationpause(nextguncycletime, nextguncycletime - gettime() / 1000 / i);
+		timepassed = waitlongdurationwithhostmigrationpause(nextguncycletime, ((nextguncycletime - gettime()) / 1000) / i);
 		nextguncycletime = nextguncycletime + timepassed;
 	}
 	for(i = 0; i < level.players.size; i++)
 	{
 		level.players[i] playlocalsound("uin_timer_wager_last_beep");
 	}
-	if(nextguncycletime - gettime() > 0)
+	if((nextguncycletime - gettime()) > 0)
 	{
-		wait(nextguncycletime - gettime() / 1000);
+		wait((nextguncycletime - gettime()) / 1000);
 	}
 	level.shrprandomweapon = getweapon(getrandomweaponnamefromprogression());
 	for(i = 0; i < level.players.size; i++)
@@ -437,12 +437,12 @@ function chooserandomguns()
 		level waittill(#"prematch_over");
 	}
 	guncycle = 1;
-	numguncycles = int(level.timelimit * 60 / waittime + 0.5);
+	numguncycles = int(((level.timelimit * 60) / waittime) + 0.5);
 	while(true)
 	{
-		nextguncycletime = gettime() + waittime * 1000;
+		nextguncycletime = gettime() + (waittime * 1000);
 		ispenultimateround = 0;
-		issharpshooterround = guncycle == numguncycles - 1;
+		issharpshooterround = guncycle == (numguncycles - 1);
 		for(i = 0; i < level.players.size; i++)
 		{
 			level.players[i].currentguncyclepoints = 0;
@@ -452,7 +452,7 @@ function chooserandomguns()
 		for(i = 0; i < level.players.size; i++)
 		{
 			player = level.players[i];
-			if(guncycle + 1 == numguncycles)
+			if((guncycle + 1) == numguncycles)
 			{
 				player wager::announcer("wm_final_weapon");
 			}

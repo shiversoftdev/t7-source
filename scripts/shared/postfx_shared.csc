@@ -136,7 +136,7 @@ function playpostfxbundle(playbundlename)
 	if(!isdefined(bundle))
 	{
 		/#
-			println("" + playbundlename + "");
+			println(("" + playbundlename) + "");
 		#/
 		return;
 	}
@@ -202,7 +202,7 @@ function playpostfxbundle(playbundlename)
 		{
 			stageprefix = stageprefix + "0";
 		}
-		stageprefix = stageprefix + stageidx + "_";
+		stageprefix = stageprefix + (stageidx + "_");
 		stagelength = getstructfield(bundle, stageprefix + "length");
 		if(!isdefined(stagelength))
 		{

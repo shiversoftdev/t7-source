@@ -169,7 +169,7 @@ function explodable_barrel_burn()
 		}
 		if(count == 0)
 		{
-			self.damagetaken = self.damagetaken + 10 + randomfloat(10);
+			self.damagetaken = self.damagetaken + (10 + randomfloat(10));
 			badplace_cylinder("", 1, self.origin, 128, 250, "axis");
 			self playsound("exp_barrel_fuse");
 		}
@@ -199,7 +199,7 @@ function explodable_barrel_explode()
 	if(dot < 0.5)
 	{
 		start = self.origin + vectorscale(up, 22);
-		end = physicstrace(start, start + vectorscale((0, 0, -1), 64));
+		end = physicstrace(start, start + (vectorscale((0, 0, -1), 64)));
 		offset = end - self.origin;
 	}
 	offset = offset + vectorscale((0, 0, 1), 4);
@@ -243,7 +243,7 @@ function explodable_barrel_explode()
 	if(dot < 0.5)
 	{
 		start = self.origin + vectorscale(up, 22);
-		pos = physicstrace(start, start + vectorscale((0, 0, -1), 64));
+		pos = physicstrace(start, start + (vectorscale((0, 0, -1), 64)));
 		self.origin = pos;
 		self.angles = self.angles + vectorscale((0, 0, 1), 90);
 	}

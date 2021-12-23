@@ -60,7 +60,7 @@ function _setup_pap_blocker()
 	level.pap_stairs = [];
 	for(i = 0; i < 4; i++)
 	{
-		stair = getent("pap_stairs" + i + 1, "targetname");
+		stair = getent("pap_stairs" + (i + 1), "targetname");
 		if(!isdefined(stair.script_vector))
 		{
 			stair.script_vector = vectorscale((0, 0, 1), 72);
@@ -195,7 +195,7 @@ function power(base, exp)
 	{
 		return 1;
 	}
-	return base * power(base, exp - 1);
+	return base * (power(base, exp - 1));
 }
 
 /*
@@ -218,7 +218,7 @@ function _setup_simultaneous_pap_triggers()
 	triggers = [];
 	for(i = 0; i < 4; i++)
 	{
-		triggers[i] = getent("pap_blocker_trigger" + i + 1, "targetname");
+		triggers[i] = getent("pap_blocker_trigger" + (i + 1), "targetname");
 	}
 	_randomize_pressure_plates(triggers);
 	array::thread_all(triggers, &_pap_pressure_plate_move);
@@ -243,9 +243,9 @@ function _setup_simultaneous_pap_triggers()
 			{
 				num_plates_active++;
 			}
-			if(triggers[i].plate.active || triggers[i].requiredplayers - 1 >= num_plates_needed)
+			if(triggers[i].plate.active || (triggers[i].requiredplayers - 1) >= num_plates_needed)
 			{
-				plate_state = plate_state + power(2, triggers[i].requiredplayers - 1);
+				plate_state = plate_state + (power(2, triggers[i].requiredplayers - 1));
 			}
 		}
 		if(last_num_plates_active != num_plates_active || plate_state != last_plate_state)
@@ -525,7 +525,7 @@ function _move_pap_mover_wait(state, onmovefunc, onstopfunc)
 	self endon(#"move");
 	goalorigin = self _mover_get_origin(state);
 	movetime = self.movetime;
-	timescale = abs(self.origin[2] - goalorigin[2]) / self.movedist[2];
+	timescale = (abs(self.origin[2] - goalorigin[2])) / self.movedist[2];
 	movetime = movetime * timescale;
 	self.state = "moving_" + state;
 	if(movetime > 0)
@@ -556,7 +556,7 @@ function _move_pap_mover_wait(state, onmovefunc, onstopfunc)
 */
 function _move_pap_mover(state, onmovefunc, onstopfunc)
 {
-	if(self.state == state || self.state == "moving_" + state)
+	if(self.state == state || self.state == ("moving_" + state))
 	{
 		return;
 	}
@@ -1200,7 +1200,7 @@ function _player_flush(index)
 	level.ents_being_flushed++;
 	self.flushed = 1;
 	useaccel = 1;
-	flushspeed = level.flushspeed - 30 * index;
+	flushspeed = level.flushspeed - (30 * index);
 	wait(index * 0.1);
 	nexttarget = self _ent_getnextflushtarget();
 	while(isdefined(nexttarget))
@@ -1208,7 +1208,7 @@ function _player_flush(index)
 		movetarget = (self.origin[0], nexttarget.origin[1], nexttarget.origin[2]);
 		if(!isdefined(nexttarget.next))
 		{
-			movetarget = (movetarget[0], self.origin[1] + movetarget[1] - self.origin[1] * level.flushscale, movetarget[2]);
+			movetarget = (movetarget[0], self.origin[1] + ((movetarget[1] - self.origin[1]) * level.flushscale), movetarget[2]);
 			level.flushscale = level.flushscale - 0.25;
 			if(level.flushscale <= 0)
 			{
@@ -1441,7 +1441,7 @@ function _travel_path(speed, reversespin)
 		{
 			acceltime = 0.2;
 		}
-		else if(i == self.path.size - 1)
+		else if(i == (self.path.size - 1))
 		{
 			deceltime = 0.2;
 		}
@@ -1473,7 +1473,7 @@ function _travel_path_reverse(speed, reversespin)
 		time = length / speed;
 		acceltime = 0;
 		deceltime = 0;
-		if(i == self.path.size - 2)
+		if(i == (self.path.size - 2))
 		{
 			acceltime = 0.2;
 		}

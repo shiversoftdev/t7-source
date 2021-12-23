@@ -1100,7 +1100,7 @@ function zombie_wait_explode(localclientnum)
 		where = self.origin;
 	}
 	start = gettime();
-	while(gettime() - start < 2000)
+	while((gettime() - start) < 2000)
 	{
 		if(isdefined(self))
 		{
@@ -1231,7 +1231,7 @@ function do_gib(model, tag)
 	angles = undefined;
 	if(!isdefined(self))
 	{
-		end_pos = start_pos + anglestoforward(start_angles) * 10;
+		end_pos = start_pos + (anglestoforward(start_angles) * 10);
 		angles = start_angles;
 	}
 	else
@@ -1821,54 +1821,65 @@ function rise_dust_fx(clientnum, type, billow_fx, burst_fx)
 	Namespace: zm
 	Checksum: 0x34AA64E8
 	Offset: 0x5D80
-	Size: 0x0
+	Size: 0x84
 	Parameters: 1
 	Flags: Linked
 */
 function end_last_stand(clientnum)
 {
+	self waittill(#"laststandend");
+	/#
+		println("" + clientnum);
+	#/
+	waitrealtime(0.7);
+	/#
+		println("");
+	#/
+	playsound(clientnum, "revive_gasp");
 }
 
-/*Unknown Op Code (0x03B7) at 5DC0*/
 /*
 	Name: last_stand_thread
 	Namespace: zm
 	Checksum: 0xD875607
 	Offset: 0x5E10
-	Size: 0x0
+	Size: 0x178
 	Parameters: 1
 	Flags: Linked
 */
-function last_stand_thread()
+function last_stand_thread(clientnum)
 {
-System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
-Parameter name: index
-   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   at System.Collections.Generic.List`1.get_Item(Int32 index)
-   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 649
-   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 211
-/*
-No Output
-*/
-
-	/* ======== */
-
-/* 
-	Stack: 
-*/
-	/* ======== */
-
-/* 
-	Blocks: 
-	Cerberus.Logic.BasicBlock at 0x5E10, end at 0x5E11
-	Cerberus.Logic.DevBlock at 0x5E74, end at 0x5E9A
-	Cerberus.Logic.IfBlock at 0x5EB2, end at 0x5F86
-*/
-	/* ======== */
-
+	self thread end_last_stand(clientnum);
+	self endon(#"laststandend");
+	/#
+		println("" + clientnum);
+	#/
+	pause = 0.5;
+	vol = 0.5;
+	while(true)
+	{
+		id = playsound(clientnum, "chr_heart_beat");
+		setsoundvolume(id, vol);
+		waitrealtime(pause);
+		if(pause < 2)
+		{
+			pause = pause * 1.05;
+			if(pause > 2)
+			{
+				pause = 2;
+			}
+		}
+		if(vol < 1)
+		{
+			vol = vol * 1.05;
+			if(vol > 1)
+			{
+				vol = 1;
+			}
+		}
+	}
 }
 
-/*Unknown Op Code (0x0A1F) at 5EFE*/
 /*
 	Name: last_stand_monitor
 	Namespace: zm

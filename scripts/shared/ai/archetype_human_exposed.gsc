@@ -132,7 +132,7 @@ private function vengeanceservice(entity)
 	}
 	foreach(index, ai in actors)
 	{
-		if(_isvalidneighbor(entity, ai) && distancesquared(entity.origin, ai.origin) <= 360 * 360 && randomfloat(1) >= 0.5)
+		if(_isvalidneighbor(entity, ai) && distancesquared(entity.origin, ai.origin) <= (360 * 360) && randomfloat(1) >= 0.5)
 		{
 			ai getperfectinfo(entity.attacker, 1);
 		}
@@ -212,7 +212,7 @@ private function tryreacquireservice(behaviortreeentity)
 		case 1:
 		case 2:
 		{
-			step_size = 32 + behaviortreeentity.reacquire_state * 32;
+			step_size = 32 + (behaviortreeentity.reacquire_state * 32);
 			reacquirepos = behaviortreeentity reacquirestep(step_size);
 			break;
 		}

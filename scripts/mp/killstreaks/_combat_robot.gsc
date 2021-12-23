@@ -72,7 +72,7 @@ private function _calculateprojectedguardposition(player)
 */
 private function _calculaterobotspawnposition(player)
 {
-	desiredspawnposition = anglestoforward(player.angles) * 72 + player.origin;
+	desiredspawnposition = (anglestoforward(player.angles) * 72) + player.origin;
 	return getclosestpointonnavmesh(desiredspawnposition, 48);
 }
 
@@ -93,7 +93,7 @@ private function _cleanuprobotcorpses()
 		deletecorpses = [];
 		foreach(var_f3de8f22, corpse in getcorpsearray())
 		{
-			if(isdefined(corpse.birthtime) && isdefined(corpse.archetype) && corpse.archetype == "robot" && corpse.birthtime + corpsedeletetime < gettime())
+			if(isdefined(corpse.birthtime) && isdefined(corpse.archetype) && corpse.archetype == "robot" && (corpse.birthtime + corpsedeletetime) < gettime())
 			{
 				deletecorpses[deletecorpses.size] = corpse;
 			}
@@ -102,7 +102,7 @@ private function _cleanuprobotcorpses()
 		{
 			deletecorpses[index] delete();
 		}
-		wait(corpsedeletetime / 1000 / 2);
+		wait((corpsedeletetime / 1000) / 2);
 	}
 }
 
@@ -131,7 +131,7 @@ function configureteampost(player, ishacked)
 	robot.fovcosinebusy = 0;
 	robot.maxsightdistsqrd = 2000 * 2000;
 	blackboard::setblackboardattribute(robot, "_robot_mode", "combat");
-	robot.gib_state = 0 | 8 & 512 - 1;
+	robot.gib_state = 0 | (8 & (512 - 1));
 	robot clientfield::set("gib_state", robot.gib_state);
 	_configurerobotteam(robot, player, ishacked);
 	robot ai::set_behavior_attribute("can_become_crawler", 0);
@@ -218,7 +218,7 @@ private function _underwater(robot)
 	robot endon(#"death");
 	while(true)
 	{
-		if(robot.origin[2] + 36 <= getwaterheight(robot.origin))
+		if((robot.origin[2] + 36) <= getwaterheight(robot.origin))
 		{
 			robot asmsetanimationrate(0.85);
 		}
@@ -250,7 +250,7 @@ private function _escort(robot)
 		attackingenemy = 0;
 		if(isdefined(robot.enemy) && isalive(robot.enemy))
 		{
-			if(robot lastknowntime(robot.enemy) + 10000 >= gettime())
+			if((robot lastknowntime(robot.enemy) + 10000) >= gettime())
 			{
 				robot ai::set_behavior_attribute("move_mode", "rusher");
 				attackingenemy = 1;
@@ -311,7 +311,7 @@ private function _guardposition(robot, position)
 		attackingenemy = 0;
 		if(isdefined(robot.enemy) && isalive(robot.enemy))
 		{
-			if(robot lastknowntime(robot.enemy) + 10000 >= gettime())
+			if((robot lastknowntime(robot.enemy) + 10000) >= gettime())
 			{
 				robot ai::set_behavior_attribute("move_mode", "rusher");
 				attackingenemy = 1;
@@ -548,7 +548,7 @@ function prolog(context)
 	combatrobot.treat_owner_damage_as_friendly_fire = 1;
 	combatrobot.ignore_team_kills = 1;
 	combatrobot.remotemissiledamage = combatrobot.maxhealth + 1;
-	combatrobot.rocketdamage = combatrobot.maxhealth / 2 + 1;
+	combatrobot.rocketdamage = (combatrobot.maxhealth / 2) + 1;
 	combatrobot thread heatseekingmissile::missiletarget_proximitydetonateincomingmissile("death");
 	combatrobot clientfield::set("enemyvehicle", 1);
 	combatrobot.soundmod = "drone_land";
@@ -872,7 +872,7 @@ private function _exploderobot(combatrobot)
 	gibserverutils::gibhead(combatrobot);
 	velocity = combatrobot getvelocity() * 0.125;
 	combatrobot startragdoll();
-	combatrobot launchragdoll((velocity[0] + randomfloatrange(-20, 20), velocity[1] + randomfloatrange(-20, 20), randomfloatrange(60, 80)), "j_mainroot");
+	combatrobot launchragdoll((velocity[0] + (randomfloatrange(-20, 20)), velocity[1] + (randomfloatrange(-20, 20)), randomfloatrange(60, 80)), "j_mainroot");
 }
 
 /*

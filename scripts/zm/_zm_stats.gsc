@@ -280,7 +280,7 @@ function update_playing_utc_time(matchendutctime)
 	{
 		for(i = 5; i > diff_days; i--)
 		{
-			timestamp_name = "TIMESTAMPLASTDAY" + i - diff_days;
+			timestamp_name = "TIMESTAMPLASTDAY" + (i - diff_days);
 			timestamp_name_to = "TIMESTAMPLASTDAY" + i;
 			timestamp_value = self get_global_stat(timestamp_name);
 			self set_global_stat(timestamp_name_to, timestamp_value);
@@ -655,7 +655,7 @@ function increment_challenge_stat(stat_name, amount = 1)
 function get_stat_distance_traveled()
 {
 	miles = int(self.pers["distance_traveled"] / 63360);
-	remainder = self.pers["distance_traveled"] / 63360 - miles;
+	remainder = (self.pers["distance_traveled"] / 63360) - miles;
 	if(miles < 1 && remainder < 0.5)
 	{
 		miles = 1;
@@ -698,7 +698,7 @@ function get_stat_combined_rank_value_survival_classic()
 	{
 		rounds = 99;
 	}
-	result = rounds * 10000000 + kills;
+	result = (rounds * 10000000) + kills;
 	return result;
 }
 

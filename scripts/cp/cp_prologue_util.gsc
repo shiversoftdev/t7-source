@@ -762,7 +762,7 @@ function function_2ffbaa00(time, str_notify)
 */
 function groundpos_ignore_water(origin)
 {
-	return groundtrace(origin, origin + vectorscale((0, 0, -1), 100000), 0, undefined, 1)["position"];
+	return groundtrace(origin, origin + (vectorscale((0, 0, -1), 100000)), 0, undefined, 1)["position"];
 }
 
 /*
@@ -1016,15 +1016,15 @@ function num_players_touching_volume(e_volume)
 function function_68b8f4af(e_volume)
 {
 	a_ai = getaiteamarray("axis");
-	var_4c8fa27e = [];
+	a_touching = [];
 	for(i = 0; i < a_ai.size; i++)
 	{
 		if(a_ai[i] istouching(e_volume))
 		{
-			var_4c8fa27e[var_4c8fa27e.size] = a_ai[i];
+			a_touching[a_touching.size] = a_ai[i];
 		}
 	}
-	return var_4c8fa27e;
+	return a_touching;
 }
 
 /*
@@ -1091,11 +1091,11 @@ function function_e0fb6da9(str_struct, close_dist, wait_time, var_d1b83750, max_
 		if(isdefined(s_struct.start_time))
 		{
 			time = gettime();
-			dt = time - s_struct.start_time / 1000;
+			dt = (time - s_struct.start_time) / 1000;
 			if(dt > wait_time)
 			{
 				a_ai = getaiteamarray("axis");
-				var_4c8fa27e = [];
+				a_touching = [];
 				for(i = 0; i < a_ai.size; i++)
 				{
 					e_ent = a_ai[i];
@@ -1103,19 +1103,19 @@ function function_e0fb6da9(str_struct, close_dist, wait_time, var_d1b83750, max_
 					{
 						if(e_ent istouching(var_37124366))
 						{
-							var_4c8fa27e[var_4c8fa27e.size] = e_ent;
+							a_touching[a_touching.size] = e_ent;
 						}
 					}
 				}
 				var_d6f9eed8 = randomintrange(var_d1b83750, max_ai + 1);
-				if(var_d6f9eed8 > var_4c8fa27e.size)
+				if(var_d6f9eed8 > a_touching.size)
 				{
-					var_d6f9eed8 = var_4c8fa27e.size;
+					var_d6f9eed8 = a_touching.size;
 				}
 				for(i = 0; i < var_d6f9eed8; i++)
 				{
-					var_4c8fa27e[i] setgoal(var_7d22b48e);
-					var_4c8fa27e[i].var_db552f4 = 1;
+					a_touching[i] setgoal(var_7d22b48e);
+					a_touching[i].var_db552f4 = 1;
 				}
 				s_struct.start_time = undefined;
 				var_cc06a93d++;

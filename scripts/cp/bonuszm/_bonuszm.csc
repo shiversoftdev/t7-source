@@ -826,7 +826,7 @@ function function_4778b020(lo, hi)
 function function_4b2bbece(var_3ae5c24, var_1bfa7cb7, frac)
 {
 	frac0 = 1 - frac;
-	color = (frac0 * var_3ae5c24[0] + frac * var_1bfa7cb7[0], frac0 * var_3ae5c24[1] + frac * var_1bfa7cb7[1], frac0 * var_3ae5c24[2] + frac * var_1bfa7cb7[2]);
+	color = ((frac0 * var_3ae5c24[0]) + (frac * var_1bfa7cb7[0]), (frac0 * var_3ae5c24[1]) + (frac * var_1bfa7cb7[1]), (frac0 * var_3ae5c24[2]) + (frac * var_1bfa7cb7[2]));
 	return color;
 }
 
@@ -1282,7 +1282,7 @@ function closed_glow_obj_cleanup(localclientnum)
 */
 function function_aea4686a()
 {
-	var_6a173bd1 = "gamedata/tables/cpzm/" + "cpzm_weapons_sgen.csv";
+	var_6a173bd1 = ("gamedata/tables/cpzm/") + "cpzm_weapons_sgen.csv";
 	var_adeb478a = tablelookuprowcount(var_6a173bd1);
 	var_709de245 = [];
 	for(i = 0; i < var_adeb478a; i++)

@@ -336,7 +336,7 @@ function wait_until_is_done(slot, timepulse)
 	{
 		wait(0.25);
 		currenttime = gettime();
-		if(currenttime > starttime + timepulse)
+		if(currenttime > (starttime + timepulse))
 		{
 			return;
 		}
@@ -361,12 +361,12 @@ function gadget_vision_pulse_flicker(slot, weapon)
 		return;
 	}
 	eventtime = self._gadgets_player[slot].gadget_flickertime;
-	self set_gadget_vision_pulse_status("^1" + "Flickering.", eventtime);
+	self set_gadget_vision_pulse_status(("^1") + "Flickering.", eventtime);
 	while(true)
 	{
 		if(!self gadgetflickering(slot))
 		{
-			set_gadget_vision_pulse_status("^2" + "Normal");
+			set_gadget_vision_pulse_status(("^2") + "Normal");
 			return;
 		}
 		wait(0.25);
@@ -387,11 +387,11 @@ function set_gadget_vision_pulse_status(status, time)
 	timestr = "";
 	if(isdefined(time))
 	{
-		timestr = "^3" + ", time: " + time;
+		timestr = (("^3") + ", time: ") + time;
 	}
 	if(getdvarint("scr_cpower_debug_prints") > 0)
 	{
-		self iprintlnbold("Vision Pulse:" + status + timestr);
+		self iprintlnbold(("Vision Pulse:" + status) + timestr);
 	}
 }
 

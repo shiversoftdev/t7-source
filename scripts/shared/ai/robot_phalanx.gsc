@@ -90,7 +90,7 @@ private function _dampenexplosivedamage(inflictor, attacker, damage, flags, mean
 		fractiondistance = 1;
 		if(weapon.explosionradius > 0)
 		{
-			fractiondistance = weapon.explosionradius - distancetoentity / weapon.explosionradius;
+			fractiondistance = (weapon.explosionradius - distancetoentity) / weapon.explosionradius;
 		}
 		return int(max(damage * fractiondistance, 1));
 	}
@@ -232,12 +232,12 @@ private function _getphalanxpositions(phalanxtype, tier)
 		default:
 		{
 			/#
-				assert("" + phalanxtype + "");
+				assert(("" + phalanxtype) + "");
 			#/
 		}
 	}
 	/#
-		assert("" + tier + "");
+		assert(("" + tier) + "");
 	#/
 }
 
@@ -254,10 +254,10 @@ private function _getphalanxspawner(tier)
 {
 	spawner = getspawnerarray(tier, "targetname");
 	/#
-		assert(spawner.size >= 0, "" + "" + "");
+		assert(spawner.size >= 0, ("" + "") + "");
 	#/
 	/#
-		assert(spawner.size == 1, "" + "" + "");
+		assert(spawner.size == 1, ("" + "") + "");
 	#/
 	return spawner[0];
 }
@@ -352,7 +352,7 @@ private function _movephalanxtier(robots, phalanxtype, tier, destination, forwar
 		if(isdefined(robot) && isalive(robot))
 		{
 			/#
-				assert(isvec(positions[index]), "" + index + "" + tier + "" + phalanxtype);
+				assert(isvec(positions[index]), (((("" + index) + "") + tier) + "") + phalanxtype);
 			#/
 			orientedpos = _rotatevec(positions[index], angles[1] - 90);
 			navmeshposition = getclosestpointonnavmesh(destination + orientedpos, 200);
@@ -474,7 +474,7 @@ private function _resumefirerobots(robots)
 */
 private function _rotatevec(vector, angle)
 {
-	return (vector[0] * cos(angle) - vector[1] * sin(angle), vector[0] * sin(angle) + vector[1] * cos(angle), vector[2]);
+	return ((vector[0] * cos(angle)) - (vector[1] * sin(angle)), (vector[0] * sin(angle)) + (vector[1] * cos(angle)), vector[2]);
 }
 
 /*
@@ -545,8 +545,8 @@ private function _updatephalanx()
 	self.tier1robots_ = _prunedead(self.tier1robots_);
 	self.tier2robots_ = _prunedead(self.tier2robots_);
 	self.tier3robots_ = _prunedead(self.tier3robots_);
-	self.currentrobotcount_ = self.tier1robots_.size + self.tier2robots_.size + self.tier2robots_.size;
-	if(self.currentrobotcount_ <= self.startrobotcount_ - self.breakingpoint_)
+	self.currentrobotcount_ = (self.tier1robots_.size + self.tier2robots_.size) + self.tier2robots_.size;
+	if(self.currentrobotcount_ <= (self.startrobotcount_ - self.breakingpoint_))
 	{
 		scatterphalanx();
 		return 0;
@@ -621,7 +621,7 @@ function initialize(phalanxtype, origin, destination, breakingpoint, maxtiersize
 	_movephalanxtier(self.tier1robots_, phalanxtype, "phalanx_tier1", destination, forward);
 	_movephalanxtier(self.tier2robots_, phalanxtype, "phalanx_tier2", destination, forward);
 	_movephalanxtier(self.tier3robots_, phalanxtype, "phalanx_tier3", destination, forward);
-	self.startrobotcount_ = self.tier1robots_.size + self.tier2robots_.size + self.tier3robots_.size;
+	self.startrobotcount_ = (self.tier1robots_.size + self.tier2robots_.size) + self.tier3robots_.size;
 	self.breakingpoint_ = breakingpoint;
 	self.startposition_ = origin;
 	self.endposition_ = destination;

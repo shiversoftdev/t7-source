@@ -261,23 +261,23 @@ function bonuzm_spawn(b_force = 0, str_targetname, v_origin, v_angles, bignoresp
 	}
 	if(isactorspawner(self))
 	{
-		if(isdefined(self.spawnflags) && self.spawnflags & 2 == 2)
+		if(isdefined(self.spawnflags) && (self.spawnflags & 2) == 2)
 		{
 			makeroom = 1;
 		}
 	}
 	else if(isvehiclespawner(self))
 	{
-		if(isdefined(self.spawnflags) && self.spawnflags & 8 == 8)
+		if(isdefined(self.spawnflags) && (self.spawnflags & 8) == 8)
 		{
 			makeroom = 1;
 		}
 	}
-	if(b_force || (isdefined(self.spawnflags) && self.spawnflags & 16 == 16) || isdefined(self.script_forcespawn))
+	if(b_force || (isdefined(self.spawnflags) && (self.spawnflags & 16) == 16) || isdefined(self.script_forcespawn))
 	{
 		force_spawn = 1;
 	}
-	if(isdefined(self.spawnflags) && self.spawnflags & 64 == 64)
+	if(isdefined(self.spawnflags) && (self.spawnflags & 64) == 64)
 	{
 		infinitespawn = 1;
 	}

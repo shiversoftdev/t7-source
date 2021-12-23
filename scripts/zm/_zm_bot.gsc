@@ -136,7 +136,7 @@ function debugmsg(str_txt)
 		iprintlnbold(str_txt);
 		if(isdefined(level.name))
 		{
-			println("" + level.name + "" + str_txt);
+			println((("" + level.name) + "") + str_txt);
 		}
 	#/
 }

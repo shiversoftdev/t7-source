@@ -365,8 +365,8 @@ function microwavefxhash(trace, origin, name)
 	counter = 2;
 	for(i = 0; i < 5; i++)
 	{
-		endofhalffxsq = i * 150 + 125 * i * 150 + 125;
-		endoffullfxsq = i * 150 + 200 * i * 150 + 200;
+		endofhalffxsq = ((i * 150) + 125) * ((i * 150) + 125);
+		endoffullfxsq = ((i * 150) + 200) * ((i * 150) + 200);
 		tracedistsq = distancesquared(origin, trace["position"]);
 		if(tracedistsq >= endofhalffxsq || i == 0)
 		{
@@ -518,8 +518,8 @@ function playmicrowavefx(localclientnum, trace, traceright, traceleft, origin)
 	rows = 5;
 	for(i = 0; i < rows; i++)
 	{
-		endofhalffxsq = i * 150 + 125 * i * 150 + 125;
-		endoffullfxsq = i * 150 + 200 * i * 150 + 200;
+		endofhalffxsq = ((i * 150) + 125) * ((i * 150) + 125);
+		endoffullfxsq = ((i * 150) + 200) * ((i * 150) + 200);
 		tracedistsq = distancesquared(origin, trace["position"]);
 		startfx = tracedistsq >= endofhalffxsq || i == 0;
 		fxname = (tracedistsq < endoffullfxsq ? "killstreaks/fx_sg_distortion_cone_ash_sm" : "killstreaks/fx_sg_distortion_cone_ash");

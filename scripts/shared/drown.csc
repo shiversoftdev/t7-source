@@ -41,7 +41,7 @@ function __init__()
 	level.player_swim_damage_interval = getdvarfloat("player_swimDamagerInterval", 5000) * 1000;
 	level.player_swim_damage = getdvarfloat("player_swimDamage", 5000);
 	level.player_swim_time = getdvarfloat("player_swimTime", 5000) * 1000;
-	level.player_swim_death_time = level.playermaxhealth / level.player_swim_damage * level.player_swim_damage_interval + 2000;
+	level.player_swim_death_time = ((level.playermaxhealth / level.player_swim_damage) * level.player_swim_damage_interval) + 2000;
 	visionset_mgr::register_overlay_info_style_speed_blur("drown_blur", 1, 1, 0.04, 1, 1, 0, 0, 125, 125, 0);
 	setup_radius_values();
 }
@@ -150,7 +150,7 @@ function enable_drown(localclientnum, stage)
 {
 	filter::init_filter_drowning_damage(localclientnum);
 	filter::enable_filter_drowning_damage(localclientnum, 1);
-	self.drown_start_time = getservertime(localclientnum) - stage - 1 * level.player_swim_damage_interval;
+	self.drown_start_time = getservertime(localclientnum) - ((stage - 1) * level.player_swim_damage_interval);
 	self.drown_outerradius = 0;
 	self.drown_innerradius = 0;
 	self.drown_opacity = 0;
@@ -187,7 +187,7 @@ function player_drown_fx(localclientnum, stage)
 	self notify(#"player_drown_fx");
 	self endon(#"player_drown_fx");
 	self player_init_drown_values();
-	lastoutwatertimestage = self.drown_start_time + stage - 1 * level.player_swim_damage_interval;
+	lastoutwatertimestage = self.drown_start_time + ((stage - 1) * level.player_swim_damage_interval);
 	stageduration = level.player_swim_damage_interval;
 	if(stage == 1)
 	{
@@ -197,7 +197,7 @@ function player_drown_fx(localclientnum, stage)
 	{
 		currenttime = getservertime(localclientnum);
 		elapsedtime = currenttime - self.drown_start_time;
-		stageratio = math::clamp(currenttime - lastoutwatertimestage / stageduration, 0, 1);
+		stageratio = math::clamp((currenttime - lastoutwatertimestage) / stageduration, 0, 1);
 		self.drown_outerradius = lerpfloat(level.drown_radius["outer"]["begin"][stage], level.drown_radius["outer"]["end"][stage], stageratio) * 1.41421;
 		self.drown_innerradius = lerpfloat(level.drown_radius["inner"]["begin"][stage], level.drown_radius["inner"]["end"][stage], stageratio) * 1.41421;
 		self.drown_opacity = lerpfloat(level.opacity["begin"][stage], level.opacity["end"][stage], stageratio);
@@ -227,9 +227,9 @@ function player_fade_out_drown_fx(localclientnum)
 	self player_init_drown_values();
 	fadestarttime = getservertime(localclientnum);
 	currenttime = getservertime(localclientnum);
-	while(currenttime - fadestarttime < 250)
+	while((currenttime - fadestarttime) < 250)
 	{
-		ratio = currenttime - fadestarttime / 250;
+		ratio = (currenttime - fadestarttime) / 250;
 		outerradius = lerpfloat(self.drown_outerradius, 1.41421, ratio);
 		innerradius = lerpfloat(self.drown_innerradius, 1.41421, ratio);
 		opacity = lerpfloat(self.drown_opacity, 0, ratio);

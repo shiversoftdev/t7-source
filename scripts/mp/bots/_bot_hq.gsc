@@ -477,6 +477,6 @@ function hq_nearest_point()
 function hq_is_contested()
 {
 	enemy = self bot::get_closest_enemy(level.radio.baseorigin, 0);
-	return isdefined(enemy) && distancesquared(enemy.origin, level.radio.baseorigin) < level.radio.node_radius * level.radio.node_radius;
+	return isdefined(enemy) && distancesquared(enemy.origin, level.radio.baseorigin) < (level.radio.node_radius * level.radio.node_radius);
 }
 

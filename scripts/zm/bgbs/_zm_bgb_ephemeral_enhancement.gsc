@@ -128,12 +128,12 @@ function activation()
 	var_398b66eb = self getweaponammostock(var_19dc14f6);
 	var_1d94ca2b = self zm_weapons::switch_from_alt_weapon(var_1d94ca2b);
 	var_1d94ca2b = self zm_weapons::give_build_kit_weapon(var_1d94ca2b);
-	if(var_5ddb5ced + var_398b66eb > var_a08320d8 + var_7298c138)
+	if((var_5ddb5ced + var_398b66eb) > (var_a08320d8 + var_7298c138))
 	{
 		self givestartammo(var_1d94ca2b);
 		var_a08320d8 = self getweaponammoclip(var_1d94ca2b);
 		var_7298c138 = self getweaponammostock(var_1d94ca2b);
-		if(var_5ddb5ced + var_398b66eb < var_a08320d8 + var_7298c138)
+		if((var_5ddb5ced + var_398b66eb) < (var_a08320d8 + var_7298c138))
 		{
 			var_a08320d8 = var_5ddb5ced;
 			var_7298c138 = var_398b66eb;

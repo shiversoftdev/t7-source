@@ -255,15 +255,46 @@ function ragdoll_impact_watch_start(localclientnum, oldval, newval, bnewent, bin
 	Namespace: _zm_weap_gravityspikes
 	Checksum: 0x5BC9D5E4
 	Offset: 0x1190
-	Size: 0x0
+	Size: 0x220
 	Parameters: 1
 	Flags: Linked
 */
 function ragdoll_impact_watch(localclientnum)
 {
+	self endon(#"entityshutdown");
+	self.v_start_pos = self.origin;
+	n_wait_time = 0.05;
+	n_gib_speed = 20;
+	v_prev_origin = self.origin;
+	waitrealtime(n_wait_time);
+	v_prev_vel = self.origin - v_prev_origin;
+	n_prev_speed = length(v_prev_vel);
+	v_prev_origin = self.origin;
+	waitrealtime(n_wait_time);
+	b_first_loop = 1;
+	while(true)
+	{
+		v_vel = self.origin - v_prev_origin;
+		n_speed = length(v_vel);
+		if(n_speed < (n_prev_speed * 0.5) && n_speed <= n_gib_speed && !b_first_loop)
+		{
+			if(self.origin[2] > (self.v_start_pos[2] + 128))
+			{
+				if(isdefined(level._effect["zombie_guts_explosion"]) && util::is_mature())
+				{
+					playfx(localclientnum, level._effect["zombie_guts_explosion"], self.origin, anglestoforward(self.angles));
+				}
+				self hide();
+			}
+			break;
+		}
+		v_prev_origin = self.origin;
+		n_prev_speed = n_speed;
+		b_first_loop = 0;
+		waitrealtime(n_wait_time);
+	}
 }
 
-/*Unknown Op Code (0x1656) at 121E*/
 /*
 	Name: gravity_trap_rumble_callback
 	Namespace: _zm_weap_gravityspikes

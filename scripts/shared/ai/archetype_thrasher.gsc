@@ -305,11 +305,11 @@ private function thrashergetclosestlaststandplayer(entity)
 	laststandtargets = [];
 	foreach(var_c3ab2da7, target in targets)
 	{
-		if(!isdefined(target.laststandstarttime) || target.laststandstarttime + 5000 > gettime())
+		if(!isdefined(target.laststandstarttime) || (target.laststandstarttime + 5000) > gettime())
 		{
 			continue;
 		}
-		if(isdefined(target.thrasherfreedtime) && target.thrasherfreedtime + 10000 > gettime())
+		if(isdefined(target.thrasherfreedtime) && (target.thrasherfreedtime + 10000) > gettime())
 		{
 			continue;
 		}
@@ -336,7 +336,7 @@ private function thrashergetclosestlaststandplayer(entity)
 */
 private function thrasherrageservice(entity)
 {
-	entity.thrasherragecount = entity.thrasherragecount + entity.thrasherragelevel * 1 + 1;
+	entity.thrasherragecount = entity.thrasherragecount + ((entity.thrasherragelevel * 1) + 1);
 	if(entity.thrasherragecount >= 200)
 	{
 		thrasherserverutils::thrashergoberserk(entity);
@@ -456,7 +456,7 @@ private function thrasherknockdownservice(entity)
 {
 	velocity = entity getvelocity();
 	predict_time = 0.3;
-	predicted_pos = entity.origin + velocity * predict_time;
+	predicted_pos = entity.origin + (velocity * predict_time);
 	move_dist_sq = distancesquared(predicted_pos, entity.origin);
 	speed = move_dist_sq / predict_time;
 	if(speed >= 10)
@@ -587,7 +587,7 @@ private function thrashershouldteleport(entity)
 	{
 		return 0;
 	}
-	if(entity.thrasherlastteleporttime + 10000 > gettime())
+	if((entity.thrasherlastteleporttime + 10000) > gettime())
 	{
 		return 0;
 	}
@@ -656,7 +656,7 @@ private function thrashershouldconsumezombie(entity)
 	{
 		return 0;
 	}
-	if(entity.thrasherlastconsume + entity.thrasherconsumecooldown >= gettime())
+	if((entity.thrasherlastconsume + entity.thrasherconsumecooldown) >= gettime())
 	{
 		return 0;
 	}
@@ -947,7 +947,7 @@ function thrashersporedamagecallback(inflictor, attacker, damage, dflags, mod, w
 			continue;
 		}
 		tagorigin = entity gettagorigin(sporestruct.tag);
-		if(isdefined(tagorigin) && distancesquared(tagorigin, point) < sporestruct.dist * sporestruct.dist)
+		if(isdefined(tagorigin) && distancesquared(tagorigin, point) < (sporestruct.dist * sporestruct.dist))
 		{
 			entity.thrasherragecount = entity.thrasherragecount + 10;
 			sporestruct.health = sporestruct.health - damage;
@@ -1113,7 +1113,7 @@ private function thrasherstuninitialize(entity)
 */
 private function thrasherstunupdate(entity)
 {
-	if(entity.thrasherstunstarttime + 1000 < gettime())
+	if((entity.thrasherstunstarttime + 1000) < gettime())
 	{
 		entity ai::set_behavior_attribute("stunned", 0);
 		entity.thrasherstunhealth = 3000;
@@ -1138,7 +1138,7 @@ private function thrasherhidespikes(entity, hide)
 		{
 			tag = tag + "0";
 		}
-		tag = tag + index + "_root";
+		tag = (tag + index) + "_root";
 		if(hide)
 		{
 			entity hidepart(tag, "", 1);
@@ -1169,8 +1169,7 @@ function thrasherhidefromplayer(thrasher, player, hide)
 	}
 	else
 	{
-		~hiddenplayers;
-		hiddenplayers = currenthidden & entitybit;
+		hiddenplayers = currenthidden & (~entitybit);
 	}
 	thrasher clientfield::set("thrasher_player_hide", hiddenplayers);
 }
@@ -1215,10 +1214,9 @@ function thrasherrestorepustule(entity)
 		if(sporestruct.health <= 0)
 		{
 			sporestruct.health = sporestruct.maxhealth;
-			entity.health = entity.health + int(entity.maxhealth / array("tag_spore_chest", "tag_spore_back", "tag_spore_leg").size);
+			entity.health = entity.health + (int(entity.maxhealth / array("tag_spore_chest", "tag_spore_back", "tag_spore_leg").size));
 			destroyedspores = entity clientfield::get("thrasher_spore_state");
-			~sporestruct;
-			destroyedspores = destroyedspores & sporestruct.clientfield;
+			destroyedspores = destroyedspores & (~sporestruct.clientfield);
 			entity clientfield::set("thrasher_spore_state", destroyedspores);
 			break;
 		}
@@ -1401,8 +1399,8 @@ function thrasherconsumeplayerutil(thrasher, player)
 	visionset_mgr::activate("visionset", "zm_isl_thrasher_stomach_visionset", player, 2);
 	player thread thrasherkillthrasheronautorevive(thrasher, player);
 	eyeposition = player gettagorigin("tag_eye");
-	eyeoffset = abs(eyeposition[2] - player.origin[2]) + 10;
-	thrasher.offsetmodel linkto(thrasher, "tag_camera_thrasher", (0, 0, eyeoffset * -1 + 27));
+	eyeoffset = (abs(eyeposition[2] - player.origin[2])) + 10;
+	thrasher.offsetmodel linkto(thrasher, "tag_camera_thrasher", (0, 0, (eyeoffset * -1) + 27));
 	player playerlinkto(thrasher.offsetmodel, undefined, 1, 0, 0, 0, 0, 1);
 	thrasher thread thrasherplayerdeath(thrasher, player);
 	thrasher.thrasherconsumedplayer = 1;
@@ -1492,21 +1490,21 @@ function thrasherreleaseplayer(thrasher, player)
 	if(isdefined(targetpos))
 	{
 		newposition = player.origin;
-		groundposition = bullettrace(targetpos + vectorscale((0, 0, -1), 128), targetpos + vectorscale((0, 0, 1), 128), 0, player);
+		groundposition = bullettrace(targetpos + (vectorscale((0, 0, -1), 128)), targetpos + vectorscale((0, 0, 1), 128), 0, player);
 		if(isdefined(groundposition["position"]))
 		{
 			newposition = groundposition["position"];
 		}
 		else
 		{
-			groundposition = bullettrace(targetpos + vectorscale((0, 0, -1), 256), targetpos + vectorscale((0, 0, 1), 256), 0, player);
+			groundposition = bullettrace(targetpos + (vectorscale((0, 0, -1), 256)), targetpos + vectorscale((0, 0, 1), 256), 0, player);
 			if(isdefined(groundposition["position"]))
 			{
 				newposition = groundposition["position"];
 			}
 			else
 			{
-				groundposition = bullettrace(targetpos + vectorscale((0, 0, -1), 512), targetpos + vectorscale((0, 0, 1), 512), 0, player);
+				groundposition = bullettrace(targetpos + (vectorscale((0, 0, -1), 512)), targetpos + vectorscale((0, 0, 1), 512), 0, player);
 				if(isdefined(groundposition["position"]))
 				{
 					newposition = groundposition["position"];

@@ -18,7 +18,7 @@ function function_ad78a144()
 {
 	for(i = 0; i < 4; i++)
 	{
-		registerclientfield("world", "player" + i + "wearableItem", 15000, 4, "int", &zm_utility::setsharedinventoryuimodels, 0);
+		registerclientfield("world", ("player" + i) + "wearableItem", 15000, 4, "int", &zm_utility::setsharedinventoryuimodels, 0);
 	}
 	clientfield::register("clientuimodel", "zmInventory.wearable_perk_icons", 15000, 2, "int", undefined, 0, 0);
 	clientfield::register("scriptmover", "battery_fx", 15000, 2, "int", &function_f51349bf, 0, 0);

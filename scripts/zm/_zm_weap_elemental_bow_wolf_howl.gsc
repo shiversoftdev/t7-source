@@ -115,7 +115,7 @@ function function_9b74f1f4(projectile, weapon)
 {
 	if(weapon.name == "elemental_bow_wolf_howl4")
 	{
-		var_307bab92 = projectile.origin + (0, 0, 0) + anglestoforward(projectile.angles) * 64;
+		var_307bab92 = (projectile.origin + (0, 0, 0)) + (anglestoforward(projectile.angles) * 64);
 		projectile thread function_f9c890ed();
 		self thread function_27bcaea1(var_307bab92);
 	}
@@ -214,13 +214,13 @@ function function_a2209df2(e_player, var_307bab92, var_c807e383, v_up, var_5c447
 		var_205259e0 = var_8f0f462c[2];
 		var_28388a90.v_start_pos = var_307bab92;
 		var_9b1b7a83 = 2560 - var_28388a90.var_76a58ed1;
-		var_307bab92 = (var_5c44718b ? var_307bab92 - (0, 0, 0) : var_307bab92 - (0, 0, 0) * 2);
-		a_trace = bullettrace(var_307bab92, var_307bab92 + var_c807e383 * var_9b1b7a83, 0, e_player);
+		var_307bab92 = (var_5c44718b ? var_307bab92 - (0, 0, 0) : var_307bab92 - ((0, 0, 0) * 2));
+		a_trace = bullettrace(var_307bab92, var_307bab92 + (var_c807e383 * var_9b1b7a83), 0, e_player);
 		var_20d031ed = a_trace["fraction"] * var_9b1b7a83;
 		if(var_20d031ed > 32)
 		{
 			var_28388a90.var_76a58ed1 = var_28388a90.var_76a58ed1 + var_20d031ed;
-			var_69a783ad = a_trace["position"] - var_c807e383 * 32;
+			var_69a783ad = a_trace["position"] - (var_c807e383 * 32);
 			var_72027ac3 = var_20d031ed / 1920;
 			str_return = "none";
 			if(var_72027ac3 > 0)
@@ -347,7 +347,7 @@ function function_2abb74b7(e_player, var_8f0f462c, var_c807e383)
 	var_28388a90 endon(#"mechz_impact");
 	var_7839cab3 = 409600;
 	var_a90ad319 = vectortoangles(var_c807e383);
-	var_200ee8c9 = 1920 * 0.1 * 2;
+	var_200ee8c9 = (1920 * 0.1) * 2;
 	var_67da22f = 32;
 	while(true)
 	{
@@ -358,12 +358,12 @@ function function_2abb74b7(e_player, var_8f0f462c, var_c807e383)
 		if(var_7478bee7.size)
 		{
 			var_718ba60a = var_28388a90.origin;
-			var_a2b66881 = var_718ba60a + var_c807e383 * var_200ee8c9;
+			var_a2b66881 = var_718ba60a + (var_c807e383 * var_200ee8c9);
 			var_2685316e = distance(var_28388a90.origin, var_28388a90.v_start_pos);
 			if(var_2685316e < 256)
 			{
 				var_fc3596dd = var_2685316e / 256;
-				var_ccc78552 = 64 - var_67da22f * var_fc3596dd;
+				var_ccc78552 = 64 - (var_67da22f * var_fc3596dd);
 			}
 			else
 			{
@@ -400,9 +400,9 @@ function function_2abb74b7(e_player, var_8f0f462c, var_c807e383)
 				if(zm_utility::is_player_valid(e_player) && (level.round_number < 26 || (level.round_number >= 26 && distancesquared(e_player.origin, ai_enemy.origin) < var_7839cab3)))
 				{
 					ai_enemy.var_98056717 = 1;
-					var_a5d28b3d = 75 * n_length / var_ccc78552;
+					var_a5d28b3d = 75 * (n_length / var_ccc78552);
 					var_ffc350c5 = vectortoangles(ai_enemy.origin - var_28388a90.origin);
-					var_f6fb36f8 = (var_ffc350c5[1] - var_a90ad319[1] > 0 ? 1 : -1);
+					var_f6fb36f8 = ((var_ffc350c5[1] - var_a90ad319[1]) > 0 ? 1 : -1);
 					var_a5d28b3d = var_a5d28b3d * var_f6fb36f8;
 					v_launch = vectornormalize(anglestoforward((0, var_a90ad319[1] + var_a5d28b3d, 0)));
 					level thread function_3af108ec(e_player, ai_enemy, v_launch);
@@ -445,7 +445,7 @@ function function_3af108ec(e_player, ai_enemy, v_launch)
 		var_f5cc78c2 = 45;
 		var_a5211278 = 90;
 		ai_enemy startragdoll();
-		ai_enemy launchragdoll(90 * v_launch + (0, 0, randomfloatrange(var_f5cc78c2, var_a5211278)));
+		ai_enemy launchragdoll((90 * v_launch) + (0, 0, randomfloatrange(var_f5cc78c2, var_a5211278)));
 		ai_enemy thread function_49dba034();
 		wait(0.1);
 		ai_enemy clientfield::set("zombie_hit_by_wolf_howl_charge", 1);
@@ -558,9 +558,9 @@ function function_cd61021a(e_player, ai_mechz, var_28388a90)
 		{
 			var_3bb42832 = math::clamp(var_3bb42832, 0, level.var_f4dc2834);
 		}
-		n_damage = var_3bb42832 * 0.4 / 0.2;
+		n_damage = (var_3bb42832 * 0.4) / 0.2;
 		ai_mechz dodamage(n_damage, ai_mechz getcentroid(), e_player, e_player, undefined, "MOD_PROJECTILE_SPLASH", 0, level.var_30611368);
-		var_e1664ef3 = ai_mechz getcentroid() - anglestoforward(var_28388a90.angles) * 96;
+		var_e1664ef3 = ai_mechz getcentroid() - (anglestoforward(var_28388a90.angles) * 96);
 		var_28388a90.origin = var_e1664ef3;
 		wait(0.05);
 		var_28388a90 notify(#"mechz_impact");
@@ -663,7 +663,7 @@ function function_81703066(var_ea1975a2, var_dad28a75)
 	while(true)
 	{
 		v_up = anglestoup(self.angles);
-		v_offset = v_up * 24 * var_dad28a75;
+		v_offset = (v_up * 24) * var_dad28a75;
 		var_ea1975a2.origin = self.origin + v_offset;
 		wait(0.05);
 	}
@@ -756,7 +756,7 @@ function function_88bf0c4e(e_player, n_damage, v_hit_origin, weapon)
 		}
 		while(var_55e8a42 > 0.7)
 		{
-			var_55e8a42 = var_55e8a42 - var_55e8a42 - 0.7 * 0.2;
+			var_55e8a42 = var_55e8a42 - ((var_55e8a42 - 0.7) * 0.2);
 			if(var_55e8a42 < 0.71)
 			{
 				var_55e8a42 = 0.7;
@@ -772,7 +772,7 @@ function function_88bf0c4e(e_player, n_damage, v_hit_origin, weapon)
 		self.var_ec71e17a = 0.73;
 		while(self.var_ec71e17a < 1)
 		{
-			self.var_ec71e17a = self.var_ec71e17a + self.var_ec71e17a - 0.7 * 0.05;
+			self.var_ec71e17a = self.var_ec71e17a + ((self.var_ec71e17a - 0.7) * 0.05);
 			if(self.var_ec71e17a > 1)
 			{
 				self.var_ec71e17a = 1;

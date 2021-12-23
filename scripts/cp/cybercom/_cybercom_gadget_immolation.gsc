@@ -553,7 +553,7 @@ function _immolaterobot(attacker, upgraded, immediate = 0)
 		variant = "";
 	}
 	var_a30bdd5a = getdvarfloat("scr_immolation_death_delay", 0.87) + randomfloatrange(0, 0.2);
-	var_ebfa18e1 = gettime() + var_a30bdd5a * 1000;
+	var_ebfa18e1 = gettime() + (var_a30bdd5a * 1000);
 	self dodamage(5, self.origin, (isdefined(attacker) ? attacker : undefined), undefined, "none", "MOD_UNKNOWN", 0, weapon, -1, 1);
 	while(gettime() < var_ebfa18e1)
 	{
@@ -778,7 +778,7 @@ function ai_activateimmolate(target, var_9bc2efcb = 1, upgraded)
 	{
 		type = self cybercom::function_5e3d3aa();
 		self orientmode("face default");
-		self animscripted("ai_cybercom_anim", self.origin, self.angles, "ai_base_rifle_" + type + "_exposed_cybercom_activate");
+		self animscripted("ai_cybercom_anim", self.origin, self.angles, ("ai_base_rifle_" + type) + "_exposed_cybercom_activate");
 		self waittill_match(#"ai_cybercom_anim");
 	}
 	weapon = getweapon("gadget_immolation");

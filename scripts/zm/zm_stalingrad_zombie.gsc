@@ -266,7 +266,7 @@ private function function_6d4522d4()
 private function function_5915f3d5(target)
 {
 	distance = distance2dsquared(target.origin, self.origin);
-	if(distance > 10000 * 10000)
+	if(distance > (10000 * 10000))
 	{
 		return 0;
 	}
@@ -569,7 +569,7 @@ function function_cec23cbf()
 			}
 			if(var_36eeba73 <= n_current_time)
 			{
-				if(zombie_utility::get_current_zombie_count() + level.zombie_total > 5)
+				if((zombie_utility::get_current_zombie_count() + level.zombie_total) > 5)
 				{
 					s_spawn_loc = array::random(var_c9b19c0c);
 					if(zm_ai_raz::function_7ed6c714(1, undefined, 1, s_spawn_loc))
@@ -581,7 +581,7 @@ function function_cec23cbf()
 			}
 			else if(level.var_f73b438a > 1 && var_c48f3f8a <= n_current_time)
 			{
-				if(zm_ai_sentinel_drone::function_74ab7484() && zombie_utility::get_current_zombie_count() + level.zombie_total > 5)
+				if(zm_ai_sentinel_drone::function_74ab7484() && (zombie_utility::get_current_zombie_count() + level.zombie_total) > 5)
 				{
 					s_spawn_loc = array::random(var_bb6abcd9);
 					if(zm_ai_sentinel_drone::function_19d0b055(1, undefined, 1, s_spawn_loc))
@@ -767,6 +767,7 @@ function function_a442e988(e_player)
 	var_1916d2ed = getentarray("zombie_sentinel", "targetname");
 	foreach(var_dd5b6e2e, var_663b2442 in var_1916d2ed)
 	{
+		var_8500f025 = getnextarraykey(var_3e7f8cd8);
 		while(isdefined(var_663b2442) && !var_663b2442 flag::exists("completed_spawning"))
 		{
 			wait(0.05);
@@ -791,7 +792,7 @@ function function_a442e988(e_player)
 				}
 				else
 				{
-					var_663b2442 notify(#"hash_d600cb9a");
+					var_663b2442 notify(#"hash_d600cb9a", var_dd5b6e2e);
 				}
 			}
 			var_d7b33d0c = var_663b2442;

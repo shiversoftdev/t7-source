@@ -69,7 +69,7 @@ function __main__()
 	level.soniczombieminroundwait = 1;
 	level.soniczombiemaxroundwait = 3;
 	level.soniczombieroundrequirement = 4;
-	level.nextsonicspawnround = level.soniczombieroundrequirement + randomintrange(0, level.soniczombiemaxroundwait + 1);
+	level.nextsonicspawnround = level.soniczombieroundrequirement + (randomintrange(0, level.soniczombiemaxroundwait + 1));
 	level.sonicplayerdamage = 10;
 	level.sonicscreamdamageradius = 300;
 	level.sonicscreamattackradius = 240;
@@ -429,7 +429,7 @@ function _zombie_ambient_sounds()
 function _updatenextscreamtime()
 {
 	self.sonicscreamattacknext = gettime();
-	self.sonicscreamattacknext = self.sonicscreamattacknext + randomintrange(self.sonicscreamattackdebouncemin * 1000, self.sonicscreamattackdebouncemax * 1000);
+	self.sonicscreamattacknext = self.sonicscreamattacknext + (randomintrange(self.sonicscreamattackdebouncemin * 1000, self.sonicscreamattackdebouncemax * 1000));
 }
 
 /*
@@ -630,7 +630,7 @@ function _player_screamattackwatch(sonic_zombie)
 */
 function _player_in_blur_area(sonic_zombie)
 {
-	if(abs(self.origin[2] - sonic_zombie.origin[2]) > 70)
+	if((abs(self.origin[2] - sonic_zombie.origin[2])) > 70)
 	{
 		return 0;
 	}
@@ -827,7 +827,7 @@ function _zombie_getnearbyplayers()
 			continue;
 		}
 		playerorigin = players[i].origin;
-		if(abs(playerorigin[2] - self.origin[2]) > 70)
+		if((abs(playerorigin[2] - self.origin[2])) > 70)
 		{
 			continue;
 		}
@@ -1043,10 +1043,10 @@ function _sonic_zombie_get_enemies_in_range()
 		if(test_range_squared < fling_range_squared)
 		{
 			level.soniczombie_fling_enemies[level.soniczombie_fling_enemies.size] = zombies[i];
-			dist_mult = fling_range_squared - test_range_squared / fling_range_squared;
+			dist_mult = (fling_range_squared - test_range_squared) / fling_range_squared;
 			fling_vec = vectornormalize(test_origin - center);
 			fling_vec = (fling_vec[0], fling_vec[1], abs(fling_vec[2]));
-			fling_vec = vectorscale(fling_vec, 100 + 100 * dist_mult);
+			fling_vec = vectorscale(fling_vec, 100 + (100 * dist_mult));
 			level.soniczombie_fling_vecs[level.soniczombie_fling_vecs.size] = fling_vec;
 			continue;
 		}
@@ -1174,7 +1174,7 @@ function sonic_zombie_count_watch()
 	}
 	else
 	{
-		level.nextsonicspawnround = level.round_number + randomintrange(level.soniczombieminroundwait, level.soniczombiemaxroundwait + 1);
+		level.nextsonicspawnround = level.round_number + (randomintrange(level.soniczombieminroundwait, level.soniczombiemaxroundwait + 1));
 	}
 	/#
 		println("" + level.nextsonicspawnround);
@@ -1207,7 +1207,7 @@ function _sonic_damage_callback(str_mod, str_hit_location, v_hit_origin, e_playe
 		{
 			self.damagecount = 0;
 		}
-		if(self.damagecount % int(getplayers().size * level.sonichealthmultiplier) == 0)
+		if((self.damagecount % (int(getplayers().size * level.sonichealthmultiplier))) == 0)
 		{
 			e_player zm_score::player_add_points("thundergun_fling", 10, str_hit_location, self.isdog);
 		}

@@ -60,7 +60,7 @@ function set_forward_and_up_vectors()
 function get(fx)
 {
 	/#
-		assert(isdefined(level._effect[fx]), "" + fx + "");
+		assert(isdefined(level._effect[fx]), ("" + fx) + "");
 	#/
 	return level._effect[fx];
 }

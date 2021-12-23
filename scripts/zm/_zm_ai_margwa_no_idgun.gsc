@@ -127,7 +127,7 @@ private function function_c0fb414e(entity)
 	{
 		return 0;
 	}
-	if(isdefined(entity.var_122a2dda) && entity.var_122a2dda)
+	if(isdefined(entity.is_flung) && entity.is_flung)
 	{
 		return 0;
 	}
@@ -746,8 +746,8 @@ private function function_1f53b1a2(modelhit, attacker)
 		attacker zm_score::player_add_points("bonus_points_powerup", 500);
 	}
 	right = anglestoright(self.angles);
-	spawn_pos = self.origin + anglestoright(self.angles) + vectorscale((0, 0, 1), 128);
-	var_df9f2e65 = self.origin - anglestoright(self.angles) + vectorscale((0, 0, 1), 128);
+	spawn_pos = (self.origin + anglestoright(self.angles)) + vectorscale((0, 0, 1), 128);
+	var_df9f2e65 = (self.origin - anglestoright(self.angles)) + vectorscale((0, 0, 1), 128);
 	loc = spawnstruct();
 	loc.origin = spawn_pos;
 	loc.angles = self.angles;
@@ -780,7 +780,7 @@ private function function_1f53b1a2(modelhit, attacker)
 */
 private function margwa_bodyfall()
 {
-	power_up_origin = self.origin + vectorscale(anglestoforward(self.angles), 32) + vectorscale((0, 0, 1), 16);
+	power_up_origin = (self.origin + vectorscale(anglestoforward(self.angles), 32)) + vectorscale((0, 0, 1), 16);
 	if(isdefined(power_up_origin) && (!(isdefined(self.no_powerups) && self.no_powerups)))
 	{
 		var_3bd46762 = [];

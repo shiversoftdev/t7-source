@@ -304,7 +304,7 @@ function whirlwind_timeout(n_time)
 function move_along_ground_position(v_position, n_time)
 {
 	v_diff = vectornormalize(v_position - self.origin);
-	v_newpos = self.origin + v_diff * 50 + vectorscale((0, 0, 1), 50);
+	v_newpos = (self.origin + (v_diff * 50)) + vectorscale((0, 0, 1), 50);
 	v_ground = zm_utility::groundpos_ignore_water_new(v_newpos);
 	self moveto(v_ground, n_time);
 }
@@ -633,7 +633,7 @@ function zombie_launch(e_attacker, w_weapon)
 */
 function determine_launch_vector(e_attacker, ai_target)
 {
-	v_launch = vectornormalize(ai_target.origin - e_attacker.origin) * randomintrange(125, 150) + (0, 0, randomintrange(75, 150));
+	v_launch = (vectornormalize(ai_target.origin - e_attacker.origin)) * randomintrange(125, 150) + (0, 0, randomintrange(75, 150));
 	return v_launch;
 }
 

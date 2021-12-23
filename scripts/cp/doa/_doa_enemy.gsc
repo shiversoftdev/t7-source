@@ -311,14 +311,14 @@ function function_d30fe558(origin, force = 0)
 	time = gettime();
 	var_bea0505e = time > self.var_99315107;
 	distsq = distancesquared(self.origin, origin);
-	if(distsq < 128 * 128)
+	if(distsq < (128 * 128))
 	{
 		var_bea0505e = 1;
 	}
 	if(var_bea0505e)
 	{
 		self setgoal(origin, 1);
-		frac = math::clamp(distsq / 1000 * 1000, 0, 1);
+		frac = math::clamp(distsq / (1000 * 1000), 0, 1);
 		if(isdefined(self.zombie_move_speed))
 		{
 			if(self.zombie_move_speed == "walk" || (isdefined(self.missinglegs) && self.missinglegs))
@@ -326,7 +326,7 @@ function function_d30fe558(origin, force = 0)
 				frac = frac + 0.2;
 			}
 		}
-		self.var_99315107 = time + int(frac * 1600);
+		self.var_99315107 = time + (int(frac * 1600));
 	}
 }
 
@@ -349,14 +349,14 @@ function function_b0edb6ef(var_12ebe63d)
 		{
 			shouldrepath = 1;
 		}
-		else if(distancesquared(self.origin, self.enemy.origin) <= 200 * 200)
+		else if(distancesquared(self.origin, self.enemy.origin) <= (200 * 200))
 		{
 			shouldrepath = 1;
 		}
 		else if(isdefined(self.pathgoalpos))
 		{
 			distancetogoalsqr = distancesquared(self.origin, self.pathgoalpos);
-			shouldrepath = distancetogoalsqr < 72 * 72;
+			shouldrepath = distancetogoalsqr < (72 * 72);
 		}
 	}
 	if(isdefined(self.keep_moving) && self.keep_moving)
@@ -370,7 +370,7 @@ function function_b0edb6ef(var_12ebe63d)
 	{
 		goalpos = var_12ebe63d;
 		self setgoal(goalpos);
-		if(distancesquared(self.origin, goalpos) > 200 * 200)
+		if(distancesquared(self.origin, goalpos) > (200 * 200))
 		{
 			self.keep_moving = 1;
 			self.keep_moving_time = gettime() + 250;
@@ -399,10 +399,10 @@ function function_b0edb6ef(var_12ebe63d)
 			for(index = 1; index < path.size; index++)
 			{
 				currentseglength = distance(path[index - 1], path[index]);
-				if(segmentlength + currentseglength > deviationdistance)
+				if((segmentlength + currentseglength) > deviationdistance)
 				{
 					remaininglength = deviationdistance - segmentlength;
-					seedposition = path[index - 1] + vectornormalize(path[index] - path[index - 1]) * remaininglength;
+					seedposition = (path[index - 1]) + ((vectornormalize(path[index] - (path[index - 1]))) * remaininglength);
 					/#
 						recordcircle(seedposition, 2, (1, 0.5, 0), "", self);
 					#/
@@ -519,7 +519,7 @@ function function_a1761846(behaviortreeentity)
 				else
 				{
 					distsq = distancesquared(closest.origin, self.origin);
-					if(distsq <= 128 * 128)
+					if(distsq <= (128 * 128))
 					{
 						behaviortreeentity.favoriteenemy = closest;
 					}
@@ -806,7 +806,7 @@ function function_f31da0d1(behaviortreeentity)
 		return 0;
 	}
 	targetorigin = behaviortreeentity function_69b8254();
-	if(distancesquared(behaviortreeentity.origin, targetorigin) > 92 * 92)
+	if(distancesquared(behaviortreeentity.origin, targetorigin) > (92 * 92))
 	{
 		return 0;
 	}
@@ -836,7 +836,7 @@ function function_2241fc21(einflictor, eattacker, idamage, idflags, smeansofdeat
 	if(self.team == "allies")
 	{
 		/#
-			doa_utility::debugmsg("" + self.archetype + "" + idamage);
+			doa_utility::debugmsg((("" + self.archetype) + "") + idamage);
 		#/
 	}
 	if(isdefined(self.allowdeath) && self.allowdeath == 0 && idamage >= self.health)
@@ -864,7 +864,7 @@ function function_2241fc21(einflictor, eattacker, idamage, idflags, smeansofdeat
 	if(smeansofdeath == "MOD_BURNED")
 	{
 		/#
-			doa_utility::debugmsg("" + idamage + "" + self.health + (idamage > self.health ? "" : ""));
+			doa_utility::debugmsg(((("" + idamage) + "") + self.health) + (idamage > self.health ? "" : ""));
 		#/
 	}
 	if(smeansofdeath == "MOD_CRUSH")
@@ -880,7 +880,7 @@ function function_2241fc21(einflictor, eattacker, idamage, idflags, smeansofdeat
 	}
 	if(weapon == level.doa.var_69899304)
 	{
-		idamage = idamage + int(3 * level.doa.round_number);
+		idamage = idamage + (int(3 * level.doa.round_number));
 	}
 	if(isdefined(self.overrideactordamage))
 	{
@@ -1450,7 +1450,7 @@ function function_155957e9()
 		if(var_2f36e0eb == 5)
 		{
 			/#
-				doa_utility::debugmsg("" + self.origin + "" + self.spawner.targetname);
+				doa_utility::debugmsg((("" + self.origin) + "") + self.spawner.targetname);
 			#/
 			self.var_802ce72 = 1;
 			self.allowdeath = 1;
@@ -1459,7 +1459,7 @@ function function_155957e9()
 		if(var_2f36e0eb == 6)
 		{
 			/#
-				doa_utility::debugmsg("" + self.origin + "" + self.spawner.targetname);
+				doa_utility::debugmsg((("" + self.origin) + "") + self.spawner.targetname);
 			#/
 			self.var_802ce72 = 1;
 			self delete();
@@ -1552,7 +1552,7 @@ function function_53055b45()
 			if(fails == 5)
 			{
 				/#
-					doa_utility::debugmsg("" + self.origin + "" + self.spawner.targetname);
+					doa_utility::debugmsg((("" + self.origin) + "") + self.spawner.targetname);
 				#/
 				self dodamage(self.health + 666, self.origin);
 			}

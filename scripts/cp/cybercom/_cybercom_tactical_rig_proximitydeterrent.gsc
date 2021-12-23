@@ -317,7 +317,7 @@ private function _stunassailant(player, attacker, upgraded)
 			weapon = player.cybercom.var_a9774972;
 			if(isdefined(attacker.voiceprefix) && isdefined(attacker.bcvoicenumber))
 			{
-				attacker thread battlechatter::do_sound(attacker.voiceprefix + attacker.bcvoicenumber + "_exert_electrocution", 1);
+				attacker thread battlechatter::do_sound((attacker.voiceprefix + attacker.bcvoicenumber) + "_exert_electrocution", 1);
 			}
 			break;
 		}

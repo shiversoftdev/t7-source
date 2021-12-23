@@ -718,11 +718,11 @@ function state_jump_update(params)
 		#/
 	}
 	totaldistance = distance2d(goal, self.jump.linkent.origin);
-	forward = (goal - self.jump.linkent.origin / totaldistance[0], goal - self.jump.linkent.origin / totaldistance[1], 0);
+	forward = ((goal - self.jump.linkent.origin) / totaldistance[0], (goal - self.jump.linkent.origin) / totaldistance[1], 0);
 	upbydistance = mapfloat(500, 2000, 46, 52, totaldistance);
 	antigravitybydistance = 0;
-	initvelocityup = (0, 0, 1) * upbydistance + params.upbyheight;
-	initvelocityforward = forward * params.scaleforward * mapfloat(500, 2000, 0.8, 1, totaldistance);
+	initvelocityup = (0, 0, 1) * (upbydistance + params.upbyheight);
+	initvelocityforward = (forward * params.scaleforward) * mapfloat(500, 2000, 0.8, 1, totaldistance);
 	velocity = initvelocityup + initvelocityforward;
 	if(self.vehicletype === "spawner_enemy_boss_siegebot_zombietron")
 	{
@@ -755,12 +755,12 @@ function state_jump_update(params)
 		}
 		oldverticlespeed = velocity[2];
 		velocity = (0, 0, velocity[2]);
-		velocity = velocity + velocityforward + params.gravityforce + antigravity;
+		velocity = velocity + ((velocityforward + params.gravityforce) + antigravity);
 		if(oldverticlespeed > 0 && velocity[2] < 0)
 		{
 			self asmrequestsubstate("fall@jump");
 		}
-		if(velocity[2] < 0 && self.jump.linkent.origin[2] + velocity[2] < goal[2])
+		if(velocity[2] < 0 && (self.jump.linkent.origin[2] + velocity[2]) < goal[2])
 		{
 			break;
 		}
@@ -792,7 +792,7 @@ function state_jump_update(params)
 	{
 		player.takedamage = player._takedamage_old;
 		player._takedamage_old = undefined;
-		if(distance2dsquared(self.origin, player.origin) < 200 * 200)
+		if(distance2dsquared(self.origin, player.origin) < (200 * 200))
 		{
 			direction = (player.origin - self.origin[0], player.origin - self.origin[1], 0);
 			if(abs(direction[0]) < 0.01 && abs(direction[1]) < 0.01)
@@ -801,7 +801,7 @@ function state_jump_update(params)
 			}
 			direction = vectornormalize(direction);
 			strength = 700;
-			player setvelocity(player getvelocity() + direction * strength);
+			player setvelocity(player getvelocity() + (direction * strength));
 			if(player.health > 80)
 			{
 				player dodamage(player.health - 70, self.origin, self);
@@ -928,9 +928,9 @@ function getnextmoveposition_tactical()
 				{
 					point._scoredebug = [];
 				}
-				point._scoredebug[""] = 120 - point.disttoorigin2d * -1.5;
+				point._scoredebug[""] = (120 - point.disttoorigin2d) * -1.5;
 			#/
-			point.score = point.score + 120 - point.disttoorigin2d * -1.5;
+			point.score = point.score + ((120 - point.disttoorigin2d) * -1.5);
 		}
 		if(isdefined(self.enemy))
 		{
@@ -941,7 +941,7 @@ function getnextmoveposition_tactical()
 				}
 				point._scoredebug[""] = point.distawayfromengagementarea * -1;
 			#/
-			point.score = point.score + point.distawayfromengagementarea * -1;
+			point.score = point.score + (point.distawayfromengagementarea * -1);
 			if(!point.visibility)
 			{
 				/#
@@ -1002,7 +1002,7 @@ function path_update_interrupt()
 				if(selfdisttotarget < farengagementdist && selfdisttotarget > closeengagementdist)
 				{
 					canseeenemycount++;
-					if(canseeenemycount > 3 && (vehicle_ai::timesince(startpath) > 5 || distance2dsquared(old_origin, self.origin) > move_dist * move_dist))
+					if(canseeenemycount > 3 && (vehicle_ai::timesince(startpath) > 5 || distance2dsquared(old_origin, self.origin) > (move_dist * move_dist)))
 					{
 						self notify(#"near_goal");
 					}
@@ -1035,7 +1035,7 @@ function path_update_interrupt()
 			{
 				self notify(#"near_goal");
 			}
-			if(self vehcansee(self.enemy) && distance2dsquared(self.origin, self.enemy.origin) < 150 * 150 && distance2dsquared(old_origin, self.enemy.origin) > 151 * 151)
+			if(self vehcansee(self.enemy) && distance2dsquared(self.origin, self.enemy.origin) < (150 * 150) && distance2dsquared(old_origin, self.enemy.origin) > (151 * 151))
 			{
 				self notify(#"near_goal");
 			}
@@ -1196,7 +1196,7 @@ function scan()
 		angles = angles + vectorscale((0, 1, 0), 30);
 		rotate = rotate - 30;
 		forward = anglestoforward(angles);
-		aimpos = self.origin + forward * 1000;
+		aimpos = self.origin + (forward * 1000);
 		self setturrettargetvec(aimpos);
 		msg = self util::waittill_any_timeout(0.5, "turret_on_target");
 		wait(0.1);
@@ -1209,7 +1209,7 @@ function scan()
 		}
 	}
 	forward = anglestoforward(self.angles);
-	aimpos = self.origin + forward * 1000;
+	aimpos = self.origin + (forward * 1000);
 	self setturrettargetvec(aimpos);
 	msg = self util::waittill_any_timeout(3, "turret_on_target");
 	self clearturrettarget();
@@ -1352,7 +1352,7 @@ function attack_thread_rocket()
 function siegebot_callback_damage(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, vdamageorigin, psoffsettime, damagefromunderneath, modelindex, partname, vsurfacenormal)
 {
 	num_players = getplayers().size;
-	maxdamage = self.healthdefault * 0.4 - 0.02 * num_players;
+	maxdamage = self.healthdefault * (0.4 - (0.02 * num_players));
 	if(smeansofdeath !== "MOD_UNKNOWN" && idamage > maxdamage)
 	{
 		idamage = maxdamage;

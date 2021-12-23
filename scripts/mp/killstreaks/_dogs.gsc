@@ -711,7 +711,7 @@ function dog_patrol_near_enemy()
 				continue;
 			}
 		}
-		if(gettime() - player.lastfiretime > 3000)
+		if((gettime() - player.lastfiretime) > 3000)
 		{
 			continue;
 		}
@@ -784,7 +784,7 @@ function dog_health_regen()
 {
 	self endon(#"death");
 	interval = 0.5;
-	regen_interval = int(self.health / 5 * interval);
+	regen_interval = int((self.health / 5) * interval);
 	regen_start = 2;
 	for(;;)
 	{
@@ -953,7 +953,7 @@ function flash_dogs(area)
 					do_flash = 0;
 				}
 			}
-			if(isdefined(dog.lastflashed) && dog.lastflashed + 1500 > gettime())
+			if(isdefined(dog.lastflashed) && (dog.lastflashed + 1500) > gettime())
 			{
 				do_flash = 0;
 			}
@@ -1129,7 +1129,7 @@ function devgui_dog_camera()
 			if(!isdefined(dog.cam))
 			{
 				forward = anglestoforward(dog.angles);
-				dog.cam = spawn("", dog.origin + vectorscale((0, 0, 1), 50) + forward * -100);
+				dog.cam = spawn("", (dog.origin + vectorscale((0, 0, 1), 50)) + (forward * -100));
 				dog.cam setmodel("");
 				dog.cam linkto(dog);
 			}

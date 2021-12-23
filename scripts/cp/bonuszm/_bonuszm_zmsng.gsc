@@ -99,7 +99,7 @@ function function_ab60ef67()
 	level.var_f5f95e45 = -1;
 	foreach(var_56a0317c, var_e81a1399 in var_a87c5e50)
 	{
-		if(var_12d65c22 && distancesquared((-1492, 1690, -640), var_e81a1399.origin) <= 200 * 200)
+		if(var_12d65c22 && (distancesquared((-1492, 1690, -640), var_e81a1399.origin)) <= (200 * 200))
 		{
 			continue;
 		}
@@ -184,7 +184,7 @@ function function_8765a33c(var_e81a1399)
 	}
 	else
 	{
-		var_837a6185.index = int(getsubstr(var_e81a1399.model, var_e81a1399.model.size - 2)) - 1;
+		var_837a6185.index = (int(getsubstr(var_e81a1399.model, var_e81a1399.model.size - 2))) - 1;
 	}
 	var_e81a1399 setmodel("p7_zm_teddybear_sitting");
 	var_e81a1399 clientfield::set("powerup_on_fx", 2);
@@ -252,7 +252,7 @@ function onuse(e_player)
 			return;
 		}
 	}
-	else if(var_27fba3a4 - level.var_8a9d11b > 0)
+	else if((var_27fba3a4 - level.var_8a9d11b) > 0)
 	{
 		return;
 	}
@@ -362,7 +362,7 @@ function onuse(e_player)
 */
 function function_d789d2e(state)
 {
-	aliasname = "mus_" + state + "_intro";
+	aliasname = ("mus_" + state) + "_intro";
 	playbacktime = soundgetplaybacktime(aliasname);
 	if(!isdefined(playbacktime) || playbacktime <= 0)
 	{

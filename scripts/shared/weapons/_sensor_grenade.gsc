@@ -182,7 +182,7 @@ function isplayertracked(player, time)
 	playertracked = 0;
 	if(isdefined(self.sensorgrenadedata) && isdefined(self.sensorgrenadedata[player.clientid]))
 	{
-		if(self.sensorgrenadedata[player.clientid] + 10000 > time)
+		if((self.sensorgrenadedata[player.clientid] + 10000) > time)
 		{
 			playertracked = 1;
 		}
@@ -328,7 +328,7 @@ function watch_for_decoys(owner)
 */
 function get_decoy_spawn_loc()
 {
-	return self.origin - 240 * anglestoforward(self.angles);
+	return self.origin - (240 * anglestoforward(self.angles));
 }
 
 /*

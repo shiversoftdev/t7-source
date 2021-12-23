@@ -236,7 +236,7 @@ function chamber_wall_change_randomly()
 		}
 		level flag::wait_till("any_crystal_picked_up");
 		n_round = cap_value(level.round_number, 10, 30);
-		f_progression_pct = n_round - 10 / 30 - 10;
+		f_progression_pct = (n_round - 10) / (30 - 10);
 		n_change_wall_time = lerpfloat(15, 5, f_progression_pct);
 		n_elem = array::random(a_element_enums);
 		arrayremovevalue(a_element_enums, n_elem, 0);

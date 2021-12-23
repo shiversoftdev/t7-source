@@ -171,7 +171,7 @@ function get_gib_ref(direction)
 	{
 		return;
 	}
-	if(gettime() > anim.lastgibtime + anim.gibdelay && anim.totalgibs > 0)
+	if(gettime() > (anim.lastgibtime + anim.gibdelay) && anim.totalgibs > 0)
 	{
 		anim.totalgibs--;
 		anim thread set_last_gib_time();
@@ -305,7 +305,7 @@ function do_gib()
 		default:
 		{
 			/#
-				assertmsg("" + self.a.gib_ref + "");
+				assertmsg(("" + self.a.gib_ref) + "");
 			#/
 			break;
 		}

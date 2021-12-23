@@ -129,7 +129,7 @@ function arc_damage(source_enemy, player, arc_num, params = level.default_lightn
 	{
 		player.tesla_enemies_hit = 0;
 	}
-	zm_utility::debug_print("TESLA: Evaulating arc damage for arc: " + arc_num + " Current enemies hit: " + player.tesla_enemies_hit);
+	zm_utility::debug_print((("TESLA: Evaulating arc damage for arc: " + arc_num) + " Current enemies hit: ") + player.tesla_enemies_hit);
 	lc_flag_hit(self, 1);
 	radius_decay = params.radius_decay * arc_num;
 	origin = self gettagorigin("j_head");
@@ -141,7 +141,7 @@ function arc_damage(source_enemy, player, arc_num, params = level.default_lightn
 	util::wait_network_frame();
 	lc_flag_hit(enemies, 1);
 	self thread lc_do_damage(source_enemy, arc_num, player, params);
-	zm_utility::debug_print("TESLA: " + enemies.size + " enemies hit during arc: " + arc_num);
+	zm_utility::debug_print((("TESLA: " + enemies.size) + " enemies hit during arc: ") + arc_num);
 	for(i = 0; i < enemies.size; i++)
 	{
 		if(!isdefined(enemies[i]) || enemies[i] == self)
@@ -195,7 +195,7 @@ private function lc_end_arc_damage(arc_num, enemies_hit_num, params)
 		return 1;
 	}
 	radius_decay = params.radius_decay * arc_num;
-	if(params.radius_start - radius_decay <= 0)
+	if((params.radius_start - radius_decay) <= 0)
 	{
 		zm_utility::debug_print("TESLA: Ending arcing. Radius is less or equal to zero");
 		return 1;
@@ -520,7 +520,7 @@ private function lc_debug_arc(origin, distance)
 			return;
 		}
 		start = gettime();
-		while(gettime() < start + 3000)
+		while(gettime() < (start + 3000))
 		{
 			wait(0.05);
 		}

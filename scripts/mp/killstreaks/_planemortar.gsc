@@ -240,13 +240,13 @@ function doplanemortar(positions, team, killstreak_id)
 		self thread dobombrun(position, yaw, team);
 		if(odd == 0)
 		{
-			yaw = yaw + 35 % 360;
+			yaw = (yaw + 35) % 360;
 		}
 		else
 		{
-			yaw = yaw + 290 % 360;
+			yaw = (yaw + 290) % 360;
 		}
-		odd = odd + 1 % 2;
+		odd = (odd + 1) % 2;
 		wait(0.8);
 	}
 	self notify(#"planemortarcomplete");
@@ -347,7 +347,7 @@ function dobombrun(position, yaw, team)
 	direction = anglestoforward(angles);
 	height = airsupport::getminimumflyheight() + 2000;
 	position = (position[0], position[1], height);
-	startpoint = position + vectorscale(direction, -12000);
+	startpoint = position + (vectorscale(direction, -12000));
 	endpoint = position + vectorscale(direction, 18000);
 	height = airsupport::getnoflyzoneheightcrossed(startpoint, endpoint, height);
 	startpoint = (startpoint[0], startpoint[1], height);
@@ -367,21 +367,21 @@ function dobombrun(position, yaw, team)
 	plane clientfield::set("enemyvehicle", 1);
 	plane playsound("mpl_lightning_flyover_boom");
 	plane setdrawinfrared(1);
-	plane.killcament = spawn("script_model", plane.origin + vectorscale((0, 0, 1), 700) + vectorscale(direction, -1500));
+	plane.killcament = spawn("script_model", (plane.origin + vectorscale((0, 0, 1), 700)) + (vectorscale(direction, -1500)));
 	plane.killcament util::deleteaftertime(2 * 3);
 	plane.killcament.angles = (15, yaw, 0);
 	plane.killcament.starttime = gettime();
 	plane.killcament linkto(plane);
 	start = (position[0], position[1], plane.origin[2]);
-	impact = bullettrace(start, start + vectorscale((0, 0, -1), 100000), 1, plane);
-	plane moveto(endpoint, 2 * 5 / 4, 0, 0);
+	impact = bullettrace(start, start + (vectorscale((0, 0, -1), 100000)), 1, plane);
+	plane moveto(endpoint, (2 * 5) / 4, 0, 0);
 	plane.killcament thread followbomb(plane, position, direction, impact, player);
 	wait(2 / 2);
 	if(isdefined(self))
 	{
 		self thread dropbomb(plane, position);
 	}
-	wait(2 * 3 / 4);
+	wait((2 * 3) / 4);
 	plane plane_cleanupondeath();
 }
 
@@ -397,9 +397,9 @@ function dobombrun(position, yaw, team)
 function followbomb(plane, position, direction, impact, player)
 {
 	player endon(#"emp_jammed");
-	wait(2 * 5 / 12);
+	wait((2 * 5) / 12);
 	plane.killcament unlink();
-	plane.killcament moveto(impact["position"] + vectorscale((0, 0, 1), 1000) + vectorscale(direction, -600), 0.8, 0, 0.2);
+	plane.killcament moveto((impact["position"] + vectorscale((0, 0, 1), 1000)) + (vectorscale(direction, -600)), 0.8, 0, 0.2);
 }
 
 /*

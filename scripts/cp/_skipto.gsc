@@ -345,7 +345,7 @@ function objective_leave_incomplete(skipto)
 	if(!isdefined(level.skipto_settings[skipto]))
 	{
 		/#
-			assertmsg("" + skipto + "");
+			assertmsg(("" + skipto) + "");
 		#/
 		return;
 	}
@@ -544,9 +544,9 @@ function split_top_level_and_or(instring)
 			ret[outindex] = ret[outindex] + c;
 			continue;
 		}
-		if(paren == 0 && c == "&")
+		if(paren == 0 && c == ("&"))
 		{
-			if(op == "|")
+			if(op == ("|"))
 			{
 				/#
 					parse_error("" + instring);
@@ -557,9 +557,9 @@ function split_top_level_and_or(instring)
 			ret[outindex] = "";
 			continue;
 		}
-		if(paren == 0 && c == "|")
+		if(paren == 0 && c == ("|"))
 		{
-			if(op == "&")
+			if(op == ("&"))
 			{
 				/#
 					parse_error("" + instring);
@@ -664,9 +664,9 @@ function check_skipto_condition(conditions, adding)
 		}
 		return 1;
 	}
-	if(conditions["op"] == "|")
+	if(conditions["op"] == ("|"))
 	{
-		for(i = 0; i < conditions.size - 1; i++)
+		for(i = 0; i < (conditions.size - 1); i++)
 		{
 			if(check_skipto_condition(conditions[i], adding))
 			{
@@ -675,7 +675,7 @@ function check_skipto_condition(conditions, adding)
 		}
 		return 0;
 	}
-	for(i = 0; i < conditions.size - 1; i++)
+	for(i = 0; i < (conditions.size - 1); i++)
 	{
 		if(!check_skipto_condition(conditions[i], adding))
 		{
@@ -975,14 +975,14 @@ function indicate(skipto, index)
 		hudelem.alignx = "";
 		hudelem.aligny = "";
 		hudelem.x = 125;
-		hudelem.y = 20 * index + 2;
+		hudelem.y = 20 * (index + 2);
 		hudelem.fontscale = 1.5;
 		hudelem.sort = 20;
 		hudelem.alpha = 0;
 		hudelem.color = vectorscale((1, 1, 1), 0.8);
 		hudelem.font = "";
 		hudelem settext(skipto);
-		wait(0.25 * index + 1);
+		wait(0.25 * (index + 1));
 		hudelem fadeovertime(0.25);
 		hudelem.alpha = 1;
 		wait(0.25);
@@ -1119,7 +1119,7 @@ function create(skipto, index)
 	{
 		if(index != 4)
 		{
-			alpha = 1 - abs(4 - index) / 4;
+			alpha = 1 - ((abs(4 - index)) / 4);
 		}
 		else
 		{
@@ -1134,7 +1134,7 @@ function create(skipto, index)
 	hudelem.alignx = "left";
 	hudelem.aligny = "middle";
 	hudelem.x = 80;
-	hudelem.y = 80 + index * 18;
+	hudelem.y = 80 + (index * 18);
 	hudelem settext(skipto);
 	hudelem.alpha = 0;
 	hudelem.foreground = 1;
@@ -1172,16 +1172,16 @@ function clear_menu()
 function devgui()
 {
 	rootmenu = "devgui_cmd \"Map/Skipto/";
-	jumpmenu = rootmenu + "Jump to/";
+	jumpmenu = rootmenu + ("Jump to/");
 	index = 1;
-	adddebugcommand(jumpmenu + "Default:0\" \"set " + "skipto_jump" + " " + "_default" + "\" \n");
+	adddebugcommand(((((jumpmenu + "Default:0\" \"set ") + "skipto_jump") + " ") + "_default") + "\" \n");
 	foreach(var_79326db2, struct in level.skipto_settings)
 	{
-		name = struct.name + ":" + index;
+		name = (struct.name + ":") + index;
 		index++;
-		adddebugcommand(jumpmenu + name + "\" \"set " + "skipto_jump" + " " + struct.name + "\" \n");
+		adddebugcommand((((((jumpmenu + name) + "\" \"set ") + "skipto_jump") + " ") + struct.name) + "\" \n");
 	}
-	adddebugcommand(jumpmenu + "No Game:" + index + "\" \"set " + "skipto_jump" + " " + "no_game" + "\" \n");
+	adddebugcommand(((((((jumpmenu + "No Game:") + index) + "\" \"set ") + "skipto_jump") + " ") + "no_game") + "\" \n");
 	for(;;)
 	{
 		jumpto = getdvarstring("skipto_jump");
@@ -1292,13 +1292,13 @@ function change_completion_menu(objectives)
 	rootclear = "devgui_remove \"Map/Skipto/Complete\" \n";
 	adddebugcommand(rootclear);
 	rootmenu = "devgui_cmd \"Map/Skipto/";
-	compmenu = rootmenu + "Complete/";
+	compmenu = rootmenu + ("Complete/");
 	index = 1;
 	foreach(var_dd043def, objective in objectives)
 	{
-		name = objective + ":" + index;
+		name = (objective + ":") + index;
 		index++;
-		adddebugcommand(compmenu + name + "\" \"set " + "skipto_complete" + " " + objective + "\" \n");
+		adddebugcommand((((((compmenu + name) + "\" \"set ") + "skipto_complete") + " ") + objective) + "\" \n");
 	}
 }
 
@@ -1347,7 +1347,7 @@ function display()
 	for(i = 0; i < names.size; i++)
 	{
 		s_name = names[i];
-		skipto_string = "[" + names[i] + "]";
+		skipto_string = ("[" + names[i]) + "]";
 		strings[strings.size] = skipto_string;
 	}
 	selected = names.size - 1;
@@ -1461,7 +1461,7 @@ function list_settext(hud_array, strings, num)
 {
 	for(i = 0; i < hud_array.size; i++)
 	{
-		index = i + num - 4;
+		index = i + (num - 4);
 		if(isdefined(strings[index]))
 		{
 			text = strings[index];
@@ -1694,7 +1694,7 @@ function teleport_ai(skipto_name, friendly_ai)
 	friendly_ai = array::remove_dead(friendly_ai);
 	a_skipto_structs = arraycopy(struct::get_array(skipto_name + "_ai", "targetname"));
 	/#
-		assert(a_skipto_structs.size >= friendly_ai.size, "" + skipto_name + "" + friendly_ai.size + "" + a_skipto_structs.size + "");
+		assert(a_skipto_structs.size >= friendly_ai.size, ((((("" + skipto_name) + "") + friendly_ai.size) + "") + a_skipto_structs.size) + "");
 	#/
 	if(!a_skipto_structs.size)
 	{
@@ -1808,10 +1808,10 @@ function get_spots(skipto_name, coop_sort = 0)
 			for(j = i; j < skipto_spots.size; j++)
 			{
 				/#
-					assert(isdefined(skipto_spots[j].script_int), "" + skipto_spots[j].origin + "");
+					assert(isdefined(skipto_spots[j].script_int), ("" + skipto_spots[j].origin) + "");
 				#/
 				/#
-					assert(isdefined(skipto_spots[i].script_int), "" + skipto_spots[i].origin + "");
+					assert(isdefined(skipto_spots[i].script_int), ("" + skipto_spots[i].origin) + "");
 				#/
 				if(skipto_spots[j].script_int < skipto_spots[i].script_int)
 				{
@@ -2196,7 +2196,7 @@ function on_player_connect()
 function objective_completed(name, player)
 {
 	/#
-		assert(isdefined(level.skipto_settings[name]), "" + name + "");
+		assert(isdefined(level.skipto_settings[name]), ("" + name) + "");
 	#/
 	setdvar("NPCDeathTracking_Save", 1);
 	foreach(var_47441b8b, var_eff42720 in level.players)
@@ -2380,9 +2380,9 @@ private function function_61843b91(var_717810f, n_player_dist)
 	}
 	foreach(var_27eb58ef, loc in var_717810f)
 	{
-		if(!(isdefined(loc.var_c2733dc7) && loc.var_c2733dc7))
+		if(!(isdefined(loc.b_used) && loc.b_used))
 		{
-			loc.var_c2733dc7 = 1;
+			loc.b_used = 1;
 			self.b_teleport_invulnerability = 1;
 			self freezecontrols(1);
 			self playsoundtoplayer("evt_coop_regroup_out", self);
@@ -2849,7 +2849,7 @@ function function_f380969b()
 	var_67bda5a5 = self getdstat("currentRankXP");
 	var_72c4032 = self rank::getrankxpstat();
 	var_9e54448b = self getdstat("hasSeenMaxLevelNotification");
-	if(var_9e54448b != 1 && var_72c4032 >= rank::getrankinfominxp(level.ranktable.size - 1))
+	if(var_9e54448b != 1 && var_72c4032 >= (rank::getrankinfominxp(level.ranktable.size - 1)))
 	{
 		self.var_a4c14d95 = self openluimenu("CPMaxLevelNotification");
 		self setdstat("hasSeenMaxLevelNotification", 1);
@@ -2898,9 +2898,9 @@ function function_c7f783fe()
 	{
 		tokens = strtok(str_next_map, "_");
 		var_a2a8516f = "cp";
-		for(i = 1; i < tokens.size - 1; i++)
+		for(i = 1; i < (tokens.size - 1); i++)
 		{
-			var_a2a8516f = var_a2a8516f + "_" + tokens[i];
+			var_a2a8516f = (var_a2a8516f + "_") + tokens[i];
 		}
 		str_next_map = var_a2a8516f;
 	}
@@ -3346,7 +3346,7 @@ function level_completed(skipto, starting)
 			}
 			else
 			{
-				world.var_2c7a40d3 = undefined;
+				world.show_aar = undefined;
 			}
 		}
 		if(!is_final_level())
@@ -3912,7 +3912,7 @@ function catch_up_teleport()
 	timepassed = undefined;
 	if(isdefined(self.respawntimerstarttime))
 	{
-		timepassed = gettime() - self.respawntimerstarttime / 1000;
+		timepassed = (gettime() - self.respawntimerstarttime) / 1000;
 	}
 	if(self laststand::player_is_in_laststand())
 	{
@@ -4222,7 +4222,7 @@ function update_player_billboard()
 				self lui::play_animation(lui_menu, "");
 				if(isdefined(level.billboard_event_state))
 				{
-					self setluimenudata(lui_menu, "", level.billboard_event + "" + level.billboard_event_state + "");
+					self setluimenudata(lui_menu, "", ((level.billboard_event + "") + level.billboard_event_state) + "");
 				}
 				else
 				{

@@ -777,7 +777,7 @@ function function_abc05be8()
 {
 	self endon(#"death");
 	self notify(#"hash_abc05be8");
-	if(isdefined(self.var_11f7b644) && gettime() - self.var_11f7b644 > 2000)
+	if(isdefined(self.var_11f7b644) && (gettime() - self.var_11f7b644) > 2000)
 	{
 		self clientfield::set("zombie_appear_vanish_fx", 1);
 	}
@@ -911,7 +911,7 @@ function function_8347526a()
 			wait(4);
 			continue;
 		}
-		if(!self haspath() && !self.lastpathtime && gettime() - self.var_11f7b644 >= 6000)
+		if(!self haspath() && !self.lastpathtime && (gettime() - self.var_11f7b644) >= 6000)
 		{
 			wait(12);
 			if(!function_c1802d32())
@@ -936,7 +936,7 @@ function function_8347526a()
 					{
 						continue;
 					}
-					if(distancesquared(closestplayer.origin, zombie.origin) < 400 * 400)
+					if(distancesquared(closestplayer.origin, zombie.origin) < (400 * 400))
 					{
 						continue;
 					}
@@ -1106,7 +1106,7 @@ function function_d0d9ed35()
 	self endon(#"death");
 	self set_zombie_run_cycle("walk");
 	rand_num = randomint(100);
-	if(rand_num > level.var_a9e78bf7["levelonezombies"] + level.var_a9e78bf7["leveltwozombies"])
+	if(rand_num > (level.var_a9e78bf7["levelonezombies"] + level.var_a9e78bf7["leveltwozombies"]))
 	{
 		self.bonuszmlevel = 2;
 		newhealth = level.var_a9e78bf7["levelthreehealth"];
@@ -1148,7 +1148,7 @@ function function_d0d9ed35()
 	}
 	self flag::wait_till("bzm_zombie_attack");
 	rand_num = randomint(100);
-	if(rand_num > level.var_a9e78bf7["walkpercent"] + level.var_a9e78bf7["runpercent"])
+	if(rand_num > (level.var_a9e78bf7["walkpercent"] + level.var_a9e78bf7["runpercent"]))
 	{
 		self set_zombie_run_cycle("sprint");
 	}
@@ -1225,7 +1225,7 @@ private function function_48cb1ad1(einflictor, eattacker, idamage, idflags, smea
 	{
 		if(randomint(100) < 20)
 		{
-			if(isdefined(self.var_11f7b644) && gettime() - self.var_11f7b644 > 1000)
+			if(isdefined(self.var_11f7b644) && (gettime() - self.var_11f7b644) > 1000)
 			{
 				self clientfield::increment("sparky_damaged_fx");
 			}
@@ -1235,7 +1235,7 @@ private function function_48cb1ad1(einflictor, eattacker, idamage, idflags, smea
 	{
 		if(randomint(100) < 60)
 		{
-			if(isdefined(self.var_11f7b644) && gettime() - self.var_11f7b644 > 1000)
+			if(isdefined(self.var_11f7b644) && (gettime() - self.var_11f7b644) > 1000)
 			{
 				self clientfield::increment("fire_damaged_fx");
 			}
@@ -1290,7 +1290,7 @@ private function function_f10fd3d1(weapon)
 	}
 	self notify(#"hash_f10fd3d1");
 	self endon(#"hash_f10fd3d1");
-	if(isdefined(weapon) && (weapon.name == "flash_grenade" || weapon.name == "flash_grenade+none") && self.archetype === "zombie")
+	if(isdefined(weapon) && (weapon.name == "flash_grenade" || weapon.name == ("flash_grenade+none")) && self.archetype === "zombie")
 	{
 		self.var_82253adf = 1;
 		self asmsetanimationrate(0.65);
@@ -1743,7 +1743,7 @@ function function_5e4284a5()
 	self notify(#"bhtn_action_notify", "taunt");
 	if(self ai::get_behavior_attribute("spark_behavior"))
 	{
-		if(isdefined(self.var_11f7b644) && gettime() - self.var_11f7b644 > 1000)
+		if(isdefined(self.var_11f7b644) && (gettime() - self.var_11f7b644) > 1000)
 		{
 			self clientfield::increment("sparky_damaged_fx");
 		}
@@ -1926,7 +1926,7 @@ function function_a608d09()
 			wait(1);
 			continue;
 		}
-		if(isdefined(level.activeplayers) && level.activeplayers.size && abs(self.origin[2] - level.activeplayers[0].origin[2]) < -5000)
+		if(isdefined(level.activeplayers) && level.activeplayers.size && (abs(self.origin[2] - level.activeplayers[0].origin[2])) < -5000)
 		{
 			self.var_4f1bf25e = 1;
 			self dodamage(self.health + 100, (0, 0, 0));
@@ -2002,7 +2002,7 @@ function zombie_death_event(zombie)
 		if(zombie.damagemod == "MOD_GRENADE" || zombie.damagemod == "MOD_GRENADE_SPLASH" || zombie.damagemod == "MOD_EXPLOSIVE")
 		{
 			splode_dist = 180;
-			if(isdefined(zombie.damagehit_origin) && distancesquared(zombie.origin, zombie.damagehit_origin) < splode_dist * splode_dist)
+			if(isdefined(zombie.damagehit_origin) && distancesquared(zombie.origin, zombie.damagehit_origin) < (splode_dist * splode_dist))
 			{
 				if(!(isdefined(zombie.is_on_fire) && zombie.is_on_fire) && (!(isdefined(zombie.guts_explosion) && zombie.guts_explosion)))
 				{
@@ -2035,7 +2035,7 @@ function zombie_death_event(zombie)
 		{
 			if(zombie ai::get_behavior_attribute("spark_behavior"))
 			{
-				if(isdefined(zombie.var_11f7b644) && gettime() - zombie.var_11f7b644 > 1000)
+				if(isdefined(zombie.var_11f7b644) && (gettime() - zombie.var_11f7b644) > 1000)
 				{
 					zombie clientfield::increment("sparky_damaged_fx");
 				}
@@ -2344,7 +2344,7 @@ private function function_9b15c7b()
 				zombies = getaiteamarray("axis");
 				foreach(var_e4947dfb, zombie in zombies)
 				{
-					if(isdefined(zombie) && isalive(zombie) && isactor(zombie) && !zombie haspath() && !zombie.lastpathtime && isdefined(zombie.var_11f7b644) && gettime() - zombie.var_11f7b644 >= 6000 && (isdefined(zombie.allowdeath) && zombie.allowdeath))
+					if(isdefined(zombie) && isalive(zombie) && isactor(zombie) && !zombie haspath() && !zombie.lastpathtime && isdefined(zombie.var_11f7b644) && (gettime() - zombie.var_11f7b644) >= 6000 && (isdefined(zombie.allowdeath) && zombie.allowdeath))
 					{
 						zombie kill();
 						util::wait_network_frame();
@@ -2621,7 +2621,7 @@ private function bzm_waitforstreamerortimeout(player, timeout)
 	/#
 		assert(isdefined(player) && isplayer(player));
 	#/
-	timeout = gettime() + timeout * 1000;
+	timeout = gettime() + (timeout * 1000);
 	do
 	{
 		util::wait_network_frame();

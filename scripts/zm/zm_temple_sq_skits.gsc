@@ -175,13 +175,13 @@ function skit_interupt(fail_pos, group)
 	{
 		num = 8;
 	}
-	snd = "vox_plr_" + character + "_safety_" + randomintrange(0, num);
+	snd = (("vox_plr_" + character) + "_safety_") + randomintrange(0, num);
 	if(!isdefined(speaker))
 	{
 		return;
 	}
 	/#
-		iprintln(character + "" + snd);
+		iprintln((character + "") + snd);
 	#/
 	speaker playsoundwithnotify(snd, "line_done");
 	speaker waittill(#"line_done");
@@ -225,7 +225,7 @@ function do_skit_line(script_line)
 		return;
 	}
 	/#
-		iprintln(speaking_player getentitynumber() + "" + script_line.vo);
+		iprintln((speaking_player getentitynumber() + "") + script_line.vo);
 	#/
 	speaking_player playsoundwithnotify(script_line.vo, "line_done");
 	speaking_player waittill(#"line_done");
@@ -250,7 +250,7 @@ function start_skit(skit_name, group)
 	level thread skit_interupt(undefined, group);
 	for(i = 0; i < script.size; i++)
 	{
-		if(i == script.size - 1)
+		if(i == (script.size - 1))
 		{
 			level notify(#"start_skit_done");
 		}

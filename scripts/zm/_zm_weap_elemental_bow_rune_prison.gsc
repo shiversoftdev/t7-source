@@ -183,7 +183,7 @@ function function_94ba3a15(e_player, v_hit_origin, str_weapon_name, var_3fee16b8
 			self dodamage(self.health, var_c8bd3127.origin, e_player, e_player, undefined, "MOD_BURNED", 0, level.var_791ba87b);
 		}
 	}
-	wait(1.8 + 0.07 * var_8b30ffd9);
+	wait(1.8 + (0.07 * var_8b30ffd9));
 	var_c8bd3127 clientfield::set("runeprison_explode_fx", 1);
 	if(isdefined(self) && isalive(self) && self.archetype === "zombie")
 	{
@@ -200,7 +200,7 @@ function function_94ba3a15(e_player, v_hit_origin, str_weapon_name, var_3fee16b8
 			{
 				var_3bb42832 = math::clamp(var_3bb42832, 0, level.var_f4dc2834);
 			}
-			var_40955aed = var_3bb42832 * 0.2 / 0.2;
+			var_40955aed = (var_3bb42832 * 0.2) / 0.2;
 			self.var_a320d911 = 0;
 			self.var_98056717 = 0;
 			self scene::stop("ai_zm_dlc1_soldat_runeprison_struggle_loop");
@@ -407,7 +407,7 @@ function function_e7abbbb8(var_3c817f0d, e_player)
 		{
 			var_3bb42832 = math::clamp(var_3bb42832, 0, level.var_f4dc2834);
 		}
-		n_max_damage = var_3bb42832 * 0.05 / 0.2;
+		n_max_damage = (var_3bb42832 * 0.05) / 0.2;
 		str_mod = "MOD_PROJECTILE_SPLASH";
 	}
 	else

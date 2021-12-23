@@ -203,11 +203,11 @@ function set_gadget_combat_efficiency_status(weapon, status, time)
 	timestr = "";
 	if(isdefined(time))
 	{
-		timestr = "^3" + ", time: " + time;
+		timestr = (("^3") + ", time: ") + time;
 	}
 	if(getdvarint("scr_cpower_debug_prints") > 0)
 	{
-		self iprintlnbold("Gadget Combat Efficiency " + weapon.name + ": " + status + timestr);
+		self iprintlnbold(((("Gadget Combat Efficiency " + weapon.name) + ": ") + status) + timestr);
 	}
 }
 

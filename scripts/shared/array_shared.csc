@@ -965,9 +965,9 @@ function get_all_closest(org, array, excluders = [], max = array.size, maxdist)
 	for(;;)
 	{
 		change = 0;
-		for(i = 0; i < dist.size - 1; i++)
+		for(i = 0; i < (dist.size - 1); i++)
 		{
-			if(dist[i] <= dist[i + 1])
+			if(dist[i] <= (dist[i + 1]))
 			{
 				continue;
 			}

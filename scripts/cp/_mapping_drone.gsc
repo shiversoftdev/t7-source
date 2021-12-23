@@ -158,7 +158,7 @@ function function_fb6d201d()
 			{
 				continue;
 			}
-			n_height_offset = player.origin[2] + 72 - self.origin[2];
+			n_height_offset = (player.origin[2] + 72) - self.origin[2];
 			n_dist_sq = distancesquared(player.origin, self.origin);
 			if(n_height_offset < n_lowest_height_offset)
 			{
@@ -168,7 +168,7 @@ function function_fb6d201d()
 			{
 				n_closest_dist_sq = n_dist_sq;
 			}
-			if(n_lowest_height_offset < 152 * -1)
+			if(n_lowest_height_offset < (152 * -1))
 			{
 				var_a8dc514 = 1;
 				continue;

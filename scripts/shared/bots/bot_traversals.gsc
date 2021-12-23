@@ -27,9 +27,9 @@ function callback_botentereduseredge(startnode, endnode)
 	standingviewheight = getdvarfloat("player_standingViewHeight", 0);
 	swimwaterheight = standingviewheight * getdvarfloat("player_swimHeightRatio", 0);
 	startwaterheight = getwaterheight(startnode.origin);
-	startinwater = startwaterheight != 0 && startwaterheight > startnode.origin[2] + swimwaterheight;
+	startinwater = startwaterheight != 0 && startwaterheight > (startnode.origin[2] + swimwaterheight);
 	endwaterheight = getwaterheight(endnode.origin);
-	endinwater = endwaterheight != 0 && endwaterheight > endnode.origin[2] + swimwaterheight;
+	endinwater = endwaterheight != 0 && endwaterheight > (endnode.origin[2] + swimwaterheight);
 	if(iswallrunnode(endnode))
 	{
 		self thread wallrun_traversal(startnode, endnode);
@@ -167,7 +167,7 @@ function jump_up_traversal(startnode, endnode)
 	wait(0.05);
 	self thread jump_to(ledgetop);
 	wait(0.05);
-	while(self.origin[2] + 72 < ledgetop[2])
+	while((self.origin[2] + 72) < ledgetop[2])
 	{
 		wait(0.05);
 	}
@@ -192,7 +192,7 @@ function jump_down_traversal(startnode, endnode)
 	fwd = (endnode.origin[0] - startnode.origin[0], endnode.origin[1] - startnode.origin[1], 0);
 	fwd = vectornormalize(fwd) * 128;
 	start = startnode.origin + vectorscale((0, 0, 1), 16);
-	end = startnode.origin + fwd + vectorscale((0, 0, 1), 16);
+	end = (startnode.origin + fwd) + vectorscale((0, 0, 1), 16);
 	result = bullettrace(start, end, 0, self);
 	if(result["surfacetype"] != "none")
 	{
@@ -204,9 +204,9 @@ function jump_down_traversal(startnode, endnode)
 	dist = distance2d(startnode.origin, endnode.origin);
 	height = startnode.origin[2] - endnode.origin[2];
 	gravity = self getplayergravity();
-	t = sqrt(2 * height / gravity);
+	t = sqrt((2 * height) / gravity);
 	speed2d = self bot_speed2d();
-	if(t * speed2d < dist)
+	if((t * speed2d) < dist)
 	{
 		ledgetop = checknavmeshdirection(startnode.origin, endnode.origin - startnode.origin, 128, 1);
 		bottomdist = dist - distance2d(startnode.origin, ledgetop);
@@ -300,7 +300,7 @@ function exit_wallrun(startnode, endnode, wallnormal, runnormal)
 	falldist = hpeak - endnode.origin[2];
 	if(falldist > 0)
 	{
-		tfall = sqrt(falldist / 0.5 * gravity);
+		tfall = sqrt(falldist / (0.5 * gravity));
 	}
 	else
 	{
@@ -313,7 +313,7 @@ function exit_wallrun(startnode, endnode, wallnormal, runnormal)
 	if(vnormal <= 200)
 	{
 		dot = sqrt(vnormal / 200);
-		vforward = sqrt(40000 * dot * dot - vnormal * vnormal);
+		vforward = sqrt(((40000 * dot) * dot) - (vnormal * vnormal));
 	}
 	else
 	{
@@ -325,10 +325,10 @@ function exit_wallrun(startnode, endnode, wallnormal, runnormal)
 		enddir = endnode.origin - self.origin;
 		enddist = vectordot(enddir, runnormal);
 		vrun = self bot_speed2d();
-		dforward = vrun + vforward * t;
+		dforward = (vrun + vforward) * t;
 		if(enddist <= dforward)
 		{
-			jumpangle = wallnormal * vnormal + runnormal * vforward;
+			jumpangle = (wallnormal * vnormal) + (runnormal * vforward);
 			if(iswallrunnode(endnode))
 			{
 				self thread wallrun_traversal(startnode, endnode, jumpangle);
@@ -435,10 +435,10 @@ function bot_hit_target(target)
 	}
 	t = targetdist / targetspeed;
 	gravity = self getplayergravity();
-	height = self.origin[2] + velocity[2] * t - gravity * t * t * 0.5;
+	height = (self.origin[2] + (velocity[2] * t)) - (((gravity * t) * t) * 0.5);
 	/#
 	#/
-	return height >= target[2] + 32;
+	return height >= (target[2] + 32);
 }
 
 /*

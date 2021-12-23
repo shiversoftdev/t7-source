@@ -70,7 +70,7 @@ function air_puzzle_1_cleanup()
 {
 	for(i = 1; i <= 3; i++)
 	{
-		n_move = 4 - i * 20;
+		n_move = (4 - i) * 20;
 		e_ring = getent("ceiling_ring_0" + i, "targetname");
 		e_ring rotateyaw(360, 1.5, 0.5, 0);
 		e_ring movez(n_move, 1.5, 0.5, 0);
@@ -128,7 +128,7 @@ function check_puzzle_solved()
 function ceiling_ring_randomize()
 {
 	n_offset_from_final = randomintrange(1, 4);
-	self.position = self.script_int + n_offset_from_final % 4;
+	self.position = (self.script_int + n_offset_from_final) % 4;
 	ceiling_ring_update_position();
 	/#
 		/#
@@ -167,7 +167,7 @@ function ceiling_ring_update_position()
 */
 function ceiling_ring_rotate()
 {
-	self.position = self.position + 1 % 4;
+	self.position = (self.position + 1) % 4;
 	/#
 		if(self.position == self.script_int)
 		{
@@ -246,7 +246,7 @@ function ceiling_ring_run()
 				self ceiling_ring_rotate();
 				zm_tomb_utility::rumble_nearby_players(self.origin, 1500, 2);
 				n_rotations++;
-				if(n_rotations % 4 == 0)
+				if((n_rotations % 4) == 0)
 				{
 					level notify(#"vo_puzzle_bad", attacker);
 				}

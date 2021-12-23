@@ -311,7 +311,7 @@ function _get_debug_color(str_color)
 			}
 			default:
 			{
-				println("" + str_color + "");
+				println(("" + str_color) + "");
 				return (0, 0, 0);
 				break;
 			}
@@ -386,10 +386,10 @@ function draw_colornodes(array, team)
 					{
 						if(isdefined(a_team_nodes[p].color_user) && isalive(a_team_nodes[p].color_user) && isdefined(a_team_nodes[p].color_user.script_forcecolor))
 						{
-							print3d(a_team_nodes[p].origin + vectorscale((0, 0, -1), 5), "" + a_team_nodes[p].script_color_allies_old, _get_debug_color(a_team_nodes[p].color_user.script_forcecolor), 0.5, 0.4);
+							print3d(a_team_nodes[p].origin + (vectorscale((0, 0, -1), 5)), "" + a_team_nodes[p].script_color_allies_old, _get_debug_color(a_team_nodes[p].color_user.script_forcecolor), 0.5, 0.4);
 							continue;
 						}
-						print3d(a_team_nodes[p].origin + vectorscale((0, 0, -1), 5), "" + a_team_nodes[p].script_color_allies_old, color, 0.5, 0.4);
+						print3d(a_team_nodes[p].origin + (vectorscale((0, 0, -1), 5)), "" + a_team_nodes[p].script_color_allies_old, color, 0.5, 0.4);
 					}
 				}
 			}
@@ -529,7 +529,7 @@ function draw_color_friendlies()
 			for(p = 0; p < colored_friendlies[colors[i]]; p++)
 			{
 				overlay = newhudelem();
-				overlay.x = 15 + 25 * p;
+				overlay.x = 15 + (25 * p);
 				overlay.y = y;
 				overlay setshader("", 16, 16);
 				overlay.alignx = "";
@@ -617,7 +617,7 @@ function goto_current_colorindex()
 		return;
 	}
 	/#
-		println("" + self.export + "");
+		println(("" + self.export) + "");
 	#/
 }
 
@@ -675,7 +675,7 @@ function get_colorcodes_from_trigger(color_team, team)
 			continue;
 		}
 		/#
-			assert(isdefined(color), "" + self getorigin() + "" + colorcodes[i]);
+			assert(isdefined(color), (("" + self getorigin()) + "") + colorcodes[i]);
 		#/
 		colorcodesbycolorindex[color] = colorcodes[i];
 		colors[colors.size] = color;
@@ -1003,7 +1003,7 @@ function activate_color_trigger_internal(colorcodes, colors, team, colorcodesbyc
 		level.currentcolorforced[team][colors[i]] = colorcodesbycolorindex[colors[i]];
 		/#
 			/#
-				assert(isdefined(level.arrays_of_colorcoded_nodes[team][level.currentcolorforced[team][colors[i]]]) || isdefined(level.colorcoded_volumes[team][level.currentcolorforced[team][colors[i]]]), "" + colors[i] + "" + team + "");
+				assert(isdefined(level.arrays_of_colorcoded_nodes[team][level.currentcolorforced[team][colors[i]]]) || isdefined(level.colorcoded_volumes[team][level.currentcolorforced[team][colors[i]]]), ((("" + colors[i]) + "") + team) + "");
 			#/
 		#/
 	}
@@ -1253,7 +1253,7 @@ function issue_color_order_to_ai(colorcode, color, team, ai)
 	/#
 		if(nodes.size < ai.size)
 		{
-			println("" + ai.size + "" + nodes.size + "");
+			println(((("" + ai.size) + "") + nodes.size) + "");
 		}
 	#/
 	counter = 0;
@@ -1388,7 +1388,7 @@ function color_node_finds_user_for_colorcode(colorcode, team)
 {
 	color = colorcode[0];
 	/#
-		assert(colorislegit(color), "" + color + "");
+		assert(colorislegit(color), ("" + color) + "");
 	#/
 	if(!isdefined(level.currentcolorforced[team][color]))
 	{
@@ -1745,12 +1745,12 @@ function get_best_available_colored_node()
 		assert(self.team != "");
 	#/
 	/#
-		assert(isdefined(self.script_forcecolor), "" + self.export + "");
+		assert(isdefined(self.script_forcecolor), ("" + self.export) + "");
 	#/
 	colorcode = level.currentcolorforced[self.team][self.script_forcecolor];
 	nodes = get_prioritized_colorcoded_nodes(self.team, colorcode, self.script_forcecolor);
 	/#
-		assert(nodes.size > 0, "" + self.export + "" + self.script_forcecolor + "");
+		assert(nodes.size > 0, ((("" + self.export) + "") + self.script_forcecolor) + "");
 	#/
 	for(i = 0; i < nodes.size; i++)
 	{
@@ -1776,12 +1776,12 @@ function get_best_available_new_colored_node()
 		assert(self.team != "");
 	#/
 	/#
-		assert(isdefined(self.script_forcecolor), "" + self.export + "");
+		assert(isdefined(self.script_forcecolor), ("" + self.export) + "");
 	#/
 	colorcode = level.currentcolorforced[self.team][self.script_forcecolor];
 	nodes = get_prioritized_colorcoded_nodes(self.team, colorcode, self.script_forcecolor);
 	/#
-		assert(nodes.size > 0, "" + self.export + "" + self.script_forcecolor + "");
+		assert(nodes.size > 0, ((("" + self.export) + "") + self.script_forcecolor) + "");
 	#/
 	nodes = arraysort(nodes, self.origin);
 	for(i = 0; i < nodes.size; i++)
@@ -1818,7 +1818,7 @@ function process_stop_short_of_node(node)
 	currenttime = gettime();
 	wait_for_killanimscript_or_time(1);
 	newtime = gettime();
-	if(newtime - currenttime >= 1000)
+	if((newtime - currenttime) >= 1000)
 	{
 		reached_node_but_could_not_claim_it(node);
 	}
@@ -2180,7 +2180,7 @@ function colornode_replace_on_death()
 	}
 	self.replace_on_death = 1;
 	/#
-		assert(!isdefined(self.respawn_on_death), "" + self.export + "");
+		assert(!isdefined(self.respawn_on_death), ("" + self.export) + "");
 	#/
 	classname = self.classname;
 	color = self.script_forcecolor;
@@ -2228,7 +2228,7 @@ function colornode_replace_on_death()
 		players = getplayers();
 		correct_colored_guy = arraysort(correct_colored_friendlies, players[0].origin, 1)[0];
 		/#
-			assert(correct_colored_guy.script_forcecolor != color, "" + color + "");
+			assert(correct_colored_guy.script_forcecolor != color, ("" + color) + "");
 		#/
 		waittillframeend();
 		if(!isalive(correct_colored_guy))
@@ -2409,7 +2409,7 @@ function getclasscolorhash(classname, fromcolor)
 	classcolorhash = classname;
 	if(isdefined(fromcolor))
 	{
-		classcolorhash = classcolorhash + "##" + fromcolor;
+		classcolorhash = classcolorhash + ("##" + fromcolor);
 	}
 	return classcolorhash;
 }

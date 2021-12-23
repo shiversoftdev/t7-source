@@ -77,7 +77,7 @@ autoexec function function_58d5283a()
 	/#
 		assert(isdefined(var_6a173bd1));
 	#/
-	function_549c28ac("gamedata/tables/cpzm/" + var_6a173bd1);
+	function_549c28ac(("gamedata/tables/cpzm/") + var_6a173bd1);
 }
 
 /*
@@ -438,7 +438,7 @@ function function_132d9eee(weapon)
 	if(!isdefined(item))
 	{
 		/#
-			iprintlnbold("" + weapon.name + "");
+			iprintlnbold(("" + weapon.name) + "");
 		#/
 		return;
 	}

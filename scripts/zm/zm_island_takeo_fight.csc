@@ -89,7 +89,7 @@ function takeo_arm_hit_fx(localclientnum, oldval, newval, bnewent, binitialsnap,
 {
 	if(newval > 0)
 	{
-		str_tag = "tag_fx_eye" + newval + "_jnt";
+		str_tag = ("tag_fx_eye" + newval) + "_jnt";
 		self.var_2c75d806 = playfxontag(localclientnum, level._effect["takeofight_postule_burst"], self, str_tag);
 	}
 }

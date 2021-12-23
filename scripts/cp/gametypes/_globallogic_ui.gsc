@@ -80,7 +80,7 @@ function isanyaiattackingtheplayer(playerent)
 			{
 				return 1;
 			}
-			if(ai.enemy === playerent && isdefined(ai.weapon) && ai.weapon.name === "none" && distancesquared(ai.origin, playerent.origin) < 240 * 240)
+			if(ai.enemy === playerent && isdefined(ai.weapon) && ai.weapon.name === "none" && distancesquared(ai.origin, playerent.origin) < (240 * 240))
 			{
 				return 1;
 			}
@@ -106,7 +106,7 @@ function isanyaiawareofplayer(playerent)
 	{
 		if(issentient(ai))
 		{
-			if(ai lastknowntime(playerent) + 4000 >= gettime())
+			if((ai lastknowntime(playerent) + 4000) >= gettime())
 			{
 				return 1;
 			}
@@ -616,7 +616,7 @@ function fullscreen_black()
 	self.fullscreen_black_active = undefined;
 	util::show_hud(1);
 	/#
-		printtoprightln("" + gettime() + "" + self getentitynumber(), (1, 1, 1));
+		printtoprightln((("" + gettime()) + "") + self getentitynumber(), (1, 1, 1));
 		streamerskiptodebug(getskiptos());
 	#/
 }
@@ -926,7 +926,7 @@ function menuclass(response)
 			timepassed = undefined;
 			if(isdefined(self.respawntimerstarttime))
 			{
-				timepassed = gettime() - self.respawntimerstarttime / 1000;
+				timepassed = (gettime() - self.respawntimerstarttime) / 1000;
 			}
 			self thread [[level.spawnclient]](timepassed);
 			self.respawntimerstarttime = undefined;

@@ -38,7 +38,7 @@ private function function_a55a134f()
 	unsorted = arenas;
 	for(i = 1; i < unsorted.size; i++)
 	{
-		for(j = i; j > 0 && int(unsorted[j - 1].script_parameters) > int(unsorted[j].script_parameters); j--)
+		for(j = i; j > 0 && (int(unsorted[j - 1].script_parameters)) > int(unsorted[j].script_parameters); j--)
 		{
 			array::swap(unsorted, j, j - 1);
 		}
@@ -154,17 +154,17 @@ function init()
 		arena.var_37d3a53b = (isdefined(arenas[i].var_f869148f) ? 1 : 0);
 		arena.var_aad78940 = 1.4;
 		arena.var_bfa5d6ae = 0;
-		arena.var_dd94482c = 1 + 2 + 16;
+		arena.var_dd94482c = (1 + 2) + 16;
 		arena.var_ecf7ec70 = undefined;
 		if(isdefined(level.var_2eda2d85))
 		{
 			[[level.var_2eda2d85]](arena);
 		}
 		arena.exits = getentarray(0, arena.name + "_doa_exit", "targetname");
-		arena.startpoints["left"] = struct::get_array(arena.name + "_exit_start_" + "left");
-		arena.startpoints["right"] = struct::get_array(arena.name + "_exit_start_" + "right");
-		arena.startpoints["top"] = struct::get_array(arena.name + "_exit_start_" + "top");
-		arena.startpoints["bottom"] = struct::get_array(arena.name + "_exit_start_" + "bottom");
+		arena.startpoints["left"] = struct::get_array((arena.name + "_exit_start_") + "left");
+		arena.startpoints["right"] = struct::get_array((arena.name + "_exit_start_") + "right");
+		arena.startpoints["top"] = struct::get_array((arena.name + "_exit_start_") + "top");
+		arena.startpoints["bottom"] = struct::get_array((arena.name + "_exit_start_") + "bottom");
 		arena.startpoints["player"] = struct::get_array(arena.name + "_player_spawnpoint");
 		if(arena.name == "vault" || arena.name == "tankmaze" || arena.name == "coop" || arena.name == "armory" || arena.name == "alien_armory" || arena.name == "wolfhole" || arena.name == "bomb_storage" || arena.name == "hangar" || arena.name == "redins" || arena.name == "truck_soccer" || arena.name == "tankmaze")
 		{
@@ -175,7 +175,7 @@ function init()
 		{
 			campos = strtok(var_5fabae4f.script_parameters, " ");
 			/#
-				assert(isdefined(campos.size == 3), "" + arena.name + "");
+				assert(isdefined(campos.size == 3), ("" + arena.name) + "");
 			#/
 			arena.var_2ac7f133 = (float(campos[0]), float(campos[1]), float(campos[2]));
 		}
@@ -187,7 +187,7 @@ function init()
 		{
 			var_b5091c96 = strtok(var_5fabae4f.script_noteworthy, " ");
 			/#
-				assert(isdefined(var_b5091c96.size == 3), "" + arena.name + "");
+				assert(isdefined(var_b5091c96.size == 3), ("" + arena.name) + "");
 			#/
 			arena.var_5fec1234 = (float(var_b5091c96[0]), float(var_b5091c96[1]), float(var_b5091c96[2]));
 		}
@@ -204,7 +204,7 @@ function init()
 			{
 				campos = strtok(var_5fabae4f.script_parameters, " ");
 				/#
-					assert(isdefined(campos.size == 3), "" + arena.name + "");
+					assert(isdefined(campos.size == 3), ("" + arena.name) + "");
 				#/
 				arena.var_5a97f5e9 = (float(campos[0]), float(campos[1]), float(campos[2]));
 			}
@@ -216,7 +216,7 @@ function init()
 			{
 				var_b5091c96 = strtok(var_5fabae4f.script_noteworthy, " ");
 				/#
-					assert(isdefined(var_b5091c96.size == 3), "" + arena.name + "");
+					assert(isdefined(var_b5091c96.size == 3), ("" + arena.name) + "");
 				#/
 				arena.var_a8b67ea4 = (float(var_b5091c96[0]), float(var_b5091c96[1]), float(var_b5091c96[2]));
 			}
@@ -560,7 +560,7 @@ function function_9f1a0b26(var_c3479584)
 	{
 		return var_44509e49;
 	}
-	if(isdefined(var_c3479584) && level.doa.arenas[level.doa.current_arena].var_dd94482c & 1 << var_c3479584)
+	if(isdefined(var_c3479584) && level.doa.arenas[level.doa.current_arena].var_dd94482c & (1 << var_c3479584))
 	{
 		return var_c3479584;
 	}
@@ -685,9 +685,9 @@ function function_836d1e22(localclientnum, oldval, newval, bnewent, binitialsnap
 	{
 		setworldfogactivebank(localclientnum, 0);
 	}
-	level.doa.var_1a3f3152 = "fx_exploder_" + level.doa.arenas[level.doa.current_arena].name + "_" + level.doa.var_d94564a5;
+	level.doa.var_1a3f3152 = (("fx_exploder_" + level.doa.arenas[level.doa.current_arena].name) + "_") + level.doa.var_d94564a5;
 	/#
-		namespace_693feb87::debugmsg("" + level.doa.var_1a3f3152 + "" + localclientnum);
+		namespace_693feb87::debugmsg((("" + level.doa.var_1a3f3152) + "") + localclientnum);
 	#/
 	playradiantexploder(localclientnum, level.doa.var_1a3f3152);
 	level function_43141563(localclientnum);
@@ -728,7 +728,7 @@ function setarena(localclientnum, oldval, newval, bnewent, binitialsnap, fieldna
 	level.doa.var_708cc739 = undefined;
 	level notify(#"hash_ec7ca67b");
 	/#
-		namespace_693feb87::debugmsg("" + level.doa.arenas[level.doa.current_arena].name + "" + level.doa.arenas[newval].name);
+		namespace_693feb87::debugmsg((("" + level.doa.arenas[level.doa.current_arena].name) + "") + level.doa.arenas[newval].name);
 	#/
 	level.doa.var_95e3fdf9 = level.doa.current_arena;
 	level.doa.current_arena = newval;

@@ -54,7 +54,7 @@ function register_clientfields()
 	clientfield::register("scriptmover", "powerup_fuse_fx", 1, 1, "int", &function_4f546258, 0, 0);
 	for(i = 0; i < 4; i++)
 	{
-		registerclientfield("world", "player" + i + "hasItem", 1, 1, "int", &zm_utility::setsharedinventoryuimodels, 0);
+		registerclientfield("world", ("player" + i) + "hasItem", 1, 1, "int", &zm_utility::setsharedinventoryuimodels, 0);
 	}
 	clientfield::register("clientuimodel", "zmInventory.player_using_sprayer", 1, 1, "int", undefined, 0, 0);
 	clientfield::register("clientuimodel", "zmInventory.widget_sprayer", 1, 1, "int", undefined, 0, 0);

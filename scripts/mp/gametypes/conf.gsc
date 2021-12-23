@@ -197,7 +197,7 @@ function onuse(player)
 	if(!tacinsertboost)
 	{
 		currenttime = gettime();
-		if(player.lastkillconfirmedtime + 1000 > currenttime)
+		if((player.lastkillconfirmedtime + 1000) > currenttime)
 		{
 			player.lastkillconfirmedcount++;
 			if(player.lastkillconfirmedcount >= 3)

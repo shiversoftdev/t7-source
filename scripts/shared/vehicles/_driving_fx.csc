@@ -533,9 +533,9 @@ function play_driving_fx_firstperson(localclientnum, speed, speed_fraction)
 			current_additional_time = 0;
 			if(pitch < 10)
 			{
-				current_additional_time = 1000 * pitch - 10 / -10 - 10;
+				current_additional_time = 1000 * ((pitch - 10) / -10 - 10);
 			}
-			if(self.last_screen_dirt + self.screen_dirt_delay + current_additional_time < getrealtime())
+			if(((self.last_screen_dirt + self.screen_dirt_delay) + current_additional_time) < getrealtime())
 			{
 				screen_fx_type = self correct_surface_type_for_screen_fx();
 				if(screen_fx_type == "dirt")
@@ -715,7 +715,7 @@ function get_impact_vol_from_speed()
 	curspeed = self getspeed();
 	maxspeed = self getmaxspeed();
 	volume = audio::scale_speed(0, maxspeed, 0, 1, curspeed);
-	volume = volume * volume * volume;
+	volume = (volume * volume) * volume;
 	return volume;
 }
 

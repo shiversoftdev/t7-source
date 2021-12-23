@@ -328,7 +328,7 @@ function onplayerkilled(einflictor, attacker, idamage, smeansofdeath, weapon, vd
 			self thread demoteplayer(attacker);
 			return;
 		}
-		if(isdefined(attacker.lastpromotiontime) && attacker.lastpromotiontime + 3000 > gettime())
+		if(isdefined(attacker.lastpromotiontime) && (attacker.lastpromotiontime + 3000) > gettime())
 		{
 			scoreevents::processscoreevent("kill_in_3_seconds_gun", attacker, self, weapon);
 		}
@@ -513,7 +513,7 @@ function promoteplayer(weaponused)
 	wait(0.05);
 	if(weaponused.rootweapon == level.gunprogression[self.gunprogress].rootweapon || (isdefined(level.gunprogression[self.gunprogress].dualwieldweapon) && level.gunprogression[self.gunprogress].dualwieldweapon.rootweapon == weaponused.rootweapon))
 	{
-		if(self.gunprogress < level.gunprogression.size - 1)
+		if(self.gunprogress < (level.gunprogression.size - 1))
 		{
 			self.gunprogress++;
 			if(isalive(self))

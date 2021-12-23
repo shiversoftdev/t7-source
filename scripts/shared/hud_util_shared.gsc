@@ -77,7 +77,7 @@ function addchild(element)
 function removechild(element)
 {
 	element.parent = undefined;
-	if(self.children[self.children.size - 1] != element)
+	if((self.children[self.children.size - 1]) != element)
 	{
 		self.children[element.index] = self.children[self.children.size - 1];
 		self.children[element.index].index = element.index;
@@ -297,7 +297,7 @@ function setpoint(point, relativepoint, xoffset, yoffset, movetime = 0)
 			xfactor = 1;
 		}
 	}
-	self.x = element.x + offsetx * xfactor;
+	self.x = element.x + (offsetx * xfactor);
 	if(relativey == element.aligny)
 	{
 		offsety = 0;
@@ -327,7 +327,7 @@ function setpoint(point, relativepoint, xoffset, yoffset, movetime = 0)
 			yfactor = 1;
 		}
 	}
-	self.y = element.y + offsety * yfactor;
+	self.y = element.y + (offsety * yfactor);
 	self.x = self.x + self.xoffset;
 	self.y = self.y + self.yoffset;
 	switch(self.elemtype)
@@ -369,7 +369,7 @@ function setpointbar(point, relativepoint, xoffset, yoffset)
 	}
 	else
 	{
-		self.bar.x = self.x - int(self.width / 2);
+		self.bar.x = self.x - (int(self.width / 2));
 	}
 	if(self.aligny == "top")
 	{
@@ -410,7 +410,7 @@ function updatebar(barfrac, rateofchange)
 */
 function updatebarscale(barfrac, rateofchange)
 {
-	barwidth = int(self.width * barfrac + 0.5);
+	barwidth = int((self.width * barfrac) + 0.5);
 	if(!barwidth)
 	{
 		barwidth = 1;
@@ -418,21 +418,21 @@ function updatebarscale(barfrac, rateofchange)
 	self.bar.frac = barfrac;
 	self.bar setshader(self.bar.shader, barwidth, self.height);
 	/#
-		assert(barwidth <= self.width, "" + barwidth + "" + self.width + "" + barfrac);
+		assert(barwidth <= self.width, (((("" + barwidth) + "") + self.width) + "") + barfrac);
 	#/
 	if(isdefined(rateofchange) && barwidth < self.width)
 	{
 		if(rateofchange > 0)
 		{
 			/#
-				assert(1 - barfrac / rateofchange > 0, "" + barfrac + "" + rateofchange);
+				assert(((1 - barfrac) / rateofchange) > 0, (("" + barfrac) + "") + rateofchange);
 			#/
-			self.bar scaleovertime(1 - barfrac / rateofchange, self.width, self.height);
+			self.bar scaleovertime((1 - barfrac) / rateofchange, self.width, self.height);
 		}
 		else if(rateofchange < 0)
 		{
 			/#
-				assert(barfrac / -1 * rateofchange > 0, "" + barfrac + "" + rateofchange);
+				assert((barfrac / -1 * rateofchange) > 0, (("" + barfrac) + "") + rateofchange);
 			#/
 			self.bar scaleovertime(barfrac / -1 * rateofchange, 1, self.height);
 		}
@@ -799,7 +799,7 @@ function getcurrentfraction()
 	frac = self.bar.frac;
 	if(isdefined(self.bar.rateofchange))
 	{
-		frac = frac + gettime() - self.bar.lastupdatetime * self.bar.rateofchange;
+		frac = frac + ((gettime() - self.bar.lastupdatetime) * self.bar.rateofchange);
 		if(frac > 1)
 		{
 			frac = 1;
@@ -1191,8 +1191,8 @@ function createloadouticon(player, verindex, horindex, xpos, ypos)
 	{
 		iconsize = 22;
 	}
-	ypos = ypos - 90 + iconsize * 3 - verindex;
-	xpos = xpos - 10 + iconsize * horindex;
+	ypos = ypos - (90 + (iconsize * (3 - verindex)));
+	xpos = xpos - (10 + (iconsize * horindex));
 	icon = createicon("white", iconsize, iconsize);
 	icon setpoint("BOTTOM RIGHT", "BOTTOM RIGHT", xpos, ypos);
 	icon.horzalign = "user_right";
@@ -1218,8 +1218,8 @@ function setloadouticoncoords(player, verindex, horindex, xpos, ypos)
 	{
 		iconsize = 22;
 	}
-	ypos = ypos - 90 + iconsize * 3 - verindex;
-	xpos = xpos - 10 + iconsize * horindex;
+	ypos = ypos - (90 + (iconsize * (3 - verindex)));
+	xpos = xpos - (10 + (iconsize * horindex));
 	self setpoint("BOTTOM RIGHT", "BOTTOM RIGHT", xpos, ypos);
 	self.horzalign = "user_right";
 	self.vertalign = "user_bottom";
@@ -1447,7 +1447,7 @@ function showkillstreak(index, killstreak, xpos, ypos)
 	}
 	if(!isdefined(self.killstreakicon[index]))
 	{
-		self.killstreakicon[index] = createloadouticon(self, 3, self.killstreak.size - 1 - index, xpos, ypos);
+		self.killstreakicon[index] = createloadouticon(self, 3, (self.killstreak.size - 1) - index, xpos, ypos);
 	}
 	if(killstreak == "killstreak_null" || killstreak == "weapon_null")
 	{

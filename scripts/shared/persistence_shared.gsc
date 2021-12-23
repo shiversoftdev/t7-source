@@ -652,7 +652,7 @@ function codecallback_challengecomplete(rewardxp, maxval, row, tablenumber, chal
 	self luinotifyevent(&"challenge_complete", 7, challengeindex, itemindex, challengetype, tablenumber, row, maxval, rewardxp);
 	self luinotifyeventtospectators(&"challenge_complete", 7, challengeindex, itemindex, challengetype, tablenumber, row, maxval, rewardxp);
 	tablenumber = tablenumber + 1;
-	tablename = "gamedata/stats/mp/statsmilestones" + tablenumber + ".csv";
+	tablename = (("gamedata/stats/mp/statsmilestones") + tablenumber) + ".csv";
 	challengestring = tablelookupcolumnforrow(tablename, row, 5);
 	challengetier = int(tablelookupcolumnforrow(tablename, row, 1));
 	matchrecordlogchallengecomplete(self, tablenumber, challengetier, itemindex, challengestring);
@@ -666,15 +666,15 @@ function codecallback_challengecomplete(rewardxp, maxval, row, tablenumber, chal
 			herostring = tablelookup(statstablename, 0, itemindex, 3);
 			if(getdvarint("") == 1)
 			{
-				iprintlnbold(makelocalizedstring(challengestring) + "" + maxval + "" + makelocalizedstring(herostring));
+				iprintlnbold((((makelocalizedstring(challengestring) + "") + maxval) + "") + makelocalizedstring(herostring));
 			}
 			else if(getdvarint("") == 2)
 			{
-				self iprintlnbold(makelocalizedstring(challengestring) + "" + maxval + "" + makelocalizedstring(herostring));
+				self iprintlnbold((((makelocalizedstring(challengestring) + "") + maxval) + "") + makelocalizedstring(herostring));
 			}
 			else if(getdvarint("") == 3)
 			{
-				iprintln(makelocalizedstring(challengestring) + "" + maxval + "" + makelocalizedstring(herostring));
+				iprintln((((makelocalizedstring(challengestring) + "") + maxval) + "") + makelocalizedstring(herostring));
 			}
 		}
 	#/

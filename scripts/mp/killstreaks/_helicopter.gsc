@@ -498,7 +498,7 @@ function explodeoncontact(hardpointtype)
 function getvalidprotectlocationstart(random_path, protectlocation, destination)
 {
 	startnode = level.heli_paths[destination][random_path];
-	path_index = random_path + 1 % level.heli_paths[destination].size;
+	path_index = (random_path + 1) % level.heli_paths[destination].size;
 	innofly = airsupport::crossesnoflyzone(protectlocation + (0, 0, 1), protectlocation);
 	if(isdefined(innofly))
 	{
@@ -510,7 +510,7 @@ function getvalidprotectlocationstart(random_path, protectlocation, destination)
 		startnode = level.heli_paths[destination][path_index];
 		if(isdefined(noflyzone))
 		{
-			path_index = path_index + 1 % level.heli_paths[destination].size;
+			path_index = (path_index + 1) % level.heli_paths[destination].size;
 		}
 	}
 	return level.heli_paths[destination][path_index];
@@ -539,7 +539,7 @@ function getvalidrandomleavenode(start)
 	}
 	random_leave_node = randomint(level.heli_leavenodes.size);
 	leavenode = level.heli_leavenodes[random_leave_node];
-	path_index = random_leave_node + 1 % level.heli_leavenodes.size;
+	path_index = (random_leave_node + 1) % level.heli_leavenodes.size;
 	noflyzone = airsupport::crossesnoflyzone(leavenode.origin, start);
 	isprimary = leavenode.script_noteworthy === "primary";
 	while(isdefined(noflyzone) || isprimary && path_index != random_leave_node)
@@ -547,7 +547,7 @@ function getvalidrandomleavenode(start)
 		leavenode = level.heli_leavenodes[path_index];
 		noflyzone = airsupport::crossesnoflyzone(leavenode.origin, start);
 		isprimary = leavenode.script_noteworthy === "primary";
-		path_index = path_index + 1 % level.heli_leavenodes.size;
+		path_index = (path_index + 1) % level.heli_leavenodes.size;
 	}
 	return level.heli_leavenodes[path_index];
 }
@@ -578,7 +578,7 @@ function getvalidrandomstartnode(dest)
 				break;
 			}
 		}
-		path_index = path_index + 1 % level.heli_startnodes.size;
+		path_index = (path_index + 1) % level.heli_startnodes.size;
 	}
 	level.last_start_node_index = best_index;
 	return level.heli_startnodes[best_index];
@@ -597,13 +597,13 @@ function getvalidrandomcrashnode(start)
 {
 	random_leave_node = randomint(level.heli_crash_paths.size);
 	leavenode = level.heli_crash_paths[random_leave_node];
-	path_index = random_leave_node + 1 % level.heli_crash_paths.size;
+	path_index = (random_leave_node + 1) % level.heli_crash_paths.size;
 	noflyzone = airsupport::crossesnoflyzone(leavenode.origin, start);
 	while(isdefined(noflyzone) && path_index != random_leave_node)
 	{
 		leavenode = level.heli_crash_paths[path_index];
 		noflyzone = airsupport::crossesnoflyzone(leavenode.origin, start);
-		path_index = path_index + 1 % level.heli_crash_paths.size;
+		path_index = (path_index + 1) % level.heli_crash_paths.size;
 	}
 	return level.heli_crash_paths[path_index];
 }
@@ -639,7 +639,7 @@ function hackedcallbackpost(hacker)
 	{
 		heli.flak_drone flak_drone::configureteam(heli, 1);
 	}
-	heli.endtime = gettime() + killstreak_bundles::get_hack_timeout() * 1000;
+	heli.endtime = gettime() + (killstreak_bundles::get_hack_timeout() * 1000);
 	heli.killstreakendtime = int(heli.endtime);
 }
 
@@ -703,7 +703,7 @@ function heli_think(owner, startnode, heli_team, missilesenabled, protectlocatio
 		chopper.maxhealth = level.heli_maxhealth;
 	}
 	chopper.rocketdamageoneshot = level.heli_maxhealth + 1;
-	chopper.rocketdamagetwoshot = level.heli_maxhealth / 2 + 1;
+	chopper.rocketdamagetwoshot = (level.heli_maxhealth / 2) + 1;
 	if(hardpointtype == "helicopter_comlink" || hardpointtype == "inventory_helicopter_comlink")
 	{
 		chopper.numflares = 0;
@@ -1013,13 +1013,13 @@ function cantargetplayer_turret(player, hardpointtype)
 	{
 		return 0;
 	}
-	if(isdefined(player.spawntime) && gettime() - player.spawntime / 1000 <= level.heli_target_spawnprotection)
+	if(isdefined(player.spawntime) && ((gettime() - player.spawntime) / 1000) <= level.heli_target_spawnprotection)
 	{
 		return 0;
 	}
-	heli_centroid = self.origin + vectorscale((0, 0, -1), 160);
+	heli_centroid = self.origin + (vectorscale((0, 0, -1), 160));
 	heli_forward_norm = anglestoforward(self.angles);
-	heli_turret_point = heli_centroid + 144 * heli_forward_norm;
+	heli_turret_point = heli_centroid + (144 * heli_forward_norm);
 	visible_amount = player sightconetrace(heli_turret_point, self);
 	if(visible_amount < level.heli_target_recognition)
 	{
@@ -1053,13 +1053,13 @@ function cantargetactor_turret(actor, hardpointtype)
 	{
 		return 0;
 	}
-	if(distancesquared(actor.origin, helicopter.origin) > level.heli_visual_range * level.heli_visual_range)
+	if(distancesquared(actor.origin, helicopter.origin) > (level.heli_visual_range * level.heli_visual_range))
 	{
 		return 0;
 	}
-	heli_centroid = helicopter.origin + vectorscale((0, 0, -1), 160);
+	heli_centroid = helicopter.origin + (vectorscale((0, 0, -1), 160));
 	heli_forward_norm = anglestoforward(helicopter.angles);
-	heli_turret_point = heli_centroid + 144 * heli_forward_norm;
+	heli_turret_point = heli_centroid + (144 * heli_forward_norm);
 	visible_amount = actor sightconetrace(heli_turret_point, helicopter);
 	if(visible_amount < level.heli_target_recognition)
 	{
@@ -1143,7 +1143,7 @@ function cantargetplayer_missile(player, hardpointtype)
 	{
 		return 0;
 	}
-	if(isdefined(player.spawntime) && gettime() - player.spawntime / 1000 <= level.heli_target_spawnprotection)
+	if(isdefined(player.spawntime) && ((gettime() - player.spawntime) / 1000) <= level.heli_target_spawnprotection)
 	{
 		return 0;
 	}
@@ -1151,9 +1151,9 @@ function cantargetplayer_missile(player, hardpointtype)
 	{
 		return 0;
 	}
-	heli_centroid = self.origin + vectorscale((0, 0, -1), 160);
+	heli_centroid = self.origin + (vectorscale((0, 0, -1), 160));
 	heli_forward_norm = anglestoforward(self.angles);
-	heli_turret_point = heli_centroid + 144 * heli_forward_norm;
+	heli_turret_point = heli_centroid + (144 * heli_forward_norm);
 	if(!isdefined(player.lasthit))
 	{
 		player.lasthit = 0;
@@ -1198,9 +1198,9 @@ function cantargetdog_turret(dog)
 	{
 		return 0;
 	}
-	heli_centroid = self.origin + vectorscale((0, 0, -1), 160);
+	heli_centroid = self.origin + (vectorscale((0, 0, -1), 160));
 	heli_forward_norm = anglestoforward(self.angles);
-	heli_turret_point = heli_centroid + 144 * heli_forward_norm;
+	heli_turret_point = heli_centroid + (144 * heli_forward_norm);
 	if(!isdefined(dog.lasthit))
 	{
 		dog.lasthit = 0;
@@ -1245,9 +1245,9 @@ function cantargetdog_missile(dog)
 	{
 		return 0;
 	}
-	heli_centroid = self.origin + vectorscale((0, 0, -1), 160);
+	heli_centroid = self.origin + (vectorscale((0, 0, -1), 160));
 	heli_forward_norm = anglestoforward(self.angles);
-	heli_turret_point = heli_centroid + 144 * heli_forward_norm;
+	heli_turret_point = heli_centroid + (144 * heli_forward_norm);
 	if(!isdefined(dog.lasthit))
 	{
 		dog.lasthit = 0;
@@ -1640,7 +1640,7 @@ function heli_damage_monitor(hardpointtype)
 				hasfmj = attacker hasperk("specialty_armorpiercing");
 				if(hasfmj)
 				{
-					damage = damage + int(damage * level.cac_armorpiercing_data);
+					damage = damage + (int(damage * level.cac_armorpiercing_data));
 				}
 				damage = damage * level.heli_armor_bulletdamage;
 			}
@@ -1855,7 +1855,7 @@ function heli_damage_monitor(hardpointtype)
 		}
 		else if(isdefined(self.owner) && isplayer(self.owner))
 		{
-			if(last_hit_vo + hit_vo_spacing < gettime())
+			if((last_hit_vo + hit_vo_spacing) < gettime())
 			{
 				if(type == "MOD_PROJECTILE" || randomintrange(0, 3) == 0)
 				{
@@ -2040,7 +2040,7 @@ function heli_health(hardpointtype, playernotify)
 			self heli_set_active_camo_state(0);
 			self thread heli_crash(hardpointtype, self.owner, playernotify);
 		}
-		else if(self.damagetaken >= self.maxhealth * 0.66 && damagestate >= 2)
+		else if(self.damagetaken >= (self.maxhealth * 0.66) && damagestate >= 2)
 		{
 			self killstreaks::play_pilot_dialog_on_owner("damaged", "helicopter_comlink", self.killstreak_id);
 			if(isdefined(self.vehicletype) && self.vehicletype == "heli_player_gunner_mp")
@@ -2056,7 +2056,7 @@ function heli_health(hardpointtype, playernotify)
 			self.evasive = 1;
 			self notify(#"hash_2b25e23d");
 		}
-		else if(self.damagetaken >= self.maxhealth * 0.33 && damagestate == 3)
+		else if(self.damagetaken >= (self.maxhealth * 0.33) && damagestate == 3)
 		{
 			if(isdefined(self.vehicletype) && self.vehicletype == "heli_player_gunner_mp")
 			{
@@ -2072,10 +2072,10 @@ function heli_health(hardpointtype, playernotify)
 		}
 		if(self.damagetaken <= level.heli_armor)
 		{
-			airsupport::debug_print3d_simple("Armor: " + level.heli_armor - self.damagetaken, self, vectorscale((0, 0, 1), 100), 20);
+			airsupport::debug_print3d_simple("Armor: " + (level.heli_armor - self.damagetaken), self, vectorscale((0, 0, 1), 100), 20);
 			continue;
 		}
-		airsupport::debug_print3d_simple("Health: " + self.maxhealth - self.damagetaken, self, vectorscale((0, 0, 1), 100), 20);
+		airsupport::debug_print3d_simple("Health: " + (self.maxhealth - self.damagetaken), self, vectorscale((0, 0, 1), 100), 20);
 	}
 }
 
@@ -2419,7 +2419,7 @@ function heli_spin(speed)
 	self setyawspeed(speed, speed / 3, speed / 3);
 	while(isdefined(self))
 	{
-		self settargetyaw(self.angles[1] + speed * 0.9);
+		self settargetyaw(self.angles[1] + (speed * 0.9));
 		wait(1);
 	}
 }
@@ -2512,7 +2512,7 @@ function destroyhelicopter()
 function heli_explode()
 {
 	self endon(#"death");
-	forward = self.origin + vectorscale((0, 0, 1), 100) - self.origin;
+	forward = (self.origin + vectorscale((0, 0, 1), 100)) - self.origin;
 	if(isdefined(self.helitype) && self.helitype == "littlebird")
 	{
 		playfx(level.chopper_fx["explode"]["guard"], self.origin, forward);
@@ -2583,7 +2583,7 @@ function heli_leave()
 	/#
 		self util::debug_slow_heli_speed();
 	#/
-	self set_goal_pos(self.origin + leavenode.origin - self.origin / 2 + vectorscale((0, 0, 1), 1000), 0);
+	self set_goal_pos((self.origin + ((leavenode.origin - self.origin) / 2)) + vectorscale((0, 0, 1), 1000), 0);
 	self waittill(#"near_goal");
 	if(isdefined(self))
 	{
@@ -2865,7 +2865,7 @@ function heli_mobilespawn(protectdest)
 	self notify(#"flying");
 	self endon(#"flying");
 	self endon(#"abandoned");
-	iprintlnbold("PROTECT ORIGIN: (" + protectdest[0] + "," + protectdest[1] + "," + protectdest[2] + ")\n");
+	iprintlnbold(((((("PROTECT ORIGIN: (" + protectdest[0]) + ",") + protectdest[1]) + ",") + protectdest[2]) + ")\n");
 	heli_reset();
 	self sethoverparams(50, 100, 50);
 	wait(2);
@@ -2907,13 +2907,13 @@ function heli_protect(startnode, protectdest, hardpointtype, heli_team)
 	protectdest = (protectdest[0], protectdest[1], noflyzoneheight + heightoffset);
 	currentdest = protectdest;
 	starttime = gettime();
-	self.endtime = starttime + level.heli_protect_time * 1000;
+	self.endtime = starttime + (level.heli_protect_time * 1000);
 	self.killstreakendtime = int(self.endtime);
 	self setspeed(150, 80);
 	/#
 		self util::debug_slow_heli_speed();
 	#/
-	self set_goal_pos(self.origin + currentdest - self.origin / 3 + vectorscale((0, 0, 1), 1000), 0);
+	self set_goal_pos((self.origin + ((currentdest - self.origin) / 3)) + vectorscale((0, 0, 1), 1000), 0);
 	self waittill(#"near_goal");
 	heli_speed = 30 + randomint(20);
 	heli_accel = 10 + randomint(5);
@@ -3085,7 +3085,7 @@ function fire_missile(smissiletype, ishots = 1, etarget)
 		emissile = self fireweapon(0, etarget);
 		emissile.killcament = self;
 		self.lastrocketfiretime = gettime();
-		if(i < ishots - 1)
+		if(i < (ishots - 1))
 		{
 			wait(weaponshoottime);
 		}
@@ -3372,7 +3372,7 @@ function attack_primary(hardpointtype)
 						self setvehweapon(self.defaultweapon);
 						minigun = self fireweapon();
 					}
-					if(i < level.heli_turretclipsize - 1)
+					if(i < (level.heli_turretclipsize - 1))
 					{
 						wait(weaponshoottime);
 					}
@@ -3427,9 +3427,9 @@ function turret_target_flag(turrettarget)
 	self.turret_last_pos = undefined;
 	while(isdefined(turrettarget))
 	{
-		heli_centroid = self.origin + vectorscale((0, 0, -1), 160);
+		heli_centroid = self.origin + (vectorscale((0, 0, -1), 160));
 		heli_forward_norm = anglestoforward(self.angles);
-		heli_turret_point = heli_centroid + 144 * heli_forward_norm;
+		heli_turret_point = heli_centroid + (144 * heli_forward_norm);
 		sight_rec = turrettarget sightconetrace(heli_turret_point, self);
 		if(sight_rec < level.heli_target_recognition)
 		{
@@ -3483,7 +3483,7 @@ function debug_print_target()
 			{
 				name = self.primarytarget.name;
 			}
-			primary_msg = "Primary: " + name + " : " + self.primarytarget.threatlevel;
+			primary_msg = (("Primary: " + name) + " : ") + self.primarytarget.threatlevel;
 		}
 		else
 		{
@@ -3499,13 +3499,13 @@ function debug_print_target()
 			{
 				name = self.secondarytarget.name;
 			}
-			secondary_msg = "Secondary: " + name + " : " + self.secondarytarget.threatlevel;
+			secondary_msg = (("Secondary: " + name) + " : ") + self.secondarytarget.threatlevel;
 		}
 		else
 		{
 			secondary_msg = "Secondary: ";
 		}
-		frames = int(self.targeting_delay * 20) + 1;
+		frames = (int(self.targeting_delay * 20)) + 1;
 		thread airsupport::draw_text(primary_msg, (1, 0.6, 0.6), self, vectorscale((0, 0, 1), 40), frames);
 		thread airsupport::draw_text(secondary_msg, (1, 0.6, 0.6), self, (0, 0, 0), frames);
 	}
@@ -3578,14 +3578,14 @@ function processcopterassist(destroyedcopter, damagedone)
 		return;
 	}
 	assist_level = "aircraft_destruction_assist";
-	assist_level_value = int(ceil(damagedone.damage / destroyedcopter.maxhealth * 4));
+	assist_level_value = int(ceil((damagedone.damage / destroyedcopter.maxhealth) * 4));
 	if(assist_level_value > 0)
 	{
 		if(assist_level_value > 3)
 		{
 			assist_level_value = 3;
 		}
-		assist_level = assist_level + "_" + assist_level_value * 25;
+		assist_level = (assist_level + "_") + (assist_level_value * 25);
 	}
 	scoreevents::processscoreevent(assist_level, self);
 }
@@ -3638,7 +3638,7 @@ function playpilotdialog(dialog, time, voice, shouldwait)
 	{
 		voicenumber = self.pilotvoicenumber;
 	}
-	soundalias = level.teamprefix[self.team] + voicenumber + "_" + dialog;
+	soundalias = ((level.teamprefix[self.team] + voicenumber) + "_") + dialog;
 	if(isdefined(self.owner))
 	{
 		self.owner playpilottalking(shouldwait, soundalias);

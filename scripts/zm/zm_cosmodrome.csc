@@ -589,7 +589,7 @@ function perk_wire_fx_client(client_num, done_notify)
 		if(isdefined(targ.target))
 		{
 			/#
-				println("" + client_num + "" + targ.target);
+				println((("" + client_num) + "") + targ.target);
 			#/
 			target = struct::get(targ.target, "targetname");
 			mover moveto(target.origin, 0.5);
@@ -653,7 +653,7 @@ function actor_flag_soulpull_handler(localclientnum, oldval, newval, bnewent, bi
 function soul_pull(client_num)
 {
 	/#
-		println("" + self.origin + "" + level.nml_spark_pull.origin);
+		println((("" + self.origin) + "") + level.nml_spark_pull.origin);
 	#/
 	mover = spawn(client_num, self.origin, "script_model");
 	mover setmodel("tag_origin");
@@ -1182,8 +1182,8 @@ function get_random_spot_in_player_view(fwd_min, fwd_max, side_min, side_max)
 	}
 	scale = randomintrange(side_min, side_max);
 	side = (side[0] * scale, side[1] * scale, side[2] * scale);
-	point = self.origin + fwd + side;
-	trace = bullettrace(point, point + vectorscale((0, 0, -1), 10000), 0, undefined);
+	point = (self.origin + fwd) + side;
+	trace = bullettrace(point, point + (vectorscale((0, 0, -1), 10000)), 0, undefined);
 	return trace["position"];
 }
 

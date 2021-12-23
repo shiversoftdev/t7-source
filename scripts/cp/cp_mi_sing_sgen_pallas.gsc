@@ -269,7 +269,7 @@ function function_48b24f3d(a_ents)
 	{
 		level.ai_pallas ghost();
 	}
-	if(isdefined(level.var_cd52fefe) && gettime() - level.var_cd52fefe < 500)
+	if(isdefined(level.var_cd52fefe) && (gettime() - level.var_cd52fefe) < 500)
 	{
 		util::wait_network_frame();
 	}
@@ -829,11 +829,11 @@ function elevator_set_door_state(str_side, str_state)
 		e_lift.a_e_doors[str_side] linkto(e_lift);
 		if(str_state == "open")
 		{
-			level flag::set("pallas_lift_" + str_side + "_open");
+			level flag::set(("pallas_lift_" + str_side) + "_open");
 		}
 		else
 		{
-			level flag::clear("pallas_lift_" + str_side + "_open");
+			level flag::clear(("pallas_lift_" + str_side) + "_open");
 		}
 	}
 }
@@ -1026,7 +1026,7 @@ function pallas_greeting_event(b_starting)
 	if(!b_starting)
 	{
 		var_34a8e0f = getent("pallas_turret_enable_trigger", "targetname");
-		var_34a8e0f.origin = var_34a8e0f.origin + vectorscale((0, -1, 0), 38);
+		var_34a8e0f.origin = var_34a8e0f.origin + (vectorscale((0, -1, 0), 38));
 		level waittill(#"enter_server");
 		trigger::wait_or_timeout(30, "pallas_turret_enable_trigger");
 	}
@@ -1099,7 +1099,7 @@ function handle_pallas_pillar_weakspot()
 		e_pallas_pillar = var_61b0688[n_random_int];
 		var_61b0688 = array::remove_index(var_61b0688, n_random_int);
 		e_pallas_pillar movez(114, 4);
-		playfx(level._effect["coolant_tower_unleash"], e_pallas_pillar.origin + vectorscale((0, 0, -1), 250));
+		playfx(level._effect["coolant_tower_unleash"], e_pallas_pillar.origin + (vectorscale((0, 0, -1), 250)));
 		e_pallas_pillar playsound("evt_pillar_move");
 		switch(level.var_e16e585d)
 		{
@@ -1458,7 +1458,7 @@ function weakspot_damage(n_tower)
 	e_core.health = n_total_health;
 	e_core thread do_damage_react();
 	exploder::exploder("pallas_fight_coolant_tower_" + n_tower);
-	while(e_core.health >= n_total_health / 2)
+	while(e_core.health >= (n_total_health / 2))
 	{
 		e_core waittill(#"damage");
 	}
@@ -1545,7 +1545,7 @@ function do_attack_on_hendricks()
 	level endon(#"hash_265b1313");
 	level.a_assault_bot = [];
 	level.var_2d3af18b = 0;
-	level.var_e15d967a = 8 + level.players.size * 2;
+	level.var_e15d967a = 8 + (level.players.size * 2);
 	var_cf1fb9af = 0;
 	while(var_cf1fb9af < level.var_e15d967a)
 	{

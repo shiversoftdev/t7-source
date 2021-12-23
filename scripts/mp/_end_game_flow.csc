@@ -82,7 +82,7 @@ function loadcharacteronmodel(localclientnum, charactermodel, topplayerindex)
 		assert(isdefined(charactermodel));
 	#/
 	bodymodel = gettopplayersbodymodel(localclientnum, topplayerindex);
-	displaytopplayermodel = createuimodel(getuimodelforcontroller(localclientnum), "displayTopPlayer" + topplayerindex + 1);
+	displaytopplayermodel = createuimodel(getuimodelforcontroller(localclientnum), "displayTopPlayer" + (topplayerindex + 1));
 	setuimodelvalue(displaytopplayermodel, 1);
 	if(!isdefined(bodymodel) || bodymodel == "")
 	{

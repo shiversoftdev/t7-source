@@ -841,7 +841,7 @@ function teleport_nuke(max_zombies, range)
 function teleporter_vo_play(vox_type, pre_wait = 0)
 {
 	index = zm_utility::get_player_index(self);
-	plr = "plr_" + index + "_";
+	plr = ("plr_" + index) + "_";
 	wait(pre_wait);
 	self zm_audio::create_and_play_dialog(plr, vox_type, 0.25);
 }
@@ -914,7 +914,7 @@ function teleport_aftereffect_fov()
 	i = 0;
 	while(i < duration)
 	{
-		fov = start_fov + end_fov - start_fov * i / duration;
+		fov = start_fov + (end_fov - start_fov) * (i / duration);
 		wait(0.017);
 		i = i + 0.017;
 	}
@@ -1026,7 +1026,7 @@ function zombietheaterteleporterseeklogic()
 			nonteleportinvalidcount++;
 		}
 	}
-	if(inteleportcount > 0 && (inteleportcount == players.size || inteleportcount + nonteleportinvalidcount == players.size))
+	if(inteleportcount > 0 && (inteleportcount == players.size || (inteleportcount + nonteleportinvalidcount) == players.size))
 	{
 		if(!poi1.poi_active && !poi2.poi_active)
 		{
@@ -1299,12 +1299,12 @@ function function_7e0ed731(var_f7b84b84, v_offset)
 	var_51bf1eed = var_f7b84b84 + 1;
 	var_2d8dac7a = "teleport_room_fx_" + var_51bf1eed;
 	var_b4c5584f = struct::get(var_2d8dac7a, "targetname");
-	var_5a10e76c = struct::spawn(var_b4c5584f.origin - v_offset, var_b4c5584f.angles);
-	if(isdefined(var_5a10e76c))
+	s_wormhole = struct::spawn(var_b4c5584f.origin - v_offset, var_b4c5584f.angles);
+	if(isdefined(s_wormhole))
 	{
 		waittillframeend();
-		var_5a10e76c scene::play("p7_fxanim_zm_kino_wormhole_bundle");
-		var_5a10e76c struct::delete();
+		s_wormhole scene::play("p7_fxanim_zm_kino_wormhole_bundle");
+		s_wormhole struct::delete();
 	}
 }
 

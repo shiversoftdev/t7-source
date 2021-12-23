@@ -372,7 +372,7 @@ function player_napalm_radius_overlay_fade()
 			dist_to_napalm = distancesquared(self.origin, level.napalm_zombie.origin);
 			if(dist_to_napalm < level.napalmplayerwarningradiussqr)
 			{
-				frac = level.napalmplayerwarningradiussqr - dist_to_napalm / level.napalmplayerwarningradiussqr;
+				frac = (level.napalmplayerwarningradiussqr - dist_to_napalm) / level.napalmplayerwarningradiussqr;
 				frac = frac * 1.1;
 				if(frac > 1)
 				{
@@ -530,37 +530,31 @@ function napalm_glow_wet(client_num)
 	Namespace: zm_ai_napalm
 	Checksum: 0x62E5C152
 	Offset: 0x1688
-	Size: 0x0
+	Size: 0x174
 	Parameters: 2
 	Flags: Linked
 */
-function napalm_glow_lerp()
+function napalm_glow_lerp(client_num, glowval)
 {
-System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
-Parameter name: index
-   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   at System.Collections.Generic.List`1.get_Item(Int32 index)
-   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 649
-   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 211
-/*
-No Output
-*/
-
-	/* ======== */
-
-/* 
-	Stack: 
-*/
-	/* ======== */
-
-/* 
-	Blocks: 
-	Cerberus.Logic.BasicBlock at 0x1688, end at 0x1689
-	Cerberus.Logic.IfBlock at 0x171C, end at 0x17DE
-	Cerberus.Logic.IfBlock at 0x1756, end at 0x17DE
-*/
-	/* ======== */
-
+	self notify(#"glow_lerp");
+	self endon(#"glow_lerp");
+	self endon(#"death");
+	self endon(#"entityshutdown");
+	startval = self.glow_val;
+	endval = glowval;
+	if(isdefined(startval))
+	{
+		delta = glowval - self.glow_val;
+		lerptime = 1000;
+		starttime = getrealtime();
+		while((starttime + lerptime) > getrealtime())
+		{
+			s = (getrealtime() - starttime) / lerptime;
+			newval = startval + ((endval - startval) * s);
+			self napalm_set_glow(client_num, newval);
+			waitrealtime(0.05);
+		}
+	}
+	self napalm_set_glow(client_num, endval);
 }
 
-/*Unknown Op Code (0x1CD4) at 17D8*/

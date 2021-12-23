@@ -37,7 +37,7 @@ autoexec function __init__sytem__()
 function __init__()
 {
 	callback::on_localclient_connect(&function_a0b86d2c);
-	registerclientfield("allplayers", "player_zombie_blood_fx", 21000, 1, "int", &function_2d30244a, 0, 1);
+	registerclientfield("allplayers", "player_zombie_blood_fx", 21000, 1, "int", &toggle_player_zombie_blood_fx, 0, 1);
 	level._effect["zombie_blood"] = "dlc5/tomb/fx_pwr_up_blood";
 	level._effect["zombie_blood_1st"] = "dlc5/tomb/fx_pwr_up_blood_overlay";
 	zm_powerups::include_zombie_powerup("zombie_blood");
@@ -63,7 +63,7 @@ function function_a0b86d2c(localclientnum)
 }
 
 /*
-	Name: function_2d30244a
+	Name: toggle_player_zombie_blood_fx
 	Namespace: zm_powerup_zombie_blood
 	Checksum: 0x78770197
 	Offset: 0x4D8
@@ -71,7 +71,7 @@ function function_a0b86d2c(localclientnum)
 	Parameters: 7
 	Flags: Linked
 */
-function function_2d30244a(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwasdemojump)
+function toggle_player_zombie_blood_fx(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwasdemojump)
 {
 	if(isspectating(localclientnum, 0) || isdemoplaying())
 	{

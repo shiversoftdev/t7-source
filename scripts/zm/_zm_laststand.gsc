@@ -593,12 +593,12 @@ function laststand_bleedout(delay)
 	n_default_bleedout_time = getdvarfloat("player_lastStandBleedoutTime");
 	n_bleedout_time = self.bleedout_time;
 	n_start_time = gettime();
-	while(self.bleedout_time > int(delay * 0.5))
+	while(self.bleedout_time > (int(delay * 0.5)))
 	{
 		if(n_bleedout_time > n_default_bleedout_time && !isdefined(self.n_bleedout_time_multiplier))
 		{
 			n_current_time = gettime();
-			n_total_time = n_current_time - n_start_time / 1000;
+			n_total_time = (n_current_time - n_start_time) / 1000;
 			if(n_total_time > n_default_bleedout_time)
 			{
 				delay = 4;
@@ -1711,7 +1711,7 @@ function add_weighted_down()
 	weighted_down = 1000;
 	if(level.round_number > 0)
 	{
-		weighted_down = int(1000 / ceil(level.round_number / 5));
+		weighted_down = int(1000 / (ceil(level.round_number / 5)));
 	}
 	self addplayerstat("weighted_downs", weighted_down);
 }

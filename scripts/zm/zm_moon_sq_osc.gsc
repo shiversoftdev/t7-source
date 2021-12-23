@@ -233,7 +233,7 @@ function moon_rb_dist_think()
 		{
 			int_distance = level._osc_min_dist;
 		}
-		scale = int_distance - level._osc_min_dist / level._osc_rbs_dist_range;
+		scale = (int_distance - level._osc_min_dist) / level._osc_rbs_dist_range;
 		rotation_offset = level._osc_rbs_totalrot * scale;
 		for(i = 0; i < level._osc_rbs.size; i++)
 		{

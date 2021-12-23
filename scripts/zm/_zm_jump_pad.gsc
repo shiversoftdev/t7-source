@@ -291,7 +291,7 @@ function jump_pad_start(ent_player, endon_condition)
 				n_reduction = getdvarfloat("");
 			}
 		#/
-		z_velocity = n_reduction * 2 * z_dist * world_gravity;
+		z_velocity = ((n_reduction * 2) * z_dist) * world_gravity;
 		if(z_velocity < 0)
 		{
 			z_velocity = z_velocity * -1;
@@ -300,15 +300,15 @@ function jump_pad_start(ent_player, endon_condition)
 		{
 			z_dist = z_dist * -1;
 		}
-		jump_time = sqrt(2 * pad_dist / world_gravity);
-		jump_time_2 = sqrt(2 * z_dist / world_gravity);
+		jump_time = sqrt((2 * pad_dist) / world_gravity);
+		jump_time_2 = sqrt((2 * z_dist) / world_gravity);
 		jump_time = jump_time + jump_time_2;
 		if(jump_time < 0)
 		{
 			jump_time = jump_time * -1;
 		}
-		x = jump_velocity[0] * forward_scaling / jump_time;
-		y = jump_velocity[1] * forward_scaling / jump_time;
+		x = (jump_velocity[0] * forward_scaling) / jump_time;
+		y = (jump_velocity[1] * forward_scaling) / jump_time;
 		z = z_velocity / jump_time;
 		fling_this_way = (x, y, z);
 	}
@@ -477,7 +477,7 @@ function jump_pad_move(vec_direction, flt_time, struct_poi, trigger)
 	{
 		self thread zm_audio::create_and_play_dialog("general", "jumppad");
 	}
-	while(gettime() - start_time < jump_time)
+	while((gettime() - start_time) < jump_time)
 	{
 		self setvelocity(vec_direction);
 		wait(0.05);

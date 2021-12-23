@@ -134,7 +134,7 @@ function playduprenderbundle(playbundlename)
 	if(!isdefined(bundle))
 	{
 		/#
-			println("" + playbundlename + "");
+			println(("" + playbundlename) + "");
 		#/
 		return;
 	}
@@ -185,7 +185,7 @@ function playduprenderbundle(playbundlename)
 		{
 			stageprefix = stageprefix + "0";
 		}
-		stageprefix = stageprefix + stageidx + "_";
+		stageprefix = stageprefix + (stageidx + "_");
 		stagelength = getstructfield(bundle, stageprefix + "length");
 		if(!isdefined(stagelength))
 		{
@@ -282,7 +282,7 @@ function adddupmaterial(localclientnum, bundle, prefix, type)
 	materialid = -1;
 	if(isdefined(materialname) && materialname != "")
 	{
-		materialname = "mc/" + materialname;
+		materialname = ("mc/") + materialname;
 		materialid = filter::mapped_material_id(materialname);
 		if(!isdefined(materialid))
 		{

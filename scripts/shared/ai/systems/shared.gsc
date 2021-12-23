@@ -108,7 +108,7 @@ function placeweaponon(weapon, position)
 		assert(isarray(self.a.weaponpos));
 	#/
 	/#
-		assert(position == "" || isdefined(self.a.weaponpos[position]), "" + position + "");
+		assert(position == "" || isdefined(self.a.weaponpos[position]), ("" + position) + "");
 	#/
 	/#
 		assert(isweapon(weapon));
@@ -299,13 +299,12 @@ function throwweapon(weapon, positiontag, scavenger)
 	{
 		endposition = self gettagorigin(positiontag);
 		endangles = self gettagangles(positiontag);
-		linearvelocity = endposition - startposition * 1 / waittime * linearscalar;
-		angularvelocity = vectornormalize(endangles - startangles) * angularscalar;
+		linearvelocity = (endposition - startposition) * (1 / waittime) * linearscalar;
+		angularvelocity = (vectornormalize(endangles - startangles)) * angularscalar;
 		throwweapon = self dropweapon(weapon, positiontag, linearvelocity, angularvelocity, scavenger);
 		if(isdefined(throwweapon))
 		{
-			~throwweapon;
-			throwweapon setcontents(throwweapon setcontents(0) & 32768 | 67108864 | 8388608 | 33554432);
+			throwweapon setcontents(throwweapon setcontents(0) & (~(((32768 | 67108864) | 8388608) | 33554432)));
 		}
 		return throwweapon;
 	}
@@ -330,14 +329,14 @@ function dropaiweapon()
 	if(isdefined(self.script_nodropsecondaryweapon) && self.script_nodropsecondaryweapon && self.weapon == self.initial_secondaryweapon)
 	{
 		/#
-			println("" + self.weapon.name + "");
+			println(("" + self.weapon.name) + "");
 		#/
 		return;
 	}
 	if(isdefined(self.script_nodropsidearm) && self.script_nodropsidearm && self.weapon == self.sidearm)
 	{
 		/#
-			println("" + self.weapon.name + "");
+			println(("" + self.weapon.name) + "");
 		#/
 		return;
 	}
@@ -410,14 +409,14 @@ function dropallaiweapons()
 				if(isdefined(self.script_nodropsecondaryweapon) && self.script_nodropsecondaryweapon && weapon == self.initial_secondaryweapon)
 				{
 					/#
-						println("" + weapon.name + "");
+						println(("" + weapon.name) + "");
 					#/
 					continue;
 				}
 				if(isdefined(self.script_nodropsidearm) && self.script_nodropsidearm && weapon == self.sidearm)
 				{
 					/#
-						println("" + weapon.name + "");
+						println(("" + weapon.name) + "");
 					#/
 					continue;
 				}
@@ -630,7 +629,7 @@ function donotetracksforeverproc(notetracksfunc, flagname, killstring, customfun
 			if(timetaken < 0.05)
 			{
 				/#
-					println(gettime() + "" + debugidentifier + "" + flagname + "" + returnednote + "");
+					println(((((((gettime() + "") + debugidentifier) + "") + flagname) + "") + returnednote) + "");
 				#/
 				wait(0.05 - timetaken);
 			}

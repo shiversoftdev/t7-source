@@ -172,8 +172,8 @@ function cic_turret_off(angles)
 	{
 		angles = self gettagangles("tag_flash");
 	}
-	target_vec = self.origin + anglestoforward((0, angles[1], 0)) * 1000;
-	target_vec = target_vec + vectorscale((0, 0, -1), 1700);
+	target_vec = self.origin + (anglestoforward((0, angles[1], 0)) * 1000);
+	target_vec = target_vec + (vectorscale((0, 0, -1), 1700));
 	self settargetorigin(target_vec);
 	self.off = 1;
 	if(!isdefined(self.emped))
@@ -228,7 +228,7 @@ function bootup()
 	if(!isdefined(self.player))
 	{
 		angles = self gettagangles("tag_flash");
-		target_vec = self.origin + anglestoforward((self.default_pitch, angles[1], 0)) * 1000;
+		target_vec = self.origin + (anglestoforward((self.default_pitch, angles[1], 0)) * 1000);
 		self.turretrotscale = 0.3;
 		self settargetorigin(target_vec);
 		wait(1);
@@ -252,8 +252,8 @@ function cic_turret_fireupdate()
 	cant_see_enemy_count = 0;
 	wait(0.2);
 	origin = self gettagorigin("tag_barrel");
-	left_look_at_pt = origin + anglestoforward(self.angles + (self.default_pitch, self.scanning_arc, 0)) * 1000;
-	right_look_at_pt = origin + anglestoforward(self.angles + (self.default_pitch, self.scanning_arc * -1, 0)) * 1000;
+	left_look_at_pt = origin + ((anglestoforward(self.angles + (self.default_pitch, self.scanning_arc, 0))) * 1000);
+	right_look_at_pt = origin + ((anglestoforward(self.angles + (self.default_pitch, self.scanning_arc * -1, 0))) * 1000);
 	while(true)
 	{
 		if(isdefined(self.enemy) && self vehcansee(self.enemy))
@@ -530,7 +530,7 @@ function cic_turret_death_movement(attacker, hitdir)
 	wait(0.1);
 	self.turretrotscale = 0.5;
 	tag_angles = self gettagangles("tag_flash");
-	target_pos = self.origin + anglestoforward((0, tag_angles[1], 0)) * 1000 + vectorscale((0, 0, -1), 1800);
+	target_pos = (self.origin + (anglestoforward((0, tag_angles[1], 0)) * 1000)) + (vectorscale((0, 0, -1), 1800));
 	self setturrettargetvec(target_pos);
 	wait(4);
 	self notify(#"crash_done");

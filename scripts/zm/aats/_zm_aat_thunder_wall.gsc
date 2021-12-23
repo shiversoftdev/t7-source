@@ -130,7 +130,7 @@ function thunder_wall_blast(attacker)
 				n_random_x = randomfloatrange(-3, 3);
 				n_random_y = randomfloatrange(-3, 3);
 				a_ai_zombies[i] startragdoll(1);
-				a_ai_zombies[i] launchragdoll(100 * vectornormalize(v_curr_zombie_origin - v_thunder_wall_blast_pos + (n_random_x, n_random_y, 30)), "torso_lower");
+				a_ai_zombies[i] launchragdoll(100 * (vectornormalize((v_curr_zombie_origin - v_thunder_wall_blast_pos) + (n_random_x, n_random_y, 30))), "torso_lower");
 			}
 			n_flung_zombies++;
 		}

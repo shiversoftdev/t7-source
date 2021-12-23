@@ -204,7 +204,7 @@ function scoreeventplayerkill(data, time)
 	{
 		if(level.teambased)
 		{
-			if(isdefined(victim.lastkilltime) && victim.lastkilltime > time - 3000)
+			if(isdefined(victim.lastkilltime) && victim.lastkilltime > (time - 3000))
 			{
 				if(isdefined(victim.lastkilledplayer) && victim.lastkilledplayer util::isenemyplayer(attacker) == 0 && attacker != victim.lastkilledplayer)
 				{
@@ -230,7 +230,7 @@ function scoreeventplayerkill(data, time)
 					{
 						continue;
 					}
-					if(time - victim.damagedplayers[key].time < 1000)
+					if((time - victim.damagedplayers[key].time) < 1000)
 					{
 						processscoreevent("kill_enemy_injuring_teammate", attacker, victim, weapon);
 						if(isdefined(victim.damagedplayers[key].entity))
@@ -318,17 +318,17 @@ function scoreeventplayerkill(data, time)
 				processscoreevent("kill_enemy_with_their_hero_ability", attacker, victim, weapon);
 			}
 		}
-		if(victimspeedburstlastontime > time - 50)
+		if(victimspeedburstlastontime > (time - 50))
 		{
 			processscoreevent("kill_enemy_who_is_speedbursting", attacker, victim, weapon);
 			attacker util::player_contract_event("killed_hero_ability_enemy");
 		}
-		if(victimcombatefficiencylastontime > time - 50)
+		if(victimcombatefficiencylastontime > (time - 50))
 		{
 			processscoreevent("kill_enemy_who_is_using_focus", attacker, victim, weapon);
 			attacker util::player_contract_event("killed_hero_ability_enemy");
 		}
-		if(attackerflashbacktime != 0 && attackerflashbacktime > time - 4000)
+		if(attackerflashbacktime != 0 && attackerflashbacktime > (time - 4000))
 		{
 			processscoreevent("flashback_kill", attacker, victim, weapon);
 			attacker hero_ability_kill_event(getweapon("gadget_flashback"), get_equipped_hero_ability(victimheroabilityname));
@@ -339,7 +339,7 @@ function scoreeventplayerkill(data, time)
 				processscoreevent("kill_enemy_with_their_hero_ability", attacker, victim, weapon);
 			}
 		}
-		if(victimflashbacktime != 0 && victimflashbacktime > time - 4000)
+		if(victimflashbacktime != 0 && victimflashbacktime > (time - 4000))
 		{
 			processscoreevent("kill_enemy_who_has_flashbacked", attacker, victim, weapon);
 			attacker util::player_contract_event("killed_hero_ability_enemy");
@@ -361,7 +361,7 @@ function scoreeventplayerkill(data, time)
 		{
 			processscoreevent("electrified", victimelectrifiedby, victim, weapon);
 		}
-		if(victimvisionpulseactivatetime != 0 && victimvisionpulseactivatetime > time - 4000)
+		if(victimvisionpulseactivatetime != 0 && victimvisionpulseactivatetime > (time - 4000))
 		{
 			gadgetweapon = getweapon("gadget_vision_pulse");
 			for(i = 0; i < victimvisionpulsearray.size; i++)
@@ -370,12 +370,12 @@ function scoreeventplayerkill(data, time)
 				if(player == attacker)
 				{
 					gadget = getweapon("gadget_vision_pulse");
-					if(victimvisionpulseactivatetime + 300 > time - gadgetweapon.gadget_pulse_duration)
+					if((victimvisionpulseactivatetime + 300) > (time - gadgetweapon.gadget_pulse_duration))
 					{
 						distancetopulse = distance(victimvisionpulseoriginarray[i], victimvisionpulseorigin);
 						ratio = distancetopulse / gadgetweapon.gadget_pulse_max_range;
 						timing = ratio * gadgetweapon.gadget_pulse_duration;
-						if(victimvisionpulseactivatetime + 300 > time - timing)
+						if((victimvisionpulseactivatetime + 300) > (time - timing))
 						{
 							break;
 						}
@@ -391,7 +391,7 @@ function scoreeventplayerkill(data, time)
 				attacker notify(#"hero_shutdown_gadget", victimheroability, victim);
 			}
 		}
-		if(attackervisionpulseactivatetime != 0 && attackervisionpulseactivatetime > time - 6500)
+		if(attackervisionpulseactivatetime != 0 && attackervisionpulseactivatetime > (time - 6500))
 		{
 			gadgetweapon = getweapon("gadget_vision_pulse");
 			for(i = 0; i < attackervisionpulsearray.size; i++)
@@ -400,12 +400,12 @@ function scoreeventplayerkill(data, time)
 				if(player == victim)
 				{
 					gadget = getweapon("gadget_vision_pulse");
-					if(attackervisionpulseactivatetime > time - gadgetweapon.gadget_pulse_duration)
+					if(attackervisionpulseactivatetime > (time - gadgetweapon.gadget_pulse_duration))
 					{
 						distancetopulse = distance(attackervisionpulseoriginarray[i], attackervisionpulseorigin);
 						ratio = distancetopulse / gadgetweapon.gadget_pulse_max_range;
 						timing = ratio * gadgetweapon.gadget_pulse_duration;
-						if(attackervisionpulseactivatetime > time - timing)
+						if(attackervisionpulseactivatetime > (time - timing))
 						{
 							break;
 						}
@@ -454,7 +454,7 @@ function scoreeventplayerkill(data, time)
 				}
 			}
 		}
-		else if(isdefined(victimpowerarmorlasttookdamagetime) && time - victimpowerarmorlasttookdamagetime <= 3000)
+		else if(isdefined(victimpowerarmorlasttookdamagetime) && (time - victimpowerarmorlasttookdamagetime) <= 3000)
 		{
 			attacker notify(#"hero_shutdown", victimheroability);
 			attacker notify(#"hero_shutdown_gadget", victimheroability, victim);
@@ -616,7 +616,7 @@ function scoreeventplayerkill(data, time)
 		}
 		if(isalive(attacker))
 		{
-			if(attacker.health < attacker.maxhealth * 0.35)
+			if(attacker.health < (attacker.maxhealth * 0.35))
 			{
 				attacker.lastkillwheninjured = time;
 				processscoreevent("kill_enemy_when_injured", attacker, victim, weapon);
@@ -627,7 +627,7 @@ function scoreeventplayerkill(data, time)
 				}
 			}
 		}
-		else if(isdefined(attacker.deathtime) && attacker.deathtime + 800 < time && !attacker isinvehicle())
+		else if(isdefined(attacker.deathtime) && (attacker.deathtime + 800) < time && !attacker isinvehicle())
 		{
 			level.globalafterlifes++;
 			processscoreevent("kill_enemy_after_death", attacker, victim, weapon);
@@ -751,7 +751,7 @@ function scoreeventplayerkill(data, time)
 				attacker.siegebot_kills = 0;
 			}
 			attacker.siegebot_kills++;
-			if(attacker.siegebot_kills % 5 == 0)
+			if((attacker.siegebot_kills % 5) == 0)
 			{
 				processscoreevent("siegebot_killstreak_5", attacker, victim, weapon);
 			}

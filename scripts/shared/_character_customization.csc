@@ -451,14 +451,14 @@ function set_showcase_weapon(data_struct, mode, localclientnum, xuid, characteri
 	attachmentindices = [];
 	tokenizedattachmentinfo = strtok(showcaseweaponattachmentinfo, ",");
 	index = 0;
-	while(index + 1 < tokenizedattachmentinfo.size)
+	while((index + 1) < tokenizedattachmentinfo.size)
 	{
 		attachmentnames[attachmentnames.size] = tokenizedattachmentinfo[index];
 		attachmentindices[attachmentindices.size] = int(tokenizedattachmentinfo[index + 1]);
 		index = index + 2;
 	}
 	index = tokenizedattachmentinfo.size;
-	while(index + 1 < 16)
+	while((index + 1) < 16)
 	{
 		attachmentnames[attachmentnames.size] = "none";
 		attachmentindices[attachmentindices.size] = 0;
@@ -1555,16 +1555,16 @@ function update_model_rotation_for_right_stick(localclientnum, data_struct, endo
 			pos = getcontrollerposition(data_lcn);
 			if(isdefined(pos["rightStick"]))
 			{
-				model.angles = (model.angles[0], absangleclamp360(model.angles[1] + pos["rightStick"][0] * 3), model.angles[2]);
+				model.angles = (model.angles[0], absangleclamp360(model.angles[1] + (pos["rightStick"][0] * 3)), model.angles[2]);
 			}
 			else
 			{
-				model.angles = (model.angles[0], absangleclamp360(model.angles[1] + pos["look"][0] * 3), model.angles[2]);
+				model.angles = (model.angles[0], absangleclamp360(model.angles[1] + (pos["look"][0] * 3)), model.angles[2]);
 			}
 			if(ispc())
 			{
 				pos = getxcammousecontrol(data_lcn);
-				model.angles = (model.angles[0], absangleclamp360(model.angles[1] - pos["yaw"] * 3), model.angles[2]);
+				model.angles = (model.angles[0], absangleclamp360(model.angles[1] - (pos["yaw"] * 3)), model.angles[2]);
 			}
 		}
 		wait(0.016);
@@ -1626,7 +1626,7 @@ function setup_character_extracam_struct(xcam, subxcam, model_animation, uselobb
 */
 function wait_for_extracam_close(localclientnum, camera_ent, extracamindex)
 {
-	level waittill("render_complete_" + localclientnum + "_" + extracamindex);
+	level waittill((("render_complete_" + localclientnum) + "_") + extracamindex);
 	multi_extracam::extracam_reset_index(localclientnum, extracamindex);
 }
 
@@ -1653,7 +1653,7 @@ function setup_character_extracam_settings(localclientnum, data_struct, extracam
 	if(!isdefined(camera_ent))
 	{
 		initializedextracam = 1;
-		multi_extracam::extracam_init_index(localclientnum, "character_staging_extracam" + extracam_data_struct.extracamindex + 1, extracam_data_struct.extracamindex);
+		multi_extracam::extracam_init_index(localclientnum, "character_staging_extracam" + (extracam_data_struct.extracamindex + 1), extracam_data_struct.extracamindex);
 		camera_ent = level.camera_ents[localclientnum][extracam_data_struct.extracamindex];
 	}
 	/#

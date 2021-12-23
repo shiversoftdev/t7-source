@@ -462,7 +462,7 @@ function spawn_stargate_fx_origins()
 	a_teleport_positions = struct::get_array("teleport_room", "script_noteworthy");
 	foreach(var_466030b3, s_teleport in a_teleport_positions)
 	{
-		v_fx_pos = s_teleport.origin + (0, 0, 64) + anglestoforward(s_teleport.angles) * 120;
+		v_fx_pos = (s_teleport.origin + (0, 0, 64)) + (anglestoforward(s_teleport.angles) * 120);
 		s_teleport.e_fx = spawn("script_model", v_fx_pos);
 		s_teleport.e_fx setmodel("tag_origin");
 		s_teleport.e_fx.angles = s_teleport.angles + vectorscale((0, 1, 0), 180);

@@ -38,7 +38,7 @@ function magic_box_init()
 function swamp_pandora_fx_func()
 {
 	self.pandora_light = spawn("script_model", self.origin);
-	self.pandora_light.angles = self.angles + vectorscale((-1, -1, 0), 90);
+	self.pandora_light.angles = self.angles + (vectorscale((-1, -1, 0), 90));
 	self.pandora_light setmodel("tag_origin");
 	if(self.script_noteworthy == "start_chest")
 	{

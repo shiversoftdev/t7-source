@@ -213,8 +213,8 @@ function dev_cac_dpad_think(part_name, cycle_function, tag)
 		self notify(#"dev_cac_dpad_think");
 		self endon(#"dev_cac_dpad_think");
 		self endon(#"disconnect");
-		iprintln("" + part_name + "");
-		iprintln("" + part_name + "");
+		iprintln(("" + part_name) + "");
+		iprintln(("" + part_name) + "");
 		dpad_left = 0;
 		dpad_right = 0;
 		level.dev_cac_player thread highlight_player();

@@ -199,7 +199,7 @@ function teamopswatcher()
 		if(isdefined(time) && time > 0)
 		{
 			elapsed = gettime() - game["teamops"].teamopsstarttime;
-			if(elapsed > time * 1000)
+			if(elapsed > (time * 1000))
 			{
 				stopteamops();
 				foreach(var_ef795c4e, team in level.teams)
@@ -299,7 +299,7 @@ function updateteamops(event, player, team)
 	teamopsname = game["teamops"].teamopsname;
 	teamops = game["teamops"].data[teamopsname];
 	count_target = teamops.count;
-	progress = int(100 * game["teamops"].teamprogress[team] / count_target);
+	progress = int((100 * game["teamops"].teamprogress[team]) / count_target);
 	teamopsupdateprogress(team, progress);
 	if(game["teamops"].teamprogress[team] >= teamops.count)
 	{

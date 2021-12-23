@@ -239,14 +239,14 @@ function function_8ef347b3(v_location)
 	}
 	self util::delay_notify(2, "stop_catching_immolation_secondaries");
 	n_start_time = gettime();
-	while(gettime() - n_start_time < 2)
+	while((gettime() - n_start_time) < 2)
 	{
 		self waittill(#"hash_a15c319", e_enemy);
 		if(!isdefined(e_enemy))
 		{
 			break;
 		}
-		if(length(v_location - e_enemy.origin) < 200)
+		if((length(v_location - e_enemy.origin)) < 200)
 		{
 			if(isdefined(e_enemy) && isdefined(self) && !isdefined(e_enemy.var_e9560d5))
 			{
@@ -272,7 +272,7 @@ function function_4c17acc8()
 	self endon(#"hash_534b9c4b");
 	self util::delay_notify(2, "stop_catching_rapid_strike_attacks");
 	n_start_time = gettime();
-	while(gettime() - n_start_time < 2)
+	while((gettime() - n_start_time) < 2)
 	{
 		self waittill(#"hash_e11b0770");
 		self addplayerstat("cybercom_uses_rapidstrike", 1);
@@ -600,7 +600,7 @@ function function_5bb05b72()
 	{
 		var_2b0fb6af = tablelookuprowcount("gamedata/stats/cp/statsmilestones3.csv");
 		challenge_data = [];
-		for(i = 0; i < var_2b0fb6af - 1; i++)
+		for(i = 0; i < (var_2b0fb6af - 1); i++)
 		{
 			challenge_data = tablelookuprow("gamedata/stats/cp/statsmilestones3.csv", i);
 			var_ec486758 = challenge_data[3];

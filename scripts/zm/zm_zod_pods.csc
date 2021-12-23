@@ -102,7 +102,7 @@ function update_fungus_pod_level(localclientnum, oldval, newval, bnewent, biniti
 		case 0:
 		case 4:
 		{
-			self thread scene_play("p7_fxanim_zm_zod_fungus_pod_stage" + self.var_8486ae6a + "_death_bundle", var_165d49f6);
+			self thread scene_play(("p7_fxanim_zm_zod_fungus_pod_stage" + self.var_8486ae6a) + "_death_bundle", var_165d49f6);
 			self.var_8486ae6a = 0;
 			break;
 		}

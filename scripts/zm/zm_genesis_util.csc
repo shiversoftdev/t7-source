@@ -147,7 +147,7 @@ function player_continuous_rumble(localclientnum, n_rumble_level, var_10ba4a4c =
 	self endon(#"disconnect");
 	self endon(#"stop_rumble_and_shake");
 	start_time = gettime();
-	while(gettime() - start_time < 120000)
+	while((gettime() - start_time) < 120000)
 	{
 		if(isdefined(self) && self islocalplayer() && isdefined(self))
 		{
@@ -407,7 +407,7 @@ function rq_gateworm_dissolve(localclientnum, var_9304bb31)
 {
 	self endon(#"entityshutdown");
 	n_start_time = gettime();
-	n_end_time = n_start_time + 2 * 1000;
+	n_end_time = n_start_time + (2 * 1000);
 	b_is_updating = 1;
 	while(b_is_updating)
 	{

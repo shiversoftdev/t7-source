@@ -128,7 +128,7 @@ function setlowermessage(text, time, combinemessageandtimer)
 	{
 		return;
 	}
-	if(isdefined(self.lowermessageoverride) && text != &"")
+	if(isdefined(self.lowermessageoverride) && text != (&""))
 	{
 		text = self.lowermessageoverride;
 		time = undefined;
@@ -178,7 +178,7 @@ function setlowermessagevalue(text, value, combinemessage)
 	{
 		return;
 	}
-	if(isdefined(self.lowermessageoverride) && text != &"")
+	if(isdefined(self.lowermessageoverride) && text != (&""))
 	{
 		text = self.lowermessageoverride;
 		time = undefined;
@@ -395,12 +395,12 @@ function printandsoundoneveryone(team, enemyteam, printfriendly, printenemy, sou
 			playerteam = player.pers["team"];
 			if(isdefined(playerteam))
 			{
-				if(playerteam == team && isdefined(printfriendly) && printfriendly != &"")
+				if(playerteam == team && isdefined(printfriendly) && printfriendly != (&""))
 				{
 					player iprintln(printfriendly, printarg);
 					continue;
 				}
-				if(isdefined(printenemy) && printenemy != &"")
+				if(isdefined(printenemy) && printenemy != (&""))
 				{
 					if(isdefined(enemyteam) && playerteam == enemyteam)
 					{
@@ -437,7 +437,7 @@ function printandsoundoneveryone(team, enemyteam, printfriendly, printenemy, sou
 				{
 					if(playerteam == team)
 					{
-						if(isdefined(printfriendly) && printfriendly != &"")
+						if(isdefined(printfriendly) && printfriendly != (&""))
 						{
 							player iprintln(printfriendly, printarg);
 						}
@@ -446,7 +446,7 @@ function printandsoundoneveryone(team, enemyteam, printfriendly, printenemy, sou
 					}
 					if(isdefined(enemyteam) && playerteam == enemyteam || (!isdefined(enemyteam) && playerteam != team))
 					{
-						if(isdefined(printenemy) && printenemy != &"")
+						if(isdefined(printenemy) && printenemy != (&""))
 						{
 							player iprintln(printenemy, printarg);
 						}
@@ -465,14 +465,14 @@ function printandsoundoneveryone(team, enemyteam, printfriendly, printenemy, sou
 				{
 					if(playerteam == team)
 					{
-						if(isdefined(printfriendly) && printfriendly != &"")
+						if(isdefined(printfriendly) && printfriendly != (&""))
 						{
 							player iprintln(printfriendly, printarg);
 						}
 						player playlocalsound(soundfriendly);
 						continue;
 					}
-					if(isdefined(printenemy) && printenemy != &"")
+					if(isdefined(printenemy) && printenemy != (&""))
 					{
 						if(isdefined(enemyteam) && playerteam == enemyteam)
 						{
@@ -648,7 +648,7 @@ function plot_points(plotpoints, r, g, b, timer)
 function getfx(fx)
 {
 	/#
-		assert(isdefined(level._effect[fx]), "" + fx + "");
+		assert(isdefined(level._effect[fx]), ("" + fx) + "");
 	#/
 	return level._effect[fx];
 }
@@ -813,7 +813,7 @@ function trigger_thread(ent, on_enter_payload, on_exit_payload)
 		return;
 	}
 	self add_trigger_to_ent(ent);
-	ender = "end_trig_death_monitor" + self getentitynumber() + " " + ent getentitynumber();
+	ender = (("end_trig_death_monitor" + self getentitynumber()) + " ") + ent getentitynumber();
 	self thread trigger_thread_death_monitor(ent, ender);
 	endon_condition = "leave_trigger_" + self getentitynumber();
 	if(isdefined(on_enter_payload))

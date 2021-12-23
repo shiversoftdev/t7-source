@@ -75,12 +75,12 @@ function __init__()
 	callback::on_connect(&watch_sword_equipped);
 	for(i = 0; i < 4; i++)
 	{
-		zombie_utility::add_zombie_gib_weapon_callback("glaive_apothicon" + "_" + i, &gib_check, &gib_head_check);
-		zombie_utility::add_zombie_gib_weapon_callback("glaive_keeper" + "_" + i, &gib_check, &gib_head_check);
-		zm_hero_weapon::register_hero_weapon("glaive_apothicon" + "_" + i);
-		zm_hero_weapon::register_hero_weapon("glaive_keeper" + "_" + i);
-		zm_hero_weapon::register_hero_recharge_event(getweapon("glaive_apothicon" + "_" + i), &function_4a948f8a);
-		zm_hero_weapon::register_hero_recharge_event(getweapon("glaive_keeper" + "_" + i), &function_4a948f8a);
+		zombie_utility::add_zombie_gib_weapon_callback(("glaive_apothicon" + "_") + i, &gib_check, &gib_head_check);
+		zombie_utility::add_zombie_gib_weapon_callback(("glaive_keeper" + "_") + i, &gib_check, &gib_head_check);
+		zm_hero_weapon::register_hero_weapon(("glaive_apothicon" + "_") + i);
+		zm_hero_weapon::register_hero_weapon(("glaive_keeper" + "_") + i);
+		zm_hero_weapon::register_hero_recharge_event(getweapon(("glaive_apothicon" + "_") + i), &function_4a948f8a);
+		zm_hero_weapon::register_hero_recharge_event(getweapon(("glaive_keeper" + "_") + i), &function_4a948f8a);
 	}
 	level.glaive_damage_locations = array("left_arm_upper", "left_arm_lower", "left_hand", "right_arm_upper", "right_arm_lower", "right_hand");
 	level thread function_e97f78f0();
@@ -110,7 +110,7 @@ function get_correct_sword_for_player_character_at_level(n_upgrade_level)
 	{
 		str_wpnname = "glaive_keeper";
 	}
-	str_wpnname = str_wpnname + "_" + self.characterindex;
+	str_wpnname = (str_wpnname + "_") + self.characterindex;
 	wpn = getweapon(str_wpnname);
 	return wpn;
 }
@@ -166,7 +166,7 @@ function function_762ff0b6(wpn_prev)
 		{
 			rate = wpn_prev.gadget_power_usage_rate;
 		}
-		self.sword_power = self.sword_power - 0.0005 * rate;
+		self.sword_power = self.sword_power - (0.0005 * rate);
 		self gadgetpowerset(0, self.sword_power * 100);
 		wait(0.05);
 	}
@@ -804,7 +804,7 @@ private function send_autokill_sword(wpn_autokill)
 	{
 		vh_glaive vehicle::lights_on();
 		self clientfield::increment_to_player("throw_fx");
-		vh_glaive.origin = self.origin + 80 * anglestoforward(self.angles) + vectorscale((0, 0, 1), 50);
+		vh_glaive.origin = (self.origin + (80 * anglestoforward(self.angles))) + vectorscale((0, 0, 1), 50);
 		vh_glaive.angles = self getplayerangles();
 		vh_glaive.owner = self;
 		vh_glaive.weapon = wpn_autokill;
@@ -1009,7 +1009,7 @@ function function_4a948f8a(player, enemy)
 			{
 				perkfactor = getdvarfloat("gadgetPowerOverchargePerkScoreFactor");
 			}
-			temp = player.sword_power + perkfactor * enemy.sword_kill_power / 100;
+			temp = player.sword_power + (perkfactor * (enemy.sword_kill_power / 100));
 			player.sword_power = math::clamp(temp, 0, 1);
 			player clientfield::set_player_uimodel("zmhud.swordEnergy", player.sword_power);
 			player gadgetpowerset(0, 100 * player.sword_power);

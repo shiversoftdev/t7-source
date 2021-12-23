@@ -616,7 +616,7 @@ function laststand_bleedout_damage()
 		self waittill(#"laststand_damage", amt);
 		if(!self.ignoreme)
 		{
-			self.bleedout_time = self.bleedout_time - 0.02 * amt;
+			self.bleedout_time = self.bleedout_time - (0.02 * amt);
 		}
 	}
 }
@@ -1642,7 +1642,7 @@ function add_weighted_down()
 	weighted_down = 1000;
 	if(level.round_number > 0)
 	{
-		weighted_down = int(1000 / ceil(level.round_number / 5));
+		weighted_down = int(1000 / (ceil(level.round_number / 5)));
 	}
 	self addplayerstat("weighted_downs", weighted_down);
 }

@@ -514,7 +514,7 @@ function assign_lowest_unused_character_index()
 	}
 	if(charindexarray.size > 0)
 	{
-		if(n_characters_defined == players.size - 1)
+		if(n_characters_defined == (players.size - 1))
 		{
 			if(!(isdefined(level.has_richtofen) && level.has_richtofen))
 			{
@@ -1095,11 +1095,11 @@ function factory_ray_gun_weighting_func()
 		{
 			if(level.pulls_since_last_ray_gun > 11)
 			{
-				num_to_add = num_to_add + int(level.zombie_include_weapons.size * 0.1);
+				num_to_add = num_to_add + (int(level.zombie_include_weapons.size * 0.1));
 			}
 			else if(level.pulls_since_last_ray_gun > 7)
 			{
-				num_to_add = num_to_add + int(0.05 * level.zombie_include_weapons.size);
+				num_to_add = num_to_add + (int(0.05 * level.zombie_include_weapons.size));
 			}
 		}
 		return num_to_add;
@@ -1607,7 +1607,7 @@ function powerup_special_drop_override()
 	else
 	{
 		powerup = level.zombie_special_drop_array[randomint(level.zombie_special_drop_array.size)];
-		if(level.round_number > 15 && randomint(100) < level.round_number - 15 * 5)
+		if(level.round_number > 15 && randomint(100) < ((level.round_number - 15) * 5))
 		{
 			powerup = "nothing";
 		}
@@ -1616,7 +1616,7 @@ function powerup_special_drop_override()
 	{
 		case "full_ammo":
 		{
-			if(level.round_number > 10 && randomint(100) < level.round_number - 10 * 5)
+			if(level.round_number > 10 && randomint(100) < ((level.round_number - 10) * 5))
 			{
 				powerup = level.zombie_powerup_array[randomint(level.zombie_powerup_array.size)];
 			}
@@ -1901,8 +1901,8 @@ function doline(guy, alias)
 	if(isdefined(guy))
 	{
 		guy clientfield::set_to_player("isspeaking", 1);
-		guy playsoundontag("vox_plr_" + guy.characterindex + "_" + alias, "J_Head");
-		waitplaybacktime("vox_plr_" + guy.characterindex + "_" + alias);
+		guy playsoundontag((("vox_plr_" + guy.characterindex) + "_") + alias, "J_Head");
+		waitplaybacktime((("vox_plr_" + guy.characterindex) + "_") + alias);
 		guy clientfield::set_to_player("isspeaking", 0);
 	}
 }
@@ -2115,8 +2115,8 @@ function sndradiowait(origin, radio, num)
 		radio.isplaying = 1;
 		for(i = 0; i < radiolinecount; i++)
 		{
-			temp_ent playsound(radioalias + "_" + i);
-			playbacktime = soundgetplaybacktime(radioalias + "_" + i);
+			temp_ent playsound((radioalias + "_") + i);
+			playbacktime = soundgetplaybacktime((radioalias + "_") + i);
 			if(!isdefined(playbacktime))
 			{
 				playbacktime = 1;
@@ -3284,7 +3284,7 @@ function setup_devgui_func(str_devgui_path, str_dvar, n_value, func, n_base_valu
 			n_base_value = -1;
 		}
 		setdvar(str_dvar, n_base_value);
-		adddebugcommand("" + str_devgui_path + "" + str_dvar + "" + n_value + "");
+		adddebugcommand(((((("" + str_devgui_path) + "") + str_dvar) + "") + n_value) + "");
 		while(true)
 		{
 			n_dvar = getdvarint(str_dvar);

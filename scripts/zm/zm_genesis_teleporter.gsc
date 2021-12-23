@@ -375,13 +375,13 @@ function teleport_pad_player_fx(var_7d7ca0ea, n_duration)
 			while(n_total_time < n_duration && array::contains(var_7d7ca0ea.var_d0866ff4, self))
 			{
 				n_current_time = gettime();
-				n_total_time = n_current_time - n_start_time / 1000;
+				n_total_time = (n_current_time - n_start_time) / 1000;
 				util::wait_network_frame();
 			}
 			visionset_mgr::deactivate("overlay", "zm_trap_electric", self);
 		}
 		n_current_time = gettime();
-		n_total_time = n_current_time - n_start_time / 1000;
+		n_total_time = (n_current_time - n_start_time) / 1000;
 		util::wait_network_frame();
 	}
 }
@@ -461,7 +461,7 @@ function teleport_players(a_s_pos, var_1bac7e2b, var_e11d2975, var_6bd63d0d = 0)
 		for(i = 0; i < level.players.size; i++)
 		{
 			e_player = level.players[i];
-			if(var_1bac7e2b || (!var_1bac7e2b && (isdefined(e_player.var_f3fbc746) && e_player.var_f3fbc746)))
+			if(var_1bac7e2b || (!var_1bac7e2b && (isdefined(e_player.b_teleported) && e_player.b_teleported)))
 			{
 				if(isdefined(var_a80e3914[i]))
 				{
@@ -560,11 +560,11 @@ function teleport_players(a_s_pos, var_1bac7e2b, var_e11d2975, var_6bd63d0d = 0)
 			e_player.var_601ebf01 delete();
 			if(var_1bac7e2b)
 			{
-				e_player.var_f3fbc746 = 1;
+				e_player.b_teleported = 1;
 			}
 			else
 			{
-				e_player.var_f3fbc746 = undefined;
+				e_player.b_teleported = undefined;
 			}
 			e_player.b_teleporting = 0;
 		}
@@ -572,7 +572,7 @@ function teleport_players(a_s_pos, var_1bac7e2b, var_e11d2975, var_6bd63d0d = 0)
 		{
 			level.var_47f4765c++;
 			level flag::set("spawn_zombies");
-			if(level.var_47f4765c == 1 || level.var_47f4765c % 3 == 0)
+			if(level.var_47f4765c == 1 || (level.var_47f4765c % 3) == 0)
 			{
 				playsoundatposition("vox_maxis_teleporter_pa_success_0", a_s_pos[0].origin);
 			}
@@ -658,7 +658,7 @@ function teleport_2d_audio()
 */
 function teleport_aftereffects(var_edc2ee2a, var_66f7e6b9)
 {
-	if(getdvarstring("genesisAftereffectOverride") == "-1")
+	if(getdvarstring("genesisAftereffectOverride") == ("-1"))
 	{
 		self thread [[level.teleport_ae_funcs[randomint(level.teleport_ae_funcs.size)]]]();
 	}

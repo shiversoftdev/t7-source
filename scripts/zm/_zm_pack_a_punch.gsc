@@ -238,7 +238,7 @@ private function third_person_weapon_upgrade(current_weapon, upgrade_weapon, pac
 		rel_entity = self;
 	}
 	forward = anglestoforward(angles_base + angles_offset);
-	interact_offset = origin_offset + forward * -25;
+	interact_offset = origin_offset + (forward * -25);
 	offsetdw = vectorscale((1, 1, 1), 3);
 	pap_machine [[level.pack_a_punch.move_in_func]](self, trigger, origin_offset, angles_offset);
 	self playsound("zmb_perks_packa_upgrade");
@@ -684,8 +684,8 @@ private function wait_for_player_to_take(player, weapon, packa_timer, b_weapon_s
 				player switchtoweapon(upgrade_weapon);
 				if(isdefined(player.restore_ammo) && player.restore_ammo)
 				{
-					new_clip = player.restore_clip + upgrade_weapon.clipsize - player.restore_clip_size;
-					new_stock = player.restore_stock + upgrade_weapon.maxammo - player.restore_max;
+					new_clip = player.restore_clip + (upgrade_weapon.clipsize - player.restore_clip_size);
+					new_stock = player.restore_stock + (upgrade_weapon.maxammo - player.restore_max);
 					player setweaponammostock(upgrade_weapon, new_stock);
 					player setweaponammoclip(upgrade_weapon, new_clip);
 				}
@@ -889,7 +889,7 @@ private function get_range(delta, origin, radius)
 		{
 			paporigin = paporigin + vectorscale((0, 0, 1), 10000);
 		}
-		if(distancesquared(paporigin, origin) < radius * radius)
+		if(distancesquared(paporigin, origin) < (radius * radius))
 		{
 			return 1;
 		}

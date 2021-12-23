@@ -216,7 +216,7 @@ function function_7b01cb74()
 	for(itemindex = 1; itemindex < 60; itemindex++)
 	{
 		var_4d26d5ca = tablelookup("gamedata/stats/cp/cp_statstable.csv", 0, itemindex, 12);
-		if(var_4d26d5ca == "-1")
+		if(var_4d26d5ca == ("-1"))
 		{
 			continue;
 		}
@@ -263,7 +263,7 @@ function function_6cd12a29()
 	for(itemindex = 1; itemindex < 60; itemindex++)
 	{
 		var_4d26d5ca = tablelookup("gamedata/stats/cp/cp_statstable.csv", 0, itemindex, 12);
-		if(var_4d26d5ca == "-1")
+		if(var_4d26d5ca == ("-1"))
 		{
 			continue;
 		}

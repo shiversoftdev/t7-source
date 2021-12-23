@@ -212,7 +212,7 @@ function zombie_behind_vox()
 	{
 		wait(1);
 		t = gettime();
-		if(t > level._zbv_vox_last_update_time + 1000)
+		if(t > (level._zbv_vox_last_update_time + 1000))
 		{
 			level._zbv_vox_last_update_time = t;
 			level._audio_zbv_shared_ent_list = zombie_utility::get_zombie_array();
@@ -253,7 +253,7 @@ function zombie_behind_vox()
 					}
 				}
 			}
-			if(distancesquared(zombs[i].origin, self.origin) < dist * dist)
+			if(distancesquared(zombs[i].origin, self.origin) < (dist * dist))
 			{
 				yaw = self zm_utility::getyawtospot(zombs[i].origin);
 				z_diff = self.origin[2] - zombs[i].origin[2];
@@ -522,7 +522,7 @@ function timer_actual(kills, time)
 {
 	self endon(#"disconnect");
 	self endon(#"death");
-	timer = gettime() + time * 1000;
+	timer = gettime() + (time * 1000);
 	while(gettime() < timer)
 	{
 		if(self.killcounter > kills)
@@ -625,7 +625,7 @@ function loadplayervoicecategories(table)
 		{
 			for(i = 0; i < 4; i++)
 			{
-				zmbvoxadd(category, subcategory + "_resp_" + i, suffix + "_resp_" + i, 50, 0);
+				zmbvoxadd(category, (subcategory + "_resp_") + i, (suffix + "_resp_") + i, 50, 0);
 			}
 		}
 		delaybeforeplayagain = checkintvalid(row[5]);
@@ -766,7 +766,7 @@ function create_and_play_dialog(category, subcategory, force_variant)
 		/#
 			if(getdvarint("") > 0)
 			{
-				println("" + category + "" + subcategory + "");
+				println(((("" + category) + "") + subcategory) + "");
 			}
 		#/
 		return;
@@ -848,7 +848,7 @@ function do_player_or_npc_playvox(sound_to_play, category, subcategory)
 		}
 		if(isplayer(self) && isdefined(self.last_vo_played_time))
 		{
-			if(gettime() < self.last_vo_played_time + 5000)
+			if(gettime() < (self.last_vo_played_time + 5000))
 			{
 				self.last_vo_played_time = gettime();
 				waittime = 7;
@@ -998,7 +998,7 @@ function setup_response_line(player, category, subcategory)
 	player_to_respond = players_that_can_respond[0];
 	if(distancesquared(player.origin, player_to_respond.origin) < 250000)
 	{
-		player_to_respond create_and_play_dialog(category, subcategory + "_resp_" + player.characterindex);
+		player_to_respond create_and_play_dialog(category, (subcategory + "_resp_") + player.characterindex);
 	}
 }
 
@@ -1053,7 +1053,7 @@ function shouldplayerspeak(player, category, subcategory, percentage)
 	{
 		index = 4;
 	}
-	return "vox_plr_" + index + "_";
+	return ("vox_plr_" + index) + "_";
 }
 
 /*
@@ -1082,7 +1082,7 @@ function isvoxoncooldown(player, category, subcategory)
 		return 0;
 	}
 	time = gettime();
-	if(time - player.voxtimer[fullname] <= level.sndplayervox[category][subcategory].delaybeforeplayagain * 1000)
+	if((time - player.voxtimer[fullname]) <= (level.sndplayervox[category][subcategory].delaybeforeplayagain * 1000))
 	{
 		return 1;
 	}
@@ -1114,7 +1114,7 @@ function zmbvoxgetlinevariant(prefix, suffix, force_variant)
 			/#
 				if(getdvarint("") > 0)
 				{
-					println("" + prefix + suffix);
+					println(("" + prefix) + suffix);
 				}
 			#/
 			return undefined;
@@ -1138,7 +1138,7 @@ function zmbvoxgetlinevariant(prefix, suffix, force_variant)
 	{
 		variation = force_variant;
 	}
-	return prefix + suffix + "_" + variation;
+	return ((prefix + suffix) + "_") + variation;
 }
 
 /*
@@ -1173,7 +1173,7 @@ function arenearbyspeakersactive(radius = 1000)
 		}
 		if(isdefined(person.isspeaking) && person.isspeaking && (!(isdefined(person.ignorenearbyspkrs) && person.ignorenearbyspkrs)))
 		{
-			if(distancesquared(self.origin, person.origin) < radius * radius)
+			if(distancesquared(self.origin, person.origin) < (radius * radius))
 			{
 				nearbyspeakeractive = 1;
 			}
@@ -1342,7 +1342,7 @@ function playstate(state)
 	{
 		music::setmusicstate(mustoplay);
 	}
-	aliasname = "mus_" + mustoplay + "_intro";
+	aliasname = ("mus_" + mustoplay) + "_intro";
 	playbacktime = soundgetplaybacktime(aliasname);
 	if(!isdefined(playbacktime) || playbacktime <= 0)
 	{
@@ -1759,7 +1759,7 @@ function sndannouncer_init()
 {
 	if(!isdefined(level.zmannouncerprefix))
 	{
-		level.zmannouncerprefix = "vox_" + "zmba" + "_";
+		level.zmannouncerprefix = ("vox_" + "zmba") + "_";
 	}
 	sndannouncervoxadd("carpenter", "powerup_carpenter_0");
 	sndannouncervoxadd("insta_kill", "powerup_instakill_0");
@@ -1813,8 +1813,8 @@ function sndannouncerplayvox(type, player)
 		{
 			level.zmannouncertalking = 1;
 			temp_ent = spawn("script_origin", (0, 0, 0));
-			temp_ent playsoundwithnotify(prefix + suffix, prefix + suffix + "wait");
-			temp_ent waittill(prefix + suffix + "wait");
+			temp_ent playsoundwithnotify(prefix + suffix, (prefix + suffix) + "wait");
+			temp_ent waittill((prefix + suffix) + "wait");
 			wait(0.05);
 			temp_ent delete();
 			level.zmannouncertalking = 0;
@@ -1957,7 +1957,7 @@ function zmbaivox_playvox(zombie, type, override, priority, delayambientvox = 0)
 		self.delayambientvox = 1;
 		self thread zmbaivox_ambientdelay();
 	}
-	alias = "zmb_vocals_" + zombie.voiceprefix + "_" + type;
+	alias = (("zmb_vocals_" + zombie.voiceprefix) + "_") + type;
 	if(sndisnetworksafe())
 	{
 		if(isdefined(override) && override)
@@ -2245,8 +2245,8 @@ function sndradiowait(origin, radio, is_sequential, num)
 		radio.isplaying = 1;
 		for(i = 0; i < radiolinecount; i++)
 		{
-			temp_ent playsound(radioalias + "_" + i);
-			playbacktime = soundgetplaybacktime(radioalias + "_" + i);
+			temp_ent playsound((radioalias + "_") + i);
+			playbacktime = soundgetplaybacktime((radioalias + "_") + i);
 			if(!isdefined(playbacktime))
 			{
 				playbacktime = 1;
@@ -2504,7 +2504,7 @@ function sndconversation_play(name)
 			}
 			else
 			{
-				level.currentconvoline = "vox_plr_" + speaker.characterindex + "_" + thisconvo.line[i];
+				level.currentconvoline = (("vox_plr_" + speaker.characterindex) + "_") + thisconvo.line[i];
 				speaker thread sndconvointerrupt();
 			}
 			speaker playsoundontag(level.currentconvoline, "J_Head");
@@ -2691,7 +2691,7 @@ function sndconvointerrupt()
 				count++;
 			}
 		}
-		if(count == level.players.size - 1)
+		if(count == (level.players.size - 1))
 		{
 			break;
 		}
@@ -2728,7 +2728,7 @@ function water_vox()
 			}
 			else if(self.voxunderwatertime)
 			{
-				if(gettime() > self.voxunderwatertime + 3000)
+				if(gettime() > (self.voxunderwatertime + 3000))
 				{
 					self.voxunderwatertime = 0;
 					self.voxemergebreath = 1;

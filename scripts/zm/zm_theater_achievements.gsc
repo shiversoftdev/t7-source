@@ -58,7 +58,7 @@ function achievement_sound_func(achievement_name_lower)
 	{
 		return;
 	}
-	for(i = 0; i < self getentitynumber() + 1; i++)
+	for(i = 0; i < (self getentitynumber() + 1); i++)
 	{
 		util::wait_network_frame();
 	}
@@ -102,10 +102,10 @@ function function_f2597520()
 	level flag::wait_till("power_on");
 	while(self.var_3ac4b03d.size > 0)
 	{
-		self waittill(#"player_teleported", var_b32c7926);
-		if(isdefined(var_b32c7926) && isint(var_b32c7926) && isinarray(self.var_3ac4b03d, var_b32c7926))
+		self waittill(#"player_teleported", n_loc);
+		if(isdefined(n_loc) && isint(n_loc) && isinarray(self.var_3ac4b03d, n_loc))
 		{
-			arrayremovevalue(self.var_3ac4b03d, var_b32c7926);
+			arrayremovevalue(self.var_3ac4b03d, n_loc);
 		}
 		wait(0.05);
 	}

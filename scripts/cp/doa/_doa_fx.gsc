@@ -522,7 +522,7 @@ function function_32bcda58(var_7aac5112, attacker)
 	{
 		self dodamage(dmg, self.origin, attacker);
 		wait(0.3);
-		if(var_1b22f058 > 0 && self.var_a27665f9 % getdvarint("scr_doa_dot_burn_fx_rate", 30) == 0)
+		if(var_1b22f058 > 0 && (self.var_a27665f9 % getdvarint("scr_doa_dot_burn_fx_rate", 30)) == 0)
 		{
 			var_1b22f058--;
 			self clientfield::increment("burnZombie");

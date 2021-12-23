@@ -308,7 +308,7 @@ function set_goal_tag(tag)
 {
 	self.bot.goaltag = tag;
 	tracestart = tag.origin;
-	traceend = tag.origin + vectorscale((0, 0, -1), 64);
+	traceend = tag.origin + (vectorscale((0, 0, -1), 64));
 	trace = bullettrace(tracestart, traceend, 0, undefined);
 	self.bot.goaltagonground = trace["fraction"] < 1;
 	self bot::path_to_trigger(tag.trigger);

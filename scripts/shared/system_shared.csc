@@ -47,7 +47,7 @@ function exec_post_system(req)
 		if(!isdefined(level.system_funcs[req]))
 		{
 			/#
-				assertmsg("" + req + "");
+				assertmsg(("" + req) + "");
 			#/
 		}
 	#/
@@ -113,7 +113,7 @@ function exec_pre_system(req)
 		if(!isdefined(level.system_funcs[req]))
 		{
 			/#
-				assertmsg("" + req + "");
+				assertmsg(("" + req) + "");
 			#/
 		}
 	#/

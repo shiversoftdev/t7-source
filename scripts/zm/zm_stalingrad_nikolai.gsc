@@ -416,7 +416,7 @@ function function_d9ffbd23()
 		for(i = 0; i < var_15518756; i++)
 		{
 			self function_39d2d4b6();
-			if(i < var_15518756 - 1)
+			if(i < (var_15518756 - 1))
 			{
 				self flag::set("halt_thread_gun");
 				self function_f56920ff(self.var_54fa7d2c);
@@ -1023,7 +1023,7 @@ function function_1679e5f0()
 	var_2b71b5b4 = self.var_4266e1d4[level.players.size];
 	var_c444a38d = self.var_ea7d582d[level.players.size];
 	var_67441125 = 3;
-	var_b4fcee85 = int(var_cbcef56 / var_2b71b5b4 / 2);
+	var_b4fcee85 = int((var_cbcef56 / var_2b71b5b4) / 2);
 	var_ad0ee644 = struct::get_array("boss_arena_spawn", "targetname");
 	var_ad0ee644 = array::filter(var_ad0ee644, 0, &zm_stalingrad_util::function_c66f2957);
 	level.var_c3c3ffc5 = [];

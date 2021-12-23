@@ -333,13 +333,13 @@ function function_ec036ed3(var_28b84d73, var_14e6a7e9, var_df4e4d0f)
 			if(data.score > var_59b020a9.score)
 			{
 				/#
-					record3dtext("" + data.score + "" + var_dcf3b4e8 + "" + var_8fb5ce54 + "" + var_6a9c89c0 + "" + var_77f56330 + "", data.origin, (0, 0, 1), "");
+					record3dtext(((((((((("" + data.score) + "") + var_dcf3b4e8) + "") + var_8fb5ce54) + "") + var_6a9c89c0) + "") + var_77f56330) + "", data.origin, (0, 0, 1), "");
 				#/
 				var_59b020a9 = data;
 				continue;
 			}
 			/#
-				record3dtext("" + data.score + "" + var_dcf3b4e8 + "" + var_8fb5ce54 + "" + var_6a9c89c0 + "" + var_77f56330 + "", data.origin, (1, 0, 0), "");
+				record3dtext(((((((((("" + data.score) + "") + var_dcf3b4e8) + "") + var_8fb5ce54) + "") + var_6a9c89c0) + "") + var_77f56330) + "", data.origin, (1, 0, 0), "");
 			#/
 		}
 	}
@@ -390,10 +390,10 @@ function function_1f637867(var_28b84d73, closestplayer, data)
 	{
 		var_5734b0ef = distancesquared(data.origin, player.origin);
 		var_d322d6e7 = math::clamp(var_5734b0ef, 0, 1200 * 1200);
-		score = score + var_d322d6e7 / 1200 * 1200;
-		if(var_5734b0ef > 1200 * 1200)
+		score = score + (var_d322d6e7 / (1200 * 1200));
+		if(var_5734b0ef > (1200 * 1200))
 		{
-			score = score + randomfloatrange(-0.1, 0.1);
+			score = score + (randomfloatrange(-0.1, 0.1));
 		}
 	}
 	return score;
@@ -463,9 +463,9 @@ function function_fb8e7615(var_28b84d73, closestplayer, data)
 	foreach(var_1561be84, location in level.var_5e64ddb4)
 	{
 		var_b0035858 = distancesquared(location, data.origin);
-		if(var_b0035858 <= 120 * 120)
+		if(var_b0035858 <= (120 * 120))
 		{
-			score = score + 1 - var_b0035858 / 120 * 120 * 0.2;
+			score = score + ((1 - (var_b0035858 / (120 * 120))) * 0.2);
 		}
 	}
 	return score;

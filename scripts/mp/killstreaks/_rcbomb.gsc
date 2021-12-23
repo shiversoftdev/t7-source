@@ -689,7 +689,7 @@ function calculatespawnorigin(origin, angles)
 	{
 		testcheck[i] = 0;
 		startangles[i] = (0, angles[1], 0);
-		startpoint = origin + vectorscale(anglestoforward(startangles[i] + testangles[i]), 70);
+		startpoint = origin + (vectorscale(anglestoforward(startangles[i] + testangles[i]), 70));
 		endpoint = startpoint - vectorscale((0, 0, 1), 100);
 		startpoint = startpoint + (0, 0, startheight);
 		mask = 1 | 2;
@@ -800,7 +800,7 @@ function testspawnorigin(origin, angles)
 		return 0;
 	}
 	startheight = getplacementstartheight();
-	mask = 1 | 2 | 4;
+	mask = (1 | 2) | 4;
 	trace = physicstrace(liftedorigin, origin + (0, 0, 1), mins, maxs, self, mask);
 	if(trace["fraction"] < 1)
 	{

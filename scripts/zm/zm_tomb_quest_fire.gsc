@@ -545,7 +545,7 @@ function fire_puzzle_2_is_complete()
 	{
 		if(e_player hasweapon(level.a_elemental_staffs["staff_fire"].w_weapon))
 		{
-			if(level.n_torches_lit % 12 == 0 && !level flag::get("fire_puzzle_2_complete"))
+			if((level.n_torches_lit % 12) == 0 && !level flag::get("fire_puzzle_2_complete"))
 			{
 				level notify(#"vo_puzzle_confused", e_player);
 				continue;
@@ -553,7 +553,7 @@ function fire_puzzle_2_is_complete()
 			if(wrong_torch && !level flag::get("fire_puzzle_2_complete"))
 			{
 				level.n_wrong_torches++;
-				if(level.n_wrong_torches % 5 == 0)
+				if((level.n_wrong_torches % 5) == 0)
 				{
 					level notify(#"vo_puzzle_bad", e_player);
 				}

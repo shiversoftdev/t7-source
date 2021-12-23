@@ -83,7 +83,7 @@ function stage_logic()
 	t_portal.require_look_at = 1;
 	t_portal.hint_string = &"ZM_TOMB_TELE";
 	t_portal thread waittill_player_activates();
-	level.ee_ending_beam_fx = spawn("script_model", s_pos.origin + vectorscale((0, 0, -1), 300));
+	level.ee_ending_beam_fx = spawn("script_model", s_pos.origin + (vectorscale((0, 0, -1), 300)));
 	level.ee_ending_beam_fx.angles = vectorscale((0, 1, 0), 90);
 	level.ee_ending_beam_fx setmodel("tag_origin");
 	playfxontag(level._effect["ee_beam"], level.ee_ending_beam_fx, "tag_origin");

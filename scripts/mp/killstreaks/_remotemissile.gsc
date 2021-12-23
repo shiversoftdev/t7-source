@@ -218,7 +218,7 @@ function _fire(lifeid, player, team, killstreak_id)
 		startpos = remotemissilespawn.origin;
 		targetpos = remotemissilespawn.targetent.origin;
 		vector = vectornormalize(startpos - targetpos);
-		startpos = vector * level.missileremotelaunchvert + targetpos;
+		startpos = (vector * level.missileremotelaunchvert) + targetpos;
 	}
 	else
 	{
@@ -226,8 +226,8 @@ function _fire(lifeid, player, team, killstreak_id)
 		backdist = level.missileremotelaunchhorz;
 		targetdist = level.missileremotelaunchtargetdist;
 		forward = anglestoforward(player.angles);
-		startpos = player.origin + upvector + forward * backdist * -1;
-		targetpos = player.origin + forward * targetdist;
+		startpos = (player.origin + upvector) + ((forward * backdist) * -1);
+		targetpos = player.origin + (forward * targetdist);
 	}
 	self util::setusingremote("remote_missile");
 	self util::freeze_player_controls(1);
@@ -610,7 +610,7 @@ function missile_sound_boost(rocket)
 	self playlocalsound("wpn_remote_missile_fire_boost_plr");
 	rocket.snd_first playloopsound("wpn_remote_missile_boost_plr");
 	self playrumbleonentity("sniper_fire");
-	if(rocket.origin[2] - self.origin[2] > 4000)
+	if((rocket.origin[2] - self.origin[2]) > 4000)
 	{
 		rocket notify(#"stop_impact_sound");
 		rocket thread missile_sound_impact(self, 6250);
@@ -636,7 +636,7 @@ function missile_sound_impact(player, distance)
 	player endon(#"joined_spectators");
 	for(;;)
 	{
-		if(self.origin[2] - player.origin[2] < distance)
+		if((self.origin[2] - player.origin[2]) < distance)
 		{
 			self playsound("wpn_remote_missile_inc");
 			return;
@@ -698,7 +698,7 @@ function getvalidtargets(rocket, trace, max_targets)
 	mapcenterz = level.mapcenter[2];
 	diff = mapcenterz - rocketz;
 	ratio = diff / forward[2];
-	aimtarget = rocket.origin + forward * ratio;
+	aimtarget = rocket.origin + (forward * ratio);
 	rocket.aimtarget = aimtarget;
 	pixendevent();
 	pixbeginevent("remotemissile_getVTs_enemies");
@@ -946,7 +946,7 @@ function targeting_hud_think(rocket)
 				if(!isdefined(target.missileiconindex))
 				{
 					target.missileiconindex = rocket.iconindexother;
-					rocket.iconindexother = rocket.iconindexother + 1 % 3;
+					rocket.iconindexother = (rocket.iconindexother + 1) % 3;
 				}
 				index = target.missileiconindex;
 				self.missile_target_other[index].x = target.origin[0];
@@ -1013,7 +1013,7 @@ function missile_deploy(rocket, hacked)
 			waitframes++;
 		}
 	}
-	if(rocket.origin[2] - self.origin[2] > 4000)
+	if((rocket.origin[2] - self.origin[2]) > 4000)
 	{
 		rocket notify(#"stop_impact_sound");
 	}
@@ -1142,7 +1142,7 @@ function fire_random_bomblet(rocket, explosionradius, quadrant, waitframes)
 	owner = rocket.owner;
 	aimtarget = rocket.aimtarget;
 	wait(waitframes * 0.05);
-	angle = randomintrange(10 + 60 * quadrant, 50 + 60 * quadrant);
+	angle = randomintrange(10 + (60 * quadrant), 50 + (60 * quadrant));
 	radius = randomintrange(200, 700);
 	x = min(radius, 550) * cos(angle);
 	y = min(radius, 550) * sin(angle);

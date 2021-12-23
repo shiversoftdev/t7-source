@@ -123,14 +123,14 @@ private function bb_getlocomotionmovementtype()
 		}
 		if(isdefined(self.enemy) && isdefined(self.runandgundist))
 		{
-			if(distancesquared(self.origin, self lastknownpos(self.enemy)) > self.runandgundist * self.runandgundist)
+			if(distancesquared(self.origin, self lastknownpos(self.enemy)) > (self.runandgundist * self.runandgundist))
 			{
 				return "human_locomotion_movement_sprint";
 			}
 		}
 		else if(isdefined(self.goalpos) && isdefined(self.runandgundist))
 		{
-			if(distancesquared(self.origin, self.goalpos) > self.runandgundist * self.runandgundist)
+			if(distancesquared(self.origin, self.goalpos) > (self.runandgundist * self.runandgundist))
 			{
 				return "human_locomotion_movement_sprint";
 			}

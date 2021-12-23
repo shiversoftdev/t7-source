@@ -662,7 +662,7 @@ function persistent_carpenter_ability_check()
 						level.carpenter_finished_start_time = gettime();
 					}
 					time = gettime();
-					dt = time - level.carpenter_finished_start_time / 1000;
+					dt = (time - level.carpenter_finished_start_time) / 1000;
 					if(dt >= carpenter_extra_time)
 					{
 						break;

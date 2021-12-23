@@ -146,7 +146,7 @@ function radio9_override(struct)
 	self.trigger.owner_ent = self;
 	self.trigger thread trig_thread();
 	self waittill(#"triggered");
-	snd = "vox_radio_egg_" + self.script_int - 1;
+	snd = "vox_radio_egg_" + (self.script_int - 1);
 	self playsound(snd);
 	self playloopsound("vox_radio_egg_snapshot", 1);
 	wait(self.manual_wait);
@@ -229,7 +229,7 @@ function radio2_override(struct)
 			break;
 		}
 	}
-	snd = "vox_radio_egg_" + self.script_int - 1 + "" + var_bc7547cb;
+	snd = (("vox_radio_egg_" + (self.script_int - 1)) + "") + var_bc7547cb;
 	self playsoundwithnotify(snd, "radiodone");
 	self playloopsound("vox_radio_egg_snapshot", 1);
 	self waittill(#"radiodone");
@@ -251,7 +251,7 @@ function radio_thread()
 	self endon(#"overridden");
 	self thread radio_debug();
 	self waittill(#"triggered");
-	snd = "vox_radio_egg_" + self.script_int - 1;
+	snd = "vox_radio_egg_" + (self.script_int - 1);
 	self playsound(snd);
 	self playloopsound("vox_radio_egg_snapshot", 1);
 	wait(self.manual_wait);

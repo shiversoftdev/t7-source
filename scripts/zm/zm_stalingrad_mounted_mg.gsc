@@ -191,13 +191,13 @@ function function_711e7f22()
 {
 	self.b_enabled = 0;
 	level.var_ffcc580a clientfield::set("overheat_fx", 1);
-	var_55acad81 = gettime() - level.var_ffcc580a.n_start_time / 30000;
+	var_55acad81 = (gettime() - level.var_ffcc580a.n_start_time) / 30000;
 	if(var_55acad81 > 1)
 	{
 		var_55acad81 = 1;
 	}
-	var_b6c00097 = var_55acad81 * 15;
-	wait(var_b6c00097);
+	n_cooldown = var_55acad81 * 15;
+	wait(n_cooldown);
 	self.b_enabled = 1;
 	level.var_ffcc580a clientfield::set("overheat_fx", 0);
 }

@@ -89,25 +89,25 @@ function function_1664174d(localclientnum, oldval, newval, bnewent, binitialsnap
 {
 	var_a879fa43 = self getentitynumber();
 	str_name = "challenge_board_" + var_a879fa43;
-	var_101d9b42 = struct::get(str_name, "targetname");
-	foreach(var_e0c1da04, var_101d9b42 in level.var_3c3a1522)
+	s_skull = struct::get(str_name, "targetname");
+	foreach(var_e0c1da04, s_skull in level.var_3c3a1522)
 	{
-		if(!isdefined(var_101d9b42.var_90369c89))
+		if(!isdefined(s_skull.var_90369c89))
 		{
-			var_101d9b42.var_90369c89 = [];
+			s_skull.var_90369c89 = [];
 		}
-		if(var_101d9b42.script_int == self getentitynumber())
+		if(s_skull.script_int == self getentitynumber())
 		{
-			if(!isdefined(var_101d9b42.var_90369c89[localclientnum]))
+			if(!isdefined(s_skull.var_90369c89[localclientnum]))
 			{
-				var_101d9b42.var_90369c89[localclientnum] = playfx(localclientnum, level._effect["skull_eyes"], var_101d9b42.origin, anglestoforward(var_101d9b42.angles));
+				s_skull.var_90369c89[localclientnum] = playfx(localclientnum, level._effect["skull_eyes"], s_skull.origin, anglestoforward(s_skull.angles));
 			}
 			continue;
 		}
-		if(isdefined(var_101d9b42.var_90369c89[localclientnum]))
+		if(isdefined(s_skull.var_90369c89[localclientnum]))
 		{
-			deletefx(localclientnum, var_101d9b42.var_90369c89[localclientnum]);
-			var_101d9b42.var_90369c89[localclientnum] = undefined;
+			deletefx(localclientnum, s_skull.var_90369c89[localclientnum]);
+			s_skull.var_90369c89[localclientnum] = undefined;
 		}
 	}
 }

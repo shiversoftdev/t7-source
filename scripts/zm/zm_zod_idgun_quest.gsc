@@ -62,7 +62,7 @@ function __init__()
 	level flag::init("second_idgun_time");
 	for(i = 0; i < 3; i++)
 	{
-		level flag::init("idgun_cocoon_" + i + "_found");
+		level flag::init(("idgun_cocoon_" + i) + "_found");
 	}
 	/#
 		level thread idgun_devgui();
@@ -658,8 +658,8 @@ function function_47867b41(var_3fbc06aa, str_part)
 	if(1)
 	{
 		self waittill(#"damage", amount, attacker, direction_vec, point, type, tagname, modelname, partname, weapon);
-		level flag::set("idgun_cocoon_" + var_3fbc06aa + "_found");
-		if(isdefined(zm::is_idgun_damage(weapon)) && zm::is_idgun_damage(weapon) === 0)
+		level flag::set(("idgun_cocoon_" + var_3fbc06aa) + "_found");
+		if((isdefined(zm::is_idgun_damage(weapon)) && zm::is_idgun_damage(weapon)) === 0)
 		{
 			return;
 		}
@@ -747,7 +747,7 @@ function idgun_proximity_sensor(var_3fbc06aa)
 		{
 			n_time_before_next_pulse = undefined;
 		}
-		if(level flag::get("idgun_cocoon_" + var_3fbc06aa + "_found"))
+		if(level flag::get(("idgun_cocoon_" + var_3fbc06aa) + "_found"))
 		{
 			return;
 		}

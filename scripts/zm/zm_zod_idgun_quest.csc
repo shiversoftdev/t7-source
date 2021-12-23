@@ -50,7 +50,7 @@ function __init__()
 */
 function add_idgun_to_box(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
-	weapon_idgun = getweapon("idgun" + "_" + newval);
+	weapon_idgun = getweapon(("idgun" + "_") + newval);
 	addzombieboxweapon(weapon_idgun, weapon_idgun.worldmodel, weapon_idgun.isdualwield);
 }
 
@@ -65,7 +65,7 @@ function add_idgun_to_box(localclientnum, oldval, newval, bnewent, binitialsnap,
 */
 function remove_idgun_from_box(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
-	weapon_idgun = getweapon("idgun" + "_" + newval);
+	weapon_idgun = getweapon(("idgun" + "_") + newval);
 	removezombieboxweapon(weapon_idgun);
 }
 

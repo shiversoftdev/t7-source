@@ -429,7 +429,7 @@ function electrostaticcontact(attacker, source, upgraded = 0, contactpoint, seco
 	{
 		if(isdefined(self.voiceprefix) && isdefined(self.bcvoicenumber))
 		{
-			self thread battlechatter::do_sound(self.voiceprefix + self.bcvoicenumber + "_exert_electrocution", 1);
+			self thread battlechatter::do_sound((self.voiceprefix + self.bcvoicenumber) + "_exert_electrocution", 1);
 		}
 		self dodamage(self.health, source.origin, (isdefined(attacker) ? attacker : undefined), undefined, "none", "MOD_UNKNOWN", 512, level.cybercom.electro_strike.human_weapon, -1, 1);
 	}

@@ -100,7 +100,7 @@ private function cleanup_main()
 			}
 			level.n_cleanup_manager_restart_time = undefined;
 		}
-		n_round_time = n_time - level.round_start_time / 1000;
+		n_round_time = (n_time - level.round_start_time) / 1000;
 		if(level.round_number <= 5 && n_round_time < 30)
 		{
 			continue;
@@ -145,7 +145,7 @@ private function function_37a5b776()
 			{
 				continue;
 			}
-			if(isdefined(level.activeplayers[j].var_122a2dda) && level.activeplayers[j].var_122a2dda)
+			if(isdefined(level.activeplayers[j].is_flung) && level.activeplayers[j].is_flung)
 			{
 				return 1;
 			}

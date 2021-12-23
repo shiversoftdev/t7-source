@@ -215,7 +215,7 @@ function cash_back_player_prone_check(got_ability)
 	while(true)
 	{
 		time = gettime();
-		dt = time - start_time / 1000;
+		dt = (time - start_time) / 1000;
 		if(dt > prone_time)
 		{
 			break;
@@ -306,7 +306,7 @@ function insta_kill_upgraded_player_kill_func(active_time)
 	while(true)
 	{
 		time = gettime();
-		dt = time - start_time / 1000;
+		dt = (time - start_time) / 1000;
 		if(dt > active_time)
 		{
 			break;
@@ -540,7 +540,7 @@ function pers_upgrade_double_points_pickup_start()
 		}
 		last_score = self.score;
 		time = gettime();
-		dt = time - self.double_points_ability_start_time / 1000;
+		dt = (time - self.double_points_ability_start_time) / 1000;
 		if(dt >= 30)
 		{
 			break;
@@ -1120,7 +1120,7 @@ function pers_magic_box_set_teddy_location(box_index)
 	}
 	v_up = anglestoup(v_angles);
 	height_offset = 22;
-	self.origin = v_origin + v_up * height_offset;
+	self.origin = v_origin + (v_up * height_offset);
 	dp = vectordot(v_up, (0, 0, 1));
 	if(dp > 0)
 	{
@@ -1385,7 +1385,7 @@ function pers_nube_weapon_upgrade_check(player, weapon)
 					fx_org = player.origin;
 					v_dir = anglestoforward(player getplayerangles());
 					v_up = anglestoup(player getplayerangles());
-					fx_org = fx_org + v_dir * 5 + v_up * 12;
+					fx_org = (fx_org + (v_dir * 5)) + (v_up * 12);
 					player.upgrade_fx_origin = fx_org;
 				}
 			}

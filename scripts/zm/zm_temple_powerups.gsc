@@ -145,7 +145,7 @@ function player_monkey_think(nummonkeys)
 		bloodfx = 0;
 		angles = (0, randomfloat(360), 0);
 		forward = anglestoforward(angles);
-		spawnloc = self.origin + spawnradius * forward;
+		spawnloc = self.origin + (spawnradius * forward);
 		spawnangles = self.angles;
 		if(isdefined(zombie))
 		{

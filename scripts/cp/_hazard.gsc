@@ -203,7 +203,7 @@ function function_a421f870()
 function function_12231466(str_name)
 {
 	/#
-		assert(isdefined(level.hazards[str_name]), "" + str_name + "");
+		assert(isdefined(level.hazards[str_name]), ("" + str_name) + "");
 	#/
 	self.hazard_damage[str_name] = 0;
 }
@@ -220,7 +220,7 @@ function function_12231466(str_name)
 function do_damage(str_name, n_damage, e_ent, disable_ui)
 {
 	/#
-		assert(isdefined(level.hazards[str_name]), "" + str_name + "");
+		assert(isdefined(level.hazards[str_name]), ("" + str_name) + "");
 	#/
 	if(!isdefined(disable_ui))
 	{
@@ -270,7 +270,7 @@ function do_damage(str_name, n_damage, e_ent, disable_ui)
 function function_eaa9157d(str_name)
 {
 	/#
-		assert(isdefined(self.hazard_damage[str_name]), "" + str_name + "");
+		assert(isdefined(self.hazard_damage[str_name]), ("" + str_name) + "");
 	#/
 	return self.hazard_damage[str_name];
 }
@@ -287,7 +287,7 @@ function function_eaa9157d(str_name)
 function function_b78a859e(str_name)
 {
 	/#
-		assert(isdefined(self.hazard_damage[str_name]), "" + str_name + "");
+		assert(isdefined(self.hazard_damage[str_name]), ("" + str_name) + "");
 	#/
 	return self.hazard_damage[str_name] / level.hazards[str_name].n_max_protection;
 }
@@ -304,7 +304,7 @@ function function_b78a859e(str_name)
 function function_459e5eff(str_name, var_5b9ad5b3 = 1)
 {
 	/#
-		assert(isdefined(self.var_6c3e78bb[str_name]), "" + str_name + "");
+		assert(isdefined(self.var_6c3e78bb[str_name]), ("" + str_name) + "");
 	#/
 	self.var_6c3e78bb[str_name] = var_5b9ad5b3;
 }
@@ -366,7 +366,7 @@ private function _fill_hazard_protection(str_name, e_ent, disable_ui)
 		wait(0.05);
 		if(self.var_6c3e78bb[str_name] == 1)
 		{
-			self.hazard_damage[str_name] = self.hazard_damage[str_name] - s_hazard.n_regen_rate * 0.05;
+			self.hazard_damage[str_name] = self.hazard_damage[str_name] - (s_hazard.n_regen_rate * 0.05);
 		}
 	}
 	while(self.hazard_damage[str_name] >= 0);
@@ -543,7 +543,7 @@ function function_e9b126ef(n_time, var_827d6de0 = 1)
 function function_ccddb105(var_be6a04c9, var_6d20ee14, n_time, var_827d6de0)
 {
 	/#
-		assert(isdefined(level.hazards[var_be6a04c9]), "" + var_be6a04c9 + "");
+		assert(isdefined(level.hazards[var_be6a04c9]), ("" + var_be6a04c9) + "");
 	#/
 	self notify("stop_hazard_dot_" + var_be6a04c9);
 	self endon("stop_hazard_dot_" + var_be6a04c9);

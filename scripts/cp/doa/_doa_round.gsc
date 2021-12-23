@@ -51,7 +51,7 @@ private function function_542758d0()
 		}
 		if(!isdefined(var_72085a07.round))
 		{
-			var_72085a07.round = var_72085a07.number * 4 + 4;
+			var_72085a07.round = (var_72085a07.number * 4) + 4;
 		}
 		if(!isdefined(var_72085a07.var_23502a36))
 		{
@@ -213,7 +213,7 @@ function main()
 	while(!level flag::get("doa_game_is_over"))
 	{
 		/#
-			doa_utility::debugmsg("" + level.doa.round_number + "" + gettime());
+			doa_utility::debugmsg((("" + level.doa.round_number) + "") + gettime());
 		#/
 		level.doa.rules.max_enemy_count = namespace_3ca3c537::function_b0e9983(namespace_3ca3c537::function_d2d75f5d());
 		level.doa.var_a3a11449 = 0;
@@ -256,7 +256,7 @@ function main()
 			level.doa.var_677d1262 = 0;
 			level.doa.round_end_time = gettime();
 			/#
-				doa_utility::debugmsg("" + level.doa.round_number + "" + level.doa.round_end_time);
+				doa_utility::debugmsg((("" + level.doa.round_number) + "") + level.doa.round_end_time);
 			#/
 			flag::clear("doa_round_active");
 			level notify(#"hash_e9dfbb22");
@@ -290,7 +290,7 @@ function main()
 		level.doa.zombie_health = level.doa.zombie_health + level.doa.zombie_health_inc;
 		level.doa.round_number++;
 		level.doa.var_6f2c52d8 = undefined;
-		level clientfield::set("roundnumber", level.doa.round_number & 1024 - 1);
+		level clientfield::set("roundnumber", level.doa.round_number & (1024 - 1));
 		function_d9345c74();
 		function_55762a85();
 		namespace_d88e3a06::function_7a8a936b();
@@ -382,7 +382,7 @@ function function_40bfe842(entnum = 0)
 			if(!isdefined(points[entnum]))
 			{
 				/#
-					doa_utility::debugmsg("" + level.doa.current_arena + "" + level.doa.previous_exit_taken + "" + entnum);
+					doa_utility::debugmsg((((("" + level.doa.current_arena) + "") + level.doa.previous_exit_taken) + "") + entnum);
 				#/
 				return points[0].origin;
 			}
@@ -517,7 +517,7 @@ function function_21a582ff(current_wave, endnote)
 	level.doa.var_3706f843[level.doa.var_3706f843.size] = current_wave;
 	spawn_locations = level.doa.current_spawners[current_wave.spawn_side];
 	time = current_wave.spawn_duration;
-	time = time * 1000 + gettime();
+	time = (time * 1000) + gettime();
 	while(gettime() < time || (level.players.size == 1 && level.doa.var_9a1cbf58 && current_wave.var_3f7b0d81 > 0))
 	{
 		if(level flag::get("doa_game_is_over") || level flag::get("doa_round_abort"))
@@ -647,7 +647,7 @@ function function_87703158(var_372a8daa = 0)
 			level.doa.current_wave = level.doa.spawn_sequence[wave];
 			level thread function_21a582ff(level.doa.current_wave);
 			/#
-				doa_utility::debugmsg("" + level.doa.current_wave.var_601f5749 + "" + level.doa.current_wave.spawn_side);
+				doa_utility::debugmsg((("" + level.doa.current_wave.var_601f5749) + "") + level.doa.current_wave.spawn_side);
 			#/
 			wait(level.doa.current_wave.time_till_next_group);
 			while(level.players.size == 1 && level.doa.var_9a1cbf58 && level.doa.var_3706f843.size > 10)
@@ -671,7 +671,7 @@ function function_87703158(var_372a8daa = 0)
 		if(isdefined(level.doa.var_155f5b81))
 		{
 			level.doa.var_155f5b81 = array::remove_undefined(level.doa.var_155f5b81);
-			var_9805ff33 = var_9805ff33 | level.doa.var_155f5b81.size > 0;
+			var_9805ff33 = var_9805ff33 | (level.doa.var_155f5b81.size > 0);
 		}
 		var_81b4b863 = isdefined(var_9805ff33) && var_9805ff33 || (isdefined(getdvarint("scr_doa_infinite_round", 0)) && getdvarint("scr_doa_infinite_round", 0));
 		if(!var_81b4b863 && !level flag::get("doa_round_active"))
@@ -700,10 +700,10 @@ function function_87703158(var_372a8daa = 0)
 private function function_da304666(wave_number, round_number)
 {
 	wave = spawnstruct();
-	wave.spawn_duration = 1 + randomfloatrange(0, 1 + wave_number * 0.3) + randomfloatrange(0, 1 + round_number * 0.2);
+	wave.spawn_duration = (1 + (randomfloatrange(0, 1 + (wave_number * 0.3)))) + (randomfloatrange(0, 1 + (round_number * 0.2)));
 	wave.spawn_side = doa_utility::function_5b4fbaef();
-	wave.time_till_next_group = 1 + randomfloatrange(0, wave.spawn_duration * 0.6);
-	wave.var_3f7b0d81 = int(wave.spawn_duration / getdvarfloat("scr_doa_spawn_delay", 0.35) * 0.35);
+	wave.time_till_next_group = 1 + (randomfloatrange(0, wave.spawn_duration * 0.6));
+	wave.var_3f7b0d81 = int((wave.spawn_duration / getdvarfloat("scr_doa_spawn_delay", 0.35)) * 0.35);
 	wave.var_4ccd4ad7 = wave.spawn_duration - wave.time_till_next_group;
 	wave.var_601f5749 = wave_number;
 	return wave;
@@ -721,8 +721,8 @@ private function function_da304666(wave_number, round_number)
 function function_703bb8b2(round_number)
 {
 	level.doa.spawn_sequence = [];
-	max = level.doa.rules.var_57cac10a + level.doa.var_da96f13c * level.doa.rules.var_57cac10a;
-	waves = 6 + int(round_number * 1.2);
+	max = level.doa.rules.var_57cac10a + (level.doa.var_da96f13c * level.doa.rules.var_57cac10a);
+	waves = 6 + (int(round_number * 1.2));
 	if(waves > max)
 	{
 		waves = max;
@@ -735,9 +735,9 @@ function function_703bb8b2(round_number)
 	for(i = 0; i < waves; i++)
 	{
 		level.doa.spawn_sequence[i] = function_da304666(i, round_number);
-		level.doa.var_677d1262 = level.doa.var_677d1262 + int(level.doa.spawn_sequence[i].var_4ccd4ad7 * 1000);
+		level.doa.var_677d1262 = level.doa.var_677d1262 + (int(level.doa.spawn_sequence[i].var_4ccd4ad7 * 1000));
 	}
-	level.doa.var_677d1262 = level.doa.var_677d1262 + level.doa.var_677d1262 >> 2;
+	level.doa.var_677d1262 = level.doa.var_677d1262 + (level.doa.var_677d1262 >> 2);
 }
 
 /*

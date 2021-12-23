@@ -58,7 +58,7 @@ function register(name, localized_string, icon)
 		assert(isdefined(name), "");
 	#/
 	/#
-		assert(!isdefined(level.aat[name]), "" + name + "");
+		assert(!isdefined(level.aat[name]), ("" + name) + "");
 	#/
 	/#
 		assert(isdefined(localized_string), "");

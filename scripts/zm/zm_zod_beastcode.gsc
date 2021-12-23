@@ -594,7 +594,7 @@ function keycode_input_prompt(player)
 		{
 			str_old_hint = str_hint;
 			self.stub.hint_string = str_hint;
-			if(str_hint === &"ZM_ZOD_KEYCODE_INCREMENT_NUMBER")
+			if(str_hint === (&"ZM_ZOD_KEYCODE_INCREMENT_NUMBER"))
 			{
 				self sethintstring(self.stub.hint_string, player.n_keycode_lookat_tag + 1);
 			}

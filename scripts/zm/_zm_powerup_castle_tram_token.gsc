@@ -77,7 +77,7 @@ function register_clientfields()
 	clientfield::register("scriptmover", "powerup_fuse_fx", 1, 1, "int");
 	for(i = 0; i < 4; i++)
 	{
-		clientfield::register("world", "player" + i + "hasItem", 1, 1, "int");
+		clientfield::register("world", ("player" + i) + "hasItem", 1, 1, "int");
 	}
 	clientfield::register("clientuimodel", "zmInventory.player_using_sprayer", 1, 1, "int");
 	clientfield::register("clientuimodel", "zmInventory.widget_sprayer", 1, 1, "int");
@@ -100,7 +100,7 @@ function function_bcb6924e(player)
 		player thread show_infotext_for_duration("ZM_CASTLE_TRAM_TOKEN_ACQUIRED", 3.5);
 		player thread function_1cb39173("zmInventory.player_using_sprayer", "zmInventory.widget_sprayer", 1);
 		level thread function_a52da515(player);
-		level clientfield::set("player" + player.entity_num + "hasItem", 1);
+		level clientfield::set(("player" + player.entity_num) + "hasItem", 1);
 		level thread function_4c1f0ef2();
 		if(!player.var_dc5e13e5)
 		{
@@ -242,7 +242,7 @@ function function_a52da515(player)
 		player clientfield::set_to_player("has_castle_tram_token", 0);
 		player clientfield::set_player_uimodel("zmInventory.player_using_sprayer", 0);
 	}
-	level clientfield::set("player" + var_507b79e0 + "hasItem", 0);
+	level clientfield::set(("player" + var_507b79e0) + "hasItem", 0);
 }
 
 /*

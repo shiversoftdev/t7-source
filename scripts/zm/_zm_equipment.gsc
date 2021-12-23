@@ -437,7 +437,7 @@ function take(equipment = self get_player_equipment())
 		current_weapon = 1;
 	}
 	/#
-		println("" + self.name + "" + equipment.name + "");
+		println(((("" + self.name) + "") + equipment.name) + "");
 	#/
 	notify_strings = get_notify_strings(equipment);
 	if(isdefined(self.current_equipment_active[equipment]) && self.current_equipment_active[equipment])
@@ -490,7 +490,7 @@ function give(equipment)
 		return;
 	}
 	/#
-		println("" + self.name + "" + equipment.name + "");
+		println(((("" + self.name) + "") + equipment.name) + "");
 	#/
 	curr_weapon = self getcurrentweapon();
 	curr_weapon_was_curr_equipment = self is_player_equipment(curr_weapon);
@@ -522,7 +522,7 @@ function buy(equipment)
 		equipment = getweapon(equipment);
 	}
 	/#
-		println("" + self.name + "" + equipment.name + "");
+		println(((("" + self.name) + "") + equipment.name) + "");
 	#/
 	if(isdefined(self.current_equipment) && equipment != self.current_equipment && self.current_equipment != level.weaponnone)
 	{
@@ -1116,7 +1116,7 @@ function function_f30ee99e()
 		wait(0.05);
 		level flag::wait_till("");
 		wait(0.05);
-		str_cmd = "" + "" + "";
+		str_cmd = ("" + "") + "";
 		adddebugcommand(str_cmd);
 		while(true)
 		{
@@ -1160,7 +1160,7 @@ function function_de79cac6(equipment)
 		if(isdefined(equipment))
 		{
 			equipment_id = equipment.name;
-			str_cmd = "" + equipment_id + "" + equipment_id + "";
+			str_cmd = ((("" + equipment_id) + "") + equipment_id) + "";
 			adddebugcommand(str_cmd);
 		}
 	#/

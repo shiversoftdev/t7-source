@@ -302,7 +302,7 @@ function continue_hacking_object(obj)
 		{
 			self thread watch_timeout(obj, obj.hackable_timeout);
 		}
-		amt = 1 / 20 * obj.hackable_hack_time;
+		amt = 1 / (20 * obj.hackable_hack_time);
 		obj.hackable_hacked_amount = obj.hackable_hacked_amount + amt;
 		if(obj.hackable_hacked_amount > 1)
 		{

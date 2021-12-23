@@ -97,7 +97,7 @@ private function cleanup_main()
 			}
 			level.n_cleanup_manager_restart_time = undefined;
 		}
-		n_round_time = n_time - level.round_start_time / 1000;
+		n_round_time = (n_time - level.round_start_time) / 1000;
 		if(level.round_number <= 5 && n_round_time < 30)
 		{
 			continue;

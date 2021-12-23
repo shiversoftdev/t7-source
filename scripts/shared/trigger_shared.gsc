@@ -60,7 +60,7 @@ function __init__()
 	trigger_funcs["exploder"] = &trigger_exploder;
 	foreach(var_4639524f, trig in get_all("trigger_radius", "trigger_multiple", "trigger_once", "trigger_box"))
 	{
-		if(isdefined(trig.spawnflags) && trig.spawnflags & 256 == 256)
+		if(isdefined(trig.spawnflags) && (trig.spawnflags & 256) == 256)
 		{
 			level thread trigger_look(trig);
 		}
@@ -74,7 +74,7 @@ function __init__()
 		{
 			if(trig.classname != "trigger_hurt")
 			{
-				if(isdefined(trig.spawnflags) && trig.spawnflags & 32 == 32)
+				if(isdefined(trig.spawnflags) && (trig.spawnflags & 32) == 32)
 				{
 					level thread trigger_spawner(trig);
 				}
@@ -260,7 +260,7 @@ function get_trigger_look_target()
 		if(a_targets.size > 0)
 		{
 			/#
-				assert(a_targets.size == 1, "" + self.origin + "");
+				assert(a_targets.size == 1, ("" + self.origin) + "");
 			#/
 			e_target = a_targets[0];
 		}
@@ -338,7 +338,7 @@ function trigger_spawner(trigger)
 {
 	a_spawners = getspawnerarray(trigger.target, "targetname");
 	/#
-		assert(a_spawners.size > 0, "" + trigger.origin + "");
+		assert(a_spawners.size > 0, ("" + trigger.origin) + "");
 	#/
 	trigger endon(#"death");
 	trigger wait_till();
@@ -522,11 +522,11 @@ function friendly_respawn_trigger(trigger)
 	trigger endon(#"death");
 	spawners = getentarray(trigger.target, "targetname");
 	/#
-		assert(spawners.size == 1, "" + trigger.target + "");
+		assert(spawners.size == 1, ("" + trigger.target) + "");
 	#/
 	spawner = spawners[0];
 	/#
-		assert(!isdefined(spawner.script_forcecolor), "" + spawner.origin + "");
+		assert(!isdefined(spawner.script_forcecolor), ("" + spawner.origin) + "");
 	#/
 	spawners = undefined;
 	spawner endon(#"death");
@@ -737,7 +737,7 @@ function trigger_once(trig)
 	{
 		/#
 			println("");
-			println("" + trig getentitynumber() + "" + trig.origin);
+			println((("" + trig getentitynumber()) + "") + trig.origin);
 			println("");
 		#/
 		trig delete();
@@ -756,7 +756,7 @@ function trigger_once(trig)
 function trigger_hint(trigger)
 {
 	/#
-		assert(isdefined(trigger.script_hint), "" + trigger.origin + "");
+		assert(isdefined(trigger.script_hint), ("" + trigger.origin) + "");
 	#/
 	trigger endon(#"death");
 	if(!isdefined(level.displayed_hints))
@@ -765,7 +765,7 @@ function trigger_hint(trigger)
 	}
 	waittillframeend();
 	/#
-		assert(isdefined(level.trigger_hint_string[trigger.script_hint]), "" + trigger.script_hint + "");
+		assert(isdefined(level.trigger_hint_string[trigger.script_hint]), ("" + trigger.script_hint) + "");
 	#/
 	trigger waittill(#"trigger", other);
 	/#
@@ -1070,7 +1070,7 @@ function wait_till(str_name, str_key = "targetname", e_entity, b_assert = 1)
 				return;
 			}
 		}
-		assert(!b_assert || triggers.size > 0, "" + str_name + "" + str_key);
+		assert(!b_assert || triggers.size > 0, (("" + str_name) + "") + str_key);
 		if(triggers.size > 0)
 		{
 			if(triggers.size == 1)
@@ -1212,7 +1212,7 @@ function use(str_name, str_key = "targetname", ent = getplayers()[0], b_assert =
 			if(b_assert)
 			{
 				/#
-					assertmsg("" + str_name + "" + str_key);
+					assertmsg((("" + str_name) + "") + str_key);
 				#/
 			}
 			return;

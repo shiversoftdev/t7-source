@@ -125,7 +125,7 @@ function startrewindableevent(localclientnum, timekey)
 			{
 				continue;
 			}
-			starttime = timekey + timedfunction.starttimesec * 1000;
+			starttime = timekey + (timedfunction.starttimesec * 1000);
 			if(starttime > level.servertime)
 			{
 				allfunctionsstarted = 0;
@@ -319,7 +319,7 @@ function addrewindableeventtowatcher(starttime, data)
 function servertimedmoveto(localclientnum, startpoint, endpoint, starttime, duration)
 {
 	level endon("demo_jump" + localclientnum);
-	timeelapsed = level.servertime - starttime * 0.001;
+	timeelapsed = (level.servertime - starttime) * 0.001;
 	/#
 		assert(duration > 0);
 	#/
@@ -355,7 +355,7 @@ function servertimedmoveto(localclientnum, startpoint, endpoint, starttime, dura
 function servertimedrotateto(localclientnum, angles, starttime, duration, timein, timeout)
 {
 	level endon("demo_jump" + localclientnum);
-	timeelapsed = level.servertime - starttime * 0.001;
+	timeelapsed = (level.servertime - starttime) * 0.001;
 	if(!isdefined(timein))
 	{
 		timein = 0;
@@ -423,7 +423,7 @@ function removecliententonjump(clientent, localclientnum)
 */
 function getpointonline(startpoint, endpoint, ratio)
 {
-	nextpoint = (startpoint[0] + endpoint[0] - startpoint[0] * ratio, startpoint[1] + endpoint[1] - startpoint[1] * ratio, startpoint[2] + endpoint[2] - startpoint[2] * ratio);
+	nextpoint = (startpoint[0] + ((endpoint[0] - startpoint[0]) * ratio), startpoint[1] + ((endpoint[1] - startpoint[1]) * ratio), startpoint[2] + ((endpoint[2] - startpoint[2]) * ratio));
 	return nextpoint;
 }
 

@@ -263,8 +263,8 @@ function drawcylinder(pos, rad, height)
 		curheight = height;
 		for(r = 0; r < 20; r++)
 		{
-			theta = r / 20 * 360;
-			theta2 = r + 1 / 20 * 360;
+			theta = (r / 20) * 360;
+			theta2 = ((r + 1) / 20) * 360;
 			line(pos + (cos(theta) * currad, sin(theta) * currad, 0), pos + (cos(theta2) * currad, sin(theta2) * currad, 0));
 			line(pos + (cos(theta) * currad, sin(theta) * currad, curheight), pos + (cos(theta2) * currad, sin(theta2) * currad, curheight));
 			line(pos + (cos(theta) * currad, sin(theta) * currad, 0), pos + (cos(theta) * currad, sin(theta) * currad, curheight));

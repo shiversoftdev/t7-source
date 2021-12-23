@@ -119,7 +119,7 @@ function mechzprocessfootstep(localclientnum, pos, surface, notetrack, bone)
 	n_mechz_dist = 1000000;
 	if(n_mechz_dist > 0)
 	{
-		n_scale = n_mechz_dist - n_dist / n_mechz_dist;
+		n_scale = (n_mechz_dist - n_dist) / n_mechz_dist;
 	}
 	else
 	{

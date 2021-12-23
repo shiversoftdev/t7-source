@@ -76,17 +76,17 @@ function function_9a03e439()
 		{
 			case "zone_slums_high_B":
 			{
-				var_b32c7926 = 1;
+				n_loc = 1;
 				break;
 			}
 			case "zone_canal_high_B":
 			{
-				var_b32c7926 = 2;
+				n_loc = 2;
 				break;
 			}
 			case "zone_theater_high_A":
 			{
-				var_b32c7926 = 3;
+				n_loc = 3;
 				break;
 			}
 		}
@@ -105,19 +105,19 @@ function function_9a03e439()
 		{
 			case "speedcola_perk":
 			{
-				thread function_e840e164(var_b32c7926);
+				thread function_e840e164(n_loc);
 				e_bottle thread clientfield::set("perk_bottle_speed_cola_fx", 1);
 				break;
 			}
 			case "jugg_perk":
 			{
-				thread function_588068b3(var_b32c7926);
+				thread function_588068b3(n_loc);
 				e_bottle thread clientfield::set("perk_bottle_juggernog_fx", 1);
 				break;
 			}
 			case "tap_perk":
 			{
-				thread function_8b929f79(var_b32c7926);
+				thread function_8b929f79(n_loc);
 				e_bottle thread clientfield::set("perk_bottle_doubletap_fx", 1);
 				break;
 			}

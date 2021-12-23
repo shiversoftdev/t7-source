@@ -165,7 +165,7 @@ function function_c32a6dca()
 		{
 			level.var_bf361dc0 = level.var_bf361dc0 + 2;
 		}
-		else if(level.var_bf361dc0 == level.n_next_raps_round + 1)
+		else if(level.var_bf361dc0 == (level.n_next_raps_round + 1))
 		{
 			level.var_bf361dc0 = level.var_bf361dc0 + 1;
 		}
@@ -302,7 +302,7 @@ function function_8bcb72e9(var_8f401985, s_loc)
 	{
 		var_225347e1.b_ignore_cleanup = 1;
 		var_225347e1 thread function_8d578a58();
-		n_health = level.round_number * 100 + 100;
+		n_health = (level.round_number * 100) + 100;
 		var_225347e1 margwaserverutils::margwasetheadhealth(n_health);
 	}
 	if(!(isdefined(var_8f401985) && var_8f401985))

@@ -84,7 +84,7 @@ function actor_damage_override(inflictor, attacker, damage, flags, meansofdeath,
 	if(meansofdeath === "MOD_MELEE")
 	{
 		damage = damage * 5;
-		if(self.health - damage <= 0 && isdefined(attacker) && isplayer(attacker))
+		if((self.health - damage) <= 0 && isdefined(attacker) && isplayer(attacker))
 		{
 			attacker zm_stats::increment_challenge_stat("GUM_GOBBLER_SWORD_FLAY");
 		}

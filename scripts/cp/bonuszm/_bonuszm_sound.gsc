@@ -125,7 +125,7 @@ private function say(alias)
 		self stopsound(self.var_478c7e3e);
 	}
 	wait(0.1);
-	uniquenotify = alias + " " + level.var_a5375ea0;
+	uniquenotify = (alias + " ") + level.var_a5375ea0;
 	level.var_a5375ea0 = level.var_a5375ea0 + 1;
 	if(isdefined(level.scr_sound) && isdefined(level.scr_sound["generic"]))
 	{
@@ -339,7 +339,7 @@ function function_dc28c71b(zombie, type, override)
 	{
 		return;
 	}
-	alias = "zmb_vocals_" + zombie.voiceprefix + "_" + type;
+	alias = (("zmb_vocals_" + zombie.voiceprefix) + "_") + type;
 	if(sndisnetworksafe())
 	{
 		if(isdefined(override) && override)
@@ -493,7 +493,7 @@ function function_b80a73a4()
 	{
 		wait(1);
 		t = gettime();
-		if(t > level._zbv_vox_last_update_time + 1000)
+		if(t > (level._zbv_vox_last_update_time + 1000))
 		{
 			level._zbv_vox_last_update_time = t;
 			level._audio_zbv_shared_ent_list = getaiteamarray("axis");
@@ -513,7 +513,7 @@ function function_b80a73a4()
 			}
 			dist = 250;
 			z_dist = 50;
-			if(distancesquared(zombs[i].origin, self.origin) < dist * dist)
+			if(distancesquared(zombs[i].origin, self.origin) < (dist * dist))
 			{
 				var_3bd0b11d = vectortoangles(zombs[i].origin - self.origin);
 				yaw = self.angles[1] - var_3bd0b11d[1];

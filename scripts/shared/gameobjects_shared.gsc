@@ -411,14 +411,14 @@ function create_carry_object(ownerteam, trigger, visuals, offset, objectivename,
 					objective_add(carryobject.objid[team], "invisible", carryobject.curorigin, objectivename);
 				}
 				objective_team(carryobject.objid[team], team);
-				carryobject.objpoints[team] = objpoints::create("objpoint_" + team + "_" + carryobject.entnum, carryobject.curorigin + offset, team, undefined);
+				carryobject.objpoints[team] = objpoints::create((("objpoint_" + team) + "_") + carryobject.entnum, carryobject.curorigin + offset, team, undefined);
 				carryobject.objpoints[team].alpha = 0;
 			}
 		}
 		else
 		{
 			objective_add(carryobject.objid[level.nonteambasedteam], "invisible", carryobject.curorigin, objectivename);
-			carryobject.objpoints[level.nonteambasedteam] = objpoints::create("objpoint_" + level.nonteambasedteam + "_" + carryobject.entnum, carryobject.curorigin + offset, "all", undefined);
+			carryobject.objpoints[level.nonteambasedteam] = objpoints::create((("objpoint_" + level.nonteambasedteam) + "_") + carryobject.entnum, carryobject.curorigin + offset, "all", undefined);
 			carryobject.objpoints[level.nonteambasedteam].alpha = 0;
 		}
 	}
@@ -1120,7 +1120,7 @@ function set_dropped()
 							self.isresetting = 0;
 							return;
 						}
-						end_reflect = forward * 1000 + trace["position"];
+						end_reflect = (forward * 1000) + trace["position"];
 						reflect_trace = physicstrace(trace["position"], end_reflect, (trace_size * -1, trace_size * -1, trace_size * -1), (trace_size, trace_size, trace_size), self, 32);
 						if(isdefined(reflect_trace) && reflect_trace["normal"][2] < 0)
 						{
@@ -1626,7 +1626,7 @@ function create_use_object(ownerteam, trigger, visuals, offset, objectivename, a
 		{
 			foreach(var_db11c837, team in level.teams)
 			{
-				useobject.objpoints[team] = objpoints::create("objpoint_" + team + "_" + useobject.entnum, useobject.curorigin + offset, team, undefined);
+				useobject.objpoints[team] = objpoints::create((("objpoint_" + team) + "_") + useobject.entnum, useobject.curorigin + offset, team, undefined);
 				useobject.objpoints[team].alpha = 0;
 			}
 		}
@@ -1945,7 +1945,7 @@ function use_object_prox_think()
 					{
 						decayscale = self.usetime / self.decaytime;
 					}
-					self.curprogress = self.curprogress - 50 * self.userate * decayscale;
+					self.curprogress = self.curprogress - ((50 * self.userate) * decayscale);
 					if(self.curprogress <= 0)
 					{
 						self clear_progress();
@@ -1953,7 +1953,7 @@ function use_object_prox_think()
 					self update_current_progress();
 					if(isdefined(self.onuseupdate))
 					{
-						self [[self.onuseupdate]](self get_claim_team(), self.curprogress / self.usetime, 50 * self.userate * decayscale / self.usetime);
+						self [[self.onuseupdate]](self get_claim_team(), self.curprogress / self.usetime, ((50 * self.userate) * decayscale) / self.usetime);
 					}
 					if(self.curprogress == 0)
 					{
@@ -1971,11 +1971,11 @@ function use_object_prox_think()
 				}
 				else
 				{
-					self.curprogress = self.curprogress + 50 * self.userate;
+					self.curprogress = self.curprogress + (50 * self.userate);
 					self update_current_progress();
 					if(isdefined(self.onuseupdate))
 					{
-						self [[self.onuseupdate]](self get_claim_team(), self.curprogress / self.usetime, 50 * self.userate / self.usetime);
+						self [[self.onuseupdate]](self get_claim_team(), self.curprogress / self.usetime, (50 * self.userate) / self.usetime);
 					}
 				}
 			}
@@ -2014,7 +2014,7 @@ function use_object_prox_think()
 				}
 			}
 		}
-		else if(self.curprogress > 0 && gettime() - self.lastclaimtime > self.claimgraceperiod * 1000)
+		else if(self.curprogress > 0 && (gettime() - self.lastclaimtime) > (self.claimgraceperiod * 1000))
 		{
 			self clear_progress();
 		}
@@ -2245,7 +2245,7 @@ function set_claim_team(newteam)
 	/#
 		assert(newteam != self.claimteam);
 	#/
-	if(self.claimteam == "none" && gettime() - self.lastclaimtime > self.claimgraceperiod * 1000)
+	if(self.claimteam == "none" && (gettime() - self.lastclaimtime) > (self.claimgraceperiod * 1000))
 	{
 		self clear_progress();
 	}
@@ -2497,7 +2497,7 @@ function update_prox_bar(object, forceremove)
 			if(object.curprogress > 0)
 			{
 				progress = object.curprogress / object.usetime;
-				rate = 1000 / object.usetime * object.userate * -1;
+				rate = (1000 / object.usetime) * (object.userate * -1);
 				if(isdefined(level.hostmigrationtimer))
 				{
 					rate = 0;
@@ -2508,7 +2508,7 @@ function update_prox_bar(object, forceremove)
 		else
 		{
 			progress = object.curprogress / object.usetime;
-			rate = 1000 / object.usetime * object.userate;
+			rate = (1000 / object.usetime) * object.userate;
 			if(isdefined(level.hostmigrationtimer))
 			{
 				rate = 0;
@@ -2843,7 +2843,7 @@ function use_hold_think_loop(player)
 		timedout = timedout + 0.05;
 		if(!isdefined(useweapon) || player getcurrentweapon() == useweapon)
 		{
-			self.curprogress = self.curprogress + 50 * self.userate;
+			self.curprogress = self.curprogress + (50 * self.userate);
 			self update_current_progress();
 			self.userate = 1;
 			waitforweapon = 0;
@@ -2913,7 +2913,7 @@ function personal_use_bar(object)
 				if(object.curprogress > 0)
 				{
 					progress = object.curprogress / usetime;
-					rate = 1000 / usetime * object.userate * -1;
+					rate = (1000 / usetime) * (object.userate * -1);
 					if(isdefined(level.hostmigrationtimer))
 					{
 						rate = 0;
@@ -2924,7 +2924,7 @@ function personal_use_bar(object)
 			else
 			{
 				progress = object.curprogress / usetime;
-				rate = 1000 / usetime * object.userate;
+				rate = (1000 / usetime) * object.userate;
 				if(isdefined(level.hostmigrationtimer))
 				{
 					rate = 0;
@@ -3022,8 +3022,7 @@ function update_objective()
 	else if(self.visibleteam == "enemy")
 	{
 		objective_state(self.objectiveid, "active");
-		~level.spawnsystem;
-		objective_visibleteams(self.objectiveid, level.spawnsystem.ispawn_teammask["all"] & level.spawnsystem.ispawn_teammask[self.ownerteam]);
+		objective_visibleteams(self.objectiveid, level.spawnsystem.ispawn_teammask["all"] & (~level.spawnsystem.ispawn_teammask[self.ownerteam]));
 	}
 	else
 	{
@@ -3106,7 +3105,7 @@ function update_world_icon(relativeteam, showicon)
 		{
 			continue;
 		}
-		opname = "objpoint_" + updateteams[index] + "_" + self.entnum;
+		opname = (("objpoint_" + updateteams[index]) + "_") + self.entnum;
 		objpoint = objpoints::get_by_name(opname);
 		objpoint notify(#"stop_flashing_thread");
 		objpoint thread objpoints::stop_flashing();
@@ -3744,7 +3743,7 @@ function set_3d_icon_color(relativeteam, v_color, alpha)
 		{
 			continue;
 		}
-		opname = "objpoint_" + updateteams[index] + "_" + self.entnum;
+		opname = (("objpoint_" + updateteams[index]) + "_") + self.entnum;
 		objpoint = objpoints::get_by_name(opname);
 		if(isdefined(objpoint))
 		{
@@ -4689,14 +4688,14 @@ function create_pack_object(ownerteam, trigger, visuals, offset, objectivename)
 			{
 				objective_add(packobject.objid[team], "invisible", packobject.curorigin);
 				objective_team(packobject.objid[team], team);
-				packobject.objpoints[team] = objpoints::create("objpoint_" + team + "_" + packobject.entnum, packobject.curorigin + offset, team, undefined);
+				packobject.objpoints[team] = objpoints::create((("objpoint_" + team) + "_") + packobject.entnum, packobject.curorigin + offset, team, undefined);
 				packobject.objpoints[team].alpha = 0;
 			}
 		}
 		else
 		{
 			objective_add(packobject.objid[level.nonteambasedteam], "invisible", packobject.curorigin);
-			packobject.objpoints[level.nonteambasedteam] = objpoints::create("objpoint_" + level.nonteambasedteam + "_" + packobject.entnum, packobject.curorigin + offset, "all", undefined);
+			packobject.objpoints[level.nonteambasedteam] = objpoints::create((("objpoint_" + level.nonteambasedteam) + "_") + packobject.entnum, packobject.curorigin + offset, "all", undefined);
 			packobject.objpoints[level.nonteambasedteam].alpha = 0;
 		}
 	}
@@ -4819,7 +4818,7 @@ function get_packicon_offset(index = 0)
 		size = 35;
 		base = -40;
 	}
-	int = base - size * index;
+	int = base - (size * index);
 	return int;
 }
 

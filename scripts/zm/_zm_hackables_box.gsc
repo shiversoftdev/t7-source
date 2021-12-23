@@ -302,7 +302,7 @@ function respin_respin_box(hacker)
 	if(isdefined(self.chest.zbarrier.weapon_model_dw))
 	{
 		self.chest.zbarrier.weapon_model_dw notify(#"kill_weapon_movement");
-		self.chest.zbarrier.weapon_model_dw moveto(org + vectorscale((0, 0, 1), 40) - vectorscale((1, 1, 1), 3), 0.5);
+		self.chest.zbarrier.weapon_model_dw moveto((org + vectorscale((0, 0, 1), 40)) - vectorscale((1, 1, 1), 3), 0.5);
 	}
 	self.chest.zbarrier notify(#"box_hacked_rerespin");
 	self.chest.box_rerespun = 1;

@@ -29,7 +29,7 @@ function debug_sphere(origin, radius, color, alpha, time)
 		{
 			color = (1, 1, 1);
 		}
-		sides = int(10 * 1 + int(radius) % 100);
+		sides = int(10 * (1 + (int(radius) % 100)));
 		sphere(origin, radius, color, alpha, 1, sides, time);
 	#/
 }
@@ -113,7 +113,7 @@ function updateminimapsetting()
 							{
 								incr = requiredmapaspectratio / mapaspectratio;
 								disttoside = disttoside * incr;
-								addvec = vecscale(eastvector, vectordot(eastvector, maxcorner - viewpos) * incr - 1);
+								addvec = vecscale(eastvector, (vectordot(eastvector, maxcorner - viewpos)) * (incr - 1));
 								mincorner = mincorner - addvec;
 								maxcorner = maxcorner + addvec;
 							}
@@ -121,7 +121,7 @@ function updateminimapsetting()
 							{
 								incr = mapaspectratio / requiredmapaspectratio;
 								disttotop = disttotop * incr;
-								addvec = vecscale(northvector, vectordot(northvector, maxcorner - viewpos) * incr - 1);
+								addvec = vecscale(northvector, (vectordot(northvector, maxcorner - viewpos)) * (incr - 1));
 								mincorner = mincorner - addvec;
 								maxcorner = maxcorner + addvec;
 							}
@@ -129,14 +129,14 @@ function updateminimapsetting()
 						if(level.console)
 						{
 							aspectratioguess = 1.777778;
-							angleside = 2 * atan(disttoside * 0.8 / minimapheight);
-							angletop = 2 * atan(disttotop * aspectratioguess * 0.8 / minimapheight);
+							angleside = 2 * (atan((disttoside * 0.8) / minimapheight));
+							angletop = 2 * (atan(((disttotop * aspectratioguess) * 0.8) / minimapheight));
 						}
 						else
 						{
 							aspectratioguess = 1.333333;
-							angleside = 2 * atan(disttoside / minimapheight);
-							angletop = 2 * atan(disttotop * aspectratioguess / minimapheight);
+							angleside = 2 * (atan(disttoside / minimapheight));
+							angletop = 2 * (atan((disttotop * aspectratioguess) / minimapheight));
 						}
 						if(angleside > angletop)
 						{
@@ -238,10 +238,10 @@ function drawminimapbounds(viewpos, mincorner, maxcorner)
 		diaglen = length(mincorner - maxcorner);
 		mincorneroffset = mincorner - viewpos;
 		mincorneroffset = vectornormalize((mincorneroffset[0], mincorneroffset[1], 0));
-		mincorner = mincorner + vecscale(mincorneroffset, diaglen * 1 / 800);
+		mincorner = mincorner + (vecscale(mincorneroffset, (diaglen * 1) / 800));
 		maxcorneroffset = maxcorner - viewpos;
 		maxcorneroffset = vectornormalize((maxcorneroffset[0], maxcorneroffset[1], 0));
-		maxcorner = maxcorner + vecscale(maxcorneroffset, diaglen * 1 / 800);
+		maxcorner = maxcorner + (vecscale(maxcorneroffset, (diaglen * 1) / 800));
 		diagonal = maxcorner - mincorner;
 		side = vecscale(north, vectordot(diagonal, north));
 		sidenorth = vecscale(north, abs(vectordot(diagonal, north)));
@@ -249,7 +249,7 @@ function drawminimapbounds(viewpos, mincorner, maxcorner)
 		corner1 = mincorner + side;
 		corner2 = maxcorner;
 		corner3 = maxcorner - side;
-		toppos = vecscale(mincorner + maxcorner, 0.5) + vecscale(sidenorth, 0.51);
+		toppos = (vecscale(mincorner + maxcorner, 0.5)) + vecscale(sidenorth, 0.51);
 		textscale = diaglen * 0.003;
 		while(true)
 		{
@@ -280,20 +280,20 @@ function minimapwarn(corners)
 		width = int(width);
 		height = abs(corners[0].origin[1] - corners[1].origin[1]);
 		height = int(height);
-		if(abs(width - height) > threshold)
+		if((abs(width - height)) > threshold)
 		{
 			for(;;)
 			{
-				iprintln("" + width + "" + height + "");
+				iprintln(((("" + width) + "") + height) + "");
 				if(height > width)
 				{
 					scale = height / width;
-					iprintln("" + scale + "");
+					iprintln(("" + scale) + "");
 				}
 				else
 				{
 					scale = width / height;
-					iprintln("" + scale + "");
+					iprintln(("" + scale) + "");
 				}
 				wait(10);
 			}
@@ -403,16 +403,16 @@ function body_customization_populate(mode)
 		body_customization_devgui_base = "";
 		foreach(var_7905f640, playerbodytype in bodies)
 		{
-			body_name = makelocalizedstring(getcharacterdisplayname(playerbodytype, mode)) + "" + getcharacterassetname(playerbodytype, mode) + "";
-			adddebugcommand(body_customization_devgui_base + body_name + "" + "" + "" + "" + "" + playerbodytype + "");
+			body_name = (makelocalizedstring(getcharacterdisplayname(playerbodytype, mode)) + "") + getcharacterassetname(playerbodytype, mode) + "";
+			adddebugcommand((((((((body_customization_devgui_base + body_name) + "") + "") + "") + "") + "") + playerbodytype) + "");
 			for(i = 0; i < getcharacterbodymodelcount(playerbodytype, mode); i++)
 			{
-				adddebugcommand(body_customization_devgui_base + body_name + "" + i + "" + "" + "" + "" + playerbodytype + "" + "" + i + "");
+				adddebugcommand((((((((((((body_customization_devgui_base + body_name) + "") + i) + "") + "") + "") + "") + playerbodytype) + "") + "") + i) + "");
 				wait(0.05);
 			}
 			for(i = 0; i < getcharacterhelmetmodelcount(playerbodytype, mode); i++)
 			{
-				adddebugcommand(body_customization_devgui_base + body_name + "" + i + "" + "" + "" + "" + playerbodytype + "" + "" + i + "");
+				adddebugcommand((((((((((((body_customization_devgui_base + body_name) + "") + i) + "") + "") + "") + "") + playerbodytype) + "") + "") + i) + "");
 				wait(0.05);
 			}
 			wait(0.05);
@@ -460,8 +460,8 @@ function add_perk_devgui(name, specialties)
 	/#
 		perk_devgui_base = "";
 		perk_name = makelocalizedstring(name);
-		test = perk_devgui_base + perk_name + "" + "" + "" + specialties + "";
-		adddebugcommand(perk_devgui_base + perk_name + "" + "" + "" + specialties + "");
+		test = (((((perk_devgui_base + perk_name) + "") + "") + "") + specialties) + "";
+		adddebugcommand((((((perk_devgui_base + perk_name) + "") + "") + "") + specialties) + "");
 	#/
 }
 

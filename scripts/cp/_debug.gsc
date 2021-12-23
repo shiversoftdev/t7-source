@@ -191,8 +191,8 @@ function drawarrow(org, ang, opcolor)
 			blue = opcolor;
 		}
 		line(org, org + forwardfar, red, 0.9);
-		line(org + forwardfar, org + forwardclose + rightdraw, red, 0.9);
-		line(org + forwardfar, org + forwardclose + leftdraw, red, 0.9);
+		line(org + forwardfar, (org + forwardclose) + rightdraw, red, 0.9);
+		line(org + forwardfar, (org + forwardclose) + leftdraw, red, 0.9);
 		line(org, org + right, blue, 0.9);
 		line(org, org + up, green, 0.9);
 	#/
@@ -578,7 +578,7 @@ function debugdvars()
 		}
 		for(i = 1; i <= level.animsound_hudlimit; i++)
 		{
-			if(getdvarstring("" + i) == "")
+			if((getdvarstring("" + i)) == "")
 			{
 				setdvar("" + i, "");
 			}
@@ -657,7 +657,7 @@ function debugdvars()
 			}
 			for(i = 1; i <= level.animsound_hudlimit; i++)
 			{
-				if(getdvarstring("" + i) != "")
+				if((getdvarstring("" + i)) != "")
 				{
 					thread debug_animsoundtag(i);
 				}
@@ -990,10 +990,10 @@ function deathspawnerpreview()
 				ent = array[p];
 				if(isdefined(ent.truecount))
 				{
-					print3d(ent.origin, i + "" + ent.truecount, (0, 0.8, 0.6), 5);
+					print3d(ent.origin, (i + "") + ent.truecount, (0, 0.8, 0.6), 5);
 					continue;
 				}
-				print3d(ent.origin, i + "" + "", (0, 0.8, 0.6), 5);
+				print3d(ent.origin, (i + "") + "", (0, 0.8, 0.6), 5);
 			}
 		}
 	#/
@@ -1088,7 +1088,7 @@ function islookingatorigin(origin)
 {
 	/#
 		normalvec = vectornormalize(origin - self getshootatpos());
-		veccomp = vectornormalize(origin - vectorscale((0, 0, 1), 24) - self getshootatpos());
+		veccomp = vectornormalize((origin - vectorscale((0, 0, 1), 24)) - self getshootatpos());
 		insidedot = vectordot(normalvec, veccomp);
 		anglevec = anglestoforward(self getplayerangles());
 		vectordot = vectordot(anglevec, normalvec);
@@ -1240,7 +1240,7 @@ function displaythreat(entity, entitygroup)
 			print3d(self.origin + (0, 0, 0), selfthreat, col2, 5);
 			if(isdefined(mygroup))
 			{
-				print3d(self.origin + vectorscale((0, 0, -1), 15), mygroup, col2, 2);
+				print3d(self.origin + (vectorscale((0, 0, -1), 15)), mygroup, col2, 2);
 			}
 			if(pacifist)
 			{
@@ -1401,7 +1401,7 @@ function debug_animsound()
 				hudelm.alignx = "";
 				hudelm.aligny = "";
 				hudelm.x = 10;
-				hudelm.y = 200 + i * 10;
+				hudelm.y = 200 + (i * 10);
 				hudelm.alpha = 1;
 				hudelm.fontscale = 1;
 				hudelm.label = "";
@@ -1410,7 +1410,7 @@ function debug_animsound()
 				hudelm.alignx = "";
 				hudelm.aligny = "";
 				hudelm.x = -10;
-				hudelm.y = 200 + i * 10;
+				hudelm.y = 200 + (i * 10);
 				hudelm.alpha = 1;
 				hudelm.fontscale = 1;
 				hudelm.label = "";
@@ -1419,7 +1419,7 @@ function debug_animsound()
 				hudelm.alignx = "";
 				hudelm.aligny = "";
 				hudelm.x = 210;
-				hudelm.y = 200 + i * 10;
+				hudelm.y = 200 + (i * 10);
 				hudelm.alpha = 1;
 				hudelm.fontscale = 1;
 				hudelm.label = "";
@@ -1483,7 +1483,7 @@ function debug_animsound()
 			{
 				animsound = level.animsounds_thisframe[i];
 				animsound.animsound_color = (0.25, 1, 0.5);
-				difference = vectornormalize(animsound.origin + vectorscale((0, 0, 1), 40) - players[0].origin + vectorscale((0, 0, 1), 55));
+				difference = vectornormalize((animsound.origin + vectorscale((0, 0, 1), 40)) - (players[0].origin + vectorscale((0, 0, 1), 55)));
 				newdot = vectordot(forward, difference);
 				if(newdot < dot)
 				{
@@ -1624,9 +1624,9 @@ function draw_animsounds_in_hud()
 			animsound = animsounds[key];
 			hudelm = level.animsound_hud[key];
 			soundalias = get_alias_from_stored(animsound);
-			hudelm.label = key + 1 + "" + animsound.notetrack;
+			hudelm.label = ((key + 1) + "") + animsound.notetrack;
 			hudelm = level.animsound_hud_timer[key];
-			hudelm.label = int(time - animsound.end_time - 60000 * 0.001);
+			hudelm.label = int((time - (animsound.end_time - 60000)) * 0.001);
 			if(isdefined(soundalias))
 			{
 				hudelm = level.animsound_hud_alias[key];
@@ -1810,11 +1810,11 @@ function tag_sound(tag, tagnum)
 function debug_animsoundsave()
 {
 	/#
-		filename = "" + level.script + "";
+		filename = ("" + level.script) + "";
 		file = openfile(filename, "");
 		if(file == -1)
 		{
-			iprintlnbold("" + filename + "");
+			iprintlnbold(("" + filename) + "");
 			return;
 		}
 		iprintlnbold("" + filename);
@@ -1863,15 +1863,15 @@ function print_aliases_to_file(file)
 						continue;
 					}
 					alias = level.animsound_aliases[animnames[i]][anime][notetrack][""];
-					if(notetrack == "" + anime)
+					if(notetrack == ("" + anime))
 					{
-						fprintln(file, tab + "" + tostr(animnames[i]) + "" + tostr(anime) + "" + tostr(alias) + "");
+						fprintln(file, (((tab + "") + tostr(animnames[i]) + "") + tostr(anime) + "") + tostr(alias) + "");
 					}
 					else
 					{
-						fprintln(file, tab + "" + tostr(animnames[i]) + "" + tostr(anime) + "" + tostr(notetrack) + "" + tostr(alias) + "");
+						fprintln(file, ((((tab + "") + tostr(animnames[i]) + "") + tostr(anime) + "") + tostr(notetrack) + "") + tostr(alias) + "");
 					}
-					println("" + alias + "" + notetrack);
+					println((("" + alias) + "") + notetrack);
 				}
 			}
 		}
@@ -1897,17 +1897,17 @@ function function_2ceda325()
 			return;
 		}
 		players = getplayers();
-		filename = "" + level.savename + "" + players[0].playername + "";
+		filename = ((("" + level.savename) + "") + players[0].playername) + "";
 		/#
 			file = openfile(filename, "");
 			if(file == -1)
 			{
-				iprintlnbold("" + filename + "");
+				iprintlnbold(("" + filename) + "");
 				return;
 			}
 			if(isdefined(level.current_skipto))
 			{
-				fprintln(file, "" + level.current_skipto + "");
+				fprintln(file, ("" + level.current_skipto) + "");
 			}
 			else
 			{
@@ -1919,7 +1919,7 @@ function function_2ceda325()
 			}
 			foreach(var_adcf2899, deadnpctypecount in level.a_npcdeaths)
 			{
-				fprintln(file, deadnpctypecount.strscoretype + "" + deadnpctypecount.icount + "" + deadnpctypecount.ikilledbyplayercount + "" + deadnpctypecount.ixpvaluesum);
+				fprintln(file, (((((deadnpctypecount.strscoretype + "") + deadnpctypecount.icount) + "") + deadnpctypecount.ikilledbyplayercount) + "") + deadnpctypecount.ixpvaluesum);
 			}
 			fprintln(file, "");
 			iprintlnbold("" + filename);
@@ -2113,10 +2113,10 @@ function debug_show_viewpos()
 				x = players[0].origin[0];
 				y = players[0].origin[1];
 				z = players[0].origin[2];
-				spacing1 = 2 + number_before_decimal(x) * 8 + 10;
-				spacing2 = 2 + number_before_decimal(y) * 8 + 10;
+				spacing1 = ((2 + number_before_decimal(x)) * 8) + 10;
+				spacing2 = ((2 + number_before_decimal(y)) * 8) + 10;
 				hud_y.x = x_pos + spacing1;
-				hud_z.x = x_pos + spacing1 + spacing2;
+				hud_z.x = (x_pos + spacing1) + spacing2;
 				hud_x setvalue(round_to(x, 100));
 				hud_y setvalue(round_to(y, 100));
 				hud_z setvalue(round_to(z, 100));
@@ -2171,7 +2171,7 @@ function number_before_decimal(num)
 function round_to(val, num)
 {
 	/#
-		return int(val * num) / num;
+		return (int(val * num)) / num;
 	#/
 }
 
@@ -2203,7 +2203,7 @@ function set_event_printname_thread(text, focus)
 			suffix = "";
 		}
 		setdvar("", text);
-		text = "" + text + suffix;
+		text = ("" + text) + suffix;
 		if(!isdefined(level.event_hudelem))
 		{
 			hud = newhudelem();
@@ -2573,7 +2573,7 @@ function debug_realtime_engage_dist()
 					engagedistmax = level.weaponengagedistvalues.engagedistmax;
 					if(tracedist >= engagedistmin && tracedist <= engagedistmax)
 					{
-						if(tracedist >= engagedistoptimal - engagedistmulligan && tracedist <= engagedistoptimal + engagedistmulligan)
+						if(tracedist >= (engagedistoptimal - engagedistmulligan) && tracedist <= (engagedistoptimal + engagedistmulligan))
 						{
 							hudobjarray engagedist_hud_changetext("", tracedist);
 							hudobj_changecolor(hudobjarray, (0, 1, 0));
@@ -2747,7 +2747,7 @@ function debug_ai_engage_dist()
 							drawstring = "";
 						}
 						scale = dist / 1000;
-						print3d(ai.origin + vectorscale((0, 0, 1), 67), drawstring + "" + dist, drawcolor, 1, scale);
+						print3d(ai.origin + vectorscale((0, 0, 1), 67), (drawstring + "") + dist, drawcolor, 1, scale);
 					}
 				}
 			}
@@ -2880,7 +2880,7 @@ function debugmsg(str_txt)
 			iprintlnbold(str_txt);
 			if(isdefined(level.name))
 			{
-				println("" + level.name + "" + str_txt);
+				println((("" + level.name) + "") + str_txt);
 			}
 		#/
 	#/
@@ -2911,7 +2911,7 @@ function plot_circle_fortime(radius1, radius2, time, color, origin, normal)
 		angletoplayer = vectortoangles(normal);
 		for(i = 0; i < circleres; i++)
 		{
-			plotpoints[plotpoints.size] = origin + vectorscale(anglestoforward(angletoplayer + (rad, 90, 0)), radius);
+			plotpoints[plotpoints.size] = origin + (vectorscale(anglestoforward(angletoplayer + (rad, 90, 0)), radius));
 			rad = rad + circleinc;
 		}
 		plot_points(plotpoints, color[0], color[1], color[2], time);
@@ -3021,12 +3021,12 @@ function spawn_guy_placement()
 			trace_dist = 4000;
 			trace = bullettrace(eye, eye + vectorscale(direction_vec, trace_dist), 0, level.dynamic_spawn_dummy_model);
 			dist = distance(eye, trace[""]);
-			position = eye + vectorscale(direction_vec, dist - level.aitypes[level.aitype_index].radius);
+			position = eye + (vectorscale(direction_vec, dist - level.aitypes[level.aitype_index].radius));
 			origin = position;
 			angles = self.angles + vectorscale((0, 1, 0), 180);
 			level.dynamic_spawn_dummy_model.origin = position;
 			level.dynamic_spawn_dummy_model.angles = angles;
-			level.dynamic_spawn_hud settext("" + level.aitype_index + "" + level.aitypes.size + "" + level.aitypes[level.aitype_index].classname);
+			level.dynamic_spawn_hud settext((((("" + level.aitype_index) + "") + level.aitypes.size) + "") + level.aitypes[level.aitype_index].classname);
 			level.dynamic_spawn_dummy_model detachall();
 			level.dynamic_spawn_dummy_model setmodel(level.aitypes[level.aitype_index].classname);
 			level.dynamic_spawn_dummy_model show();
@@ -3090,7 +3090,7 @@ function display_module_text()
 {
 	/#
 		wait(1);
-		iprintlnbold("" + level.script + "");
+		iprintlnbold(("" + level.script) + "");
 	#/
 }
 
@@ -3196,7 +3196,7 @@ function debug_engagedist()
 		guys = getaiarray();
 		for(i = 0; i < guys.size; i++)
 		{
-			diststring = guys[i].engageminfalloffdist + "" + guys[i].engagemindist + "" + guys[i].engagemaxdist + "" + guys[i].engagemaxfalloffdist;
+			diststring = (((((guys[i].engageminfalloffdist + "") + guys[i].engagemindist) + "") + guys[i].engagemaxdist) + "") + guys[i].engagemaxfalloffdist;
 			recordenttext(diststring, guys[i], level.debugteamcolors[guys[i].team], "");
 		}
 	#/
@@ -3222,7 +3222,7 @@ function debug_sphere(origin, radius, color, alpha, time)
 		{
 			color = (1, 1, 1);
 		}
-		sides = int(10 * 1 + int(radius) % 100);
+		sides = int(10 * (1 + (int(radius) % 100)));
 		sphere(origin, radius, color, alpha, 1, sides, time);
 	#/
 }
@@ -3248,13 +3248,13 @@ function draw_arrow_time(start, end, color, frames)
 		dist = distance(start, end);
 		arrow = [];
 		arrow[0] = start;
-		arrow[1] = start + vectorscale(right, dist * 0.1) + vectorscale(forward, dist * -0.1);
+		arrow[1] = (start + (vectorscale(right, dist * 0.1))) + (vectorscale(forward, dist * -0.1));
 		arrow[2] = end;
-		arrow[3] = start + vectorscale(right, dist * -1 * 0.1) + vectorscale(forward, dist * -0.1);
+		arrow[3] = (start + (vectorscale(right, dist * -1 * 0.1))) + (vectorscale(forward, dist * -0.1));
 		arrow[4] = start;
-		arrow[5] = start + vectorscale(up, dist * 0.1) + vectorscale(forward, dist * -0.1);
+		arrow[5] = (start + (vectorscale(up, dist * 0.1))) + (vectorscale(forward, dist * -0.1));
 		arrow[6] = end;
-		arrow[7] = start + vectorscale(up, dist * -1 * 0.1) + vectorscale(forward, dist * -0.1);
+		arrow[7] = (start + (vectorscale(up, dist * -1 * 0.1))) + (vectorscale(forward, dist * -0.1));
 		arrow[8] = start;
 		r = color[0];
 		g = color[1];
@@ -3283,9 +3283,9 @@ function draw_arrow(start, end, color)
 		dist = distance(start, end);
 		arrow = [];
 		arrow[0] = start;
-		arrow[1] = start + vectorscale(right, dist * 0.05) + vectorscale(forward, dist * -0.2);
+		arrow[1] = (start + (vectorscale(right, dist * 0.05))) + (vectorscale(forward, dist * -0.2));
 		arrow[2] = end;
-		arrow[3] = start + vectorscale(right, dist * -1 * 0.05) + vectorscale(forward, dist * -0.2);
+		arrow[3] = (start + (vectorscale(right, dist * -1 * 0.05))) + (vectorscale(forward, dist * -0.2));
 		for(p = 0; p < 4; p++)
 		{
 			nextpoint = p + 1;
@@ -3322,8 +3322,8 @@ function debugorigin()
 			left = vectorscale(right, -10);
 			right = vectorscale(right, 10);
 			line(self.origin, self.origin + forwardfar, (0.9, 0.7, 0.6), 0.9);
-			line(self.origin + forwardfar, self.origin + forwardclose + right, (0.9, 0.7, 0.6), 0.9);
-			line(self.origin + forwardfar, self.origin + forwardclose + left, (0.9, 0.7, 0.6), 0.9);
+			line(self.origin + forwardfar, (self.origin + forwardclose) + right, (0.9, 0.7, 0.6), 0.9);
+			line(self.origin + forwardfar, (self.origin + forwardclose) + left, (0.9, 0.7, 0.6), 0.9);
 			wait(0.05);
 		}
 	#/
@@ -3378,7 +3378,7 @@ function plot_points(plotpoints, r, g, b, timer)
 function draw_line_for_time(org1, org2, r, g, b, timer)
 {
 	/#
-		timer = gettime() + timer * 1000;
+		timer = gettime() + (timer * 1000);
 		while(gettime() < timer)
 		{
 			line(org1, org2, (r, g, b), 1);
@@ -3449,7 +3449,7 @@ function _get_debug_color(str_color)
 			}
 			default:
 			{
-				println("" + str_color + "");
+				println(("" + str_color) + "");
 				return (0, 0, 0);
 				break;
 			}
@@ -3526,11 +3526,11 @@ function debug_info_screen(text_array, time, fade_in_bg_time, fade_out_bg_time, 
 			}
 		}
 		text_elems = [];
-		spacing = int(level.fontheight * font_size) + 2;
+		spacing = (int(level.fontheight * font_size)) + 2;
 		start_y = 0;
 		if(isarray(text_array))
 		{
-			start_y = 0 - text_array.size * spacing / 2;
+			start_y = 0 - ((text_array.size * spacing) / 2);
 			foreach(var_e101a114, text in text_array)
 			{
 				if(isplayer(self))
@@ -3559,7 +3559,7 @@ function debug_info_screen(text_array, time, fade_in_bg_time, fade_out_bg_time, 
 			text_elem.horzalign = "";
 			text_elem.vertalign = "";
 			text_elem.x = 0;
-			text_elem.y = start_y + spacing * text_num;
+			text_elem.y = start_y + (spacing * text_num);
 			text_elem.color = (1, 1, 1);
 			text_elem.foreground = 1;
 			text_elem.sort = 1;

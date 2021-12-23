@@ -762,7 +762,7 @@ function function_e7a4bc31(e_player)
 {
 	var_6b2a60d = getent(self.target, "targetname");
 	var_6b2a60d.original_location = var_6b2a60d.origin;
-	var_477663ed = anglestoforward(self.origin) * 25 + self.origin;
+	var_477663ed = (anglestoforward(self.origin) * 25) + self.origin;
 	var_6b2a60d moveto(var_477663ed, 1);
 	s_anim_struct = struct::get(var_6b2a60d.target, "targetname");
 	var_bb7b50d = zombie_utility::spawn_zombie(level.zombie_spawners[0], "wall_trap_zombie", s_anim_struct, 1);

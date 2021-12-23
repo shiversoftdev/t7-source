@@ -399,7 +399,7 @@ function switch_cooldown(t_use)
 	function_7e393675(undefined);
 	foreach(var_ae58444e, e_heart in self.m_a_e_heart)
 	{
-		e_heart moveto(e_heart.origin - vectorscale((0, 0, -1), 32), 0.25);
+		e_heart moveto(e_heart.origin - (vectorscale((0, 0, -1), 32)), 0.25);
 	}
 	wait(0.25);
 	self thread update_chain_animation();
@@ -586,7 +586,7 @@ function trap_damage_player(ent)
 		return;
 	}
 	ent.trap_damage_cooldown = 1;
-	if(!ent hasperk("specialty_armorvest") || ent.health - 100 < 1)
+	if(!ent hasperk("specialty_armorvest") || (ent.health - 100) < 1)
 	{
 		ent dodamage(self.m_n_player_damage, ent.origin);
 		ent.trap_damage_cooldown = undefined;
@@ -722,7 +722,7 @@ function function_7e393675(n_time)
 			for(i = 0; i < self.m_a_e_heart.size; i++)
 			{
 				e_heart = self.m_a_e_heart[i];
-				if(i + 1 == self.m_a_e_heart.size)
+				if((i + 1) == self.m_a_e_heart.size)
 				{
 					e_heart scene::play("p7_fxanim_zm_zod_chain_trap_heart_pull_bundle", e_heart);
 					continue;

@@ -137,11 +137,11 @@ function add_craftable_cheat(craftable)
 			{
 				if(token != "" && token != "" && token != "")
 				{
-					display_string = display_string + "" + token;
+					display_string = (display_string + "") + token;
 				}
 			}
 			level.cheat_craftables["" + client_field_val] = s_piece;
-			adddebugcommand("" + craftable.name + "" + display_string + "" + client_field_val + "");
+			adddebugcommand(((((("" + craftable.name) + "") + display_string) + "") + client_field_val) + "");
 			s_piece.waste = "";
 		}
 		wait(0.05);
@@ -736,7 +736,7 @@ function ondrop_crystal(player)
 	s_piece = self.piecestub;
 	s_piece.piecespawn.canmove = 1;
 	zm_unitrigger::reregister_unitrigger_as_dynamic(s_piece.piecespawn.unitrigger);
-	s_original_pos = struct::get(self.craftablename + "_" + self.piecename);
+	s_original_pos = struct::get((self.craftablename + "_") + self.piecename);
 	s_piece.piecespawn.model.origin = s_original_pos.origin;
 	s_piece.piecespawn.model.angles = s_original_pos.angles;
 }
@@ -992,7 +992,7 @@ function onpickup_staffpiece(player, elementname)
 	}
 	foreach(var_3cfc4ebf, e_player in level.players)
 	{
-		e_player thread zm_craftables::player_show_craftable_parts_ui(undefined, "zmInventory." + elementname + "_staff.visible", 0);
+		e_player thread zm_craftables::player_show_craftable_parts_ui(undefined, ("zmInventory." + elementname) + "_staff.visible", 0);
 	}
 	player thread staff_pickup_vo();
 }
@@ -1017,7 +1017,7 @@ function onpickup_crystal(player, elementname, elementenum)
 	}
 	foreach(var_86300fe7, e_player in level.players)
 	{
-		e_player thread zm_craftables::player_show_craftable_parts_ui(undefined, "zmInventory." + elementname + "_staff.visible", 0);
+		e_player thread zm_craftables::player_show_craftable_parts_ui(undefined, ("zmInventory." + elementname) + "_staff.visible", 0);
 	}
 	player thread zm_craftables::player_show_craftable_parts_ui(undefined, "zmInventory.show_musical_parts_widget", 0);
 	level flag::set("any_crystal_picked_up");
@@ -1118,7 +1118,7 @@ function watch_part_pickup(str_quest_clientfield, n_clientfield_val, var_e46422e
 {
 	self craftable_waittill_spawned();
 	self.piecespawn waittill(#"pickup");
-	level notify(self.craftablename + "_" + self.piecename + "_picked_up");
+	level notify(((self.craftablename + "_") + self.piecename) + "_picked_up");
 	if(isdefined(str_quest_clientfield) && isdefined(n_clientfield_val))
 	{
 		level clientfield::set(str_quest_clientfield, n_clientfield_val);
@@ -1306,7 +1306,7 @@ function staff_fullycrafted(modelname, elementenum)
 		}
 		foreach(var_1aabd321, e_player in level.players)
 		{
-			e_player thread zm_craftables::player_show_craftable_parts_ui(undefined, "zmInventory." + staff_info.element + "_staff.visible", 1);
+			e_player thread zm_craftables::player_show_craftable_parts_ui(undefined, ("zmInventory." + staff_info.element) + "_staff.visible", 1);
 		}
 	}
 	if(!isdefined(staff_info.charger) || (!(isdefined(staff_info.charger.is_charged) && staff_info.charger.is_charged)))
@@ -1939,7 +1939,7 @@ function tomb_check_crafted_weapon_persistence(player)
 			}
 			self sethintstring(self.stub.hint_string);
 			player zm_craftables::track_craftables_pickedup(self.stub.craftablespawn);
-			str_name = "craftable_" + self.stub.weaponname.name + "_zm";
+			str_name = ("craftable_" + self.stub.weaponname.name) + "_zm";
 			model = getent(str_name, "targetname");
 			model ghost();
 			self.stub thread track_crafted_staff_trigger();
@@ -2168,7 +2168,7 @@ function track_staff_weapon_respawn(player)
 	}
 	if(!b_staff_in_use)
 	{
-		str_name = "craftable_" + self.base_weaponname + "_zm";
+		str_name = ("craftable_" + self.base_weaponname) + "_zm";
 		model = getent(str_name, "targetname");
 		model show();
 		level flag::set(self.base_weaponname + "_zm_enabled");
@@ -2201,7 +2201,7 @@ function set_player_staff(var_5ec0aa73, e_player)
 	level clientfield::set(s_staff.element + "_staff.holder", e_player.characterindex + 1);
 	e_player zm_tomb_utility::update_staff_accessories(s_staff.enum);
 	/#
-		iprintlnbold("" + n_player + "" + s_staff.enum);
+		iprintlnbold((("" + n_player) + "") + s_staff.enum);
 	#/
 }
 
@@ -2218,7 +2218,7 @@ function clear_player_staff_by_player_number(var_d95a0cf3)
 {
 	foreach(var_8d8b935d, s_staff in level.a_elemental_staffs)
 	{
-		if(level clientfield::get(s_staff.element + "_staff.holder") == var_d95a0cf3)
+		if((level clientfield::get(s_staff.element + "_staff.holder")) == var_d95a0cf3)
 		{
 			level clientfield::set(s_staff.element + "_staff.holder", 0);
 		}
@@ -2247,7 +2247,7 @@ function clear_player_staff(var_382bb75, e_owner)
 	}
 	if(isdefined(e_owner))
 	{
-		if(level clientfield::get(s_staff.element + "_staff.holder") == e_owner.characterindex + 1)
+		if((level clientfield::get(s_staff.element + "_staff.holder")) == (e_owner.characterindex + 1))
 		{
 			n_player = e_owner getentitynumber() + 1;
 			e_owner.staff_enum = 0;

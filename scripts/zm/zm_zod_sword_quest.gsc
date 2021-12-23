@@ -149,8 +149,8 @@ function __main__()
 	for(i = 0; i < 4; i++)
 	{
 		level.sword_quest.weapons[i] = [];
-		level.sword_quest.weapons[i][1] = getweapon("glaive_apothicon" + "_" + i);
-		level.sword_quest.weapons[i][2] = getweapon("glaive_keeper" + "_" + i);
+		level.sword_quest.weapons[i][1] = getweapon(("glaive_apothicon" + "_") + i);
+		level.sword_quest.weapons[i][2] = getweapon(("glaive_keeper" + "_") + i);
 		foreach(var_4c737ae4, wpn in level.sword_quest.weapons[i])
 		{
 			/#
@@ -668,7 +668,7 @@ function magic_circle_trigger_activate(trig_stub, player)
 	zm_unitrigger::run_visibility_function_for_all_triggers();
 	player playsound("zmb_zod_egg_place");
 	player clientfield::set_player_uimodel("zmInventory.widget_egg", 0);
-	str_endon = "magic_circle_" + var_181b74a5 + "_off";
+	str_endon = ("magic_circle_" + var_181b74a5) + "_off";
 	player thread function_278154b(trig_stub.origin, var_181b74a5, 32, 0.01, str_endon);
 	level thread function_47563199(trig_stub, player, str_endon);
 	level thread function_413de655(trig_stub, player, str_endon);

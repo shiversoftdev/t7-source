@@ -178,7 +178,7 @@ function tesla_end_arc_damage(arc_num, enemies_hit_num)
 		return 1;
 	}
 	radius_decay = level.doa.rules.tesla_radius_decay * arc_num;
-	if(level.doa.rules.tesla_radius_start - radius_decay <= 0)
+	if((level.doa.rules.tesla_radius_start - radius_decay) <= 0)
 	{
 		return 1;
 	}
@@ -363,7 +363,7 @@ function tesla_play_arc_fx(target)
 	origin = self gettagorigin(tag);
 	target_origin = target gettagorigin(target_tag);
 	distsq = distancesquared(origin, target_origin);
-	var_3d719a1d = distsq / 128 * 128;
+	var_3d719a1d = distsq / (128 * 128);
 	timemove = var_3d719a1d * getdvarfloat("scr_arc_travel_time", 0.05);
 	if(timemove < 0.2)
 	{
@@ -396,7 +396,7 @@ function tesla_debug_arc(origin, distance)
 			return;
 		}
 		start = gettime();
-		while(gettime() < start + 3000)
+		while(gettime() < (start + 3000))
 		{
 			wait(0.05);
 		}

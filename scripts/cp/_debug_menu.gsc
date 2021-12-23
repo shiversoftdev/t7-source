@@ -15,7 +15,7 @@ function add_menu(menu_name, title)
 	/#
 		if(isdefined(level.menu_sys[menu_name]))
 		{
-			println("" + menu_name + "");
+			println(("" + menu_name) + "");
 			return;
 		}
 		level.menu_sys[menu_name] = spawnstruct();
@@ -137,7 +137,7 @@ function enable_menu(menu_name)
 			options = level.menu_sys[menu_name].options;
 			for(i = 0; i < options.size; i++)
 			{
-				text = i + 1 + "" + options[i];
+				text = ((i + 1) + "") + options[i];
 				level.menu_sys[""].options[i] = set_menu_hudelem(text, "", 20 * i);
 				back_option_num = i;
 			}
@@ -145,7 +145,7 @@ function enable_menu(menu_name)
 		if(isdefined(level.menu_sys[menu_name].parent_menu) && !isdefined(level.menu_sys[menu_name].no_back))
 		{
 			back_option_num++;
-			text = back_option_num + 1 + "" + "";
+			text = ((back_option_num + 1) + "") + "";
 			level.menu_sys[""].options[back_option_num] = set_menu_hudelem(text, "", 20 * back_option_num);
 		}
 	#/
@@ -290,7 +290,7 @@ function menu_input()
 				}
 				else if(level.menu_cursor.current_pos == 0)
 				{
-					level.menu_cursor.y = level.menu_cursor.y + level.menu_sys[""].options.size - 1 * 20;
+					level.menu_cursor.y = level.menu_cursor.y + ((level.menu_sys[""].options.size - 1) * 20);
 					level.menu_cursor.current_pos = level.menu_sys[""].options.size - 1;
 				}
 				wait(0.1);
@@ -298,14 +298,14 @@ function menu_input()
 			}
 			else if(keystring == "" || keystring == "")
 			{
-				if(level.menu_cursor.current_pos < level.menu_sys[""].options.size - 1)
+				if(level.menu_cursor.current_pos < (level.menu_sys[""].options.size - 1))
 				{
 					level.menu_cursor.y = level.menu_cursor.y + 20;
 					level.menu_cursor.current_pos++;
 				}
-				else if(level.menu_cursor.current_pos == level.menu_sys[""].options.size - 1)
+				else if(level.menu_cursor.current_pos == (level.menu_sys[""].options.size - 1))
 				{
-					level.menu_cursor.y = level.menu_cursor.y + level.menu_cursor.current_pos * -20;
+					level.menu_cursor.y = level.menu_cursor.y + (level.menu_cursor.current_pos * -20);
 					level.menu_cursor.current_pos = 0;
 				}
 				wait(0.1);
@@ -347,17 +347,17 @@ function menu_input()
 			}
 			if(!isdefined(level.menu_sys[menu_name].children_menu))
 			{
-				println("" + menu_name + "");
+				println(("" + menu_name) + "");
 				continue;
 			}
 			else if(!isdefined(level.menu_sys[menu_name].children_menu[key]))
 			{
-				println("" + menu_name + "" + key + "");
+				println(((("" + menu_name) + "") + key) + "");
 				continue;
 			}
 			else if(!isdefined(level.menu_sys[level.menu_sys[menu_name].children_menu[key]]))
 			{
-				println("" + level.menu_sys[menu_name].options[key] + "");
+				println(("" + level.menu_sys[menu_name].options[key]) + "");
 				continue;
 			}
 			if(isdefined(level.menu_sys[menu_name].children_func) && isdefined(level.menu_sys[menu_name].children_func[key]))
@@ -475,7 +475,7 @@ function list_menu(list, x, y, scale, func, sort, start_num)
 			{
 				alpha = 0.3;
 			}
-			hud = set_hudelem(list[i], x, y + i - 2 * 15, scale, alpha, sort);
+			hud = set_hudelem(list[i], x, y + ((i - 2) * 15), scale, alpha, sort);
 			if(!isdefined(hud_array))
 			{
 				hud_array = [];
@@ -508,7 +508,7 @@ function list_menu(list, x, y, scale, func, sort, start_num)
 			}
 			else if(key == "" || key == "")
 			{
-				if(current_num >= list.size - 1)
+				if(current_num >= (list.size - 1))
 				{
 					continue;
 				}
@@ -570,9 +570,9 @@ function new_move_list_menu(hud_array, list, num)
 	/#
 		for(i = 0; i < hud_array.size; i++)
 		{
-			if(isdefined(list[i + num - 2]))
+			if(isdefined(list[i + (num - 2)]))
 			{
-				text = list[i + num - 2];
+				text = list[i + (num - 2)];
 			}
 			else
 			{
@@ -638,8 +638,8 @@ function move_list_menu(hud_array, dir, space, num, min_alpha, num_of_fades)
 			{
 				temp = temp * -1;
 			}
-			alpha = 1 / temp + 1;
-			if(alpha < 1 / num_of_fades)
+			alpha = 1 / (temp + 1);
+			if(alpha < (1 / num_of_fades))
 			{
 				alpha = min_alpha;
 			}
@@ -762,8 +762,8 @@ function hud_font_scaler(mult)
 		}
 		self.fontscale = og_scale * mult;
 		dif = og_scale - self.fontscale;
-		dif = dif / 1 * 20;
-		for(i = 0; i < 1 * 20; i++)
+		dif = dif / (1 * 20);
+		for(i = 0; i < (1 * 20); i++)
 		{
 			self.fontscale = self.fontscale + dif;
 			wait(0.05);
@@ -885,13 +885,13 @@ function set_menus_pos_by_num(hud_array, num, x, y, space, min_alpha, num_of_fad
 		for(i = 0; i < hud_array.size; i++)
 		{
 			temp = i - num;
-			hud_array[i].y = y + temp * space;
+			hud_array[i].y = y + (temp * space);
 			if(temp < 0)
 			{
 				temp = temp * -1;
 			}
-			alpha = 1 / temp + 1;
-			if(alpha < 1 / num_of_fades)
+			alpha = 1 / (temp + 1);
+			if(alpha < (1 / num_of_fades))
 			{
 				alpha = min_alpha;
 			}
@@ -1002,28 +1002,28 @@ function dialog_text_box(dialog_msg, dialog_msg2, word_length)
 {
 	/#
 		y = 100;
-		hud = new_hud("", undefined, 320 - 300 * 0.5, y, 1);
+		hud = new_hud("", undefined, 320 - (300 * 0.5), y, 1);
 		hud setshader("", 300, 100);
 		hud.aligny = "";
 		hud.color = vectorscale((0, 0, 1), 0.2);
 		hud.alpha = 0.85;
 		hud.sort = 20;
-		hud = new_hud("", dialog_msg, 320 - 300 * 0.5 + 10, y + 10, 1.25);
+		hud = new_hud("", dialog_msg, (320 - (300 * 0.5)) + 10, y + 10, 1.25);
 		hud.sort = 25;
 		if(isdefined(dialog_msg2))
 		{
-			hud = new_hud("", dialog_msg2, 320 - 300 * 0.5 + 10, y + 30, 1.1);
+			hud = new_hud("", dialog_msg2, (320 - (300 * 0.5)) + 10, y + 30, 1.1);
 			hud.sort = 25;
 		}
 		bg2_shader_width = 300 - 20;
 		y = 150;
-		hud = new_hud("", undefined, 320 - bg2_shader_width * 0.5, y, 1);
+		hud = new_hud("", undefined, 320 - (bg2_shader_width * 0.5), y, 1);
 		hud setshader("", bg2_shader_width, 20);
 		hud.aligny = "";
 		hud.color = (0, 0, 0);
 		hud.alpha = 0.85;
 		hud.sort = 30;
-		cursor_x = 320 - bg2_shader_width * 0.5 + 2;
+		cursor_x = (320 - (bg2_shader_width * 0.5)) + 2;
 		cursor_y = y + 8;
 		if(level.xenon)
 		{
@@ -1084,7 +1084,7 @@ function dialog_text_box_input(cursor_x, cursor_y, word_length)
 			else if(button == "" || button == "")
 			{
 				new_word = "";
-				for(i = 0; i < word.size - 1; i++)
+				for(i = 0; i < (word.size - 1); i++)
 				{
 					new_word = new_word + word[i];
 				}

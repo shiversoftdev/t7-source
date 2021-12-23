@@ -141,7 +141,7 @@ function ice_tiles_randomize()
 		n_index++;
 	}
 	/#
-		assert(a_unused_tiles.size == n_total_tiles - a_original_positions.size);
+		assert(a_unused_tiles.size == (n_total_tiles - a_original_positions.size));
 	#/
 	array::delete_all(a_unused_tiles);
 }
@@ -391,7 +391,7 @@ function ice_puzzle_2_run()
 function ice_stone_run()
 {
 	v_up = anglestoup(self.angles);
-	v_spawn_pos = self.origin - 64 * v_up;
+	v_spawn_pos = self.origin - (64 * v_up);
 	self.e_model = spawn("script_model", v_spawn_pos);
 	self.e_model.angles = self.angles;
 	self.e_model setmodel("p7_zm_ori_note_rock_01_anim_water");

@@ -66,7 +66,7 @@ function __main__()
 	level.napalmzombieminroundwait = 1;
 	level.napalmzombiemaxroundwait = 2;
 	level.napalmzombieroundrequirement = 5;
-	level.nextnapalmspawnround = level.napalmzombieroundrequirement + randomintrange(0, level.napalmzombiemaxroundwait + 1);
+	level.nextnapalmspawnround = level.napalmzombieroundrequirement + (randomintrange(0, level.napalmzombiemaxroundwait + 1));
 	level.napalmzombiedamageradius = 250;
 	level.napalmexploderadius = 90;
 	level.napalmexplodekillradiusjugs = 90;
@@ -342,7 +342,7 @@ function napalm_zombie_spawn(animname_set)
 	self.animname = "napalm_zombie";
 	self thread napalm_zombie_client_flag();
 	self.napalm_zombie_glowing = 0;
-	self.maxhealth = self.maxhealth * getplayers().size * level.napalmhealthmultiplier;
+	self.maxhealth = self.maxhealth * (getplayers().size * level.napalmhealthmultiplier);
 	self.health = self.maxhealth;
 	self.no_gib = 1;
 	self.rising = 1;
@@ -520,7 +520,7 @@ private function napalmcanexplode(entity)
 		}
 		if(distance2dsquared(player.origin, entity.origin) < napalmplayerwarningradiussqr)
 		{
-			if(!isdefined(player.napalmradiuswarningtime) || player.napalmradiuswarningtime <= gettime() - 0.1)
+			if(!isdefined(player.napalmradiuswarningtime) || player.napalmradiuswarningtime <= (gettime() - 0.1))
 			{
 				player clientfield::set_to_player("napalm_pstfx_burn", 1);
 				player playloopsound("chr_burning_loop", 1);
@@ -544,7 +544,7 @@ private function napalmcanexplode(entity)
 		{
 			continue;
 		}
-		if(abs(player.origin[2] - entity.origin[2]) > 50)
+		if((abs(player.origin[2] - entity.origin[2])) > 50)
 		{
 			continue;
 		}
@@ -728,7 +728,7 @@ function _napalm_damage_players()
 {
 	eyeorigin = self geteye();
 	footorigin = self.origin + vectorscale((0, 0, 1), 8);
-	midorigin = (footorigin[0], footorigin[1], footorigin[2] + eyeorigin[2] / 2);
+	midorigin = (footorigin[0], footorigin[1], (footorigin[2] + eyeorigin[2]) / 2);
 	players_damaged_by_explosion = 0;
 	players = getplayers();
 	for(i = 0; i < players.size; i++)
@@ -743,12 +743,12 @@ function _napalm_damage_players()
 		{
 			damageradius = level.napalmexplodedamageradiuswet;
 		}
-		if(distancesquared(eyeorigin, test_origin) > damageradius * damageradius)
+		if(distancesquared(eyeorigin, test_origin) > (damageradius * damageradius))
 		{
 			continue;
 		}
 		test_origin_foot = players[i].origin + vectorscale((0, 0, 1), 8);
-		test_origin_mid = (test_origin_foot[0], test_origin_foot[1], test_origin_foot[2] + test_origin[2] / 2);
+		test_origin_mid = (test_origin_foot[0], test_origin_foot[1], (test_origin_foot[2] + test_origin[2]) / 2);
 		if(!bullettracepassed(eyeorigin, test_origin, 0, undefined))
 		{
 			if(!bullettracepassed(midorigin, test_origin_mid, 0, undefined))
@@ -781,9 +781,9 @@ function _napalm_damage_players()
 		}
 		else
 		{
-			scale = level.napalmexplodedamageradius - dist / level.napalmexplodedamageradius - level.napalmexplodekillradius;
-			shellshocktime = scale * shellshockmaxtime - shellshockmintime + shellshockmintime;
-			damage = scale * killplayerdamage - level.napalmexplodedamagemin + level.napalmexplodedamagemin;
+			scale = (level.napalmexplodedamageradius - dist) / (level.napalmexplodedamageradius - level.napalmexplodekillradius);
+			shellshocktime = (scale * (shellshockmaxtime - shellshockmintime)) + shellshockmintime;
+			damage = (scale * (killplayerdamage - level.napalmexplodedamagemin)) + level.napalmexplodedamagemin;
 		}
 		if(isdefined(self.shrinked) && self.shrinked)
 		{
@@ -892,7 +892,7 @@ function triggerdamage()
 				{
 					guy.last_napalm_fire_damage = -1 * debounce;
 				}
-				if(guy.last_napalm_fire_damage + debounce < gettime())
+				if((guy.last_napalm_fire_damage + debounce) < gettime())
 				{
 					guy dodamage(self.napalm_fire_damage, guy.origin, undefined, undefined, self.napalm_fire_damage_type);
 					guy.last_napalm_fire_damage = gettime();
@@ -1130,7 +1130,7 @@ function napalm_zombie_count_watch()
 	}
 	else
 	{
-		level.nextnapalmspawnround = level.round_number + randomintrange(level.napalmzombieminroundwait, level.napalmzombiemaxroundwait + 1);
+		level.nextnapalmspawnround = level.round_number + (randomintrange(level.napalmzombieminroundwait, level.napalmzombiemaxroundwait + 1));
 	}
 	/#
 		println("" + level.nextnapalmspawnround);

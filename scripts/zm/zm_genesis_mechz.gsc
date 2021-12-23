@@ -266,22 +266,22 @@ private function function_2ffb7337(entity)
 private function function_d8f5da34(var_2dba2212)
 {
 	var_3a067a8d = struct::get_array(var_2dba2212, "script_noteworthy");
-	self.var_fdce40e2 = undefined;
+	self.s_trap = undefined;
 	n_closest_dist_sq = 57600;
-	foreach(var_bc6b0872, var_fdce40e2 in var_3a067a8d)
+	foreach(var_bc6b0872, s_trap in var_3a067a8d)
 	{
-		n_dist_sq = distancesquared(var_fdce40e2.origin, self.origin);
+		n_dist_sq = distancesquared(s_trap.origin, self.origin);
 		if(n_dist_sq < n_closest_dist_sq)
 		{
 			n_closest_dist_sq = n_dist_sq;
-			self.var_fdce40e2 = var_fdce40e2;
+			self.s_trap = s_trap;
 		}
 	}
-	if(isdefined(self.var_fdce40e2))
+	if(isdefined(self.s_trap))
 	{
 		self.var_d77404f7 = 1;
 		self.ignoreall = 1;
-		self setgoal(self.var_fdce40e2.origin);
+		self setgoal(self.s_trap.origin);
 		self thread function_957c9419();
 		return 1;
 	}
@@ -419,9 +419,9 @@ function function_910e57ee(entity)
 {
 	entity.var_72308ff2 = 0;
 	entity.ignoreall = 0;
-	if(isdefined(entity.var_fdce40e2))
+	if(isdefined(entity.s_trap))
 	{
-		if(entity.var_fdce40e2.script_noteworthy == "masher_trap_switch")
+		if(entity.s_trap.script_noteworthy == "masher_trap_switch")
 		{
 			level flag::clear("masher_on");
 		}
@@ -463,7 +463,7 @@ function function_78198ba2(entity)
 */
 function function_45f397ee(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
-	entity orientmode("face angle", entity.var_fdce40e2.angles[1]);
+	entity orientmode("face angle", entity.s_trap.angles[1]);
 	entity animmode("normal");
 }
 
@@ -521,11 +521,11 @@ function mechz_health_increases()
 			}
 		}
 		var_485a2c2c = level.zombie_health / level.zombie_vars["zombie_health_start"];
-		level.mechz_health = int(n_player_modifier * level.mechz_base_health + level.mechz_health_increase * var_485a2c2c);
-		level.mechz_faceplate_health = int(n_player_modifier * level.var_fa14536d + level.var_1a5bb9d8 * var_485a2c2c);
-		level.mechz_powercap_cover_health = int(n_player_modifier * level.mechz_powercap_cover_health + level.var_a1943286 * var_485a2c2c);
-		level.mechz_powercap_health = int(n_player_modifier * level.mechz_powercap_health + level.var_9684c99e * var_485a2c2c);
-		level.var_2cbc5b59 = int(n_player_modifier * level.var_3f1bf221 + level.var_158234c * var_485a2c2c);
+		level.mechz_health = int(n_player_modifier * (level.mechz_base_health + (level.mechz_health_increase * var_485a2c2c)));
+		level.mechz_faceplate_health = int(n_player_modifier * (level.var_fa14536d + (level.var_1a5bb9d8 * var_485a2c2c)));
+		level.mechz_powercap_cover_health = int(n_player_modifier * (level.mechz_powercap_cover_health + (level.var_a1943286 * var_485a2c2c)));
+		level.mechz_powercap_health = int(n_player_modifier * (level.mechz_powercap_health + (level.var_9684c99e * var_485a2c2c)));
+		level.var_2cbc5b59 = int(n_player_modifier * (level.var_3f1bf221 + (level.var_158234c * var_485a2c2c)));
 		level.mechz_health = function_26beb37e(level.mechz_health, 17500, n_player_modifier);
 		level.mechz_faceplate_health = function_26beb37e(level.mechz_faceplate_health, 16000, n_player_modifier);
 		level.mechz_powercap_cover_health = function_26beb37e(level.mechz_powercap_cover_health, 7500, n_player_modifier);
@@ -544,11 +544,11 @@ function mechz_health_increases()
 	Parameters: 3
 	Flags: Linked
 */
-function function_26beb37e(n_value, var_9cc1b75, n_player_modifier)
+function function_26beb37e(n_value, n_limit, n_player_modifier)
 {
-	if(n_value >= var_9cc1b75 * n_player_modifier)
+	if(n_value >= (n_limit * n_player_modifier))
 	{
-		n_value = int(var_9cc1b75 * n_player_modifier);
+		n_value = int(n_limit * n_player_modifier);
 	}
 	return n_value;
 }
@@ -820,7 +820,7 @@ function function_2d571578(e_player, v_attack_source, n_push_away, n_lift_height
 		while(10 > n_total_time && e_player.gravityspikes_state === 3)
 		{
 			util::wait_network_frame();
-			n_total_time = gettime() - n_start_time / 1000;
+			n_total_time = (gettime() - n_start_time) / 1000;
 		}
 		self scene::stop("cin_zm_dlc1_mechz_dth_deathray_01");
 		self thread function_a0b6d6b9(self);
@@ -891,7 +891,7 @@ function function_a0b6d6b9(mechz)
 function function_5f2149bb(inflictor, attacker)
 {
 	var_3bb42832 = level.mechz_health;
-	n_damage = var_3bb42832 * 0.25 / 0.2;
+	n_damage = (var_3bb42832 * 0.25) / 0.2;
 	self dodamage(n_damage, self getcentroid(), inflictor, attacker, undefined, "MOD_PROJECTILE_SPLASH", 0, getweapon("none"));
 }
 

@@ -320,7 +320,7 @@ function spawn_robot(player, trig_stub, n_spawn_delay)
 	a_s_start_pos = struct::get_array("robot_start_pos", "targetname");
 	a_s_start_pos = array::filter(a_s_start_pos, 0, &filter_callbox_name, trig_stub.str_areaname);
 	robot_start_pos = a_s_start_pos[0];
-	trace = bullettrace(robot_start_pos.origin, robot_start_pos.origin + vectorscale((0, 0, -1), 256), 0, robot_start_pos);
+	trace = bullettrace(robot_start_pos.origin, robot_start_pos.origin + (vectorscale((0, 0, -1), 256)), 0, robot_start_pos);
 	v_ground_position = trace["position"];
 	var_36e9b69a = v_ground_position + vectorscale((0, 0, 1), 650);
 	level thread function_70541dc1(v_ground_position);
@@ -505,7 +505,7 @@ function function_fa1df614(v_origin, eattacker, n_radius)
 		v_fling = ai_zombie.origin - v_origin;
 		v_fling = v_fling + vectorscale((0, 0, 1), 15);
 		v_fling = vectornormalize(v_fling);
-		n_size = 50 + 20 * n_dist_mult;
+		n_size = 50 + (20 * n_dist_mult);
 		v_fling = (v_fling[0], v_fling[1], abs(v_fling[2]));
 		v_fling = vectorscale(v_fling, n_size);
 		ai_zombie startragdoll();
@@ -565,9 +565,9 @@ function update_readout_for_remaining_robot_cost()
 	{
 		for(j = 0; j < 10; j++)
 		{
-			self hidepart("J_" + i + "_" + j);
+			self hidepart((("J_" + i) + "_") + j);
 		}
-		self showpart("J_" + i + "_" + a_cost[i]);
+		self showpart((("J_" + i) + "_") + a_cost[i]);
 	}
 }
 
@@ -587,7 +587,7 @@ function get_placed_array_from_number(n_number)
 	{
 		n_place = pow(10, 3 - i);
 		a_number[i] = floor(n_number / n_place);
-		n_number = n_number - a_number[i] * n_place;
+		n_number = n_number - (a_number[i] * n_place);
 	}
 	return a_number;
 }
@@ -669,7 +669,7 @@ function function_f9a6039c(entity, suffix, delay)
 	if(isdefined(entity) && (!(isdefined(entity.is_speaking) && entity.is_speaking)))
 	{
 		entity.is_speaking = 1;
-		entity playsoundwithnotify(alias + "_" + var_4dc11cc, "sndDone");
+		entity playsoundwithnotify((alias + "_") + var_4dc11cc, "sndDone");
 		entity waittill(#"snddone");
 		entity.is_speaking = 0;
 	}

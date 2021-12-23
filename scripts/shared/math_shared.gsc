@@ -50,7 +50,7 @@ function clamp(val, val_min, val_max = val)
 */
 function linear_map(num, min_a, max_a, min_b, max_b)
 {
-	return clamp(num - min_a / max_a - min_a * max_b - min_b + min_b, min_b, max_b);
+	return clamp((num - min_a) / (max_a - min_a) * (max_b - min_b) + min_b, min_b, max_b);
 }
 
 /*
@@ -65,14 +65,14 @@ function linear_map(num, min_a, max_a, min_b, max_b)
 function lag(desired, curr, k, dt)
 {
 	r = 0;
-	if(k * dt >= 1 || k <= 0)
+	if((k * dt) >= 1 || k <= 0)
 	{
 		r = desired;
 	}
 	else
 	{
 		err = desired - curr;
-		r = curr + k * err * dt;
+		r = curr + ((k * err) * dt);
 	}
 	return r;
 }
@@ -157,7 +157,7 @@ function expand_maxs(maxs, point)
 */
 function vector_compare(vec1, vec2)
 {
-	return abs(vec1[0] - vec2[0]) < 0.001 && abs(vec1[1] - vec2[1]) < 0.001 && abs(vec1[2] - vec2[2]) < 0.001;
+	return (abs(vec1[0] - vec2[0])) < 0.001 && (abs(vec1[1] - vec2[1])) < 0.001 && (abs(vec1[2] - vec2[2])) < 0.001;
 }
 
 /*
@@ -185,14 +185,14 @@ function random_vector(max_length)
 */
 function angle_dif(oldangle, newangle)
 {
-	outvalue = oldangle - newangle % 360;
+	outvalue = (oldangle - newangle) % 360;
 	if(outvalue < 0)
 	{
 		outvalue = outvalue + 360;
 	}
 	if(outvalue > 180)
 	{
-		outvalue = outvalue - 360 * -1;
+		outvalue = (outvalue - 360) * -1;
 	}
 	return outvalue;
 }
@@ -222,7 +222,7 @@ function sign(x)
 */
 function randomsign()
 {
-	return (randomintrange(-1, 1) >= 0 ? 1 : -1);
+	return ((randomintrange(-1, 1)) >= 0 ? 1 : -1);
 }
 
 /*
@@ -398,7 +398,7 @@ function get_dot_from_eye(v_point, b_ignore_z, b_normalize, str_direction)
 		assert(isdefined(v_point), "");
 	#/
 	/#
-		assert(isplayer(self) || isai(self), "" + self.classname + "");
+		assert(isplayer(self) || isai(self), ("" + self.classname) + "");
 	#/
 	n_dot = get_dot_direction(v_point, b_ignore_z, b_normalize, str_direction, 1);
 	return n_dot;
@@ -449,7 +449,7 @@ function array_std_deviation(array, mean)
 	tmp = [];
 	for(i = 0; i < array.size; i++)
 	{
-		tmp[i] = array[i] - mean * array[i] - mean;
+		tmp[i] = (array[i] - mean) * (array[i] - mean);
 	}
 	total = 0;
 	for(i = 0; i < tmp.size; i++)
@@ -476,13 +476,13 @@ function random_normal_distribution(mean, std_deviation, lower_bound, upper_boun
 	y1 = 0;
 	while(w >= 1)
 	{
-		x1 = 2 * randomfloatrange(0, 1) - 1;
-		x2 = 2 * randomfloatrange(0, 1) - 1;
-		w = x1 * x1 + x2 * x2;
+		x1 = (2 * randomfloatrange(0, 1)) - 1;
+		x2 = (2 * randomfloatrange(0, 1)) - 1;
+		w = (x1 * x1) + (x2 * x2);
 	}
 	w = sqrt(-2 * log(w) / w);
 	y1 = x1 * w;
-	number = mean + y1 * std_deviation;
+	number = mean + (y1 * std_deviation);
 	if(isdefined(lower_bound) && number < lower_bound)
 	{
 		number = lower_bound;
@@ -506,7 +506,7 @@ function random_normal_distribution(mean, std_deviation, lower_bound, upper_boun
 function closest_point_on_line(point, linestart, lineend)
 {
 	linemagsqrd = lengthsquared(lineend - linestart);
-	t = point[0] - linestart[0] * lineend[0] - linestart[0] + point[1] - linestart[1] * lineend[1] - linestart[1] + point[2] - linestart[2] * lineend[2] - linestart[2] / linemagsqrd;
+	t = (point[0] - linestart[0]) * (lineend[0] - linestart[0]) + (point[1] - linestart[1]) * (lineend[1] - linestart[1]) + (point[2] - linestart[2]) * (lineend[2] - linestart[2]) / linemagsqrd;
 	if(t < 0)
 	{
 		return linestart;
@@ -515,9 +515,9 @@ function closest_point_on_line(point, linestart, lineend)
 	{
 		return lineend;
 	}
-	start_x = linestart[0] + t * lineend[0] - linestart[0];
-	start_y = linestart[1] + t * lineend[1] - linestart[1];
-	start_z = linestart[2] + t * lineend[2] - linestart[2];
+	start_x = linestart[0] + (t * (lineend[0] - linestart[0]));
+	start_y = linestart[1] + (t * (lineend[1] - linestart[1]));
+	start_z = linestart[2] + (t * (lineend[2] - linestart[2]));
 	return (start_x, start_y, start_z);
 }
 
@@ -582,7 +582,7 @@ function pow(base, exp)
 		return 1;
 	}
 	result = base;
-	for(i = 0; i < exp - 1; i++)
+	for(i = 0; i < (exp - 1); i++)
 	{
 		result = result * base;
 	}

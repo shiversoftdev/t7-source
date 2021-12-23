@@ -813,7 +813,7 @@ function get_debug_spawnpoint(player)
 		foreach(var_7c31b6b, team in level.teams)
 		{
 			size = level.unified_spawn_points[team].a.size;
-			if(level.test_spawn_point_index < count + size)
+			if(level.test_spawn_point_index < (count + size))
 			{
 				return level.unified_spawn_points[team].a[level.test_spawn_point_index - count];
 			}
@@ -1005,11 +1005,11 @@ function getteamstartspawnname(team, spawnpointnamebase)
 		if(!util::isoneround())
 		{
 			number = int(getsubstr(spawn_point_team_name, 4, 5)) - 1;
-			number = number + game["roundsplayed"] % level.teams.size + 1;
+			number = ((number + game["roundsplayed"]) % level.teams.size) + 1;
 			spawn_point_team_name = "team" + number;
 		}
 	}
-	return spawnpointnamebase + "_" + spawn_point_team_name + "_start";
+	return ((spawnpointnamebase + "_") + spawn_point_team_name) + "_start";
 }
 
 /*

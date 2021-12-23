@@ -238,7 +238,7 @@ function apothiconfurydeath(localclientnum, oldval, newval, bnewent, binitialsna
 		self apothiconstoploopingeffects(localclientnum);
 		n_phase_in = 0.3;
 		s_timer = new_timer(localclientnum);
-		stoptime = gettime() + n_phase_in * 1000;
+		stoptime = gettime() + (n_phase_in * 1000);
 		do
 		{
 			util::server_wait(localclientnum, 0.11);

@@ -172,20 +172,20 @@ function function_9d4a523c(var_24ee4867)
 */
 function function_4173be8d(var_d484b386, var_15872fa7)
 {
-	exploder::stop_exploder("lgt_" + var_d484b386 + "_down");
+	exploder::stop_exploder(("lgt_" + var_d484b386) + "_down");
 	while(level flag::get("tram_moving") || level flag::get(var_15872fa7))
 	{
-		exploder::exploder("lgt_" + var_d484b386 + "_up");
+		exploder::exploder(("lgt_" + var_d484b386) + "_up");
 		wait(0.6);
-		exploder::stop_exploder("lgt_" + var_d484b386 + "_up");
+		exploder::stop_exploder(("lgt_" + var_d484b386) + "_up");
 		wait(0.6);
 	}
-	exploder::exploder("lgt_" + var_d484b386 + "_down");
+	exploder::exploder(("lgt_" + var_d484b386) + "_down");
 	if(var_d484b386 === "tram_car_02")
 	{
 		level flag::wait_till_clear("tram_cooldown");
-		exploder::stop_exploder("lgt_" + var_d484b386 + "_down");
-		exploder::exploder("lgt_" + var_d484b386 + "_up");
+		exploder::stop_exploder(("lgt_" + var_d484b386) + "_down");
+		exploder::exploder(("lgt_" + var_d484b386) + "_up");
 	}
 }
 
@@ -646,7 +646,7 @@ function timer_til_despawn(v_float, n_dist)
 	{
 		self rotateyaw(360, 1);
 		wait(1);
-		n_total_time = gettime() - n_start_time / 1000;
+		n_total_time = (gettime() - n_start_time) / 1000;
 	}
 	self notify(#"powerup_timedout");
 	if(isdefined(self.trigger))
@@ -724,7 +724,7 @@ function function_97f09efd()
 			level flag::wait_till("tram_cooldown");
 			level flag::wait_till_clear("tram_cooldown");
 		}
-		else if(!isdefined(level.var_f6d3c9c0) || gettime() - level.var_f6d3c9c0 > 12000)
+		else if(!isdefined(level.var_f6d3c9c0) || (gettime() - level.var_f6d3c9c0) > 12000)
 		{
 			level.var_f6d3c9c0 = gettime();
 			e_who thread zm_castle_vo::function_b6633a79();

@@ -112,7 +112,7 @@ private function on_player_spawned()
 	{
 		self.bgb_token_last_given_time = self zm_stats::get_global_stat("BGB_TOKEN_LAST_GIVEN_TIME");
 		self.bgb_tokens_gained_this_game = 0;
-		self.var_bc978de9 = level.var_bc978de9 + level.round_number - 1;
+		self.var_bc978de9 = (level.var_bc978de9 + level.round_number) - 1;
 	}
 }
 
@@ -177,7 +177,7 @@ private function setup_devgui()
 		waittillframeend();
 		setdvar("", "");
 		bgb_devgui_base = "";
-		adddebugcommand(bgb_devgui_base + "" + "" + "");
+		adddebugcommand(((bgb_devgui_base + "") + "") + "");
 		level thread function_a29384f8();
 	#/
 }
@@ -269,7 +269,7 @@ function function_51cf4361(var_5561679e)
 		return;
 	}
 	time_played_total = self zm_stats::get_global_stat("TIME_PLAYED_TOTAL");
-	if(time_played_total - level.var_baa8fd09 > self.bgb_token_last_given_time)
+	if((time_played_total - level.var_baa8fd09) > self.bgb_token_last_given_time)
 	{
 		if(function_2d75b98d(level.var_342aa5b2))
 		{

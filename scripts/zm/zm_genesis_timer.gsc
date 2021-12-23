@@ -107,7 +107,7 @@ function function_86419da()
 	do
 	{
 		level waittill(#"end_of_round");
-		n_current_time = gettime() - level.n_gameplay_start_time / 1000;
+		n_current_time = (gettime() - level.n_gameplay_start_time) / 1000;
 		var_99870abd = zm::get_round_number() - 1;
 		var_ec31aba8 = undefined;
 		switch(var_99870abd)
@@ -228,7 +228,7 @@ function function_86419da()
 				break;
 			}
 		}
-		if(var_99870abd % 5 == 0)
+		if((var_99870abd % 5) == 0)
 		{
 			if(isdefined(var_ec31aba8) && n_current_time < var_ec31aba8)
 			{
@@ -250,13 +250,13 @@ function function_86419da()
 	Parameters: 1
 	Flags: Linked
 */
-function function_cc8ae246(var_9b606949)
+function function_cc8ae246(n_reward)
 {
-	if(var_9b606949 != 200 && level flag::get("hope_done"))
+	if(n_reward != 200 && level flag::get("hope_done"))
 	{
 		return;
 	}
-	switch(var_9b606949)
+	switch(n_reward)
 	{
 		case 200:
 		{

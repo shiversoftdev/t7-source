@@ -544,7 +544,7 @@ private function zodcompaniontryreacquireservice(entity)
 		case 1:
 		case 2:
 		{
-			step_size = 32 + entity.reacquire_state * 32;
+			step_size = 32 + (entity.reacquire_state * 32);
 			reacquirepos = entity reacquirestep(step_size);
 			break;
 		}
@@ -620,7 +620,7 @@ private function manage_companion_movement(entity)
 	{
 		return;
 	}
-	if(entity.leader.var_122a2dda === 1)
+	if(entity.leader.is_flung === 1)
 	{
 		entity thread function_3463b8c2(entity.leader.var_fa1ecd39);
 	}
@@ -629,7 +629,7 @@ private function manage_companion_movement(entity)
 		if(player laststand::player_is_in_laststand() && entity.reviving_a_player === 0 && player.revivetrigger.beingrevived !== 1)
 		{
 			time = gettime();
-			if(distancesquared(entity.origin, player.origin) <= 1024 * 1024 && time >= entity.var_57e708f6)
+			if(distancesquared(entity.origin, player.origin) <= (1024 * 1024) && time >= entity.var_57e708f6)
 			{
 				entity.reviving_a_player = 1;
 				entity zod_companion_revive_player(player);
@@ -652,7 +652,7 @@ private function manage_companion_movement(entity)
 			if(isinarray(entity.var_fb400bf7, powerup.powerup_name))
 			{
 				dist = distancesquared(entity.origin, powerup.origin);
-				if(dist <= 147456 && randomint(100) < 50 + 10 * entity.var_34a9f1ad)
+				if(dist <= 147456 && randomint(100) < (50 + (10 * entity.var_34a9f1ad)))
 				{
 					entity setgoal(powerup.origin, 1);
 					entity.var_a0c5deb2 = gettime() + randomintrange(2500, 3500);
@@ -681,7 +681,7 @@ private function manage_companion_movement(entity)
 	if(isdefined(entity.enemy) && entity.enemy.archetype == "parasite")
 	{
 		height_difference = abs(entity.origin[2] - entity.enemy.origin[2]);
-		var_3b804002 = 1.5 * height_difference * 1.5 * height_difference;
+		var_3b804002 = (1.5 * height_difference) * (1.5 * height_difference);
 		if(distancesquared(dist_check_start_point, entity.enemy.origin) < var_3b804002)
 		{
 			entity pick_new_movement_point();
@@ -773,7 +773,7 @@ private function function_f62bd05c(target_entity, max_distance)
 {
 	entity = self;
 	var_c96da0a0 = target_entity.origin;
-	if(distancesquared(entity.origin, var_c96da0a0) > max_distance * max_distance)
+	if(distancesquared(entity.origin, var_c96da0a0) > (max_distance * max_distance))
 	{
 		return 0;
 	}
@@ -782,7 +782,7 @@ private function function_f62bd05c(target_entity, max_distance)
 	for(index = 1; index < path.size; index++)
 	{
 		currentseglength = distance(path[index - 1], path[index]);
-		if(currentseglength + segmentlength > max_distance)
+		if((currentseglength + segmentlength) > max_distance)
 		{
 			return 0;
 		}
@@ -879,7 +879,7 @@ private function function_ab299a53(parasite)
 {
 	point = self;
 	height_difference = abs(point.origin[2] - parasite.origin[2]);
-	var_3b804002 = 1.5 * height_difference * 1.5 * height_difference;
+	var_3b804002 = (1.5 * height_difference) * (1.5 * height_difference);
 	return distancesquared(point.origin, parasite.origin) > var_3b804002;
 }
 
@@ -1102,7 +1102,7 @@ private function _trygibbinghead(entity, damage, hitloc, isexplosive)
 	{
 		gibserverutils::gibhead(entity);
 	}
-	else if(entity.health - damage <= 0 && randomfloatrange(0, 1) <= 0.25)
+	else if((entity.health - damage) <= 0 && randomfloatrange(0, 1) <= 0.25)
 	{
 		gibserverutils::gibhead(entity);
 	}
@@ -1125,7 +1125,7 @@ private function _trygibbinglimb(entity, damage, hitloc, isexplosive)
 	}
 	if(isexplosive && randomfloatrange(0, 1) <= 0.25)
 	{
-		if(entity.health - damage <= 0 && entity.allowdeath && math::cointoss())
+		if((entity.health - damage) <= 0 && entity.allowdeath && math::cointoss())
 		{
 			gibserverutils::gibrightarm(entity);
 		}
@@ -1138,11 +1138,11 @@ private function _trygibbinglimb(entity, damage, hitloc, isexplosive)
 	{
 		gibserverutils::gibleftarm(entity);
 	}
-	else if(entity.health - damage <= 0 && entity.allowdeath && isinarray(array("right_hand", "right_arm_lower", "right_arm_upper"), hitloc))
+	else if((entity.health - damage) <= 0 && entity.allowdeath && isinarray(array("right_hand", "right_arm_lower", "right_arm_upper"), hitloc))
 	{
 		gibserverutils::gibrightarm(entity);
 	}
-	else if(entity.health - damage <= 0 && entity.allowdeath && randomfloatrange(0, 1) <= 0.25)
+	else if((entity.health - damage) <= 0 && entity.allowdeath && randomfloatrange(0, 1) <= 0.25)
 	{
 		if(math::cointoss())
 		{
@@ -1166,16 +1166,16 @@ private function _trygibbinglimb(entity, damage, hitloc, isexplosive)
 */
 private function _trygibbinglegs(entity, damage, hitloc, isexplosive, attacker = entity)
 {
-	cangiblegs = entity.health - damage <= 0 && entity.allowdeath;
-	cangiblegs = cangiblegs || (entity.health - damage / entity.maxhealth <= 0.25 && distancesquared(entity.origin, attacker.origin) <= 360000 && entity.allowdeath);
-	if(entity.health - damage <= 0 && entity.allowdeath && isexplosive && randomfloatrange(0, 1) <= 0.5)
+	cangiblegs = (entity.health - damage) <= 0 && entity.allowdeath;
+	cangiblegs = cangiblegs || (((entity.health - damage) / entity.maxhealth) <= 0.25 && distancesquared(entity.origin, attacker.origin) <= 360000 && entity.allowdeath);
+	if((entity.health - damage) <= 0 && entity.allowdeath && isexplosive && randomfloatrange(0, 1) <= 0.5)
 	{
 		gibserverutils::giblegs(entity);
 		entity startragdoll();
 	}
 	else if(cangiblegs && isinarray(array("left_leg_upper", "left_leg_lower", "left_foot"), hitloc) && randomfloatrange(0, 1) <= 1)
 	{
-		if(entity.health - damage > 0)
+		if((entity.health - damage) > 0)
 		{
 			entity.becomecrawler = 1;
 		}
@@ -1183,13 +1183,13 @@ private function _trygibbinglegs(entity, damage, hitloc, isexplosive, attacker =
 	}
 	else if(cangiblegs && isinarray(array("right_leg_upper", "right_leg_lower", "right_foot"), hitloc) && randomfloatrange(0, 1) <= 1)
 	{
-		if(entity.health - damage > 0)
+		if((entity.health - damage) > 0)
 		{
 			entity.becomecrawler = 1;
 		}
 		gibserverutils::gibrightleg(entity);
 	}
-	else if(entity.health - damage <= 0 && entity.allowdeath && randomfloatrange(0, 1) <= 0.25)
+	else if((entity.health - damage) <= 0 && entity.allowdeath && randomfloatrange(0, 1) <= 0.25)
 	{
 		if(math::cointoss())
 		{
@@ -1214,7 +1214,7 @@ private function _trygibbinglegs(entity, damage, hitloc, isexplosive, attacker =
 private function zodcompaniongibdamageoverride(inflictor, attacker, damage, flags, meansofdeath, weapon, point, dir, hitloc, offsettime, boneindex, modelindex)
 {
 	entity = self;
-	if(entity.health - damage / entity.maxhealth > 0.75)
+	if(((entity.health - damage) / entity.maxhealth) > 0.75)
 	{
 		return damage;
 	}
@@ -1238,7 +1238,7 @@ private function zodcompaniongibdamageoverride(inflictor, attacker, damage, flag
 private function zodcompaniondestructdeathoverride(inflictor, attacker, damage, flags, meansofdeath, weapon, point, dir, hitloc, offsettime, boneindex, modelindex)
 {
 	entity = self;
-	if(entity.health - damage <= 0)
+	if((entity.health - damage) <= 0)
 	{
 		destructserverutils::togglespawngibs(entity, 1);
 		piececount = destructserverutils::getpiececount(entity);

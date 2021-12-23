@@ -208,7 +208,7 @@ function inside_bounds(node_origin, bounds)
 function initdroplocations()
 {
 	scalar = 0.8;
-	bound = level.spawnmaxs - level.mapcenter * scalar;
+	bound = (level.spawnmaxs - level.mapcenter) * scalar;
 	possible_nodes = getallnodes();
 	nodes = [];
 	count = 0;

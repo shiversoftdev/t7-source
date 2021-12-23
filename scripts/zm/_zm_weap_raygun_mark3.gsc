@@ -144,7 +144,7 @@ function watch_raygun_impact()
 	while(true)
 	{
 		self waittill(#"projectile_impact", w_weapon, v_pos, n_radius, e_projectile, v_normal);
-		v_pos_final = raygun_vortex_reposition(v_pos + v_normal * 32);
+		v_pos_final = raygun_vortex_reposition(v_pos + (v_normal * 32));
 		if(is_slow_raygun(w_weapon))
 		{
 			self thread start_slow_vortex(w_weapon, v_pos, v_pos_final, n_radius, e_projectile, v_normal);
@@ -253,7 +253,7 @@ function pulse_damage(e_owner, w_weapon)
 		{
 			if(isdefined(e_player) && (!(isdefined(e_player.raygun_mark3_vision_on) && e_player.raygun_mark3_vision_on)))
 			{
-				if(distance(e_player.origin, self.origin) < float(n_radius / 2))
+				if(distance(e_player.origin, self.origin) < (float(n_radius / 2)))
 				{
 					e_player thread player_vortex_visionset();
 				}

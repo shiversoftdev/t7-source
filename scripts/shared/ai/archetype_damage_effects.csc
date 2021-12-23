@@ -160,7 +160,7 @@ private function _burntag(localclientnum, tag, postfix)
 	if(isdefined(self) && self hasdobj(localclientnum))
 	{
 		fx_to_play = undefined;
-		fxname = "fire_" + self.archetype + "_" + tag + postfix;
+		fxname = ((("fire_" + self.archetype) + "_") + tag) + postfix;
 		if(isdefined(level._effect[fxname]))
 		{
 			fx_to_play = level._effect[fxname];
@@ -378,7 +378,7 @@ private function _smoldercorpse(localclientnum)
 	}
 	foreach(var_77eeeab8, tag in fxtoplay)
 	{
-		fx = "smolder_" + self.archetype + tag + "_os";
+		fx = (("smolder_" + self.archetype) + tag) + "_os";
 		if(isdefined(level._effect[fx]))
 		{
 			activefx[activefx.size] = playfxontag(localclientnum, level._effect[fx], self, tag);

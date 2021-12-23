@@ -120,7 +120,7 @@ function onroundswitch()
 	{
 		game["switchedsides"] = 0;
 	}
-	if(game["teamScores"]["allies"] == level.scorelimit - 1 && game["teamScores"]["axis"] == level.scorelimit - 1)
+	if(game["teamScores"]["allies"] == (level.scorelimit - 1) && game["teamScores"]["axis"] == (level.scorelimit - 1))
 	{
 		level.halftimetype = "overtime";
 		level.halftimesubcaption = &"MP_TIE_BREAKER";
@@ -201,7 +201,7 @@ function onstartgametype()
 	level.spawn_start = [];
 	foreach(var_bdc3529e, team in level.teams)
 	{
-		level.spawn_start[team] = spawnlogic::get_spawnpoint_array("mp_sab_spawn_" + team + "_start");
+		level.spawn_start[team] = spawnlogic::get_spawnpoint_array(("mp_sab_spawn_" + team) + "_start");
 	}
 	thread updategametypedvars();
 	thread sabotage();
@@ -258,7 +258,7 @@ function onovertime()
 		if(!level.bombplanted)
 		{
 			waittime = waittime + 1;
-			setgameendtime(gettime() + 90 - waittime * 1000);
+			setgameendtime(gettime() + ((90 - waittime) * 1000));
 		}
 		wait(1);
 	}
@@ -526,7 +526,7 @@ function onpickup(player)
 		print("");
 	#/
 	excludelist[0] = player;
-	if(gettime() - level.lastdialogtime > 10000)
+	if((gettime() - level.lastdialogtime) > 10000)
 	{
 		globallogic_audio::leader_dialog("bomb_acquired", team);
 		player globallogic_audio::leader_dialog_on_player("obj_destroy", "bomb");
@@ -735,7 +735,7 @@ function bombplanted(destroyedobj, team)
 	level.bombplantedby = team;
 	level.timelimitoverride = 1;
 	setmatchflag("bomb_timer", 1);
-	setgameendtime(int(gettime() + level.bombtimer * 1000));
+	setgameendtime(int(gettime() + (level.bombtimer * 1000)));
 	destroyedobj.visuals[0] thread globallogic_utils::playtickingsound("mpl_sab_ui_suitcasebomb_timer");
 	starttime = gettime();
 	bombtimerwait();
@@ -745,7 +745,7 @@ function bombplanted(destroyedobj, team)
 	{
 		if(level.hotpotato)
 		{
-			timepassed = gettime() - starttime / 1000;
+			timepassed = (gettime() - starttime) / 1000;
 			level.bombtimer = level.bombtimer - timepassed;
 		}
 		return;

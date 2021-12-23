@@ -142,7 +142,7 @@ function callback_actordamage(einflictor, eattacker, idamage, idflags, smeansofd
 	self callback::callback(#"hash_7b543e98", params);
 	actorkilled = 0;
 	self thread globallogic_player::trackattackerdamage(eattacker, idamage, smeansofdeath, weapon);
-	if(self.health > 0 && self.health - idamage <= 0)
+	if(self.health > 0 && (self.health - idamage) <= 0)
 	{
 		if(isdefined(eattacker) && isplayer(eattacker.driver))
 		{
@@ -151,7 +151,7 @@ function callback_actordamage(einflictor, eattacker, idamage, idflags, smeansofd
 		if(isplayer(eattacker))
 		{
 			/#
-				println("" + weapon.name + "" + smeansofdeath);
+				println((("" + weapon.name) + "") + smeansofdeath);
 			#/
 			if(self.team != eattacker.team)
 			{

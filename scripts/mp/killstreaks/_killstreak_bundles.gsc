@@ -424,7 +424,7 @@ function get_emp_grenade_damage(killstreaktype, maxhealth)
 		}
 		else if(empgrenadestokill > 0)
 		{
-			emp_weapon_damage = maxhealth / empgrenadestokill + 1;
+			emp_weapon_damage = (maxhealth / empgrenadestokill) + 1;
 		}
 		else
 		{
@@ -461,7 +461,7 @@ function get_weapon_damage(killstreaktype, maxhealth, attacker, weapon, type, da
 				{
 					shotstokill = shotstokill / chargeshotlevel;
 				}
-				weapon_damage = maxhealth / shotstokill + 1;
+				weapon_damage = (maxhealth / shotstokill) + 1;
 			}
 			else
 			{
@@ -480,7 +480,7 @@ function get_weapon_damage(killstreaktype, maxhealth, attacker, weapon, type, da
 				}
 				else if(hasarmorpiercing && self.aitype !== "spawner_bo3_robot_grunt_assault_mp_escort")
 				{
-					weapon_damage = damage + int(damage * level.cac_armorpiercing_data);
+					weapon_damage = damage + (int(damage * level.cac_armorpiercing_data));
 				}
 				if(weapon.weapclass == "spread")
 				{
@@ -504,7 +504,7 @@ function get_weapon_damage(killstreaktype, maxhealth, attacker, weapon, type, da
 					}
 					else if(shotgunenergytokill > 0)
 					{
-						weapon_damage = maxhealth / shotgunenergytokill + 1;
+						weapon_damage = (maxhealth / shotgunenergytokill) + 1;
 					}
 					else
 					{
@@ -523,7 +523,7 @@ function get_weapon_damage(killstreaktype, maxhealth, attacker, weapon, type, da
 						{
 							rocketstokill = rocketstokill * 2;
 						}
-						weapon_damage = maxhealth / rocketstokill + 1;
+						weapon_damage = (maxhealth / rocketstokill) + 1;
 					}
 					else
 					{

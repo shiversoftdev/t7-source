@@ -271,7 +271,7 @@ function function_ee3c7f46()
 {
 	trigger::wait_till("t_spawn_machine_gunner");
 	m_door_r = getent("fueltunnel_spawnclosetdoor_1", "targetname");
-	m_door_r rotateto(m_door_r.angles + vectorscale((0, -1, 0), 150), 0.5);
+	m_door_r rotateto(m_door_r.angles + (vectorscale((0, -1, 0), 150)), 0.5);
 	m_door_r playsound("evt_spawner_door_open");
 	var_8e7793a5 = getent("info_fuel_tunnel_fallback_end", "targetname");
 	a_ai = getentarray("sp_fuel_tunnel_upper_door", "targetname");
@@ -348,7 +348,7 @@ function function_3964d78d()
 		wait(0.05);
 	}
 	m_door_r = getent("fueltunnel_spawnclosetdoor_1", "targetname");
-	m_door_r rotateto(m_door_r.angles - vectorscale((0, -1, 0), 150), 0.5);
+	m_door_r rotateto(m_door_r.angles - (vectorscale((0, -1, 0), 150)), 0.5);
 	m_door_r playsound("evt_spawner_door_close");
 }
 
@@ -768,7 +768,7 @@ function function_d9bab593(str_trigger, str_door, str_spawners, var_137809d6, va
 	e_trigger = getent(str_trigger, "targetname");
 	e_trigger waittill(#"trigger");
 	e_door = getent(str_door, "targetname");
-	e_door rotateto(e_door.angles + vectorscale((0, -1, 0), 110), 0.5);
+	e_door rotateto(e_door.angles + (vectorscale((0, -1, 0), 110)), 0.5);
 	e_door playsound("evt_spawner_door_open");
 	e_goal_volume = getent(var_343b0267, "targetname");
 	a_ai = getentarray(str_spawners, "targetname");
@@ -1881,7 +1881,7 @@ function function_b1017ede()
 		time = gettime();
 		if(e_player istouching(var_c2798c63))
 		{
-			dt = time - start_time / 1000;
+			dt = (time - start_time) / 1000;
 			if(dt > 15)
 			{
 				var_f2c0d323 = 0;
@@ -2092,7 +2092,7 @@ function function_17d64396()
 	while(true)
 	{
 		time = gettime();
-		dt = time - start_time / 1000;
+		dt = (time - start_time) / 1000;
 		if(dt > 10)
 		{
 			num_touching = cp_prologue_util::function_609c412a("info_lift_start_area_volume", 0);
@@ -2272,7 +2272,7 @@ function function_4d214c02(delay)
 	while(true)
 	{
 		time = gettime();
-		dt = time - start_time / 1000;
+		dt = (time - start_time) / 1000;
 		if(dt > 8)
 		{
 			break;
@@ -2311,7 +2311,7 @@ function function_17ecef2()
 */
 function function_10ffa58e(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, psoffsettime, damagefromunderneath, modelindex, partname)
 {
-	if(self.health - idamage <= 0)
+	if((self.health - idamage) <= 0)
 	{
 		if(isdefined(eattacker) && isplayer(eattacker))
 		{
@@ -2540,7 +2540,7 @@ function function_51da5fc6()
 	v_down = (0, 0, -1);
 	dist = 354;
 	move_time = 5;
-	v_lift_destination = level.e_lift.origin + v_down * dist;
+	v_lift_destination = level.e_lift.origin + (v_down * dist);
 	level.var_3dce3f88 moveto(v_lift_destination, move_time);
 	level.e_lift = getent("freight_lift", "targetname");
 	level.e_lift playsound("evt_freight_lift_start");
@@ -2668,7 +2668,7 @@ function function_dfbe3c61()
 	while(true)
 	{
 		time = gettime();
-		dt = time - start_time / 1000;
+		dt = (time - start_time) / 1000;
 		if(dt > 20)
 		{
 			e_trigger = getent("t_lift_reinforcements", "targetname");
@@ -2744,9 +2744,9 @@ function function_45ed0d4b(open_door, move_time)
 		{
 			return;
 		}
-		v_dest = var_507d66a5.origin + v_up * move_amount;
+		v_dest = var_507d66a5.origin + (v_up * move_amount);
 		var_507d66a5 moveto(v_dest, move_time);
-		v_dest = var_3d3eb4dd.origin + v_up * move_amount * -1;
+		v_dest = var_3d3eb4dd.origin + (v_up * (move_amount * -1));
 		var_3d3eb4dd moveto(v_dest, move_time);
 		level.var_1dd14818 = 1;
 	}
@@ -2754,9 +2754,9 @@ function function_45ed0d4b(open_door, move_time)
 	{
 		return;
 	}
-	v_dest = var_507d66a5.origin + v_up * move_amount * -1;
+	v_dest = var_507d66a5.origin + (v_up * (move_amount * -1));
 	var_507d66a5 moveto(v_dest, move_time);
-	v_dest = var_3d3eb4dd.origin + v_up * move_amount;
+	v_dest = var_3d3eb4dd.origin + (v_up * move_amount);
 	var_3d3eb4dd moveto(v_dest, move_time);
 	level.var_1dd14818 = 0;
 	var_3d3eb4dd playsound("evt_freight_elev_door_start");

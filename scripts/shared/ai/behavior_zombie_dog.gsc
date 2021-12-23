@@ -393,10 +393,10 @@ function get_locomotion_target(behaviortreeentity)
 		spacing_value = ai::get_behavior_attribute("spacing_value");
 		to_enemy = behaviortreeentity.favoriteenemy.origin - behaviortreeentity.origin;
 		perp = vectornormalize((to_enemy[1] * -1, to_enemy[0], 0));
-		offset = perp * spacing_horz_dist * spacing_value;
+		offset = (perp * spacing_horz_dist) * spacing_value;
 		spacing_dist = math::clamp(length(to_enemy), spacing_near_dist, spacing_far_dist);
-		lerp_amount = math::clamp(spacing_dist - spacing_near_dist / spacing_far_dist - spacing_near_dist, 0, 1);
-		desired_point = last_valid_position + offset * lerp_amount;
+		lerp_amount = math::clamp((spacing_dist - spacing_near_dist) / (spacing_far_dist - spacing_near_dist), 0, 1);
+		desired_point = last_valid_position + (offset * lerp_amount);
 		desired_point = getclosestpointonnavmesh(desired_point, spacing_horz_dist * 1.2, 16);
 		if(isdefined(desired_point))
 		{
@@ -472,7 +472,7 @@ function zombiedogtargetservice(behaviortreeentity)
 		if(isdefined(locomotion_target))
 		{
 			repathdist = 16;
-			if(!isdefined(behaviortreeentity.lasttargetposition) || distancesquared(behaviortreeentity.lasttargetposition, locomotion_target) > repathdist * repathdist || !behaviortreeentity haspath())
+			if(!isdefined(behaviortreeentity.lasttargetposition) || distancesquared(behaviortreeentity.lasttargetposition, locomotion_target) > (repathdist * repathdist) || !behaviortreeentity haspath())
 			{
 				behaviortreeentity useposition(locomotion_target);
 				behaviortreeentity.lasttargetposition = locomotion_target;
@@ -499,7 +499,7 @@ function zombiedogshouldmelee(behaviortreeentity)
 	if(!(isdefined(level.intermission) && level.intermission))
 	{
 		meleedist = 72;
-		if(distancesquared(behaviortreeentity.origin, behaviortreeentity.favoriteenemy.origin) < meleedist * meleedist && behaviortreeentity cansee(behaviortreeentity.favoriteenemy))
+		if(distancesquared(behaviortreeentity.origin, behaviortreeentity.favoriteenemy.origin) < (meleedist * meleedist) && behaviortreeentity cansee(behaviortreeentity.favoriteenemy))
 		{
 			dog_eye = behaviortreeentity.origin + vectorscale((0, 0, 1), 40);
 			enemy_eye = behaviortreeentity.favoriteenemy geteye();

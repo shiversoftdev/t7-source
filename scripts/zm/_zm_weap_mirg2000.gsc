@@ -1089,7 +1089,7 @@ function function_b7e68127(var_7364b0dd)
 		}
 		if(isalive(self) && !self isragdoll())
 		{
-			self scene::play("p7_fxanim_zm_island_mirg_trap_crawl_" + level.var_d290a02b + "_bundle", self);
+			self scene::play(("p7_fxanim_zm_island_mirg_trap_crawl_" + level.var_d290a02b) + "_bundle", self);
 		}
 	}
 	else
@@ -1101,7 +1101,7 @@ function function_b7e68127(var_7364b0dd)
 		}
 		if(isalive(self) && !self isragdoll())
 		{
-			self scene::play("p7_fxanim_zm_island_mirg_trap_" + level.var_7a9b882a + "_bundle", self);
+			self scene::play(("p7_fxanim_zm_island_mirg_trap_" + level.var_7a9b882a) + "_bundle", self);
 		}
 	}
 }

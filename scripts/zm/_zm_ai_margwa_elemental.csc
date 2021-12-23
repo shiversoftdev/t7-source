@@ -321,7 +321,7 @@ private function shadow_margwa_attack_portal_fx(localclientnum, oldval, newval, 
 	if(newval == 1)
 	{
 		vector = anglestoforward(self.angles);
-		portal_pos = self.origin + vector * 96 + vectorscale((0, 0, 1), 72);
+		portal_pos = (self.origin + (vector * 96)) + vectorscale((0, 0, 1), 72);
 		self.shadow_margwa_attack_portal_fx = playfx(localclientnum, level._effect["margwa_shadow_attack_portal_open"], portal_pos, vector);
 		playsound(0, "zmb_margwa_shadow_portal_open", portal_pos);
 		audio::playloopat("zmb_margwa_shadow_portal_lp", portal_pos);
@@ -334,7 +334,7 @@ private function shadow_margwa_attack_portal_fx(localclientnum, oldval, newval, 
 	if(newval == 0 && isdefined(self.shadow_margwa_attack_portal_fx))
 	{
 		vector = anglestoforward(self.angles);
-		portal_pos = self.origin + vector * 96 + vectorscale((0, 0, 1), 72);
+		portal_pos = (self.origin + (vector * 96)) + vectorscale((0, 0, 1), 72);
 		if(isdefined(self.shadow_margwa_attack_portal_fx))
 		{
 			stopfx(localclientnum, self.shadow_margwa_attack_portal_fx);

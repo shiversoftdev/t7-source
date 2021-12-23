@@ -85,7 +85,7 @@ function turret_debug_line(start, end, color)
 function function_ba2c6c94(origin, sector)
 {
 	forward = anglestoforward((0, sector, 0));
-	end = origin + forward * 50;
+	end = origin + (forward * 50);
 	passed = bullettracepassed(origin, end, 0, self);
 	/#
 		if(passed)
@@ -122,34 +122,34 @@ function function_e606dad7()
 	#/
 	yaw = angleclamp180(angles[1]);
 	max_angle = yaw;
-	for(sector = 0; sector * 10 <= 360; sector++)
+	for(sector = 0; (sector * 10) <= 360; sector++)
 	{
-		if(function_ba2c6c94(eye, yaw + sector * 10))
+		if(function_ba2c6c94(eye, yaw + (sector * 10)))
 		{
-			max_angle = yaw + sector * 10;
+			max_angle = yaw + (sector * 10);
 			continue;
 		}
 		break;
 	}
 	min_angle = yaw;
-	for(sector = 0; sector * 10 <= 360; sector++)
+	for(sector = 0; (sector * 10) <= 360; sector++)
 	{
-		if(function_ba2c6c94(eye, yaw - sector * 10))
+		if(function_ba2c6c94(eye, yaw - (sector * 10)))
 		{
-			min_angle = yaw - sector * 10;
+			min_angle = yaw - (sector * 10);
 			continue;
 		}
 		break;
 	}
-	if(max_angle - min_angle >= 360)
+	if((max_angle - min_angle) >= 360)
 	{
 		var_2421690d = yaw;
 		self.scanning_arc = 180;
 	}
 	else
 	{
-		var_2421690d = angleclamp180(max_angle + min_angle * 0.5);
-		self.scanning_arc = max_angle - max_angle + min_angle * 0.5;
+		var_2421690d = angleclamp180((max_angle + min_angle) * 0.5);
+		self.scanning_arc = max_angle - ((max_angle + min_angle) * 0.5);
 	}
 	self.angles = (angles[0], var_2421690d, angles[2]);
 }
@@ -182,7 +182,7 @@ function function_5f695de4(point, yaw)
 */
 function get_target_point(origin, angles, yaw_offset)
 {
-	point = origin + anglestoforward(angles + (self.default_pitch, yaw_offset, 0)) * 1000;
+	point = origin + ((anglestoforward(angles + (self.default_pitch, yaw_offset, 0))) * 1000);
 	return function_5f695de4(point, yaw_offset);
 }
 
@@ -257,13 +257,13 @@ function function_c8f2c95d(point)
 	{
 		if(yaw_delta < targetpoint.yaw)
 		{
-			if(targetpoint.yaw - yaw_delta < 5)
+			if((targetpoint.yaw - yaw_delta) < 5)
 			{
 				return;
 			}
 			continue;
 		}
-		if(yaw_delta - targetpoint.yaw < 5)
+		if((yaw_delta - targetpoint.yaw) < 5)
 		{
 			return;
 		}
@@ -440,8 +440,8 @@ function function_e6f10cc7(angles)
 	{
 		angles = self gettagangles("tag_flash");
 	}
-	target_vec = self.origin + anglestoforward((0, angles[1], 0)) * 1000;
-	target_vec = target_vec + vectorscale((0, 0, -1), 1700);
+	target_vec = self.origin + (anglestoforward((0, angles[1], 0)) * 1000);
+	target_vec = target_vec + (vectorscale((0, 0, -1), 1700));
 	self settargetorigin(target_vec);
 	self.off = 1;
 	if(!isdefined(self.emped))
@@ -493,7 +493,7 @@ function bootup()
 	if(!isdefined(self.player))
 	{
 		angles = self gettagangles("tag_flash");
-		target_vec = self.origin + anglestoforward((self.default_pitch, angles[1], 0)) * 1000;
+		target_vec = self.origin + (anglestoforward((self.default_pitch, angles[1], 0)) * 1000);
 		self.turretrotscale = 0.3;
 		self settargetorigin(target_vec);
 		wait(1);
@@ -803,7 +803,7 @@ function function_e99c1c2(attacker, hitdir)
 	wait(0.1);
 	self.turretrotscale = 0.5;
 	tag_angles = self gettagangles("tag_flash");
-	target_pos = self.origin + anglestoforward((0, tag_angles[1], 0)) * 1000 + vectorscale((0, 0, -1), 1800);
+	target_pos = (self.origin + (anglestoforward((0, tag_angles[1], 0)) * 1000)) + (vectorscale((0, 0, -1), 1800));
 	self setturrettargetvec(target_pos);
 	wait(4);
 	self notify(#"crash_done");

@@ -241,7 +241,7 @@ function function_657f1d1(s_stub, str_zone, var_6d359b2e, var_db6533 = 0)
 		return;
 	}
 	self.var_5aef0317 = 1;
-	a_s_spots = struct::get_array("apothican_exit_" + s_stub.name + "_pos", "targetname");
+	a_s_spots = struct::get_array(("apothican_exit_" + s_stub.name) + "_pos", "targetname");
 	self zm_utility::create_streamer_hint(a_s_spots[0].origin, a_s_spots[0].angles, 1);
 	self.b_invulnerable = self enableinvulnerability();
 	self allowcrouch(0);
@@ -359,7 +359,7 @@ function function_538e24a(var_413ea50f, s_stub)
 private function function_3298b25f(s_stub)
 {
 	self endon(#"death");
-	a_s_spots = struct::get_array("apothican_exit_" + s_stub.name + "_pos", "targetname");
+	a_s_spots = struct::get_array(("apothican_exit_" + s_stub.name) + "_pos", "targetname");
 	var_a05a47c7 = s_stub function_fbd80603(self);
 	while(positionwouldtelefrag(var_a05a47c7.origin))
 	{
@@ -383,13 +383,13 @@ private function function_3298b25f(s_stub)
 */
 private function function_fbd80603(player)
 {
-	a_s_spots = struct::get_array("apothican_exit_" + self.name + "_pos", "targetname");
+	a_s_spots = struct::get_array(("apothican_exit_" + self.name) + "_pos", "targetname");
 	/#
 		assert(a_s_spots.size, "" + self.name);
 	#/
 	foreach(var_4c1dadb3, s_spot in a_s_spots)
 	{
-		if(s_spot.script_int === player.characterindex + 1)
+		if(s_spot.script_int === (player.characterindex + 1))
 		{
 			return s_spot;
 		}
@@ -593,7 +593,7 @@ function function_21a5cf5e()
 				if(isdefined(spawn_point))
 				{
 					v_spawn_origin = spawn_point.origin;
-					v_ground = bullettrace(spawn_point.origin + vectorscale((0, 0, 1), 40), spawn_point.origin + vectorscale((0, 0, 1), 40) + vectorscale((0, 0, -1), 100000), 0, undefined)["position"];
+					v_ground = bullettrace(spawn_point.origin + vectorscale((0, 0, 1), 40), (spawn_point.origin + vectorscale((0, 0, 1), 40)) + (vectorscale((0, 0, -1), 100000)), 0, undefined)["position"];
 					if(distancesquared(v_ground, spawn_point.origin) < 1600)
 					{
 						v_spawn_origin = v_ground + vectorscale((0, 0, 1), 40);
@@ -758,7 +758,7 @@ function function_551d8f75()
 			e_player.var_d273f814 = n_current_time;
 			return e_player;
 		}
-		var_43421314 = n_current_time - e_player.var_d273f814 / 1000;
+		var_43421314 = (n_current_time - e_player.var_d273f814) / 1000;
 		if(var_43421314 >= n_wait_time)
 		{
 			n_wait_time = var_43421314;
@@ -1106,11 +1106,11 @@ function function_49a0c182()
 	Parameters: 1
 	Flags: None
 */
-function function_26da4beb(var_db04d156)
+function function_26da4beb(n_stage)
 {
 	if(isdefined(self.script_int))
 	{
-		if(self.script_int > var_db04d156)
+		if(self.script_int > n_stage)
 		{
 			return 0;
 		}
@@ -1133,7 +1133,7 @@ function function_a6e114bc(s_pos)
 	n_current_time = gettime();
 	if(isdefined(level.var_f77d7372))
 	{
-		var_47768568 = n_current_time - level.var_f77d7372 / 1000;
+		var_47768568 = (n_current_time - level.var_f77d7372) / 1000;
 		if(var_47768568 < 300)
 		{
 			var_d695363e = 0;
@@ -1174,10 +1174,10 @@ function function_ecd2e6b5()
 		return;
 	}
 	n_time = gettime();
-	var_43421314 = n_time - level.var_f77d7372 / 1000;
+	var_43421314 = (n_time - level.var_f77d7372) / 1000;
 	if(var_43421314 < 240)
 	{
-		n_delay = 240 - var_43421314 + randomintrange(120, 240);
+		n_delay = (240 - var_43421314) + randomintrange(120, 240);
 		wait(n_delay);
 	}
 }
@@ -1208,7 +1208,7 @@ function function_9ccb8410(n_delay)
 		n_time = gettime();
 		if(level.var_b8b48a73.size > 0)
 		{
-			n_total_time = n_total_time + n_time - var_47768568 / 1000;
+			n_total_time = n_total_time + ((n_time - var_47768568) / 1000);
 		}
 		var_47768568 = n_time;
 		if(n_total_time >= n_delay)

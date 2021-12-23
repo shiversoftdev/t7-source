@@ -545,11 +545,11 @@ function set_gadget_status(status, time)
 	timestr = "";
 	if(isdefined(time))
 	{
-		timestr = "^3" + ", time: " + time;
+		timestr = (("^3") + ", time: ") + time;
 	}
 	if(getdvarint("scr_cpower_debug_prints") > 0)
 	{
-		self iprintlnbold("Gadget Roulette: " + status + timestr);
+		self iprintlnbold(("Gadget Roulette: " + status) + timestr);
 	}
 }
 

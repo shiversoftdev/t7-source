@@ -112,10 +112,10 @@ function function_69f1cd9e(state)
 		{
 			state = "round_start";
 		}
-		statename = state + "_" + location;
+		statename = (state + "_") + location;
 		if(state != "game_over")
 		{
-			statename = statename + "_" + num;
+			statename = (statename + "_") + num;
 		}
 		music::setmusicstate(statename, player);
 	}

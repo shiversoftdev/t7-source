@@ -249,7 +249,7 @@ function airsupport(localclientnum, x, y, z, type, yaw, team, teamfaction, owner
 				println("");
 			#/
 			/#
-				println("" + teamfaction + "");
+				println(("" + teamfaction) + "");
 			#/
 			teamfaction = "marines";
 			break;
@@ -275,7 +275,7 @@ function airsupport(localclientnum, x, y, z, type, yaw, team, teamfaction, owner
 		default:
 		{
 			/#
-				println("" + team + "");
+				println(("" + team) + "");
 			#/
 			team = "allies";
 			break;
@@ -293,7 +293,7 @@ function airsupport(localclientnum, x, y, z, type, yaw, team, teamfaction, owner
 	{
 		planehalfdistance = 12000;
 		data.planehalfdistance = planehalfdistance;
-		data.startpoint = pos + vectorscale(anglestoforward(direction), -1 * planehalfdistance);
+		data.startpoint = pos + (vectorscale(anglestoforward(direction), -1 * planehalfdistance));
 		data.endpoint = pos + vectorscale(anglestoforward(direction), planehalfdistance);
 		data.planemodel = "t5_veh_air_b52";
 		data.flybysound = "null";
@@ -301,14 +301,14 @@ function airsupport(localclientnum, x, y, z, type, yaw, team, teamfaction, owner
 		data.apextime = 6145;
 		data.exittype = -1;
 		data.flyspeed = 2000;
-		data.flytime = planehalfdistance * 2 / data.flyspeed;
+		data.flytime = (planehalfdistance * 2) / data.flyspeed;
 		planetype = "airstrike";
 	}
 	else if(type == "n")
 	{
 		planehalfdistance = 24000;
 		data.planehalfdistance = planehalfdistance;
-		data.startpoint = pos + vectorscale(anglestoforward(direction), -1 * planehalfdistance);
+		data.startpoint = pos + (vectorscale(anglestoforward(direction), -1 * planehalfdistance));
 		data.endpoint = pos + vectorscale(anglestoforward(direction), planehalfdistance);
 		data.planemodel = airsupport::getplanemodel(teamfaction);
 		data.flybysound = "null";
@@ -316,7 +316,7 @@ function airsupport(localclientnum, x, y, z, type, yaw, team, teamfaction, owner
 		data.apextime = 2362;
 		data.exittype = exittype;
 		data.flyspeed = 7000;
-		data.flytime = planehalfdistance * 2 / data.flyspeed;
+		data.flytime = (planehalfdistance * 2) / data.flyspeed;
 		planetype = "napalm";
 	}
 	else

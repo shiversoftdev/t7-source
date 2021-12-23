@@ -35,7 +35,7 @@ function init(str_centerpoint, str_spawn)
 	self.m_str_spawn = str_spawn;
 	self.m_n_defend_duration = 30;
 	self.m_n_defend_current_progress = 0;
-	self.m_n_defend_progress_per_update_interval = 100 / self.m_n_defend_duration * 0.1;
+	self.m_n_defend_progress_per_update_interval = (100 / self.m_n_defend_duration) * 0.1;
 	self.m_n_defend_grace_duration = 5;
 	self.m_n_defend_grace_remaining = self.m_n_defend_grace_duration;
 	self.m_n_defend_radius = 220;
@@ -166,7 +166,7 @@ function set_volumes(str_defend_volume, str_rumble_volume)
 function set_duration(n_duration)
 {
 	self.m_n_defend_duration = n_duration;
-	self.m_n_defend_progress_per_update_interval = 100 / self.m_n_defend_duration * 0.1;
+	self.m_n_defend_progress_per_update_interval = (100 / self.m_n_defend_duration) * 0.1;
 }
 
 /*
@@ -413,7 +413,7 @@ function progress_think()
 	a_players_in_defend_area = get_players_in_defend_area();
 	n_players_in_defend_area = a_players_in_defend_area.size;
 	self.m_n_defend_duration = function_d9a5609b(var_db69778c, n_players_in_defend_area);
-	self.m_n_defend_progress_per_update_interval = 100 / self.m_n_defend_duration * 0.1;
+	self.m_n_defend_progress_per_update_interval = (100 / self.m_n_defend_duration) * 0.1;
 	while(self.m_n_defend_current_progress < 100 && self.m_n_defend_grace_remaining > 0)
 	{
 		a_players_in_defend_area = get_players_in_defend_area();
@@ -765,7 +765,7 @@ function kill_all_defend_event_zombies()
 */
 function get_progress_rate(n_players_in_defend_area, n_players_total)
 {
-	n_current_update_rate = n_players_in_defend_area / n_players_total * self.m_n_defend_progress_per_update_interval;
+	n_current_update_rate = (n_players_in_defend_area / n_players_total) * self.m_n_defend_progress_per_update_interval;
 	return n_current_update_rate;
 }
 
@@ -824,7 +824,7 @@ function is_player_in_defend_area(player)
 		}
 		return 0;
 	}
-	if(zm_utility::is_player_valid(player, 1, 1) && distance2dsquared(player.origin, self.m_s_centerpoint.origin) < self.m_n_defend_radius_sq && player.origin[2] > self.m_s_centerpoint.origin[2] + -20)
+	if(zm_utility::is_player_valid(player, 1, 1) && distance2dsquared(player.origin, self.m_s_centerpoint.origin) < self.m_n_defend_radius_sq && player.origin[2] > (self.m_s_centerpoint.origin[2] + -20))
 	{
 		return 1;
 	}

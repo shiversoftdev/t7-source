@@ -332,7 +332,7 @@ private function function_6ba7e9d6(e_player)
 	while(e_player usebuttonpressed() && n_total_time < 3)
 	{
 		n_current_time = gettime();
-		n_total_time = n_current_time - n_start_time / 1000;
+		n_total_time = (n_current_time - n_start_time) / 1000;
 		util::wait_network_frame();
 	}
 	e_player stoploopsound(0.5);
@@ -464,7 +464,7 @@ function create_callbox_unitrigger(str_areaname, func_trigger_visibility, func_t
 	length = 64;
 	s_callbox = struct::get("companion_callbox_" + str_areaname, "script_noteworthy");
 	/#
-		assert(isdefined(s_callbox), "" + str_areaname + "");
+		assert(isdefined(s_callbox), ("" + str_areaname) + "");
 	#/
 	s_callbox.unitrigger_stub = spawnstruct();
 	s_callbox.unitrigger_stub.origin = s_callbox.origin;
@@ -707,7 +707,7 @@ function filter_callbox_name(e_entity, str_areaname)
 */
 function function_ff7f239d(e_player, s_stub, s_start_pos)
 {
-	a_trace = bullettrace(s_start_pos.origin + vectorscale((0, 0, 1), 100), s_start_pos.origin + vectorscale((0, 0, -1), 256), 0, s_start_pos);
+	a_trace = bullettrace(s_start_pos.origin + vectorscale((0, 0, 1), 100), s_start_pos.origin + (vectorscale((0, 0, -1), 256)), 0, s_start_pos);
 	v_ground_position = a_trace["position"];
 	s_stub zm_unitrigger::run_visibility_function_for_all_triggers();
 	var_7b3e5077 = spawn("script_model", v_ground_position);
@@ -874,7 +874,7 @@ function function_83f1533a(entity, suffix, delay)
 	if(isdefined(entity) && (!(isdefined(entity.is_speaking) && entity.is_speaking)))
 	{
 		entity.is_speaking = 1;
-		entity playsoundwithnotify(alias + "_" + var_4dc11cc, "sndDone");
+		entity playsoundwithnotify((alias + "_") + var_4dc11cc, "sndDone");
 		entity waittill(#"snddone");
 		entity.is_speaking = 0;
 	}

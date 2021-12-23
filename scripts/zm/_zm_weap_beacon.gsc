@@ -147,7 +147,7 @@ function watch_for_emp(model, actor)
 	while(true)
 	{
 		level waittill(#"emp_detonate", origin, radius);
-		if(distancesquared(origin, self.origin) < radius * radius)
+		if(distancesquared(origin, self.origin) < (radius * radius))
 		{
 			break;
 		}
@@ -859,7 +859,7 @@ function homing_beacon_vo()
 		n_time = gettime();
 		if(isdefined(self.time_thrown))
 		{
-			if(n_time < self.time_thrown + 3000)
+			if(n_time < (self.time_thrown + 3000))
 			{
 				self.owner zm_audio::create_and_play_dialog("general", "use_beacon");
 			}
@@ -1253,7 +1253,7 @@ function function_45216da2()
 private function setup_devgui_func(str_devgui_path, str_dvar, n_value, func, n_base_value = -1)
 {
 	setdvar(str_dvar, n_base_value);
-	adddebugcommand("devgui_cmd \"" + str_devgui_path + "\" \"" + str_dvar + " " + n_value + "\"\n");
+	adddebugcommand(((((("devgui_cmd \"" + str_devgui_path) + "\" \"") + str_dvar) + " ") + n_value) + "\"\n");
 	while(true)
 	{
 		n_dvar = getdvarint(str_dvar);

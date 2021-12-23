@@ -144,11 +144,11 @@ function player_on_spawned()
 	Parameters: 3
 	Flags: Linked
 */
-function score_cf_register_info(name, var_829cb7a3, max_count)
+function score_cf_register_info(name, version, max_count)
 {
 	for(i = 0; i < 4; i++)
 	{
-		clientfield::register("clientuimodel", "PlayerList.client" + i + ".score_cf_" + name, var_829cb7a3, getminbitcountfornum(max_count), "counter");
+		clientfield::register("clientuimodel", (("PlayerList.client" + i) + ".score_cf_") + name, version, getminbitcountfornum(max_count), "counter");
 	}
 }
 
@@ -165,7 +165,7 @@ function score_cf_increment_info(name)
 {
 	foreach(var_832f6a13, player in level.players)
 	{
-		thread wait_score_cf_increment_info(player, "PlayerList.client" + self.entity_num + ".score_cf_" + name);
+		thread wait_score_cf_increment_info(player, (("PlayerList.client" + self.entity_num) + ".score_cf_") + name);
 	}
 }
 
@@ -375,7 +375,7 @@ function player_add_points(event, mod, hit_location, is_dog, zombie_team, damage
 	team_points = multiplier * zm_utility::round_up_score(team_points, 10);
 	if(isdefined(self.point_split_receiver) && (event == "death" || event == "ballistic_knife_death"))
 	{
-		split_player_points = player_points - zm_utility::round_up_score(player_points * self.point_split_keep_percent, 10);
+		split_player_points = player_points - (zm_utility::round_up_score(player_points * self.point_split_keep_percent, 10));
 		self.point_split_receiver add_to_player_score(split_player_points);
 		player_points = player_points - split_player_points;
 	}

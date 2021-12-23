@@ -386,7 +386,7 @@ function teleport_pad_active_think(index)
 function player_teleporting(index)
 {
 	time_since_last_teleport = gettime() - level.teleport_time;
-	exploder::exploder_duration("teleporter_" + level.teleport_pad_names[index] + "_teleporting", 5.3);
+	exploder::exploder_duration(("teleporter_" + level.teleport_pad_names[index]) + "_teleporting", 5.3);
 	exploder::exploder_duration("mainframe_warm_up", 4.8);
 	level util::clientnotify("tpw" + index);
 	level thread zm_factory::sndpa_dovox("vox_maxis_teleporter_success_0");
@@ -697,10 +697,10 @@ function teleport_core_think()
 							level.teleport[i] = "active";
 							level.active_links++;
 							level flag::set("teleporter_pad_link_" + level.active_links);
-							level thread zm_factory::sndpa_dovox("vox_maxis_teleporter_" + i + "active_0");
+							level thread zm_factory::sndpa_dovox(("vox_maxis_teleporter_" + i) + "active_0");
 							level util::delay(10, undefined, &zm_audio::sndmusicsystem_playstate, "teleporter_" + level.active_links);
-							exploder::exploder("teleporter_" + level.teleport_pad_names[i] + "_linked");
-							exploder::exploder("lgt_teleporter_" + level.teleport_pad_names[i] + "_linked");
+							exploder::exploder(("teleporter_" + level.teleport_pad_names[i]) + "_linked");
+							exploder::exploder(("lgt_teleporter_" + level.teleport_pad_names[i]) + "_linked");
 							exploder::exploder_duration("mainframe_steam", 14.6);
 							if(level.active_links == 3)
 							{
@@ -944,7 +944,7 @@ function play_packa_see_vox()
 */
 function teleporter_wire_wait(index)
 {
-	targ = struct::get("pad_" + index + "_wire", "targetname");
+	targ = struct::get(("pad_" + index) + "_wire", "targetname");
 	if(!isdefined(targ))
 	{
 		return;
@@ -975,7 +975,7 @@ function teleporter_wire_wait(index)
 */
 function teleport_aftereffects()
 {
-	if(getdvarstring("factoryAftereffectOverride") == "-1")
+	if(getdvarstring("factoryAftereffectOverride") == ("-1"))
 	{
 		self thread [[level.teleport_ae_funcs[randomint(level.teleport_ae_funcs.size)]]]();
 	}

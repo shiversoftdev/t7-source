@@ -201,7 +201,7 @@ function watch_for_emp(model, actor)
 	while(true)
 	{
 		level waittill(#"emp_detonate", origin, radius);
-		if(distancesquared(origin, self.origin) < radius * radius)
+		if(distancesquared(origin, self.origin) < (radius * radius))
 		{
 			break;
 		}

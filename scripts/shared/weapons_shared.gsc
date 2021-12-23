@@ -252,7 +252,7 @@ function weapondamagetrace(from, to, startradius, ignore)
 {
 	midpos = undefined;
 	diff = to - from;
-	if(lengthsquared(diff) < startradius * startradius)
+	if(lengthsquared(diff) < (startradius * startradius))
 	{
 		midpos = to;
 	}
@@ -332,6 +332,6 @@ function has_lockon(target)
 {
 	player = self;
 	clientnum = player getentitynumber();
-	return isdefined(target.locked_on) && target.locked_on & 1 << clientnum;
+	return isdefined(target.locked_on) && target.locked_on & (1 << clientnum);
 }
 

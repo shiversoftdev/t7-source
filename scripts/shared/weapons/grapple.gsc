@@ -241,7 +241,7 @@ function place_dummy_target(origin, forward, weapon)
 	{
 		distance = level.grapple_notarget_distance;
 	}
-	end = origin + forward * distance;
+	end = origin + (forward * distance);
 	if(!self isgrappling())
 	{
 		self.dummy_target.origin = self trace(start, end, self.dummy_target);
@@ -395,9 +395,9 @@ function get_target_score(target, origin, forward, min_range, max_range)
 		normal = vectornormalize(testorigin - origin);
 		dot = vectordot(forward, normal);
 		targetdistance = distance(self.origin, testorigin);
-		distance_score = 1 - targetdistance - min_range / max_range - min_range;
+		distance_score = 1 - (targetdistance - min_range) / (max_range - min_range);
 		type_score = get_target_type_score(target);
-		return type_score * pow(dot, 0.85) * pow(distance_score, 0.15);
+		return (type_score * pow(dot, 0.85)) * pow(distance_score, 0.15);
 	}
 	return -1;
 }
@@ -467,8 +467,8 @@ function trace(from, to, target)
 */
 function can_see(target, target_origin, player_origin, player_forward, distance)
 {
-	start = player_origin + player_forward * distance;
-	end = target_origin - player_forward * distance;
+	start = player_origin + (player_forward * distance);
+	end = target_origin - (player_forward * distance);
 	collided = self trace(start, end, target);
 	if(distance2dsquared(end, collided) > 9)
 	{

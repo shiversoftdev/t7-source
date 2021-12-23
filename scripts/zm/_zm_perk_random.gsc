@@ -170,7 +170,7 @@ function create_perk_random_machine_unitrigger_stub()
 	self.unitrigger_stub.script_width = 70;
 	self.unitrigger_stub.script_height = 30;
 	self.unitrigger_stub.script_length = 40;
-	self.unitrigger_stub.origin = self.origin + anglestoright(self.angles) * self.unitrigger_stub.script_length + anglestoup(self.angles) * self.unitrigger_stub.script_height / 2;
+	self.unitrigger_stub.origin = (self.origin + (anglestoright(self.angles) * self.unitrigger_stub.script_length)) + (anglestoup(self.angles) * (self.unitrigger_stub.script_height / 2));
 	self.unitrigger_stub.angles = self.angles;
 	self.unitrigger_stub.script_unitrigger_type = "unitrigger_box_use";
 	self.unitrigger_stub.trigger_target = self;
@@ -700,7 +700,7 @@ function perk_bottle_motion()
 {
 	putouttime = 3;
 	putbacktime = 10;
-	v_float = anglestoforward(self.angles - (0, 90, 0)) * 10;
+	v_float = (anglestoforward(self.angles - (0, 90, 0))) * 10;
 	level.bottle_spawn_location.origin = self.origin + (0, 0, 53);
 	level.bottle_spawn_location.angles = self.angles;
 	level.bottle_spawn_location.origin = level.bottle_spawn_location.origin - v_float;

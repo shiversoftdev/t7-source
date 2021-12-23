@@ -136,9 +136,9 @@ function onspawnretrievetrigger(watcher, player)
 	}
 	else
 	{
-		trigger_pos[0] = retrievable_model.origin[0] + vec_scale * normal[0];
-		trigger_pos[1] = retrievable_model.origin[1] + vec_scale * normal[1];
-		trigger_pos[2] = retrievable_model.origin[2] + vec_scale * normal[2];
+		trigger_pos[0] = retrievable_model.origin[0] + (vec_scale * normal[0]);
+		trigger_pos[1] = retrievable_model.origin[1] + (vec_scale * normal[1]);
+		trigger_pos[2] = retrievable_model.origin[2] + (vec_scale * normal[2]);
 	}
 	trigger_pos[2] = trigger_pos[2] - 50;
 	retrievable_model clientfield::set("retrievable", 1);
@@ -317,7 +317,7 @@ function dropknivestoground()
 */
 function droptoground(origin, radius)
 {
-	if(distancesquared(origin, self.origin) < radius * radius)
+	if(distancesquared(origin, self.origin) < (radius * radius))
 	{
 		self physicslaunch((0, 0, 1), vectorscale((1, 1, 1), 5));
 		self thread updateretrievetrigger();

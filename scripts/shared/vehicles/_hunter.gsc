@@ -321,7 +321,7 @@ function kill_drones()
 	self endon(#"death");
 	foreach(var_1c0bd7aa, drone in self.dronesowned)
 	{
-		if(isalive(drone) && distance2dsquared(self.origin, drone.origin) < 80 * 80)
+		if(isalive(drone) && distance2dsquared(self.origin, drone.origin) < (80 * 80))
 		{
 			damageorigin = self.origin + (0, 0, 1);
 			drone finishvehicleradiusdamage(self.death_info.attacker, self.death_info.attacker, 32000, 32000, 10, 0, "MOD_EXPLOSIVE", level.weaponnone, damageorigin, 400, -1, (0, 0, 1), 0);
@@ -630,13 +630,13 @@ function state_strafe_update(params)
 	self endon(#"change_state");
 	self endon(#"death");
 	self clearvehgoalpos();
-	distancetotarget = 0.5 * self.settings.engagementdistmin + self.settings.engagementdistmax;
-	target = self.origin + anglestoforward(self.angles) * distancetotarget;
+	distancetotarget = 0.5 * (self.settings.engagementdistmin + self.settings.engagementdistmax);
+	target = self.origin + (anglestoforward(self.angles) * distancetotarget);
 	if(isdefined(self.enemy))
 	{
 		distancetotarget = distance(self.origin, self.enemy.origin);
 	}
-	distancethreshold = 500 + distancetotarget * 0.08;
+	distancethreshold = 500 + (distancetotarget * 0.08);
 	strafe_distance_attribute = ai::get_behavior_attribute("strafe_distance");
 	if(strafe_distance_attribute > 0)
 	{
@@ -654,7 +654,7 @@ function state_strafe_update(params)
 	foreach(var_c56cb562, point in queryresult.data)
 	{
 		distancetopointsqr = distancesquared(point.origin, self.origin);
-		if(distancetopointsqr < distancethreshold * 0.5)
+		if(distancetopointsqr < (distancethreshold * 0.5))
 		{
 			/#
 				if(!isdefined(point._scoredebug))
@@ -663,7 +663,7 @@ function state_strafe_update(params)
 				}
 				point._scoredebug[""] = distancethreshold * -1;
 			#/
-			point.score = point.score + distancethreshold * -1;
+			point.score = point.score + (distancethreshold * -1);
 		}
 		/#
 			if(!isdefined(point._scoredebug))
@@ -765,7 +765,7 @@ function getnextmoveposition_tactical(enemy)
 		return self.goalpos;
 	}
 	selfdisttoenemy = distance2d(self.origin, enemy.origin);
-	gooddist = 0.5 * self.settings.engagementdistmin + self.settings.engagementdistmax;
+	gooddist = 0.5 * (self.settings.engagementdistmin + self.settings.engagementdistmax);
 	tooclosedist = 0.8 * gooddist;
 	closedist = 1.2 * gooddist;
 	fardist = 3 * gooddist;
@@ -782,7 +782,7 @@ function getnextmoveposition_tactical(enemy)
 	self vehicle_ai::positionquery_filter_outofgoalanchor(queryresult, 200);
 	self vehicle_ai::positionquery_filter_engagementdist(queryresult, enemy, self.settings.engagementdistmin, self.settings.engagementdistmax);
 	self vehicle_ai::positionquery_filter_random(queryresult, 0, 30);
-	goalheight = enemy.origin[2] + 0.5 * self.settings.engagementheightmin + self.settings.engagementheightmax;
+	goalheight = enemy.origin[2] + (0.5 * (self.settings.engagementheightmin + self.settings.engagementheightmax));
 	foreach(var_c586cd95, point in queryresult.data)
 	{
 		if(!point.visibility)
@@ -803,7 +803,7 @@ function getnextmoveposition_tactical(enemy)
 			}
 			point._scoredebug[""] = point.distawayfromengagementarea * -1;
 		#/
-		point.score = point.score + point.distawayfromengagementarea * -1;
+		point.score = point.score + (point.distawayfromengagementarea * -1);
 		/#
 			if(!isdefined(point._scoredebug))
 			{
@@ -957,7 +957,7 @@ function movement_thread_stayindistance()
 			continue;
 		}
 		distancetogoalsq = distancesquared(self.current_pathto_pos, self.origin);
-		if(distancetogoalsq > 0.5 * self.settings.engagementdistmin + self.settings.engagementdistmax * 0.5 * self.settings.engagementdistmin + self.settings.engagementdistmax)
+		if(distancetogoalsq > (0.5 * (self.settings.engagementdistmin + self.settings.engagementdistmax)) * (0.5 * (self.settings.engagementdistmin + self.settings.engagementdistmax)))
 		{
 			self setspeed(self.settings.defaultmovespeed * 2);
 		}
@@ -985,7 +985,7 @@ function movement_thread_stayindistance()
 		enemy = self.enemy;
 		if(isdefined(enemy))
 		{
-			goalheight = enemy.origin[2] + 0.5 * self.settings.engagementheightmin + self.settings.engagementheightmax;
+			goalheight = enemy.origin[2] + (0.5 * (self.settings.engagementheightmin + self.settings.engagementheightmax));
 			distfrompreferredheight = abs(self.origin[2] - goalheight);
 			fardist = self.settings.engagementdistmax;
 			neardist = self.settings.engagementdistmin;
@@ -1040,9 +1040,9 @@ function delay_target_toenemy_thread(point, enemy, timetohit)
 	{
 		offset = enemy geteye() - enemy.origin;
 	}
-	while(gettime() < timestart + timetohit * 1000)
+	while(gettime() < (timestart + (timetohit * 1000)))
 	{
-		self.faketargetent.origin = lerpvector(point, enemy.origin + offset, gettime() - timestart / timetohit * 1000);
+		self.faketargetent.origin = lerpvector(point, enemy.origin + offset, (gettime() - timestart) / (timetohit * 1000));
 		wait(0.05);
 	}
 	self.faketargetent.origin = enemy.origin + offset;
@@ -1073,7 +1073,7 @@ function attack_thread_mainturret()
 			if(self vehcansee(enemy))
 			{
 				vectorfromenemy = vectornormalize((self.origin - enemy.origin[0], self.origin - enemy.origin[1], 0));
-				self thread delay_target_toenemy_thread(enemy.origin + vectorfromenemy * 300, enemy, 1.5);
+				self thread delay_target_toenemy_thread(enemy.origin + (vectorfromenemy * 300), enemy, 1.5);
 				self waittill(#"turret_on_target");
 				self vehicle_ai::fire_for_time(2 + randomfloat(0.8));
 				self clearturrettarget();
@@ -1154,14 +1154,14 @@ function attack_thread_rocket()
 			rightdir = anglestoright(anglestotarget);
 			randomrange = 30;
 			offset = [];
-			offset[0] = rightdir * -1 * randomrange * 2 + (randomfloatrange(randomrange * -1, randomrange), randomfloatrange(randomrange * -1, randomrange), 0);
-			offset[1] = rightdir * randomrange * 2 + (randomfloatrange(randomrange * -1, randomrange), randomfloatrange(randomrange * -1, randomrange), 0);
+			offset[0] = (((rightdir * -1) * randomrange) * 2) + (randomfloatrange(randomrange * -1, randomrange), randomfloatrange(randomrange * -1, randomrange), 0);
+			offset[1] = ((rightdir * randomrange) * 2) + (randomfloatrange(randomrange * -1, randomrange), randomfloatrange(randomrange * -1, randomrange), 0);
 			self hunter_fire_one_missile(0, target, offset[0]);
 			wait(0.5);
 			if(isdefined(enemy))
 			{
 				eye = self gettagorigin("tag_eye");
-				angles = vectortoangles(enemy.origin - eye) - self.angles;
+				angles = (vectortoangles(enemy.origin - eye)) - self.angles;
 				if(-30 < angles[0] && angles[0] < 60 && -70 < angles[1] && angles[1] < 70)
 				{
 					target = enemy.origin;
@@ -1340,7 +1340,7 @@ function is_point_in_view(point, do_trace)
 	}
 	scanner = self.frontscanner;
 	vector_to_point = point - scanner.origin;
-	in_view = lengthsquared(vector_to_point) <= 10000 * 10000;
+	in_view = lengthsquared(vector_to_point) <= (10000 * 10000);
 	if(in_view)
 	{
 		in_view = util::within_fov(scanner.origin, scanner.angles, point, cos(190));
@@ -1427,7 +1427,7 @@ function hunter_scanner_init()
 	self.frontscanner linkto(self, "tag_gunner_flash3");
 	self.frontscanner.owner = self;
 	self.frontscanner.hastargetent = 0;
-	self.frontscanner.sndscanningent = spawn("script_origin", self.frontscanner.origin + anglestoforward(self.angles) * 1000);
+	self.frontscanner.sndscanningent = spawn("script_origin", self.frontscanner.origin + (anglestoforward(self.angles) * 1000));
 	self.frontscanner.sndscanningent linkto(self.frontscanner);
 	wait(0.25);
 	if(0)
@@ -1516,7 +1516,7 @@ function hunter_frontscanning()
 		if(isdefined(self.inpain) && self.inpain)
 		{
 			wait(0.3);
-			offset = vectorscale((1, 0, 0), 50) + (math::randomsign() * randomfloatrange(1, 2) * pitchrange, math::randomsign() * randomfloatrange(1, 2) * yawrange, 0);
+			offset = vectorscale((1, 0, 0), 50) + ((math::randomsign() * randomfloatrange(1, 2)) * pitchrange, (math::randomsign() * randomfloatrange(1, 2)) * yawrange, 0);
 			scannerdirection = anglestoforward(self.angles + offset);
 		}
 		else if(!isdefined(self.enemy))
@@ -1552,7 +1552,7 @@ function hunter_frontscanning()
 		{
 			self.frontscanner.sndscanningent stoploopsound(1);
 		}
-		targetlocation = scannerorigin + scannerdirection * 1000;
+		targetlocation = scannerorigin + (scannerdirection * 1000);
 		self hunter_scanner_settargetposition(targetlocation);
 		/#
 			line(scannerorigin, self.frontscanner.targetpos, (0, 1, 0), 1, 1000);
@@ -1871,7 +1871,7 @@ function hunter_pain_for_time(time, velocitystablizeparam, rotationstablizeparam
 	if(!(isdefined(self.inpain) && self.inpain))
 	{
 		self.inpain = 1;
-		while(gettime() < self.painstarttime + time * 1000)
+		while(gettime() < (self.painstarttime + (time * 1000)))
 		{
 			self setvehvelocity(self.velocity * velocitystablizeparam);
 			self setangularvelocity(self getangularvelocity() * rotationstablizeparam);
@@ -1908,7 +1908,7 @@ function hunter_pain_small(eattacker, damagetype, hitpoint, hitdirection, hitloc
 	{
 		return;
 	}
-	self setvehvelocity(self.velocity + vectornormalize(hitdirection) * 20);
+	self setvehvelocity(self.velocity + (vectornormalize(hitdirection) * 20));
 	if(!(isdefined(self.inpain) && self.inpain))
 	{
 		vecright = anglestoright(self.angles);
@@ -1939,7 +1939,7 @@ function huntercallback_vehicledamage(einflictor, eattacker, idamage, idflags, s
 		return 0;
 	}
 	num_players = getplayers().size;
-	maxdamage = self.healthdefault * 0.35 - 0.025 * num_players;
+	maxdamage = self.healthdefault * (0.35 - (0.025 * num_players));
 	if(smeansofdeath !== "MOD_UNKNOWN" && idamage > maxdamage)
 	{
 		idamage = maxdamage;

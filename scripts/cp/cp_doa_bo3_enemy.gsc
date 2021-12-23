@@ -225,7 +225,7 @@ function function_a0d7d949(spawner, loc, def)
 	{
 		ai.spawner = spawner;
 		ai.team = "axis";
-		ai.health = def.var_83bae1f8 + 150 * level.doa.round_number;
+		ai.health = def.var_83bae1f8 + (150 * level.doa.round_number);
 		if(isdefined(def.maxhitpoints) && ai.health > def.maxhitpoints)
 		{
 			ai.health = def.maxhitpoints;
@@ -266,7 +266,7 @@ function function_bb3b0416(spawner, loc, def)
 	{
 		ai.spawner = spawner;
 		ai.team = "axis";
-		ai.health = def.var_83bae1f8 + 150 * level.doa.round_number;
+		ai.health = def.var_83bae1f8 + (150 * level.doa.round_number);
 		ai.meleedamage = 50;
 		if(isdefined(def.maxhitpoints) && ai.health > def.maxhitpoints)
 		{
@@ -299,7 +299,7 @@ function function_92159541(spawner, loc, def)
 	{
 		ai.spawner = spawner;
 		ai.team = "axis";
-		ai.health = def.var_83bae1f8 + 150 * level.doa.round_number;
+		ai.health = def.var_83bae1f8 + (150 * level.doa.round_number);
 		if(isdefined(def.maxhitpoints) && ai.health > def.maxhitpoints)
 		{
 			ai.health = def.maxhitpoints;
@@ -481,7 +481,7 @@ function function_7517e6b7(origin)
 	{
 		return;
 	}
-	hazard = spawn("script_model", origin + vectorscale((0, 0, -1), 120));
+	hazard = spawn("script_model", origin + (vectorscale((0, 0, -1), 120)));
 	level.doa.hazards[level.doa.hazards.size] = hazard;
 	hazard.targetname = "hazard";
 	hazard setmodel(level.doa.var_f6ba7ed2.model);
@@ -564,7 +564,7 @@ function function_5e86b6fa(spawner, loc, def)
 		ai.team = "axis";
 		if(isdefined(def))
 		{
-			ai.health = def.var_83bae1f8 + 150 * level.doa.round_number;
+			ai.health = def.var_83bae1f8 + (150 * level.doa.round_number);
 			if(isdefined(def.maxhitpoints) && ai.health > def.maxhitpoints)
 			{
 				ai.health = def.maxhitpoints;
@@ -605,7 +605,7 @@ function droptoground(origin, trailfx, var_b8f99479 = "turret_impact", var_96214
 	}
 	if(var_7c5f2b05)
 	{
-		dst = spawn("script_model", goalpoint + (randomfloatrange(-100, 100), randomfloatrange(-100, 100), 0) + vectorscale((0, 0, 1), 12));
+		dst = spawn("script_model", (goalpoint + (randomfloatrange(-100, 100), randomfloatrange(-100, 100), 0)) + vectorscale((0, 0, 1), 12));
 	}
 	else
 	{
@@ -738,7 +738,7 @@ function function_4d2a4a76(spawner, loc, def)
 	{
 		ai ai::set_behavior_attribute("rogue_allow_pregib", 0);
 		ai.spawner = spawner;
-		ai.health = def.var_83bae1f8 + 150 * level.doa.round_number;
+		ai.health = def.var_83bae1f8 + (150 * level.doa.round_number);
 		if(isdefined(def.maxhitpoints) && ai.health > def.maxhitpoints)
 		{
 			ai.health = def.maxhitpoints;
@@ -797,7 +797,7 @@ function function_fb051310(spawner, loc, def, droptoground = 1, hp, force = 0)
 		{
 			ai.health = 1000;
 		}
-		ai.health = ai.health + 150 * level.doa.round_number;
+		ai.health = ai.health + (150 * level.doa.round_number);
 		if(isdefined(hp))
 		{
 			ai.health = hp;
@@ -925,7 +925,7 @@ function function_1631202b(spawner, loc, def)
 		ai.team = "axis";
 		if(isdefined(def))
 		{
-			ai.health = def.var_83bae1f8 + 150 * level.doa.round_number;
+			ai.health = def.var_83bae1f8 + (150 * level.doa.round_number);
 			if(isdefined(def.maxhitpoints) && ai.health > def.maxhitpoints)
 			{
 				ai.health = def.maxhitpoints;
@@ -982,7 +982,7 @@ function function_ee2c4b95(spawner = level.doa.var_4720602e, loc, def)
 		ai.squelch_damage_overlay = 1;
 		ai.updatesight = 1;
 		ai.team = "axis";
-		ai.health = 2000 + 150 * level.doa.round_number;
+		ai.health = 2000 + (150 * level.doa.round_number);
 		goal = namespace_3ca3c537::function_2a9d778d();
 		ai setgoal(goal);
 	}
@@ -1061,7 +1061,7 @@ function function_deb6cf13()
 	{
 		self waittill(#"damage", damage);
 		/#
-			doa_utility::debugmsg("" + damage + "" + self.health);
+			doa_utility::debugmsg((("" + damage) + "") + self.health);
 		#/
 	}
 }
@@ -1102,7 +1102,7 @@ function function_197752f7(lifetime = 15)
 	self enableaimassist();
 	self thread function_8fe0340c();
 	self clientfield::set("heartbeat", 6);
-	lifetime = lifetime + randomint(lifetime >> 1);
+	lifetime = lifetime + (randomint(lifetime >> 1));
 	self thread function_3dc77ad7();
 	self thread function_e0df2a3e();
 	self util::waittill_any_timeout(lifetime, "hatchNow");
@@ -1140,7 +1140,7 @@ function function_8fe0340c()
 	{
 		level waittill(#"hash_842cebcb", origin);
 		distsq = distancesquared(self.origin, origin);
-		if(distsq < 72 * 72)
+		if(distsq < (72 * 72))
 		{
 			self notify(#"hash_c909cc4f");
 			return;
@@ -1192,7 +1192,7 @@ function function_7512c5ee(spawner, loc, def, forced = 0)
 	if(isdefined(ai))
 	{
 		ai.team = "axis";
-		ai.health = (isdefined(def) ? def.var_83bae1f8 : 2000) + 150 * level.doa.round_number;
+		ai.health = (isdefined(def) ? def.var_83bae1f8 : 2000) + (150 * level.doa.round_number);
 		if(isdefined(def) && isdefined(def.maxhitpoints) && ai.health > def.maxhitpoints)
 		{
 			ai.health = def.maxhitpoints;
@@ -1317,7 +1317,7 @@ function function_33525e11(spawner, loc, def)
 		ai.team = "axis";
 		if(isdefined(def))
 		{
-			ai.health = def.var_83bae1f8 + 150 * level.doa.round_number;
+			ai.health = def.var_83bae1f8 + (150 * level.doa.round_number);
 			if(isdefined(def.maxhitpoints) && ai.health > def.maxhitpoints)
 			{
 				ai.health = def.maxhitpoints;
@@ -1366,7 +1366,7 @@ function function_ce9bce16(spawner, loc, def)
 	if(isdefined(ai))
 	{
 		ai.team = "axis";
-		ai.health = def.var_83bae1f8 + 150 * level.doa.round_number;
+		ai.health = def.var_83bae1f8 + (150 * level.doa.round_number);
 		if(isdefined(def.maxhitpoints) && ai.health > def.maxhitpoints)
 		{
 			ai.health = def.maxhitpoints;
@@ -1404,7 +1404,7 @@ function function_b9980eda(spawner, loc, def, teleport = 1)
 		ai.team = "axis";
 		if(isdefined(def))
 		{
-			ai.health = def.var_83bae1f8 + 150 * level.doa.round_number;
+			ai.health = def.var_83bae1f8 + (150 * level.doa.round_number);
 			if(isdefined(def.maxhitpoints) && ai.health > def.maxhitpoints)
 			{
 				ai.health = def.maxhitpoints;
@@ -1412,7 +1412,7 @@ function function_b9980eda(spawner, loc, def, teleport = 1)
 		}
 		else
 		{
-			ai.health = 2000 + 150 * level.doa.round_number;
+			ai.health = 2000 + (150 * level.doa.round_number);
 		}
 		ai.maxhealth = ai.health;
 		ai.spawner = spawner;
@@ -1623,7 +1623,7 @@ function function_17de14f1(spawner, loc, def)
 		ai.var_ad61c13d = 1;
 		if(isdefined(def))
 		{
-			ai.health = def.var_83bae1f8 + 150 * level.doa.round_number;
+			ai.health = def.var_83bae1f8 + (150 * level.doa.round_number);
 			if(isdefined(def.maxhitpoints) && ai.health > def.maxhitpoints)
 			{
 				ai.health = def.maxhitpoints;
@@ -1683,7 +1683,7 @@ function function_45849d81(spawner, loc, def)
 		ai.team = "axis";
 		if(isdefined(def))
 		{
-			ai.health = def.var_83bae1f8 + 150 * level.doa.round_number;
+			ai.health = def.var_83bae1f8 + (150 * level.doa.round_number);
 			if(isdefined(def.maxhitpoints) && ai.health > def.maxhitpoints)
 			{
 				ai.health = def.maxhitpoints;
@@ -1939,7 +1939,7 @@ function function_c9e4e727(var_bbd280b0, asmstatename)
 	}
 	var_bbd280b0 thread function_57aea19e();
 	var_bbd280b0.var_8f12ed02 = undefined;
-	var_bbd280b0.nextspecial = gettime() + randomintrange(3, 8) * 1000;
+	var_bbd280b0.nextspecial = gettime() + (randomintrange(3, 8) * 1000);
 	animationstatenetworkutility::requeststate(var_bbd280b0, asmstatename);
 	return 5;
 }
@@ -2081,7 +2081,7 @@ function function_53b44cb7(spawner, loc, def, forced = 0)
 	{
 		ai.spawner = spawner;
 		ai.team = "axis";
-		ai.health = def.var_83bae1f8 + 150 * level.doa.round_number;
+		ai.health = def.var_83bae1f8 + (150 * level.doa.round_number);
 		if(isdefined(def.maxhitpoints) && ai.health > def.maxhitpoints)
 		{
 			ai.health = def.maxhitpoints;
@@ -2345,7 +2345,7 @@ private function function_c0147a11()
 	wait(0.05);
 	self endon(#"death");
 	self.takedamage = 1;
-	self.health = getplayers().size * 250000 + 1 + level.doa.var_da96f13c * 300000;
+	self.health = (getplayers().size * 250000) + ((1 + level.doa.var_da96f13c) * 300000);
 	self.maxhealth = self.health;
 	self.var_d3627554 = int(self.health * 0.8);
 	self.var_b220d777 = int(self.health * 0.5);
@@ -2393,7 +2393,7 @@ private function function_c0147a11()
 */
 function margwadamage(inflictor, attacker, damage, dflags, mod, weapon, point, dir, hitloc, offsettime, boneindex, modelindex)
 {
-	if(self.health >= self.var_d3627554 && self.health - damage < self.var_d3627554)
+	if(self.health >= self.var_d3627554 && (self.health - damage) < self.var_d3627554)
 	{
 		self notify(#"hash_2f07c48c");
 		modelhit = "c_zom_margwa_chunks_le";
@@ -2408,7 +2408,7 @@ function margwadamage(inflictor, attacker, damage, dflags, mod, weapon, point, d
 		org setmodel("tag_origin");
 		level doa_pickups::function_3238133b("zombietron_heart", self.origin, 1, 1, 90);
 	}
-	else if(self.health >= self.var_b220d777 && self.health - damage < self.var_b220d777)
+	else if(self.health >= self.var_b220d777 && (self.health - damage) < self.var_b220d777)
 	{
 		self notify(#"hash_2f07c48c");
 		modelhit = "c_zom_margwa_chunks_ri";
@@ -2417,7 +2417,7 @@ function margwadamage(inflictor, attacker, damage, dflags, mod, weapon, point, d
 		org setmodel("tag_origin");
 		level doa_pickups::function_3238133b("zombietron_heart", self.origin, 1, 1, 90);
 	}
-	else if(self.health >= self.var_e6ea564a && self.health - damage < self.var_e6ea564a)
+	else if(self.health >= self.var_e6ea564a && (self.health - damage) < self.var_e6ea564a)
 	{
 		self notify(#"hash_2f07c48c");
 		modelhit = "c_zom_margwa_chunks_mid";

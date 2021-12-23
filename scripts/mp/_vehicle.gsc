@@ -464,7 +464,7 @@ function manage_vehicles()
 		}
 	}
 	level.vehicles_list = newarray;
-	vehiclestodelete = level.vehicles_list.size + 1 - max_vehicles;
+	vehiclestodelete = (level.vehicles_list.size + 1) - max_vehicles;
 	if(vehiclestodelete > 0)
 	{
 		newarray = [];
@@ -510,7 +510,7 @@ function init_vehicle()
 	{
 		self.maxhealth = getdvarint("scr_veh_health_tank");
 		/#
-			println("" + self.vehicletype + "");
+			println(("" + self.vehicletype) + "");
 		#/
 	}
 	self.health = self.maxhealth;
@@ -935,7 +935,7 @@ function wait_until_severely_damaged()
 		health_percentage = self.health / self.initial_state.health;
 		if(isdefined(level.k_severe_damage_health_percentage))
 		{
-			self cleanup_debug_print("Damage Test: Still healthy - (" + health_percentage + " >= " + level.k_severe_damage_health_percentage + ") and working treads");
+			self cleanup_debug_print(((("Damage Test: Still healthy - (") + health_percentage) + (" >= ") + level.k_severe_damage_health_percentage) + ") and working treads");
 		}
 		else
 		{
@@ -961,7 +961,7 @@ function wait_until_severely_damaged()
 */
 function get_random_cleanup_wait_time(state)
 {
-	varnameprefix = "scr_veh_" + state + "_cleanuptime";
+	varnameprefix = ("scr_veh_" + state) + "_cleanuptime";
 	mintime = getdvarfloat(varnameprefix + "min");
 	maxtime = getdvarfloat(varnameprefix + "max");
 	if(maxtime > mintime)
@@ -995,7 +995,7 @@ function do_alive_cleanup_wait(test_name)
 		damagefraction = 0;
 		if(self is_vehicle())
 		{
-			damagefraction = self.initial_state.health - self.health / self.initial_state.health;
+			damagefraction = (self.initial_state.health - self.health) / self.initial_state.health;
 		}
 		else
 		{
@@ -1012,15 +1012,15 @@ function do_alive_cleanup_wait(test_name)
 		}
 		else
 		{
-			dydx = factor_min - factor_max / curve_end - curve_begin;
-			damagefactor = factor_max + damagefraction - curve_begin * dydx;
+			dydx = (factor_min - factor_max) / (curve_end - curve_begin);
+			damagefactor = factor_max + ((damagefraction - curve_begin) * dydx);
 		}
 		totalsecstowait = initialrandomwaitseconds * damagefactor;
 		if(secondswaited >= totalsecstowait)
 		{
 			break;
 		}
-		self cleanup_debug_print(test_name + ": Waiting " + totalsecstowait - secondswaited + "s");
+		self cleanup_debug_print((test_name + ": Waiting ") + (totalsecstowait - secondswaited) + "s");
 		wait(seconds_per_iteration);
 		secondswaited = secondswaited + seconds_per_iteration;
 	}
@@ -1042,7 +1042,7 @@ function do_dead_cleanup_wait(test_name)
 	seconds_per_iteration = 1;
 	while(seconds_waited < total_secs_to_wait)
 	{
-		self cleanup_debug_print(test_name + ": Waiting " + total_secs_to_wait - seconds_waited + "s");
+		self cleanup_debug_print((test_name + ": Waiting ") + (total_secs_to_wait - seconds_waited) + "s");
 		wait(seconds_per_iteration);
 		seconds_waited = seconds_waited + seconds_per_iteration;
 	}
@@ -1070,7 +1070,7 @@ function cleanup(test_name, cleanup_dvar_name, cleanup_func)
 		}
 		keep_waiting = 0;
 		/#
-			self cleanup_debug_print("" + test_name + "" + cleanup_dvar_name + "");
+			self cleanup_debug_print(((("" + test_name) + "") + cleanup_dvar_name) + "");
 			wait(5);
 			keep_waiting = 1;
 		#/
@@ -1133,7 +1133,7 @@ function wait_for_vehicle_to_stop_outside_min_radius()
 		cutoffmph = getdvarfloat("scr_veh_cleanupmaxspeedmph");
 		if(speedmph > cutoffmph)
 		{
-			cleanup_debug_print("(" + maxwaittime - totalsecondswaited + "s) Speed: " + speedmph + ">" + cutoffmph);
+			cleanup_debug_print(((("(" + (maxwaittime - totalsecondswaited)) + "s) Speed: ") + speedmph) + (">") + cutoffmph);
 		}
 		else
 		{
@@ -1727,8 +1727,8 @@ function wait_for_unnoticeable_cleanup_opportunity()
 {
 	maxpreventdistancefeet = getdvarint("scr_veh_disappear_maxpreventdistancefeet");
 	maxpreventvisibilityfeet = getdvarint("scr_veh_disappear_maxpreventvisibilityfeet");
-	maxpreventdistanceinchessq = 144 * maxpreventdistancefeet * maxpreventdistancefeet;
-	maxpreventvisibilityinchessq = 144 * maxpreventvisibilityfeet * maxpreventvisibilityfeet;
+	maxpreventdistanceinchessq = (144 * maxpreventdistancefeet) * maxpreventdistancefeet;
+	maxpreventvisibilityinchessq = (144 * maxpreventvisibilityfeet) * maxpreventvisibilityfeet;
 	maxsecondstowait = getdvarfloat("scr_veh_disappear_maxwaittime");
 	iterationwaitseconds = 1;
 	secondswaited = 0;
@@ -1742,7 +1742,7 @@ function wait_for_unnoticeable_cleanup_opportunity()
 			distinchessq = distancesquared(self.origin, player.origin);
 			if(distinchessq < maxpreventdistanceinchessq)
 			{
-				self cleanup_debug_print("(" + maxsecondstowait - secondswaited + "s) Player too close: " + distinchessq + "<" + maxpreventdistanceinchessq);
+				self cleanup_debug_print(((("(" + (maxsecondstowait - secondswaited)) + "s) Player too close: ") + distinchessq) + ("<") + maxpreventdistanceinchessq);
 				oktocleanup = 0;
 				continue;
 			}
@@ -1751,7 +1751,7 @@ function wait_for_unnoticeable_cleanup_opportunity()
 				vehiclevisibilityfromplayer = self sightconetrace(player.origin, player, anglestoforward(player.angles));
 				if(vehiclevisibilityfromplayer > 0)
 				{
-					self cleanup_debug_print("(" + maxsecondstowait - secondswaited + "s) Player can see");
+					self cleanup_debug_print(("(" + (maxsecondstowait - secondswaited)) + "s) Player can see");
 					oktocleanup = 0;
 				}
 			}
@@ -2351,7 +2351,7 @@ function performvehicleprespawn(veh_spawner_id, veh_name, origin, angles, spawn_
 	kill_overlap_time = 0.1;
 	wait_before_kill = fx_prespawn_time - kill_overlap_time;
 	wait(wait_before_kill);
-	kill_duration_ms = kill_overlap_time * 2 * 1000;
+	kill_duration_ms = (kill_overlap_time * 2) * 1000;
 	level thread kill_any_touching(kill_trigger, kill_duration_ms);
 	wait(kill_overlap_time);
 }

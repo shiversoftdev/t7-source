@@ -62,9 +62,9 @@ function main()
 	level thread function_8d1c7be1();
 	level thread amb_0_zombie();
 	var_3a067a8d = struct::get_array("trap_electric", "targetname");
-	foreach(var_882cee42, var_fdce40e2 in var_3a067a8d)
+	foreach(var_882cee42, s_trap in var_3a067a8d)
 	{
-		e_trap = getent(var_fdce40e2.script_noteworthy, "target");
+		e_trap = getent(s_trap.script_noteworthy, "target");
 		e_trap thread function_57a1070b();
 	}
 	level thread function_71554606();
@@ -242,14 +242,14 @@ function function_1da885f0()
 	while(true)
 	{
 		level waittill(#"hash_9b53c751", e_player);
-		var_c661f4ef = level.var_2a0600f - 1;
-		if(var_c661f4ef < 0)
+		n_variant = level.var_2a0600f - 1;
+		if(n_variant < 0)
 		{
-			var_c661f4ef = 0;
+			n_variant = 0;
 		}
 		if(isdefined(e_player))
 		{
-			e_player thread zm_audio::create_and_play_dialog("eggs", "meteors", var_c661f4ef);
+			e_player thread zm_audio::create_and_play_dialog("eggs", "meteors", n_variant);
 		}
 	}
 }
@@ -428,9 +428,9 @@ function function_57a1070b()
 	Parameters: 2
 	Flags: Linked
 */
-function function_448d83df(trap, var_cab8c90c)
+function function_448d83df(trap, b_start)
 {
-	if(!(isdefined(var_cab8c90c) && var_cab8c90c))
+	if(!(isdefined(b_start) && b_start))
 	{
 		return;
 	}

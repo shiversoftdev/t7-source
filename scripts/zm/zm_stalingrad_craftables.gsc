@@ -33,9 +33,9 @@ function include_craftables()
 	level.craftable_piece_swap_allowed = 0;
 	shared_pieces = getnumexpectedplayers() == 1;
 	craftable_name = "dragonride";
-	var_67638a1e = zm_craftables::generate_zombie_craftable_piece(craftable_name, "part_transmitter", 64, 64, 0, undefined, &function_6545e739, undefined, &function_7de936c2, undefined, undefined, undefined, "dragonride" + "_" + "part_transmitter", 1, undefined, undefined, &"ZM_STALINGRAD_DRAGONRIDE_TRANSMITTER", 1);
-	var_a4054f7d = zm_craftables::generate_zombie_craftable_piece(craftable_name, "part_codes", 64, 64, 0, undefined, &function_6545e739, undefined, &function_7de936c2, undefined, undefined, undefined, "dragonride" + "_" + "part_codes", 1, undefined, undefined, &"ZM_STALINGRAD_DRAGONRIDE_CODES", 1);
-	var_a9ad06c5 = zm_craftables::generate_zombie_craftable_piece(craftable_name, "part_map", 64, 64, 0, undefined, &function_6545e739, undefined, &function_7de936c2, undefined, undefined, undefined, "dragonride" + "_" + "part_map", 1, undefined, undefined, &"ZM_STALINGRAD_DRAGONRIDE_MAP", 1);
+	var_67638a1e = zm_craftables::generate_zombie_craftable_piece(craftable_name, "part_transmitter", 64, 64, 0, undefined, &function_6545e739, undefined, &function_7de936c2, undefined, undefined, undefined, ("dragonride" + "_") + "part_transmitter", 1, undefined, undefined, &"ZM_STALINGRAD_DRAGONRIDE_TRANSMITTER", 1);
+	var_a4054f7d = zm_craftables::generate_zombie_craftable_piece(craftable_name, "part_codes", 64, 64, 0, undefined, &function_6545e739, undefined, &function_7de936c2, undefined, undefined, undefined, ("dragonride" + "_") + "part_codes", 1, undefined, undefined, &"ZM_STALINGRAD_DRAGONRIDE_CODES", 1);
+	var_a9ad06c5 = zm_craftables::generate_zombie_craftable_piece(craftable_name, "part_map", 64, 64, 0, undefined, &function_6545e739, undefined, &function_7de936c2, undefined, undefined, undefined, ("dragonride" + "_") + "part_map", 1, undefined, undefined, &"ZM_STALINGRAD_DRAGONRIDE_MAP", 1);
 	var_67638a1e.client_field_state = undefined;
 	var_a4054f7d.client_field_state = undefined;
 	var_a9ad06c5.client_field_state = undefined;
@@ -46,9 +46,9 @@ function include_craftables()
 	dragonride zm_craftables::add_craftable_piece(var_a9ad06c5, "tag_dragon_network_console_part03_socket");
 	dragonride.triggerthink = &function_16bbd78d;
 	zm_craftables::include_zombie_craftable(dragonride);
-	level flag::init(craftable_name + "_" + "part_transmitter" + "_found");
-	level flag::init(craftable_name + "_" + "part_codes" + "_found");
-	level flag::init(craftable_name + "_" + "part_map" + "_found");
+	level flag::init(((craftable_name + "_") + "part_transmitter") + "_found");
+	level flag::init(((craftable_name + "_") + "part_codes") + "_found");
+	level flag::init(((craftable_name + "_") + "part_map") + "_found");
 	level flag::init("dragonride_crafted");
 }
 
@@ -95,9 +95,9 @@ function init_craftables()
 function register_clientfields()
 {
 	shared_bits = 1;
-	registerclientfield("world", "dragonride" + "_" + "part_transmitter", 12000, shared_bits, "int", undefined, 0);
-	registerclientfield("world", "dragonride" + "_" + "part_codes", 12000, shared_bits, "int", undefined, 0);
-	registerclientfield("world", "dragonride" + "_" + "part_map", 12000, shared_bits, "int", undefined, 0);
+	registerclientfield("world", ("dragonride" + "_") + "part_transmitter", 12000, shared_bits, "int", undefined, 0);
+	registerclientfield("world", ("dragonride" + "_") + "part_codes", 12000, shared_bits, "int", undefined, 0);
+	registerclientfield("world", ("dragonride" + "_") + "part_map", 12000, shared_bits, "int", undefined, 0);
 	clientfield::register("toplayer", "ZMUI_DRAGONRIDE_PART_PICKUP", 12000, 1, "int");
 	clientfield::register("toplayer", "ZMUI_DRAGONRIDE_CRAFTED", 12000, 1, "int");
 	clientfield::register("clientuimodel", "zmInventory.widget_dragonride_parts", 12000, 1, "int");
@@ -114,12 +114,12 @@ function register_clientfields()
 */
 function function_6545e739(player)
 {
-	level flag::set(self.craftablename + "_" + self.piecename + "_found");
+	level flag::set(((self.craftablename + "_") + self.piecename) + "_found");
 	level notify(#"hash_8d3f0071");
 	level.var_583e4a97.var_365bcb3c++;
 	if(isdefined(level.var_583e4a97.s_radio))
 	{
-		level.var_583e4a97.s_radio.var_c2733dc7 = 1;
+		level.var_583e4a97.s_radio.b_used = 1;
 	}
 	str_piece = self.piecename;
 	foreach(var_2b851d38, e_player in level.players)
@@ -281,7 +281,7 @@ function function_d7eb8f21()
 		{
 			var_4c5a66ad = 5;
 		}
-		str_vo_line = "vox_plr_" + e_who.characterindex + "_dragon_shield_acquire_" + randomint(var_4c5a66ad);
+		str_vo_line = (("vox_plr_" + e_who.characterindex) + "_dragon_shield_acquire_") + randomint(var_4c5a66ad);
 		e_who zm_stalingrad_vo::function_897246e4(str_vo_line);
 	}
 }

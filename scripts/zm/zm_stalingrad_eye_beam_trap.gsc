@@ -214,7 +214,7 @@ function function_8bc8cc13(var_f2bd831, var_9bafc533)
 			}
 		}
 		wait(0.25);
-		n_total_time = gettime() - n_start_time / 1000;
+		n_total_time = (gettime() - n_start_time) / 1000;
 	}
 	if(isdefined(var_f2bd831))
 	{
@@ -285,7 +285,7 @@ function function_6009178e(e_kill_zone)
 	while(zm_utility::is_player_valid(self) && self istouching(e_kill_zone))
 	{
 		n_cur_time = gettime();
-		if(!isdefined(self.var_6850f846) || n_cur_time - self.var_6850f846 > 200)
+		if(!isdefined(self.var_6850f846) || (n_cur_time - self.var_6850f846) > 200)
 		{
 			self.var_6850f846 = n_cur_time;
 			self playrumbleonentity("damage_heavy");

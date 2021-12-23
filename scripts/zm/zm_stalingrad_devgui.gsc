@@ -744,7 +744,7 @@ function function_4be43f4d()
 function function_354ff582()
 {
 	/#
-		level clientfield::set("", int(level.time - level.n_gameplay_start_time + 500 / 1000));
+		level clientfield::set("", int(((level.time - level.n_gameplay_start_time) + 500) / 1000));
 		level clientfield::set("", level.round_number);
 	#/
 }
@@ -761,7 +761,7 @@ function function_354ff582()
 function function_f0aaa402()
 {
 	/#
-		level clientfield::set("", int(level.time - level.n_gameplay_start_time + 500 / 1000));
+		level clientfield::set("", int(((level.time - level.n_gameplay_start_time) + 500) / 1000));
 	#/
 }
 
@@ -777,7 +777,7 @@ function function_f0aaa402()
 function function_b221d46()
 {
 	/#
-		level clientfield::set("", int(level.time - level.n_gameplay_start_time + 500 / 1000));
+		level clientfield::set("", int(((level.time - level.n_gameplay_start_time) + 500) / 1000));
 	#/
 }
 

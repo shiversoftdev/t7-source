@@ -166,14 +166,14 @@ private function humangibkilledoverride(inflictor, attacker, damage, meansofdeat
 		if(isdefined(inflictor))
 		{
 			isdirectexplosive = isinarray(array("MOD_GRENADE", "MOD_GRENADE_SPLASH", "MOD_PROJECTILE", "MOD_PROJECTILE_SPLASH", "MOD_EXPLOSIVE"), meansofdeath);
-			iscloseexplosive = distancesquared(inflictor.origin, entity.origin) <= 60 * 60;
+			iscloseexplosive = distancesquared(inflictor.origin, entity.origin) <= (60 * 60);
 			if(isdirectexplosive && iscloseexplosive)
 			{
 				gibserverutils::annihilate(entity);
 			}
 		}
 	}
-	if(forcegibbing || isexplosive || (isdefined(level.__ai_forcegibs) && level.__ai_forcegibs) || (weapon.dogibbing && attackerdistance <= weapon.maxgibdistance * weapon.maxgibdistance))
+	if(forcegibbing || isexplosive || (isdefined(level.__ai_forcegibs) && level.__ai_forcegibs) || (weapon.dogibbing && attackerdistance <= (weapon.maxgibdistance * weapon.maxgibdistance)))
 	{
 		gibserverutils::togglespawngibs(entity, 1);
 		destructserverutils::togglespawngibs(entity, 1);

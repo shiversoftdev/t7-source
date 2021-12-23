@@ -131,7 +131,7 @@ function function_97181777(bottle)
 		right = anglestoright(angles);
 		up = anglestoup(angles);
 		angles = angles + vectorscale((0, 0, 1), 180);
-		offset = forward * 1.6 + right * -1.2 + up * 11;
+		offset = (forward * 1.6) + (right * -1.2) + (up * 11);
 		bottle.origin = origin + offset;
 		bottle.angles = angles;
 		wait(0.016);
@@ -337,12 +337,12 @@ function function_66f3947f(n_local_client, n_val_old, n_val_new, b_ent_new, b_in
 	self endon(#"entityshutdown");
 	if(n_val_new)
 	{
-		self.var_9fa8c7a2 = playfxontag(n_local_client, level._effect["nikolai_raps_trail"], self, "tag_body");
+		self.fx_trail = playfxontag(n_local_client, level._effect["nikolai_raps_trail"], self, "tag_body");
 		self playsound(0, "wpn_nikolaibot_raps_launch");
 	}
-	else if(isdefined(self.var_9fa8c7a2))
+	else if(isdefined(self.fx_trail))
 	{
-		stopfx(n_local_client, self.var_9fa8c7a2);
+		stopfx(n_local_client, self.fx_trail);
 	}
 }
 

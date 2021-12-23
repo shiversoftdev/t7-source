@@ -989,7 +989,7 @@ function water_spout_push()
 	while(true)
 	{
 		self waittill(#"trigger", player);
-		if(!player isonground() && isdefined(player.last_air_push_time) && gettime() - player.last_air_push_time < 1000)
+		if(!player isonground() && isdefined(player.last_air_push_time) && (gettime() - player.last_air_push_time) < 1000)
 		{
 			continue;
 		}
@@ -998,13 +998,13 @@ function water_spout_push()
 		{
 			continue;
 		}
-		if(player issprinting() && n_distance > v_length * 0.4)
+		if(player issprinting() && n_distance > (v_length * 0.4))
 		{
 			continue;
 		}
 		n_push_strength = mapfloat(0, v_length, 80, 0, n_distance);
 		v_player_velocity = player getvelocity();
-		player setvelocity(v_player_velocity + v_dir * n_push_strength);
+		player setvelocity(v_player_velocity + (v_dir * n_push_strength));
 		if(!player isonground())
 		{
 			player.last_air_push_time = gettime();
@@ -1235,7 +1235,7 @@ function play_water_teleport_fx()
 */
 function stop_water_teleport_fx(a_ents)
 {
-	while(gettime() - level.var_5580212f < 1000)
+	while((gettime() - level.var_5580212f) < 1000)
 	{
 		wait(0.1);
 	}

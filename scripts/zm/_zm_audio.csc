@@ -266,8 +266,8 @@ function playerexert(localclientnum, exert)
 */
 function sndvonotifydtp(localclientnum, notifystring)
 {
-	level notify("kill_sndVoNotifyDTP" + localclientnum + notifystring);
-	level endon("kill_sndVoNotifyDTP" + localclientnum + notifystring);
+	level notify(("kill_sndVoNotifyDTP" + localclientnum) + notifystring);
+	level endon(("kill_sndVoNotifyDTP" + localclientnum) + notifystring);
 	player = undefined;
 	while(!isdefined(player))
 	{
@@ -343,8 +343,8 @@ function sndmeleeswipe(localclientnum, notifystring)
 */
 function sndvonotifyplain(localclientnum, notifystring)
 {
-	level notify("kill_sndVoNotifyPlain" + localclientnum + notifystring);
-	level endon("kill_sndVoNotifyPlain" + localclientnum + notifystring);
+	level notify(("kill_sndVoNotifyPlain" + localclientnum) + notifystring);
+	level endon(("kill_sndVoNotifyPlain" + localclientnum) + notifystring);
 	player = undefined;
 	while(!isdefined(player))
 	{

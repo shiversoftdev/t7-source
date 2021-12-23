@@ -148,13 +148,13 @@ function thrasherprocessfootstep(localclientnum, pos, surface, notetrack, bone)
 	{
 		return;
 	}
-	n_scale = n_thrasher_dist - n_dist / n_thrasher_dist;
+	n_scale = (n_thrasher_dist - n_dist) / n_thrasher_dist;
 	if(n_scale > 1 || n_scale < 0 || n_scale <= 0.01)
 	{
 		return;
 	}
 	fx = playfxontag(localclientnum, level._effect["fx_mech_foot_step"], self, bone);
-	if(isdefined(e_player.thrasherlastfootstep) && e_player.thrasherlastfootstep + 400 > gettime())
+	if(isdefined(e_player.thrasherlastfootstep) && (e_player.thrasherlastfootstep + 400) > gettime())
 	{
 		return;
 	}
@@ -283,10 +283,8 @@ private function thrashersporeexplode(localclientnum, oldvalue, newvalue, bnewen
 	entity = self;
 	sporeclientfields = array(1, 2, 4);
 	sporetags = array("tag_spore_chest", "tag_spore_back", "tag_spore_leg");
-	~sporetags;
-	newsporesexploded = oldvalue ^ newvalue & oldvalue;
-	~newsporesexploded;
-	oldsporesinflated = oldvalue ^ newvalue & newvalue;
+	newsporesexploded = (oldvalue ^ newvalue) & (~oldvalue);
+	oldsporesinflated = (oldvalue ^ newvalue) & (~newvalue);
 	currentspore = sporeclientfields[0];
 	for(index = 0; index < array("tag_spore_chest", "tag_spore_back", "tag_spore_leg").size; index++)
 	{
@@ -339,7 +337,7 @@ private function thrashersporeimpact(localclientnum, oldvalue, newvalue, bnewent
 	#/
 	for(index = 0; index < sporeclientfields.size; index++)
 	{
-		if(fieldname == "thrasher_spore_impact" + sporeclientfields[index])
+		if(fieldname == ("thrasher_spore_impact" + sporeclientfields[index]))
 		{
 			sporetag = array("tag_spore_chest", "tag_spore_back", "tag_spore_leg")[index];
 			break;

@@ -219,13 +219,13 @@ function ondrop(player)
 	{
 		flagtime = int(gettime() - player.tdef_flagtime);
 		player addplayerstat("HOLDINGTEAMDEFENDERFLAG", flagtime);
-		if(flagtime / 100 / 60 < 1)
+		if(((flagtime / 100) / 60) < 1)
 		{
 			flagminutes = 0;
 		}
 		else
 		{
-			flagminutes = int(flagtime / 100 / 60);
+			flagminutes = int((flagtime / 100) / 60);
 		}
 		player addplayerstatwithgametype("DESTRUCTIONS", flagminutes);
 		player.tdef_flagtime = undefined;
@@ -384,13 +384,13 @@ function watchforendgame()
 		{
 			flagtime = int(gettime() - self.tdef_flagtime);
 			self addplayerstat("HOLDINGTEAMDEFENDERFLAG", flagtime);
-			if(flagtime / 100 / 60 < 1)
+			if(((flagtime / 100) / 60) < 1)
 			{
 				flagminutes = 0;
 			}
 			else
 			{
-				flagminutes = int(flagtime / 100 / 60);
+				flagminutes = int((flagtime / 100) / 60);
 			}
 			self addplayerstatwithgametype("DESTRUCTIONS", flagminutes);
 		}

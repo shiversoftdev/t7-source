@@ -128,7 +128,7 @@ function function_6fdcefe3(str_event, str_mod, str_hit_location, var_48d0b2fe, v
 	{
 		var_1fdfc3ef = zm_score::get_zombie_death_player_points();
 		var_2d175949 = self zm_score::player_add_points_kill_bonus(str_mod, str_hit_location, var_2f7fd5db);
-		var_1fdfc3ef = var_1fdfc3ef + var_2d175949 * 2;
+		var_1fdfc3ef = (var_1fdfc3ef + var_2d175949) * 2;
 		if(str_mod == "MOD_GRENADE" || str_mod == "MOD_GRENADE_SPLASH")
 		{
 			self zm_stats::increment_client_stat("grenade_kills");
@@ -661,7 +661,7 @@ function function_25561504()
 	else
 	{
 		var_4a50cb2a = level.var_6a6f912a;
-		trace = groundtrace(var_4a50cb2a + vectorscale((0, 0, 1), 100), var_4a50cb2a + vectorscale((0, 0, -1), 1000), 0, undefined);
+		trace = groundtrace(var_4a50cb2a + vectorscale((0, 0, 1), 100), var_4a50cb2a + (vectorscale((0, 0, -1), 1000)), 0, undefined);
 		var_4a50cb2a = trace["position"];
 		if(isdefined(var_4a50cb2a))
 		{
@@ -725,7 +725,7 @@ function get_favorite_enemy()
 */
 function function_a67ada8()
 {
-	level.var_f95eaac8 = 5500 + level.round_number * 100;
+	level.var_f95eaac8 = 5500 + (level.round_number * 100);
 	if(level.var_f95eaac8 < 5500)
 	{
 		level.var_f95eaac8 = 5500;
@@ -734,7 +734,7 @@ function function_a67ada8()
 	{
 		level.var_f95eaac8 = 15000;
 	}
-	level.var_f95eaac8 = int(level.var_f95eaac8 * 1 + 0.15 * level.players.size - 1);
+	level.var_f95eaac8 = int(level.var_f95eaac8 * (1 + (0.15 * (level.players.size - 1))));
 	level.razgunhealth = level.var_f95eaac8 * 0.15;
 	level.razhelmethealth = level.var_f95eaac8 * 0.3;
 	level.razleftshoulderarmorhealth = level.var_f95eaac8 * 0.25;
@@ -815,7 +815,7 @@ function function_4749ab89()
 	self thread function_f8080b7();
 	level thread zm_spawner::zombie_death_event(self);
 	self thread zm_spawner::enemy_death_detection();
-	self zm_spawner::zombie_history("zombie_raz_spawn_init -> Spawned = " + self.origin);
+	self zm_spawner::zombie_history(("zombie_raz_spawn_init -> Spawned = ") + self.origin);
 	if(isdefined(level.achievement_monitor_func))
 	{
 		self thread [[level.achievement_monitor_func]]();
@@ -1024,7 +1024,7 @@ function function_94372a17(inflictor, attacker, damage, dflags, mod, weapon, poi
 	{
 		dist_sq = distancesquared(attacker.origin, player.origin);
 		var_bfa346a2 = 16384;
-		var_a9914202 = 1 - dist_sq / var_bfa346a2;
+		var_a9914202 = 1 - (dist_sq / var_bfa346a2);
 		var_2882f9d = 35;
 		damage = var_2882f9d * var_a9914202;
 		damage = int(damage);

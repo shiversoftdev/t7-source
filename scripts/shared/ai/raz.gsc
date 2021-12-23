@@ -208,12 +208,12 @@ function findnodesservice(behaviortreeentity)
 		}
 		behaviortreeentity.entrance_nodes[behaviortreeentity.entrance_nodes.size] = node;
 		/#
-			assert(isdefined(node), "" + behaviortreeentity.find_flesh_struct_string + "");
+			assert(isdefined(node), ("" + behaviortreeentity.find_flesh_struct_string) + "");
 		#/
 		behaviortreeentity.first_node = node;
 		behaviortreeentity.goalradius = 80;
 		behaviortreeentity.mocomp_barricade_offset = getdvarint("raz_node_origin_offset", -22);
-		node_origin = node.origin + anglestoforward(node.angles) * behaviortreeentity.mocomp_barricade_offset;
+		node_origin = node.origin + (anglestoforward(node.angles) * behaviortreeentity.mocomp_barricade_offset);
 		behaviortreeentity setgoal(node_origin);
 		if(zm_behavior::zombieisatentrance(behaviortreeentity))
 		{
@@ -860,7 +860,7 @@ private function raztorpedolaunchdirection(forward_dir, torpedo_pos, torpedo_tar
 	}
 	plane_normal = vectorcross(forward_dir, vec_to_enemy_normal);
 	perpendicular_normal = vectorcross(plane_normal, forward_dir);
-	torpedo_dir = forward_dir * cos(max_angle) + perpendicular_normal * sin(max_angle);
+	torpedo_dir = (forward_dir * cos(max_angle)) + (perpendicular_normal * sin(max_angle));
 	return torpedo_dir;
 }
 
@@ -1279,9 +1279,9 @@ private function razapplytorpedodetonationpushtoplayers(torpedo_origin)
 			v_dir = (v_dir[0], v_dir[1], 0.1);
 			v_dir = vectornormalize(v_dir);
 			n_push_strength = getdvarint("raz_n_push_strength", 500);
-			n_push_strength = 200 + randomint(n_push_strength - 200);
+			n_push_strength = 200 + (randomint(n_push_strength - 200));
 			v_player_velocity = player getvelocity();
-			player setvelocity(v_player_velocity + v_dir * n_push_strength);
+			player setvelocity(v_player_velocity + (v_dir * n_push_strength));
 		}
 	}
 }
@@ -1445,7 +1445,7 @@ private function razgibzombiesonmelee()
 				continue;
 			}
 			distance2dsq = distance2dsquared(zombie.origin, self.origin);
-			if(distance2dsq > 90 * 90)
+			if(distance2dsq > (90 * 90))
 			{
 				continue;
 			}
@@ -1581,10 +1581,10 @@ private function razdamagecallback(inflictor, attacker, damage, dflags, mod, wea
 				{
 					post_hit_health = entity.health - damage;
 					gun_detach_damage = entity.maxhealth * 0.33;
-					post_hit_health_percent = post_hit_health - gun_detach_damage / entity.maxhealth;
+					post_hit_health_percent = (post_hit_health - gun_detach_damage) / entity.maxhealth;
 					if(post_hit_health_percent > 0.25)
 					{
-						return entity.health - entity.maxhealth * 0.25;
+						return entity.health - (entity.maxhealth * 0.25);
 					}
 					return gun_detach_damage;
 				}

@@ -471,7 +471,7 @@ function continue_draining_hero_weapon(w_weapon)
 		{
 			n_rate = w_weapon.gadget_power_usage_rate;
 		}
-		self.hero_power = self.hero_power - 0.05 * n_rate;
+		self.hero_power = self.hero_power - (0.05 * n_rate);
 		self.hero_power = math::clamp(self.hero_power, 0, 100);
 		if(self.hero_power != self.hero_power_prev)
 		{
@@ -562,7 +562,7 @@ function player_hero_power_event(ai_enemy)
 			{
 				perkfactor = getdvarfloat("gadgetPowerOverchargePerkScoreFactor");
 			}
-			self.hero_power = self.hero_power + perkfactor * ai_enemy.heroweapon_kill_power;
+			self.hero_power = self.hero_power + (perkfactor * ai_enemy.heroweapon_kill_power);
 			self.hero_power = math::clamp(self.hero_power, 0, 100);
 			if(self.hero_power != self.hero_power_prev)
 			{

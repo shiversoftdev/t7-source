@@ -216,7 +216,7 @@ function function_5ac3fada()
 	pos = randomintrange(0, 3);
 	if(pos == self.script_int)
 	{
-		pos = pos + 1 % 4;
+		pos = (pos + 1) % 4;
 	}
 	self rotatepitch(90 * pos, 0.01);
 	correct = 0;
@@ -226,7 +226,7 @@ function function_5ac3fada()
 		self playsound("evt_sq_bttp2_wheel_turn");
 		self rotatepitch(90, 0.25);
 		self waittill(#"rotatedone");
-		pos = pos + 1 % 4;
+		pos = (pos + 1) % 4;
 		if(pos == self.script_int)
 		{
 			level.var_64d74143++;

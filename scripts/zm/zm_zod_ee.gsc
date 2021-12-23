@@ -106,8 +106,8 @@ function __init__()
 	level flag::init("ee_book");
 	foreach(var_a6459b26, str_charname in var_9eb45ed3)
 	{
-		level flag::init("ee_keeper_" + str_charname + "_resurrected");
-		level flag::init("ee_keeper_" + str_charname + "_armed");
+		level flag::init(("ee_keeper_" + str_charname) + "_resurrected");
+		level flag::init(("ee_keeper_" + str_charname) + "_armed");
 	}
 	level flag::init("ee_boss_started");
 	level flag::init("ee_boss_defeated");
@@ -206,7 +206,7 @@ function function_189ed812()
 		for(i = 1; i < 5; i++)
 		{
 			str_charname = function_d93f551b(i);
-			var_91341fca = "ee_keeper_" + str_charname + "_state";
+			var_91341fca = ("ee_keeper_" + str_charname) + "_state";
 			level clientfield::set(var_91341fca, 8);
 			wait(0.1);
 		}
@@ -370,7 +370,7 @@ function function_2e77f7bf()
 		{
 			var_6aaeecbc = array(var_6aaeecbc);
 		}
-		var_6aaeecbc[var_6aaeecbc.size] = "ee_keeper_" + str_charname + "_resurrected";
+		var_6aaeecbc[var_6aaeecbc.size] = ("ee_keeper_" + str_charname) + "_resurrected";
 	}
 	level flag::wait_till_all(var_6aaeecbc);
 }
@@ -400,7 +400,7 @@ function function_db49b939()
 		{
 			var_62e5c0fb = array(var_62e5c0fb);
 		}
-		var_62e5c0fb[var_62e5c0fb.size] = "ee_keeper_" + str_charname + "_armed";
+		var_62e5c0fb[var_62e5c0fb.size] = ("ee_keeper_" + str_charname) + "_armed";
 		function_676d671(i + 1);
 	}
 	function_1e8f02dd();
@@ -483,9 +483,9 @@ function function_f0c43ca0()
 			for(i = 1; i < 5; i++)
 			{
 				str_charname = function_d93f551b(i);
-				var_91341fca = "ee_keeper_" + str_charname + "_state";
+				var_91341fca = ("ee_keeper_" + str_charname) + "_state";
 				level clientfield::set(var_91341fca, 4);
-				level flag::set("ee_keeper_" + str_charname + "_armed");
+				level flag::set(("ee_keeper_" + str_charname) + "_armed");
 				wait(0.1);
 			}
 			return;
@@ -759,7 +759,7 @@ function function_91c4dc69()
 	while(true)
 	{
 		var_565450eb = zombie_utility::get_current_zombie_count();
-		while(var_565450eb >= 10 || var_565450eb >= level.players.size * 5)
+		while(var_565450eb >= 10 || var_565450eb >= (level.players.size * 5))
 		{
 			wait(randomfloatrange(2, 4));
 			var_565450eb = zombie_utility::get_current_zombie_count();
@@ -1434,7 +1434,7 @@ function function_e186ed49(a_ents)
 	for(i = 1; i < 5; i++)
 	{
 		str_charname = function_d93f551b(i);
-		var_91341fca = "ee_keeper_" + str_charname + "_state";
+		var_91341fca = ("ee_keeper_" + str_charname) + "_state";
 		level clientfield::set(var_91341fca, 0);
 	}
 	level clientfield::set("ee_keeper_beam_state", 0);
@@ -1741,7 +1741,7 @@ function function_9190a90e(n_char_index)
 			continue;
 		}
 		var_fa9b3019 = level clientfield::get("ee_totem_state");
-		var_27b0f0e4 = level clientfield::get("ee_keeper_" + str_charname + "_state");
+		var_27b0f0e4 = level clientfield::get(("ee_keeper_" + str_charname) + "_state");
 		if(var_27b0f0e4 == 1 && var_fa9b3019 == 3)
 		{
 			function_b54f7960(player, n_char_index);
@@ -1801,7 +1801,7 @@ function function_b54f7960(player, n_char_index)
 		}
 	}
 	str_charname = function_d93f551b(n_char_index);
-	level clientfield::set("ee_keeper_" + str_charname + "_state", 2);
+	level clientfield::set(("ee_keeper_" + str_charname) + "_state", 2);
 	player playsound("zmb_zod_totem_place");
 	wait(5);
 	level function_8f4b6b20(n_char_index);
@@ -1885,7 +1885,7 @@ function function_3089f820(var_ee1ff130)
 	if(isdefined(var_ee1ff130))
 	{
 		str_name = function_d93f551b(var_ee1ff130);
-		level clientfield::set("ee_keeper_" + str_name + "_state", 1);
+		level clientfield::set(("ee_keeper_" + str_name) + "_state", 1);
 	}
 	players = level.activeplayers;
 	foreach(var_b1aff48c, player in players)
@@ -1916,7 +1916,7 @@ function function_5d546ced(var_ee1ff130)
 	if(isdefined(var_ee1ff130))
 	{
 		str_name = function_d93f551b(var_ee1ff130);
-		level clientfield::set("ee_keeper_" + str_name + "_state", 1);
+		level clientfield::set(("ee_keeper_" + str_name) + "_state", 1);
 	}
 	level function_e525a12(1);
 	level clientfield::set("ee_totem_state", 1);
@@ -1936,8 +1936,8 @@ function function_8f4b6b20(var_ee1ff130, var_dcdf1cd5 = 0)
 	level function_6f0edfa1();
 	level notify(#"ee_keeper_resurrected");
 	str_charname = function_d93f551b(var_ee1ff130);
-	level clientfield::set("ee_keeper_" + str_charname + "_state", 3);
-	level flag::set("ee_keeper_" + str_charname + "_resurrected");
+	level clientfield::set(("ee_keeper_" + str_charname) + "_state", 3);
+	level flag::set(("ee_keeper_" + str_charname) + "_resurrected");
 	if(var_dcdf1cd5)
 	{
 		level function_e525a12(0);
@@ -1988,7 +1988,7 @@ function function_676d671(n_char_index)
 	height = 128;
 	length = 128;
 	str_charname = function_d93f551b(n_char_index);
-	s_loc = struct::get("ee_keeper_8_" + n_char_index - 1, "targetname");
+	s_loc = struct::get("ee_keeper_8_" + (n_char_index - 1), "targetname");
 	s_loc.unitrigger_stub = spawnstruct();
 	s_loc.unitrigger_stub.origin = s_loc.origin;
 	s_loc.unitrigger_stub.angles = s_loc.angles;
@@ -2020,7 +2020,7 @@ function function_676d671(n_char_index)
 */
 function function_9207a201(player)
 {
-	var_91341fca = "ee_keeper_" + self.stub.str_charname + "_state";
+	var_91341fca = ("ee_keeper_" + self.stub.str_charname) + "_state";
 	var_fe2fb4b9 = level clientfield::get(var_91341fca);
 	var_a18af120 = 0;
 	var_39ec9ec2 = level clientfield::get("ee_quest_state");
@@ -2070,17 +2070,17 @@ function function_5eae8cbb()
 		{
 			continue;
 		}
-		var_27b0f0e4 = level clientfield::get("ee_keeper_" + self.stub.str_charname + "_state");
+		var_27b0f0e4 = level clientfield::get(("ee_keeper_" + self.stub.str_charname) + "_state");
 		if(var_27b0f0e4 === 3)
 		{
 			player zm_zod_sword::take_sword();
-			level clientfield::set("ee_keeper_" + self.stub.str_charname + "_state", 4);
-			level flag::set("ee_keeper_" + self.stub.str_charname + "_armed");
+			level clientfield::set(("ee_keeper_" + self.stub.str_charname) + "_state", 4);
+			level flag::set(("ee_keeper_" + self.stub.str_charname) + "_armed");
 		}
 		else if(var_27b0f0e4 === 6)
 		{
-			level clientfield::set("ee_keeper_" + self.stub.str_charname + "_state", 4);
-			level flag::set("ee_keeper_" + self.stub.str_charname + "_armed");
+			level clientfield::set(("ee_keeper_" + self.stub.str_charname) + "_state", 4);
+			level flag::set(("ee_keeper_" + self.stub.str_charname) + "_armed");
 		}
 		self.stub zm_unitrigger::run_visibility_function_for_all_triggers();
 		break;
@@ -2106,7 +2106,7 @@ function function_4bcb6826()
 		var_a74ccb30 = 1;
 		foreach(var_89f99442, str_charname in var_9eb45ed3)
 		{
-			var_587a4446 = level clientfield::get("ee_keeper_" + str_charname + "_state");
+			var_587a4446 = level clientfield::get(("ee_keeper_" + str_charname) + "_state");
 			if(var_587a4446 !== 4)
 			{
 				var_a74ccb30 = 0;
@@ -2120,7 +2120,7 @@ function function_4bcb6826()
 		wait(3);
 		foreach(var_f92fcfd3, str_charname in var_9eb45ed3)
 		{
-			level clientfield::set("ee_keeper_" + str_charname + "_state", 5);
+			level clientfield::set(("ee_keeper_" + str_charname) + "_state", 5);
 		}
 		level.var_dbc3a0ef.var_93dad597 playsound("zmb_zod_shadfight_shield_down");
 		wait(3);
@@ -2141,7 +2141,7 @@ function function_4bcb6826()
 		level.var_dbc3a0ef zm_zod_shadowman::function_a3821eb5(0.1, 4);
 		foreach(var_e78d576, str_charname in var_9eb45ed3)
 		{
-			level clientfield::set("ee_keeper_" + str_charname + "_state", 6);
+			level clientfield::set(("ee_keeper_" + str_charname) + "_state", 6);
 		}
 		level.var_df5409ea = level.var_df5409ea + 2;
 		level.var_dbc3a0ef thread zm_zod_shadowman::function_b6c7fd80();
@@ -2317,7 +2317,7 @@ function function_3fc4aca5()
 		{
 			zm_unitrigger::unregister_unitrigger(level.var_f86952c7["boss_1_" + str_charname]);
 		}
-		var_91341fca = "ee_keeper_" + str_charname + "_state";
+		var_91341fca = ("ee_keeper_" + str_charname) + "_state";
 		level clientfield::set(var_91341fca, 7);
 		wait(0.1);
 	}
@@ -2598,7 +2598,7 @@ function function_f016ad0d(trig_stub, player)
 		level thread function_4cc29f4f(player);
 		zm_zod_shadowman::function_e48af0db();
 		var_c9a88def = struct::get_array("cursetrap_point", "targetname");
-		var_96b4af2e = int(var_c9a88def.size * level.var_f47099f2 / 2);
+		var_96b4af2e = int((var_c9a88def.size * level.var_f47099f2) / 2);
 		level thread zm_zod_shadowman::function_f38a6a2a(var_96b4af2e);
 		trig_stub.b_taken = 1;
 		level.var_f47099f2++;
@@ -2682,7 +2682,7 @@ function function_832f1b2a()
 	var_9eb45ed3 = array("boxer", "detective", "femme", "magician");
 	foreach(var_d2807391, str_charname in var_9eb45ed3)
 	{
-		if(clientfield::get("ee_keeper_" + str_charname + "_state") >= 3)
+		if((clientfield::get(("ee_keeper_" + str_charname) + "_state")) >= 3)
 		{
 			var_fb88b1ef = var_fb88b1ef + 1;
 		}
@@ -2727,7 +2727,7 @@ function function_353871a(var_ee1ff130, owner)
 	self.owner = owner;
 	self setowner(owner);
 	var_9124cf71 = 0;
-	var_a62764b3 = 2400 + -1600 * level.activeplayers.size - 1 / 3;
+	var_a62764b3 = 2400 + -1600 * ((level.activeplayers.size - 1) / 3);
 	while(true)
 	{
 		self waittill(#"damage", amount, attacker, direction_vec, point, type, tagname, modelname, partname, weapon);
@@ -2823,7 +2823,7 @@ function function_877ea350()
 	while(true)
 	{
 		var_565450eb = zombie_utility::get_current_zombie_count();
-		while(var_565450eb >= 10 || var_565450eb >= level.players.size * 5)
+		while(var_565450eb >= 10 || var_565450eb >= (level.players.size * 5))
 		{
 			wait(randomfloatrange(2, 4));
 			var_565450eb = zombie_utility::get_current_zombie_count();
@@ -2909,7 +2909,7 @@ function function_737ebab()
 		while(!b_swarm_spawned)
 		{
 			n_wasps_alive = zm_ai_wasp::get_current_wasp_count();
-			while(n_wasps_alive >= 8 || n_wasps_alive >= level.players.size * 4)
+			while(n_wasps_alive >= 8 || n_wasps_alive >= (level.players.size * 4))
 			{
 				wait(randomfloatrange(2, 4));
 				n_wasps_alive = zm_ai_wasp::get_current_wasp_count();
@@ -2932,8 +2932,8 @@ function function_737ebab()
 				}
 			}
 			v_spawn_origin = spawn_point.origin;
-			v_ground = bullettrace(spawn_point.origin + (0, 0, 60), spawn_point.origin + (0, 0, 60) + vectorscale((0, 0, -1), 100000), 0, undefined)["position"];
-			if(distancesquared(v_ground, spawn_point.origin) < 60 * 60)
+			v_ground = bullettrace(spawn_point.origin + (0, 0, 60), (spawn_point.origin + (0, 0, 60)) + (vectorscale((0, 0, -1), 100000)), 0, undefined)["position"];
+			if(distancesquared(v_ground, spawn_point.origin) < (60 * 60))
 			{
 				v_spawn_origin = v_ground + (0, 0, 60);
 			}
@@ -3017,7 +3017,7 @@ function function_83bdd16b()
 	while(true)
 	{
 		n_raps_alive = zm_ai_raps::get_current_raps_count();
-		while(n_raps_alive >= 13 || n_raps_alive >= level.players.size * 4)
+		while(n_raps_alive >= 13 || n_raps_alive >= (level.players.size * 4))
 		{
 			wait(randomfloatrange(2, 4));
 			n_raps_alive = zm_ai_raps::get_current_raps_count();
@@ -3512,7 +3512,7 @@ function function_2a306df(n_val)
 			for(i = 1; i < 5; i++)
 			{
 				str_charname = function_d93f551b(i);
-				var_91341fca = "ee_keeper_" + str_charname + "_state";
+				var_91341fca = ("ee_keeper_" + str_charname) + "_state";
 				level clientfield::set(var_91341fca, 4);
 			}
 			break;
@@ -3523,7 +3523,7 @@ function function_2a306df(n_val)
 			for(i = 1; i < 5; i++)
 			{
 				str_charname = function_d93f551b(i);
-				var_91341fca = "ee_keeper_" + str_charname + "_state";
+				var_91341fca = ("ee_keeper_" + str_charname) + "_state";
 				level clientfield::set(var_91341fca, 5);
 			}
 			wait(3);
@@ -3687,7 +3687,7 @@ function function_7a0bffae(n_val)
 	for(i = 1; i < 5; i++)
 	{
 		str_charname = function_d93f551b(i);
-		var_27b0f0e4 = level clientfield::get("ee_keeper_" + str_charname + "_state");
+		var_27b0f0e4 = level clientfield::get(("ee_keeper_" + str_charname) + "_state");
 		if(var_27b0f0e4 == 3)
 		{
 			continue;
@@ -3714,7 +3714,7 @@ function function_54098545(n_val)
 	for(i = 1; i < 5; i++)
 	{
 		str_charname = function_d93f551b(i);
-		var_27b0f0e4 = level clientfield::get("ee_keeper_" + str_charname + "_state");
+		var_27b0f0e4 = level clientfield::get(("ee_keeper_" + str_charname) + "_state");
 		if(var_27b0f0e4 == 3)
 		{
 			continue;
@@ -3781,7 +3781,7 @@ function function_c1cc37db(n_val)
 		for(i = 1; i < 5; i++)
 		{
 			str_charname = function_d93f551b(i);
-			var_27b0f0e4 = level clientfield::get("ee_keeper_" + str_charname + "_state");
+			var_27b0f0e4 = level clientfield::get(("ee_keeper_" + str_charname) + "_state");
 			if(var_27b0f0e4 == 3)
 			{
 				continue;

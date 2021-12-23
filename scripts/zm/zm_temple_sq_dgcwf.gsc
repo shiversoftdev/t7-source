@@ -52,11 +52,11 @@ function plate_counter()
 	#/
 	while(true)
 	{
-		if(level._on_plate >= var_b4264aa6 - 1 && !level flag::get("dgcwf_on_plate"))
+		if(level._on_plate >= (var_b4264aa6 - 1) && !level flag::get("dgcwf_on_plate"))
 		{
 			level flag::set("dgcwf_on_plate");
 		}
-		else if(level flag::get("dgcwf_on_plate") && level._on_plate < var_b4264aa6 - 1)
+		else if(level flag::get("dgcwf_on_plate") && level._on_plate < (var_b4264aa6 - 1))
 		{
 			level flag::clear("dgcwf_on_plate");
 		}
@@ -280,7 +280,7 @@ function function_3ab2e3c3()
 	self endon(#"death");
 	self show();
 	self.on_pos = self.origin;
-	self.off_pos = self.on_pos - anglestoright(self.angles) * 36;
+	self.off_pos = self.on_pos - (anglestoright(self.angles) * 36);
 	self.origin = self.off_pos;
 	self.trigger triggerenable(0);
 	self.pressed = 0;

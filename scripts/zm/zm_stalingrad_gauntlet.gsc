@@ -74,7 +74,7 @@ function function_622ad391()
 	{
 		player clientfield::set_player_uimodel("zmInventory.progress_egg", 0.4);
 	}
-	level.var_de98e3ce.var_44e7a938 = 3 + 2 * zm_utility::get_number_of_valid_players();
+	level.var_de98e3ce.var_44e7a938 = 3 + (2 * zm_utility::get_number_of_valid_players());
 	level.var_de98e3ce.var_f22951fa = 0;
 	level thread function_e8c061f7();
 	level waittill(#"hash_68bf9f79");
@@ -82,7 +82,7 @@ function function_622ad391()
 	{
 		player clientfield::set_player_uimodel("zmInventory.progress_egg", 0.6);
 	}
-	level.var_de98e3ce.var_661a78ea = 3 + 2 * zm_utility::get_number_of_valid_players();
+	level.var_de98e3ce.var_661a78ea = 3 + (2 * zm_utility::get_number_of_valid_players());
 	level.var_de98e3ce.var_56c226f4 = 0;
 	level thread function_ba9bd748();
 	level waittill(#"hash_b227a45b");
@@ -90,7 +90,7 @@ function function_622ad391()
 	{
 		player clientfield::set_player_uimodel("zmInventory.progress_egg", 0.8);
 	}
-	level.var_de98e3ce.var_e97b0f0a = 3 + 2 * zm_utility::get_number_of_valid_players();
+	level.var_de98e3ce.var_e97b0f0a = 3 + (2 * zm_utility::get_number_of_valid_players());
 	level.var_de98e3ce.var_b57ab994 = 0;
 	level thread function_cf16e2bc();
 	level waittill(#"hash_9b46a273");
@@ -283,7 +283,7 @@ function function_48a9eab7()
 			e_player clientfield::increment_to_player("interact_rumble");
 			level flag::set("egg_placed_in_hazard");
 			self.stub.related_parent.var_a1914ebb = 1;
-			level.var_de98e3ce.var_d54b9ade.var_62ceb838 = util::spawn_model("p7_fxanim_zm_stal_dragon_incubator_egg_mod", self.stub.related_parent.origin + vectorscale((0, 0, -1), 40));
+			level.var_de98e3ce.var_d54b9ade.var_62ceb838 = util::spawn_model("p7_fxanim_zm_stal_dragon_incubator_egg_mod", self.stub.related_parent.origin + (vectorscale((0, 0, -1), 40)));
 			level thread function_d0ba871e();
 			level clientfield::set("force_stream_dragon_egg", 0);
 		}
@@ -594,7 +594,7 @@ function function_59a929b0(s_stub)
 {
 	var_734c1c5a = getent("dragon_incubator", "targetname");
 	var_734c1c5a thread scene::play("p7_fxanim_zm_stal_dragon_incubator_bundle");
-	level.var_de98e3ce.var_a6563820 = 7 + 6 * zm_utility::get_number_of_valid_players();
+	level.var_de98e3ce.var_a6563820 = 7 + (6 * zm_utility::get_number_of_valid_players());
 	level.var_c2c83bb6 = spawnstruct();
 	level.var_de98e3ce.var_d54b9ade = s_stub;
 	level.var_de98e3ce.var_312cd3bc = 1;
@@ -723,7 +723,7 @@ function function_dcc4fd22()
 			level thread function_77c54581();
 		}
 		/#
-			println("" + level.var_de98e3ce.var_179b5b71 + "" + level.var_de98e3ce.var_a6563820);
+			println((("" + level.var_de98e3ce.var_179b5b71) + "") + level.var_de98e3ce.var_a6563820);
 		#/
 	}
 }

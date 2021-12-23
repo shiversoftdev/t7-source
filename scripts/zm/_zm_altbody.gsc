@@ -476,7 +476,7 @@ private function function_d97ca744(name, trigger)
 		}
 		self zm_weapons::player_take_loadout(loadout);
 		/#
-			assert(self.get_player_weapon_limit == &function_9244ee8e);
+			assert(self.get_player_weapon_limit == (&function_9244ee8e));
 		#/
 		self.get_player_weapon_limit = undefined;
 		self resetanimations();

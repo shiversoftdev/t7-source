@@ -425,17 +425,17 @@ function function_8258d71c()
 	if(level flag::get("draconite_available"))
 	{
 		var_5a0c399b = getweapon("launcher_dragon_strike_upgraded");
-		var_7bf8ceb7 = 2;
+		n_max_ammo = 2;
 	}
 	else
 	{
 		var_5a0c399b = getweapon("launcher_dragon_strike");
-		var_7bf8ceb7 = 1;
+		n_max_ammo = 1;
 	}
 	self thread zm_placeable_mine::setup_for_player(var_5a0c399b, "hudItems.showDpadRight_DragonStrike");
 	self thread function_b8ea3482("zmInventory.widget_dragon_strike");
 	self zm_weapons::weapon_give(var_5a0c399b);
-	self setweaponammoclip(var_5a0c399b, var_7bf8ceb7);
+	self setweaponammoclip(var_5a0c399b, n_max_ammo);
 	self thread zm_equipment::show_hint_text(&"ZM_STALINGRAD_DRAGON_STRIKE_EQUIP");
 	self zm_audio::create_and_play_dialog("weapon_pickup", "controller");
 }
@@ -490,7 +490,7 @@ function function_93510b8b()
 	level flag::wait_till("dragon_strike_unlocked");
 	level flag::set("dragon_stage1_started");
 	zm_spawner::register_zombie_death_event_callback(&function_2e107eef);
-	level function_815a155e(20 + 10 * level.players.size);
+	level function_815a155e(20 + (10 * level.players.size));
 	zm_spawner::deregister_zombie_death_event_callback(&function_2e107eef);
 	level function_e6794c49();
 	level thread function_5cb61169();
@@ -502,7 +502,7 @@ function function_93510b8b()
 		level.var_d4286019 = 1;
 		level function_af4562b1();
 		zm_spawner::register_zombie_death_event_callback(&function_2e107eef);
-		level thread function_815a155e(15 + 5 * level.players.size);
+		level thread function_815a155e(15 + (5 * level.players.size));
 		level thread function_46c8b621();
 		level flag::wait_till("lockdown_active");
 		level flag::wait_till("lockdown_complete");

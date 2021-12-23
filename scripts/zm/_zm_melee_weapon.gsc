@@ -703,7 +703,7 @@ function melee_weapon_show(player)
 		yaw = weapon_yaw + 90;
 	}
 	self.og_origin = self.origin;
-	self.origin = self.origin + anglestoforward((0, yaw, 0)) * 8;
+	self.origin = self.origin + (anglestoforward((0, yaw, 0)) * 8);
 	wait(0.05);
 	self show();
 	zm_utility::play_sound_at_pos("weapon_show", self.origin, self);

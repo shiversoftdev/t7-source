@@ -136,7 +136,7 @@ function drone_pain_for_time(time, stablizeparam, restorelookpoint, weapon)
 	if(!(isdefined(self.inpain) && self.inpain) && isdefined(self.health) && self.health > 0)
 	{
 		self.inpain = 1;
-		while(gettime() < self.painstarttime + time * 1000)
+		while(gettime() < (self.painstarttime + (time * 1000)))
 		{
 			self setvehvelocity(self.velocity * stablizeparam);
 			self setangularvelocity(self getangularvelocity() * stablizeparam);
@@ -198,7 +198,7 @@ function sentineldamageoverride(einflictor, eattacker, idamage, idflags, smeanso
 	{
 		return 0;
 	}
-	emp_damage = self.healthdefault * 0.5 + 0.5;
+	emp_damage = (self.healthdefault * 0.5) + 0.5;
 	idamage = killstreaks::ondamageperweapon("sentinel", eattacker, idamage, idflags, smeansofdeath, weapon, self.maxhealth, &destroyed_cb, self.maxhealth * 0.4, &low_health_cb, emp_damage, undefined, 1, 1);
 	if(isdefined(eattacker) && isdefined(eattacker.team) && eattacker.team != self.team)
 	{
@@ -272,7 +272,7 @@ function calcspawnorigin(origin, angles)
 	for(i = 0; i < testangles.size; i++)
 	{
 		startpoint = origin + (0, 0, heightoffset);
-		endpoint = startpoint + vectorscale(anglestoforward((0, angles[1], 0) + testangles[i]), 70);
+		endpoint = startpoint + (vectorscale(anglestoforward((0, angles[1], 0) + testangles[i]), 70));
 		mask = 1 | 2;
 		trace = physicstrace(startpoint, endpoint, mins, maxs, self, mask);
 		if(isdefined(trace["entity"]) && isplayer(trace["entity"]))
@@ -359,7 +359,7 @@ function activatesentinel(killstreaktype)
 	sentinel.lowhealth = killstreak_bundles::get_low_health("sentinel");
 	sentinel.health = sentinel.maxhealth;
 	sentinel.hackedhealth = killstreak_bundles::get_hacked_health("sentinel");
-	sentinel.rocketdamage = sentinel.maxhealth / 1 + 1;
+	sentinel.rocketdamage = (sentinel.maxhealth / 1) + 1;
 	sentinel.playeddamaged = 0;
 	sentinel.treat_owner_damage_as_friendly_fire = 1;
 	sentinel.ignore_team_kills = 1;

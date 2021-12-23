@@ -183,7 +183,7 @@ function phrase_convert_to_cipher(str_phrase, str_key)
 			continue;
 		}
 		n_cipher_offset = alphabet_vals[cipher_letter];
-		n_ciphered_letter = n_original_letter + n_cipher_offset % alphabet.size;
+		n_ciphered_letter = (n_original_letter + n_cipher_offset) % alphabet.size;
 		encrypted_phrase[encrypted_phrase.size] = alphabet[n_ciphered_letter];
 		j++;
 	}
@@ -214,7 +214,7 @@ function light_show_morse(a_discs, message)
 				{
 					wait(0.2);
 				}
-				else if(letter_code[j] == "-")
+				else if(letter_code[j] == ("-"))
 				{
 					wait(1);
 				}

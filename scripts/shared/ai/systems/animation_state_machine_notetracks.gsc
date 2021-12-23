@@ -81,7 +81,7 @@ function registernotetrackhandlerfunction(notetrackname, notetrackfuncptr)
 		assert(isfunctionptr(notetrackfuncptr), "");
 	#/
 	/#
-		assert(!isdefined(level._notetrack_handler[notetrackname]), "" + notetrackname + "");
+		assert(!isdefined(level._notetrack_handler[notetrackname]), ("" + notetrackname) + "");
 	#/
 	level._notetrack_handler[notetrackname] = notetrackfuncptr;
 }

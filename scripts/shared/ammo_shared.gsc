@@ -49,8 +49,7 @@ function dropaiammo()
 	if(isdefined(droppedweapon))
 	{
 		droppedweapon thread ammo_pouch_think();
-		~droppedweapon;
-		droppedweapon setcontents(droppedweapon setcontents(0) & 32768 | 67108864 | 8388608 | 33554432);
+		droppedweapon setcontents(droppedweapon setcontents(0) & (~(((32768 | 67108864) | 8388608) | 33554432)));
 	}
 }
 
@@ -151,9 +150,9 @@ function ammo_pouch_think()
 		clip = clip * getdvarfloat("scavenger_clip_multiplier", 1);
 		clip = int(clip);
 		maxammo = weapon.maxammo;
-		if(stock < maxammo - clip * 3)
+		if(stock < (maxammo - (clip * 3)))
 		{
-			ammo = stock + clip * 3;
+			ammo = stock + (clip * 3);
 			player setweaponammostock(weapon, ammo);
 			continue;
 		}

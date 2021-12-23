@@ -101,7 +101,7 @@ function function_6eb27bd9(localclientnum, oldval, newval, bnewent, binitialsnap
 {
 	if(newval)
 	{
-		self.n_fx_id = playfx(localclientnum, level._effect["spider_pheromone"], self.origin + vectorscale((0, 0, -1), 100));
+		self.n_fx_id = playfx(localclientnum, level._effect["spider_pheromone"], self.origin + (vectorscale((0, 0, -1), 100)));
 	}
 	else if(isdefined(self.n_fx_id))
 	{

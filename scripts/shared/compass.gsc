@@ -61,12 +61,12 @@ function setupminimap(material)
 		if(mapaspectratio < requiredmapaspectratio)
 		{
 			incr = requiredmapaspectratio / mapaspectratio;
-			addvec = vecscale(west, westportion * incr - 1 * 0.5);
+			addvec = vecscale(west, (westportion * (incr - 1)) * 0.5);
 		}
 		else
 		{
 			incr = mapaspectratio / requiredmapaspectratio;
-			addvec = vecscale(north, northportion * incr - 1 * 0.5);
+			addvec = vecscale(north, (northportion * (incr - 1)) * 0.5);
 		}
 		northwest = northwest + addvec;
 		southeast = southeast - addvec;

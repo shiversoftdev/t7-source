@@ -52,7 +52,7 @@ function callback_hostmigration()
 	if(level.gameended)
 	{
 		/#
-			println("" + gettime() + "");
+			println(("" + gettime()) + "");
 		#/
 		return;
 	}

@@ -434,7 +434,7 @@ function firefly_check_for_collisions(target, move_to, time)
 	dir = vectornormalize(move_to - self.origin);
 	dist = distance(self.origin, move_to);
 	speed = dist / time;
-	delta = dir * speed * level.fireflies_collision_check_interval;
+	delta = dir * (speed * level.fireflies_collision_check_interval);
 	while(true)
 	{
 		if(!firefly_check_move(self.origin + delta, target))
@@ -460,7 +460,7 @@ function firefly_pod_rotated_point(degrees, radius, height)
 	angles = (0, degrees, 0);
 	forward = (radius, 0, 0);
 	point = rotatepoint(forward, angles);
-	return self.spawn_origin + point + (0, 0, height);
+	return (self.spawn_origin + point) + (0, 0, height);
 }
 
 /*
@@ -520,7 +520,7 @@ function firefly_spyrograph_patrol(degrees, increment, radius)
 {
 	self endon(#"death");
 	self endon(#"attacking");
-	current_degrees = randomint(int(360 / degrees)) * degrees;
+	current_degrees = (randomint(int(360 / degrees))) * degrees;
 	height_offset = 0;
 	while(true)
 	{
@@ -536,7 +536,7 @@ function firefly_spyrograph_patrol(degrees, increment, radius)
 		}
 		firefly_move(point, time);
 		wait(randomfloatrange(0.1, 0.3));
-		current_degrees = current_degrees + degrees * increment % 360;
+		current_degrees = (current_degrees + (degrees * increment)) % 360;
 	}
 }
 
@@ -803,11 +803,11 @@ function target_bread_crumbs_render(target)
 			previous_crumb = self.origin;
 			for(i = 0; i < self.target_breadcrumbs.size; i++)
 			{
-				if(self.target_breadcrumb_current_index + i > self.target_breadcrumb_last_added)
+				if((self.target_breadcrumb_current_index + i) > self.target_breadcrumb_last_added)
 				{
 					break;
 				}
-				crumb_index = self.target_breadcrumb_current_index + i % self.target_breadcrumbs.size;
+				crumb_index = (self.target_breadcrumb_current_index + i) % self.target_breadcrumbs.size;
 				crumb = self.target_breadcrumbs[crumb_index];
 				sphere(crumb, 2, (0, 1, 0), 1, 1, 10, self.debug_time);
 				if(i > 0)
@@ -854,9 +854,9 @@ function target_bread_crumbs(target)
 		if(distancesquared(potential_crumb_position, self.target_breadcrumbs[previous_crumb_index]) > minimum_delta_sqr)
 		{
 			self.target_breadcrumb_last_added++;
-			if(self.target_breadcrumb_last_added >= self.target_breadcrumb_current_index + self.max_crumbs)
+			if(self.target_breadcrumb_last_added >= (self.target_breadcrumb_current_index + self.max_crumbs))
 			{
-				self.target_breadcrumb_current_index = self.target_breadcrumb_last_added - self.max_crumbs + 1;
+				self.target_breadcrumb_current_index = (self.target_breadcrumb_last_added - self.max_crumbs) + 1;
 			}
 			self.target_breadcrumbs[self.target_breadcrumb_last_added % self.max_crumbs] = potential_crumb_position;
 		}
@@ -1024,7 +1024,7 @@ function firefly_pod_release_fireflies(attacker, target)
 	{
 		jumpheight = level.fireflies_spawn_height_wall;
 	}
-	explodepos = self.origin + jumpdir * jumpheight;
+	explodepos = self.origin + (jumpdir * jumpheight);
 	self.firefly_mover.spawn_origin = explodepos;
 	linked_to = self getlinkedent();
 	linked = linked_to === target;

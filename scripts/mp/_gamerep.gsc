@@ -291,18 +291,18 @@ function gamerepupdatepersistentplayerinformation()
 		timeplayed = 1;
 	}
 	game["gameRep"]["players"][name]["score"] = self.score;
-	game["gameRep"]["players"][name]["scorePerMin"] = int(game["gameRep"]["players"][name]["score"] / timeplayed / 60);
+	game["gameRep"]["players"][name]["scorePerMin"] = int(game["gameRep"]["players"][name]["score"] / (timeplayed / 60));
 	game["gameRep"]["players"][name]["kills"] = self.kills;
 	game["gameRep"]["players"][name]["deaths"] = self.deaths;
 	if(game["gameRep"]["players"][name]["deaths"] != 0)
 	{
-		game["gameRep"]["players"][name]["killDeathRatio"] = int(game["gameRep"]["players"][name]["kills"] / game["gameRep"]["players"][name]["deaths"] * 100);
+		game["gameRep"]["players"][name]["killDeathRatio"] = int((game["gameRep"]["players"][name]["kills"] / game["gameRep"]["players"][name]["deaths"]) * 100);
 	}
 	else
 	{
 		game["gameRep"]["players"][name]["killDeathRatio"] = game["gameRep"]["players"][name]["kills"] * 100;
 	}
-	game["gameRep"]["players"][name]["killsPerMin"] = int(game["gameRep"]["players"][name]["kills"] / timeplayed / 60);
+	game["gameRep"]["players"][name]["killsPerMin"] = int(game["gameRep"]["players"][name]["kills"] / (timeplayed / 60));
 	game["gameRep"]["players"][name]["plants"] = self.plants;
 	game["gameRep"]["players"][name]["defuses"] = self.defuses;
 	game["gameRep"]["players"][name]["captures"] = self.captures;
@@ -327,7 +327,7 @@ function getparamvalueforplayer(playername, paramname)
 		return game["gameRep"]["players"][playername][paramname];
 	}
 	/#
-		assertmsg("" + paramname + "");
+		assertmsg(("" + paramname) + "");
 	#/
 }
 
@@ -408,7 +408,7 @@ function getgamerepparamlimit(paramname)
 		return game["gameRep"]["gameLimit"]["default"][paramname];
 	}
 	/#
-		assertmsg("" + paramname + "");
+		assertmsg(("" + paramname) + "");
 	#/
 }
 

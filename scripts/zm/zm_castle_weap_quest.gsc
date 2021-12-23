@@ -73,10 +73,10 @@ function __init__()
 		level.soul_catchers[i].is_eating = 0;
 		level.soul_catchers[i] thread soul_catcher_check();
 		level.soul_catchers[i] thread soul_catcher_state_manager();
-		level.soul_catchers[i] thread function_e775e6a4("bow_door_sign_" + i + 1);
+		level.soul_catchers[i] thread function_e775e6a4("bow_door_sign_" + (i + 1));
 		level.soul_catchers_vol[i] = getent(level.soul_catchers[i].target, "targetname");
 	}
-	level.var_423db59a = 0;
+	level.n_soul_catchers_charged = 0;
 }
 
 /*
@@ -279,15 +279,15 @@ function zombie_soul_catcher_death(einflictor, attacker, idamage, smeansofdeath,
 	level clientfield::set(var_56269cbf.script_parameters, n_eating_anim);
 	if(n_eating_anim == 3)
 	{
-		var_a8b20b82 = getanimlength(%zm_castle::rtrg_o_zm_dlc1_dragonhead_consume_pre_eat_f) + getanimlength(%zm_castle::rtrg_ai_zm_dlc1_dragonhead_consume_zombie_align_f);
+		var_a8b20b82 = (getanimlength(%zm_castle::rtrg_o_zm_dlc1_dragonhead_consume_pre_eat_f)) + (getanimlength(%zm_castle::rtrg_ai_zm_dlc1_dragonhead_consume_zombie_align_f));
 	}
 	else if(n_eating_anim == 4)
 	{
-		var_a8b20b82 = getanimlength(%zm_castle::rtrg_o_zm_dlc1_dragonhead_consume_pre_eat_r) + getanimlength(%zm_castle::rtrg_ai_zm_dlc1_dragonhead_consume_zombie_align_r);
+		var_a8b20b82 = (getanimlength(%zm_castle::rtrg_o_zm_dlc1_dragonhead_consume_pre_eat_r)) + (getanimlength(%zm_castle::rtrg_ai_zm_dlc1_dragonhead_consume_zombie_align_r));
 	}
 	else
 	{
-		var_a8b20b82 = getanimlength(%zm_castle::rtrg_o_zm_dlc1_dragonhead_consume_pre_eat_l) + getanimlength(%zm_castle::rtrg_ai_zm_dlc1_dragonhead_consume_zombie_align_l);
+		var_a8b20b82 = (getanimlength(%zm_castle::rtrg_o_zm_dlc1_dragonhead_consume_pre_eat_l)) + (getanimlength(%zm_castle::rtrg_ai_zm_dlc1_dragonhead_consume_zombie_align_l));
 	}
 	wait(var_a8b20b82 - 0.5);
 	var_56269cbf.var_98730ffa++;
@@ -394,18 +394,18 @@ function soul_catcher_check()
 	{
 		if(self.var_98730ffa >= 8)
 		{
-			level.var_423db59a++;
+			level.n_soul_catchers_charged++;
 			self.is_charged = 1;
 			self notify(#"fully_charged");
 			break;
 		}
 		wait(0.05);
 	}
-	if(level.var_423db59a == 1)
+	if(level.n_soul_catchers_charged == 1)
 	{
 		self thread function_54af3e05();
 	}
-	else if(level.var_423db59a >= level.soul_catchers.size)
+	else if(level.n_soul_catchers_charged >= level.soul_catchers.size)
 	{
 		level flag::set("soul_catchers_charged");
 		self thread function_b7dd8bb3();

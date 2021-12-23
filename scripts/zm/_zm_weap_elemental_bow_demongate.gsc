@@ -128,7 +128,7 @@ function function_95ad1040(var_be00572f, var_c211b5bb)
 {
 	if(abs(var_c211b5bb[2]) < 0.2)
 	{
-		var_be00572f = var_be00572f + var_c211b5bb * 16;
+		var_be00572f = var_be00572f + (var_c211b5bb * 16);
 		a_trace = bullettrace(var_be00572f, var_be00572f + vectorscale((0, 0, 1), 64), 0, undefined);
 		if(a_trace["fraction"] < 1)
 		{
@@ -183,7 +183,7 @@ function function_19575106(weapon, position, attacker, normal)
 	}
 	else
 	{
-		var_33efb6fa = int(zombie_utility::get_current_zombie_count() + level.zombie_total * level.zombie_health / var_76d7100b);
+		var_33efb6fa = int(((zombie_utility::get_current_zombie_count() + level.zombie_total) * level.zombie_health) / var_76d7100b);
 		if(getdvarint("splitscreen_playerCount") > 2)
 		{
 			var_33efb6fa = math::clamp(var_33efb6fa, 4, 4);
@@ -415,8 +415,8 @@ function function_a3e439a5(e_player, var_67eb721b)
 {
 	self.var_e3146903 = 1;
 	self.origin = self.origin + (0, 0, randomintrange(int(-51.2), int(51.2)));
-	self.angles = (self.angles[0] + randomintrange(-30, 30), self.angles[1] + randomintrange(-45, 45), self.angles[2]);
-	var_69a783ad = self.origin + anglestoforward(self.angles) * 96;
+	self.angles = (self.angles[0] + (randomintrange(-30, 30)), self.angles[1] + (randomintrange(-45, 45)), self.angles[2]);
+	var_69a783ad = self.origin + (anglestoforward(self.angles) * 96);
 	self.angles = (0, self.angles[1], 0);
 	self moveto(var_69a783ad, 0.4);
 	wait(0.4);
@@ -487,12 +487,12 @@ function function_9fcea3e8(e_player)
 	}
 	var_9ef67615 = (var_6073ac1c[0] + var_13fe538c, var_6073ac1c[1] + var_3a00cdf5, var_6073ac1c[2] + var_6003485e);
 	var_962558f1 = vectornormalize(anglestoforward(var_9ef67615));
-	a_trace = physicstraceex(var_150aaea, var_150aaea + var_962558f1 * 512, vectorscale((-1, -1, -1), 16), vectorscale((1, 1, 1), 16));
-	var_69a783ad = a_trace["position"] + var_962558f1 * -32;
+	a_trace = physicstraceex(var_150aaea, var_150aaea + (var_962558f1 * 512), vectorscale((-1, -1, -1), 16), vectorscale((1, 1, 1), 16));
+	var_69a783ad = a_trace["position"] + (var_962558f1 * -32);
 	n_dist = distance(self.origin, var_69a783ad);
 	n_time = n_dist / 48;
-	var_d1979001 = var_69a783ad - self.origin;
-	var_d1979001 = (0, var_d1979001[1], 0);
+	v_rotate = var_69a783ad - self.origin;
+	v_rotate = (0, v_rotate[1], 0);
 	if(!isdefined(level.var_a9ac7b97))
 	{
 		level.var_a9ac7b97 = gettime();
@@ -503,7 +503,7 @@ function function_9fcea3e8(e_player)
 	}
 	level.var_a9ac7b97 = gettime();
 	self moveto(var_69a783ad, n_time);
-	self rotateto(vectortoangles(var_d1979001), n_time * 0.5);
+	self rotateto(vectortoangles(v_rotate), n_time * 0.5);
 	self thread function_f9dd2ee2(e_player);
 	self util::waittill_any_timeout(n_time * 2, "movedone", "demongate_chomper_found_target", "demongate_chomper_despawning", "death");
 	if(isdefined(self.target_enemy))
@@ -761,12 +761,12 @@ function function_5dee133f()
 		n_time = n_dist / 640;
 		var_5d76b65c = 1 / n_loop_count;
 		var_ef096040 = vectorscale((0, 0, 1), 160) * var_5d76b65c;
-		var_c5a0d28e = anglestoright(vectortoangles(var_b710c4e5 - self.origin)) * 256;
+		var_c5a0d28e = (anglestoright(vectortoangles(var_b710c4e5 - self.origin))) * 256;
 		var_c5a0d28e = var_c5a0d28e * var_5d76b65c;
 		var_c5a0d28e = var_c5a0d28e * var_4e26e12a;
-		var_74490e48 = var_b710c4e5 + var_c5a0d28e + var_ef096040;
-		var_d1979001 = var_74490e48 - self.origin;
-		var_d1979001 = (0, var_d1979001[1], 0);
+		var_74490e48 = (var_b710c4e5 + var_c5a0d28e) + var_ef096040;
+		v_rotate = var_74490e48 - self.origin;
+		v_rotate = (0, v_rotate[1], 0);
 		if(!isdefined(level.var_a9ac7b97))
 		{
 			level.var_a9ac7b97 = gettime();
@@ -777,7 +777,7 @@ function function_5dee133f()
 		}
 		level.var_a9ac7b97 = gettime();
 		self moveto(var_74490e48, n_time);
-		self rotateto(vectortoangles(var_d1979001), n_time * 0.5);
+		self rotateto(vectortoangles(v_rotate), n_time * 0.5);
 		n_time = n_time * 0.3;
 		n_time = (n_time < 0.1 ? 0.1 : n_time);
 		wait(n_time);
@@ -844,7 +844,7 @@ function function_3f57ba41(e_player)
 	{
 		var_3bb42832 = math::clamp(var_3bb42832, 0, level.var_f4dc2834);
 	}
-	n_damage = var_3bb42832 * 0.2 / 0.2;
+	n_damage = (var_3bb42832 * 0.2) / 0.2;
 	if(zm_utility::is_player_valid(e_player))
 	{
 		var_38fe557 = e_player;

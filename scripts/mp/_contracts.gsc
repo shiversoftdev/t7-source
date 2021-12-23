@@ -247,7 +247,7 @@ function watch_contract_debug()
 						player set_contract_stat(test_slot, "", 0);
 						player set_contract_stat(test_slot, "", 0);
 						player setup_player_contracts();
-						iprintln("" + test_slot + "" + new_index + "" + player.name + "");
+						iprintln(((((("" + test_slot) + "") + new_index) + "") + player.name) + "");
 					}
 				}
 				setdvar("", 0);
@@ -272,10 +272,10 @@ function watch_contract_debug()
 						{
 							player set_contract_stat(test_slot, "", 0);
 							player setup_player_contracts();
-							iprintln("" + test_slot + "" + player.name);
+							iprintln((("" + test_slot) + "") + player.name);
 							continue;
 						}
-						iprintln("" + test_slot + "" + player.name);
+						iprintln((("" + test_slot) + "") + player.name);
 					}
 				}
 				setdvar("", 0);
@@ -650,7 +650,7 @@ function add_active_stat(contract_index, delta = 1)
 	/#
 		if(getdvarint("", 0) > 0)
 		{
-			iprintln("" + slot + "" + contract_index + "" + new_progress + "" + target_value);
+			iprintln((((((("" + slot) + "") + contract_index) + "") + new_progress) + "") + target_value);
 		}
 	#/
 }
@@ -787,7 +787,7 @@ function set_contract_award_stat_from_path(stat_path, stat_value)
 		default:
 		{
 			/#
-				assertmsg("" + stat_path_array.size + "");
+				assertmsg(("" + stat_path_array.size) + "");
 			#/
 			break;
 		}

@@ -277,7 +277,7 @@ function runeprison_zombie_charring(localclientnum, oldval, newval, bnewent, bin
 		var_39255d08 = n_cur_time + 1200;
 		while(n_cur_time < var_39255d08)
 		{
-			var_dd5c416e = n_cur_time - n_start_time / 1200;
+			var_dd5c416e = (n_cur_time - n_start_time) / 1200;
 			self mapshaderconstant(localclientnum, 0, "scriptVector0", var_dd5c416e, var_dd5c416e, 0);
 			wait(0.016);
 			n_cur_time = gettime();

@@ -169,7 +169,7 @@ function timer(n_time, str_endon, x = 1080, y = 200, height = 60)
 	self setluimenudata(lui, "x", x);
 	self setluimenudata(lui, "y", y);
 	self setluimenudata(lui, "height", height);
-	self setluimenudata(lui, "time", gettime() + n_time * 1000);
+	self setluimenudata(lui, "time", gettime() + (n_time * 1000));
 	if(isdefined(str_endon))
 	{
 		self util::waittill_notify_or_timeout(str_endon, n_time);
@@ -284,7 +284,7 @@ private function _play_movie_for_player(str_movie, str_type, show_black_screen, 
 		default:
 		{
 			/#
-				assertmsg("" + str_type + "");
+				assertmsg(("" + str_type) + "");
 			#/
 		}
 	}
@@ -388,7 +388,7 @@ private function _play_movie_for_player_with_timeout(str_movie, str_type, timeou
 		default:
 		{
 			/#
-				assertmsg("" + str_type + "");
+				assertmsg(("" + str_type) + "");
 			#/
 		}
 	}
@@ -619,12 +619,12 @@ private function _screen_fade(n_time, n_target_alpha, n_start_alpha, v_color, b_
 			level.n_fade_debug_time = 0;
 		}
 		n_debug_time = gettime();
-		if(n_debug_time - level.n_fade_debug_time > 5000)
+		if((n_debug_time - level.n_fade_debug_time) > 5000)
 		{
 			printtoprightln("");
 		}
 		level.n_fade_debug_time = n_debug_time;
-		printtoprightln("" + string::rfill("" + gettime(), 6) + "" + string::rfill(str_menu_id, 10) + "" + string::rfill(v_color, 11) + "" + string::rfill(n_start_alpha + "" + n_target_alpha, 10) + "" + string::rfill(n_time, 6) + "", (1, 1, 1));
+		printtoprightln(((((("" + (string::rfill("" + gettime(), 6))) + "") + string::rfill(str_menu_id, 10) + "") + string::rfill(v_color, 11) + "") + (string::rfill((n_start_alpha + "") + n_target_alpha, 10)) + "") + string::rfill(n_time, 6) + "", (1, 1, 1));
 	#/
 	if(n_time > 0)
 	{

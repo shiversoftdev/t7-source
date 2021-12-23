@@ -310,7 +310,7 @@ function burst_fire_unmanned()
 			self cleartargetentity();
 			self settargetentity(self.manual_targets[randomint(self.manual_targets.size)]);
 		}
-		duration = pauseuntiltime - gettime() * 0.001;
+		duration = (pauseuntiltime - gettime()) * 0.001;
 		if(self isfiringturret() && duration <= 0)
 		{
 			if(turretstate != "fire")
@@ -325,7 +325,7 @@ function burst_fire_unmanned()
 			self waittill(#"turretstatechange");
 			self.script_shooting = 0;
 			duration = turret_delay + randomfloat(turret_delay_range);
-			pauseuntiltime = gettime() + int(duration * 1000);
+			pauseuntiltime = gettime() + (int(duration * 1000));
 			continue;
 		}
 		if(turretstate != "aim")

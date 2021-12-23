@@ -147,7 +147,7 @@ function givecarryqrdrone(lifeid, streakname)
 */
 function createcarryqrdrone(streakname, owner)
 {
-	pos = owner.origin + anglestoforward(owner.angles) * 4 + anglestoup(owner.angles) * 50;
+	pos = (owner.origin + (anglestoforward(owner.angles) * 4)) + (anglestoup(owner.angles) * 50);
 	carryqrdrone = spawnturret("misc_turret", pos, getweapon("auto_gun_turret"));
 	carryqrdrone.turrettype = "sentry";
 	carryqrdrone setturrettype(carryqrdrone.turrettype);
@@ -316,7 +316,7 @@ function updatecarryqrdroneplacement(carryqrdrone)
 			}
 		}
 		placement = self canplayerplacevehicle(22, 22, 50, heightoffset, 0, 0);
-		carryqrdrone.origin = placement["origin"] + anglestoup(self.angles) * 27;
+		carryqrdrone.origin = placement["origin"] + (anglestoup(self.angles) * 27);
 		carryqrdrone.angles = placement["angles"];
 		carryqrdrone.canbeplaced = self isonground() && placement["result"] && carryqrdrone qrdrone_in_range() && !carryqrdrone isinremotenodeploy();
 		if(carryqrdrone.canbeplaced != lastcanplacecarryqrdrone)
@@ -506,7 +506,7 @@ function createqrdrone(lifeid, owner, streakname, origin, angles, killstreak_id)
 	qrdrone thread heatseekingmissile::missiletarget_proximitydetonateincomingmissile("crashing");
 	qrdrone.emp_fx = spawn("script_model", self.origin);
 	qrdrone.emp_fx setmodel("tag_origin");
-	qrdrone.emp_fx linkto(self, "tag_origin", vectorscale((0, 0, -1), 20) + anglestoforward(self.angles) * 6);
+	qrdrone.emp_fx linkto(self, "tag_origin", (vectorscale((0, 0, -1), 20)) + (anglestoforward(self.angles) * 6));
 	qrdrone spawning::create_entity_enemy_influencer("small_vehicle", qrdrone.team);
 	qrdrone spawning::create_entity_enemy_influencer("qrdrone_cylinder", qrdrone.team);
 	return qrdrone;
@@ -818,7 +818,7 @@ function deleteonkillbrush(player)
 		{
 			origin = self.origin - vectorscale((0, 0, 1), 12);
 			water = getwaterheight(origin);
-			if(water - origin[2] > 0)
+			if((water - origin[2]) > 0)
 			{
 				self touchedkillbrush();
 				return;
@@ -932,7 +932,7 @@ function qrdrone_damagewatcher()
 		}
 		self.owner playrumbleonentity("damage_heavy");
 		/#
-			self.damage_debug = damage + "" + weapon.name + "";
+			self.damage_debug = ((damage + "") + weapon.name) + "";
 		#/
 		if(mod == "MOD_RIFLE_BULLET" || mod == "MOD_PISTOL_BULLET")
 		{
@@ -940,7 +940,7 @@ function qrdrone_damagewatcher()
 			{
 				if(attacker hasperk("specialty_armorpiercing"))
 				{
-					damage = damage + int(damage * level.cac_armorpiercing_data);
+					damage = damage + (int(damage * level.cac_armorpiercing_data));
 				}
 			}
 			if(weapon.weapclass == "spread")
@@ -1072,14 +1072,14 @@ function qrdrone_crash_movement(attacker, hitdir)
 	self setphysacceleration(vectorscale((0, 0, -1), 800));
 	side_dir = vectorcross(hitdir, (0, 0, 1));
 	side_dir_mag = randomfloatrange(-100, 100);
-	side_dir_mag = side_dir_mag + math::sign(side_dir_mag) * 80;
+	side_dir_mag = side_dir_mag + (math::sign(side_dir_mag) * 80);
 	side_dir = side_dir * side_dir_mag;
 	velocity = self getvelocity();
-	self setvehvelocity(velocity + vectorscale((0, 0, 1), 100) + vectornormalize(side_dir));
+	self setvehvelocity((velocity + vectorscale((0, 0, 1), 100)) + vectornormalize(side_dir));
 	ang_vel = self getangularvelocity();
 	ang_vel = (ang_vel[0] * 0.3, ang_vel[1], ang_vel[2] * 0.3);
 	yaw_vel = randomfloatrange(0, 210) * math::sign(ang_vel[1]);
-	yaw_vel = yaw_vel + math::sign(yaw_vel) * 180;
+	yaw_vel = yaw_vel + (math::sign(yaw_vel) * 180);
 	ang_vel = ang_vel + (randomfloatrange(-100, 100), yaw_vel, randomfloatrange(-200, 200));
 	self setangularvelocity(ang_vel);
 	self.crash_accel = randomfloatrange(75, 110);
@@ -1160,11 +1160,11 @@ function qrdrone_crash_accel()
 	while(true)
 	{
 		velocity = self getvelocity();
-		self setvehvelocity(velocity + anglestoup(self.angles) * self.crash_accel);
+		self setvehvelocity(velocity + (anglestoup(self.angles) * self.crash_accel));
 		self.crash_accel = self.crash_accel * 0.98;
 		wait(0.1);
 		count++;
-		if(count % 8 == 0)
+		if((count % 8) == 0)
 		{
 			if(randomint(100) > 40)
 			{
@@ -1209,7 +1209,7 @@ function qrdrone_collision()
 		velocity = self getvelocity();
 		if(normal[2] < 0.7)
 		{
-			self setvehvelocity(velocity + normal * 70);
+			self setvehvelocity(velocity + (normal * 70));
 			self playsound("veh_qrdrone_wall");
 			playfx(level._effect["quadrotor_nudge"], self.origin);
 		}
@@ -1274,7 +1274,7 @@ function qrdrone_watch_distance(zoffset, minheightoverride)
 				if(isdefined(self.heliinproximity))
 				{
 					dist = distance(self.origin, self.heliinproximity.origin);
-					staticalpha = 1 - dist - 150 / 150;
+					staticalpha = 1 - ((dist - 150) / 150);
 				}
 				else
 				{
@@ -1622,7 +1622,7 @@ function qrdrone_dialog(dialoggroup)
 	{
 		waittime = 5000;
 	}
-	if(gettime() - level.qrdrone_lastdialogtime < waittime)
+	if((gettime() - level.qrdrone_lastdialogtime) < waittime)
 	{
 		return;
 	}

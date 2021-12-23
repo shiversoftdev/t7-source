@@ -227,11 +227,11 @@ private function _get_valid_targets(weapon)
 			continue;
 		}
 		distsq = distancesquared(self.origin, guy.origin);
-		if(distsq < getdvarint("scr_misdirection_min_distanceSQR", getdvarint("scr_misdirection_min_distance", 200) * getdvarint("scr_misdirection_min_distance", 200)))
+		if(distsq < (getdvarint("scr_misdirection_min_distanceSQR", getdvarint("scr_misdirection_min_distance", 200) * getdvarint("scr_misdirection_min_distance", 200))))
 		{
 			continue;
 		}
-		if(distsq > getdvarint("scr_misdirection_max_distanceSQR", getdvarint("scr_misdirection_max_distance", 1750) * getdvarint("scr_misdirection_max_distance", 1750)))
+		if(distsq > (getdvarint("scr_misdirection_max_distanceSQR", getdvarint("scr_misdirection_max_distance", 1750) * getdvarint("scr_misdirection_max_distance", 1750))))
 		{
 			continue;
 		}
@@ -289,7 +289,7 @@ function function_7074260(point)
 	foreach(var_40bfeb9d, var_d3c532e6 in self.cybercom.var_1beb8e5f)
 	{
 		distsq = distance2dsquared(point, var_d3c532e6.origin);
-		if(distsq < getdvarint("scr_misdirection_decoy_spacingSQR", getdvarint("scr_misdirection_decoy_spacing", 90) * getdvarint("scr_misdirection_decoy_spacing", 90)))
+		if(distsq < (getdvarint("scr_misdirection_decoy_spacingSQR", getdvarint("scr_misdirection_decoy_spacing", 90) * getdvarint("scr_misdirection_decoy_spacing", 90))))
 		{
 			return 0;
 		}
@@ -320,39 +320,39 @@ function function_10cd71b(decoy, potentialtargets)
 		mins = function_44a2ae85(origin, mins);
 		maxs = function_b72ba417(origin, maxs);
 	}
-	rangemax = self.origin + playerforward * getdvarint("scr_misdirection_no_target_max_distance", 675);
+	rangemax = self.origin + (playerforward * getdvarint("scr_misdirection_no_target_max_distance", 675));
 	maxs = function_b72ba417(rangemax, maxs);
-	rangemin = self.origin + playerforward * getdvarint("scr_misdirection_min_distance", 200);
+	rangemin = self.origin + (playerforward * getdvarint("scr_misdirection_min_distance", 200));
 	mins = function_44a2ae85(rangemin, mins);
-	center = maxs + mins * 0.5;
+	center = (maxs + mins) * 0.5;
 	var_412aa3ee = distance(center, self.origin);
 	var_eec44088 = vectornormalize(center - self.origin);
-	var_b333c85b = self.origin + var_eec44088 * var_412aa3ee;
+	var_b333c85b = self.origin + (var_eec44088 * var_412aa3ee);
 	var_6a0945f2 = var_b333c85b;
 	maxtries = 6;
 	var_539aaa1a = 0;
 	step = var_81ca05ac * getdvarint("scr_misdirection_decoy_spacing", 90);
 	while(maxtries > 0)
 	{
-		left = var_6a0945f2 + 6 - maxtries * step;
-		v_ground = bullettrace(left + vectorscale((0, 0, 1), 72), left + vectorscale((0, 0, -1), 2048), 0, undefined, 1)["position"];
+		left = var_6a0945f2 + ((6 - maxtries) * step);
+		v_ground = bullettrace(left + vectorscale((0, 0, 1), 72), left + (vectorscale((0, 0, -1), 2048)), 0, undefined, 1)["position"];
 		left = (left[0], left[1], v_ground[2]);
 		v_trace = bullettrace(self.origin + vectorscale((0, 0, 1), 24), left + vectorscale((0, 0, 1), 24), 1, self)["position"];
 		dir = vectornormalize(v_trace - self.origin);
 		v_trace = v_trace + -48 * dir;
-		v_ground = bullettrace(v_trace, v_trace + vectorscale((0, 0, -1), 2048), 0, undefined, 1)["position"];
+		v_ground = bullettrace(v_trace, v_trace + (vectorscale((0, 0, -1), 2048)), 0, undefined, 1)["position"];
 		if(self function_7074260(v_ground))
 		{
 			var_b333c85b = v_ground;
 			break;
 		}
-		right = var_6a0945f2 - 6 - maxtries * step;
-		v_ground = bullettrace(right + vectorscale((0, 0, 1), 72), right + vectorscale((0, 0, -1), 2048), 0, undefined, 1)["position"];
+		right = var_6a0945f2 - ((6 - maxtries) * step);
+		v_ground = bullettrace(right + vectorscale((0, 0, 1), 72), right + (vectorscale((0, 0, -1), 2048)), 0, undefined, 1)["position"];
 		right = (right[0], right[1], v_ground[2]);
 		v_trace = bullettrace(self.origin + vectorscale((0, 0, 1), 24), right + vectorscale((0, 0, 1), 24), 1, self)["position"];
 		dir = vectornormalize(v_trace - self.origin);
 		v_trace = v_trace + -48 * dir;
-		v_ground = bullettrace(v_trace, v_trace + vectorscale((0, 0, -1), 2048), 0, undefined, 1)["position"];
+		v_ground = bullettrace(v_trace, v_trace + (vectorscale((0, 0, -1), 2048)), 0, undefined, 1)["position"];
 		if(self function_7074260(v_ground))
 		{
 			var_b333c85b = v_ground;
@@ -416,7 +416,7 @@ function function_4adc7dc8(potentialtargets)
 		v_trace = bullettrace(self.origin + vectorscale((0, 0, 1), 24), target.origin + vectorscale((0, 0, 1), 24), 1, self)["position"];
 		dir = vectornormalize(v_trace - self.origin);
 		v_trace = v_trace + -48 * dir;
-		v_ground = bullettrace(v_trace, v_trace + vectorscale((0, 0, -1), 2048), 0, target, 1)["position"];
+		v_ground = bullettrace(v_trace, v_trace + (vectorscale((0, 0, -1), 2048)), 0, target, 1)["position"];
 		if(self function_7074260(v_ground) == 0)
 		{
 			continue;

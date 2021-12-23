@@ -1039,7 +1039,7 @@ function get_eye()
 */
 function spawn_player_arms()
 {
-	arms = spawn(self getlocalclientnumber(), self.origin + vectorscale((0, 0, -1), 1000), "script_model");
+	arms = spawn(self getlocalclientnumber(), self.origin + (vectorscale((0, 0, -1), 1000)), "script_model");
 	if(isdefined(level.player_viewmodel))
 	{
 		arms setmodel(level.player_viewmodel);
@@ -1237,15 +1237,44 @@ function waittill_dobj(localclientnum)
 	Namespace: util
 	Checksum: 0xB4E33953
 	Offset: 0x27C0
-	Size: 0x0
+	Size: 0x122
 	Parameters: 4
 	Flags: Linked
 */
 function server_wait(localclientnum, seconds, waitbetweenchecks, level_endon)
 {
+	if(isdefined(level_endon))
+	{
+		level endon(level_endon);
+	}
+	if(level.isdemoplaying && seconds != 0)
+	{
+		if(!isdefined(waitbetweenchecks))
+		{
+			waitbetweenchecks = 0.2;
+		}
+		waitcompletedsuccessfully = 0;
+		starttime = level.servertime;
+		lasttime = starttime;
+		endtime = starttime + (seconds * 1000);
+		while(level.servertime < endtime && level.servertime >= lasttime)
+		{
+			lasttime = level.servertime;
+			wait(waitbetweenchecks);
+		}
+		if(lasttime < level.servertime)
+		{
+			waitcompletedsuccessfully = 1;
+		}
+	}
+	else
+	{
+		waitrealtime(seconds);
+		waitcompletedsuccessfully = 1;
+	}
+	return waitcompletedsuccessfully;
 }
 
-/*Unknown Op Code (0x177B) at 28D0*/
 /*
 	Name: friend_not_foe
 	Namespace: util
@@ -1883,7 +1912,7 @@ function button_held_think(which_button)
 				{
 					time_started = gettime();
 				}
-				if(gettime() - time_started > 250)
+				if((gettime() - time_started) > 250)
 				{
 					self._holding_button[which_button] = 1;
 				}

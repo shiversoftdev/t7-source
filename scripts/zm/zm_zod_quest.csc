@@ -116,7 +116,7 @@ function __init__()
 	a_str_names = array("boxer", "detective", "femme", "magician");
 	for(i = 0; i < 4; i++)
 	{
-		clientfield::register("toplayer", "check_" + a_str_names[i] + "_memento", 1, 1, "int", &zm_utility::setinventoryuimodels, 0, 0);
+		clientfield::register("toplayer", ("check_" + a_str_names[i]) + "_memento", 1, 1, "int", &zm_utility::setinventoryuimodels, 0, 0);
 	}
 	n_bits = getminbitcountfornum(6);
 	clientfield::register("toplayer", "used_quest_key", 1, n_bits, "int", &zm_utility::setsharedinventoryuimodels, 0, 0);
@@ -228,7 +228,7 @@ function function_9118f74a(localclientnum, n_current_ritual, var_85dc52da)
 	str_name = get_name_from_ritual_clientfield_value(n_current_ritual);
 	foreach(var_8707636f, var_fb62adc1 in var_3c32cd48)
 	{
-		if(var_fb62adc1.script_string === "ritual_" + str_name)
+		if(var_fb62adc1.script_string === ("ritual_" + str_name))
 		{
 			return var_fb62adc1;
 		}
@@ -411,7 +411,7 @@ function function_6d34f463(localclientnum, n_total_time)
 	exploder::exploder("lgt_sword_altar_underground");
 	for(i = 0; i <= var_1baf89ac; i++)
 	{
-		var_6740490 = 1 - i / var_1baf89ac;
+		var_6740490 = 1 - (i / var_1baf89ac);
 		self setshaderconstant(localclientnum, 0, var_6740490, 0, 0, 0);
 		wait(0.016);
 	}
@@ -538,7 +538,7 @@ function ritual_state_internal(localclientnum, newval, n_current_ritual)
 			level thread function_60f1115e(localclientnum, n_current_ritual, 2);
 			for(i = 0; i < 4; i++)
 			{
-				mdl_ritual.vfx_trails[i] = playfxontag(localclientnum, level._effect["ritual_trail"], mdl_ritual, "disc" + i + 1 + "_blade_body_jnt");
+				mdl_ritual.vfx_trails[i] = playfxontag(localclientnum, level._effect["ritual_trail"], mdl_ritual, ("disc" + (i + 1)) + "_blade_body_jnt");
 			}
 			mdl_ritual.var_958bf245 = playfxontag(localclientnum, level._effect["ritual_key_open_glow"], mdl_ritual, "key_outer_rot_jnt");
 			level thread sndritual(2, mdl_ritual);
@@ -738,7 +738,7 @@ function function_1088ce1d(localclientnum, mdl_ritual)
 function ritual_success_light_exploder(str_name)
 {
 	level thread exploder::stop_exploder("ritual_light_" + str_name);
-	level thread exploder::exploder("ritual_light_" + str_name + "_fin");
+	level thread exploder::exploder(("ritual_light_" + str_name) + "_fin");
 }
 
 /*
@@ -759,7 +759,7 @@ function toggle_altar_vfx(localclientnum, str_name, b_on)
 		{
 			e_ritual_pedestal.ritual_fx = [];
 		}
-		if(b_on && e_ritual_pedestal.script_string == "ritual_" + str_name)
+		if(b_on && e_ritual_pedestal.script_string == ("ritual_" + str_name))
 		{
 			e_ritual_pedestal.ritual_fx[localclientnum] = playfx(localclientnum, level._effect["ritual_altar"], e_ritual_pedestal.origin);
 			continue;
@@ -1233,7 +1233,7 @@ function keeper_spawn_portals(localclientnum, oldval, newval, bnewent, binitials
 {
 	for(i = 0; i < 4; i++)
 	{
-		b_on = newval >> i & 1;
+		b_on = (newval >> i) & 1;
 		str_name = get_name_from_ritual_clientfield_value(i + 1);
 		function_46df8306(localclientnum, "memento_spawn_point_" + str_name, b_on);
 	}
@@ -1678,7 +1678,7 @@ function footsteps(localclientnum, str_name)
 	var_8f19a67f = 10;
 	for(i = 0; i < var_8f19a67f; i++)
 	{
-		str_struct = str_name + "_" + i;
+		str_struct = (str_name + "_") + i;
 		a_struct[a_struct.size] = struct::get(str_struct, "targetname");
 	}
 	for(num_loops = 0; num_loops < 10; num_loops++)

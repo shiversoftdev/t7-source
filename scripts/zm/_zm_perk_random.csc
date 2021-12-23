@@ -199,7 +199,7 @@ function rock_emissive_think(localclientnum)
 function rock_emissive_fade(localclientnum, n_max_val, n_min_val)
 {
 	n_start_time = gettime();
-	n_end_time = n_start_time + 0.5 * 1000;
+	n_end_time = n_start_time + (0.5 * 1000);
 	b_is_updating = 1;
 	while(b_is_updating)
 	{
@@ -435,7 +435,7 @@ function fx_artifact_pulse_thread(localclientnum)
 		{
 			shader_amount = shader_amount * -1;
 		}
-		shader_amount = 0.75 - shader_amount * 0.75;
+		shader_amount = 0.75 - (shader_amount * 0.75);
 		self.artifact_glow_setting = shader_amount;
 		self.machinery_glow_setting = 1;
 		self setshaderconstant(localclientnum, 1, self.artifact_glow_setting, 0, self.machinery_glow_setting, 0);

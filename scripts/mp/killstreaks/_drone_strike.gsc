@@ -178,19 +178,19 @@ function startdronestrike(position, yaw, team, killstreak_id)
 	direction = anglestoforward(angles);
 	height = airsupport::getminimumflyheight() + 3000;
 	selectedposition = (position[0], position[1], height);
-	startpoint = selectedposition + vectorscale(direction, -14000);
-	endpoint = selectedposition + vectorscale(direction, -6000);
+	startpoint = selectedposition + (vectorscale(direction, -14000));
+	endpoint = selectedposition + (vectorscale(direction, -6000));
 	tracestartpos = (position[0], position[1], height);
 	traceendpos = (position[0], position[1], height * -1);
 	trace = bullettrace(tracestartpos, traceendpos, 0, undefined);
 	targetpoint = (trace["fraction"] < 1 ? trace["position"] : (position[0], position[1], 0));
-	initialoffset = vectorscale(direction, 12 * 0.5 - 1 * 500) * -1;
+	initialoffset = (vectorscale(direction, ((12 * 0.5) - 1) * 500)) * -1;
 	for(i = 0; i < 12; i++)
 	{
 		right = anglestoright(angles);
 		rightoffset = vectorscale(right, 300);
 		leftoffset = vectorscale(right, 900);
-		forwardoffset = endpoint + initialoffset + vectorscale(direction, i * 500);
+		forwardoffset = (endpoint + initialoffset) + (vectorscale(direction, i * 500));
 		self thread spawndrone(startpoint + rightoffset, forwardoffset + rightoffset, targetpoint, angles, self.team, killstreak_id);
 		self thread spawndrone(startpoint - rightoffset, forwardoffset - rightoffset, targetpoint, angles, self.team, killstreak_id);
 		self thread spawndrone(startpoint + leftoffset, forwardoffset + leftoffset, targetpoint, angles, self.team, killstreak_id);
@@ -238,7 +238,7 @@ function spawndrone(startpoint, endpoint, targetpoint, angles, team, killstreak_
 	halfgravity = 386;
 	dxy = abs(-6000);
 	dz = endpoint[2] - targetpoint[2];
-	dvxy = dxy * sqrt(halfgravity / dz);
+	dvxy = dxy * (sqrt(halfgravity / dz));
 	nvel = vectornormalize(velocity);
 	launchvel = nvel * dvxy;
 	bomb = self launchbomb(weapon, drone.origin, launchvel);

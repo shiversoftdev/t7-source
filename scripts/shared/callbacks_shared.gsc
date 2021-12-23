@@ -1375,7 +1375,7 @@ function codecallback_decoration(name)
 		self notify(#"give_achievement", "CP_ALL_DECORATIONS");
 	}
 	a_all_decorations = self getdecorations();
-	if(a_decorations.size == a_all_decorations.size - 1)
+	if(a_decorations.size == (a_all_decorations.size - 1))
 	{
 		self givedecoration("cp_medal_all_decorations");
 	}

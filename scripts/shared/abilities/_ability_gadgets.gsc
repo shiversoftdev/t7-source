@@ -54,7 +54,7 @@ function gadgets_print(str)
 		if(getdvarint(""))
 		{
 			toprint = str;
-			println(self.playername + "" + "" + toprint);
+			println(((self.playername + "") + "") + toprint);
 		}
 	#/
 }
@@ -111,7 +111,7 @@ function on_player_spawned()
 function gadget_give_callback(ent, slot, weapon)
 {
 	/#
-		ent gadgets_print("" + slot + "");
+		ent gadgets_print(("" + slot) + "");
 	#/
 	ent ability_player::give_gadget(slot, weapon);
 }
@@ -128,7 +128,7 @@ function gadget_give_callback(ent, slot, weapon)
 function gadget_take_callback(ent, slot, weapon)
 {
 	/#
-		ent gadgets_print("" + slot + "");
+		ent gadgets_print(("" + slot) + "");
 	#/
 	ent ability_player::take_gadget(slot, weapon);
 }
@@ -145,7 +145,7 @@ function gadget_take_callback(ent, slot, weapon)
 function gadget_primed_callback(ent, slot, weapon)
 {
 	/#
-		ent gadgets_print("" + slot + "");
+		ent gadgets_print(("" + slot) + "");
 	#/
 	ent ability_player::gadget_primed(slot, weapon);
 }
@@ -162,7 +162,7 @@ function gadget_primed_callback(ent, slot, weapon)
 function gadget_ready_callback(ent, slot, weapon)
 {
 	/#
-		ent gadgets_print("" + slot + "");
+		ent gadgets_print(("" + slot) + "");
 	#/
 	ent ability_player::gadget_ready(slot, weapon);
 }
@@ -179,7 +179,7 @@ function gadget_ready_callback(ent, slot, weapon)
 function gadget_on_callback(ent, slot, weapon)
 {
 	/#
-		ent gadgets_print("" + slot + "");
+		ent gadgets_print(("" + slot) + "");
 	#/
 	if(isdefined(level.bzmoncybercomoncallback))
 	{
@@ -200,7 +200,7 @@ function gadget_on_callback(ent, slot, weapon)
 function gadget_off_callback(ent, slot, weapon)
 {
 	/#
-		ent gadgets_print("" + slot + "");
+		ent gadgets_print(("" + slot) + "");
 	#/
 	ent ability_player::turn_gadget_off(slot, weapon);
 }
@@ -217,7 +217,7 @@ function gadget_off_callback(ent, slot, weapon)
 function gadget_flicker_callback(ent, slot, weapon)
 {
 	/#
-		ent gadgets_print("" + slot + "");
+		ent gadgets_print(("" + slot) + "");
 	#/
 	ent ability_player::gadget_flicker(slot, weapon);
 }

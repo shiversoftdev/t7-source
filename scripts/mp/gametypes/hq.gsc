@@ -143,7 +143,7 @@ function getrespawndelay()
 		}
 		else
 		{
-			timeremaining = level.hqdestroytime - gettime() / 1000;
+			timeremaining = (level.hqdestroytime - gettime()) / 1000;
 		}
 		if(!level.playerobjectiveheldrespawndelay)
 		{
@@ -262,7 +262,7 @@ function spawn_first_radio(delay)
 		level.radio = getfirstradio();
 	}
 	/#
-		print("" + level.radio.trigorigin[0] + "" + level.radio.trigorigin[1] + "" + level.radio.trigorigin[2] + "");
+		print(((((("" + level.radio.trigorigin[0]) + "") + level.radio.trigorigin[1]) + "") + level.radio.trigorigin[2]) + "");
 	#/
 	level.radio spawning::enable_influencers(1);
 }
@@ -287,7 +287,7 @@ function spawn_next_radio()
 		level.radio = getnextradio();
 	}
 	/#
-		print("" + level.radio.trigorigin[0] + "" + level.radio.trigorigin[1] + "" + level.radio.trigorigin[2] + "");
+		print(((((("" + level.radio.trigorigin[0]) + "") + level.radio.trigorigin[1]) + "") + level.radio.trigorigin[2]) + "");
 	#/
 	level.radio spawning::enable_influencers(1);
 }
@@ -348,7 +348,7 @@ function hqmainloop()
 		radius = 75;
 		for(index = 0; index < rcbombs.size; index++)
 		{
-			if(distancesquared(rcbombs[index], level.radio.origin) < radius * radius)
+			if(distancesquared(rcbombs[index], level.radio.origin) < (radius * radius))
 			{
 				rcbombs[index] notify(#"rcbomb_shutdown");
 			}
@@ -712,7 +712,7 @@ function destroyhqaftertime(time, ownerteam)
 {
 	level endon(#"game_ended");
 	level endon(#"hq_reset");
-	level.hqdestroytime = gettime() + time * 1000;
+	level.hqdestroytime = gettime() + (time * 1000);
 	level.hqdestroyedbytimer = 0;
 	wait(time);
 	globallogic_audio::leader_dialog("hq_offline");
@@ -855,7 +855,7 @@ function getradioarray()
 	while(swapped)
 	{
 		swapped = 0;
-		for(i = 0; i < n - 1; i++)
+		for(i = 0; i < (n - 1); i++)
 		{
 			if(compareradioindexes(radios[i], radios[i + 1]))
 			{
@@ -899,7 +899,7 @@ function setupradios()
 			{
 				if(isdefined(radio.trig))
 				{
-					maperrors[maperrors.size] = "Radio at " + radio.origin + " is touching more than one \"radiotrigger\" trigger";
+					maperrors[maperrors.size] = ("Radio at " + radio.origin) + " is touching more than one \"radiotrigger\" trigger";
 					errored = 1;
 					break;
 				}
@@ -911,7 +911,7 @@ function setupradios()
 		{
 			if(!errored)
 			{
-				maperrors[maperrors.size] = "Radio at " + radio.origin + " is not inside any \"radiotrigger\" trigger";
+				maperrors[maperrors.size] = ("Radio at " + radio.origin) + " is not inside any \"radiotrigger\" trigger";
 				continue;
 			}
 		}
@@ -992,7 +992,7 @@ function setupnearbyspawns()
 	while(i < spawns.size)
 	{
 		outer[outer.size] = spawns[i];
-		if(i <= thirdsize * 2)
+		if(i <= (thirdsize * 2))
 		{
 			second[second.size] = spawns[i];
 		}
@@ -1069,7 +1069,7 @@ function getfirstradio()
 */
 function getnextradio()
 {
-	nextradioindex = level.prevradioindex + 1 % level.radios.size;
+	nextradioindex = (level.prevradioindex + 1) % level.radios.size;
 	radio = level.radios[nextradioindex];
 	level.prevradio2 = level.prevradio;
 	level.prevradio = radio;
@@ -1201,7 +1201,7 @@ function getpointcost(avgpos, origin)
 	foreach(team, dist in distances)
 	{
 		err = distances[team] - avg_distance;
-		total_error = total_error + err * err;
+		total_error = total_error + (err * err);
 	}
 	return total_error;
 }
@@ -1436,7 +1436,7 @@ function killwhilecontesting(radio)
 		self.clearenemycount = 0;
 		return;
 	}
-	if(self.clearenemycount >= 2 && killtime + 200 > gettime())
+	if(self.clearenemycount >= 2 && (killtime + 200) > gettime())
 	{
 		scoreevents::processscoreevent("clear_2_attackers", self);
 	}

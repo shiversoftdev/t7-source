@@ -625,7 +625,7 @@ function _get_default_target_offset(e_target, n_index)
 	if((isdefined(s_turret.n_target_leading_factor) ? s_turret.n_target_leading_factor : 0) != 0 && isdefined(e_target) && issentient(self) && issentient(e_target) && !isvehicle(e_target))
 	{
 		velocity = e_target getvelocity();
-		v_offset = v_offset + velocity * s_turret.n_target_leading_factor;
+		v_offset = v_offset + (velocity * s_turret.n_target_leading_factor);
 	}
 	return v_offset;
 }
@@ -719,7 +719,7 @@ function set_target_flags(n_flags, n_index)
 function _has_target_flags(n_flags, n_index)
 {
 	n_current_flags = _get_turret_data(n_index).n_target_flags;
-	return n_current_flags & n_flags == n_flags;
+	return (n_current_flags & n_flags) == n_flags;
 }
 
 /*
@@ -850,7 +850,7 @@ function fire_for_time(n_time, n_index = 0)
 		b_fire_forever = 1;
 	}
 	w_weapon = get_weapon(n_index);
-	assert(n_time >= w_weapon.firetime, "" + n_time + "" + w_weapon.firetime);
+	assert(n_time >= w_weapon.firetime, (("" + n_time) + "") + w_weapon.firetime);
 	while(n_time > 0 || b_fire_forever)
 	{
 		n_burst_time = _burst_fire(n_time, n_index);
@@ -1210,7 +1210,7 @@ function _has_nearby_player_enemy(index, turret)
 			{
 				continue;
 			}
-			if(abs(ai_user.origin[2] - player.origin[2]) <= 60 && distance2dsquared(ai_user.origin, player.origin) <= 300 * 300)
+			if((abs(ai_user.origin[2] - player.origin[2])) <= 60 && distance2dsquared(ai_user.origin, player.origin) <= (300 * 300))
 			{
 				has_nearby_enemy = 1;
 				break;
@@ -1238,7 +1238,7 @@ function _did_turret_lose_target(n_time_now)
 	}
 	if(isdefined(self.n_time_lose_sight))
 	{
-		return n_time_now - self.n_time_lose_sight > 3000;
+		return (n_time_now - self.n_time_lose_sight) > 3000;
 	}
 	return 0;
 }
@@ -1565,7 +1565,7 @@ function _debug_turret_think(n_index)
 			{
 				str_target = str_target + "";
 			}
-			str_debug = self getentnum() + "" + str_team + "" + str_target;
+			str_debug = (((self getentnum() + "") + str_team) + "") + str_target;
 			record3dtext(str_debug, self.origin, v_color, "", self);
 			wait(0.05);
 		}
@@ -1841,7 +1841,7 @@ function _burst_fire(n_max_time, n_index)
 	if(s_turret.n_burst_fire_time >= n_burst_time)
 	{
 		s_turret.n_burst_fire_time = 0;
-		n_time_since_last_shot = gettime() - s_turret.n_last_fire_time / 1000;
+		n_time_since_last_shot = (gettime() - s_turret.n_last_fire_time) / 1000;
 		if(n_time_since_last_shot < n_burst_wait)
 		{
 			wait(n_burst_wait - n_time_since_last_shot);
@@ -2377,7 +2377,7 @@ function trace_test(e_target, v_offset = (0, 0, 0), n_index)
 		if(e_target sightconetrace(v_start_org, self) > 0.2)
 		{
 			v_target = e_target.origin + v_offset;
-			v_start_org = v_start_org + vectornormalize(v_target - v_start_org) * 50;
+			v_start_org = v_start_org + ((vectornormalize(v_target - v_start_org)) * 50);
 			a_trace = bullettrace(v_start_org, v_target, 1, s_turret.e_trace_ignore, 1, 1);
 			if(a_trace["fraction"] > 0.6)
 			{
@@ -2400,8 +2400,8 @@ function trace_test(e_target, v_offset = (0, 0, 0), n_index)
 	v_dir_to_target = vectornormalize(v_target - v_start_org);
 	if(!sessionmodeismultiplayergame())
 	{
-		v_start_org = v_start_org + v_dir_to_target * 50;
-		v_target = v_target - v_dir_to_target * 75;
+		v_start_org = v_start_org + (v_dir_to_target * 50);
+		v_target = v_target - (v_dir_to_target * 75);
 	}
 	if(sighttracepassed(v_start_org, v_target, 0, self))
 	{

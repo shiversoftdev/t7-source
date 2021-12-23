@@ -294,7 +294,7 @@ function scramblerupdate(localclientnum)
 			}
 			if(nearestenemy < level.scramblervoouterradius)
 			{
-				enemyvoscrambleramount = 1 - nearestenemy - level.scramblerinnerradius / level.scramblervoouterradius - level.scramblerinnerradius;
+				enemyvoscrambleramount = 1 - (nearestenemy - level.scramblerinnerradius) / (level.scramblervoouterradius - level.scramblerinnerradius);
 			}
 			else
 			{
@@ -306,7 +306,7 @@ function scramblerupdate(localclientnum)
 			}
 			else if(nearestfriendly < level.scramblervoouterradius)
 			{
-				friendlyscrambleramount = 1 - nearestfriendly - level.scramblerinnerradius / level.scramblervoouterradius - level.scramblerinnerradius;
+				friendlyscrambleramount = 1 - (nearestfriendly - level.scramblerinnerradius) / (level.scramblervoouterradius - level.scramblerinnerradius);
 			}
 			player setfriendlyscrambleramount(friendlyscrambleramount);
 			if(level.scramblers.size > 0 && isdefined(nearestenemyscramblercent))

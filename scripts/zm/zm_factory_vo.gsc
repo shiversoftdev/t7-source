@@ -207,7 +207,7 @@ function function_c23e3a71(var_49fefccd, n_index, b_wait_if_busy = 0, var_7e649f
 	Parameters: 4
 	Flags: Linked
 */
-function function_7aa5324a(var_cbd11028, b_wait_if_busy = 0, var_a8564a44 = 0, var_d1295208 = 0)
+function function_7aa5324a(var_cbd11028, b_wait_if_busy = 0, n_priority = 0, var_d1295208 = 0)
 {
 	function_218256bd(1);
 	for(i = 0; i < var_cbd11028.size; i++)
@@ -220,7 +220,7 @@ function function_7aa5324a(var_cbd11028, b_wait_if_busy = 0, var_a8564a44 = 0, v
 		{
 			var_e27770b1 = 0.5;
 		}
-		function_897246e4(var_cbd11028[i], var_e27770b1, b_wait_if_busy, var_a8564a44, var_d1295208);
+		function_897246e4(var_cbd11028[i], var_e27770b1, b_wait_if_busy, n_priority, var_d1295208);
 	}
 	function_218256bd(0);
 }
@@ -248,6 +248,7 @@ function function_218256bd(var_eca8128e)
 	{
 		foreach(var_584bda53, player in level.activeplayers)
 		{
+			var_8f810568 = getnextarraykey(var_4e5ea88d);
 			while(isdefined(player) && (isdefined(player.isspeaking) && player.isspeaking))
 			{
 				wait(0.1);
@@ -265,7 +266,7 @@ function function_218256bd(var_eca8128e)
 	Parameters: 5
 	Flags: Linked
 */
-function function_897246e4(str_vo_alias, n_wait = 0, b_wait_if_busy = 0, var_a8564a44 = 0, var_d1295208 = 0)
+function function_897246e4(str_vo_alias, n_wait = 0, b_wait_if_busy = 0, n_priority = 0, var_d1295208 = 0)
 {
 	var_81132431 = strtok(str_vo_alias, "_");
 	if(var_81132431[1] === "plr")
@@ -277,12 +278,12 @@ function function_897246e4(str_vo_alias, n_wait = 0, b_wait_if_busy = 0, var_a85
 	{
 		e_speaker = undefined;
 		/#
-			assert(0, "" + str_vo_alias + "");
+			assert(0, ("" + str_vo_alias) + "");
 		#/
 	}
 	if(zm_utility::is_player_valid(e_speaker))
 	{
-		e_speaker function_7b697614(str_vo_alias, n_wait, b_wait_if_busy, var_a8564a44);
+		e_speaker function_7b697614(str_vo_alias, n_wait, b_wait_if_busy, n_priority);
 	}
 }
 
@@ -295,7 +296,7 @@ function function_897246e4(str_vo_alias, n_wait = 0, b_wait_if_busy = 0, var_a85
 	Parameters: 5
 	Flags: Linked
 */
-function function_7b697614(str_vo_alias, n_delay = 0, b_wait_if_busy = 0, var_a8564a44 = 0, var_d1295208 = 0)
+function function_7b697614(str_vo_alias, n_delay = 0, b_wait_if_busy = 0, n_priority = 0, var_d1295208 = 0)
 {
 	self endon(#"death");
 	self endon(#"disconnect");
@@ -336,7 +337,7 @@ function function_7b697614(str_vo_alias, n_delay = 0, b_wait_if_busy = 0, var_a8
 			return;
 		}
 		self.isspeaking = 1;
-		self.n_vo_priority = var_a8564a44;
+		self.n_vo_priority = n_priority;
 		self.str_vo_being_spoken = str_vo_alias;
 		array::add(level.a_e_speakers, self, 1);
 		var_2df3d133 = str_vo_alias + "_vo_done";

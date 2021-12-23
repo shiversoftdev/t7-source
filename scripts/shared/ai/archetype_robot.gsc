@@ -328,8 +328,8 @@ function robotproceduraltraversalupdate(entity, asmstatename)
 		assert(isdefined(entity.traversal));
 	#/
 	traversal = entity.traversal;
-	t = min(gettime() - traversal.starttime / traversal.totaltime, 1);
-	curveremaining = traversal.curvelength * 1 - t;
+	t = min((gettime() - traversal.starttime) / traversal.totaltime, 1);
+	curveremaining = traversal.curvelength * (1 - t);
 	if(curveremaining < traversal.landingdistance)
 	{
 		traversal.landing = 1;
@@ -384,7 +384,7 @@ function robotcalcproceduraltraversal(entity, asmstatename)
 	if(endiswallrun)
 	{
 		facenormal = getnavmeshfacenormal(traversal.endpoint1, 30);
-		traversal.endpoint1 = traversal.endpoint1 + facenormal * 30 / 2;
+		traversal.endpoint1 = traversal.endpoint1 + ((facenormal * 30) / 2);
 	}
 	if(!isdefined(traversal.endpoint1))
 	{
@@ -410,7 +410,7 @@ function robotcalcproceduraltraversal(entity, asmstatename)
 	{
 		speedboost = entity [[entity.traversalspeedboost]]();
 	}
-	traversal.speedoncurve = traversal.minimumspeed + speedboost * 12;
+	traversal.speedoncurve = (traversal.minimumspeed + speedboost) * 12;
 	heightoffset = max(traversal.absheighttoend * 0.8, min(traversal.abslengthtoend, 96));
 	traversal.startpoint2 = entity.origin + (0, 0, heightoffset);
 	traversal.endpoint2 = traversal.endpoint1 + (0, 0, heightoffset);
@@ -429,7 +429,7 @@ function robotcalcproceduraltraversal(entity, asmstatename)
 		if(startdirection == "out")
 		{
 			point2scale = 0.5;
-			towardend = traversal.endnode.origin - entity.origin * point2scale;
+			towardend = (traversal.endnode.origin - entity.origin) * point2scale;
 			traversal.startpoint2 = entity.origin + (towardend[0], towardend[1], 0);
 			traversal.endpoint2 = traversal.endpoint1 + (0, 0, traversal.absheighttoend * point2scale);
 			traversal.angles = entity.angles;
@@ -437,7 +437,7 @@ function robotcalcproceduraltraversal(entity, asmstatename)
 		if(enddirection == "in")
 		{
 			point2scale = 0.5;
-			towardstart = entity.origin - traversal.endnode.origin * point2scale;
+			towardstart = (entity.origin - traversal.endnode.origin) * point2scale;
 			traversal.startpoint2 = entity.origin + (0, 0, traversal.absheighttoend * point2scale);
 			traversal.endpoint2 = traversal.endnode.origin + (towardstart[0], towardstart[1], 0);
 			facenormal = getnavmeshfacenormal(traversal.endnode.origin, 30);
@@ -480,7 +480,7 @@ function robotcalcproceduraltraversal(entity, asmstatename)
 		previouspoint = nextpoint;
 	}
 	traversal.starttime = gettime();
-	traversal.endtime = traversal.starttime + traversal.curvelength * 1000 / traversal.speedoncurve;
+	traversal.endtime = traversal.starttime + (traversal.curvelength * (1000 / traversal.speedoncurve));
 	traversal.totaltime = traversal.endtime - traversal.starttime;
 	traversal.landing = 0;
 	return 1;
@@ -500,7 +500,7 @@ function robottraversestart(entity, asmstatename)
 	entity.skipdeath = 1;
 	traversal = entity.traversal;
 	traversal.starttime = gettime();
-	traversal.endtime = traversal.starttime + traversal.curvelength * 1000 / traversal.speedoncurve;
+	traversal.endtime = traversal.starttime + (traversal.curvelength * (1000 / traversal.speedoncurve));
 	traversal.totaltime = traversal.endtime - traversal.starttime;
 	animationstatenetworkutility::requeststate(entity, asmstatename);
 	return 5;
@@ -639,7 +639,7 @@ private function mocomprobotstartwallrunupdate(entity, mocompanim, mocompanimble
 		{
 			movedirection = movedirection * -1;
 		}
-		forwardpositiononwall = getclosestpointonnavmesh(positiononwall + movedirection * 12, 30, 0);
+		forwardpositiononwall = getclosestpointonnavmesh(positiononwall + (movedirection * 12), 30, 0);
 		anglestoend = vectortoangles(forwardpositiononwall - positiononwall);
 		/#
 			recordline(positiononwall, forwardpositiononwall, (1, 0, 0), "", entity);
@@ -676,7 +676,7 @@ private function mocomprobotstartwallrunterminate(entity, mocompanim, mocompanim
 */
 private function calculatecubicbezier(t, p1, p2, p3, p4)
 {
-	return pow(1 - t, 3) * p1 + 3 * pow(1 - t, 2) * t * p2 + 3 * 1 - t * pow(t, 2) * p3 + pow(t, 3) * p4;
+	return ((pow(1 - t, 3)) * p1) + (((3 * (pow(1 - t, 2))) * t) * p2) + ((3 * (1 - t)) * pow(t, 2) * p3) + (pow(t, 3) * p4);
 }
 
 /*
@@ -717,10 +717,10 @@ private function mocomprobotstarttraversalinit(entity, mocompanim, mocompanimble
 			movedirection = movedirection * -1;
 		}
 		/#
-			recordline(endnode.origin, endnode.origin + facenormal * 20, (1, 0, 0), "", entity);
+			recordline(endnode.origin, endnode.origin + (facenormal * 20), (1, 0, 0), "", entity);
 		#/
 		/#
-			recordline(endnode.origin, endnode.origin + movedirection * 20, (1, 0, 0), "", entity);
+			recordline(endnode.origin, endnode.origin + (movedirection * 20), (1, 0, 0), "", entity);
 		#/
 		angles = vectortoangles(movedirection);
 		entity orientmode("face angle", angles[1]);
@@ -796,7 +796,7 @@ private function mocomprobotproceduraltraversalupdate(entity, mocompanim, mocomp
 			return;
 		}
 		endiswallrun = traversal.endnode.spawnflags & 2048;
-		realt = gettime() - traversal.starttime / traversal.totaltime;
+		realt = (gettime() - traversal.starttime) / traversal.totaltime;
 		t = min(realt, 1);
 		if(t < 1 || realt == 1 || !endiswallrun)
 		{
@@ -918,12 +918,12 @@ private function _calculatewallrundirection(startposition, endposition)
 	if(isdefined(facenormal))
 	{
 		/#
-			recordline(endposition, endposition + facenormal * 12, (1, 0.5, 0), "", entity);
+			recordline(endposition, endposition + (facenormal * 12), (1, 0.5, 0), "", entity);
 		#/
 		angles = vectortoangles(facenormal);
 		right = anglestoright(angles);
 		d = vectordot(right, endposition) * -1;
-		if(vectordot(right, startposition) + d > 0)
+		if((vectordot(right, startposition) + d) > 0)
 		{
 			return "right";
 		}
@@ -1063,7 +1063,7 @@ private function robotstartjumpdirection()
 		if(startiswallrun)
 		{
 			abslengthtoend = distance2d(startnode.origin, endnode.origin);
-			if(startnode.origin[2] - endnode.origin[2] > 48 && abslengthtoend < 250)
+			if((startnode.origin[2] - endnode.origin[2]) > 48 && abslengthtoend < 250)
 			{
 				return "out";
 			}
@@ -1094,7 +1094,7 @@ private function robotendjumpdirection()
 		if(endiswallrun)
 		{
 			abslengthtoend = distance2d(startnode.origin, endnode.origin);
-			if(endnode.origin[2] - startnode.origin[2] > 48 && abslengthtoend < 250)
+			if((endnode.origin[2] - startnode.origin[2]) > 48 && abslengthtoend < 250)
 			{
 				return "in";
 			}
@@ -1235,9 +1235,9 @@ private function robotcrawlercanshootenemy(entity)
 		return 0;
 	}
 	aimlimits = entity getaimlimitsfromentry("robot_crawler");
-	yawtoenemy = angleclamp180(vectortoangles(entity lastknownpos(entity.enemy) - entity.origin)[1] - entity.angles[1]);
+	yawtoenemy = angleclamp180((vectortoangles(entity lastknownpos(entity.enemy) - entity.origin)[1]) - entity.angles[1]);
 	angleepsilon = 10;
-	return yawtoenemy <= aimlimits["aim_left"] + angleepsilon && yawtoenemy >= aimlimits["aim_right"] + angleepsilon;
+	return yawtoenemy <= (aimlimits["aim_left"] + angleepsilon) && yawtoenemy >= (aimlimits["aim_right"] + angleepsilon);
 }
 
 /*
@@ -1453,7 +1453,7 @@ function robotcanpreemptivejuke(entity)
 			jukemaxdistance = 1200;
 		}
 	}
-	if(distancesquared(entity.origin, entity.enemy.origin) < jukemaxdistance * jukemaxdistance)
+	if(distancesquared(entity.origin, entity.enemy.origin) < (jukemaxdistance * jukemaxdistance))
 	{
 		angledifference = absangleclamp180(entity.angles[1] - entity.enemy.angles[1]);
 		/#
@@ -2143,7 +2143,7 @@ private function robotsupportsovercover(entity)
 {
 	if(isdefined(entity.node))
 	{
-		if(isdefined(entity.node.spawnflags) && entity.node.spawnflags & 4 == 4)
+		if(isdefined(entity.node.spawnflags) && (entity.node.spawnflags & 4) == 4)
 		{
 			return entity.node.type == "Cover Stand" || entity.node.type == "Conceal Stand";
 		}
@@ -2301,7 +2301,7 @@ private function movetoplayerupdate(entity, asmstatename)
 	}
 	if(entity.allowpushactors)
 	{
-		if(isdefined(entity.enemy) && distancesquared(entity.origin, entity.enemy.origin) > 300 * 300)
+		if(isdefined(entity.enemy) && distancesquared(entity.origin, entity.enemy.origin) > (300 * 300))
 		{
 			entity pushactors(0);
 		}
@@ -2325,18 +2325,18 @@ private function movetoplayerupdate(entity, asmstatename)
 		{
 			shouldrepath = 1;
 		}
-		else if(distancesquared(entity.lastknownenemypos, entity.enemy.origin) > 72 * 72)
+		else if(distancesquared(entity.lastknownenemypos, entity.enemy.origin) > (72 * 72))
 		{
 			shouldrepath = 1;
 		}
-		else if(distancesquared(entity.origin, entity.enemy.origin) <= 120 * 120)
+		else if(distancesquared(entity.origin, entity.enemy.origin) <= (120 * 120))
 		{
 			shouldrepath = 1;
 		}
 		else if(isdefined(entity.pathgoalpos))
 		{
 			distancetogoalsqr = distancesquared(entity.origin, entity.pathgoalpos);
-			shouldrepath = distancetogoalsqr < 72 * 72;
+			shouldrepath = distancetogoalsqr < (72 * 72);
 		}
 	}
 	if(shouldrepath)
@@ -2351,7 +2351,7 @@ private function movetoplayerupdate(entity, asmstatename)
 		if(isdefined(entity.lastvalidenemypos))
 		{
 			entity useposition(entity.lastvalidenemypos);
-			if(distancesquared(entity.origin, entity.lastvalidenemypos) > 240 * 240)
+			if(distancesquared(entity.origin, entity.lastvalidenemypos) > (240 * 240))
 			{
 				path = entity calcapproximatepathtoposition(entity.lastvalidenemypos, 0);
 				/#
@@ -2368,10 +2368,10 @@ private function movetoplayerupdate(entity, asmstatename)
 				for(index = 1; index < path.size; index++)
 				{
 					currentseglength = distance(path[index - 1], path[index]);
-					if(segmentlength + currentseglength > deviationdistance)
+					if((segmentlength + currentseglength) > deviationdistance)
 					{
 						remaininglength = deviationdistance - segmentlength;
-						seedposition = path[index - 1] + vectornormalize(path[index] - path[index - 1]) * remaininglength;
+						seedposition = (path[index - 1]) + ((vectornormalize(path[index] - (path[index - 1]))) * remaininglength);
 						/#
 							recordcircle(seedposition, 2, (1, 0.5, 0), "", entity);
 						#/
@@ -2427,9 +2427,9 @@ private function robothasenemytomelee(entity)
 	if(isdefined(entity.enemy) && issentient(entity.enemy) && entity.enemy.health > 0)
 	{
 		enemydistsq = distancesquared(entity.origin, entity.enemy.origin);
-		if(enemydistsq < entity.chargemeleedistance * entity.chargemeleedistance && abs(entity.enemy.origin[2] - entity.origin[2]) < 24)
+		if(enemydistsq < (entity.chargemeleedistance * entity.chargemeleedistance) && (abs(entity.enemy.origin[2] - entity.origin[2])) < 24)
 		{
-			yawtoenemy = angleclamp180(entity.angles[1] - vectortoangles(entity.enemy.origin - entity.origin)[1]);
+			yawtoenemy = angleclamp180(entity.angles[1] - (vectortoangles(entity.enemy.origin - entity.origin)[1]));
 			return abs(yawtoenemy) <= 80;
 		}
 	}
@@ -2453,7 +2453,7 @@ private function robotroguehasenemytomelee(entity)
 		{
 			return 0;
 		}
-		return distancesquared(entity.origin, entity.enemy.origin) < 132 * 132;
+		return distancesquared(entity.origin, entity.enemy.origin) < (132 * 132);
 	}
 	return 0;
 }
@@ -2494,9 +2494,9 @@ private function robothascloseenemytomelee(entity)
 			return 0;
 		}
 		enemydistsq = distancesquared(entity.origin, entity.enemy.origin);
-		if(enemydistsq < 64 * 64)
+		if(enemydistsq < (64 * 64))
 		{
-			yawtoenemy = angleclamp180(entity.angles[1] - vectortoangles(entity.enemy.origin - entity.origin)[1]);
+			yawtoenemy = angleclamp180(entity.angles[1] - (vectortoangles(entity.enemy.origin - entity.origin)[1]));
 			return abs(yawtoenemy) <= 80;
 		}
 	}
@@ -2516,7 +2516,7 @@ private function robotroguehascloseenemytomelee(entity)
 {
 	if(isdefined(entity.enemy) && issentient(entity.enemy) && entity.enemy.health > 0 && entity ai::get_behavior_attribute("rogue_control") != "level_3")
 	{
-		return distancesquared(entity.origin, entity.enemy.origin) < 64 * 64;
+		return distancesquared(entity.origin, entity.enemy.origin) < (64 * 64);
 	}
 	return 0;
 }
@@ -2615,7 +2615,7 @@ private function _robotoutsidemovementrange(entity, range, useenemypos)
 	{
 		return 0;
 	}
-	outsiderange = distancesquared(entity.origin, goalpos) > range * range;
+	outsiderange = distancesquared(entity.origin, goalpos) > (range * range);
 	return outsiderange;
 }
 
@@ -2684,7 +2684,7 @@ private function robotoutsidetacticalwalkrange(entity)
 	{
 		return 0;
 	}
-	if(isdefined(entity.enemy) && distancesquared(entity.origin, entity.goalpos) < entity.minwalkdistance * entity.minwalkdistance)
+	if(isdefined(entity.enemy) && distancesquared(entity.origin, entity.goalpos) < (entity.minwalkdistance * entity.minwalkdistance))
 	{
 		return 0;
 	}
@@ -2706,7 +2706,7 @@ private function robotwithinsprintrange(entity)
 	{
 		return 0;
 	}
-	if(isdefined(entity.enemy) && distancesquared(entity.origin, entity.goalpos) < entity.minwalkdistance * entity.minwalkdistance)
+	if(isdefined(entity.enemy) && distancesquared(entity.origin, entity.goalpos) < (entity.minwalkdistance * entity.minwalkdistance))
 	{
 		return 0;
 	}
@@ -2770,7 +2770,7 @@ private function robotismoving(entity)
 	velocity = entity getvelocity();
 	velocity = (velocity[0], 0, velocity[1]);
 	velocitysqr = lengthsquared(velocity);
-	return velocitysqr > 24 * 24;
+	return velocitysqr > (24 * 24);
 }
 
 /*
@@ -2839,7 +2839,7 @@ private function _robotcoverposition(entity)
 	}
 	shouldlookforbettercover = !shouldusecovernode || itsbeenawhile || !isatscriptgoal;
 	/#
-		recordenttext("" + shouldusecovernode + "" + itsbeenawhile + "" + isatscriptgoal, entity, (shouldlookforbettercover ? (0, 1, 0) : (1, 0, 0)), "");
+		recordenttext((((("" + shouldusecovernode) + "") + itsbeenawhile) + "") + isatscriptgoal, entity, (shouldlookforbettercover ? (0, 1, 0) : (1, 0, 0)), "");
 	#/
 	if(shouldlookforbettercover && isdefined(entity.enemy) && !entity.keepclaimednode)
 	{
@@ -2986,7 +2986,7 @@ private function _robotrusherposition(entity)
 			return 1;
 		}
 		disttoenemysqr = distance2dsquared(entity.origin, entity.enemy.origin);
-		if(disttoenemysqr <= entity.robotrushermaxradius * entity.robotrushermaxradius && disttoenemysqr >= entity.robotrusherminradius * entity.robotrusherminradius)
+		if(disttoenemysqr <= (entity.robotrushermaxradius * entity.robotrushermaxradius) && disttoenemysqr >= (entity.robotrusherminradius * entity.robotrusherminradius))
 		{
 			return 1;
 		}
@@ -3046,7 +3046,7 @@ private function _robotguardposition(entity)
 		{
 			return 1;
 		}
-		if(!isdefined(entity.guardposition) || distancesquared(entity.origin, entity.guardposition) < 60 * 60)
+		if(!isdefined(entity.guardposition) || distancesquared(entity.origin, entity.guardposition) < (60 * 60))
 		{
 			entity pathmode("move delayed", 1, randomfloatrange(1, 1.5));
 			queryresult = positionquery_source_navigation(entity.goalpos, 0, entity.goalradius / 2, 36, 36, entity, 72);
@@ -3075,7 +3075,7 @@ private function _robotguardposition(entity)
 		currenttime = gettime();
 		if(!isdefined(entity.intermediateguardtime) || entity.intermediateguardtime < currenttime)
 		{
-			if(isdefined(entity.intermediateguardposition) && distancesquared(entity.intermediateguardposition, entity.origin) < 24 * 24)
+			if(isdefined(entity.intermediateguardposition) && distancesquared(entity.intermediateguardposition, entity.origin) < (24 * 24))
 			{
 				entity.guardposition = entity.origin;
 			}
@@ -3271,7 +3271,7 @@ private function robottryreacquireservice(entity)
 		case 1:
 		case 2:
 		{
-			step_size = 32 + entity.reacquire_state * 32;
+			step_size = 32 + (entity.reacquire_state * 32);
 			reacquirepos = entity reacquirestep(step_size);
 			break;
 		}
@@ -3469,7 +3469,7 @@ private function shouldstepincondition(entity)
 	{
 		return 0;
 	}
-	exposedtimeinseconds = gettime() - entity.steppedouttime / 1000;
+	exposedtimeinseconds = (gettime() - entity.steppedouttime) / 1000;
 	exceededtime = exposedtimeinseconds >= 4 || exposedtimeinseconds >= 8;
 	suppressed = entity.suppressionmeter > entity.suppressionthreshold;
 	return exceededtime || (exceededtime && suppressed);
@@ -3518,7 +3518,7 @@ private function _trygibbinghead(entity, damage, hitloc, isexplosive)
 	{
 		gibserverutils::gibhead(entity);
 	}
-	else if(entity.health - damage <= 0 && randomfloatrange(0, 1) <= 0.25)
+	else if((entity.health - damage) <= 0 && randomfloatrange(0, 1) <= 0.25)
 	{
 		gibserverutils::gibhead(entity);
 	}
@@ -3586,23 +3586,23 @@ private function _trygibbinglimb(entity, damage, hitloc, isexplosive, ondeath)
 */
 private function _trygibbinglegs(entity, damage, hitloc, isexplosive, attacker = entity)
 {
-	cangiblegs = entity.health - damage <= 0 && entity.allowdeath;
+	cangiblegs = (entity.health - damage) <= 0 && entity.allowdeath;
 	if(entity ai::get_behavior_attribute("can_become_crawler"))
 	{
-		cangiblegs = cangiblegs || (entity.health - damage / entity.maxhealth <= 0.25 && distancesquared(entity.origin, attacker.origin) <= 360000 && !robotsoldierbehavior::robotisatcovercondition(entity) && entity.allowdeath);
+		cangiblegs = cangiblegs || (((entity.health - damage) / entity.maxhealth) <= 0.25 && distancesquared(entity.origin, attacker.origin) <= 360000 && !robotsoldierbehavior::robotisatcovercondition(entity) && entity.allowdeath);
 	}
-	if(entity.gibdeath && entity.health - damage <= 0 && entity.allowdeath && !robotsoldierbehavior::robotiscrawler(entity))
+	if(entity.gibdeath && (entity.health - damage) <= 0 && entity.allowdeath && !robotsoldierbehavior::robotiscrawler(entity))
 	{
 		return;
 	}
-	if(entity.health - damage <= 0 && entity.allowdeath && isexplosive && randomfloatrange(0, 1) <= 0.5)
+	if((entity.health - damage) <= 0 && entity.allowdeath && isexplosive && randomfloatrange(0, 1) <= 0.5)
 	{
 		gibserverutils::giblegs(entity);
 		entity startragdoll();
 	}
 	else if(cangiblegs && isinarray(array("left_leg_upper", "left_leg_lower", "left_foot"), hitloc) && randomfloatrange(0, 1) <= 1)
 	{
-		if(entity.health - damage > 0)
+		if((entity.health - damage) > 0)
 		{
 			becomecrawler(entity);
 		}
@@ -3610,13 +3610,13 @@ private function _trygibbinglegs(entity, damage, hitloc, isexplosive, attacker =
 	}
 	else if(cangiblegs && isinarray(array("right_leg_upper", "right_leg_lower", "right_foot"), hitloc) && randomfloatrange(0, 1) <= 1)
 	{
-		if(entity.health - damage > 0)
+		if((entity.health - damage) > 0)
 		{
 			becomecrawler(entity);
 		}
 		gibserverutils::gibrightleg(entity);
 	}
-	else if(entity.health - damage <= 0 && entity.allowdeath && randomfloatrange(0, 1) <= 0.25)
+	else if((entity.health - damage) <= 0 && entity.allowdeath && randomfloatrange(0, 1) <= 0.25)
 	{
 		if(math::cointoss())
 		{
@@ -3649,7 +3649,7 @@ private function robotgibdamageoverride(inflictor, attacker, damage, flags, mean
 	{
 		return damage;
 	}
-	if(entity.health - damage / entity.maxhealth > 0.75)
+	if(((entity.health - damage) / entity.maxhealth) > 0.75)
 	{
 		return damage;
 	}
@@ -3713,7 +3713,7 @@ private function robotgibdeathoverride(inflictor, attacker, damage, meansofdeath
 		gibserverutils::giblegs(entity);
 		velocity = entity getvelocity() / 9;
 		entity startragdoll();
-		entity launchragdoll((velocity[0] + randomfloatrange(-10, 10), velocity[1] + randomfloatrange(-10, 10), randomfloatrange(40, 50)), "j_mainroot");
+		entity launchragdoll((velocity[0] + (randomfloatrange(-10, 10)), velocity[1] + (randomfloatrange(-10, 10)), randomfloatrange(40, 50)), "j_mainroot");
 		physicsexplosionsphere(entity.origin + vectorscale((0, 0, 1), 36), 120, 32, 1);
 	}
 	else
@@ -4145,7 +4145,7 @@ private function forcerobotsoldiermindcontrollevel2()
 	{
 		destructserverutils::destructrandompieces(entity);
 	}
-	if(entity.health > entity.maxhealth * 0.6)
+	if(entity.health > (entity.maxhealth * 0.6))
 	{
 		entity.health = int(entity.maxhealth * 0.6);
 	}
@@ -4407,7 +4407,7 @@ function robotforcecrawler(entity, attribute, oldvalue, value)
 		{
 			gibserverutils::giblegs(entity);
 		}
-		if(entity.health > entity.maxhealth * 0.25)
+		if(entity.health > (entity.maxhealth * 0.25))
 		{
 			entity.health = int(entity.maxhealth * 0.25);
 		}

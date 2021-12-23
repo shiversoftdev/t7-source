@@ -729,7 +729,7 @@ function church_volume_death_check()
 */
 function spawn_tablet_model(n_player_id, str_location, str_state)
 {
-	s_tablet_spawn = struct::get("oneinchpunch_" + str_location + "_tablet_" + n_player_id, "targetname");
+	s_tablet_spawn = struct::get((("oneinchpunch_" + str_location) + "_tablet_") + n_player_id, "targetname");
 	v_spawnpt = s_tablet_spawn.origin;
 	v_spawnang = s_tablet_spawn.angles;
 	m_tablet = spawn("script_model", v_spawnpt);
@@ -746,7 +746,7 @@ function spawn_tablet_model(n_player_id, str_location, str_state)
 	{
 		m_tablet setmodel("p7_zm_ori_tablet_stone_muddy");
 	}
-	m_tablet.targetname = "tablet_" + str_location + "_" + n_player_id;
+	m_tablet.targetname = (("tablet_" + str_location) + "_") + n_player_id;
 	return m_tablet;
 }
 

@@ -737,7 +737,7 @@ function player_intermission()
 			{
 				if(!isdefined(org))
 				{
-					org = spawn("script_model", self.origin + vectorscale((0, 0, -1), 60));
+					org = spawn("script_model", self.origin + (vectorscale((0, 0, -1), 60)));
 					org setmodel("tag_origin");
 				}
 				org.origin = points[i].origin;
@@ -888,7 +888,7 @@ function onallplayersready()
 			}
 		}
 		/#
-			println("" + getnumconnectedplayers() + "" + getnumexpectedplayers());
+			println((("" + getnumconnectedplayers()) + "") + getnumexpectedplayers());
 		#/
 	}
 	while(var_f862b7b1 < var_91f98264 || player_count_actual < var_91f98264);

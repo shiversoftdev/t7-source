@@ -413,7 +413,7 @@ function function_784ed421()
 	Parameters: 3
 	Flags: Linked
 */
-function function_4c6beece(var_f9f788a6, var_8963ba33, e_attacker)
+function function_4c6beece(var_f9f788a6, b_hero_weapon, e_attacker)
 {
 	if(var_f9f788a6 == 1)
 	{
@@ -436,7 +436,7 @@ function function_4c6beece(var_f9f788a6, var_8963ba33, e_attacker)
 		self.var_66bbb0c0 = 76;
 	}
 	s_org = level.var_564761a3.var_11c98268;
-	self thread spore_cloud_fx(var_8963ba33, s_org, var_f9f788a6);
+	self thread spore_cloud_fx(b_hero_weapon, s_org, var_f9f788a6);
 	playsoundatposition("zmb_spore_eject", self.origin);
 	var_88c0f006 = self function_cc07e4ad(self.var_66bbb0c0, s_org);
 	while(self.var_d7bb540a > 0 && (!isdefined(level.var_564761a3.var_1cd02afb) || !isalive(level.var_564761a3.var_1cd02afb)))
@@ -444,8 +444,8 @@ function function_4c6beece(var_f9f788a6, var_8963ba33, e_attacker)
 		self.var_d7bb540a = self.var_d7bb540a - 1;
 		a_e_enemies = var_88c0f006 array::get_touching(getaiteamarray("axis"));
 		a_e_players = var_88c0f006 array::get_touching(level.players);
-		array::thread_all(a_e_enemies, &function_c6cec92d, 1, var_8963ba33, e_attacker);
-		array::thread_all(a_e_players, &function_c6cec92d, 1, var_8963ba33, undefined);
+		array::thread_all(a_e_enemies, &function_c6cec92d, 1, b_hero_weapon, e_attacker);
+		array::thread_all(a_e_players, &function_c6cec92d, 1, b_hero_weapon, undefined);
 		wait(1);
 	}
 	self clientfield::set("side_ee_gt_spore_cloud_fx", 0);
@@ -462,9 +462,9 @@ function function_4c6beece(var_f9f788a6, var_8963ba33, e_attacker)
 	Parameters: 3
 	Flags: Linked
 */
-function spore_cloud_fx(var_8963ba33, s_org, var_f9f788a6)
+function spore_cloud_fx(b_hero_weapon, s_org, var_f9f788a6)
 {
-	if(var_8963ba33)
+	if(b_hero_weapon)
 	{
 		if(var_f9f788a6 == 1)
 		{
@@ -519,7 +519,7 @@ function function_cc07e4ad(var_66bbb0c0, s_org)
 	Parameters: 3
 	Flags: Linked
 */
-function function_c6cec92d(is_enemy, var_8963ba33, e_attacker)
+function function_c6cec92d(is_enemy, b_hero_weapon, e_attacker)
 {
 	self endon(#"death");
 	self endon(#"disconnect");
@@ -571,7 +571,7 @@ function function_c6cec92d(is_enemy, var_8963ba33, e_attacker)
 				{
 					e_attacker notify(#"update_challenge_3_1");
 				}
-				if(var_8963ba33)
+				if(b_hero_weapon)
 				{
 					radiusdamage(self.origin, 128, 1000, 1000);
 				}
@@ -585,7 +585,7 @@ function function_c6cec92d(is_enemy, var_8963ba33, e_attacker)
 		{
 			if(!self.var_d07c64b6)
 			{
-				if(var_8963ba33)
+				if(b_hero_weapon)
 				{
 					self.var_d07c64b6 = 1;
 					self dodamage(self.health / 2, self.origin);
@@ -603,7 +603,7 @@ function function_c6cec92d(is_enemy, var_8963ba33, e_attacker)
 		{
 			self thread function_703ef5e8();
 		}
-		if(var_8963ba33)
+		if(b_hero_weapon)
 		{
 			self clientfield::set("side_ee_gt_spore_trail_player_fx", 1);
 			self thread function_365b46bb();

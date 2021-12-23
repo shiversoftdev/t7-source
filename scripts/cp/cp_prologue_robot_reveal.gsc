@@ -312,6 +312,7 @@ function function_f7a7c69a()
 	a_ai_allies = cp_prologue_util::get_ai_allies();
 	foreach(var_b9659309, ai_ally in a_ai_allies)
 	{
+		var_53b8ce9a = getnextarraykey(var_e32153e3);
 		while(isalive(ai_ally) && !ai_ally istouching(var_ede59fe8))
 		{
 			wait(0.1);

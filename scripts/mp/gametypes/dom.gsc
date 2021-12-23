@@ -151,7 +151,7 @@ function onstartgametype()
 	level.spawn_start = [];
 	foreach(var_3ed956da, team in level.teams)
 	{
-		level.spawn_start[team] = spawnlogic::get_spawnpoint_array("mp_dom_spawn_" + team + "_start");
+		level.spawn_start[team] = spawnlogic::get_spawnpoint_array(("mp_dom_spawn_" + team) + "_start");
 	}
 	flagspawns = spawnlogic::get_spawnpoint_array("mp_dom_spawn_flag_a");
 	level.startpos["allies"] = level.spawn_start["allies"][0].origin;
@@ -268,7 +268,7 @@ function domflags()
 				trigger.visual = dom_flag;
 				trigger.script_label = dom_flag.script_label;
 			}
-			util::error("" + dom_flag.script_label + "" + dom_flag.target);
+			util::error((("" + dom_flag.script_label) + "") + dom_flag.target);
 		}
 		util::error("" + dom_flag.script_label);
 		level.flags[level.flags.size] = trigger;
@@ -304,7 +304,7 @@ function domflags()
 		domflag gameobjects::set_objective_entity(visuals[0]);
 		domflag gameobjects::set_owner_team("neutral");
 		tracestart = visuals[0].origin + vectorscale((0, 0, 1), 32);
-		traceend = visuals[0].origin + vectorscale((0, 0, -1), 32);
+		traceend = visuals[0].origin + (vectorscale((0, 0, -1), 32));
 		trace = bullettrace(tracestart, traceend, 0, undefined);
 		upangles = vectortoangles(trace["normal"]);
 		domflag.baseeffectforward = anglestoforward(upangles);
@@ -546,7 +546,7 @@ function flagcapturedfromneutral(team)
 	self.singleowner = 1;
 	otherteam = util::getotherteam(team);
 	thread util::printandsoundoneveryone(team, undefined, &"", undefined, "mp_war_objective_taken");
-	thread sound::play_on_players("mus_dom_captured" + "_" + level.teampostfix[team]);
+	thread sound::play_on_players(("mus_dom_captured" + "_") + level.teampostfix[team]);
 	if(getteamflagcount(team) == level.flags.size)
 	{
 		statusdialog("secured_all", team, "objective_all");
@@ -755,7 +755,7 @@ function onusewithneutralizingflag(player)
 		self flagneutralized(team, oldteam);
 	}
 	/#
-		assert(string != &"");
+		assert(string != (&""));
 	#/
 	touchlist = [];
 	touchkeys = getarraykeys(self.touchlist[team]);
@@ -815,7 +815,7 @@ function onusewithoutneutralizingflag(player)
 	}
 	string = getdomflagusestring(label, 0);
 	/#
-		assert(string != &"");
+		assert(string != (&""));
 	#/
 	touchlist = [];
 	touchkeys = getarraykeys(self.touchlist[team]);
@@ -1040,7 +1040,7 @@ function updatedomscores()
 		scoring_teams = [];
 		round_score_limit = util::get_current_round_score_limit();
 		totalflags = getteamflagcount("allies") + getteamflagcount("axis");
-		if(totalflags == 3 && game["teamScores"]["allies"] == round_score_limit - 1 && game["teamScores"]["axis"] == round_score_limit - 1)
+		if(totalflags == 3 && game["teamScores"]["allies"] == (round_score_limit - 1) && game["teamScores"]["axis"] == (round_score_limit - 1))
 		{
 			level.clampscorelimit = 0;
 		}
@@ -1099,7 +1099,7 @@ function updatedomscores()
 		}
 		onscoreclosemusic();
 		timepassed = globallogic_utils::gettimepassed();
-		if(timepassed / 1000 > 120 && numownedflags < 2 || (timepassed / 1000 > 300 && numownedflags < 3) && gamemodeismode(0))
+		if((timepassed / 1000) > 120 && numownedflags < 2 || ((timepassed / 1000) > 300 && numownedflags < 3) && gamemodeismode(0))
 		{
 			thread globallogic::endgame("tie", game["strings"]["time_limit_reached"]);
 			return;
@@ -1353,7 +1353,7 @@ function killwhilecontesting(flag)
 		self.clearenemycount = 0;
 		return;
 	}
-	if(self.clearenemycount >= 2 && killtime + 200 > gettime())
+	if(self.clearenemycount >= 2 && (killtime + 200) > gettime())
 	{
 		scoreevents::processscoreevent("clear_2_attackers", self);
 	}
@@ -1614,7 +1614,7 @@ function flagsetup()
 		}
 		if(isdefined(closestdesc.flag))
 		{
-			maperrors[maperrors.size] = "flag_descriptor with script_linkname \"" + closestdesc.script_linkname + "\" is nearby more than one flag; is there a unique descriptor near each flag?";
+			maperrors[maperrors.size] = ("flag_descriptor with script_linkname \"" + closestdesc.script_linkname) + "\" is nearby more than one flag; is there a unique descriptor near each flag?";
 			continue;
 		}
 		flags[i].descriptor = closestdesc;
@@ -1638,13 +1638,13 @@ function flagsetup()
 				otherdesc = descriptorsbylinkname[adjdescs[j]];
 				if(!isdefined(otherdesc) || otherdesc.targetname != "flag_descriptor")
 				{
-					maperrors[maperrors.size] = "flag_descriptor with script_linkname \"" + flags[i].descriptor.script_linkname + "\" linked to \"" + adjdescs[j] + "\" which does not exist as a script_linkname of any other entity with a targetname of flag_descriptor (or, if it does, that flag_descriptor has not been assigned to a flag)";
+					maperrors[maperrors.size] = ((("flag_descriptor with script_linkname \"" + flags[i].descriptor.script_linkname) + "\" linked to \"") + adjdescs[j]) + "\" which does not exist as a script_linkname of any other entity with a targetname of flag_descriptor (or, if it does, that flag_descriptor has not been assigned to a flag)";
 					continue;
 				}
 				adjflag = otherdesc.flag;
 				if(adjflag == flags[i])
 				{
-					maperrors[maperrors.size] = "flag_descriptor with script_linkname \"" + flags[i].descriptor.script_linkname + "\" linked to itself";
+					maperrors[maperrors.size] = ("flag_descriptor with script_linkname \"" + flags[i].descriptor.script_linkname) + "\" linked to itself";
 					continue;
 				}
 				flags[i].adjflags[flags[i].adjflags.size] = adjflag;
@@ -1659,7 +1659,7 @@ function flagsetup()
 			desc = descriptorsbylinkname[spawnpoints[i].script_linkto];
 			if(!isdefined(desc) || desc.targetname != "flag_descriptor")
 			{
-				maperrors[maperrors.size] = "Spawnpoint at " + spawnpoints[i].origin + "\" linked to \"" + spawnpoints[i].script_linkto + "\" which does not exist as a script_linkname of any entity with a targetname of flag_descriptor (or, if it does, that flag_descriptor has not been assigned to a flag)";
+				maperrors[maperrors.size] = ((("Spawnpoint at " + spawnpoints[i].origin) + "\" linked to \"") + spawnpoints[i].script_linkto) + "\" which does not exist as a script_linkname of any entity with a targetname of flag_descriptor (or, if it does, that flag_descriptor has not been assigned to a flag)";
 				continue;
 			}
 			nearestflag = desc.flag;

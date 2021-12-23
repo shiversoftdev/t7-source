@@ -342,7 +342,7 @@ function calculate_free_for_all_payouts()
 	{
 		if(playerrankings[i].pers["score"] < playergroup[0].pers["score"])
 		{
-			set_winnings_on_players(playergroup, int(game["wager_pot"] * cumulativepayoutpercentage / playergroup.size));
+			set_winnings_on_players(playergroup, int((game["wager_pot"] * cumulativepayoutpercentage) / playergroup.size));
 			playergroup = [];
 			cumulativepayoutpercentage = 0;
 		}
@@ -353,7 +353,7 @@ function calculate_free_for_all_payouts()
 			cumulativepayoutpercentage = cumulativepayoutpercentage + payoutpercentages[currentpayoutpercentage];
 		}
 	}
-	set_winnings_on_players(playergroup, int(game["wager_pot"] * cumulativepayoutpercentage / playergroup.size));
+	set_winnings_on_players(playergroup, int((game["wager_pot"] * cumulativepayoutpercentage) / playergroup.size));
 }
 
 /*
@@ -577,7 +577,7 @@ function post_round_side_bet()
 function side_bet_timer()
 {
 	level endon(#"side_bet_end");
-	secondstowait = level.sidebetendtime - gettime() / 1000;
+	secondstowait = (level.sidebetendtime - gettime()) / 1000;
 	if(secondstowait < 0)
 	{
 		secondstowait = 0;
@@ -597,7 +597,7 @@ function side_bet_timer()
 */
 function side_bet_all_bets_placed()
 {
-	secondsleft = level.sidebetendtime - gettime() / 1000;
+	secondsleft = (level.sidebetendtime - gettime()) / 1000;
 	if(secondsleft <= 3)
 	{
 		return;
@@ -1015,8 +1015,8 @@ function pulse_powerup_icon(powerupindex)
 	origheight = hud_elem.height;
 	bigwidth = origwidth * pulsepercent;
 	bigheight = origheight * pulsepercent;
-	xoffset = bigwidth - origwidth / 2;
-	yoffset = bigheight - origheight / 2;
+	xoffset = (bigwidth - origwidth) / 2;
+	yoffset = (bigheight - origheight) / 2;
 	hud_elem scaleovertime(0.05, int(bigwidth), int(bigheight));
 	hud_elem moveovertime(0.05);
 	hud_elem.x = origx - xoffset;
@@ -1061,7 +1061,7 @@ function show_powerup_message(powerupindex, doanimation)
 	self.powerups[powerupindex].hud_elem = newclienthudelem(self);
 	self.powerups[powerupindex].hud_elem.fontscale = 1.5;
 	self.powerups[powerupindex].hud_elem.x = -125;
-	self.powerups[powerupindex].hud_elem.y = powerupstarty - powerupspacing * powerupindex;
+	self.powerups[powerupindex].hud_elem.y = powerupstarty - (powerupspacing * powerupindex);
 	self.powerups[powerupindex].hud_elem.alignx = "left";
 	self.powerups[powerupindex].hud_elem.aligny = "middle";
 	self.powerups[powerupindex].hud_elem.horzalign = "user_right";
@@ -1088,8 +1088,8 @@ function show_powerup_message(powerupindex, doanimation)
 	{
 		self.powerups[powerupindex].hud_elem_icon = self hud::createicon(self.powerups[powerupindex].iconmaterial, iconsize, iconsize);
 	}
-	self.powerups[powerupindex].hud_elem_icon.x = self.powerups[powerupindex].hud_elem.x - 5 - iconsize / 2 - bigiconsize / 2;
-	self.powerups[powerupindex].hud_elem_icon.y = powerupstarty - powerupspacing * powerupindex - bigiconsize / 2;
+	self.powerups[powerupindex].hud_elem_icon.x = (self.powerups[powerupindex].hud_elem.x - 5) - (iconsize / 2) - (bigiconsize / 2);
+	self.powerups[powerupindex].hud_elem_icon.y = (powerupstarty - (powerupspacing * powerupindex)) - (bigiconsize / 2);
 	self.powerups[powerupindex].hud_elem_icon.horzalign = "user_right";
 	self.powerups[powerupindex].hud_elem_icon.vertalign = "user_top";
 	self.powerups[powerupindex].hud_elem_icon.color = (1, 1, 1);
@@ -1112,8 +1112,8 @@ function show_powerup_message(powerupindex, doanimation)
 		self.powerups[powerupindex].hud_elem_icon moveovertime(pulsetime);
 	}
 	self.powerups[powerupindex].hud_elem.alpha = 1;
-	self.powerups[powerupindex].hud_elem_icon.x = self.powerups[powerupindex].hud_elem.x - 5 - iconsize;
-	self.powerups[powerupindex].hud_elem_icon.y = powerupstarty - powerupspacing * powerupindex - iconsize / 2;
+	self.powerups[powerupindex].hud_elem_icon.x = (self.powerups[powerupindex].hud_elem.x - 5) - iconsize;
+	self.powerups[powerupindex].hud_elem_icon.y = (powerupstarty - (powerupspacing * powerupindex)) - (iconsize / 2);
 	if(doanimation)
 	{
 		wait(pulsetime);

@@ -311,9 +311,9 @@ function pickup(attacker)
 function spawntacticalinsertion()
 {
 	self endon(#"disconnect");
-	trace = bullettrace(self.origin, self.origin + vectorscale((0, 0, -1), 30), 0, self);
+	trace = bullettrace(self.origin, self.origin + (vectorscale((0, 0, -1), 30)), 0, self);
 	trace["position"] = trace["position"] + (0, 0, 1);
-	if(!self isonground() && bullettracepassed(self.origin, self.origin + vectorscale((0, 0, -1), 30), 0, self))
+	if(!self isonground() && bullettracepassed(self.origin, self.origin + (vectorscale((0, 0, -1), 30)), 0, self))
 	{
 		self giveweapon(level.weapontacticalinsertion);
 		self setweaponammoclip(level.weapontacticalinsertion, 1);

@@ -510,7 +510,7 @@ function fish_swim_by()
 {
 	mdl_fish = getent("oarfish", "targetname");
 	level flag::wait_till("hendricks_follow1_wait2");
-	mdl_fish.angles = mdl_fish.angles + vectorscale((-1, 0, 0), 15);
+	mdl_fish.angles = mdl_fish.angles + (vectorscale((-1, 0, 0), 15));
 	n_time = 10;
 	s_target = mdl_fish;
 	while(isdefined(s_target.target))

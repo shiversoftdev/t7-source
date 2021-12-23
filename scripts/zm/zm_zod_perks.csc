@@ -50,7 +50,7 @@ function perk_light_speed_cola(localclientnum, oldval, newval, bnewent, binitial
 {
 	if(newval)
 	{
-		level.var_320cd7b4 = "lgt_vending_speed_" + newval + "_on";
+		level.var_320cd7b4 = ("lgt_vending_speed_" + newval) + "_on";
 		exploder::exploder(level.var_320cd7b4);
 	}
 	else if(isdefined(level.var_320cd7b4))
@@ -72,7 +72,7 @@ function perk_light_juggernog(localclientnum, oldval, newval, bnewent, binitials
 {
 	if(newval)
 	{
-		level.var_d1316ad = "lgt_vending_jugg_" + newval + "_on";
+		level.var_d1316ad = ("lgt_vending_jugg_" + newval) + "_on";
 		exploder::exploder(level.var_d1316ad);
 	}
 	else if(isdefined(level.var_d1316ad))
@@ -94,7 +94,7 @@ function perk_light_doubletap(localclientnum, oldval, newval, bnewent, binitials
 {
 	if(newval)
 	{
-		level.var_c09154cb = "lgt_vending_tap_" + newval + "_on";
+		level.var_c09154cb = ("lgt_vending_tap_" + newval) + "_on";
 		exploder::exploder(level.var_c09154cb);
 	}
 	else if(isdefined(level.var_c09154cb))

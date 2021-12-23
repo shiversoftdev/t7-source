@@ -277,7 +277,7 @@ function centrifuge_activate()
 	degrees = end_angle - curr_angle;
 	if(degrees > 0)
 	{
-		time = degrees / 360 * step;
+		time = (degrees / 360) * step;
 		for(i = 0; i < self._trap_movers.size; i++)
 		{
 			self._trap_movers[i] rotateyaw(degrees, time);

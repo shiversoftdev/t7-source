@@ -233,7 +233,7 @@ function wait_for_teleport_aftereffect()
 	while(true)
 	{
 		level waittill(#"tae", localclientnum);
-		if(getdvarstring("castleAftereffectOverride") == "-1")
+		if(getdvarstring("castleAftereffectOverride") == ("-1"))
 		{
 			self thread [[level.teleport_ae_funcs[randomint(level.teleport_ae_funcs.size)]]](localclientnum);
 		}
@@ -277,40 +277,27 @@ function teleport_aftereffect_shellshock_electric(localclientnum)
 	Namespace: zm_castle_teleporter
 	Checksum: 0xB268D3BE
 	Offset: 0xE00
-	Size: 0x0
+	Size: 0xDA
 	Parameters: 1
 	Flags: Linked
 */
-function teleport_aftereffect_fov()
+function teleport_aftereffect_fov(localclientnum)
 {
-System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
-Parameter name: index
-   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   at System.Collections.Generic.List`1.get_Item(Int32 index)
-   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 649
-   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 211
-/*
-No Output
-*/
-
-	/* ======== */
-
-/* 
-	Stack: 
-*/
-	/* ======== */
-
-/* 
-	Blocks: 
-	Cerberus.Logic.BasicBlock at 0x0E00, end at 0x0E01
-	Cerberus.Logic.DevBlock at 0x0E32, end at 0x0E52
-	Cerberus.Logic.IfBlock at 0x0E8A, end at 0x0ED8
-*/
-	/* ======== */
-
+	/#
+		println("");
+	#/
+	start_fov = 30;
+	end_fov = getdvarfloat("cg_fov_default");
+	duration = 0.5;
+	i = 0;
+	while(i < duration)
+	{
+		fov = start_fov + (end_fov - start_fov) * (i / duration);
+		waitrealtime(0.017);
+		i = i + 0.017;
+	}
 }
 
-/*Unknown Op Code (0x18B9) at 0EC0*/
 /*
 	Name: teleport_aftereffect_bw_vision
 	Namespace: zm_castle_teleporter

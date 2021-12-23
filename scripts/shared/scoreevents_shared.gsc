@@ -302,7 +302,7 @@ function getcolumnoffsetforgametype(gametype)
 			gamemodecolumn = 14;
 			break;
 		}
-		if(column_header == level.gametype + " score")
+		if(column_header == (level.gametype + " score"))
 		{
 			foundgamemode = 1;
 			break;

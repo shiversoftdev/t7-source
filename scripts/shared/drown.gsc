@@ -130,12 +130,12 @@ function watch_player_drowning()
 	{
 		if(self isplayerunderwater() && self isplayerswimming())
 		{
-			if(gettime() - self.lastwaterdamagetime > self.drown_damage_after_time - level.drown_pre_damage_stage_time && self.drownstage == 0)
+			if((gettime() - self.lastwaterdamagetime) > (self.drown_damage_after_time - level.drown_pre_damage_stage_time) && self.drownstage == 0)
 			{
 				self.drownstage++;
 				self clientfield::set_to_player("drown_stage", self.drownstage);
 			}
-			if(gettime() - self.lastwaterdamagetime > self.drown_damage_after_time)
+			if((gettime() - self.lastwaterdamagetime) > self.drown_damage_after_time)
 			{
 				self.lastwaterdamagetime = self.lastwaterdamagetime + level.drown_damage_interval;
 				drownflags = 6;

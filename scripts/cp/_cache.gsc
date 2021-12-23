@@ -155,15 +155,15 @@ function _place_player_loadout()
 	{
 		primary_weapon_pos = self gettagorigin("loadOut_B");
 		tmp_offset = anglestoright(self gettagangles("loadOut_B")) * n_offset_multiplier;
-		m_weapon_script_model = spawn("weapon_" + w_primary_weapon.name + level.game_mode_suffix, primary_weapon_pos + tmp_offset + v_model_offset, 8);
-		m_weapon_script_model.angles = self gettagangles("loadOut_B") + vectorscale((0, -1, 0), 90);
+		m_weapon_script_model = spawn(("weapon_" + w_primary_weapon.name) + level.game_mode_suffix, primary_weapon_pos + (tmp_offset + v_model_offset), 8);
+		m_weapon_script_model.angles = self gettagangles("loadOut_B") + (vectorscale((0, -1, 0), 90));
 	}
 	else if(isassetloaded("weapon", "hk416" + level.game_mode_suffix))
 	{
 		primary_weapon_pos = self gettagorigin("loadOut_B");
 		tmp_offset = anglestoright(self gettagangles("loadOut_B")) * n_offset_multiplier;
-		m_weapon_script_model = spawn("weapon_" + "ar_standard" + level.game_mode_suffix, primary_weapon_pos + tmp_offset + v_model_offset, 8);
-		m_weapon_script_model.angles = self gettagangles("loadOut_B") + vectorscale((0, -1, 0), 90);
+		m_weapon_script_model = spawn(("weapon_" + "ar_standard") + level.game_mode_suffix, primary_weapon_pos + (tmp_offset + v_model_offset), 8);
+		m_weapon_script_model.angles = self gettagangles("loadOut_B") + (vectorscale((0, -1, 0), 90));
 	}
 	switch(self.model)
 	{
@@ -184,15 +184,15 @@ function _place_player_loadout()
 	{
 		secondary_weapon_pos = self gettagorigin("loadOut_A");
 		tmp_offset = anglestoright(self gettagangles("loadOut_A")) * n_offset_multiplier;
-		m_weapon_script_model = spawn("weapon_" + w_secondary_weapon + level.game_mode_suffix, secondary_weapon_pos + tmp_offset + v_model_offset, 8);
-		m_weapon_script_model.angles = self gettagangles("loadOut_A") + vectorscale((0, -1, 0), 90);
+		m_weapon_script_model = spawn(("weapon_" + w_secondary_weapon) + level.game_mode_suffix, secondary_weapon_pos + (tmp_offset + v_model_offset), 8);
+		m_weapon_script_model.angles = self gettagangles("loadOut_A") + (vectorscale((0, -1, 0), 90));
 	}
 	else if(isassetloaded("weapon", "smg_fastfire" + level.game_mode_suffix))
 	{
 		secondary_weapon_pos = self gettagorigin("loadOut_A");
 		tmp_offset = anglestoright(self gettagangles("loadOut_A")) * n_offset_multiplier;
-		m_weapon_script_model = spawn("weapon_" + "smg_fastfire" + level.game_mode_suffix, secondary_weapon_pos + tmp_offset + v_model_offset, 8);
-		m_weapon_script_model.angles = self gettagangles("loadOut_A") + vectorscale((0, -1, 0), 90);
+		m_weapon_script_model = spawn(("weapon_" + "smg_fastfire") + level.game_mode_suffix, secondary_weapon_pos + (tmp_offset + v_model_offset), 8);
+		m_weapon_script_model.angles = self gettagangles("loadOut_A") + (vectorscale((0, -1, 0), 90));
 	}
 }
 
@@ -221,8 +221,8 @@ function _check_extra_slots()
 				break;
 			}
 		}
-		m_weapon_script_model = spawn("weapon_" + self.ac_slot1 + level.game_mode_suffix, auxilary_weapon_pos + tmp_offset + vectorscale((0, 0, 1), 10), 8);
-		m_weapon_script_model.angles = self gettagangles("auxilary_A") + vectorscale((0, -1, 0), 90);
+		m_weapon_script_model = spawn(("weapon_" + self.ac_slot1) + level.game_mode_suffix, auxilary_weapon_pos + (tmp_offset + vectorscale((0, 0, 1), 10)), 8);
+		m_weapon_script_model.angles = self gettagangles("auxilary_A") + (vectorscale((0, -1, 0), 90));
 		m_weapon_script_model itemweaponsetammo(9999, 9999);
 	}
 	if(isdefined(self.ac_slot2))
@@ -232,7 +232,7 @@ function _check_extra_slots()
 			assert(isdefined(auxilary_weapon_pos), "");
 		#/
 		tmp_offset = anglestoforward(self gettagangles("secondary_A")) * 10;
-		m_weapon_script_model = spawn("weapon_" + self.ac_slot2 + level.game_mode_suffix, auxilary_weapon_pos + tmp_offset + vectorscale((0, 0, 1), 10), 8);
+		m_weapon_script_model = spawn(("weapon_" + self.ac_slot2) + level.game_mode_suffix, auxilary_weapon_pos + (tmp_offset + vectorscale((0, 0, 1), 10)), 8);
 		m_weapon_script_model.angles = self gettagangles("secondary_A");
 		m_weapon_script_model itemweaponsetammo(9999, 9999);
 	}
@@ -302,12 +302,12 @@ function disable_ammo_cache(str_ammo_cache_id)
 {
 	a_ammo_cache = getentarray(str_ammo_cache_id, "script_noteworthy");
 	/#
-		assert(isdefined(a_ammo_cache), "" + str_ammo_cache_id + "");
+		assert(isdefined(a_ammo_cache), ("" + str_ammo_cache_id) + "");
 	#/
 	if(a_ammo_cache.size > 1)
 	{
 		/#
-			assertmsg("" + str_ammo_cache_id + "");
+			assertmsg(("" + str_ammo_cache_id) + "");
 		#/
 	}
 	a_ammo_cache[0] notify(#"disable_ammo_cache");
@@ -342,8 +342,8 @@ function activate_extra_slot(n_slot_number, w_weapon)
 			assert(isdefined(auxilary_weapon_pos), "");
 		#/
 		tmp_offset = anglestoright(self gettagangles("auxilary_A")) * 5;
-		m_weapon_script_model = spawn("weapon_" + w_weapon.name + level.game_mode_suffix, auxilary_weapon_pos + tmp_offset + vectorscale((0, 0, 1), 10), 8);
-		m_weapon_script_model.angles = self gettagangles("auxilary_A") + vectorscale((0, -1, 0), 90);
+		m_weapon_script_model = spawn(("weapon_" + w_weapon.name) + level.game_mode_suffix, auxilary_weapon_pos + (tmp_offset + vectorscale((0, 0, 1), 10)), 8);
+		m_weapon_script_model.angles = self gettagangles("auxilary_A") + (vectorscale((0, -1, 0), 90));
 		m_weapon_script_model itemweaponsetammo(9999, 9999);
 	}
 	if(n_slot_number == 2)
@@ -353,7 +353,7 @@ function activate_extra_slot(n_slot_number, w_weapon)
 			assert(isdefined(auxilary_weapon_pos), "");
 		#/
 		tmp_offset = anglestoforward(self gettagangles("secondary_A")) * 7;
-		m_weapon_script_model = spawn("weapon_" + w_weapon.name + level.game_mode_suffix, auxilary_weapon_pos + tmp_offset + vectorscale((0, 0, 1), 10), 8);
+		m_weapon_script_model = spawn(("weapon_" + w_weapon.name) + level.game_mode_suffix, auxilary_weapon_pos + (tmp_offset + vectorscale((0, 0, 1), 10)), 8);
 		m_weapon_script_model.angles = self gettagangles("secondary_A");
 		m_weapon_script_model itemweaponsetammo(9999, 9999);
 	}

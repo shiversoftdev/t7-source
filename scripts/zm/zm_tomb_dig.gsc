@@ -167,7 +167,7 @@ function shovel_prompt_update(e_player)
 */
 function function_6e5f017f(n_player)
 {
-	return "player" + n_player + "wearableItem";
+	return ("player" + n_player) + "wearableItem";
 }
 
 /*
@@ -181,7 +181,7 @@ function function_6e5f017f(n_player)
 */
 function function_f4768ce9(n_player)
 {
-	return "player" + n_player + "hasItem";
+	return ("player" + n_player) + "hasItem";
 }
 
 /*
@@ -329,7 +329,7 @@ function dig_spots_init()
 			s_dig_spot.str_zone = "";
 			/#
 				/#
-					assertmsg("" + s_dig_spot.origin[0] + "" + s_dig_spot.origin[1] + "" + s_dig_spot.origin[2] + "");
+					assertmsg(((((("" + s_dig_spot.origin[0]) + "") + s_dig_spot.origin[1]) + "") + s_dig_spot.origin[2]) + "");
 				#/
 			#/
 		}
@@ -422,7 +422,7 @@ function dig_spots_respawn(a_dig_spots)
 function dig_spot_spawn()
 {
 	level.n_dig_spots_cur++;
-	self.m_dig = spawn("script_model", self.origin + vectorscale((0, 0, -1), 40));
+	self.m_dig = spawn("script_model", self.origin + (vectorscale((0, 0, -1), 40)));
 	self.m_dig setmodel("p7_zm_ori_dig_mound");
 	self.m_dig.angles = self.angles;
 	self.m_dig moveto(self.origin, 3, 0, 1);
@@ -596,7 +596,7 @@ function dig_up_powerup(player)
 	powerup endon(#"powerup_timedout");
 	a_rare_powerups = dig_get_rare_powerups(player);
 	powerup_item = undefined;
-	if(level.dig_n_powerups_spawned + level.powerup_drop_count > 4 || level.dig_last_prize_rare || a_rare_powerups.size == 0 || randomint(100) < 80)
+	if((level.dig_n_powerups_spawned + level.powerup_drop_count) > 4 || level.dig_last_prize_rare || a_rare_powerups.size == 0 || randomint(100) < 80)
 	{
 		if(level.dig_n_zombie_bloods_spawned < 1 && randomint(100) > 70)
 		{
@@ -962,7 +962,7 @@ function ee_zombie_blood_dig_disconnect_watch()
 */
 function create_zombie_blood_dig_spot(e_player)
 {
-	self.m_dig = spawn("script_model", self.origin + vectorscale((0, 0, -1), 40));
+	self.m_dig = spawn("script_model", self.origin + (vectorscale((0, 0, -1), 40)));
 	self.m_dig.angles = self.angles;
 	self.m_dig setmodel("p7_zm_ori_dig_mound_blood");
 	self.m_dig zm_powerup_zombie_blood::make_zombie_blood_entity();
@@ -1285,7 +1285,7 @@ function watch_devgui_dig()
 				a_z_spots = struct::get_array("", "");
 				foreach(var_5ca06c8d, s_spot in a_z_spots)
 				{
-					s_spot.m_dig = spawn("", s_spot.origin + vectorscale((0, 0, -1), 40));
+					s_spot.m_dig = spawn("", s_spot.origin + (vectorscale((0, 0, -1), 40)));
 					s_spot.m_dig.angles = s_spot.angles;
 					s_spot.m_dig setmodel("");
 					s_spot.m_dig moveto(s_spot.origin, 3, 0, 1);

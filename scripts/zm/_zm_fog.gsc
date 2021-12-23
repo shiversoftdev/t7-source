@@ -66,7 +66,7 @@ function __main__()
 function function_b8a83a11(var_1cafad33)
 {
 	/#
-		assert(isdefined(level.var_f87fe25d[var_1cafad33]), "" + var_1cafad33 + "");
+		assert(isdefined(level.var_f87fe25d[var_1cafad33]), ("" + var_1cafad33) + "");
 	#/
 	var_f832704f = level.var_f87fe25d[var_1cafad33];
 	if(isdefined(var_f832704f.var_400d18c9))
@@ -167,7 +167,7 @@ function function_bd594680(var_965632d6, n_bank)
 function setup_devgui_func(str_devgui_path, str_dvar, n_value, func, n_base_value = -1)
 {
 	setdvar(str_dvar, n_base_value);
-	adddebugcommand("devgui_cmd \"" + str_devgui_path + "\" \"" + str_dvar + " " + n_value + "\"\n");
+	adddebugcommand(((((("devgui_cmd \"" + str_devgui_path) + "\" \"") + str_dvar) + " ") + n_value) + "\"\n");
 	while(true)
 	{
 		n_dvar = getdvarint(str_dvar);
@@ -253,7 +253,7 @@ function function_49720b6e(n_val)
 function function_124286f7(n_val)
 {
 	/#
-		iprintlnbold("" + level.var_9814fc19 + "" + n_val);
+		iprintlnbold((("" + level.var_9814fc19) + "") + n_val);
 		function_bd594680(level.var_9814fc19, n_val - 1);
 	#/
 }

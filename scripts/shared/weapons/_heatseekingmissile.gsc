@@ -291,7 +291,7 @@ function stingerirtloop(weapon)
 			timepassed = gettime() - self.stingerlockstarttime;
 			if(isdefined(weapon))
 			{
-				self setweaponlockonpercent(weapon, timepassed / locklength * 100);
+				self setweaponlockonpercent(weapon, (timepassed / locklength) * 100);
 				setfriendlyflags(weapon, self.stingertarget);
 			}
 			if(timepassed < locklength)
@@ -391,7 +391,7 @@ function targetwithinrangeofplayspace(target)
 		}
 		if(!isdefined(level.missilelockplayspacecheckradiussqr))
 		{
-			level.missilelockplayspacecheckradiussqr = util::getplayspacemaxwidth() * 0.5 + level.missilelockplayspacecheckextraradius * util::getplayspacemaxwidth() * 0.5 + level.missilelockplayspacecheckextraradius;
+			level.missilelockplayspacecheckradiussqr = ((util::getplayspacemaxwidth() * 0.5) + level.missilelockplayspacecheckextraradius) * ((util::getplayspacemaxwidth() * 0.5) + level.missilelockplayspacecheckextraradius);
 		}
 		if(distance2dsquared(target.origin, level.playspacecenter) > level.missilelockplayspacecheckradiussqr)
 		{
@@ -552,7 +552,7 @@ function calclockonradius(target, weapon)
 	if(isdefined(level.lockoncloserange) && isdefined(level.lockoncloseradiusscaler))
 	{
 		dist2 = distancesquared(target.origin, self.origin);
-		if(dist2 < level.lockoncloserange * level.lockoncloserange)
+		if(dist2 < (level.lockoncloserange * level.lockoncloserange))
 		{
 			radius = radius * level.lockoncloseradiusscaler;
 		}
@@ -579,7 +579,7 @@ function calclockonlossradius(target, weapon)
 	if(isdefined(level.lockoncloserange) && isdefined(level.lockoncloseradiusscaler))
 	{
 		dist2 = distancesquared(target.origin, self.origin);
-		if(dist2 < level.lockoncloserange * level.lockoncloserange)
+		if(dist2 < (level.lockoncloserange * level.lockoncloserange))
 		{
 			radius = radius * level.lockoncloseradiusscaler;
 		}
@@ -898,14 +898,13 @@ function lockingon(target, lock)
 	if(lock)
 	{
 		target notify(#"hash_b081980b");
-		target.locking_on = target.locking_on | 1 << clientnum;
+		target.locking_on = target.locking_on | (1 << clientnum);
 		self thread watchclearlockingon(target, clientnum);
 	}
 	else
 	{
 		self notify(#"locking_on_cleared");
-		~target;
-		target.locking_on = target.locking_on & 1 << clientnum;
+		target.locking_on = target.locking_on & (~(1 << clientnum));
 	}
 }
 
@@ -923,8 +922,7 @@ function watchclearlockingon(target, clientnum)
 	target endon(#"death");
 	self endon(#"locking_on_cleared");
 	self util::waittill_any("death", "disconnect");
-	~target;
-	target.locking_on = target.locking_on & 1 << clientnum;
+	target.locking_on = target.locking_on & (~(1 << clientnum));
 }
 
 /*
@@ -944,14 +942,13 @@ function lockedon(target, lock)
 	clientnum = self getentitynumber();
 	if(lock)
 	{
-		target.locked_on = target.locked_on | 1 << clientnum;
+		target.locked_on = target.locked_on | (1 << clientnum);
 		self thread watchclearlockedon(target, clientnum);
 	}
 	else
 	{
 		self notify(#"locked_on_cleared");
-		~target;
-		target.locked_on = target.locked_on & 1 << clientnum;
+		target.locked_on = target.locked_on & (~(1 << clientnum));
 	}
 }
 
@@ -973,14 +970,13 @@ function targetinghacking(target, lock)
 	if(lock)
 	{
 		target notify(#"hash_e1494b46");
-		target.locking_on_hacking = target.locking_on_hacking | 1 << clientnum;
+		target.locking_on_hacking = target.locking_on_hacking | (1 << clientnum);
 		self thread watchclearhacking(target, clientnum);
 	}
 	else
 	{
 		self notify(#"locking_on_hacking_cleared");
-		~target;
-		target.locking_on_hacking = target.locking_on_hacking & 1 << clientnum;
+		target.locking_on_hacking = target.locking_on_hacking & (~(1 << clientnum));
 	}
 }
 
@@ -998,8 +994,7 @@ function watchclearhacking(target, clientnum)
 	target endon(#"death");
 	self endon(#"locking_on_hacking_cleared");
 	self util::waittill_any("death", "disconnect");
-	~target;
-	target.locking_on_hacking = target.locking_on_hacking & 1 << clientnum;
+	target.locking_on_hacking = target.locking_on_hacking & (~(1 << clientnum));
 }
 
 /*
@@ -1074,7 +1069,7 @@ function setfriendlyflags(weapon, target)
 					}
 					if(isdefined(damagetaken) && isdefined(maxhealth))
 					{
-						damageperrocket = maxhealth / level.killstreakbundle[killstreaktype].ksrocketstokill + 1;
+						damageperrocket = (maxhealth / level.killstreakbundle[killstreaktype].ksrocketstokill) + 1;
 						remaininghealth = maxhealth - damagetaken;
 						if(remaininghealth > 0)
 						{
@@ -1114,8 +1109,7 @@ function setfriendlyhacking(weapon, target)
 		{
 			friendlyhacking = 0;
 			clientnum = self getentitynumber();
-			~clientnum;
-			friendlyhackingmask = friendlyhackingmask & 1 << clientnum;
+			friendlyhackingmask = friendlyhackingmask & (~(1 << clientnum));
 			if(friendlyhackingmask != 0)
 			{
 				friendlyhacking = 1;
@@ -1143,8 +1137,7 @@ function setfriendlytargetting(weapon, target)
 		{
 			friendlytargeting = 0;
 			clientnum = self getentitynumber();
-			~clientnum;
-			friendlytargetingmask = friendlytargetingmask & 1 << clientnum;
+			friendlytargetingmask = friendlytargetingmask & (~(1 << clientnum));
 			if(friendlytargetingmask != 0)
 			{
 				friendlytargeting = 1;
@@ -1173,8 +1166,7 @@ function setfriendlytargetlocked(weapon, target)
 		{
 			friendlytargetlocked = 0;
 			clientnum = self getentitynumber();
-			~clientnum;
-			friendlylockingonmask = friendlylockingonmask & 1 << clientnum;
+			friendlylockingonmask = friendlylockingonmask & (~(1 << clientnum));
 			if(friendlylockingonmask != 0)
 			{
 				friendlytargetlocked = 1;
@@ -1203,8 +1195,7 @@ function watchclearlockedon(target, clientnum)
 	self util::waittill_any("death", "disconnect");
 	if(isdefined(target))
 	{
-		~target;
-		target.locked_on = target.locked_on & 1 << clientnum;
+		target.locked_on = target.locked_on & (~(1 << clientnum));
 	}
 }
 
@@ -1567,7 +1558,7 @@ function missiletarget_deployflares(origin, angles)
 	{
 		sign = -1;
 	}
-	flare_dir = vectornormalize(vectorscale(vec_toforward, -0.5) + vectorscale(vec_toright, sign));
+	flare_dir = vectornormalize((vectorscale(vec_toforward, -0.5)) + vectorscale(vec_toright, sign));
 	velocity = vectorscale(flare_dir, randomintrange(200, 400));
 	velocity = (velocity[0], velocity[1], velocity[2] - randomintrange(10, 100));
 	flareorigin = self.origin;

@@ -290,7 +290,7 @@ function precache_mp_leaderboards()
 		gamemodeleaderboard = gamemodeleaderboard + "_HC";
 	}
 	mapleaderboard = " LB_MP_MAP_" + getsubstr(mapname, 3, mapname.size);
-	precacheleaderboards(globalleaderboards + gamemodeleaderboard + mapleaderboard);
+	precacheleaderboards((globalleaderboards + gamemodeleaderboard) + mapleaderboard);
 }
 
 /*
@@ -677,7 +677,7 @@ function dodeadeventupdates()
 		}
 		if(isdefined(level.onlastteamaliveevent))
 		{
-			if(alldeadteamcount() == level.teams.size - 1)
+			if(alldeadteamcount() == (level.teams.size - 1))
 			{
 				foreach(var_f2ae5787, team in level.teams)
 				{
@@ -895,7 +895,7 @@ function matchstarttimerskip()
 */
 function notifyteamwavespawn(team, time)
 {
-	if(time - level.lastwave[team] > level.wavedelay[team] * 1000)
+	if((time - level.lastwave[team]) > (level.wavedelay[team] * 1000))
 	{
 		level notify("wave_respawn_" + team);
 		level.lastwave[team] = time;
@@ -1067,7 +1067,7 @@ function displayroundswitch(winner, endreasontext)
 		}
 		else if(level.roundlimit)
 		{
-			if(game["roundsplayed"] * 2 == level.roundlimit)
+			if((game["roundsplayed"] * 2) == level.roundlimit)
 			{
 				switchtype = "halftime";
 			}
@@ -1078,7 +1078,7 @@ function displayroundswitch(winner, endreasontext)
 		}
 		else if(level.scorelimit)
 		{
-			if(game["roundsplayed"] == level.scorelimit - 1)
+			if(game["roundsplayed"] == (level.scorelimit - 1))
 			{
 				switchtype = "halftime";
 			}
@@ -1825,7 +1825,7 @@ function removedisconnectedplayerfromplacement()
 	}
 	level.placement["all"][numplayers - 1] = undefined;
 	/#
-		assert(level.placement[""].size == numplayers - 1);
+		assert(level.placement[""].size == (numplayers - 1));
 	#/
 	/#
 		globallogic_utils::assertproperplacement();
@@ -2613,7 +2613,7 @@ function callback_startgametype()
 	level.inprematchperiod = 1;
 	if(level.prematchperiod > 2)
 	{
-		level.prematchperiod = level.prematchperiod + randomfloat(4) - 2;
+		level.prematchperiod = level.prematchperiod + (randomfloat(4) - 2);
 	}
 	if(level.numlives || anyteamhaswavedelay() || level.playerqueuedrespawn)
 	{
@@ -2699,7 +2699,7 @@ function forcedebughostmigration()
 */
 function registerfriendlyfiredelay(dvarstring, defaultvalue, minvalue, maxvalue)
 {
-	dvarstring = "scr_" + dvarstring + "_friendlyFireDelayTime";
+	dvarstring = ("scr_" + dvarstring) + "_friendlyFireDelayTime";
 	if(getdvarstring(dvarstring) == "")
 	{
 		setdvar(dvarstring, defaultvalue);
@@ -2737,7 +2737,7 @@ function checkroundswitch()
 	/#
 		assert(game[""] > 0);
 	#/
-	if(game["roundsplayed"] % level.roundswitch == 0)
+	if((game["roundsplayed"] % level.roundswitch) == 0)
 	{
 		[[level.onroundswitch]]();
 		return 1;

@@ -226,7 +226,7 @@ function update_threat(newthreat)
 	velocity = self.bot.threat.entity getvelocity();
 	distancesq = distancesquared(self geteye(), self.bot.threat.entity.origin);
 	predictiontime = (isdefined(level.botsettings.thinkinterval) ? level.botsettings.thinkinterval : 0.05);
-	predictedposition = self.bot.threat.entity.origin + velocity * predictiontime;
+	predictedposition = self.bot.threat.entity.origin + (velocity * predictiontime);
 	aimpoint = predictedposition + self.bot.threat.aimoffset;
 	dot = self bot::fwd_dot(aimpoint);
 	fov = self botgetfov();
@@ -248,9 +248,9 @@ function update_threat(newthreat)
 	self.bot.threat.dot = dot;
 	weapon = self getcurrentweapon();
 	weaponrange = weapon_range(weapon);
-	self.bot.threat.inrange = distancesq < weaponrange * weaponrange;
+	self.bot.threat.inrange = distancesq < (weaponrange * weaponrange);
 	weaponrangeclose = weapon_range_close(weapon);
-	self.bot.threat.incloserange = distancesq < weaponrangeclose * weaponrangeclose;
+	self.bot.threat.incloserange = distancesq < (weaponrangeclose * weaponrangeclose);
 }
 
 /*
@@ -480,7 +480,7 @@ function chase_threat()
 		self bot::sprint_to_goal();
 		return;
 	}
-	if(self.bot.threat.lastvisibletime + (isdefined(level.botsettings.chasethreattime) ? level.botsettings.chasethreattime : 0) < gettime())
+	if((self.bot.threat.lastvisibletime + (isdefined(level.botsettings.chasethreattime) ? level.botsettings.chasethreattime : 0)) < gettime())
 	{
 		self clear_threat();
 		return;
@@ -554,7 +554,7 @@ function update_weapon_aim()
 */
 function start_threat_aim()
 {
-	self.bot.threat.aimstarttime = gettime() + (isdefined(level.botsettings.aimdelay) ? level.botsettings.aimdelay : 0) * 1000;
+	self.bot.threat.aimstarttime = gettime() + ((isdefined(level.botsettings.aimdelay) ? level.botsettings.aimdelay : 0) * 1000);
 	self.bot.threat.aimtime = (isdefined(level.botsettings.aimtime) ? level.botsettings.aimtime : 0) * 1000;
 	loc_00001942:
 	pitcherror = angleerror((isdefined(level.botsettings.aimerrorminpitch) ? level.botsettings.aimerrorminpitch : 0), (isdefined(level.botsettings.aimerrormaxpitch) ? level.botsettings.aimerrormaxpitch : 0));
@@ -575,7 +575,7 @@ function start_threat_aim()
 function angleerror(anglemin, anglemax)
 {
 	angle = anglemax - anglemin;
-	angle = angle * randomfloatrange(-1, 1);
+	angle = angle * (randomfloatrange(-1, 1));
 	if(angle < 0)
 	{
 		angle = angle - anglemin;
@@ -622,7 +622,7 @@ function bot_pre_combat()
 	{
 		return;
 	}
-	if(isdefined(self.bot.damage.time) && self.bot.damage.time + 1500 > gettime())
+	if(isdefined(self.bot.damage.time) && (self.bot.damage.time + 1500) > gettime())
 	{
 		if(self has_threat() && self.bot.damage.time > self.bot.threat.lastvisibletime)
 		{
@@ -1031,7 +1031,7 @@ function throw_grenade(weapon, target)
 		self press_grenade_button(weapon);
 		return;
 	}
-	if(self.bot.threat.aimstarttime + self.bot.threat.aimtime > gettime())
+	if((self.bot.threat.aimstarttime + self.bot.threat.aimtime) > gettime())
 	{
 		return;
 	}
@@ -1097,8 +1097,8 @@ function will_hit_target(weapon, target)
 	xyspeed = distance2d(velocity, (0, 0, 0));
 	t = xydist / xyspeed;
 	gravity = getdvarfloat("bg_gravity") * -1;
-	theight = throworigin[2] + velocity[2] * t + gravity * t * t * 0.5;
-	return abs(theight - target[2]) < 20;
+	theight = (throworigin[2] + (velocity[2] * t)) + (((gravity * t) * t) * 0.5);
+	return (abs(theight - target[2])) < 20;
 }
 
 /*

@@ -282,18 +282,18 @@ function function_5ee3951f()
 		self.ai_doppleganger delete();
 	}
 	var_91a9d91c = anglestoforward(self.angles);
-	v_new_pos = self.origin - var_91a9d91c * 220;
+	v_new_pos = self.origin - (var_91a9d91c * 220);
 	self.var_d73c077d = getclosestpointonnavmesh(v_new_pos, 64);
 	if(!isdefined(self.var_d73c077d))
 	{
 		var_6e3e5458 = anglestoright(self.angles);
-		v_new_pos = self.origin - var_6e3e5458 * 220;
+		v_new_pos = self.origin - (var_6e3e5458 * 220);
 		self.var_d73c077d = getclosestpointonnavmesh(v_new_pos, 64);
 	}
 	if(!isdefined(self.var_d73c077d))
 	{
 		var_379fad75 = anglestoright(self.angles) * -1;
-		v_new_pos = self.origin - var_379fad75 * 220;
+		v_new_pos = self.origin - (var_379fad75 * 220);
 		self.var_d73c077d = getclosestpointonnavmesh(v_new_pos, 64);
 	}
 	if(isdefined(self.var_d73c077d))
@@ -394,7 +394,7 @@ function function_69f74476()
 		ai linkto(var_1f377995);
 		self setplayerangles(vectortoangles(ai.origin - self.origin));
 		self thread function_89b0bd32();
-		v_dest = self.origin + vectornormalize(anglestoforward(self.angles)) * 30;
+		v_dest = self.origin + (vectornormalize(anglestoforward(self.angles)) * 30);
 		ai util::stop_magic_bullet_shield();
 		ai thread scene::play("zm_dlc2_side_ee_doppleganger_scare_180l");
 		wait(0.05);

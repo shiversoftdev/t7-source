@@ -802,7 +802,7 @@ function get_name_for_nationality(nationality)
 		self.propername = "";
 		return;
 	}
-	level.nameindex[nationality] = level.nameindex[nationality] + 1 % level.names[nationality].size;
+	level.nameindex[nationality] = (level.nameindex[nationality] + 1) % level.names[nationality].size;
 	lastname = level.names[nationality][level.nameindex[nationality]];
 	if(!isdefined(lastname))
 	{
@@ -1036,7 +1036,7 @@ function getrankfromname(name)
 		default:
 		{
 			/#
-				println("" + shortrank + "");
+				println(("" + shortrank) + "");
 			#/
 			self.airank = "private";
 			break;

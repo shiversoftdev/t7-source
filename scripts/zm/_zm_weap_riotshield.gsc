@@ -516,14 +516,14 @@ function riotshield_get_enemies_in_range()
 		if(test_range_squared < fling_range_squared)
 		{
 			level.riotshield_fling_enemies[level.riotshield_fling_enemies.size] = zombies[i];
-			dist_mult = fling_range_squared - test_range_squared / fling_range_squared;
+			dist_mult = (fling_range_squared - test_range_squared) / fling_range_squared;
 			fling_vec = vectornormalize(test_origin - view_pos);
 			if(5000 < test_range_squared)
 			{
-				fling_vec = fling_vec + vectornormalize(test_origin - radial_origin);
+				fling_vec = fling_vec + (vectornormalize(test_origin - radial_origin));
 			}
 			fling_vec = (fling_vec[0], fling_vec[1], fling_force_v * abs(fling_vec[2]));
-			fling_vec = vectorscale(fling_vec, fling_force + fling_force * dist_mult);
+			fling_vec = vectorscale(fling_vec, fling_force + (fling_force * dist_mult));
 			level.riotshield_fling_vecs[level.riotshield_fling_vecs.size] = fling_vec;
 			continue;
 		}

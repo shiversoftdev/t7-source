@@ -268,7 +268,7 @@ function watch_for_code(code)
 			{
 				break;
 			}
-			if(i == codes.size - 1)
+			if(i == (codes.size - 1))
 			{
 				self notify(#"code_correct");
 				return;
@@ -289,7 +289,7 @@ function watch_for_code(code)
 */
 function button_not_pressed(button, time)
 {
-	endtime = gettime() + time * 1000;
+	endtime = gettime() + (time * 1000);
 	while(gettime() < endtime)
 	{
 		if(!self buttonpressed(button))
@@ -312,7 +312,7 @@ function button_not_pressed(button, time)
 */
 function button_pressed(button, time)
 {
-	endtime = gettime() + time * 1000;
+	endtime = gettime() + (time * 1000);
 	while(gettime() < endtime)
 	{
 		if(self buttonpressed(button))
@@ -389,7 +389,7 @@ function trigger_slow_ent(player, endon_condition)
 		{
 			wait(0.05);
 			delta = gettime() - prevtime;
-			player.movespeedscale = player.movespeedscale - delta / 1000 * self.inturp_rate;
+			player.movespeedscale = player.movespeedscale - ((delta / 1000) * self.inturp_rate);
 			prevtime = gettime();
 			player setmovespeedscale(player.movespeedscale);
 		}
@@ -420,7 +420,7 @@ function trigger_unslow_ent(player)
 		{
 			wait(0.05);
 			delta = gettime() - prevtime;
-			player.movespeedscale = player.movespeedscale + delta / 1000 * self.inturp_rate;
+			player.movespeedscale = player.movespeedscale + ((delta / 1000) * self.inturp_rate);
 			prevtime = gettime();
 			player setmovespeedscale(player.movespeedscale);
 		}
@@ -799,7 +799,7 @@ function code_entry(player)
 			{
 				break;
 			}
-			if(i == self.codes.size - 1)
+			if(i == (self.codes.size - 1))
 			{
 				self code_reward(player);
 				return;
@@ -853,7 +853,7 @@ function is_player_in_radius(player)
 	{
 		return 0;
 	}
-	if(abs(self.origin[2] - player.origin[2]) > 30)
+	if((abs(self.origin[2] - player.origin[2])) > 30)
 	{
 		return 0;
 	}

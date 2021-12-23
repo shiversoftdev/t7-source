@@ -158,7 +158,7 @@ function function_9a8a19ab(localclientnum, oldval, newval, bnewent, binitialsnap
 	if(newval == 1)
 	{
 		n_start_time = gettime();
-		n_end_time = n_start_time + 1 * 1000;
+		n_end_time = n_start_time + (1 * 1000);
 		b_is_updating = 1;
 		while(b_is_updating)
 		{
@@ -179,7 +179,7 @@ function function_9a8a19ab(localclientnum, oldval, newval, bnewent, binitialsnap
 	else
 	{
 		n_start_time = gettime();
-		n_end_time = n_start_time + 2 * 1000;
+		n_end_time = n_start_time + (2 * 1000);
 		b_is_updating = 1;
 		while(b_is_updating)
 		{
@@ -214,7 +214,7 @@ function function_a3279a5(localclientnum, oldval, newval, bnewent, binitialsnap,
 	self notify(#"hash_67a9e087");
 	self endon(#"hash_67a9e087");
 	n_start_time = gettime();
-	n_end_time = n_start_time + 1 * 1000;
+	n_end_time = n_start_time + (1 * 1000);
 	b_is_updating = 1;
 	while(b_is_updating)
 	{
@@ -250,7 +250,7 @@ function function_23861dfe(localclientnum, oldval, newval, bnewent, binitialsnap
 	if(newval == 1)
 	{
 		n_start_time = gettime();
-		n_end_time = n_start_time + 1 * 1000;
+		n_end_time = n_start_time + (1 * 1000);
 		b_is_updating = 1;
 		while(b_is_updating)
 		{
@@ -271,7 +271,7 @@ function function_23861dfe(localclientnum, oldval, newval, bnewent, binitialsnap
 	else
 	{
 		n_start_time = gettime();
-		n_end_time = n_start_time + 2 * 1000;
+		n_end_time = n_start_time + (2 * 1000);
 		b_is_updating = 1;
 		while(b_is_updating)
 		{

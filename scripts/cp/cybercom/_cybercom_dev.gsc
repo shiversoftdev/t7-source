@@ -20,7 +20,7 @@
 */
 function function_a0e51d80(point, timesec, size, color)
 {
-	end = gettime() + timesec * 1000;
+	end = gettime() + (timesec * 1000);
 	halfwidth = int(size / 2);
 	l1 = point + (halfwidth * -1, 0, 0);
 	l2 = point + (halfwidth, 0, 0);
@@ -192,7 +192,7 @@ function cybercom_devguithink()
 		{
 			player cybercom_gadget::giveability(cmd, upgrade);
 		}
-		iprintlnbold("Adding ability on player: " + playernum + " --> " + cmd + "  Upgraded:" + (upgrade ? "TRUE" : "FALSE"));
+		iprintlnbold(((("Adding ability on player: " + playernum) + (" --> ") + cmd) + "  Upgraded:") + (upgrade ? "TRUE" : "FALSE"));
 		setdvar("devgui_cybercore", "");
 		setdvar("devgui_cybercore_upgrade", "");
 	}

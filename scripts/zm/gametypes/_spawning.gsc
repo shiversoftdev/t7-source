@@ -718,7 +718,7 @@ function get_debug_spawnpoint(player)
 		foreach(var_9156795c, team in level.teams)
 		{
 			size = level.unified_spawn_points[team].a.size;
-			if(level.test_spawn_point_index < count + size)
+			if(level.test_spawn_point_index < (count + size))
 			{
 				return level.unified_spawn_points[team].a[level.test_spawn_point_index - count];
 			}

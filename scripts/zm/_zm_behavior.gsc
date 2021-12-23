@@ -433,14 +433,14 @@ function zombieupdategoal()
 		{
 			shouldrepath = 1;
 		}
-		else if(distancesquared(self.origin, self.favoriteenemy.origin) <= level.zigzag_activation_distance * level.zigzag_activation_distance)
+		else if(distancesquared(self.origin, self.favoriteenemy.origin) <= (level.zigzag_activation_distance * level.zigzag_activation_distance))
 		{
 			shouldrepath = 1;
 		}
 		else if(isdefined(self.pathgoalpos))
 		{
 			distancetogoalsqr = distancesquared(self.origin, self.pathgoalpos);
-			shouldrepath = distancetogoalsqr < 72 * 72;
+			shouldrepath = distancetogoalsqr < (72 * 72);
 		}
 	}
 	if(isdefined(level.validate_on_navmesh) && level.validate_on_navmesh)
@@ -472,7 +472,7 @@ function zombieupdategoal()
 		}
 		if(isdefined(level.do_randomized_zigzag_path) && level.do_randomized_zigzag_path && should_zigzag)
 		{
-			if(distancesquared(self.origin, goalpos) > level.zigzag_activation_distance * level.zigzag_activation_distance)
+			if(distancesquared(self.origin, goalpos) > (level.zigzag_activation_distance * level.zigzag_activation_distance))
 			{
 				self.keep_moving = 1;
 				self.keep_moving_time = gettime() + 250;
@@ -495,10 +495,10 @@ function zombieupdategoal()
 				for(index = 1; index < path.size; index++)
 				{
 					currentseglength = distance(path[index - 1], path[index]);
-					if(segmentlength + currentseglength > deviationdistance)
+					if((segmentlength + currentseglength) > deviationdistance)
 					{
 						remaininglength = deviationdistance - segmentlength;
-						seedposition = path[index - 1] + vectornormalize(path[index] - path[index - 1]) * remaininglength;
+						seedposition = (path[index - 1]) + ((vectornormalize(path[index] - (path[index - 1]))) * remaininglength);
 						/#
 							recordcircle(seedposition, 2, (1, 0.5, 0), "", self);
 						#/
@@ -541,14 +541,14 @@ function zombieupdategoalcode()
 		{
 			shouldrepath = 1;
 		}
-		else if(distancesquared(self.origin, self.enemy.origin) <= 200 * 200)
+		else if(distancesquared(self.origin, self.enemy.origin) <= (200 * 200))
 		{
 			shouldrepath = 1;
 		}
 		else if(isdefined(self.pathgoalpos))
 		{
 			distancetogoalsqr = distancesquared(self.origin, self.pathgoalpos);
-			shouldrepath = distancetogoalsqr < 72 * 72;
+			shouldrepath = distancetogoalsqr < (72 * 72);
 		}
 	}
 	if(isdefined(self.keep_moving) && self.keep_moving)
@@ -567,7 +567,7 @@ function zombieupdategoalcode()
 		}
 		if(isdefined(level.do_randomized_zigzag_path) && level.do_randomized_zigzag_path)
 		{
-			if(distancesquared(self.origin, goalpos) > 240 * 240)
+			if(distancesquared(self.origin, goalpos) > (240 * 240))
 			{
 				self.keep_moving = 1;
 				self.keep_moving_time = gettime() + 250;
@@ -586,10 +586,10 @@ function zombieupdategoalcode()
 				for(index = 1; index < path.size; index++)
 				{
 					currentseglength = distance(path[index - 1], path[index]);
-					if(segmentlength + currentseglength > deviationdistance)
+					if((segmentlength + currentseglength) > deviationdistance)
 					{
 						remaininglength = deviationdistance - segmentlength;
-						seedposition = path[index - 1] + vectornormalize(path[index] - path[index - 1]) * remaininglength;
+						seedposition = (path[index - 1]) + ((vectornormalize(path[index] - (path[index - 1]))) * remaininglength);
 						/#
 							recordcircle(seedposition, 2, (1, 0.5, 0), "", self);
 						#/
@@ -1385,7 +1385,7 @@ function findnodesservice(behaviortreeentity)
 		}
 		behaviortreeentity.entrance_nodes[behaviortreeentity.entrance_nodes.size] = node;
 		/#
-			assert(isdefined(node), "" + behaviortreeentity.find_flesh_struct_string + "");
+			assert(isdefined(node), ("" + behaviortreeentity.find_flesh_struct_string) + "");
 		#/
 		behaviortreeentity.first_node = node;
 		behaviortreeentity.goalradius = 128;
@@ -1760,7 +1760,7 @@ function barricadeentermocompstart(entity, mocompanim, mocompanimblendouttime, m
 	angles = getstartangles(entity.first_node.zbarrier.origin, entity.first_node.zbarrier.angles, mocompanim);
 	if(isdefined(entity.mocomp_barricade_offset))
 	{
-		origin = origin + anglestoforward(angles) * entity.mocomp_barricade_offset;
+		origin = origin + (anglestoforward(angles) * entity.mocomp_barricade_offset);
 	}
 	entity forceteleport(origin, angles, 1);
 	entity animmode("noclip", 0);
@@ -1821,7 +1821,7 @@ function barricadeentermocompnozstart(entity, mocompanim, mocompanimblendouttime
 	angles = getstartangles(zbarrier_origin, entity.first_node.zbarrier.angles, mocompanim);
 	if(isdefined(entity.mocomp_barricade_offset))
 	{
-		origin = origin + anglestoforward(angles) * entity.mocomp_barricade_offset;
+		origin = origin + (anglestoforward(angles) * entity.mocomp_barricade_offset);
 	}
 	entity forceteleport(origin, angles, 1);
 	entity animmode("noclip", 0);
@@ -1909,11 +1909,11 @@ function notetrackboardmelee(animationentity)
 		{
 			playerdistsq = distance2dsquared(animationentity.player_targets[i].origin, animationentity.origin);
 			heightdiff = abs(animationentity.player_targets[i].origin[2] - animationentity.origin[2]);
-			if(playerdistsq < meleedistsq && heightdiff * heightdiff < meleedistsq)
+			if(playerdistsq < meleedistsq && (heightdiff * heightdiff) < meleedistsq)
 			{
 				playertriggerdistsq = distance2dsquared(animationentity.player_targets[i].origin, animationentity.first_node.trigger_location.origin);
 				heightdiff = abs(animationentity.player_targets[i].origin[2] - animationentity.first_node.trigger_location.origin[2]);
-				if(playertriggerdistsq < triggerdistsq && heightdiff * heightdiff < triggerdistsq)
+				if(playertriggerdistsq < triggerdistsq && (heightdiff * heightdiff) < triggerdistsq)
 				{
 					animationentity.player_targets[i] dodamage(animationentity.meleeweapon.meleedamage, animationentity.origin, self, self, "none", "MOD_MELEE");
 					break;
@@ -2039,7 +2039,7 @@ function zombieblackholebombpullupdate(entity, asmstatename)
 	{
 		entity.v_zombie_custom_goal_pos = entity.damageorigin;
 	}
-	if(!(isdefined(entity.missinglegs) && entity.missinglegs) && gettime() - entity.pulltime > 1000)
+	if(!(isdefined(entity.missinglegs) && entity.missinglegs) && (gettime() - entity.pulltime) > 1000)
 	{
 		distsq = distance2dsquared(entity.origin, entity.pullorigin);
 		if(distsq < 144)

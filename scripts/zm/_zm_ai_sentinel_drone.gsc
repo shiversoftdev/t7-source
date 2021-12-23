@@ -339,7 +339,7 @@ function function_7766fb04()
 				util::wait_network_frame();
 				continue;
 			}
-			var_c94972aa = level.var_35078afd > 1 && level.zombie_total % 2 == 0;
+			var_c94972aa = level.var_35078afd > 1 && (level.zombie_total % 2) == 0;
 			function_23a30f49(var_c94972aa);
 			util::wait_network_frame();
 		}
@@ -594,7 +594,7 @@ function function_d600cb9a()
 						{
 							level.var_a657e360.script_string = s_spawn_loc.script_string;
 						}
-						a_ground_trace = groundtrace(var_e31f585b + vectorscale((0, 0, 1), 64), var_e31f585b + vectorscale((0, 0, -1), 128), 0, undefined);
+						a_ground_trace = groundtrace(var_e31f585b + vectorscale((0, 0, 1), 64), var_e31f585b + (vectorscale((0, 0, -1), 128)), 0, undefined);
 						v_spawn_pos = a_ground_trace["position"];
 						break;
 					}
@@ -900,7 +900,7 @@ function function_e9be6289()
 			var_ebe16089 = 4;
 		}
 	}
-	return n_wave_count + level.var_35078afd - 1 * var_ebe16089;
+	return n_wave_count + ((level.var_35078afd - 1) * var_ebe16089);
 }
 
 /*
@@ -1189,11 +1189,11 @@ function function_53547f4d()
 function function_630f7ed5(v_origin)
 {
 	self endon(#"death");
-	var_ce975480 = getclosestpointonnavmesh(v_origin, 512, 16);
-	if(isdefined(var_ce975480))
+	v_navmesh = getclosestpointonnavmesh(v_origin, 512, 16);
+	if(isdefined(v_navmesh))
 	{
 		wait(2);
-		self moveto(var_ce975480 + vectorscale((0, 0, 1), 40), 2);
+		self moveto(v_navmesh + vectorscale((0, 0, 1), 40), 2);
 	}
 }
 
@@ -1208,7 +1208,7 @@ function function_630f7ed5(v_origin)
 */
 function function_e930da45()
 {
-	level.var_d6d4b6f9 = 2500 + level.round_number * 200;
+	level.var_d6d4b6f9 = 2500 + (level.round_number * 200);
 	if(level.var_d6d4b6f9 < 4500)
 	{
 		level.var_d6d4b6f9 = 4500;
@@ -1217,7 +1217,7 @@ function function_e930da45()
 	{
 		level.var_d6d4b6f9 = 50000;
 	}
-	level.var_d6d4b6f9 = int(level.var_d6d4b6f9 * 1 + 0.25 * level.players.size - 1);
+	level.var_d6d4b6f9 = int(level.var_d6d4b6f9 * (1 + (0.25 * (level.players.size - 1))));
 }
 
 /*
@@ -1300,7 +1300,7 @@ function function_3b40bf32()
 	{
 		self thread function_d600cb9a();
 	}
-	self zm_spawner::zombie_history("zombie_sentinel_spawn_init -> Spawned = " + self.origin);
+	self zm_spawner::zombie_history(("zombie_sentinel_spawn_init -> Spawned = ") + self.origin);
 	if(isdefined(level.achievement_monitor_func))
 	{
 		self thread [[level.achievement_monitor_func]]();

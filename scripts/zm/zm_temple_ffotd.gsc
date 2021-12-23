@@ -15,8 +15,8 @@
 */
 function main_start()
 {
-	var_c64a793a = struct::get_array("weapon_upgrade", "targetname");
-	foreach(var_7e8940a8, s_wallbuy in var_c64a793a)
+	a_wallbuys = struct::get_array("weapon_upgrade", "targetname");
+	foreach(var_7e8940a8, s_wallbuy in a_wallbuys)
 	{
 		if(s_wallbuy.zombie_weapon_upgrade == "smg_standard")
 		{

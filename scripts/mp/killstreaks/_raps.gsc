@@ -142,13 +142,13 @@ function rapshelicopterdynamicavoidanceupdate(index_to_update)
 				helicopter.lastnewgoaltime = gettime();
 			}
 			helicopterforward = anglestoforward(helicopter getangles());
-			helicopterreforigin = helicopter.origin + helicopterforward * 500;
+			helicopterreforigin = helicopter.origin + (helicopterforward * 500);
 			otherhelicopterforward = anglestoforward(level.raps_helicopters[i] getangles());
-			otherhelicopterreforigin = level.raps_helicopters[i].origin + otherhelicopterforward * 100;
+			otherhelicopterreforigin = level.raps_helicopters[i].origin + (otherhelicopterforward * 100);
 			deltatoother = otherhelicopterreforigin - helicopterreforigin;
 			otherinfront = vectordot(helicopterforward, vectornormalize(deltatoother)) > 0.707;
 			distancesqr = distance2dsquared(helicopterreforigin, otherhelicopterreforigin);
-			if(distancesqr < 200 + 1200 * 200 + 1200 || helicopter getspeed() == 0 && gettime() - helicopter.lastnewgoaltime > 5000)
+			if(distancesqr < (200 + 1200) * (200 + 1200) || helicopter getspeed() == 0 && (gettime() - helicopter.lastnewgoaltime) > 5000)
 			{
 				/#
 					helicopter.__last_dynamic_avoidance_action = 20;
@@ -170,7 +170,7 @@ function rapshelicopterdynamicavoidanceupdate(index_to_update)
 				helicopter.lastnewgoaltime = gettime();
 				continue;
 			}
-			if(distancesqr < 1200 * 1200 && otherinfront && gettime() - helicopter.laststoptime > 500)
+			if(distancesqr < (1200 * 1200) && otherinfront && (gettime() - helicopter.laststoptime) > 500)
 			{
 				/#
 					helicopter.__last_dynamic_avoidance_action = 10;
@@ -181,7 +181,7 @@ function rapshelicopterdynamicavoidanceupdate(index_to_update)
 				helicopter stophelicopter();
 				continue;
 			}
-			if(helicopter getspeed() == 0 && otherinfront && distancesqr < 1200 * 1200)
+			if(helicopter getspeed() == 0 && otherinfront && distancesqr < (1200 * 1200))
 			{
 				/#
 					helicopter.__last_dynamic_avoidance_action = 50;
@@ -193,7 +193,7 @@ function rapshelicopterdynamicavoidanceupdate(index_to_update)
 				newgoalposition = helicopter.origin - (deltatoother[0] * randomfloatrange(0.7, 2.5), deltatoother[1] * randomfloatrange(0.7, 2.5), 0);
 				helicopter updatehelicopterspeed();
 				helicopter setvehgoalpos(newgoalposition, 0);
-				if(1 || gettime() - helicopter.lastnewgoaltime > 5000)
+				if(1 || (gettime() - helicopter.lastnewgoaltime) > 5000)
 				{
 					/#
 						helicopter.__last_dynamic_avoidance_action = 51;
@@ -203,7 +203,7 @@ function rapshelicopterdynamicavoidanceupdate(index_to_update)
 				}
 				continue;
 			}
-			if(distancesqr < 1000 + 200 + 1200 * 1000 + 200 + 1200 && helicopter.drivemodespeedscale == 1)
+			if(distancesqr < (1000 + (200 + 1200)) * (1000 + (200 + 1200)) && helicopter.drivemodespeedscale == 1)
 			{
 				/#
 					helicopter.__last_dynamic_avoidance_action = (otherinfront ? 31 : 30);
@@ -214,7 +214,7 @@ function rapshelicopterdynamicavoidanceupdate(index_to_update)
 				helicopter updatehelicopterspeed((otherinfront ? 2 : 1));
 				continue;
 			}
-			if(distancesqr >= 1000 + 200 + 1200 * 1000 + 200 + 1200 && helicopter.drivemodespeedscale < 1)
+			if(distancesqr >= (1000 + (200 + 1200)) * (1000 + (200 + 1200)) && helicopter.drivemodespeedscale < 1)
 			{
 				/#
 					helicopter.__last_dynamic_avoidance_action = 40;
@@ -225,7 +225,7 @@ function rapshelicopterdynamicavoidanceupdate(index_to_update)
 				helicopter updatehelicopterspeed(0);
 				continue;
 			}
-			if(helicopter getspeed() == 0 && gettime() - helicopter.laststoptime > 500)
+			if(helicopter getspeed() == 0 && (gettime() - helicopter.laststoptime) > 500)
 			{
 				helicopter updatehelicopterspeed();
 			}
@@ -235,10 +235,10 @@ function rapshelicopterdynamicavoidanceupdate(index_to_update)
 			{
 				if(isdefined(helicopter))
 				{
-					server_frames_to_persist = int(0.05 * 2 / 0.05);
+					server_frames_to_persist = int((0.05 * 2) / 0.05);
 					sphere(helicopterreforigin, 10, (0, 0, 1), 1, 0, 10, server_frames_to_persist);
 					sphere(otherhelicopterreforigin, 10, (1, 0, 0), 1, 0, 10, server_frames_to_persist);
-					circle(helicopterreforigin, 1000 + 200 + 1200, (1, 1, 0), 1, 1, server_frames_to_persist);
+					circle(helicopterreforigin, 1000 + (200 + 1200), (1, 1, 0), 1, 1, server_frames_to_persist);
 					circle(helicopterreforigin, 200 + 1200, (0, 0, 0), 1, 1, server_frames_to_persist);
 					circle(helicopterreforigin, 1200, (1, 0, 0), 1, 1, server_frames_to_persist);
 					print3d(helicopter.origin, "" + int(helicopter getspeedmph()), (1, 1, 1), 1, 2.5, server_frames_to_persist);
@@ -295,7 +295,7 @@ function rapshelicopterdynamicavoidanceupdate(index_to_update)
 							break;
 						}
 					}
-					print3d(helicopter.origin + vectorscale((0, 0, -1), 50), debug_action_string, action_debug_color, 1, 2.5, server_frames_to_persist);
+					print3d(helicopter.origin + (vectorscale((0, 0, -1), 50)), debug_action_string, action_debug_color, 1, 2.5, server_frames_to_persist);
 				}
 			}
 		#/
@@ -577,7 +577,7 @@ function inithelicopterpositions()
 		should_omit = 0;
 		foreach(var_1171aa34, omit_location in omit_locations)
 		{
-			if(distancesquared(omit_location, point) < omit_radius * omit_radius)
+			if(distancesquared(omit_location, point) < (omit_radius * omit_radius))
 			{
 				should_omit = 1;
 				/#
@@ -711,7 +711,7 @@ function istracesafeforrapsdronedropfromhelicopter(spaciouspoint, traceheight, t
 		{
 			if(trace[""] < 1)
 			{
-				box(end, (traceboxhalfwidth * -1, traceboxhalfwidth * -1, 0), (traceboxhalfwidth, traceboxhalfwidth, start[2] - end[2] * 1 - trace[""]), 0, (1, 0, 0), 0.6, 0, 9999999);
+				box(end, (traceboxhalfwidth * -1, traceboxhalfwidth * -1, 0), (traceboxhalfwidth, traceboxhalfwidth, (start[2] - end[2]) * (1 - trace[""])), 0, (1, 0, 0), 0.6, 0, 9999999);
 			}
 			else
 			{
@@ -768,12 +768,12 @@ function getinitialhelicopterflyheight()
 	if(level.raps_helicopters.size > 0)
 	{
 		already_assigned_height = level.raps_helicopters[0].assigned_fly_height;
-		if(already_assigned_height == minimum_fly_height + int(airsupport::getminimumflyheight() + 1000))
+		if(already_assigned_height == (minimum_fly_height + (int(airsupport::getminimumflyheight() + 1000))))
 		{
-			return minimum_fly_height + int(airsupport::getminimumflyheight() + 1000) + 400;
+			return (minimum_fly_height + (int(airsupport::getminimumflyheight() + 1000))) + 400;
 		}
 	}
-	return minimum_fly_height + int(airsupport::getminimumflyheight() + 1000);
+	return minimum_fly_height + (int(airsupport::getminimumflyheight() + 1000));
 }
 
 /*
@@ -833,9 +833,9 @@ function spawnrapshelicopter(killstreakid)
 	helicopter.extra_low_health_callback = &onextralowhealth;
 	helicopter setcandamage(1);
 	helicopter thread killstreaks::monitordamage("raps", helicopter.maxhealth, &ondeath, helicopter.lowhealth, &onlowhealth, 0, undefined, 1);
-	helicopter.rocketdamage = helicopter.maxhealth / 4 + 1;
-	helicopter.remotemissiledamage = helicopter.maxhealth / 1 + 1;
-	helicopter.hackertooldamage = helicopter.maxhealth / 2 + 1;
+	helicopter.rocketdamage = (helicopter.maxhealth / 4) + 1;
+	helicopter.remotemissiledamage = (helicopter.maxhealth / 1) + 1;
+	helicopter.hackertooldamage = (helicopter.maxhealth / 2) + 1;
 	helicopter.detonateviaemp = &raps::detonate_damage_monitored;
 	target_set(helicopter, vectorscale((0, 0, 1), 100));
 	helicopter setdrawinfrared(1);
@@ -1087,7 +1087,7 @@ function waitforstoppingmovetoexpire()
 	elapsedtimestopping = gettime() - self.laststoptime;
 	if(elapsedtimestopping < 2000)
 	{
-		wait(2000 - elapsedtimestopping * 0.001);
+		wait((2000 - elapsedtimestopping) * 0.001);
 	}
 }
 
@@ -1133,7 +1133,7 @@ function picknextdroplocation(heli, drop_index, firstdropreferencepoint, assigne
 		heli.prepickeddroplocation = undefined;
 		return targetdroplocation;
 	}
-	targetdroplocation = (drop_index == 0 ? getclosestrandomhelicopterposition(firstdropreferencepoint, int(game["raps_helicopter_positions"].size * 66.6 / 100 + 1), avoid_point) : getrandomhelicopterposition(lastdroplocation, avoid_point));
+	targetdroplocation = (drop_index == 0 ? getclosestrandomhelicopterposition(firstdropreferencepoint, int((game["raps_helicopter_positions"].size * (66.6 / 100)) + 1), avoid_point) : getrandomhelicopterposition(lastdroplocation, avoid_point));
 	targetdroplocation = (targetdroplocation[0], targetdroplocation[1], assigned_fly_height);
 	return targetdroplocation;
 }
@@ -1168,7 +1168,7 @@ function helicopterthink()
 		}
 		if(isdefined(self.owner))
 		{
-			if(i + 1 < 3)
+			if((i + 1) < 3)
 			{
 				self killstreaks::play_pilot_dialog_on_owner("waveStart", "raps", self.killstreakid);
 			}
@@ -1179,12 +1179,12 @@ function helicopterthink()
 		}
 		enemy = self.owner battlechatter::get_closest_player_enemy(self.origin, 1);
 		enemyradius = battlechatter::mpdialog_value("rapsDropRadius", 0);
-		if(isdefined(enemy) && distance2dsquared(self.origin, enemy.origin) < enemyradius * enemyradius)
+		if(isdefined(enemy) && distance2dsquared(self.origin, enemy.origin) < (enemyradius * enemyradius))
 		{
 			enemy battlechatter::play_killstreak_threat("raps");
 		}
 		self dropraps();
-		wait((i + 1 >= 3 ? 2 + randomfloatrange(1 * -1, 1) : 2 + randomfloatrange(2 * -1, 2)));
+		wait(((i + 1) >= 3 ? 2 + (randomfloatrange(1 * -1, 1)) : 2 + (randomfloatrange(2 * -1, 2))));
 	}
 	self notify(#"raps_helicopter_shutdown", 0);
 }
@@ -1222,7 +1222,7 @@ function helicopterthinkdebugvisitall()
 				wait(1);
 				if(getdvarint("") > 0)
 				{
-					if(j + 1 % 3 == 0)
+					if(((j + 1) % 3) == 0)
 					{
 						self.targetdroplocation = getrandomhelicopterstartorigin(self.assigned_fly_height, self.origin);
 						while(distance2dsquared(self.origin, self.targetdroplocation) > 25)
@@ -1255,8 +1255,8 @@ function dropraps()
 	self endon(#"death");
 	self.droppingraps = 1;
 	self.lastdroplocation = self.origin;
-	precisedroplocation = 0.5 * self gettagorigin(level.raps_helicopter_drop_tag_names[0]) + self gettagorigin(level.raps_helicopter_drop_tag_names[1]);
-	precisegoallocation = self.targetdroplocation + self.targetdroplocation - precisedroplocation;
+	precisedroplocation = 0.5 * (self gettagorigin(level.raps_helicopter_drop_tag_names[0]) + self gettagorigin(level.raps_helicopter_drop_tag_names[1]));
+	precisegoallocation = self.targetdroplocation + (self.targetdroplocation - precisedroplocation);
 	precisegoallocation = (precisegoallocation[0], precisegoallocation[1], self.targetdroplocation[2]);
 	self setvehgoalpos(precisegoallocation, 1);
 	self waittill(#"goal");
@@ -1298,7 +1298,7 @@ function spin()
 	}
 	while(isdefined(self))
 	{
-		self settargetyaw(self.angles[1] + speed * 0.4);
+		self settargetyaw(self.angles[1] + (speed * 0.4));
 		wait(1);
 	}
 }
@@ -1430,7 +1430,7 @@ function updatehelicopterspeed(drivemode)
 			}
 		}
 	}
-	desiredspeed = self getmaxspeed() / 17.6 * self.drivemodespeedscale;
+	desiredspeed = (self getmaxspeed() / 17.6) * self.drivemodespeedscale;
 	if(desiredspeed < self getspeedmph())
 	{
 		self setspeed(desiredspeed, self.drivemodedecel, self.drivemodedecel);
@@ -1720,7 +1720,7 @@ function initialwaituntilsettled()
 		wait(0.2);
 		waittime = waittime + 0.2;
 	}
-	while(!ispointonnavmesh(self.origin, 36) || abs(self.velocity[2]) > 0.1 && waittime < 5 + 5)
+	while(!ispointonnavmesh(self.origin, 36) || abs(self.velocity[2]) > 0.1 && waittime < (5 + 5))
 	{
 		wait(0.2);
 		waittime = waittime + 0.2;
@@ -1728,10 +1728,10 @@ function initialwaituntilsettled()
 	/#
 		if(0)
 		{
-			waittime = waittime + 5 + 5;
+			waittime = waittime + (5 + 5);
 		}
 	#/
-	return waittime < 5 + 5;
+	return waittime < (5 + 5);
 }
 
 /*

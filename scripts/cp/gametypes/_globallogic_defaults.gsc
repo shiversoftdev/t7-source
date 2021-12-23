@@ -73,7 +73,7 @@ function default_onforfeit(team)
 			assert(isdefined(team), "");
 		#/
 		/#
-			assert(0, "" + team + "");
+			assert(0, ("" + team) + "");
 		#/
 		winner = "tie";
 	}
@@ -81,7 +81,7 @@ function default_onforfeit(team)
 	/#
 		if(isplayer(winner))
 		{
-			print("" + winner getxuid() + "" + winner.name + "");
+			print(((("" + winner getxuid()) + "") + winner.name) + "");
 		}
 		else
 		{
@@ -382,14 +382,14 @@ function default_onspawnspectator(origin, angles)
 	spawnpointname = "cp_global_intermission";
 	spawnpoints = struct::get_array(spawnpointname, "targetname");
 	/#
-		assert(spawnpoints.size, "" + spawnpointname + "");
+		assert(spawnpoints.size, ("" + spawnpointname) + "");
 	#/
 	spawnpoint = spawnlogic::get_spawnpoint_random(spawnpoints);
 	/#
-		assert(isdefined(spawnpoint.origin), "" + spawnpointname + "");
+		assert(isdefined(spawnpoint.origin), ("" + spawnpointname) + "");
 	#/
 	/#
-		assert(isdefined(spawnpoint.angles), "" + spawnpointname + "" + spawnpoint.origin + "");
+		assert(isdefined(spawnpoint.angles), ((("" + spawnpointname) + "") + spawnpoint.origin) + "");
 	#/
 	self spawn(spawnpoint.origin, spawnpoint.angles);
 }
@@ -412,7 +412,7 @@ function default_onspawnintermission()
 	{
 		self spawn(spawnpoint.origin, spawnpoint.angles);
 	}
-	util::error("" + spawnpointname + "");
+	util::error(("" + spawnpointname) + "");
 }
 
 /*

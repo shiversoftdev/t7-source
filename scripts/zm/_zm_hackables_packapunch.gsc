@@ -23,7 +23,7 @@ function hack_packapunch()
 	if(isdefined(perk))
 	{
 		struct = spawnstruct();
-		struct.origin = perk.origin + anglestoright(perk.angles) * 26 + vectorscale((0, 0, 1), 48);
+		struct.origin = (perk.origin + (anglestoright(perk.angles) * 26)) + vectorscale((0, 0, 1), 48);
 		struct.radius = 48;
 		struct.height = 48;
 		struct.script_float = 5;

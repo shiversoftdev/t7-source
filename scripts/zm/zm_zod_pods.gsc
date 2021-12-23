@@ -93,7 +93,7 @@ function __init__()
 			{
 				/#
 					/#
-						assertmsg("" + a_table[str_key][""] + "");
+						assertmsg(("" + a_table[str_key][""]) + "");
 					#/
 				#/
 				continue;
@@ -199,7 +199,7 @@ function function_5c18476f()
 		for(i = 0; i < a_keys.size; i++)
 		{
 			str_id = a_keys[i];
-			adddebugcommand("" + str_id + "" + str_id + "");
+			adddebugcommand(((("" + str_id) + "") + str_id) + "");
 		}
 		s_sword_rock = struct::get("", "");
 		while(true)
@@ -432,9 +432,9 @@ function function_254faf4d()
 	while(true)
 	{
 		self.origin = self.origin - vectorscale((0, 0, 1), 5000);
-		level waittill("pod_" + self.script_int + "_hatched");
+		level waittill(("pod_" + self.script_int) + "_hatched");
 		self.origin = self.origin + vectorscale((0, 0, 1), 5000);
-		level waittill("pod_" + self.script_int + "_harvested");
+		level waittill(("pod_" + self.script_int) + "_harvested");
 	}
 }
 
@@ -562,7 +562,7 @@ private function function_42bd572d()
 			}
 			level.var_6fa2f6ca.var_4042b27e[level.var_6fa2f6ca.var_4042b27e.size] = self;
 			self notify(#"harvested");
-			level notify("pod_" + self.script_int + "_harvested");
+			level notify(("pod_" + self.script_int) + "_harvested");
 		}
 	}
 }
@@ -586,7 +586,7 @@ private function function_bf70a1ff()
 		if(!isdefined(e_pod.zone))
 		{
 			/#
-				println("" + zm_zod_util::vec_to_string(e_pod.origin) + "");
+				println(("" + zm_zod_util::vec_to_string(e_pod.origin)) + "");
 			#/
 			arrayremovevalue(level.var_6fa2f6ca.var_4042b27e, e_pod);
 		}
@@ -630,9 +630,9 @@ function function_7e428fa9(e_harvester)
 	var_785a5f87 = self.var_8486ae6a;
 	self.var_8486ae6a = 0;
 	self.model clientfield::set("update_fungus_pod_level", self.var_8486ae6a);
-	wait(getanimlength("p7_fxanim_zm_zod_fungus_pod_stage" + var_785a5f87 + "_death_bundle") - 0.5);
+	wait((getanimlength(("p7_fxanim_zm_zod_fungus_pod_stage" + var_785a5f87) + "_death_bundle")) - 0.5);
 	e_harvester recordmapevent(24, gettime(), self.origin, level.round_number, var_785a5f87);
-	level notify("pod_" + self.script_int + "_harvested");
+	level notify(("pod_" + self.script_int) + "_harvested");
 	n_roll = randomint(100);
 	n_cumulation = 0;
 	var_68a89987 = 0;
@@ -957,7 +957,7 @@ function function_d6abde0a(n_pods)
 		}
 		level.var_6fa2f6ca.var_5d8c3695[level.var_6fa2f6ca.var_5d8c3695.size] = s_pod;
 		s_pod.var_8486ae6a = 1;
-		level notify("pod_" + s_pod.script_int + "_hatched");
+		level notify(("pod_" + s_pod.script_int) + "_hatched");
 		s_pod.model clientfield::set("update_fungus_pod_level", s_pod.var_8486ae6a);
 		s_pod thread function_e1065706();
 		s_pod thread function_5f89f77a();
@@ -984,7 +984,7 @@ function function_d6abde0a(n_pods)
 function function_e1065706()
 {
 	wait(getanimlength("p7_fxanim_zm_zod_fungus_pod_base_birth_anim"));
-	self.trigger = zm_zod_util::spawn_trigger_radius(self.origin + anglestoup(self.angles) * 8, 50, 1, &pod_player_msg);
+	self.trigger = zm_zod_util::spawn_trigger_radius(self.origin + (anglestoup(self.angles) * 8), 50, 1, &pod_player_msg);
 	self notify(#"hash_e446a51c");
 }
 
@@ -1200,7 +1200,7 @@ function normalize_reward_chances()
 		{
 			if(!(isdefined(reward.do_not_consider) && reward.do_not_consider))
 			{
-				reward.chance = reward.chance / n_total * 100;
+				reward.chance = (reward.chance / n_total) * 100;
 			}
 		}
 	}

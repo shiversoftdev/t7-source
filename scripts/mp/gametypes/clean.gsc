@@ -809,7 +809,7 @@ function function_9bc55b1b()
 	self.baseeffect.team = "none";
 	time_left = time_left + 0.25;
 	var_3112d2e7 = 3;
-	angles = (self.var_6de41998.angles[0], self.var_6de41998.angles[1] - var_3112d2e7 * 360, self.var_6de41998.angles[2]);
+	angles = (self.var_6de41998.angles[0], self.var_6de41998.angles[1] - (var_3112d2e7 * 360), self.var_6de41998.angles[2]);
 	self.var_6de41998 rotateto(angles, time_left, time_left, 0, 0);
 }
 
@@ -839,7 +839,7 @@ function function_5b1f87d2()
 			foreach(var_f58ebfe8, team in level.teams)
 			{
 				setmatchflag("bomb_timer_a", 1);
-				setbombtimer("A", int(gettime() + 1000 + level.var_c8a5fbc4 * 1000));
+				setbombtimer("A", int((gettime() + 1000) + (level.var_c8a5fbc4 * 1000)));
 				if(var_1bc0e62e >= 0)
 				{
 					globallogic_audio::leader_dialog("hubOffline", team);
@@ -858,7 +858,7 @@ function function_5b1f87d2()
 		foreach(var_1d25397b, team in level.teams)
 		{
 			setmatchflag("bomb_timer_a", 1);
-			setbombtimer("A", int(gettime() + 1000 + level.cleandepositonlinetime * 1000));
+			setbombtimer("A", int((gettime() + 1000) + (level.cleandepositonlinetime * 1000)));
 			if(level.var_c8a5fbc4 > 0)
 			{
 				globallogic_audio::leader_dialog("hubOnline", team);
@@ -898,7 +898,7 @@ function function_a293cd04(var_1bc0e62e = -1)
 	{
 		case 0:
 		{
-			return var_1bc0e62e + 1 % level.cleandeposithubs.size;
+			return (var_1bc0e62e + 1) % level.cleandeposithubs.size;
 		}
 		case 1:
 		{
@@ -1007,7 +1007,7 @@ function hidetimerdisplayongameend()
 function function_f6b1cbad(player)
 {
 	time = gettime();
-	if(time - player.var_2deb2526 > 0.3 * 1000)
+	if((time - player.var_2deb2526) > (0.3 * 1000))
 	{
 		player.var_6963bf0f = 0;
 	}
@@ -1112,7 +1112,7 @@ function function_aaca5c8e(var_b9fd331)
 	wait(0.1);
 	while(true)
 	{
-		if(distance2dsquared(self.origin, var_b9fd331.origin) > 90 * 90)
+		if(distance2dsquared(self.origin, var_b9fd331.origin) > (90 * 90))
 		{
 			break;
 		}
@@ -1225,7 +1225,7 @@ function function_52f9b039(player)
 	{
 		return 1;
 	}
-	return player.var_2deb2526 + 250 < gettime();
+	return (player.var_2deb2526 + 250) < gettime();
 }
 
 /*
@@ -1253,7 +1253,7 @@ function function_9629206a(player)
 	else if(player.carriedtacos >= 10)
 	{
 		time = gettime();
-		if(time - player.var_f2408e26 > 500)
+		if((time - player.var_f2408e26) > 500)
 		{
 			player playlocalsound("mpl_fracture_enemy_pickup_nope");
 			if(!isdefined(player.var_741e5451))
@@ -1307,7 +1307,7 @@ function function_5d5411e2(attacker, yawangle)
 	/#
 		dropcount = dropcount + getdvarint("", 0);
 	#/
-	var_cdaa100d = 360 / dropcount + 1;
+	var_cdaa100d = 360 / (dropcount + 1);
 	for(i = 0; i < dropcount; i++)
 	{
 		taco = function_54bb534d();

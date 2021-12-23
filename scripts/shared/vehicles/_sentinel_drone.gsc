@@ -207,7 +207,7 @@ function sentinel_drone_initialize()
 	{
 		level.sentinel_drone_target_id = 0;
 	}
-	level.sentinel_drone_target_id = level.sentinel_drone_target_id + 1 % 32;
+	level.sentinel_drone_target_id = (level.sentinel_drone_target_id + 1) % 32;
 	if(level.sentinel_drone_target_id == 0)
 	{
 		level.sentinel_drone_target_id = 1;
@@ -241,7 +241,7 @@ function sentinel_drone_initialize()
 	self.should_buff_zombies = 0;
 	self.disable_flame_fx = 1;
 	self.no_widows_wine = 1;
-	self.targetplayertime = gettime() + 1000 + randomint(1000);
+	self.targetplayertime = (gettime() + 1000) + randomint(1000);
 	self.pers = [];
 	self.pers["team"] = self.team;
 	self.overridevehicledamage = &sentinel_callbackdamage;
@@ -643,7 +643,7 @@ function sentinel_dodgeroll()
 	else
 	{
 		roll_dir = vectorscale(roll_dir, -1);
-		roll_point = self.origin - vectorscale(roll_dir, juke_distance_max * -1);
+		roll_point = self.origin - (vectorscale(roll_dir, juke_distance_max * -1));
 		roll_asm_state = "dodge_left@attack";
 	}
 	trace = sentinel_trace(self.origin, roll_point, self, 1);
@@ -661,7 +661,7 @@ function sentinel_dodgeroll()
 			}
 			else
 			{
-				roll_distance = juke_distance_max * trace["fraction"] - juke_offset;
+				roll_distance = (juke_distance_max * trace["fraction"]) - juke_offset;
 			}
 			if(roll_distance >= juke_distance)
 			{
@@ -670,7 +670,7 @@ function sentinel_dodgeroll()
 				{
 					roll_anim_rate = juke_min_anim_rate;
 				}
-				roll_speed = roll_distance / juke_distance * juke_speed;
+				roll_speed = (roll_distance / juke_distance) * juke_speed;
 				can_roll = 1;
 			}
 		}
@@ -776,7 +776,7 @@ private function sentinel_shouldchangesentinelposition()
 	{
 		if(isdefined(self.lastjuketime))
 		{
-			if(gettime() - self.lastjuketime > 3000)
+			if((gettime() - self.lastjuketime) > 3000)
 			{
 				speed = self getspeed();
 				if(speed < 1)
@@ -868,7 +868,7 @@ function sentinel_navigatetheworld()
 			returndata = sentinel_getnextmovepositiontactical(self.should_buff_zombies);
 			current_pathto_pos = returndata["origin"];
 			self.lastjuketime = gettime();
-			self.nextjuketime = gettime() + 1000 + randomint(4000);
+			self.nextjuketime = (gettime() + 1000) + randomint(4000);
 			b_in_tactical_position = 1;
 		}
 		else if(gettime() > self.next_near_player_check && sentinel_isnearanotherplayer(self.origin, 100))
@@ -945,7 +945,7 @@ function sentinel_navigatetheworld()
 			{
 				self.last_failsafe_time = gettime();
 			}
-			if(gettime() - self.last_failsafe_time >= 3000)
+			if((gettime() - self.last_failsafe_time) >= 3000)
 			{
 				self.last_failsafe_count = 0;
 			}
@@ -1000,7 +1000,7 @@ function sentinel_navigatetheworld()
 			{
 				self.stucktime = gettime();
 			}
-			if(gettime() - self.stucktime > 15000)
+			if((gettime() - self.stucktime) > 15000)
 			{
 				self sentinel_killmyself();
 			}
@@ -1030,11 +1030,11 @@ function sentinel_getnextmovepositiontactical(b_do_not_chase_enemy)
 	{
 		selfdisttotarget = 0;
 	}
-	gooddist = 0.5 * sentinel_getengagementdistmin() + sentinel_getengagementdistmax();
+	gooddist = 0.5 * (sentinel_getengagementdistmin() + sentinel_getengagementdistmax());
 	closedist = 1.2 * gooddist;
 	fardist = 3 * gooddist;
 	querymultiplier = mapfloat(closedist, fardist, 1, 3, selfdisttotarget);
-	preferedheightrange = 0.5 * sentinel_getengagementheightmax() + sentinel_getengagementheightmin();
+	preferedheightrange = 0.5 * (sentinel_getengagementheightmax() + sentinel_getengagementheightmin());
 	randomness = 20;
 	sentinel_drone_too_close_to_self_dist_ex = getdvarint("SENTINEL_DRONE_TOO_CLOSE_TO_SELF_DIST_EX", 70);
 	sentinel_drone_move_dist_max_ex = getdvarint("SENTINEL_DRONE_MOVE_DIST_MAX_EX", 600);
@@ -1083,12 +1083,12 @@ function sentinel_getnextmovepositiontactical(b_do_not_chase_enemy)
 		{
 			self vehicle_ai::positionquery_filter_engagementdist(queryresult, self.sentinel_droneenemy, sentinel_getengagementdistmin(), sentinel_getengagementdistmax());
 		}
-		goalheight = self.sentinel_droneenemy.origin[2] + 0.5 * sentinel_getengagementheightmin() + sentinel_getengagementheightmax();
+		goalheight = self.sentinel_droneenemy.origin[2] + (0.5 * (sentinel_getengagementheightmin() + sentinel_getengagementheightmax()));
 		enemy_origin = self.sentinel_droneenemy.origin + vectorscale((0, 0, 1), 48);
 	}
 	else
 	{
-		goalheight = self.origin[2] + 0.5 * sentinel_getengagementheightmin() + sentinel_getengagementheightmax();
+		goalheight = self.origin[2] + (0.5 * (sentinel_getengagementheightmin() + sentinel_getengagementheightmax()));
 		enemy_origin = self.origin;
 	}
 	best_point = undefined;
@@ -1124,7 +1124,7 @@ function sentinel_getnextmovepositiontactical(b_do_not_chase_enemy)
 				}
 				point._scoredebug[""] = point.distawayfromengagementarea * -1;
 			#/
-			point.score = point.score + point.distawayfromengagementarea * -1;
+			point.score = point.score + (point.distawayfromengagementarea * -1);
 		}
 		is_near_another_sentinel = sentinel_isnearanothersentinel(point.origin, 200);
 		if(isdefined(is_near_another_sentinel) && is_near_another_sentinel)
@@ -1165,7 +1165,7 @@ function sentinel_getnextmovepositiontactical(b_do_not_chase_enemy)
 		distfrompreferredheight = abs(point.origin[2] - goalheight);
 		if(distfrompreferredheight > preferedheightrange)
 		{
-			heightscore = distfrompreferredheight - preferedheightrange * 3;
+			heightscore = (distfrompreferredheight - preferedheightrange) * 3;
 			/#
 				if(!isdefined(point._scoredebug))
 				{
@@ -1173,7 +1173,7 @@ function sentinel_getnextmovepositiontactical(b_do_not_chase_enemy)
 				}
 				point._scoredebug[""] = heightscore * -1;
 			#/
-			point.score = point.score + heightscore * -1;
+			point.score = point.score + (heightscore * -1);
 		}
 		if(!isdefined(best_score))
 		{
@@ -1259,12 +1259,12 @@ function sentinel_chargeatplayernavigation(b_charge_at_player, time_out, charge_
 		else
 		{
 			sentinel_dir = anglestoforward(self.angles);
-			charge_at_position = self.origin + sentinel_dir * length(self.sentinel_droneenemy.origin - self.origin);
+			charge_at_position = self.origin + (sentinel_dir * (length(self.sentinel_droneenemy.origin - self.origin)));
 			charge_at_position = (charge_at_position[0], charge_at_position[1], self.sentinel_droneenemy.origin[2]);
 		}
 	}
 	charge_at_dir = vectornormalize(charge_at_position - self.origin);
-	charge_at_position = self.origin + charge_at_dir * 1200;
+	charge_at_position = self.origin + (charge_at_dir * 1200);
 	self clearlookatent();
 	self setvehgoalpos(charge_at_position, 1, 0);
 	self setlookatorigin(charge_at_position);
@@ -1277,7 +1277,7 @@ function sentinel_chargeatplayernavigation(b_charge_at_player, time_out, charge_
 			velocitymag = 1;
 		}
 		predicted_pos = self.origin + velocity;
-		offset = vectornormalize(predicted_pos - self.origin) * 35;
+		offset = (vectornormalize(predicted_pos - self.origin)) * 35;
 		trace = sentinel_trace(self.origin + offset, predicted_pos + offset, self, 1);
 		if(trace["fraction"] < 1)
 		{
@@ -1323,7 +1323,7 @@ function sentinel_pathupdateinterrupt()
 	{
 		if(isdefined(self.current_pathto_pos))
 		{
-			if(distance2dsquared(self.origin, self.goalpos) < self.goalradius * self.goalradius)
+			if(distance2dsquared(self.origin, self.goalpos) < (self.goalradius * self.goalradius))
 			{
 				/#
 					if(getdvarint("") > 0)
@@ -1476,7 +1476,7 @@ function sentinel_firelogic()
 			result = sentinel_canseeenemy(self.origin);
 			if(result.can_see_enemy)
 			{
-				self.nextfiretime = gettime() + 2500 + randomint(2500);
+				self.nextfiretime = (gettime() + 2500) + randomint(2500);
 				sentinel_navigationstandstill();
 				wait(0.1);
 				if(!isdefined(self.sentinel_droneenemy))
@@ -1541,7 +1541,7 @@ function sentinel_firelogic()
 				}
 				if(randomint(100) < 30)
 				{
-					self.nextfiretime = gettime() + 2500 + randomint(2500);
+					self.nextfiretime = (gettime() + 2500) + randomint(2500);
 				}
 				return 1;
 			}
@@ -2188,7 +2188,7 @@ function sentinel_drone_callbackradiusdamage(einflictor, eattacker, idamage, fin
 		}
 		else
 		{
-			self.nextrolltime = gettime() + 3000 + randomint(4000);
+			self.nextrolltime = (gettime() + 3000) + randomint(4000);
 		}
 	}
 	return idamage;
@@ -2477,15 +2477,15 @@ function sentinel_getengagementheightmin()
 */
 function sentinel_isinsideengagementdistance(origin, position, b_accept_negative_height)
 {
-	if(!(distance2dsquared(position, origin) > sentinel_getengagementdistmin() * sentinel_getengagementdistmin() && distance2dsquared(position, origin) < sentinel_getengagementdistmax() * sentinel_getengagementdistmax()))
+	if(!(distance2dsquared(position, origin) > (sentinel_getengagementdistmin() * sentinel_getengagementdistmin()) && distance2dsquared(position, origin) < (sentinel_getengagementdistmax() * sentinel_getengagementdistmax())))
 	{
 		return 0;
 	}
 	if(isdefined(b_accept_negative_height) && b_accept_negative_height)
 	{
-		return abs(origin[2] - position[2]) >= sentinel_getengagementheightmin() && abs(origin[2] - position[2]) <= sentinel_getengagementheightmax();
+		return (abs(origin[2] - position[2])) >= sentinel_getengagementheightmin() && (abs(origin[2] - position[2])) <= sentinel_getengagementheightmax();
 	}
-	return position[2] - origin[2] >= sentinel_getengagementheightmin() && position[2] - origin[2] <= sentinel_getengagementheightmax();
+	return (position[2] - origin[2]) >= sentinel_getengagementheightmin() && (position[2] - origin[2]) <= sentinel_getengagementheightmax();
 }
 
 /*
@@ -2686,7 +2686,7 @@ function sentinel_isnearanotherplayer(origin, min_distance)
 */
 function sentinel_play_taunt(taunt_arr)
 {
-	if(isdefined(level._lastplayed_drone_taunt) && gettime() - level._lastplayed_drone_taunt < 6000)
+	if(isdefined(level._lastplayed_drone_taunt) && (gettime() - level._lastplayed_drone_taunt) < 6000)
 	{
 		return;
 	}

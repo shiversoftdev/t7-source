@@ -330,7 +330,7 @@ private function _system_overload_vehicle(attacker, weapon)
 		}
 	}
 	self dodamage(damage, self.origin, attacker, undefined, "none", "MOD_GRENADE_SPLASH", 0, getweapon("emp_grenade"), -1, 1);
-	self.var_7c04bee3 = gettime() + getdvarint("scr_system_overload_vehicle_cooldown_seconds", 5) * 1000;
+	self.var_7c04bee3 = gettime() + (getdvarint("scr_system_overload_vehicle_cooldown_seconds", 5) * 1000);
 }
 
 /*
@@ -373,7 +373,7 @@ function ai_activatesystemoverload(target, var_9bc2efcb = 1, disabletimemsec)
 	{
 		type = self cybercom::function_5e3d3aa();
 		self orientmode("face default");
-		self animscripted("ai_cybercom_anim", self.origin, self.angles, "ai_base_rifle_" + type + "_exposed_cybercom_activate");
+		self animscripted("ai_cybercom_anim", self.origin, self.angles, ("ai_base_rifle_" + type) + "_exposed_cybercom_activate");
 		self waittill_match(#"ai_cybercom_anim");
 	}
 	weapon = getweapon("gadget_system_overload");
@@ -431,7 +431,7 @@ function system_overload(attacker, disabletimemsec, weapon = getweapon("gadget_s
 	}
 	self clientfield::set("cybercom_sysoverload", 1);
 	wait(randomfloatrange(0, 0.75));
-	disablefor = gettime() + disabletime + randomint(3000);
+	disablefor = (gettime() + disabletime) + randomint(3000);
 	type = self cybercom::function_5e3d3aa();
 	var_c60a5dd5 = type == "crc";
 	var_fea6d69a = 0;
@@ -443,7 +443,7 @@ function system_overload(attacker, disabletimemsec, weapon = getweapon("gadget_s
 	self thread function_53cfe88a();
 	self orientmode("face default");
 	self ai::set_behavior_attribute("robot_lights", 1);
-	self animscripted("shutdown_anim", self.origin, self.angles, "ai_robot_base_" + type + "_shutdown", "normal", %generic::root, 1, 0.2);
+	self animscripted("shutdown_anim", self.origin, self.angles, ("ai_robot_base_" + type) + "_shutdown", "normal", %generic::root, 1, 0.2);
 	self thread cybercom::stopanimscriptedonnotify("damage_pain", "shutdown_anim", 1, attacker, weapon);
 	self thread cybercom::stopanimscriptedonnotify("notify_melee_damage", "shutdown_anim", 1, attacker, weapon);
 	self thread cybercom::stopanimscriptedonnotify("breakout_sysoverload_loop", "shutdown_anim", 0, attacker, weapon);
@@ -465,7 +465,7 @@ function system_overload(attacker, disabletimemsec, weapon = getweapon("gadget_s
 		self ai::set_behavior_attribute("robot_lights", 0);
 		self.ignoreall = 0;
 		self clientfield::set("cybercom_sysoverload", 2);
-		self animscripted("restart_anim", self.origin, self.angles, "ai_robot_base_" + type + "_shutdown_2_alert");
+		self animscripted("restart_anim", self.origin, self.angles, ("ai_robot_base_" + type) + "_shutdown_2_alert");
 		self thread cybercom::stopanimscriptedonnotify("damage_pain", "restart_anim", 1, attacker, weapon);
 		self thread cybercom::stopanimscriptedonnotify("notify_melee_damage", "restart_anim", 1, attacker, weapon);
 		self waittill_match(#"restart_anim");

@@ -79,7 +79,7 @@ function function_25b0085d()
 			var_34b4e10b = "sheffield";
 		}
 		var_9949c988 = randomintrange(1, 4);
-		var_3f75b0e3 = "lgtexp_solarflare_" + var_34b4e10b + "_0" + var_9949c988;
+		var_3f75b0e3 = (("lgtexp_solarflare_" + var_34b4e10b) + "_0") + var_9949c988;
 		exploder::exploder_duration(var_3f75b0e3, 4);
 	}
 }

@@ -116,7 +116,7 @@ function channeling_stone_glow(localclientnum, oldval, newval, bnewent, binitial
 	if(newval == 1)
 	{
 		n_start_time = gettime();
-		var_b1382f05 = n_start_time + 0.85 * 1000;
+		var_b1382f05 = n_start_time + (0.85 * 1000);
 		var_c8a6e70a = 0;
 		var_2be3abbd = 1;
 		n_shader_value = 0;
@@ -126,7 +126,7 @@ function channeling_stone_glow(localclientnum, oldval, newval, bnewent, binitial
 			if(n_time >= var_b1382f05)
 			{
 				n_start_time = gettime();
-				var_b1382f05 = n_start_time + 0.85 * 1000;
+				var_b1382f05 = n_start_time + (0.85 * 1000);
 				var_c8a6e70a = n_shader_value;
 				var_2be3abbd = (var_2be3abbd == 1 ? 0 : 1);
 			}

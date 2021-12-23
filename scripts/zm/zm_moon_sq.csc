@@ -97,15 +97,36 @@ function dest_debug(dest)
 	Namespace: zm_moon_sq
 	Checksum: 0x8BB418F4
 	Offset: 0x9C8
-	Size: 0x0
+	Size: 0x1EC
 	Parameters: 0
 	Flags: Linked
 */
 function vision_wobble()
 {
+	setdvar("r_poisonFX_debug_amount", 0);
+	setdvar("r_poisonFX_debug_enable", 1);
+	setdvar("r_poisonFX_pulse", 2);
+	setdvar("r_poisonFX_warpX", -0.3);
+	setdvar("r_poisonFX_warpY", 0.15);
+	setdvar("r_poisonFX_dvisionA", 0);
+	setdvar("r_poisonFX_dvisionX", 0);
+	setdvar("r_poisonFX_dvisionY", 0);
+	setdvar("r_poisonFX_blurMin", 0);
+	setdvar("r_poisonFX_blurMax", 3);
+	delta = 0.064;
+	amount = 1;
+	setdvar("r_poisonFX_debug_amount", amount);
+	waitrealtime(3);
+	while(amount > 0)
+	{
+		amount = max(amount - delta, 0);
+		setdvar("r_poisonFX_debug_amount", amount);
+		wait(0.016);
+	}
+	setdvar("r_poisonFX_debug_amount", 0);
+	setdvar("r_poisonFX_debug_enable", 0);
 }
 
-/*Unknown Op Code (0x1C63) at 0B26*/
 /*
 	Name: soul_swap
 	Namespace: zm_moon_sq
@@ -199,7 +220,7 @@ function zombie_release_soul(localclientnum, oldval, newval, bnewent, binitialsn
 	if(isdefined(closest))
 	{
 		/#
-			println("" + self.origin + "" + closest.origin);
+			println((("" + self.origin) + "") + closest.origin);
 		#/
 		for(i = 0; i < getlocalplayers().size; i++)
 		{

@@ -127,7 +127,7 @@ private function parse_parameters()
 		}
 		/#
 			/#
-				assertmsg("" + str_param + "" + self.m_e_trigger.targetname + "");
+				assertmsg(((("" + str_param) + "") + self.m_e_trigger.targetname) + "");
 			#/
 		#/
 	}
@@ -661,7 +661,7 @@ private function init_smashables()
 		{
 			/#
 				/#
-					assertmsg("" + str_id + "");
+					assertmsg(("" + str_id) + "");
 				#/
 			#/
 			continue;
@@ -756,7 +756,7 @@ function add_callback(targetname, fn_callback, param1, param2, param3)
 	{
 		/#
 			/#
-				assertmsg("" + targetname + "");
+				assertmsg(("" + targetname) + "");
 			#/
 		#/
 		return;

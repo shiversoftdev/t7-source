@@ -246,45 +246,43 @@ function init_perk_machines_fx(localclientnum)
 	Namespace: zm_perks
 	Checksum: 0x15419E0
 	Offset: 0x810
-	Size: 0x0
+	Size: 0x142
 	Parameters: 0
 	Flags: Linked
 */
 function perk_start_up()
 {
-System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
-Parameter name: index
-   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   at System.Collections.Generic.List`1.get_Item(Int32 index)
-   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 649
-   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 211
-/*
-No Output
-*/
-
-	/* ======== */
-
-/* 
-	Stack: 
-	Stack Entry: undefined
-*/
-	/* ======== */
-
-/* 
-	Blocks: 
-	Cerberus.Logic.BasicBlock at 0x0810, end at 0x0811
-	Cerberus.Logic.WhileLoop at 0x0852, end at 0x0872
-	Cerberus.Logic.IfBlock at 0x0832, end at 0x087A
-	Cerberus.Logic.IfBlock at 0x089A, end at 0x0950
-	Cerberus.Logic.IfBlock at 0x08A2, end at 0x0912
-	Cerberus.Logic.IfBlock at 0x0934, end at 0x0946
-	Cerberus.Logic.ElseBlock at 0x087A, end at 0x0886
-*/
-	/* ======== */
-
+	if(isdefined(self.script_int))
+	{
+		power_zone = self.script_int;
+		int = undefined;
+		while(int != power_zone)
+		{
+			level waittill(#"power_on", int);
+		}
+	}
+	else
+	{
+		level waittill(#"power_on");
+	}
+	timer = 0;
+	duration = 0.1;
+	while(true)
+	{
+		if(isdefined(level._custom_perks[self.script_noteworthy]) && isdefined(level._custom_perks[self.script_noteworthy].machine_light_effect))
+		{
+			self thread vending_machine_flicker_light(level._custom_perks[self.script_noteworthy].machine_light_effect, duration);
+		}
+		timer = timer + duration;
+		duration = duration + 0.2;
+		if(timer >= 3)
+		{
+			break;
+		}
+		waitrealtime(duration);
+	}
 }
 
-/*Unknown Op Code (0x1C5E) at 094A*/
 /*
 	Name: vending_machine_flicker_light
 	Namespace: zm_perks
@@ -308,12 +306,16 @@ function vending_machine_flicker_light(fx_light, duration)
 	Namespace: zm_perks
 	Checksum: 0xB34FAA2C
 	Offset: 0x9E0
-	Size: 0x0
+	Size: 0xCC
 	Parameters: 3
 	Flags: Linked
 */
 function play_perk_fx_on_client(client_num, fx_light, duration)
 {
+	fxobj = spawn(client_num, self.origin + (vectorscale((0, 0, -1), 50)), "script_model");
+	fxobj setmodel("tag_origin");
+	playfxontag(client_num, level._effect[fx_light], fxobj, "tag_origin");
+	waitrealtime(duration);
+	fxobj delete();
 }
 
-/*Unknown Op Code (0x023D) at 0A8E*/

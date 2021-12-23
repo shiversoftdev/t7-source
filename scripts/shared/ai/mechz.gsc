@@ -206,7 +206,7 @@ private function mechznotetrackshootgrenade(entity)
 	}
 	base_target_pos = entity.enemy.origin;
 	v_velocity = entity.enemy getvelocity();
-	base_target_pos = base_target_pos + v_velocity * 1.5;
+	base_target_pos = base_target_pos + (v_velocity * 1.5);
 	target_pos_offset_x = math::randomsign() * randomint(32);
 	target_pos_offset_y = math::randomsign() * randomint(32);
 	target_pos = base_target_pos + (target_pos_offset_x, target_pos_offset_y, 0);
@@ -360,7 +360,7 @@ private function mechzberserkknockdownservice(entity)
 {
 	velocity = entity getvelocity();
 	predict_time = 0.3;
-	predicted_pos = entity.origin + velocity * predict_time;
+	predicted_pos = entity.origin + (velocity * predict_time);
 	move_dist_sq = distancesquared(predicted_pos, entity.origin);
 	speed = move_dist_sq / predict_time;
 	if(speed >= 10)
@@ -1298,7 +1298,7 @@ function mechzdamagecallback(inflictor, attacker, damage, dflags, mod, weapon, p
 	if(!isdefined(self.next_pain_time) || gettime() >= self.next_pain_time)
 	{
 		self thread mechz_play_pain_audio();
-		self.next_pain_time = gettime() + 250 + randomint(500);
+		self.next_pain_time = (gettime() + 250) + randomint(500);
 	}
 	if(isdefined(self.damage_scoring_function))
 	{
@@ -1320,7 +1320,7 @@ function mechzdamagecallback(inflictor, attacker, damage, dflags, mod, weapon, p
 				self mechz_track_faceplate_damage(staffdamage);
 			}
 			/#
-				iprintlnbold("" + staffdamage + "" + self.health - staffdamage);
+				iprintlnbold((("" + staffdamage) + "") + (self.health - staffdamage));
 			#/
 			if(!isdefined(self.explosive_dmg_taken))
 			{
@@ -1355,7 +1355,7 @@ function mechzdamagecallback(inflictor, attacker, damage, dflags, mod, weapon, p
 			}
 			self [[level.mechz_explosive_damage_reaction_callback]]();
 			/#
-				iprintlnbold("" + explosive_damage + "" + self.health - explosive_damage);
+				iprintlnbold((("" + explosive_damage) + "") + (self.health - explosive_damage));
 			#/
 			return explosive_damage;
 		}
@@ -1364,7 +1364,7 @@ function mechzdamagecallback(inflictor, attacker, damage, dflags, mod, weapon, p
 	{
 		attacker show_hit_marker();
 		/#
-			iprintlnbold("" + damage + "" + self.health - damage);
+			iprintlnbold((("" + damage) + "") + (self.health - damage));
 		#/
 		return damage;
 	}
@@ -1395,7 +1395,7 @@ function mechzdamagecallback(inflictor, attacker, damage, dflags, mod, weapon, p
 					self mechz_track_powercap_cover_damage(damage);
 					attacker show_hit_marker();
 					/#
-						iprintlnbold("" + damage * 0.1 + "" + self.health - damage * 0.1);
+						iprintlnbold((("" + (damage * 0.1)) + "") + (self.health - (damage * 0.1)));
 					#/
 					return damage * 0.1;
 				}
@@ -1404,14 +1404,14 @@ function mechzdamagecallback(inflictor, attacker, damage, dflags, mod, weapon, p
 					self mechz_track_powercap_damage(damage);
 					attacker show_hit_marker();
 					/#
-						iprintlnbold("" + damage + "" + self.health - damage);
+						iprintlnbold((("" + damage) + "") + (self.health - damage));
 					#/
 					return damage;
 				}
 				else if(self.powercap_covered !== 1 && self.has_powercap !== 1 && (partname === "tag_powersupply" || partname === "tag_powersupply_hit"))
 				{
 					/#
-						iprintlnbold("" + damage * 0.5 + "" + self.health - damage * 0.5);
+						iprintlnbold((("" + (damage * 0.5)) + "") + (self.health - (damage * 0.5)));
 					#/
 					attacker show_hit_marker();
 					return damage * 0.5;
@@ -1420,7 +1420,7 @@ function mechzdamagecallback(inflictor, attacker, damage, dflags, mod, weapon, p
 				{
 					self mechz_track_rshoulder_armor_damage(damage);
 					/#
-						iprintlnbold("" + damage * 0.1 + "" + self.health - damage * 0.1);
+						iprintlnbold((("" + (damage * 0.1)) + "") + (self.health - (damage * 0.1)));
 					#/
 					return damage * 0.1;
 				}
@@ -1428,12 +1428,12 @@ function mechzdamagecallback(inflictor, attacker, damage, dflags, mod, weapon, p
 				{
 					self mechz_track_lshoulder_armor_damage(damage);
 					/#
-						iprintlnbold("" + damage * 0.1 + "" + self.health - damage * 0.1);
+						iprintlnbold((("" + (damage * 0.1)) + "") + (self.health - (damage * 0.1)));
 					#/
 					return damage * 0.1;
 				}
 				/#
-					iprintlnbold("" + damage * 0.1 + "" + self.health - damage * 0.1);
+					iprintlnbold((("" + (damage * 0.1)) + "") + (self.health - (damage * 0.1)));
 				#/
 				return damage * 0.1;
 				break;
@@ -1446,7 +1446,7 @@ function mechzdamagecallback(inflictor, attacker, damage, dflags, mod, weapon, p
 					self mechz_track_lknee_armor_damage(damage);
 				}
 				/#
-					iprintlnbold("" + damage * 0.1 + "" + self.health - damage * 0.1);
+					iprintlnbold((("" + (damage * 0.1)) + "") + (self.health - (damage * 0.1)));
 				#/
 				return damage * 0.1;
 				break;
@@ -1459,7 +1459,7 @@ function mechzdamagecallback(inflictor, attacker, damage, dflags, mod, weapon, p
 					self mechz_track_rknee_armor_damage(damage);
 				}
 				/#
-					iprintlnbold("" + damage * 0.1 + "" + self.health - damage * 0.1);
+					iprintlnbold((("" + (damage * 0.1)) + "") + (self.health - (damage * 0.1)));
 				#/
 				return damage * 0.1;
 				break;
@@ -1473,7 +1473,7 @@ function mechzdamagecallback(inflictor, attacker, damage, dflags, mod, weapon, p
 					self [[level.mechz_left_arm_damage_callback]]();
 				}
 				/#
-					iprintlnbold("" + damage * 0.1 + "" + self.health - damage * 0.1);
+					iprintlnbold((("" + (damage * 0.1)) + "") + (self.health - (damage * 0.1)));
 				#/
 				return damage * 0.1;
 				break;
@@ -1481,7 +1481,7 @@ function mechzdamagecallback(inflictor, attacker, damage, dflags, mod, weapon, p
 			default:
 			{
 				/#
-					iprintlnbold("" + damage * 0.1 + "" + self.health - damage * 0.1);
+					iprintlnbold((("" + (damage * 0.1)) + "") + (self.health - (damage * 0.1)));
 				#/
 				return damage * 0.1;
 				break;
@@ -1498,7 +1498,7 @@ function mechzdamagecallback(inflictor, attacker, damage, dflags, mod, weapon, p
 			if(dist_sq <= 144)
 			{
 				/#
-					iprintlnbold("" + damage + "" + self.health - damage);
+					iprintlnbold((("" + damage) + "") + (self.health - damage));
 				#/
 				attacker show_hit_marker();
 				return damage;
@@ -1526,7 +1526,7 @@ function mechzdamagecallback(inflictor, attacker, damage, dflags, mod, weapon, p
 			if(self.powercap_covered !== 1 && self.has_powercap !== 1)
 			{
 				/#
-					iprintlnbold("" + damage + "" + self.health - damage);
+					iprintlnbold((("" + damage) + "") + (self.health - damage));
 				#/
 				attacker show_hit_marker();
 				return damage;
@@ -1536,7 +1536,7 @@ function mechzdamagecallback(inflictor, attacker, damage, dflags, mod, weapon, p
 				self mechz_track_powercap_damage(damage);
 				attacker show_hit_marker();
 				/#
-					iprintlnbold("" + damage + "" + self.health - damage);
+					iprintlnbold((("" + damage) + "") + (self.health - damage));
 				#/
 				return damage;
 			}
@@ -1583,7 +1583,7 @@ function mechzdamagecallback(inflictor, attacker, damage, dflags, mod, weapon, p
 			}
 		}
 		/#
-			iprintlnbold("" + hit_damage + "" + self.health - hit_damage);
+			iprintlnbold((("" + hit_damage) + "") + (self.health - hit_damage));
 		#/
 		return hit_damage;
 	}
@@ -1652,7 +1652,7 @@ function mechzdamagecallback(inflictor, attacker, damage, dflags, mod, weapon, p
 			self mechz_track_faceplate_damage(damage * 0.5);
 		}
 		/#
-			iprintlnbold("" + hit_damage + "" + self.health - hit_damage);
+			iprintlnbold((("" + hit_damage) + "") + (self.health - hit_damage));
 		#/
 		return hit_damage;
 	}
@@ -1929,7 +1929,7 @@ function mechzcheckinarc(right_offset, aim_tag)
 	if(isdefined(right_offset))
 	{
 		right_angle = anglestoright(angles);
-		origin = origin + right_angle * right_offset;
+		origin = origin + (right_angle * right_offset);
 	}
 	facing_vec = anglestoforward(angles);
 	enemy_vec = self.favoriteenemy.origin - origin;
@@ -1965,7 +1965,7 @@ private function mechzgrenadecheckinarc(right_offset)
 	if(isdefined(right_offset))
 	{
 		right_angle = anglestoright(self.angles);
-		origin = origin + right_angle * right_offset;
+		origin = origin + (right_angle * right_offset);
 	}
 	facing_vec = anglestoforward(self.angles);
 	enemy_vec = self.favoriteenemy.origin - origin;

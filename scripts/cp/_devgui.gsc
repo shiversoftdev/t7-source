@@ -85,7 +85,7 @@ function devgui_player_commands()
 		players = getplayers();
 		foreach(var_72915306, player in getplayers())
 		{
-			rootclear = "" + player.playername + "";
+			rootclear = ("" + player.playername) + "";
 			adddebugcommand(rootclear);
 		}
 		thread devgui_player_weapons();
@@ -144,7 +144,7 @@ function devgui_player_disconnect()
 		{
 			return;
 		}
-		rootclear = "" + self.playername + "";
+		rootclear = ("" + self.playername) + "";
 		util::add_queued_debug_command(rootclear);
 	#/
 }
@@ -161,7 +161,7 @@ function devgui_player_disconnect()
 function devgui_add_player_commands(root, pname, index)
 {
 	/#
-		player_devgui_root = root + pname + "";
+		player_devgui_root = (root + pname) + "";
 		pid = "" + index;
 		devgui_add_player_command(player_devgui_root, pid, "", 1, "");
 		devgui_add_player_command(player_devgui_root, pid, "", 2, "");
@@ -211,7 +211,7 @@ function devgui_add_player_commands(root, pname, index)
 function devgui_add_player_command(root, pid, cmdname, cmdindex, cmddvar)
 {
 	/#
-		adddebugcommand(root + cmdname + "" + "" + "" + pid + "" + "" + "" + cmddvar + "");
+		adddebugcommand((((((((((root + cmdname) + "") + "") + "") + pid) + "") + "") + "") + cmddvar) + "");
 	#/
 }
 
@@ -779,17 +779,6 @@ function devgui_kill()
 */
 function devgui_toggle_ammo()
 {
-System.InvalidOperationException: Stack empty.
-   at System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
-   at System.Collections.Generic.Stack`1.Pop()
-   at Cerberus.Logic.Decompiler.BuildExpression(ScriptOp startOp) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 1185
-   at Cerberus.Logic.Decompiler.ProcessInstruction(ScriptOp operation, DecompilerBlock block) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 2343
-   at Cerberus.Logic.Decompiler.DecompileBlock(DecompilerBlock decompilerBlock, Int32 tabs) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 998
-   at Cerberus.Logic.Decompiler.DecompileBlock(DecompilerBlock decompilerBlock, Int32 tabs) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 968
-   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 222
-/*
-function devgui_toggle_ammo()
-{
 	/#
 		/#
 			assert(isdefined(self));
@@ -802,29 +791,22 @@ function devgui_toggle_ammo()
 		#/
 		self notify(#"devgui_toggle_ammo");
 		self endon(#"devgui_toggle_ammo");
-
-*/
-
-	/* ======== */
-
-/* 
-	Stack: 
-*/
-	/* ======== */
-
-/* 
-	Blocks: 
-	Cerberus.Logic.BasicBlock at 0x2158, end at 0x22AF
-	Cerberus.Logic.DevBlock at 0x216A, end at 0x22AC
-	Cerberus.Logic.DevBlock at 0x216E, end at 0x218A
-	Cerberus.Logic.DevBlock at 0x218A, end at 0x21B2
-	Cerberus.Logic.DevBlock at 0x21B2, end at 0x21DA
-	Cerberus.Logic.WhileLoop at 0x2212, end at 0x22A8
-	Cerberus.Logic.IfBlock at 0x223E, end at 0x22A2
-	Cerberus.Logic.IfBlock at 0x227E, end at 0x22A2
-*/
-	/* ======== */
-
+		self.ammo4evah = !(isdefined(self.ammo4evah) && self.ammo4evah);
+		while(isdefined(self) && self.ammo4evah)
+		{
+			weapon = self getcurrentweapon();
+			if(weapon != level.weaponnone)
+			{
+				self setweaponoverheating(0, 0);
+				max = weapon.maxammo;
+				if(isdefined(max))
+				{
+					self setweaponammostock(weapon, max);
+				}
+			}
+			wait(1);
+		}
+	#/
 }
 
 /*
@@ -1013,9 +995,9 @@ function devgui_player_weapons()
 			arrayinsert(a_misc_cp, a_weapons[i], 0);
 		}
 		player_devgui_base_cp = "";
-		adddebugcommand(player_devgui_base_cp + "" + "" + "" + "");
-		adddebugcommand(player_devgui_base_cp + "" + "" + "" + "");
-		adddebugcommand(player_devgui_base_cp + "" + "" + "" + "");
+		adddebugcommand((((player_devgui_base_cp + "") + "") + "") + "");
+		adddebugcommand((((player_devgui_base_cp + "") + "") + "") + "");
+		adddebugcommand((((player_devgui_base_cp + "") + "") + "") + "");
 		devgui_add_player_weapons(player_devgui_base_cp, "", 0, a_grenades_cp, "");
 		devgui_add_player_weapons(player_devgui_base_cp, "", 0, a_weapons_cp, "");
 		devgui_add_player_weapons(player_devgui_base_cp, "", 0, a_misc_cp, "");
@@ -1024,9 +1006,9 @@ function devgui_player_weapons()
 		for(i = 0; i < players.size; i++)
 		{
 			ip1 = i + 1;
-			adddebugcommand(player_devgui_base_cp + players[i].playername + "" + "" + "");
-			adddebugcommand(player_devgui_base_cp + players[i].playername + "" + "" + "");
-			adddebugcommand(player_devgui_base_cp + players[i].playername + "" + "" + "");
+			adddebugcommand((((player_devgui_base_cp + players[i].playername) + "") + "") + "");
+			adddebugcommand((((player_devgui_base_cp + players[i].playername) + "") + "") + "");
+			adddebugcommand((((player_devgui_base_cp + players[i].playername) + "") + "") + "");
 			devgui_add_player_weapons(player_devgui_base_cp, players[i].playername, ip1, a_grenades_cp, "");
 			devgui_add_player_weapons(player_devgui_base_cp, players[i].playername, ip1, a_weapons_cp, "");
 			devgui_add_player_weapons(player_devgui_base_cp, players[i].playername, ip1, a_misc_cp, "");
@@ -1048,7 +1030,7 @@ function devgui_player_weapons()
 function devgui_add_player_gun_attachments(root, pname, index, a_weapons, weapon_type)
 {
 	/#
-		player_devgui_root = root + pname + "" + "" + weapon_type + "";
+		player_devgui_root = ((((root + pname) + "") + "") + weapon_type) + "";
 		attachments = [];
 		foreach(var_eb8947fe, weapon in a_weapons)
 		{
@@ -1077,7 +1059,7 @@ function devgui_add_player_gun_attachments(root, pname, index, a_weapons, weapon
 function devgui_add_player_weapons(root, pname, index, a_weapons, weapon_type)
 {
 	/#
-		player_devgui_root = root + pname + "" + "" + weapon_type + "";
+		player_devgui_root = ((((root + pname) + "") + "") + weapon_type) + "";
 		pid = "" + index;
 		if(isdefined(a_weapons))
 		{
@@ -1094,12 +1076,12 @@ function devgui_add_player_weapons(root, pname, index, a_weapons, weapon_type)
 				name = a_weapons[i].name;
 				if(attachments.size)
 				{
-					devgui_add_player_weap_command(player_devgui_root + name + "", pid, name, i + 1);
+					devgui_add_player_weap_command((player_devgui_root + name) + "", pid, name, i + 1);
 					foreach(var_8029f4aa, att in attachments)
 					{
 						if(att != "")
 						{
-							devgui_add_player_weap_command(player_devgui_root + name + "", pid, name + "" + att, i + 1);
+							devgui_add_player_weap_command((player_devgui_root + name) + "", pid, (name + "") + att, i + 1);
 						}
 					}
 				}
@@ -1125,7 +1107,7 @@ function devgui_add_player_weapons(root, pname, index, a_weapons, weapon_type)
 function devgui_add_player_weap_command(root, pid, weap_name, cmdindex)
 {
 	/#
-		adddebugcommand(root + weap_name + "" + "" + "" + pid + "" + "" + "" + weap_name + "");
+		adddebugcommand((((((((((root + weap_name) + "") + "") + "") + pid) + "") + "") + "") + weap_name) + "");
 	#/
 }
 
@@ -1141,7 +1123,7 @@ function devgui_add_player_weap_command(root, pid, weap_name, cmdindex)
 function devgui_add_player_attachment_command(root, pid, attachment_name, cmdindex)
 {
 	/#
-		adddebugcommand(root + attachment_name + "" + "" + "" + pid + "" + "" + "" + attachment_name + "");
+		adddebugcommand((((((((((root + attachment_name) + "") + "") + "") + pid) + "") + "") + "") + attachment_name) + "");
 	#/
 }
 
@@ -1413,7 +1395,7 @@ function devgui_give_attachment(attachment_name)
 		}
 		if(attachmentsupported == 0)
 		{
-			iprintlnbold("" + attachment_name + "" + split[0]);
+			iprintlnbold((("" + attachment_name) + "") + split[0]);
 			attachmentsstring = "";
 			if(currentweapon.supportedattachments.size == 0)
 			{
@@ -1421,7 +1403,7 @@ function devgui_give_attachment(attachment_name)
 			}
 			foreach(var_3a2b1b15, attachment in currentweapon.supportedattachments)
 			{
-				attachmentsstring = attachmentsstring + "" + attachment;
+				attachmentsstring = attachmentsstring + ("" + attachment);
 			}
 			iprintlnbold(attachmentsstring);
 			return;
@@ -1430,7 +1412,7 @@ function devgui_give_attachment(attachment_name)
 		{
 			if(currentattachment == attachment_name)
 			{
-				iprintlnbold("" + attachment_name + "" + currentweapon.name);
+				iprintlnbold((("" + attachment_name) + "") + currentweapon.name);
 				return;
 			}
 		}

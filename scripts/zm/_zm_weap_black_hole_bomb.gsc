@@ -282,7 +282,7 @@ function function_bf9781f8(player)
 		}
 		if(var_a81ad02a < 262144)
 		{
-			visionset_mgr::set_state_active(player, 1 - var_a81ad02a / 262144);
+			visionset_mgr::set_state_active(player, 1 - (var_a81ad02a / 262144));
 		}
 		wait(0.05);
 	}

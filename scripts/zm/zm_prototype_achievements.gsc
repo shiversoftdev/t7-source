@@ -62,7 +62,7 @@ function achievement_sound_func(achievement_name_lower)
 	{
 		return;
 	}
-	for(i = 0; i < self getentitynumber() + 1; i++)
+	for(i = 0; i < (self getentitynumber() + 1); i++)
 	{
 		util::wait_network_frame();
 	}

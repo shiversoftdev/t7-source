@@ -825,26 +825,26 @@ function time_for_quad_wave(zone_name)
 	}
 	if(level.round_number >= 10)
 	{
-		multiplier = multiplier * level.round_number * 0.15;
+		multiplier = multiplier * (level.round_number * 0.15);
 	}
 	player_num = level.players.size;
 	if(player_num == 1)
 	{
-		max = max + int(0.5 * level.zombie_vars["zombie_ai_per_player"] * multiplier);
+		max = max + (int((0.5 * level.zombie_vars["zombie_ai_per_player"]) * multiplier));
 	}
 	else
 	{
-		max = max + int(player_num - 1 * level.zombie_vars["zombie_ai_per_player"] * multiplier);
+		max = max + (int(((player_num - 1) * level.zombie_vars["zombie_ai_per_player"]) * multiplier));
 	}
 	chance = 100;
 	max_zombies = [[level.max_zombie_func]](max, level.round_number);
 	current_round = level.round_number;
-	if(level.round_number % 3 == 0 && chance >= randomint(100))
+	if((level.round_number % 3) == 0 && chance >= randomint(100))
 	{
 		if(zone.is_occupied)
 		{
 			level flag::set("special_quad_round");
-			while(level.zombie_total < max_zombies / 2 && current_round == level.round_number)
+			while(level.zombie_total < (max_zombies / 2) && current_round == level.round_number)
 			{
 				wait(0.1);
 			}

@@ -76,7 +76,7 @@ function function_7c5410c4()
 */
 function function_92c929ab(val)
 {
-	ret = val << 2 + self.entnum;
+	ret = (val << 2) + self.entnum;
 	return ret;
 }
 
@@ -106,7 +106,7 @@ function function_676edeb7()
 			var_7d01b30f = math::clamp(self.doa.var_91c268dc / getdvarint("scr_doa_weapon_increment_range", 1024), 0, 1);
 			var_f63556d9 = self.doa.weaponlevel;
 		}
-		var_24b562d = self.doa.var_db3637c0 << 2 + (self.doa.respawning ? 1 : 0);
+		var_24b562d = (self.doa.var_db3637c0 << 2) + (self.doa.respawning ? 1 : 0);
 		multiplier = self.doa.multiplier + self.doa.var_a3f61a60;
 		max = level.doa.rules.max_multiplier;
 		if(self.doa.fate == 11)
@@ -115,9 +115,9 @@ function function_676edeb7()
 		}
 		multiplier = math::clamp(multiplier, 0, max);
 		self.score = int(self.doa.score / 25);
-		self.headshots = self.doa.lives << 12 + self.doa.bombs << 8 + self.doa.boosters << 4 + multiplier;
-		self.downs = int(var_132c0655 * 255) << 2 + var_f63556d9;
-		self.revives = int(var_7d01b30f * 255) << 2 + self.doa.var_9742391e;
+		self.headshots = (self.doa.lives << 12) + (self.doa.bombs << 8) + (self.doa.boosters << 4) + multiplier;
+		self.downs = ((int(var_132c0655 * 255)) << 2) + var_f63556d9;
+		self.revives = ((int(var_7d01b30f * 255)) << 2) + self.doa.var_9742391e;
 		self.assists = var_24b562d;
 	}
 }
@@ -137,7 +137,7 @@ function function_93ccc5da()
 	{
 		return 0;
 	}
-	return self.doa.score + self.doa.var_db3637c0 * int(int(4000000) * 25 - 1);
+	return self.doa.score + (self.doa.var_db3637c0 * (int((int(4000000) * 25) - 1)));
 }
 
 /*
@@ -166,10 +166,10 @@ function function_80eb303(points, var_c979daec = 0)
 		multiplier = math::clamp(multiplier, 0, max);
 		points = points * multiplier;
 	}
-	points = 25 * int(points / 25);
+	points = 25 * (int(points / 25));
 	self.doa.var_e1956fd2 = self.doa.var_e1956fd2 + points;
 	self.doa.score = self.doa.score + points;
-	if(self.doa.score > int(int(4000000) * 25 - 1))
+	if(self.doa.score > (int((int(4000000) * 25) - 1)))
 	{
 		if(self.doa.var_db3637c0 < 3)
 		{
@@ -179,7 +179,7 @@ function function_80eb303(points, var_c979daec = 0)
 		}
 		else
 		{
-			self.doa.score = int(int(4000000) * 25 - 1);
+			self.doa.score = int((int(4000000) * 25) - 1);
 		}
 	}
 	if(self.doa.score >= self.doa.var_295df6ca)
@@ -227,7 +227,7 @@ function function_126dc996(multiplier)
 	{
 		for(reductions = self.doa.multiplier - 1; reductions; reductions--)
 		{
-			self.doa.var_5d2140f2 = doa_utility::clamp(int(self.doa.var_5d2140f2 * 0.65 + 0.69), 1, level.doa.rules.var_a9114441);
+			self.doa.var_5d2140f2 = doa_utility::clamp(int((self.doa.var_5d2140f2 * 0.65) + 0.69), 1, level.doa.rules.var_a9114441);
 		}
 	}
 }

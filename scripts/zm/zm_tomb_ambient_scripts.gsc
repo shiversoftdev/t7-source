@@ -88,7 +88,7 @@ function move_zeppelin_down_new_path(a_structs)
 	if(!isdefined(s_path_start.goal_struct))
 	{
 		/#
-			assert(isdefined(s_path_start.target), "" + s_path_start.origin + "");
+			assert(isdefined(s_path_start.target), ("" + s_path_start.origin) + "");
 		#/
 		s_path_start.goal_struct = struct::get(s_path_start.target, "targetname");
 		/#

@@ -66,7 +66,7 @@ function on_player_connect()
 		level.clientid++;
 	}
 	/#
-		println("" + self.name + "" + self.clientid);
+		println((("" + self.name) + "") + self.clientid);
 	#/
 }
 

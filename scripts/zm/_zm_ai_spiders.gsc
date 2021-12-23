@@ -726,7 +726,7 @@ function function_c1730af7()
 {
 	var_621b3c65 = function_c9adb887();
 	var_8817ee62 = var_621b3c65 >= 13;
-	var_72a71294 = var_621b3c65 >= level.players.size * 4;
+	var_72a71294 = var_621b3c65 >= (level.players.size * 4);
 	if(var_8817ee62 || var_72a71294 || !level flag::get("spawn_zombies"))
 	{
 		return 0;
@@ -1058,7 +1058,7 @@ function function_f602171e()
 				var_4a50cb2a = e_player.origin;
 			}
 		}
-		trace = groundtrace(var_4a50cb2a + vectorscale((0, 0, 1), 15), var_4a50cb2a + vectorscale((0, 0, -1), 1000), 0, undefined);
+		trace = groundtrace(var_4a50cb2a + vectorscale((0, 0, 1), 15), var_4a50cb2a + (vectorscale((0, 0, -1), 1000)), 0, undefined);
 		var_4a50cb2a = trace["position"];
 		if(isdefined(var_4a50cb2a))
 		{
@@ -1695,7 +1695,7 @@ function function_c83dc712()
 	{
 		e_zone = level.zones[str_zone];
 		/#
-			assert(isdefined(e_zone), "" + str_zone + "");
+			assert(isdefined(e_zone), ("" + str_zone) + "");
 		#/
 		if(!function_7be01d65(str_zone))
 		{
@@ -2686,7 +2686,7 @@ function function_20915a1a(n_multiplier = 1, var_2b5697d = 0)
 	self endon(#"death");
 	if(self.var_255c77dc < 100)
 	{
-		var_86b6ca3c = 10 * n_multiplier * zm_score::get_points_multiplier(self);
+		var_86b6ca3c = (10 * n_multiplier) * zm_score::get_points_multiplier(self);
 		self zm_score::add_to_player_score(var_86b6ca3c);
 		self.var_255c77dc = self.var_255c77dc + var_86b6ca3c;
 	}

@@ -132,7 +132,7 @@ function teamscorelimitcheck(rulescorepercent, debug_count)
 		minscorepercentageleft = 100;
 		foreach(var_1db7f1c8, team in level.teams)
 		{
-			scorepercentageleft = 100 - game["teamScores"][team] / scorelimit * 100;
+			scorepercentageleft = 100 - ((game["teamScores"][team] / scorelimit) * 100);
 			if(minscorepercentageleft > scorepercentageleft)
 			{
 				minscorepercentageleft = scorepercentageleft;
@@ -195,7 +195,7 @@ function default_rules()
 		#/
 		if(level.teambased)
 		{
-			if(currentround >= level.gameadvertisementruleround - 1)
+			if(currentround >= (level.gameadvertisementruleround - 1))
 			{
 				if(teamscorelimitcheck(level.gameadvertisementrulescorepercent, debug_count) == 0)
 				{
@@ -217,7 +217,7 @@ function default_rules()
 					highestscore = players[i].pointstowin;
 				}
 			}
-			scorepercentageleft = 100 - highestscore / level.scorelimit * 100;
+			scorepercentageleft = 100 - ((highestscore / level.scorelimit) * 100);
 			/#
 				debug_count = updatedebughud(debug_count, "", int(scorepercentageleft));
 			#/
@@ -227,7 +227,7 @@ function default_rules()
 			}
 		}
 	}
-	if(level.gameadvertisementruletimeleft && currentround >= level.gameadvertisementruleround - 1)
+	if(level.gameadvertisementruletimeleft && currentround >= (level.gameadvertisementruleround - 1))
 	{
 		/#
 			debug_count = updatedebughud(debug_count, "", level.gameadvertisementruletimeleft / 60000);
@@ -340,7 +340,7 @@ function sessionadvertismentcreatedebughud(linenum, alignx)
 		debug_hud.alignx = "";
 		debug_hud.aligny = "";
 		debug_hud.x = alignx;
-		debug_hud.y = -50 + linenum * 15;
+		debug_hud.y = -50 + (linenum * 15);
 		debug_hud.foreground = 1;
 		debug_hud.font = "";
 		debug_hud.fontscale = 1.5;

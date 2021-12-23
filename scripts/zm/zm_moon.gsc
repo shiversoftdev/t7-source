@@ -1189,7 +1189,7 @@ function register_clientfields()
 	clientfield::register("clientuimodel", "hudItems.showDpadDown_HackTool", 21000, 1, "int");
 	for(i = 0; i < 4; i++)
 	{
-		clientfield::register("world", "player" + i + "wearableItem", 21000, 1, "int");
+		clientfield::register("world", ("player" + i) + "wearableItem", 21000, 1, "int");
 	}
 	clientfield::register("world", "BIO", 21000, 1, "int");
 	clientfield::register("world", "DH", 21000, 1, "int");
@@ -1287,7 +1287,7 @@ function moon_round_think_func(restart = 0)
 			}
 		}
 		/#
-			println("" + level.round_number + "" + players.size);
+			println((("" + level.round_number) + "") + players.size);
 		#/
 		level.round_start_time = gettime();
 		while(level.zm_loc_types["zombie_location"].size <= 0)
@@ -1363,9 +1363,9 @@ function moon_round_think_func(restart = 0)
 		}
 		players = getplayers();
 		array::thread_all(players, &zm_pers_upgrades_system::round_end);
-		if(int(level.round_number / 5) * 5 == level.round_number)
+		if(((int(level.round_number / 5)) * 5) == level.round_number)
 		{
-			level clientfield::set("round_complete_time", int(level.time - level.n_gameplay_start_time + 500 / 1000));
+			level clientfield::set("round_complete_time", int(((level.time - level.n_gameplay_start_time) + 500) / 1000));
 			level clientfield::set("round_complete_num", level.round_number);
 		}
 		if(level.gamedifficulty == 0)
@@ -1395,7 +1395,7 @@ function moon_round_think_func(restart = 0)
 		players = getplayers();
 		foreach(var_129a2772, player in players)
 		{
-			if(level.curr_gametype_affects_rank && zm::get_round_number() > 3 + level.start_round)
+			if(level.curr_gametype_affects_rank && zm::get_round_number() > (3 + level.start_round))
 			{
 				player zm_stats::add_client_stat("weighted_rounds_played", zm::get_round_number());
 			}
@@ -1768,7 +1768,7 @@ function gasmask_reset_player_set_viewmodel(entity_num)
 {
 	gasmask_change_player_headmodel(entity_num, 0);
 	self setcharacterbodystyle(0);
-	level clientfield::set("player" + self getentitynumber() + "wearableItem", 0);
+	level clientfield::set(("player" + self getentitynumber()) + "wearableItem", 0);
 }
 
 /*
@@ -1786,7 +1786,7 @@ function on_player_spawned()
 	self endon(#"hash_2436f867");
 	entnum = self getentitynumber();
 	self util::waittill_any("disconnect", "bled_out", "death");
-	level clientfield::set("player" + entnum + "wearableItem", 0);
+	level clientfield::set(("player" + entnum) + "wearableItem", 0);
 }
 
 /*
@@ -2333,7 +2333,7 @@ function moon_digger_respawn(revivee)
 				spawn_array = struct::get_array(spawn_points[i].target, "targetname");
 				for(j = 0; j < spawn_array.size; j++)
 				{
-					if(spawn_array[j].script_int == revivee.entity_num + 1)
+					if(spawn_array[j].script_int == (revivee.entity_num + 1))
 					{
 						return spawn_array[j];
 					}
@@ -2351,7 +2351,7 @@ function moon_digger_respawn(revivee)
 				spawn_array = struct::get_array(spawn_points[i].target, "targetname");
 				for(j = 0; j < spawn_array.size; j++)
 				{
-					if(spawn_array[j].script_int == revivee.entity_num + 1)
+					if(spawn_array[j].script_int == (revivee.entity_num + 1))
 					{
 						return spawn_array[j];
 					}

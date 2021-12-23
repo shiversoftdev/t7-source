@@ -158,7 +158,7 @@ function raps_round_tracker()
 			}
 			else
 			{
-				level.n_next_raps_round = 10 + level.raps_round_count * 10 + randomintrange(-1, 1);
+				level.n_next_raps_round = (10 + (level.raps_round_count * 10)) + (randomintrange(-1, 1));
 			}
 			/#
 				getplayers()[0] iprintln("" + level.n_next_raps_round);
@@ -498,7 +498,7 @@ function can_we_spawn_raps()
 {
 	n_raps_alive = get_current_raps_count();
 	b_raps_count_at_max = n_raps_alive >= 13;
-	b_raps_count_per_player_at_max = n_raps_alive >= level.players.size * 4;
+	b_raps_count_per_player_at_max = n_raps_alive >= (level.players.size * 4);
 	if(b_raps_count_at_max || b_raps_count_per_player_at_max || !level flag::get("spawn_zombies"))
 	{
 		return 0;
@@ -563,7 +563,7 @@ function raps_round_aftermath()
 	else
 	{
 		power_up_origin = level.last_ai_origin;
-		trace = groundtrace(power_up_origin + vectorscale((0, 0, 1), 100), power_up_origin + vectorscale((0, 0, -1), 1000), 0, undefined);
+		trace = groundtrace(power_up_origin + vectorscale((0, 0, 1), 100), power_up_origin + (vectorscale((0, 0, -1), 1000)), 0, undefined);
 		power_up_origin = trace["position"];
 		if(isdefined(power_up_origin))
 		{
@@ -593,7 +593,7 @@ function raps_spawn_fx(ai, ent)
 		ent = self;
 	}
 	ai vehicle_ai::set_state("scripted");
-	trace = bullettrace(ent.origin, ent.origin + vectorscale((0, 0, -1), 720), 0, ai);
+	trace = bullettrace(ent.origin, ent.origin + (vectorscale((0, 0, -1), 720)), 0, ai);
 	raps_impact_location = trace["position"];
 	angle = vectortoangles(ai.favoriteenemy.origin - ent.origin);
 	angles = (ai.angles[0], angle[1], ai.angles[2]);
@@ -958,7 +958,7 @@ function raps_init()
 	self thread raps_timeout_after_xsec(90);
 	level thread zm_spawner::zombie_death_event(self);
 	self thread zm_spawner::enemy_death_detection();
-	self zm_spawner::zombie_history("zombie_raps_spawn_init -> Spawned = " + self.origin);
+	self zm_spawner::zombie_history(("zombie_raps_spawn_init -> Spawned = ") + self.origin);
 	if(isdefined(level.achievement_monitor_func))
 	{
 		self [[level.achievement_monitor_func]]();

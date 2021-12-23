@@ -87,8 +87,8 @@ function vehgetpredictedyawtoenemy(entity, lookaheadtime)
 	}
 	selfpredictedpos = entity.origin;
 	moveangle = entity.angles[1] + entity getmotionangle();
-	selfpredictedpos = selfpredictedpos + (cos(moveangle), sin(moveangle), 0) * 200 * lookaheadtime;
-	yaw = vectortoangles(entity.enemy.origin - selfpredictedpos)[1] - entity.angles[1];
+	selfpredictedpos = selfpredictedpos + (((cos(moveangle), sin(moveangle), 0) * 200) * lookaheadtime);
+	yaw = (vectortoangles(entity.enemy.origin - selfpredictedpos)[1]) - entity.angles[1];
 	yaw = absangleclamp360(yaw);
 	entity.predictedyawtoenemy = yaw;
 	entity.predictedyawtoenemytime = gettime();

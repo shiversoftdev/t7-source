@@ -277,7 +277,7 @@ function function_b3289e6d(localclientnum, oldval, newval, bnewent, binitialsnap
 	{
 		return;
 	}
-	scale = newval / 256 - 1 * 16;
+	scale = (newval / (256 - 1)) * 16;
 	if(scale < 0.5)
 	{
 		scale = 0.5;
@@ -358,7 +358,7 @@ function function_474724d7(localclientnum, oldval, newval, bnewent, binitialsnap
 	newval = newval - 1;
 	if(newval > 0)
 	{
-		entnum = newval >> 1 - 1;
+		entnum = (newval >> 1) - 1;
 		players = getplayers(localclientnum);
 		foreach(var_c7670038, guy in players)
 		{
@@ -387,7 +387,7 @@ function function_892b2a87(localclientnum, oldval, newval, bnewent, binitialsnap
 	{
 		return;
 	}
-	type = newval & 64 - 1;
+	type = newval & (64 - 1);
 	variant = undefined;
 	if(newval > 38)
 	{

@@ -173,7 +173,7 @@ function sidequest_uses_teleportation(name)
 */
 function register_sidequest_icon(icon_name, version_number)
 {
-	clientfieldprefix = "sidequestIcons." + icon_name + ".";
+	clientfieldprefix = ("sidequestIcons." + icon_name) + ".";
 	clientfield::register("clientuimodel", clientfieldprefix + "icon", version_number, 1, "int");
 	clientfield::register("clientuimodel", clientfieldprefix + "notification", version_number, 1, "int");
 }
@@ -189,10 +189,10 @@ function register_sidequest_icon(icon_name, version_number)
 */
 function add_sidequest_icon(sidequest_name, icon_name, var_275b4f28 = 1)
 {
-	clientfield::set_player_uimodel("sidequestIcons." + icon_name + ".icon", 1);
+	clientfield::set_player_uimodel(("sidequestIcons." + icon_name) + ".icon", 1);
 	if(isdefined(var_275b4f28) && var_275b4f28)
 	{
-		clientfield::set_player_uimodel("sidequestIcons." + icon_name + ".notification", 1);
+		clientfield::set_player_uimodel(("sidequestIcons." + icon_name) + ".notification", 1);
 	}
 }
 
@@ -207,8 +207,8 @@ function add_sidequest_icon(sidequest_name, icon_name, var_275b4f28 = 1)
 */
 function remove_sidequest_icon(sidequest_name, icon_name)
 {
-	clientfield::set_player_uimodel("sidequestIcons." + icon_name + ".icon", 0);
-	clientfield::set_player_uimodel("sidequestIcons." + icon_name + ".notification", 0);
+	clientfield::set_player_uimodel(("sidequestIcons." + icon_name) + ".icon", 0);
+	clientfield::set_player_uimodel(("sidequestIcons." + icon_name) + ".notification", 0);
 }
 
 /*
@@ -271,12 +271,12 @@ function declare_sidequest_stage(sidequest_name, stage_name, init_func, logic_fu
 		}
 		if(!isdefined(level._zombie_sidequests[sidequest_name]))
 		{
-			println("" + stage_name + "" + sidequest_name + "");
+			println(((("" + stage_name) + "") + sidequest_name) + "");
 			return;
 		}
 		if(isdefined(level._zombie_sidequests[sidequest_name].stages[stage_name]))
 		{
-			println("" + sidequest_name + "" + stage_name);
+			println((("" + sidequest_name) + "") + stage_name);
 			return;
 		}
 	#/
@@ -312,12 +312,12 @@ function set_stage_time_limit(sidequest_name, stage_name, time_limit, timer_func
 		}
 		if(!isdefined(level._zombie_sidequests[sidequest_name]))
 		{
-			println("" + stage_name + "" + sidequest_name + "");
+			println(((("" + stage_name) + "") + sidequest_name) + "");
 			return;
 		}
 		if(!isdefined(level._zombie_sidequests[sidequest_name].stages[stage_name]))
 		{
-			println("" + stage_name + "" + sidequest_name + "");
+			println(((("" + stage_name) + "") + sidequest_name) + "");
 			return;
 		}
 	#/
@@ -340,22 +340,22 @@ function declare_stage_asset_from_struct(sidequest_name, stage_name, target_name
 	/#
 		if(!isdefined(level._zombie_sidequests))
 		{
-			println("" + target_name + "");
+			println(("" + target_name) + "");
 			return;
 		}
 		if(!isdefined(level._zombie_sidequests[sidequest_name]))
 		{
-			println("" + target_name + "" + sidequest_name + "");
+			println(((("" + target_name) + "") + sidequest_name) + "");
 			return;
 		}
 		if(!isdefined(level._zombie_sidequests[sidequest_name].stages[stage_name]))
 		{
-			println("" + target_name + "" + sidequest_name + "" + stage_name + "");
+			println(((((("" + target_name) + "") + sidequest_name) + "") + stage_name) + "");
 			return;
 		}
 		if(!structs.size)
 		{
-			println("" + target_name + "");
+			println(("" + target_name) + "");
 			return;
 		}
 	#/
@@ -384,17 +384,17 @@ function declare_stage_title(sidequest_name, stage_name, title)
 	/#
 		if(!isdefined(level._zombie_sidequests))
 		{
-			println("" + title + "");
+			println(("" + title) + "");
 			return;
 		}
 		if(!isdefined(level._zombie_sidequests[sidequest_name]))
 		{
-			println("" + title + "" + sidequest_name + "");
+			println(((("" + title) + "") + sidequest_name) + "");
 			return;
 		}
 		if(!isdefined(level._zombie_sidequests[sidequest_name].stages[stage_name]))
 		{
-			println("" + title + "" + sidequest_name + "" + stage_name + "");
+			println(((((("" + title) + "") + sidequest_name) + "") + stage_name) + "");
 			return;
 		}
 	#/
@@ -416,22 +416,22 @@ function declare_stage_asset(sidequest_name, stage_name, target_name, thread_fun
 	/#
 		if(!isdefined(level._zombie_sidequests))
 		{
-			println("" + target_name + "");
+			println(("" + target_name) + "");
 			return;
 		}
 		if(!isdefined(level._zombie_sidequests[sidequest_name]))
 		{
-			println("" + target_name + "" + sidequest_name + "");
+			println(((("" + target_name) + "") + sidequest_name) + "");
 			return;
 		}
 		if(!isdefined(level._zombie_sidequests[sidequest_name].stages[stage_name]))
 		{
-			println("" + target_name + "" + sidequest_name + "" + stage_name + "");
+			println(((((("" + target_name) + "") + sidequest_name) + "") + stage_name) + "");
 			return;
 		}
 		if(!ents.size)
 		{
-			println("" + target_name + "");
+			println(("" + target_name) + "");
 			return;
 		}
 	#/
@@ -461,17 +461,17 @@ function declare_sidequest_asset(sidequest_name, target_name, thread_func, trigg
 	/#
 		if(!isdefined(level._zombie_sidequests))
 		{
-			println("" + target_name + "");
+			println(("" + target_name) + "");
 			return;
 		}
 		if(!isdefined(level._zombie_sidequests[sidequest_name]))
 		{
-			println("" + target_name + "" + sidequest_name + "");
+			println(((("" + target_name) + "") + sidequest_name) + "");
 			return;
 		}
 		if(!ents.size)
 		{
-			println("" + target_name + "");
+			println(("" + target_name) + "");
 			return;
 		}
 	#/
@@ -503,17 +503,17 @@ function declare_sidequest_asset_from_struct(sidequest_name, target_name, thread
 	/#
 		if(!isdefined(level._zombie_sidequests))
 		{
-			println("" + target_name + "");
+			println(("" + target_name) + "");
 			return;
 		}
 		if(!isdefined(level._zombie_sidequests[sidequest_name]))
 		{
-			println("" + target_name + "" + sidequest_name + "");
+			println(((("" + target_name) + "") + sidequest_name) + "");
 			return;
 		}
 		if(!structs.size)
 		{
-			println("" + target_name + "");
+			println(("" + target_name) + "");
 			return;
 		}
 	#/
@@ -767,7 +767,7 @@ function build_assets()
 		{
 			self.active_assets[self.active_assets.size - 1] thread [[self.assets[i].thread_func]]();
 		}
-		if(i % 2 == 0)
+		if((i % 2) == 0)
 		{
 			util::wait_network_frame();
 		}
@@ -835,7 +835,7 @@ function stage_logic_func_wrapper(sidequest, stage)
 {
 	if(isdefined(stage.logic_func))
 	{
-		level endon(sidequest.name + "_" + stage.name + "_over");
+		level endon(((sidequest.name + "_") + stage.name) + "_over");
 		stage [[stage.logic_func]]();
 	}
 }
@@ -854,12 +854,12 @@ function sidequest_start(sidequest_name)
 	/#
 		if(!isdefined(level._zombie_sidequests))
 		{
-			println("" + sidequest_name + "");
+			println(("" + sidequest_name) + "");
 			return;
 		}
 		if(!isdefined(level._zombie_sidequests[sidequest_name]))
 		{
-			println("" + sidequest_name + "");
+			println(("" + sidequest_name) + "");
 			return;
 		}
 	#/
@@ -896,7 +896,7 @@ function stage_start(sidequest, stage)
 	}
 	stage build_assets();
 	sidequest.active_stage = stage.stage_number;
-	level notify(sidequest.name + "_" + stage.name + "_started");
+	level notify(((sidequest.name + "_") + stage.name) + "_started");
 	stage.completed = 0;
 	if(isdefined(sidequest.generic_stage_start_func))
 	{
@@ -969,9 +969,9 @@ function display_stage_title(wait_for_teleport_done_notify)
 function time_limited_stage(sidequest)
 {
 	/#
-		println("" + sidequest.name + "" + self.name + "" + self.time_limit + "");
+		println(((((("" + sidequest.name) + "") + self.name) + "") + self.time_limit) + "");
 	#/
-	level endon(sidequest.name + "_" + self.name + "_over");
+	level endon(((sidequest.name + "_") + self.name) + "_over");
 	level endon(#"suspend_timer");
 	level endon(#"end_game");
 	time_limit = undefined;
@@ -1042,12 +1042,12 @@ function sidequest_complete(sidequest_name)
 	/#
 		if(!isdefined(level._zombie_sidequests))
 		{
-			println("" + sidequest_name + "");
+			println(("" + sidequest_name) + "");
 			return;
 		}
 		if(!isdefined(level._zombie_sidequests[sidequest_name]))
 		{
-			println("" + sidequest_name + "");
+			println(("" + sidequest_name) + "");
 			return;
 		}
 	#/
@@ -1068,17 +1068,17 @@ function stage_completed(sidequest_name, stage_name)
 	/#
 		if(!isdefined(level._zombie_sidequests))
 		{
-			println("" + sidequest_name + "");
+			println(("" + sidequest_name) + "");
 			return;
 		}
 		if(!isdefined(level._zombie_sidequests[sidequest_name]))
 		{
-			println("" + sidequest_name + "");
+			println(("" + sidequest_name) + "");
 			return;
 		}
 		if(!isdefined(level._zombie_sidequests[sidequest_name].stages[stage_name]))
 		{
-			println("" + sidequest_name + "" + stage_name + "");
+			println(((("" + sidequest_name) + "") + stage_name) + "");
 			return;
 		}
 		println("");
@@ -1099,8 +1099,8 @@ function stage_completed(sidequest_name, stage_name)
 */
 function stage_completed_internal(sidequest, stage)
 {
-	level notify(sidequest.name + "_" + stage.name + "_over");
-	level notify(sidequest.name + "_" + stage.name + "_completed");
+	level notify(((sidequest.name + "_") + stage.name) + "_over");
+	level notify(((sidequest.name + "_") + stage.name) + "_completed");
 	if(isdefined(sidequest.generic_stage_end_func))
 	{
 		/#
@@ -1135,7 +1135,7 @@ function stage_completed_internal(sidequest, stage)
 		{
 			sidequest thread [[sidequest.complete_func]]();
 		}
-		level notify("sidequest_" + sidequest.name + "_complete");
+		level notify(("sidequest_" + sidequest.name) + "_complete");
 		sidequest.sidequest_completed = 1;
 	}
 }
@@ -1151,8 +1151,8 @@ function stage_completed_internal(sidequest, stage)
 */
 function stage_failed_internal(sidequest, stage)
 {
-	level notify(sidequest.name + "_" + stage.name + "_over");
-	level notify(sidequest.name + "_" + stage.name + "_failed");
+	level notify(((sidequest.name + "_") + stage.name) + "_over");
+	level notify(((sidequest.name + "_") + stage.name) + "_failed");
 	if(isdefined(sidequest.generic_stage_end_func))
 	{
 		stage [[sidequest.generic_stage_end_func]]();
@@ -1310,12 +1310,12 @@ function sidequest_start_next_stage(sidequest_name)
 	/#
 		if(!isdefined(level._zombie_sidequests))
 		{
-			println("" + sidequest_name + "");
+			println(("" + sidequest_name) + "");
 			return;
 		}
 		if(!isdefined(level._zombie_sidequests[sidequest_name]))
 		{
-			println("" + sidequest_name + "");
+			println(("" + sidequest_name) + "");
 			return;
 		}
 	#/
@@ -1337,7 +1337,7 @@ function sidequest_start_next_stage(sidequest_name)
 	if(!isdefined(stage))
 	{
 		/#
-			println("" + sidequest_name + "" + last_completed);
+			println((("" + sidequest_name) + "") + last_completed);
 		#/
 		return;
 	}

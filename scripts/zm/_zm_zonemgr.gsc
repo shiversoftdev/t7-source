@@ -1079,7 +1079,7 @@ function debug_show_spawn_locations()
 			{
 				distance = distance(location.origin, host_player.origin);
 				color = (0, 0, 1);
-				if(distance > getdvarint("") * 12)
+				if(distance > (getdvarint("") * 12))
 				{
 					color = (1, 0, 0);
 				}
@@ -1518,8 +1518,8 @@ function _debug_zones()
 					zone.debug_hud[4] settext("");
 				}
 				/#
-					text = text + zone.a_loc_types[""].size + "";
-					zone.debug_hud[5] settext(zone.a_loc_types[""].size + "" + zone.total_spawn_count + "" + zone.round_spawn_count);
+					text = text + (zone.a_loc_types[""].size + "");
+					zone.debug_hud[5] settext((((zone.a_loc_types[""].size + "") + zone.total_spawn_count) + "") + zone.round_spawn_count);
 				#/
 			}
 		}

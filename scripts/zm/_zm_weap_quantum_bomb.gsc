@@ -166,7 +166,7 @@ function quantum_bomb_register_result(name, result_func, chance, validation_func
 	}
 	if(isdefined(level.quantum_bomb_results[name]))
 	{
-		quantum_bomb_debug_print_ln("quantum_bomb_register_result(): '" + name + "' is already registered as a quantum bomb result.\n");
+		quantum_bomb_debug_print_ln(("quantum_bomb_register_result(): '" + name) + "' is already registered as a quantum bomb result.\n");
 		return;
 	}
 	result = spawnstruct();
@@ -208,7 +208,7 @@ function quantum_bomb_deregister_result(name)
 	}
 	if(!isdefined(level.quantum_bomb_results[name]))
 	{
-		quantum_bomb_debug_print_ln("quantum_bomb_deregister_result(): '" + name + "' is not registered as a quantum bomb result.\n");
+		quantum_bomb_debug_print_ln(("quantum_bomb_deregister_result(): '" + name) + "' is not registered as a quantum bomb result.\n");
 		return;
 	}
 	level.quantum_bomb_results[name] = undefined;
@@ -363,7 +363,7 @@ function player_handle_quantum_bomb()
 			playsoundatposition("wpn_quantum_exp", position);
 			result = self quantum_bomb_select_result(position);
 			self thread [[result.result_func]](position);
-			quantum_bomb_debug_print_bold("quantum_bomb exploded at " + position + ", result: '" + result.name + "'.\n");
+			quantum_bomb_debug_print_bold(((("quantum_bomb exploded at " + position) + ", result: '") + result.name) + "'.\n");
 		}
 		wait(0.05);
 	}
@@ -942,10 +942,10 @@ function quantum_bomb_zombie_fling_result(position)
 		{
 			break;
 		}
-		dist_mult = range_squared - test_origin_squared / range_squared;
+		dist_mult = (range_squared - test_origin_squared) / range_squared;
 		fling_vec = vectornormalize(test_origin - position);
 		fling_vec = (fling_vec[0], fling_vec[1], abs(fling_vec[2]));
-		fling_vec = vectorscale(fling_vec, 100 + 100 * dist_mult);
+		fling_vec = vectorscale(fling_vec, 100 + (100 * dist_mult));
 		zombie quantum_bomb_fling_zombie(self, fling_vec);
 		if(i && !i % 10)
 		{

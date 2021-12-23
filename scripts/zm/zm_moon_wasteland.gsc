@@ -509,7 +509,7 @@ function nml_round_manager()
 			}
 		}
 		num_dog_targets = 0;
-		if(current_time - level.nml_start_time > dog_round_start_time)
+		if((current_time - level.nml_start_time) > dog_round_start_time)
 		{
 			skip_dogs = 0;
 			players = getplayers();
@@ -582,7 +582,7 @@ function function_3eb8ebf9(move_speed)
 		{
 			break;
 		}
-		if(gettime() > time + 500)
+		if(gettime() > (time + 500))
 		{
 			break;
 		}
@@ -792,7 +792,7 @@ function get_vending_ents(vending_name, perk_script_string, nml_pos, nml_radius)
 			ent = ents[j];
 			if(isdefined(ent.script_string) && ent.script_string == perk_script_string)
 			{
-				if(abs(nml_pos[0] - ent.origin[0]) < nml_radius && abs(nml_pos[1] - ent.origin[1]) < nml_radius && abs(nml_pos[2] - ent.origin[2]) < nml_radius)
+				if((abs(nml_pos[0] - ent.origin[0])) < nml_radius && (abs(nml_pos[1] - ent.origin[1])) < nml_radius && (abs(nml_pos[2] - ent.origin[2])) < nml_radius)
 				{
 					ent_array[ent_array.size] = ent;
 				}
@@ -1136,7 +1136,7 @@ function nml_shouldsidestep()
 */
 function nml_cansidestep()
 {
-	if(gettime() - self.a.lastsidesteptime < level.nml_reaction_interval)
+	if((gettime() - self.a.lastsidesteptime) < level.nml_reaction_interval)
 	{
 		return 0;
 	}

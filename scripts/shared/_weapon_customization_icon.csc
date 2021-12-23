@@ -88,7 +88,7 @@ function update_wc_icon_extracam(localclientnum)
 */
 function wait_for_extracam_close(localclientnum, camera_ent, extracam_data_struct)
 {
-	level waittill("render_complete_" + localclientnum + "_" + extracam_data_struct.extracamindex);
+	level waittill((("render_complete_" + localclientnum) + "_") + extracam_data_struct.extracamindex);
 	multi_extracam::extracam_reset_index(localclientnum, extracam_data_struct.extracamindex);
 	if(isdefined(extracam_data_struct.weapon_script_model))
 	{
@@ -233,7 +233,7 @@ function set_wc_icon_cosmetic_variants(acv_param, weapon_full_name, extracam_dat
 {
 	acv_indexes = strtok(acv_param, ",");
 	i = 0;
-	while(i + 1 < acv_indexes.size)
+	while((i + 1) < acv_indexes.size)
 	{
 		extracam_data_struct.weapon_script_model setattachmentcosmeticvariantindex(weapon_full_name, acv_indexes[i], int(acv_indexes[i + 1]));
 		i = i + 2;

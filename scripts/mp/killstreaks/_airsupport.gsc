@@ -211,7 +211,7 @@ function stoploopsoundaftertime(time)
 function calculatefalltime(flyheight)
 {
 	gravity = getdvarint("bg_gravity");
-	time = sqrt(2 * flyheight / gravity);
+	time = sqrt((2 * flyheight) / gravity);
 	return time;
 }
 
@@ -227,9 +227,9 @@ function calculatefalltime(flyheight)
 function calculatereleasetime(flytime, flyheight, flyspeed, bombspeedscale)
 {
 	falltime = calculatefalltime(flyheight);
-	bomb_x = flyspeed * bombspeedscale * falltime;
+	bomb_x = (flyspeed * bombspeedscale) * falltime;
 	release_time = bomb_x / flyspeed;
-	return flytime * 0.5 - release_time;
+	return (flytime * 0.5) - release_time;
 }
 
 /*
@@ -437,7 +437,7 @@ function _insidecylinder(point, base, radius, height)
 {
 	if(isdefined(height))
 	{
-		if(point[2] > base[2] + height)
+		if(point[2] > (base[2] + height))
 		{
 			return 0;
 		}
@@ -537,7 +537,7 @@ function crossesnoflyzone(start, end)
 	{
 		point = math::closest_point_on_line(level.noflyzones[i].origin + (0, 0, 0.5 * level.noflyzones[i].height), start, end);
 		dist = distance2d(point, level.noflyzones[i].origin);
-		if(point[2] > level.noflyzones[i].origin[2] + level.noflyzones[i].height)
+		if(point[2] > (level.noflyzones[i].origin[2] + level.noflyzones[i].height))
 		{
 			continue;
 		}
@@ -565,7 +565,7 @@ function crossesnoflyzones(start, end)
 	{
 		point = math::closest_point_on_line(level.noflyzones[i].origin, start, end);
 		dist = distance2d(point, level.noflyzones[i].origin);
-		if(point[2] > level.noflyzones[i].origin[2] + level.noflyzones[i].height)
+		if(point[2] > (level.noflyzones[i].origin[2] + level.noflyzones[i].height))
 		{
 			continue;
 		}
@@ -695,7 +695,7 @@ function gethelipath(start, goal)
 */
 function followpath(path, donenotify, stopatgoal)
 {
-	for(i = 0; i < path.size - 1; i++)
+	for(i = 0; i < (path.size - 1); i++)
 	{
 		self setvehgoalpos(path[i], 0);
 		thread debug_line(self.origin, path[i], (1, 1, 0));
@@ -843,7 +843,7 @@ function calculatepath(start, end, startnoflyzones, goalnoflyzones)
 function _getstrikepathstartandend(goal, yaw, halfdistance)
 {
 	direction = (0, yaw, 0);
-	startpoint = goal + vectorscale(anglestoforward(direction), -1 * halfdistance);
+	startpoint = goal + (vectorscale(anglestoforward(direction), -1 * halfdistance));
 	endpoint = goal + vectorscale(anglestoforward(direction), halfdistance);
 	noflyzone = crossesnoflyzone(startpoint, endpoint);
 	path = [];
@@ -976,7 +976,7 @@ function entlosradiusdamage(ent, pos, radius, max, min, owner, einflictor)
 			debug_star(ent.entity.origin + (0, 0, assumed_ceiling_height), (1, 0, 0), debug_display_time);
 		}
 	}
-	ent.damage = int(max + min - max * dist / radius);
+	ent.damage = int(max + (((min - max) * dist) / radius));
 	ent.pos = pos;
 	ent.damageowner = owner;
 	ent.einflictor = einflictor;
@@ -1149,7 +1149,7 @@ function flattenyaw(goal)
 	{
 		increment = increment * -1;
 	}
-	while(abs(self.angles[1] - goal) > 3)
+	while((abs(self.angles[1] - goal)) > 3)
 	{
 		self.angles = (self.angles[0], self.angles[1] + increment, self.angles[2]);
 		wait(0.05);
@@ -1192,7 +1192,7 @@ function leave(duration)
 	yaw = 0;
 	while(tries > 0)
 	{
-		exitvector = anglestoforward(self.angles + (0, yaw, 0)) * 20000;
+		exitvector = (anglestoforward(self.angles + (0, yaw, 0))) * 20000;
 		exitpoint = (self.origin[0] + exitvector[0], self.origin[1] + exitvector[1], self.origin[2] - 2500);
 		exitpoint = self.origin + exitvector;
 		nfz = crossesnoflyzone(self.origin, exitpoint);
@@ -1200,7 +1200,7 @@ function leave(duration)
 		{
 			if(tries != 1)
 			{
-				if(tries % 2 == 1)
+				if((tries % 2) == 1)
 				{
 					yaw = yaw * -1;
 				}
@@ -1224,7 +1224,7 @@ function leave(duration)
 	}
 	if(isvehicle(self))
 	{
-		self setspeed(length(exitvector) / duration / 17.6, 60);
+		self setspeed((length(exitvector) / duration) / 17.6, 60);
 		self setvehgoalpos(exitpoint, 0, 0);
 	}
 	else
@@ -1249,7 +1249,7 @@ function getrandomhelicopterstartorigin()
 	pathrandomness = 100;
 	direction = (0, randomintrange(-2, 3), 0);
 	start_origin = anglestoforward(direction) * dist;
-	start_origin = start_origin + (randomfloat(2) - 1 * pathrandomness, randomfloat(2) - 1 * pathrandomness, 0);
+	start_origin = start_origin + ((randomfloat(2) - 1) * pathrandomness, (randomfloat(2) - 1) * pathrandomness, 0);
 	/#
 		if(getdvarint("", 0))
 		{
@@ -1300,7 +1300,7 @@ function debug_plane_line(flytime, flyspeed, pathstart, pathend)
 	delta = vectornormalize(pathend - pathstart);
 	for(i = 0; i < flytime; i++)
 	{
-		thread debug_star(pathstart + vectorscale(delta, i * flyspeed), (1, 0, 0));
+		thread debug_star(pathstart + (vectorscale(delta, i * flyspeed)), (1, 0, 0));
 	}
 }
 
@@ -1551,7 +1551,7 @@ function debug_sphere(origin, radius, color, alpha, time)
 			{
 				color = (1, 1, 1);
 			}
-			sides = int(10 * 1 + int(radius / 100));
+			sides = int(10 * (1 + (int(radius / 100))));
 			sphere(origin, radius, color, alpha, 1, sides, time);
 		}
 	#/
@@ -1623,7 +1623,7 @@ function debug_cylinder(origin, radius, height, color, mustrenderheight, time)
 */
 function getpointonline(startpoint, endpoint, ratio)
 {
-	nextpoint = (startpoint[0] + endpoint[0] - startpoint[0] * ratio, startpoint[1] + endpoint[1] - startpoint[1] * ratio, startpoint[2] + endpoint[2] - startpoint[2] * ratio);
+	nextpoint = (startpoint[0] + ((endpoint[0] - startpoint[0]) * ratio), startpoint[1] + ((endpoint[1] - startpoint[1]) * ratio), startpoint[2] + ((endpoint[2] - startpoint[2]) * ratio));
 	return nextpoint;
 }
 

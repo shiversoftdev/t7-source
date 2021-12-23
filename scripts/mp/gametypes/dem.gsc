@@ -152,7 +152,7 @@ function onroundswitch()
 	{
 		game["switchedsides"] = 0;
 	}
-	if(game["teamScores"]["allies"] == level.scorelimit - 1 && game["teamScores"]["axis"] == level.scorelimit - 1)
+	if(game["teamScores"]["allies"] == (level.scorelimit - 1) && game["teamScores"]["axis"] == (level.scorelimit - 1))
 	{
 		aheadteam = getbetterteam();
 		if(aheadteam != game["defenders"])
@@ -866,7 +866,7 @@ function bombs()
 		/#
 			assert(isdefined(bombzone.bombdefusetrig));
 		#/
-		bombzone.bombdefusetrig.origin = bombzone.bombdefusetrig.origin + vectorscale((0, 0, -1), 10000);
+		bombzone.bombdefusetrig.origin = bombzone.bombdefusetrig.origin + (vectorscale((0, 0, -1), 10000));
 		bombzone.bombdefusetrig.label = scriptlabel;
 		team_mask = util::getteammask(game["attackers"]);
 		bombzone.spawninfluencer = bombzone spawning::create_influencer("dem_enemy_base", trigger.origin, team_mask);
@@ -919,7 +919,7 @@ function setbomboverheatingafterweaponchange(useobject, overheated, heat)
 function onbeginuse(player)
 {
 	timeremaining = globallogic_utils::gettimeremaining();
-	if(timeremaining <= level.planttime * 1000)
+	if(timeremaining <= (level.planttime * 1000))
 	{
 		globallogic_utils::pausetimer();
 		level.haspausedtimer = 1;
@@ -1128,7 +1128,7 @@ function onpickup(player)
 	self gameobjects::set_3d_icon("friendly", "waypoint_defend");
 	if(!level.bombdefused)
 	{
-		thread sound::play_on_players("mus_sd_pickup" + "_" + level.teampostfix[player.pers["team"]], player.pers["team"]);
+		thread sound::play_on_players(("mus_sd_pickup" + "_") + level.teampostfix[player.pers["team"]], player.pers["team"]);
 		globallogic_audio::leader_dialog("bombFriendlyTaken", player.pers["team"]);
 		/#
 			print("");
@@ -1230,7 +1230,7 @@ function bombplanted(destroyedobj, player)
 	destroyedobj.visuals[0] thread globallogic_utils::playtickingsound("mpl_sab_ui_suitcasebomb_timer");
 	destroyedobj.tickingobject = destroyedobj.visuals[0];
 	label = destroyedobj.label;
-	detonatetime = int(gettime() + level.bombtimer * 1000);
+	detonatetime = int(gettime() + (level.bombtimer * 1000));
 	updatebombtimers(label, detonatetime);
 	destroyedobj.detonatetime = detonatetime;
 	trace = bullettrace(player.origin + vectorscale((0, 0, 1), 20), player.origin - vectorscale((0, 0, 1), 2000), 0, player);
@@ -1284,7 +1284,7 @@ function bombplanted(destroyedobj, player)
 	currenttime = gettime();
 	if(isdefined(level.lastbombexplodetime) && level.lastbombexplodebyteam == team)
 	{
-		if(level.lastbombexplodetime + 10000 > currenttime)
+		if((level.lastbombexplodetime + 10000) > currenttime)
 		{
 			for(i = 0; i < level.players.size; i++)
 			{
@@ -1390,7 +1390,7 @@ function shouldplayovertimeround()
 	{
 		return 0;
 	}
-	if(game["teamScores"]["allies"] == level.scorelimit - 1 && game["teamScores"]["axis"] == level.scorelimit - 1)
+	if(game["teamScores"]["allies"] == (level.scorelimit - 1) && game["teamScores"]["axis"] == (level.scorelimit - 1))
 	{
 		return 1;
 	}
@@ -1416,10 +1416,10 @@ function waitlongdurationwithbombtimeupdate(whichbomb, duration)
 		assert(duration > 0);
 	#/
 	starttime = gettime();
-	endtime = gettime() + duration * 1000;
+	endtime = gettime() + (duration * 1000);
 	while(gettime() < endtime)
 	{
-		hostmigration::waittillhostmigrationstarts(endtime - gettime() / 1000);
+		hostmigration::waittillhostmigrationstarts((endtime - gettime()) / 1000);
 		while(isdefined(level.hostmigrationtimer))
 		{
 			endtime = endtime + 250;
@@ -1430,7 +1430,7 @@ function waitlongdurationwithbombtimeupdate(whichbomb, duration)
 	/#
 		if(gettime() != endtime)
 		{
-			println("" + gettime() + "" + endtime);
+			println((("" + gettime()) + "") + endtime);
 		}
 	#/
 	while(isdefined(level.hostmigrationtimer))

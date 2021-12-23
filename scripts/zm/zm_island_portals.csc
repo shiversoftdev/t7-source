@@ -225,7 +225,7 @@ function function_11ac3c33(localclientnum, str_areaname, b_is_top)
 		var_836f2873 = function_86743484(localclientnum, s_loc);
 		for(i = 1; i < 25; i++)
 		{
-			if(i % 5 === 0)
+			if((i % 5) === 0)
 			{
 				playfxontag(localclientnum, level._effect["portal_shortcut_pulse"], var_836f2873, "tag_fx_ring_" + i);
 			}
@@ -340,7 +340,7 @@ function get_portal_fx_loc(str_targetname, str_areaname, b_is_top)
 	}
 	foreach(var_eefd79cb, s_portal_loc in a_s_portal_locs)
 	{
-		if(s_portal_loc.script_noteworthy === str_areaname + "_portal_" + str_top_or_bottom)
+		if(s_portal_loc.script_noteworthy === ((str_areaname + "_portal_") + str_top_or_bottom))
 		{
 			s_return_loc = s_portal_loc;
 		}

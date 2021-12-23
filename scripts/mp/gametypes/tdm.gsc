@@ -231,7 +231,7 @@ function onscoreclosemusic()
 			}
 		}
 		scoredif = topscore - runnerupscore;
-		if(topscore >= scorelimit * 0.5)
+		if(topscore >= (scorelimit * 0.5))
 		{
 			level notify(#"sndmusichalfway");
 			return;

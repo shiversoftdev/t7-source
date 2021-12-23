@@ -180,7 +180,7 @@ function powerup_hud_monitor()
 		}
 		if(flashing_is_on)
 		{
-			flashing_timer = flashing_timer - flashing_delta_time - 0.05;
+			flashing_timer = (flashing_timer - flashing_delta_time) - 0.05;
 			flashing_value = 2;
 		}
 		else
@@ -436,7 +436,7 @@ function watch_for_drop()
 	level flag::wait_till("begin_spawning");
 	wait(0.05);
 	players = getplayers();
-	score_to_drop = players.size * level.zombie_vars["zombie_score_start_" + players.size + "p"] + level.zombie_vars["zombie_powerup_drop_increment"];
+	score_to_drop = (players.size * (level.zombie_vars[("zombie_score_start_" + players.size) + "p"])) + level.zombie_vars["zombie_powerup_drop_increment"];
 	while(true)
 	{
 		level flag::wait_till("zombie_drop_powerups");
@@ -1696,7 +1696,7 @@ function print_powerup_drop(powerup, type)
 			level.powerup_random_count = 0;
 			level.powerup_score_count = 0;
 		}
-		time = gettime() - level.powerup_drop_time * 0.001;
+		time = (gettime() - level.powerup_drop_time) * 0.001;
 		level.powerup_drop_time = gettime();
 		if(type == "")
 		{
@@ -1801,7 +1801,7 @@ function powerup_move()
 		self waittill(#"move_powerup", moveto, distance);
 		drag_vector = moveto - self.origin;
 		range_squared = lengthsquared(drag_vector);
-		if(range_squared > distance * distance)
+		if(range_squared > (distance * distance))
 		{
 			drag_vector = vectornormalize(drag_vector);
 			drag_vector = distance * drag_vector;
@@ -1831,7 +1831,7 @@ function powerup_emp()
 	while(true)
 	{
 		level waittill(#"emp_detonate", origin, radius);
-		if(distancesquared(origin, self.origin) < radius * radius)
+		if(distancesquared(origin, self.origin) < (radius * radius))
 		{
 			playfx(level._effect["powerup_off"], self.origin);
 			self thread powerup_delete_delayed();
@@ -1856,7 +1856,7 @@ function get_powerups(origin, radius)
 		powerups = [];
 		foreach(var_3342ec6a, powerup in level.active_powerups)
 		{
-			if(distancesquared(origin, powerup.origin) < radius * radius)
+			if(distancesquared(origin, powerup.origin) < (radius * radius))
 			{
 				powerups[powerups.size] = powerup;
 			}
@@ -1914,8 +1914,8 @@ function teller_withdrawl(powerup, player)
 function show_on_hud(player_team, str_powerup)
 {
 	self endon(#"disconnect");
-	str_index_on = "zombie_powerup_" + str_powerup + "_on";
-	str_index_time = "zombie_powerup_" + str_powerup + "_time";
+	str_index_on = ("zombie_powerup_" + str_powerup) + "_on";
+	str_index_time = ("zombie_powerup_" + str_powerup) + "_time";
 	if(level.zombie_vars[player_team][str_index_on])
 	{
 		level.zombie_vars[player_team][str_index_time] = 30;
@@ -1940,10 +1940,10 @@ function show_on_hud(player_team, str_powerup)
 */
 function time_remaining_on_powerup(player_team, str_powerup)
 {
-	str_index_on = "zombie_powerup_" + str_powerup + "_on";
-	str_index_time = "zombie_powerup_" + str_powerup + "_time";
-	str_sound_loop = "zmb_" + str_powerup + "_loop";
-	str_sound_off = "zmb_" + str_powerup + "_loop_off";
+	str_index_on = ("zombie_powerup_" + str_powerup) + "_on";
+	str_index_time = ("zombie_powerup_" + str_powerup) + "_time";
+	str_sound_loop = ("zmb_" + str_powerup) + "_loop";
+	str_sound_off = ("zmb_" + str_powerup) + "_loop_off";
 	temp_ent = spawn("script_origin", (0, 0, 0));
 	temp_ent playloopsound(str_sound_loop);
 	if(bgb::is_team_enabled("zm_bgb_temporal_gift"))
@@ -1973,7 +1973,7 @@ function time_remaining_on_powerup(player_team, str_powerup)
 */
 function weapon_powerup(ent_player, time, str_weapon, allow_cycling = 0)
 {
-	str_weapon_on = "zombie_powerup_" + str_weapon + "_on";
+	str_weapon_on = ("zombie_powerup_" + str_weapon) + "_on";
 	str_weapon_time_over = str_weapon + "_time_over";
 	ent_player notify(#"replace_weapon_powerup");
 	ent_player._show_solo_hud = 1;
@@ -2036,7 +2036,7 @@ function weapon_powerup_countdown(ent_player, str_gun_return_notify, time, str_w
 	ent_player endon(#"player_downed");
 	ent_player endon(str_gun_return_notify);
 	ent_player endon(#"replace_weapon_powerup");
-	str_weapon_time = "zombie_powerup_" + str_weapon + "_time";
+	str_weapon_time = ("zombie_powerup_" + str_weapon) + "_time";
 	ent_player.zombie_vars[str_weapon_time] = time;
 	if(bgb::is_team_enabled("zm_bgb_temporal_gift"))
 	{
@@ -2061,7 +2061,7 @@ function weapon_powerup_replace(ent_player, str_gun_return_notify, str_weapon)
 	ent_player endon(#"disconnect");
 	ent_player endon(#"player_downed");
 	ent_player endon(str_gun_return_notify);
-	str_weapon_on = "zombie_powerup_" + str_weapon + "_on";
+	str_weapon_on = ("zombie_powerup_" + str_weapon) + "_on";
 	ent_player waittill(#"replace_weapon_powerup");
 	ent_player takeweapon(level.zombie_powerup_weapon[str_weapon]);
 	ent_player.zombie_vars[str_weapon_on] = 0;
@@ -2083,7 +2083,7 @@ function weapon_powerup_remove(ent_player, str_gun_return_notify, str_weapon, b_
 {
 	ent_player endon(#"death");
 	ent_player endon(#"player_downed");
-	str_weapon_on = "zombie_powerup_" + str_weapon + "_on";
+	str_weapon_on = ("zombie_powerup_" + str_weapon) + "_on";
 	ent_player takeweapon(level.zombie_powerup_weapon[str_weapon]);
 	ent_player.zombie_vars[str_weapon_on] = 0;
 	ent_player._show_solo_hud = 0;
@@ -2109,7 +2109,7 @@ function weapon_powerup_remove(ent_player, str_gun_return_notify, str_weapon, b_
 function weapon_watch_gunner_downed(str_weapon)
 {
 	str_notify = str_weapon + "_time_over";
-	str_weapon_on = "zombie_powerup_" + str_weapon + "_on";
+	str_weapon_on = ("zombie_powerup_" + str_weapon) + "_on";
 	if(!isdefined(self.has_specific_powerup_weapon) || (!(isdefined(self.has_specific_powerup_weapon[str_weapon]) && self.has_specific_powerup_weapon[str_weapon])))
 	{
 		return;

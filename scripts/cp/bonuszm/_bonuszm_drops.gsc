@@ -138,33 +138,33 @@ function function_b67e03f7()
 	{
 		var_bf55d8d2[var_bf55d8d2.size] = "instakill";
 	}
-	else if(randomchance < int(level.var_a9e78bf7["weapondropchance"] * level.var_a9e78bf7["powerdropsscalar"]))
+	else if(randomchance < (int(level.var_a9e78bf7["weapondropchance"] * level.var_a9e78bf7["powerdropsscalar"])))
 	{
 		var_bf55d8d2[var_bf55d8d2.size] = "random_weapon";
 	}
-	if(randomchance < int(level.var_a9e78bf7["cybercoredropchance"] * level.var_a9e78bf7["powerdropsscalar"]))
+	if(randomchance < (int(level.var_a9e78bf7["cybercoredropchance"] * level.var_a9e78bf7["powerdropsscalar"])))
 	{
 		var_bf55d8d2[var_bf55d8d2.size] = "cybercom";
 	}
-	if(randomchance < int(level.var_a9e78bf7["cybercoreupgradeddropchance"] * level.var_a9e78bf7["powerdropsscalar"]))
+	if(randomchance < (int(level.var_a9e78bf7["cybercoreupgradeddropchance"] * level.var_a9e78bf7["powerdropsscalar"])))
 	{
 		var_bf55d8d2[var_bf55d8d2.size] = "cybercom_upgraded";
 	}
 	var_7a2764e8 = getactorteamarray("axis");
 	var_d55df350 = isdefined(var_7a2764e8) && var_7a2764e8.size && var_7a2764e8.size >= 3;
-	if(randomchance < int(level.var_a9e78bf7["instakilldropchance"] * level.var_a9e78bf7["powerdropsscalar"]) && !function_9c4468cc() && !function_5fcda3a0())
+	if(randomchance < (int(level.var_a9e78bf7["instakilldropchance"] * level.var_a9e78bf7["powerdropsscalar"])) && !function_9c4468cc() && !function_5fcda3a0())
 	{
 		var_bf55d8d2[var_bf55d8d2.size] = "instakill";
 	}
-	if(randomchance < int(level.var_a9e78bf7["maxdropammochance"] * level.var_a9e78bf7["powerdropsscalar"]))
+	if(randomchance < (int(level.var_a9e78bf7["maxdropammochance"] * level.var_a9e78bf7["powerdropsscalar"])))
 	{
 		var_bf55d8d2[var_bf55d8d2.size] = "max_ammo";
 	}
-	if(randomchance < int(level.var_a9e78bf7["maxdropammoupgradedchance"] * level.var_a9e78bf7["powerdropsscalar"]))
+	if(randomchance < (int(level.var_a9e78bf7["maxdropammoupgradedchance"] * level.var_a9e78bf7["powerdropsscalar"])))
 	{
 		var_bf55d8d2[var_bf55d8d2.size] = "max_ammo_upgraded";
 	}
-	if(var_d55df350 && randomchance < int(level.var_a9e78bf7["instakillupgradeddropchance"] * level.var_a9e78bf7["powerdropsscalar"]) && !function_9c4468cc() && !function_5fcda3a0())
+	if(var_d55df350 && randomchance < (int(level.var_a9e78bf7["instakillupgradeddropchance"] * level.var_a9e78bf7["powerdropsscalar"])) && !function_9c4468cc() && !function_5fcda3a0())
 	{
 		var_b37cc8bd = 0;
 		foreach(var_40ce22db, player in level.players)
@@ -183,7 +183,7 @@ function function_b67e03f7()
 			var_bf55d8d2[var_bf55d8d2.size] = "instakill";
 		}
 	}
-	if(var_d55df350 && randomchance < int(level.var_a9e78bf7["rapsdropchance"] * level.var_a9e78bf7["powerdropsscalar"]) && (!(isdefined(level.var_5a1513c4) && level.var_5a1513c4)))
+	if(var_d55df350 && randomchance < (int(level.var_a9e78bf7["rapsdropchance"] * level.var_a9e78bf7["powerdropsscalar"])) && (!(isdefined(level.var_5a1513c4) && level.var_5a1513c4)))
 	{
 		var_bf55d8d2[var_bf55d8d2.size] = "raps";
 	}
@@ -522,7 +522,7 @@ function function_6b3c34cc(var_638b7f73, str_identifier, str_bonus)
 		for(i = 0; i < players.size; i++)
 		{
 			b_player_inside_radius = distance2dsquared(var_638b7f73.origin, players[i].origin) < 2025;
-			var_e33aadf8 = abs(var_638b7f73.origin[2] - players[i].origin[2]) < 50;
+			var_e33aadf8 = (abs(var_638b7f73.origin[2] - players[i].origin[2])) < 50;
 			if(b_player_inside_radius && var_e33aadf8)
 			{
 				player = players[i];
@@ -647,7 +647,7 @@ function function_da35c458(str_bonus, var_638b7f73)
 		default:
 		{
 			/#
-				assert("" + str_bonus + "");
+				assert(("" + str_bonus) + "");
 			#/
 			break;
 		}

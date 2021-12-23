@@ -89,7 +89,7 @@ function anim_info_render_thread(animation, v_origin_or_ent, v_angles_or_tag, n_
 			{
 				str_name = self.targetname;
 			}
-			print3d(self.origin, self getentnum() + get_ent_type() + "" + str_name, color, 0.8, 0.3);
+			print3d(self.origin, ((self getentnum() + get_ent_type()) + "") + str_name, color, 0.8, 0.3);
 			print3d(self.origin - vectorscale((0, 0, 1), 5), "" + animation, color, 0.8, 0.3);
 			print3d(self.origin - vectorscale((0, 0, 1), 7), str_extra_info, color, 0.8, 0.15);
 			render_tag("", "");
@@ -114,7 +114,7 @@ function anim_info_render_thread(animation, v_origin_or_ent, v_angles_or_tag, n_
 function get_ent_type()
 {
 	/#
-		return "" + (isdefined(self.classname) ? self.classname : "") + "";
+		return ("" + (isdefined(self.classname) ? self.classname : "")) + "";
 	#/
 }
 
@@ -197,7 +197,7 @@ function anim_origin_render(org, angles, line_length, str_label)
 		if(isdefined(org) && isdefined(angles))
 		{
 			originendpoint = org + vectorscale(anglestoforward(angles), line_length);
-			originrightpoint = org + vectorscale(anglestoright(angles), -1 * line_length);
+			originrightpoint = org + (vectorscale(anglestoright(angles), -1 * line_length));
 			originuppoint = org + vectorscale(anglestoup(angles), line_length);
 			line(org, originendpoint, (1, 0, 0));
 			line(org, originrightpoint, (0, 1, 0));

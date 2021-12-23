@@ -103,7 +103,7 @@ function function_1a31df5b()
 	self clientfield::set("zm_bgb_near_death_experience_3p_fx", 1);
 	self util::waittill_either("bled_out", "bgb_update");
 	self clientfield::set("zm_bgb_near_death_experience_3p_fx", 0);
-	self notify(#"hash_d59552a3");
+	self notify(#"zm_bgb_near_death_experience_complete");
 }
 
 /*
@@ -268,7 +268,7 @@ function function_ff41ae2d(e_player)
 	e_player endon(var_5b3c4fd2);
 	e_player endon(#"disconnect");
 	self endon(#"disconnect");
-	self endon(#"hash_d59552a3");
+	self endon(#"zm_bgb_near_death_experience_complete");
 	while(true)
 	{
 		if(!e_player laststand::player_is_in_laststand() && !self laststand::player_is_in_laststand())
@@ -325,7 +325,7 @@ function function_52d6b4dc(e_player, str_notify)
 	e_player endon(str_notify);
 	e_player endon(#"disconnect");
 	self endon(#"disconnect");
-	self endon(#"hash_d59552a3");
+	self endon(#"zm_bgb_near_death_experience_complete");
 	while(!self function_73277c01(e_player) && !e_player function_73277c01(self))
 	{
 		wait(0.1);
@@ -347,7 +347,7 @@ function function_c8cee225(e_player, str_notify)
 	e_player endon(str_notify);
 	e_player endon(#"disconnect");
 	self endon(#"disconnect");
-	self endon(#"hash_d59552a3");
+	self endon(#"zm_bgb_near_death_experience_complete");
 	while(self function_73277c01(e_player) || e_player function_73277c01(self))
 	{
 		wait(0.1);

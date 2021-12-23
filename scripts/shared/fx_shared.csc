@@ -106,7 +106,7 @@ function validate(fxid, origin)
 		if(!isdefined(level._effect[fxid]))
 		{
 			/#
-				assertmsg("" + fxid + "" + origin);
+				assertmsg((("" + fxid) + "") + origin);
 			#/
 		}
 	#/
@@ -217,39 +217,19 @@ function set_forward_and_up_vectors()
 	Namespace: fx
 	Checksum: 0xAE8EBC44
 	Offset: 0x860
-	Size: 0x0
+	Size: 0x4C
 	Parameters: 1
 	Flags: Linked
 */
-function oneshot_thread()
+function oneshot_thread(clientnum)
 {
-System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
-Parameter name: index
-   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   at System.Collections.Generic.List`1.get_Item(Int32 index)
-   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 649
-   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 211
-/*
-No Output
-*/
-
-	/* ======== */
-
-/* 
-	Stack: 
-*/
-	/* ======== */
-
-/* 
-	Blocks: 
-	Cerberus.Logic.BasicBlock at 0x0860, end at 0x0861
-	Cerberus.Logic.IfBlock at 0x086A, end at 0x0894
-*/
-	/* ======== */
-
+	if(self.v["delay"] > 0)
+	{
+		waitrealtime(self.v["delay"]);
+	}
+	create_trigger(clientnum);
 }
 
-/*Unknown Op Code (0x0A1F) at 0892*/
 /*
 	Name: report_num_effects
 	Namespace: fx
@@ -299,15 +279,17 @@ function loop_sound(clientnum)
 	Namespace: fx
 	Checksum: 0x4B028E2C
 	Offset: 0x9E0
-	Size: 0x0
+	Size: 0x50
 	Parameters: 2
 	Flags: Linked
 */
 function lightning(normalfunc, flashfunc)
 {
+	[[flashfunc]]();
+	waitrealtime(randomfloatrange(0.05, 0.1));
+	[[normalfunc]]();
 }
 
-/*Unknown Op Code (0x1E8E) at 0A20*/
 /*
 	Name: loop_thread
 	Namespace: fx
@@ -392,40 +374,28 @@ function create_looper(clientnum)
 	Namespace: fx
 	Checksum: 0xF1CD1AA5
 	Offset: 0xBD0
-	Size: 0x0
+	Size: 0x1D0
 	Parameters: 1
 	Flags: Linked
 */
-function loop()
+function loop(clientnum)
 {
-System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
-Parameter name: index
-   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   at System.Collections.Generic.List`1.get_Item(Int32 index)
-   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 649
-   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 211
-/*
-No Output
-*/
-
-	/* ======== */
-
-/* 
-	Stack: 
-*/
-	/* ======== */
-
-/* 
-	Blocks: 
-	Cerberus.Logic.BasicBlock at 0x0BD0, end at 0x0BD1
-	Cerberus.Logic.IfBlock at 0x0CAA, end at 0x0D9E
-	Cerberus.Logic.IfBlock at 0x0CB2, end at 0x0CDC
-*/
-	/* ======== */
-
+	validate(self.v["fxid"], self.v["origin"]);
+	self.looperfx = playfx(clientnum, level._effect[self.v["fxid"]], self.v["origin"], self.v["forward"], self.v["up"], self.v["delay"], self.v["primlightfrac"], self.v["lightoriginoffs"]);
+	while(true)
+	{
+		if(isdefined(self.v["delay"]))
+		{
+			waitrealtime(self.v["delay"]);
+		}
+		while(isfxplaying(clientnum, self.looperfx))
+		{
+			wait(0.25);
+		}
+		self.looperfx = playfx(clientnum, level._effect[self.v["fxid"]], self.v["origin"], self.v["forward"], self.v["up"], 0, self.v["primlightfrac"], self.v["lightoriginoffs"]);
+	}
 }
 
-/*Unknown Op Code (0x04A8) at 0CDA*/
 /*
 	Name: create_trigger
 	Namespace: fx

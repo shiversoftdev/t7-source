@@ -167,7 +167,7 @@ function setupkillcament()
 function cleanupkillcamentondeath()
 {
 	self waittill(#"death");
-	self.killcament util::deleteaftertime(4 + level.proximitygrenadedotdamagetime * level.proximitygrenadedotdamageinstances);
+	self.killcament util::deleteaftertime(4 + (level.proximitygrenadedotdamagetime * level.proximitygrenadedotdamageinstances));
 }
 
 /*
@@ -287,9 +287,9 @@ function damageplayerinradius(eattacker)
 	{
 		self thread watch_death();
 		self util::show_hud(0);
-		if(gettime() - g_time < 100)
+		if((gettime() - g_time) < 100)
 		{
-			wait(gettime() - g_time / 1000);
+			wait((gettime() - g_time) / 1000);
 		}
 		self util::show_hud(1);
 	}
@@ -470,7 +470,7 @@ function function_cb55123a()
 		var_199ecc3a = zm_elemental_zombie::function_4aeed0a5("sparky");
 		if(!isdefined(level.var_1ae26ca5) || var_199ecc3a < level.var_1ae26ca5)
 		{
-			if(!isdefined(level.var_a9284ac8) || gettime() - level.var_a9284ac8 >= 0.5)
+			if(!isdefined(level.var_a9284ac8) || (gettime() - level.var_a9284ac8) >= 0.5)
 			{
 				foreach(var_73487940, ai_zombie in var_82aacc64)
 				{

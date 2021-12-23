@@ -79,7 +79,7 @@ function spawn_manager_debug_hud_update(active_ai, spawn_ai, max_ai, active_mana
 			{
 				level.spawn_manager_debug_hud = [];
 			}
-			level.spawn_manager_debug_hud_title settext("" + spawn_ai + "" + active_ai + "" + potential_ai + "" + max_ai + "" + active_managers);
+			level.spawn_manager_debug_hud_title settext((((((((("" + spawn_ai) + "") + active_ai) + "") + potential_ai) + "") + max_ai) + "") + active_managers);
 			for(i = 0; i < level.debugactivemanagers.size; i++)
 			{
 				if(!isdefined(level.spawn_manager_debug_hud[i]))
@@ -88,7 +88,7 @@ function spawn_manager_debug_hud_update(active_ai, spawn_ai, max_ai, active_mana
 					level.spawn_manager_debug_hud[i].alignx = "";
 					level.spawn_manager_debug_hud[i].x = 0;
 					level.spawn_manager_debug_hud[i].fontscale = 1;
-					level.spawn_manager_debug_hud[i].y = level.spawn_manager_debug_hud_title.y + i + 1 * 15;
+					level.spawn_manager_debug_hud[i].y = level.spawn_manager_debug_hud_title.y + ((i + 1) * 15);
 				}
 				if(isdefined(level.current_debug_spawn_manager) && level.debugactivemanagers[i] == level.current_debug_spawn_manager)
 				{
@@ -109,13 +109,13 @@ function spawn_manager_debug_hud_update(active_ai, spawn_ai, max_ai, active_mana
 				{
 					level.spawn_manager_debug_hud[i].color = vectorscale((1, 1, 1), 0.4);
 				}
-				text = "" + level.debugactivemanagers[i].sm_id + "";
-				text = text + "" + level.debugactivemanagers[i].spawncount;
-				text = text + "" + level.debugactivemanagers[i].activeai.size + "" + level.debugactivemanagers[i].sm_active_count_min + "" + level.debugactivemanagers[i].sm_active_count_max + "";
-				text = text + "" + level.debugactivemanagers[i].allspawners.size;
+				text = ("" + level.debugactivemanagers[i].sm_id) + "";
+				text = text + ("" + level.debugactivemanagers[i].spawncount);
+				text = text + (((((("" + level.debugactivemanagers[i].activeai.size) + "") + level.debugactivemanagers[i].sm_active_count_min) + "") + level.debugactivemanagers[i].sm_active_count_max) + "");
+				text = text + ("" + level.debugactivemanagers[i].allspawners.size);
 				if(isdefined(level.debugactivemanagers[i].sm_group_size))
 				{
-					text = text + "" + level.debugactivemanagers[i].sm_group_size + "" + level.debugactivemanagers[i].sm_group_size_min + "" + level.debugactivemanagers[i].sm_group_size_max + "";
+					text = text + (((((("" + level.debugactivemanagers[i].sm_group_size) + "") + level.debugactivemanagers[i].sm_group_size_min) + "") + level.debugactivemanagers[i].sm_group_size_max) + "");
 				}
 				level.spawn_manager_debug_hud[i] settext(text);
 			}
@@ -215,7 +215,7 @@ function spawn_manager_debug_spawn_manager()
 					if(level.test_player buttonpressed(""))
 					{
 						current_spawn_manager_index++;
-						if(current_spawn_manager_index > level.debugactivemanagers.size - 1)
+						if(current_spawn_manager_index > (level.debugactivemanagers.size - 1))
 						{
 							current_spawn_manager_index = level.debugactivemanagers.size - 1;
 						}
@@ -291,7 +291,7 @@ function spawn_manager_debug_spawner_values()
 						{
 							spawnerfree = current_spawner.sm_active_count - current_spawner.activeai.size;
 							print3d(current_spawner.origin + vectorscale((0, 0, 1), 65), "" + current_spawner.count, (0, 1, 0), 1, 1.25, 2);
-							print3d(current_spawner.origin + vectorscale((0, 0, 1), 85), "" + current_spawner.activeai.size + "" + spawnerfree + "" + current_spawner.sm_active_count, (0, 1, 0), 1, 1.25, 2);
+							print3d(current_spawner.origin + vectorscale((0, 0, 1), 85), (((("" + current_spawner.activeai.size) + "") + spawnerfree) + "") + current_spawner.sm_active_count, (0, 1, 0), 1, 1.25, 2);
 						}
 					}
 				}
@@ -460,13 +460,13 @@ function spawn_manager_debug_spawn_manager_values_dpad()
 			{
 				case 0:
 				{
-					if(self.sm_active_count + add > self.sm_active_count_max)
+					if((self.sm_active_count + add) > self.sm_active_count_max)
 					{
 						self.sm_active_count_max = self.sm_active_count + add;
 					}
-					if(self.sm_active_count + add < self.sm_active_count_min)
+					if((self.sm_active_count + add) < self.sm_active_count_min)
 					{
-						if(self.sm_active_count + add > 0)
+						if((self.sm_active_count + add) > 0)
 						{
 							self.sm_active_count_min = self.sm_active_count + add;
 						}
@@ -477,12 +477,12 @@ function spawn_manager_debug_spawn_manager_values_dpad()
 				}
 				case 1:
 				{
-					if(self.sm_active_count_min + add < self.sm_group_size_max)
+					if((self.sm_active_count_min + add) < self.sm_group_size_max)
 					{
 						modify_debug_hud2("");
 						break;
 					}
-					if(self.sm_active_count_min + add > self.sm_active_count_max)
+					if((self.sm_active_count_min + add) > self.sm_active_count_max)
 					{
 						modify_debug_hud2("");
 						break;
@@ -493,7 +493,7 @@ function spawn_manager_debug_spawn_manager_values_dpad()
 				}
 				case 2:
 				{
-					if(self.sm_active_count_max + add < self.sm_active_count_min)
+					if((self.sm_active_count_max + add) < self.sm_active_count_min)
 					{
 						modify_debug_hud2("");
 						break;
@@ -504,7 +504,7 @@ function spawn_manager_debug_spawn_manager_values_dpad()
 				}
 				case 3:
 				{
-					if(self.sm_group_size_min + add > self.sm_group_size_max)
+					if((self.sm_group_size_min + add) > self.sm_group_size_max)
 					{
 						modify_debug_hud2("");
 						break;
@@ -515,12 +515,12 @@ function spawn_manager_debug_spawn_manager_values_dpad()
 				}
 				case 4:
 				{
-					if(self.sm_group_size_max + add < self.sm_group_size_min)
+					if((self.sm_group_size_max + add) < self.sm_group_size_min)
 					{
 						modify_debug_hud2("");
 						break;
 					}
-					if(self.sm_group_size_max + add > self.sm_active_count)
+					if((self.sm_group_size_max + add) > self.sm_active_count)
 					{
 						modify_debug_hud2("");
 						break;
@@ -531,24 +531,24 @@ function spawn_manager_debug_spawn_manager_values_dpad()
 				}
 				case 5:
 				{
-					if(self.sm_spawner_count + add > self.allspawners.size)
+					if((self.sm_spawner_count + add) > self.allspawners.size)
 					{
 						modify_debug_hud2("");
 						break;
 					}
-					if(self.sm_spawner_count + add <= 0)
+					if((self.sm_spawner_count + add) <= 0)
 					{
 						modify_debug_hud2("");
 						break;
 					}
-					if(self.sm_spawner_count + add < self.sm_spawner_count_min)
+					if((self.sm_spawner_count + add) < self.sm_spawner_count_min)
 					{
-						if(self.sm_spawner_count + add > 0)
+						if((self.sm_spawner_count + add) > 0)
 						{
 							self.sm_spawner_count_min = self.sm_spawner_count + add;
 						}
 					}
-					if(self.sm_spawner_count + add > self.sm_spawner_count_max)
+					if((self.sm_spawner_count + add) > self.sm_spawner_count_max)
 					{
 						self.sm_spawner_count_max = self.sm_spawner_count + add;
 					}
@@ -558,7 +558,7 @@ function spawn_manager_debug_spawn_manager_values_dpad()
 				}
 				case 6:
 				{
-					if(self.sm_spawner_count_min + add > self.sm_spawner_count_max)
+					if((self.sm_spawner_count_min + add) > self.sm_spawner_count_max)
 					{
 						modify_debug_hud2("");
 						break;
@@ -569,7 +569,7 @@ function spawn_manager_debug_spawn_manager_values_dpad()
 				}
 				case 7:
 				{
-					if(self.sm_spawner_count_max + add < self.sm_spawner_count_min)
+					if((self.sm_spawner_count_max + add) < self.sm_spawner_count_min)
 					{
 						modify_debug_hud2("");
 						break;

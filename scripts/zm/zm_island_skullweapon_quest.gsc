@@ -206,12 +206,12 @@ function main()
 	for(i = 1; i <= 4; i++)
 	{
 		level.var_a576e0b9[i].script_special = i;
-		level.var_a576e0b9[i].var_ba133ee2 = "skullquest_ritual_" + level.var_a576e0b9[i].script_special + "_fx";
+		level.var_a576e0b9[i].var_ba133ee2 = ("skullquest_ritual_" + level.var_a576e0b9[i].script_special) + "_fx";
 		level.var_a576e0b9[i].origin = level.var_a576e0b9[i].s_skulltar_skull_pos.origin;
 		level.var_a576e0b9[i].angles = level.var_a576e0b9[i].s_skulltar_skull_pos.angles;
 		var_8fb7dd10 = "skullquest_ritual_failed_" + i;
 		level zm_island_vo::function_65f8953a(var_8fb7dd10, "response", "negative", 5, 0, 0.5, level.var_a576e0b9[i].origin);
-		var_4a347901 = "skulltar_" + i + "_spawnpts";
+		var_4a347901 = ("skulltar_" + i) + "_spawnpts";
 		level.var_a576e0b9[i].a_s_spawnpts = struct::get_array(var_4a347901, "targetname");
 		level.var_a576e0b9[i].var_aa15c945 = var_aa15c945[i];
 		var_c0032031 = level.var_21406c35[i];
@@ -547,11 +547,11 @@ function function_9098a17a(var_c198423 = 1)
 */
 function function_194dd3fe(var_9f8b46b0 = 2, var_d03250e = 0.25)
 {
-	var_fc1e97a0 = self.n_progress / self.n_goal * 0.75;
+	var_fc1e97a0 = self.n_progress / (self.n_goal * 0.75);
 	var_f3370df8 = var_9f8b46b0 - var_d03250e;
 	if(var_fc1e97a0 < 0.75)
 	{
-		self.var_9543b4d3 = var_9f8b46b0 - var_fc1e97a0 * var_f3370df8;
+		self.var_9543b4d3 = var_9f8b46b0 - (var_fc1e97a0 * var_f3370df8);
 	}
 	else
 	{
@@ -797,7 +797,7 @@ function function_82fc8508(var_40e67963)
 {
 	if(!isdefined(var_40e67963))
 	{
-		var_40e67963 = -1 * self.n_progress / 4;
+		var_40e67963 = -1 * (self.n_progress / 4);
 		if(var_40e67963 <= 10)
 		{
 			var_40e67963 = -100;
@@ -957,7 +957,7 @@ function function_ff1550bd()
 	self.var_bd61ef5b = 0;
 	self.var_d38f69da = [];
 	self.var_41335b73 = [];
-	var_19b19369 = "skull" + var_f2e38849 + "_attacker";
+	var_19b19369 = ("skull" + var_f2e38849) + "_attacker";
 	a_spawners = [];
 	var_89f44116 = level.zombie_spawners;
 	var_64cc2fa5 = level.var_feebf312;
@@ -1069,7 +1069,7 @@ function function_ff1550bd()
 							/#
 								if(isdefined(level.var_32d5991a) && level.var_32d5991a)
 								{
-									iprintlnbold("" + i + "" + self.a_s_spawnpts[i].origin);
+									iprintlnbold((("" + i) + "") + self.a_s_spawnpts[i].origin);
 								}
 							#/
 						}
@@ -1159,7 +1159,7 @@ function function_c46730e7(var_f2e38849)
 		/#
 			if(isdefined(level.var_32d5991a) && level.var_32d5991a)
 			{
-				iprintlnbold("" + self.origin + "");
+				iprintlnbold(("" + self.origin) + "");
 			}
 		#/
 		arrayremovevalue(level.var_a576e0b9[var_f2e38849].var_d38f69da, self);
@@ -1700,6 +1700,7 @@ function function_ef5b1df5()
 	{
 		foreach(var_89f99442, s_spawn_point in a_spawn_points)
 		{
+			var_cf4c284f = getnextarraykey(var_c3e1ee64);
 			while(getfreeactorcount() < 1 && !level flag::get("skullroom_empty_of_players") && (!(isdefined(level.var_d9d19dae) && level.var_d9d19dae)))
 			{
 				wait(0.05);
@@ -1811,7 +1812,7 @@ function function_41b94a87()
 	{
 		var_e312b793 = 1;
 	}
-	var_3de76631 = level.var_55c48492.var_5cd7e450[2] + 10 * 1 - var_e312b793;
+	var_3de76631 = level.var_55c48492.var_5cd7e450[2] + (10 * (1 - var_e312b793));
 	var_ba7b8d86 = (level.var_55c48492.origin[0], level.var_55c48492.origin[1], var_3de76631);
 	level.var_55c48492 moveto(var_ba7b8d86, 0.2);
 }
@@ -1988,7 +1989,7 @@ function function_940267cd()
 	self endon(#"disconnect");
 	level flag::wait_till("a_player_got_skullgun");
 	var_d9516038 = getent("reveal_keeper_mural_01", "targetname");
-	if(isdefined(var_d9516038) && !isdefined(var_d9516038.var_168e6657))
+	if(isdefined(var_d9516038) && !isdefined(var_d9516038.b_shown))
 	{
 		self thread function_f293f820(var_d9516038, "mural1_revealed");
 	}
@@ -2012,7 +2013,7 @@ function function_ba04e236()
 	self endon(#"disconnect");
 	level flag::wait_till("a_player_got_skullgun");
 	var_d9516038 = getent("reveal_keeper_mural_02", "targetname");
-	if(isdefined(var_d9516038) && !isdefined(var_d9516038.var_168e6657))
+	if(isdefined(var_d9516038) && !isdefined(var_d9516038.b_shown))
 	{
 		self thread function_f293f820(var_d9516038, "mural2_revealed");
 	}
@@ -2036,7 +2037,7 @@ function function_e0075c9f()
 	self endon(#"disconnect");
 	level flag::wait_till("a_player_got_skullgun");
 	var_d9516038 = getent("reveal_keeper_mural_03", "targetname");
-	if(isdefined(var_d9516038) && !isdefined(var_d9516038.var_168e6657))
+	if(isdefined(var_d9516038) && !isdefined(var_d9516038.b_shown))
 	{
 		self thread function_f293f820(var_d9516038, "mural3_revealed");
 	}
@@ -2064,7 +2065,7 @@ function function_f293f820(mdl_target, var_6a4cf64a)
 	{
 		self zm_island_util::function_7448e472(mdl_target);
 		mdl_target clientfield::set("do_emissive_material", 1);
-		mdl_target.var_168e6657 = 1;
+		mdl_target.b_shown = 1;
 		level notify(var_6a4cf64a);
 	}
 }
@@ -2237,7 +2238,7 @@ function function_b6c35b21(var_f2e38849)
 */
 function function_76e79e0e()
 {
-	return self.var_4849e523 + self.var_d64275e8 > 0;
+	return (self.var_4849e523 + self.var_d64275e8) > 0;
 }
 
 /*
@@ -2570,15 +2571,15 @@ function function_38f8b6e3(var_f2e38849)
 	Parameters: 6
 	Flags: Linked
 */
-function setup_unitrigger(str_type = "unitrigger_radius_use", var_fe58e458, var_c0e6cb4e, n_radius = 64, n_height = 256, var_ae5f250a = 1)
+function setup_unitrigger(str_type = "unitrigger_radius_use", var_fe58e458, func_think, n_radius = 64, n_height = 256, b_lookat = 1)
 {
 	self.script_unitrigger_type = "unitrigger_radius_use";
 	self.cursor_hint = "HINT_NOICON";
-	self.require_look_at = var_ae5f250a;
+	self.require_look_at = b_lookat;
 	self.radius = n_radius;
 	self.height = n_height;
 	self.prompt_and_visibility_func = var_fe58e458;
-	zm_unitrigger::register_static_unitrigger(self, var_c0e6cb4e);
+	zm_unitrigger::register_static_unitrigger(self, func_think);
 }
 
 /*

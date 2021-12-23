@@ -96,7 +96,7 @@ function function_6f749a23(localclientnum, oldval, newval, bnewent, binitialsnap
 		{
 			if(!isdefined(var_d2c81bd9.var_90369c89[localclientnum]))
 			{
-				var_d2c81bd9.var_90369c89[localclientnum] = playfx(localclientnum, level._effect["grave_fire"], var_d2c81bd9.origin + vectorscale((0, 0, -1), 8));
+				var_d2c81bd9.var_90369c89[localclientnum] = playfx(localclientnum, level._effect["grave_fire"], var_d2c81bd9.origin + (vectorscale((0, 0, -1), 8)));
 				audio::playloopat("zmb_challenge_fire_lp", var_d2c81bd9.origin);
 			}
 			continue;

@@ -485,11 +485,11 @@ private function function_a405f422()
 	starttime = gettime();
 	while(true)
 	{
-		if(isdefined(self.pathgoalpos) && distancesquared(self.origin, self.pathgoalpos) <= self.goalradius * self.goalradius)
+		if(isdefined(self.pathgoalpos) && distancesquared(self.origin, self.pathgoalpos) <= (self.goalradius * self.goalradius))
 		{
 			break;
 		}
-		if(gettime() - starttime / 1000 >= getdvarint("scr_surge_seek_time", 8))
+		if(((gettime() - starttime) / 1000) >= getdvarint("scr_surge_seek_time", 8))
 		{
 			break;
 		}
@@ -511,7 +511,7 @@ private function function_d007b404(upgraded, enemy, attacker)
 {
 	self endon(#"death");
 	enemy endon(#"death");
-	traveltime = distancesquared(enemy.origin, self.origin) / 128 * 128 * getdvarfloat("scr_surge_arc_travel_time", 0.05);
+	traveltime = (distancesquared(enemy.origin, self.origin) / (128 * 128)) * getdvarfloat("scr_surge_arc_travel_time", 0.05);
 	self thread _electrodischargearcfx(enemy, traveltime);
 	wait(traveltime);
 	if(isvehicle(enemy))
@@ -710,7 +710,7 @@ private function function_d09562d9(target, time, tag)
 	{
 		dist = distance(self.origin, dest);
 		step = dist / intervals;
-		v_to_target = vectornormalize(dest - self.origin) * step;
+		v_to_target = (vectornormalize(dest - self.origin)) * step;
 		/#
 		#/
 		intervals--;
@@ -760,7 +760,7 @@ function ai_activatesurge(target, var_9bc2efcb = 1, upgraded = 0)
 	{
 		type = self cybercom::function_5e3d3aa();
 		self orientmode("face default");
-		self animscripted("ai_cybercom_anim", self.origin, self.angles, "ai_base_rifle_" + type + "_exposed_cybercom_activate");
+		self animscripted("ai_cybercom_anim", self.origin, self.angles, ("ai_base_rifle_" + type) + "_exposed_cybercom_activate");
 		self waittill_match(#"ai_cybercom_anim");
 	}
 	weapon = getweapon("gadget_surge");

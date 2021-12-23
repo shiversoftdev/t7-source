@@ -258,9 +258,9 @@ function waitforplayertouch()
 		if(!player isoutofbounds() && !player isplayinganimscripted() && (!(isdefined(player.oobdisabled) && player.oobdisabled)))
 		{
 			player notify(#"oob_enter");
-			if(isdefined(level.oob_timekeep_ms) && isdefined(player.last_oob_timekeep_ms) && isdefined(player.last_oob_duration_ms) && gettime() - player.last_oob_timekeep_ms < level.oob_timekeep_ms)
+			if(isdefined(level.oob_timekeep_ms) && isdefined(player.last_oob_timekeep_ms) && isdefined(player.last_oob_duration_ms) && (gettime() - player.last_oob_timekeep_ms) < level.oob_timekeep_ms)
 			{
-				player.oob_start_time = gettime() - level.oob_timelimit_ms - player.last_oob_duration_ms;
+				player.oob_start_time = gettime() - (level.oob_timelimit_ms - player.last_oob_duration_ms);
 			}
 			else
 			{
@@ -321,7 +321,7 @@ function getdistancefromlastvalidplayerloc(trigger, entity)
 */
 function updatevisualeffects(trigger, entity)
 {
-	timeremaining = level.oob_timelimit_ms - gettime() - self.oob_start_time;
+	timeremaining = level.oob_timelimit_ms - (gettime() - self.oob_start_time);
 	if(isdefined(level.oob_timekeep_ms))
 	{
 		self.last_oob_duration_ms = timeremaining;
@@ -333,12 +333,12 @@ function updatevisualeffects(trigger, entity)
 		{
 			self.oob_lasteffectvalue = getdistancefromlastvalidplayerloc(trigger, entity);
 		}
-		time_val = 1 - timeremaining / level.oob_time_remaining_before_black;
+		time_val = 1 - (timeremaining / level.oob_time_remaining_before_black);
 		if(time_val > 1)
 		{
 			time_val = 1;
 		}
-		oob_effectvalue = self.oob_lasteffectvalue + 1 - self.oob_lasteffectvalue * time_val;
+		oob_effectvalue = self.oob_lasteffectvalue + ((1 - self.oob_lasteffectvalue) * time_val);
 	}
 	else
 	{
@@ -399,7 +399,7 @@ function watchforleave(trigger, entity)
 		if(entity istouchinganyoobtrigger())
 		{
 			updatevisualeffects(trigger, entity);
-			if(level.oob_timelimit_ms - gettime() - self.oob_start_time <= 0)
+			if((level.oob_timelimit_ms - (gettime() - self.oob_start_time)) <= 0)
 			{
 				if(isplayer(entity))
 				{

@@ -736,8 +736,8 @@ function monitor_footsteps(trig_stomp_kill, foot_side)
 {
 	self endon(#"death");
 	self endon(#"giant_robot_stop");
-	str_start_stomp = "kill_zombies_" + foot_side + "foot_1";
-	str_end_stomp = "footstep_" + foot_side + "_large";
+	str_start_stomp = ("kill_zombies_" + foot_side) + "foot_1";
+	str_end_stomp = ("footstep_" + foot_side) + "_large";
 	while(true)
 	{
 		self waittill_match(str_start_stomp);
@@ -769,7 +769,7 @@ function monitor_footsteps_fx(trig_stomp_kill, foot_side)
 {
 	self endon(#"death");
 	self endon(#"giant_robot_stop");
-	str_end_stomp = "footstep_" + foot_side + "_large";
+	str_end_stomp = ("footstep_" + foot_side) + "_large";
 	while(true)
 	{
 		level clientfield::set("play_foot_stomp_fx_robot_" + self.giant_robot_id, 0);
@@ -1040,7 +1040,7 @@ function activate_kill_trigger(robot, foot_side)
 					fade_in_time = 0.01;
 					fade_out_time = 0.2;
 					players[i] thread hud::fade_to_black_for_x_sec(start_wait, black_screen_wait, fade_in_time, fade_out_time, "white");
-					n_transition_time = start_wait + black_screen_wait + fade_in_time + fade_out_time;
+					n_transition_time = ((start_wait + black_screen_wait) + fade_in_time) + fade_out_time;
 					n_start_time = start_wait + fade_in_time;
 					players[i] thread player_transition_into_robot_head_start(n_start_time);
 					players[i] thread player_transition_into_robot_head_finish(n_transition_time);
@@ -1673,7 +1673,7 @@ function player_screams_while_falling()
 	self endon(#"disconnect");
 	self stopsounds();
 	util::wait_network_frame();
-	self playsoundtoplayer("vox_plr_" + self.characterindex + "_exit_robot_0", self);
+	self playsoundtoplayer(("vox_plr_" + self.characterindex) + "_exit_robot_0", self);
 }
 
 /*
@@ -1866,7 +1866,7 @@ function giant_robot_head_teleport_timeout(n_robot_id)
 	{
 		return;
 	}
-	while(level flag::get("maxis_audiolog_gr" + n_robot_id + "_playing"))
+	while(level flag::get(("maxis_audiolog_gr" + n_robot_id) + "_playing"))
 	{
 		wait(0.1);
 	}
@@ -2435,7 +2435,7 @@ function play_robot_crush_player_vo()
 		{
 			n_alt = 0;
 		}
-		self playsoundwithnotify("vox_plr_" + self.characterindex + "_robot_crush_player_" + n_alt, "sound_done" + "vox_plr_" + self.characterindex + "_robot_crush_player_" + n_alt);
+		self playsoundwithnotify((("vox_plr_" + self.characterindex) + "_robot_crush_player_") + n_alt, ((("sound_done" + "vox_plr_") + self.characterindex) + "_robot_crush_player_") + n_alt);
 	}
 }
 

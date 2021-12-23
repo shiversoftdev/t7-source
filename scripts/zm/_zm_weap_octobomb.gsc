@@ -470,7 +470,7 @@ function animate_octobomb(is_upgraded)
 	self thread scene::play("p7_fxanim_zm_zod_octobomb_loop_bundle", self.anim_model);
 	n_start_anim_length = getanimlength("p7_fxanim_zm_zod_octobomb_start_anim");
 	n_end_anim_length = getanimlength("p7_fxanim_zm_zod_octobomb_end_anim");
-	n_life_time = self.weapon.fusetime - n_end_anim_length * 1000 - n_start_anim_length * 1000 / 1000;
+	n_life_time = (self.weapon.fusetime - (n_end_anim_length * 1000)) - (n_start_anim_length * 1000) / 1000;
 	wait(n_life_time * 0.75);
 	if(is_upgraded)
 	{
@@ -809,9 +809,9 @@ function do_tentacle_grab(e_player, is_upgraded)
 				ai_target octo_gib();
 				ai_target dodamage(ai_target.health, ai_target.origin, e_player, self);
 				ai_target startragdoll();
-				ai_target launchragdoll(105 * vectornormalize(ai_target.origin - self.origin + (n_random_x, n_random_y, 200)));
+				ai_target launchragdoll(105 * (vectornormalize((ai_target.origin - self.origin) + (n_random_x, n_random_y, 200))));
 			}
-			if(randomint(6) > n_grabs + 3)
+			if(randomint(6) > (n_grabs + 3))
 			{
 				b_fast_grab = 1;
 				n_grabs++;
@@ -984,7 +984,7 @@ function parasite_attractor_init()
 	{
 		self.a_v_parasite_attractors = array(self.a_v_parasite_attractors);
 	}
-	self.a_v_parasite_attractors[self.a_v_parasite_attractors.size] = self.v_parasite_attractor_center + vectorscale((-1, 0, 0), 80);
+	self.a_v_parasite_attractors[self.a_v_parasite_attractors.size] = self.v_parasite_attractor_center + (vectorscale((-1, 0, 0), 80));
 	if(!isdefined(self.a_v_parasite_attractors))
 	{
 		self.a_v_parasite_attractors = [];
@@ -993,7 +993,7 @@ function parasite_attractor_init()
 	{
 		self.a_v_parasite_attractors = array(self.a_v_parasite_attractors);
 	}
-	self.a_v_parasite_attractors[self.a_v_parasite_attractors.size] = self.v_parasite_attractor_center + vectorscale((0, -1, 0), 80);
+	self.a_v_parasite_attractors[self.a_v_parasite_attractors.size] = self.v_parasite_attractor_center + (vectorscale((0, -1, 0), 80));
 }
 
 /*
@@ -1111,7 +1111,7 @@ function parasite_attractor_grab(e_grenade)
 			ai_parasite = array::random(a_ai_parasites);
 			v_fling = vectornormalize(ai_parasite.origin - e_grenade.origin);
 			ai_parasite dodamage(ai_parasite.maxhealth, self.origin);
-			if(randomint(6) > n_grabs + 3)
+			if(randomint(6) > (n_grabs + 3))
 			{
 				b_fast_grab = 1;
 				n_grabs++;
@@ -1204,7 +1204,7 @@ function octobomb_devgui()
 {
 	for(i = 0; i < 4; i++)
 	{
-		level thread setup_devgui_func("ZM/Weapons/Offhand/Octobomb/Give" + i, "zod_give_octobomb", i, &devgui_octobomb_give);
+		level thread setup_devgui_func(("ZM/Weapons/Offhand/Octobomb/Give") + i, "zod_give_octobomb", i, &devgui_octobomb_give);
 	}
 	level thread setup_devgui_func("ZM/Weapons/Offhand/Octobomb/Give to All", "zod_give_octobomb", 4, &devgui_octobomb_give);
 }
@@ -1221,7 +1221,7 @@ function octobomb_devgui()
 private function setup_devgui_func(str_devgui_path, str_dvar, n_value, func, n_base_value = -1)
 {
 	setdvar(str_dvar, n_base_value);
-	adddebugcommand("devgui_cmd \"" + str_devgui_path + "\" \"" + str_dvar + " " + n_value + "\"\n");
+	adddebugcommand(((((("devgui_cmd \"" + str_devgui_path) + "\" \"") + str_dvar) + " ") + n_value) + "\"\n");
 	while(true)
 	{
 		n_dvar = getdvarint(str_dvar);

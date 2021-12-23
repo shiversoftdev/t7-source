@@ -234,7 +234,7 @@ function function_ecdbdfeb(e_player)
 	if(isdefined(self.var_ab455203.script_int))
 	{
 		var_9cba4a73 = 3;
-		var_9cba4a73 = var_9cba4a73 + self.var_ab455203.script_int - 6 << 2;
+		var_9cba4a73 = var_9cba4a73 + ((self.var_ab455203.script_int - 6) << 2);
 	}
 	e_player clientfield::set_to_player("mobile_armory_cac", var_9cba4a73);
 	e_player flagsys::set("mobile_armory_in_use");
@@ -403,7 +403,7 @@ function function_6b1fa4df(weapon)
 	if(!isdefined(item))
 	{
 		/#
-			iprintlnbold("" + weapon.name + "");
+			iprintlnbold(("" + weapon.name) + "");
 		#/
 		return;
 	}

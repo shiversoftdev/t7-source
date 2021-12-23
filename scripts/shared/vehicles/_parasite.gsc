@@ -438,14 +438,14 @@ function state_combat_update(params)
 			{
 				self.stucktime = gettime();
 			}
-			if(gettime() - self.stucktime > 10000)
+			if((gettime() - self.stucktime) > 10000)
 			{
 				self dodamage(self.health + 100, self.origin);
 			}
 		}
 		if(isdefined(self.lasttimejuked) && self.lasttimejuked)
 		{
-			if(randomint(100) < 50 && isdefined(self.parasiteenemy) && distance2dsquared(self.origin, self.parasiteenemy.origin) < 64 * 64)
+			if(randomint(100) < 50 && isdefined(self.parasiteenemy) && distance2dsquared(self.origin, self.parasiteenemy.origin) < (64 * 64))
 			{
 				self.parasiteenemy dodamage(self.settings.meleedamage, self.parasiteenemy.origin, self);
 			}
@@ -473,13 +473,13 @@ function state_combat_update(params)
 */
 function fire_pod_logic(chosetojuke)
 {
-	if(isdefined(self.parasiteenemy) && self vehcansee(self.parasiteenemy) && distance2dsquared(self.parasiteenemy.origin, self.origin) < 0.5 * self.settings.engagementdistmin + self.settings.engagementdistmax * 3 * 0.5 * self.settings.engagementdistmin + self.settings.engagementdistmax * 3)
+	if(isdefined(self.parasiteenemy) && self vehcansee(self.parasiteenemy) && distance2dsquared(self.parasiteenemy.origin, self.origin) < ((0.5 * (self.settings.engagementdistmin + self.settings.engagementdistmax)) * 3) * ((0.5 * (self.settings.engagementdistmin + self.settings.engagementdistmax)) * 3))
 	{
 		self asmrequestsubstate("fire@stationary");
 		self playsound("zmb_vocals_parasite_preattack");
 		self clientfield::set("parasite_tell_fx", 1);
 		self waittill(#"pre_fire");
-		if(isdefined(self.parasiteenemy) && self vehcansee(self.parasiteenemy) && distance2dsquared(self.parasiteenemy.origin, self.origin) < 0.5 * self.settings.engagementdistmin + self.settings.engagementdistmax * 3 * 0.5 * self.settings.engagementdistmin + self.settings.engagementdistmax * 3)
+		if(isdefined(self.parasiteenemy) && self vehcansee(self.parasiteenemy) && distance2dsquared(self.parasiteenemy.origin, self.origin) < ((0.5 * (self.settings.engagementdistmin + self.settings.engagementdistmax)) * 3) * ((0.5 * (self.settings.engagementdistmin + self.settings.engagementdistmax)) * 3))
 		{
 			self setturrettargetent(self.parasiteenemy, self.parasiteenemy getvelocity() * 0.3);
 		}
@@ -511,11 +511,11 @@ function getnextmoveposition_tactical()
 	self endon(#"change_state");
 	self endon(#"death");
 	selfdisttotarget = distance2d(self.origin, self.parasiteenemy.origin);
-	gooddist = 0.5 * self.settings.engagementdistmin + self.settings.engagementdistmax;
+	gooddist = 0.5 * (self.settings.engagementdistmin + self.settings.engagementdistmax);
 	closedist = 1.2 * gooddist;
 	fardist = 3 * gooddist;
 	querymultiplier = mapfloat(closedist, fardist, 1, 3, selfdisttotarget);
-	preferedheightrange = 0.5 * self.settings.engagementheightmax - self.settings.engagementheightmin;
+	preferedheightrange = 0.5 * (self.settings.engagementheightmax - self.settings.engagementheightmin);
 	randomness = 30;
 	queryresult = positionquery_source_navigation(self.origin, 75, 225 * querymultiplier, 75, 20 * querymultiplier, self, 20 * querymultiplier);
 	if(!(isdefined(queryresult.centeronnav) && queryresult.centeronnav))
@@ -529,7 +529,7 @@ function getnextmoveposition_tactical()
 	positionquery_filter_distancetogoal(queryresult, self);
 	vehicle_ai::positionquery_filter_outofgoalanchor(queryresult);
 	self vehicle_ai::positionquery_filter_engagementdist(queryresult, self.parasiteenemy, self.settings.engagementdistmin, self.settings.engagementdistmax);
-	goalheight = self.parasiteenemy.origin[2] + 0.5 * self.settings.engagementheightmin + self.settings.engagementheightmax;
+	goalheight = self.parasiteenemy.origin[2] + (0.5 * (self.settings.engagementheightmin + self.settings.engagementheightmax));
 	best_point = undefined;
 	best_score = -999999;
 	trace_count = 0;
@@ -570,7 +570,7 @@ function getnextmoveposition_tactical()
 			}
 			point._scoredebug[""] = point.distawayfromengagementarea * -1;
 		#/
-		point.score = point.score + point.distawayfromengagementarea * -1;
+		point.score = point.score + (point.distawayfromengagementarea * -1);
 		distfrompreferredheight = abs(point.origin[2] - goalheight);
 		if(distfrompreferredheight > preferedheightrange)
 		{
@@ -582,7 +582,7 @@ function getnextmoveposition_tactical()
 				}
 				point._scoredebug[""] = heightscore * -1;
 			#/
-			point.score = point.score + heightscore * -1;
+			point.score = point.score + (heightscore * -1);
 		}
 		if(point.score > best_score)
 		{
@@ -618,11 +618,11 @@ function getnextmoveposition_forwardjuke()
 	self endon(#"change_state");
 	self endon(#"death");
 	selfdisttotarget = distance2d(self.origin, self.parasiteenemy.origin);
-	gooddist = 0.5 * self.settings.forwardjukeengagementdistmin + self.settings.forwardjukeengagementdistmax;
+	gooddist = 0.5 * (self.settings.forwardjukeengagementdistmin + self.settings.forwardjukeengagementdistmax);
 	closedist = 1.2 * gooddist;
 	fardist = 3 * gooddist;
 	querymultiplier = mapfloat(closedist, fardist, 1, 3, selfdisttotarget);
-	preferedheightrange = 0.5 * self.settings.forwardjukeengagementheightmax - self.settings.forwardjukeengagementheightmin;
+	preferedheightrange = 0.5 * (self.settings.forwardjukeengagementheightmax - self.settings.forwardjukeengagementheightmin);
 	randomness = 30;
 	queryresult = positionquery_source_navigation(self.origin, 75, 300 * querymultiplier, 75, 20 * querymultiplier, self, 20 * querymultiplier);
 	if(!(isdefined(queryresult.centeronnav) && queryresult.centeronnav))
@@ -636,7 +636,7 @@ function getnextmoveposition_forwardjuke()
 	positionquery_filter_distancetogoal(queryresult, self);
 	vehicle_ai::positionquery_filter_outofgoalanchor(queryresult);
 	self vehicle_ai::positionquery_filter_engagementdist(queryresult, self.parasiteenemy, self.settings.forwardjukeengagementdistmin, self.settings.forwardjukeengagementdistmax);
-	goalheight = self.parasiteenemy.origin[2] + 0.5 * self.settings.forwardjukeengagementheightmin + self.settings.forwardjukeengagementheightmax;
+	goalheight = self.parasiteenemy.origin[2] + (0.5 * (self.settings.forwardjukeengagementheightmin + self.settings.forwardjukeengagementheightmax));
 	best_point = undefined;
 	best_score = -999999;
 	trace_count = 0;
@@ -677,7 +677,7 @@ function getnextmoveposition_forwardjuke()
 			}
 			point._scoredebug[""] = point.distawayfromengagementarea * -1;
 		#/
-		point.score = point.score + point.distawayfromengagementarea * -1;
+		point.score = point.score + (point.distawayfromengagementarea * -1);
 		distfrompreferredheight = abs(point.origin[2] - goalheight);
 		if(distfrompreferredheight > preferedheightrange)
 		{
@@ -689,7 +689,7 @@ function getnextmoveposition_forwardjuke()
 				}
 				point._scoredebug[""] = heightscore * -1;
 			#/
-			point.score = point.score + heightscore * -1;
+			point.score = point.score + (heightscore * -1);
 		}
 		if(point.score > best_score)
 		{
@@ -731,7 +731,7 @@ function path_update_interrupt()
 	{
 		if(isdefined(self.current_pathto_pos))
 		{
-			if(distance2dsquared(self.current_pathto_pos, self.goalpos) > self.goalradius * self.goalradius)
+			if(distance2dsquared(self.current_pathto_pos, self.goalpos) > (self.goalradius * self.goalradius))
 			{
 				wait(0.2);
 				self._override_juke = 1;
@@ -759,7 +759,7 @@ function drone_pain_for_time(time, stablizeparam, restorelookpoint)
 	{
 		self.inpain = 1;
 		self playsound("zmb_vocals_parasite_pain");
-		while(gettime() < self.painstarttime + time * 1000)
+		while(gettime() < (self.painstarttime + (time * 1000)))
 		{
 			self setvehvelocity(self.velocity * stablizeparam);
 			self setangularvelocity(self getangularvelocity() * stablizeparam);

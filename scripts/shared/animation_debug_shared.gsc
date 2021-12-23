@@ -106,11 +106,11 @@ function anim_info_render_thread(animation, v_origin_or_ent, v_angles_or_tag, n_
 			}
 			if(b_anim_debug_on)
 			{
-				print3d(self.origin, self getentnum() + get_ent_type() + "" + str_name, color, 0.8, 0.3);
+				print3d(self.origin, ((self getentnum() + get_ent_type()) + "") + str_name, color, 0.8, 0.3);
 				print3d(self.origin - vectorscale((0, 0, 1), 5), "" + animation, color, 0.8, 0.3);
 				print3d(self.origin - vectorscale((0, 0, 1), 7), str_extra_info, color, 0.8, 0.15);
 			}
-			record3dtext(self getentnum() + get_ent_type() + "" + str_name, self.origin, color, "");
+			record3dtext(((self getentnum() + get_ent_type()) + "") + str_name, self.origin, color, "");
 			record3dtext("" + animation, self.origin - vectorscale((0, 0, 1), 5), color, "");
 			record3dtext(str_extra_info, self.origin - vectorscale((0, 0, 1), 7), color, "");
 			render_tag("", "", !b_anim_debug_on);
@@ -143,7 +143,7 @@ function get_ent_type()
 		{
 			return "";
 		}
-		return "" + self.classname + "";
+		return ("" + self.classname) + "";
 	#/
 }
 
@@ -232,7 +232,7 @@ function anim_origin_render(org, angles, line_length, str_label, b_recorder_only
 		if(isdefined(org) && isdefined(angles))
 		{
 			originendpoint = org + vectorscale(anglestoforward(angles), line_length);
-			originrightpoint = org + vectorscale(anglestoright(angles), -1 * line_length);
+			originrightpoint = org + (vectorscale(anglestoright(angles), -1 * line_length));
 			originuppoint = org + vectorscale(anglestoup(angles), line_length);
 			if(!b_recorder_only)
 			{

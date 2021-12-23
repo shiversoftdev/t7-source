@@ -23,7 +23,7 @@ function setuptraits()
 	self.behaviortracker.traits["effectiveWallRunCombat"] = 0.5;
 	self.behaviortracker.traits["effectiveDoubleJumpCombat"] = 0.5;
 	self.behaviortracker.traits["effectiveSlideCombat"] = 0.5;
-	if(self.behaviortracker.var_829cb7a3 != 0)
+	if(self.behaviortracker.version != 0)
 	{
 		traits = getarraykeys(self.behaviortracker.traits);
 		for(i = 0; i < traits.size; i++)
@@ -58,7 +58,7 @@ function initialize()
 		return;
 	}
 	self.behaviortracker = spawnstruct();
-	self.behaviortracker.var_829cb7a3 = int(self gettraitstatvalue("version"));
+	self.behaviortracker.version = int(self gettraitstatvalue("version"));
 	self.behaviortracker.numrecords = int(self gettraitstatvalue("numRecords")) + 1;
 	self setuptraits();
 	self.behaviortracker.valid = 1;
@@ -124,7 +124,7 @@ function isallowed()
 */
 function printtrackertoblackbox()
 {
-	bbprint("mpbehaviortracker", "username %s version %d numRecords %d effectiveSlideCombat %f effectiveDoubleJumpCombat %f effectiveWallRunCombat %f effectiveCombat %f", self.name, self.behaviortracker.var_829cb7a3, self.behaviortracker.numrecords, self.behaviortracker.traits["effectiveSlideCombat"], self.behaviortracker.traits["effectiveDoubleJumpCombat"], self.behaviortracker.traits["effectiveWallRunCombat"], self.behaviortracker.traits["effectiveCombat"]);
+	bbprint("mpbehaviortracker", "username %s version %d numRecords %d effectiveSlideCombat %f effectiveDoubleJumpCombat %f effectiveWallRunCombat %f effectiveCombat %f", self.name, self.behaviortracker.version, self.behaviortracker.numrecords, self.behaviortracker.traits["effectiveSlideCombat"], self.behaviortracker.traits["effectiveDoubleJumpCombat"], self.behaviortracker.traits["effectiveWallRunCombat"], self.behaviortracker.traits["effectiveCombat"]);
 }
 
 /*
@@ -174,11 +174,11 @@ function updatetrait(trait, percent)
 	currentvalue = self gettraitvalue(trait);
 	if(percent >= 0)
 	{
-		delta = 1 - currentvalue * percent;
+		delta = (1 - currentvalue) * percent;
 	}
 	else
 	{
-		delta = currentvalue - 0 * percent;
+		delta = (currentvalue - 0) * percent;
 	}
 	weighteddelta = 0.1 * delta;
 	newvalue = currentvalue + weighteddelta;
@@ -293,7 +293,7 @@ function updateplayerkilled(attacker, victim)
 */
 function settraitstats()
 {
-	if(self.behaviortracker.var_829cb7a3 == 0)
+	if(self.behaviortracker.version == 0)
 	{
 		return;
 	}

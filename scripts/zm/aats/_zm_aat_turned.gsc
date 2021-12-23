@@ -138,7 +138,7 @@ function turned_local_blast(attacker)
 		n_random_x = randomfloatrange(-3, 3);
 		n_random_y = randomfloatrange(-3, 3);
 		a_ai_zombies[i] startragdoll(1);
-		a_ai_zombies[i] launchragdoll(60 * vectornormalize(v_curr_zombie_origin - v_turned_blast_pos + (n_random_x, n_random_y, 10)), "torso_lower");
+		a_ai_zombies[i] launchragdoll(60 * (vectornormalize((v_curr_zombie_origin - v_turned_blast_pos) + (n_random_x, n_random_y, 10))), "torso_lower");
 		n_flung_zombies++;
 		if(-1 && n_flung_zombies >= 3)
 		{

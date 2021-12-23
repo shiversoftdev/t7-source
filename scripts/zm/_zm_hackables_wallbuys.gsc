@@ -63,7 +63,7 @@ function hack_wallbuys()
 function wallbuy_hack(hacker)
 {
 	self.wallbuy.trigger_stub.hacked = 1;
-	self.clientfieldname = self.wallbuy.zombie_weapon_upgrade + "_" + self.origin;
+	self.clientfieldname = (self.wallbuy.zombie_weapon_upgrade + "_") + self.origin;
 	level clientfield::set(self.clientfieldname, 2);
 	zm_equip_hacker::deregister_hackable_struct(self);
 }

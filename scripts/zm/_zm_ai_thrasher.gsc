@@ -234,7 +234,7 @@ function function_8aac3fe()
 				continue;
 			}
 		}
-		if(level.round_number === level.var_ebc4830 && level.round_number - level.var_1f0937ce <= 3)
+		if(level.round_number === level.var_ebc4830 && (level.round_number - level.var_1f0937ce) <= 3)
 		{
 			level.var_ebc4830 = level.var_ebc4830 + 1;
 			continue;
@@ -581,7 +581,7 @@ function function_bf8a850e(v_origin, weapon, e_attacker)
 		var_29d3165e = gettime();
 		var_94f86cd2 = 60 * 60;
 		var_5ce805c5 = 36;
-		while(var_29d3165e + 5000 > gettime())
+		while((var_29d3165e + 5000) > gettime())
 		{
 			if(level.var_e51f5b82 < 2)
 			{
@@ -734,7 +734,7 @@ function function_a716de1f()
 	else if(level.round_number <= 70)
 	{
 		n_round = level.round_number;
-		var_84e68afa = 10 - n_round - 50 * 0.35;
+		var_84e68afa = 10 - ((n_round - 50) * 0.35);
 		self.maxhealth = int(zombiehealth * var_84e68afa);
 	}
 	else
@@ -912,7 +912,7 @@ function function_74b91821(entity)
 		{
 			continue;
 		}
-		if(abs(zombie.origin[2] - entity.origin[2]) > 18)
+		if((abs(zombie.origin[2] - entity.origin[2])) > 18)
 		{
 			continue;
 		}
@@ -1016,9 +1016,8 @@ function function_d2ac7b69(entity, player, state)
 	{
 		entitynumber = player getentitynumber();
 		var_4b5ca201 = entity clientfield::get("thrasher_mouth_cf");
-		~var_4b5ca201;
-		var_4b5ca201 = var_4b5ca201 & 3 << entitynumber * 2;
-		var_4b5ca201 = var_4b5ca201 | state << entitynumber * 2;
+		var_4b5ca201 = var_4b5ca201 & (~(3 << (entitynumber * 2)));
+		var_4b5ca201 = var_4b5ca201 | (state << (entitynumber * 2));
 		entity clientfield::set("thrasher_mouth_cf", var_4b5ca201);
 	}
 }
@@ -1398,7 +1397,7 @@ function function_da954e93(cmd)
 					v_dir = e_player.origin - spot.origin;
 					v_dir = vectornormalize(v_dir);
 					v_angles = vectortoangles(v_dir);
-					trace = bullettrace(spot.origin, spot.origin + vectorscale((0, 0, -1), 256), 0, spot);
+					trace = bullettrace(spot.origin, spot.origin + (vectorscale((0, 0, -1), 256)), 0, spot);
 					v_ground_position = trace[""];
 					var_a6621bfd = v_ground_position;
 					thrasher forceteleport(var_a6621bfd, v_angles);

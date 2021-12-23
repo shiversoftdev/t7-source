@@ -205,7 +205,7 @@ function function_88a65f39()
 	while(n_total_time < 15)
 	{
 		level scene::play("p7_fxanim_zm_stal_finger_trap_bundle");
-		n_total_time = gettime() - n_start_time / 1000;
+		n_total_time = (gettime() - n_start_time) / 1000;
 	}
 }
 

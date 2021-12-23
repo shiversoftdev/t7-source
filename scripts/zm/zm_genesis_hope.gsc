@@ -95,7 +95,7 @@ function start()
 	{
 		foreach(var_53b3e826, var_1493eda1 in var_d028d3a8)
 		{
-			var_dc163518 = player zm_stats::get_global_stat("DARKOPS_" + var_1493eda1 + "_SUPER_EE") > 0;
+			var_dc163518 = (player zm_stats::get_global_stat(("DARKOPS_" + var_1493eda1) + "_SUPER_EE")) > 0;
 			var_9d5e869 = isinarray(var_61d59a5a, var_1493eda1);
 			if(var_dc163518 && !var_9d5e869)
 			{
@@ -112,7 +112,7 @@ function start()
 		}
 	}
 	/#
-		iprintlnbold("" + var_61d59a5a.size + "");
+		iprintlnbold(("" + var_61d59a5a.size) + "");
 	#/
 	if(var_61d59a5a.size == var_d028d3a8.size)
 	{

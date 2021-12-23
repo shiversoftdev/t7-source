@@ -116,7 +116,7 @@ function stage_logic_2()
 	s = struct::get("be2_pos", "targetname");
 	level._be dontinterpolate();
 	level._be.origin = s.origin;
-	level.teleport_target_trigger = spawn("trigger_radius", s.origin + vectorscale((0, 0, -1), 70), 0, 125, 100);
+	level.teleport_target_trigger = spawn("trigger_radius", s.origin + (vectorscale((0, 0, -1), 70)), 0, 125, 100);
 	level.black_hole_bomb_loc_check_func = &bhb_teleport_loc_check;
 	level waittill(#"be2_tp_done");
 	players = getplayers();
@@ -615,7 +615,7 @@ function moon_be_move(motivation_array)
 		if(isdefined(motivational_array[0]))
 		{
 			/#
-				println("" + motivational_array[0] + "");
+				println(("" + motivational_array[0]) + "");
 			#/
 		}
 		println("");

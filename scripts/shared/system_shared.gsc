@@ -18,7 +18,7 @@ function register(str_system, func_preinit, func_postinit, reqs = [])
 	if(isdefined(level.system_funcs) && isdefined(level.system_funcs[str_system]))
 	{
 		/#
-			assertmsg("" + str_system + "");
+			assertmsg(("" + str_system) + "");
 		#/
 		return;
 	}
@@ -50,7 +50,7 @@ function exec_post_system(req)
 		if(!isdefined(level.system_funcs[req]))
 		{
 			/#
-				assertmsg("" + req + "");
+				assertmsg(("" + req) + "");
 			#/
 		}
 	#/
@@ -116,7 +116,7 @@ function exec_pre_system(req)
 		if(!isdefined(level.system_funcs[req]))
 		{
 			/#
-				assertmsg("" + req + "");
+				assertmsg(("" + req) + "");
 			#/
 		}
 	#/

@@ -57,7 +57,7 @@ function lookatposition(looktargetpos, lookduration, lookspeed, eyesonly, interr
 	if(!isdefined(interruptothers) || interruptothers == "interrupt others" || gettime() > self.a.lookendtime)
 	{
 		self.a.looktargetpos = looktargetpos;
-		self.a.lookendtime = gettime() + lookduration * 1000;
+		self.a.lookendtime = gettime() + (lookduration * 1000);
 		if(lookspeed == "casual")
 		{
 			self.a.looktargetspeed = 800;
@@ -602,7 +602,7 @@ function donotetracksforeverproc(notetracksfunc, flagname, killstring, customfun
 			if(timetaken < 0.05)
 			{
 				/#
-					println(gettime() + "" + flagname + "" + returnednote + "");
+					println(((((gettime() + "") + flagname) + "") + returnednote) + "");
 				#/
 				wait(0.05 - timetaken);
 			}
@@ -760,7 +760,7 @@ function movetooriginovertime(origin, time)
 	if(distancesquared(self.origin, origin) > 256 && !self maymovetopoint(origin))
 	{
 		/#
-			println("" + origin + "");
+			println(("" + origin) + "");
 		#/
 		return;
 	}
@@ -884,12 +884,12 @@ function trackloop()
 			yawdeltachange = yawdelta - prevyawdelta;
 			if(abs(yawdeltachange) > maxyawdeltachange)
 			{
-				yawdelta = prevyawdelta + maxyawdeltachange * math::sign(yawdeltachange);
+				yawdelta = prevyawdelta + (maxyawdeltachange * math::sign(yawdeltachange));
 			}
 			pitchdeltachange = pitchdelta - prevpitchdelta;
 			if(abs(pitchdeltachange) > maxpitchdeltachange)
 			{
-				pitchdelta = prevpitchdelta + maxpitchdeltachange * math::sign(pitchdeltachange);
+				pitchdelta = prevpitchdelta + (maxpitchdeltachange * math::sign(pitchdeltachange));
 			}
 		}
 		prevyawdelta = yawdelta;
@@ -901,7 +901,7 @@ function trackloop()
 			/#
 				assert(yawdelta <= self.rightaimlimit);
 			#/
-			weight = yawdelta / self.rightaimlimit * self.a.aimweight;
+			weight = (yawdelta / self.rightaimlimit) * self.a.aimweight;
 			leftright = weight;
 		}
 		else if(yawdelta < 0)
@@ -909,7 +909,7 @@ function trackloop()
 			/#
 				assert(yawdelta >= self.leftaimlimit);
 			#/
-			weight = yawdelta / self.leftaimlimit * self.a.aimweight;
+			weight = (yawdelta / self.leftaimlimit) * self.a.aimweight;
 			leftright = -1 * weight;
 		}
 		if(pitchdelta > 0)
@@ -917,7 +917,7 @@ function trackloop()
 			/#
 				assert(pitchdelta <= self.upaimlimit);
 			#/
-			weight = pitchdelta / self.upaimlimit * self.a.aimweight;
+			weight = (pitchdelta / self.upaimlimit) * self.a.aimweight;
 			updown = weight;
 		}
 		else if(pitchdelta < 0)
@@ -925,7 +925,7 @@ function trackloop()
 			/#
 				assert(pitchdelta >= self.downaimlimit);
 			#/
-			weight = pitchdelta / self.downaimlimit * self.a.aimweight;
+			weight = (pitchdelta / self.downaimlimit) * self.a.aimweight;
 			updown = -1 * weight;
 		}
 		wait(0.05);
@@ -974,8 +974,8 @@ function incranimaimweight()
 	if(self.a.aimweight_t < self.a.aimweight_transframes)
 	{
 		self.a.aimweight_t++;
-		t = 1 * self.a.aimweight_t / self.a.aimweight_transframes;
-		self.a.aimweight = self.a.aimweight_start * 1 - t + self.a.aimweight_end * t;
+		t = (1 * self.a.aimweight_t) / self.a.aimweight_transframes;
+		self.a.aimweight = (self.a.aimweight_start * (1 - t)) + (self.a.aimweight_end * t);
 	}
 }
 

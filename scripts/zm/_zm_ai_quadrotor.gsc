@@ -95,11 +95,11 @@ function follow_ent(e_followee)
 		{
 			v_facing = e_followee getplayerangles();
 			v_forward = anglestoforward((0, v_facing[1], 0));
-			candidate_goalpos = e_followee.origin + v_forward * 128;
+			candidate_goalpos = e_followee.origin + (v_forward * 128);
 			trace_goalpos = physicstrace(self.origin, candidate_goalpos);
 			if(trace_goalpos["position"] == candidate_goalpos)
 			{
-				self.current_pathto_pos = e_followee.origin + v_forward * 128;
+				self.current_pathto_pos = e_followee.origin + (v_forward * 128);
 			}
 			else
 			{
@@ -255,10 +255,10 @@ function quadrotor_adjust_goal_for_enemy_height(goalpos)
 		{
 			offset = -100;
 		}
-		if(self.enemy.origin[2] + offset > goalpos[2])
+		if((self.enemy.origin[2] + offset) > goalpos[2])
 		{
 			goal_z = self.enemy.origin[2] + offset;
-			if(goal_z > goalpos[2] + 400)
+			if(goal_z > (goalpos[2] + 400))
 			{
 				goal_z = goalpos[2] + 400;
 			}
@@ -344,7 +344,7 @@ function quadrotor_movementupdate()
 		{
 			self util::script_delay();
 		}
-		else if(distancesquared(self.origin, self.current_pathto_pos) < 10000 && (self.current_pathto_pos[2] > old_goalpos[2] + 10 || self.origin[2] + 10 < self.current_pathto_pos[2]))
+		else if(distancesquared(self.origin, self.current_pathto_pos) < 10000 && (self.current_pathto_pos[2] > (old_goalpos[2] + 10) || (self.origin[2] + 10) < self.current_pathto_pos[2]))
 		{
 			self setvehgoalpos(self.current_pathto_pos, 1, 1);
 			self pathvariableoffset(vectorscale((0, 0, 1), 20), 2);
@@ -638,7 +638,7 @@ function quadrotor_find_new_position()
 	}
 	if(isdefined(best_node))
 	{
-		node_origin = best_node.origin + (0, 0, self.flyheight + randomfloatrange(-30, 40));
+		node_origin = best_node.origin + (0, 0, self.flyheight + (randomfloatrange(-30, 40)));
 		z = self getheliheightlockheight(node_origin);
 		node_origin = (node_origin[0], node_origin[1], z);
 		node_origin = self getclosestpointonnavvolume(node_origin, 100);
@@ -686,7 +686,7 @@ function quadrotor_damage()
 		}
 		if(type == "MOD_EXPLOSIVE" || type == "MOD_GRENADE_SPLASH" || type == "MOD_PROJECTILE_SPLASH")
 		{
-			self setvehvelocity(self.velocity + vectornormalize(dir) * 300);
+			self setvehvelocity(self.velocity + (vectornormalize(dir) * 300));
 			ang_vel = self getangularvelocity();
 			ang_vel = ang_vel + (randomfloatrange(-300, 300), randomfloatrange(-300, 300), randomfloatrange(-300, 300));
 			self setangularvelocity(ang_vel);
@@ -815,13 +815,13 @@ function quadrotor_crash_movement(attacker, hitdir)
 	}
 	side_dir = vectorcross(hitdir, (0, 0, 1));
 	side_dir_mag = randomfloatrange(-100, 100);
-	side_dir_mag = side_dir_mag + math::sign(side_dir_mag) * 80;
+	side_dir_mag = side_dir_mag + (math::sign(side_dir_mag) * 80);
 	side_dir = side_dir * side_dir_mag;
-	self setvehvelocity(self.velocity + vectorscale((0, 0, 1), 100) + vectornormalize(side_dir));
+	self setvehvelocity((self.velocity + vectorscale((0, 0, 1), 100)) + vectornormalize(side_dir));
 	ang_vel = self getangularvelocity();
 	ang_vel = (ang_vel[0] * 0.3, ang_vel[1], ang_vel[2] * 0.3);
 	yaw_vel = randomfloatrange(0, 210) * math::sign(ang_vel[1]);
-	yaw_vel = yaw_vel + math::sign(yaw_vel) * 180;
+	yaw_vel = yaw_vel + (math::sign(yaw_vel) * 180);
 	ang_vel = ang_vel + (randomfloatrange(-1, 1), yaw_vel, randomfloatrange(-1, 1));
 	self setangularvelocity(ang_vel);
 	self.crash_accel = randomfloatrange(75, 110);
@@ -920,11 +920,11 @@ function quadrotor_crash_accel()
 	count = 0;
 	while(true)
 	{
-		self setvehvelocity(self.velocity + anglestoup(self.angles) * self.crash_accel);
+		self setvehvelocity(self.velocity + (anglestoup(self.angles) * self.crash_accel));
 		self.crash_accel = self.crash_accel * 0.98;
 		wait(0.1);
 		count++;
-		if(count % 8 == 0)
+		if((count % 8) == 0)
 		{
 			if(randomint(100) > 40)
 			{
@@ -1027,18 +1027,18 @@ function quadrotor_collision()
 		self setangularvelocity(ang_vel);
 		if(normal[2] < 0.6 || (isalive(self) && !isdefined(self.emped)))
 		{
-			self setvehvelocity(self.velocity + normal * 90);
+			self setvehvelocity(self.velocity + (normal * 90));
 			self playsound("veh_qrdrone_wall");
 			if(normal[2] < 0.6)
 			{
-				fx_origin = self.origin - normal * 28;
+				fx_origin = self.origin - (normal * 28);
 			}
 			else
 			{
-				fx_origin = self.origin - normal * 10;
+				fx_origin = self.origin - (normal * 10);
 			}
 			current_time = gettime();
-			if(current_time - time_of_last_bounce < 1000)
+			if((current_time - time_of_last_bounce) < 1000)
 			{
 				self.bounce_count = self.bounce_count + 1;
 				if(self.bounce_count > 2)
@@ -1084,15 +1084,15 @@ function quadrotor_collision()
 				return;
 			}
 			self.bounced = 1;
-			self setvehvelocity(self.velocity + normal * 120);
+			self setvehvelocity(self.velocity + (normal * 120));
 			self playsound("veh_qrdrone_wall");
 			if(normal[2] < 0.6)
 			{
-				fx_origin = self.origin - normal * 28;
+				fx_origin = self.origin - (normal * 28);
 			}
 			else
 			{
-				fx_origin = self.origin - normal * 10;
+				fx_origin = self.origin - (normal * 10);
 			}
 			playfx(level._effect["quadrotor_nudge"], fx_origin, normal);
 		}
@@ -1332,7 +1332,7 @@ function player_in_last_stand_within_range(range)
 	}
 	foreach(var_5cf30226, player in players)
 	{
-		if(player laststand::player_is_in_laststand() && distancesquared(self.origin, player.origin) < range * range && !isdefined(player.quadrotor_revive))
+		if(player laststand::player_is_in_laststand() && distancesquared(self.origin, player.origin) < (range * range) && !isdefined(player.quadrotor_revive))
 		{
 			var_d46f516e = self getclosestpointonnavvolume(player.origin + vectorscale((0, 0, 1), 100), 100);
 			if(!isdefined(var_d46f516e))

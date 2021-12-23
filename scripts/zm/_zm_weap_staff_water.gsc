@@ -96,7 +96,7 @@ function water_dart_cleanup()
 			if(isdefined(e_grenade.model) && e_grenade.model == "p6_zm_tm_staff_projectile_ice")
 			{
 				time = gettime();
-				if(time - e_grenade.birthtime >= 1000)
+				if((time - e_grenade.birthtime) >= 1000)
 				{
 					e_grenade delete();
 				}

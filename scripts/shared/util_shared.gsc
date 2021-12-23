@@ -79,7 +79,7 @@ function streamer_wait(n_stream_request_id, n_wait_frames = 0, n_timeout = 0, b_
 			n_timeout = 7;
 		}
 	}
-	timeout = gettime() + n_timeout * 1000;
+	timeout = gettime() + (n_timeout * 1000);
 	if(self == level)
 	{
 		n_num_streamers_ready = 0;
@@ -128,7 +128,7 @@ function streamer_wait(n_stream_request_id, n_wait_frames = 0, n_timeout = 0, b_
 function draw_debug_line(start, end, timer)
 {
 	/#
-		for(i = 0; i < timer * 20; i++)
+		for(i = 0; i < (timer * 20); i++)
 		{
 			line(start, end, (1, 1, 0.5));
 			wait(0.05);
@@ -224,7 +224,7 @@ function debug_sphere(origin, radius, color, alpha, time)
 		{
 			color = (1, 1, 1);
 		}
-		sides = int(10 * 1 + int(radius) % 100);
+		sides = int(10 * (1 + (int(radius) % 100)));
 		sphere(origin, radius, color, alpha, 1, sides, time);
 	#/
 }
@@ -1050,7 +1050,7 @@ function fileprint_start(file)
 function fileprint_map_start(file)
 {
 	/#
-		file = "" + file + "";
+		file = ("" + file) + "";
 		fileprint_start(file);
 		level.fileprint_mapentcount = 0;
 		fileprint_map_header(1);
@@ -1123,7 +1123,7 @@ function fileprint_map_keypairprint(key1, key2)
 		/#
 			assert(isdefined(level.fileprint));
 		#/
-		fileprint_chk(level.fileprint, "" + key1 + "" + key2 + "");
+		fileprint_chk(level.fileprint, ((("" + key1) + "") + key2) + "");
 	#/
 }
 
@@ -1231,7 +1231,7 @@ function fileprint_end()
 function fileprint_radiant_vec(vector)
 {
 	/#
-		string = "" + vector[0] + "" + vector[1] + "" + vector[2] + "";
+		string = ((((("" + vector[0]) + "") + vector[1]) + "") + vector[2]) + "";
 		return string;
 	#/
 }
@@ -1701,7 +1701,7 @@ function getclientsysstate(ssysname)
 	{
 		/#
 			/#
-				assertmsg("" + ssysname + "");
+				assertmsg(("" + ssysname) + "");
 			#/
 		#/
 		return "";
@@ -2541,7 +2541,7 @@ function is_first_round()
 */
 function is_lastround()
 {
-	if(level.roundlimit > 1 && game["roundsplayed"] >= level.roundlimit - 1)
+	if(level.roundlimit > 1 && game["roundsplayed"] >= (level.roundlimit - 1))
 	{
 		return 1;
 	}
@@ -2667,7 +2667,7 @@ function button_held_think(which_button)
 			{
 				time_started = gettime();
 			}
-			if(gettime() - time_started > 250)
+			if((gettime() - time_started) > 250)
 			{
 				self._holding_button[which_button] = 1;
 			}
@@ -3196,7 +3196,7 @@ function note_elapsed_time(start_time, label = "unknown")
 		{
 			elapsed_time = int(elapsed_time);
 		}
-		msg = label + "" + elapsed_time + "";
+		msg = ((label + "") + elapsed_time) + "";
 		iprintln(msg);
 	#/
 }
@@ -3438,7 +3438,7 @@ function waitfortimeandnetworkframe(time = 0)
 {
 	start_time_ms = gettime();
 	wait_network_frame();
-	elapsed_time = gettime() - start_time_ms * 0.001;
+	elapsed_time = (gettime() - start_time_ms) * 0.001;
 	remaining_time = time - elapsed_time;
 	if(remaining_time > 0)
 	{
@@ -3500,7 +3500,7 @@ function drawcylinder_think(pos, rad, height, seconds, stop_notify, color, alpha
 		{
 			level endon(stop_notify);
 		}
-		stop_time = gettime() + seconds * 1000;
+		stop_time = gettime() + (seconds * 1000);
 		currad = rad;
 		curheight = height;
 		if(!isdefined(color))
@@ -3519,8 +3519,8 @@ function drawcylinder_think(pos, rad, height, seconds, stop_notify, color, alpha
 			}
 			for(r = 0; r < 20; r++)
 			{
-				theta = r / 20 * 360;
-				theta2 = r + 1 / 20 * 360;
+				theta = (r / 20) * 360;
+				theta2 = ((r + 1) / 20) * 360;
 				line(pos + (cos(theta) * currad, sin(theta) * currad, 0), pos + (cos(theta2) * currad, sin(theta2) * currad, 0), color, alpha);
 				line(pos + (cos(theta) * currad, sin(theta) * currad, curheight), pos + (cos(theta2) * currad, sin(theta2) * currad, curheight), color, alpha);
 				line(pos + (cos(theta) * currad, sin(theta) * currad, 0), pos + (cos(theta) * currad, sin(theta) * currad, curheight), color, alpha);
@@ -3712,9 +3712,9 @@ function get_array_of_closest(org, array, excluders = [], max = array.size, maxd
 	for(;;)
 	{
 		change = 0;
-		for(i = 0; i < dist.size - 1; i++)
+		for(i = 0; i < (dist.size - 1); i++)
 		{
-			if(dist[i] <= dist[i + 1])
+			if(dist[i] <= (dist[i + 1]))
 			{
 				continue;
 			}
@@ -3859,9 +3859,9 @@ function auto_delete(n_mode = 1, n_min_time_alive = 0, n_dist_horizontal = 0, n_
 	{
 		do
 		{
-			wait(randomfloatrange(n_think_time - n_think_time / 3, n_think_time + n_think_time / 3));
+			wait(randomfloatrange(n_think_time - (n_think_time / 3), n_think_time + (n_think_time / 3)));
 		}
-		while(isdefined(self.birthtime) && gettime() - self.birthtime / 1000 < n_min_time_alive);
+		while(isdefined(self.birthtime) && ((gettime() - self.birthtime) / 1000) < n_min_time_alive);
 		n_tests_passed = 0;
 		foreach(var_a897f40, player in level.players)
 		{
@@ -3869,7 +3869,7 @@ function auto_delete(n_mode = 1, n_min_time_alive = 0, n_dist_horizontal = 0, n_
 			{
 				continue;
 			}
-			if(n_dist_vertical && abs(self.origin[2] - player.origin[2]) < n_dist_vertical)
+			if(n_dist_vertical && (abs(self.origin[2] - player.origin[2])) < n_dist_vertical)
 			{
 				continue;
 			}
@@ -4125,7 +4125,7 @@ function _query_ents_by_substring_helper(a_ents, str_value, str_key = "targetnam
 			default:
 			{
 				/#
-					assert("" + str_key + "");
+					assert(("" + str_key) + "");
 				#/
 			}
 		}
@@ -4332,7 +4332,7 @@ function isfirstround()
 */
 function islastround()
 {
-	if(level.roundlimit > 1 && game["roundsplayed"] >= level.roundlimit - 1)
+	if(level.roundlimit > 1 && game["roundsplayed"] >= (level.roundlimit - 1))
 	{
 		return 1;
 	}
@@ -4426,7 +4426,7 @@ function anyteamhitroundlimitwithdraws()
 	tie_wins = game["roundswon"]["tie"];
 	foreach(var_21ef6375, team in level.teams)
 	{
-		if(getroundswon(team) + tie_wins >= level.roundwinlimit)
+		if((getroundswon(team) + tie_wins) >= level.roundwinlimit)
 		{
 			return 1;
 		}
@@ -4571,7 +4571,7 @@ function hitscorelimit()
 */
 function get_current_round_score_limit()
 {
-	return level.roundscorelimit * game["roundsplayed"] + 1;
+	return level.roundscorelimit * (game["roundsplayed"] + 1);
 }
 
 /*
@@ -4732,7 +4732,7 @@ function getcurrentgamemode()
 function ground_position(v_start, n_max_dist = 5000, n_ground_offset = 0, e_ignore, b_ignore_water = 0, b_ignore_glass = 0)
 {
 	v_trace_start = v_start + (0, 0, 5);
-	v_trace_end = v_trace_start + (0, 0, n_max_dist + 5 * -1);
+	v_trace_end = v_trace_start + (0, 0, (n_max_dist + 5) * -1);
 	a_trace = groundtrace(v_trace_start, v_trace_end, 0, e_ignore, b_ignore_water, b_ignore_glass);
 	if(a_trace["surfacetype"] != "none")
 	{
@@ -5388,7 +5388,7 @@ function trackwallrunningdistance()
 		self.movementtracking.wallrunning.count++;
 		self waittill(#"wallrun_end");
 		self.movementtracking.wallrunning.distance = self.movementtracking.wallrunning.distance + distance(startpos, self.origin);
-		self.movementtracking.wallrunning.time = self.movementtracking.wallrunning.time + gettime() - starttime;
+		self.movementtracking.wallrunning.time = self.movementtracking.wallrunning.time + (gettime() - starttime);
 	}
 }
 
@@ -5416,7 +5416,7 @@ function tracksprintdistance()
 		self.movementtracking.sprinting.count++;
 		self waittill(#"sprint_end");
 		self.movementtracking.sprinting.distance = self.movementtracking.sprinting.distance + distance(startpos, self.origin);
-		self.movementtracking.sprinting.time = self.movementtracking.sprinting.time + gettime() - starttime;
+		self.movementtracking.sprinting.time = self.movementtracking.sprinting.time + (gettime() - starttime);
 	}
 }
 
@@ -5444,7 +5444,7 @@ function trackdoublejumpdistance()
 		self.movementtracking.doublejump.count++;
 		self waittill(#"doublejump_end");
 		self.movementtracking.doublejump.distance = self.movementtracking.doublejump.distance + distance(startpos, self.origin);
-		self.movementtracking.doublejump.time = self.movementtracking.doublejump.time + gettime() - starttime;
+		self.movementtracking.doublejump.time = self.movementtracking.doublejump.time + (gettime() - starttime);
 	}
 }
 
@@ -5499,7 +5499,7 @@ function getplayspacemaxwidth()
 */
 function function_e2ac06bb(menu_path, commands)
 {
-	adddebugcommand("devgui_cmd \"" + menu_path + "\" \"" + commands + "\"\n");
+	adddebugcommand(((("devgui_cmd \"" + menu_path) + "\" \"") + commands) + "\"\n");
 }
 
 /*
@@ -5513,7 +5513,7 @@ function function_e2ac06bb(menu_path, commands)
 */
 function function_181cbd1a(menu_path)
 {
-	adddebugcommand("devgui_remove \"" + menu_path + "\"\n");
+	adddebugcommand(("devgui_remove \"" + menu_path) + "\"\n");
 }
 
 /*

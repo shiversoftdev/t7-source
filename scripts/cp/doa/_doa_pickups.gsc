@@ -275,7 +275,7 @@ function function_9fc58738(var_742d8fb5, origin, launch = 0, ondeath = 0, var_b0
 	pickup.angles = (0, randomint(360), 0);
 	if(getdvarint("scr_doa_client_side_pickup_models", 1) && !launch)
 	{
-		pickup clientfield::set("pickuptype", pickup.type + pickup.def.variant << 6);
+		pickup clientfield::set("pickuptype", pickup.type + (pickup.def.variant << 6));
 		pickup setmodel("tag_origin");
 		pickup.var_52cf38a3 = 1;
 	}
@@ -381,7 +381,7 @@ function function_9fc58738(var_742d8fb5, origin, launch = 0, ondeath = 0, var_b0
 				inc = inc + quarterbar;
 			}
 			barpoints = barpoints + randomfloat(inc);
-			scale = scale + barpoints / quarterbar;
+			scale = scale + (barpoints / quarterbar);
 		}
 		pickup thread function_b3289e6d(scale);
 		pickup.var_5d2140f2 = int(barpoints);
@@ -491,7 +491,7 @@ function function_92d90e55(var_742d8fb5, location, timeout = 1, rotate = 1, angl
 		{
 			variant = 0;
 		}
-		pickup clientfield::set("pickuptype", pickup.type + variant << 6);
+		pickup clientfield::set("pickuptype", pickup.type + (variant << 6));
 		pickup setmodel("tag_origin");
 		pickup.var_52cf38a3 = 1;
 	}
@@ -812,7 +812,7 @@ function function_68c8220(player)
 	ent = spawn("script_origin", (0, 0, 0));
 	ent playloopsound("zmb_pickup_umbrella_loop");
 	locations = doa_utility::function_308fa126(16);
-	amount = randomintrange(namespace_831a4a7c::function_5eb6e4d1().size * 3 + 4, namespace_831a4a7c::function_5eb6e4d1().size * 5 + 6);
+	amount = randomintrange((namespace_831a4a7c::function_5eb6e4d1().size * 3) + 4, (namespace_831a4a7c::function_5eb6e4d1().size * 5) + 6);
 	while(amount)
 	{
 		item = spawnubertreasure(locations[randomint(locations.size)] + vectorscale((0, 0, 1), 2200), 1, 128, 1, 1, 1, level.doa.var_9bf7e61b, undefined, 1, 0, 0)[0];
@@ -870,7 +870,7 @@ private function function_c41b5928()
 	/#
 		assert(var_a60f3304);
 	#/
-	if(level.doa.var_3cc04c3a.size < var_a60f3304 / 4)
+	if(level.doa.var_3cc04c3a.size < (var_a60f3304 / 4))
 	{
 		return 1;
 	}
@@ -1274,8 +1274,8 @@ function function_30768f24(item, time)
 	while(isdefined(item) && time > 0.15)
 	{
 		dist = distance(self.origin, item.origin);
-		step = dist / time / intervals;
-		v_to_target = vectornormalize(self.origin - item.origin) * step;
+		step = (dist / time) / intervals;
+		v_to_target = (vectornormalize(self.origin - item.origin)) * step;
 		/#
 		#/
 		item moveto(item.origin + v_to_target, 0.15);
@@ -1721,8 +1721,8 @@ function function_d526f0bb()
 				}
 				case 2:
 				{
-					player.doa.var_c2b9d7d0 = gettime() + int(player doa_utility::function_1ded48e6(level.doa.rules.var_c05a9a3f) * 1000);
-					player namespace_831a4a7c::function_71dab8e8(int(getdvarint("scr_doa_weapon_increment_range", 1024) / getdvarint("scr_doa_weapon_increment", 64)) - 1);
+					player.doa.var_c2b9d7d0 = gettime() + (int(player doa_utility::function_1ded48e6(level.doa.rules.var_c05a9a3f) * 1000));
+					player namespace_831a4a7c::function_71dab8e8((int(getdvarint("scr_doa_weapon_increment_range", 1024) / getdvarint("scr_doa_weapon_increment", 64))) - 1);
 					player thread namespace_1a381543::function_90118d8c("zmb_pickup_ammo");
 					player thread function_322262ea();
 					break;
@@ -2156,7 +2156,7 @@ function function_6b4a5f81(player)
 		var_28a41a34 = 0;
 		if(isdefined(player))
 		{
-			var_28a41a34 = 1 + player.entnum << 1;
+			var_28a41a34 = (1 + player.entnum) << 1;
 		}
 		val = var_28a41a34 + 1;
 		self clientfield::set("pickupmoveto", val);
@@ -2317,7 +2317,7 @@ function function_b3289e6d(scale)
 		{
 			scale = 16;
 		}
-		val = int(scale / 16 * 256 - 1);
+		val = int((scale / 16) * (256 - 1));
 		self clientfield::set("pickupscale", val);
 	}
 	else
@@ -2477,7 +2477,7 @@ function function_80ed7f(popvec)
 		target_point = self.origin + popvec;
 	}
 	vel = target_point - self.origin;
-	self.origin = self.origin + 4 * vel;
+	self.origin = self.origin + (4 * vel);
 	vel = vel * randomfloatrange(0.5, 3);
 	self physicslaunch(self.origin, vel);
 	wait(1);
@@ -2615,7 +2615,7 @@ private function function_5441452b(maxdistsq)
 		{
 			if(self.origin[0] != self.var_18193c2a[0] || self.origin[1] != self.var_18193c2a[1])
 			{
-				trace = bullettrace(self.origin, self.origin + vectorscale((0, 0, -1), 500), 0, undefined);
+				trace = bullettrace(self.origin, self.origin + (vectorscale((0, 0, -1), 500)), 0, undefined);
 				self.groundpos = (self.origin[0], self.origin[1], trace["position"][2]) + vectorscale((0, 0, 1), 32);
 				self moveto(self.groundpos, 1);
 				self util::waittill_any_timeout(1.1, "movedone", "picked_up", "pickup_ForceAttractKill", "death");
@@ -2646,7 +2646,7 @@ private function function_5441452b(maxdistsq)
 				origin = force.origin;
 			}
 			var_ad2b0f07 = vectornormalize(origin - self.origin);
-			scale = var_119472f5 - distsq / var_119472f5;
+			scale = (var_119472f5 - distsq) / var_119472f5;
 			movevec = vectorscale(var_ad2b0f07, var_af22fa93 * scale);
 			self.origin = self.origin + movevec;
 			self.var_3033320e = 1;
@@ -2918,7 +2918,7 @@ function function_2e7c9798()
 */
 function function_5c21c936()
 {
-	self.origin = self.origin + vectorscale((0, 0, -1), 12);
+	self.origin = self.origin + (vectorscale((0, 0, -1), 12));
 }
 
 /*

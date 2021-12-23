@@ -309,14 +309,14 @@ function function_d19cb2f8()
 		/#
 			if(getdvarint("") > 0)
 			{
-				println("" + loopers.size + "");
+				println(("" + loopers.size) + "");
 			}
 		#/
 		for(i = 0; i < loopers.size; i++)
 		{
 			loopers[i] thread soundloopthink();
 			delay = delay + 1;
-			if(delay % 20 == 0)
+			if((delay % 20) == 0)
 			{
 				wait(0.016);
 			}

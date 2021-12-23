@@ -298,7 +298,7 @@ function function_41e98fcc(attacker, offset)
 	}
 	else
 	{
-		var_f5aa368a = 0.15 + randomfloatrange(0.1, 0.25) * offset;
+		var_f5aa368a = 0.15 + (randomfloatrange(0.1, 0.25) * offset);
 		wait(var_f5aa368a);
 	}
 	self dodamage(self.health + 100, self.origin, attacker, attacker);

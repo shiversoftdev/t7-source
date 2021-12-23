@@ -89,7 +89,7 @@ function last_valid_position()
 	}
 	while(true)
 	{
-		if(distance2dsquared(self.origin, self.last_valid_position) < 15 * 15 && self.origin[2] - self.last_valid_position[2] * self.origin[2] - self.last_valid_position[2] < 16 * 16)
+		if(distance2dsquared(self.origin, self.last_valid_position) < (15 * 15) && (self.origin[2] - self.last_valid_position[2]) * (self.origin[2] - self.last_valid_position[2]) < (16 * 16))
 		{
 			wait(0.1);
 			continue;
@@ -103,7 +103,7 @@ function last_valid_position()
 		{
 			self.last_valid_position = self.origin;
 		}
-		else if(!ispointonnavmesh(self.origin, self) && ispointonnavmesh(self.last_valid_position, self) && distance2dsquared(self.origin, self.last_valid_position) < 32 * 32)
+		else if(!ispointonnavmesh(self.origin, self) && ispointonnavmesh(self.last_valid_position, self) && distance2dsquared(self.origin, self.last_valid_position) < (32 * 32))
 		{
 			wait(0.1);
 			continue;
@@ -436,7 +436,7 @@ function is_valid_weapon(weaponobject)
 */
 function is_spawn_protected()
 {
-	return gettime() - (isdefined(self.spawntime) ? self.spawntime : 0) <= level.spawnprotectiontimems;
+	return (gettime() - (isdefined(self.spawntime) ? self.spawntime : 0)) <= level.spawnprotectiontimems;
 }
 
 /*

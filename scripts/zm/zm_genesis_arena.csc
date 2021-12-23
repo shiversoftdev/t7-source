@@ -93,7 +93,7 @@ function summoning_key_charge_state(localclientnum, oldval, newval, bnewent, bin
 	{
 		stopfx(localclientnum, level.var_530ae70[localclientnum].var_1397ba8a);
 	}
-	level.var_530ae70[localclientnum].var_1397ba8a = playfxontag(localclientnum, level._effect["summoning_key_charge_" + newval + 1], level.var_530ae70[localclientnum], "key_root_jnt");
+	level.var_530ae70[localclientnum].var_1397ba8a = playfxontag(localclientnum, level._effect["summoning_key_charge_" + (newval + 1)], level.var_530ae70[localclientnum], "key_root_jnt");
 }
 
 /*
@@ -700,8 +700,8 @@ function function_244d3483(localclientnum)
 	}
 	if(!isdefined(level.var_530ae70[localclientnum]))
 	{
-		var_5a9b38da = struct::get("summoning_key", "targetname");
-		level.var_530ae70[localclientnum] = spawn(localclientnum, var_5a9b38da.origin, "script_model");
+		s_summoning_key = struct::get("summoning_key", "targetname");
+		level.var_530ae70[localclientnum] = spawn(localclientnum, s_summoning_key.origin, "script_model");
 		level.var_530ae70[localclientnum] setmodel("p7_fxanim_zm_zod_summoning_key_mod");
 		level.var_530ae70[localclientnum] useanimtree($generic);
 		level.var_530ae70[localclientnum] hide();
@@ -739,13 +739,13 @@ function function_a8a110ed(localclientnum, s_location, v_angle_offset = (0, 0, 0
 */
 function function_3d5c3a74(var_9494ad2f)
 {
-	var_5a9b38da = struct::get("summoning_key", "targetname");
+	s_summoning_key = struct::get("summoning_key", "targetname");
 	v_offset = vectorscale((0, 0, 1), 512);
 	if(!var_9494ad2f)
 	{
 		v_offset = (0, 0, 0);
 	}
-	self moveto(var_5a9b38da.origin + v_offset, 3);
+	self moveto(s_summoning_key.origin + v_offset, 3);
 }
 
 /*
@@ -808,8 +808,8 @@ function function_fad1f25a(n_height)
 		case 0:
 		{
 			n_duration = randomfloatrange(1.75, 2);
-			self.var_b079127 moveto(self.v_origin + vectorscale((0, 0, -1), 128), n_duration);
-			self.var_4100f709 moveto(self.v_origin + vectorscale((0, 0, -1), 128), n_duration);
+			self.var_b079127 moveto(self.v_origin + (vectorscale((0, 0, -1), 128)), n_duration);
+			self.var_4100f709 moveto(self.v_origin + (vectorscale((0, 0, -1), 128)), n_duration);
 			break;
 		}
 		case 1:
@@ -1052,7 +1052,7 @@ function function_b9c422c3(localclientnum, oldval, newval, bnewent, binitialsnap
 		{
 			if(!isdefined(var_d2c81bd9.var_90369c89[localclientnum]))
 			{
-				var_d2c81bd9.var_90369c89[localclientnum] = playfx(localclientnum, level._effect["random_weapon_powerup_marker"], var_d2c81bd9.origin + vectorscale((0, 0, -1), 8));
+				var_d2c81bd9.var_90369c89[localclientnum] = playfx(localclientnum, level._effect["random_weapon_powerup_marker"], var_d2c81bd9.origin + (vectorscale((0, 0, -1), 8)));
 			}
 			continue;
 		}
@@ -1154,7 +1154,7 @@ function fire_column(localclientnum, oldval, newval, bnewent, binitialsnap, fiel
 {
 	if(newval)
 	{
-		self.var_7dec59b4 = playfx(localclientnum, level._effect["fire_column"], self.origin + vectorscale((0, 0, -1), 90), (0, -1, 0));
+		self.var_7dec59b4 = playfx(localclientnum, level._effect["fire_column"], self.origin + (vectorscale((0, 0, -1), 90)), (0, -1, 0));
 	}
 	else
 	{

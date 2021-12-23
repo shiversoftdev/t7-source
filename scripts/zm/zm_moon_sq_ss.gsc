@@ -490,7 +490,7 @@ function sq_ss_button_thread(dud)
 		self notify(#"ss_kill_button_thread");
 	}
 	pos = self.origin;
-	pressed = self.origin - anglestoright(self.angles) * 0.25;
+	pressed = self.origin - (anglestoright(self.angles) * 0.25);
 	targ_model = self.terminal_model;
 	while(true)
 	{
@@ -798,7 +798,7 @@ function display_seq(buttons, seq, index)
 	{
 		print_duration = 1;
 		wait_duration = 0.4;
-		if(i < index - 1)
+		if(i < (index - 1))
 		{
 			print_duration = print_duration / 2;
 			wait_duration = wait_duration / 2;

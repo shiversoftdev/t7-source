@@ -311,7 +311,7 @@ function portal_teleport_player(player, show_fx = 1)
 	a_ai_enemies = arraysort(a_ai_enemies, self.origin, 1, 99, 768);
 	array::thread_all(a_ai_enemies, &ai_delay_cleanup);
 	level.n_cleanup_manager_restart_time = 2 + 15;
-	level.n_cleanup_manager_restart_time = level.n_cleanup_manager_restart_time + gettime() / 1000;
+	level.n_cleanup_manager_restart_time = level.n_cleanup_manager_restart_time + (gettime() / 1000);
 	image_room = struct::get("teleport_room_" + n_pos, "targetname");
 	player disableoffhandweapons();
 	player disableweapons();

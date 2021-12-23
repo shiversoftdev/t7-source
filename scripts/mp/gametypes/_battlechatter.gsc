@@ -353,7 +353,7 @@ function water_vox()
 			}
 			else if(self.voxunderwatertime)
 			{
-				if(gettime() > self.voxunderwatertime + mpdialog_value("underwaterBreathTime", 0) * 1000)
+				if(gettime() > (self.voxunderwatertime + (mpdialog_value("underwaterBreathTime", 0) * 1000)))
 				{
 					self.voxunderwatertime = 0;
 					self.voxemergebreath = 1;
@@ -468,7 +468,7 @@ function enemy_threat()
 		{
 			continue;
 		}
-		if(self.enemythreattime + mpdialog_value("enemyContactInterval", 0) * 1000 >= gettime())
+		if((self.enemythreattime + (mpdialog_value("enemyContactInterval", 0) * 1000)) >= gettime())
 		{
 			continue;
 		}
@@ -478,7 +478,7 @@ function enemy_threat()
 			continue;
 		}
 		allyradius = mpdialog_value("enemyContactAllyRadius", 0);
-		if(distancesquared(self.origin, closest_ally.origin) < allyradius * allyradius)
+		if(distancesquared(self.origin, closest_ally.origin) < (allyradius * allyradius))
 		{
 			eyepoint = self geteye();
 			dir = anglestoforward(self getplayerangles());
@@ -525,7 +525,7 @@ function killed_by_sniper(sniper)
 	{
 		closest_ally = self get_closest_player_ally();
 		allyradius = mpdialog_value("sniperKillAllyRadius", 0);
-		if(isdefined(closest_ally) && distancesquared(self.origin, closest_ally.origin) < allyradius * allyradius)
+		if(isdefined(closest_ally) && distancesquared(self.origin, closest_ally.origin) < (allyradius * allyradius))
 		{
 			closest_ally thread play_dialog("threatSniper", 1);
 			sniper.spottedtime = gettime();
@@ -573,7 +573,7 @@ function player_killed(attacker, killstreaktype)
 		}
 		ally = get_closest_player_ally(1);
 		allyradius = mpdialog_value("killstreakKillAllyRadius", 0);
-		if(isdefined(ally) && distancesquared(self.origin, ally.origin) < allyradius * allyradius)
+		if(isdefined(ally) && distancesquared(self.origin, ally.origin) < (allyradius * allyradius))
 		{
 			ally play_killstreak_threat(killstreaktype);
 		}
@@ -617,13 +617,13 @@ function say_kill_battle_chatter(attacker, weapon, victim, inflictor)
 		if(!(isdefined(attacker.speedburstkill) && attacker.speedburstkill))
 		{
 			speedburstkilldist = mpdialog_value("speedBurstKillDistance", 0);
-			if(distancesquared(attacker.origin, victim.origin) < speedburstkilldist * speedburstkilldist)
+			if(distancesquared(attacker.origin, victim.origin) < (speedburstkilldist * speedburstkilldist))
 			{
 				attacker.speedburstkill = 1;
 			}
 		}
 	}
-	else if(attacker _gadget_camo::camo_is_inuse() || (isdefined(attacker.gadget_camo_off_time) && attacker.gadget_camo_off_time + mpdialog_value("camoKillTime", 0) * 1000 >= gettime()))
+	else if(attacker _gadget_camo::camo_is_inuse() || (isdefined(attacker.gadget_camo_off_time) && (attacker.gadget_camo_off_time + (mpdialog_value("camoKillTime", 0) * 1000)) >= gettime()))
 	{
 		if(!(isdefined(attacker.playedgadgetsuccess) && attacker.playedgadgetsuccess))
 		{
@@ -632,7 +632,7 @@ function say_kill_battle_chatter(attacker, weapon, victim, inflictor)
 	}
 	else if(dialog_chance("enemyKillChance"))
 	{
-		if(isdefined(victim.spottedtime) && victim.spottedtime + mpdialog_value("enemySniperKillTime", 0) >= gettime() && array::contains(victim.spottedby, attacker) && dialog_chance("enemySniperKillChance"))
+		if(isdefined(victim.spottedtime) && (victim.spottedtime + mpdialog_value("enemySniperKillTime", 0)) >= gettime() && array::contains(victim.spottedby, attacker) && dialog_chance("enemySniperKillChance"))
 		{
 			killdialog = attacker get_random_key("killSniper");
 		}
@@ -755,7 +755,7 @@ function incoming_projectile_alert(thrower, projectile, dialogkey, waittime)
 		{
 			closest_enemy = thrower get_closest_player_enemy(projectile.origin);
 			incomingprojectileradius = mpdialog_value("incomingProjectileRadius", 0);
-			if(isdefined(closest_enemy) && distancesquared(projectile.origin, closest_enemy.origin) < incomingprojectileradius * incomingprojectileradius)
+			if(isdefined(closest_enemy) && distancesquared(projectile.origin, closest_enemy.origin) < (incomingprojectileradius * incomingprojectileradius))
 			{
 				closest_enemy thread play_dialog(dialogkey, 6);
 				return;
@@ -1046,7 +1046,7 @@ function play_dialog(dialogkey, dialogflags, dialogbuffer, enemy)
 	{
 		dialogflags = 0;
 	}
-	if(!level.allowspecialistdialog && dialogflags & 16 == 0)
+	if(!level.allowspecialistdialog && (dialogflags & 16) == 0)
 	{
 		return;
 	}
@@ -1082,7 +1082,7 @@ function play_dialog(dialogkey, dialogflags, dialogbuffer, enemy)
 		{
 			self.stolendialogindex = 0;
 		}
-		dialogalias = dialogalias + "_0" + self.stolendialogindex;
+		dialogalias = (dialogalias + "_0") + self.stolendialogindex;
 		self.stolendialogindex++;
 		self.stolendialogindex = self.stolendialogindex % 4;
 	}
@@ -1410,7 +1410,7 @@ function play_gadget_ready(weapon, userflip = 0)
 	else
 	{
 		waittime = mpdialog_value(delaykey, 0);
-		if(self.laststolengadget === weapon && self.laststolengadgettime + mpdialog_value(repeatthresholdkey, 0) * 1000 > gettime())
+		if(self.laststolengadget === weapon && (self.laststolengadgettime + (mpdialog_value(repeatthresholdkey, 0) * 1000)) > gettime())
 		{
 			dialogkey = repeatkey;
 		}
@@ -2198,7 +2198,7 @@ function play_conv_self_other()
 		{
 			if(player != self && isalive(player))
 			{
-				player play_test_dialog("" + self response_key() + num);
+				player play_test_dialog(("" + self response_key()) + num);
 				break;
 			}
 		}
@@ -2228,7 +2228,7 @@ function play_conv_other_self()
 			}
 		}
 		wait(4);
-		self play_test_dialog("" + player response_key() + num);
+		self play_test_dialog(("" + player response_key()) + num);
 	#/
 }
 
@@ -2260,7 +2260,7 @@ function play_conv_other_other()
 		{
 			if(player != self && player !== firstplayer && isalive(player))
 			{
-				player play_test_dialog("" + firstplayer response_key() + num);
+				player play_test_dialog(("" + firstplayer response_key()) + num);
 				break;
 			}
 		}

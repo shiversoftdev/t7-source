@@ -289,14 +289,14 @@ function thundergun_get_enemies_in_range()
 		if(test_range_squared < fling_range_squared)
 		{
 			level.thundergun_fling_enemies[level.thundergun_fling_enemies.size] = zombies[i];
-			dist_mult = fling_range_squared - test_range_squared / fling_range_squared;
+			dist_mult = (fling_range_squared - test_range_squared) / fling_range_squared;
 			fling_vec = vectornormalize(test_origin - view_pos);
 			if(5000 < test_range_squared)
 			{
-				fling_vec = fling_vec + vectornormalize(test_origin - radial_origin);
+				fling_vec = fling_vec + (vectornormalize(test_origin - radial_origin));
 			}
 			fling_vec = (fling_vec[0], fling_vec[1], abs(fling_vec[2]));
-			fling_vec = vectorscale(fling_vec, 100 + 100 * dist_mult);
+			fling_vec = vectorscale(fling_vec, 100 + (100 * dist_mult));
 			level.thundergun_fling_vecs[level.thundergun_fling_vecs.size] = fling_vec;
 			zombies[i] thread setup_thundergun_vox(self, 1, 0, 0);
 			continue;

@@ -215,7 +215,7 @@ function zone_alarms_setup()
 */
 function play_zone_alarms()
 {
-	level endon("Dz" + self.script_noteworthy + "e");
+	level endon(("Dz" + self.script_noteworthy) + "e");
 	self thread reset_alarms();
 	level waittill("Dz" + self.script_noteworthy);
 	while(true)
@@ -236,7 +236,7 @@ function play_zone_alarms()
 */
 function play_zone_shakes()
 {
-	level endon("Dz" + self.script_noteworthy + "e");
+	level endon(("Dz" + self.script_noteworthy) + "e");
 	self thread reset_shakes();
 	level waittill("Dz" + self.script_noteworthy);
 	while(true)
@@ -257,7 +257,7 @@ function play_zone_shakes()
 */
 function reset_alarms()
 {
-	level waittill("Dz" + self.script_noteworthy + "e");
+	level waittill(("Dz" + self.script_noteworthy) + "e");
 	wait(2);
 	self thread play_zone_alarms();
 }
@@ -273,7 +273,7 @@ function reset_alarms()
 */
 function reset_shakes()
 {
-	level waittill("Dz" + self.script_noteworthy + "e");
+	level waittill(("Dz" + self.script_noteworthy) + "e");
 	wait(2);
 	self thread play_zone_shakes();
 }
@@ -661,14 +661,14 @@ function function_d19cb2f8()
 		/#
 			if(getdvarint("") > 0)
 			{
-				println("" + loopers.size + "");
+				println(("" + loopers.size) + "");
 			}
 		#/
 		for(i = 0; i < loopers.size; i++)
 		{
 			loopers[i] thread soundloopthink();
 			delay = delay + 1;
-			if(delay % 20 == 0)
+			if((delay % 20) == 0)
 			{
 				wait(0.016);
 			}

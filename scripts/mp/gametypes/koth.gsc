@@ -152,7 +152,7 @@ function getrespawndelay()
 		{
 			return undefined;
 		}
-		timeremaining = level.zonemovetime - gettime() / 1000;
+		timeremaining = (level.zonemovetime - gettime()) / 1000;
 		if(!level.playerobjectiveheldrespawndelay)
 		{
 			return undefined;
@@ -321,7 +321,7 @@ function spawn_first_zone(delay)
 	if(isdefined(level.zone))
 	{
 		/#
-			print("" + level.zone.trigorigin[0] + "" + level.zone.trigorigin[1] + "" + level.zone.trigorigin[2] + "");
+			print(((((("" + level.zone.trigorigin[0]) + "") + level.zone.trigorigin[1]) + "") + level.zone.trigorigin[2]) + "");
 		#/
 		level.zone spawning::enable_influencers(1);
 	}
@@ -351,7 +351,7 @@ function spawn_next_zone()
 	if(isdefined(level.zone))
 	{
 		/#
-			print("" + level.zone.trigorigin[0] + "" + level.zone.trigorigin[1] + "" + level.zone.trigorigin[2] + "");
+			print(((((("" + level.zone.trigorigin[0]) + "") + level.zone.trigorigin[1]) + "") + level.zone.trigorigin[2]) + "");
 		#/
 		level.zone spawning::enable_influencers(1);
 	}
@@ -504,7 +504,7 @@ function kothmainloop()
 			level.zone.gameobject gameobjects::set_flags(1);
 			updateobjectivehintmessage(level.objectivehintpreparezone);
 			setmatchflag("bomb_timer_a", 1);
-			setbombtimer("A", int(gettime() + 1000 + level.zonespawntime * 1000));
+			setbombtimer("A", int((gettime() + 1000) + (level.zonespawntime * 1000)));
 			wait(level.zonespawntime);
 			level.zone.gameobject gameobjects::set_flags(0);
 			globallogic_audio::leader_dialog("kothOnline", undefined, undefined, "gamemode_objective", undefined, "kothActiveDialogBuffer");
@@ -520,7 +520,7 @@ function kothmainloop()
 		{
 			thread movezoneaftertime(level.zoneautomovetime);
 			setmatchflag("bomb_timer_a", 1);
-			setbombtimer("A", int(gettime() + 1000 + level.zoneautomovetime * 1000));
+			setbombtimer("A", int((gettime() + 1000) + (level.zoneautomovetime * 1000)));
 		}
 		else
 		{
@@ -712,7 +712,7 @@ function onzonecapture(player)
 					player = level.players[index];
 					if(player.pers["team"] == team)
 					{
-						if(player.lastkilltime + 500 > gettime())
+						if((player.lastkilltime + 500) > gettime())
 						{
 							player challenges::killedlastcontester();
 						}
@@ -777,7 +777,7 @@ function give_capture_credit(touchlist, string, capturetime, capture_team, lastc
 		if(!isscoreboosting(player))
 		{
 			player challenges::capturedobjective(capturetime, self.trigger);
-			if(level.kothstarttime + 3000 > capturetime && level.kothcapteam == capture_team)
+			if((level.kothstarttime + 3000) > capturetime && level.kothcapteam == capture_team)
 			{
 				scoreevents::processscoreevent("quickly_secure_point", player);
 			}
@@ -789,7 +789,7 @@ function give_capture_credit(touchlist, string, capturetime, capture_team, lastc
 				player.pers["captures"]++;
 				player.captures = player.pers["captures"];
 			}
-			if(level.kothstarttime + 500 > capturetime)
+			if((level.kothstarttime + 500) > capturetime)
 			{
 				player challenges::immediatecapture();
 			}
@@ -952,7 +952,7 @@ function movezoneaftertime(time)
 {
 	level endon(#"game_ended");
 	level endon(#"zone_reset");
-	level.zonemovetime = gettime() + time * 1000;
+	level.zonemovetime = gettime() + (time * 1000);
 	level.zonedestroyedbytimer = 0;
 	wait(time);
 	if(!isdefined(level.zone.gameobject.wascontested) || level.zone.gameobject.wascontested == 0)
@@ -1089,7 +1089,7 @@ function getzonearray()
 	while(swapped)
 	{
 		swapped = 0;
-		for(i = 0; i < n - 1; i++)
+		for(i = 0; i < (n - 1); i++)
 		{
 			if(comparezoneindexes(zones[i], zones[i + 1]))
 			{
@@ -1129,7 +1129,7 @@ function setupzones()
 			{
 				if(isdefined(zone.trig))
 				{
-					maperrors[maperrors.size] = "Zone at " + zone.origin + " is touching more than one \"zonetrigger\" trigger";
+					maperrors[maperrors.size] = ("Zone at " + zone.origin) + " is touching more than one \"zonetrigger\" trigger";
 					errored = 1;
 					break;
 				}
@@ -1141,7 +1141,7 @@ function setupzones()
 		{
 			if(!errored)
 			{
-				maperrors[maperrors.size] = "Zone at " + zone.origin + " is not inside any \"zonetrigger\" trigger";
+				maperrors[maperrors.size] = ("Zone at " + zone.origin) + " is not inside any \"zonetrigger\" trigger";
 				continue;
 			}
 		}
@@ -1267,7 +1267,7 @@ function setupnearbyspawns()
 	while(i < spawns.size)
 	{
 		outer[outer.size] = spawns[i];
-		if(i <= thirdsize * 2)
+		if(i <= (thirdsize * 2))
 		{
 			second[second.size] = spawns[i];
 		}
@@ -1314,7 +1314,7 @@ function getfirstzone()
 */
 function getnextzone()
 {
-	nextzoneindex = level.prevzoneindex + 1 % level.zones.size;
+	nextzoneindex = (level.prevzoneindex + 1) % level.zones.size;
 	zone = level.zones[nextzoneindex];
 	level.prevzone2 = level.prevzone;
 	level.prevzone = zone;
@@ -1446,7 +1446,7 @@ function getpointcost(avgpos, origin)
 	foreach(team, dist in distances)
 	{
 		err = distances[team] - avg_distance;
-		total_error = total_error + err * err;
+		total_error = total_error + (err * err);
 	}
 	return total_error;
 }
@@ -1717,7 +1717,7 @@ function killwhilecontesting()
 		self.clearenemycount = 0;
 		return;
 	}
-	if(self.clearenemycount >= 2 && killtime + 200 > gettime())
+	if(self.clearenemycount >= 2 && (killtime + 200) > gettime())
 	{
 		scoreevents::processscoreevent("clear_2_attackers", self);
 	}

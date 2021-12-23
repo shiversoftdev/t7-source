@@ -182,7 +182,7 @@ function monitor_melee_swipe()
 		a_zombies = util::get_array_of_closest(self.origin, a_zombies, undefined, undefined, 100);
 		foreach(var_4c491cdb, zombie in a_zombies)
 		{
-			if(self is_player_facing(zombie, v_punch_yaw) && distancesquared(self.origin, zombie.origin) <= 4096 * range_mod)
+			if(self is_player_facing(zombie, v_punch_yaw) && distancesquared(self.origin, zombie.origin) <= (4096 * range_mod))
 			{
 				self thread zombie_punch_damage(zombie, 1);
 				continue;
@@ -382,7 +382,7 @@ function zombie_punch_death(ai_zombie)
 	if(isdefined(ai_zombie))
 	{
 		ai_zombie startragdoll();
-		v_launch = vectornormalize(ai_zombie.origin - self.origin) * randomintrange(125, 150) + (0, 0, randomintrange(75, 150));
+		v_launch = (vectornormalize(ai_zombie.origin - self.origin)) * randomintrange(125, 150) + (0, 0, randomintrange(75, 150));
 		ai_zombie launchragdoll(v_launch);
 	}
 }
@@ -485,7 +485,7 @@ function knockdown_zombie_animate()
 		animation_side = "belly";
 	}
 	self thread knockdown_zombie_animate_state();
-	self setanimstatefromasd("zm_punch_fall_" + animation_direction + animation_legs);
+	self setanimstatefromasd(("zm_punch_fall_" + animation_direction) + animation_legs);
 	self zombie_shared::donotetracks("punch_fall_anim", self.punch_handle_pain_notetracks);
 	if(isdefined(self.missinglegs) && self.missinglegs || (isdefined(self.marked_for_death) && self.marked_for_death))
 	{

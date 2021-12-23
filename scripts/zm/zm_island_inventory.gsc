@@ -132,13 +132,13 @@ function function_2cc6bcea()
 	}
 	if(!(isdefined(self.var_4d1c77e5) && self.var_4d1c77e5))
 	{
-		self attach("c_zom_dlc2_" + str_character + "_head_gasmask");
+		self attach(("c_zom_dlc2_" + str_character) + "_head_gasmask");
 		self.var_4d1c77e5 = 1;
 	}
 	self util::waittill_any("disconnect", "death", "player_lost_gasmask");
 	if(isdefined(self.var_4d1c77e5) && self.var_4d1c77e5)
 	{
-		self detach("c_zom_dlc2_" + str_character + "_head_gasmask");
+		self detach(("c_zom_dlc2_" + str_character) + "_head_gasmask");
 		self.var_4d1c77e5 = 0;
 	}
 }

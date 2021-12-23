@@ -62,17 +62,17 @@ function doexplosion(localclientnum, oldval, newval, bnewent, binitialsnap, fiel
 	{
 		return;
 	}
-	var_824b40e2 = newval & 1 << 10;
+	var_824b40e2 = newval & (1 << 10);
 	if(var_824b40e2)
 	{
-		newval = newval - 1 << 10;
+		newval = newval - (1 << 10);
 	}
 	physics_force = 0.3;
-	var_34aa7e9b = newval & 1 << 9;
+	var_34aa7e9b = newval & (1 << 9);
 	if(var_34aa7e9b)
 	{
 		physics_force = 0.5;
-		newval = newval - 1 << 9;
+		newval = newval - (1 << 9);
 	}
 	if(isdefined(var_824b40e2) && var_824b40e2)
 	{

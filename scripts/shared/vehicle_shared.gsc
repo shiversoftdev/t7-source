@@ -1514,20 +1514,20 @@ function _disconnect_paths_when_stopped()
 	threshold = 3;
 	while(isdefined(self))
 	{
-		if(lengthsquared(self.velocity) < threshold * threshold)
+		if(lengthsquared(self.velocity) < (threshold * threshold))
 		{
 			if(self.disconnectpathonstop === 1)
 			{
 				self disconnect_paths(self.disconnectpathdetail);
 				self notify(#"speed_zero_path_disconnect");
 			}
-			while(lengthsquared(self.velocity) < threshold * threshold)
+			while(lengthsquared(self.velocity) < (threshold * threshold))
 			{
 				wait(0.05);
 			}
 		}
 		self connect_paths();
-		while(lengthsquared(self.velocity) >= threshold * threshold)
+		while(lengthsquared(self.velocity) >= (threshold * threshold))
 		{
 			wait(0.05);
 		}
@@ -1625,7 +1625,7 @@ function script_resume_speed(msg, rate)
 	}
 	self notify(#"hash_eeaec2a0");
 	/#
-		self thread debug_resume(msg + "" + type);
+		self thread debug_resume((msg + "") + type);
 	#/
 }
 
@@ -1648,7 +1648,7 @@ function debug_resume(msg)
 		self endon(#"death");
 		number = self.resumemsgs.size;
 		self.resumemsgs[number] = msg;
-		self thread print_resume_speed(gettime() + 3 * 1000);
+		self thread print_resume_speed(gettime() + (3 * 1000));
 		wait(3);
 		newarray = [];
 		for(i = 0; i < self.resumemsgs.size; i++)
@@ -1808,7 +1808,7 @@ function is_node_script_origin(pathnode)
 function node_trigger_process()
 {
 	processtrigger = 0;
-	if(isdefined(self.spawnflags) && self.spawnflags & 1 == 1)
+	if(isdefined(self.spawnflags) && (self.spawnflags & 1) == 1)
 	{
 		if(isdefined(self.script_crashtype))
 		{
@@ -2494,7 +2494,7 @@ function land()
 	self sethoverparams(0, 0, 10);
 	self cleargoalyaw();
 	self settargetyaw((0, self.angles[1], 0)[1]);
-	self set_goal_pos(bullettrace(self.origin, self.origin + vectorscale((0, 0, -1), 100000), 0, self)["position"], 1);
+	self set_goal_pos(bullettrace(self.origin, self.origin + (vectorscale((0, 0, -1), 100000)), 0, self)["position"], 1);
 	self waittill(#"goal");
 }
 
@@ -2755,7 +2755,7 @@ function simple_spawn_single(name, b_supress_assert = 0)
 {
 	vehicle_array = simple_spawn(name, b_supress_assert);
 	/#
-		assert(b_supress_assert || vehicle_array.size == 1, "" + name + "" + vehicle_array.size + "");
+		assert(b_supress_assert || vehicle_array.size == 1, ((("" + name) + "") + vehicle_array.size) + "");
 	#/
 	if(vehicle_array.size > 0)
 	{
@@ -2776,7 +2776,7 @@ function simple_spawn_single_and_drive(name)
 {
 	vehiclearray = simple_spawn(name);
 	/#
-		assert(vehiclearray.size == 1, "" + name + "" + vehiclearray.size + "");
+		assert(vehiclearray.size == 1, ((("" + name) + "") + vehiclearray.size) + "");
 	#/
 	vehiclearray[0] thread go_path();
 	return vehiclearray[0];
@@ -2870,7 +2870,7 @@ function aircraft_dust_kickup(model)
 			dotracethisframe = 3;
 			trace = bullettrace(trace_ent.origin, trace_ent.origin - vectorscale((0, 0, 1), 100000), 0, trace_ent);
 			d = distance(trace_ent.origin, trace["position"]);
-			repeatrate = d - 350 / 1200 - 350 * 0.15 - 0.05 + 0.05;
+			repeatrate = (d - 350) / (1200 - 350) * (0.15 - 0.05) + 0.05;
 		}
 		if(!isdefined(trace))
 		{
@@ -2932,8 +2932,8 @@ function impact_fx(fxname, surfacetypes)
 		trace = bullettrace(body, body - (0, 0, 2 * self.radius), 0, self);
 		if(trace["fraction"] < 1 && !isdefined(trace["entity"]) && (!isdefined(surfacetypes) || array::contains(surfacetypes, trace["surfacetype"])))
 		{
-			pos = 0.5 * self.origin + trace["position"];
-			up = 0.5 * trace["normal"] + anglestoup(self.angles);
+			pos = 0.5 * (self.origin + trace["position"]);
+			up = 0.5 * (trace["normal"] + anglestoup(self.angles));
 			forward = anglestoforward(self.angles);
 			playfx(fxname, pos, up, forward);
 		}
@@ -2961,7 +2961,7 @@ function maingun_fx()
 		self waittill(#"weapon_fired");
 		playfxontag(level.vehicle_deckdust[self.model], self, "tag_engine_exhaust");
 		barrel_origin = self gettagorigin("tag_flash");
-		ground = physicstrace(barrel_origin, barrel_origin + vectorscale((0, 0, -1), 128));
+		ground = physicstrace(barrel_origin, barrel_origin + (vectorscale((0, 0, -1), 128)));
 		physicsexplosionsphere(ground, 192, 100, 1);
 	}
 }
@@ -3161,7 +3161,7 @@ function should_update_damage_fx_level(currenthealth, damage, maxhealth)
 		return 0;
 	}
 	currentratio = math::clamp(float(currenthealth) / float(maxhealth), 0, 1);
-	afterdamageratio = math::clamp(float(currenthealth - damage) / float(maxhealth), 0, 1);
+	afterdamageratio = math::clamp((float(currenthealth - damage)) / float(maxhealth), 0, 1);
 	currentlevel = undefined;
 	afterdamagelevel = undefined;
 	switch((isdefined(settings.damagestate_numstates) ? settings.damagestate_numstates : 0))
@@ -3600,7 +3600,7 @@ function add_main_callback(vehicletype, main)
 	/#
 		if(isdefined(level.vehicle_main_callback[vehicletype]))
 		{
-			println("" + vehicletype + "");
+			println(("" + vehicletype) + "");
 		}
 	#/
 	level.vehicle_main_callback[vehicletype] = main;
@@ -4042,8 +4042,7 @@ function get_closest_attacker_with_missile_locked_on_to_me(monitored_entity)
 					closest_attacker = attacker;
 					closest_attacker_dot = attacker_dot;
 				}
-				~closest_attacker_dot;
-				remaining_locked_on_flags = remaining_locked_on_flags & client_flag;
+				remaining_locked_on_flags = remaining_locked_on_flags & (~client_flag);
 			}
 		}
 	}
@@ -4248,7 +4247,7 @@ function vehicle_spawner_tool()
 				dynamic_spawn_dummy_model = sys::spawn("", (0, 0, 0));
 				while(getdvarint("") > 0)
 				{
-					origin = player.origin + anglestoforward(player getplayerangles()) * 270;
+					origin = player.origin + (anglestoforward(player getplayerangles()) * 270);
 					origin = origin + vectorscale((0, 0, 1), 40);
 					if(player usebuttonpressed())
 					{
@@ -4360,11 +4359,11 @@ function show_node_debug_info()
 		self.n_debug_display_count = 0;
 		if(is_unload_node())
 		{
-			print_debug_info("" + self.script_unload + "");
+			print_debug_info(("" + self.script_unload) + "");
 		}
 		if(isdefined(self.script_notify))
 		{
-			print_debug_info("" + self.script_notify + "");
+			print_debug_info(("" + self.script_notify) + "");
 		}
 		if(isdefined(self.script_delete) && self.script_delete)
 		{

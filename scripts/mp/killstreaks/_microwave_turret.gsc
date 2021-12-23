@@ -317,7 +317,7 @@ function onemp(attacker)
 */
 function onturretdamage(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, vdamageorigin, psoffsettime, damagefromunderneath, modelindex, partname, vsurfacenormal)
 {
-	empdamage = int(idamage + self.healthdefault * 1 + 0.5);
+	empdamage = int((idamage + (self.healthdefault * 1)) + 0.5);
 	idamage = self killstreaks::ondamageperweapon("microwave_turret", eattacker, idamage, idflags, smeansofdeath, weapon, self.maxhealth, undefined, self.maxhealth * 0.4, undefined, empdamage, undefined, 1, 1);
 	self.damagetaken = self.damagetaken + idamage;
 	return idamage;
@@ -674,16 +674,16 @@ function microwaveentity(entity)
 		time = gettime();
 		if(isplayer(entity) && !entity isremotecontrolling())
 		{
-			if(time - (isdefined(entity.microwaveshellshockandviewkicktime) ? entity.microwaveshellshockandviewkicktime : 0) > 950)
+			if((time - (isdefined(entity.microwaveshellshockandviewkicktime) ? entity.microwaveshellshockandviewkicktime : 0)) > 950)
 			{
-				if(entity.microwaveeffect % 2 == 1)
+				if((entity.microwaveeffect % 2) == 1)
 				{
-					if(distancesquared(entity.origin, turret.origin) > 750 * 2 / 3 * 750 * 2 / 3)
+					if(distancesquared(entity.origin, turret.origin) > ((750 * 2) / 3) * ((750 * 2) / 3))
 					{
 						entity shellshock("mp_radiation_low", 1.5 * shellshockscalar);
 						entity viewkick(int(25 * viewkickscalar), turret.origin);
 					}
-					else if(distancesquared(entity.origin, turret.origin) > 750 * 1 / 3 * 750 * 1 / 3)
+					else if(distancesquared(entity.origin, turret.origin) > ((750 * 1) / 3) * ((750 * 1) / 3))
 					{
 						entity shellshock("mp_radiation_med", 1.5 * shellshockscalar);
 						entity viewkick(int(50 * viewkickscalar), turret.origin);
@@ -697,7 +697,7 @@ function microwaveentity(entity)
 				}
 			}
 		}
-		if(isplayer(entity) && entity.microwaveeffect % 3 == 2)
+		if(isplayer(entity) && (entity.microwaveeffect % 3) == 2)
 		{
 			scoreevents::processscoreevent("hpm_suppress", turret.owner, entity, turretweapon);
 		}
@@ -745,7 +745,7 @@ function microwaveturretaffectsentity(entity)
 	{
 		return 0;
 	}
-	if(distancesquared(entity.origin, turret.origin) > 750 * 750)
+	if(distancesquared(entity.origin, turret.origin) > (750 * 750))
 	{
 		return 0;
 	}

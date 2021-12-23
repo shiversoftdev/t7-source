@@ -422,7 +422,7 @@ function function_235019b6(str_spawner_name, n_speed = 35, n_acceleration = 100)
 	Parameters: 2
 	Flags: Linked
 */
-function vehicle_rumble(b_wait_for_flag = 1, var_8e1d8055 = 0)
+function vehicle_rumble(b_wait_for_flag = 1, b_delay = 0)
 {
 	self endon(#"rumble_stop");
 	var_8e09e52a = 0;
@@ -430,9 +430,9 @@ function vehicle_rumble(b_wait_for_flag = 1, var_8e1d8055 = 0)
 	{
 		level flag::wait_till("flag_plane_start_rumble");
 	}
-	if(var_8e1d8055 > 0)
+	if(b_delay > 0)
 	{
-		wait(var_8e1d8055);
+		wait(b_delay);
 	}
 	while(isdefined(self) && var_8e09e52a < 1)
 	{
@@ -906,9 +906,9 @@ function function_2f6a6dcd(n_start_time, var_ddb12d5c)
 	self endon(#"death");
 	self endon(#"disconnect");
 	self endon(#"hash_bd5f338b");
-	while(isdefined(self) && gettime() - n_start_time < var_ddb12d5c)
+	while(isdefined(self) && (gettime() - n_start_time) < var_ddb12d5c)
 	{
-		n_progress = gettime() - n_start_time / var_ddb12d5c;
+		n_progress = (gettime() - n_start_time) / var_ddb12d5c;
 		if(n_progress < 0)
 		{
 			n_progress = 0;
@@ -1010,9 +1010,9 @@ function function_37ca6cbb(var_5eeae9f2 = 0)
 	Parameters: 2
 	Flags: Linked
 */
-function function_1957d78d(str_perk, var_fc60a7a7 = 0)
+function function_1957d78d(str_perk, b_off = 0)
 {
-	if(!(isdefined(var_fc60a7a7) && var_fc60a7a7))
+	if(!(isdefined(b_off) && b_off))
 	{
 		str_msg = str_perk + "_on";
 		var_e3e6c76a = str_perk + "_power_on";

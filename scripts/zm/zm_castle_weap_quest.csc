@@ -243,8 +243,8 @@ function function_2731927f(localclientnum)
 function function_c54660fa(localclientnum)
 {
 	n_start_time = gettime();
-	n_end_time = n_start_time + 3.6 * 1000;
-	var_2f4dbfb7 = n_start_time + 0.5 * 1000;
+	n_end_time = n_start_time + (3.6 * 1000);
+	var_2f4dbfb7 = n_start_time + (0.5 * 1000);
 	b_is_updating = 1;
 	while(b_is_updating)
 	{
@@ -284,7 +284,7 @@ function function_c54660fa(localclientnum)
 function function_2ea674b8(localclientnum)
 {
 	n_start_time = gettime();
-	n_end_time = n_start_time + 7 * 1000;
+	n_end_time = n_start_time + (7 * 1000);
 	b_is_updating = 1;
 	while(b_is_updating && isdefined(self))
 	{
@@ -316,7 +316,7 @@ function function_2ea674b8(localclientnum)
 function function_aa74062f(localclientnum)
 {
 	n_start_time = gettime();
-	n_end_time = n_start_time + 5 * 1000;
+	n_end_time = n_start_time + (5 * 1000);
 	b_is_updating = 1;
 	while(b_is_updating)
 	{
@@ -541,14 +541,14 @@ function function_939ae9de(var_e88629ec, localclientnum, direction, var_3c6f5c75
 		return;
 	}
 	animlength = getanimlength(var_3c6f5c75);
-	animlength = animlength - animlength * var_e88629ec getanimtime(var_3c6f5c75);
+	animlength = animlength - (animlength * var_e88629ec getanimtime(var_3c6f5c75));
 	animlength = max(animlength, 0.05);
 	self moveto(self.origin + var_6ea7737a, animlength * 0.75, animlength * 0.75, 0);
 	var_31e7de73 = var_e88629ec gettagangles("tag_attach");
 	self rotateto(var_31e7de73, animlength * 0.75);
 	self waittill(#"movedone");
 	animlength = getanimlength(var_3c6f5c75);
-	animlength = animlength - animlength * var_e88629ec getanimtime(var_3c6f5c75);
+	animlength = animlength - (animlength * var_e88629ec getanimtime(var_3c6f5c75));
 	animlength = max(animlength, 0.05);
 	var_6b61dff7 = var_e88629ec gettagorigin("tag_attach");
 	self moveto(var_6b61dff7, animlength, animlength, 0);

@@ -694,7 +694,7 @@ function function_c1730af7()
 {
 	var_621b3c65 = function_c9adb887();
 	var_8817ee62 = var_621b3c65 >= 13;
-	var_72a71294 = var_621b3c65 >= level.players.size * 4;
+	var_72a71294 = var_621b3c65 >= (level.players.size * 4);
 	if(var_8817ee62 || var_72a71294 || !level flag::get("spawn_zombies"))
 	{
 		return 0;
@@ -1022,7 +1022,7 @@ function function_f602171e()
 				var_4a50cb2a = e_player.origin;
 			}
 		}
-		trace = groundtrace(var_4a50cb2a + vectorscale((0, 0, 1), 15), var_4a50cb2a + vectorscale((0, 0, -1), 1000), 0, undefined);
+		trace = groundtrace(var_4a50cb2a + vectorscale((0, 0, 1), 15), var_4a50cb2a + (vectorscale((0, 0, -1), 1000)), 0, undefined);
 		var_4a50cb2a = trace["position"];
 		if(isdefined(var_4a50cb2a))
 		{

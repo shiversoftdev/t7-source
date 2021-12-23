@@ -427,7 +427,7 @@ private function _hasgibpieces(entity, gibflag)
 {
 	hasgibpieces = 0;
 	gibstate = _getgibbedstate(entity);
-	entity.gib_state = gibstate | gibflag & 512 - 1;
+	entity.gib_state = gibstate | (gibflag & (512 - 1));
 	if(isdefined(_getgibbedtorsomodel(entity)) && isdefined(_getgibbedlegmodel(entity)))
 	{
 		hasgibpieces = 1;
@@ -452,11 +452,11 @@ private function _setgibbed(entity, gibflag, gibdir)
 		angles = vectortoangles(gibdir);
 		yaw = angles[1];
 		yaw_bits = getbitsforangle(yaw, 3);
-		entity.gib_state = _getgibbedstate(entity) | gibflag & 512 - 1 + yaw_bits << 9;
+		entity.gib_state = (_getgibbedstate(entity) | (gibflag & (512 - 1))) + (yaw_bits << 9);
 	}
 	else
 	{
-		entity.gib_state = _getgibbedstate(entity) | gibflag & 512 - 1;
+		entity.gib_state = _getgibbedstate(entity) | (gibflag & (512 - 1));
 	}
 	entity.gibbed = 1;
 	entity clientfield::set("gib_state", entity.gib_state);

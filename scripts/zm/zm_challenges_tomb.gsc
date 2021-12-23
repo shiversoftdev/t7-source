@@ -231,8 +231,8 @@ function player_stats_init(n_index)
 			s_stat.b_medal_awarded = 0;
 			s_stat.b_reward_claimed = 0;
 			n_index = level._challenges.a_stats.size + 1;
-			s_stat.str_medal_tag = "j_" + str_character + "_medal_0" + n_challenge_index;
-			s_stat.str_glow_tag = "j_" + str_character + "_glow_0" + n_challenge_index;
+			s_stat.str_medal_tag = (("j_" + str_character) + "_medal_0") + n_challenge_index;
+			s_stat.str_glow_tag = (("j_" + str_character) + "_glow_0") + n_challenge_index;
 			s_stat.b_display_tag = 0;
 			n_challenge_index++;
 		}
@@ -312,10 +312,10 @@ function get_stat(str_stat, player)
 {
 	s_parent_stat = level._challenges.a_stats[str_stat];
 	/#
-		assert(isdefined(s_parent_stat), "" + str_stat + "");
+		assert(isdefined(s_parent_stat), ("" + str_stat) + "");
 	#/
 	/#
-		assert(s_parent_stat.b_team || isdefined(player), "" + str_stat + "");
+		assert(s_parent_stat.b_team || isdefined(player), ("" + str_stat) + "");
 	#/
 	if(s_parent_stat.b_team)
 	{
@@ -427,7 +427,7 @@ function check_stat_complete(s_stat)
 		}
 		if(isplayer(self))
 		{
-			if(level._challenges.a_players[self.characterindex].n_completed + level._challenges.s_team.n_completed == level._challenges.a_stats.size)
+			if((level._challenges.a_players[self.characterindex].n_completed + level._challenges.s_team.n_completed) == level._challenges.a_stats.size)
 			{
 				self notify(#"all_challenges_complete");
 			}
@@ -438,7 +438,7 @@ function check_stat_complete(s_stat)
 			{
 				if(isdefined(player.characterindex))
 				{
-					if(level._challenges.a_players[player.characterindex].n_completed + level._challenges.s_team.n_completed == level._challenges.a_stats.size)
+					if((level._challenges.a_players[player.characterindex].n_completed + level._challenges.s_team.n_completed) == level._challenges.a_stats.size)
 					{
 						player notify(#"all_challenges_complete");
 					}
@@ -526,8 +526,8 @@ function board_init(m_board)
 		n_challenge_index = 1;
 		foreach(var_c386209f, s_stat in s_set.a_stats)
 		{
-			str_medal_tag = "j_" + str_character + "_medal_0" + n_challenge_index;
-			str_glow_tag = "j_" + str_character + "_glow_0" + n_challenge_index;
+			str_medal_tag = (("j_" + str_character) + "_medal_0") + n_challenge_index;
+			str_glow_tag = (("j_" + str_character) + "_glow_0") + n_challenge_index;
 			s_tag = spawnstruct();
 			s_tag.v_origin = m_board gettagorigin(str_medal_tag);
 			s_tag.s_stat = s_stat;
@@ -711,7 +711,7 @@ function update_box_prompt(player)
 				}
 			}
 		}
-		if(str_hint == &"")
+		if(str_hint == (&""))
 		{
 			s_player = level._challenges.a_players[player.characterindex];
 			s_team = level._challenges.s_team;

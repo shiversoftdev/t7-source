@@ -598,7 +598,7 @@ function debug_draw_robot_path()
 		}
 		debug_duration = 999999999;
 		pathnodes = level.robot.patharray;
-		for(i = 0; i < pathnodes.size - 1; i++)
+		for(i = 0; i < (pathnodes.size - 1); i++)
 		{
 			currnode = pathnodes[i];
 			nextnode = pathnodes[i + 1];
@@ -629,7 +629,7 @@ function debug_draw_approximate_robot_path_to_goal(goalpatharray)
 		}
 		debug_duration = 60;
 		pathnodes = goalpatharray;
-		for(i = 0; i < pathnodes.size - 1; i++)
+		for(i = 0; i < (pathnodes.size - 1); i++)
 		{
 			currnode = pathnodes[i];
 			nextnode = pathnodes[i + 1];
@@ -874,7 +874,7 @@ function auto_reboot_robot(time)
 			rate = 0.05;
 			if(friendlycount > 1)
 			{
-				bonusrate = friendlycount - 1 * 0.05 * 0;
+				bonusrate = ((friendlycount - 1) * 0.05) * 0;
 				rate = rate + bonusrate;
 			}
 		}
@@ -1100,7 +1100,7 @@ function robot_damage(einflictor, eattacker, idamage, idflags, smeansofdeath, we
 		{
 			level thread popups::displayteammessagetoall(&"MP_ESCORT_ROBOT_DISABLED", eattacker);
 			level.robot recordgameeventnonplayer("robot_disabled");
-			if(distance2dsquared(self.origin, level.goalobject.trigger.origin) < level.goalobject.trigger.radius + 50 * level.goalobject.trigger.radius + 50)
+			if(distance2dsquared(self.origin, level.goalobject.trigger.origin) < (level.goalobject.trigger.radius + 50) * (level.goalobject.trigger.radius + 50))
 			{
 				scoreevents::processscoreevent("escort_robot_disable_near_goal", eattacker);
 			}
@@ -1309,10 +1309,10 @@ function reached_closest_nav_mesh_goal_but_still_too_far_and_blocked(goalonnavme
 		return 0;
 	}
 	distsqr = distancesquared(goalonnavmesh, self.origin);
-	robotreachedclosestgoalonnavmesh = distsqr <= 24 * 24;
+	robotreachedclosestgoalonnavmesh = distsqr <= (24 * 24);
 	if(robotreachedclosestgoalonnavmesh)
 	{
-		closestgoalonnavmeshtoofarfrompathgoal = distancesquared(goalonnavmesh, self.patharray[self.pathindex]) > 1 * 1;
+		closestgoalonnavmeshtoofarfrompathgoal = distancesquared(goalonnavmesh, self.patharray[self.pathindex]) > (1 * 1);
 		if(closestgoalonnavmeshtoofarfrompathgoal)
 		{
 			robotisblockedfromgettingtopathgoal = self check_if_goal_is_blocked(self.origin, self.patharray[self.pathindex]);
@@ -1342,7 +1342,7 @@ function check_blocked_goal_and_kill()
 	}
 	if(gettime() < (isdefined(self.blocked_wait_end_time) ? self.blocked_wait_end_time : 0))
 	{
-		wait(self.blocked_wait_end_time - gettime() / 1000);
+		wait((self.blocked_wait_end_time - gettime()) / 1000);
 	}
 	goalonnavmesh = self get_closest_point_on_nav_mesh_for_current_goal();
 	previousgoal = (!isdefined(self.immediategoaloverride) ? self.patharray[self.pathindex - 1] : self.origin);
@@ -1603,12 +1603,12 @@ function robot_wait_next_point()
 		{
 			self thread watch_becoming_blocked_at_goal();
 		}
-		if(distancesquared(self.origin, get_current_goal()) < 24 * 24)
+		if(distancesquared(self.origin, get_current_goal()) < (24 * 24))
 		{
 			self.pathindex = self.pathindex + (isdefined(self.immediategoaloverride) ? 0 : 1);
 			self.immediategoaloverride = undefined;
 		}
-		while(self.pathindex < self.patharray.size && distancesquared(self.origin, self.patharray[self.pathindex]) < 48 + 1 * 48 + 1)
+		while(self.pathindex < self.patharray.size && distancesquared(self.origin, self.patharray[self.pathindex]) < (48 + 1) * (48 + 1))
 		{
 			self.pathindex++;
 		}
@@ -1618,7 +1618,7 @@ function robot_wait_next_point()
 			self stop_robot();
 			return;
 		}
-		if(self.pathindex + 1 >= self.patharray.size)
+		if((self.pathindex + 1) >= self.patharray.size)
 		{
 			otherteam = util::getotherteam(self.team);
 			globallogic_audio::leader_dialog("sfgRobotCloseAttacker", self.team, undefined, "robot");
@@ -1740,7 +1740,7 @@ function is_path_distance_to_goal_too_long(patharray, toolongthreshold)
 	lastindextocheck = patharray.size - 1;
 	for(i = 0; i < lastindextocheck; i++)
 	{
-		goaldistance = goaldistance + distance(patharray[i], patharray[i + 1]);
+		goaldistance = goaldistance + (distance(patharray[i], patharray[i + 1]));
 		if(goaldistance >= toolongthreshold)
 		{
 			return 1;
@@ -1771,7 +1771,7 @@ function debug_reset_robot_to_start()
 					pathindex = (isdefined(getdvarint("")) ? getdvarint("") : 0) - 1;
 					pathpoint = level.robot.patharray[pathindex];
 					robotangles = (0, 0, 0);
-					if(pathindex < level.robot.patharray.size - 1)
+					if(pathindex < (level.robot.patharray.size - 1))
 					{
 						nextpoint = level.robot.patharray[pathindex + 1];
 						robotangles = vectortoangles(nextpoint - pathpoint);
@@ -1819,7 +1819,7 @@ function explode_robot()
 	gibserverutils::gibhead(self);
 	velocity = self getvelocity() * 0.125;
 	self startragdoll();
-	self launchragdoll((velocity[0] + randomfloatrange(-20, 20), velocity[1] + randomfloatrange(-20, 20), randomfloatrange(60, 80)), "j_mainroot");
+	self launchragdoll((velocity[0] + (randomfloatrange(-20, 20)), velocity[1] + (randomfloatrange(-20, 20)), randomfloatrange(60, 80)), "j_mainroot");
 	playfxontag("weapon/fx_c4_exp_metal", self, "tag_origin");
 	if(target_istarget(self))
 	{
@@ -2011,7 +2011,7 @@ function track_escort_time(player)
 		}
 		player addplayerstatwithgametype("ESCORTS", 1);
 		consecutiveescorts++;
-		if(consecutiveescorts % 3 == 0)
+		if((consecutiveescorts % 3) == 0)
 		{
 			scoreevents::processscoreevent("escort_robot_escort", player);
 		}
@@ -2281,7 +2281,7 @@ function destroy_supply_crate_blocking_goal(dirtogoal)
 	bestcrateedot = -1E+09;
 	foreach(var_265759c5, crate in crates)
 	{
-		if(distancesquared(crate.origin, self.origin) > 108 * 108)
+		if(distancesquared(crate.origin, self.origin) > (108 * 108))
 		{
 			continue;
 		}

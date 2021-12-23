@@ -151,7 +151,7 @@ function setlowermessage(text, time, combinemessageandtimer)
 	{
 		return;
 	}
-	if(isdefined(self.lowermessageoverride) && text != &"")
+	if(isdefined(self.lowermessageoverride) && text != (&""))
 	{
 		text = self.lowermessageoverride;
 		time = undefined;
@@ -201,7 +201,7 @@ function setlowermessagevalue(text, value, combinemessage)
 	{
 		return;
 	}
-	if(isdefined(self.lowermessageoverride) && text != &"")
+	if(isdefined(self.lowermessageoverride) && text != (&""))
 	{
 		text = self.lowermessageoverride;
 		time = undefined;
@@ -418,12 +418,12 @@ function printandsoundoneveryone(team, enemyteam, printfriendly, printenemy, sou
 			playerteam = player.pers["team"];
 			if(isdefined(playerteam))
 			{
-				if(playerteam == team && isdefined(printfriendly) && printfriendly != &"")
+				if(playerteam == team && isdefined(printfriendly) && printfriendly != (&""))
 				{
 					player iprintln(printfriendly, printarg);
 					continue;
 				}
-				if(isdefined(printenemy) && printenemy != &"")
+				if(isdefined(printenemy) && printenemy != (&""))
 				{
 					if(isdefined(enemyteam) && playerteam == enemyteam)
 					{
@@ -460,7 +460,7 @@ function printandsoundoneveryone(team, enemyteam, printfriendly, printenemy, sou
 				{
 					if(playerteam == team)
 					{
-						if(isdefined(printfriendly) && printfriendly != &"")
+						if(isdefined(printfriendly) && printfriendly != (&""))
 						{
 							player iprintln(printfriendly, printarg);
 						}
@@ -469,7 +469,7 @@ function printandsoundoneveryone(team, enemyteam, printfriendly, printenemy, sou
 					}
 					if(isdefined(enemyteam) && playerteam == enemyteam || (!isdefined(enemyteam) && playerteam != team))
 					{
-						if(isdefined(printenemy) && printenemy != &"")
+						if(isdefined(printenemy) && printenemy != (&""))
 						{
 							player iprintln(printenemy, printarg);
 						}
@@ -488,14 +488,14 @@ function printandsoundoneveryone(team, enemyteam, printfriendly, printenemy, sou
 				{
 					if(playerteam == team)
 					{
-						if(isdefined(printfriendly) && printfriendly != &"")
+						if(isdefined(printfriendly) && printfriendly != (&""))
 						{
 							player iprintln(printfriendly, printarg);
 						}
 						player playlocalsound(soundfriendly);
 						continue;
 					}
-					if(isdefined(printenemy) && printenemy != &"")
+					if(isdefined(printenemy) && printenemy != (&""))
 					{
 						if(isdefined(enemyteam) && playerteam == enemyteam)
 						{
@@ -628,7 +628,7 @@ function plot_points(plotpoints, r = 1, g = 1, b = 1, server_frames = 1)
 function getfx(fx)
 {
 	/#
-		assert(isdefined(level._effect[fx]), "" + fx + "");
+		assert(isdefined(level._effect[fx]), ("" + fx) + "");
 	#/
 	return level._effect[fx];
 }
@@ -793,7 +793,7 @@ function trigger_thread(ent, on_enter_payload, on_exit_payload)
 		return;
 	}
 	self add_trigger_to_ent(ent);
-	ender = "end_trig_death_monitor" + self getentitynumber() + " " + ent getentitynumber();
+	ender = (("end_trig_death_monitor" + self getentitynumber()) + " ") + ent getentitynumber();
 	self thread trigger_thread_death_monitor(ent, ender);
 	endon_condition = "leave_trigger_" + self getentitynumber();
 	if(isdefined(on_enter_payload))
@@ -1148,7 +1148,7 @@ function isentstunned()
 	{
 		return 1;
 	}
-	if(isdefined(self.laststunnedtime) && self.laststunnedtime + 5000 > time)
+	if(isdefined(self.laststunnedtime) && (self.laststunnedtime + 5000) > time)
 	{
 		return 1;
 	}
@@ -1627,7 +1627,7 @@ function helper_message(message, delay, str_abort_flag)
 	while(true)
 	{
 		time = gettime();
-		dt = time - start_time / 1000;
+		dt = (time - start_time) / 1000;
 		if(dt >= delay)
 		{
 			break;
@@ -1711,7 +1711,7 @@ function init_hero(name, func_init, arg1, arg2, arg3, arg4, arg5, b_show_in_ev =
 				spawner.count++;
 				ai_hero = spawner::simple_spawn_single(spawner);
 				/#
-					assert(isdefined(ai_hero), "" + name + "");
+					assert(isdefined(ai_hero), ("" + name) + "");
 				#/
 				spawner notify(#"hero_spawned", ai_hero);
 			}
@@ -1786,7 +1786,7 @@ function _hero_death(str_name)
 	if(isdefined(self))
 	{
 		/#
-			assertmsg("" + str_name + "");
+			assertmsg(("" + str_name) + "");
 		#/
 	}
 	unmake_hero(str_name);
@@ -1993,9 +1993,9 @@ function teleport_players_igc(str_spots, coop_sort)
 	}
 	a_spots = skipto::get_spots(str_spots, coop_sort);
 	/#
-		assert(a_spots.size >= level.players.size - 1, "");
+		assert(a_spots.size >= (level.players.size - 1), "");
 	#/
-	for(i = 0; i < level.players.size - 1; i++)
+	for(i = 0; i < (level.players.size - 1); i++)
 	{
 		level.players[i + 1] setorigin(a_spots[i].origin);
 		if(isdefined(a_spots[i].angles))

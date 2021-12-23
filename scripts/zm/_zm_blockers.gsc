@@ -1808,12 +1808,12 @@ function blocker_attack_spots()
 		slot = 1;
 		for(i = 0; i < reps; i++)
 		{
-			offset = self.zbarrier getzbarrierattackslothorzoffset() * i + 1;
-			spots[spots.size] = zm_utility::groundpos_ignore_water_new(spots[0] + anglestoright(self.angles) * offset + vectorscale((0, 0, 1), 60));
+			offset = self.zbarrier getzbarrierattackslothorzoffset() * (i + 1);
+			spots[spots.size] = zm_utility::groundpos_ignore_water_new((spots[0] + (anglestoright(self.angles) * offset)) + vectorscale((0, 0, 1), 60));
 			slot++;
 			if(slot < numslots)
 			{
-				spots[spots.size] = zm_utility::groundpos_ignore_water_new(spots[0] + anglestoright(self.angles) * offset * -1 + vectorscale((0, 0, 1), 60));
+				spots[spots.size] = zm_utility::groundpos_ignore_water_new((spots[0] + (anglestoright(self.angles) * (offset * -1))) + vectorscale((0, 0, 1), 60));
 				slot++;
 			}
 		}
@@ -1985,7 +1985,7 @@ function handle_post_board_repair_rewards(cost, zbarrier)
 {
 	self zm_stats::increment_client_stat("boards");
 	self zm_stats::increment_player_stat("boards");
-	if(isdefined(self.pers["boards"]) && self.pers["boards"] % 10 == 0)
+	if(isdefined(self.pers["boards"]) && (self.pers["boards"] % 10) == 0)
 	{
 		self zm_audio::create_and_play_dialog("general", "rebuild_boards");
 	}
@@ -2084,7 +2084,7 @@ function blocker_trigger_think()
 		{
 			trigger_location.angles = (0, 0, 0);
 		}
-		self.unitrigger_stub.origin = zm_utility::groundpos(trigger_location.origin) + vectorscale((0, 0, 1), 4) + anglestoforward(trigger_location.angles) * -11;
+		self.unitrigger_stub.origin = (zm_utility::groundpos(trigger_location.origin) + vectorscale((0, 0, 1), 4)) + (anglestoforward(trigger_location.angles) * -11);
 	}
 	self thread trigger_delete_on_repair();
 	thread zm_unitrigger::register_static_unitrigger(self.unitrigger_stub, &blocker_unitrigger_think);
@@ -2408,11 +2408,11 @@ function remove_chunk(chunk, node, destroy_immediately, zomb)
 			{
 				dist = 100 + randomint(100);
 			}
-			dest = ent.origin + anglestoforward(ent.angles) * dist;
-			trace = bullettrace(dest + vectorscale((0, 0, 1), 16), dest + vectorscale((0, 0, -1), 200), 0, undefined);
+			dest = ent.origin + (anglestoforward(ent.angles) * dist);
+			trace = bullettrace(dest + vectorscale((0, 0, 1), 16), dest + (vectorscale((0, 0, -1), 200)), 0, undefined);
 			if(trace["fraction"] == 1)
 			{
-				dest = dest + vectorscale((0, 0, -1), 200);
+				dest = dest + (vectorscale((0, 0, -1), 200));
 			}
 			else
 			{
@@ -2447,11 +2447,11 @@ function remove_chunk(chunk, node, destroy_immediately, zomb)
 			{
 				dist = 100 + randomint(100);
 			}
-			dest = ent.origin + anglestoforward(ent.angles) * dist;
-			trace = bullettrace(dest + vectorscale((0, 0, 1), 16), dest + vectorscale((0, 0, -1), 200), 0, undefined);
+			dest = ent.origin + (anglestoforward(ent.angles) * dist);
+			trace = bullettrace(dest + vectorscale((0, 0, 1), 16), dest + (vectorscale((0, 0, -1), 200)), 0, undefined);
 			if(trace["fraction"] == 1)
 			{
-				dest = dest + vectorscale((0, 0, -1), 200);
+				dest = dest + (vectorscale((0, 0, -1), 200));
 			}
 			else
 			{
@@ -2489,11 +2489,11 @@ function remove_chunk(chunk, node, destroy_immediately, zomb)
 		{
 			dist = 100 + randomint(100);
 		}
-		dest = ent.origin + anglestoforward(ent.angles) * dist;
-		trace = bullettrace(dest + vectorscale((0, 0, 1), 16), dest + vectorscale((0, 0, -1), 200), 0, undefined);
+		dest = ent.origin + (anglestoforward(ent.angles) * dist);
+		trace = bullettrace(dest + vectorscale((0, 0, 1), 16), dest + (vectorscale((0, 0, -1), 200)), 0, undefined);
 		if(trace["fraction"] == 1)
 		{
-			dest = dest + vectorscale((0, 0, -1), 200);
+			dest = dest + (vectorscale((0, 0, -1), 200));
 		}
 		else
 		{
@@ -2537,11 +2537,11 @@ function remove_chunk(chunk, node, destroy_immediately, zomb)
 			ent = spawn("script_origin", chunk.origin);
 			ent.angles = node.angles + vectorscale((0, 1, 0), 180);
 			dist = 100 + randomint(100);
-			dest = ent.origin + anglestoforward(ent.angles) * dist;
-			trace = bullettrace(dest + vectorscale((0, 0, 1), 16), dest + vectorscale((0, 0, -1), 200), 0, undefined);
+			dest = ent.origin + (anglestoforward(ent.angles) * dist);
+			trace = bullettrace(dest + vectorscale((0, 0, 1), 16), dest + (vectorscale((0, 0, -1), 200)), 0, undefined);
 			if(trace["fraction"] == 1)
 			{
-				dest = dest + vectorscale((0, 0, -1), 200);
+				dest = dest + (vectorscale((0, 0, -1), 200));
 			}
 			else
 			{
@@ -2859,57 +2859,57 @@ function zombie_gratetear_audio_plus_fx_offset_repair_horizontal(chunk)
 	{
 		case 0:
 		{
-			playfx(level._effect["fx_zombie_bar_break"], chunk.origin + vectorscale((-1, 0, 0), 30));
+			playfx(level._effect["fx_zombie_bar_break"], chunk.origin + (vectorscale((-1, 0, 0), 30)));
 			wait(randomfloatrange(0, 0.3));
-			playfx(level._effect["fx_zombie_bar_break_lite"], chunk.origin + vectorscale((-1, 0, 0), 30));
+			playfx(level._effect["fx_zombie_bar_break_lite"], chunk.origin + (vectorscale((-1, 0, 0), 30)));
 			break;
 		}
 		case 1:
 		{
-			playfx(level._effect["fx_zombie_bar_break"], chunk.origin + vectorscale((-1, 0, 0), 30));
+			playfx(level._effect["fx_zombie_bar_break"], chunk.origin + (vectorscale((-1, 0, 0), 30)));
 			wait(randomfloatrange(0, 0.3));
-			playfx(level._effect["fx_zombie_bar_break"], chunk.origin + vectorscale((-1, 0, 0), 30));
+			playfx(level._effect["fx_zombie_bar_break"], chunk.origin + (vectorscale((-1, 0, 0), 30)));
 			break;
 		}
 		case 2:
 		{
-			playfx(level._effect["fx_zombie_bar_break_lite"], chunk.origin + vectorscale((-1, 0, 0), 30));
+			playfx(level._effect["fx_zombie_bar_break_lite"], chunk.origin + (vectorscale((-1, 0, 0), 30)));
 			wait(randomfloatrange(0, 0.3));
-			playfx(level._effect["fx_zombie_bar_break"], chunk.origin + vectorscale((-1, 0, 0), 30));
+			playfx(level._effect["fx_zombie_bar_break"], chunk.origin + (vectorscale((-1, 0, 0), 30)));
 			break;
 		}
 		case 3:
 		{
-			playfx(level._effect["fx_zombie_bar_break"], chunk.origin + vectorscale((-1, 0, 0), 30));
+			playfx(level._effect["fx_zombie_bar_break"], chunk.origin + (vectorscale((-1, 0, 0), 30)));
 			wait(randomfloatrange(0, 0.3));
-			playfx(level._effect["fx_zombie_bar_break_lite"], chunk.origin + vectorscale((-1, 0, 0), 30));
+			playfx(level._effect["fx_zombie_bar_break_lite"], chunk.origin + (vectorscale((-1, 0, 0), 30)));
 			break;
 		}
 		case 4:
 		{
-			playfx(level._effect["fx_zombie_bar_break_lite"], chunk.origin + vectorscale((-1, 0, 0), 30));
+			playfx(level._effect["fx_zombie_bar_break_lite"], chunk.origin + (vectorscale((-1, 0, 0), 30)));
 			wait(randomfloatrange(0, 0.3));
-			playfx(level._effect["fx_zombie_bar_break_lite"], chunk.origin + vectorscale((-1, 0, 0), 30));
+			playfx(level._effect["fx_zombie_bar_break_lite"], chunk.origin + (vectorscale((-1, 0, 0), 30)));
 			break;
 		}
 		case 5:
 		{
-			playfx(level._effect["fx_zombie_bar_break_lite"], chunk.origin + vectorscale((-1, 0, 0), 30));
+			playfx(level._effect["fx_zombie_bar_break_lite"], chunk.origin + (vectorscale((-1, 0, 0), 30)));
 			break;
 		}
 		case 6:
 		{
-			playfx(level._effect["fx_zombie_bar_break_lite"], chunk.origin + vectorscale((-1, 0, 0), 30));
+			playfx(level._effect["fx_zombie_bar_break_lite"], chunk.origin + (vectorscale((-1, 0, 0), 30)));
 			break;
 		}
 		case 7:
 		{
-			playfx(level._effect["fx_zombie_bar_break"], chunk.origin + vectorscale((-1, 0, 0), 30));
+			playfx(level._effect["fx_zombie_bar_break"], chunk.origin + (vectorscale((-1, 0, 0), 30)));
 			break;
 		}
 		case 8:
 		{
-			playfx(level._effect["fx_zombie_bar_break"], chunk.origin + vectorscale((-1, 0, 0), 30));
+			playfx(level._effect["fx_zombie_bar_break"], chunk.origin + (vectorscale((-1, 0, 0), 30)));
 			break;
 		}
 	}
@@ -3075,7 +3075,7 @@ function flag_blocker()
 	if(!isdefined(self.script_flag_wait))
 	{
 		/#
-			assertmsg("" + self.origin + "");
+			assertmsg(("" + self.origin) + "");
 		#/
 		return;
 	}
@@ -3103,7 +3103,7 @@ function flag_blocker()
 		return;
 	}
 	/#
-		assertmsg("" + self.origin + "" + type + "");
+		assertmsg(((("" + self.origin) + "") + type) + "");
 	#/
 }
 

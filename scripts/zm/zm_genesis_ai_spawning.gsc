@@ -245,11 +245,11 @@ function function_66a5ce12(ai_last, e_attacker)
 function function_630f7ed5(v_origin)
 {
 	self endon(#"death");
-	var_ce975480 = getclosestpointonnavmesh(v_origin, 512, 16);
-	if(isdefined(var_ce975480))
+	v_navmesh = getclosestpointonnavmesh(v_origin, 512, 16);
+	if(isdefined(v_navmesh))
 	{
 		wait(2);
-		self moveto(var_ce975480 + vectorscale((0, 0, 1), 40), 2);
+		self moveto(v_navmesh + vectorscale((0, 0, 1), 40), 2);
 	}
 }
 
@@ -283,7 +283,7 @@ function function_5a772555()
 	}
 	if(level.var_8cd70c57 > 1)
 	{
-		n_num = n_num + 10 * level.var_8cd70c57 - 1;
+		n_num = n_num + (10 * (level.var_8cd70c57 - 1));
 	}
 	return n_num;
 }
@@ -379,7 +379,7 @@ function function_4a9010ae()
 */
 function get_spawn_delay()
 {
-	n_round_time = gettime() - level.var_1f12d3b8 / 1000;
+	n_round_time = (gettime() - level.var_1f12d3b8) / 1000;
 	if(n_round_time < 5)
 	{
 		n_delay = 0.2;

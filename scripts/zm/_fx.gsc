@@ -22,12 +22,12 @@ function print_org(fxcommand, fxid, fxpos, waittime)
 		if(getdvarstring("") == "")
 		{
 			println("");
-			println("" + fxpos[0] + "" + fxpos[1] + "" + fxpos[2] + "");
+			println(((((("" + fxpos[0]) + "") + fxpos[1]) + "") + fxpos[2]) + "");
 			println("");
 			println("");
-			println("" + fxcommand + "");
-			println("" + fxid + "");
-			println("" + waittime + "");
+			println(("" + fxcommand) + "");
+			println(("" + fxid) + "");
+			println(("" + waittime) + "");
 			println("");
 		}
 	#/
@@ -153,10 +153,10 @@ function gunfireloopfxvecthread(fxid, fxpos, fxpos2, shotsmin, shotsmax, shotdel
 	for(;;)
 	{
 		shotnum = shotsbase + randomint(shotsrange);
-		for(i = 0; i < int(shotnum / level.fxfireloopmod); i++)
+		for(i = 0; i < (int(shotnum / level.fxfireloopmod)); i++)
 		{
 			triggerfx(fxent);
-			delay = shotdelaybase + randomfloat(shotdelayrange) * level.fxfireloopmod;
+			delay = (shotdelaybase + randomfloat(shotdelayrange)) * level.fxfireloopmod;
 			if(delay < 0.05)
 			{
 				delay = 0.05;

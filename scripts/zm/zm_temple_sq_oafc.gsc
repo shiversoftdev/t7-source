@@ -71,7 +71,7 @@ function oafc_switch()
 	level endon(#"sq_oafc_over");
 	level thread knocking_audio();
 	self.on_pos = self.origin;
-	self.off_pos = self.on_pos - anglestoup(self.angles) * 5.5;
+	self.off_pos = self.on_pos - (anglestoup(self.angles) * 5.5);
 	self.trigger triggerignoreteam();
 	self waittill(#"triggered", who);
 	if(isdefined(who))

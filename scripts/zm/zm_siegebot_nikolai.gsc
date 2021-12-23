@@ -331,7 +331,7 @@ function pain_update(params)
 	self endon(#"death");
 	if(1 <= self.damagelevel && self.damagelevel <= 4)
 	{
-		asmstate = "damage_" + self.damagelevel + "@pain";
+		asmstate = ("damage_" + self.damagelevel) + "@pain";
 	}
 	else
 	{
@@ -372,7 +372,7 @@ function jump_to(target)
 		self.jump.var_e8ce546f = target.origin;
 	}
 	distsqr = distance2dsquared(self.origin, self.jump.var_e8ce546f);
-	if(isdefined(self.jump.var_e8ce546f) && 600 * 600 < distsqr && distsqr < 1800 * 1800)
+	if(isdefined(self.jump.var_e8ce546f) && (600 * 600) < distsqr && distsqr < (1800 * 1800))
 	{
 		self vehicle_ai::set_state("jump");
 		return 1;
@@ -467,11 +467,11 @@ function state_jump_update(params)
 	self linkto(self.jump.linkent);
 	self.jump.in_air = 1;
 	totaldistance = distance2d(goal, self.jump.linkent.origin);
-	forward = (goal - self.jump.linkent.origin / totaldistance[0], goal - self.jump.linkent.origin / totaldistance[1], 0);
+	forward = ((goal - self.jump.linkent.origin) / totaldistance[0], (goal - self.jump.linkent.origin) / totaldistance[1], 0);
 	upbydistance = mapfloat(500, 2000, 46, 52, totaldistance);
 	antigravitybydistance = mapfloat(500, 2000, 0, 0.5, totaldistance);
-	initvelocityup = (0, 0, 1) * upbydistance + params.upbyheight;
-	initvelocityforward = forward * params.scaleforward * mapfloat(500, 2000, 0.8, 1, totaldistance);
+	initvelocityup = (0, 0, 1) * (upbydistance + params.upbyheight);
+	initvelocityforward = (forward * params.scaleforward) * mapfloat(500, 2000, 0.8, 1, totaldistance);
 	velocity = initvelocityup + initvelocityforward;
 	self asmrequestsubstate("inair@jump");
 	self.jump.debug_state = "engine_startup";
@@ -485,19 +485,19 @@ function state_jump_update(params)
 	while(true)
 	{
 		distancetogoal = distance2d(self.jump.linkent.origin, goal);
-		antigravityscaleup = mapfloat(0, 0.5, 0.6, 0, abs(0.5 - distancetogoal / totaldistance));
+		antigravityscaleup = mapfloat(0, 0.5, 0.6, 0, abs(0.5 - (distancetogoal / totaldistance)));
 		antigravityscale = mapfloat(self.radius * 1, self.radius * 3, 0, 1, distancetogoal);
-		antigravity = antigravityscale * antigravityscaleup * params.gravityforce * -1 + (0, 0, antigravitybydistance);
+		antigravity = (antigravityscale * antigravityscaleup) * (params.gravityforce * -1) + (0, 0, antigravitybydistance);
 		velocityforwardscale = mapfloat(self.radius * 1, self.radius * 4, 0.2, 1, distancetogoal);
 		velocityforward = initvelocityforward * velocityforwardscale;
 		oldverticlespeed = velocity[2];
 		velocity = (0, 0, velocity[2]);
-		velocity = velocity + velocityforward + params.gravityforce + antigravity;
+		velocity = velocity + ((velocityforward + params.gravityforce) + antigravity);
 		if(oldverticlespeed > 0 && velocity[2] <= 0)
 		{
 			self asmrequestsubstate("fall@jump");
 		}
-		if(velocity[2] <= 0 && self.jump.linkent.origin[2] + velocity[2] <= goal[2] || vehicle_ai::timesince(jumpstart) > 10)
+		if(velocity[2] <= 0 && (self.jump.linkent.origin[2] + velocity[2]) <= goal[2] || vehicle_ai::timesince(jumpstart) > 10)
 		{
 			break;
 		}
@@ -525,7 +525,7 @@ function state_jump_update(params)
 	self notify(#"land_crush");
 	foreach(var_44041b8d, player in level.players)
 	{
-		if(distance2dsquared(self.origin, player.origin) < 200 * 200)
+		if(distance2dsquared(self.origin, player.origin) < (200 * 200))
 		{
 			direction = (player.origin - self.origin[0], player.origin - self.origin[1], 0);
 			if(abs(direction[0]) < 0.01 && abs(direction[1]) < 0.01)
@@ -534,7 +534,7 @@ function state_jump_update(params)
 			}
 			direction = vectornormalize(direction);
 			strength = 700;
-			player setvelocity(player getvelocity() + direction * strength);
+			player setvelocity(player getvelocity() + (direction * strength));
 			player dodamage(50, self.origin, self);
 		}
 	}
@@ -595,11 +595,11 @@ function side_step()
 		jukestate = "juke_l@movement";
 		oppositejukestate = "juke_r@movement";
 	}
-	trace = physicstrace(start, start + tracedir * step_size, 0.8 * (self.radius * -1, self.radius * -1, 0), 0.8 * (self.radius, self.radius, self.height), self, 2);
+	trace = physicstrace(start, start + (tracedir * step_size), 0.8 * (self.radius * -1, self.radius * -1, 0), 0.8 * (self.radius, self.radius, self.height), self, 2);
 	if(trace["fraction"] < 1)
 	{
 		tracedir = tracedir * -1;
-		trace = physicstrace(start, start + tracedir * step_size, 0.8 * (self.radius * -1, self.radius * -1, 0), 0.8 * (self.radius, self.radius, self.height), self, 2);
+		trace = physicstrace(start, start + (tracedir * step_size), 0.8 * (self.radius * -1, self.radius * -1, 0), 0.8 * (self.radius, self.radius, self.height), self, 2);
 		jukestate = oppositejukestate;
 	}
 	if(trace["fraction"] >= 1)
@@ -715,7 +715,7 @@ function movement_thread()
 	{
 		self setspeed(self.settings.defaultmovespeed);
 		e_enemy = self.enemy;
-		if(isdefined(self.goalpos) && distancesquared(self.current_pathto_pos, self.goalpos) > self.radius * 0.8 * self.radius * 0.8)
+		if(isdefined(self.goalpos) && distancesquared(self.current_pathto_pos, self.goalpos) > (self.radius * 0.8) * (self.radius * 0.8))
 		{
 			self.current_pathto_pos = self.goalpos;
 			self setvehgoalpos(self.current_pathto_pos, 0, 1);
@@ -927,7 +927,7 @@ function function_75775e52(point, range)
 	a_zombies = getaiarchetypearray("zombie");
 	foreach(var_9356268c, zombie in a_zombies)
 	{
-		if(isalive(zombie) && zombie.knockdown !== 1 && distance2dsquared(point, zombie.origin) < range * range && point[2] - zombie.origin[2] * point[2] - zombie.origin[2] < 100 * 100)
+		if(isalive(zombie) && zombie.knockdown !== 1 && distance2dsquared(point, zombie.origin) < (range * range) && (point[2] - zombie.origin[2]) * (point[2] - zombie.origin[2]) < (100 * 100))
 		{
 			zombie zombie_utility::setup_zombie_knockdown(self);
 		}
@@ -1040,7 +1040,7 @@ function function_b9b039e0(einflictor, eattacker, idamage, idflags, smeansofdeat
 	{
 		return 0;
 	}
-	var_cf402baf = self.var_65850094[n_index] > 0 && self.var_65850094[n_index] - idamage <= 0;
+	var_cf402baf = self.var_65850094[n_index] > 0 && (self.var_65850094[n_index] - idamage) <= 0;
 	self.var_65850094[n_index] = self.var_65850094[n_index] - idamage;
 	eattacker.var_b3a9099 = eattacker.var_b3a9099 + idamage;
 	eattacker show_hit_marker();
@@ -1216,9 +1216,9 @@ function function_a3258c2a(var_f8b7c9a1)
 	{
 		self setlookatent(self.enemy);
 		self vehicle_ai::setturrettarget(self.enemy, 0);
-		angleoffset = anglestoforward((0, randomint(100) * var_a3f49a09, 0)) * 100;
+		angleoffset = (anglestoforward((0, randomint(100) * var_a3f49a09, 0))) * 100;
 		var_8a7bdf21 = self.enemy getvelocity() * -0.3;
-		targetposition = self.enemy.origin + angleoffset + var_8a7bdf21;
+		targetposition = (self.enemy.origin + angleoffset) + var_8a7bdf21;
 		self vehicle_ai::setturrettarget(targetposition, 1);
 		wait(fireinterval);
 		self fireweapon(1, undefined, angleoffset + var_8a7bdf21, self);
@@ -1271,7 +1271,7 @@ function function_59fe8c9c(targetposition)
 	var_a3f49a09 = 137.5;
 	for(i = 0; i < 6; i++)
 	{
-		if(i % 2 == 0)
+		if((i % 2) == 0)
 		{
 			self util::waittill_notify_or_timeout("fire_raps", 0.5);
 		}
@@ -1298,7 +1298,7 @@ function function_59fe8c9c(targetposition)
 		ai_raps hide();
 		ai_raps.takedamage = 0;
 		wait(0.05);
-		ai_raps.origin = spawntag + var_5d7a8c53 * 40;
+		ai_raps.origin = spawntag + (var_5d7a8c53 * 40);
 		wait(0.05);
 		ai_raps show();
 		wait(0.05);
@@ -1317,8 +1317,8 @@ function function_59fe8c9c(targetposition)
 		ai_raps.takedamage = 1;
 		ai_raps thread function_3b145bbb();
 		offset = anglestoforward((0, i * var_a3f49a09, 0));
-		launchforce = var_5d7a8c53 * 300 + offset * 40;
-		ai_raps thread function_853d3b2b(targetposition + offset * 60, launchforce);
+		launchforce = (var_5d7a8c53 * 300) + (offset * 40);
+		ai_raps thread function_853d3b2b(targetposition + (offset * 60), launchforce);
 		wait(0.1);
 	}
 	if(self.var_65850094[1] > 0)
@@ -1449,20 +1449,20 @@ function function_3b145bbb()
 function pin_spike_to_ground(spike, targetorigin)
 {
 	spike endon(#"death");
-	targetdist = distance2d(spike.origin, targetorigin) - 400 + randomfloat(60);
+	targetdist = distance2d(spike.origin, targetorigin) - (400 + randomfloat(60));
 	startorigin = spike.origin;
-	while(distance2dsquared(spike.origin, startorigin) < targetdist * 0.4 * targetdist * 0.4)
+	while(distance2dsquared(spike.origin, startorigin) < (targetdist * 0.4) * (targetdist * 0.4))
 	{
 		wait(0.05);
 	}
 	var_5f13f183 = 1;
 	maxpitch = 10;
-	while(distance2dsquared(spike.origin, startorigin) < max(targetdist * targetdist, 150 * 150))
+	while(distance2dsquared(spike.origin, startorigin) < (max(targetdist * targetdist, 150 * 150)))
 	{
 		pitch = angleclamp180(spike.angles[0]);
 		if(pitch < maxpitch)
 		{
-			pitch = pitch + min(var_5f13f183, maxpitch - pitch);
+			pitch = pitch + (min(var_5f13f183, maxpitch - pitch));
 			spike.angles = (pitch, spike.angles[1], spike.angles[2]);
 		}
 		wait(0.05);
@@ -1554,7 +1554,7 @@ function function_dfc5ede1(targetent)
 	#/
 	target = targetent.origin;
 	vectotarget = (target - self.origin[0], target - self.origin[1], 0);
-	if(lengthsquared(vectotarget) < 0.01 * 0.01)
+	if(lengthsquared(vectotarget) < (0.01 * 0.01))
 	{
 		return 0;
 	}

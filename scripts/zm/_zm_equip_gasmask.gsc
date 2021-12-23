@@ -120,7 +120,7 @@ function gasmask_removed_watcher_thread()
 		self clientfield::set_player_uimodel("hudItems.showDpadDown_PES", 0);
 		self clientfield::set_to_player("gasmaskoverlay", 0);
 		visionset_mgr::deactivate("overlay", "zm_gasmask_postfx", self);
-		level clientfield::set("player" + self getentitynumber() + "wearableItem", 0);
+		level clientfield::set(("player" + self getentitynumber()) + "wearableItem", 0);
 	}
 }
 
@@ -167,7 +167,7 @@ function gasmask_activation_watcher_thread()
 			}
 			self clientfield::increment_to_player("gas_mask_on");
 			self waittill(#"weapon_change_complete");
-			level clientfield::set("player" + self getentitynumber() + "wearableItem", 1);
+			level clientfield::set(("player" + self getentitynumber()) + "wearableItem", 1);
 			self clientfield::set_to_player("gasmaskoverlay", 1);
 			visionset_mgr::activate("overlay", "zm_gasmask_postfx", self);
 		}
@@ -190,7 +190,7 @@ function gasmask_activation_watcher_thread()
 			wait(0.05);
 			self clientfield::set_to_player("gasmaskoverlay", 0);
 			visionset_mgr::deactivate("overlay", "zm_gasmask_postfx", self);
-			level clientfield::set("player" + self getentitynumber() + "wearableItem", 0);
+			level clientfield::set(("player" + self getentitynumber()) + "wearableItem", 0);
 			self waittill(#"weapon_change_complete");
 			self takeweapon(var_f499fcb0);
 			self giveweapon(level.var_f486078e);
@@ -270,7 +270,7 @@ function remove_gasmask_on_player_bleedout()
 		self clientfield::set_player_uimodel("hudItems.showDpadDown_PES", 0);
 		self clientfield::set_to_player("gasmaskoverlay", 0);
 		visionset_mgr::deactivate("overlay", "zm_gasmask_postfx", self);
-		level clientfield::set("player" + self getentitynumber() + "wearableItem", 0);
+		level clientfield::set(("player" + self getentitynumber()) + "wearableItem", 0);
 		self takeweapon(level.var_f486078e);
 	}
 }

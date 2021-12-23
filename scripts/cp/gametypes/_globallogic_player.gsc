@@ -275,7 +275,7 @@ function callback_playerconnect()
 	self thread util::trackdoublejumpdistance();
 	lpselfnum = self getentitynumber();
 	lpguid = self getguid();
-	logprint("J;" + lpguid + ";" + lpselfnum + ";" + self.name + "\n");
+	logprint(((((("J;" + lpguid) + ";") + lpselfnum) + ";") + self.name) + "\n");
 	lpxuid = self getxuid(1);
 	bbprint("global_joins", "name %s client %s xuid %s", self.name, lpselfnum, lpxuid);
 	if(!sessionmodeiszombiesgame())
@@ -512,7 +512,7 @@ function callback_playerconnect()
 		self util::show_hud(0);
 		self [[level.spawnintermission]]();
 		self closeingamemenu();
-		profilelog_endtiming(4, "gs=" + game["state"] + " zom=" + sessionmodeiszombiesgame());
+		profilelog_endtiming(4, (("gs=" + game["state"]) + " zom=") + sessionmodeiszombiesgame());
 		return;
 	}
 	if(level.rankedmatch || level.wagermatch || level.leaguematch && !isdefined(self.pers["lossAlreadyReported"]))
@@ -611,7 +611,7 @@ function callback_playerconnect()
 	{
 		self [[level.onspawnplayer]](1);
 	}
-	profilelog_endtiming(4, "gs=" + game["state"] + " zom=" + sessionmodeiszombiesgame());
+	profilelog_endtiming(4, (("gs=" + game["state"]) + " zom=") + sessionmodeiszombiesgame());
 	globallogic::updateteamstatus();
 	self function_b18d61a5();
 	var_e04e8527 = self getdstat("zmCampaignData", "unlocked");
@@ -767,14 +767,14 @@ function spectate_player_watcher()
 function callback_playermigrated()
 {
 	/#
-		println("" + self.name + "" + gettime());
+		println((("" + self.name) + "") + gettime());
 	#/
 	if(isdefined(self.connected) && self.connected)
 	{
 		self globallogic_ui::updateobjectivetext();
 	}
 	level.hostmigrationreturnedplayercount++;
-	if(level.hostmigrationreturnedplayercount >= level.players.size * 2 / 3)
+	if(level.hostmigrationreturnedplayercount >= ((level.players.size * 2) / 3))
 	{
 		/#
 			println("");
@@ -815,14 +815,14 @@ function callback_playerdisconnect()
 	if(isdefined(self.score) && isdefined(self.pers["team"]))
 	{
 		/#
-			print("" + self.pers[""] + "" + self.score);
+			print((("" + self.pers[""]) + "") + self.score);
 		#/
 		level.dropteam = level.dropteam + 1;
 	}
 	[[level.onplayerdisconnect]]();
 	lpselfnum = self getentitynumber();
 	lpguid = self getguid();
-	logprint("Q;" + lpguid + ";" + lpselfnum + ";" + self.name + "\n");
+	logprint(((((("Q;" + lpguid) + ";") + lpselfnum) + ";") + self.name) + "\n");
 	self gamerep::gamerepplayerdisconnected();
 	for(entry = 0; entry < level.players.size; entry++)
 	{
@@ -853,7 +853,7 @@ function callback_playerdisconnect()
 		self globallogic::removedisconnectedplayerfromplacement();
 	}
 	globallogic::updateteamstatus();
-	profilelog_endtiming(5, "gs=" + game["state"] + " zom=" + sessionmodeiszombiesgame());
+	profilelog_endtiming(5, (("gs=" + game["state"]) + " zom=") + sessionmodeiszombiesgame());
 	self clearallnoncheckpointdata();
 }
 
@@ -1214,7 +1214,7 @@ function callback_playerdamage(einflictor, eattacker, idamage, idflags, smeansof
 	{
 		smeansofdeath = "MOD_HEAD_SHOT";
 	}
-	if(level.onplayerdamage != &globallogic::blank)
+	if(level.onplayerdamage != (&globallogic::blank))
 	{
 		modifieddamage = [[level.onplayerdamage]](einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, psoffsettime);
 		if(isdefined(modifieddamage))
@@ -1272,7 +1272,7 @@ function callback_playerdamage(einflictor, eattacker, idamage, idflags, smeansof
 				}
 				previous_shield_damage = self.shielddamageblocked;
 				self.shielddamageblocked = self.shielddamageblocked + idamage;
-				if(self.shielddamageblocked % 400 < previous_shield_damage % 400)
+				if((self.shielddamageblocked % 400) < (previous_shield_damage % 400))
 				{
 					score_event = "shield_blocked_damage";
 					if(self.shielddamageblocked > 2000)
@@ -1312,7 +1312,7 @@ function callback_playerdamage(einflictor, eattacker, idamage, idflags, smeansof
 	{
 		if(isdefined(einflictor) && (smeansofdeath == "MOD_GAS" || loadout::isexplosivedamage(smeansofdeath)))
 		{
-			if(einflictor.classname == "grenade" || weaponname == "tabun_gas" && self.lastspawntime + 3500 > gettime() && distancesquared(einflictor.origin, self.lastspawnpoint.origin) < 62500)
+			if(einflictor.classname == "grenade" || weaponname == "tabun_gas" && (self.lastspawntime + 3500) > gettime() && distancesquared(einflictor.origin, self.lastspawnpoint.origin) < 62500)
 			{
 				return;
 			}
@@ -1352,7 +1352,7 @@ function callback_playerdamage(einflictor, eattacker, idamage, idflags, smeansof
 					self.laststunnedby = eattacker;
 					self.laststunnedtime = self.idflagstime;
 				}
-				if(isdefined(eattacker.lastgrenadesuicidetime) && eattacker.lastgrenadesuicidetime >= gettime() - 50 && isfrag)
+				if(isdefined(eattacker.lastgrenadesuicidetime) && eattacker.lastgrenadesuicidetime >= (gettime() - 50) && isfrag)
 				{
 					self.explosiveinfo["suicideGrenadeKill"] = 1;
 				}
@@ -1420,7 +1420,7 @@ function callback_playerdamage(einflictor, eattacker, idamage, idflags, smeansof
 				{
 					idamage = 1;
 				}
-				if(level.friendlyfiredelay && level.friendlyfiredelaytime >= gettime() - level.starttime - level.discardtime / 1000)
+				if(level.friendlyfiredelay && level.friendlyfiredelaytime >= (((gettime() - level.starttime) - level.discardtime) / 1000))
 				{
 					eattacker.lastdamagewasfromenemy = 0;
 					eattacker.friendlydamage = 1;
@@ -1519,11 +1519,11 @@ function callback_playerdamage(einflictor, eattacker, idamage, idflags, smeansof
 		{
 			if(isdefined(eattacker.clientid))
 			{
-				println("" + self getentitynumber() + "" + self.health + "" + eattacker.clientid + "" + isplayer(einflictor) + "" + idamage + "" + shitloc);
+				println(((((((((("" + self getentitynumber()) + "") + self.health) + "") + eattacker.clientid) + "") + isplayer(einflictor) + "") + idamage) + "") + shitloc);
 			}
 			else
 			{
-				println("" + self getentitynumber() + "" + self.health + "" + eattacker getentitynumber() + "" + isplayer(einflictor) + "" + idamage + "" + shitloc);
+				println((((((((("" + self getentitynumber()) + "") + self.health) + "") + eattacker getentitynumber() + "") + isplayer(einflictor) + "") + idamage) + "") + shitloc);
 			}
 		}
 	#/
@@ -1551,10 +1551,10 @@ function callback_playerdamage(einflictor, eattacker, idamage, idflags, smeansof
 			lpattackname = "";
 		}
 		bb::function_2aa586aa(eattacker, self, weapon, idamage, smeansofdeath, shitloc, 0, var_f23089ea);
-		logprint("D;" + lpselfguid + ";" + lpselfnum + ";" + lpselfteam + ";" + lpselfname + ";" + lpattackguid + ";" + lpattacknum + ";" + lpattackerteam + ";" + lpattackname + ";" + weapon.name + ";" + idamage + ";" + smeansofdeath + ";" + shitloc + "\n");
+		logprint(((((((((((((((((((((((("D;" + lpselfguid) + ";") + lpselfnum) + ";") + lpselfteam) + ";") + lpselfname) + ";") + lpattackguid) + ";") + lpattacknum) + ";") + lpattackerteam) + ";") + lpattackname) + ";") + weapon.name) + ";") + idamage) + ";") + smeansofdeath) + ";") + shitloc) + "\n");
 	}
 	pixendevent();
-	profilelog_endtiming(6, "gs=" + game["state"] + " zom=" + sessionmodeiszombiesgame());
+	profilelog_endtiming(6, (("gs=" + game["state"]) + " zom=") + sessionmodeiszombiesgame());
 }
 
 /*
@@ -1660,7 +1660,7 @@ function finishplayerdamagewrapper(einflictor, eattacker, idamage, idflags, smea
 	if(!level.console && idflags & 8 && isplayer(eattacker))
 	{
 		/#
-			println("" + self getentitynumber() + "" + self.health + "" + eattacker.clientid + "" + isplayer(einflictor) + "" + idamage + "" + shitloc);
+			println(((((((((("" + self getentitynumber()) + "") + self.health) + "") + eattacker.clientid) + "") + isplayer(einflictor) + "") + idamage) + "") + shitloc);
 		#/
 		eattacker addplayerstat("penetration_shots", 1);
 	}
@@ -1860,7 +1860,7 @@ function playerkilled_suicide(einflictor, attacker, smeansofdeath, weapon, shitl
 			playercounts = self teams::count_players();
 			playercounts[self.leaving_team]--;
 			playercounts[self.joining_team]++;
-			if(playercounts[self.joining_team] - playercounts[self.leaving_team] > 1)
+			if((playercounts[self.joining_team] - playercounts[self.leaving_team]) > 1)
 			{
 				thread scoreevents::processscoreevent("suicide", self);
 				self thread rank::giverankxp("suicide");
@@ -1936,7 +1936,7 @@ function playerkilled_teamkill(einflictor, attacker, smeansofdeath, weapon, shit
 		{
 			teamkilldelay = 1;
 		}
-		else if(attacker.pers["teamkills_nostats"] > 1 && globallogic_utils::gettimepassed() < 8000 + attacker.pers["teamkills_nostats"] * 1000)
+		else if(attacker.pers["teamkills_nostats"] > 1 && globallogic_utils::gettimepassed() < (8000 + (attacker.pers["teamkills_nostats"] * 1000)))
 		{
 			teamkilldelay = 1;
 		}
@@ -2010,7 +2010,7 @@ function playerkilled_awardassists(einflictor, attacker, weapon, lpattackteam)
 	}
 	if(isdefined(self.lastattackedshieldplayer) && isdefined(self.lastattackedshieldtime) && self.lastattackedshieldplayer != attacker)
 	{
-		if(gettime() - self.lastattackedshieldtime < 4000)
+		if((gettime() - self.lastattackedshieldtime) < 4000)
 		{
 			self.lastattackedshieldplayer thread globallogic_score::processshieldassist(self);
 		}
@@ -2190,7 +2190,7 @@ function callback_playerkilled(einflictor, attacker, idamage, smeansofdeath, wea
 			vdir = self.laststandparams.vdir;
 			shitloc = self.laststandparams.shitloc;
 			self.vattackerorigin = self.laststandparams.vattackerorigin;
-			deathtimeoffset = gettime() - self.laststandparams.laststandstarttime / 1000;
+			deathtimeoffset = (gettime() - self.laststandparams.laststandstarttime) / 1000;
 			if(isdefined(self.previousprimary))
 			{
 				wasinlaststand = 1;
@@ -2224,7 +2224,7 @@ function callback_playerkilled(einflictor, attacker, idamage, smeansofdeath, wea
 				{
 					continue;
 				}
-				if(self.attackerdamage[player.clientid].lasttimedamaged + 2500 < gettime())
+				if((self.attackerdamage[player.clientid].lasttimedamaged + 2500) < gettime())
 				{
 					continue;
 				}
@@ -2292,7 +2292,7 @@ function callback_playerkilled(einflictor, attacker, idamage, smeansofdeath, wea
 	self.killedplayerscurrent = [];
 	self.deathcount++;
 	/#
-		println("" + self.clientid + "" + self.deathcount);
+		println((("" + self.clientid) + "") + self.deathcount);
 	#/
 	self playerkilled_killstreaks(attacker, weapon);
 	lpselfnum = self getentitynumber();
@@ -2419,14 +2419,14 @@ function callback_playerkilled(einflictor, attacker, idamage, smeansofdeath, wea
 		self.attackers = [];
 	}
 	bb::function_2aa586aa(attacker, self, weapon, idamage, smeansofdeath, shitloc, 1, !wasinlaststand);
-	logprint("K;" + lpselfguid + ";" + lpselfnum + ";" + lpselfteam + ";" + lpselfname + ";" + lpattackguid + ";" + lpattacknum + ";" + lpattackteam + ";" + lpattackname + ";" + weapon.name + ";" + idamage + ";" + smeansofdeath + ";" + shitloc + "\n");
+	logprint(((((((((((((((((((((((("K;" + lpselfguid) + ";") + lpselfnum) + ";") + lpselfteam) + ";") + lpselfname) + ";") + lpattackguid) + ";") + lpattacknum) + ";") + lpattackteam) + ";") + lpattackname) + ";") + weapon.name) + ";") + idamage) + ";") + smeansofdeath) + ";") + shitloc) + "\n");
 	attackerstring = "none";
 	if(isplayer(attacker))
 	{
-		attackerstring = attacker getxuid() + "(" + lpattackname + ")";
+		attackerstring = ((attacker getxuid() + "(") + lpattackname) + ")";
 	}
 	/#
-		println("" + smeansofdeath + "" + weapon.name + "" + attackerstring + "" + idamage + "" + shitloc + "" + int(self.origin[0]) + "" + int(self.origin[1]) + "" + int(self.origin[2]));
+		println((((((((((((("" + smeansofdeath) + "") + weapon.name) + "") + attackerstring) + "") + idamage) + "") + shitloc) + "") + int(self.origin[0]) + "") + int(self.origin[1]) + "") + int(self.origin[2]));
 	#/
 	globallogic::updateteamstatus();
 	self weapons::detach_carry_object_model();
@@ -2522,7 +2522,7 @@ function callback_playerkilled(einflictor, attacker, idamage, smeansofdeath, wea
 	{
 		self thread [[level.spawnplayerprediction]]();
 	}
-	profilelog_endtiming(7, "gs=" + game["state"] + " zom=" + sessionmodeiszombiesgame());
+	profilelog_endtiming(7, (("gs=" + game["state"]) + " zom=") + sessionmodeiszombiesgame());
 	if(!(isdefined(level.var_d59daf8) && level.var_d59daf8) || level.players.size > 1)
 	{
 		wait(0.25);
@@ -2548,7 +2548,7 @@ function callback_playerkilled(einflictor, attacker, idamage, smeansofdeath, wea
 	}
 	if(smeansofdeath == "MOD_MELEE_ASSASSINATE" || 0 > weapon.deathcamtime)
 	{
-		defaultplayerdeathwatchtime = deathanimduration * 0.001 + 0.5;
+		defaultplayerdeathwatchtime = (deathanimduration * 0.001) + 0.5;
 	}
 	else if(0 < weapon.deathcamtime)
 	{
@@ -2595,7 +2595,7 @@ function callback_playerkilled(einflictor, attacker, idamage, smeansofdeath, wea
 		timepassed = undefined;
 		if(isdefined(self.respawntimerstarttime) && userespawntime)
 		{
-			timepassed = gettime() - self.respawntimerstarttime / 1000;
+			timepassed = (gettime() - self.respawntimerstarttime) / 1000;
 		}
 		self thread [[level.spawnclient]](timepassed);
 		self.respawntimerstarttime = undefined;
@@ -2634,7 +2634,7 @@ function waittillkillstreakdone()
 	{
 		starttime = gettime();
 		waittime = self.killstreak_waitamount * 1000;
-		while(gettime() < starttime + waittime && isdefined(self.killstreak_waitamount))
+		while(gettime() < (starttime + waittime) && isdefined(self.killstreak_waitamount))
 		{
 			wait(0.1);
 		}
@@ -2682,10 +2682,10 @@ function teamkillkick()
 		timeplayedtotal = self getdstat("playerstatslist", "time_played_total", "StatValue");
 		minutesplayed = timeplayedtotal / 60;
 		freebees = 2;
-		banallowance = int(floor(minutesplayed / playlistbanquantum)) + freebees;
+		banallowance = (int(floor(minutesplayed / playlistbanquantum))) + freebees;
 		if(self.sessionbans > banallowance)
 		{
-			self setdstat("playerstatslist", "gametypeban", "StatValue", timeplayedtotal + playlistbanpenalty * 60);
+			self setdstat("playerstatslist", "gametypeban", "StatValue", timeplayedtotal + (playlistbanpenalty * 60));
 		}
 	}
 	globallogic::gamehistoryplayerkicked();
@@ -3001,7 +3001,7 @@ function delaystartragdoll(ent, shitloc, vdir, weapon, einflictor, smeansofdeath
 			vdir = (0, 0, 0);
 		}
 		explosionpos = ent.origin + (0, 0, globallogic_utils::gethitlocheight(shitloc));
-		explosionpos = explosionpos - vdir * 20;
+		explosionpos = explosionpos - (vdir * 20);
 		explosionradius = 40;
 		explosionforce = 0.75;
 		if(smeansofdeath == "MOD_IMPACT" || smeansofdeath == "MOD_EXPLOSIVE" || issubstr(smeansofdeath, "MOD_GRENADE") || issubstr(smeansofdeath, "MOD_PROJECTILE") || shitloc == "head" || shitloc == "helmet")
@@ -3319,7 +3319,7 @@ function function_ece4ca01()
 				}
 				if(!issubstr(var_c44df3d1, weapon.name + ","))
 				{
-					var_c44df3d1 = var_c44df3d1 + weapon.name + ",";
+					var_c44df3d1 = (var_c44df3d1 + weapon.name) + ",";
 					self savegame::set_player_data(savegame::get_mission_name() + "hero_weapon", var_c44df3d1);
 				}
 			}

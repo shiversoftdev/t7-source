@@ -546,9 +546,9 @@ function apply_filter(localclientnum, filter, filterset = "framebuffer")
 			}
 			else if(isdefined(self.model))
 			{
-				name = name + "" + self.model;
+				name = name + ("" + self.model);
 			}
-			msg = "" + filter.name + "" + name + "" + filterset;
+			msg = (((("" + filter.name) + "") + name) + "") + filterset;
 			println(msg);
 		}
 	#/

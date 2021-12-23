@@ -266,7 +266,7 @@ function digger_activate(force_digger)
 {
 	if(isdefined(force_digger))
 	{
-		level flag::set("start_" + force_digger + "_digger");
+		level flag::set(("start_" + force_digger) + "_digger");
 		level thread send_clientnotify(force_digger, 0);
 		level thread play_digger_start_vox(force_digger);
 		wait(1);
@@ -277,7 +277,7 @@ function digger_activate(force_digger)
 	non_active = [];
 	for(i = 0; i < level.diggers.size; i++)
 	{
-		if(!level flag::get("start_" + level.diggers[i] + "_digger"))
+		if(!level flag::get(("start_" + level.diggers[i]) + "_digger"))
 		{
 			non_active[non_active.size] = level.diggers[i];
 		}
@@ -285,7 +285,7 @@ function digger_activate(force_digger)
 	if(non_active.size > 0)
 	{
 		digger_to_activate = array::random(non_active);
-		level flag::set("start_" + digger_to_activate + "_digger");
+		level flag::set(("start_" + digger_to_activate) + "_digger");
 		level thread send_clientnotify(digger_to_activate, 0);
 		level thread play_digger_start_vox(digger_to_activate);
 		wait(1);
@@ -439,7 +439,7 @@ function digger_think_move()
 	self.hacked_flag = self.digger_name + "_digger_hacked";
 	self.hacked_before_breached_flag = self.digger_name + "_digger_hacked_before_breached";
 	self.breached_flag = self.digger_name + "_breached";
-	self.start_flag = "start_" + self.digger_name + "_digger";
+	self.start_flag = ("start_" + self.digger_name) + "_digger";
 	self.arm_lowered = 0;
 	tracks digger_follow_path(self, undefined, arm);
 	self endon(self.digger_name + "_digger_hacked");
@@ -704,12 +704,12 @@ function digger_think_panel(blocker_name, trig_name, start_flag, hacked_flag, ha
 {
 	if(isdefined(blocker_name))
 	{
-		dmg_trig = getent("digger_" + digger_name + "_dmg", "targetname");
+		dmg_trig = getent(("digger_" + digger_name) + "_dmg", "targetname");
 		blocker = getent(blocker_name, "targetname");
 		if(digger_name == "teleporter")
 		{
-			dmg_trig.origin = dmg_trig.origin + vectorscale((0, -1, 0), 20);
-			blocker.origin = blocker.origin + vectorscale((0, -1, 0), 20);
+			dmg_trig.origin = dmg_trig.origin + (vectorscale((0, -1, 0), 20));
+			blocker.origin = blocker.origin + (vectorscale((0, -1, 0), 20));
 		}
 		level thread [[blocker_func]](blocker, digger_name, dmg_trig);
 	}
@@ -1008,7 +1008,7 @@ function digger_push_player(trig, player)
 	explode_radius = 50;
 	test_org = player geteye();
 	dist = distance(eye_org, test_org);
-	scale = 1 - dist / explode_radius;
+	scale = 1 - (dist / explode_radius);
 	if(scale < 0)
 	{
 		scale = 0;
@@ -1239,7 +1239,7 @@ function play_timer_vox(digger_name)
 	while(time_left > 0)
 	{
 		curr_time = gettime();
-		time_used = curr_time - digger_start_time / 1000;
+		time_used = (curr_time - digger_start_time) / 1000;
 		time_left = level.diggers_global_time - time_used;
 		if(time_left <= 180 && !played180sec)
 		{
@@ -1523,7 +1523,7 @@ function digger_follow_path_recalc_speed(path_start_node)
 		}
 	}
 	curr_time = gettime();
-	time_used = curr_time - self.start_time / 1000;
+	time_used = (curr_time - self.start_time) / 1000;
 	time_left = level.diggers_global_time - time_used;
 	self.digger_speed = self.path_length / time_left;
 }
@@ -1706,7 +1706,7 @@ function digger_follow_path(body, reverse, arm)
 			{
 				curr_node_length = length(next_node.origin - current_node.origin);
 				dist = length(origin_to_next_node);
-				fraction = 1 - dist / curr_node_length;
+				fraction = 1 - (dist / curr_node_length);
 				fraction = math::clamp(fraction, 0, 1);
 				if(fraction > 0.95)
 				{
@@ -1727,35 +1727,35 @@ function digger_follow_path(body, reverse, arm)
 				}
 			}
 		}
-		fraction = d1 / d1 + d2;
-		speed = current_node.speed + next_node.speed - current_node.speed * fraction;
-		speed = speed * 0.5 * level.digger_speed_multiplier;
-		look_ahead = current_node.lookahead + next_node.lookahead - current_node.lookahead * fraction;
+		fraction = d1 / (d1 + d2);
+		speed = current_node.speed + ((next_node.speed - current_node.speed) * fraction);
+		speed = (speed * 0.5) * level.digger_speed_multiplier;
+		look_ahead = current_node.lookahead + ((next_node.lookahead - current_node.lookahead) * fraction);
 		look_dist = current_node.lookahead * speed;
 		node_length = length(next_node.origin - current_node.origin);
-		dist = fraction * node_length + look_dist;
+		dist = (fraction * node_length) + look_dist;
 		look_pos = (0, 0, 0);
 		if(dist > node_length)
 		{
 			delta = dist - node_length;
-			look_pos = next_node.origin + next_node_dir * delta;
+			look_pos = next_node.origin + (next_node_dir * delta);
 		}
 		else
 		{
-			look_pos = self.origin + curr_node_dir * dist;
+			look_pos = self.origin + (curr_node_dir * dist);
 		}
 		look_dir = vectornormalize(look_pos - self.origin);
 		if(direction == "fwd")
 		{
-			velocity = look_dir * self.digger_speed * level.digger_speed_multiplier;
+			velocity = (look_dir * self.digger_speed) * level.digger_speed_multiplier;
 		}
 		else
 		{
 			velocity = look_dir * speed;
 		}
-		self.origin = self.origin + velocity * 0.05;
-		look_ahead = current_node.lookahead + next_node.lookahead - current_node.lookahead * fraction;
-		self.angles = current_node.angles + next_node.angles - current_node.angles * fraction;
+		self.origin = self.origin + (velocity * 0.05);
+		look_ahead = current_node.lookahead + ((next_node.lookahead - current_node.lookahead) * fraction);
+		self.angles = current_node.angles + ((next_node.angles - current_node.angles) * fraction);
 		wait(0.05);
 	}
 	if(body.digger_name == "hangar")

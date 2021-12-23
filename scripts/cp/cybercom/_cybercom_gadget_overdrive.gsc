@@ -149,7 +149,7 @@ function _on(slot, weapon)
 	visionset_mgr::activate("visionset", "overdrive", self, 0.4, 0.1, 1.35);
 	self notify(weapon.name + "_fired");
 	level notify(weapon.name + "_fired");
-	if(self.health < self.maxhealth * getdvarfloat("scr_overdrive_min_health", 0.35))
+	if(self.health < (self.maxhealth * getdvarfloat("scr_overdrive_min_health", 0.35)))
 	{
 		self setnormalhealth(getdvarfloat("scr_overdrive_min_health", 0.35));
 	}

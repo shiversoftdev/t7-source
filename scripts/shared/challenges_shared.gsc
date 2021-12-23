@@ -144,7 +144,7 @@ function addflyswatterstat(weapon, aircraft)
 	}
 	if(isdefined(aircraft) && isdefined(aircraft.birthtime))
 	{
-		if(gettime() - aircraft.birthtime < 20000)
+		if((gettime() - aircraft.birthtime) < 20000)
 		{
 			self addweaponstat(weapon, "destroyed_aircraft_under20s", 1);
 		}
@@ -153,7 +153,7 @@ function addflyswatterstat(weapon, aircraft)
 	{
 		self.destroyedaircrafttime = [];
 	}
-	if(isdefined(self.destroyedaircrafttime[weapon]) && gettime() - self.destroyedaircrafttime[weapon] < 10000)
+	if(isdefined(self.destroyedaircrafttime[weapon]) && (gettime() - self.destroyedaircrafttime[weapon]) < 10000)
 	{
 		self addweaponstat(weapon, "destroyed_2aircraft_quickly", 1);
 		self.destroyedaircrafttime[weapon] = undefined;
@@ -476,14 +476,14 @@ function perkkills(victim, isstunned, time)
 	}
 	if(player hasperk("specialty_longersprint"))
 	{
-		if(isdefined(player.lastsprinttime) && gettime() - player.lastsprinttime < 2500)
+		if(isdefined(player.lastsprinttime) && (gettime() - player.lastsprinttime) < 2500)
 		{
 			player addplayerstat("perk_longersprint", 1);
 		}
 	}
 	if(player hasperk("specialty_fastmantle"))
 	{
-		if(isdefined(player.lastsprinttime) && gettime() - player.lastsprinttime < 2500 && player playerads() >= 1)
+		if(isdefined(player.lastsprinttime) && (gettime() - player.lastsprinttime) < 2500 && player playerads() >= 1)
 		{
 			player addplayerstat("perk_fastmantle_kills", 1);
 		}
@@ -572,7 +572,7 @@ function perkkills(victim, isstunned, time)
 			player addplayerstat("perk_gpsjammer_immune_kills", 1);
 		}
 	}
-	if(player.lastweaponchange + 5000 > time)
+	if((player.lastweaponchange + 5000) > time)
 	{
 		if(player hasperk("specialty_fastweaponswitch"))
 		{
@@ -1088,7 +1088,7 @@ function capturedcrate(owner)
 {
 	if(isdefined(self.lastrescuedby) && isdefined(self.lastrescuedtime))
 	{
-		if(self.lastrescuedtime + 5000 > gettime())
+		if((self.lastrescuedtime + 5000) > gettime())
 		{
 			self.lastrescuedby addplayerstat("defend_teammate_who_captured_package", 1);
 		}
@@ -1218,7 +1218,7 @@ function capturedobjective(capturetime, objective)
 {
 	if(isdefined(self.smokegrenadetime) && isdefined(self.smokegrenadeposition))
 	{
-		if(self.smokegrenadetime + 14000 > capturetime)
+		if((self.smokegrenadetime + 14000) > capturetime)
 		{
 			distsq = distancesquared(self.smokegrenadeposition, self.origin);
 			if(distsq < 57600)
@@ -1235,7 +1235,7 @@ function capturedobjective(capturetime, objective)
 	{
 		self [[level.capturedobjectivefunction]]();
 	}
-	heroabilitywasactiverecently = isdefined(self.heroabilityactive) || (isdefined(self.heroabilitydectivatetime) && self.heroabilitydectivatetime > gettime() - 3000);
+	heroabilitywasactiverecently = isdefined(self.heroabilityactive) || (isdefined(self.heroabilitydectivatetime) && self.heroabilitydectivatetime > (gettime() - 3000));
 	if(heroabilitywasactiverecently && isdefined(self.heroability) && self.heroability.name == "gadget_camo")
 	{
 		scoreevents::processscoreevent("optic_camo_capture_objective", self);
@@ -1535,7 +1535,7 @@ function challengegameend(data)
 		{
 			if(player.team == winner)
 			{
-				if(winnerscore >= loserscore + 20)
+				if(winnerscore >= (loserscore + 20))
 				{
 					player addgametypestat("CRUSH", 1);
 				}
@@ -1565,7 +1565,7 @@ function challengegameend(data)
 				if(level.placement["all"].size >= 2)
 				{
 					secondplace = level.placement["all"][1];
-					if(player.kills >= secondplace.kills + 7)
+					if(player.kills >= (secondplace.kills + 7))
 					{
 						player addgametypestat("CRUSH", 1);
 					}
@@ -1588,7 +1588,7 @@ function challengegameend(data)
 		{
 			if(player.team == winner)
 			{
-				if(winnerscore >= loserscore + 70)
+				if(winnerscore >= (loserscore + 70))
 				{
 					player addgametypestat("CRUSH", 1);
 				}
@@ -1599,7 +1599,7 @@ function challengegameend(data)
 		{
 			if(player.team == winner && winnerscore > 0)
 			{
-				if(winnerscore >= loserscore + 70)
+				if(winnerscore >= (loserscore + 70))
 				{
 					player addgametypestat("CRUSH", 1);
 				}
@@ -1610,14 +1610,14 @@ function challengegameend(data)
 		{
 			if(player.team == winner && winnerscore > 0)
 			{
-				if(winnerscore >= loserscore + 70)
+				if(winnerscore >= (loserscore + 70))
 				{
 					player addgametypestat("CRUSH", 1);
 				}
 			}
 			if(player.team == winner && winnerscore > 0)
 			{
-				if(winnerscore >= loserscore + 110)
+				if(winnerscore >= (loserscore + 110))
 				{
 					player addgametypestat("ANNIHILATION", 1);
 				}
@@ -1665,7 +1665,7 @@ function multikill(killcount, weapon)
 {
 	if(killcount >= 3 && isdefined(self.lastkillwheninjured))
 	{
-		if(self.lastkillwheninjured + 5000 > gettime())
+		if((self.lastkillwheninjured + 5000) > gettime())
 		{
 			self addplayerstat("multikill_3_near_death", 1);
 		}
@@ -2113,7 +2113,7 @@ function killstreakten()
 	}
 	for(numspecialties = 0; numspecialties < level.maxspecialties; numspecialties++)
 	{
-		perk = self getloadoutitem(self.class_num, "specialty" + numspecialties + 1);
+		perk = self getloadoutitem(self.class_num, "specialty" + (numspecialties + 1));
 		if(perk != 0)
 		{
 			return;
@@ -2222,7 +2222,7 @@ function playerkilled(einflictor, attacker, idamage, smeansofdeath, weapon, shit
 		}
 		washacked = einflictor util::ishacked();
 	}
-	waslockingon = waslockingon & 1 << data.victim.entnum;
+	waslockingon = waslockingon & (1 << data.victim.entnum);
 	if(waslockingon != 0)
 	{
 		data.waslockingon = 1;

@@ -435,42 +435,32 @@ function kill_exploder(exploder_id)
 	Namespace: exploder
 	Checksum: 0xDC3E1AE6
 	Offset: 0x15E8
-	Size: 0x0
+	Size: 0xFC
 	Parameters: 0
 	Flags: Linked
 */
 function exploder_delay()
 {
-System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
-Parameter name: index
-   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   at System.Collections.Generic.List`1.get_Item(Int32 index)
-   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 649
-   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 211
-/*
-No Output
-*/
-
-	/* ======== */
-
-/* 
-	Stack: 
-*/
-	/* ======== */
-
-/* 
-	Blocks: 
-	Cerberus.Logic.BasicBlock at 0x15E8, end at 0x15E9
-	Cerberus.Logic.IfBlock at 0x15FA, end at 0x1624
-	Cerberus.Logic.IfBlock at 0x165C, end at 0x168C
-	Cerberus.Logic.IfBlock at 0x168C, end at 0x16BC
-	Cerberus.Logic.IfBlock at 0x16BC, end at 0x16E2
-*/
-	/* ======== */
-
+	if(!isdefined(self.v["delay"]))
+	{
+		self.v["delay"] = 0;
+	}
+	min_delay = self.v["delay"];
+	max_delay = self.v["delay"] + 0.001;
+	if(isdefined(self.v["delay_min"]))
+	{
+		min_delay = self.v["delay_min"];
+	}
+	if(isdefined(self.v["delay_max"]))
+	{
+		max_delay = self.v["delay_max"];
+	}
+	if(min_delay > 0)
+	{
+		waitrealtime(randomfloatrange(min_delay, max_delay));
+	}
 }
 
-/*Unknown Op Code (0x1605) at 16E0*/
 /*
 	Name: exploder_playsound
 	Namespace: exploder
@@ -666,7 +656,7 @@ function cannon_effect()
 	if(!isdefined(level._effect[self.v["fxid"]]))
 	{
 		/#
-			assertmsg("" + self.v[""] + "");
+			assertmsg(("" + self.v[""]) + "");
 		#/
 		return;
 	}

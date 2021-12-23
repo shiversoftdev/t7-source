@@ -107,7 +107,7 @@ function function_86419da()
 	do
 	{
 		level waittill(#"end_of_round");
-		n_current_time = gettime() - level.n_gameplay_start_time / 1000;
+		n_current_time = (gettime() - level.n_gameplay_start_time) / 1000;
 		var_99870abd = zm::get_round_number() - 1;
 		var_ec31aba8 = undefined;
 		switch(var_99870abd)
@@ -256,7 +256,7 @@ function function_86419da()
 				break;
 			}
 		}
-		if(var_99870abd % 5 == 0)
+		if((var_99870abd % 5) == 0)
 		{
 			if(isdefined(var_ec31aba8) && n_current_time < var_ec31aba8)
 			{

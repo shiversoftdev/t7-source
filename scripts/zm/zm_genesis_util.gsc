@@ -130,7 +130,7 @@ function function_1bd652e9()
 */
 function vec_to_string(v)
 {
-	return "<" + v[0] + ", " + v[1] + ", " + v[2] + ">";
+	return (((((("<") + v[0]) + ", ") + v[1]) + ", ") + v[2]) + (">");
 }
 
 /*
@@ -372,7 +372,7 @@ function function_c3266652(str_targetname, n_duration, n_offset)
 {
 	var_bd7e807d = array::filter(level.var_7c6cbc08, 0, &function_f889e065, str_targetname);
 	/#
-		assert(isdefined(var_bd7e807d), "" + str_targetname + "");
+		assert(isdefined(var_bd7e807d), ("" + str_targetname) + "");
 	#/
 	if(!isdefined(level.var_e17963aa[str_targetname]))
 	{
@@ -397,7 +397,7 @@ function function_c3266652(str_targetname, n_duration, n_offset)
 		}
 	}
 	/#
-		assert(isdefined(level.var_e17963aa[str_targetname]), "" + str_targetname + "");
+		assert(isdefined(level.var_e17963aa[str_targetname]), ("" + str_targetname) + "");
 	#/
 	foreach(var_575757b6, var_a535abab in level.var_e17963aa[str_targetname])
 	{
@@ -808,7 +808,7 @@ function function_3a7a7013(n_rumbletype, n_radius, v_origin, var_d00db512)
 function setup_devgui_func(str_devgui_path, str_dvar, n_value, func, n_base_value = -1)
 {
 	setdvar(str_dvar, n_base_value);
-	adddebugcommand("devgui_cmd \"" + str_devgui_path + "\" \"" + str_dvar + " " + n_value + "\"\n");
+	adddebugcommand(((((("devgui_cmd \"" + str_devgui_path) + "\" \"") + str_dvar) + " ") + n_value) + "\"\n");
 	while(true)
 	{
 		n_dvar = getdvarint(str_dvar);
@@ -947,7 +947,7 @@ function function_555e8704()
 	Parameters: 4
 	Flags: Linked
 */
-function function_17c00a4f(var_9165799c, var_25cf04a1, var_e8c4df7b, var_202b5b6a)
+function function_17c00a4f(var_9165799c, var_25cf04a1, var_e8c4df7b, player_area)
 {
 	return 1;
 }
@@ -1024,7 +1024,7 @@ function n_observation_deck_stage(mdl_anchor)
 function function_42108922(str_zone, str_flag)
 {
 	/#
-		assert(isdefined(level.zones[str_zone]), "" + str_zone + "");
+		assert(isdefined(level.zones[str_zone]), ("" + str_zone) + "");
 	#/
 	level flag::wait_till(str_flag);
 	if(zm_zonemgr::zone_is_enabled(str_zone))
@@ -1046,7 +1046,7 @@ function function_42108922(str_zone, str_flag)
 function function_342295d8(str_zone, b_enable = 1)
 {
 	/#
-		assert(isdefined(level.zones[str_zone]), "" + str_zone + "");
+		assert(isdefined(level.zones[str_zone]), ("" + str_zone) + "");
 	#/
 	if(b_enable && zm_zonemgr::zone_is_enabled(str_zone))
 	{
@@ -1074,7 +1074,7 @@ function function_37a5b776()
 		e_island = getent(var_9e84b959[i], "targetname");
 		for(j = 0; j < level.activeplayers.size; j++)
 		{
-			if(isdefined(level.activeplayers[j].var_122a2dda) && level.activeplayers[j].var_122a2dda)
+			if(isdefined(level.activeplayers[j].is_flung) && level.activeplayers[j].is_flung)
 			{
 				return 1;
 			}
@@ -1851,7 +1851,7 @@ function function_d3845622(var_7b429b7d)
 */
 function function_442d17f2(v_start_pos, v_angles)
 {
-	v_spawn_pos = self geteye() + anglestoforward(self getplayerangles()) * 64;
+	v_spawn_pos = self geteye() + (anglestoforward(self getplayerangles()) * 64);
 	var_7add4736 = util::spawn_model("tag_origin", v_spawn_pos, v_angles);
 	mdl_gateworm = util::spawn_model("p7_zm_dlc4_gateworm", v_spawn_pos, v_angles);
 	mdl_gateworm linkto(var_7add4736);
@@ -1859,7 +1859,7 @@ function function_442d17f2(v_start_pos, v_angles)
 	self thread util::delete_on_death(var_7add4736);
 	self thread util::delete_on_death(mdl_gateworm);
 	mdl_gateworm thread function_9646de9a();
-	v_ground_pos = bullettrace(v_start_pos, v_start_pos + vectorscale((0, 0, -1), 100000), 0, mdl_gateworm)["position"];
+	v_ground_pos = bullettrace(v_start_pos, v_start_pos + (vectorscale((0, 0, -1), 100000)), 0, mdl_gateworm)["position"];
 	var_7add4736 moveto(v_ground_pos, 4);
 	var_7add4736 playsound("zmb_main_searchparty_worm_appear");
 	var_7add4736 playloopsound("zmb_main_omelettes_worm_lp", 1);
@@ -1947,7 +1947,7 @@ function function_f3a1c8c5(var_e4342d5d, s_pos)
 	var_7b98b639 = level.var_7bddd74e[var_e4342d5d];
 	var_7b98b639 thread scene::play(var_b96024, var_7b98b639);
 	var_7b98b639 clientfield::set("rq_rune_glow", 1);
-	v_pos = bullettrace(self.origin, self.origin + vectorscale((0, 0, -1), 100000), 0, s_pos)["position"];
+	v_pos = bullettrace(self.origin, self.origin + (vectorscale((0, 0, -1), 100000)), 0, s_pos)["position"];
 	v_pos = v_pos + vectorscale((0, 0, 1), 32);
 	s_unitrigger_stub = spawn_trigger_radius(v_pos, 128, 1);
 	s_unitrigger_stub.var_e4342d5d = var_e4342d5d;
@@ -2055,8 +2055,8 @@ function function_bb26d959(var_e4342d5d)
 function function_1e620a08(str_tag_name)
 {
 	var_c0132a00 = getent("rift_entrance_rune_portal", "targetname");
-	var_c0132a00 hidepart("tag_" + str_tag_name + "_off");
-	var_c0132a00 showpart("tag_" + str_tag_name + "_on");
+	var_c0132a00 hidepart(("tag_" + str_tag_name) + "_off");
+	var_c0132a00 showpart(("tag_" + str_tag_name) + "_on");
 }
 
 /*
@@ -2164,7 +2164,7 @@ function function_ae4d938c(v_target_pos, var_e57941b7, var_ca841609, str_endon_n
 			n_scale = n_dist / var_2b515bba;
 			n_scaled_pulse_delay = n_scale * n_pulse_delay_range;
 			n_time_before_next_pulse = 0.2 + n_scaled_pulse_delay;
-			var_887c2fcb = (n_dist < var_2b515bba * 0.25 ? 2 : 1);
+			var_887c2fcb = (n_dist < (var_2b515bba * 0.25) ? 2 : 1);
 		}
 		else
 		{
@@ -2487,8 +2487,8 @@ function function_ea73a995(v_color, str_ender)
 			left = vectorscale(right, -10);
 			right = vectorscale(right, 10);
 			line(self.origin, self.origin + forwardfar, v_color, 0.9);
-			line(self.origin + forwardfar, self.origin + forwardclose + right, v_color, 0.9);
-			line(self.origin + forwardfar, self.origin + forwardclose + left, v_color, 0.9);
+			line(self.origin + forwardfar, (self.origin + forwardclose) + right, v_color, 0.9);
+			line(self.origin + forwardfar, (self.origin + forwardclose) + left, v_color, 0.9);
 			wait(0.05);
 		}
 	#/
@@ -2517,18 +2517,18 @@ function function_d8db939b(str_flag, var_6e86b6bc, str_ender)
 		level endon(str_ender);
 		if(level flag::get(str_flag))
 		{
-			print("" + str_flag + "" + "");
+			print((("" + str_flag) + "") + "");
 			if(var_6e86b6bc)
 			{
-				iprintlnbold("" + str_flag + "");
+				iprintlnbold(("" + str_flag) + "");
 			}
 			return;
 		}
 		level flag::wait_till(str_flag);
-		print("" + str_flag + "" + "");
+		print((("" + str_flag) + "") + "");
 		if(var_6e86b6bc)
 		{
-			iprintlnbold("" + str_flag + "");
+			iprintlnbold(("" + str_flag) + "");
 		}
 	#/
 }
@@ -2644,7 +2644,7 @@ function function_b411d2a8()
 		level endon(#"hash_7fb84095");
 		if(!ispointonnavmesh(self.origin))
 		{
-			print("" + self.origin + "");
+			print(("" + self.origin) + "");
 			while(!ispointonnavmesh(self.origin) && function_4086bd17(self.origin))
 			{
 				sphere(self.origin, 16, (1, 0, 0));
@@ -2670,9 +2670,9 @@ function debug_spawn_points()
 		level notify(#"hash_79ca2895");
 		a_s_points = struct::get_array("");
 		var_97786609 = [];
-		foreach(i, var_81cac751 in a_s_points)
+		foreach(i, s_respawn in a_s_points)
 		{
-			var_c901c998 = struct::get_array(var_81cac751.target);
+			var_c901c998 = struct::get_array(s_respawn.target);
 			foreach(j, s_point in var_c901c998)
 			{
 				var_97786609[j] = s_point;
@@ -2811,7 +2811,7 @@ function function_3d73091f()
 {
 	/#
 		/#
-			assert(self.a_loc_types[""].size > 0, "" + self.volumes[0].targetname + "");
+			assert(self.a_loc_types[""].size > 0, ("" + self.volumes[0].targetname) + "");
 		#/
 		foreach(var_8a7576c5, a_locs in self.a_loc_types)
 		{
@@ -2839,11 +2839,11 @@ function function_2e9f38b0()
 		}
 		if(!ispointonnavmesh(self.origin) && self.script_noteworthy != "")
 		{
-			print("" + self.origin + "");
+			print(("" + self.origin) + "");
 			while(!ispointonnavmesh(self.origin))
 			{
 				sphere(self.origin, 32, (1, 0, 0));
-				print3d(self.origin + vectorscale((0, 0, 1), 16), self.origin + "" + self.script_noteworthy + "" + self.zone_name, (1, 0, 0));
+				print3d(self.origin + vectorscale((0, 0, 1), 16), (((self.origin + "") + self.script_noteworthy) + "") + self.zone_name, (1, 0, 0));
 				wait(0.05);
 			}
 		}
@@ -2947,11 +2947,11 @@ function function_7129ea51()
 		level endon(#"hash_79ca2895");
 		if(!ispointonnavmesh(self.origin))
 		{
-			print("" + self.origin + "");
+			print(("" + self.origin) + "");
 			while(!ispointonnavmesh(self.origin))
 			{
 				sphere(self.origin, 16, (1, 0, 0));
-				print3d(self.origin + vectorscale((0, 0, 1), 16), self.origin + "" + self.script_noteworthy, (1, 0, 0));
+				print3d(self.origin + vectorscale((0, 0, 1), 16), (self.origin + "") + self.script_noteworthy, (1, 0, 0));
 				wait(0.05);
 			}
 		}
@@ -2991,7 +2991,7 @@ function function_ed69d7f4()
 		level endon(#"hash_4a4c33ec");
 		if(!ispointonnavmesh(self.origin, 61.88) || function_4086bd17(self.origin))
 		{
-			print("" + self.origin + "");
+			print(("" + self.origin) + "");
 			while(true)
 			{
 				sphere(self.origin, 61.88, (1, 1, 0));
@@ -3014,7 +3014,7 @@ function function_ed69d7f4()
 function function_4086bd17(v_point)
 {
 	/#
-		a_trace = bullettrace(v_point, v_point + vectorscale((0, 0, -1), 2000), 0, undefined, 0);
+		a_trace = bullettrace(v_point, v_point + (vectorscale((0, 0, -1), 2000)), 0, undefined, 0);
 		if(distance2dsquared(a_trace[""], v_point) > 36)
 		{
 			return 1;
@@ -3185,7 +3185,7 @@ function function_b3db2cea()
 		level endon(#"hash_4a4c33ec");
 		if(!ispointonnavmesh(self.origin, 96))
 		{
-			print("" + self.origin + "");
+			print(("" + self.origin) + "");
 			while(!ispointonnavmesh(self.origin))
 			{
 				sphere(self.origin, 96, (1, 1, 0), 0.5);
@@ -3483,7 +3483,7 @@ function function_30672281()
 		{
 			for(i = 0; i < level.activeplayers.size; i++)
 			{
-				var_83c144e5 = var_2f06ca53 * 10 + 11;
+				var_83c144e5 = (var_2f06ca53 * 10) + 11;
 				if(isdefined(level.activeplayers[i]))
 				{
 					if(isgodmode(level.activeplayers[i]) && !isdefined(var_f1ef8e43[level.activeplayers[i].name]))

@@ -710,7 +710,7 @@ function get_unused_spawn_point(a_s_spawnpoints)
 	Parameters: 7
 	Flags: Linked
 */
-function function_b55ebb81(var_cde5eb87, var_2b71b5b4, var_15eb9a52, var_f92c3865, var_b4fcee85, str_notify_end, var_ee8c6a82 = 0)
+function function_b55ebb81(a_spawnpoints, var_2b71b5b4, var_15eb9a52, var_f92c3865, var_b4fcee85, str_notify_end, var_ee8c6a82 = 0)
 {
 	level notify(#"turbine_idle");
 	level endon(#"turbine_idle");
@@ -756,7 +756,7 @@ function function_b55ebb81(var_cde5eb87, var_2b71b5b4, var_15eb9a52, var_f92c386
 		{
 			var_4751753a = array::remove_dead(var_4751753a, 0);
 			level function_9b76f612("raz");
-			var_1c963231 = function_432cdad9(var_cde5eb87);
+			var_1c963231 = function_432cdad9(a_spawnpoints);
 			if(isalive(var_1c963231))
 			{
 				var_1c963231.no_powerups = 1;
@@ -842,7 +842,7 @@ function function_4334972f(str_endon, str_notify_end, var_1d9f5031)
 	Parameters: 2
 	Flags: Linked
 */
-function function_432cdad9(var_cde5eb87, var_e41e673a)
+function function_432cdad9(a_spawnpoints, var_e41e673a)
 {
 	players = getplayers();
 	var_19764360 = zm_ai_raz::get_favorite_enemy();
@@ -850,9 +850,9 @@ function function_432cdad9(var_cde5eb87, var_e41e673a)
 	{
 		s_spawn_loc = [[level.var_a3559c05]](level.var_6bca5baa, var_19764360);
 	}
-	else if(isdefined(var_cde5eb87))
+	else if(isdefined(a_spawnpoints))
 	{
-		s_spawn_loc = function_77b29938(var_cde5eb87);
+		s_spawn_loc = function_77b29938(a_spawnpoints);
 	}
 	else if(level.zm_loc_types["raz_location"].size > 0)
 	{
@@ -934,16 +934,16 @@ function function_77b29938(a_spawners, var_19764360)
 	b_all_points_used = 0;
 	if(isdefined(a_spawners))
 	{
-		var_cde5eb87 = arraycopy(a_spawners);
+		a_spawnpoints = arraycopy(a_spawners);
 	}
 	else
 	{
-		var_cde5eb87 = arraycopy(level.zm_loc_types["raz_location"]);
+		a_spawnpoints = arraycopy(level.zm_loc_types["raz_location"]);
 	}
 	a_valid_spawn_points = [];
 	while(!a_valid_spawn_points.size)
 	{
-		foreach(var_d2788ed5, s_spawn_point in var_cde5eb87)
+		foreach(var_d2788ed5, s_spawn_point in a_spawnpoints)
 		{
 			if(!isdefined(s_spawn_point.spawned_zombie) || b_all_points_used)
 			{
@@ -1113,16 +1113,16 @@ function function_383b110b(a_spawners)
 	b_all_points_used = 0;
 	if(isdefined(a_spawners))
 	{
-		var_cde5eb87 = arraycopy(a_spawners);
+		a_spawnpoints = arraycopy(a_spawners);
 	}
 	else
 	{
-		var_cde5eb87 = arraycopy(level.zm_loc_types["sentinel_location"]);
+		a_spawnpoints = arraycopy(level.zm_loc_types["sentinel_location"]);
 	}
 	a_valid_spawn_points = [];
 	while(!a_valid_spawn_points.size)
 	{
-		foreach(var_2a70c54a, s_spawn_point in var_cde5eb87)
+		foreach(var_2a70c54a, s_spawn_point in a_spawnpoints)
 		{
 			if(!isdefined(s_spawn_point.var_1565f394) || b_all_points_used)
 			{
@@ -1426,7 +1426,7 @@ function function_4da6e8(b_open)
 	Parameters: 2
 	Flags: Linked
 */
-function function_903f6b36(var_3d2579d3, str_identifier = undefined)
+function function_903f6b36(b_turn_on, str_identifier = undefined)
 {
 	if(!isdefined(str_identifier))
 	{
@@ -1437,7 +1437,7 @@ function function_903f6b36(var_3d2579d3, str_identifier = undefined)
 	{
 		var_144a9df9 = getentarray(str_identifier + "_switch", "targetname");
 	}
-	if(var_3d2579d3)
+	if(b_turn_on)
 	{
 		str_scene = "p7_fxanim_zm_stal_power_switch_on_bundle";
 		exploder::exploder(str_identifier + "_red");
@@ -1452,7 +1452,7 @@ function function_903f6b36(var_3d2579d3, str_identifier = undefined)
 		e_switch thread scene::play(str_scene, e_switch);
 	}
 	wait(1);
-	if(!var_3d2579d3)
+	if(!b_turn_on)
 	{
 		exploder::exploder(str_identifier + "_green");
 		exploder::stop_exploder(str_identifier + "_red");

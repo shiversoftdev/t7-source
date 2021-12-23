@@ -764,7 +764,7 @@ function exit_ground()
 		self thread ragdoll_dead_exit_rider();
 	}
 	/#
-		assert(isstring(self.rider_info.exitgroundanim), "" + self.rider_info.position + "");
+		assert(isstring(self.rider_info.exitgroundanim), ("" + self.rider_info.position) + "");
 	#/
 	if(isstring(self.rider_info.exitgroundanim))
 	{
@@ -785,7 +785,7 @@ function exit_low()
 {
 	self animation::set_death_anim(self.rider_info.exitlowdeathanim);
 	/#
-		assert(isdefined(self.rider_info.exitlowanim), "" + self.rider_info.position + "");
+		assert(isdefined(self.rider_info.exitlowanim), ("" + self.rider_info.position) + "");
 	#/
 	animation::play(self.rider_info.exitlowanim, self.vehicle, self.rider_info.aligntag);
 }
@@ -829,9 +829,9 @@ private function forward_euler_integration(e_move, v_target_landing, n_initial_s
 	while(!landed)
 	{
 		previousposition = position;
-		velocity = velocity + gravity * integrationstep;
-		position = position + velocity * integrationstep;
-		if(position[2] + velocity[2] * integrationstep <= v_target_landing[2])
+		velocity = velocity + (gravity * integrationstep);
+		position = position + (velocity * integrationstep);
+		if((position[2] + (velocity[2] * integrationstep)) <= v_target_landing[2])
 		{
 			landed = 1;
 			position = v_target_landing;
@@ -865,7 +865,7 @@ function exit_variable()
 	self thread handle_falling_death();
 	self animation::set_death_anim(self.rider_info.exithighdeathanim);
 	/#
-		assert(isdefined(self.rider_info.exithighanim), "" + self.rider_info.position + "");
+		assert(isdefined(self.rider_info.exithighanim), ("" + self.rider_info.position) + "");
 	#/
 	animation::play(self.rider_info.exithighanim, self.vehicle, self.rider_info.aligntag, 1, 0, 0);
 	self animation::set_death_anim(self.rider_info.exithighloopdeathanim);
@@ -874,11 +874,11 @@ function exit_variable()
 	n_target_height = bundle.highexitlandheight;
 	if(isdefined(self.rider_info.dropundervehicleorigin) && self.rider_info.dropundervehicleorigin || (isdefined(self.dropundervehicleoriginoverride) && self.dropundervehicleoriginoverride))
 	{
-		v_target_landing = (self.vehicle.origin[0], self.vehicle.origin[1], self.origin[2] - n_cur_height + n_target_height);
+		v_target_landing = (self.vehicle.origin[0], self.vehicle.origin[1], (self.origin[2] - n_cur_height) + n_target_height);
 	}
 	else
 	{
-		v_target_landing = (self.origin[0], self.origin[1], self.origin[2] - n_cur_height + n_target_height);
+		v_target_landing = (self.origin[0], self.origin[1], (self.origin[2] - n_cur_height) + n_target_height);
 	}
 	if(isdefined(self.overridedropposition))
 	{
@@ -897,7 +897,7 @@ function exit_variable()
 	distance = n_target_height - n_cur_height;
 	initialspeed = bundle.dropspeed;
 	acceleration = 385.8;
-	n_fall_time = initialspeed * -1 + sqrt(pow(initialspeed, 2) - 2 * acceleration * distance) / acceleration;
+	n_fall_time = (initialspeed * -1) + (sqrt(pow(initialspeed, 2) - ((2 * acceleration) * distance))) / acceleration;
 	self notify(#"falling", n_fall_time);
 	forward_euler_integration(e_move, v_target_landing, bundle.dropspeed);
 	e_move waittill(#"movedone");
@@ -940,7 +940,7 @@ function exit_high_loop_anim(e_parent)
 */
 function get_height(e_ignore = self)
 {
-	trace = groundtrace(self.origin + (0, 0, 10), self.origin + vectorscale((0, 0, -1), 10000), 0, e_ignore, 0);
+	trace = groundtrace(self.origin + (0, 0, 10), self.origin + (vectorscale((0, 0, -1), 10000)), 0, e_ignore, 0);
 	/#
 		recordline(self.origin + (0, 0, 10), trace[""], (1, 0.5, 0), "", self);
 	#/

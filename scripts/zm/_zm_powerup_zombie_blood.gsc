@@ -168,7 +168,7 @@ function zombie_blood_powerup(var_bae0d10b, e_player)
 	e_player notify(#"zombie_blood_over");
 	if(isdefined(e_player.characterindex))
 	{
-		e_player playsound("vox_plr_" + e_player.characterindex + "_exert_grunt_" + randomintrange(0, 3));
+		e_player playsound((("vox_plr_" + e_player.characterindex) + "_exert_grunt_") + randomintrange(0, 3));
 	}
 	e_player.m_fx delete();
 	visionset_mgr::deactivate("visionset", "zm_tomb_in_plain_sight", e_player);

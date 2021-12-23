@@ -85,9 +85,9 @@ function function_16f0344e()
 	level flag::init("pap_whistle");
 	level flag::init("pap_wheel");
 	level.var_12542033 = 0;
-	foreach(var_9fb8dcf8, var_3ea1611f in struct::get_array("pap_water_control"))
+	foreach(var_9fb8dcf8, s_valve in struct::get_array("pap_water_control"))
 	{
-		var_3ea1611f thread function_dd9ccb8(var_3ea1611f.script_int);
+		s_valve thread function_dd9ccb8(s_valve.script_int);
 	}
 	level thread function_aa37ce2d();
 	level scene::add_scene_func("p7_fxanim_zm_island_pap_elements_gauge_bundle", &function_b6d4787d, "init");
@@ -506,7 +506,7 @@ function function_c762197b()
 		ai_zombie.deathpoints_already_given = 1;
 		ai_zombie thread zm_island_util::function_acd04dc9();
 		wait(0.1);
-		self thread scene::play("zm_dlc2_zombie_spawn_cocoon_v" + randomint(3) + 1, ai_zombie);
+		self thread scene::play("zm_dlc2_zombie_spawn_cocoon_v" + (randomint(3) + 1), ai_zombie);
 	}
 }
 
@@ -554,7 +554,7 @@ function function_bd8082d1()
 function function_7a0ede5()
 {
 	self playloopsound("zmb_cocoon_lp", 1);
-	playsoundatposition("evt_cocoon_explode", self.origin + vectorscale((0, 0, -1), 100));
+	playsoundatposition("evt_cocoon_explode", self.origin + (vectorscale((0, 0, -1), 100)));
 	self stoploopsound();
 	if(isdefined(self.var_166a0518))
 	{
@@ -597,7 +597,7 @@ function function_b09adc86(str_mod)
 */
 function function_14c57bc9()
 {
-	mdl_part = util::spawn_model("p7_zm_isl_pap_elements_gauge", self.origin + vectorscale((0, 0, -1), 154));
+	mdl_part = util::spawn_model("p7_zm_isl_pap_elements_gauge", self.origin + (vectorscale((0, 0, -1), 154)));
 	mdl_part clientfield::set("show_part", 1);
 	mdl_part setscale(1.5);
 	mdl_part.trigger = zm_island_util::spawn_trigger_radius(mdl_part.origin, 50, 1, &function_9bd3096f);
@@ -634,9 +634,9 @@ function function_f4a071bb()
 	level.mdl_clip = getent("defend_clip", "targetname");
 	level.mdl_clip notsolid();
 	level.mdl_clip connectpaths();
-	var_a2365998 = struct::get("valvethree_part_lever");
-	s_pos = struct::get(var_a2365998.target);
-	level.var_ced49fc = util::spawn_model("p7_zm_isl_pap_elements_whistle", var_a2365998.origin, var_a2365998.angles);
+	s_part = struct::get("valvethree_part_lever");
+	s_pos = struct::get(s_part.target);
+	level.var_ced49fc = util::spawn_model("p7_zm_isl_pap_elements_whistle", s_part.origin, s_part.angles);
 	level.var_ced49fc setscale(1.5);
 	level.var_ced49fc.v_org = s_pos.origin;
 	level.var_ced49fc.v_ang = s_pos.angles;

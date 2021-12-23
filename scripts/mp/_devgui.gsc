@@ -135,8 +135,8 @@ function devgui_player_spawn()
 			{
 				continue;
 			}
-			temp = player_devgui_base_mp + player.playername + "" + "" + "" + player.playername + "";
-			adddebugcommand(player_devgui_base_mp + player.playername + "" + "" + "" + player.playername + "");
+			temp = (((((player_devgui_base_mp + player.playername) + "") + "") + "") + player.playername) + "";
+			adddebugcommand((((((player_devgui_base_mp + player.playername) + "") + "") + "") + player.playername) + "");
 		}
 	#/
 }
@@ -267,19 +267,19 @@ function devgui_player_weapons()
 		menu_index++;
 		game[""] = 1;
 		wait(0.05);
-		adddebugcommand(player_devgui_base_mp + "" + "" + "" + "");
+		adddebugcommand((((player_devgui_base_mp + "") + "") + "") + "");
 		menu_index++;
-		adddebugcommand(player_devgui_base_mp + "" + "" + "" + "");
+		adddebugcommand((((player_devgui_base_mp + "") + "") + "") + "");
 		menu_index++;
-		adddebugcommand(player_devgui_base_mp + "" + "" + "" + "");
+		adddebugcommand((((player_devgui_base_mp + "") + "") + "") + "");
 		menu_index++;
-		acv_devgui_base_mp = player_devgui_base_mp + "" + "";
+		acv_devgui_base_mp = (player_devgui_base_mp + "") + "";
 		menu_index++;
 		acv_menu_index = 1;
 		acv_sub_menu_index = 1;
 		for(i = 0; i <= 3; i++)
 		{
-			adddebugcommand(acv_devgui_base_mp + "" + "" + i + "" + "" + "" + i + "");
+			adddebugcommand((((((((acv_devgui_base_mp + "") + "") + i) + "") + "") + "") + i) + "");
 			acv_sub_menu_index++;
 		}
 		acv_menu_index++;
@@ -292,7 +292,7 @@ function devgui_player_weapons()
 				continue;
 			}
 			function_27141585();
-			adddebugcommand(acv_devgui_base_mp + "" + "" + attachmentnames[i] + "" + "" + "" + attachmentnames[i] + "");
+			adddebugcommand((((((((acv_devgui_base_mp + "") + "") + attachmentnames[i]) + "") + "") + "") + attachmentnames[i]) + "");
 			acv_sub_menu_index++;
 		}
 		acv_menu_index++;
@@ -304,18 +304,18 @@ function devgui_player_weapons()
 				continue;
 			}
 			function_27141585();
-			adddebugcommand(acv_devgui_base_mp + "" + "" + attachmentnames[i] + "" + "" + "" + attachmentnames[i] + "");
+			adddebugcommand((((((((acv_devgui_base_mp + "") + "") + attachmentnames[i]) + "") + "") + "") + attachmentnames[i]) + "");
 			acv_sub_menu_index++;
 		}
 		acv_menu_index++;
 		wait(0.05);
-		attachment_cycling_devgui_base_mp = player_devgui_base_mp + "" + "";
-		adddebugcommand(attachment_cycling_devgui_base_mp + "" + "" + "");
-		adddebugcommand(attachment_cycling_devgui_base_mp + "" + "" + "");
+		attachment_cycling_devgui_base_mp = (player_devgui_base_mp + "") + "";
+		adddebugcommand(((attachment_cycling_devgui_base_mp + "") + "") + "");
+		adddebugcommand(((attachment_cycling_devgui_base_mp + "") + "") + "");
 		for(i = 0; i < 6; i++)
 		{
 			attachment_cycling_sub_menu_index = 1;
-			adddebugcommand(attachment_cycling_devgui_base_mp + "" + i + 1 + "" + "" + "" + i + "");
+			adddebugcommand((((((attachment_cycling_devgui_base_mp + "") + (i + 1) + "") + "") + "") + i) + "");
 			for(attachmentname = 0; attachmentname < attachmentnames.size; attachmentname++)
 			{
 				if(issubstr(attachmentnames[attachmentname], ""))
@@ -323,9 +323,9 @@ function devgui_player_weapons()
 					continue;
 				}
 				function_27141585();
-				adddebugcommand(attachment_cycling_devgui_base_mp + "" + i + 1 + "" + attachmentnames[attachmentname] + "" + "" + "" + level.attachment_cycling_dvars[i] + "" + attachmentnames[attachmentname] + "" + level.acv_cycling_dvars[i] + "" + 0 + "");
+				adddebugcommand((((((((((((((attachment_cycling_devgui_base_mp + "") + (i + 1) + "") + attachmentnames[attachmentname]) + "") + "") + "") + level.attachment_cycling_dvars[i]) + "") + attachmentnames[attachmentname]) + "") + level.acv_cycling_dvars[i]) + "") + 0) + "");
 				attachment_cycling_sub_menu_index++;
-				adddebugcommand(attachment_cycling_devgui_base_mp + "" + i + 1 + "" + attachmentnames[attachmentname] + "" + "" + "" + level.attachment_cycling_dvars[i] + "" + attachmentnames[attachmentname] + "" + level.acv_cycling_dvars[i] + "" + 1 + "");
+				adddebugcommand((((((((((((((attachment_cycling_devgui_base_mp + "") + (i + 1) + "") + attachmentnames[attachmentname]) + "") + "") + "") + level.attachment_cycling_dvars[i]) + "") + attachmentnames[attachmentname]) + "") + level.acv_cycling_dvars[i]) + "") + 1) + "");
 				attachment_cycling_sub_menu_index++;
 			}
 		}
@@ -350,7 +350,7 @@ function devgui_add_player_weapons(root, pname, index, a_weapons, weapon_type, m
 		{
 			return;
 		}
-		devgui_root = root + weapon_type + "";
+		devgui_root = (root + weapon_type) + "";
 		if(isdefined(a_weapons))
 		{
 			for(i = 0; i < a_weapons.size; i++)
@@ -359,12 +359,12 @@ function devgui_add_player_weapons(root, pname, index, a_weapons, weapon_type, m
 				name = a_weapons[i].name;
 				if(attachments.size)
 				{
-					devgui_add_player_weap_command(devgui_root + name + "", index, name, i + 1);
+					devgui_add_player_weap_command((devgui_root + name) + "", index, name, i + 1);
 					foreach(var_d8bff18b, att in attachments)
 					{
 						if(att != "")
 						{
-							devgui_add_player_weap_command(devgui_root + name + "", index, name + "" + att, i + 1);
+							devgui_add_player_weap_command((devgui_root + name) + "", index, (name + "") + att, i + 1);
 						}
 					}
 				}
@@ -395,7 +395,7 @@ function function_27141585()
 			level.var_f842514b = 0;
 		}
 		level.var_f842514b++;
-		if(level.var_f842514b % 10 == 0)
+		if((level.var_f842514b % 10) == 0)
 		{
 			wait(randomintrange(2, 5) * 0.05);
 		}
@@ -415,7 +415,7 @@ function devgui_add_player_weap_command(root, pid, weap_name, cmdindex)
 {
 	/#
 		function_27141585();
-		adddebugcommand(root + weap_name + "" + "" + "" + weap_name + "");
+		adddebugcommand((((((root + weap_name) + "") + "") + "") + weap_name) + "");
 	#/
 }
 

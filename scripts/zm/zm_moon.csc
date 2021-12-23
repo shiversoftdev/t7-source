@@ -190,7 +190,7 @@ function lock_model(model)
 }
 
 /*
-	Name: function_e750888f
+	Name: unlock_model
 	Namespace: zm_moon
 	Checksum: 0x3369B572
 	Offset: 0x1EC8
@@ -198,7 +198,7 @@ function lock_model(model)
 	Parameters: 1
 	Flags: None
 */
-function function_e750888f(model)
+function unlock_model(model)
 {
 	if(isdefined(model))
 	{
@@ -284,7 +284,7 @@ function register_clientfields()
 	clientfield::register("clientuimodel", "hudItems.showDpadDown_HackTool", 21000, 1, "int", undefined, 0, 0);
 	for(i = 0; i < 4; i++)
 	{
-		registerclientfield("world", "player" + i + "wearableItem", 21000, 1, "int", &zm_utility::setsharedinventoryuimodels, 0);
+		registerclientfield("world", ("player" + i) + "wearableItem", 21000, 1, "int", &zm_utility::setsharedinventoryuimodels, 0);
 	}
 }
 

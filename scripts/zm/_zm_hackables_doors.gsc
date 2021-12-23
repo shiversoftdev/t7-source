@@ -26,7 +26,7 @@ function door_struct_debug()
 		point = origin;
 		for(i = 1; i < 5; i++)
 		{
-			point = origin + anglestoforward(self.door.angles) * i * 2;
+			point = origin + (anglestoforward(self.door.angles) * (i * 2));
 			passed = bullettracepassed(point, origin, 0, undefined);
 			color = vectorscale((0, 1, 0), 255);
 			if(!passed)
@@ -56,7 +56,7 @@ function hack_doors(targetname = "zombie_door", door_activate_func = &zm_blocker
 	{
 		door = doors[i];
 		struct = spawnstruct();
-		struct.origin = door.origin + anglestoforward(door.angles) * 2;
+		struct.origin = door.origin + (anglestoforward(door.angles) * 2);
 		struct.radius = 48;
 		struct.height = 72;
 		struct.script_float = 32.7;

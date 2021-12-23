@@ -207,7 +207,7 @@ function craftables_watch_swipes()
 	while(true)
 	{
 		self waittill(#"melee_swipe", zombie);
-		if(distancesquared(zombie.origin, self.origin) > zombie.meleeattackdist * zombie.meleeattackdist)
+		if(distancesquared(zombie.origin, self.origin) > (zombie.meleeattackdist * zombie.meleeattackdist))
 		{
 			continue;
 		}
@@ -246,7 +246,7 @@ function craftables_watch_swipes()
 function explosiondamage(damage, pos)
 {
 	/#
-		println("" + damage + "" + self.name + "");
+		println(((("" + damage) + "") + self.name) + "");
 	#/
 	self dodamage(damage, pos);
 }
@@ -263,7 +263,7 @@ function explosiondamage(damage, pos)
 function make_zombie_craftable_open(str_craftable, str_model, v_angle_offset, v_origin_offset)
 {
 	/#
-		assert(isdefined(level.zombie_craftablestubs[str_craftable]), "" + str_craftable + "");
+		assert(isdefined(level.zombie_craftablestubs[str_craftable]), ("" + str_craftable) + "");
 	#/
 	s_craftable = level.zombie_craftablestubs[str_craftable];
 	s_craftable.is_open_table = 1;
@@ -437,7 +437,7 @@ function generate_zombie_craftable_piece(craftablename, piecename, radius, heigh
 			assertmsg("");
 		#/
 	}
-	craftable_pieces_structs = struct::get_array(craftablename + "_" + piecename, "targetname");
+	craftable_pieces_structs = struct::get_array((craftablename + "_") + piecename, "targetname");
 	if(!isdefined(level.craftablepieceindex))
 	{
 		level.craftablepieceindex = 0;
@@ -479,7 +479,7 @@ function generate_zombie_craftable_piece(craftablename, piecename, radius, heigh
 		if(isdefined(is_shared) && is_shared)
 		{
 			/#
-				assert(isstring(client_field_value), "" + piecename + "");
+				assert(isstring(client_field_value), ("" + piecename) + "");
 			#/
 			piecestub.client_field_id = client_field_value;
 		}
@@ -952,7 +952,7 @@ function player_throw_piece(piece, origin, dir, return_to_spawn, return_time, en
 			else
 			{
 				origin = grenade_origin;
-				dir = (dir[0] * -1 / 10, dir[1] * -1 / 10, -1);
+				dir = ((dir[0] * -1) / 10, (dir[1] * -1) / 10, -1);
 				pass++;
 			}
 		}
@@ -1795,7 +1795,7 @@ function setup_unitrigger_craftable_internal(trig, equipname, weaponname, trigge
 	{
 		angles = (0, 0, 0);
 	}
-	unitrigger_stub.origin = trig.origin + anglestoright(angles) * -6;
+	unitrigger_stub.origin = trig.origin + (anglestoright(angles) * -6);
 	unitrigger_stub.angles = trig.angles;
 	if(isdefined(trig.script_angles))
 	{
@@ -2915,7 +2915,7 @@ function player_continue_crafting(craftablespawn, slot)
 	{
 		torigin = craftablespawn.stub zm_unitrigger::unitrigger_origin();
 		porigin = self geteye();
-		radius_sq = 2.25 * craftablespawn.stub.radius * craftablespawn.stub.radius;
+		radius_sq = (2.25 * craftablespawn.stub.radius) * craftablespawn.stub.radius;
 		if(distance2dsquared(torigin, porigin) > radius_sq)
 		{
 			return 0;
@@ -2947,9 +2947,9 @@ function player_progress_bar_update(start_time, craft_time)
 	self endon(#"death");
 	self endon(#"disconnect");
 	self endon(#"craftable_progress_end");
-	while(isdefined(self) && gettime() - start_time < craft_time)
+	while(isdefined(self) && (gettime() - start_time) < craft_time)
 	{
-		progress = gettime() - start_time / craft_time;
+		progress = (gettime() - start_time) / craft_time;
 		if(progress < 0)
 		{
 			progress = 0;
@@ -3039,7 +3039,7 @@ function craftable_use_hold_think_internal(player, slot = self.stub.craftablespa
 		{
 			player thread [[level.craftable_craft_custom_func]](self.stub);
 		}
-		while(isdefined(self) && player player_continue_crafting(self.stub.craftablespawn, slot) && gettime() - self.craft_start_time < self.craft_time)
+		while(isdefined(self) && player player_continue_crafting(self.stub.craftablespawn, slot) && (gettime() - self.craft_start_time) < self.craft_time)
 		{
 			wait(0.05);
 		}
@@ -3052,7 +3052,7 @@ function craftable_use_hold_think_internal(player, slot = self.stub.craftablespa
 		}
 		player zm_utility::enable_player_move_states();
 	}
-	if(isdefined(self) && player player_continue_crafting(self.stub.craftablespawn, slot) && (self.craft_time <= 0 || gettime() - self.craft_start_time >= self.craft_time))
+	if(isdefined(self) && player player_continue_crafting(self.stub.craftablespawn, slot) && (self.craft_time <= 0 || (gettime() - self.craft_start_time) >= self.craft_time))
 	{
 		if(isdefined(slot))
 		{
@@ -4230,7 +4230,7 @@ function track_craftables_pickedup(craftable)
 	if(!isdefined(stat_name))
 	{
 		/#
-			println("" + craftable.craftable_name + "");
+			println(("" + craftable.craftable_name) + "");
 		#/
 		return;
 	}
@@ -4268,7 +4268,7 @@ function track_craftables_planted(equipment)
 	if(!isdefined(craftable_name))
 	{
 		/#
-			println("" + equipment.name + "");
+			println(("" + equipment.name) + "");
 		#/
 		return;
 	}
@@ -4809,7 +4809,7 @@ function add_craftable_cheat(craftable)
 		}
 		if(isdefined(craftable.weaponname))
 		{
-			str_cmd = "" + craftable.name + "" + craftable.weaponname + "";
+			str_cmd = ((("" + craftable.name) + "") + craftable.weaponname) + "";
 			adddebugcommand(str_cmd);
 		}
 		if(!isdefined(craftable.a_piecestubs))
@@ -4845,21 +4845,21 @@ function add_craftable_cheat(craftable)
 			{
 				if(token != "" && token != "")
 				{
-					display_string = display_string + "" + token;
+					display_string = (display_string + "") + token;
 				}
 			}
 			level.cheat_craftables["" + client_field_val] = s_piece;
-			str_cmd = "" + craftable.name + "" + display_string + "" + client_field_val + "";
+			str_cmd = ((((("" + craftable.name) + "") + display_string) + "") + client_field_val) + "";
 			adddebugcommand(str_cmd);
-			str_cmd = "" + craftable.name + "" + display_string + "" + client_field_val + "";
+			str_cmd = ((((("" + craftable.name) + "") + display_string) + "") + client_field_val) + "";
 			adddebugcommand(str_cmd);
-			str_cmd = "" + craftable.name + "" + display_string + "" + client_field_val + "";
+			str_cmd = ((((("" + craftable.name) + "") + display_string) + "") + client_field_val) + "";
 			adddebugcommand(str_cmd);
-			str_cmd = "" + craftable.name + "" + display_string + "" + client_field_val + "";
+			str_cmd = ((((("" + craftable.name) + "") + display_string) + "") + client_field_val) + "";
 			adddebugcommand(str_cmd);
-			str_cmd = "" + craftable.name + "" + display_string + "" + client_field_val + "";
+			str_cmd = ((((("" + craftable.name) + "") + display_string) + "") + client_field_val) + "";
 			adddebugcommand(str_cmd);
-			str_cmd = "" + craftable.name + "" + display_string + "" + s_piece.craftablename + "";
+			str_cmd = ((((("" + craftable.name) + "") + display_string) + "") + s_piece.craftablename) + "";
 			adddebugcommand(str_cmd);
 			s_piece.waste = "";
 		}

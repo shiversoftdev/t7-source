@@ -176,16 +176,16 @@ private function setup_devgui()
 		setdvar("", 0);
 		setdvar("", 0);
 		bgb_devgui_base = "";
-		adddebugcommand(bgb_devgui_base + "" + "" + "");
+		adddebugcommand(((bgb_devgui_base + "") + "") + "");
 		keys = getarraykeys(level.bgb);
 		for(i = 0; i < keys.size; i++)
 		{
-			adddebugcommand(bgb_devgui_base + "" + keys[i] + "" + "" + "" + keys[i] + "");
+			adddebugcommand(((((((bgb_devgui_base + "") + keys[i]) + "") + "") + "") + keys[i]) + "");
 		}
-		adddebugcommand(bgb_devgui_base + "" + "" + "");
-		adddebugcommand(bgb_devgui_base + "" + "" + "");
-		adddebugcommand(bgb_devgui_base + "" + "" + "");
-		adddebugcommand(bgb_devgui_base + "" + "" + "");
+		adddebugcommand(((bgb_devgui_base + "") + "") + "");
+		adddebugcommand(((bgb_devgui_base + "") + "") + "");
+		adddebugcommand(((bgb_devgui_base + "") + "") + "");
+		adddebugcommand(((bgb_devgui_base + "") + "") + "");
 		level thread function_95dc1528();
 	#/
 }
@@ -376,7 +376,7 @@ function function_c4ed49b()
 	self.unitrigger_stub.script_width = 30;
 	self.unitrigger_stub.script_height = 70;
 	self.unitrigger_stub.script_length = 25;
-	self.unitrigger_stub.origin = self.origin + anglestoright(self.angles) * self.unitrigger_stub.script_length + anglestoup(self.angles) * self.unitrigger_stub.script_height / 2;
+	self.unitrigger_stub.origin = (self.origin + (anglestoright(self.angles) * self.unitrigger_stub.script_length)) + (anglestoup(self.angles) * (self.unitrigger_stub.script_height / 2));
 	self.unitrigger_stub.angles = self.angles;
 	self.unitrigger_stub.script_unitrigger_type = "unitrigger_box_use";
 	self.unitrigger_stub.trigger_target = self;
@@ -443,7 +443,7 @@ function function_6c7a96b4(player, base_cost)
 		var_33ea806b = floor(level.round_number / level.var_e1dee7ba);
 		var_33ea806b = math::clamp(var_33ea806b, 0, level.var_8ef45dc2);
 		var_39a90c5a = pow(level.var_a3e3127d, var_33ea806b);
-		cost = cost + level.var_f02c5598 * var_39a90c5a;
+		cost = cost + (level.var_f02c5598 * var_39a90c5a);
 	}
 	if(player.var_85da8a33 >= 2)
 	{
@@ -452,7 +452,7 @@ function function_6c7a96b4(player, base_cost)
 	cost = int(cost);
 	if(500 != base_cost)
 	{
-		cost = cost - 500 - base_cost;
+		cost = cost - (500 - base_cost);
 	}
 	return cost;
 }

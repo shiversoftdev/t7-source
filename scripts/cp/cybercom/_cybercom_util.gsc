@@ -270,7 +270,7 @@ function function_8b088b97(cybercore_type)
 		{
 			upgraded = self function_cc812e3b(ability.name);
 			self setcybercomability(ability.name, upgraded);
-			debugmsg(ability.name + " UPGRADED: " + upgraded);
+			debugmsg((ability.name + " UPGRADED: ") + upgraded);
 			continue;
 		}
 		debugmsg(ability.name + " NOT INSTALLED");
@@ -324,7 +324,7 @@ function function_1adaa876(var_e4230c26, var_f4132a83)
 		return;
 	}
 	var_d66f8a9e = int(self getdstat("PlayerStatsList", "LAST_CYBERCOM_EQUIPPED", "statValue"));
-	var_2324b7c = var_d66f8a9e & 1024 - 1;
+	var_2324b7c = var_d66f8a9e & (1024 - 1);
 	var_768ee804 = var_d66f8a9e >> 10;
 	self function_1e4531c7(var_e4230c26);
 	if(isdefined(var_f4132a83) && var_f4132a83 && var_2324b7c > 99 && var_2324b7c < 142)
@@ -338,7 +338,7 @@ function function_1adaa876(var_e4230c26, var_f4132a83)
 				self setcybercomactivetype(var_b5725157.type);
 				self.var_768ee804 = var_768ee804;
 				self cybercom_gadget::equipability(var_b5725157.name, 0);
-				self setcontrolleruimodelvalue("AbilityWheel.Selected" + var_b5725157.type + 1, self.var_768ee804);
+				self setcontrolleruimodelvalue("AbilityWheel.Selected" + (var_b5725157.type + 1), self.var_768ee804);
 				return;
 			}
 		}
@@ -353,7 +353,7 @@ function function_1adaa876(var_e4230c26, var_f4132a83)
 		{
 			self.var_768ee804 = abilityindex;
 			self cybercom_gadget::equipability(ability.name, 0);
-			self setcontrolleruimodelvalue("AbilityWheel.Selected" + ability.type + 1, abilityindex);
+			self setcontrolleruimodelvalue("AbilityWheel.Selected" + (ability.type + 1), abilityindex);
 			return;
 		}
 		abilityindex++;
@@ -371,7 +371,7 @@ function function_1adaa876(var_e4230c26, var_f4132a83)
 */
 function function_6e0bf068()
 {
-	return self.cur_ranknum + 1 >= 20 || (isdefined(self.var_8201758a) && (isdefined(self.var_8201758a) && self.var_8201758a));
+	return (self.cur_ranknum + 1) >= 20 || (isdefined(self.var_8201758a) && (isdefined(self.var_8201758a) && self.var_8201758a));
 }
 
 /*
@@ -488,8 +488,8 @@ function function_4b8ac464(class_num, class_num_for_global_weapons, var_f4132a83
 		self savegame::set_player_data("saved_rig2", var_1aca16ad);
 		self savegame::set_player_data("saved_rig2_upgraded", var_2e518e8);
 	}
-	debugmsg("RIG1: " + var_40cc9116 + " UPGRADED:" + var_65303699);
-	debugmsg("RIG2: " + var_1aca16ad + " UPGRADED:" + var_2e518e8);
+	debugmsg((("RIG1: " + var_40cc9116) + " UPGRADED:") + var_65303699);
+	debugmsg((("RIG2: " + var_1aca16ad) + " UPGRADED:") + var_2e518e8);
 	self thread function_674d724c(class_num_for_global_weapons, var_f4132a83);
 }
 
@@ -761,7 +761,7 @@ private function _lock_sighttest(target, var_b3464abe = 1)
 	{
 		mins = target getmins();
 		maxs = target getmaxs();
-		var_d11e725f = maxs[2] - mins[2] / 4;
+		var_d11e725f = (maxs[2] - mins[2]) / 4;
 		for(i = 0; i <= 4; i++)
 		{
 			pos = target.origin + (0, 0, var_d11e725f * i);
@@ -787,11 +787,11 @@ private function _lock_sighttest(target, var_b3464abe = 1)
 			}
 		}
 		var_cb365fdc = target.cybercom.var_8d2f4636[self getentitynumber()];
-		if(isdefined(var_cb365fdc) && var_cb365fdc + getdvarint("scr_los_latency", 3000) > gettime())
+		if(isdefined(var_cb365fdc) && (var_cb365fdc + getdvarint("scr_los_latency", 3000)) > gettime())
 		{
 			trace = bullettrace(eyepos, pos, 0, target);
 			distsq = distancesquared(pos, trace["position"]);
-			if(distsq <= getdvarint("scr_cached_dist_threshhold", 315 * 315))
+			if(distsq <= (getdvarint("scr_cached_dist_threshhold", 315 * 315)))
 			{
 				return 2;
 			}
@@ -907,7 +907,7 @@ function weapon_lock_meetsrangerequirement(target, maxrange, weapon)
 	if(isdefined(maxrange))
 	{
 		distancesqr = distancesquared(target.origin, self.origin);
-		if(distancesqr > maxrange * maxrange)
+		if(distancesqr > (maxrange * maxrange))
 		{
 			return 0;
 		}
@@ -944,7 +944,7 @@ function weapon_lock_meetsrequirement(target, radius, weapon, maxrange)
 	if(isdefined(maxrange))
 	{
 		distancesqr = distancesquared(target.origin, self.origin);
-		if(distancesqr > maxrange * maxrange)
+		if(distancesqr > (maxrange * maxrange))
 		{
 			self function_29bf9dee(target, 3);
 			return 0;
@@ -963,7 +963,7 @@ function weapon_lock_meetsrequirement(target, radius, weapon, maxrange)
 	if(isdefined(radius))
 	{
 		distsq = distancesquared(self.origin, target.origin);
-		if(distsq > 144 * 144)
+		if(distsq > (144 * 144))
 		{
 			result = target_isincircle(target, self, 65, radius);
 		}
@@ -1115,13 +1115,13 @@ function weapon_lock_settargettoslot(slot, target, maxrange, weapon)
 				newitem.target.var_9d876bed = gettime() - newitem.target.var_6c8af4c4;
 				newitem.target.lockon_owner = self;
 				newitem.target notify(#"hash_1bf7ef5");
-				var_9df7c303 = newitem.target.var_6c8af4c4 / newitem.target.var_9147087d[self.cybercom.lastequipped.name] * 1000;
+				var_9df7c303 = newitem.target.var_6c8af4c4 / (newitem.target.var_9147087d[self.cybercom.lastequipped.name] * 1000);
 				function_eae88e7f(self, newitem.target.var_9147087d[self.cybercom.lastequipped.name], var_9df7c303);
 				level thread function_9641f650(self);
 			}
 			if(isdefined(newitem.target.lockon_owner) && newitem.target.lockon_owner == self)
 			{
-				newitem.target.var_1e1a5e6f = math::clamp(gettime() - newitem.target.var_9d876bed / newitem.target.var_9147087d[self.cybercom.lastequipped.name] * 1000, 0, 1);
+				newitem.target.var_1e1a5e6f = math::clamp((gettime() - newitem.target.var_9d876bed) / (newitem.target.var_9147087d[self.cybercom.lastequipped.name] * 1000), 0, 1);
 			}
 		}
 		self weaponlockstart(newitem.target, newitem.lockslot);
@@ -1179,7 +1179,7 @@ function function_eae88e7f(hacker, duration, startratio)
 	if(startratio > 0)
 	{
 		cur = math::clamp(startratio, 0, 1);
-		offset = int(cur * 128) << 5;
+		offset = (int(cur * 128)) << 5;
 		val = val + offset;
 	}
 	hacker clientfield::set_to_player("hacking_progress", val);
@@ -1428,7 +1428,7 @@ function function_5ad57748()
 	self notify(#"hash_5ad57748");
 	self endon(#"hash_5ad57748");
 	self endon(#"hash_1bf7ef5");
-	var_82361971 = int(getdvarfloat("scr_hacktime_decay_rate", 0.25) / 20 * 1000);
+	var_82361971 = int((getdvarfloat("scr_hacktime_decay_rate", 0.25) / 20) * 1000);
 	while(self.var_6c8af4c4 > 0)
 	{
 		wait(0.05);
@@ -1702,8 +1702,8 @@ function debug_arrow(org, ang, opcolor)
 			blue = opcolor;
 		}
 		line(org, org + forwardfar, red, 0.9);
-		line(org + forwardfar, org + forwardclose + rightdraw, red, 0.9);
-		line(org + forwardfar, org + forwardclose + leftdraw, red, 0.9);
+		line(org + forwardfar, (org + forwardclose) + rightdraw, red, 0.9);
+		line(org + forwardfar, (org + forwardclose) + leftdraw, red, 0.9);
 		line(org, org + right, blue, 0.9);
 		line(org, org + up, green, 0.9);
 	#/
@@ -1776,7 +1776,7 @@ function cybercom_aioptoutgetflag(name)
 	}
 	if(isdefined(level._cybercom_rig_ability[name]))
 	{
-		return 1 << 24 + level._cybercom_rig_ability[name].type;
+		return 1 << (24 + level._cybercom_rig_ability[name].type);
 	}
 }
 
@@ -1855,8 +1855,7 @@ function cybercom_aiclearoptout(name)
 	{
 		return;
 	}
-	~self.cybercom;
-	self.cybercom.optoutflags = self.cybercom.optoutflags & flag;
+	self.cybercom.optoutflags = self.cybercom.optoutflags & (~flag);
 }
 
 /*
@@ -1940,11 +1939,11 @@ function notifymeonmatchend(note, animname)
 */
 function stopanimscriptedonnotify(note, animname, kill = 0, attacker, weapon)
 {
-	self notify("stopOnNotify" + note + animname);
-	self endon("stopOnNotify" + note + animname);
+	self notify(("stopOnNotify" + note) + animname);
+	self endon(("stopOnNotify" + note) + animname);
 	if(isdefined(animname))
 	{
-		self thread notifymeonmatchend("stopOnNotify" + note + animname, animname);
+		self thread notifymeonmatchend(("stopOnNotify" + note) + animname, animname);
 	}
 	self util::waittill_any_return(note, "death");
 	if(isdefined(self) && self isinscriptedstate())
@@ -2088,7 +2087,7 @@ function debug_box(origin, mins, maxs, yaw = 0, frames = 20, color = (1, 0, 0))
 function debug_sphere(origin, radius, color = (1, 0, 0), alpha = 0.1, timeframes = 1)
 {
 	/#
-		sides = int(10 * 1 + int(radius) % 100);
+		sides = int(10 * (1 + (int(radius) % 100)));
 		sphere(origin, radius, color, alpha, 1, sides, timeframes);
 	#/
 }

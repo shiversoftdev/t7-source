@@ -461,7 +461,7 @@ function show_hide_pap_weed(localclientnum, oldval, newval, bnewent, binitialsna
 		foreach(i, model in a_misc_model)
 		{
 			unhidestaticmodel(model);
-			if(i % 25 == 0)
+			if((i % 25) == 0)
 			{
 				wait(0.016);
 			}
@@ -472,7 +472,7 @@ function show_hide_pap_weed(localclientnum, oldval, newval, bnewent, binitialsna
 		foreach(i, model in a_misc_model)
 		{
 			hidestaticmodel(model);
-			if(i % 10 == 0)
+			if((i % 10) == 0)
 			{
 				wait(0.016);
 			}

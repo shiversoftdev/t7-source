@@ -1253,7 +1253,7 @@ function function_c794d3c2(n_height = 300, var_7ad049d6 = 100, b_do_rumble = 1, 
 	self enableinvulnerability();
 	v_player_fwd = anglestoforward(self.angles);
 	var_652493a5 = v_player_fwd * var_7ad049d6;
-	var_f720f8d7 = self.origin + (0, 0, n_height) + var_652493a5;
+	var_f720f8d7 = (self.origin + (0, 0, n_height)) + var_652493a5;
 	var_f9f8910c = self.origin + var_652493a5;
 	var_90911853 = getweapon("launcher_standard_magic_bullet");
 	magicbullet(var_90911853, var_f720f8d7, var_f9f8910c);

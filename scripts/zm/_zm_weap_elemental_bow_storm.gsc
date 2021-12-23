@@ -309,7 +309,7 @@ function function_2d3e3c1b(e_player, var_337b3336, var_6e7a59eb, var_94d13bd0)
 				var_3bb42832 = math::clamp(var_3bb42832, 0, level.var_f4dc2834);
 			}
 			var_508db998 = (var_94d13bd0 ? 0.03 : 0.01);
-			n_damage = var_3bb42832 * var_508db998 / 0.2;
+			n_damage = (var_3bb42832 * var_508db998) / 0.2;
 			str_damage_mod = "MOD_PROJECTILE_SPLASH";
 			var_79be6e3b = self.health / 0.2;
 		}
@@ -580,7 +580,7 @@ function function_35612a9e(v_hit_pos)
 			var_34137522.script_int = gettime();
 			var_34137522.var_d8bee13b = 0;
 			v_ground_pos = util::ground_position(v_hit_pos, 1000, vectorscale((0, 0, 1), 16)[2]);
-			if(v_hit_pos[2] - v_ground_pos[2] < 64)
+			if((v_hit_pos[2] - v_ground_pos[2]) < 64)
 			{
 				var_34137522.origin = v_ground_pos;
 			}
@@ -775,7 +775,7 @@ function function_88b53a11(var_80242169, v_hit_origin, var_3fee16b8)
 {
 	var_bba6e664 = anglestoforward(var_3fee16b8.angles);
 	var_3e878400 = vectornormalize(var_bba6e664 * -1);
-	var_75181c09 = v_hit_origin + var_3e878400 * var_80242169;
+	var_75181c09 = v_hit_origin + (var_3e878400 * var_80242169);
 	return var_75181c09;
 }
 

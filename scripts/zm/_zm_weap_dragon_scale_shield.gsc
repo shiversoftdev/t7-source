@@ -377,7 +377,7 @@ function function_f894ad3e()
 	range = level.zombie_vars["dragonshield_knockdown_range"];
 	view_pos = self getweaponmuzzlepoint();
 	forward_view_angles = self getweaponforwarddir();
-	end_pos = view_pos + range * forward_view_angles;
+	end_pos = view_pos + (range * forward_view_angles);
 	var_aa911866 = magicbullet(var_c3937998, view_pos, end_pos, self);
 }
 
@@ -544,7 +544,7 @@ function function_459dacdd()
 			dist_mult = 1;
 			fling_vec = vectornormalize(test_origin - view_pos);
 			fling_vec = (fling_vec[0], fling_vec[1], abs(fling_vec[2]));
-			fling_vec = vectorscale(fling_vec, 50 + 50 * dist_mult);
+			fling_vec = vectorscale(fling_vec, 50 + (50 * dist_mult));
 			level.var_1c1b4cce[level.var_1c1b4cce.size] = fling_vec;
 			zombies[i] thread function_41f7c503(self, 1, 0, 0);
 			continue;
@@ -577,18 +577,18 @@ function function_459dacdd()
 			continue;
 		}
 		var_6ce0bf79 = level.zombie_vars["dragonshield_projectile_lifetime"];
-		zombies[i].var_d8486721 = var_6ce0bf79 * sqrt(test_range_squared) / level.zombie_vars["dragonshield_knockdown_range"];
+		zombies[i].var_d8486721 = (var_6ce0bf79 * sqrt(test_range_squared)) / level.zombie_vars["dragonshield_knockdown_range"];
 		if(test_range_squared < fling_range_squared)
 		{
 			level.var_e4a96ed9[level.var_e4a96ed9.size] = zombies[i];
-			dist_mult = fling_range_squared - test_range_squared / fling_range_squared;
+			dist_mult = (fling_range_squared - test_range_squared) / fling_range_squared;
 			fling_vec = vectornormalize(test_origin - view_pos);
 			if(5000 < test_range_squared)
 			{
-				fling_vec = fling_vec + vectornormalize(test_origin - radial_origin);
+				fling_vec = fling_vec + (vectornormalize(test_origin - radial_origin));
 			}
 			fling_vec = (fling_vec[0], fling_vec[1], abs(fling_vec[2]));
-			fling_vec = vectorscale(fling_vec, 50 + 50 * dist_mult);
+			fling_vec = vectorscale(fling_vec, 50 + (50 * dist_mult));
 			level.var_1c1b4cce[level.var_1c1b4cce.size] = fling_vec;
 			zombies[i] thread function_41f7c503(self, 1, 0, 0);
 			continue;

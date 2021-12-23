@@ -156,21 +156,21 @@ function mayspawn()
 */
 function timeuntilwavespawn(minimumwait)
 {
-	earliestspawntime = gettime() + minimumwait * 1000;
+	earliestspawntime = gettime() + (minimumwait * 1000);
 	lastwavetime = level.lastwave[self.pers["team"]];
 	wavedelay = level.wavedelay[self.pers["team"]] * 1000;
 	if(wavedelay == 0)
 	{
 		return 0;
 	}
-	numwavespassedearliestspawntime = earliestspawntime - lastwavetime / wavedelay;
+	numwavespassedearliestspawntime = (earliestspawntime - lastwavetime) / wavedelay;
 	numwaves = ceil(numwavespassedearliestspawntime);
-	timeofspawn = lastwavetime + numwaves * wavedelay;
+	timeofspawn = lastwavetime + (numwaves * wavedelay);
 	if(isdefined(self.wavespawnindex))
 	{
-		timeofspawn = timeofspawn + 50 * self.wavespawnindex;
+		timeofspawn = timeofspawn + (50 * self.wavespawnindex);
 	}
-	return timeofspawn - gettime() / 1000;
+	return (timeofspawn - gettime()) / 1000;
 }
 
 /*
@@ -403,7 +403,7 @@ function spawnplayer()
 		callback::callback(#"hash_bc12b61f");
 	}
 	/#
-		print("" + self.origin[0] + "" + self.origin[1] + "" + self.origin[2] + "");
+		print(((((("" + self.origin[0]) + "") + self.origin[1]) + "") + self.origin[2]) + "");
 	#/
 	setdvar("scr_selecting_location", "");
 	self thread vehicledeathwaiter();
@@ -628,8 +628,8 @@ function kickifidontspawninternal()
 	}
 	starttime = gettime();
 	kickwait(waittime);
-	timepassed = gettime() - starttime / 1000;
-	if(timepassed < waittime - 0.1 && timepassed < mintime)
+	timepassed = (gettime() - starttime) / 1000;
+	if(timepassed < (waittime - 0.1) && timepassed < mintime)
 	{
 		return;
 	}
@@ -815,7 +815,7 @@ function allteamsnearscorelimit()
 	}
 	foreach(var_2d73003b, team in level.teams)
 	{
-		if(!game["teamScores"][team] >= level.scorelimit - 1)
+		if(!game["teamScores"][team] >= (level.scorelimit - 1))
 		{
 			return 0;
 		}

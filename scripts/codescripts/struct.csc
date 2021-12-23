@@ -274,7 +274,7 @@ function get(kvp_value, kvp_key = "targetname")
 			if(level.struct_class_names[kvp_key][kvp_value].size > 1)
 			{
 				/#
-					assertmsg("" + kvp_key + "" + kvp_value + "");
+					assertmsg(((("" + kvp_key) + "") + kvp_value) + "");
 				#/
 				return undefined;
 			}

@@ -156,22 +156,22 @@ function do_vision_world_pulse(localclientnum)
 	amount = 1;
 	irisamount = 0;
 	pulsemaxradius = 0;
-	while(getservertime(localclientnum) - starttime < 2000)
+	while((getservertime(localclientnum) - starttime) < 2000)
 	{
-		elapsedtime = getservertime(localclientnum) - starttime * 1;
+		elapsedtime = (getservertime(localclientnum) - starttime) * 1;
 		if(elapsedtime < 200)
 		{
 			irisamount = elapsedtime / 200;
 		}
-		else if(elapsedtime < 2000 * 0.6)
+		else if(elapsedtime < (2000 * 0.6))
 		{
-			irisamount = 1 - elapsedtime / 1000;
+			irisamount = 1 - (elapsedtime / 1000);
 		}
 		else
 		{
 			irisamount = 0;
 		}
-		amount = 1 - elapsedtime / 2000;
+		amount = 1 - (elapsedtime / 2000);
 		pulseradius = getvisionpulseradius(localclientnum);
 		pulsemaxradius = getvisionpulsemaxradius(localclientnum);
 		filter::set_filter_vision_pulse_constant(localclientnum, 3, 0, pulseradius);
@@ -254,11 +254,11 @@ function do_vision_local_pulse(localclientnum)
 	filter::set_filter_vision_pulse_constant(localclientnum, 3, 9, origin[1]);
 	filter::set_filter_vision_pulse_constant(localclientnum, 3, 7, 1);
 	starttime = getservertime(localclientnum);
-	while(getservertime(localclientnum) - starttime < 4000)
+	while((getservertime(localclientnum) - starttime) < 4000)
 	{
-		if(getservertime(localclientnum) - starttime < 2000)
+		if((getservertime(localclientnum) - starttime) < 2000)
 		{
-			pulseradius = getservertime(localclientnum) - starttime / 2000 * 2000;
+			pulseradius = ((getservertime(localclientnum) - starttime) / 2000) * 2000;
 		}
 		filter::set_filter_vision_pulse_constant(localclientnum, 3, 10, pulseradius);
 		wait(0.016);
@@ -311,11 +311,11 @@ function do_reveal_enemy_pulse(localclientnum)
 	starttime = getservertime(localclientnum);
 	currtime = starttime;
 	self mapshaderconstant(localclientnum, 0, "scriptVector7", 0, 0, 0, 0);
-	while(currtime - starttime < 4000)
+	while((currtime - starttime) < 4000)
 	{
-		if(currtime - starttime > 3500)
+		if((currtime - starttime) > 3500)
 		{
-			value = float(currtime - starttime - 3500 / 500);
+			value = float(((currtime - starttime) - 3500) / 500);
 			self mapshaderconstant(localclientnum, 0, "scriptVector7", value, 0, 0, 0);
 		}
 		wait(0.016);

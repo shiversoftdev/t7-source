@@ -108,7 +108,7 @@ function plates()
 	trig delete();
 	level notify(#"stage_1");
 	level waittill(#"stage_1_done");
-	level.teleport_target_trigger = spawn("trigger_radius", plates[0].origin + vectorscale((0, 0, -1), 70), 0, 125, 100);
+	level.teleport_target_trigger = spawn("trigger_radius", plates[0].origin + (vectorscale((0, 0, -1), 70)), 0, 125, 100);
 	level.black_hole_bomb_loc_check_func = &bhb_teleport_loc_check;
 	level waittill(#"ctvg_tp_done");
 	level.black_hole_bomb_loc_check_func = undefined;
@@ -578,13 +578,13 @@ function typing_sound_thread()
 	{
 		if(typing)
 		{
-			if(gettime() - level._typing_time > 250)
+			if((gettime() - level._typing_time) > 250)
 			{
 				typing = 0;
 				level._charge_sound_ent stoploopsound();
 			}
 		}
-		else if(gettime() - level._typing_time < 100)
+		else if((gettime() - level._typing_time) < 100)
 		{
 			typing = 1;
 			level._charge_sound_ent playloopsound("evt_typing_loop");

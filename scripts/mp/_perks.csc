@@ -344,7 +344,7 @@ function monitor_tracker_perk_killcam(local_client_num)
 			servertime = getservertime(local_client_num);
 			for(count = 0; count < level.trackerspecialtyself[local_client_num].size; count++)
 			{
-				if(level.trackerspecialtyself[local_client_num][count].time < servertime && level.trackerspecialtyself[local_client_num][count].time > servertime - 5000)
+				if(level.trackerspecialtyself[local_client_num][count].time < servertime && level.trackerspecialtyself[local_client_num][count].time > (servertime - 5000))
 				{
 					positionandrotationstruct = level.trackerspecialtyself[local_client_num][count];
 					tracker_playfx(local_client_num, positionandrotationstruct);
@@ -506,7 +506,7 @@ function killtrackerfx_on_death(local_client_num)
 	servertime = getservertime(local_client_num);
 	foreach(var_4121b5ed, killfxstruct in killtrackerfx.array)
 	{
-		if(isdefined(killfxstruct) && killfxstruct.time + 5000 > servertime)
+		if(isdefined(killfxstruct) && (killfxstruct.time + 5000) > servertime)
 		{
 			killfx(local_client_num, killfxstruct.handle);
 		}
@@ -727,22 +727,22 @@ function monitor_detectnearbyenemies(local_client_num)
 				cosangle = vectordot(vectorflat, localplayeranglestoforward);
 				if(cosangle > 0.7071)
 				{
-					enemydetectedbitfield = enemydetectedbitfield | 1 * distancemask;
+					enemydetectedbitfield = enemydetectedbitfield | (1 * distancemask);
 					continue;
 				}
 				if(cosangle < -0.7071)
 				{
-					enemydetectedbitfield = enemydetectedbitfield | 2 * distancemask;
+					enemydetectedbitfield = enemydetectedbitfield | (2 * distancemask);
 					continue;
 				}
 				localplayeranglestoright = anglestoright(localplayer.angles);
 				cosangle = vectordot(vectorflat, localplayeranglestoright);
 				if(cosangle < 0)
 				{
-					enemydetectedbitfield = enemydetectedbitfield | 4 * distancemask;
+					enemydetectedbitfield = enemydetectedbitfield | (4 * distancemask);
 					continue;
 				}
-				enemydetectedbitfield = enemydetectedbitfield | 8 * distancemask;
+				enemydetectedbitfield = enemydetectedbitfield | (8 * distancemask);
 			}
 		}
 		if(enemydetectedbitfield)

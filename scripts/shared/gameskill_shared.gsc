@@ -191,7 +191,7 @@ function pain_protection()
 	{
 		return 0;
 	}
-	return randomint(100) > get_enemy_pain_chance() * 100;
+	return randomint(100) > (get_enemy_pain_chance() * 100);
 }
 
 /*
@@ -342,23 +342,23 @@ function printhealthdebug()
 			width = 0;
 			if(i == 0)
 			{
-				width = player.health / player.maxhealth * 300;
-				level.healthbarhudelems[key] settext(level.healthbarkeys[0] + " " + player.health);
+				width = (player.health / player.maxhealth) * 300;
+				level.healthbarhudelems[key] settext((level.healthbarkeys[0] + " ") + player.health);
 			}
 			else if(i == 1)
 			{
-				width = level.playerinvultimeend - gettime() / 1000 * 40;
+				width = ((level.playerinvultimeend - gettime()) / 1000) * 40;
 			}
 			else if(i == 2)
 			{
-				width = level.player_deathinvulnerabletimeout - gettime() / 1000 * 40;
+				width = ((level.player_deathinvulnerabletimeout - gettime()) / 1000) * 40;
 			}
 			width = int(max(width, 1));
 			width = int(min(width, 300));
 			bar = level.healthbarhudelems[key].bar;
 			bar setshader("black", width, 8);
 			bgbar = level.healthbarhudelems[key].bgbar;
-			if(width + 2 > bgbar.maxwidth)
+			if((width + 2) > bgbar.maxwidth)
 			{
 				bgbar.maxwidth = width + 2;
 				bgbar setshader("white", bgbar.maxwidth, 10);
@@ -456,7 +456,7 @@ function playerhurtcheck()
 			self setburn(0.5);
 			self playsound("chr_burn");
 		}
-		invulworthyhealthdrop = amount / self.maxhealth >= level.worthydamageratio;
+		invulworthyhealthdrop = (amount / self.maxhealth) >= level.worthydamageratio;
 		death_invuln_time = 0;
 		if(self.health <= 1 && self player_eligible_for_death_invulnerability())
 		{
@@ -581,7 +581,7 @@ function playerhealthregen()
 		}
 		if(health_ratio >= oldratio)
 		{
-			if(gettime() - hurttime < level.playerhealth_regularregendelay)
+			if((gettime() - hurttime) < level.playerhealth_regularregendelay)
 			{
 				continue;
 			}
@@ -589,7 +589,7 @@ function playerhealthregen()
 			{
 				self.veryhurt = 1;
 				newhealth = health_ratio;
-				if(gettime() > hurttime + level.longregentime)
+				if(gettime() > (hurttime + level.longregentime))
 				{
 					newhealth = newhealth + 0.1;
 				}
@@ -685,7 +685,7 @@ function playerinvul(timer)
 	{
 		self.attackeraccuracy = 0;
 		self.ignorebulletdamage = 1;
-		level.playerinvultimeend = gettime() + timer * 1000;
+		level.playerinvultimeend = gettime() + (timer * 1000);
 		wait(timer);
 	}
 	self.attackeraccuracy = self.oldattackeraccuracy;
@@ -1093,10 +1093,10 @@ function shouldshowcoverwarning()
 function fadefunc(overlay, coverwarning, severity, mult, hud_scaleonly)
 {
 	fadeintime = 0.8 * 0.1;
-	stayfulltime = 0.8 * 0.1 + severity * 0.2;
-	fadeouthalftime = 0.8 * 0.1 + severity * 0.1;
+	stayfulltime = 0.8 * (0.1 + (severity * 0.2));
+	fadeouthalftime = 0.8 * (0.1 + (severity * 0.1));
 	fadeoutfulltime = 0.8 * 0.3;
-	remainingtime = 0.8 - fadeintime - stayfulltime - fadeouthalftime - fadeoutfulltime;
+	remainingtime = (((0.8 - fadeintime) - stayfulltime) - fadeouthalftime) - fadeoutfulltime;
 	/#
 		assert(remainingtime >= -0.001);
 	#/
@@ -1104,8 +1104,8 @@ function fadefunc(overlay, coverwarning, severity, mult, hud_scaleonly)
 	{
 		remainingtime = 0;
 	}
-	halfalpha = 0.8 + severity * 0.1;
-	leastalpha = 0.5 + severity * 0.3;
+	halfalpha = 0.8 + (severity * 0.1);
+	leastalpha = 0.5 + (severity * 0.3);
 	overlay fadeovertime(fadeintime);
 	overlay.alpha = mult * 1;
 	if(maychangecoverwarningalpha(coverwarning))
@@ -2336,7 +2336,7 @@ function get_coop_enemy_pain_chance_modifier()
 */
 function get_general_difficulty_level()
 {
-	value = level.gameskill + level.players.size - 1;
+	value = (level.gameskill + level.players.size) - 1;
 	if(value < 0)
 	{
 		value = 0;
@@ -2499,14 +2499,14 @@ function accuracy_buildup_before_fire(ai)
 					timeshooting = shottime - ai.shoottimestart;
 					distance = distance(ai.origin, ai.enemy.origin);
 					misstime = ai.miss_time_constant * 1000;
-					accuracybuilduptime = misstime + distance * ai.miss_time_distance_factor;
+					accuracybuilduptime = misstime + (distance * ai.miss_time_distance_factor);
 					targetfacingangle = anglestoforward(ai.enemy.angles);
 					anglefromtarget = vectornormalize(ai.origin - ai.enemy.origin);
 					if(vectordot(targetfacingangle, anglefromtarget) < 0.7)
 					{
 						accuracybuilduptime = accuracybuilduptime * 2;
 					}
-					if(shottime - ai.lastshottime > ai.miss_time_reset_delay)
+					if((shottime - ai.lastshottime) > ai.miss_time_reset_delay)
 					{
 						ai.buildupaccuracymodifier = 0;
 						ai.shoottimestart = shottime;
@@ -2516,15 +2516,15 @@ function accuracy_buildup_before_fire(ai)
 					{
 						ai.buildupaccuracymodifier = 1;
 					}
-					if(timeshooting <= accuracybuilduptime && timeshooting > accuracybuilduptime * 0.66)
+					if(timeshooting <= accuracybuilduptime && timeshooting > (accuracybuilduptime * 0.66))
 					{
 						ai.buildupaccuracymodifier = 0.66;
 					}
-					if(timeshooting <= accuracybuilduptime * 0.66 && timeshooting > accuracybuilduptime * 0.33)
+					if(timeshooting <= (accuracybuilduptime * 0.66) && timeshooting > (accuracybuilduptime * 0.33))
 					{
 						ai.buildupaccuracymodifier = 0.33;
 					}
-					if(timeshooting <= accuracybuilduptime * 0.33)
+					if(timeshooting <= (accuracybuilduptime * 0.33))
 					{
 						ai.buildupaccuracymodifier = 0;
 					}

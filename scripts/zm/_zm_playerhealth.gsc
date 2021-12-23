@@ -242,7 +242,7 @@ function playerhealthregen()
 		}
 		if(health_ratio >= oldratio)
 		{
-			if(gettime() - hurttime < level.playerhealth_regularregendelay)
+			if((gettime() - hurttime) < level.playerhealth_regularregendelay)
 			{
 				continue;
 			}
@@ -250,7 +250,7 @@ function playerhealthregen()
 			{
 				self.veryhurt = 1;
 				newhealth = health_ratio;
-				if(gettime() > hurttime + level.longregentime)
+				if(gettime() > (hurttime + level.longregentime))
 				{
 					newhealth = newhealth + regenrate;
 				}
@@ -278,7 +278,7 @@ function playerhealthregen()
 			oldratio = self.health / self.maxhealth;
 			continue;
 		}
-		invulworthyhealthdrop = lastinvulratio - health_ratio > level.worthydamageratio;
+		invulworthyhealthdrop = (lastinvulratio - health_ratio) > level.worthydamageratio;
 		if(self.health <= 1)
 		{
 			self setnormalhealth(2 / self.maxhealth);
@@ -350,7 +350,7 @@ function playerinvul(timer)
 	if(timer > 0)
 	{
 		/#
-			level.playerinvultimeend = gettime() + timer * 1000;
+			level.playerinvultimeend = gettime() + (timer * 1000);
 		#/
 		wait(timer);
 	}
@@ -412,10 +412,10 @@ function fadefunc(overlay, severity, mult, hud_scaleonly)
 	pulsetime = 0.8;
 	scalemin = 0.5;
 	fadeintime = pulsetime * 0.1;
-	stayfulltime = pulsetime * 0.1 + severity * 0.2;
-	fadeouthalftime = pulsetime * 0.1 + severity * 0.1;
+	stayfulltime = pulsetime * (0.1 + (severity * 0.2));
+	fadeouthalftime = pulsetime * (0.1 + (severity * 0.1));
 	fadeoutfulltime = pulsetime * 0.3;
-	remainingtime = pulsetime - fadeintime - stayfulltime - fadeouthalftime - fadeoutfulltime;
+	remainingtime = (((pulsetime - fadeintime) - stayfulltime) - fadeouthalftime) - fadeoutfulltime;
 	/#
 		assert(remainingtime >= -0.001);
 	#/
@@ -423,8 +423,8 @@ function fadefunc(overlay, severity, mult, hud_scaleonly)
 	{
 		remainingtime = 0;
 	}
-	halfalpha = 0.8 + severity * 0.1;
-	leastalpha = 0.5 + severity * 0.3;
+	halfalpha = 0.8 + (severity * 0.1);
+	leastalpha = 0.5 + (severity * 0.3);
 	overlay fadeovertime(fadeintime);
 	overlay.alpha = mult * 1;
 	wait(fadeintime + stayfulltime);
@@ -693,22 +693,22 @@ function printhealthdebug()
 				width = 0;
 				if(i == 0)
 				{
-					width = player.health / player.maxhealth * 300;
+					width = (player.health / player.maxhealth) * 300;
 				}
 				else if(i == 1)
 				{
-					width = level.playerinvultimeend - gettime() / 1000 * 40;
+					width = ((level.playerinvultimeend - gettime()) / 1000) * 40;
 				}
 				else if(i == 2)
 				{
-					width = level.player_deathinvulnerabletimeout - gettime() / 1000 * 40;
+					width = ((level.player_deathinvulnerabletimeout - gettime()) / 1000) * 40;
 				}
 				width = int(max(width, 1));
 				width = int(min(width, 300));
 				bar = level.healthbarhudelems[key].bar;
 				bar setshader("", width, 8);
 				bgbar = level.healthbarhudelems[key].bgbar;
-				if(width + 2 > bgbar.maxwidth)
+				if((width + 2) > bgbar.maxwidth)
 				{
 					bgbar.maxwidth = width + 2;
 					bgbar setshader("", bgbar.maxwidth, 10);

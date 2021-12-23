@@ -55,7 +55,7 @@ function is_encounter()
 */
 function round_up_to_ten(score)
 {
-	new_score = score - score % 10;
+	new_score = score - (score % 10);
 	if(new_score < score)
 	{
 		new_score = new_score + 10;
@@ -75,7 +75,7 @@ function round_up_to_ten(score)
 function round_up_score(score, value)
 {
 	score = int(score);
-	new_score = score - score % value;
+	new_score = score - (score % value);
 	if(new_score < score)
 	{
 		new_score = new_score + value;
@@ -256,8 +256,8 @@ function drawcylinder(pos, rad, height, color)
 		debugstar(pos, 1, color);
 		for(r = 0; r < 20; r++)
 		{
-			theta = r / 20 * 360;
-			theta2 = r + 1 / 20 * 360;
+			theta = (r / 20) * 360;
+			theta2 = ((r + 1) / 20) * 360;
 			line(pos + (cos(theta) * currad, sin(theta) * currad, 0), pos + (cos(theta2) * currad, sin(theta2) * currad, 0), color, 1, 1, 100);
 			line(pos + (cos(theta) * currad, sin(theta) * currad, curheight), pos + (cos(theta2) * currad, sin(theta2) * currad, curheight), color, 1, 1, 100);
 			line(pos + (cos(theta) * currad, sin(theta) * currad, 0), pos + (cos(theta) * currad, sin(theta) * currad, curheight), color, 1, 1, 100);
@@ -309,7 +309,7 @@ function umbra_fix_trigger(localclientnum, pos, height, radius, umbra_name)
 	topy = pos[2] + height;
 	if(self.origin[2] > bottomy && self.origin[2] < topy)
 	{
-		if(distance2dsquared(self.origin, pos) < radius * radius)
+		if(distance2dsquared(self.origin, pos) < (radius * radius))
 		{
 			umbra_settometrigger(localclientnum, umbra_name);
 			/#

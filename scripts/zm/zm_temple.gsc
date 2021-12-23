@@ -497,7 +497,7 @@ function assign_lowest_unused_character_index()
 	}
 	if(charindexarray.size > 0)
 	{
-		if(n_characters_defined == players.size - 1)
+		if(n_characters_defined == (players.size - 1))
 		{
 			if(!(isdefined(level.has_richtofen) && level.has_richtofen))
 			{
@@ -933,10 +933,10 @@ function rolling_door_think()
 	self zm_utility::play_sound_on_ent("purchase");
 	exploder::exploder(str_exploder);
 	pi = 3.141593;
-	endorigin = self.origin + self.door_movedir * self.door_movedist;
+	endorigin = self.origin + (self.door_movedir * self.door_movedist);
 	self moveto(endorigin, self.door_movetime, 0.1, 0.1);
-	cir = 2 * pi * self.door_radius;
-	rotate = self.door_movedist / cir * 360;
+	cir = (2 * pi) * self.door_radius;
+	rotate = (self.door_movedist / cir) * 360;
 	self rotateto(self.angles + (rotate, 0, 0), self.door_movetime, 0.1, 0.1);
 	self connectpaths();
 }
@@ -970,7 +970,7 @@ function player_laststand_temple(einflictor, attacker, idamage, smeansofdeath, s
 */
 function temple_poi_positioning_func(origin, forward)
 {
-	return zm_server_throttle::server_safe_ground_trace_ignore_water("poi_trace", 10, self.origin + forward + vectorscale((0, 0, 1), 10));
+	return zm_server_throttle::server_safe_ground_trace_ignore_water("poi_trace", 10, (self.origin + forward) + vectorscale((0, 0, 1), 10));
 }
 
 /*
@@ -1396,7 +1396,7 @@ function temple_check_valid_spawn(revivee)
 					spawn_array = struct::get_array(spawn_points[i].target, "targetname");
 					for(j = 0; j < spawn_array.size; j++)
 					{
-						if(spawn_array[j].script_int == revivee.entity_num + 1)
+						if(spawn_array[j].script_int == (revivee.entity_num + 1))
 						{
 							return spawn_array[j];
 						}

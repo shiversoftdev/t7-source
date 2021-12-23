@@ -1007,7 +1007,7 @@ function isvaliddartmissiletarget(ent)
 	{
 		return 0;
 	}
-	if(distancesquared(dart.origin, ent.origin) > player.dart_killstreak_weapon.lockonmaxrange * player.dart_killstreak_weapon.lockonmaxrange)
+	if(distancesquared(dart.origin, ent.origin) > (player.dart_killstreak_weapon.lockonmaxrange * player.dart_killstreak_weapon.lockonmaxrange))
 	{
 		return 0;
 	}
@@ -1048,7 +1048,7 @@ function isstillvaliddartmissiletarget(ent, weapon)
 	{
 		return 0;
 	}
-	if(distancesquared(dart.origin, ent.origin) > player.dart_killstreak_weapon.lockonmaxrange * player.dart_killstreak_weapon.lockonmaxrange)
+	if(distancesquared(dart.origin, ent.origin) > (player.dart_killstreak_weapon.lockonmaxrange * player.dart_killstreak_weapon.lockonmaxrange))
 	{
 		return 0;
 	}

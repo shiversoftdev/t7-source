@@ -340,7 +340,7 @@ function bubblesort_players()
 		swapped = 0;
 		for(i = 1; i < players.size; i++)
 		{
-			if(players[i - 1].score < players[i].score)
+			if((players[i - 1].score) < players[i].score)
 			{
 				t = players[i - 1];
 				players[i - 1] = players[i];
@@ -625,7 +625,7 @@ function onuseupdate(team, progress, change)
 function statusdialog(dialog, team)
 {
 	time = gettime();
-	if(gettime() < level.laststatus[team] + 6000)
+	if(gettime() < (level.laststatus[team] + 6000))
 	{
 		return;
 	}
@@ -1057,7 +1057,7 @@ function flagsetup()
 		}
 		if(isdefined(closestdesc.flag))
 		{
-			maperrors[maperrors.size] = "flag_descriptor with script_linkname \"" + closestdesc.script_linkname + "\" is nearby more than one flag; is there a unique descriptor near each flag?";
+			maperrors[maperrors.size] = ("flag_descriptor with script_linkname \"" + closestdesc.script_linkname) + "\" is nearby more than one flag; is there a unique descriptor near each flag?";
 			continue;
 		}
 		flags[i].descriptor = closestdesc;
@@ -1081,13 +1081,13 @@ function flagsetup()
 				otherdesc = descriptorsbylinkname[adjdescs[j]];
 				if(!isdefined(otherdesc) || otherdesc.targetname != "flag_descriptor")
 				{
-					maperrors[maperrors.size] = "flag_descriptor with script_linkname \"" + flags[i].descriptor.script_linkname + "\" linked to \"" + adjdescs[j] + "\" which does not exist as a script_linkname of any other entity with a targetname of flag_descriptor (or, if it does, that flag_descriptor has not been assigned to a flag)";
+					maperrors[maperrors.size] = ((("flag_descriptor with script_linkname \"" + flags[i].descriptor.script_linkname) + "\" linked to \"") + adjdescs[j]) + "\" which does not exist as a script_linkname of any other entity with a targetname of flag_descriptor (or, if it does, that flag_descriptor has not been assigned to a flag)";
 					continue;
 				}
 				adjflag = otherdesc.flag;
 				if(adjflag == flags[i])
 				{
-					maperrors[maperrors.size] = "flag_descriptor with script_linkname \"" + flags[i].descriptor.script_linkname + "\" linked to itself";
+					maperrors[maperrors.size] = ("flag_descriptor with script_linkname \"" + flags[i].descriptor.script_linkname) + "\" linked to itself";
 					continue;
 				}
 				flags[i].adjflags[flags[i].adjflags.size] = adjflag;
@@ -1102,7 +1102,7 @@ function flagsetup()
 			desc = descriptorsbylinkname[spawnpoints[i].script_linkto];
 			if(!isdefined(desc) || desc.targetname != "flag_descriptor")
 			{
-				maperrors[maperrors.size] = "Spawnpoint at " + spawnpoints[i].origin + "\" linked to \"" + spawnpoints[i].script_linkto + "\" which does not exist as a script_linkname of any entity with a targetname of flag_descriptor (or, if it does, that flag_descriptor has not been assigned to a flag)";
+				maperrors[maperrors.size] = ((("Spawnpoint at " + spawnpoints[i].origin) + "\" linked to \"") + spawnpoints[i].script_linkto) + "\" which does not exist as a script_linkname of any entity with a targetname of flag_descriptor (or, if it does, that flag_descriptor has not been assigned to a flag)";
 				continue;
 			}
 			nearestflag = desc.flag;

@@ -501,7 +501,7 @@ private function function_e3577caa(entity, asmstatename)
 		entity.fx_field_old = entity.fx_field;
 	}
 	entity thread zombie_utility::zombie_eye_glow_stop();
-	entity.var_1ea3b675 = level.time + level.mechz_jump_delay * 1000;
+	entity.var_1ea3b675 = level.time + (level.mechz_jump_delay * 1000);
 }
 
 /*
@@ -584,7 +584,7 @@ private function function_647ea967(entity, asmstatename)
 private function function_13bab4e7(entity, asmstatename)
 {
 	entity function_97cf5f();
-	entity.var_5819fc = level.time + level.mechz_robot_knockdown_time * 1000;
+	entity.var_5819fc = level.time + (level.mechz_robot_knockdown_time * 1000);
 }
 
 /*
@@ -664,7 +664,7 @@ private function function_f7a84bd6(entity, asmstatename)
 	entity function_97cf5f();
 	entity show();
 	entity pathmode("move allowed");
-	entity.var_918f1b56 = level.time + level.mechz_tank_knockdown_time * 1000;
+	entity.var_918f1b56 = level.time + (level.mechz_tank_knockdown_time * 1000);
 }
 
 /*
@@ -827,7 +827,7 @@ function get_closest_mechz_spawn_pos(org)
 	/#
 		if(!isdefined(best_pos))
 		{
-			println("" + self.origin[0] + "" + self.origin[1] + "" + self.origin[2] + "");
+			println(((((("" + self.origin[0]) + "") + self.origin[1]) + "") + self.origin[2]) + "");
 		}
 	#/
 	return best_pos;
@@ -1211,8 +1211,8 @@ function mechz_health_increases()
 		{
 			n_player_modifier = a_players.size * 0.75;
 		}
-		level.mechz_health = int(n_player_modifier * level.mechz_base_health + level.mechz_health_increase * level.mechz_round_count);
-		if(level.mechz_health >= 22500 * n_player_modifier)
+		level.mechz_health = int(n_player_modifier * (level.mechz_base_health + (level.mechz_health_increase * level.mechz_round_count)));
+		if(level.mechz_health >= (22500 * n_player_modifier))
 		{
 			level.mechz_health = int(22500 * n_player_modifier);
 		}
@@ -1236,7 +1236,7 @@ function mechz_damage_override(inflictor, attacker, damage, flags, meansofdeath,
 		return 0;
 	}
 	num_tiers = level.mechz_armor_info.size + 1;
-	old_health_tier = int(num_tiers * self.health / level.mechz_health);
+	old_health_tier = int((num_tiers * self.health) / level.mechz_health);
 	bonename = getpartname("c_zom_mech_body", boneindex);
 	if(isdefined(attacker) && isalive(attacker) && isplayer(attacker) && (level.zombie_vars[attacker.team]["zombie_insta_kill"] || (isdefined(attacker.personal_instakill) && attacker.personal_instakill)))
 	{
@@ -1335,13 +1335,13 @@ function mechz_damage_override(inflictor, attacker, damage, flags, meansofdeath,
 			final_damage = 0;
 		}
 	}
-	new_health_tier = int(num_tiers * self.health - final_damage / level.mechz_health);
+	new_health_tier = int((num_tiers * (self.health - final_damage)) / level.mechz_health);
 	if(old_health_tier > new_health_tier)
 	{
 		while(old_health_tier > new_health_tier)
 		{
 			/#
-				iprintlnbold("" + old_health_tier + "" + new_health_tier + "");
+				iprintlnbold(((("" + old_health_tier) + "") + new_health_tier) + "");
 			#/
 			if(old_health_tier < num_tiers)
 			{
@@ -1351,7 +1351,7 @@ function mechz_damage_override(inflictor, attacker, damage, flags, meansofdeath,
 		}
 	}
 	/#
-		iprintlnbold("" + final_damage + "" + self.health);
+		iprintlnbold((("" + final_damage) + "") + self.health);
 	#/
 	return final_damage;
 }

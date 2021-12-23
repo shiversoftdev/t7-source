@@ -22,7 +22,7 @@ function init(str_flag, b_val = 0, b_is_trigger = 0)
 		if(!isdefined(level.first_frame))
 		{
 			/#
-				assert(!isdefined(self.flag[str_flag]), "" + str_flag + "");
+				assert(!isdefined(self.flag[str_flag]), ("" + str_flag) + "");
 			#/
 		}
 	#/
@@ -56,7 +56,7 @@ function set(str_flag)
 {
 	/#
 		/#
-			assert(exists(str_flag), "" + str_flag + "");
+			assert(exists(str_flag), ("" + str_flag) + "");
 		#/
 	#/
 	self.flag[str_flag] = 1;
@@ -127,7 +127,7 @@ function set_for_time(n_time, str_flag)
 function clear(str_flag)
 {
 	/#
-		assert(exists(str_flag), "" + str_flag + "");
+		assert(exists(str_flag), ("" + str_flag) + "");
 	#/
 	if(self.flag[str_flag])
 	{
@@ -169,7 +169,7 @@ function toggle(str_flag)
 function get(str_flag)
 {
 	/#
-		assert(exists(str_flag), "" + str_flag + "");
+		assert(exists(str_flag), ("" + str_flag) + "");
 	#/
 	return self.flag[str_flag];
 }

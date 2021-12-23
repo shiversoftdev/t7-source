@@ -718,8 +718,8 @@ private function function_9bd3096f(player)
 */
 function function_c3efae8e()
 {
-	var_a2365998 = struct::get("ww_part_underwater", "script_noteworthy");
-	mdl_part = util::spawn_model("p7_zm_isl_foliage_plant_underwater_01_red", var_a2365998.origin);
+	s_part = struct::get("ww_part_underwater", "script_noteworthy");
+	mdl_part = util::spawn_model("p7_zm_isl_foliage_plant_underwater_01_red", s_part.origin);
 	mdl_part clientfield::set("play_vial_fx", 1);
 	mdl_part playloopsound("zmb_vial_loop");
 	mdl_part.trigger = zm_island_util::spawn_trigger_radius(mdl_part.origin, 50, 1, &function_9bd3096f);
@@ -1055,13 +1055,13 @@ function function_cc8fe309(var_c79d3f71, var_18130313)
 		level._powerup_timeout_custom_time = &namespace_1aa6bd0c::function_3321a018;
 		e_linkto = util::spawn_model("tag_origin", level.var_1a139831.origin, level.var_1a139831.angles);
 		e_linkto linkto(level.var_1a139831);
-		var_93eb638b = zm_powerups::specific_powerup_drop("full_ammo", var_18130313 + vectorscale((0, 0, -1), 16));
+		var_93eb638b = zm_powerups::specific_powerup_drop("full_ammo", var_18130313 + (vectorscale((0, 0, -1), 16)));
 		var_93eb638b linkto(e_linkto);
 		level._powerup_timeout_custom_time = undefined;
 	}
 	else
 	{
-		var_93eb638b = zm_powerups::specific_powerup_drop("full_ammo", var_18130313 + vectorscale((0, 0, -1), 16));
+		var_93eb638b = zm_powerups::specific_powerup_drop("full_ammo", var_18130313 + (vectorscale((0, 0, -1), 16)));
 	}
 	level.zm_override_ai_aftermath_powerup_drop = undefined;
 }
@@ -1896,12 +1896,12 @@ function function_46d3d1b0(var_9330a364)
 	Parameters: 1
 	Flags: Linked
 */
-function function_e3f30b83(var_d5d05f50)
+function function_e3f30b83(b_charged)
 {
 	n_radius = 25;
 	n_height = 100;
 	v_pos = (2591, 765, -687);
-	if(var_d5d05f50)
+	if(b_charged)
 	{
 		wait(2);
 	}

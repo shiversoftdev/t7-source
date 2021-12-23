@@ -77,7 +77,7 @@ function function_471d1403()
 			{
 				var_cb365fdc = room.var_57ce7582[room.var_57ce7582.size - 1];
 			}
-			if(isdefined(var_cb365fdc) && level.doa.round_number - var_cb365fdc < room.var_a90de2a1)
+			if(isdefined(var_cb365fdc) && (level.doa.round_number - var_cb365fdc) < room.var_a90de2a1)
 			{
 				continue;
 			}
@@ -88,7 +88,7 @@ function function_471d1403()
 		}
 		possible[possible.size] = room;
 	}
-	if(level.doa.round_number - level.doa.var_ff23f7c8 < 14)
+	if((level.doa.round_number - level.doa.var_ff23f7c8) < 14)
 	{
 		return;
 	}

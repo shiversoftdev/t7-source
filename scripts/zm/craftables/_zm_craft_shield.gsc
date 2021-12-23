@@ -272,9 +272,9 @@ function function_f3127c4f()
 		wait(1);
 		zm_devgui::add_custom_devgui_callback(&function_b6937313);
 		setdvar("", 0);
-		adddebugcommand("" + level.craftable_shield_equipment + "");
-		adddebugcommand("" + level.craftable_shield_equipment + "");
-		adddebugcommand("" + level.craftable_shield_equipment + "");
+		adddebugcommand(("" + level.craftable_shield_equipment) + "");
+		adddebugcommand(("" + level.craftable_shield_equipment) + "");
+		adddebugcommand(("" + level.craftable_shield_equipment) + "");
 	#/
 }
 
@@ -390,8 +390,8 @@ function function_2b0b208f()
 		self notify(#"hash_2b0b208f");
 		self endon(#"hash_2b0b208f");
 		self.var_74469a7a = !(isdefined(self.var_74469a7a) && self.var_74469a7a);
-		println("" + self.name + "" + (self.var_74469a7a ? "" : ""));
-		iprintlnbold("" + self.name + "" + (self.var_74469a7a ? "" : ""));
+		println((("" + self.name) + "") + (self.var_74469a7a ? "" : ""));
+		iprintlnbold((("" + self.name) + "") + (self.var_74469a7a ? "" : ""));
 		if(self.var_74469a7a)
 		{
 			while(isdefined(self))

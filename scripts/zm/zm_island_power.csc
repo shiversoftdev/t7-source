@@ -65,8 +65,8 @@ function bucket_fx(localclientnum, oldval, newval, bnewent, binitialsnap, fieldn
 */
 function power_switch_1_fx(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
-	var_9ee18415 = struct::get_array("power_switch_1_fx", "targetname");
-	foreach(var_622a73d9, s_fx in var_9ee18415)
+	a_s_fx = struct::get_array("power_switch_1_fx", "targetname");
+	foreach(var_622a73d9, s_fx in a_s_fx)
 	{
 		if(isdefined(s_fx.a_fx_id))
 		{
@@ -81,7 +81,7 @@ function power_switch_1_fx(localclientnum, oldval, newval, bnewent, binitialsnap
 	{
 		var_92ee343f = getent(localclientnum, "power_wires_lab_a", "targetname");
 		var_92ee343f thread function_5ae9f178(localclientnum, 0);
-		foreach(var_7012b4f5, s_fx in var_9ee18415)
+		foreach(var_7012b4f5, s_fx in a_s_fx)
 		{
 			if(!isdefined(s_fx.a_fx_id))
 			{
@@ -94,7 +94,7 @@ function power_switch_1_fx(localclientnum, oldval, newval, bnewent, binitialsnap
 	{
 		var_92ee343f = getent(localclientnum, "power_wires_lab_a", "targetname");
 		var_92ee343f thread function_5ae9f178(localclientnum, 1);
-		foreach(var_e498c241, s_fx in var_9ee18415)
+		foreach(var_e498c241, s_fx in a_s_fx)
 		{
 			if(!isdefined(s_fx.a_fx_id))
 			{
@@ -116,8 +116,8 @@ function power_switch_1_fx(localclientnum, oldval, newval, bnewent, binitialsnap
 */
 function power_switch_2_fx(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
-	var_9ee18415 = struct::get_array("power_switch_2_fx", "targetname");
-	foreach(var_8e14c94b, s_fx in var_9ee18415)
+	a_s_fx = struct::get_array("power_switch_2_fx", "targetname");
+	foreach(var_8e14c94b, s_fx in a_s_fx)
 	{
 		if(isdefined(s_fx.a_fx_id))
 		{
@@ -132,7 +132,7 @@ function power_switch_2_fx(localclientnum, oldval, newval, bnewent, binitialsnap
 	{
 		var_92ee343f = getent(localclientnum, "power_wires_lab_b", "targetname");
 		var_92ee343f thread function_5ae9f178(localclientnum, 0);
-		foreach(var_1127fad8, s_fx in var_9ee18415)
+		foreach(var_1127fad8, s_fx in a_s_fx)
 		{
 			if(!isdefined(s_fx.a_fx_id))
 			{
@@ -145,7 +145,7 @@ function power_switch_2_fx(localclientnum, oldval, newval, bnewent, binitialsnap
 	{
 		var_92ee343f = getent(localclientnum, "power_wires_lab_b", "targetname");
 		var_92ee343f thread function_5ae9f178(localclientnum, 1);
-		foreach(var_3fe383f4, s_fx in var_9ee18415)
+		foreach(var_3fe383f4, s_fx in a_s_fx)
 		{
 			if(!isdefined(s_fx.a_fx_id))
 			{
@@ -171,7 +171,7 @@ function function_5ae9f178(localclientnum, b_on = 1)
 	self notify(#"hash_67a9e087");
 	self endon(#"hash_67a9e087");
 	n_start_time = gettime();
-	n_end_time = n_start_time + 2 * 1000;
+	n_end_time = n_start_time + (2 * 1000);
 	b_is_updating = 1;
 	if(isdefined(b_on) && b_on)
 	{
@@ -257,7 +257,7 @@ function function_a88bde9b(localclientnum, b_on = 1)
 	self notify(#"hash_67a9e087");
 	self endon(#"hash_67a9e087");
 	n_start_time = gettime();
-	n_end_time = n_start_time + 2 * 1000;
+	n_end_time = n_start_time + (2 * 1000);
 	b_is_updating = 1;
 	if(isdefined(b_on) && b_on)
 	{

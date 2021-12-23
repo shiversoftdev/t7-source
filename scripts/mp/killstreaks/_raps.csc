@@ -110,7 +110,7 @@ function monitor_drop_landing(localclientnum)
 	self endon(#"entityshutdown");
 	self notify(#"monitor_drop_landing_entity_singleton");
 	self endon(#"monitor_drop_landing_entity_singleton");
-	a_trace = bullettrace(self.origin + vectorscale((0, 0, -1), 200), self.origin + vectorscale((0, 0, -1), 5000), 0, self, 1);
+	a_trace = bullettrace(self.origin + (vectorscale((0, 0, -1), 200)), self.origin + (vectorscale((0, 0, -1), 5000)), 0, self, 1);
 	v_ground = a_trace["position"];
 	wait(0.5);
 	whoosh_distance = 0;
@@ -120,13 +120,13 @@ function monitor_drop_landing(localclientnum)
 		while(not_close_enough_to_ground)
 		{
 			velocity = self getvelocity();
-			whoosh_distance = max(whoosh_distance, abs(velocity[2]) * 0.15 + 193.044 * 0.15 * 0.15);
+			whoosh_distance = max(whoosh_distance, (abs(velocity[2]) * 0.15) + ((193.044 * 0.15) * 0.15));
 			whoosh_distance_squared = whoosh_distance * whoosh_distance;
 			distance_squared = distancesquared(self.origin, v_ground);
 			not_close_enough_to_ground = distance_squared > whoosh_distance_squared;
 			if(not_close_enough_to_ground)
 			{
-				wait((distance_squared > whoosh_distance_squared * 4 ? 0.1 : 0.05));
+				wait((distance_squared > (whoosh_distance_squared * 4) ? 0.1 : 0.05));
 			}
 		}
 		self playsound(localclientnum, "veh_raps_first_land");

@@ -199,7 +199,7 @@ function scoreeventplayerkill(data, time)
 	if(level.teambased)
 	{
 		attacker.lastkilltime = time;
-		if(isdefined(victim.lastkilltime) && victim.lastkilltime > time - 3000)
+		if(isdefined(victim.lastkilltime) && victim.lastkilltime > (time - 3000))
 		{
 			if(isdefined(victim.lastkilledplayer) && victim.lastkilledplayer util::isenemyplayer(attacker) == 0 && attacker != victim.lastkilledplayer)
 			{
@@ -225,7 +225,7 @@ function scoreeventplayerkill(data, time)
 				{
 					continue;
 				}
-				if(time - victim.damagedplayers[key].time < 1000)
+				if((time - victim.damagedplayers[key].time) < 1000)
 				{
 					processscoreevent("kill_enemy_injuring_teammate", attacker, victim, weapon);
 					if(isdefined(victim.damagedplayers[key].entity))
@@ -330,7 +330,7 @@ function scoreeventplayerkill(data, time)
 	}
 	if(isalive(attacker))
 	{
-		if(attacker.health < attacker.maxhealth * 0.35)
+		if(attacker.health < (attacker.maxhealth * 0.35))
 		{
 			attacker.lastkillwheninjured = time;
 			processscoreevent("kill_enemy_when_injured", attacker, victim, weapon);
@@ -341,7 +341,7 @@ function scoreeventplayerkill(data, time)
 			}
 		}
 	}
-	else if(isdefined(attacker.deathtime) && attacker.deathtime + 800 < time && !attacker isinvehicle())
+	else if(isdefined(attacker.deathtime) && (attacker.deathtime + 800) < time && !attacker isinvehicle())
 	{
 		level.globalafterlifes++;
 		processscoreevent("kill_enemy_after_death", attacker, victim, weapon);

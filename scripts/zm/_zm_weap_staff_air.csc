@@ -59,15 +59,48 @@ function function_869adfb(localclientnum, oldval, newval, bnewent, binitialsnap,
 	Namespace: zm_weap_staff_air
 	Checksum: 0x472E06EE
 	Offset: 0x408
-	Size: 0x0
+	Size: 0x20E
 	Parameters: 1
 	Flags: Linked
 */
 function ragdoll_impact_watch(localclientnum)
 {
+	self endon(#"entityshutdown");
+	wait(0.1);
+	waittime = 0.016;
+	gibspeed = 500;
+	prevorigin = self.origin;
+	waitrealtime(waittime);
+	prevvel = self.origin - prevorigin;
+	prevspeed = length(prevvel);
+	prevorigin = self.origin;
+	waitrealtime(waittime);
+	firstloop = 1;
+	while(true)
+	{
+		vel = self.origin - prevorigin;
+		speed = length(vel);
+		if(speed < (prevspeed * 0.5) && prevspeed > (gibspeed * waittime))
+		{
+			if(isdefined(level._effect["zombie_guts_explosion"]) && util::is_mature())
+			{
+				where = self gettagorigin("J_SpineLower");
+				playfx(localclientnum, level._effect["zombie_guts_explosion"], where);
+			}
+			break;
+		}
+		if(prevspeed < (gibspeed * waittime) && !firstloop)
+		{
+			break;
+		}
+		prevorigin = self.origin;
+		prevvel = vel;
+		prevspeed = speed;
+		firstloop = 0;
+		waitrealtime(waittime);
+	}
 }
 
-/*Unknown Op Code (0x1F7D) at 0496*/
 /*
 	Name: air_staff_launch
 	Namespace: zm_weap_staff_air

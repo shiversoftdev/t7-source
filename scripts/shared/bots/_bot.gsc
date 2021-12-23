@@ -470,7 +470,7 @@ function update_swim()
 		press_swim_up();
 		return;
 	}
-	bottomtrace = groundtrace(self.origin, self.origin + vectorscale((0, 0, -1), 1000), 0, self, 1);
+	bottomtrace = groundtrace(self.origin, self.origin + (vectorscale((0, 0, -1), 1000)), 0, self, 1);
 	swimheight = self.origin[2] - bottomtrace["position"][2];
 	if(swimheight < 25)
 	{
@@ -487,7 +487,7 @@ function update_swim()
 		intervaldist = level.botsettings.swimverticalspeed * level.botsettings.thinkinterval;
 		if(intervaldist > vertdist)
 		{
-			self wait_release_swim_buttons(level.botsettings.thinkinterval * vertdist / intervaldist);
+			self wait_release_swim_buttons((level.botsettings.thinkinterval * vertdist) / intervaldist);
 		}
 	}
 }
@@ -632,7 +632,7 @@ function sprint_think()
 function goal_in_trigger(trigger)
 {
 	radius = self get_trigger_radius(trigger);
-	return distancesquared(trigger.origin, self botgetgoalposition()) <= radius * radius;
+	return distancesquared(trigger.origin, self botgetgoalposition()) <= (radius * radius);
 }
 
 /*
@@ -648,7 +648,7 @@ function point_in_goal(point)
 {
 	deltasq = distance2dsquared(self botgetgoalposition(), point);
 	goalradius = self botgetgoalradius();
-	return deltasq <= goalradius * goalradius;
+	return deltasq <= (goalradius * goalradius);
 }
 
 /*
@@ -670,7 +670,7 @@ function path_to_trigger(trigger, radius)
 		}
 		randomangle = (0, randomint(360), 0);
 		randomvec = anglestoforward(randomangle);
-		point = trigger.origin + randomvec * radius;
+		point = trigger.origin + (randomvec * radius);
 		self botsetgoal(point);
 	}
 	if(!isdefined(radius))
@@ -798,7 +798,7 @@ function check_stuck()
 				if(getdvarint("", 0))
 				{
 					sphere(self.origin, 16, (1, 0, 0), 0.25, 0, 16, 1200);
-					iprintln("" + self.name + "" + self.origin);
+					iprintln((("" + self.name) + "") + self.origin);
 				}
 			#/
 			self thread stuck_resolution();
@@ -831,7 +831,7 @@ function check_stuck_position()
 	}
 	self.bot.checkpositiontime = gettime() + 500;
 	self.bot.positionhistory[self.bot.positionhistoryindex] = self.origin;
-	self.bot.positionhistoryindex = self.bot.positionhistoryindex + 1 % 5;
+	self.bot.positionhistoryindex = (self.bot.positionhistoryindex + 1) % 5;
 	if(self.bot.positionhistory.size < 5)
 	{
 		return;
@@ -858,7 +858,7 @@ function check_stuck_position()
 		if(getdvarint("", 0))
 		{
 			sphere(self.origin, 128, (1, 0, 0), 0.25, 0, 16, 1200);
-			iprintln("" + self.name + "" + self.origin);
+			iprintln((("" + self.name) + "") + self.origin);
 		}
 	#/
 	self thread stuck_resolution();
@@ -879,7 +879,7 @@ function stuck_resolution()
 	level endon(#"game_ended");
 	self clear_stuck();
 	self bottakemanualcontrol();
-	escapeangle = self getangles()[1] + 180 + randomintrange(-60, 60);
+	escapeangle = (self getangles()[1] + 180) + (randomintrange(-60, 60));
 	escapedir = anglestoforward((0, escapeangle, 0));
 	self botsetmoveangle(escapedir);
 	self botsetmovemagnitude(1);
@@ -942,7 +942,7 @@ function wait_bot_path_failed_loop()
 				box(self.origin, vectorscale((-1, -1, 0), 15), (15, 15, 72), 0, (0, 1, 0), 0.25, 0, 1200);
 				box(goalposition, vectorscale((-1, -1, 0), 15), (15, 15, 72), 0, (1, 0, 0), 0.25, 0, 1200);
 				line(self.origin, goalposition, (1, 1, 1), 1, 0, 1200);
-				iprintln("" + self.name + "" + self.origin + "" + goalposition);
+				iprintln((((("" + self.name) + "") + self.origin) + "") + goalposition);
 			}
 		#/
 		self thread stuck_resolution();
@@ -1198,7 +1198,7 @@ function lead_player(player, followmin)
 	dotmax = 0.92;
 	queryresult = positionquery_source_navigation(player.origin, radiusmin, radiusmax, 150, 32, self);
 	fwd = anglestoforward(player.angles);
-	point = player.origin + fwd * 72;
+	point = player.origin + (fwd * 72);
 	self botsetgoal(point, 42);
 	self sprint_to_goal();
 }
@@ -1294,7 +1294,7 @@ function navmesh_wander(fwd, radiusmin = (isdefined(level.botsettings.wandermin)
 				circle(self.origin, radiusmin, (1, 0, 0), 0, 1, 1200);
 				circle(self.origin, radiusmax, (1, 0, 0), 0, 1, 1200);
 				sphere(self.origin, 16, (0, 1, 0), 0.25, 0, 16, 1200);
-				iprintln("" + self.name + "" + self.origin);
+				iprintln((("" + self.name) + "") + self.origin);
 			}
 		#/
 		self thread stuck_resolution();
@@ -1313,7 +1313,7 @@ function navmesh_wander(fwd, radiusmin = (isdefined(level.botsettings.wandermin)
 function approach_goal_trigger(trigger, radiusmax = 1500, spacing = 128)
 {
 	distsq = distancesquared(self.origin, trigger.origin);
-	if(distsq < radiusmax * radiusmax)
+	if(distsq < (radiusmax * radiusmax))
 	{
 		self path_to_point_in_trigger(trigger);
 		return;
@@ -1334,7 +1334,7 @@ function approach_goal_trigger(trigger, radiusmax = 1500, spacing = 128)
 function approach_point(point, radiusmin = 0, radiusmax = 1500, spacing = 128)
 {
 	distsq = distancesquared(self.origin, point);
-	if(distsq < radiusmax * radiusmax)
+	if(distsq < (radiusmax * radiusmax))
 	{
 		self botsetgoal(point, 24);
 		return;
@@ -1731,7 +1731,7 @@ function get_nav_points()
 			}
 			if(self buttonpressed(""))
 			{
-				if(isdefined(point) && (points.size == 0 || distance2d(point, points[points.size - 1]) > 16))
+				if(isdefined(point) && (points.size == 0 || (distance2d(point, points[points.size - 1])) > 16))
 				{
 					points[points.size] = point;
 				}
@@ -1773,7 +1773,7 @@ function debug_patrol(points)
 			self botsetgoal(points[i], 24);
 			self sprint_to_goal();
 			self waittill(#"bot_goal_reached");
-			i = i + 1 % points.size;
+			i = (i + 1) % points.size;
 		}
 	#/
 }

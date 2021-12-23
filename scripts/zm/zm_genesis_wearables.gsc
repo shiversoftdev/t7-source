@@ -59,7 +59,7 @@ function __init__()
 	zm_spawner::register_zombie_damage_callback(&function_cb27f92e);
 	for(i = 0; i < 4; i++)
 	{
-		registerclientfield("world", "player" + i + "wearableItem", 15000, 4, "int");
+		registerclientfield("world", ("player" + i) + "wearableItem", 15000, 4, "int");
 	}
 	level thread function_aa6437f1();
 	level thread function_b4575902();
@@ -105,7 +105,7 @@ function function_2436f867()
 */
 function function_b712ee6f(var_908867a0)
 {
-	level clientfield::set("player" + self.entity_num + "wearableItem", var_908867a0);
+	level clientfield::set(("player" + self.entity_num) + "wearableItem", var_908867a0);
 }
 
 /*
@@ -117,9 +117,9 @@ function function_b712ee6f(var_908867a0)
 	Parameters: 1
 	Flags: Linked
 */
-function function_30fb8e63(var_1058470b)
+function function_30fb8e63(n_perks)
 {
-	self clientfield::set_player_uimodel("zmInventory.wearable_perk_icons", var_1058470b);
+	self clientfield::set_player_uimodel("zmInventory.wearable_perk_icons", n_perks);
 }
 
 /*
@@ -440,7 +440,7 @@ function function_9157236c()
 	var_7bd91d87 = struct::get_array("s_ee_clock", "targetname");
 	var_687cab15 = getent("ee_grand_tour_undercroft", "targetname");
 	var_687cab15 setcandamage(1);
-	var_db04d156 = 9;
+	n_stage = 9;
 	var_c52419ba = 1;
 	while(var_c52419ba)
 	{
@@ -456,13 +456,13 @@ function function_9157236c()
 				s_closest = var_7bd91d87[i];
 			}
 		}
-		switch(var_db04d156)
+		switch(n_stage)
 		{
 			case 9:
 			{
 				if(s_closest.script_int == 9)
 				{
-					var_db04d156 = 3;
+					n_stage = 3;
 				}
 				break;
 			}
@@ -470,11 +470,11 @@ function function_9157236c()
 			{
 				if(s_closest.script_int == 3)
 				{
-					var_db04d156 = 5;
+					n_stage = 5;
 				}
 				else
 				{
-					var_db04d156 = 9;
+					n_stage = 9;
 				}
 				break;
 			}
@@ -486,7 +486,7 @@ function function_9157236c()
 				}
 				else
 				{
-					var_db04d156 = 9;
+					n_stage = 9;
 				}
 				break;
 			}
@@ -585,7 +585,7 @@ function function_edd475ab(var_dd087d43, var_33c3e058, var_e7d196cc)
 		{
 			n_start_time = n_time;
 		}
-		var_84e70e75 = n_time - n_start_time / 1000;
+		var_84e70e75 = (n_time - n_start_time) / 1000;
 		if(var_84e70e75 > var_33c3e058)
 		{
 			n_start_time = n_time;
@@ -1414,14 +1414,14 @@ function function_cb27f92e(mod, hit_location, hit_origin, player, amount, weapon
 function function_e8a31296()
 {
 	/#
-		adddebugcommand("" + "" + "");
-		adddebugcommand("" + "" + "");
-		adddebugcommand("" + "" + "");
-		adddebugcommand("" + "" + "");
-		adddebugcommand("" + "" + "");
-		adddebugcommand("" + "" + "");
-		adddebugcommand("" + "" + "");
-		adddebugcommand("" + "" + "");
+		adddebugcommand(("" + "") + "");
+		adddebugcommand(("" + "") + "");
+		adddebugcommand(("" + "") + "");
+		adddebugcommand(("" + "") + "");
+		adddebugcommand(("" + "") + "");
+		adddebugcommand(("" + "") + "");
+		adddebugcommand(("" + "") + "");
+		adddebugcommand(("" + "") + "");
 		adddebugcommand("");
 		adddebugcommand("");
 		adddebugcommand("");

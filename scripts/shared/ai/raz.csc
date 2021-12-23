@@ -301,7 +301,7 @@ function razprocessfootstep(localclientnum, pos, surface, notetrack, bone)
 	n_raz_dist = 160000;
 	if(n_raz_dist > 0)
 	{
-		n_scale = n_raz_dist - n_dist / n_raz_dist;
+		n_scale = (n_raz_dist - n_dist) / n_raz_dist;
 	}
 	else
 	{
@@ -416,7 +416,7 @@ private function razcreatedynentandlaunch(localclientnum, model, pos, angles, hi
 	{
 		velocity_length = 10;
 	}
-	launch_dir = launch_dir * 0.5 + velocity_normal * 0.5;
+	launch_dir = (launch_dir * 0.5) + (velocity_normal * 0.5);
 	launch_dir = launch_dir * velocity_length;
 	createdynentandlaunch(localclientnum, model, pos, angles, self.origin, launch_dir * vel_factor);
 }

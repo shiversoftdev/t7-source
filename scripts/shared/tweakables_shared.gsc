@@ -257,7 +257,7 @@ function gettweakablevalue(category, name)
 			break;
 		}
 	}
-	overridedvar = "scr_" + level.gametype + "_" + category + "_" + name;
+	overridedvar = (((("scr_" + level.gametype) + "_") + category) + "_") + name;
 	if(getdvarstring(overridedvar) != "")
 	{
 		return getdvarint(overridedvar);

@@ -109,7 +109,7 @@ function function_42722ac4()
 	v_right = anglestoright(self.angles);
 	self magicgrenadetype(level.var_77eb3698, self.origin + v_launch_offset, v_facing * 1000, 0.5);
 	util::wait_network_frame();
-	self magicgrenadetype(level.var_77eb3698, self.origin + v_launch_offset, v_facing * -1 * 100, 0.05);
+	self magicgrenadetype(level.var_77eb3698, self.origin + v_launch_offset, (v_facing * -1) * 100, 0.05);
 	self bgb::do_one_shot_use();
 	self.var_abd23dd0--;
 	self bgb::set_timer(self.var_abd23dd0, 6);

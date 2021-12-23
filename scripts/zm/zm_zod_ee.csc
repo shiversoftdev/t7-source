@@ -163,7 +163,7 @@ function function_f2a0dbdc(localclientnum, oldval, newval, bnewent, binitialsnap
 	mdl_victim show();
 	for(i = 0; i < 4; i++)
 	{
-		mdl_ritual.vfx_trails[i] = playfxontag(localclientnum, level._effect["ritual_trail"], mdl_ritual, "key_pcs0" + i + 1 + "_jnt");
+		mdl_ritual.vfx_trails[i] = playfxontag(localclientnum, level._effect["ritual_trail"], mdl_ritual, ("key_pcs0" + (i + 1)) + "_jnt");
 	}
 	level thread zm_zod_quest::sndritual(2, mdl_ritual);
 	level thread exploder::exploder("ritual_light_pap");
@@ -416,7 +416,7 @@ function function_a39c9866(localclientnum, var_fe2fb4b9, var_f471914b, n_charact
 			var_4fafa709.var_4cf62d2c hide();
 			stopfx(localclientnum, var_4fafa709.var_f87c0436);
 			stopfx(localclientnum, var_4fafa709.var_6b0fc6a1);
-			str_targetname = "ee_keeper_8_" + n_character_index - 1;
+			str_targetname = "ee_keeper_8_" + (n_character_index - 1);
 			s_loc = struct::get(str_targetname, "targetname");
 			var_4fafa709.model.origin = s_loc.origin;
 			var_4fafa709.model.angles = s_loc.angles + vectorscale((0, 1, 0), 180);
@@ -437,7 +437,7 @@ function function_a39c9866(localclientnum, var_fe2fb4b9, var_f471914b, n_charact
 				v_fwd = anglestoforward(s_loc.angles);
 				s_loc.var_dda4503d = playfx(localclientnum, level._effect["portal_shortcut_closed_base"], s_loc.origin, v_fwd);
 			}
-			str_targetname = "ee_keeper_8_" + n_character_index - 1;
+			str_targetname = "ee_keeper_8_" + (n_character_index - 1);
 			s_loc = struct::get(str_targetname, "targetname");
 			if(var_f471914b === 6)
 			{
@@ -489,7 +489,7 @@ function function_a39c9866(localclientnum, var_fe2fb4b9, var_f471914b, n_charact
 			var_4fafa709.model notify(#"hash_274ba0e6");
 			var_4fafa709.model clearanim("ai_zombie_zod_keeper_sword_quest_attack_intro", 0);
 			var_4fafa709.model clearanim("ai_zombie_zod_keeper_sword_quest_attack_idle", 0);
-			str_targetname = "ee_apothigod_keeper_" + n_character_index - 1;
+			str_targetname = "ee_apothigod_keeper_" + (n_character_index - 1);
 			s_loc = struct::get(str_targetname, "targetname");
 			var_4fafa709.model.origin = s_loc.origin;
 			var_4fafa709.model.angles = s_loc.angles;
@@ -502,7 +502,7 @@ function function_a39c9866(localclientnum, var_fe2fb4b9, var_f471914b, n_charact
 			var_4fafa709.model notify(#"hash_274ba0e6");
 			var_4fafa709.model clearanim("ai_zombie_zod_keeper_sword_quest_attack_intro", 0);
 			var_4fafa709.model clearanim("ai_zombie_zod_keeper_sword_quest_attack_idle", 0);
-			str_targetname = "ee_apothigod_keeper_" + n_character_index - 1;
+			str_targetname = "ee_apothigod_keeper_" + (n_character_index - 1);
 			s_loc = struct::get(str_targetname, "targetname");
 			var_4fafa709.model.origin = s_loc.origin;
 			var_4fafa709.model.angles = s_loc.angles;
@@ -601,17 +601,17 @@ function function_4d0c8ca8(var_4fafa709, var_fe2fb4b9, n_character_index)
 	{
 		case 0:
 		{
-			str_targetname = "keeper_spirit_" + n_character_index - 1;
+			str_targetname = "keeper_spirit_" + (n_character_index - 1);
 			break;
 		}
 		case 1:
 		{
-			str_targetname = "ee_keeper_8_" + n_character_index - 1;
+			str_targetname = "ee_keeper_8_" + (n_character_index - 1);
 			break;
 		}
 		case 2:
 		{
-			str_targetname = "ee_apothigod_keeper_" + n_character_index - 1;
+			str_targetname = "ee_apothigod_keeper_" + (n_character_index - 1);
 			break;
 		}
 	}
@@ -633,7 +633,7 @@ function function_4d0c8ca8(var_4fafa709, var_fe2fb4b9, n_character_index)
 function function_e1e53e16(localclientnum, n_character_index)
 {
 	function_1461c206(localclientnum, n_character_index);
-	s_loc = struct::get("keeper_spirit_" + n_character_index - 1, "targetname");
+	s_loc = struct::get("keeper_spirit_" + (n_character_index - 1), "targetname");
 	var_4fafa709 = level.var_673f721c[localclientnum][n_character_index];
 	if(!isdefined(var_4fafa709.model))
 	{
@@ -645,7 +645,7 @@ function function_e1e53e16(localclientnum, n_character_index)
 	}
 	if(!isdefined(var_4fafa709.var_4cf62d2c))
 	{
-		var_f4fc4f28 = struct::get("keeper_resurrection_totem_" + n_character_index - 1, "targetname");
+		var_f4fc4f28 = struct::get("keeper_resurrection_totem_" + (n_character_index - 1), "targetname");
 		var_4fafa709.var_4cf62d2c = spawn(localclientnum, var_f4fc4f28.origin, "script_model");
 		var_4fafa709.var_4cf62d2c.angles = var_f4fc4f28.angles;
 		var_4fafa709.var_4cf62d2c setmodel("t7_zm_zod_keepers_totem");

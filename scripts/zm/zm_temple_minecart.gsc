@@ -580,7 +580,7 @@ function function_9c70545()
 		{
 			continue;
 		}
-		trace = groundtrace(level.spikemores[i].origin, level.spikemores[i].origin + vectorscale((0, 0, -1), 24), 0, level.spikemores[i]);
+		trace = groundtrace(level.spikemores[i].origin, level.spikemores[i].origin + (vectorscale((0, 0, -1), 24)), 0, level.spikemores[i]);
 		if(isdefined(trace["entity"]))
 		{
 			if(self == trace["entity"] || (isdefined(self.floor) && self.floor == trace["entity"]))
@@ -623,7 +623,7 @@ function function_539188d5()
 */
 function function_b6cb1d5a(name)
 {
-	node = getvehiclenode(self.targetname + "_" + name, "targetname");
+	node = getvehiclenode((self.targetname + "_") + name, "targetname");
 	if(isdefined(node))
 	{
 		self attachpath(node);
@@ -947,7 +947,7 @@ function function_a2aafac6()
 	}
 	forward = anglestoforward(self.angles);
 	forwarddist = 370;
-	var_f127a043 = forward * forwarddist + vectorscale((0, 0, 1), 110);
+	var_f127a043 = (forward * forwarddist) + vectorscale((0, 0, 1), 110);
 	time = forwarddist / speed;
 	players = getplayers();
 	var_e6eabdfa = [];
@@ -984,12 +984,12 @@ function function_a2aafac6()
 		player.var_68072c39 movegravity(var_f127a043, time);
 	}
 	var_f127a043 = (0, 0, 0);
-	wait(time * 0.9 - 0.1);
+	wait((time * 0.9) - 0.1);
 	if(var_8e3b7101.size > 0)
 	{
 		old_origin = var_8e3b7101[0].var_68072c39.origin;
 		wait(0.1);
-		var_f127a043 = var_8e3b7101[0].var_68072c39.origin - old_origin * 10;
+		var_f127a043 = (var_8e3b7101[0].var_68072c39.origin - old_origin) * 10;
 	}
 	else
 	{
@@ -1264,7 +1264,7 @@ function function_7fec5b68()
 	{
 		return;
 	}
-	scale.origin = scale.origin + vectorscale((0, 0, -1), 37);
+	scale.origin = scale.origin + (vectorscale((0, 0, -1), 37));
 	level waittill(#"hash_25007749");
 	while(true)
 	{

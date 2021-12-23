@@ -178,7 +178,7 @@ function function_7039f685()
 	{
 		self.var_fe555a38 = self getcurrentweapon();
 	}
-	var_2826b50 = zm_weapons::is_weapon_upgraded(self.var_fe555a38);
+	b_upgraded = zm_weapons::is_weapon_upgraded(self.var_fe555a38);
 	var_6c94ea19 = self aat::getaatonweapon(self.var_fe555a38);
 	if(isdefined(var_6c94ea19))
 	{
@@ -219,7 +219,7 @@ function function_7039f685()
 		}
 		do
 		{
-			var_aca7cde1 = self function_4035ce17(n_index, var_2826b50, var_77bd95a);
+			var_aca7cde1 = self function_4035ce17(n_index, b_upgraded, var_77bd95a);
 			n_index++;
 		}
 		while(!var_aca7cde1);
@@ -278,7 +278,7 @@ function disable_weapons()
 	Parameters: 3
 	Flags: Linked
 */
-function function_4035ce17(n_index, var_2826b50, var_77bd95a)
+function function_4035ce17(n_index, b_upgraded, var_77bd95a)
 {
 	if(n_index >= level.var_8fcdc919.size)
 	{
@@ -286,7 +286,7 @@ function function_4035ce17(n_index, var_2826b50, var_77bd95a)
 		n_index = 0;
 	}
 	var_e3c04036 = level.var_8fcdc919[n_index];
-	if(var_2826b50)
+	if(b_upgraded)
 	{
 		var_e3c04036 = zm_weapons::get_upgrade_weapon(var_e3c04036);
 	}

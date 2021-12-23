@@ -29,15 +29,15 @@ autoexec function main()
 		for(index = 1; index <= destructbundle.piececount; index++)
 		{
 			piecestruct = spawnstruct();
-			piecestruct.gibmodel = getstructfield(destructible, "piece" + index + "_gibmodel");
-			piecestruct.gibtag = getstructfield(destructible, "piece" + index + "_gibtag");
-			piecestruct.gibfx = getstructfield(destructible, "piece" + index + "_gibfx");
-			piecestruct.gibfxtag = getstructfield(destructible, "piece" + index + "_gibeffecttag");
-			piecestruct.gibdynentfx = getstructfield(destructible, "piece" + index + "_gibdynentfx");
-			piecestruct.gibsound = getstructfield(destructible, "piece" + index + "_gibsound");
-			piecestruct.hitlocation = getstructfield(destructible, "piece" + index + "_hitlocation");
-			piecestruct.hidetag = getstructfield(destructible, "piece" + index + "_hidetag");
-			piecestruct.detachmodel = getstructfield(destructible, "piece" + index + "_detachmodel");
+			piecestruct.gibmodel = getstructfield(destructible, ("piece" + index) + "_gibmodel");
+			piecestruct.gibtag = getstructfield(destructible, ("piece" + index) + "_gibtag");
+			piecestruct.gibfx = getstructfield(destructible, ("piece" + index) + "_gibfx");
+			piecestruct.gibfxtag = getstructfield(destructible, ("piece" + index) + "_gibeffecttag");
+			piecestruct.gibdynentfx = getstructfield(destructible, ("piece" + index) + "_gibdynentfx");
+			piecestruct.gibsound = getstructfield(destructible, ("piece" + index) + "_gibsound");
+			piecestruct.hitlocation = getstructfield(destructible, ("piece" + index) + "_hitlocation");
+			piecestruct.hidetag = getstructfield(destructible, ("piece" + index) + "_hidetag");
+			piecestruct.detachmodel = getstructfield(destructible, ("piece" + index) + "_detachmodel");
 			destructbundle.pieces[destructbundle.pieces.size] = piecestruct;
 		}
 		processedbundles[destructiblename] = destructbundle;
@@ -342,7 +342,7 @@ function isdestructed(entity, piecenumber)
 			assert(1 <= piecenumber && piecenumber <= 20);
 		#/
 	#/
-	return _getdestructstate(entity) & 1 << piecenumber;
+	return _getdestructstate(entity) & (1 << piecenumber);
 }
 
 /*

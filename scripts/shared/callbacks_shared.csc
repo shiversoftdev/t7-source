@@ -385,7 +385,7 @@ function codecallback_statechange(clientnum, system, newstate)
 	{
 		[[level._systemstates[system].callback]](clientnum, newstate);
 	}
-	println("" + system + "");
+	println(("" + system) + "");
 }
 
 /*

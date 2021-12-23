@@ -155,16 +155,16 @@ function physics_explosion_and_rumble(origin, radius, var_824b40e2 = 1, var_34aa
 	sexplosion.origin = origin;
 	wait(0.05);
 	/#
-		assert(radius <= pow(2, 10) - 1);
+		assert(radius <= (pow(2, 10) - 1));
 	#/
 	var_e0d11135 = radius;
 	if(var_824b40e2)
 	{
-		var_e0d11135 = var_e0d11135 + 1 << 10;
+		var_e0d11135 = var_e0d11135 + (1 << 10);
 	}
 	if(var_34aa7e9b)
 	{
-		var_e0d11135 = var_e0d11135 + 1 << 9;
+		var_e0d11135 = var_e0d11135 + (1 << 9);
 	}
 	sexplosion clientfield::set("start_destructible_explosion", var_e0d11135);
 	sexplosion.in_use = 0;

@@ -449,7 +449,7 @@ function function_5ed5738a(var_b90e5c2c, var_c878636f)
 		{
 			var_e13f49eb = 1;
 			player.var_c8656312 = player openluimenu("CPMissionFailed");
-			if(var_b90e5c2c == &"GAME_YOU_DIED")
+			if(var_b90e5c2c == (&"GAME_YOU_DIED"))
 			{
 				if(player == level.dead_player)
 				{
@@ -834,11 +834,11 @@ function function_e9f7384d()
 	w_hero = a_heroweapons[0];
 	if(isdefined(w_hero))
 	{
-		if(self getweaponammoclip(w_hero) + self getweaponammostock(w_hero) > 0)
+		if((self getweaponammoclip(w_hero) + self getweaponammostock(w_hero)) > 0)
 		{
 			if(isdefined(self.var_928b1776))
 			{
-				if(gettime() - self.var_928b1776 > 90000)
+				if((gettime() - self.var_928b1776) > 90000)
 				{
 					switch(w_hero.rootweapon.name)
 					{

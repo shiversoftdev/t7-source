@@ -380,7 +380,7 @@ function function_44ff9baa(player)
 			self.bird.angles = self.angles;
 			self.bird.origin = self.origin;
 			self.is_moving = 0;
-			if(distance2dsquared(self.var_947e1f34.origin, follow_points[follow_index]) > getdvarint("scr_doa_follow_point_spacing", 4 * 4))
+			if(distance2dsquared(self.var_947e1f34.origin, follow_points[follow_index]) > (getdvarint("scr_doa_follow_point_spacing", 4 * 4)))
 			{
 				follow_pt = self.var_947e1f34.origin;
 				if(isplayer(self.var_947e1f34))
@@ -592,14 +592,14 @@ private function function_cea0c915(player, weapon)
 	{
 		forward = anglestoforward(self.angles);
 	}
-	offset = forward * 12 + vectorscale((0, 0, 1), 6);
+	offset = (forward * 12) + vectorscale((0, 0, 1), 6);
 	start = self.bird.origin + offset;
 	if(getdvarint("scr_doa_debug_chicken_fire", 0))
 	{
 		level thread namespace_2f63e553::function_a0e51d80(start, 5, 20, (1, 0, 0));
-		level thread namespace_2f63e553::debugline(start, self.origin + forward * 1000, 5, (1, 0, 0));
+		level thread namespace_2f63e553::debugline(start, self.origin + (forward * 1000), 5, (1, 0, 0));
 	}
-	magicbullet(weapon, start, start + forward * 1000, (isdefined(player) ? player : self.bird));
+	magicbullet(weapon, start, start + (forward * 1000), (isdefined(player) ? player : self.bird));
 }
 
 /*
@@ -769,12 +769,12 @@ function function_c397fab3(player)
 			self.var_fe6ede28 = self.var_fe6ede28 - 0.05;
 			self.bird setscale(self.var_6e0abf98 + self.var_fe6ede28);
 			/#
-				doa_utility::debugmsg("" + self getentitynumber() + "" + self.var_fe6ede28);
+				doa_utility::debugmsg((("" + self getentitynumber()) + "") + self.var_fe6ede28);
 			#/
 			wait(0.05);
 		}
 		/#
-			doa_utility::debugmsg("" + self getentitynumber() + "" + self.var_fe6ede28);
+			doa_utility::debugmsg((("" + self getentitynumber()) + "") + self.var_fe6ede28);
 		#/
 		self.var_fe6ede28 = math::clamp(var_141b6128, 0, getdvarfloat("scr_doa_chicken_max_plump", 3));
 		self.var_1f6fdc8f = undefined;
@@ -808,7 +808,7 @@ function function_cff32183(player)
 			{
 				self.var_fe6ede28 = math::clamp(self.var_fe6ede28 + increment, 0, getdvarfloat("scr_doa_chicken_max_plump", 3));
 				/#
-					doa_utility::debugmsg("" + self getentitynumber() + "" + self.var_fe6ede28);
+					doa_utility::debugmsg((("" + self getentitynumber()) + "") + self.var_fe6ede28);
 				#/
 			}
 			self.bird setscale(self.var_6e0abf98 + self.var_fe6ede28);
@@ -881,7 +881,7 @@ function function_2d0f96ef(player)
 	var_ff37339 = 32;
 	pos = 0;
 	i = 0;
-	var_fb842d4e = gettime() + getdvarfloat("scr_doa_chicken_egg_lay_duration", 12) * 1000;
+	var_fb842d4e = gettime() + (getdvarfloat("scr_doa_chicken_egg_lay_duration", 12) * 1000);
 	self thread namespace_1a381543::function_90118d8c("zmb_golden_chicken_dance");
 	while(gettime() < var_fb842d4e)
 	{
@@ -896,7 +896,7 @@ function function_2d0f96ef(player)
 				continue;
 			}
 			i++;
-			offset = 48 + var_ff37339 * floor(i / 4);
+			offset = 48 + (var_ff37339 * (floor(i / 4)));
 			chicken thread function_5af02c44(self, i, offset);
 		}
 		self rotateto(self.angles + vectorscale((0, 1, 0), 180), 1);
@@ -919,7 +919,7 @@ function function_2d0f96ef(player)
 		}
 		var_19a5d5--;
 		scale = scale * 0.72;
-		chance = int(chance * scale + 0.9);
+		chance = int((chance * scale) + 0.9);
 	}
 	while(self.var_fe6ede28 > 0)
 	{
@@ -1061,7 +1061,7 @@ function function_4c41e6af()
 				continue;
 			}
 			zombie setentitytarget(self);
-			dir = vectornormalize(self.origin - zombie.origin) * 30;
+			dir = (vectornormalize(self.origin - zombie.origin)) * 30;
 			self physicslaunch(self.origin, (dir[0], dir[1], dir[2] + 10));
 			self.health = self.health - 40;
 			if(self.health < 0)
@@ -1097,7 +1097,7 @@ function function_7b8c015c()
 		self.prize = level.doa.extra_life_model;
 	}
 	self physicslaunch(self.origin, vectorscale((0, 0, 1), 10));
-	self.health = 1500 + level.doa.var_da96f13c * 500;
+	self.health = 1500 + (level.doa.var_da96f13c * 500);
 	if(self.def.type == 36)
 	{
 		self.health = self.health + 3000;

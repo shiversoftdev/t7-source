@@ -442,7 +442,7 @@ private function _iff_leash_to_owner(owner)
 	while(isdefined(owner))
 	{
 		wait(randomfloatrange(1, 4));
-		if(distancesquared(self.origin, owner.origin) > self.goalradius * self.goalradius)
+		if(distancesquared(self.origin, owner.origin) > (self.goalradius * self.goalradius))
 		{
 			self setgoal(owner.origin);
 		}
@@ -698,7 +698,7 @@ function ai_activateiffoverride(target, var_9bc2efcb = 1)
 	{
 		type = self cybercom::function_5e3d3aa();
 		self orientmode("face default");
-		self animscripted("ai_cybercom_anim", self.origin, self.angles, "ai_base_rifle_" + type + "_exposed_cybercom_activate");
+		self animscripted("ai_cybercom_anim", self.origin, self.angles, ("ai_base_rifle_" + type) + "_exposed_cybercom_activate");
 		self waittill_match(#"ai_cybercom_anim");
 	}
 	weapon = getweapon("gadget_iff_override");

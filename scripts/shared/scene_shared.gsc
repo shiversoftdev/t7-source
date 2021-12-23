@@ -331,7 +331,7 @@ function get_align_ent()
 		}
 		if(!isdefined(e_align))
 		{
-			str_msg = "Align target '" + (isdefined(self._s.aligntarget) ? "" + self._s.aligntarget : "") + "' doesn't exist for scene object.";
+			str_msg = ("Align target '" + (isdefined(self._s.aligntarget) ? "" + self._s.aligntarget : "")) + "' doesn't exist for scene object.";
 			if(!cscriptbundleobjectbase::warning(self._o_bundle._testing, str_msg))
 			{
 				cscriptbundleobjectbase::error(getdvarint("scene_align_errors", 1), str_msg);
@@ -398,7 +398,7 @@ function _on_damage_run_scene_thread()
 	loc_00001C60:
 	loc_00001CB0:
 	loc_00001D00:
-	str_damage_types = !isdefined(self._s.runsceneondmg0) || (self._s.runsceneondmg0 == "none" ? "" : self._s.runsceneondmg0) + !isdefined(self._s.runsceneondmg1) || (self._s.runsceneondmg1 == "none" ? "" : self._s.runsceneondmg1) + !isdefined(self._s.runsceneondmg2) || (self._s.runsceneondmg2 == "none" ? "" : self._s.runsceneondmg2) + !isdefined(self._s.runsceneondmg3) || (self._s.runsceneondmg3 == "none" ? "" : self._s.runsceneondmg3) + !isdefined(self._s.runsceneondmg4) || (self._s.runsceneondmg4 == "none" ? "" : self._s.runsceneondmg4);
+	str_damage_types = (!isdefined(self._s.runsceneondmg0) || (self._s.runsceneondmg0 == "none" ? "" : self._s.runsceneondmg0)) + (!isdefined(self._s.runsceneondmg1) || (self._s.runsceneondmg1 == "none" ? "" : self._s.runsceneondmg1)) + (!isdefined(self._s.runsceneondmg2) || (self._s.runsceneondmg2 == "none" ? "" : self._s.runsceneondmg2)) + (!isdefined(self._s.runsceneondmg3) || (self._s.runsceneondmg3 == "none" ? "" : self._s.runsceneondmg3)) + (!isdefined(self._s.runsceneondmg4) || (self._s.runsceneondmg4 == "none" ? "" : self._s.runsceneondmg4));
 	if(str_damage_types != "")
 	{
 		b_run_scene = 0;
@@ -475,11 +475,11 @@ function _assign_unique_name()
 	{
 		if(isdefined(self._s.name))
 		{
-			self._str_name = self._s.name + "_gen" + level.scene_object_id;
+			self._str_name = (self._s.name + "_gen") + level.scene_object_id;
 		}
 		else
 		{
-			self._str_name = [[ scene() ]]->get_name() + "_noname" + level.scene_object_id;
+			self._str_name = (([[ scene() ]]->get_name()) + "_noname") + level.scene_object_id;
 		}
 		level.scene_object_id++;
 	}
@@ -489,7 +489,7 @@ function _assign_unique_name()
 	}
 	else
 	{
-		self._str_name = [[ scene() ]]->get_name() + "_noname" + [[ scene() ]]->get_object_id();
+		self._str_name = (([[ scene() ]]->get_name()) + "_noname") + ([[ scene() ]]->get_object_id());
 	}
 }
 
@@ -1392,7 +1392,7 @@ function _play_anim(animation, n_delay_min = 0, n_delay_max = 0, n_rate = 1, n_b
 		/#
 			if(getdvarint("") > 0)
 			{
-				printtoprightln("" + (isdefined(self._s.name) ? self._s.name : self._s.model) + "" + animation);
+				printtoprightln((("" + (isdefined(self._s.name) ? self._s.name : self._s.model)) + "") + animation);
 			}
 		#/
 		/#
@@ -1401,7 +1401,7 @@ function _play_anim(animation, n_delay_min = 0, n_delay_max = 0, n_rate = 1, n_b
 				if(!isdefined(level.animation_played))
 				{
 					level.animation_played = [];
-					animation_played_name = (isdefined(self._s.name) ? self._s.name : self._s.model) + "" + animation;
+					animation_played_name = ((isdefined(self._s.name) ? self._s.name : self._s.model) + "") + animation;
 					if(!isdefined(level.animation_played))
 					{
 						level.animation_played = [];
@@ -1431,7 +1431,7 @@ function _play_anim(animation, n_delay_min = 0, n_delay_max = 0, n_rate = 1, n_b
 				{
 					for(i = 0; i < level.animation_played.size; i++)
 					{
-						animation_played_name = (isdefined(self._s.name) ? self._s.name : self._s.model) + "" + animation;
+						animation_played_name = ((isdefined(self._s.name) ? self._s.name : self._s.model) + "") + animation;
 						if(level.animation_played[i] == animation_played_name)
 						{
 							arrayremovevalue(level.animation_played, animation_played_name);
@@ -1445,11 +1445,11 @@ function _play_anim(animation, n_delay_min = 0, n_delay_max = 0, n_rate = 1, n_b
 		/#
 			if(getdvarint("") > 0)
 			{
-				printtoprightln("" + (isdefined(self._s.name) ? self._s.name : self._s.model) + "" + animation);
+				printtoprightln((("" + (isdefined(self._s.name) ? self._s.name : self._s.model)) + "") + animation);
 			}
 		#/
 	}
-	cscriptbundleobjectbase::log("" + animation + "");
+	cscriptbundleobjectbase::log(("" + animation) + "");
 	self._is_valid = is_alive() && !in_a_different_scene();
 }
 
@@ -1613,10 +1613,10 @@ function _play_shared_player_anim_for_player(player)
 	player show();
 	player setinvisibletoall();
 	_prepare_player(player);
-	n_time_passed = gettime() - self.player_start_time / 1000;
+	n_time_passed = (gettime() - self.player_start_time) / 1000;
 	n_start_time = self.player_time_frac * self.player_animation_length;
-	n_time_left = self.player_animation_length - n_time_passed - n_start_time;
-	n_time_frac = 1 - n_time_left / self.player_animation_length;
+	n_time_left = (self.player_animation_length - n_time_passed) - n_start_time;
+	n_time_frac = 1 - (n_time_left / self.player_animation_length);
 	if(isdefined(self._e) && player != self._e)
 	{
 		player dontinterpolate();
@@ -1641,7 +1641,7 @@ function _play_shared_player_anim_for_player(player)
 			}
 			if(getdvarint("") > 0)
 			{
-				printtoprightln("" + self._s.name + "" + self.player_animation);
+				printtoprightln((("" + self._s.name) + "") + self.player_animation);
 			}
 		#/
 		str_animation = self.player_animation;
@@ -1693,7 +1693,7 @@ function _play_shared_player_anim_for_player(player)
 		/#
 			if(getdvarint("") > 0)
 			{
-				printtoprightln("" + self._s.name + "" + self.player_animation);
+				printtoprightln((("" + self._s.name) + "") + self.player_animation);
 			}
 		#/
 	}
@@ -2104,7 +2104,7 @@ function skip_scene_on_client()
 		/#
 			if(getdvarint("") > 0)
 			{
-				printtoprightln("" + self._s.mainanim + "" + gettime(), vectorscale((1, 1, 1), 0.8));
+				printtoprightln((("" + self._s.mainanim) + "") + gettime(), vectorscale((1, 1, 1), 0.8));
 			}
 		#/
 		if(is_shared_player())
@@ -2139,7 +2139,7 @@ function skip_scene_on_server()
 		/#
 			if(getdvarint("") > 0)
 			{
-				printtoprightln("" + self._s.mainanim + "" + gettime(), (1, 1, 1));
+				printtoprightln((("" + self._s.mainanim) + "") + gettime(), (1, 1, 1));
 			}
 		#/
 		if(is_shared_player())
@@ -2622,7 +2622,7 @@ function _assign_ents_by_name(a_objects, a_ents)
 		{
 			foreach(i, o_obj in arraycopy(a_objects))
 			{
-				if(isdefined(o_obj._s.name) && (isdefined(o_obj._s.name) ? "" + o_obj._s.name : "") == tolower((isdefined(str_name) ? "" + str_name : "")))
+				if(isdefined(o_obj._s.name) && (isdefined(o_obj._s.name) ? "" + o_obj._s.name : "") == (tolower((isdefined(str_name) ? "" + str_name : ""))))
 				{
 					o_obj._e = e_ent;
 					arrayremoveindex(a_ents, str_name, 1);
@@ -2634,7 +2634,7 @@ function _assign_ents_by_name(a_objects, a_ents)
 		/#
 			foreach(i, ent in a_ents)
 			{
-				cscriptbundlebase::error(isstring(i), "" + i + "");
+				cscriptbundlebase::error(isstring(i), ("" + i) + "");
 			}
 		#/
 	}
@@ -2766,7 +2766,7 @@ function get_anim_relative_start_time(animation, n_time)
 	}
 	anim_length = getanimlength(animation);
 	is_looping = isanimlooping(animation);
-	n_time = self.longest_anim_length / anim_length * n_time;
+	n_time = (self.longest_anim_length / anim_length) * n_time;
 	if(is_looping)
 	{
 		if(n_time > 0.95)
@@ -2916,7 +2916,7 @@ function play(str_state = "play", a_ents, b_testing = 0, str_mode = "")
 		if(strstartswith(self._str_mode, "capture"))
 		{
 			/#
-				adddebugcommand("" + self._str_name + "" + self._str_name);
+				adddebugcommand((("" + self._str_name) + "") + self._str_name);
 			#/
 		}
 		if(self.n_start_time == 0)
@@ -3036,7 +3036,7 @@ function play(str_state = "play", a_ents, b_testing = 0, str_mode = "")
 */
 function _wait_server_time(n_time, n_start_time = 0)
 {
-	n_len = n_time - n_time * n_start_time;
+	n_len = n_time - (n_time * n_start_time);
 	n_len = n_len / 0.05;
 	n_len_int = int(n_len);
 	if(n_len_int != n_len)
@@ -3451,19 +3451,19 @@ function run_next()
 				/#
 					if(getdvarint("") > 0)
 					{
-						printtoprightln("" + self._s.nextscenebundle + "" + gettime(), (1, 1, 0));
+						printtoprightln((("" + self._s.nextscenebundle) + "") + gettime(), (1, 1, 0));
 					}
 				#/
 			}
 			/#
 				if(getdvarint("") > 0)
 				{
-					printtoprightln("" + self._s.nextscenebundle + "" + gettime(), (1, 0, 0));
+					printtoprightln((("" + self._s.nextscenebundle) + "") + gettime(), (1, 0, 0));
 				}
 			#/
 			if(self._s.scenetype == "fxanim" && self._s.nextscenemode === "init")
 			{
-				if(!cscriptbundlebase::error(!has_init_state(), "Scene can't init next scene '" + self._s.nextscenebundle + "' because it doesn't have an init state."))
+				if(!cscriptbundlebase::error(!has_init_state(), ("Scene can't init next scene '" + self._s.nextscenebundle) + "' because it doesn't have an init state."))
 				{
 					if(allows_multiple())
 					{
@@ -3563,7 +3563,7 @@ function stop(b_clear = 0, b_finished = 0)
 		/#
 			if(getdvarint("") > 0)
 			{
-				printtoprightln("" + self._s.name + "" + self._str_state);
+				printtoprightln((("" + self._s.name) + "") + self._str_state);
 			}
 		#/
 		/#
@@ -3698,7 +3698,7 @@ function _call_state_funcs(str_state)
 	{
 		waittillframeend();
 	}
-	level notify(self._str_notify_name + "_" + str_state);
+	level notify((self._str_notify_name + "_") + str_state);
 	if(isdefined(level.scene_funcs) && isdefined(level.scene_funcs[self._str_notify_name]) && isdefined(level.scene_funcs[self._str_notify_name][str_state]))
 	{
 		a_ents = get_ents();
@@ -3822,7 +3822,7 @@ function get_align_ent()
 		}
 		if(!isdefined(e_gdt_align))
 		{
-			str_msg = "Align target '" + (isdefined(self._s.aligntarget) ? "" + self._s.aligntarget : "") + "' doesn't exist for scene.";
+			str_msg = ("Align target '" + (isdefined(self._s.aligntarget) ? "" + self._s.aligntarget : "")) + "' doesn't exist for scene.";
 			if(!cscriptbundlebase::warning(self._testing, str_msg))
 			{
 				cscriptbundlebase::error(getdvarint("scene_align_errors", 1), str_msg);
@@ -4058,7 +4058,7 @@ function skip_scene(b_sequence)
 		/#
 			if(getdvarint("") > 0)
 			{
-				printtoprightln("" + self._s.name + "" + gettime(), (1, 0, 0));
+				printtoprightln((("" + self._s.name) + "") + gettime(), (1, 0, 0));
 			}
 		#/
 		finish_skip_scene();
@@ -4067,7 +4067,7 @@ function skip_scene(b_sequence)
 	/#
 		if(getdvarint("") > 0)
 		{
-			printtoprightln("" + self._s.name + "" + gettime(), (0, 1, 0));
+			printtoprightln((("" + self._s.name) + "") + gettime(), (0, 1, 0));
 		}
 	#/
 	if(!(isdefined(b_sequence) && b_sequence))
@@ -4128,7 +4128,7 @@ function skip_scene(b_sequence)
 	/#
 		if(getdvarint("") > 0)
 		{
-			printtoprightln("" + self._s.name + "" + gettime(), (0, 0, 1));
+			printtoprightln((("" + self._s.name) + "") + gettime(), (0, 0, 1));
 		}
 	#/
 	_call_state_funcs("skip_started");
@@ -4159,7 +4159,7 @@ function skip_scene(b_sequence)
 	/#
 		if(getdvarint("") > 0)
 		{
-			printtoprightln("" + self._s.name + "" + gettime(), (1, 0.5, 0));
+			printtoprightln((("" + self._s.name) + "") + gettime(), (1, 0.5, 0));
 		}
 	#/
 	_call_state_funcs("skip_completed");
@@ -5204,7 +5204,7 @@ function __init__()
 				{
 					s_object.player = 0;
 				}
-				s_object.name = "player " + s_object.player + 1;
+				s_object.name = "player " + (s_object.player + 1);
 				s_object.newplayermethod = 1;
 				continue;
 			}
@@ -5359,12 +5359,12 @@ function run_instances()
 {
 	foreach(var_cc537bad, s_instance in struct::get_script_bundle_instances("scene"))
 	{
-		if(isdefined(s_instance.spawnflags) && s_instance.spawnflags & 2 == 2)
+		if(isdefined(s_instance.spawnflags) && (s_instance.spawnflags & 2) == 2)
 		{
 			s_instance thread play();
 			continue;
 		}
-		if(isdefined(s_instance.spawnflags) && s_instance.spawnflags & 1 == 1)
+		if(isdefined(s_instance.spawnflags) && (s_instance.spawnflags & 1) == 1)
 		{
 			s_instance thread init();
 		}
@@ -5452,7 +5452,7 @@ function add_scene_func(str_scenedef, func, str_state = "play", vararg)
 {
 	/#
 		/#
-			assert(isdefined(get_scenedef(str_scenedef)), "" + str_scenedef + "");
+			assert(isdefined(get_scenedef(str_scenedef)), ("" + str_scenedef) + "");
 		#/
 	#/
 	if(!isdefined(level.scene_funcs))
@@ -5483,7 +5483,7 @@ function remove_scene_func(str_scenedef, func, str_state = "play")
 {
 	/#
 		/#
-			assert(isdefined(get_scenedef(str_scenedef)), "" + str_scenedef + "");
+			assert(isdefined(get_scenedef(str_scenedef)), ("" + str_scenedef) + "");
 		#/
 	#/
 	if(!isdefined(level.scene_funcs))
@@ -5614,7 +5614,7 @@ function init(arg1, arg2, arg3, b_test_run)
 				a_instances = struct::get_array(str_value, str_key);
 				/#
 					/#
-						assert(a_instances.size, "" + str_key + "" + str_value + "");
+						assert(a_instances.size, ((("" + str_key) + "") + str_value) + "");
 					#/
 				#/
 			}
@@ -5674,10 +5674,10 @@ function _init_instance(str_scenedef = self.scriptbundlename, a_ents, b_test_run
 	s_bundle = get_scenedef(str_scenedef);
 	/#
 		/#
-			assert(isdefined(str_scenedef), "" + (isdefined(self.origin) ? self.origin : "") + "");
+			assert(isdefined(str_scenedef), ("" + (isdefined(self.origin) ? self.origin : "")) + "");
 		#/
 		/#
-			assert(isdefined(s_bundle), "" + (isdefined(self.origin) ? self.origin : "") + "" + str_scenedef + "");
+			assert(isdefined(s_bundle), ((("" + (isdefined(self.origin) ? self.origin : "")) + "") + str_scenedef) + "");
 		#/
 	#/
 	o_scene = get_active_scene(str_scenedef);
@@ -5818,7 +5818,7 @@ function play(arg1, arg2, arg3, b_test_run = 0, str_state, str_mode = "")
 				str_scenedef = undefined;
 				/#
 					/#
-						assert(a_instances.size, "" + str_key + "" + str_value + "");
+						assert(a_instances.size, ((("" + str_key) + "") + str_value) + "");
 					#/
 				#/
 			}
@@ -5950,7 +5950,7 @@ function skipto_end(arg1, arg2, arg3, n_time, b_include_players = 0)
 	}
 	if(isdefined(n_time))
 	{
-		str_mode = str_mode + ":" + n_time;
+		str_mode = str_mode + (":" + n_time);
 	}
 	play(arg1, arg2, arg3, 0, undefined, str_mode);
 }
@@ -5969,7 +5969,7 @@ function skipto_end_noai(arg1, arg2, arg3, n_time)
 	str_mode = "skipto_noai_noplayers";
 	if(isdefined(n_time))
 	{
-		str_mode = str_mode + ":" + n_time;
+		str_mode = str_mode + (":" + n_time);
 	}
 	play(arg1, arg2, arg3, 0, undefined, str_mode);
 }
@@ -6005,7 +6005,7 @@ function stop(arg1, arg2, arg3)
 				a_instances = struct::get_array(str_value, str_key);
 				/#
 					/#
-						assert(a_instances.size, "" + str_key + "" + str_value + "");
+						assert(a_instances.size, ((("" + str_key) + "") + str_value) + "");
 					#/
 				#/
 				str_value = undefined;
@@ -6297,7 +6297,7 @@ function get_active_scene(str_scenedef)
 	{
 		foreach(var_7faf5530, o_scene in self.scenes)
 		{
-			if([[ o_scene ]]->get_name() == str_scenedef)
+			if(([[ o_scene ]]->get_name()) == str_scenedef)
 			{
 				return o_scene;
 			}
@@ -6421,7 +6421,7 @@ function updateigcviewtime(b_in_igc)
 			{
 				player.totaligcviewtime = 0;
 			}
-			player.totaligcviewtime = player.totaligcviewtime + int(igcviewtimesec / 1000);
+			player.totaligcviewtime = player.totaligcviewtime + (int(igcviewtimesec / 1000));
 		}
 	}
 }
@@ -6441,12 +6441,11 @@ function set_igc_active(b_in_igc)
 	n_players_in_igc_field = level clientfield::get("in_igc");
 	if(b_in_igc)
 	{
-		n_players_in_igc_field = n_players_in_igc_field | 1 << n_ent_num;
+		n_players_in_igc_field = n_players_in_igc_field | (1 << n_ent_num);
 	}
 	else
 	{
-		~n_players_in_igc_field;
-		n_players_in_igc_field = n_players_in_igc_field & 1 << n_ent_num;
+		n_players_in_igc_field = n_players_in_igc_field & (~(1 << n_ent_num));
 	}
 	updateigcviewtime(b_in_igc);
 	level clientfield::set("in_igc", n_players_in_igc_field);
@@ -6467,7 +6466,7 @@ function is_igc_active()
 {
 	n_players_in_igc = level clientfield::get("in_igc");
 	n_entnum = self getentitynumber();
-	return n_players_in_igc & 1 << n_entnum;
+	return n_players_in_igc & (1 << n_entnum);
 }
 
 /*
@@ -6561,7 +6560,7 @@ function skip_scene(scene_name, b_sequence, b_player_scene, b_check_linked_scene
 		{
 			if(isdefined(scene_name))
 			{
-				printtoprightln("" + scene_name + "" + gettime(), (1, 0.5, 0));
+				printtoprightln((("" + scene_name) + "") + gettime(), (1, 0.5, 0));
 			}
 			else
 			{
@@ -6916,7 +6915,7 @@ function should_skip_scene_loop()
 		}
 		else if(isdefined(self.scene_skip_timer))
 		{
-			if(gettime() - self.scene_skip_timer > 3000)
+			if((gettime() - self.scene_skip_timer) > 3000)
 			{
 				self setluimenudata(self.skip_scene_menu_handle, "showSkipButton", 2);
 				self.scene_skip_timer = undefined;
@@ -6940,7 +6939,7 @@ function should_skip_scene_loop()
 				}
 				self.scene_skip_start_time = gettime();
 			}
-			else if(gettime() - self.scene_skip_start_time > 2500)
+			else if((gettime() - self.scene_skip_start_time) > 2500)
 			{
 				b_skip_scene = 1;
 				break;
@@ -7127,7 +7126,7 @@ private function _wait_for_ordered_notify(id, group_obj, group_name, str_note)
 			group_obj.pending_notifies = undefined;
 			level.scene_ordered_notetracks[group_name] = undefined;
 		}
-		else if(isdefined(group_obj.pending_notifies) && group_obj.current_count + group_obj.pending_notifies.size == group_obj.count)
+		else if(isdefined(group_obj.pending_notifies) && (group_obj.current_count + group_obj.pending_notifies.size) == group_obj.count)
 		{
 			self thread _fire_ordered_notitifes(group_obj, group_name);
 		}
@@ -7143,7 +7142,7 @@ private function _wait_for_ordered_notify(id, group_obj, group_name, str_note)
 	{
 	}
 	arrayinsert(group_obj.pending_notifies, notetrack, i);
-	if(group_obj.current_count + group_obj.pending_notifies.size == group_obj.count)
+	if((group_obj.current_count + group_obj.pending_notifies.size) == group_obj.count)
 	{
 		self thread _fire_ordered_notitifes(group_obj, group_name);
 	}

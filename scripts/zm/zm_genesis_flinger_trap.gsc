@@ -308,7 +308,7 @@ function function_ef013ee8(var_c4f1ee44, e_player)
 		self.var_3d0a6850 scene::play(self.var_3d0a6850.scriptbundlename);
 		wait(0.5);
 		level function_1ff56fb0("p7_fxanim_zm_stal_flinger_trap_bundle");
-		n_total_time = gettime() - n_start_time / 1000;
+		n_total_time = (gettime() - n_start_time) / 1000;
 	}
 	self notify(#"trap_done");
 }

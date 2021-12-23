@@ -746,7 +746,7 @@ private function function_4f4a272(right_offset)
 	if(isdefined(right_offset))
 	{
 		right_angle = anglestoright(self.angles);
-		origin = origin + right_angle * right_offset;
+		origin = origin + (right_angle * right_offset);
 	}
 	facing_vec = anglestoforward(self.angles);
 	enemy_vec = self.favoriteenemy.origin - origin;
@@ -841,7 +841,7 @@ private function function_c8dea044(entity)
 	{
 		return 0;
 	}
-	if(isdefined(entity.favoriteenemy) && (isdefined(entity.favoriteenemy.var_122a2dda) && entity.favoriteenemy.var_122a2dda))
+	if(isdefined(entity.favoriteenemy) && (isdefined(entity.favoriteenemy.is_flung) && entity.favoriteenemy.is_flung))
 	{
 		return 0;
 	}
@@ -1100,7 +1100,7 @@ private function function_50654c28(entity)
 	{
 		return 0;
 	}
-	if(isdefined(entity.favoriteenemy) && (isdefined(entity.favoriteenemy.var_122a2dda) && entity.favoriteenemy.var_122a2dda))
+	if(isdefined(entity.favoriteenemy) && (isdefined(entity.favoriteenemy.is_flung) && entity.favoriteenemy.is_flung))
 	{
 		return 0;
 	}
@@ -1759,10 +1759,10 @@ private function function_aa4e7619()
 	for(index = 1; index < path.size; index++)
 	{
 		var_cabd9641 = distance(path[index - 1], path[index]);
-		if(segment_length + var_cabd9641 > var_2fd16fa4)
+		if((segment_length + var_cabd9641) > var_2fd16fa4)
 		{
 			var_bee1a4a2 = var_2fd16fa4 - segment_length;
-			var_5a78f4fc = path[index - 1] + vectornormalize(path[index] - path[index - 1]) * var_bee1a4a2;
+			var_5a78f4fc = (path[index - 1]) + ((vectornormalize(path[index] - (path[index - 1]))) * var_bee1a4a2);
 			query_result = positionquery_source_navigation(var_5a78f4fc, 64, 128, 36, 16, self, 16);
 			if(query_result.data.size > 0)
 			{
@@ -1926,7 +1926,7 @@ private function function_9a9f35ac(entity)
 	entity.var_187c138e = 1;
 	entity.var_1ab20b9b = undefined;
 	var_5ba5953 = anglestoforward(entity.angles);
-	var_bc39bd09 = entity.origin + vectorscale((0, 0, 1), 72) + var_5ba5953 * 96;
+	var_bc39bd09 = (entity.origin + vectorscale((0, 0, 1), 72)) + (var_5ba5953 * 96);
 	var_1be3af57 = entity.angles;
 	entity waittill(#"hash_64a0057e");
 	entity clientfield::set("shadow_margwa_attack_portal_fx", 1);
@@ -1934,7 +1934,7 @@ private function function_9a9f35ac(entity)
 	target = undefined;
 	if(isdefined(entity.favoriteenemy))
 	{
-		position = var_bc39bd09 + var_5ba5953 * 96;
+		position = var_bc39bd09 + (var_5ba5953 * 96);
 		target = spawn("script_model", position);
 		target setmodel("tag_origin");
 		target.var_8002cc8a = entity.favoriteenemy;
@@ -2389,7 +2389,7 @@ function function_2ab5f647(e_player, v_attack_source, n_push_away, n_lift_height
 		while(10 > n_total_time && e_player.gravityspikes_state === 3)
 		{
 			util::wait_network_frame();
-			n_total_time = gettime() - n_start_time / 1000;
+			n_total_time = (gettime() - n_start_time) / 1000;
 		}
 		self scene::stop(scene);
 		self thread function_3f3b0b14(self);

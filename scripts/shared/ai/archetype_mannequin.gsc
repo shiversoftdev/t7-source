@@ -49,7 +49,7 @@ autoexec function init()
 */
 function mannequincollisionservice(entity)
 {
-	if(isdefined(entity.enemy) && distancesquared(entity.origin, entity.enemy.origin) > 300 * 300)
+	if(isdefined(entity.enemy) && distancesquared(entity.origin, entity.enemy.origin) > (300 * 300))
 	{
 		entity pushactors(0);
 	}
@@ -95,15 +95,15 @@ private function mannequinshouldmelee(entity)
 	{
 		return 0;
 	}
-	if(distance2dsquared(entity.origin, entity.enemy.origin) > 64 * 64)
+	if(distance2dsquared(entity.origin, entity.enemy.origin) > (64 * 64))
 	{
 		return 0;
 	}
-	if(abs(entity.origin[2] - entity.enemy.origin[2]) > 72)
+	if((abs(entity.origin[2] - entity.enemy.origin[2])) > 72)
 	{
 		return 0;
 	}
-	yawtoenemy = angleclamp180(entity.angles[1] - vectortoangles(entity.enemy.origin - entity.origin)[1]);
+	yawtoenemy = angleclamp180(entity.angles[1] - (vectortoangles(entity.enemy.origin - entity.origin)[1]));
 	if(abs(yawtoenemy) > 45)
 	{
 		return 0;

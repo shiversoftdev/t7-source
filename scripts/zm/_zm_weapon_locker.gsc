@@ -155,7 +155,7 @@ function triggerweaponslockerwatch()
 	{
 		unitrigger_stub.script_height = 64;
 	}
-	unitrigger_stub.origin = unitrigger_stub.origin - anglestoright(unitrigger_stub.angles) * unitrigger_stub.script_length / 2;
+	unitrigger_stub.origin = unitrigger_stub.origin - (anglestoright(unitrigger_stub.angles) * (unitrigger_stub.script_length / 2));
 	unitrigger_stub.targetname = "weapon_locker";
 	unitrigger_stub.script_unitrigger_type = "unitrigger_box_use";
 	unitrigger_stub.clientfieldname = "weapon_locker";

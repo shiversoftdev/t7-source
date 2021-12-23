@@ -56,7 +56,7 @@ function __init__()
 		level.dofdefault["nearBlur"] = 6;
 		level.dofdefault["farBlur"] = 0;
 	}
-	level.curdof = level.dofdefault["farStart"] - level.dofdefault["nearEnd"] / 2;
+	level.curdof = (level.dofdefault["farStart"] - level.dofdefault["nearEnd"]) / 2;
 	/#
 		thread tweakart();
 	#/
@@ -139,7 +139,7 @@ function setfogsliders()
 	}
 	setdvar("scr_fog_exp_halfplane", halfplane);
 	setdvar("scr_fog_nearplane", nearplane);
-	setdvar("scr_fog_color", red + " " + green + " " + blue);
+	setdvar("scr_fog_color", (((red + " ") + green) + " ") + blue);
 }
 
 /*
@@ -192,9 +192,9 @@ function tweakart()
 				setdvar("", fogsettings[1]);
 				setdvar("", fogsettings[3]);
 				setdvar("", fogsettings[2]);
-				setdvar("", fogsettings[4] + "" + fogsettings[5] + "" + fogsettings[6]);
+				setdvar("", (((fogsettings[4] + "") + fogsettings[5]) + "") + fogsettings[6]);
 				setdvar("", fogsettings[7]);
-				setdvar("", fogsettings[8] + "" + fogsettings[9] + "" + fogsettings[10]);
+				setdvar("", (((fogsettings[8] + "") + fogsettings[9]) + "") + fogsettings[10]);
 				level.fogsundir = [];
 				level.fogsundir[0] = fogsettings[11];
 				level.fogsundir[1] = fogsettings[12];
@@ -309,24 +309,24 @@ function dumpsettings()
 	/#
 		if(getdvarstring("") != "")
 		{
-			println("" + level.fognearplane + "");
-			println("" + level.fogexphalfplane + "");
-			println("" + level.fogexphalfheight + "");
-			println("" + level.fogbaseheight + "");
-			println("" + level.fogcolorred + "");
-			println("" + level.fogcolorgreen + "");
-			println("" + level.fogcolorblue + "");
-			println("" + level.fogcolorscale + "");
-			println("" + level.sunfogcolorred + "");
-			println("" + level.sunfogcolorgreen + "");
-			println("" + level.sunfogcolorblue + "");
-			println("" + level.fogsundir[0] + "");
-			println("" + level.fogsundir[1] + "");
-			println("" + level.fogsundir[2] + "");
-			println("" + level.sunstartangle + "");
-			println("" + level.sunendangle + "");
+			println(("" + level.fognearplane) + "");
+			println(("" + level.fogexphalfplane) + "");
+			println(("" + level.fogexphalfheight) + "");
+			println(("" + level.fogbaseheight) + "");
+			println(("" + level.fogcolorred) + "");
+			println(("" + level.fogcolorgreen) + "");
+			println(("" + level.fogcolorblue) + "");
+			println(("" + level.fogcolorscale) + "");
+			println(("" + level.sunfogcolorred) + "");
+			println(("" + level.sunfogcolorgreen) + "");
+			println(("" + level.sunfogcolorblue) + "");
+			println(("" + level.fogsundir[0]) + "");
+			println(("" + level.fogsundir[1]) + "");
+			println(("" + level.fogsundir[2]) + "");
+			println(("" + level.sunstartangle) + "");
+			println(("" + level.sunendangle) + "");
 			println("");
-			println("" + level.fogmaxopacity + "");
+			println(("" + level.fogmaxopacity) + "");
 			println("");
 			println("");
 			println("");

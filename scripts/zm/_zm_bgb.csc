@@ -140,7 +140,7 @@ private function function_47aee2eb()
 		}
 		level.bgb[keys[i]].camo_index = int(tablelookup(statstablename, 0, level.bgb[keys[i]].item_index, 5));
 		level.bgb[keys[i]].var_d3c80142 = "tag_gumball_" + level.bgb[keys[i]].limit_type;
-		level.bgb[keys[i]].var_ece14434 = "tag_gumball_" + level.bgb[keys[i]].limit_type + "_" + level.var_f3c83828[level.bgb[keys[i]].rarity];
+		level.bgb[keys[i]].var_ece14434 = (("tag_gumball_" + level.bgb[keys[i]].limit_type) + "_") + level.var_f3c83828[level.bgb[keys[i]].rarity];
 		level.var_318929eb[level.bgb[keys[i]].item_index] = keys[i];
 	}
 }
@@ -160,13 +160,13 @@ function register(name, limit_type)
 		assert(isdefined(name), "");
 	#/
 	/#
-		assert("" != name, "" + "" + "");
+		assert("" != name, ("" + "") + "");
 	#/
 	/#
-		assert(!isdefined(level.bgb[name]), "" + name + "");
+		assert(!isdefined(level.bgb[name]), ("" + name) + "");
 	#/
 	/#
-		assert(isdefined(limit_type), "" + name + "");
+		assert(isdefined(limit_type), ("" + name) + "");
 	#/
 	level.bgb[name] = spawnstruct();
 	level.bgb[name].name = name;

@@ -368,11 +368,11 @@ function mechz_health_increases()
 			}
 		}
 		var_485a2c2c = level.zombie_health / level.zombie_vars["zombie_health_start"];
-		level.mechz_health = int(n_player_modifier * level.mechz_base_health + level.mechz_health_increase * var_485a2c2c);
-		level.mechz_faceplate_health = int(n_player_modifier * level.var_fa14536d + level.var_1a5bb9d8 * var_485a2c2c);
-		level.mechz_powercap_cover_health = int(n_player_modifier * level.mechz_powercap_cover_health + level.var_a1943286 * var_485a2c2c);
-		level.mechz_powercap_health = int(n_player_modifier * level.mechz_powercap_health + level.var_9684c99e * var_485a2c2c);
-		level.var_2cbc5b59 = int(n_player_modifier * level.var_3f1bf221 + level.var_158234c * var_485a2c2c);
+		level.mechz_health = int(n_player_modifier * (level.mechz_base_health + (level.mechz_health_increase * var_485a2c2c)));
+		level.mechz_faceplate_health = int(n_player_modifier * (level.var_fa14536d + (level.var_1a5bb9d8 * var_485a2c2c)));
+		level.mechz_powercap_cover_health = int(n_player_modifier * (level.mechz_powercap_cover_health + (level.var_a1943286 * var_485a2c2c)));
+		level.mechz_powercap_health = int(n_player_modifier * (level.mechz_powercap_health + (level.var_9684c99e * var_485a2c2c)));
+		level.var_2cbc5b59 = int(n_player_modifier * (level.var_3f1bf221 + (level.var_158234c * var_485a2c2c)));
 		level.mechz_health = function_26beb37e(level.mechz_health, 17500, n_player_modifier);
 		level.mechz_faceplate_health = function_26beb37e(level.mechz_faceplate_health, 16000, n_player_modifier);
 		level.mechz_powercap_cover_health = function_26beb37e(level.mechz_powercap_cover_health, 7500, n_player_modifier);
@@ -393,7 +393,7 @@ function mechz_health_increases()
 */
 function function_26beb37e(value, limit, var_69de4866)
 {
-	if(value >= limit * var_69de4866)
+	if(value >= (limit * var_69de4866))
 	{
 		value = int(limit * var_69de4866);
 	}
@@ -708,7 +708,7 @@ function function_bddef31c(inflictor, attacker, damage, dflags, mod, weapon, poi
 {
 	if(issubstr(weapon.name, "elemental_bow"))
 	{
-		var_45d7f4c0 = self.health - damage * 0.2;
+		var_45d7f4c0 = self.health - (damage * 0.2);
 		var_be912ff6 = var_45d7f4c0 / level.mechz_health;
 		if(self.has_faceplate == 1 && var_be912ff6 < 0.5)
 		{

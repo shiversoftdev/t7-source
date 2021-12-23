@@ -317,7 +317,7 @@ function get_teleporter_target_positions(teleporter_ent, name)
 		dest_name = "nml_to_bridge_teleporter";
 		for(i = 0; i < 4; i++)
 		{
-			str = dest_name + "_player" + i + 1 + "_position";
+			str = (dest_name + "_player") + (i + 1) + "_position";
 			ent = struct::get(str, "targetname");
 			target_positions[i] = ent;
 		}
@@ -356,7 +356,7 @@ function teleport_player_to_target(player, target_positions)
 	target_ent = undefined;
 	for(i = 0; i < target_positions.size; i++)
 	{
-		if(isdefined(target_positions[i].script_int) && target_positions[i].script_int == player_index + 1)
+		if(isdefined(target_positions[i].script_int) && target_positions[i].script_int == (player_index + 1))
 		{
 			target_ent = target_positions[i];
 		}
@@ -806,12 +806,12 @@ function teleporter_to_nml_power_down()
 	}
 	level waittill(#"between_round_over");
 	time = gettime();
-	open_door_time = time + level.teleporter_to_nml_powerdown_time * 1000;
+	open_door_time = time + (level.teleporter_to_nml_powerdown_time * 1000);
 	lights_mode = 0;
 	dt = open_door_time - time;
-	time0 = time + dt / 4;
-	time1 = time + dt / 2;
-	time2 = time + 3 * dt / 4;
+	time0 = time + (dt / 4);
+	time1 = time + (dt / 2);
+	time2 = time + ((3 * dt) / 4);
 	time3 = open_door_time - 0.75;
 	while(time < open_door_time)
 	{

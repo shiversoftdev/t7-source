@@ -182,9 +182,9 @@ function dothedirty(localclientnum, right, up, distance, dirtduration, dirtfadet
 	elapsedtime = 0;
 	while(elapsedtime < dirtduration)
 	{
-		if(elapsedtime > dirtduration - dirtfadetime)
+		if(elapsedtime > (dirtduration - dirtfadetime))
 		{
-			filter::set_filter_sprite_dirt_opacity(self, 5, dirtduration - elapsedtime / dirtfadetime);
+			filter::set_filter_sprite_dirt_opacity(self, 5, (dirtduration - elapsedtime) / dirtfadetime);
 		}
 		else
 		{
@@ -254,7 +254,7 @@ function watchforexplosion(localclientnum)
 					{
 						rdot = -1;
 					}
-					self thread dothedirty(localclientnum, rdot, udot, 1 - explosiondistance / 600, 2000, 500);
+					self thread dothedirty(localclientnum, rdot, udot, 1 - (explosiondistance / 600), 2000, 500);
 				}
 			}
 		}

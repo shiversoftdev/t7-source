@@ -96,7 +96,7 @@ function main()
 {
 	level thread zm_tomb_ffotd::main_start();
 	clientfield::register("scriptmover", "glow_biplane_trail_fx", 21000, 1, "int", &glow_biplane_trail_fx, 0, 0);
-	clientfield::register("scriptmover", "element_glow_fx", 21000, 4, "int", &function_e25324c6, 0, 0);
+	clientfield::register("scriptmover", "element_glow_fx", 21000, 4, "int", &crystal_fx, 0, 0);
 	clientfield::register("scriptmover", "bryce_cake", 21000, 2, "int", &function_f6e2b5fc, 0, 0);
 	clientfield::register("scriptmover", "switch_spark", 21000, 1, "int", &function_81f3b018, 0, 0);
 	clientfield::register("scriptmover", "plane_fx", 21000, 1, "int", &function_ae268bd3, 0, 0);
@@ -615,10 +615,10 @@ function function_1ee903c(localclientnum, oldval, newval, bnewent, binitialsnap,
 */
 function function_1c88eb29(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwasdemojump)
 {
-	var_183f4dbd = self getnumzbarrierpieces();
+	n_pieces = self getnumzbarrierpieces();
 	if(!isdefined(self.mapped_const))
 	{
-		for(i = 0; i < var_183f4dbd; i++)
+		for(i = 0; i < n_pieces; i++)
 		{
 			e_piece = self zbarriergetpiece(i);
 			e_piece mapshaderconstant(localclientnum, 1, "ScriptVector0");
@@ -627,7 +627,7 @@ function function_1c88eb29(localclientnum, oldval, newval, bnewent, binitialsnap
 	}
 	if(newval)
 	{
-		for(i = 0; i < var_183f4dbd; i++)
+		for(i = 0; i < n_pieces; i++)
 		{
 			e_piece = self zbarriergetpiece(i);
 			e_piece setshaderconstant(localclientnum, 1, 0, 1, 0, 0);
@@ -635,7 +635,7 @@ function function_1c88eb29(localclientnum, oldval, newval, bnewent, binitialsnap
 	}
 	else
 	{
-		for(i = 0; i < var_183f4dbd; i++)
+		for(i = 0; i < n_pieces; i++)
 		{
 			e_piece = self zbarriergetpiece(i);
 			e_piece setshaderconstant(localclientnum, 1, 0, 0, 0, 0);
@@ -654,14 +654,14 @@ function function_1c88eb29(localclientnum, oldval, newval, bnewent, binitialsnap
 */
 function angle_dif(oldangle, newangle)
 {
-	outvalue = oldangle - newangle % 360;
+	outvalue = (oldangle - newangle) % 360;
 	if(outvalue < 0)
 	{
 		outvalue = outvalue + 360;
 	}
 	if(outvalue > 180)
 	{
-		outvalue = outvalue - 360 * -1;
+		outvalue = (outvalue - 360) * -1;
 	}
 	return outvalue;
 }
@@ -938,7 +938,7 @@ function glow_biplane_trail_fx(localclientnum, oldval, newval, bnewent, binitial
 }
 
 /*
-	Name: function_e25324c6
+	Name: crystal_fx
 	Namespace: zm_tomb
 	Checksum: 0x8C3E277
 	Offset: 0x5258
@@ -946,7 +946,7 @@ function glow_biplane_trail_fx(localclientnum, oldval, newval, bnewent, binitial
 	Parameters: 7
 	Flags: Linked
 */
-function function_e25324c6(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwasdemojump)
+function crystal_fx(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwasdemojump)
 {
 	if(newval >= 5)
 	{

@@ -173,22 +173,22 @@ function aoe_fx(localclientnum)
 	pitch_vals[0] = 90;
 	pitch_vals[3] = 0;
 	pitch_vals[6] = -90;
-	trace = bullettrace(center, center + (0, 0, -1) * 400, 0, self);
+	trace = bullettrace(center, center + ((0, 0, -1) * 400), 0, self);
 	if(trace["fraction"] < 1)
 	{
-		pitch_vals[1] = 90 - atan(150 / trace["fraction"] * 400);
-		pitch_vals[2] = 90 - atan(300 / trace["fraction"] * 400);
+		pitch_vals[1] = 90 - (atan(150 / (trace["fraction"] * 400)));
+		pitch_vals[2] = 90 - (atan(300 / (trace["fraction"] * 400)));
 	}
 	else
 	{
 		pitch_vals[1] = 60;
 		pitch_vals[2] = 30;
 	}
-	trace = bullettrace(center, center + (0, 0, 1) * 400, 0, self);
+	trace = bullettrace(center, center + ((0, 0, 1) * 400), 0, self);
 	if(trace["fraction"] < 1)
 	{
-		pitch_vals[5] = -90 + atan(150 / trace["fraction"] * 400);
-		pitch_vals[4] = -90 + atan(300 / trace["fraction"] * 400);
+		pitch_vals[5] = -90 + (atan(150 / (trace["fraction"] * 400)));
+		pitch_vals[4] = -90 + (atan(300 / (trace["fraction"] * 400)));
 	}
 	else
 	{
@@ -221,15 +221,15 @@ function do_fx(localclientnum, center, yaw_count, pitch)
 		randomoffsetyaw = randomint(30) - 15;
 		angles = (pitch + randomoffsetpitch, currentyaw + randomoffsetyaw, 0);
 		tracedir = anglestoforward(angles);
-		currentyaw = currentyaw + 360 / yaw_count;
-		fx_position = center + tracedir * 400;
+		currentyaw = currentyaw + (360 / yaw_count);
+		fx_position = center + (tracedir * 400);
 		trace = bullettrace(center, fx_position, 0, self);
 		sphere_size = 5;
 		angles = (0, randomint(360), 0);
 		forward = anglestoforward(angles);
 		if(trace["fraction"] < 1)
 		{
-			fx_position = center + tracedir * 400 * trace["fraction"];
+			fx_position = center + ((tracedir * 400) * trace["fraction"]);
 			/#
 				if(level.debug_heat_wave_traces)
 				{
@@ -258,7 +258,7 @@ function do_fx(localclientnum, center, yaw_count, pitch)
 					sphere(fx_position, sphere_size, (1, 0, 1), 1, 1, 8, 300);
 				}
 			#/
-			if(lengthsquared(vectorcross(forward, tracedir * -1)) == 0)
+			if((lengthsquared(vectorcross(forward, tracedir * -1))) == 0)
 			{
 				forward = vectorcross(right, forward);
 			}

@@ -30,7 +30,7 @@ function hack_perks()
 		{
 			machine = getentarray(vending_triggers[i].target, "targetname");
 		}
-		struct.origin = machine[0].origin + anglestoright(machine[0].angles) * 18 + vectorscale((0, 0, 1), 48);
+		struct.origin = (machine[0].origin + (anglestoright(machine[0].angles) * 18)) + vectorscale((0, 0, 1), 48);
 		struct.radius = 48;
 		struct.height = 64;
 		struct.script_float = 5;

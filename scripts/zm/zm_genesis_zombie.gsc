@@ -624,7 +624,7 @@ function function_f95a87ae(a_spots)
 		}
 		e_player = level.players[level.n_player_spawn_selection_index];
 		level.n_player_spawn_selection_index++;
-		if(level.n_player_spawn_selection_index > level.players.size - 1)
+		if(level.n_player_spawn_selection_index > (level.players.size - 1))
 		{
 			level.n_player_spawn_selection_index = 0;
 		}

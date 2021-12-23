@@ -824,7 +824,7 @@ function function_83dd194d()
 		}
 		if(level.activeplayers.size == 1)
 		{
-			level thread scene::play(var_76862d83 + "_idle_2_pavlovs_p" + level.var_3f756142, level.var_163a43e4[0]);
+			level thread scene::play((var_76862d83 + "_idle_2_pavlovs_p") + level.var_3f756142, level.var_163a43e4[0]);
 		}
 		else
 		{
@@ -832,7 +832,7 @@ function function_83dd194d()
 			foreach(var_2ddeae41, player in level.var_163a43e4)
 			{
 				player unlink();
-				level thread scene::play(var_76862d83 + "_idle_2_pavlovs_p" + var_2102f1cc, player);
+				level thread scene::play((var_76862d83 + "_idle_2_pavlovs_p") + var_2102f1cc, player);
 				var_2102f1cc++;
 			}
 		}
@@ -1439,7 +1439,7 @@ function function_517c3b8c()
 		var_44faa778 = 0;
 		for(i = 1; i < var_4752d17a.size; i++)
 		{
-			if(var_4752d17a[i - 1] < var_4752d17a[i])
+			if((var_4752d17a[i - 1]) < var_4752d17a[i])
 			{
 				var_d697e552 = var_50f98093[i - 1];
 				var_8da39cf7 = var_4752d17a[i - 1];
@@ -2151,7 +2151,7 @@ function craftable_use_hold_think_internal(player)
 		player zm_utility::disable_player_move_states(1);
 		player zm_utility::increment_is_drinking();
 		player thread player_progress_bar(craft_start_time, craft_time);
-		while(isdefined(self) && player player_continue_crafting(self) && gettime() - self.craft_start_time < self.craft_time)
+		while(isdefined(self) && player player_continue_crafting(self) && (gettime() - self.craft_start_time) < self.craft_time)
 		{
 			wait(0.05);
 		}
@@ -2165,7 +2165,7 @@ function craftable_use_hold_think_internal(player)
 	}
 	if(isdefined(self))
 	{
-		if(player player_continue_crafting(self) && (self.craft_time <= 0 || gettime() - self.craft_start_time >= self.craft_time))
+		if(player player_continue_crafting(self) && (self.craft_time <= 0 || (gettime() - self.craft_start_time) >= self.craft_time))
 		{
 			self notify(#"craft_succeed");
 			if(isdefined(player.usebartext))
@@ -2231,9 +2231,9 @@ function player_progress_bar_update(start_time, craft_time)
 	self endon(#"disconnect");
 	self endon(#"craftable_progress_end");
 	self endon(#"craft_succeed");
-	while(isdefined(self) && gettime() - start_time < craft_time)
+	while(isdefined(self) && (gettime() - start_time) < craft_time)
 	{
-		progress = gettime() - start_time / craft_time;
+		progress = (gettime() - start_time) / craft_time;
 		if(progress < 0)
 		{
 			progress = 0;
@@ -2273,7 +2273,7 @@ function player_continue_crafting(t_console)
 	trigger = t_console.stub zm_unitrigger::unitrigger_trigger(self);
 	torigin = t_console.stub.origin;
 	porigin = self geteye();
-	radius_sq = 2.25 * t_console.stub.radius * t_console.stub.radius;
+	radius_sq = (2.25 * t_console.stub.radius) * t_console.stub.radius;
 	var_422cea21 = level.var_f5464041[trigger.targetname];
 	var_395c2885 = t_console.stub.var_395c2885;
 	if(var_395c2885 == 0 && var_422cea21 != 3)
@@ -2586,7 +2586,7 @@ function function_3f0f5f61()
 			}
 			else
 			{
-				var_ce48aee6 = "tag_passenger" + var_9544a498 + 1;
+				var_ce48aee6 = "tag_passenger" + (var_9544a498 + 1);
 				var_2a65eda2 = level.var_e29dd7ca gettagangles(var_ce48aee6);
 				player thread function_fce6cca8(s_pavlov_player[var_9544a498].origin, var_2a65eda2);
 			}
@@ -2742,9 +2742,9 @@ function function_c0e035d6(str_spawn, var_bf7e118f = 0, var_8f4dddff = 1)
 	{
 		level notify(#"stop_dragon_boss_zombie");
 		wait(1);
-		n_zombie_count = level.var_e66ebd0c[level.activeplayers.size - 1] - level.var_8447be11[level.activeplayers.size - 1] * var_8f4dddff;
+		n_zombie_count = (level.var_e66ebd0c[level.activeplayers.size - 1]) - ((level.var_8447be11[level.activeplayers.size - 1]) * var_8f4dddff);
 		level thread zm_stalingrad_util::function_f70dde0b(level.zombie_spawners[0], var_ad0ee644, str_spawn, n_zombie_count, 1.25, undefined, "stop_dragon_boss_zombie", 0);
-		level thread zm_stalingrad_util::function_b55ebb81(undefined, undefined, level.var_8447be11[level.activeplayers.size - 1] * var_8f4dddff, 1, 0, "stop_dragon_boss_zombie");
+		level thread zm_stalingrad_util::function_b55ebb81(undefined, undefined, (level.var_8447be11[level.activeplayers.size - 1]) * var_8f4dddff, 1, 0, "stop_dragon_boss_zombie");
 	}
 }
 
@@ -3373,10 +3373,10 @@ function function_3a34c204()
 	for(i = 0; i < 3; i++)
 	{
 		var_270cdd14 = anglestoforward((0, randomintrange(-180, 180), 0));
-		v_target_origin = var_4cc0e23c + var_270cdd14 * randomintrange(36, 72);
+		v_target_origin = var_4cc0e23c + (var_270cdd14 * randomintrange(36, 72));
 		self thread function_98ee9e20(i, var_6646a04b, v_target_origin);
 		util::wait_network_frame();
-		var_4cc0e23c = var_4cc0e23c + var_f840b1a7 * 256;
+		var_4cc0e23c = var_4cc0e23c + (var_f840b1a7 * 256);
 	}
 }
 
@@ -3391,7 +3391,7 @@ function function_3a34c204()
 */
 function function_98ee9e20(n_number, var_6646a04b, v_target_origin, e_player)
 {
-	ground_trace = bullettrace(v_target_origin + vectorscale((0, 0, 1), 128), v_target_origin + vectorscale((0, 0, -1), 500), 0, e_player);
+	ground_trace = bullettrace(v_target_origin + vectorscale((0, 0, 1), 128), v_target_origin + (vectorscale((0, 0, -1), 500)), 0, e_player);
 	e_fx = fx::play("meatball_impact", ground_trace["position"], (0, 0, 0), "stop_meatball_impact");
 	self waittill(#"hash_49fa08aa");
 	if(n_number)
@@ -4488,13 +4488,13 @@ function function_30e5b419(s_pos, str_pos, var_6e2a6191, var_4827e728)
 */
 function function_b1a4952d()
 {
-	if(isdefined(self.var_b1a4952d) && distance2dsquared(self.origin, self.var_b1a4952d.origin) < 100 * 100)
+	if(isdefined(self.var_b1a4952d) && distance2dsquared(self.origin, self.var_b1a4952d.origin) < (100 * 100))
 	{
 		return self.var_b1a4952d;
 	}
 	foreach(var_56772174, post in level.var_4c8e35f4)
 	{
-		if(distance2dsquared(self.origin, post.origin) < 100 * 100)
+		if(distance2dsquared(self.origin, post.origin) < (100 * 100))
 		{
 			self.var_b1a4952d = post;
 			return post;
@@ -4559,13 +4559,13 @@ function attack_thread_gun()
 						var_7c574538 = distsqr;
 						enemy = zombie;
 					}
-					if(distsqr < 60 * 60)
+					if(distsqr < (60 * 60))
 					{
 						break;
 					}
 				}
 			}
-			if(distsqr < 60 * 60)
+			if(distsqr < (60 * 60))
 			{
 				break;
 			}
@@ -4580,7 +4580,7 @@ function attack_thread_gun()
 		}
 		self setlookatent(enemy);
 		self vehicle_ai::setturrettarget(enemy, 0);
-		offset = enemy.origin - enemy geteye() * 0.8;
+		offset = (enemy.origin - enemy geteye()) * 0.8;
 		self vehicle_ai::setturrettarget(enemy, 1, offset);
 		var_eb3cc6f2 = gettime();
 		do
@@ -4650,7 +4650,7 @@ function function_32faa6e1(no_delay = 0)
 			}
 			self.var_1163fa40 = 1;
 			goalpos = level.var_4c8e35f4[var_90863f97].origin;
-			if(!function_1a2d9dc9() && distance2dsquared(goalpos, self.origin) > var_2edd3c78 * var_2edd3c78)
+			if(!function_1a2d9dc9() && distance2dsquared(goalpos, self.origin) > (var_2edd3c78 * var_2edd3c78))
 			{
 				self setvehgoalpos(goalpos, 1, 1);
 				foundpath = self vehicle_ai::waittill_pathresult();
@@ -4852,7 +4852,7 @@ function function_f3810a1d(var_2443f661)
 	var_9e426197 = level.var_1564d2c8[var_2443f661];
 	while(true)
 	{
-		if(distance2dsquared(level.var_357a65b.origin, var_9e426197.origin) < 300 * 300)
+		if(distance2dsquared(level.var_357a65b.origin, var_9e426197.origin) < (300 * 300))
 		{
 			break;
 		}

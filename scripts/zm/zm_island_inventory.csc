@@ -108,7 +108,7 @@ function function_63119d2(var_1b778cf0, var_6e653641, n_new_value)
 	var_1c9f31e1 = 0;
 	while(var_1c9f31e1 <= 1)
 	{
-		var_1c9f31e1 = getrealtime() - n_start_time / 1000;
+		var_1c9f31e1 = (getrealtime() - n_start_time) / 1000;
 		var_9b20c5f5 = lerpfloat(var_6e653641, n_new_value, var_1c9f31e1);
 		setuimodelvalue(var_1b778cf0, var_9b20c5f5);
 		wait(0.016);

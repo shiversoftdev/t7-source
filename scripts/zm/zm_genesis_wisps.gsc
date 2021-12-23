@@ -106,10 +106,10 @@ function on_player_disconnect()
 */
 function function_d1c51308()
 {
-	level.var_a8dc973b = [];
-	level.var_a8dc973b["s_trig"] = struct::get_array("s_trig_wisp", "targetname");
-	level.var_a8dc973b["s_fx"] = struct::get_array("s_fx_wisp", "targetname");
-	foreach(var_c5bb5761, s_trig in level.var_a8dc973b["s_trig"])
+	level.a_wisps = [];
+	level.a_wisps["s_trig"] = struct::get_array("s_trig_wisp", "targetname");
+	level.a_wisps["s_fx"] = struct::get_array("s_fx_wisp", "targetname");
+	foreach(var_c5bb5761, s_trig in level.a_wisps["s_trig"])
 	{
 		s_unitrigger = s_trig zm_unitrigger::create_unitrigger(&"", 64, &function_836f0458);
 		s_unitrigger.require_look_at = 1;
@@ -181,7 +181,7 @@ function function_719d3043(b_on = 1, str_who)
 			assert(str_who == "" || str_who == "", "");
 		#/
 		level.var_c1feb276 = "wisp_" + str_who;
-		foreach(var_da6c0ba9, s_trig in level.var_a8dc973b["s_trig"])
+		foreach(var_da6c0ba9, s_trig in level.a_wisps["s_trig"])
 		{
 			s_trig thread function_26ed5998(1, str_who);
 		}
@@ -189,7 +189,7 @@ function function_719d3043(b_on = 1, str_who)
 	else
 	{
 		level.var_11db95ba = "wisp_off";
-		foreach(var_316cf841, s_trig in level.var_a8dc973b["s_trig"])
+		foreach(var_316cf841, s_trig in level.a_wisps["s_trig"])
 		{
 			s_trig thread function_26ed5998(0, str_who);
 		}

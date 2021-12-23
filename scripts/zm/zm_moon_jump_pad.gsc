@@ -200,7 +200,7 @@ function moon_low_gravity_velocity(ent_start_point, struct_end_point)
 			n_reduction = getdvarfloat("");
 		}
 	#/
-	z_velocity = n_reduction * 0.75 * z_dist * world_gravity;
+	z_velocity = ((n_reduction * 0.75) * z_dist) * world_gravity;
 	if(z_velocity < 0)
 	{
 		z_velocity = z_velocity * -1;
@@ -209,15 +209,15 @@ function moon_low_gravity_velocity(ent_start_point, struct_end_point)
 	{
 		z_dist = z_dist * -1;
 	}
-	jump_time = sqrt(2 * pad_dist / world_gravity);
+	jump_time = sqrt((2 * pad_dist) / world_gravity);
 	jump_time_2 = sqrt(z_dist / world_gravity);
 	jump_time = jump_time + jump_time_2;
 	if(jump_time < 0)
 	{
 		jump_time = jump_time * -1;
 	}
-	x = jump_velocity[0] * forward_scaling / jump_time;
-	y = jump_velocity[1] * forward_scaling / jump_time;
+	x = (jump_velocity[0] * forward_scaling) / jump_time;
+	y = (jump_velocity[1] * forward_scaling) / jump_time;
 	z = z_velocity / jump_time;
 	fling_this_way = (x, y, z);
 	jump_info = [];
@@ -252,7 +252,7 @@ function moon_vertical_jump(ent_start_point, struct_end_point)
 	jump_velocity = end_point.origin - start_point.origin;
 	z_dist = end_point.origin[2] - start_point.origin[2];
 	z_dist = z_dist * 1.5;
-	z_velocity = 0.0012 * 2 * z_dist * world_gravity;
+	z_velocity = ((0.0012 * 2) * z_dist) * world_gravity;
 	if(z_velocity < 0)
 	{
 		z_velocity = z_velocity * -1;
@@ -261,15 +261,15 @@ function moon_vertical_jump(ent_start_point, struct_end_point)
 	{
 		z_dist = z_dist * -1;
 	}
-	jump_time = sqrt(2 * pad_dist / world_gravity);
-	jump_time_2 = sqrt(2 * z_dist / world_gravity);
+	jump_time = sqrt((2 * pad_dist) / world_gravity);
+	jump_time_2 = sqrt((2 * z_dist) / world_gravity);
 	jump_time = jump_time + jump_time_2;
 	if(jump_time < 0)
 	{
 		jump_time = jump_time * -1;
 	}
-	x = jump_velocity[0] * forward_scaling / jump_time;
-	y = jump_velocity[1] * forward_scaling / jump_time;
+	x = (jump_velocity[0] * forward_scaling) / jump_time;
+	y = (jump_velocity[1] * forward_scaling) / jump_time;
 	z = z_velocity / jump_time;
 	fling_vel = (x, y, z) + vel_random;
 	fling_this_way = (x, y, z);

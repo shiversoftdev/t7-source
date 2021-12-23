@@ -283,7 +283,7 @@ function function_bc95cac0(n_local_client, n_val_old, n_val_new, b_ent_new, b_in
 */
 function sentinel_play_taunt(localclientnum, taunt_arr)
 {
-	if(isdefined(level._lastplayed_drone_taunt) && gettime() - level._lastplayed_drone_taunt < 6000)
+	if(isdefined(level._lastplayed_drone_taunt) && (gettime() - level._lastplayed_drone_taunt) < 6000)
 	{
 		return;
 	}

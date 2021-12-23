@@ -785,7 +785,7 @@ function is_spawn_trapped(team)
 	{
 		return 0;
 	}
-	if(isdefined(level.alivetimesaverage[team]) && level.alivetimesaverage[team] != 0 && level.alivetimesaverage[team] < level.spawntraptriggertime * 1000)
+	if(isdefined(level.alivetimesaverage[team]) && level.alivetimesaverage[team] != 0 && level.alivetimesaverage[team] < (level.spawntraptriggertime * 1000))
 	{
 		return 1;
 	}
@@ -814,7 +814,7 @@ function use_start_spawns(predictedspawn)
 	if(level.teambased)
 	{
 		spawnteam = self.pers["team"];
-		if(level.aliveplayers[spawnteam].size + level.spawningplayers[self.team].size >= level.spawn_start[spawnteam].size)
+		if((level.aliveplayers[spawnteam].size + level.spawningplayers[self.team].size) >= level.spawn_start[spawnteam].size)
 		{
 			if(!predictedspawn)
 			{
@@ -823,7 +823,7 @@ function use_start_spawns(predictedspawn)
 			return 0;
 		}
 	}
-	else if(level.aliveplayers["free"].size + level.spawningplayers["free"].size >= level.spawn_start.size)
+	else if((level.aliveplayers["free"].size + level.spawningplayers["free"].size) >= level.spawn_start.size)
 	{
 		if(!predictedspawn)
 		{
@@ -1026,7 +1026,7 @@ function get_debug_spawnpoint(player)
 		foreach(var_306c57cf, team in level.teams)
 		{
 			size = level.player_spawn_points[team].size;
-			if(level.test_spawn_point_index < count + size)
+			if(level.test_spawn_point_index < (count + size))
 			{
 				return level.player_spawn_points[team][level.test_spawn_point_index - count];
 			}
@@ -1306,11 +1306,11 @@ function getteamstartspawnname(team, spawnpointnamebase)
 		if(!util::isoneround())
 		{
 			number = int(getsubstr(spawn_point_team_name, 4, 5)) - 1;
-			number = number + game["roundsplayed"] % level.teams.size + 1;
+			number = ((number + game["roundsplayed"]) % level.teams.size) + 1;
 			spawn_point_team_name = "team" + number;
 		}
 	}
-	return spawnpointnamebase + "_" + spawn_point_team_name + "_start";
+	return ((spawnpointnamebase + "_") + spawn_point_team_name) + "_start";
 }
 
 /*

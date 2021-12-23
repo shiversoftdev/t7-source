@@ -96,7 +96,7 @@ function function_40e95c74()
 	Parameters: 1
 	Flags: Linked
 */
-function function_b41dc007(var_1d00995b = 1)
+function function_b41dc007(b_walk = 1)
 {
 	a_ai = getaiarray();
 	for(i = 0; i < a_ai.size; i++)
@@ -112,7 +112,7 @@ function function_b41dc007(var_1d00995b = 1)
 		}
 		if(var_3812f8bd)
 		{
-			if(var_1d00995b)
+			if(b_walk)
 			{
 				a_ai[i] zombie_utility::set_zombie_run_cycle_override_value("walk");
 				continue;

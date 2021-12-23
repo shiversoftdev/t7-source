@@ -85,7 +85,7 @@ function oneinchpunch_physics_launchragdoll(localclientnum, oldval, newval, bnew
 		}
 		if(isdefined(var_b262e13f))
 		{
-			v_launch = vectornormalize(self.origin - var_b262e13f.origin) * randomintrange(125, 150) + (0, 0, randomintrange(75, 150));
+			v_launch = (vectornormalize(self.origin - var_b262e13f.origin)) * randomintrange(125, 150) + (0, 0, randomintrange(75, 150));
 		}
 		if(isdefined(v_launch))
 		{

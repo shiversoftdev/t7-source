@@ -132,7 +132,7 @@ function teleport_target_event()
 	teleport_target_spark setmodel("tag_origin");
 	teleport_target_spark.angles = var_1dc1d30a;
 	playfxontag(level._effect["generator_ee_sparks"], teleport_target_spark, "tag_origin");
-	level.teleport_target_trigger = spawn("trigger_radius", teleport_target_start.origin + vectorscale((0, 0, -1), 70), 0, 125, 100);
+	level.teleport_target_trigger = spawn("trigger_radius", teleport_target_start.origin + (vectorscale((0, 0, -1), 70)), 0, 125, 100);
 	/#
 		if(!isdefined(level.var_74eed1d3) || !level.var_74eed1d3)
 		{
@@ -735,7 +735,7 @@ function function_362373ab(model)
 		{
 			v_player_angles = getplayers()[0] getplayerangles();
 			v_player_origin = getplayers()[0] getorigin();
-			var_ab7c1d7f = v_player_origin + anglestoforward(v_player_angles) * 128;
+			var_ab7c1d7f = v_player_origin + (anglestoforward(v_player_angles) * 128);
 			model.origin = level.var_40705128.origin + vectorscale((0, 0, 1), 32);
 			self.origin = model.origin;
 		}
@@ -1206,7 +1206,7 @@ function play_egg_vox(ann_alias, gersh_alias, plr_num)
 	{
 		players = getplayers();
 		rand = randomintrange(0, players.size);
-		players[rand] playsoundwithnotify("vox_plr_" + players[rand].characterindex + "_level_start_" + randomintrange(0, 4), "level_start_vox_done");
+		players[rand] playsoundwithnotify((("vox_plr_" + players[rand].characterindex) + "_level_start_") + randomintrange(0, 4), "level_start_vox_done");
 		players[rand] waittill(#"level_start_vox_done");
 		level.var_92ed253c = 1;
 	}

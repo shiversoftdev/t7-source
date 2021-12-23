@@ -24,7 +24,7 @@ function animate_crack(localclientnum, vectorname, delay, duration, start, end)
 	valstep = 0;
 	if(durationseconds > 0)
 	{
-		valstep = end - start / durationseconds / 0.01;
+		valstep = (end - start) / (durationseconds / 0.01);
 	}
 	timestep = 0.01 * direction;
 	value = start;

@@ -179,7 +179,7 @@ function set_state(name, state_params)
 	if(!isdefined(state))
 	{
 		/#
-			assertmsg("" + name + "" + self.name);
+			assertmsg((("" + name) + "") + self.name);
 		#/
 		return 0;
 	}

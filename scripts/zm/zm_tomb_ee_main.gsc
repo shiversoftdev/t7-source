@@ -286,9 +286,9 @@ function get_zombie_blood_hint_vox()
 {
 	if(level flag::get("all_zones_captured"))
 	{
-		return "vox_sam_upgrade_staff_clue_" + level.n_ee_step + "_0";
+		return ("vox_sam_upgrade_staff_clue_" + level.n_ee_step) + "_0";
 	}
-	return "vox_sam_upgrade_staff_clue_" + level.n_ee_step + "_grbld_0";
+	return ("vox_sam_upgrade_staff_clue_" + level.n_ee_step) + "_grbld_0";
 }
 
 /*
@@ -530,7 +530,7 @@ function player_intermission_ee()
 			{
 				if(!isdefined(org))
 				{
-					org = spawn("script_model", self.origin + vectorscale((0, 0, -1), 60));
+					org = spawn("script_model", self.origin + (vectorscale((0, 0, -1), 60)));
 					org setmodel("tag_origin");
 				}
 				org.origin = points[i].origin;
@@ -591,7 +591,7 @@ function setup_ee_main_devgui()
 		{
 			foreach(var_9f6a3af9, player in getplayers())
 			{
-				if(distance2d(player.origin, (2904, 5040, -336)) < 100 && player usebuttonpressed())
+				if((distance2d(player.origin, (2904, 5040, -336))) < 100 && player usebuttonpressed())
 				{
 					wait(2);
 					if(player usebuttonpressed())

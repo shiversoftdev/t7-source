@@ -325,7 +325,7 @@ function killcam(attackernum, targetnum, killcamentity, killcamentityindex, kill
 		self notify(#"end_killcam");
 		return;
 	}
-	postdeathdelay = gettime() - deathtime / 1000;
+	postdeathdelay = (gettime() - deathtime) / 1000;
 	predelay = postdeathdelay + deathtimeoffset;
 	camtime = calc_time(weapon, killcamentitystarttime, predelay, respawn, maxtime);
 	postdelay = calc_post_delay();
@@ -336,7 +336,7 @@ function killcam(attackernum, targetnum, killcamentity, killcamentityindex, kill
 		{
 			return;
 		}
-		if(maxtime - camtime >= 1)
+		if((maxtime - camtime) >= 1)
 		{
 			postdelay = maxtime - camtime;
 		}
@@ -349,13 +349,13 @@ function killcam(attackernum, targetnum, killcamentity, killcamentityindex, kill
 	}
 	killcamoffset = camtime + predelay;
 	self notify(#"begin_killcam", gettime());
-	killcamstarttime = gettime() - killcamoffset * 1000;
+	killcamstarttime = gettime() - (killcamoffset * 1000);
 	self.sessionstate = "spectator";
 	self.spectatorclient = attackernum;
 	self.killcamentity = -1;
 	if(killcamentityindex >= 0)
 	{
-		self thread set_entity(killcamentityindex, killcamentitystarttime - killcamstarttime - 100);
+		self thread set_entity(killcamentityindex, (killcamentitystarttime - killcamstarttime) - 100);
 	}
 	self.killcamtargetentity = targetnum;
 	self.archivetime = killcamoffset;
@@ -472,8 +472,8 @@ function wait_final_killcam_slowdown(deathtime, starttime)
 {
 	self endon(#"disconnect");
 	self endon(#"end_killcam");
-	secondsuntildeath = deathtime - starttime / 1000;
-	deathtime = gettime() + secondsuntildeath * 1000;
+	secondsuntildeath = (deathtime - starttime) / 1000;
+	deathtime = gettime() + (secondsuntildeath * 1000);
 	waitbeforedeath = 2;
 	util::setclientsysstate("levelNotify", "fkcb");
 	wait(max(0, secondsuntildeath - waitbeforedeath));
@@ -630,7 +630,7 @@ function spectator_killcam_cleanup(attacker)
 	self endon(#"disconnect");
 	attacker endon(#"disconnect");
 	attacker waittill(#"begin_killcam", attackerkcstarttime);
-	waittime = max(0, attackerkcstarttime - self.deathtime - 50);
+	waittime = max(0, (attackerkcstarttime - self.deathtime) - 50);
 	wait(waittime);
 	self end(0);
 }
@@ -821,20 +821,20 @@ function final_killcam(winner)
 		self globallogic_spawn::setthirdperson(0);
 	}
 	killcamsettings = level.finalkillcamsettings[winner];
-	postdeathdelay = gettime() - killcamsettings.deathtime / 1000;
+	postdeathdelay = (gettime() - killcamsettings.deathtime) / 1000;
 	predelay = postdeathdelay + killcamsettings.deathtimeoffset;
 	camtime = calc_time(killcamsettings.weapon, killcamsettings.entitystarttime, predelay, 0, undefined);
 	postdelay = calc_post_delay();
 	killcamoffset = camtime + predelay;
-	killcamlength = camtime + postdelay - 0.05;
-	killcamstarttime = gettime() - killcamoffset * 1000;
+	killcamlength = (camtime + postdelay) - 0.05;
+	killcamstarttime = gettime() - (killcamoffset * 1000);
 	self notify(#"begin_killcam", gettime());
 	self.sessionstate = "spectator";
 	self.spectatorclient = killcamsettings.spectatorclient;
 	self.killcamentity = -1;
 	if(killcamsettings.entityindex >= 0)
 	{
-		self thread set_entity(killcamsettings.entityindex, killcamsettings.entitystarttime - killcamstarttime - 100);
+		self thread set_entity(killcamsettings.entityindex, (killcamsettings.entitystarttime - killcamstarttime) - 100);
 	}
 	self.killcamtargetentity = killcamsettings.targetentityindex;
 	self.archivetime = killcamoffset;
@@ -922,7 +922,7 @@ function calc_time(weapon, entitystarttime, predelay, respawn, maxtime)
 	{
 		if(is_entity_weapon(weapon))
 		{
-			camtime = gettime() - entitystarttime / 1000 - predelay - 0.1;
+			camtime = (((gettime() - entitystarttime) / 1000) - predelay) - 0.1;
 		}
 		else if(!respawn)
 		{

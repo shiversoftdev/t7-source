@@ -215,7 +215,7 @@ function calculatespawnorigin(origin, angles, clonedistance)
 		for(i = 0; i < testangles.size; i++)
 		{
 			startangles[i] = (0, angles[1], 0);
-			startpoint = origin + vectorscale(anglestoforward(startangles[i] + testangles[i]), clonedistance);
+			startpoint = origin + (vectorscale(anglestoforward(startangles[i] + testangles[i]), clonedistance));
 			startpoint = startpoint + (0, 0, zoff);
 			if(playerpositionvalidignoreent(startpoint, self))
 			{
@@ -266,7 +266,7 @@ function insertclone(clone)
 			level._clone[i] = clone;
 			insertedclone = 1;
 			/#
-				println("" + i + "" + level._clone.size);
+				println((("" + i) + "") + level._clone.size);
 			#/
 			break;
 		}
@@ -294,7 +294,7 @@ function removeclone(clone)
 			level._clone[i] = undefined;
 			array::remove_undefined(level._clone);
 			/#
-				println("" + i + "" + level._clone.size);
+				println((("" + i) + "") + level._clone.size);
 			#/
 			break;
 		}
@@ -331,7 +331,7 @@ function removeoldestclone()
 		}
 	}
 	/#
-		println("" + i + "" + level._clone.size);
+		println((("" + i) + "") + level._clone.size);
 	#/
 	level._clone[oldestindex] notify(#"clone_shutdown");
 	level._clone[oldestindex] = undefined;
@@ -355,7 +355,7 @@ function spawnclones()
 	velocity = self getvelocity();
 	velocity = velocity + (0, 0, velocity[2] * -1);
 	velocity = vectornormalize(velocity);
-	origin = self.origin + velocity * 17 + vectorscale(anglestoforward(self getangles()), 17);
+	origin = (self.origin + (velocity * 17)) + vectorscale(anglestoforward(self getangles()), 17);
 	validspawns = calculatespawnorigin(origin, self getangles(), 60);
 	if(validspawns.validpositions.size < 3)
 	{
@@ -431,7 +431,7 @@ private function _updateclonepathing()
 	{
 		if(getdvarint("tu1_gadgetCloneSwimming", 1))
 		{
-			if(self.origin[2] + 36 <= getwaterheight(self.origin))
+			if((self.origin[2] + 36) <= getwaterheight(self.origin))
 			{
 				blackboard::setblackboardattribute(self, "_stance", "swim");
 				self setgoal(self.origin, 1);
@@ -446,13 +446,13 @@ private function _updateclonepathing()
 				self.lastknownpos = self.origin;
 				self.lastknownpostime = gettime();
 			}
-			if(distancesquared(self.lastknownpos, self.origin) < 24 * 24 && !self haspath())
+			if(distancesquared(self.lastknownpos, self.origin) < (24 * 24) && !self haspath())
 			{
 				blackboard::setblackboardattribute(self, "_stance", "crouch");
 				wait(0.5);
 				continue;
 			}
-			if(self.lastknownpostime + 2000 <= gettime())
+			if((self.lastknownpostime + 2000) <= gettime())
 			{
 				self.lastknownpos = self.origin;
 				self.lastknownpostime = gettime();
@@ -466,7 +466,7 @@ private function _updateclonepathing()
 		if(distance < 14400 || !self haspath())
 		{
 			forward = anglestoforward(self getangles());
-			searchorigin = self.origin + forward * 750;
+			searchorigin = self.origin + (forward * 750);
 			self._goal_center_point = searchorigin;
 			queryresult = positionquery_source_navigation(self._goal_center_point, 500, 750, 750, 100, self);
 			if(queryresult.data.size == 0)
@@ -567,8 +567,7 @@ private function _configureclone(clone, player, forward, spawntime)
 	{
 		if(isdefined(clone.pathablematerial))
 		{
-			~clone;
-			clone.pathablematerial = clone.pathablematerial & 2;
+			clone.pathablematerial = clone.pathablematerial & (~2);
 		}
 	}
 	clone pushactors(1);
@@ -584,7 +583,7 @@ private function _configureclone(clone, player, forward, spawntime)
 	clone thread _clonewatchshutdown();
 	clone thread _clonefakefire();
 	clone thread _clonebreakglass();
-	clone._goal_center_point = forward * 1000 + clone.origin;
+	clone._goal_center_point = (forward * 1000) + clone.origin;
 	clone._goal_center_point = getclosestpointonnavmesh(clone._goal_center_point, 600);
 	queryresult = undefined;
 	if(isdefined(clone._goal_center_point) && clone findpath(clone.origin, clone._goal_center_point, 1, 0))
@@ -1000,7 +999,7 @@ private function _chooseweapon(player)
 	classnum = randomint(10);
 	for(i = 0; i < 10; i++)
 	{
-		weapon = player getloadoutweapon(i + classnum % 10, "primary");
+		weapon = player getloadoutweapon((i + classnum) % 10, "primary");
 		if(weapon != level.weaponnone)
 		{
 			break;

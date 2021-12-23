@@ -178,7 +178,7 @@ function function_f424a041(str_name, localclientnumber)
 		level.var_92a1717d[localclientnumber][str_name] = getent(localclientnumber, str_name, "targetname");
 	}
 	/#
-		assert(isdefined(level.var_92a1717d[localclientnumber][str_name]), "" + str_name + "");
+		assert(isdefined(level.var_92a1717d[localclientnumber][str_name]), ("" + str_name) + "");
 	#/
 	level.var_92a1717d[localclientnumber][str_name] util::waittill_dobj(localclientnumber);
 	if(!level.var_92a1717d[localclientnumber][str_name] hasanimtree())
@@ -738,9 +738,9 @@ function scale_speed(x1, x2, y1, y2, z)
 		z = x2;
 	}
 	dx = x2 - x1;
-	n = z - x1 / dx;
+	n = (z - x1) / dx;
 	dy = y2 - y1;
-	w = n * dy + y1;
+	w = (n * dy) + y1;
 	return w;
 }
 
@@ -842,7 +842,7 @@ function function_59c8afc0(localclientnumber, var_98ce6736, var_4333264, var_e2a
 		var_68feedab = randomfloatrange(var_98ce6736, var_4333264);
 		n_transition_time = randomfloatrange(var_e2ad4e8e, var_22a5887c);
 		n_steps = int(n_transition_time / 0.016);
-		var_5885a5c5 = var_68feedab - self.var_40a6544d / n_steps;
+		var_5885a5c5 = (var_68feedab - self.var_40a6544d) / n_steps;
 		for(i = 0; i < n_steps; i++)
 		{
 			self.var_40a6544d = self.var_40a6544d + var_5885a5c5;
@@ -871,7 +871,7 @@ function function_217d24cd(localclientnumber, var_68feedab, n_transition_time)
 		self.var_40a6544d = 1;
 	}
 	n_steps = int(n_transition_time / 0.016);
-	var_5885a5c5 = var_68feedab - self.var_40a6544d / n_steps;
+	var_5885a5c5 = (var_68feedab - self.var_40a6544d) / n_steps;
 	for(i = 0; i < n_steps; i++)
 	{
 		self.var_40a6544d = self.var_40a6544d + var_5885a5c5;
@@ -912,7 +912,7 @@ function function_24fcf23b(str_targetname, localclientnum)
 		level.var_4cb39fae[localclientnum][str_targetname].var_8d2380bb[localclientnum] = 1;
 	}
 	/#
-		assert(isdefined(level.var_4cb39fae[localclientnum][str_targetname]), "" + str_targetname + "");
+		assert(isdefined(level.var_4cb39fae[localclientnum][str_targetname]), ("" + str_targetname) + "");
 	#/
 	return level.var_4cb39fae[localclientnum][str_targetname];
 }
@@ -980,91 +980,79 @@ function function_9164d089(localclientnumber)
 	Namespace: zm_tomb_capture_zones
 	Checksum: 0x342547DA
 	Offset: 0x35A0
-	Size: 0x0
+	Size: 0xF0
 	Parameters: 0
 	Flags: Linked
 */
 function function_f35264ff()
 {
+	self notify(#"hash_3b22402e");
+	self endon(#"hash_765cfe11");
+	self function_4f226940();
+	self setanim(%generic::p7_fxanim_zm_ori_monolith_inductor_pull_anim, 1, 0.2);
+	waitrealtime((getanimlength(%generic::p7_fxanim_zm_ori_monolith_inductor_pull_anim)) - 0.2);
+	self clearanim(%generic::p7_fxanim_zm_ori_monolith_inductor_pull_anim, 0.2);
+	self setanim(%generic::p7_fxanim_zm_ori_monolith_inductor_pull_idle_anim, 1, 0.2);
+	level.var_d7512031 = 1;
 }
 
-/*Unknown Op Code (0x0A1F) at 362A*/
 /*
 	Name: function_3f73ddc3
 	Namespace: zm_tomb_capture_zones
 	Checksum: 0xF52F364B
 	Offset: 0x3698
-	Size: 0x0
+	Size: 0xF0
 	Parameters: 1
 	Flags: Linked
 */
-function function_3f73ddc3()
+function function_3f73ddc3(oldval)
 {
-System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
-Parameter name: index
-   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   at System.Collections.Generic.List`1.get_Item(Int32 index)
-   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 649
-   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 211
-/*
-No Output
-*/
-
-	/* ======== */
-
-/* 
-	Stack: 
-*/
-	/* ======== */
-
-/* 
-	Blocks: 
-	Cerberus.Logic.BasicBlock at 0x3698, end at 0x3699
-	Cerberus.Logic.IfBlock at 0x36D2, end at 0x374A
-*/
-	/* ======== */
-
+	self notify(#"hash_765cfe11");
+	self endon(#"hash_3b22402e");
+	self function_4f226940();
+	if(oldval)
+	{
+		self setanim(%generic::p7_fxanim_zm_ori_monolith_inductor_release_anim, 1, 0.2);
+		waitrealtime((getanimlength(%generic::p7_fxanim_zm_ori_monolith_inductor_release_anim)) - 0.2);
+		self function_4f226940();
+	}
+	self setanim(%generic::p7_fxanim_zm_ori_monolith_inductor_idle_anim, 1, 0.2);
+	level.var_d7512031 = 0;
 }
 
-/*Unknown Op Code (0x1303) at 3732*/
 /*
 	Name: pap_monolith_ring_shake
 	Namespace: zm_tomb_capture_zones
 	Checksum: 0x4A0E125A
 	Offset: 0x3790
-	Size: 0x0
+	Size: 0x1EC
 	Parameters: 7
 	Flags: Linked
 */
-function pap_monolith_ring_shake()
+function pap_monolith_ring_shake(localclientnumber, oldval, newval, bnewent, binitialsnap, fieldname, bwasdemojump)
 {
-System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
-Parameter name: index
-   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   at System.Collections.Generic.List`1.get_Item(Int32 index)
-   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 649
-   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 211
-/*
-No Output
-*/
-
-	/* ======== */
-
-/* 
-	Stack: 
-*/
-	/* ======== */
-
-/* 
-	Blocks: 
-	Cerberus.Logic.BasicBlock at 0x3790, end at 0x3791
-	Cerberus.Logic.IfBlock at 0x37FA, end at 0x397A
-*/
-	/* ======== */
-
+	var_eb1b4657 = function_12a07195(localclientnumber);
+	var_eb1b4657 endon(#"hash_3b22402e");
+	if(newval == 1)
+	{
+		var_eb1b4657 function_4f226940();
+		var_eb1b4657 setanim(%generic::p7_fxanim_zm_ori_monolith_inductor_shake_anim, 1, 0.2);
+		waitrealtime((getanimlength(%generic::p7_fxanim_zm_ori_monolith_inductor_shake_anim)) - 0.2);
+		var_eb1b4657 clearanim(%generic::p7_fxanim_zm_ori_monolith_inductor_shake_anim, 0.2);
+		if(level.var_d7512031)
+		{
+			var_eb1b4657 setanim(%generic::p7_fxanim_zm_ori_monolith_inductor_pull_anim, 1, 0.2);
+			waitrealtime((getanimlength(%generic::p7_fxanim_zm_ori_monolith_inductor_pull_anim)) - 0.2);
+			var_eb1b4657 clearanim(%generic::p7_fxanim_zm_ori_monolith_inductor_pull_anim, 0.2);
+			var_eb1b4657 setanim(%generic::p7_fxanim_zm_ori_monolith_inductor_pull_idle_anim, 1, 0.2);
+		}
+		else
+		{
+			var_eb1b4657 thread function_3f73ddc3(0);
+		}
+	}
 }
 
-/*Unknown Op Code (0x0EC5) at 387A*/
 /*
 	Name: function_4f226940
 	Namespace: zm_tomb_capture_zones
@@ -1105,7 +1093,7 @@ function function_aab40f28(localclientnumber, n_value)
 		self.var_40a6544d[localclientnumber] = 0;
 	}
 	n_delta = n_value - self.var_40a6544d[localclientnumber];
-	n_increment = n_delta / 4.5 * 0.016;
+	n_increment = (n_delta / 4.5) * 0.016;
 	while(self.var_40a6544d[localclientnumber] != n_value)
 	{
 		self.var_40a6544d[localclientnumber] = math::clamp(self.var_40a6544d[localclientnumber] + n_increment, 0, 3);

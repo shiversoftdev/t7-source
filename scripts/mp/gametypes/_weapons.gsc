@@ -200,14 +200,14 @@ function showcaseweapon_get()
 	attachmentindices = [];
 	tokenizedattachmentinfo = strtok(showcaseweapondata.attachmentinfo, ",");
 	index = 0;
-	while(index + 1 < tokenizedattachmentinfo.size)
+	while((index + 1) < tokenizedattachmentinfo.size)
 	{
 		attachmentnames[attachmentnames.size] = tokenizedattachmentinfo[index];
 		attachmentindices[attachmentindices.size] = int(tokenizedattachmentinfo[index + 1]);
 		index = index + 2;
 	}
 	index = tokenizedattachmentinfo.size;
-	while(index + 1 < 16)
+	while((index + 1) < 16)
 	{
 		attachmentnames[attachmentnames.size] = "none";
 		attachmentindices[attachmentindices.size] = 0;

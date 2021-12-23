@@ -88,7 +88,7 @@ function missile_logic(fake)
 	missile endon(#"death");
 	fake thread doa_utility::function_981c685d(missile);
 	missile missile_settarget(fake);
-	uptime = gettime() + getdvarfloat("scr_doa_missile_upwardMax", 2) * 1000;
+	uptime = gettime() + (getdvarfloat("scr_doa_missile_upwardMax", 2) * 1000);
 	while(gettime() < uptime && isdefined(fake) && isdefined(missile))
 	{
 		if(getdvarfloat("scr_doa_missile_debug", 0))
@@ -96,14 +96,14 @@ function missile_logic(fake)
 			level thread namespace_2f63e553::function_a0e51d80(missile.origin, 4, 24, (1, 0, 0));
 		}
 		distsq = distancesquared(missile.origin, fake.origin);
-		if(distsq < getdvarint("scr_doa_missile_travel_reached_dist", 96) * getdvarint("scr_doa_missile_travel_reached_dist", 96))
+		if(distsq < (getdvarint("scr_doa_missile_travel_reached_dist", 96) * getdvarint("scr_doa_missile_travel_reached_dist", 96)))
 		{
 			break;
 		}
 		if(isdefined(fake.var_5525f623))
 		{
 			distsq = distancesquared(missile.origin, fake.var_5525f623.origin);
-			if(distsq < getdvarint("scr_doa_missile_detonate_range", 96) * getdvarint("scr_doa_missile_detonate_range", 96))
+			if(distsq < (getdvarint("scr_doa_missile_detonate_range", 96) * getdvarint("scr_doa_missile_detonate_range", 96)))
 			{
 				if(isdefined(missile))
 				{
@@ -127,7 +127,7 @@ function missile_logic(fake)
 			level thread namespace_2f63e553::function_a0e51d80(missile.origin, 4, 24, (0, 1, 0));
 		}
 		distsq = distancesquared(missile.origin, enemy.origin);
-		if(distsq < getdvarint("scr_doa_missile_detonate_range", 96) * getdvarint("scr_doa_missile_detonate_range", 96))
+		if(distsq < (getdvarint("scr_doa_missile_detonate_range", 96) * getdvarint("scr_doa_missile_detonate_range", 96)))
 		{
 			break;
 		}
@@ -154,7 +154,7 @@ function function_3bf11cb5(index, enemy)
 	{
 		return;
 	}
-	pos = self.origin + enemy.origin - self.origin * 0.5 + (0, 0, getdvarint("scr_doa_missile_travel_height", 650));
+	pos = (self.origin + ((enemy.origin - self.origin) * 0.5)) + (0, 0, getdvarint("scr_doa_missile_travel_height", 650));
 	fake = spawn("script_model", pos);
 	fake.targetname = "turret_FakeUpTarget";
 	fake setmodel("tag_origin");
@@ -184,13 +184,13 @@ function function_d8189eaf(weapon, enemy)
 	{
 		return;
 	}
-	pos = self.origin + enemy.origin - self.origin * 0.5 + (0, 0, getdvarint("scr_doa_missile_travel_height", 650));
+	pos = (self.origin + ((enemy.origin - self.origin) * 0.5)) + (0, 0, getdvarint("scr_doa_missile_travel_height", 650));
 	fake = spawn("script_model", pos);
 	fake.targetname = "weapon_FakeUpTarget";
 	fake setmodel("tag_origin");
 	fake.var_5525f623 = enemy;
 	self thread missile_logic(fake);
-	magicbullet(weapon, v_spawn, v_spawn + 50 * v_dir, self);
+	magicbullet(weapon, v_spawn, v_spawn + (50 * v_dir), self);
 }
 
 /*
@@ -413,7 +413,7 @@ function function_eabe8c0(player, var_a6f28f3b = 0)
 	target = player.origin;
 	if(isdefined(player.doa.vehicle))
 	{
-		hitp = playerphysicstrace(player.origin + vectorscale((0, 0, 1), 72), player.origin + vectorscale((0, 0, -1), 500));
+		hitp = playerphysicstrace(player.origin + vectorscale((0, 0, 1), 72), player.origin + (vectorscale((0, 0, -1), 500)));
 		target = (player.origin[0], player.origin[1], hitp[2]);
 	}
 	mini_turret thread doa_utility::function_a98c85b2(target, 0.5);
@@ -429,13 +429,13 @@ function function_eabe8c0(player, var_a6f28f3b = 0)
 	mini_turret laseroff();
 	if(isdefined(player))
 	{
-		time_left = gettime() + player doa_utility::function_1ded48e6(level.doa.rules.var_7daebb69 * 1000);
+		time_left = gettime() + (player doa_utility::function_1ded48e6(level.doa.rules.var_7daebb69 * 1000));
 		fx = namespace_831a4a7c::function_ee495f41(player.entnum);
 		mini_turret thread namespace_eaa992c::function_285a2999("player_trail_" + fx);
 	}
 	else
 	{
-		time_left = gettime() + level.doa.rules.var_7daebb69 * 1000;
+		time_left = gettime() + (level.doa.rules.var_7daebb69 * 1000);
 	}
 	mini_turret thread function_dfe832b7(time_left, "turret_expired");
 	mini_turret waittill(#"hash_d3ef93e9");
@@ -474,7 +474,7 @@ function function_a0d09d25(player)
 		self rotateto(self.angles + vectorscale((0, 1, 0), 8), 0.1);
 		wait(0.1);
 		forward = anglestoforward(self.angles + (0, 0, randomfloatrange(100, 500)));
-		magicbullet(weapon, top, top + forward * 1000, (isdefined(player) ? player : self));
+		magicbullet(weapon, top, top + (forward * 1000), (isdefined(player) ? player : self));
 	}
 }
 
@@ -499,7 +499,7 @@ function function_3ce8bf1c(player, origin)
 	target = player.origin;
 	if(isdefined(player.doa.vehicle))
 	{
-		hitp = playerphysicstrace(player.origin + vectorscale((0, 0, 1), 72), player.origin + vectorscale((0, 0, -1), 500));
+		hitp = playerphysicstrace(player.origin + vectorscale((0, 0, 1), 72), player.origin + (vectorscale((0, 0, -1), 500)));
 		target = (player.origin[0], player.origin[1], hitp[2]);
 	}
 	mark = target + vectorscale((0, 0, 1), 12);
@@ -579,7 +579,7 @@ private function function_dfe832b7(timeleft, note)
 function function_62c5a5a(player, origin)
 {
 	team = player.team;
-	time_left = gettime() + player doa_utility::function_1ded48e6(level.doa.rules.var_3c441789 * 1000);
+	time_left = gettime() + (player doa_utility::function_1ded48e6(level.doa.rules.var_3c441789 * 1000));
 	angles = player.angles;
 	dropspot = origin + vectorscale((0, 0, 1), 800);
 	spawner = getent("doa_amws", "targetname");
@@ -590,7 +590,7 @@ function function_62c5a5a(player, origin)
 	target = player.origin;
 	if(isdefined(player.doa.vehicle))
 	{
-		hitp = playerphysicstrace(player.origin + vectorscale((0, 0, 1), 72), player.origin + vectorscale((0, 0, -1), 500));
+		hitp = playerphysicstrace(player.origin + vectorscale((0, 0, 1), 72), player.origin + (vectorscale((0, 0, -1), 500)));
 		target = (player.origin[0], player.origin[1], hitp[2]);
 	}
 	mark = target + vectorscale((0, 0, 1), 16);

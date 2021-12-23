@@ -153,7 +153,7 @@ private function is_enemy_valid(target)
 	{
 		return 0;
 	}
-	if(distancesquared(self.owner.origin, target.origin) > self.settings.guardradius * self.settings.guardradius)
+	if(distancesquared(self.owner.origin, target.origin) > (self.settings.guardradius * self.settings.guardradius))
 	{
 		return 0;
 	}
@@ -291,7 +291,7 @@ function state_power_up_update(params)
 			closest = powerup;
 		}
 	}
-	if(isdefined(closest) && distsqr < 2000 * 2000)
+	if(isdefined(closest) && distsqr < (2000 * 2000))
 	{
 		self setvehgoalpos(closest.navvolumeorigin, 1, 1);
 		if(vehicle_ai::waittill_pathresult())
@@ -360,7 +360,7 @@ function state_combat_update(params)
 	{
 		self setspeed(self.settings.defaultmovespeed);
 		self asmrequestsubstate("locomotion@movement");
-		if(isdefined(self.owner) && distance2dsquared(self.origin, self.owner.origin) < idealdisttoowner * idealdisttoowner && ispointinnavvolume(self.origin, "navvolume_small"))
+		if(isdefined(self.owner) && distance2dsquared(self.origin, self.owner.origin) < (idealdisttoowner * idealdisttoowner) && ispointinnavvolume(self.origin, "navvolume_small"))
 		{
 			if(!isdefined(self.current_pathto_pos))
 			{
@@ -388,16 +388,16 @@ function state_combat_update(params)
 				foreach(var_e3caefb, point in queryresult.data)
 				{
 					distsqr = distance2dsquared(point.origin, ownerorigin);
-					if(distsqr > idealdisttoowner * idealdisttoowner)
+					if(distsqr > (idealdisttoowner * idealdisttoowner))
 					{
 						/#
 							if(!isdefined(point._scoredebug))
 							{
 								point._scoredebug = [];
 							}
-							point._scoredebug[""] = sqrt(distsqr) * -1 * 2;
+							point._scoredebug[""] = (sqrt(distsqr) * -1) * 2;
 						#/
-						point.score = point.score + sqrt(distsqr) * -1 * 2;
+						point.score = point.score + ((sqrt(distsqr) * -1) * 2);
 					}
 					if(isdefined(point.visibility) && point.visibility)
 					{
@@ -456,7 +456,7 @@ function state_combat_update(params)
 							recordline(self.origin, self.owner.origin, (1, 0, 0.4));
 						}
 					#/
-					if(distancesquared(self.origin, best_point.origin) > 50 * 50)
+					if(distancesquared(self.origin, best_point.origin) > (50 * 50))
 					{
 						self.current_pathto_pos = best_point.origin;
 						self setvehgoalpos(self.current_pathto_pos, 1, 1);
@@ -507,17 +507,17 @@ function attack_thread()
 		{
 			continue;
 		}
-		if(distance2dsquared(self.dragonenemy.origin, self.owner.origin) > self.settings.guardradius * self.settings.guardradius)
+		if(distance2dsquared(self.dragonenemy.origin, self.owner.origin) > (self.settings.guardradius * self.settings.guardradius))
 		{
 			continue;
 		}
-		eyeoffset = self.dragonenemy geteye() - self.dragonenemy.origin * 0.6;
+		eyeoffset = (self.dragonenemy geteye() - self.dragonenemy.origin) * 0.6;
 		if(!bullettracepassed(self.origin, self.dragonenemy geteye() - eyeoffset, 0, self, self.dragonenemy))
 		{
 			self.dragonenemy = undefined;
 			continue;
 		}
-		aimoffset = self.dragonenemy getvelocity() * 0.3 - eyeoffset;
+		aimoffset = (self.dragonenemy getvelocity() * 0.3) - eyeoffset;
 		self setturrettargetent(self.dragonenemy, aimoffset);
 		wait(0.2);
 		if(isdefined(self.dragonenemy))

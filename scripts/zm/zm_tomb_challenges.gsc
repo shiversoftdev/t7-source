@@ -138,14 +138,14 @@ function box_footprint_think()
 				player util::delay(1.5, undefined, &zm_tomb_vo::richtofenrespondvoplay, "zm_box_start", 0, "vo_soul_box_intro_played");
 			}
 		}
-		if(self.n_souls_absorbed == floor(n_souls_required / 4))
+		if(self.n_souls_absorbed == (floor(n_souls_required / 4)))
 		{
 			if(isdefined(player) && level flag::get("vo_soul_box_intro_played") && !level flag::get("vo_soul_box_continue_played"))
 			{
 				player thread zm_tomb_vo::richtofenrespondvoplay("zm_box_continue", 1, "vo_soul_box_continue_played");
 			}
 		}
-		if(self.n_souls_absorbed == floor(n_souls_required / 2) || self.n_souls_absorbed == floor(n_souls_required / 1.3))
+		if(self.n_souls_absorbed == (floor(n_souls_required / 2)) || self.n_souls_absorbed == (floor(n_souls_required / 1.3)))
 		{
 			if(isdefined(player))
 			{

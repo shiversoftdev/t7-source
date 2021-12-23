@@ -152,7 +152,7 @@ private function _warlordhuntenemy(entity)
 	/#
 		warlorddebughelpers::trystate(entity, 3, 1);
 	#/
-	if(distance2dsquared(entity.origin, self lastknownpos(self.enemy)) <= 250 * 250)
+	if(distance2dsquared(entity.origin, self lastknownpos(self.enemy)) <= (250 * 250))
 	{
 		return 0;
 	}
@@ -284,7 +284,7 @@ function choosebetterpositionservice(entity)
 		if(isdefined(entity.pathgoalpos))
 		{
 			distancetogoalsqr = distancesquared(searchorigin, entity.pathgoalpos);
-			if(distancetogoalsqr < 200 * 200)
+			if(distancetogoalsqr < (200 * 200))
 			{
 				shouldrepath = 0;
 			}
@@ -352,7 +352,7 @@ function choosebetterpositionservice(entity)
 			}
 			if(bpointsingoal == 0)
 			{
-				searchoriginongoalradius = entity.goalpos + vectornormalize(searchorigin - entity.goalpos) * entity.goalradius;
+				searchoriginongoalradius = entity.goalpos + ((vectornormalize(searchorigin - entity.goalpos)) * entity.goalradius);
 				queryresult = positionquery_source_navigation(searchoriginongoalradius, 0, entity.engagemaxdist, 45, 72, entity, 108);
 				positionquery_filter_inclaimedlocation(queryresult, entity);
 				positionquery_filter_distancetogoal(queryresult, entity);
@@ -486,7 +486,7 @@ function choosebetterpositionservice(entity)
 					pointweight = pointweight + -0.5;
 				}
 			}
-			pointweight = pointweight + randomfloatrange(-0.25, 0.25);
+			pointweight = pointweight + (randomfloatrange(-0.25, 0.25));
 			if(goalweight < pointweight)
 			{
 				goalweight = pointweight;
@@ -1079,7 +1079,7 @@ private function clearpreferedpoint(entity)
 */
 private function atpreferedpoint(entity)
 {
-	if(isdefined(entity.current_prefered_point) && (distancesquared(entity.current_prefered_point.origin, entity.origin) < 36 * 36 && abs(self.current_prefered_point.origin[2] - entity.origin[2]) < 45))
+	if(isdefined(entity.current_prefered_point) && (distancesquared(entity.current_prefered_point.origin, entity.origin) < (36 * 36) && (abs(self.current_prefered_point.origin[2] - entity.origin[2])) < 45))
 	{
 		return 1;
 	}
@@ -1255,7 +1255,7 @@ function warlordcanjuke(entity)
 		return 0;
 	}
 	distancesqr = distancesquared(entity.enemy.origin, entity.origin);
-	if(distancesqr < 300 * 300)
+	if(distancesqr < (300 * 300))
 	{
 		jukedistance = 72.5;
 	}
@@ -1349,7 +1349,7 @@ function havetoolowtoattackenemy(entity)
 	{
 		return 0;
 	}
-	if(gettime() - entity.lasttimetohavecrouchingenemy <= 4000)
+	if((gettime() - entity.lasttimetohavecrouchingenemy) <= 4000)
 	{
 		return 1;
 	}
@@ -1401,13 +1401,13 @@ function computeattackerthreat(entity, attackerinfo)
 	normalizeddistancefromattacker = 0;
 	if(isattackerplayer)
 	{
-		if(distancefromattackersqr <= 100 * 100)
+		if(distancefromattackersqr <= (100 * 100))
 		{
 			threat = threat * 1000;
 		}
 		else
 		{
-			normalizeddistancefromattacker = distancefromattackersqr / entity.engagemaxfalloffdist * entity.engagemaxfalloffdist;
+			normalizeddistancefromattacker = distancefromattackersqr / (entity.engagemaxfalloffdist * entity.engagemaxfalloffdist);
 			if(normalizeddistancefromattacker > 1)
 			{
 				normalizeddistancefromattacker = 1;
@@ -1420,7 +1420,7 @@ function computeattackerthreat(entity, attackerinfo)
 	{
 		normalizeddamagefromattacker = 1;
 	}
-	threat = threat * normalizeddistancefromattacker * 0.65 + normalizeddamagefromattacker * 0.35 * 100;
+	threat = threat * ((normalizeddistancefromattacker * 0.65) + (normalizeddamagefromattacker * 0.35) * 100);
 	return threat;
 }
 
@@ -1451,7 +1451,7 @@ function shouldswitchtonewthreat(entity, attacker, threat)
 	{
 		return 0;
 	}
-	if(gettime() - entity.lastdangerousattackertime < 1)
+	if((gettime() - entity.lastdangerousattackertime) < 1)
 	{
 		return 0;
 	}
@@ -1478,7 +1478,7 @@ function updateattackerslist(entity, newattacker, damage)
 	for(i = 0; i < entity.knownattackers.size; i++)
 	{
 		attacker = entity.knownattackers[i].attacker;
-		if(!isdefined(attacker) || !isentity(attacker) || attacker.health <= 0 || gettime() - entity.knownattackers[i].lastattacktime > 5000)
+		if(!isdefined(attacker) || !isentity(attacker) || attacker.health <= 0 || (gettime() - entity.knownattackers[i].lastattacktime) > 5000)
 		{
 			arrayremoveindex(entity.knownattackers, i);
 			i--;
@@ -1555,7 +1555,7 @@ function checkifweshouldmove(entity)
 	var_a8e832eb = 0;
 	if(atpreferedpoint(entity))
 	{
-		if(!isdefined(entity.var_7e5dd3e4) || gettime() - entity.var_7e5dd3e4 < 1)
+		if(!isdefined(entity.var_7e5dd3e4) || (gettime() - entity.var_7e5dd3e4) < 1)
 		{
 			return;
 		}
@@ -1565,7 +1565,7 @@ function checkifweshouldmove(entity)
 	{
 		if(isdefined(entity.pathgoalpos))
 		{
-			if(distance2dsquared(entity.pathgoalpos, entity.origin) < 36 * 36 && abs(entity.pathgoalpos[2] - entity.origin[2]) < 45)
+			if(distance2dsquared(entity.pathgoalpos, entity.origin) < (36 * 36) && (abs(entity.pathgoalpos[2] - entity.origin[2])) < 45)
 			{
 				var_a8e832eb = 1;
 			}
@@ -1664,7 +1664,7 @@ function warlorddamageoverride(einflictor, eattacker, idamage, idflags, smeansof
 	{
 		entity.lastdamagetime = 0;
 	}
-	if(gettime() - entity.lastdamagetime > 1500)
+	if((gettime() - entity.lastdamagetime) > 1500)
 	{
 		entity.accumilateddamage = idamage;
 	}
@@ -1839,31 +1839,31 @@ function printstate(state, color, string)
 			}
 			if(state == 0)
 			{
-				printtoprightln("" + string + gettime(), color, -1);
+				printtoprightln(("" + string) + gettime(), color, -1);
 			}
 			else if(state == 1)
 			{
-				printtoprightln("" + string + gettime(), color, -1);
+				printtoprightln(("" + string) + gettime(), color, -1);
 			}
 			else if(state == 2)
 			{
-				printtoprightln("" + string + gettime(), color, -1);
+				printtoprightln(("" + string) + gettime(), color, -1);
 			}
 			else if(state == 3)
 			{
-				printtoprightln("" + string + gettime(), color, -1);
+				printtoprightln(("" + string) + gettime(), color, -1);
 			}
 			else if(state == 4)
 			{
-				printtoprightln("" + string + gettime(), color, -1);
+				printtoprightln(("" + string) + gettime(), color, -1);
 			}
 			else if(state == 5)
 			{
-				printtoprightln("" + string + gettime(), color, -1);
+				printtoprightln(("" + string) + gettime(), color, -1);
 			}
 			else if(state == 6)
 			{
-				printtoprightln("" + string + gettime(), color, -1);
+				printtoprightln(("" + string) + gettime(), color, -1);
 			}
 		}
 	#/

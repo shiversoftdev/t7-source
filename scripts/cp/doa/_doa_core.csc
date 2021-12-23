@@ -280,7 +280,7 @@ function function_ae0a4fc5()
 			if(isdefined(doa.player) && doa.player != player)
 			{
 				/#
-					debugmsg("" + player.name + "" + doa.player.name + "" + player getentitynumber() + "" + doa.player getentitynumber());
+					debugmsg(((((("" + player.name) + "") + doa.player.name) + "") + player getentitynumber() + "") + doa.player getentitynumber());
 				#/
 				continue;
 			}
@@ -378,7 +378,7 @@ function function_fc05827f(localclientnum)
 function function_2eaf8a3f(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
 	/#
-		debugmsg("" + newval + "" + level.doa.roundnumber);
+		debugmsg((("" + newval) + "") + level.doa.roundnumber);
 	#/
 	if(newval)
 	{
@@ -481,9 +481,9 @@ function function_e63081e8(localclientnum, oldval, newval, bnewent, binitialsnap
 			stopradiantexploder(localclientnum, level.doa.var_6e0195ea);
 			level.doa.var_6e0195ea = undefined;
 		}
-		level.doa.var_6e0195ea = "fx_exploder_" + level.doa.arenas[level.doa.current_arena].name + "_FPS";
+		level.doa.var_6e0195ea = ("fx_exploder_" + level.doa.arenas[level.doa.current_arena].name) + "_FPS";
 		/#
-			debugmsg("" + level.doa.var_6e0195ea + "" + localclientnum);
+			debugmsg((("" + level.doa.var_6e0195ea) + "") + localclientnum);
 		#/
 		playradiantexploder(localclientnum, level.doa.var_6e0195ea);
 	}
@@ -872,7 +872,7 @@ function function_9bf26aa6(localclientnum, oldval, newval, bnewent, binitialsnap
 */
 function onground()
 {
-	a_trace = bullettrace(self.origin, self.origin + vectorscale((0, 0, -1), 5000), 0, self, 1);
+	a_trace = bullettrace(self.origin, self.origin + (vectorscale((0, 0, -1), 5000)), 0, self, 1);
 	v_ground = a_trace["position"];
 	distance_squared = distancesquared(self.origin, v_ground);
 	if(distance_squared > 576)
@@ -917,7 +917,7 @@ function function_10477d98(localclientnum)
 			{
 				continue;
 			}
-			steps = int(dist / stepsize + 0.5);
+			steps = int((dist / stepsize) + 0.5);
 			for(i = 0; i < steps; i++)
 			{
 				playfx(localclientnum, level._effect["fury_boost"], lastposition, anglestoforward(self.angles), (0, 0, 1));
@@ -967,7 +967,7 @@ function function_b868b40f(localclientnum, oldval, newval, bnewent, binitialsnap
 function function_409fa9ce(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
 	/#
-		debugmsg("" + (isdefined(self.name) ? self.name : "") + "" + newval + "" + localclientnum);
+		debugmsg((((("" + (isdefined(self.name) ? self.name : "")) + "") + newval) + "") + localclientnum);
 	#/
 	if(newval)
 	{
@@ -1177,7 +1177,7 @@ function function_b54615b2()
 			continue;
 		}
 		distsq = distancesquared(hazard.origin, self.origin);
-		if(distsq < 72 * 72)
+		if(distsq < (72 * 72))
 		{
 			if(isdefined(hazard.activefx) && hazard.activefx == level._effect["electric_trap"])
 			{
@@ -1359,7 +1359,7 @@ function function_f7c0d598(mapping = "zombietron")
 	self endon(#"disconnect");
 	/#
 		loc_00004FA8:
-		debugmsg("" + (isdefined(self.name) ? self.name : "") + "" + mapping + "" + (self islocalplayer() ? "" : ""));
+		debugmsg((((("" + (isdefined(self.name) ? self.name : "")) + "") + mapping) + "") + (self islocalplayer() ? "" : ""));
 	#/
 	if(self islocalplayer())
 	{
@@ -1404,7 +1404,7 @@ function function_f87ff72d(localclientnum, oldval, newval, bnewent, binitialsnap
 	if(isdefined(level.doa.var_2836c8ee) && level.doa.var_2836c8ee)
 	{
 		forward = anglestoforward(self.angles);
-		var_ec8a4984 = self.origin + forward * 100;
+		var_ec8a4984 = self.origin + (forward * 100);
 	}
 	else
 	{
@@ -1464,7 +1464,7 @@ function function_ef1ad359(origin, count = 3, dir)
 	{
 		if(!isdefined(dir))
 		{
-			dir = level.var_ff8aba3b + (randomfloatrange(level.var_46418da4 * -1 - count, level.var_46418da4 + count), randomfloatrange(level.var_46418da4 * -1 - count, level.var_46418da4 + count), randomintrange(level.var_96344b03 * -1 - count, level.var_96344b03 + count)) * level.var_bd436f37;
+			dir = (level.var_ff8aba3b + (randomfloatrange((level.var_46418da4 * -1) - count, level.var_46418da4 + count), randomfloatrange((level.var_46418da4 * -1) - count, level.var_46418da4 + count), randomintrange((level.var_96344b03 * -1) - count, level.var_96344b03 + count))) * level.var_bd436f37;
 		}
 		model = level.var_e3119165[randomint(level.var_e3119165.size)];
 		launchorigin = origin + (randomintrange(-12, 12), randomintrange(-12, 12), randomintrange(-40, 12));
@@ -1610,7 +1610,7 @@ function zombie_wait_explode(localclientnum)
 		where = self.origin;
 	}
 	start = gettime();
-	while(gettime() - start < 2000)
+	while((gettime() - start) < 2000)
 	{
 		if(isdefined(self))
 		{
@@ -1653,7 +1653,7 @@ function function_36c61ba6(localclientnum, var_4faf5231 = 1, var_ad5de66e = 1)
 		while(currentscale < var_c316c8b8)
 		{
 			currentscale = currentscale + var_ba7af42;
-			var_ba7af42 = var_ba7af42 + var_fa7c415 * self.rate;
+			var_ba7af42 = var_ba7af42 + (var_fa7c415 * self.rate);
 			if(currentscale > var_c316c8b8)
 			{
 				currentscale = var_c316c8b8;
@@ -1668,7 +1668,7 @@ function function_36c61ba6(localclientnum, var_4faf5231 = 1, var_ad5de66e = 1)
 		while(currentscale > var_ad5de66e)
 		{
 			currentscale = currentscale - var_ba7af42;
-			var_ba7af42 = var_ba7af42 - var_fa7c415 * self.rate;
+			var_ba7af42 = var_ba7af42 - (var_fa7c415 * self.rate);
 			if(var_ba7af42 < 0.0125)
 			{
 				var_ba7af42 = 0.0125;
@@ -1684,8 +1684,8 @@ function function_36c61ba6(localclientnum, var_4faf5231 = 1, var_ad5de66e = 1)
 			}
 			wait(0.016);
 		}
-		self rotateto(baseangles, 0.6 - self.rate / 10);
-		wait(0.6 - self.rate / 10);
+		self rotateto(baseangles, 0.6 - (self.rate / 10));
+		wait(0.6 - (self.rate / 10));
 	}
 }
 
@@ -1811,7 +1811,7 @@ function function_ddbc17b4(localclientnum, var_bac17ccf, var_2ca34dda)
 	{
 		return var_2ca34dda;
 	}
-	if(level.doa.arenas[level.doa.current_arena].var_dd94482c & 1 << var_bac17ccf)
+	if(level.doa.arenas[level.doa.current_arena].var_dd94482c & (1 << var_bac17ccf))
 	{
 		return var_bac17ccf;
 	}
@@ -1870,7 +1870,7 @@ function changecamera(localclientnum, oldval, newval, bnewent, binitialsnap, fie
 		}
 	}
 	/#
-		debugmsg("" + self getentitynumber() + "" + self.var_44509e49);
+		debugmsg((("" + self getentitynumber()) + "") + self.var_44509e49);
 	#/
 }
 
@@ -2033,7 +2033,7 @@ function function_12c2fbcb()
 			/#
 				loc_00006CBC:
 				loc_00006CFC:
-				debugmsg("" + (isdefined(self.name) ? self.name : "") + "" + (isdefined(self.doa.player) ? self.doa.player.name : "") + "" + self getentitynumber() + "" + (isdefined(self.doa.player) ? self.doa.player getentitynumber() : -1));
+				debugmsg((((("" + (isdefined(self.name) ? self.name : "")) + "") + (isdefined(self.doa.player) ? self.doa.player.name : "") + "") + self getentitynumber() + "") + (isdefined(self.doa.player) ? self.doa.player getentitynumber() : -1));
 			#/
 			/#
 				assert(self.doa.player == self);
@@ -2043,7 +2043,7 @@ function function_12c2fbcb()
 		self.doa.player = self;
 		/#
 			loc_00006DF4:
-			debugmsg("" + (isdefined(self.name) ? self.name : "") + "" + self.entnum + "" + (isdefined(self.doa.player) ? self.doa.player getentitynumber() : -1));
+			debugmsg((((("" + (isdefined(self.name) ? self.name : "")) + "") + self.entnum) + "") + (isdefined(self.doa.player) ? self.doa.player getentitynumber() : -1));
 		#/
 		self cameraforcedisablescriptcam(0);
 		self camerasetupdatecallback(&namespace_ad544aeb::function_d207ecc1);
@@ -2099,42 +2099,42 @@ function function_c33d3992(localclientnum)
 	if(!clienthassnapshot(localclientnum))
 	{
 		/#
-			debugmsg("" + (isdefined(self.name) ? self.name : "") + "");
+			debugmsg(("" + (isdefined(self.name) ? self.name : "")) + "");
 		#/
 		return 0;
 	}
 	if(!self isplayer())
 	{
 		/#
-			debugmsg("" + (isdefined(self.name) ? self.name : "") + "");
+			debugmsg(("" + (isdefined(self.name) ? self.name : "")) + "");
 		#/
 		return 0;
 	}
 	if(!self hasdobj(localclientnum))
 	{
 		/#
-			debugmsg("" + (isdefined(self.name) ? self.name : "") + "");
+			debugmsg(("" + (isdefined(self.name) ? self.name : "")) + "");
 		#/
 		return 0;
 	}
 	if(self islocalplayer() && !isdefined(self getlocalclientnumber()))
 	{
 		/#
-			debugmsg("" + (isdefined(self.name) ? self.name : "") + "");
+			debugmsg(("" + (isdefined(self.name) ? self.name : "")) + "");
 		#/
 		return 0;
 	}
 	if(isspectating(localclientnum))
 	{
 		/#
-			debugmsg("" + (isdefined(self.name) ? self.name : "") + "");
+			debugmsg(("" + (isdefined(self.name) ? self.name : "")) + "");
 		#/
 		return 0;
 	}
 	if(isdemoplaying())
 	{
 		/#
-			debugmsg("" + (isdefined(self.name) ? self.name : "") + "");
+			debugmsg(("" + (isdefined(self.name) ? self.name : "")) + "");
 		#/
 		return 0;
 	}
@@ -2144,7 +2144,7 @@ function function_c33d3992(localclientnum)
 		if(self != spectated)
 		{
 			/#
-				debugmsg("" + (isdefined(self.name) ? self.name : "") + "");
+				debugmsg(("" + (isdefined(self.name) ? self.name : "")) + "");
 			#/
 			return 0;
 		}
@@ -2153,7 +2153,7 @@ function function_c33d3992(localclientnum)
 	if(isdefined(doa.player) && doa.player != self)
 	{
 		/#
-			debugmsg("" + (isdefined(self.name) ? self.name : "") + "" + doa.player.name + "" + self getentitynumber() + "" + doa.player getentitynumber());
+			debugmsg(((((("" + (isdefined(self.name) ? self.name : "")) + "") + doa.player.name) + "") + self getentitynumber() + "") + doa.player getentitynumber());
 		#/
 		return 0;
 	}
@@ -2211,8 +2211,8 @@ function drawcylinder(pos, rad, height, frames = 60, color = (0, 0, 0))
 		{
 			for(r = 0; r < 20; r++)
 			{
-				theta = r / 20 * 360;
-				theta2 = r + 1 / 20 * 360;
+				theta = (r / 20) * 360;
+				theta2 = ((r + 1) / 20) * 360;
 				line(pos + (cos(theta) * currad, sin(theta) * currad, 0), pos + (cos(theta2) * currad, sin(theta2) * currad, 0), color);
 				line(pos + (cos(theta) * currad, sin(theta) * currad, curheight), pos + (cos(theta2) * currad, sin(theta2) * currad, curheight), color);
 				line(pos + (cos(theta) * currad, sin(theta) * currad, 0), pos + (cos(theta) * currad, sin(theta) * currad, curheight), color);

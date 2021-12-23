@@ -563,11 +563,11 @@ function giveflipweapon(slot, victim, heroweapon)
 	victimbodyindex = getvictimbodyindex(victim, heroweapon);
 	self handlestolenscoreevent(heroweapon);
 	self notify(#"thief_flip_activated");
-	if(self.last_thief_give_flip_time - previousgivefliptime > 99)
+	if((self.last_thief_give_flip_time - previousgivefliptime) > 99)
 	{
 		self playsoundtoplayer("mpl_bm_specialist_coin_place", self);
 	}
-	elapsed_time = gettime() - (isdefined(self.thief_new_gadget_time) ? self.thief_new_gadget_time : 0) * 0.001;
+	elapsed_time = (gettime() - (isdefined(self.thief_new_gadget_time) ? self.thief_new_gadget_time : 0)) * 0.001;
 	if(elapsed_time < 0.75)
 	{
 		wait(0.75 - elapsed_time);
@@ -840,7 +840,7 @@ function gadget_give_random_gadget(slot, weapon, weaponstolenfromentnum, justspa
 	}
 	selectedweapon = weapon;
 	/#
-		if(getdvarint("", -1) != -1)
+		if((getdvarint("", -1)) != -1)
 		{
 			selectedweapon = level.gadgetthiefarray[getdvarint("", -1)];
 		}
@@ -970,7 +970,7 @@ function watchgadgetactivated(slot)
 	self.pers[#"hash_c5c4a13f"] = 1;
 	self waittill(#"heroability_off");
 	power = self gadgetpowerget(slot);
-	power = int(power / getthiefpowergain()) * getthiefpowergain();
+	power = (int(power / getthiefpowergain())) * getthiefpowergain();
 	self gadgetpowerset(slot, power);
 	for(i = 0; i < 3; i++)
 	{
@@ -1034,11 +1034,11 @@ function set_gadget_status(status, time)
 	timestr = "";
 	if(isdefined(time))
 	{
-		timestr = "^3" + ", time: " + time;
+		timestr = (("^3") + ", time: ") + time;
 	}
 	if(getdvarint("scr_cpower_debug_prints") > 0)
 	{
-		self iprintlnbold("Gadget thief: " + status + timestr);
+		self iprintlnbold(("Gadget thief: " + status) + timestr);
 	}
 }
 

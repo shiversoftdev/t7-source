@@ -1427,7 +1427,7 @@ function function_ee422b5c(chunk)
 			animstatebase = self.first_node.zbarrier.dynents[chunk].script_noteworthy;
 			self.first_node.zbarrier.var_48c7593a = 1;
 		}
-		assertmsg("" + chunk + "");
+		assertmsg(("" + chunk) + "");
 	}
 	else
 	{

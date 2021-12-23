@@ -722,7 +722,7 @@ function waterfall_trap_player(fwd, time)
 {
 	wait(1);
 	vel = self getvelocity();
-	self setvelocity(vel + fwd * 60);
+	self setvelocity(vel + (fwd * 60));
 	self playrumbleonentity("slide_rumble");
 }
 
@@ -841,7 +841,7 @@ function init_maze_trap()
 		mazewall.adjacentcells = [];
 		adjacent_cell_nums = [];
 		adjacent_cell_nums[0] = wallnum % 100;
-		adjacent_cell_nums[1] = int(wallnum - wallnum % 100 / 100);
+		adjacent_cell_nums[1] = int((wallnum - (wallnum % 100)) / 100);
 		for(j = 0; j < adjacent_cell_nums.size; j++)
 		{
 			cell_num = adjacent_cell_nums[j];
@@ -1030,7 +1030,7 @@ function maze_mover_active(active)
 	{
 		currentz = self.origin[2];
 		goalz = goalpos[2];
-		ratio = abs(goalz - currentz) / abs(self.movedist);
+		ratio = (abs(goalz - currentz)) / abs(self.movedist);
 		movetime = movetime * ratio;
 	}
 	self notify(#"stop_maze_mover");
@@ -1833,7 +1833,7 @@ function maze_vibrate_active_floors(time)
 {
 	level endon(#"maze_path_end");
 	level endon(#"maze_all_safe");
-	endtime = gettime() + time * 1000;
+	endtime = gettime() + (time * 1000);
 	while(endtime > gettime())
 	{
 		for(i = 0; i < level.mazecells.size; i++)
@@ -1841,7 +1841,7 @@ function maze_vibrate_active_floors(time)
 			cell = level.mazecells[i];
 			if(cell.floor.isactive)
 			{
-				cell thread maze_vibrate_floor(endtime - gettime() / 1000);
+				cell thread maze_vibrate_floor((endtime - gettime()) / 1000);
 				players = getplayers();
 				for(w = 0; w < players.size; w++)
 				{
@@ -2043,7 +2043,7 @@ function pick_random_path_index()
 		}
 		if(isdefined(level.mazepathlaststart) && isdefined(level.mazepathlastend))
 		{
-			if(level.mazepathlaststart == path[0] && level.mazepathlastend == path[path.size - 1])
+			if(level.mazepathlaststart == path[0] && level.mazepathlastend == (path[path.size - 1]))
 			{
 				continue;
 			}
@@ -2069,7 +2069,7 @@ function pick_random_path_index()
 function cell_get_next()
 {
 	index = self.pathindex;
-	if(index < level.mazepath.size - 1)
+	if(index < (level.mazepath.size - 1))
 	{
 		return level.mazepath[index + 1];
 	}

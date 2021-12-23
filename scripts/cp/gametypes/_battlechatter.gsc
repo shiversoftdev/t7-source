@@ -713,15 +713,15 @@ function bc_death()
 		{
 			if(meansofdeath == "MOD_ELECTROCUTED")
 			{
-				soundalias = self.voiceprefix + self.bcvoicenumber + "_" + "exert_electrocution";
+				soundalias = ((self.voiceprefix + self.bcvoicenumber) + "_") + "exert_electrocution";
 			}
 			else if(meansofdeath == "MOD_BURNED")
 			{
-				soundalias = self.voiceprefix + self.bcvoicenumber + "_" + "exert_firefly_burning";
+				soundalias = ((self.voiceprefix + self.bcvoicenumber) + "_") + "exert_firefly_burning";
 			}
 			else
 			{
-				soundalias = self.voiceprefix + self.bcvoicenumber + "_" + "exert_death";
+				soundalias = ((self.voiceprefix + self.bcvoicenumber) + "_") + "exert_death";
 			}
 			self thread do_sound(soundalias, 1);
 		}
@@ -818,7 +818,7 @@ function bc_robotbehindvox()
 	{
 		wait(1);
 		t = gettime();
-		if(t > level._bc_robotbehindvoxtime + 1000)
+		if(t > (level._bc_robotbehindvoxtime + 1000))
 		{
 			level._bc_robotbehindvoxtime = t;
 			enemies = getaiteamarray("axis", "team3");
@@ -934,11 +934,11 @@ function bc_makeline(ai, line, causeresponse, category, alwaysplay)
 	}
 	if(isdefined(ai.archetype) && ai.archetype == "robot")
 	{
-		soundalias = ai.voiceprefix + ai.bcvoicenumber + "_" + "chatter";
+		soundalias = ((ai.voiceprefix + ai.bcvoicenumber) + "_") + "chatter";
 	}
 	else
 	{
-		soundalias = ai.voiceprefix + ai.bcvoicenumber + "_" + line;
+		soundalias = ((ai.voiceprefix + ai.bcvoicenumber) + "_") + line;
 	}
 	ai thread do_sound(soundalias, alwaysplay, response, category);
 }

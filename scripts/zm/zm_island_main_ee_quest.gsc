@@ -206,7 +206,7 @@ function function_d9de7eb6(var_a3612ddd)
 	e_clip setcandamage(1);
 	e_clip.health = 10000;
 	var_75f5a225 = getent("clip_player_" + var_a3612ddd, "targetname");
-	self thread scene::play("p7_fxanim_zm_island_takeo_arm_gate" + var_a3612ddd + "_bundle", self);
+	self thread scene::play(("p7_fxanim_zm_island_takeo_arm_gate" + var_a3612ddd) + "_bundle", self);
 	var_2b128827 = 1;
 	var_b538c87 = 0;
 	while(isdefined(var_2b128827) && var_2b128827)
@@ -215,12 +215,12 @@ function function_d9de7eb6(var_a3612ddd)
 		if(w_weapon === level.var_5e75629a)
 		{
 			self playrumbleonentity("tank_damage_heavy_mp");
-			self scene::play("p7_fxanim_zm_island_takeo_arm_gate" + var_a3612ddd + "_close_bundle", self);
-			self thread scene::play("p7_fxanim_zm_island_takeo_arm_gate" + var_a3612ddd + "_bundle", self);
+			self scene::play(("p7_fxanim_zm_island_takeo_arm_gate" + var_a3612ddd) + "_close_bundle", self);
+			self thread scene::play(("p7_fxanim_zm_island_takeo_arm_gate" + var_a3612ddd) + "_bundle", self);
 			if(var_a3612ddd == 1 && !var_b538c87)
 			{
 				var_b538c87 = 1;
-				str_vo = "vox_plr_" + e_attacker.characterindex + "_mq_ee_3_1_0";
+				str_vo = ("vox_plr_" + e_attacker.characterindex) + "_mq_ee_3_1_0";
 				e_attacker thread zm_island_vo::function_7b697614(str_vo, 0, 1);
 			}
 		}
@@ -231,7 +231,7 @@ function function_d9de7eb6(var_a3612ddd)
 			self playsound("zmb_takeo_vox_roar_amrgate");
 			self hidepart("eye1_side_jnt");
 			wait(1.5);
-			self scene::play("p7_fxanim_zm_island_takeo_arm_gate" + var_a3612ddd + "_retract_bundle", self);
+			self scene::play(("p7_fxanim_zm_island_takeo_arm_gate" + var_a3612ddd) + "_retract_bundle", self);
 			e_clip delete();
 			var_75f5a225 delete();
 			level.var_6f17d9e9--;
@@ -242,9 +242,9 @@ function function_d9de7eb6(var_a3612ddd)
 				level.var_6f17d9e9 = undefined;
 			}
 			wait(5);
-			struct::delete_script_bundle("scene", "p7_fxanim_zm_island_takeo_arm_gate" + var_a3612ddd + "_bundle");
-			struct::delete_script_bundle("scene", "p7_fxanim_zm_island_takeo_arm_gate" + var_a3612ddd + "_close_bundle");
-			struct::delete_script_bundle("scene", "p7_fxanim_zm_island_takeo_arm_gate" + var_a3612ddd + "_retract_bundle");
+			struct::delete_script_bundle("scene", ("p7_fxanim_zm_island_takeo_arm_gate" + var_a3612ddd) + "_bundle");
+			struct::delete_script_bundle("scene", ("p7_fxanim_zm_island_takeo_arm_gate" + var_a3612ddd) + "_close_bundle");
+			struct::delete_script_bundle("scene", ("p7_fxanim_zm_island_takeo_arm_gate" + var_a3612ddd) + "_retract_bundle");
 			var_2b128827 = 0;
 		}
 	}
@@ -303,7 +303,7 @@ function function_75e5527f()
 		e_talker = array::random(a_talkers);
 		if(isdefined(e_talker))
 		{
-			str_vo = "vox_plr_" + e_talker.characterindex + "_mq_ee_3_0_0";
+			str_vo = ("vox_plr_" + e_talker.characterindex) + "_mq_ee_3_0_0";
 			e_talker thread zm_island_vo::function_7b697614(str_vo, 0, 1);
 			level notify(#"hash_5790f552");
 		}
@@ -339,8 +339,8 @@ function function_19cfd507()
 */
 function function_d6bb2a6c()
 {
-	var_a2365998 = struct::get("elevator_part_gear1");
-	mdl_part = util::spawn_model("p7_zm_bgb_gear_01", var_a2365998.origin, var_a2365998.angles);
+	s_part = struct::get("elevator_part_gear1");
+	mdl_part = util::spawn_model("p7_zm_bgb_gear_01", s_part.origin, s_part.angles);
 	mdl_part.trigger = zm_island_util::spawn_trigger_radius(mdl_part.origin, 50, 1, &function_9bd3096f);
 	mdl_part thread function_d81e5824("elevator_part_gear1_found");
 }
@@ -510,7 +510,7 @@ function function_af46160f()
 	Parameters: 4
 	Flags: Linked
 */
-function function_4d23baa6(v_origin, v_angles, var_b6c00097 = 5, var_5588387b)
+function function_4d23baa6(v_origin, v_angles, n_cooldown = 5, var_5588387b)
 {
 	self endon(#"death");
 	self setcandamage(1);
@@ -529,7 +529,7 @@ function function_4d23baa6(v_origin, v_angles, var_b6c00097 = 5, var_5588387b)
 			{
 				var_752908f7 thread [[var_5588387b]]();
 			}
-			wait(var_b6c00097);
+			wait(n_cooldown);
 			var_752908f7 notify(#"hash_48ec464");
 			var_752908f7 clientfield::set("zipline_lightning_fx", 0);
 			util::wait_network_frame();
@@ -629,8 +629,8 @@ function function_1bbe32e1()
 function function_53246bea()
 {
 	level flag::wait_till("trilogy_released");
-	var_a2365998 = struct::get("elevator_part_gear2");
-	mdl_part = util::spawn_model("p7_zm_bgb_gear_01", var_a2365998.origin, var_a2365998.angles);
+	s_part = struct::get("elevator_part_gear2");
+	mdl_part = util::spawn_model("p7_zm_bgb_gear_01", s_part.origin, s_part.angles);
 	mdl_part.trigger = zm_island_util::spawn_trigger_radius(mdl_part.origin, 50, 1, &function_9bd3096f);
 	mdl_part thread function_d81e5824("elevator_part_gear2_found");
 }
@@ -1198,20 +1198,20 @@ function elevator_gears()
 		{
 			if(level flag::get("elevator_at_bottom"))
 			{
-				var_b126107b = -90;
+				n_rot = -90;
 			}
 			else
 			{
-				var_b126107b = 90;
+				n_rot = 90;
 			}
-			self.var_df281e84 rotateroll(var_b126107b, 1);
-			self.var_e882d83c rotateroll(var_b126107b, 1);
-			self.var_aab7a6d1 rotateroll(var_b126107b * -1, 1);
+			self.var_df281e84 rotateroll(n_rot, 1);
+			self.var_e882d83c rotateroll(n_rot, 1);
+			self.var_aab7a6d1 rotateroll(n_rot * -1, 1);
 			wait(0.9);
 		}
-		self.var_df281e84 rotateroll(var_b126107b * 0.01, 0.1);
-		self.var_e882d83c rotateroll(var_b126107b * 0.01, 0.1);
-		self.var_aab7a6d1 rotateroll(var_b126107b * -1 * 0.01, 0.1);
+		self.var_df281e84 rotateroll(n_rot * 0.01, 0.1);
+		self.var_e882d83c rotateroll(n_rot * 0.01, 0.1);
+		self.var_aab7a6d1 rotateroll((n_rot * -1) * 0.01, 0.1);
 	}
 }
 
@@ -1598,7 +1598,7 @@ function function_7b8e6e93()
 		wait(0.05);
 		foreach(var_aeab9042, player in level.players)
 		{
-			if(player.in_elevator === 1 && (player.origin[2] > self.origin[2] + 60 || player.origin[2] < self.origin[2] - 20))
+			if(player.in_elevator === 1 && (player.origin[2] > (self.origin[2] + 60) || player.origin[2] < (self.origin[2] - 20)))
 			{
 				player setorigin(self.origin + vectorscale((0, 0, 1), 20));
 			}

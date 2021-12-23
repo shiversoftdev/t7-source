@@ -300,12 +300,12 @@ function move_gate(pos, lower, time = 1)
 		self notsolid();
 		if(self.classname == "script_brushmodel")
 		{
-			self moveto(pos.origin + vectorscale((0, 0, -1), 132), time);
+			self moveto(pos.origin + (vectorscale((0, 0, -1), 132)), time);
 		}
 		else
 		{
 			self playsound("zmb_lander_gate");
-			self moveto(pos.origin + vectorscale((0, 0, -1), 44), time);
+			self moveto(pos.origin + (vectorscale((0, 0, -1), 44)), time);
 		}
 		self waittill(#"movedone");
 		if(self.classname == "script_brushmodel")
@@ -850,8 +850,8 @@ function function_5f5d494f()
 */
 function lander_hover_idle()
 {
-	num = self.angles[0] + randomintrange(-3, 3);
-	num1 = self.angles[1] + randomintrange(-3, 3);
+	num = self.angles[0] + (randomintrange(-3, 3));
+	num1 = self.angles[1] + (randomintrange(-3, 3));
 	self rotateto((num, num1, randomfloatrange(0, 5)), 0.5);
 	self moveto((self.origin[0], self.origin[1], self.origin[2] + 20), 0.5, 0.1);
 	wait(0.5);
@@ -1316,7 +1316,7 @@ function takeoff_knockdown(min_range, max_range)
 	for(i = 0; i < zombies.size; i++)
 	{
 		dist = distancesquared(zombies[i].origin, self.origin);
-		if(dist >= min_range * min_range && dist <= max_range * max_range)
+		if(dist >= (min_range * min_range) && dist <= (max_range * max_range))
 		{
 			zombies[i] thread zombie_knockdown();
 		}
@@ -1361,7 +1361,7 @@ function lander_clean_up_corpses(spot, range)
 	{
 		for(i = 0; i < corpses.size; i++)
 		{
-			if(distancesquared(spot, corpses[i].origin) <= range * range)
+			if(distancesquared(spot, corpses[i].origin) <= (range * range))
 			{
 				corpses[i] thread lander_remove_corpses();
 			}
@@ -1478,7 +1478,7 @@ function lander_takeoff_wobble()
 function lander_landing_wobble(movetime)
 {
 	time = movetime - 1;
-	timer = gettime() + time * 1000;
+	timer = gettime() + (time * 1000);
 	while(gettime() < timer)
 	{
 		self rotateto((randomfloatrange(-5, 5), 0, randomfloatrange(-5, 5)), 0.75);

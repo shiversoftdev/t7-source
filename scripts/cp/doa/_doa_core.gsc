@@ -109,10 +109,10 @@ private function _load()
 			}
 		}
 		/#
-			doa_utility::debugmsg("" + getnumconnectedplayers() + "" + getnumexpectedplayers() + "" + var_a349db66);
+			doa_utility::debugmsg(((("" + getnumconnectedplayers()) + "") + getnumexpectedplayers() + "") + var_a349db66);
 		#/
 	}
-	while(var_f862b7b1 < var_91f98264 && player_count_actual + var_a349db66 < var_91f98264);
+	while(var_f862b7b1 < var_91f98264 && (player_count_actual + var_a349db66) < var_91f98264);
 	setinitialplayersconnected();
 	level flag::set("all_players_connected");
 	setdvar("all_players_are_connected", "1");
@@ -398,10 +398,10 @@ function function_437a340d(var_73419762)
 		self thread doa_utility::notifymeinnsec("menuresponse", 2, "menuresponse", "notarealmenu", "notarealresponse");
 		self waittill(#"menuresponse", menu, response);
 		/#
-			doa_utility::debugmsg("" + menu + "" + response);
+			doa_utility::debugmsg((("" + menu) + "") + response);
 		#/
 		var_682b9faa = gettime();
-		if(var_682b9faa - timestart > 3 * 60000)
+		if((var_682b9faa - timestart) > (3 * 60000))
 		{
 			break;
 		}
@@ -459,7 +459,7 @@ function on_player_spawned()
 		}
 		else if(isdefined(level.doa.var_a9ba4ffb[self.name]))
 		{
-			if(gettime() - level.doa.var_a9ba4ffb[self.name] <= 5 * 60000)
+			if((gettime() - level.doa.var_a9ba4ffb[self.name]) <= (5 * 60000))
 			{
 				var_9774756a = 1;
 			}
@@ -1111,7 +1111,7 @@ function function_780f83fd(round)
 		return;
 	}
 	/#
-		doa_utility::debugmsg("" + (isdefined(self.name) ? self.name : "") + "" + round + "" + self namespace_64c6b720::function_93ccc5da());
+		doa_utility::debugmsg((((("" + (isdefined(self.name) ? self.name : "")) + "") + round) + "") + self namespace_64c6b720::function_93ccc5da());
 	#/
 	self function_9ac615ee(0, round);
 	wait(4);

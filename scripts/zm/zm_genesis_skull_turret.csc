@@ -252,7 +252,7 @@ function function_b578a840(localclientnum, oldval, newval, bnewent, binitialsnap
 {
 	v_position = self gettagorigin("tag_aim");
 	v_forward = anglestoforward(self gettagangles("tag_aim"));
-	a_trace = beamtrace(v_position, v_position + v_forward * 20000, 1, self);
+	a_trace = beamtrace(v_position, v_position + (v_forward * 20000), 1, self);
 	self.var_f929ecf4.origin = a_trace["position"];
 	self.var_f929ecf4.angles = vectortoangles(v_forward);
 	function_cd048702(v_position, self.var_f929ecf4.origin, (1, 1, 0));
@@ -280,7 +280,7 @@ function function_b578a840(localclientnum, oldval, newval, bnewent, binitialsnap
 		}
 		self.var_f929ecf4.angles = vectortoangles(v_forward);
 		v_position = self.var_f929ecf4.origin;
-		a_trace = beamtrace(v_position, v_position + v_forward * 20000, 1, self);
+		a_trace = beamtrace(v_position, v_position + (v_forward * 20000), 1, self);
 		var_263c10ef = "dlc4_skull_turret_beam_reflect";
 		if(isdefined(e_last_target) && (e_last_target.archetype === "zombie" || e_last_target.archetype === "parasite"))
 		{
@@ -308,7 +308,7 @@ function function_b578a840(localclientnum, oldval, newval, bnewent, binitialsnap
 function function_f8f61ccb(d, n)
 {
 	perp = 2 * vectordot(d, n);
-	var_e47d2859 = d - perp * n;
+	var_e47d2859 = d - (perp * n);
 	return var_e47d2859;
 }
 

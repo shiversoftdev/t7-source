@@ -175,7 +175,7 @@ function function_c3e7ff05(eplayer)
 	{
 		eplayer give_achievement("CP_CAMPAIGN_COMPLETE");
 	}
-	if(var_44a14bc7[2] + var_44a14bc7[3] + var_44a14bc7[4] == var_98680dde)
+	if(((var_44a14bc7[2] + var_44a14bc7[3]) + var_44a14bc7[4]) == var_98680dde)
 	{
 		eplayer give_achievement("CP_HARD_COMPLETE");
 	}
@@ -310,7 +310,7 @@ private function function_1121f26a(var_c856ad1d, evictim)
 		var_46907f23 = var_c856ad1d getdstat("Achievements", "CP_DISTANCE_KILL");
 		var_46907f23++;
 		/#
-			printtoprightln("" + var_1efe785f + "" + var_46907f23, (1, 1, 1));
+			printtoprightln((("" + var_1efe785f) + "") + var_46907f23, (1, 1, 1));
 		#/
 		if(var_46907f23 >= 5)
 		{
@@ -428,15 +428,15 @@ private function function_2b2fb40b(player, var_aae1ed0d, weapon)
 	player.var_75cf9e2e.var_940a9f6e++;
 	currentindex = player.var_75cf9e2e.killindex;
 	player.var_75cf9e2e.kills[currentindex] = gettime();
-	player.var_75cf9e2e.killindex = currentindex + 1 % 10;
+	player.var_75cf9e2e.killindex = (currentindex + 1) % 10;
 	if(player.var_75cf9e2e.var_940a9f6e < 10)
 	{
 		return;
 	}
-	startindex = currentindex + 1 % 10;
+	startindex = (currentindex + 1) % 10;
 	starttime = player.var_75cf9e2e.kills[startindex];
 	endtime = player.var_75cf9e2e.kills[currentindex];
-	if(player.var_75cf9e2e.var_940a9f6e >= 10 && endtime - starttime <= 3000)
+	if(player.var_75cf9e2e.var_940a9f6e >= 10 && (endtime - starttime) <= 3000)
 	{
 		player give_achievement("CP_TIMED_KILL");
 	}

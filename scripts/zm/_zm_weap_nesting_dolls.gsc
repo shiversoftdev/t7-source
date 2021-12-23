@@ -46,7 +46,7 @@ function __init__()
 	level.nesting_dolls_player_aim_dot = cos(22.5);
 	level.nesting_dolls_damage_radius = 180;
 	gravity = getdvarfloat("bg_gravity");
-	level.nesting_dolls_launch_peak_time = level.nesting_dolls_launch_speed * sin(level.nesting_dolls_launch_angle) / abs(gravity) * 0.5;
+	level.nesting_dolls_launch_peak_time = (level.nesting_dolls_launch_speed * sin(level.nesting_dolls_launch_angle)) / abs(gravity) * 0.5;
 	level.nesting_dolls_max_ids = 10;
 	/#
 		level.zombiemode_devgui_nesting_dolls_give = &player_give_nesting_dolls;
@@ -302,7 +302,7 @@ function get_random_launch_velocity(doll_origin, angles)
 	for(i = 0; i < 4; i++)
 	{
 		dir = anglestoforward(angles);
-		if(bullettracepassed(doll_origin, doll_origin + dir * trace_dist, 0, undefined))
+		if(bullettracepassed(doll_origin, doll_origin + (dir * trace_dist), 0, undefined))
 		{
 			grenade_vel = dir * level.nesting_dolls_launch_speed;
 			return grenade_vel;
@@ -386,7 +386,7 @@ function spawn_doll_model(id, index, parent)
 	data_index = parent.nesting_dolls_randomized_indices[id][index];
 	name = level.nesting_dolls_data[data_index].name;
 	model_index = index + 1;
-	model_name = "wpn_t7_zmb_hd_nesting_dolls_" + name + "_doll" + model_index + "_world";
+	model_name = ((("wpn_t7_zmb_hd_nesting_dolls_" + name) + "_doll") + model_index) + "_world";
 	self.doll_model setmodel(model_name);
 	self.doll_model useanimtree($zombie_cymbal_monkey);
 	self.doll_model linkto(self);

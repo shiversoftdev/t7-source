@@ -251,7 +251,7 @@ function spawn_boss(str_enemy, v_pos)
 		if(isdefined(var_33504256))
 		{
 			var_33504256.b_ignore_cleanup = 1;
-			n_health = level.round_number * 100 + 100;
+			n_health = (level.round_number * 100) + 100;
 			var_33504256 margwaserverutils::margwasetheadhealth(n_health);
 		}
 	}

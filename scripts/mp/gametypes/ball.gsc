@@ -253,7 +253,7 @@ function onstartgametype()
 	level.spawn_start = [];
 	foreach(var_9ff30f90, team in level.teams)
 	{
-		level.spawn_start[team] = spawnlogic::get_spawnpoint_array("mp_ctf_spawn_" + team + "_start");
+		level.spawn_start[team] = spawnlogic::get_spawnpoint_array(("mp_ctf_spawn_" + team) + "_start");
 	}
 	level thread setup_objectives();
 }
@@ -780,7 +780,7 @@ function shouldplayovertimeround()
 	}
 	if(!level.scoreroundwinbased)
 	{
-		if(game["teamScores"]["allies"] == game["teamScores"]["axis"] && (util::hitroundlimit() || game["teamScores"]["allies"] == level.scorelimit - 1))
+		if(game["teamScores"]["allies"] == game["teamScores"]["axis"] && (util::hitroundlimit() || game["teamScores"]["allies"] == (level.scorelimit - 1)))
 		{
 			return 1;
 		}
@@ -789,7 +789,7 @@ function shouldplayovertimeround()
 	{
 		alliesroundswon = util::getroundswon("allies");
 		axisroundswon = util::getroundswon("axis");
-		if(level.roundwinlimit > 0 && axisroundswon == level.roundwinlimit - 1 && alliesroundswon == level.roundwinlimit - 1)
+		if(level.roundwinlimit > 0 && axisroundswon == (level.roundwinlimit - 1) && alliesroundswon == (level.roundwinlimit - 1))
 		{
 			return 1;
 		}
@@ -850,7 +850,7 @@ function ball_getteamkillscore(einflictor, attacker, smeansofdeath, weapon)
 */
 function get_real_ball_location(startpos, startangles, index, count, defaultdistance, rotation)
 {
-	currentangle = startangles[1] + 360 / count * 0.5 + 360 / count * index;
+	currentangle = startangles[1] + ((360 / count) * 0.5) + ((360 / count) * index);
 	coscurrent = cos(currentangle + rotation);
 	sincurrent = sin(currentangle + rotation);
 	new_position = startpos + (defaultdistance * coscurrent, defaultdistance * sincurrent, 0);
@@ -1110,7 +1110,7 @@ function can_use_ball(player)
 	ball = self.visuals[0];
 	thresh = 15;
 	dist2 = distance2dsquared(ball.origin, player.origin);
-	if(dist2 < thresh * thresh)
+	if(dist2 < (thresh * thresh))
 	{
 		return 1;
 	}
@@ -1340,7 +1340,7 @@ function ball_set_dropped(skip_physics = 0)
 	{
 		angles = (0, dropangles[1], 0);
 		forward = anglestoforward(angles);
-		velocity = forward * 200 + vectorscale((0, 0, 1), 80);
+		velocity = (forward * 200) + vectorscale((0, 0, 1), 80);
 		ball_physics_launch(velocity);
 	}
 	return 1;
@@ -1850,13 +1850,13 @@ function ball_pass_projectile(passer, target, last_target_origin)
 	if(trace["fraction"] < 1)
 	{
 		t = 0.7 * trace["fraction"];
-		self gameobjects::set_position(self.visuals[0].origin + delta * t, self.visuals[0].angles);
+		self gameobjects::set_position(self.visuals[0].origin + (delta * t), self.visuals[0].angles);
 	}
 	else
 	{
 		self gameobjects::set_position(trace["position"], self.visuals[0].angles);
 	}
-	pass_dir = vectornormalize(last_target_origin + offset - self.visuals[0].origin);
+	pass_dir = vectornormalize((last_target_origin + offset) - self.visuals[0].origin);
 	pass_vel = pass_dir * 850;
 	self.lastprojectile = self.projectile;
 	self.projectile = passer magicmissile(level.passingballweapon, self.visuals[0].origin, pass_vel);
@@ -1886,7 +1886,7 @@ function ball_on_projectile_death()
 	ball = self.visuals[0];
 	if(!isdefined(self.carrier) && !self.in_goal)
 	{
-		if(ball.origin != ball.baseorigin + vectorscale((0, 0, 1), 4000))
+		if(ball.origin != (ball.baseorigin + vectorscale((0, 0, 1), 4000)))
 		{
 			self ball_physics_launch(vectorscale((0, 0, 1), 10));
 		}
@@ -2074,7 +2074,7 @@ function ball_physics_launch(force, droppingplayer)
 		owner = droppingplayer;
 		origin = droppingplayer getweaponmuzzlepoint();
 		right = anglestoright(force);
-		origin = origin + (right[0], right[1], 0) * 7;
+		origin = origin + ((right[0], right[1], 0) * 7);
 		startpos = origin;
 		delta = vectornormalize(force) * 80;
 		size = 5;
@@ -2082,7 +2082,7 @@ function ball_physics_launch(force, droppingplayer)
 		if(trace["fraction"] < 1)
 		{
 			t = 0.7 * trace["fraction"];
-			self gameobjects::set_position(startpos + delta * t, visuals.angles);
+			self gameobjects::set_position(startpos + (delta * t), visuals.angles);
 		}
 		else
 		{
@@ -2156,7 +2156,7 @@ function ball_physics_touch_cant_pickup_player(droppingplayer)
 		{
 			continue;
 		}
-		if(ball.origin == ball.baseorigin + vectorscale((0, 0, 1), 4000))
+		if(ball.origin == (ball.baseorigin + vectorscale((0, 0, 1), 4000)))
 		{
 			continue;
 		}
@@ -2238,7 +2238,7 @@ function line_intersect_sphere(line_start, line_end, sphere_center, sphere_radiu
 	b = line_start - sphere_center;
 	b = b * b;
 	c = sphere_radius * sphere_radius;
-	return a - b + c >= 0;
+	return ((a - b) + c) >= 0;
 }
 
 /*
@@ -2335,7 +2335,7 @@ function should_record_final_score_cam(team, score_to_add)
 {
 	team_score = [[level._getteamscore]](team);
 	other_team_score = [[level._getteamscore]](util::getotherteam(team));
-	return team_score + score_to_add >= other_team_score;
+	return (team_score + score_to_add) >= other_team_score;
 }
 
 /*
@@ -2353,7 +2353,7 @@ function ball_check_assist(player, wasdunk)
 	{
 		return;
 	}
-	if(player.passtime + 3000 < gettime())
+	if((player.passtime + 3000) < gettime())
 	{
 		return;
 	}
@@ -2684,7 +2684,7 @@ function balladdstart(origin)
 function ballfindground(z_offset)
 {
 	tracestart = self.origin + vectorscale((0, 0, 1), 32);
-	traceend = self.origin + vectorscale((0, 0, -1), 1000);
+	traceend = self.origin + (vectorscale((0, 0, -1), 1000));
 	trace = bullettrace(tracestart, traceend, 0, undefined);
 	self.ground_origin = trace["position"];
 	return trace["fraction"] != 0 && trace["fraction"] != 1;

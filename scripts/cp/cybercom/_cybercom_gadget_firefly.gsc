@@ -205,7 +205,7 @@ function ai_activatefireflyswarm(target, var_9bc2efcb = 1, upgraded = 1)
 	{
 		type = self cybercom::function_5e3d3aa();
 		self orientmode("face default");
-		self animscripted("ai_cybercom_anim", self.origin, self.angles, "ai_base_rifle_" + type + "_exposed_cybercom_activate");
+		self animscripted("ai_cybercom_anim", self.origin, self.angles, ("ai_base_rifle_" + type) + "_exposed_cybercom_activate");
 		self playsound("gdt_firefly_activate_npc");
 		self waittill_match(#"ai_cybercom_anim");
 	}
@@ -325,7 +325,7 @@ function spawn_firefly_swarm(upgraded, targetent, swarms = getdvarint("scr_firef
 			origin = self gettagorigin("tag_eye");
 			angles = self gettagangles("tag_eye");
 		}
-		frontgoal = origin + anglestoforward(angles) * 100;
+		frontgoal = origin + (anglestoforward(angles) * 100);
 		trace = bullettrace(origin, frontgoal, 0, undefined);
 		if(trace["fraction"] == 1)
 		{
@@ -479,7 +479,7 @@ function path_update_interrupt()
 	{
 		if(isdefined(self.current_pathto_pos))
 		{
-			if(distance2dsquared(self.current_pathto_pos, self.goalpos) > self.goalradius * self.goalradius)
+			if(distance2dsquared(self.current_pathto_pos, self.goalpos) > (self.goalradius * self.goalradius))
 			{
 				wait(0.2);
 				self notify(#"near_goal");
@@ -505,7 +505,7 @@ function getnextmoveposition_tactical()
 		goalpos = self getclosestpointonnavvolume(self.goalpos, 100);
 		if(isdefined(goalpos))
 		{
-			if(distancesquared(goalpos, self.goalpos) > 50 * 50)
+			if(distancesquared(goalpos, self.goalpos) > (50 * 50))
 			{
 				self.isonnav = 0;
 			}
@@ -514,7 +514,7 @@ function getnextmoveposition_tactical()
 		return self.goalpos;
 	}
 	querymultiplier = 1;
-	queryresult = positionquery_source_navigation(self.origin, 80, 500 * querymultiplier, 500, 3 * self.radius * querymultiplier, self, self.radius * querymultiplier);
+	queryresult = positionquery_source_navigation(self.origin, 80, 500 * querymultiplier, 500, (3 * self.radius) * querymultiplier, self, self.radius * querymultiplier);
 	positionquery_filter_distancetogoal(queryresult, self);
 	vehicle_ai::positionquery_filter_outofgoalanchor(queryresult);
 	self.isonnav = queryresult.centeronnav;
@@ -524,7 +524,7 @@ function getnextmoveposition_tactical()
 	{
 		randomscore = randomfloatrange(0, 100);
 		disttooriginscore = point.disttoorigin2d * 0.2;
-		point.score = point.score + randomscore + disttooriginscore;
+		point.score = point.score + (randomscore + disttooriginscore);
 		/#
 			if(!isdefined(point._scoredebug))
 			{
@@ -661,7 +661,7 @@ function swarm_init(params)
 		if(closetargets.size == 0)
 		{
 			angles = (self.angles[0], self.angles[1], 0);
-			frontgoal = self.origin + anglestoforward(angles) * 240;
+			frontgoal = self.origin + (anglestoforward(angles) * 240);
 			a_trace = bullettrace(self.origin, frontgoal, 0, undefined, 1);
 			hitp = a_trace["position"];
 			queryresult = positionquery_source_navigation(hitp, 0, 72, 72, 20, self);
@@ -762,15 +762,15 @@ function swarm_attackhumantarget(target)
 	if(self.firebugcount > 0)
 	{
 		self.firebugcount--;
-		reactionanims["intro"] = "ai_" + base + "_" + type + "_exposed_swarm_upg_react_intro" + variant;
+		reactionanims["intro"] = (((("ai_" + base) + "_") + type) + "_exposed_swarm_upg_react_intro") + variant;
 		target thread _firebombtarget(self, reactionanims, getweapon("gadget_firefly_swarm_upgraded"));
 		target notify(#"bhtn_action_notify", "fireflyAttack");
 		target clientfield::set("firefly_state", 9);
 	}
 	else if(target.archetype === "human")
 	{
-		reactionanims["intro"] = "ai_" + base + "_" + type + "_exposed_swarm_react_intro" + variant;
-		reactionanims["outro"] = "ai_" + base + "_" + type + "_exposed_swarm_react_outro" + variant;
+		reactionanims["intro"] = (((("ai_" + base) + "_") + type) + "_exposed_swarm_react_intro") + variant;
+		reactionanims["outro"] = (((("ai_" + base) + "_") + type) + "_exposed_swarm_react_outro") + variant;
 	}
 	else
 	{
@@ -1042,14 +1042,14 @@ private function _firebombtarget(swarm, reactionanims, weapon)
 		swarm notify(#"attack_stopped", "end");
 		if(isdefined(self.voiceprefix) && isdefined(self.bcvoicenumber))
 		{
-			self thread battlechatter::do_sound(self.voiceprefix + self.bcvoicenumber + "_exert_firefly_burning", 1);
+			self thread battlechatter::do_sound((self.voiceprefix + self.bcvoicenumber) + "_exert_firefly_burning", 1);
 		}
 		swarm.owner notify(#"hash_304642e3");
 		self dodamage(self.health, self.origin, swarm.owner, swarm, "none", "MOD_BURNED", 0, weapon, -1, 1);
 	}
 	else if(isdefined(self.voiceprefix) && isdefined(self.bcvoicenumber))
 	{
-		self thread battlechatter::do_sound(self.voiceprefix + self.bcvoicenumber + "_exert_firefly_burning", 1);
+		self thread battlechatter::do_sound((self.voiceprefix + self.bcvoicenumber) + "_exert_firefly_burning", 1);
 	}
 	self dodamage(self.health, self.origin, undefined, undefined, "none", "MOD_BURNED", 0, weapon, -1, 1);
 }
@@ -1175,7 +1175,7 @@ private function _reacttoswarm(swarm, reactionanims, weapon)
 		self dodamage(5, self.origin, swarm.owner, swarm, "none", "MOD_UNKNOWN", 0, weapon, -1, 1);
 		wait(0.05);
 		self waittill_match(#"bhtn_action_terminate");
-		attack = isdefined(swarm) && (!(isdefined(swarm.dying_out) && swarm.dying_out)) && distancesquared(self.origin + vectorscale((0, 0, 1), 48), swarm.origin) < getdvarint("scr_firefly_swarm_attack_radius", 110) * getdvarint("scr_firefly_swarm_attack_radius", 110) && isalive(self);
+		attack = isdefined(swarm) && (!(isdefined(swarm.dying_out) && swarm.dying_out)) && (distancesquared(self.origin + vectorscale((0, 0, 1), 48), swarm.origin)) < (getdvarint("scr_firefly_swarm_attack_radius", 110) * getdvarint("scr_firefly_swarm_attack_radius", 110)) && isalive(self);
 	}
 	self notify(#"attack_stopped", "specialpain", "end");
 	if(isalive(self) && !self isragdoll())
@@ -1306,7 +1306,7 @@ function swarm_main_think(params)
 	{
 		self.state_machine statemachine::set_state("hunt");
 	}
-	else if(distancesquared(self.targetent.origin + vectorscale((0, 0, 1), 48), self.origin) > getdvarint("scr_firefly_swarm_attack_radius", 110) * getdvarint("scr_firefly_swarm_attack_radius", 110))
+	else if((distancesquared(self.targetent.origin + vectorscale((0, 0, 1), 48), self.origin)) > (getdvarint("scr_firefly_swarm_attack_radius", 110) * getdvarint("scr_firefly_swarm_attack_radius", 110)))
 	{
 		self.state_machine statemachine::set_state("move");
 	}

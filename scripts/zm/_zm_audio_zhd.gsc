@@ -277,7 +277,7 @@ function function_a9a34039()
 	self endon(#"ballerina_destroyed");
 	if(level.players.size > 1)
 	{
-		wait(90 - 15 * level.players.size);
+		wait(90 - (15 * level.players.size));
 	}
 	else
 	{

@@ -318,7 +318,7 @@ function function_a0e4a574()
 */
 function function_1abfde35(e_attacker)
 {
-	if(isdefined(e_attacker.var_122a2dda) && e_attacker.var_122a2dda)
+	if(isdefined(e_attacker.is_flung) && e_attacker.is_flung)
 	{
 		e_attacker notify(#"hash_f00d390e");
 	}

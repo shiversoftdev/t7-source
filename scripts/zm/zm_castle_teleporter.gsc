@@ -185,7 +185,7 @@ function function_798f36c()
 	playsoundatposition("vox_maxis_teleporter_pa_recharging_0", self.origin);
 	while(level.is_cooldown)
 	{
-		if(gettime() - self.var_eb37ce09 > 16000)
+		if((gettime() - self.var_eb37ce09) > 16000)
 		{
 			foreach(var_96e4708c, e_player in level.activeplayers)
 			{
@@ -587,13 +587,13 @@ function teleport_pad_player_fx(var_7d7ca0ea, n_duration)
 			while(n_total_time < n_duration && var_7d7ca0ea player_is_near_pad(self))
 			{
 				n_current_time = gettime();
-				n_total_time = n_current_time - n_start_time / 1000;
+				n_total_time = (n_current_time - n_start_time) / 1000;
 				util::wait_network_frame();
 			}
 			visionset_mgr::deactivate("overlay", "zm_factory_teleport", self);
 		}
 		n_current_time = gettime();
-		n_total_time = n_current_time - n_start_time / 1000;
+		n_total_time = (n_current_time - n_start_time) / 1000;
 		util::wait_network_frame();
 	}
 }
@@ -740,7 +740,7 @@ function teleport_players(var_edc2ee2a = 0, var_66f7e6b9 = 0)
 		player.var_601ebf01 delete();
 	}
 	level.var_47f4765c++;
-	if(level.var_47f4765c == 1 || level.var_47f4765c % 3 == 0)
+	if(level.var_47f4765c == 1 || (level.var_47f4765c % 3) == 0)
 	{
 		playsoundatposition("vox_maxis_teleporter_pa_success_0", var_764d9cb[0].origin);
 	}
@@ -842,7 +842,7 @@ function teleport_nuke(max_zombies, range)
 */
 function teleporter_wire_wait(index)
 {
-	targ = struct::get("pad_" + index + "_wire", "targetname");
+	targ = struct::get(("pad_" + index) + "_wire", "targetname");
 	if(!isdefined(targ))
 	{
 		return;
@@ -873,7 +873,7 @@ function teleporter_wire_wait(index)
 */
 function teleport_aftereffects(var_edc2ee2a, var_66f7e6b9)
 {
-	if(getdvarstring("castleAftereffectOverride") == "-1")
+	if(getdvarstring("castleAftereffectOverride") == ("-1"))
 	{
 		self thread [[level.teleport_ae_funcs[randomint(level.teleport_ae_funcs.size)]]]();
 	}

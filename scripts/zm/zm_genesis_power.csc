@@ -193,7 +193,7 @@ function tower_fx(n_local_client, var_47d9b5f4, str_tag, str_fx, str_alias)
 		{
 			for(i = 1; i <= 4; i++)
 			{
-				var_3805981f = "pillar_0" + i + "_" + str_alias;
+				var_3805981f = (("pillar_0" + i) + "_") + str_alias;
 				if(isdefined(self.a_fx[var_3805981f]))
 				{
 					stopfx(n_local_client, self.a_fx[var_3805981f]);
@@ -205,7 +205,7 @@ function tower_fx(n_local_client, var_47d9b5f4, str_tag, str_fx, str_alias)
 		{
 			for(i = 1; i <= 4; i++)
 			{
-				var_da7eab4b = "pillar_0" + i + "_" + str_tag;
+				var_da7eab4b = (("pillar_0" + i) + "_") + str_tag;
 				if(isdefined(self.a_fx[var_da7eab4b]))
 				{
 					stopfx(n_local_client, self.a_fx[var_da7eab4b]);
@@ -220,8 +220,8 @@ function tower_fx(n_local_client, var_47d9b5f4, str_tag, str_fx, str_alias)
 		{
 			for(i = 1; i <= 4; i++)
 			{
-				var_da7eab4b = "pillar_0" + i + "_" + str_tag;
-				var_3805981f = "pillar_0" + i + "_" + str_alias;
+				var_da7eab4b = (("pillar_0" + i) + "_") + str_tag;
+				var_3805981f = (("pillar_0" + i) + "_") + str_alias;
 				if(!isdefined(self.a_fx[var_3805981f]))
 				{
 					self.a_fx[var_3805981f] = playfxontag(n_local_client, level._effect[str_fx], self, var_da7eab4b);
@@ -232,7 +232,7 @@ function tower_fx(n_local_client, var_47d9b5f4, str_tag, str_fx, str_alias)
 		{
 			for(i = 1; i <= 4; i++)
 			{
-				var_da7eab4b = "pillar_0" + i + "_" + str_tag;
+				var_da7eab4b = (("pillar_0" + i) + "_") + str_tag;
 				if(!isdefined(self.a_fx[var_da7eab4b]))
 				{
 					self.a_fx[var_da7eab4b] = playfxontag(n_local_client, level._effect[str_fx], self, var_da7eab4b);

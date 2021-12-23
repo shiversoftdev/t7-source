@@ -124,14 +124,14 @@ function debug_friendlyfire()
 		friendly_fire.fontscale = 3;
 		friendly_fire.alignx = "";
 		friendly_fire.aligny = "";
-		friendly_fire.x = rbound - bar_width * level.friendlyfirepoints[""] / fullpts - log(self.participation) * friendly_fire.fontscale;
+		friendly_fire.x = (rbound - (bar_width * (level.friendlyfirepoints[""] / fullpts))) - (log(self.participation) * friendly_fire.fontscale);
 		friendly_fire.y = 100;
 		friendly_fire.alpha = 1;
 		friendly_fire_lower_bound_label = newdebughudelem();
 		friendly_fire_lower_bound_label.fontscale = 1.5;
 		friendly_fire_lower_bound_label.alignx = "";
 		friendly_fire_lower_bound_label.aligny = "";
-		friendly_fire_lower_bound_label.x = lbound - ceil(max(log(abs(level.friendlyfirepoints[""])) / log(10), 0)) - 2 + self.participation < 0 * friendly_fire.fontscale;
+		friendly_fire_lower_bound_label.x = lbound - (((ceil(max(log(abs(level.friendlyfirepoints[""])) / log(10), 0))) - 2) + (self.participation < 0) * friendly_fire.fontscale);
 		friendly_fire_lower_bound_label.y = ypos;
 		friendly_fire_lower_bound_label.alpha = 1;
 		friendly_fire_lower_bound_label setvalue(level.friendlyfirepoints[""]);
@@ -139,7 +139,7 @@ function debug_friendlyfire()
 		friendly_fire_upper_bound_label.fontscale = 1.5;
 		friendly_fire_upper_bound_label.alignx = "";
 		friendly_fire_upper_bound_label.aligny = "";
-		friendly_fire_upper_bound_label.x = rbound + 2 * ceil(max(log(abs(level.friendlyfirepoints[""])) / log(10), 0)) + 2.5 + self.participation < 0 * friendly_fire.fontscale;
+		friendly_fire_upper_bound_label.x = rbound + ((2 * ((ceil(max(log(abs(level.friendlyfirepoints[""])) / log(10), 0))) + 2.5) + (self.participation < 0)) * friendly_fire.fontscale);
 		friendly_fire_upper_bound_label.y = ypos;
 		friendly_fire_upper_bound_label.alpha = 1;
 		friendly_fire_upper_bound_label setvalue(level.friendlyfirepoints[""]);
@@ -184,7 +184,7 @@ function debug_friendlyfire()
 		var_d2572fe4 = newclienthudelem(self);
 		var_d2572fe4.alignx = "";
 		var_d2572fe4.aligny = "";
-		var_d2572fe4.x = lbound + level.friendlyfirepoints[""] * -1 / fullpts * bar_width;
+		var_d2572fe4.x = lbound + (((level.friendlyfirepoints[""] * -1) / fullpts) * bar_width);
 		var_d2572fe4.y = ypos + 9;
 		var_d2572fe4.sort = 2;
 		var_d2572fe4.alpha = 1;
@@ -193,7 +193,7 @@ function debug_friendlyfire()
 		var_5c31876e = newclienthudelem(self);
 		var_5c31876e.alignx = "";
 		var_5c31876e.aligny = "";
-		var_5c31876e.x = lbound + level.friendlyfirepoints[""] * -1 / fullpts * bar_width;
+		var_5c31876e.x = lbound + (((level.friendlyfirepoints[""] * -1) / fullpts) * bar_width);
 		var_5c31876e.y = ypos - 9;
 		var_5c31876e.sort = 2;
 		var_5c31876e.alpha = 1;
@@ -225,10 +225,10 @@ function debug_friendlyfire()
 				var_d2572fe4.alpha = 0;
 				var_5c31876e.alpha = 0;
 			}
-			xpos = level.friendlyfirepoints[""] - self.participation / fullpts * bar_width;
+			xpos = ((level.friendlyfirepoints[""] - self.participation) / fullpts) * bar_width;
 			debug_health_bar.x = rbound - xpos;
 			friendly_fire setvalue(self.participation);
-			friendly_fire.x = rbound - bar_width * level.friendlyfirepoints[""] / fullpts + ceil(max(log(abs(self.participation)) / log(10), 0)) + 1 + self.participation < 0 * friendly_fire.fontscale * 2;
+			friendly_fire.x = (rbound - (bar_width * (level.friendlyfirepoints[""] / fullpts))) + ((((ceil(max(log(abs(self.participation)) / log(10), 0))) + 1) + (self.participation < 0) * friendly_fire.fontscale) * 2);
 			wait(0.25);
 		}
 	#/
@@ -342,7 +342,7 @@ function friendly_fire_callback(entity, damage, attacker, method)
 		{
 			attacker.participation = attacker.participation + level.friendlyfirepoints["enemy_kill_points"];
 			attacker participation_point_cap();
-			debug_log("Enemy killed: +" + level.friendlyfirepoints["enemy_kill_points"]);
+			debug_log(("Enemy killed: +") + level.friendlyfirepoints["enemy_kill_points"]);
 		}
 		return;
 	}
@@ -356,23 +356,23 @@ function friendly_fire_callback(entity, damage, attacker, method)
 		{
 			level notify(#"player_killed_civ");
 			attacker.participation = attacker.participation + level.friendlyfirepoints["civ_kill_points"];
-			debug_log("Civilian killed: -" + 0 - level.friendlyfirepoints["civ_kill_points"]);
+			debug_log(("Civilian killed: -") + (0 - level.friendlyfirepoints["civ_kill_points"]));
 		}
 		else if(isdefined(entity) && isdefined(entity.ff_kill_penalty))
 		{
 			attacker.participation = attacker.participation + entity.ff_kill_penalty;
-			debug_log("Friendly killed with custom penalty: -" + 0 - entity.ff_kill_penalty);
+			debug_log(("Friendly killed with custom penalty: -") + (0 - entity.ff_kill_penalty));
 		}
 		else
 		{
 			attacker.participation = attacker.participation + level.friendlyfirepoints["friend_kill_points"];
-			debug_log("Friendly killed: -" + 0 - level.friendlyfirepoints["friend_kill_points"]);
+			debug_log(("Friendly killed: -") + (0 - level.friendlyfirepoints["friend_kill_points"]));
 		}
 	}
 	else
 	{
 		attacker.participation = attacker.participation - damage;
-		debug_log("Friendly hurt: -" + damage);
+		debug_log(("Friendly hurt: -") + damage);
 	}
 	attacker participation_point_cap();
 	if(check_grenade(entity, method) && savecommit_aftergrenade())
@@ -469,7 +469,7 @@ function friendly_fire_think(entity)
 			{
 				attacker.participation = attacker.participation + level.friendlyfirepoints["enemy_kill_points"];
 				attacker participation_point_cap();
-				debug_log("Enemy killed: +" + level.friendlyfirepoints["enemy_kill_points"]);
+				debug_log(("Enemy killed: +") + level.friendlyfirepoints["enemy_kill_points"]);
 			}
 			return;
 		}
@@ -490,24 +490,24 @@ function friendly_fire_think(entity)
 				else
 				{
 					attacker.participation = attacker.participation + level.friendlyfirepoints["civ_kill_points"];
-					debug_log("Civilian killed: -" + 0 - level.friendlyfirepoints["civ_kill_points"]);
+					debug_log(("Civilian killed: -") + (0 - level.friendlyfirepoints["civ_kill_points"]));
 				}
 			}
 			else if(isdefined(entity) && isdefined(entity.ff_kill_penalty))
 			{
 				attacker.participation = attacker.participation + entity.ff_kill_penalty;
-				debug_log("Friendly killed with custom penalty: -" + 0 - entity.ff_kill_penalty);
+				debug_log(("Friendly killed with custom penalty: -") + (0 - entity.ff_kill_penalty));
 			}
 			else
 			{
 				attacker.participation = attacker.participation + level.friendlyfirepoints["friend_kill_points"];
-				debug_log("Friendly killed: -" + 0 - level.friendlyfirepoints["friend_kill_points"]);
+				debug_log(("Friendly killed: -") + (0 - level.friendlyfirepoints["friend_kill_points"]));
 			}
 		}
 		else
 		{
 			attacker.participation = attacker.participation - damage;
-			debug_log("Friendly hurt: -" + damage);
+			debug_log(("Friendly hurt: -") + damage);
 		}
 		attacker participation_point_cap();
 		if(check_grenade(entity, method) && savecommit_aftergrenade())

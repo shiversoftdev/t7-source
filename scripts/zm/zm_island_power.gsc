@@ -150,8 +150,8 @@ function function_fbe51672()
 		var_ac878678 hide();
 	}
 	playsoundatposition("zmb_island_main_power_on", (0, 0, 0));
-	level clientfield::set("power_switch_" + 1 + "_fx", 0);
-	level clientfield::set("power_switch_" + 2 + "_fx", 0);
+	level clientfield::set(("power_switch_" + 1) + "_fx", 0);
+	level clientfield::set(("power_switch_" + 2) + "_fx", 0);
 	exploder::exploder("ex_power_bdoor_left");
 	exploder::exploder("ex_power_bdoor_right");
 	function_2b5b24e9();
@@ -418,7 +418,7 @@ function function_156f973e()
 		}
 		if(isdefined(level.var_7b5a9e65) && level.var_7b5a9e65 > 0)
 		{
-			level clientfield::set("power_switch_" + self.script_int + "_fx", 0);
+			level clientfield::set(("power_switch_" + self.script_int) + "_fx", 0);
 			if(self.script_int == 1)
 			{
 				exploder::exploder("ex_power_bdoor_left");
@@ -445,7 +445,7 @@ function function_156f973e()
 			}
 			level notify(#"hash_94e4da4f");
 			self playsound("zmb_temp_power_alert");
-			level clientfield::set("power_switch_" + self.script_int + "_fx", 1);
+			level clientfield::set(("power_switch_" + self.script_int) + "_fx", 1);
 			var_b46e7d63.var_5260546a clientfield::set("power_plant_glow", 0);
 			var_b46e7d63 thread scene::play("p7_fxanim_zm_island_power_plant_off_bundle", var_b46e7d63.var_969af1da);
 			if(self.script_int == 1)
@@ -1099,7 +1099,7 @@ function function_3e519f17()
 		/#
 			if(isdefined(e_who.playernum))
 			{
-				println("" + e_who.playernum + "");
+				println(("" + e_who.playernum) + "");
 			}
 		#/
 	}
@@ -1139,11 +1139,11 @@ function function_d99ed9ac()
 		if(e_player usebuttonpressed())
 		{
 			e_player.var_7621b9dd = gettime();
-			if(isdefined(e_player.var_57db2550) && e_player.var_7621b9dd - e_player.var_57db2550 > 250)
+			if(isdefined(e_player.var_57db2550) && (e_player.var_7621b9dd - e_player.var_57db2550) > 250)
 			{
 				e_player thread function_a84a1aec(self.script_int);
 				/#
-					println("" + e_player.playernum + "");
+					println(("" + e_player.playernum) + "");
 				#/
 			}
 		}

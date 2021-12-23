@@ -141,7 +141,7 @@ function activatesatellite()
 	satellite thread killstreaks::monitordamage("satellite", satellite.maxhealth, &destroysatellite, satellite.lowhealth, &onlowhealth, 0, undefined, 0);
 	satellite thread killstreaks::waittillemp(&destroysatellitebyemp);
 	satellite.killstreakdamagemodifier = &killstreakdamagemodifier;
-	satellite.rocketdamage = satellite.maxhealth / 3 + 1;
+	satellite.rocketdamage = (satellite.maxhealth / 3) + 1;
 	/#
 	#/
 	satellite moveto(airsupport::getmapcenter() + (xoffset * -1, yoffset * -1, zoffset), 40000 * 0.001);

@@ -173,7 +173,7 @@ function function_e2d94882(old_position, new_position)
 */
 function is_falling(position)
 {
-	return function_e2d94882(position, position + vectorscale((0, 0, -1), 500));
+	return function_e2d94882(position, position + (vectorscale((0, 0, -1), 500)));
 }
 
 /*
@@ -252,13 +252,13 @@ function function_c003e53f(vdir, var_f120d111, var_f40ed68d, var_9aadeff9, var_9
 			var_cdbed540 = length(var_e79cd0f2);
 			var_206341c9 = position - original_position;
 			var_3b8e30c5 = length((var_206341c9[0], var_206341c9[1], 0));
-			if(var_3b8e30c5 + var_cdbed540 >= var_f40ed68d)
+			if((var_3b8e30c5 + var_cdbed540) >= var_f40ed68d)
 			{
 				var_cdbed540 = var_f40ed68d - var_3b8e30c5;
 				var_505f8faa = 1;
 			}
 			new_position = position - vectorscale(forwardvec, var_cdbed540);
-			var_381dd463 = position - vectorscale(forwardvec, var_cdbed540 + epsilon);
+			var_381dd463 = position - (vectorscale(forwardvec, var_cdbed540 + epsilon));
 			if(function_e2d94882(position, var_381dd463))
 			{
 				position = new_position;
@@ -272,13 +272,13 @@ function function_c003e53f(vdir, var_f120d111, var_f40ed68d, var_9aadeff9, var_9
 		{
 			var_553c9550 = var_67ca400f;
 			var_6775da6e = abs(original_position[2] - position[2]);
-			if(var_6775da6e + var_553c9550 >= var_9aadeff9)
+			if((var_6775da6e + var_553c9550) >= var_9aadeff9)
 			{
 				var_553c9550 = var_9aadeff9 - var_6775da6e;
 				var_582dff76 = 1;
 			}
 			new_position = (position[0], position[1], position[2] - var_553c9550);
-			var_381dd463 = (position[0], position[1], position[2] - var_553c9550 - epsilon);
+			var_381dd463 = (position[0], position[1], (position[2] - var_553c9550) - epsilon);
 			if(function_e2d94882(position, var_381dd463))
 			{
 				position = new_position;
@@ -486,7 +486,7 @@ function function_7a3707a6(einflictor, attacker, idamage, weapon, vdir, shitloc)
 	lookdir = undefined;
 	if(isdefined(attacker) && attacker != self)
 	{
-		var_7ec6acc8 = attacker getabsmins() + attacker getabsmaxs() * 0.5;
+		var_7ec6acc8 = (attacker getabsmins() + attacker getabsmaxs()) * 0.5;
 		lookdir = var_7ec6acc8 - self.origin;
 		lookdir = vectornormalize(lookdir);
 	}

@@ -179,7 +179,7 @@ function function_d9a07413(e_player, var_a70a7d09)
 		function_54227761(var_a70a7d09, v_fling, e_player);
 		playrumbleonposition("zm_stalingrad_bridge_closing", var_d617e29b.origin);
 		var_d617e29b scene::play("p7_fxanim_zm_stal_flinger_trap_bundle", array(var_d617e29b));
-		n_total_time = gettime() - n_start_time / 1000;
+		n_total_time = (gettime() - n_start_time) / 1000;
 		wait(0.5);
 	}
 	self.var_66a9cd70 = 0;

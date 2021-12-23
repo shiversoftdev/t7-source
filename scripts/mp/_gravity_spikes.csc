@@ -111,12 +111,12 @@ function do_gravity_spike_fx(localclientnum, owner, weapon, position)
 	base_number_of_effects = 3;
 	additional_number_of_effects_per_circle = 7;
 	explosion_radius = weapon.explosionradius;
-	radius_per_circle = explosion_radius - radius_of_effect / number_of_circles;
+	radius_per_circle = (explosion_radius - radius_of_effect) / number_of_circles;
 	for(circle = 0; circle < number_of_circles; circle++)
 	{
 		wait(0.1);
-		radius_for_this_circle = radius_per_circle * circle + 1;
-		number_for_this_circle = base_number_of_effects + additional_number_of_effects_per_circle * circle;
+		radius_for_this_circle = radius_per_circle * (circle + 1);
+		number_for_this_circle = base_number_of_effects + (additional_number_of_effects_per_circle * circle);
 		thread do_gravity_spike_fx_circle(localclientnum, owner, position, radius_for_this_circle, number_for_this_circle);
 	}
 }
@@ -132,7 +132,7 @@ function do_gravity_spike_fx(localclientnum, owner, weapon, position)
 */
 function getideallocationforfx(startpos, fxindex, fxcount, defaultdistance, rotation)
 {
-	currentangle = 360 / fxcount * fxindex;
+	currentangle = (360 / fxcount) * fxindex;
 	coscurrent = cos(currentangle + rotation);
 	sincurrent = sin(currentangle + rotation);
 	return startpos + (defaultdistance * coscurrent, defaultdistance * sincurrent, 0);

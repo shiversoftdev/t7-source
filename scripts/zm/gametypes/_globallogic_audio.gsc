@@ -202,7 +202,7 @@ function registerdialoggroup(group, skipifcurrentlyplayinggroup)
 	}
 	else if(isdefined(level.dialoggroup[group]))
 	{
-		util::error("registerDialogGroup:  Dialog group " + group + " already registered.");
+		util::error(("registerDialogGroup:  Dialog group " + group) + " already registered.");
 		return;
 	}
 	level.dialoggroup[group] = spawnstruct();
@@ -256,7 +256,7 @@ function suspensemusicforplayer()
 	/#
 		if(getdvarint("") > 0)
 		{
-			println("" + self.pers[""].returnstate + "" + self getentitynumber());
+			println((("" + self.pers[""].returnstate) + "") + self getentitynumber());
 		}
 	#/
 }
@@ -370,7 +370,7 @@ function announceroundwinner(winner, delay)
 	{
 		foreach(var_c4618acf, team in level.teams)
 		{
-			thread util::playsoundonplayers("mus_round_draw" + "_" + level.teampostfix[team]);
+			thread util::playsoundonplayers(("mus_round_draw" + "_") + level.teampostfix[team]);
 		}
 		leaderdialog("round_draw");
 	}
@@ -424,7 +424,7 @@ function doflameaudio()
 		self.lastflamehurtaudio = 0;
 	}
 	currenttime = gettime();
-	if(self.lastflamehurtaudio + level.fire_audio_repeat_duration + randomint(level.fire_audio_random_max_duration) < currenttime)
+	if((self.lastflamehurtaudio + level.fire_audio_repeat_duration) + randomint(level.fire_audio_random_max_duration) < currenttime)
 	{
 		self playlocalsound("vox_pain_small");
 		self.lastflamehurtaudio = currenttime;
@@ -626,7 +626,7 @@ function addgroupdialogtoplayer(dialog, group)
 {
 	if(!isdefined(level.dialoggroup[group]))
 	{
-		util::error("leaderDialogOnPlayer:  Dialog group " + group + " is not registered");
+		util::error(("leaderDialogOnPlayer:  Dialog group " + group) + " is not registered");
 		return 0;
 	}
 	addtoqueue = 0;
@@ -636,7 +636,7 @@ function addgroupdialogtoplayer(dialog, group)
 	}
 	if(!level.dialoggroup[group].skipifcurrentlyplayinggroup)
 	{
-		if(self.currentleaderdialog == dialog && self.currentleaderdialogtime + 2000 > gettime())
+		if(self.currentleaderdialog == dialog && (self.currentleaderdialogtime + 2000) > gettime())
 		{
 			self.leaderdialoggroups[group] = undefined;
 			foreach(key, leader_dialog in self.leaderdialogqueue)
@@ -750,7 +750,7 @@ function waitforsound(sound, extratime = 0.1)
 	}
 	else
 	{
-		wait(time * 0.001 + extratime);
+		wait((time * 0.001) + extratime);
 	}
 }
 
@@ -1031,7 +1031,7 @@ function set_music_on_team(state, team, save_state, return_state, wait_time)
 			/#
 				if(getdvarint("") > 0)
 				{
-					println("" + state + "" + player getentitynumber());
+					println((("" + state) + "") + player getentitynumber());
 				}
 			#/
 		}
@@ -1104,7 +1104,7 @@ function set_music_on_player(state, save_state, return_state, wait_time)
 		/#
 			if(getdvarint("") > 0)
 			{
-				println("" + self.pers[""].returnstate + "" + self getentitynumber());
+				println((("" + self.pers[""].returnstate) + "") + self getentitynumber());
 			}
 		#/
 	}
@@ -1113,7 +1113,7 @@ function set_music_on_player(state, save_state, return_state, wait_time)
 	/#
 		if(getdvarint("") > 0)
 		{
-			println("" + state + "" + self getentitynumber());
+			println((("" + state) + "") + self getentitynumber());
 		}
 	#/
 	if(isdefined(self.pers["music"].returnstate) && return_state)
@@ -1121,7 +1121,7 @@ function set_music_on_player(state, save_state, return_state, wait_time)
 		/#
 			if(getdvarint("") > 0)
 			{
-				println("" + self.pers[""].returnstate + "" + self getentitynumber());
+				println((("" + self.pers[""].returnstate) + "") + self getentitynumber());
 			}
 		#/
 		self set_next_music_state(self.pers["music"].returnstate, wait_time);
@@ -1187,7 +1187,7 @@ function return_music_state_team(team, wait_time)
 			/#
 				if(getdvarint("") > 0)
 				{
-					println("" + self.pers[""].returnstate + "" + player getentitynumber());
+					println((("" + self.pers[""].returnstate) + "") + player getentitynumber());
 				}
 			#/
 		}
@@ -1210,7 +1210,7 @@ function set_next_music_state(nextstate, wait_time)
 	/#
 		if(getdvarint("") > 0)
 		{
-			println("" + self.pers[""].nextstate + "" + self getentitynumber());
+			println((("" + self.pers[""].nextstate) + "") + self getentitynumber());
 		}
 	#/
 	if(!isdefined(self.pers["music"].inque))

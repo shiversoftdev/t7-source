@@ -109,9 +109,9 @@ function teleportation_audio()
 		level waittill(#"tpa");
 		if(isdefined(self.script_sound))
 		{
-			playsound(0, "evt_" + self.script_sound + "_warmup", self.origin);
+			playsound(0, ("evt_" + self.script_sound) + "_warmup", self.origin);
 			wait(teleport_delay);
-			playsound(0, "evt_" + self.script_sound + "_cooldown", self.origin);
+			playsound(0, ("evt_" + self.script_sound) + "_cooldown", self.origin);
 		}
 	}
 }

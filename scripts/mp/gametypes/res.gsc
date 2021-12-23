@@ -89,7 +89,7 @@ function onroundswitch()
 	{
 		game["switchedsides"] = 0;
 	}
-	if(game["teamScores"]["allies"] == level.scorelimit - 1 && game["teamScores"]["axis"] == level.scorelimit - 1)
+	if(game["teamScores"]["allies"] == (level.scorelimit - 1) && game["teamScores"]["axis"] == (level.scorelimit - 1))
 	{
 		aheadteam = getbetterteam();
 		if(aheadteam != game["defenders"])
@@ -199,8 +199,8 @@ function onstartgametype()
 	level.objectivehintcapturehq = &"MP_CAPTURE_HQ";
 	level.objectivehintdefendhq = &"MP_DEFEND_HQ";
 	level.flagbasefxid = [];
-	level.flagbasefxid["allies"] = "_t6/misc/fx_ui_flagbase_" + game["allies"];
-	level.flagbasefxid["axis"] = "_t6/misc/fx_ui_flagbase_" + game["axis"];
+	level.flagbasefxid["allies"] = ("_t6/misc/fx_ui_flagbase_") + game["allies"];
+	level.flagbasefxid["axis"] = ("_t6/misc/fx_ui_flagbase_") + game["axis"];
 	setclientnamemode("auto_change");
 	spawning::create_map_placed_influencers();
 	level.spawnmins = (0, 0, 0);
@@ -219,7 +219,7 @@ function onstartgametype()
 	level.spawn_start = [];
 	foreach(var_2b6d0244, team in level.teams)
 	{
-		level.spawn_start[team] = spawnlogic::get_spawnpoint_array("mp_res_spawn_" + team + "_start");
+		level.spawn_start[team] = spawnlogic::get_spawnpoint_array(("mp_res_spawn_" + team) + "_start");
 	}
 	hud_createflagprogressbar();
 	updategametypedvars();
@@ -227,7 +227,7 @@ function onstartgametype()
 	thread resflagsinit();
 	level.overtime = 0;
 	overtime = 0;
-	if(game["teamScores"]["allies"] == level.scorelimit - 1 && game["teamScores"]["axis"] == level.scorelimit - 1)
+	if(game["teamScores"]["allies"] == (level.scorelimit - 1) && game["teamScores"]["axis"] == (level.scorelimit - 1))
 	{
 		overtime = 1;
 	}
@@ -354,7 +354,7 @@ function gettimelimit()
 		{
 			flagcount = flagcount + level.currentflag.orderindex;
 		}
-		return timelimit + level.extratime * flagcount;
+		return timelimit + (level.extratime * flagcount);
 	}
 	return timelimit;
 }
@@ -441,7 +441,7 @@ function resflagsinit()
 		resflag.claimgraceperiod = level.flagcapturegraceperiod;
 		resflag.decayprogress = level.flaginactivedecay;
 		tracestart = visuals[0].origin + vectorscale((0, 0, 1), 32);
-		traceend = visuals[0].origin + vectorscale((0, 0, -1), 32);
+		traceend = visuals[0].origin + (vectorscale((0, 0, -1), 32));
 		trace = bullettrace(tracestart, traceend, 0, undefined);
 		upangles = vectortoangles(trace["normal"]);
 		resflag.baseeffectforward = anglestoforward(upangles);
@@ -487,9 +487,9 @@ function sortflags()
 	}
 	for(i = 1; i < level.resflags.size; i++)
 	{
-		for(j = 0; j < level.resflags.size - i; j++)
+		for(j = 0; j < (level.resflags.size - i); j++)
 		{
-			if(level.resflags[j].orderindex > level.resflags[j + 1].orderindex)
+			if(level.resflags[j].orderindex > (level.resflags[j + 1].orderindex))
 			{
 				temp = level.resflags[j];
 				level.resflags[j] = level.resflags[j + 1];
@@ -698,7 +698,7 @@ function getunownedflagneareststart(team, excludeflag)
 function onbeginuse(player)
 {
 	ownerteam = self gameobjects::get_owner_team();
-	setdvar("scr_obj" + self gameobjects::get_label() + "_flash", 1);
+	setdvar(("scr_obj" + self gameobjects::get_label()) + "_flash", 1);
 	self.didstatusnotify = 0;
 	if(ownerteam == "allies")
 	{
@@ -710,7 +710,7 @@ function onbeginuse(player)
 	}
 	if(ownerteam == "neutral")
 	{
-		if(gettime() - level.lastdialogtime > 5000)
+		if((gettime() - level.lastdialogtime) > 5000)
 		{
 			otherteam = util::getotherteam(player.pers["team"]);
 			statusdialog("securing" + self.label, player.pers["team"]);
@@ -741,7 +741,7 @@ function onuseupdate(team, progress, change)
 	if(progress > 0.05 && change && !self.didstatusnotify)
 	{
 		ownerteam = self gameobjects::get_owner_team();
-		if(gettime() - level.lastdialogtime > 10000)
+		if((gettime() - level.lastdialogtime) > 10000)
 		{
 			statusdialog("losing" + self.label, ownerteam);
 			statusdialog("securing" + self.label, team);
@@ -790,7 +790,7 @@ function onuseclear()
 function statusdialog(dialog, team)
 {
 	time = gettime();
-	if(gettime() < level.laststatus[team] + 6000)
+	if(gettime() < (level.laststatus[team] + 6000))
 	{
 		return;
 	}
@@ -809,7 +809,7 @@ function statusdialog(dialog, team)
 */
 function onenduse(team, player, success)
 {
-	setdvar("scr_obj" + self gameobjects::get_label() + "_flash", 0);
+	setdvar(("scr_obj" + self gameobjects::get_label()) + "_flash", 0);
 	self.objpoints["allies"] thread objpoints::stop_flashing();
 	self.objpoints["axis"] thread objpoints::stop_flashing();
 }
@@ -857,7 +857,7 @@ function onuse(player, team)
 		print("" + self.label);
 	#/
 	setupnextflag(self.orderindex + 1);
-	if(self.orderindex + 1 == level.resflags.size || level.overtime)
+	if((self.orderindex + 1) == level.resflags.size || level.overtime)
 	{
 		setgameendtime(0);
 		wait(1);
@@ -931,7 +931,7 @@ function onuse(player, team)
 			}
 		}
 		/#
-			assert(string != &"");
+			assert(string != (&""));
 		#/
 		touchlist = [];
 		touchkeys = getarraykeys(self.touchlist[team]);

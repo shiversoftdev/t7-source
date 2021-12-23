@@ -269,9 +269,9 @@ function function_16beb600(var_8cc26a7f, var_7ab4c34a, var_535f5919, var_13d4cd8
 function function_b55fb314(var_8cc26a7f, var_7ab4c34a, var_535f5919, var_13d4cd83, var_3988ba7b)
 {
 	var_7ae4bfa0 = var_535f5919;
-	var_8a1358c0 = var_7ab4c34a[2] + var_7ae4bfa0 - var_13d4cd83[2];
+	var_8a1358c0 = (var_7ab4c34a[2] + var_7ae4bfa0) - var_13d4cd83[2];
 	var_dfcea895 = (var_13d4cd83[0] - var_7ab4c34a[0], var_13d4cd83[1] - var_7ab4c34a[1], 0);
-	var_30280c29 = var_7ab4c34a + var_dfcea895 * 0.5 + (0, 0, var_535f5919);
+	var_30280c29 = (var_7ab4c34a + (var_dfcea895 * 0.5)) + (0, 0, var_535f5919);
 	var_be9b92b3 = spawn("script_model", var_7ab4c34a);
 	var_be9b92b3 setmodel("tag_origin");
 	var_be9b92b3 clientfield::set("apothicon_fury_spawn_meteor", 1);
@@ -279,7 +279,7 @@ function function_b55fb314(var_8cc26a7f, var_7ab4c34a, var_535f5919, var_13d4cd8
 	var_be9b92b3.angles = vectortoangles(var_22077f2a - var_be9b92b3.origin);
 	var_be9b92b3 moveto(var_22077f2a, var_8cc26a7f / 6);
 	var_be9b92b3 waittill(#"movedone");
-	var_22077f2a = var_be9b92b3.origin + (0, 0, var_7ae4bfa0 * 0.25) + var_dfcea895 * 0.25;
+	var_22077f2a = (var_be9b92b3.origin + (0, 0, var_7ae4bfa0 * 0.25)) + (var_dfcea895 * 0.25);
 	var_be9b92b3.angles = vectortoangles(var_22077f2a - var_be9b92b3.origin);
 	var_be9b92b3 moveto(var_22077f2a, var_8cc26a7f / 6);
 	var_be9b92b3 waittill(#"movedone");
@@ -287,7 +287,7 @@ function function_b55fb314(var_8cc26a7f, var_7ab4c34a, var_535f5919, var_13d4cd8
 	var_be9b92b3.angles = vectortoangles(var_22077f2a - var_be9b92b3.origin);
 	var_be9b92b3 moveto(var_30280c29, var_8cc26a7f / 6);
 	var_be9b92b3 waittill(#"movedone");
-	var_22077f2a = var_be9b92b3.origin - (0, 0, var_8a1358c0 * 0.25) + var_dfcea895 * 0.25;
+	var_22077f2a = (var_be9b92b3.origin - (0, 0, var_8a1358c0 * 0.25)) + (var_dfcea895 * 0.25);
 	var_be9b92b3.angles = vectortoangles(var_22077f2a - var_be9b92b3.origin);
 	var_be9b92b3 moveto(var_22077f2a, var_8cc26a7f / 6);
 	var_be9b92b3 waittill(#"movedone");

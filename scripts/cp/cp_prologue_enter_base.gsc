@@ -84,7 +84,7 @@ function nrc_knocking_main()
 	foreach(var_a9ca35d7, ai_ally in level.var_681ad194)
 	{
 		ai_ally.goalradius = 16;
-		ai_ally setgoal(getnode("ally0" + ai_ally.var_a89679b6 + "_start_node", "targetname"));
+		ai_ally setgoal(getnode(("ally0" + ai_ally.var_a89679b6) + "_start_node", "targetname"));
 	}
 	battlechatter::function_d9f49fba(0);
 	cp_prologue_util::function_47a62798(1);
@@ -451,7 +451,7 @@ function function_3eb38d8d()
 			}
 		}
 		time = gettime();
-		dt = time - start_time / 1000;
+		dt = (time - start_time) / 1000;
 		if(dt > var_5f00f64d && nag0 == 0)
 		{
 			level.ai_hendricks dialog::say("hend_on_me_nice_and_easy_0");
@@ -492,7 +492,7 @@ function enter_tunnel_nag()
 	while(level flag::get("player_entering_tunnel") == 0)
 	{
 		time = gettime();
-		dt = time - start_time / 1000;
+		dt = (time - start_time) / 1000;
 		if(dt > var_5f00f64d && nag0 == 0)
 		{
 			level.ai_hendricks dialog::say("hend_stay_on_me_we_need_0");
@@ -699,7 +699,7 @@ function function_be42a33f()
 	trigger::wait_till("tarmac_move_friendies");
 	foreach(var_35de897, ai_ally in level.var_681ad194)
 	{
-		ai_ally thread setgoal_then_delete("ally0" + ai_ally.var_a89679b6 + "_tunnel_goal", "security_cam_active");
+		ai_ally thread setgoal_then_delete(("ally0" + ai_ally.var_a89679b6) + "_tunnel_goal", "security_cam_active");
 	}
 }
 
@@ -717,7 +717,7 @@ function function_ae8c8b7b()
 	level waittill(#"hash_c4d700a5");
 	var_280d5f68 = getent("controltower_exitdoor_l", "targetname");
 	var_3c301126 = getent("controltower_exitdoor_r", "targetname");
-	var_280d5f68 rotateto(var_280d5f68.angles + vectorscale((0, -1, 0), 90), 0.75);
+	var_280d5f68 rotateto(var_280d5f68.angles + (vectorscale((0, -1, 0), 90)), 0.75);
 	var_3c301126 rotateto(var_3c301126.angles + vectorscale((0, 1, 0), 90), 0.75);
 	var_3c301126 playsound("evt_towerdoor_open");
 	level thread cp_prologue_util::rumble_all_players("damage_light", 0.05, 2, var_3c301126);
@@ -1789,23 +1789,23 @@ function function_21dd3be1()
 	v_side = anglestoright(e_left_door.angles);
 	e_right_door = getent("tunnel_vault_upperdoor_R", "targetname");
 	move_amount = 52;
-	v_pos_left = e_left_door.origin + v_side * move_amount * -1;
+	v_pos_left = e_left_door.origin + (v_side * (move_amount * -1));
 	e_left_door moveto(v_pos_left, 0.1);
-	v_pos_right = e_right_door.origin + v_side * move_amount;
+	v_pos_right = e_right_door.origin + (v_side * move_amount);
 	e_right_door moveto(v_pos_right, 0.1);
 	level waittill(#"hash_2170cc63");
 	playsoundatposition("evt_tunnel_upper_door", e_left_door.origin);
-	v_pos_left = e_left_door.origin + v_side * move_amount;
+	v_pos_left = e_left_door.origin + (v_side * move_amount);
 	e_left_door moveto(v_pos_left, 1.5);
-	v_pos_right = e_right_door.origin + v_side * move_amount * -1;
+	v_pos_right = e_right_door.origin + (v_side * (move_amount * -1));
 	e_right_door moveto(v_pos_right, 1.5);
 	while(!cp_prologue_util::function_cdd726fb("keycard_doors"))
 	{
 		wait(0.5);
 	}
-	v_pos_left = e_left_door.origin + v_side * move_amount * -1;
+	v_pos_left = e_left_door.origin + (v_side * (move_amount * -1));
 	e_left_door moveto(v_pos_left, 0.1);
-	v_pos_right = e_right_door.origin + v_side * move_amount;
+	v_pos_right = e_right_door.origin + (v_side * move_amount);
 	e_right_door moveto(v_pos_right, 0.1);
 }
 

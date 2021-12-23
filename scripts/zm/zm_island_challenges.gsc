@@ -101,7 +101,7 @@ function function_970609e0(n_challenge_index, var_3e1001b, var_80792f67, str_cha
 	s_challenge.str_info = var_3e1001b;
 	s_challenge.n_count = var_80792f67;
 	s_challenge.str_notify = str_challenge_notify;
-	s_challenge.var_c0e6cb4e = var_d675d6d8;
+	s_challenge.func_think = var_d675d6d8;
 	return s_challenge;
 }
 
@@ -172,7 +172,7 @@ function on_player_disconnect()
 	var_a879fa43 = self getentitynumber();
 	for(i = 1; i < 4; i++)
 	{
-		level clientfield::set("pillar_challenge_" + var_a879fa43 + "_" + i, 1);
+		level clientfield::set((("pillar_challenge_" + var_a879fa43) + "_") + i, 1);
 	}
 	array::add(level._challenges.var_4687355c, self._challenges.var_4687355c);
 	array::add(level._challenges.var_b88ea497, self._challenges.var_b88ea497);
@@ -197,9 +197,9 @@ function function_b7156b15(var_a879fa43)
 	self flag::init("flag_player_completed_challenge_1");
 	self flag::init("flag_player_completed_challenge_2");
 	self flag::init("flag_player_completed_challenge_3");
-	self thread function_2ce855f3(self._challenges.var_4687355c.n_index, self._challenges.var_4687355c.var_c0e6cb4e, self._challenges.var_4687355c.n_count, self._challenges.var_4687355c.str_notify);
-	self thread function_2ce855f3(self._challenges.var_b88ea497.n_index, self._challenges.var_b88ea497.var_c0e6cb4e, self._challenges.var_b88ea497.n_count, self._challenges.var_b88ea497.str_notify);
-	self thread function_2ce855f3(self._challenges.var_928c2a2e.n_index, self._challenges.var_928c2a2e.var_c0e6cb4e, self._challenges.var_928c2a2e.n_count, self._challenges.var_928c2a2e.str_notify);
+	self thread function_2ce855f3(self._challenges.var_4687355c.n_index, self._challenges.var_4687355c.func_think, self._challenges.var_4687355c.n_count, self._challenges.var_4687355c.str_notify);
+	self thread function_2ce855f3(self._challenges.var_b88ea497.n_index, self._challenges.var_b88ea497.func_think, self._challenges.var_b88ea497.n_count, self._challenges.var_b88ea497.str_notify);
+	self thread function_2ce855f3(self._challenges.var_928c2a2e.n_index, self._challenges.var_928c2a2e.func_think, self._challenges.var_928c2a2e.n_count, self._challenges.var_928c2a2e.str_notify);
 	self thread function_fbbc8608(self._challenges.var_4687355c.n_index, "flag_player_completed_challenge_1");
 	self thread function_fbbc8608(self._challenges.var_b88ea497.n_index, "flag_player_completed_challenge_2");
 	self thread function_fbbc8608(self._challenges.var_928c2a2e.n_index, "flag_player_completed_challenge_3");
@@ -479,10 +479,10 @@ function function_a00e23d0()
 	Parameters: 2
 	Flags: Linked
 */
-function function_7fc84e9c(var_a879fa43, var_15fa438f)
+function function_7fc84e9c(var_a879fa43, n_challenge)
 {
 	self endon(#"disconnect");
-	self flag::wait_till("flag_player_completed_challenge_" + var_15fa438f);
+	self flag::wait_till("flag_player_completed_challenge_" + n_challenge);
 	switch(var_a879fa43)
 	{
 		case 0:
@@ -520,15 +520,15 @@ function function_7fc84e9c(var_a879fa43, var_15fa438f)
 	Parameters: 2
 	Flags: Linked
 */
-function function_e43d4636(var_a879fa43, var_15fa438f)
+function function_e43d4636(var_a879fa43, n_challenge)
 {
 	self endon(#"disconnect");
 	level flag::wait_till("flag_init_challenge_pillars");
-	level clientfield::set("pillar_challenge_" + var_a879fa43 + "_" + var_15fa438f, 2);
-	self flag::wait_till("flag_player_completed_challenge_" + var_15fa438f);
-	level clientfield::set("pillar_challenge_" + var_a879fa43 + "_" + var_15fa438f, 3);
-	self flag::wait_till("flag_player_collected_reward_" + var_15fa438f);
-	level clientfield::set("pillar_challenge_" + var_a879fa43 + "_" + var_15fa438f, 4);
+	level clientfield::set((("pillar_challenge_" + var_a879fa43) + "_") + n_challenge, 2);
+	self flag::wait_till("flag_player_completed_challenge_" + n_challenge);
+	level clientfield::set((("pillar_challenge_" + var_a879fa43) + "_") + n_challenge, 3);
+	self flag::wait_till("flag_player_collected_reward_" + n_challenge);
+	level clientfield::set((("pillar_challenge_" + var_a879fa43) + "_") + n_challenge, 4);
 }
 
 /*
@@ -540,17 +540,17 @@ function function_e43d4636(var_a879fa43, var_15fa438f)
 	Parameters: 1
 	Flags: Linked
 */
-function function_8675d6ed(var_15fa438f)
+function function_8675d6ed(n_challenge)
 {
 	self endon(#"disconnect");
 	var_a879fa43 = self getentitynumber();
 	var_81d71db = [];
 	s_altar = struct::get("s_challenge_altar");
-	if(var_15fa438f == 1)
+	if(n_challenge == 1)
 	{
 		var_c9d33fc4 = "p7_zm_power_up_max_ammo";
 	}
-	else if(var_15fa438f == 2)
+	else if(n_challenge == 2)
 	{
 		array::add(var_81d71db, "wpn_t7_lmg_dingo_world");
 		array::add(var_81d71db, "wpn_t7_shotty_gator_world");
@@ -566,7 +566,7 @@ function function_8675d6ed(var_15fa438f)
 	self function_d655a4ce(var_a6a1ecf9);
 	self thread function_26abcbe0();
 	self thread function_994b4784(var_a6a1ecf9);
-	if(var_15fa438f == 2)
+	if(n_challenge == 2)
 	{
 		v_spawnpt = s_altar.origin + (0, 8, 30);
 	}
@@ -576,24 +576,24 @@ function function_8675d6ed(var_15fa438f)
 	}
 	var_30ff0d6c = function_5e39bbbe(var_c9d33fc4, v_spawnpt, s_altar.angles);
 	self thread function_6168d051(var_30ff0d6c);
-	if(var_15fa438f == 1)
+	if(n_challenge == 1)
 	{
 		var_30ff0d6c clientfield::set("challenge_glow_fx", 1);
 	}
-	else if(var_15fa438f == 3)
+	else if(n_challenge == 3)
 	{
 		var_30ff0d6c clientfield::set("challenge_glow_fx", 2);
 	}
-	var_30ff0d6c thread timer_til_despawn(self, var_15fa438f, v_spawnpt, 30 * -1);
+	var_30ff0d6c thread timer_til_despawn(self, n_challenge, v_spawnpt, 30 * -1);
 	self thread function_5c44a258(var_30ff0d6c);
 	var_30ff0d6c endon(#"hash_59e0fa55");
-	var_30ff0d6c.trigger = s_altar function_be89930d(var_a879fa43, var_15fa438f);
+	var_30ff0d6c.trigger = s_altar function_be89930d(var_a879fa43, n_challenge);
 	var_30ff0d6c.trigger waittill(#"trigger", e_who);
 	if(e_who == self)
 	{
 		self playsoundtoplayer("zmb_trial_unlock_reward", self);
 		var_30ff0d6c.trigger notify(#"reward_grabbed");
-		self function_640cd978(var_15fa438f, s_altar, var_c9d33fc4);
+		self player_give_reward(n_challenge, s_altar, var_c9d33fc4);
 		if(isdefined(var_30ff0d6c.trigger))
 		{
 			zm_unitrigger::unregister_unitrigger(var_30ff0d6c.trigger);
@@ -630,7 +630,7 @@ function function_5e39bbbe(var_c9d33fc4, v_origin, v_angles)
 	Parameters: 4
 	Flags: Linked
 */
-function timer_til_despawn(player, var_15fa438f, v_float, n_dist)
+function timer_til_despawn(player, n_challenge, v_float, n_dist)
 {
 	player endon(#"disconnect");
 	self endon(#"reward_grabbed");
@@ -667,7 +667,7 @@ function function_5c44a258(var_30ff0d6c)
 }
 
 /*
-	Name: function_640cd978
+	Name: player_give_reward
 	Namespace: zm_island_challenges
 	Checksum: 0x327BEB88
 	Offset: 0x31B0
@@ -675,13 +675,13 @@ function function_5c44a258(var_30ff0d6c)
 	Parameters: 3
 	Flags: Linked
 */
-function function_640cd978(var_15fa438f, s_altar, var_c9d33fc4)
+function player_give_reward(n_challenge, s_altar, var_c9d33fc4)
 {
-	if(var_15fa438f == 1)
+	if(n_challenge == 1)
 	{
 		level thread zm_powerups::specific_powerup_drop("full_ammo", self.origin);
 	}
-	else if(var_15fa438f == 2)
+	else if(n_challenge == 2)
 	{
 		if(var_c9d33fc4 == "wpn_t7_lmg_dingo_world")
 		{
@@ -701,7 +701,7 @@ function function_640cd978(var_15fa438f, s_altar, var_c9d33fc4)
 	{
 		level thread zm_powerups::specific_powerup_drop("empty_perk", self.origin);
 	}
-	self flag::set("flag_player_collected_reward_" + var_15fa438f);
+	self flag::set("flag_player_collected_reward_" + n_challenge);
 	level flag::clear("flag_player_initialized_reward");
 	self notify(#"reward_grabbed");
 }
@@ -715,7 +715,7 @@ function function_640cd978(var_15fa438f, s_altar, var_c9d33fc4)
 	Parameters: 2
 	Flags: Linked
 */
-function function_be89930d(var_a879fa43, var_15fa438f)
+function function_be89930d(var_a879fa43, n_challenge)
 {
 	unitrigger_stub = spawnstruct();
 	unitrigger_stub.origin = self.origin;
@@ -725,7 +725,7 @@ function function_be89930d(var_a879fa43, var_15fa438f)
 	unitrigger_stub.radius = 128;
 	unitrigger_stub.require_look_at = 0;
 	unitrigger_stub.var_a879fa43 = var_a879fa43;
-	unitrigger_stub.var_15fa438f = var_15fa438f;
+	unitrigger_stub.n_challenge = n_challenge;
 	zm_unitrigger::unitrigger_force_per_player_triggers(unitrigger_stub, 1);
 	unitrigger_stub.prompt_and_visibility_func = &function_6d42affc;
 	zm_unitrigger::register_static_unitrigger(unitrigger_stub, &function_1e314338);
@@ -744,7 +744,7 @@ function function_be89930d(var_a879fa43, var_15fa438f)
 function function_6d42affc(player)
 {
 	w_current = player getcurrentweapon();
-	if(zm_utility::is_placeable_mine(w_current) || zm_equipment::is_equipment(w_current) || w_current == level.weaponnone || w_current.isheroweapon == 1 && self.stub.var_15fa438f == 2)
+	if(zm_utility::is_placeable_mine(w_current) || zm_equipment::is_equipment(w_current) || w_current == level.weaponnone || w_current.isheroweapon == 1 && self.stub.n_challenge == 2)
 	{
 		self sethintstringforplayer(player, "");
 		return 0;
@@ -774,7 +774,7 @@ function function_1e314338()
 	{
 		self waittill(#"trigger", player);
 		w_current = player getcurrentweapon();
-		if(zm_utility::is_placeable_mine(w_current) || zm_equipment::is_equipment(w_current) || w_current == level.weaponnone || w_current.isheroweapon == 1 && self.stub.var_15fa438f == 2)
+		if(zm_utility::is_placeable_mine(w_current) || zm_equipment::is_equipment(w_current) || w_current == level.weaponnone || w_current.isheroweapon == 1 && self.stub.n_challenge == 2)
 		{
 			continue;
 		}
@@ -1040,7 +1040,7 @@ function function_2ce855f3(n_challenge_index, var_d675d6d8, var_80792f67, str_ch
 	{
 		self waittill(str_challenge_notify);
 		var_80792f67--;
-		self.var_873a3e27[n_challenge_index] = 1 - var_80792f67 / var_ea184c3d;
+		self.var_873a3e27[n_challenge_index] = 1 - (var_80792f67 / var_ea184c3d);
 	}
 	self flag::set("flag_player_completed_challenge_" + n_challenge_index);
 }
@@ -1222,9 +1222,9 @@ function function_16ba3a1e(cmd)
 					arrayremovevalue(level._challenges.var_4687355c, player._challenges.var_4687355c);
 					arrayremovevalue(level._challenges.var_b88ea497, player._challenges.var_b88ea497);
 					arrayremovevalue(level._challenges.var_928c2a2e, player._challenges.var_928c2a2e);
-					player thread function_2ce855f3(player._challenges.var_4687355c.n_index, player._challenges.var_4687355c.var_c0e6cb4e, player._challenges.var_4687355c.n_count, player._challenges.var_4687355c.str_notify);
-					player thread function_2ce855f3(player._challenges.var_b88ea497.n_index, player._challenges.var_b88ea497.var_c0e6cb4e, player._challenges.var_b88ea497.n_count, player._challenges.var_b88ea497.str_notify);
-					player thread function_2ce855f3(player._challenges.var_928c2a2e.n_index, player._challenges.var_928c2a2e.var_c0e6cb4e, player._challenges.var_928c2a2e.n_count, player._challenges.var_928c2a2e.str_notify);
+					player thread function_2ce855f3(player._challenges.var_4687355c.n_index, player._challenges.var_4687355c.func_think, player._challenges.var_4687355c.n_count, player._challenges.var_4687355c.str_notify);
+					player thread function_2ce855f3(player._challenges.var_b88ea497.n_index, player._challenges.var_b88ea497.func_think, player._challenges.var_b88ea497.n_count, player._challenges.var_b88ea497.str_notify);
+					player thread function_2ce855f3(player._challenges.var_928c2a2e.n_index, player._challenges.var_928c2a2e.func_think, player._challenges.var_928c2a2e.n_count, player._challenges.var_928c2a2e.str_notify);
 				}
 				return 1;
 			}

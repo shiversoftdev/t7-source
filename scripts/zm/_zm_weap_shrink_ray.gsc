@@ -180,7 +180,7 @@ function function_fe7a4182(upgraded)
 	{
 		if(isai(zombies[i]))
 		{
-			zombies[i] thread function_dd384ad7(upgraded, self);
+			zombies[i] thread shrink_zombie(upgraded, self);
 			continue;
 		}
 		zombies[i] notify(#"shrunk", upgraded);
@@ -238,7 +238,7 @@ function function_9af5d92d(upgraded, attacker)
 }
 
 /*
-	Name: function_dd384ad7
+	Name: shrink_zombie
 	Namespace: zm_weap_shrink_ray
 	Checksum: 0xD22E8E38
 	Offset: 0xB68
@@ -246,7 +246,7 @@ function function_9af5d92d(upgraded, attacker)
 	Parameters: 2
 	Flags: Linked
 */
-function function_dd384ad7(upgraded, attacker)
+function shrink_zombie(upgraded, attacker)
 {
 	self endon(#"death");
 	if(isdefined(self.shrinked) && self.shrinked)
@@ -330,10 +330,10 @@ function function_dd384ad7(upgraded, attacker)
 			view_pos = attacker getweaponmuzzlepoint();
 			test_origin = self getcentroid();
 			test_range_squared = distancesquared(view_pos, test_origin);
-			dist_mult = fling_range_squared - test_range_squared / fling_range_squared;
+			dist_mult = (fling_range_squared - test_range_squared) / fling_range_squared;
 			fling_vec = vectornormalize(test_origin - view_pos);
 			fling_vec = (fling_vec[0], fling_vec[1], abs(fling_vec[2]));
-			fling_vec = vectorscale(fling_vec, 100 + 100 * dist_mult);
+			fling_vec = vectorscale(fling_vec, 100 + (100 * dist_mult));
 			self dodamage(self.health + 666, attacker.origin, attacker);
 			self startragdoll();
 			self launchragdoll(fling_vec);

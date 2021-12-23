@@ -283,7 +283,7 @@ private function function_25c29799(localclientnum)
 		array::push_front(var_98ba48a2, bgb);
 		for(i = 0; i < 10; i++)
 		{
-			var_f3eb485b showpart(localclientnum, level.bgb[var_98ba48a2[i]].var_d3c80142 + "_" + i);
+			var_f3eb485b showpart(localclientnum, (level.bgb[var_98ba48a2[i]].var_d3c80142 + "_") + i);
 		}
 		wait(0.01);
 	}
@@ -896,7 +896,7 @@ private function function_fda54943(localclientnum)
 		{
 			foreach(var_9f84532c, machine in level.var_5081bd63)
 			{
-				if(distancesquared(self.origin, machine.origin) <= var_89caac36 && 96 > abs(self.origin[2] - machine.origin[2]))
+				if(distancesquared(self.origin, machine.origin) <= var_89caac36 && 96 > (abs(self.origin[2] - machine.origin[2])))
 				{
 					wait(randomintrange(1, 4));
 					machine playsound(localclientnum, "zmb_bgb_lionhead_roar");
@@ -977,7 +977,7 @@ function function_6c7a96b4(player, base_cost, buys, rounds, firesale)
 		var_33ea806b = floor(rounds / level.var_e1dee7ba);
 		var_33ea806b = math::clamp(var_33ea806b, 0, level.var_8ef45dc2);
 		var_39a90c5a = pow(level.var_a3e3127d, var_33ea806b);
-		cost = cost + level.var_f02c5598 * var_39a90c5a;
+		cost = cost + (level.var_f02c5598 * var_39a90c5a);
 	}
 	if(buys >= 2)
 	{
@@ -986,7 +986,7 @@ function function_6c7a96b4(player, base_cost, buys, rounds, firesale)
 	cost = int(cost);
 	if(500 != base_cost)
 	{
-		cost = cost - 500 - base_cost;
+		cost = cost - (500 - base_cost);
 	}
 	return cost;
 }

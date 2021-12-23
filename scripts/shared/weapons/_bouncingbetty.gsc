@@ -424,7 +424,7 @@ function bouncingbettyjumpandexplode()
 	{
 		jumpheight = level.bettyjumpheightwall;
 	}
-	explodepos = self.origin + jumpdir * jumpheight;
+	explodepos = self.origin + (jumpdir * jumpheight);
 	self.killcament moveto(explodepos + self.killcamoffset, level.bettyjumptime, 0, level.bettyjumptime);
 	self clientfield::set("bouncingbetty_state", 1);
 	wait(level.bettyjumptime);

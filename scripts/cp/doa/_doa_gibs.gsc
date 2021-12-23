@@ -165,7 +165,7 @@ function trygibbinghead(entity, damage, hitloc, isexplosive)
 	{
 		gibserverutils::gibhead(entity);
 	}
-	else if(entity.health - damage <= 0 && randomfloatrange(0, 1) <= 0.25)
+	else if((entity.health - damage) <= 0 && randomfloatrange(0, 1) <= 0.25)
 	{
 		gibserverutils::gibhead(entity);
 	}
@@ -184,7 +184,7 @@ function trygibbinglimb(entity, damage, hitloc = level.doa.hitlocs[randomint(lev
 {
 	if(isexplosive && randomfloatrange(0, 1) <= 0.35)
 	{
-		if(entity.health - damage <= 0 && entity.allowdeath && math::cointoss())
+		if((entity.health - damage) <= 0 && entity.allowdeath && math::cointoss())
 		{
 			if(!gibserverutils::isgibbed(entity, 16))
 			{
@@ -203,11 +203,11 @@ function trygibbinglimb(entity, damage, hitloc = level.doa.hitlocs[randomint(lev
 			gibserverutils::gibleftarm(entity);
 		}
 	}
-	else if(entity.health - damage <= 0 && entity.allowdeath && isinarray(array("right_hand", "right_arm_lower", "right_arm_upper"), hitloc))
+	else if((entity.health - damage) <= 0 && entity.allowdeath && isinarray(array("right_hand", "right_arm_lower", "right_arm_upper"), hitloc))
 	{
 		gibserverutils::gibrightarm(entity);
 	}
-	else if(entity.health - damage <= 0 && entity.allowdeath && randomfloatrange(0, 1) <= 0.45)
+	else if((entity.health - damage) <= 0 && entity.allowdeath && randomfloatrange(0, 1) <= 0.45)
 	{
 		if(math::cointoss())
 		{
@@ -234,9 +234,9 @@ function trygibbinglimb(entity, damage, hitloc = level.doa.hitlocs[randomint(lev
 */
 function trygibbinglegs(entity, damage, hitloc = level.doa.hitlocs[randomint(level.doa.hitlocs.size)], isexplosive = 0, attacker = entity)
 {
-	cangiblegs = entity.health - damage <= 0 && entity.allowdeath;
-	cangiblegs = cangiblegs || (entity.health - damage / entity.maxhealth <= 0.25 && distancesquared(entity.origin, attacker.origin) <= 600 * 600 && entity.allowdeath);
-	if(entity.health - damage <= 0 && entity.allowdeath && isexplosive && randomfloatrange(0, 1) <= 0.5)
+	cangiblegs = (entity.health - damage) <= 0 && entity.allowdeath;
+	cangiblegs = cangiblegs || (((entity.health - damage) / entity.maxhealth) <= 0.25 && distancesquared(entity.origin, attacker.origin) <= (600 * 600) && entity.allowdeath);
+	if((entity.health - damage) <= 0 && entity.allowdeath && isexplosive && randomfloatrange(0, 1) <= 0.5)
 	{
 		if(!gibserverutils::isgibbed(entity, 384))
 		{
@@ -249,7 +249,7 @@ function trygibbinglegs(entity, damage, hitloc = level.doa.hitlocs[randomint(lev
 	}
 	else if(cangiblegs && isinarray(array("left_leg_upper", "left_leg_lower", "left_foot"), hitloc) && randomfloatrange(0, 1) <= 1)
 	{
-		if(entity.health - damage > 0)
+		if((entity.health - damage) > 0)
 		{
 			entity.becomecrawler = 1;
 		}
@@ -260,7 +260,7 @@ function trygibbinglegs(entity, damage, hitloc = level.doa.hitlocs[randomint(lev
 	}
 	else if(cangiblegs && isinarray(array("right_leg_upper", "right_leg_lower", "right_foot"), hitloc) && randomfloatrange(0, 1) <= 1)
 	{
-		if(entity.health - damage > 0)
+		if((entity.health - damage) > 0)
 		{
 			entity.becomecrawler = 1;
 		}
@@ -269,7 +269,7 @@ function trygibbinglegs(entity, damage, hitloc = level.doa.hitlocs[randomint(lev
 			gibserverutils::gibrightleg(entity);
 		}
 	}
-	else if(entity.health - damage <= 0 && entity.allowdeath && randomfloatrange(0, 1) <= 0.25)
+	else if((entity.health - damage) <= 0 && entity.allowdeath && randomfloatrange(0, 1) <= 0.25)
 	{
 		if(math::cointoss())
 		{

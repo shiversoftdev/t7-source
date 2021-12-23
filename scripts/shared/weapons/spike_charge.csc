@@ -147,11 +147,11 @@ function spike_detonation(localclientnum)
 	{
 		player = getlocalplayer(localclientnum);
 		explosion_distance = distancesquared(spike_position, player.origin);
-		if(explosion_distance <= 450 * 450)
+		if(explosion_distance <= (450 * 450))
 		{
 			player thread postfx::playpostfxbundle("pstfx_dust_chalk");
 		}
-		if(explosion_distance <= 300 * 300)
+		if(explosion_distance <= (300 * 300))
 		{
 			player thread postfx::playpostfxbundle("pstfx_dust_concrete");
 		}

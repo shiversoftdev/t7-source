@@ -147,7 +147,7 @@ function init()
 			{
 				name = spawner.archetype;
 			}
-			cmd = rootmenu + name + "\" \"zombie_devgui aispawn; scr_spawn_name " + name + "\" \n";
+			cmd = (((rootmenu + name) + "\" \"zombie_devgui aispawn; scr_spawn_name ") + name) + "\" \n";
 			level.doa.enemyspawners[name] = spawner;
 			/#
 				adddebugcommand(cmd);
@@ -169,7 +169,7 @@ function init()
 				classname = type[1];
 				name = "zombie_" + classname;
 			}
-			cmd = rootmenu + name + "\" \"zombie_devgui aispawn; scr_spawn_name " + classname + "\" \n";
+			cmd = (((rootmenu + name) + "\" \"zombie_devgui aispawn; scr_spawn_name ") + classname) + "\" \n";
 			level.doa.enemyspawners[name] = spawner;
 			/#
 				adddebugcommand(cmd);

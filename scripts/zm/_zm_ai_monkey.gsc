@@ -56,7 +56,7 @@ autoexec function init()
 	level.var_45abf882 = [];
 	for(i = 0; i < 4; i++)
 	{
-		level.var_45abf882[i] = "rtrg_ai_zm_dlc5_monkey_thundergun_roll_0" + i + 1;
+		level.var_45abf882[i] = "rtrg_ai_zm_dlc5_monkey_thundergun_roll_0" + (i + 1);
 	}
 }
 
@@ -131,7 +131,7 @@ function function_f7725aa8(entity)
 			continue;
 		}
 		test_origin = players[i] geteye();
-		if(distancesquared(origin, test_origin) > level.monkey_zombie_groundhit_damage_radius * level.monkey_zombie_groundhit_damage_radius)
+		if(distancesquared(origin, test_origin) > (level.monkey_zombie_groundhit_damage_radius * level.monkey_zombie_groundhit_damage_radius))
 		{
 			continue;
 		}
@@ -1094,7 +1094,7 @@ function monkey_pack_think()
 			monkey = spawner monkey_zombie_spawn(self);
 			self.monkeys[self.monkeys.size] = monkey;
 		}
-		if(i < level.monkeys_per_pack - 1)
+		if(i < (level.monkeys_per_pack - 1))
 		{
 			time = randomfloatrange(2.2, 4.4);
 			wait(time);
@@ -2150,7 +2150,7 @@ function monkey_zombie_attack_perk()
 	level thread play_player_perk_theft_vox(self.perk.script_noteworthy, self);
 	spot = self.attack.script_int;
 	self teleport(self.attack.origin, self.attack.angles);
-	monkey_print("attack " + self.perk.script_noteworthy + " from " + spot);
+	monkey_print((("attack " + self.perk.script_noteworthy) + " from ") + spot);
 	choose = 0;
 	if(spot == 1)
 	{
@@ -2519,7 +2519,7 @@ function monkey_zombie_ground_hit_think()
 				}
 				test_origin = players[i] geteye();
 				d = distancesquared(origin, test_origin);
-				if(d > level.monkey_zombie_groundhit_trigger_radius * level.monkey_zombie_groundhit_trigger_radius)
+				if(d > (level.monkey_zombie_groundhit_trigger_radius * level.monkey_zombie_groundhit_trigger_radius))
 				{
 					continue;
 				}
@@ -2596,7 +2596,7 @@ function groundhit_watcher(animname)
 			continue;
 		}
 		test_origin = players[i] geteye();
-		if(distancesquared(origin, test_origin) > level.monkey_zombie_groundhit_damage_radius * level.monkey_zombie_groundhit_damage_radius)
+		if(distancesquared(origin, test_origin) > (level.monkey_zombie_groundhit_damage_radius * level.monkey_zombie_groundhit_damage_radius))
 		{
 			continue;
 		}

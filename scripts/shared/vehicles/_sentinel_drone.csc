@@ -502,12 +502,12 @@ function sentinel_spawn_broken_arm(localclientnum, arm, arm_tag, claw_tag)
 	{
 		velocity_length = 10;
 	}
-	launch_dir = launch_dir * 0.5 + velocity_normal * 0.5;
+	launch_dir = (launch_dir * 0.5) + (velocity_normal * 0.5);
 	launch_dir = launch_dir * velocity_length;
-	claw_pos = self gettagorigin(claw_tag) + launch_dir * 3;
+	claw_pos = self gettagorigin(claw_tag) + (launch_dir * 3);
 	claw_ang = self gettagangles(claw_tag);
 	thread sentinel_launch_piece(localclientnum, "veh_t7_dlc3_sentinel_drone_spawn_claw", claw_pos, claw_ang, self.origin, launch_dir * 1.3);
-	arm_pos = self gettagorigin(arm_tag) + launch_dir * 2;
+	arm_pos = self gettagorigin(arm_tag) + (launch_dir * 2);
 	arm_ang = self gettagangles(arm_tag);
 	thread sentinel_launch_piece(localclientnum, "veh_t7_dlc3_sentinel_drone_spawn_arm", arm_pos, arm_ang, self.origin, launch_dir);
 }
@@ -687,7 +687,7 @@ function sentinel_drone_face_cut(localclientnum, oldval, newval, bnewent, biniti
 	{
 		velocity_length = 10;
 	}
-	launch_dir = launch_dir * 0.5 + velocity_normal * 0.5;
+	launch_dir = (launch_dir * 0.5) + (velocity_normal * 0.5);
 	launch_dir = launch_dir * velocity_length;
 	thread sentinel_launch_piece(localclientnum, "veh_t7_dlc3_sentinel_drone_faceplate", face_pos, face_ang, self.origin, launch_dir);
 	playfxontag(localclientnum, "dlc3/stalingrad/fx_sentinel_drone_dest_core", self, "tag_faceplate_d0");
@@ -785,7 +785,7 @@ function sentinel_play_engine_fx(localclientnum, b_engine, b_roll_engine)
 */
 function sentinel_play_taunt(localclientnum, taunt_arr)
 {
-	if(isdefined(level._lastplayed_drone_taunt) && gettime() - level._lastplayed_drone_taunt < 6000)
+	if(isdefined(level._lastplayed_drone_taunt) && (gettime() - level._lastplayed_drone_taunt) < 6000)
 	{
 		return;
 	}
@@ -851,7 +851,7 @@ function sentinel_launch_piece(localclientnum, model, pos, angles, hitpos, force
 			count++;
 			if(count == 5)
 			{
-				if(posheight - dynent.origin[2] < 15)
+				if((posheight - dynent.origin[2]) < 15)
 				{
 					setdynentenabled(dynent, 0);
 				}

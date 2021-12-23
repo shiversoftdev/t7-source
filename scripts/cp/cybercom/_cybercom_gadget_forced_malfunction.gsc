@@ -345,7 +345,7 @@ private function function_609fcb0a(attacker, disablefor, weapon)
 	miss = 100;
 	while(isalive(self) && gettime() < disablefor)
 	{
-		if(getdvarint("scr_malfunction_rate_of_failure", 25) + miss > randomint(100))
+		if((getdvarint("scr_malfunction_rate_of_failure", 25) + miss) > randomint(100))
 		{
 			miss = 0;
 			self dodamage(5, self.origin, (isdefined(attacker) ? attacker : undefined), undefined, "none", "MOD_UNKNOWN", 0, weapon, -1, 1);
@@ -392,7 +392,7 @@ private function _force_malfunction(attacker, disabletimemsec)
 		self kill(self.origin, (isdefined(attacker) ? attacker : undefined), undefined, weapon);
 		return;
 	}
-	disablefor = gettime() + disabletime + randomint(4000);
+	disablefor = (gettime() + disabletime) + randomint(4000);
 	if(self.archetype == "robot")
 	{
 		self thread function_609fcb0a(attacker, disablefor, weapon);
@@ -424,7 +424,7 @@ private function _force_malfunction(attacker, disabletimemsec)
 		}
 		type = self cybercom::function_5e3d3aa();
 		variant = attacker cybercom::getanimationvariant(base);
-		self animscripted("malfunction_intro_anim", self.origin, self.angles, "ai_" + base + "_" + type + "_exposed_rifle_malfunction" + variant);
+		self animscripted("malfunction_intro_anim", self.origin, self.angles, (((("ai_" + base) + "_") + type) + "_exposed_rifle_malfunction") + variant);
 		self thread cybercom::stopanimscriptedonnotify("damage_pain", "malfunction_intro_anim", 1, attacker, weapon);
 		self thread cybercom::stopanimscriptedonnotify("notify_melee_damage", "malfunction_intro_anim", 1, attacker, weapon);
 		self waittill_match(#"malfunction_intro_anim");
@@ -434,7 +434,7 @@ private function _force_malfunction(attacker, disabletimemsec)
 	{
 		if(gettime() > var_ac712236)
 		{
-			var_ac712236 = gettime() + randomfloatrange(getdvarfloat("scr_malfunction_duration_min_wait", 2), getdvarfloat("scr_malfunction_duration_max_wait", 3.25)) * 1000;
+			var_ac712236 = gettime() + (randomfloatrange(getdvarfloat("scr_malfunction_duration_min_wait", 2), getdvarfloat("scr_malfunction_duration_max_wait", 3.25)) * 1000);
 			if(getdvarint("scr_malfunction_rate_of_failure", 90) > randomint(100))
 			{
 				self.malfunctionreaction = 1;
@@ -492,7 +492,7 @@ function ai_activateforcedmalfuncton(target, var_9bc2efcb = 1)
 	if(isdefined(var_9bc2efcb) && var_9bc2efcb)
 	{
 		type = self cybercom::function_5e3d3aa();
-		self animscripted("ai_cybercom_anim", self.origin, self.angles, "ai_base_rifle_" + type + "_exposed_cybercom_activate");
+		self animscripted("ai_cybercom_anim", self.origin, self.angles, ("ai_base_rifle_" + type) + "_exposed_cybercom_activate");
 		self waittill_match(#"ai_cybercom_anim");
 	}
 	weapon = getweapon("gadget_forced_malfunction");

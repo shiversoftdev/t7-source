@@ -514,18 +514,18 @@ function function_e949d1d7()
 	Parameters: 1
 	Flags: Linked
 */
-function function_82ae321c(var_db04d156)
+function function_82ae321c(n_stage)
 {
 	/#
 		level endon(#"hash_9a8b82c3");
 	#/
 	level notify(#"hash_c69c8ddc");
-	self clientfield::set("spider_queen_stage_bleed", var_db04d156);
+	self clientfield::set("spider_queen_stage_bleed", n_stage);
 	level flag::clear("spider_queen_weak_spot_exposed");
 	if(level flag::get("spider_queen_spawn_babies"))
 	{
 		level flag::set("spider_baby_hit_react");
-		if(var_db04d156 == 2)
+		if(n_stage == 2)
 		{
 			level scene::play("cin_t7_ai_zm_dlc2_spider_queen_baby_drop_pain_react_phase_2", self);
 		}
@@ -542,7 +542,7 @@ function function_82ae321c(var_db04d156)
 			level scene::play("cin_t7_ai_zm_dlc2_spider_queen_backwall_outro", self);
 		}
 	}
-	else if(var_db04d156 == 2)
+	else if(n_stage == 2)
 	{
 		level scene::play("cin_t7_ai_zm_dlc2_spider_queen_arm_attack_pain_react_phase_2", self);
 	}
@@ -554,7 +554,7 @@ function function_82ae321c(var_db04d156)
 	self thread function_9b964659();
 	self thread function_b6ea5d0d();
 	level thread scene::play("cin_t7_ai_zm_dlc2_spider_queen_idle", self);
-	if(var_db04d156 == 2)
+	if(n_stage == 2)
 	{
 		level.var_4e5986ea = 3;
 	}

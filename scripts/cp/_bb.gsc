@@ -81,7 +81,7 @@ private function function_b918cb9(player)
 		{
 			var_6a98da9a = var_6a98da9a + ";";
 		}
-		var_6a98da9a = var_6a98da9a + var_3ca39bd6 + ":" + var_ee404e07;
+		var_6a98da9a = var_6a98da9a + ((var_3ca39bd6 + ":") + var_ee404e07);
 	}
 	return var_6a98da9a;
 }

@@ -158,7 +158,7 @@ function play_boost_start_vox(localclientnum)
 		}
 	}
 	wait(0.5);
-	level.booststartresponse = "boostStartResp" + level.mpboostresponse[self getmpdialogname()] + level.boostnumber;
+	level.booststartresponse = ("boostStartResp" + level.mpboostresponse[self getmpdialogname()]) + level.boostnumber;
 	if(isdefined(level.boostresponseentnum))
 	{
 		responder = getentbynum(localclientnum, level.boostresponseentnum);

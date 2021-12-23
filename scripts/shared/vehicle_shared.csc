@@ -292,45 +292,81 @@ function stop_exhaust(localclientnum)
 	Namespace: vehicle
 	Checksum: 0x46D6B1E2
 	Offset: 0x1B10
-	Size: 0x96
+	Size: 0x2A6
 	Parameters: 0
 	Flags: Linked
 */
 function aircraft_dustkick()
 {
-System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
-Parameter name: index
-   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   at System.Collections.Generic.List`1.get_Item(Int32 index)
-   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 649
-   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 211
-/*
-No Output
-*/
-
-	/* ======== */
-
-/* 
-	Stack: 
-*/
-	/* ======== */
-
-/* 
-	Blocks: 
-	Cerberus.Logic.BasicBlock at 0x1B10, end at 0x1BA7
-	Cerberus.Logic.IfBlock at 0x1B84, end at 0x1B8E
-	Cerberus.Logic.IfBlock at 0x1B8E, end at 0x1BA6
-	Cerberus.Logic.IfBlock at 0x1BA6, end at 0x1BDC
-	Cerberus.Logic.IfBlock at 0x1C16, end at 0x1DB4
-	Cerberus.Logic.IfBlock at 0x1C1E, end at 0x1C36
-	Cerberus.Logic.IfBlock at 0x1C36, end at 0x1C6A
-	Cerberus.Logic.ElseBlock at 0x1BDC, end at 0x1BE6
-*/
-	/* ======== */
-
+	waittillframeend();
+	self endon(#"kill_treads_forever");
+	self endon(#"entityshutdown");
+	if(!isdefined(self))
+	{
+		return;
+	}
+	if(isdefined(self.csf_no_tread) && self.csf_no_tread)
+	{
+		return;
+	}
+	if(self.vehicleclass == "plane_mig17" || self.vehicleclass == "plane_mig21")
+	{
+		numframespertrace = 1;
+	}
+	else
+	{
+		numframespertrace = 3;
+	}
+	dotracethisframe = numframespertrace;
+	repeatrate = 1;
+	trace = undefined;
+	d = undefined;
+	trace_ent = self;
+	while(isdefined(self))
+	{
+		if(repeatrate <= 0)
+		{
+			repeatrate = 1;
+		}
+		if(self.vehicleclass == "plane_mig17" || self.vehicleclass == "plane_mig21")
+		{
+			repeatrate = 0.02;
+		}
+		waitrealtime(repeatrate);
+		if(!isdefined(self))
+		{
+			return;
+		}
+		dotracethisframe--;
+		if(dotracethisframe <= 0)
+		{
+			dotracethisframe = numframespertrace;
+			trace = tracepoint(trace_ent.origin, trace_ent.origin - vectorscale((0, 0, 1), 100000));
+			d = distance(trace_ent.origin, trace["position"]);
+			if(d > 350)
+			{
+				repeatrate = (d - 350) / (1200 - 350) * (0.2 - 0.1) + 0.1;
+			}
+			else
+			{
+				repeatrate = 0.1;
+			}
+		}
+		if(isdefined(trace))
+		{
+			if(d > 1200)
+			{
+				repeatrate = 1;
+				continue;
+			}
+			if(!isdefined(trace["surfacetype"]))
+			{
+				trace["surfacetype"] = "dirt";
+			}
+		}
+	}
 }
 
-/*Unknown Op Code (0x01D5) at 1C6E*/
 /*
 	Name: weapon_fired
 	Namespace: vehicle
@@ -360,7 +396,7 @@ function weapon_fired()
 			if(player_distance < 160000)
 			{
 				fraction = player_distance / 160000;
-				time = 4 - 3 * fraction;
+				time = 4 - (3 * fraction);
 				if(isdefined(players[i]))
 				{
 					if(isdefined(self.shootshock) && self.shootshock != "")
@@ -881,13 +917,13 @@ function toggle_fx_bundle(localclientnum, name, turnon)
 		i = 1;
 		for(;;)
 		{
-			fx = getstructfield(self.settings, name + "_fx_" + i);
+			fx = getstructfield(self.settings, (name + "_fx_") + i);
 			if(!isdefined(fx))
 			{
 				return;
 			}
-			tag = getstructfield(self.settings, name + "_tag_" + i);
-			delay = getstructfield(self.settings, name + "_delay_" + i);
+			tag = getstructfield(self.settings, (name + "_tag_") + i);
+			delay = getstructfield(self.settings, (name + "_delay_") + i);
 			self thread delayed_fx_thread(localclientnum, name, fx, tag, delay);
 			i++;
 		}

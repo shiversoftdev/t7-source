@@ -572,7 +572,7 @@ private function keepercompanionmovementservice(entity)
 			entity thread function_34117adf(entity.leader.teleport_location);
 			return;
 		}
-		if(entity.leader.var_122a2dda === 1)
+		if(entity.leader.is_flung === 1)
 		{
 			if(isdefined(entity.leader.var_fa1ecd39))
 			{
@@ -593,7 +593,7 @@ private function keepercompanionmovementservice(entity)
 		if(player laststand::player_is_in_laststand() && entity.reviving_a_player === 0 && player.revivetrigger.beingrevived !== 1)
 		{
 			time = gettime();
-			if(distancesquared(entity.origin, player.origin) <= 1024 * 1024 && time >= entity.var_57e708f6)
+			if(distancesquared(entity.origin, player.origin) <= (1024 * 1024) && time >= entity.var_57e708f6)
 			{
 				entity.reviving_a_player = 1;
 				entity function_95adf61c(player);
@@ -616,7 +616,7 @@ private function keepercompanionmovementservice(entity)
 			if(isinarray(entity.var_fb400bf7, powerup.powerup_name))
 			{
 				dist = distancesquared(entity.origin, powerup.origin);
-				if(dist <= 147456 && randomint(100) < 50 + 10 * entity.var_34a9f1ad)
+				if(dist <= 147456 && randomint(100) < (50 + (10 * entity.var_34a9f1ad)))
 				{
 					entity setgoal(powerup.origin, 1);
 					entity.var_a0c5deb2 = gettime() + randomintrange(2500, 3500);
@@ -758,7 +758,7 @@ private function function_3463b8c2(var_ee6ad78e)
 	var_292fba5b = arraygetclosest(var_ee6ad78e, var_c9277d64);
 	var_577ef8dd = getnode(var_292fba5b.target, "targetname");
 	self teleport_to_location(var_577ef8dd.origin, var_577ef8dd.angles);
-	while(!isdefined(self.leader) || !isalive(self.leader) || (isdefined(self.leader.var_122a2dda) && self.leader.var_122a2dda))
+	while(!isdefined(self.leader) || !isalive(self.leader) || (isdefined(self.leader.is_flung) && self.leader.is_flung))
 	{
 		self setgoal(var_577ef8dd.origin);
 		wait(0.05);
@@ -819,7 +819,7 @@ private function function_ab299a53(parasite)
 {
 	point = self;
 	height_difference = abs(point.origin[2] - parasite.origin[2]);
-	var_3b804002 = 1.5 * height_difference * 1.5 * height_difference;
+	var_3b804002 = (1.5 * height_difference) * (1.5 * height_difference);
 	return distancesquared(point.origin, parasite.origin) > var_3b804002;
 }
 
@@ -854,7 +854,7 @@ function function_95adf61c(player)
 	{
 		self.companion_destination = player.origin;
 	}
-	if(distancesquared(self.companion_destination, self.origin) <= 450 * 450)
+	if(distancesquared(self.companion_destination, self.origin) <= (450 * 450))
 	{
 		self forceteleport(self.origin, self.angles, 1);
 		wait(0.05);
@@ -1041,7 +1041,7 @@ private function function_36af0313(entity, var_109b8552)
 				var_aef04392 = getanimlength("");
 			}
 		#/
-		entity.var_285f7306 = gettime() + var_aef04392 * 1000;
+		entity.var_285f7306 = gettime() + (var_aef04392 * 1000);
 		/#
 			recordenttext("", self, (0, 1, 0), "");
 		#/
@@ -1090,7 +1090,7 @@ private function function_87727b5b(entity)
 	validenemies = [];
 	foreach(var_84d7c5bb, enemy in enemies)
 	{
-		if(enemy.team != entity.team && (entity cansee(enemy) || distancesquared(entity.origin, enemy.origin) <= 350 * 350))
+		if(enemy.team != entity.team && (entity cansee(enemy) || distancesquared(entity.origin, enemy.origin) <= (350 * 350)))
 		{
 			if(enemy.archetype === "zombie" && (!(isdefined(enemy.completed_emerging_into_playable_area) && enemy.completed_emerging_into_playable_area)))
 			{
@@ -1182,7 +1182,7 @@ private function keeperupdatethunderwallattackparams(entity)
 	}
 	else if(var_a943c5d0 && (!(isdefined(entity.var_92aa697) && entity.var_92aa697)) && isdefined(entity.var_8cf1ff79))
 	{
-		if(var_a59136fc.size <= 3 && distancesquared(entity.var_8cf1ff79, entity.origin) < 500 * 500)
+		if(var_a59136fc.size <= 3 && distancesquared(entity.var_8cf1ff79, entity.origin) < (500 * 500))
 		{
 			if(randomint(100) < 10)
 			{
@@ -1429,7 +1429,7 @@ private function function_5c472d67(entity, var_4fd6352b, var_e54db1ed)
 		}
 		if(var_e54db1ed != "attack_up")
 		{
-			tooclose = distancesquared(var_4fd6352b, zombie.origin) <= 64 * 64;
+			tooclose = distancesquared(var_4fd6352b, zombie.origin) <= (64 * 64);
 			if(!tooclose && !util::within_fov(var_4fd6352b, entity.angles, zombie.origin, fov))
 			{
 				continue;
@@ -1437,17 +1437,17 @@ private function function_5c472d67(entity, var_4fd6352b, var_e54db1ed)
 		}
 		var_ce2c8115 = distancesquared(var_4fd6352b, zombie getcentroid());
 		level.var_fb631584[level.var_fb631584.size] = zombie;
-		var_e3b3d13c = var_13bc5a88 - var_ce2c8115 / var_13bc5a88;
+		var_e3b3d13c = (var_13bc5a88 - var_ce2c8115) / var_13bc5a88;
 		if(var_e54db1ed == "attack_up")
 		{
-			var_94f0027d = vectornormalize(zombie.origin - entity.origin + vectorscale((0, 0, 1), 200));
+			var_94f0027d = vectornormalize(zombie.origin - (entity.origin + vectorscale((0, 0, 1), 200)));
 		}
 		else
 		{
 			var_94f0027d = vectornormalize(zombie.origin - entity.origin);
 		}
 		var_94f0027d = (var_94f0027d[0], var_94f0027d[1], abs(var_94f0027d[2]));
-		var_94f0027d = vectorscale(var_94f0027d, 75 + 75 * var_e3b3d13c);
+		var_94f0027d = vectorscale(var_94f0027d, 75 + (75 * var_e3b3d13c));
 		level.var_90c9a476[level.var_90c9a476.size] = var_94f0027d;
 	}
 }

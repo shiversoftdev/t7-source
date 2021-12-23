@@ -77,7 +77,7 @@ function fallerdropaction(entity, asmstatename)
 function fallerdropactionupdate(entity, asmstatename)
 {
 	ground_pos = zm_utility::groundpos_ignore_water_new(entity.origin);
-	if(entity.origin[2] - ground_pos[2] < 20)
+	if((entity.origin[2] - ground_pos[2]) < 20)
 	{
 		return 4;
 	}
@@ -376,7 +376,7 @@ function zombie_faller_do_fall()
 			self.zombie_faller_should_drop = 1;
 			break;
 		}
-		else if(gettime() >= self.zombie_faller_wait_start + 20000)
+		else if(gettime() >= (self.zombie_faller_wait_start + 20000))
 		{
 			self.zombie_faller_should_drop = 1;
 			break;
@@ -409,7 +409,7 @@ function zombie_faller_do_fall()
 	self stopanimscripted();
 	landanimdelta = 15;
 	ground_pos = zm_utility::groundpos_ignore_water_new(self.origin);
-	physdist = self.origin[2] - ground_pos[2] + landanimdelta;
+	physdist = (self.origin[2] - ground_pos[2]) + landanimdelta;
 	if(physdist > 0)
 	{
 		self.faller_drop = 1;
@@ -436,7 +436,7 @@ function zombie_fall_loop()
 	while(true)
 	{
 		ground_pos = zm_utility::groundpos_ignore_water_new(self.origin);
-		if(self.origin[2] - ground_pos[2] < 20)
+		if((self.origin[2] - ground_pos[2]) < 20)
 		{
 			self notify(#"faller_on_ground");
 			break;
@@ -548,7 +548,7 @@ function zombie_faller_watch_player(player)
 		{
 			if(inrange)
 			{
-				if(inrangetime + timer < gettime())
+				if((inrangetime + timer) < gettime())
 				{
 					self.zombie_faller_should_drop = 1;
 					break;
@@ -957,7 +957,7 @@ function in_player_fov(player)
 	{
 		banzaivsplayerfovbuffer = 0.2;
 	}
-	inplayerfov = anglefromcenter <= playerfov * 0.5 * 1 - banzaivsplayerfovbuffer;
+	inplayerfov = anglefromcenter <= (playerfov * 0.5) * (1 - banzaivsplayerfovbuffer);
 	return inplayerfov;
 }
 

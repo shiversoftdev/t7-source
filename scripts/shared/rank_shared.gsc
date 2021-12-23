@@ -170,7 +170,7 @@ function initscoreinfo()
 				}
 				ismedal = 0;
 				istring = tablelookupistring(scoreinfotableid, 0, type, 2);
-				if(isdefined(istring) && istring != &"")
+				if(isdefined(istring) && istring != (&""))
 				{
 					ismedal = 1;
 				}
@@ -248,7 +248,7 @@ function getcodpointscapped(incodpoints)
 */
 function registerscoreinfo(type, value, xp, label, teamscore_material)
 {
-	overridedvar = "scr_" + level.gametype + "_score_" + type;
+	overridedvar = (("scr_" + level.gametype) + "_score_") + type;
 	if(getdvarstring(overridedvar) != "")
 	{
 		value = getdvarint(overridedvar);
@@ -612,7 +612,7 @@ function on_player_connect()
 	self.rankupdatetotal = 0;
 	self.cur_ranknum = rankid;
 	/#
-		assert(isdefined(self.cur_ranknum), "" + rankid + "" + level.ranktable_name);
+		assert(isdefined(self.cur_ranknum), (("" + rankid) + "") + level.ranktable_name);
 	#/
 	prestige = self getdstat("playerstatslist", "plevel", "StatValue");
 	self setrank(rankid, prestige);
@@ -746,7 +746,7 @@ function inccodpoints(amount)
 	newcodpoints = getcodpointscapped(self.pers["codpoints"] + amount);
 	if(newcodpoints > self.pers["codpoints"])
 	{
-		self.pers["summary"]["codpoints"] = self.pers["summary"]["codpoints"] + newcodpoints - self.pers["codpoints"];
+		self.pers["summary"]["codpoints"] = self.pers["summary"]["codpoints"] + (newcodpoints - self.pers["codpoints"]);
 	}
 	self.pers["codpoints"] = newcodpoints;
 	setcodpointsstat(int(newcodpoints));
@@ -981,7 +981,7 @@ function updaterank()
 		rankid++;
 	}
 	/#
-		print("" + oldrank + "" + newrankid + "" + self getdstat("", "", ""));
+		print((((("" + oldrank) + "") + newrankid) + "") + self getdstat("", "", ""));
 	#/
 	self setrank(newrankid);
 	return 1;
@@ -1041,7 +1041,7 @@ function getitemindex(refstring)
 	statstablename = util::getstatstablename();
 	itemindex = int(tablelookup(statstablename, 4, refstring, 0));
 	/#
-		assert(itemindex > 0, "" + refstring + "" + itemindex);
+		assert(itemindex > 0, (("" + refstring) + "") + itemindex);
 	#/
 	return itemindex;
 }
@@ -1214,7 +1214,7 @@ function getrank()
 {
 	rankxp = getrankxpcapped(self.pers["rankxp"]);
 	rankid = self.pers["rank"];
-	if(rankxp < getrankinfominxp(rankid) + getrankinfoxpamt(rankid))
+	if(rankxp < (getrankinfominxp(rankid) + getrankinfoxpamt(rankid)))
 	{
 		return rankid;
 	}
@@ -1239,7 +1239,7 @@ function getrankforxp(xpval)
 	#/
 	while(isdefined(rankname) && rankname != "")
 	{
-		if(xpval < getrankinfominxp(rankid) + getrankinfoxpamt(rankid))
+		if(xpval < (getrankinfominxp(rankid) + getrankinfoxpamt(rankid)))
 		{
 			return rankid;
 		}
@@ -1269,7 +1269,7 @@ function getrankforxp(xpval)
 function getspm()
 {
 	ranklevel = self getrank() + 1;
-	return 3 + ranklevel * 0.5 * 10;
+	return (3 + (ranklevel * 0.5)) * 10;
 }
 
 /*

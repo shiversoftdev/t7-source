@@ -142,13 +142,13 @@ function applyemp(attacker, explosionpoint)
 	else
 	{
 		distancetoexplosion = distance(self.origin, explosionpoint);
-		ratio = 1 - distancetoexplosion / 425;
-		currentempduration = 3 + 3 * ratio;
+		ratio = 1 - (distancetoexplosion / 425);
+		currentempduration = 3 + (3 * ratio);
 	}
 	if(isdefined(self.empendtime))
 	{
 		emp_time_left_ms = self.empendtime - gettime();
-		if(emp_time_left_ms > currentempduration * 1000)
+		if(emp_time_left_ms > (currentempduration * 1000))
 		{
 			self.empduration = emp_time_left_ms / 1000;
 		}
@@ -165,7 +165,7 @@ function applyemp(attacker, explosionpoint)
 	self shellshock("emp_shock", 1);
 	self clientfield::set_to_player("empd", 1);
 	self.empstarttime = gettime();
-	self.empendtime = self.empstarttime + self.empduration * 1000;
+	self.empendtime = self.empstarttime + (self.empduration * 1000);
 	self.empedby = attacker;
 	shutdownemprebootindicatormenu();
 	emprebootmenu = self openluimenu("EmpRebootIndicator");
@@ -283,7 +283,7 @@ function emprumbleloop(duration)
 {
 	self endon(#"emp_rumble_loop");
 	self notify(#"emp_rumble_loop");
-	goaltime = gettime() + duration * 1000;
+	goaltime = gettime() + (duration * 1000);
 	while(gettime() < goaltime)
 	{
 		self playrumbleonentity("damage_heavy");

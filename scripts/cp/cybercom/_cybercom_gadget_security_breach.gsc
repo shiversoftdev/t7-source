@@ -346,7 +346,7 @@ private function _activate_security_breach(slot, weapon)
 	if(!aborted && fired)
 	{
 		upgraded = weapon.name == "gadget_remote_hijack_upgraded";
-		self playsound("gdt_cybercore_activate" + isdefined(upgraded) && (upgraded ? "_upgraded" : ""));
+		self playsound("gdt_cybercore_activate" + (isdefined(upgraded) && (upgraded ? "_upgraded" : "")));
 	}
 	cybercom::function_adc40f11(weapon, fired);
 	if(fired && isplayer(self))
@@ -721,9 +721,9 @@ private function _anchor_to_location(player, anchor)
 			else
 			{
 				range = lostcontactdistsq - losecontactdistsq;
-				val = math::clamp(distancesq - losecontactdistsq / range, 0, maxstatic);
+				val = math::clamp((distancesq - losecontactdistsq) / range, 0, maxstatic);
 			}
-			outofrangewarningvalue = distancesq >= getdvarfloat("scr_security_breach_lost_contact_warning_distance_percent", 0.6) * lostcontactdistsq;
+			outofrangewarningvalue = distancesq >= (getdvarfloat("scr_security_breach_lost_contact_warning_distance_percent", 0.6) * lostcontactdistsq);
 			if(outofrangewarningvalue !== lastoutofrangewarningvalue)
 			{
 				player setcontrolleruimodelvalue("vehicle.outOfRange", outofrangewarningvalue);

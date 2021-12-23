@@ -174,7 +174,7 @@ private function watch_zombie_death()
 */
 function vec_to_string(v)
 {
-	return "<" + v[0] + ", " + v[1] + ", " + v[2] + ">";
+	return (((((("<") + v[0]) + ", ") + v[1]) + ", ") + v[2]) + (">");
 }
 
 /*
@@ -292,7 +292,7 @@ function teleport_player(struct_targetname)
 	{
 		/#
 			/#
-				assertmsg("" + struct_targetname + "");
+				assertmsg(("" + struct_targetname) + "");
 			#/
 		#/
 		return;
@@ -658,7 +658,7 @@ function function_15166300(var_c3a9e22d)
 			break;
 		}
 	}
-	var_4422ef10 = var_565450eb + n_wasps_alive * 2 + n_raps_alive * 2 + level.var_6e63e659;
+	var_4422ef10 = (var_565450eb + (n_wasps_alive * 2)) + (n_raps_alive * 2) + level.var_6e63e659;
 	var_e1bef548 = level.zombie_ai_limit - var_4422ef10;
 	var_49fa7253 = min(var_49fa7253, var_e1bef548);
 	if(var_49fa7253 > 0 && (var_c3a9e22d === 2 || var_c3a9e22d === 3))
@@ -713,7 +713,7 @@ function show_infotext_for_duration(str_infotext, n_duration)
 function setup_devgui_func(str_devgui_path, str_dvar, n_value, func, n_base_value = -1)
 {
 	setdvar(str_dvar, n_base_value);
-	adddebugcommand("devgui_cmd \"" + str_devgui_path + "\" \"" + str_dvar + " " + n_value + "\"\n");
+	adddebugcommand(((((("devgui_cmd \"" + str_devgui_path) + "\" \"") + str_dvar) + " ") + n_value) + "\"\n");
 	while(true)
 	{
 		n_dvar = getdvarint(str_dvar);

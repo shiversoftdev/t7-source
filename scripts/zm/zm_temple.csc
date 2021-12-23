@@ -334,7 +334,7 @@ function crystal_sauce_end(localclientnum, oldval, newval, bnewent, binitialsnap
 function crystal_trail_runner(localclientnum, fx_name, dest)
 {
 	/#
-		println("" + fx_name + "" + self.origin + "" + dest);
+		println((((("" + fx_name) + "") + self.origin) + "") + dest);
 	#/
 	playfxontag(localclientnum, level._effect[fx_name], self, "tag_origin");
 	self playloopsound("evt_sq_bag_crystal_bounce_loop", 0.05);
@@ -474,10 +474,10 @@ function function_bf1b3728(n_val, n_time)
 	}
 	else
 	{
-		var_83a6ec14 = level.var_3766c3d3 - n_val * -1;
+		var_83a6ec14 = (level.var_3766c3d3 - n_val) * -1;
 		wait(0.5);
 	}
-	n_change = var_83a6ec14 / n_time / 0.1;
+	n_change = var_83a6ec14 / (n_time / 0.1);
 	while(level.var_3766c3d3 != n_val)
 	{
 		level.var_3766c3d3 = level.var_3766c3d3 + n_change;
@@ -555,7 +555,7 @@ function generator_move()
 		self waittill(#"rotatedone");
 		self rotateroll(offsetangle * 2, rottime);
 		self waittill(#"rotatedone");
-		self rotateroll(0 - offsetangle * 2, rottime);
+		self rotateroll(0 - (offsetangle * 2), rottime);
 	}
 }
 
@@ -683,7 +683,7 @@ function water_gush_debug()
 		{
 			print3d(self.origin + offset, "", (60, 60, 255), 1, scale, 10);
 			scale = scale * 1.7;
-			offset = offset + dir * 6;
+			offset = offset + (dir * 6);
 		}
 	#/
 }
@@ -738,7 +738,7 @@ function sq_std_watcher()
 	#/
 	targets = struct::get_array("sq_sad", "targetname");
 	/#
-		println("" + targets.size + "");
+		println(("" + targets.size) + "");
 	#/
 	for(i = 0; i < targets.size; i++)
 	{
@@ -760,7 +760,7 @@ function sq_std_watch_for_restart(num_local_players)
 	level waittill(#"sr");
 	if(isdefined(level._sq_std_array[self.script_int - 1]))
 	{
-		for(i = 0; i < level._sq_std_array[self.script_int - 1].size; i++)
+		for(i = 0; i < (level._sq_std_array[self.script_int - 1].size); i++)
 		{
 			if(isdefined(level._sq_std_array[self.script_int - 1][i]))
 			{
@@ -1187,7 +1187,7 @@ function power(base, exp)
 	{
 		return 1;
 	}
-	return base * power(base, exp - 1);
+	return base * (power(base, exp - 1));
 }
 
 /*
@@ -1202,7 +1202,7 @@ function power(base, exp)
 function _set_num_visible_spinners(clientnum, num)
 {
 	/#
-		println("" + clientnum + "" + num);
+		println((("" + clientnum) + "") + num);
 	#/
 	if(!isdefined(level.spinners))
 	{
@@ -1215,7 +1215,7 @@ function _set_num_visible_spinners(clientnum, num)
 	for(i = 3; i >= 0; i--)
 	{
 		/#
-			println("" + i + "" + clientnum);
+			println((("" + i) + "") + clientnum);
 		#/
 		/#
 			assert(isdefined(level.spinners));
@@ -1231,13 +1231,13 @@ function _set_num_visible_spinners(clientnum, num)
 		{
 			num = num - pow;
 			/#
-				println("" + clientnum + "" + i + "" + level.spinners[clientnum][i].size);
+				println((((("" + clientnum) + "") + i) + "") + level.spinners[clientnum][i].size);
 			#/
 			array::thread_all(level.spinners[clientnum][i], &spin_to_start);
 			continue;
 		}
 		/#
-			println("" + clientnum + "" + i + "" + level.spinners[clientnum][i].size);
+			println((((("" + clientnum) + "") + i) + "") + level.spinners[clientnum][i].size);
 		#/
 		array::thread_all(level.spinners[clientnum][i], &spin_forever);
 	}
@@ -1291,7 +1291,7 @@ function set_trap_spears(localclientnum)
 			continue;
 		}
 		delta = abs(self.origin[0] - spear.origin[0]);
-		if(abs(self.origin[0] - spear.origin[0]) < 21)
+		if((abs(self.origin[0] - spear.origin[0])) < 21)
 		{
 			spear.assigned = 1;
 			self.spears[self.spears.size] = spear;
@@ -1338,7 +1338,7 @@ function spear_move(localclientnum, active, playsound)
 			sound::play_in_space(0, "evt_spiketrap_warn", self.origin);
 		}
 		movedist = randomfloatrange(self.movedistmin, self.movedistmax);
-		endpos = self.start + self.movedir * movedist;
+		endpos = self.start + (self.movedir * movedist);
 		playfx(localclientnum, level._effect["punji_dust"], endpos);
 		playsound(0, "evt_spiketrap", self.origin);
 		movetime = randomfloatrange(0.08, 0.22);
@@ -1453,7 +1453,7 @@ function board_move()
 	{
 		yaw = randomfloatrange(0, 360);
 		tovector = anglestoforward((0, yaw, 0));
-		newloc = self.start_origin + tovector * dist;
+		newloc = self.start_origin + (tovector * dist);
 		tox = newloc[0] - self.origin[0];
 		self movex(tox, movetime);
 		toy = newloc[1] - self.origin[1];
@@ -1481,13 +1481,13 @@ function _init_pap_spinners(cnum)
 		level.spinners[level.spinners.size] = array([], [], [], []);
 	}
 	/#
-		println("" + cnum + "");
+		println(("" + cnum) + "");
 	#/
 	for(i = 0; i < level.spinners[cnum].size; i++)
 	{
-		spinners = getentarray(cnum, "pap_spinner" + i + 1, "targetname");
+		spinners = getentarray(cnum, "pap_spinner" + (i + 1), "targetname");
 		/#
-			println("" + cnum + "" + i + "" + spinners.size);
+			println((((("" + cnum) + "") + i) + "") + spinners.size);
 		#/
 		array::thread_all(spinners, &init_spinner, i + 1);
 		level.spinners[cnum][i] = spinners;
@@ -1509,7 +1509,7 @@ function init_spinner(listnum)
 	self.startangles = self.angles;
 	self.spin_sound = "evt_pap_spinner0" + listnum;
 	self.spin_stop_sound = "evt_pap_timer_stop";
-	self.angles = (0, 90 * listnum - 1 + randomfloatrange(10, 80), 0);
+	self.angles = (0, (90 * (listnum - 1)) + randomfloatrange(10, 80), 0);
 }
 
 /*
@@ -1606,7 +1606,7 @@ function spin_to_start()
 		deltayaw = deltayaw + 360;
 	}
 	spintime = self spinner_get_spin_time();
-	spintime = spintime * deltayaw / 360;
+	spintime = spintime * (deltayaw / 360);
 	if(spintime > 0)
 	{
 		self rotateyaw(deltayaw, spintime, 0);
@@ -1712,15 +1712,44 @@ function ragdoll_impact_watch_start(localclientnum, oldval, newval, bnewent, bin
 	Namespace: zm_temple
 	Checksum: 0x659FD91E
 	Offset: 0x4C38
-	Size: 0x0
+	Size: 0x1C6
 	Parameters: 1
 	Flags: Linked
 */
 function ragdoll_impact_watch(localclientnum)
 {
+	self endon(#"entityshutdown");
+	waittime = 0.016;
+	gibspeed = 500;
+	prevorigin = self.origin;
+	waitrealtime(waittime);
+	prevvel = self.origin - prevorigin;
+	prevspeed = length(prevvel);
+	prevorigin = self.origin;
+	waitrealtime(waittime);
+	firstloop = 1;
+	while(true)
+	{
+		vel = self.origin - prevorigin;
+		speed = length(vel);
+		if(speed < (prevspeed * 0.5) && prevspeed > (gibspeed * waittime))
+		{
+			dir = vectornormalize(prevvel);
+			self gib_ragdoll(localclientnum, dir);
+			break;
+		}
+		if(prevspeed < (gibspeed * waittime) && !firstloop)
+		{
+			break;
+		}
+		prevorigin = self.origin;
+		prevvel = vel;
+		prevspeed = speed;
+		firstloop = 0;
+		waitrealtime(waittime);
+	}
 }
 
-/*Unknown Op Code (0x0162) at 4CBE*/
 /*
 	Name: gib_ragdoll
 	Namespace: zm_temple

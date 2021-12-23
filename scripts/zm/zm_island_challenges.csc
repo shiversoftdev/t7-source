@@ -299,28 +299,28 @@ function pillar_challenge_3_3(localclientnum, oldval, newval, bnewent, binitials
 	Parameters: 4
 	Flags: Linked
 */
-function function_4aadb052(localclientnum, newval, var_15fa438f, var_2ca030e2)
+function function_4aadb052(localclientnum, newval, n_challenge, var_2ca030e2)
 {
 	switch(newval)
 	{
 		case 1:
 		{
-			self thread function_4516da29(localclientnum, var_15fa438f);
+			self thread function_4516da29(localclientnum, n_challenge);
 			break;
 		}
 		case 2:
 		{
-			self thread function_2fba808e(localclientnum, var_15fa438f, var_2ca030e2);
+			self thread function_2fba808e(localclientnum, n_challenge, var_2ca030e2);
 			break;
 		}
 		case 3:
 		{
-			self thread function_21cf53eb(localclientnum, var_15fa438f, var_2ca030e2);
+			self thread function_21cf53eb(localclientnum, n_challenge, var_2ca030e2);
 			break;
 		}
 		case 4:
 		{
-			self thread function_72573d3d(localclientnum, var_15fa438f, var_2ca030e2);
+			self thread function_72573d3d(localclientnum, n_challenge, var_2ca030e2);
 			break;
 		}
 	}
@@ -335,15 +335,15 @@ function function_4aadb052(localclientnum, newval, var_15fa438f, var_2ca030e2)
 	Parameters: 2
 	Flags: Linked
 */
-function function_4516da29(localclientnum, var_15fa438f)
+function function_4516da29(localclientnum, n_challenge)
 {
 	self util::waittill_dobj(localclientnum);
-	self hidepart(localclientnum, "j_player_started_0" + var_15fa438f, "p7_zm_isl_ritual_pillar_symbol");
-	self hidepart(localclientnum, "j_player_completed_0" + var_15fa438f, "p7_zm_isl_ritual_pillar_symbol");
-	self hidepart(localclientnum, "j_player_claimed_0" + var_15fa438f, "p7_zm_isl_ritual_pillar_symbol");
-	self hidepart(localclientnum, "j_ally_started_0" + var_15fa438f, "p7_zm_isl_ritual_pillar_symbol");
-	self hidepart(localclientnum, "j_ally_completed_0" + var_15fa438f, "p7_zm_isl_ritual_pillar_symbol");
-	self hidepart(localclientnum, "j_ally_claimed_0" + var_15fa438f, "p7_zm_isl_ritual_pillar_symbol");
+	self hidepart(localclientnum, "j_player_started_0" + n_challenge, "p7_zm_isl_ritual_pillar_symbol");
+	self hidepart(localclientnum, "j_player_completed_0" + n_challenge, "p7_zm_isl_ritual_pillar_symbol");
+	self hidepart(localclientnum, "j_player_claimed_0" + n_challenge, "p7_zm_isl_ritual_pillar_symbol");
+	self hidepart(localclientnum, "j_ally_started_0" + n_challenge, "p7_zm_isl_ritual_pillar_symbol");
+	self hidepart(localclientnum, "j_ally_completed_0" + n_challenge, "p7_zm_isl_ritual_pillar_symbol");
+	self hidepart(localclientnum, "j_ally_claimed_0" + n_challenge, "p7_zm_isl_ritual_pillar_symbol");
 }
 
 /*
@@ -355,17 +355,17 @@ function function_4516da29(localclientnum, var_15fa438f)
 	Parameters: 3
 	Flags: Linked
 */
-function function_2fba808e(localclientnum, var_15fa438f, var_2ca030e2)
+function function_2fba808e(localclientnum, n_challenge, var_2ca030e2)
 {
 	self util::waittill_dobj(localclientnum);
-	self function_4516da29(localclientnum, var_15fa438f);
+	self function_4516da29(localclientnum, n_challenge);
 	if(var_2ca030e2)
 	{
-		self showpart(localclientnum, "j_player_started_0" + var_15fa438f, "p7_zm_isl_ritual_pillar_symbol");
+		self showpart(localclientnum, "j_player_started_0" + n_challenge, "p7_zm_isl_ritual_pillar_symbol");
 	}
 	else
 	{
-		self showpart(localclientnum, "j_ally_started_0" + var_15fa438f, "p7_zm_isl_ritual_pillar_symbol");
+		self showpart(localclientnum, "j_ally_started_0" + n_challenge, "p7_zm_isl_ritual_pillar_symbol");
 	}
 }
 
@@ -378,17 +378,17 @@ function function_2fba808e(localclientnum, var_15fa438f, var_2ca030e2)
 	Parameters: 3
 	Flags: Linked
 */
-function function_21cf53eb(localclientnum, var_15fa438f, var_2ca030e2)
+function function_21cf53eb(localclientnum, n_challenge, var_2ca030e2)
 {
 	self util::waittill_dobj(localclientnum);
-	self function_4516da29(localclientnum, var_15fa438f);
+	self function_4516da29(localclientnum, n_challenge);
 	if(var_2ca030e2)
 	{
-		self showpart(localclientnum, "j_player_completed_0" + var_15fa438f, "p7_zm_isl_ritual_pillar_symbol");
+		self showpart(localclientnum, "j_player_completed_0" + n_challenge, "p7_zm_isl_ritual_pillar_symbol");
 	}
 	else
 	{
-		self showpart(localclientnum, "j_ally_completed_0" + var_15fa438f, "p7_zm_isl_ritual_pillar_symbol");
+		self showpart(localclientnum, "j_ally_completed_0" + n_challenge, "p7_zm_isl_ritual_pillar_symbol");
 	}
 }
 
@@ -401,17 +401,17 @@ function function_21cf53eb(localclientnum, var_15fa438f, var_2ca030e2)
 	Parameters: 3
 	Flags: Linked
 */
-function function_72573d3d(localclientnum, var_15fa438f, var_2ca030e2)
+function function_72573d3d(localclientnum, n_challenge, var_2ca030e2)
 {
 	self util::waittill_dobj(localclientnum);
-	self function_4516da29(localclientnum, var_15fa438f);
+	self function_4516da29(localclientnum, n_challenge);
 	if(var_2ca030e2)
 	{
-		self showpart(localclientnum, "j_player_claimed_0" + var_15fa438f, "p7_zm_isl_ritual_pillar_symbol");
+		self showpart(localclientnum, "j_player_claimed_0" + n_challenge, "p7_zm_isl_ritual_pillar_symbol");
 	}
 	else
 	{
-		self showpart(localclientnum, "j_ally_claimed_0" + var_15fa438f, "p7_zm_isl_ritual_pillar_symbol");
+		self showpart(localclientnum, "j_ally_claimed_0" + n_challenge, "p7_zm_isl_ritual_pillar_symbol");
 	}
 }
 

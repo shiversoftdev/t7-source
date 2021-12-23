@@ -207,7 +207,7 @@ function fire_for_time(totalfiretime, turretidx = 0, target, intervalscale = 1)
 		assert(isdefined(weapon) && weapon.name != "" && weapon.firetime > 0);
 	#/
 	firetime = weapon.firetime * intervalscale;
-	firecount = int(floor(totalfiretime / firetime)) + 1;
+	firecount = (int(floor(totalfiretime / firetime))) + 1;
 	__fire_for_rounds_internal(firecount, firetime, turretidx, target);
 }
 
@@ -382,7 +382,7 @@ function javelin_losetargetatrighttime(target)
 	wait(2);
 	while(isdefined(target))
 	{
-		if(proj getvelocity()[2] < -150 && distancesquared(proj.origin, target.origin) < 1200 * 1200)
+		if(proj getvelocity()[2] < -150 && distancesquared(proj.origin, target.origin) < (1200 * 1200))
 		{
 			proj missile_settarget(undefined);
 			break;
@@ -495,7 +495,7 @@ function throw_off_balance(damagetype, hitpoint, hitdirection, hitlocationinfo)
 {
 	if(damagetype == "MOD_EXPLOSIVE" || damagetype == "MOD_GRENADE_SPLASH" || damagetype == "MOD_PROJECTILE_SPLASH")
 	{
-		self setvehvelocity(self.velocity + vectornormalize(hitdirection) * 300);
+		self setvehvelocity(self.velocity + (vectornormalize(hitdirection) * 300));
 		ang_vel = self getangularvelocity();
 		ang_vel = ang_vel + (randomfloatrange(-300, 300), randomfloatrange(-300, 300), randomfloatrange(-300, 300));
 		self setangularvelocity(ang_vel);
@@ -504,7 +504,7 @@ function throw_off_balance(damagetype, hitpoint, hitdirection, hitlocationinfo)
 	{
 		ang_vel = self getangularvelocity();
 		yaw_vel = randomfloatrange(-320, 320);
-		yaw_vel = yaw_vel + math::sign(yaw_vel) * 150;
+		yaw_vel = yaw_vel + (math::sign(yaw_vel) * 150);
 		ang_vel = ang_vel + (randomfloatrange(-150, 150), yaw_vel, randomfloatrange(-150, 150));
 		self setangularvelocity(ang_vel);
 	}
@@ -545,7 +545,7 @@ function predicted_collision()
 function collision_fx(normal)
 {
 	tilted = normal[2] < 0.6;
-	fx_origin = self.origin - normal * (tilted ? 28 : 10);
+	fx_origin = self.origin - (normal * (tilted ? 28 : 10));
 	self playsound("veh_wasp_wall_imp");
 }
 
@@ -577,7 +577,7 @@ function nudge_collision()
 		empedoroff = self get_current_state() === "emped" || self get_current_state() === "off";
 		if(isalive(self) && (normal[2] < 0.6 || !empedoroff))
 		{
-			self setvehvelocity(self.velocity + normal * 90);
+			self setvehvelocity(self.velocity + (normal * 90));
 			self collision_fx(normal);
 		}
 		else if(empedoroff)
@@ -595,7 +595,7 @@ function nudge_collision()
 				return;
 			}
 			self.bounced = 1;
-			self setvehvelocity(self.velocity + normal * 30);
+			self setvehvelocity(self.velocity + (normal * 30));
 			self collision_fx(normal);
 		}
 		else
@@ -603,7 +603,7 @@ function nudge_collision()
 			impact_vel = abs(vectordot(velocity, normal));
 			if(normal[2] < 0.6 && impact_vel < 100)
 			{
-				self setvehvelocity(self.velocity + normal * 90);
+				self setvehvelocity(self.velocity + (normal * 90));
 				self collision_fx(normal);
 			}
 			else
@@ -636,7 +636,7 @@ function level_out_for_landing()
 		self.angles = (self.angles[0] * 0.85, self.angles[1], self.angles[2] * 0.85);
 		ang_vel = self getangularvelocity() * 0.85;
 		self setangularvelocity(ang_vel);
-		self setvehvelocity(velocity + vectorscale((0, 0, -1), 60));
+		self setvehvelocity(velocity + (vectorscale((0, 0, -1), 60)));
 		wait(0.05);
 	}
 }
@@ -699,7 +699,7 @@ function burning_thread(attacker, inflictor)
 	{
 		previoustime = gettime();
 		wait(interval);
-		damage = damage + timesince(previoustime) * damagepersecond;
+		damage = damage + (timesince(previoustime) * damagepersecond);
 		damageint = int(damage);
 		self dodamage(damageint, self.origin, attacker, self, "none", "MOD_BURNED");
 		damage = damage - damageint;
@@ -804,7 +804,7 @@ function blink_lights_for_time(time)
 	starttime = gettime();
 	self vehicle::lights_off();
 	wait(0.1);
-	while(gettime() < starttime + time * 1000)
+	while(gettime() < (starttime + (time * 1000)))
 	{
 		self vehicle::lights_off();
 		wait(0.2);
@@ -1968,7 +1968,7 @@ function defaultstate_surge_update(params)
 	self setspeed(self.settings.surgespeedmultiplier * self.settings.defaultmovespeed);
 	starttime = gettime();
 	self thread swap_team_after_time(params.notify_param[0]);
-	while(gettime() - starttime < self.settings.surgetimetolive * 1000)
+	while((gettime() - starttime) < (self.settings.surgetimetolive * 1000))
 	{
 		if(!isdefined(closest))
 		{
@@ -2033,7 +2033,7 @@ function path_update_interrupt(closest, attacker)
 	{
 		if(isdefined(self.current_pathto_pos))
 		{
-			if(distance2dsquared(self.current_pathto_pos, self.goalpos) > self.goalradius * self.goalradius)
+			if(distance2dsquared(self.current_pathto_pos, self.goalpos) > (self.goalradius * self.goalradius))
 			{
 				wait(0.5);
 				self notify(#"near_goal");
@@ -2073,7 +2073,7 @@ function try_detonate(closest, attacker)
 {
 	if(isdefined(closest) && isalive(closest))
 	{
-		if(distancesquared(closest.origin, self.origin) < 80 * 80)
+		if(distancesquared(closest.origin, self.origin) < (80 * 80))
 		{
 			self detonate(attacker);
 			return 1;
@@ -2361,7 +2361,7 @@ function findnewposition(sight_check_height)
 				}
 				point._scoredebug[""] = point.distawayfromengagementarea * -1;
 			#/
-			point.score = point.score + point.distawayfromengagementarea * -1;
+			point.score = point.score + (point.distawayfromengagementarea * -1);
 			if(distance2dsquared(self.origin, point.origin) < 28900)
 			{
 				/#
@@ -2456,7 +2456,7 @@ function findnewposition(sight_check_height)
 */
 function timesince(starttimeinmilliseconds)
 {
-	return gettime() - starttimeinmilliseconds * 0.001;
+	return (gettime() - starttimeinmilliseconds) * 0.001;
 }
 
 /*
@@ -2488,7 +2488,7 @@ function cooldowninit()
 function cooldown(name, time_seconds)
 {
 	cooldowninit();
-	self._cooldown[name] = gettime() + time_seconds * 1000;
+	self._cooldown[name] = gettime() + (time_seconds * 1000);
 }
 
 /*
@@ -2522,7 +2522,7 @@ function getcooldowntimeraw(name)
 function getcooldownleft(name)
 {
 	cooldowninit();
-	return getcooldowntimeraw(name) - gettime() * 0.001;
+	return (getcooldowntimeraw(name) - gettime()) * 0.001;
 }
 
 /*
@@ -2542,7 +2542,7 @@ function iscooldownready(name, timeforward_seconds)
 		timeforward_seconds = 0;
 	}
 	cooldownreadytime = self._cooldown[name];
-	return !isdefined(cooldownreadytime) || gettime() + timeforward_seconds * 1000 > cooldownreadytime;
+	return !isdefined(cooldownreadytime) || (gettime() + (timeforward_seconds * 1000)) > cooldownreadytime;
 }
 
 /*
@@ -2572,7 +2572,7 @@ function clearcooldown(name)
 function addcooldowntime(name, time_seconds)
 {
 	cooldowninit();
-	self._cooldown[name] = getcooldowntimeraw(name) + time_seconds * 1000;
+	self._cooldown[name] = getcooldowntimeraw(name) + (time_seconds * 1000);
 }
 
 /*
@@ -2644,11 +2644,11 @@ function debugscore(entity)
 			color = (0, 1, 0);
 		}
 		recordstar(self.origin, color);
-		record3dtext("" + self.score + "", self.origin - (0, 0, step * count), color);
+		record3dtext(("" + self.score) + "", self.origin - (0, 0, step * count), color);
 		foreach(name, score in self._scoredebug)
 		{
 			count++;
-			record3dtext(name + "" + score, self.origin - (0, 0, step * count), color);
+			record3dtext((name + "") + score, self.origin - (0, 0, step * count), color);
 		}
 	#/
 }
@@ -2762,7 +2762,7 @@ function positionquery_filter_outofgoalanchor(queryresult, tolerance = 1)
 	{
 		if(point.disttogoal > tolerance)
 		{
-			score = -10000 - point.disttogoal * 10;
+			score = -10000 - (point.disttogoal * 10);
 			/#
 				if(!isdefined(point._scoredebug))
 				{
@@ -2790,7 +2790,7 @@ function positionquery_filter_engagementdist(queryresult, enemy, engagementdista
 	{
 		return;
 	}
-	engagementdistance = engagementdistancemin + engagementdistancemax * 0.5;
+	engagementdistance = (engagementdistancemin + engagementdistancemax) * 0.5;
 	half_engagement_width = abs(engagementdistancemax - engagementdistance);
 	enemy_origin = (enemy.origin[0], enemy.origin[1], 0);
 	vec_enemy_to_self = vectornormalize((self.origin[0], self.origin[1], 0) - enemy_origin);
@@ -2857,7 +2857,7 @@ function positionquery_filter_distawayfromtarget(queryresult, targetarray, dista
 			{
 				origin = target.origin;
 			}
-			if(isdefined(origin) && distance2dsquared(point.origin, origin) < distance * distance)
+			if(isdefined(origin) && distance2dsquared(point.origin, origin) < (distance * distance))
 			{
 				tooclose = 1;
 				break;
@@ -2893,7 +2893,7 @@ function distancepointtoengagementheight(origin, enemy, engagementheightmin, eng
 		return undefined;
 	}
 	result = 0;
-	engagementheight = 0.5 * self.settings.engagementheightmin + self.settings.engagementheightmax;
+	engagementheight = 0.5 * (self.settings.engagementheightmin + self.settings.engagementheightmax);
 	half_height = abs(engagementheightmax - engagementheight);
 	targetheight = enemy.origin[2] + engagementheight;
 	distfromengagementheight = abs(origin[2] - targetheight);
@@ -2919,7 +2919,7 @@ function positionquery_filter_engagementheight(queryresult, enemy, engagementhei
 	{
 		return;
 	}
-	engagementheight = 0.5 * engagementheightmin + engagementheightmax;
+	engagementheight = 0.5 * (engagementheightmin + engagementheightmax);
 	half_height = abs(engagementheightmax - engagementheight);
 	foreach(var_b57f1106, point in queryresult.data)
 	{
@@ -3011,8 +3011,7 @@ function function_c8b0c8c2(client_flags, var_9f84050f, var_1e08b2fd, var_9c5ca2c
 				{
 					self getperfectinfo(attacker, var_cee3c9e9);
 				}
-				~client_flag;
-				remaining_flags_to_process = remaining_flags_to_process & client_flag;
+				remaining_flags_to_process = remaining_flags_to_process & (~client_flag);
 			}
 		}
 	}

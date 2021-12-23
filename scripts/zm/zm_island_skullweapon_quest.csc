@@ -229,7 +229,7 @@ function function_4dcbb3a6(localclientnum, var_f2e38849, n_fx_type = 1)
 			var_4b429234 = var_9915798f;
 		}
 	}
-	var_4a347901 = "skulltar_" + var_f2e38849 + "_spawnpts";
+	var_4a347901 = ("skulltar_" + var_f2e38849) + "_spawnpts";
 	if(isdefined(n_fx_type) && n_fx_type >= 0 && n_fx_type < 5)
 	{
 		var_b9533b1f function_267f859f(localclientnum, var_f4fc4e39[n_fx_type], n_fx_type);

@@ -639,12 +639,12 @@ function function_e7fe168a(weapon)
 	self notify(#"hash_c0a47e94");
 	self endon(#"hash_c0a47e94");
 	start_time = gettime();
-	while(start_time + 1000 > gettime())
+	while((start_time + 1000) > gettime())
 	{
 		self playrumbleonentity("zod_shield_juke");
 		forward = anglestoforward(self getplayerangles());
 		velocity = self getvelocity();
-		predicted_pos = self.origin + velocity * 0.1;
+		predicted_pos = self.origin + (velocity * 0.1);
 		self thread function_345e492a(predicted_pos, 96);
 		wait(0.1);
 	}
@@ -694,7 +694,7 @@ function function_345e492a(var_ebcc1e01, radius)
 				n_random_y = randomfloatrange(-3, 3);
 				player thread zm_audio::create_and_play_dialog("whelp", "punch");
 				enemy startragdoll(1);
-				enemy launchragdoll(100 * vectornormalize(enemy.origin - self.origin + (n_random_x, n_random_y, 100)), "torso_lower");
+				enemy launchragdoll(100 * (vectornormalize((enemy.origin - self.origin) + (n_random_x, n_random_y, 100))), "torso_lower");
 			}
 		}
 	}
@@ -749,7 +749,7 @@ function function_fa885ef2(e_player, ai_enemy)
 					n_perk_factor = 0.25;
 				}
 			}
-			e_player.var_8afc8427 = e_player.var_8afc8427 + n_perk_factor * ai_enemy.heroweapon_kill_power;
+			e_player.var_8afc8427 = e_player.var_8afc8427 + (n_perk_factor * ai_enemy.heroweapon_kill_power);
 			e_player.var_8afc8427 = math::clamp(e_player.var_8afc8427, 0, 100);
 			if(e_player.var_8afc8427 >= e_player.hero_power_prev)
 			{
@@ -994,7 +994,7 @@ function function_d775fe77(einflictor, attacker, idamage, smeansofdeath, weapon,
 	n_random_x = randomfloatrange(-3, 3);
 	n_random_y = randomfloatrange(-3, 3);
 	self startragdoll(1);
-	self launchragdoll(100 * vectornormalize(self.origin - attacker.origin + (n_random_x, n_random_y, 100)), "torso_lower");
+	self launchragdoll(100 * (vectornormalize((self.origin - attacker.origin) + (n_random_x, n_random_y, 100))), "torso_lower");
 }
 
 /*
@@ -1012,7 +1012,7 @@ function function_cb6fb97(einflictor, attacker, idamage, smeansofdeath, weapon, 
 	n_random_x = randomfloatrange(-3, 3);
 	n_random_y = randomfloatrange(-3, 3);
 	self startragdoll(1);
-	self launchragdoll(100 * vectornormalize(self.origin - attacker.origin + (n_random_x, n_random_y, 100)), "torso_lower");
+	self launchragdoll(100 * (vectornormalize((self.origin - attacker.origin) + (n_random_x, n_random_y, 100))), "torso_lower");
 }
 
 /*
@@ -1032,13 +1032,13 @@ function function_a23fb854()
 		wait(0.05);
 		var_40c4a571 = self.var_207d01be;
 		equipment_id = var_40c4a571.name;
-		str_cmd = "" + equipment_id + "";
+		str_cmd = ("" + equipment_id) + "";
 		adddebugcommand(str_cmd);
-		str_cmd = "" + equipment_id + "";
+		str_cmd = ("" + equipment_id) + "";
 		adddebugcommand(str_cmd);
-		str_cmd = "" + equipment_id + "";
+		str_cmd = ("" + equipment_id) + "";
 		adddebugcommand(str_cmd);
-		str_cmd = "" + equipment_id + "";
+		str_cmd = ("" + equipment_id) + "";
 		adddebugcommand(str_cmd);
 		str_cmd = "";
 		adddebugcommand(str_cmd);

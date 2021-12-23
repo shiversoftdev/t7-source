@@ -116,7 +116,7 @@ function function_ad78a144()
 	clientfield::register("scriptmover", "show_wearable", 12000, 1, "int");
 	for(i = 0; i < 4; i++)
 	{
-		registerclientfield("world", "player" + i + "wearableItem", 12000, 2, "int");
+		registerclientfield("world", ("player" + i) + "wearableItem", 12000, 2, "int");
 	}
 }
 
@@ -136,7 +136,7 @@ function function_2436f867()
 	self util::waittill_any("disconnect", "bled_out", "death");
 	self.var_bc5f242a = undefined;
 	self.var_e7d196cc = undefined;
-	level clientfield::set("player" + self.entity_num + "wearableItem", 0);
+	level clientfield::set(("player" + self.entity_num) + "wearableItem", 0);
 }
 
 /*
@@ -150,7 +150,7 @@ function function_2436f867()
 */
 function function_793f10ed(var_908867a0)
 {
-	level clientfield::set("player" + self.entity_num + "wearableItem", var_908867a0);
+	level clientfield::set(("player" + self.entity_num) + "wearableItem", var_908867a0);
 }
 
 /*
@@ -952,9 +952,9 @@ function function_70aa26aa()
 		knockdown_range_squared = level.zombie_vars["dragonshield_knockdown_range"] * level.zombie_vars["dragonshield_knockdown_range"];
 		forward_view_angles = self getweaponforwarddir();
 		end_pos = var_7dda366c + vectorscale(forward_view_angles, level.zombie_vars["dragonshield_knockdown_range"]);
-		foreach(var_fc36dbcf, var_2cd7ef33 in var_3ec0a9c2)
+		foreach(var_fc36dbcf, s_rune in var_3ec0a9c2)
 		{
-			var_cb78916d = var_2cd7ef33.origin;
+			var_cb78916d = s_rune.origin;
 			var_8112eb05 = distancesquared(var_7dda366c, var_cb78916d);
 			if(var_8112eb05 > knockdown_range_squared)
 			{
@@ -966,9 +966,9 @@ function function_70aa26aa()
 			{
 				break;
 			}
-			var_2cd7ef33.model delete();
-			arrayremovevalue(level.var_8f92a57b.var_3ec0a9c2, var_2cd7ef33);
-			level flag::set("drshup_" + var_2cd7ef33.script_string + "_rune_hit");
+			s_rune.model delete();
+			arrayremovevalue(level.var_8f92a57b.var_3ec0a9c2, s_rune);
+			level flag::set(("drshup_" + s_rune.script_string) + "_rune_hit");
 			playsoundatposition("zmb_dragshield_success_small", (0, 0, 0));
 		}
 	}

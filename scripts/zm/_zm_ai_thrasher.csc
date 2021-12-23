@@ -36,8 +36,8 @@ autoexec function main()
 function function_43bf0af5(entity, player, state)
 {
 	entitynumber = player getentitynumber();
-	var_a2619f0 = 3 << entitynumber * 2;
-	return state & var_a2619f0 >> entitynumber * 2;
+	var_a2619f0 = 3 << (entitynumber * 2);
+	return (state & var_a2619f0) >> (entitynumber * 2);
 }
 
 /*
@@ -179,7 +179,7 @@ private function function_4cf5760d(localclientnum, thrasher, player)
 	player endon(#"hash_d53b1d6d");
 	thrasher endon(#"hash_d53b1d6d");
 	eyeposition = player gettagorigin("tag_eye");
-	eyeoffset = (0, 0, abs(abs(eyeposition[2] - player.origin[2]) - 40) - 10);
+	eyeoffset = (0, 0, (abs((abs(eyeposition[2] - player.origin[2])) - 40)) - 10);
 	thrasher.var_18fd72ff = spawn(localclientnum, thrasher.origin, "script_model");
 	thrasher.var_18fd72ff setmodel("p7_fxanim_zm_island_thrasher_stomach_mod");
 	thrasher.var_18fd72ff useanimtree($generic);
@@ -196,7 +196,7 @@ private function function_4cf5760d(localclientnum, thrasher, player)
 	while(true)
 	{
 		forwardoffset = anglestoforward(thrasher.var_18fd72ff.angles) * var_8cfe2065;
-		desiredposition = thrasher gettagorigin("tag_camera_thrasher") + eyeoffset - forwardoffset;
+		desiredposition = (thrasher gettagorigin("tag_camera_thrasher") + eyeoffset) - forwardoffset;
 		var_bef3bf12 = getcamposbylocalclientnum(player.localclientnum) - forwardoffset;
 		var_622b2c1a = desiredposition - var_bef3bf12;
 		if(lengthsquared(var_622b2c1a) > var_3c524399)
@@ -207,7 +207,7 @@ private function function_4cf5760d(localclientnum, thrasher, player)
 		var_e8cd6d4 = var_622b2c1a - var_2f57a8ba;
 		if(lengthsquared(var_e8cd6d4) > var_dadc8424)
 		{
-			var_622b2c1a = var_2f57a8ba + vectornormalize(var_e8cd6d4) * var_11a41486;
+			var_622b2c1a = var_2f57a8ba + (vectornormalize(var_e8cd6d4) * var_11a41486);
 		}
 		thrasher.var_18fd72ff.origin = var_bef3bf12 + var_622b2c1a;
 		var_2f57a8ba = var_622b2c1a;

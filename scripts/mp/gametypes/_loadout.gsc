@@ -407,12 +407,12 @@ function init()
 			{
 				if(attachment_tokens.size == 0)
 				{
-					weapon_class_register(weapon + "_" + attachment, weapon_type);
+					weapon_class_register((weapon + "_") + attachment, weapon_type);
 					continue;
 				}
 				for(k = 0; k < attachment_tokens.size; k++)
 				{
-					weapon_class_register(weapon + "_" + attachment_tokens[k], weapon_type);
+					weapon_class_register((weapon + "_") + attachment_tokens[k], weapon_type);
 				}
 			}
 		}
@@ -458,7 +458,7 @@ function create_class_exclusion_list()
 		currentdvar++;
 	}
 	level.attachmentexclusions = [];
-	for(currentdvar = 0; getdvarstring("attachment_exclusion_" + currentdvar) != ""; currentdvar++)
+	for(currentdvar = 0; (getdvarstring("attachment_exclusion_" + currentdvar)) != ""; currentdvar++)
 	{
 		level.attachmentexclusions[currentdvar] = getdvarstring("attachment_exclusion_" + currentdvar);
 	}
@@ -810,7 +810,7 @@ function givekillstreaks()
 		if(isdefined(killstreakindex) && killstreakindex > 0)
 		{
 			/#
-				assert(isdefined(level.tbl_killstreakdata[killstreakindex]), "" + killstreakindex + "");
+				assert(isdefined(level.tbl_killstreakdata[killstreakindex]), ("" + killstreakindex) + "");
 			#/
 			if(isdefined(level.tbl_killstreakdata[killstreakindex]))
 			{
@@ -1071,7 +1071,7 @@ function setclassnum(weaponclass)
 	if(issubstr(weaponclass, "CLASS_CUSTOM"))
 	{
 		pixbeginevent("custom class");
-		self.class_num = int(weaponclass[weaponclass.size - 1]) - 1;
+		self.class_num = (int(weaponclass[weaponclass.size - 1])) - 1;
 		if(-1 == self.class_num)
 		{
 			self.class_num = 9;
@@ -1697,11 +1697,11 @@ function cac_modified_vehicle_damage(victim, attacker, damage, meansofdeath, wea
 	final_damage = damage;
 	if(attacker hasperk("specialty_bulletdamage") && isprimarydamage(meansofdeath))
 	{
-		final_damage = damage * 100 + level.cac_bulletdamage_data / 100;
+		final_damage = (damage * (100 + level.cac_bulletdamage_data)) / 100;
 		/#
 			if(getdvarint(""))
 			{
-				println("" + attacker.name + "");
+				println(("" + attacker.name) + "");
 			}
 		#/
 	}
@@ -1712,7 +1712,7 @@ function cac_modified_vehicle_damage(victim, attacker, damage, meansofdeath, wea
 	/#
 		if(getdvarint(""))
 		{
-			println("" + final_damage / old_damage + "" + old_damage + "" + final_damage);
+			println((((("" + (final_damage / old_damage)) + "") + old_damage) + "") + final_damage);
 		}
 	#/
 	return int(final_damage);
@@ -1764,38 +1764,38 @@ function cac_modified_damage(victim, attacker, damage, mod, weapon, inflictor, h
 				/#
 					if(debug)
 					{
-						println("" + victim.name + "" + attacker.name + "");
+						println(((("" + victim.name) + "") + attacker.name) + "");
 					}
 				#/
 			}
 			else
 			{
-				final_damage = damage * 100 + level.cac_bulletdamage_data / 100;
+				final_damage = (damage * (100 + level.cac_bulletdamage_data)) / 100;
 				/#
 					if(debug)
 					{
-						println("" + attacker.name + "" + victim.name);
+						println((("" + attacker.name) + "") + victim.name);
 					}
 				#/
 			}
 		}
 		else if(victim hasperk("specialty_armorvest") && isprimarydamage(mod) && !isheaddamage(hitloc))
 		{
-			final_damage = damage * level.cac_armorvest_data * 0.01;
+			final_damage = damage * (level.cac_armorvest_data * 0.01);
 			/#
 				if(debug)
 				{
-					println("" + attacker.name + "" + victim.name);
+					println((("" + attacker.name) + "") + victim.name);
 				}
 			#/
 		}
 		else if(victim hasperk("specialty_fireproof") && isfiredamage(weapon, mod))
 		{
-			final_damage = damage * level.cac_fireproof_data * 0.01;
+			final_damage = damage * (level.cac_fireproof_data * 0.01);
 			/#
 				if(debug)
 				{
-					println("" + attacker.name + "" + victim.name);
+					println((("" + attacker.name) + "") + victim.name);
 				}
 			#/
 		}
@@ -1813,11 +1813,11 @@ function cac_modified_damage(victim, attacker, damage, mod, weapon, inflictor, h
 					victim thread challenges::flakjacketprotectedmp(weapon, attacker);
 				}
 			}
-			final_damage = int(damage * cac_data / 100);
+			final_damage = int(damage * (cac_data / 100));
 			/#
 				if(debug)
 				{
-					println("" + victim.name + "" + attacker.name + "");
+					println(((("" + victim.name) + "") + attacker.name) + "");
 				}
 			#/
 		}
@@ -1831,7 +1831,7 @@ function cac_modified_damage(victim, attacker, damage, mod, weapon, inflictor, h
 		victim.cac_debug_range = int(distance(attacker.origin, victim.origin));
 		if(debug)
 		{
-			println("" + final_damage / damage + "" + damage + "" + final_damage);
+			println((((("" + (final_damage / damage)) + "") + damage) + "") + final_damage);
 		}
 	#/
 	final_damage = int(final_damage);

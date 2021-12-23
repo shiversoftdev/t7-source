@@ -75,7 +75,7 @@ function function_5ecbd7cb()
 {
 	level waittill(#"start_zombie_round_logic");
 	var_845e036a = getent(self.target, "targetname");
-	var_3cb25813 = getent(var_845e036a.target, "targetname");
+	vol_fling = getent(var_845e036a.target, "targetname");
 	var_cec95fd7 = struct::get(self.target, "targetname");
 	var_cec95fd7 thread function_86ef1da5();
 	v_fling = anglestoforward(self.angles) * self.script_int;
@@ -83,39 +83,39 @@ function function_5ecbd7cb()
 	s_unitrigger_stub = self zm_unitrigger::create_unitrigger("", 50, &function_485001bf, &function_4029cf56, "unitrigger_radius");
 	s_unitrigger_stub.angles = (0, 0, 0);
 	s_unitrigger_stub.hint_parm1 = 0;
-	s_unitrigger_stub.script_string = var_3cb25813.script_string;
+	s_unitrigger_stub.script_string = vol_fling.script_string;
 	zm_unitrigger::unitrigger_force_per_player_triggers(s_unitrigger_stub, 1);
 	var_3432399a = var_845e036a.target + "_spline";
 	nd_start = getvehiclenode(var_3432399a, "targetname");
 	while(true)
 	{
 		s_unitrigger_stub waittill(#"trigger", e_who);
-		if(isdefined(e_who.var_8dbb72b1) && e_who.var_8dbb72b1[var_3cb25813.script_string] === 1)
+		if(isdefined(e_who.var_8dbb72b1) && e_who.var_8dbb72b1[vol_fling.script_string] === 1)
 		{
 			e_who zm_audio::create_and_play_dialog("general", "transport_deny");
 			continue;
 		}
 		level.var_6fe80781 = gettime();
 		n_timer = 0;
-		var_3cb25813 playsound("zmb_fling_activate");
+		vol_fling playsound("zmb_fling_activate");
 		while(n_timer <= 3)
 		{
 			a_ai_zombies = zombie_utility::get_zombie_array();
-			a_ai_zombies = function_3dcd0982(a_ai_zombies, var_3cb25813);
+			a_ai_zombies = function_3dcd0982(a_ai_zombies, vol_fling);
 			if(a_ai_zombies.size)
 			{
 				foreach(var_f3de8f22, ai_zombie in a_ai_zombies)
 				{
 					if(math::cointoss())
 					{
-						ai_zombie thread function_e9d3c391(var_3cb25813, v_fling, nd_start);
+						ai_zombie thread function_e9d3c391(vol_fling, v_fling, nd_start);
 					}
 				}
 			}
 			else
 			{
-				var_7092e170 = function_3dcd0982(level.activeplayers, var_3cb25813);
-				array::thread_all(var_7092e170, &function_e9d3c391, var_3cb25813, v_fling, nd_start, var_845e036a);
+				var_7092e170 = function_3dcd0982(level.activeplayers, vol_fling);
+				array::thread_all(var_7092e170, &function_e9d3c391, vol_fling, v_fling, nd_start, var_845e036a);
 			}
 			n_timer = n_timer + 0.1;
 			wait(0.1);
@@ -182,7 +182,7 @@ function function_3dcd0982(array, var_8d88ae81)
 */
 function function_a78c631a(val, var_8d88ae81)
 {
-	return isalive(val) && (!(isdefined(val.var_122a2dda) && val.var_122a2dda)) && val istouching(var_8d88ae81);
+	return isalive(val) && (!(isdefined(val.is_flung) && val.is_flung)) && val istouching(var_8d88ae81);
 }
 
 /*
@@ -238,7 +238,7 @@ function function_149a5187()
 function function_e9d3c391(var_a89f74ed, v_fling, nd_start, var_173065cc)
 {
 	self endon(#"death");
-	if(isdefined(self.var_122a2dda) && self.var_122a2dda || (isdefined(self.var_8dbb72b1) && self.var_8dbb72b1[var_a89f74ed.script_string] === 1))
+	if(isdefined(self.is_flung) && self.is_flung || (isdefined(self.var_8dbb72b1) && self.var_8dbb72b1[var_a89f74ed.script_string] === 1))
 	{
 		return;
 	}
@@ -247,7 +247,7 @@ function function_e9d3c391(var_a89f74ed, v_fling, nd_start, var_173065cc)
 		self thread function_149a5187();
 		self.b_invulnerable = self enableinvulnerability();
 		self.var_fa1ecd39 = self.origin;
-		self.var_122a2dda = 1;
+		self.is_flung = 1;
 		if(!self laststand::player_is_in_laststand() && !self inlaststand())
 		{
 			self allowcrouch(0);
@@ -358,7 +358,7 @@ function function_e9d3c391(var_a89f74ed, v_fling, nd_start, var_173065cc)
 	}
 	else if(self.archetype === "zombie")
 	{
-		self.var_122a2dda = 1;
+		self.is_flung = 1;
 		self pathmode("dont move");
 		self setplayercollision(0);
 		self.mdl_anchor = util::spawn_model("tag_origin", nd_start.origin, nd_start.angles);
@@ -379,7 +379,7 @@ function function_e9d3c391(var_a89f74ed, v_fling, nd_start, var_173065cc)
 		{
 			wait(0.1);
 		}
-		self.var_122a2dda = undefined;
+		self.is_flung = undefined;
 	}
 }
 
@@ -509,7 +509,7 @@ function function_cbac68fe(e_player)
 */
 function function_c1f1756a()
 {
-	while(isdefined(self.var_122a2dda) && self.var_122a2dda)
+	while(isdefined(self.is_flung) && self.is_flung)
 	{
 		self playrumbleonentity("zod_beast_grapple_reel");
 		wait(0.2);
@@ -553,7 +553,7 @@ function function_3298b25f(var_a89f74ed)
 		self freezecontrols(1);
 	}
 	self clientfield::increment_to_player("flinger_land_smash");
-	self.var_122a2dda = undefined;
+	self.is_flung = undefined;
 	wait(3);
 	var_a05a47c7.occupied = undefined;
 	self.var_3298b25f = 1;
@@ -568,7 +568,7 @@ function function_3298b25f(var_a89f74ed)
 	Parameters: 1
 	Flags: Linked
 */
-function function_fbd80603(var_24021c9d = 0)
+function function_fbd80603(b_random = 0)
 {
 	var_2b58409e = struct::get(self.script_noteworthy, "targetname");
 	/#
@@ -588,7 +588,7 @@ function function_fbd80603(var_24021c9d = 0)
 			}
 		}
 	}
-	if(var_24021c9d)
+	if(b_random)
 	{
 		return array::random(a_s_spots);
 	}
@@ -615,7 +615,7 @@ function function_b19e2d45(var_a89f74ed)
 {
 	var_2b58409e = struct::get(var_a89f74ed.script_noteworthy, "targetname");
 	str_zone = zm_zonemgr::get_zone_from_position(var_2b58409e.origin + vectorscale((0, 0, 1), 32), 1);
-	while(isdefined(self.var_122a2dda) && self.var_122a2dda)
+	while(isdefined(self.is_flung) && self.is_flung)
 	{
 		level.zones[str_zone].is_active = 1;
 		wait(0.1);
@@ -675,8 +675,8 @@ function function_1a4837ab(nd_target, e_target, var_a89f74ed, v_fling)
 		self util::waittill_any_timeout(6, "goal", "death");
 		self.ignoreall = 0;
 		n_end_time = gettime();
-		n_total_time = n_end_time - n_start_time / 1000;
-		if(!(isdefined(self.var_122a2dda) && self.var_122a2dda) && n_total_time < 6)
+		n_total_time = (n_end_time - n_start_time) / 1000;
+		if(!(isdefined(self.is_flung) && self.is_flung) && n_total_time < 6)
 		{
 			n_randy = randomint(100);
 			if(n_randy < 25)
@@ -789,7 +789,7 @@ function zombie_slam_direction(ai_zombie)
 */
 function function_4b3d145d(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, psoffsettime, boneindex)
 {
-	if(isdefined(self.var_122a2dda) && self.var_122a2dda)
+	if(isdefined(self.is_flung) && self.is_flung)
 	{
 		return 0;
 	}

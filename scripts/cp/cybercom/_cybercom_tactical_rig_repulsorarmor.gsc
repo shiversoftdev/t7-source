@@ -147,7 +147,7 @@ private function _threatmonitor(weapon)
 	while(true)
 	{
 		self waittill(#"projectile_applyattractor", missile);
-		if(gettime() > var_6d621232 + cooldown * 1000)
+		if(gettime() > (var_6d621232 + (cooldown * 1000)))
 		{
 			if(!isdefined(self.usingvehicle) || (isdefined(self.usingvehicle) && self.usingvehicle != 1))
 			{

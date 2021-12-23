@@ -68,7 +68,7 @@ function on_spawn(watcher, owner)
 	self thread simulate_weapon_fire(owner);
 	while(true)
 	{
-		if(gettime() > spawn_time + decoy_time * 1000)
+		if(gettime() > (spawn_time + (decoy_time * 1000)))
 		{
 			self destroy(watcher, owner);
 			return;
@@ -99,7 +99,7 @@ function move(owner, count, fire_time, main_dir, max_offset_angle)
 	min_up_speed = 100;
 	max_up_speed = 200;
 	current_main_dir = randomintrange(main_dir - max_offset_angle, main_dir + max_offset_angle);
-	avel = (randomfloatrange(800, 1800) * randomintrange(0, 2) * 2 - 1, 0, randomfloatrange(580, 940) * randomintrange(0, 2) * 2 - 1);
+	avel = (randomfloatrange(800, 1800) * ((randomintrange(0, 2) * 2) - 1), 0, randomfloatrange(580, 940) * ((randomintrange(0, 2) * 2) - 1));
 	intial_up = randomfloatrange(min_up_speed, max_up_speed);
 	start_time = gettime();
 	gravity = getdvarint("bg_gravity");
@@ -108,8 +108,8 @@ function move(owner, count, fire_time, main_dir, max_offset_angle)
 		angles = (0, randomintrange(current_main_dir - max_offset_angle, current_main_dir + max_offset_angle), 0);
 		dir = anglestoforward(angles);
 		dir = vectorscale(dir, randomfloatrange(min_speed, max_speed));
-		deltatime = gettime() - start_time * 0.001;
-		up = (0, 0, intial_up - 800 * deltatime);
+		deltatime = (gettime() - start_time) * 0.001;
+		up = (0, 0, intial_up - (800 * deltatime));
 		self launch(dir + up, avel);
 		wait(fire_time);
 	}
@@ -385,7 +385,7 @@ function fire_burst(owner, weapon, firetime, count, interrupt)
 	if(interrupt)
 	{
 		self fakefire(owner, self.origin, weapon, count - interrupt_shot);
-		wait(firetime * count - interrupt_shot);
+		wait(firetime * (count - interrupt_shot));
 	}
 }
 
@@ -421,7 +421,7 @@ function finish_while_loop(weapon, reloadtime, burst_spacing_min, burst_spacing_
 */
 function play_reload_sounds(weapon, reloadtime)
 {
-	divy_it_up = reloadtime - 0.1 / 2;
+	divy_it_up = (reloadtime - 0.1) / 2;
 	wait(0.1);
 	self playsound("fly_assault_reload_npc_mag_out");
 	wait(divy_it_up);
@@ -482,7 +482,7 @@ function do_explosion(owner, pos, weapon, count)
 	for(i = 0; i < count; i++)
 	{
 		wait(randomfloatrange(0.1, 0.5));
-		offset = (randomfloatrange(min_offset, max_offset) * randomintrange(0, 2) * 2 - 1, randomfloatrange(min_offset, max_offset) * randomintrange(0, 2) * 2 - 1, 0);
+		offset = (randomfloatrange(min_offset, max_offset) * ((randomintrange(0, 2) * 2) - 1), randomfloatrange(min_offset, max_offset) * ((randomintrange(0, 2) * 2) - 1), 0);
 		owner fakefire(owner, pos + offset, weapon, 1);
 	}
 }
@@ -505,7 +505,7 @@ function pick_random_weapon()
 	}
 	randomval = randomintrange(0, level.decoyweapons[type].size);
 	/#
-		println("" + type + "" + level.decoyweapons[type][randomval].name);
+		println((("" + type) + "") + level.decoyweapons[type][randomval].name);
 	#/
 	return level.decoyweapons[type][randomval];
 }

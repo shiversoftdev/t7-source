@@ -192,7 +192,7 @@ function debug_print_kill_info()
 			return;
 		}
 		player = self;
-		iprintln("" + player.pers[""] + "" + player.pers[""]);
+		iprintln((("" + player.pers[""]) + "") + player.pers[""]);
 	#/
 }
 
@@ -569,7 +569,7 @@ function track_blackjack_consumable()
 	}
 	while(isdefined(player))
 	{
-		random_wait_time = getdvarfloat("mp_blackjack_consumable_wait", 20) + randomfloatrange(-5, 5);
+		random_wait_time = getdvarfloat("mp_blackjack_consumable_wait", 20) + (randomfloatrange(-5, 5));
 		wait(random_wait_time);
 		player report_consumable();
 	}

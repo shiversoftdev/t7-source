@@ -188,7 +188,7 @@ function function_728dfe3()
 	{
 		var_bbf77908 = [[level.var_2d4e3645]](var_bbf77908);
 	}
-	var_59fe7f49 = undefined;
+	s_player_respawn = undefined;
 	if(var_bbf77908.size > 0)
 	{
 		var_90551969 = array::random(var_bbf77908);
@@ -198,10 +198,10 @@ function function_728dfe3()
 			n_script_int = self getentitynumber() + 1;
 			if(var_dbd59eb2.script_int === n_script_int)
 			{
-				var_59fe7f49 = var_dbd59eb2;
+				s_player_respawn = var_dbd59eb2;
 			}
 		}
 	}
-	return var_59fe7f49;
+	return s_player_respawn;
 }
 

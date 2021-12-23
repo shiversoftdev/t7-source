@@ -161,7 +161,7 @@ function function_12bffd86()
 		upgraded = self hascybercomability(ability.name) == 2;
 		if(ret == "cybercom_activation_succeeded")
 		{
-			alias = "gdt_cybercore_activate" + isdefined(upgraded) && (upgraded ? "_upgraded" : "");
+			alias = "gdt_cybercore_activate" + (isdefined(upgraded) && (upgraded ? "_upgraded" : ""));
 		}
 		else
 		{
@@ -442,7 +442,7 @@ function equipability(name, var_a67a6c08 = 0)
 		{
 			if(ability.name == self.cybercom.lastequipped.name)
 			{
-				self setcontrolleruimodelvalue("AbilityWheel.Selected" + ability.type + 1, abilityindex);
+				self setcontrolleruimodelvalue("AbilityWheel.Selected" + (ability.type + 1), abilityindex);
 				break;
 			}
 			abilityindex++;
@@ -457,7 +457,7 @@ function equipability(name, var_a67a6c08 = 0)
 	var_6f5af609 = int(tablelookup("gamedata/stats/cp/cp_statstable.csv", 4, ability.name, 0));
 	if(isdefined(self.var_768ee804))
 	{
-		var_6f5af609 = var_6f5af609 | self.var_768ee804 << 10;
+		var_6f5af609 = var_6f5af609 | (self.var_768ee804 << 10);
 	}
 	self setdstat("PlayerStatsList", "LAST_CYBERCOM_EQUIPPED", "statValue", var_6f5af609);
 	return ability;

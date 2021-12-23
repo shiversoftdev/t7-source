@@ -149,7 +149,7 @@ function function_8d5c3682()
 function function_21d887cd()
 {
 	/#
-		assert(ispointonnavmesh(self.origin), "" + self.origin + "");
+		assert(ispointonnavmesh(self.origin), ("" + self.origin) + "");
 	#/
 	s_stub = level zm_genesis_util::spawn_trigger_radius(self.origin, 256, undefined, &function_f8c1234b);
 	while(true)
@@ -203,7 +203,7 @@ function function_e8ef758e()
 		if(!(isdefined(e_player.var_1533bb11) && e_player.var_1533bb11))
 		{
 			e_player.var_1533bb11 = 1;
-			zm_grappler::function_7eaac04b(level.apothicon_grapple_source, e_player, 2, 3300);
+			zm_grappler::start_grapple(level.apothicon_grapple_source, e_player, 2, 3300);
 			e_player.var_1533bb11 = 0;
 		}
 	}
@@ -221,11 +221,11 @@ function function_e8ef758e()
 function function_4ab898f4(nd_start)
 {
 	self endon(#"death");
-	if(isdefined(self.var_122a2dda) && self.var_122a2dda)
+	if(isdefined(self.is_flung) && self.is_flung)
 	{
 		return;
 	}
-	self.var_122a2dda = 1;
+	self.is_flung = 1;
 	self.var_a393601c = 1;
 	self function_e8ef758e();
 	self.b_invulnerable = self enableinvulnerability();
@@ -277,7 +277,7 @@ function function_4ab898f4(nd_start)
 	util::wait_network_frame();
 	var_6a7beeb2 delete();
 	self thread function_10171438();
-	self.var_122a2dda = undefined;
+	self.is_flung = undefined;
 	self thread cleanup_vehicle(var_413ea50f);
 	wait(2);
 	self allowcrouch(1);
@@ -344,7 +344,7 @@ function function_fc804fdd(var_16caea3d)
 		}
 	}
 	/#
-		assert(isdefined(nd_spline), "" + var_16caea3d + "" + self.origin + "");
+		assert(isdefined(nd_spline), ((("" + var_16caea3d) + "") + self.origin) + "");
 	#/
 }
 
@@ -360,7 +360,7 @@ function function_fc804fdd(var_16caea3d)
 function function_3298b25f()
 {
 	self.var_3298b25f = 0;
-	var_6b138e28 = groundtrace(self.origin, self.origin + vectorscale((0, 0, -1), 10000), 0, undefined)["position"];
+	var_6b138e28 = groundtrace(self.origin, self.origin + (vectorscale((0, 0, -1), 10000)), 0, undefined)["position"];
 	var_16f5c370 = var_6b138e28;
 	while(positionwouldtelefrag(var_16f5c370) || !ispointonnavmesh(var_16f5c370))
 	{
@@ -434,7 +434,7 @@ function function_9278bc8a(var_181e2689)
 	{
 		attacker thread zm_genesis_vo::function_57f3d77();
 	}
-	exploder::exploder("fxexp_" + 106 + var_181e2689);
+	exploder::exploder("fxexp_" + (106 + var_181e2689));
 	level thread scene::play(self.current_scene);
 }
 

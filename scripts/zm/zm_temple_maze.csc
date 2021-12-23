@@ -97,7 +97,7 @@ function move_maze_wall(active)
 	{
 		currentz = self.origin[2];
 		goalz = goalpos[2];
-		ratio = abs(goalz - currentz) / abs(self.movedist);
+		ratio = (abs(goalz - currentz)) / abs(self.movedist);
 		movetime = movetime * ratio;
 	}
 	self notify(#"stop_maze_mover", !active && isdefined(self.movedownsound), active && isdefined(self.moveupsound));

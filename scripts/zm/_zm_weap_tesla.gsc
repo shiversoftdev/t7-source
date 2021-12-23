@@ -113,14 +113,14 @@ function tesla_damage_init(hit_location, hit_origin, player)
 	player endon(#"disconnect");
 	if(isdefined(player.tesla_firing) && player.tesla_firing)
 	{
-		zm_utility::debug_print("TESLA: Player: '" + player.name + "' currently processing tesla damage");
+		zm_utility::debug_print(("TESLA: Player: '" + player.name) + "' currently processing tesla damage");
 		return;
 	}
 	if(isdefined(self.zombie_tesla_hit) && self.zombie_tesla_hit)
 	{
 		return;
 	}
-	zm_utility::debug_print("TESLA: Player: '" + player.name + "' hit with the tesla gun");
+	zm_utility::debug_print(("TESLA: Player: '" + player.name) + "' hit with the tesla gun");
 	player.tesla_enemies = undefined;
 	player.tesla_enemies_hit = 1;
 	player.tesla_powerup_dropped = 0;
@@ -291,7 +291,7 @@ function tesla_pvp_thread()
 			{
 				damage = 25;
 			}
-			if(self.health - damage < 1)
+			if((self.health - damage) < 1)
 			{
 				self.health = 1;
 			}
@@ -329,8 +329,8 @@ function play_tesla_sound(emotion)
 		level.one_emo_at_a_time = 1;
 		org = spawn("script_origin", self.origin);
 		org linkto(self);
-		org playsoundwithnotify(emotion, "sound_complete" + "_" + level.var_9533aed);
-		org waittill("sound_complete" + "_" + level.var_9533aed);
+		org playsoundwithnotify(emotion, ("sound_complete" + "_") + level.var_9533aed);
+		org waittill(("sound_complete" + "_") + level.var_9533aed);
 		org delete();
 		level.one_emo_at_a_time = 0;
 	}

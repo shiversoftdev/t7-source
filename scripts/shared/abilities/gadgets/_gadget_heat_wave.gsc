@@ -276,11 +276,11 @@ function set_gadget_status(status, time)
 	timestr = "";
 	if(isdefined(time))
 	{
-		timestr = "^3" + ", time: " + time;
+		timestr = (("^3") + ", time: ") + time;
 	}
 	if(getdvarint("scr_cpower_debug_prints") > 0)
 	{
-		self iprintlnbold("Gadget Heat Wave: " + status + timestr);
+		self iprintlnbold(("Gadget Heat Wave: " + status) + timestr);
 	}
 }
 
@@ -378,7 +378,7 @@ function heat_wave_fx(origin, direction)
 	}
 	dirvec = vectornormalize(direction);
 	angles = vectortoangles(dirvec);
-	fxorg = spawn("script_model", origin + vectorscale((0, 0, -1), 30), 0, angles);
+	fxorg = spawn("script_model", origin + (vectorscale((0, 0, -1), 30)), 0, angles);
 	fxorg.angles = angles;
 	fxorg setowner(self);
 	fxorg setmodel("tag_origin");
@@ -449,12 +449,12 @@ function heat_wave_damage_entities(weapon, heatwave)
 	self endon(#"heat_wave_think");
 	starttime = gettime();
 	burnedenemy = 0;
-	while(250 + starttime > gettime())
+	while((250 + starttime) > gettime())
 	{
 		entities = getdamageableentarray(heatwave.origin, heatwave.radius, 1);
 		foreach(var_5f70e9dc, entity in entities)
 		{
-			if(isdefined(entity._heat_wave_damaged_time) && entity._heat_wave_damaged_time + 250 + 1 > gettime())
+			if(isdefined(entity._heat_wave_damaged_time) && ((entity._heat_wave_damaged_time + 250) + 1) > gettime())
 			{
 				continue;
 			}
@@ -546,7 +546,7 @@ function heat_wave_damage_projectiles(weapon, heatwave)
 	self endon(#"heat_wave_think");
 	owner = self;
 	starttime = gettime();
-	while(250 + starttime > gettime())
+	while((250 + starttime) > gettime())
 	{
 		if(level.missileentities.size < 1)
 		{
@@ -590,7 +590,7 @@ function heat_wave_damage_projectiles(weapon, heatwave)
 					continue;
 				}
 				grenadedistancesquared = distancesquared(grenade.origin, heatwave.origin);
-				if(grenadedistancesquared < heatwave.radius * heatwave.radius)
+				if(grenadedistancesquared < (heatwave.radius * heatwave.radius))
 				{
 					if(bullettracepassed(grenade.origin, heatwave.origin + vectorscale((0, 0, 1), 29), 0, owner, grenade, 0, 1))
 					{
@@ -640,7 +640,7 @@ function apply_burn(weapon, entity, heatwave)
 	entity thread watch_burn_clear();
 	entity resetdoublejumprechargetime();
 	shellshock_duration = 2.5;
-	entity._heat_wave_stuned_end = gettime() + shellshock_duration * 1000;
+	entity._heat_wave_stuned_end = gettime() + (shellshock_duration * 1000);
 	if(!isdefined(entity._heat_wave_stunned_by))
 	{
 		entity._heat_wave_stunned_by = [];

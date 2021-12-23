@@ -16,7 +16,7 @@ function registerblackboardattribute(entity, attributename, defaultattributevalu
 		assert(isdefined(entity.__blackboard), "");
 	#/
 	/#
-		assert(!isdefined(entity.__blackboard[attributename]), "" + attributename + "");
+		assert(!isdefined(entity.__blackboard[attributename]), ("" + attributename) + "");
 	#/
 	if(isdefined(getterfunction))
 	{

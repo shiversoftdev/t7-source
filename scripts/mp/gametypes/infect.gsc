@@ -528,7 +528,7 @@ function function_485556b(player, comingfrommenu)
 function function_dc5fbf33()
 {
 	started_waiting = gettime();
-	while(!self isstreamerready(-1, 1) && started_waiting + 90000 > gettime())
+	while(!self isstreamerready(-1, 1) && (started_waiting + 90000) > gettime())
 	{
 		wait(0.05);
 	}
@@ -836,7 +836,7 @@ function finalsurvivoruav(var_53fb74fd)
 			removeuav = 0;
 		}
 		wait(6);
-		if(distancesquared(prevpos, var_53fb74fd.origin) < 200 * 200)
+		if(distancesquared(prevpos, var_53fb74fd.origin) < (200 * 200))
 		{
 			setteamspyplane(game["attackers"], 1);
 			util::set_team_radar(game["attackers"], 1);
@@ -1732,7 +1732,7 @@ function gettimelimit()
 	{
 		return 0;
 	}
-	var_22ff0aac = level.var_93e2155b - level.starttime + 1000 / 60000;
+	var_22ff0aac = ((level.var_93e2155b - level.starttime) + 1000) / 60000;
 	timelimit = var_22ff0aac + var_6b74a930;
 	return timelimit;
 }
@@ -1807,7 +1807,7 @@ function function_c17c938d(winner, endtype, endreasontext, outcometext, team, wi
 		{
 			foreach(var_ef82f8e6, team in level.teams)
 			{
-				if(endreasontext == game["strings"][team + "_eliminated"])
+				if(endreasontext == (game["strings"][team + "_eliminated"]))
 				{
 					endreasontext = game["strings"]["cod_caster_team_eliminated"];
 					break;
@@ -1957,7 +1957,7 @@ function function_897ac191()
 		level thread function_fb550fe9("", &function_27ccd53);
 		level flag::wait_till("");
 		var_126022b3 = "";
-		adddebugcommand(var_126022b3 + "" + "" + "" + "");
+		adddebugcommand((((var_126022b3 + "") + "") + "") + "");
 	#/
 }
 

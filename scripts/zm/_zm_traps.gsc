@@ -767,7 +767,7 @@ function player_elec_damage()
 			elec_loop = 1;
 			self playsound("wpn_zmb_electrap_zap");
 		}
-		if(!self hasperk("specialty_armorvest") || self.health - 100 < 1)
+		if(!self hasperk("specialty_armorvest") || (self.health - 100) < 1)
 		{
 			self dodamage(self.health + 100, self.origin);
 			self.is_burning = undefined;
@@ -806,7 +806,7 @@ function player_fire_damage()
 			self setburn(1.25);
 		}
 		self notify(#"burned");
-		if(!self hasperk("specialty_armorvest") || self.health - 100 < 1)
+		if(!self hasperk("specialty_armorvest") || (self.health - 100) < 1)
 		{
 			radiusdamage(self.origin, 10, self.health + 100, self.health + 100);
 			self.is_burning = undefined;
@@ -1052,7 +1052,7 @@ function trap_dialog()
 			if(dist < 4900 && timer == 3)
 			{
 				index = zm_utility::get_player_index(players[i]);
-				plr = "plr_" + index + "_";
+				plr = ("plr_" + index) + "_";
 				wait(3);
 				self notify(#"warning_dialog");
 			}

@@ -98,9 +98,9 @@ function player_shock_fx_fade_off(localclientnum, amount, fadeouttime)
 	starttime = gettime();
 	filter::set_filter_ev_interference_amount(self, 4, amount);
 	filter::enable_filter_ev_interference(self, 4);
-	while(gettime() <= starttime + fadeouttime * 1000 && isalive(self))
+	while(gettime() <= (starttime + (fadeouttime * 1000)) && isalive(self))
 	{
-		ratio = gettime() - starttime / fadeouttime * 1000;
+		ratio = (gettime() - starttime) / (fadeouttime * 1000);
 		currentvalue = lerpfloat(amount, 0, ratio);
 		setfilterpassconstant(localclientnum, 4, 0, 0, currentvalue);
 		wait(0.016);
@@ -158,7 +158,7 @@ function set_trophy_state(localclientnum, ison)
 		warmuptime = (isdefined(settings.trophywarmup) ? settings.trophywarmup : 0.1);
 		start = gettime();
 		interval = 0.3;
-		while(gettime() <= start + warmuptime * 1000)
+		while(gettime() <= (start + (warmuptime * 1000)))
 		{
 			if(isdefined(settings.trophylight_fx_1) && isdefined(settings.trophylight_tag_1))
 			{

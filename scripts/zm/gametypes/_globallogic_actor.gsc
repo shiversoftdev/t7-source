@@ -181,7 +181,7 @@ function callback_actordamage(einflictor, eattacker, idamage, idflags, smeansofd
 	/#
 		if(getdvarint(""))
 		{
-			println("" + self getentitynumber() + "" + self.health + "" + eattacker.clientid + "" + isplayer(einflictor) + "" + idamage + shitloc + "" + boneindex + "");
+			println(((((((((((("" + self getentitynumber()) + "") + self.health) + "") + eattacker.clientid) + "") + isplayer(einflictor) + "") + idamage) + shitloc) + "") + boneindex) + "");
 		}
 	#/
 	if(1)
@@ -203,7 +203,7 @@ function callback_actordamage(einflictor, eattacker, idamage, idflags, smeansofd
 			lpattackname = "";
 			lpattackerteam = "world";
 		}
-		logprint("AD;" + lpselfnum + ";" + lpselfteam + ";" + lpattackguid + ";" + lpattacknum + ";" + lpattackerteam + ";" + lpattackname + ";" + weapon.name + ";" + idamage + ";" + smeansofdeath + ";" + shitloc + "\n");
+		logprint(((((((((((((((((((("AD;" + lpselfnum) + ";") + lpselfteam) + ";") + lpattackguid) + ";") + lpattacknum) + ";") + lpattackerteam) + ";") + lpattackname) + ";") + weapon.name) + ";") + idamage) + ";") + smeansofdeath) + ";") + shitloc) + "\n");
 	}
 }
 

@@ -694,7 +694,7 @@ function command_parser()
 				{
 					if(isdefined(tokens[1]))
 					{
-						println("" + tokens[0] + "" + tokens[1]);
+						println((("" + tokens[0]) + "") + tokens[1]);
 					}
 					else
 					{
@@ -705,13 +705,13 @@ function command_parser()
 				}
 				else if(!isdefined(tokens[2]))
 				{
-					println("" + tokens[0] + "" + tokens[1]);
+					println((("" + tokens[0]) + "") + tokens[1]);
 					println("");
 					success = 0;
 				}
 				else if(!isdefined(tokens[3]))
 				{
-					println("" + tokens[0] + "" + tokens[1]);
+					println((("" + tokens[0]) + "") + tokens[1]);
 					println("");
 					success = 0;
 				}
@@ -931,7 +931,7 @@ function heli_sound_play(heli_bone)
 		default:
 		{
 			/#
-				println("" + heli_bone.type + "");
+				println(("" + heli_bone.type) + "");
 			#/
 			break;
 		}
@@ -1513,14 +1513,14 @@ function function_d19cb2f8()
 		/#
 			if(getdvarint("") > 0)
 			{
-				println("" + loopers.size + "");
+				println(("" + loopers.size) + "");
 			}
 		#/
 		for(i = 0; i < loopers.size; i++)
 		{
 			loopers[i] thread soundloopthink();
 			delay = delay + 1;
-			if(delay % 20 == 0)
+			if((delay % 20) == 0)
 			{
 				wait(0.016);
 			}

@@ -124,7 +124,7 @@ function actor_death_override(e_attacker)
 {
 	if(e_attacker laststand::player_is_in_laststand() && (!(isdefined(e_attacker.var_df0decf1) && e_attacker.var_df0decf1)))
 	{
-		e_attacker thread bgb::function_7d63d2eb();
+		e_attacker thread bgb::bgb_revive_watcher();
 		e_attacker notify(#"hash_935cc366");
 	}
 }

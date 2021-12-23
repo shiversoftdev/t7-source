@@ -199,7 +199,7 @@ function play_intro_igc()
 }
 
 /*
-	Name: function_2b0842cd
+	Name: play_outro_igc
 	Namespace: namespace_21b2c1f2
 	Checksum: 0x97E11DE2
 	Offset: 0x788
@@ -207,7 +207,7 @@ function play_intro_igc()
 	Parameters: 0
 	Flags: Linked
 */
-function function_2b0842cd()
+function play_outro_igc()
 {
 	music::setmusicstate("outro_igc");
 }

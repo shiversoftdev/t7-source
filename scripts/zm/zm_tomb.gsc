@@ -932,7 +932,7 @@ function tomb_round_spawn_failsafe()
 		}
 		if(isdefined(self.lastchunk_destroy_time))
 		{
-			if(gettime() - self.lastchunk_destroy_time < 8000)
+			if((gettime() - self.lastchunk_destroy_time) < 8000)
 			{
 				continue;
 			}
@@ -1086,7 +1086,7 @@ function assign_lowest_unused_character_index()
 	}
 	if(charindexarray.size > 0)
 	{
-		if(n_characters_defined == players.size - 1)
+		if(n_characters_defined == (players.size - 1))
 		{
 			if(!(isdefined(level.has_richtofen) && level.has_richtofen))
 			{
@@ -1187,10 +1187,10 @@ function fall_down(vdir, stance)
 	origin = self.origin;
 	xyspeed = (0, 0, 0);
 	angles = self getplayerangles();
-	angles = (angles[0], angles[1], angles[2] + randomfloatrange(-5, 5));
+	angles = (angles[0], angles[1], angles[2] + (randomfloatrange(-5, 5)));
 	if(isdefined(vdir) && length(vdir) > 0)
 	{
-		xyspeedmag = 40 + randomint(12) + randomint(12);
+		xyspeedmag = (40 + randomint(12)) + randomint(12);
 		xyspeed = xyspeedmag * vectornormalize((vdir[0], vdir[1], 0));
 	}
 	linker = spawn("script_origin", (0, 0, 0));
@@ -1204,7 +1204,7 @@ function fall_down(vdir, stance)
 	{
 		origin = playerphysicstrace(origin, origin + xyspeed);
 		eye = self util::get_eye();
-		floor_height = 10 + origin[2] - eye[2];
+		floor_height = (10 + origin[2]) - eye[2];
 		origin = origin + (0, 0, floor_height);
 		lerptime = 0.5;
 		linker moveto(origin, lerptime, lerptime);
@@ -1220,11 +1220,11 @@ function fall_down(vdir, stance)
 	if(falling)
 	{
 		bounce = randomint(4) + 8;
-		origin = origin + (0, 0, bounce) - xyspeed * 0.1;
+		origin = (origin + (0, 0, bounce)) - (xyspeed * 0.1);
 		lerptime = bounce / 50;
 		linker moveto(origin, lerptime, 0, lerptime);
 		linker waittill(#"movedone");
-		origin = origin + (0, 0, bounce * -1) + xyspeed * 0.1;
+		origin = (origin + (0, 0, bounce * -1)) + (xyspeed * 0.1);
 		lerptime = lerptime / 2;
 		linker moveto(origin, lerptime, lerptime);
 		linker waittill(#"movedone");
@@ -2030,7 +2030,7 @@ function tomb_actor_damage_override_wrapper(einflictor, eattacker, idamage, idfl
 	{
 		if(idamage >= self.health)
 		{
-			if(100 * level.round_number > eattacker.n_capture_zombie_points)
+			if((100 * level.round_number) > eattacker.n_capture_zombie_points)
 			{
 				eattacker zm_score::player_add_points("rebuild_board", 10);
 				eattacker.n_capture_zombie_points = eattacker.n_capture_zombie_points + 10;
@@ -2126,7 +2126,7 @@ function show_zombie_count()
 	while(true)
 	{
 		n_round_zombies = zombie_utility::get_current_zombie_count();
-		str_hint = "Alive: " + n_round_zombies + ". To Spawn: " + level.zombie_total;
+		str_hint = (("Alive: " + n_round_zombies) + ". To Spawn: ") + level.zombie_total;
 		/#
 			iprintlnbold(str_hint);
 		#/

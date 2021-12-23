@@ -266,7 +266,7 @@ function function_447a5d62()
 		/#
 			iprintlnbold("");
 		#/
-		var_f7cbce08 thread zm_castle_vo::function_7b697614("vox_plr_" + var_f7cbce08.characterindex + "_rocket_start_" + randomint(5), 1, 1);
+		var_f7cbce08 thread zm_castle_vo::function_7b697614((("vox_plr_" + var_f7cbce08.characterindex) + "_rocket_start_") + randomint(5), 1, 1);
 	}
 }
 

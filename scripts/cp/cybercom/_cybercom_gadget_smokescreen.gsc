@@ -182,8 +182,8 @@ function _is_primed(slot, weapon)
 */
 function rotateforwardxy(vtorotate, fangledegrees)
 {
-	x = vtorotate[0] * cos(fangledegrees) + vtorotate[1] * sin(fangledegrees);
-	y = -1 * vtorotate[0] * sin(fangledegrees) + vtorotate[1] * cos(fangledegrees);
+	x = (vtorotate[0] * cos(fangledegrees)) + (vtorotate[1] * sin(fangledegrees));
+	y = -1 * vtorotate[0] * sin(fangledegrees) + (vtorotate[1] * cos(fangledegrees));
 	z = vtorotate[2];
 	return (x, y, z);
 }
@@ -201,16 +201,16 @@ function spawn_smokescreen(owner, upgraded = 0)
 {
 	weapon = (upgraded ? getweapon("smoke_cybercom_upgraded") : getweapon("smoke_cybercom"));
 	forward = anglestoforward(owner.angles);
-	center = 40 * forward + owner.origin;
-	frontspot = 140 * forward + center;
+	center = (40 * forward) + owner.origin;
+	frontspot = (140 * forward) + center;
 	owner thread _cloudcreate(frontspot, weapon, upgraded);
 	playsoundatposition("gdt_cybercore_smokescreen", frontspot);
 	rotated = rotateforwardxy(forward, 23);
-	var_ae0aa92 = rotated * 140 + center;
+	var_ae0aa92 = (rotated * 140) + center;
 	rotated = rotateforwardxy(forward, 46);
-	var_e4de3029 = rotated * 140 + center;
+	var_e4de3029 = (rotated * 140) + center;
 	rotated = rotateforwardxy(forward, 69);
-	var_bedbb5c0 = rotated * 140 + center;
+	var_bedbb5c0 = (rotated * 140) + center;
 	owner thread _cloudcreate(var_ae0aa92, weapon, upgraded);
 	util::wait_network_frame();
 	owner thread _cloudcreate(var_e4de3029, weapon, upgraded);
@@ -218,11 +218,11 @@ function spawn_smokescreen(owner, upgraded = 0)
 	owner thread _cloudcreate(var_bedbb5c0, weapon, upgraded);
 	util::wait_network_frame();
 	rotated = rotateforwardxy(forward, -23);
-	var_354533f = rotated * 140 + center;
+	var_354533f = (rotated * 140) + center;
 	rotated = rotateforwardxy(forward, -46);
-	var_914ce404 = rotated * 140 + center;
+	var_914ce404 = (rotated * 140) + center;
 	rotated = rotateforwardxy(forward, -69);
-	var_b74f5e6d = rotated * 140 + center;
+	var_b74f5e6d = (rotated * 140) + center;
 	owner thread _cloudcreate(var_354533f, weapon, upgraded);
 	util::wait_network_frame();
 	owner thread _cloudcreate(var_914ce404, weapon, upgraded);
@@ -402,7 +402,7 @@ private function _moveindirection(dir, unitstomove, seconds)
 {
 	self endon(#"death");
 	ticks = seconds * 20;
-	dxstep = unitstomove / ticks * vectornormalize(dir);
+	dxstep = (unitstomove / ticks) * vectornormalize(dir);
 	while(ticks)
 	{
 		ticks--;
@@ -474,7 +474,7 @@ private function _scaleovertime(time, startscale, maxscale)
 	else
 	{
 		deltascale = startscale - maxscale;
-		deltastep = deltascale / serverticks * -1;
+		deltastep = (deltascale / serverticks) * -1;
 	}
 	while(serverticks)
 	{
@@ -529,7 +529,7 @@ function ai_activatesmokescreen(var_9bc2efcb = 1, upgraded = 0)
 	{
 		type = self cybercom::function_5e3d3aa();
 		self orientmode("face default");
-		self animscripted("ai_cybercom_anim", self.origin, self.angles, "ai_base_rifle_" + type + "_exposed_cybercom_activate");
+		self animscripted("ai_cybercom_anim", self.origin, self.angles, ("ai_base_rifle_" + type) + "_exposed_cybercom_activate");
 		self waittill_match(#"ai_cybercom_anim");
 	}
 	level thread spawn_smokescreen(self, upgraded);

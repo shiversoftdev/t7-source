@@ -765,14 +765,14 @@ function zombieupdatezigzaggoal()
 		{
 			shouldrepath = 1;
 		}
-		else if(distancesquared(self.origin, self.favoriteenemy.origin) <= 250 * 250)
+		else if(distancesquared(self.origin, self.favoriteenemy.origin) <= (250 * 250))
 		{
 			shouldrepath = 1;
 		}
 		else if(isdefined(self.pathgoalpos))
 		{
 			distancetogoalsqr = distancesquared(self.origin, self.pathgoalpos);
-			shouldrepath = distancetogoalsqr < 72 * 72;
+			shouldrepath = distancetogoalsqr < (72 * 72);
 		}
 	}
 	if(isdefined(self.keep_moving) && self.keep_moving)
@@ -790,7 +790,7 @@ function zombieupdatezigzaggoal()
 			goalpos = self.favoriteenemy.last_valid_position;
 		}
 		self setgoal(goalpos);
-		if(distancesquared(self.origin, goalpos) > 250 * 250)
+		if(distancesquared(self.origin, goalpos) > (250 * 250))
 		{
 			self.keep_moving = 1;
 			self.keep_moving_time = gettime() + 250;
@@ -819,10 +819,10 @@ function zombieupdatezigzaggoal()
 			for(index = 1; index < path.size; index++)
 			{
 				currentseglength = distance(path[index - 1], path[index]);
-				if(segmentlength + currentseglength > deviationdistance)
+				if((segmentlength + currentseglength) > deviationdistance)
 				{
 					remaininglength = deviationdistance - segmentlength;
-					seedposition = path[index - 1] + vectornormalize(path[index] - path[index - 1]) * remaininglength;
+					seedposition = (path[index - 1]) + ((vectornormalize(path[index] - (path[index - 1]))) * remaininglength);
 					/#
 						recordcircle(seedposition, 2, (1, 0.5, 0), "", self);
 					#/
@@ -1034,7 +1034,7 @@ function zombieshouldmeleecondition(behaviortreeentity)
 	{
 		return 0;
 	}
-	yawtoenemy = angleclamp180(behaviortreeentity.angles[1] - vectortoangles(behaviortreeentity.enemy.origin - behaviortreeentity.origin)[1]);
+	yawtoenemy = angleclamp180(behaviortreeentity.angles[1] - (vectortoangles(behaviortreeentity.enemy.origin - behaviortreeentity.origin)[1]));
 	if(abs(yawtoenemy) > 60)
 	{
 		return 0;
@@ -1078,17 +1078,17 @@ function zombieshouldjumpmeleecondition(behaviortreeentity)
 		return 0;
 	}
 	jumpchance = getdvarfloat("zmMeleeJumpChance", 0.5);
-	if(behaviortreeentity getentitynumber() % 10 / 10 > jumpchance)
+	if(((behaviortreeentity getentitynumber() % 10) / 10) > jumpchance)
 	{
 		return 0;
 	}
-	predictedposition = behaviortreeentity.enemy.origin + behaviortreeentity.enemy getvelocity() * 0.05 * 2;
+	predictedposition = behaviortreeentity.enemy.origin + ((behaviortreeentity.enemy getvelocity() * 0.05) * 2);
 	jumpdistancesq = pow(getdvarint("zmMeleeJumpDistance", 180), 2);
 	if(distance2dsquared(behaviortreeentity.origin, predictedposition) > jumpdistancesq)
 	{
 		return 0;
 	}
-	yawtoenemy = angleclamp180(behaviortreeentity.angles[1] - vectortoangles(behaviortreeentity.enemy.origin - behaviortreeentity.origin)[1]);
+	yawtoenemy = angleclamp180(behaviortreeentity.angles[1] - (vectortoangles(behaviortreeentity.enemy.origin - behaviortreeentity.origin)[1]));
 	if(abs(yawtoenemy) > 60)
 	{
 		return 0;
@@ -1141,7 +1141,7 @@ function zombieshouldjumpunderwatermelee(behaviortreeentity)
 	{
 		return 0;
 	}
-	yawtoenemy = angleclamp180(behaviortreeentity.angles[1] - vectortoangles(behaviortreeentity.enemy.origin - behaviortreeentity.origin)[1]);
+	yawtoenemy = angleclamp180(behaviortreeentity.angles[1] - (vectortoangles(behaviortreeentity.enemy.origin - behaviortreeentity.origin)[1]));
 	if(abs(yawtoenemy) > 60)
 	{
 		return 0;
@@ -1403,7 +1403,7 @@ function zombiemeleejumpmocompstart(entity, mocompanim, mocompanimblendouttime, 
 */
 function zombiemeleejumpmocompupdate(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
-	normalizedtime = entity getanimtime(mocompanim) * getanimlength(mocompanim) + mocompanimblendouttime / mocompduration;
+	normalizedtime = ((entity getanimtime(mocompanim) * getanimlength(mocompanim)) + mocompanimblendouttime) / mocompduration;
 	if(normalizedtime > 0.5)
 	{
 		entity orientmode("face angle", entity.angles[1]);
@@ -1430,7 +1430,7 @@ function zombiemeleejumpmocompupdate(entity, mocompanim, mocompanimblendouttime,
 			}
 		}
 	}
-	newposition = entity.origin + anglestoforward(entity.angles) * speed;
+	newposition = entity.origin + (anglestoforward(entity.angles) * speed);
 	newtestposition = (newposition[0], newposition[1], entity.jumpstartposition[2]);
 	newvalidposition = getclosestpointonnavmesh(newtestposition, 12, 20);
 	if(isdefined(newvalidposition))
@@ -1503,7 +1503,7 @@ function zombieidgundeathupdate(entity, mocompanim, mocompanimblendouttime, moco
 				}
 			}
 		}
-		entity_center = entity.origin + entity_eye - entity.origin / 2;
+		entity_center = entity.origin + ((entity_eye - entity.origin) / 2);
 		flyingdir = entity.damageorigin - entity_center;
 		lengthfromhole = length(flyingdir);
 		if(lengthfromhole < entity.hole_pull_speed)
@@ -1532,7 +1532,7 @@ function zombieidgundeathupdate(entity, mocompanim, mocompanimblendouttime, moco
 			}
 		}
 		flyingdir = vectornormalize(flyingdir);
-		entity forceteleport(entity.origin + flyingdir * entity.hole_pull_speed);
+		entity forceteleport(entity.origin + (flyingdir * entity.hole_pull_speed));
 	}
 }
 
@@ -1595,7 +1595,7 @@ private function zombieturnmocompstart(entity, mocompanim, mocompanimblendouttim
 */
 private function zombieturnmocompupdate(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
-	normalizedtime = entity getanimtime(mocompanim) + mocompanimblendouttime / mocompduration;
+	normalizedtime = (entity getanimtime(mocompanim) + mocompanimblendouttime) / mocompduration;
 	if(normalizedtime > 0.25)
 	{
 		entity orientmode("face motion");
@@ -1780,7 +1780,7 @@ function zombiemoveactionupdate(behaviortreeentity, asmstatename)
 		behaviortreeentity.move_anim_end_time = undefined;
 		return 4;
 	}
-	if(!(isdefined(behaviortreeentity.missinglegs) && behaviortreeentity.missinglegs) && gettime() - behaviortreeentity.movetime > 1000)
+	if(!(isdefined(behaviortreeentity.missinglegs) && behaviortreeentity.missinglegs) && (gettime() - behaviortreeentity.movetime) > 1000)
 	{
 		distsq = distance2dsquared(behaviortreeentity.origin, behaviortreeentity.moveorigin);
 		if(distsq < 144)
@@ -1884,7 +1884,7 @@ private function zombiegibkilledanhilateoverride(inflictor, attacker, damage, me
 		if(isdefined(inflictor))
 		{
 			isdirectexplosive = isinarray(array("MOD_GRENADE", "MOD_GRENADE_SPLASH", "MOD_PROJECTILE", "MOD_PROJECTILE_SPLASH", "MOD_EXPLOSIVE"), meansofdeath);
-			iscloseexplosive = distancesquared(inflictor.origin, self.origin) <= 60 * 60;
+			iscloseexplosive = distancesquared(inflictor.origin, self.origin) <= (60 * 60);
 			if(isdirectexplosive && iscloseexplosive)
 			{
 				self zombie_utility::gib_random_parts();

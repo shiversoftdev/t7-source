@@ -180,12 +180,12 @@ function init()
 			{
 				if(attachment_tokens.size == 0)
 				{
-					weapon_class_register(weapon + "_" + attachment, weapon_type);
+					weapon_class_register((weapon + "_") + attachment, weapon_type);
 					continue;
 				}
 				for(k = 0; k < attachment_tokens.size; k++)
 				{
-					weapon_class_register(weapon + "_" + attachment_tokens[k], weapon_type);
+					weapon_class_register((weapon + "_") + attachment_tokens[k], weapon_type);
 				}
 			}
 		}
@@ -249,7 +249,7 @@ function create_class_exclusion_list()
 		currentdvar++;
 	}
 	level.attachmentexclusions = [];
-	for(currentdvar = 0; getdvarstring("attachment_exclusion_" + currentdvar) != ""; currentdvar++)
+	for(currentdvar = 0; (getdvarstring("attachment_exclusion_" + currentdvar)) != ""; currentdvar++)
 	{
 		level.attachmentexclusions[currentdvar] = getdvarstring("attachment_exclusion_" + currentdvar);
 	}
@@ -684,7 +684,7 @@ function giveloadout(team, weaponclass, var_dc236bc8, altplayer)
 	if(issubstr(weaponclass, "CLASS_CUSTOM"))
 	{
 		pixbeginevent("custom class");
-		class_num = int(weaponclass[weaponclass.size - 1]) - 1;
+		class_num = (int(weaponclass[weaponclass.size - 1])) - 1;
 		if(-1 == class_num)
 		{
 			class_num = 9;
@@ -717,14 +717,14 @@ function giveloadout(team, weaponclass, var_dc236bc8, altplayer)
 			{
 				class_num = array::random(level.classtoclassnum);
 			}
-			assert(0, "" + weaponclass + "");
+			assert(0, ("" + weaponclass) + "");
 		}
 		self.class_num = class_num;
 		pixendevent();
 	}
 	knifeweaponoptions = self calcweaponoptions(class_num, 2);
 	/#
-		println("" + self.name + "" + level.weaponbasemelee.name + "");
+		println(((("" + self.name) + "") + level.weaponbasemelee.name) + "");
 	#/
 	self giveweapon(level.weaponbasemelee, knifeweaponoptions);
 	self.specialty = self getloadoutperks(class_num);
@@ -780,7 +780,7 @@ function giveloadout(team, weaponclass, var_dc236bc8, altplayer)
 			secondaryweaponoptions = altplayer calcweaponoptions(class_num, 1);
 		}
 		/#
-			println("" + self.name + "" + sidearm.name + "");
+			println(((("" + self.name) + "") + sidearm.name) + "");
 		#/
 		acvi = self getattachmentcosmeticvariantforweapon(class_num, "secondary");
 		if(isdefined(altplayer))
@@ -808,7 +808,7 @@ function giveloadout(team, weaponclass, var_dc236bc8, altplayer)
 			primaryweaponoptions = altplayer calcweaponoptions(class_num, 0);
 		}
 		/#
-			println("" + self.name + "" + primaryweapon.name + "");
+			println(((("" + self.name) + "") + primaryweapon.name) + "");
 		#/
 		acvi = self getattachmentcosmeticvariantforweapon(class_num, "primary");
 		if(isdefined(altplayer))
@@ -842,7 +842,7 @@ function giveloadout(team, weaponclass, var_dc236bc8, altplayer)
 		if(!isusingt7melee())
 		{
 			/#
-				println("" + self.name + "" + level.weaponbasemeleeheld.name + "");
+				println(((("" + self.name) + "") + level.weaponbasemeleeheld.name) + "");
 			#/
 			self giveweapon(level.weaponbasemeleeheld, knifeweaponoptions);
 		}
@@ -915,7 +915,7 @@ function giveloadout(team, weaponclass, var_dc236bc8, altplayer)
 	if(primaryoffhand != level.weaponnull)
 	{
 		/#
-			println("" + self.name + "" + primaryoffhand.name + "");
+			println(((("" + self.name) + "") + primaryoffhand.name) + "");
 		#/
 		self giveweapon(primaryoffhand);
 		self setweaponammoclip(primaryoffhand, primaryoffhandcount);
@@ -963,7 +963,7 @@ function giveloadout(team, weaponclass, var_dc236bc8, altplayer)
 	if(secondaryoffhand != level.weaponnull)
 	{
 		/#
-			println("" + self.name + "" + secondaryoffhand.name + "");
+			println(((("" + self.name) + "") + secondaryoffhand.name) + "");
 		#/
 		self giveweapon(secondaryoffhand);
 		self setweaponammoclip(secondaryoffhand, secondaryoffhandcount);
@@ -994,7 +994,7 @@ function giveloadout(team, weaponclass, var_dc236bc8, altplayer)
 	if(specialoffhand != level.weaponnull)
 	{
 		/#
-			println("" + self.name + "" + specialoffhand.name + "");
+			println(((("" + self.name) + "") + specialoffhand.name) + "");
 		#/
 		self giveweapon(specialoffhand);
 		self setweaponammoclip(specialoffhand, specialoffhandcount);
@@ -1225,7 +1225,7 @@ function register_perks()
 			continue;
 		}
 		/#
-			println("" + self.name + "" + perk + "");
+			println(((("" + self.name) + "") + perk) + "");
 		#/
 		self setperk(perk);
 	}
@@ -1257,11 +1257,11 @@ function cac_modified_vehicle_damage(victim, attacker, damage, meansofdeath, wea
 	final_damage = damage;
 	if(attacker hasperk("specialty_bulletdamage") && isprimarydamage(meansofdeath))
 	{
-		final_damage = damage * 100 + level.cac_bulletdamage_data / 100;
+		final_damage = (damage * (100 + level.cac_bulletdamage_data)) / 100;
 		/#
 			if(getdvarint(""))
 			{
-				println("" + attacker.name + "");
+				println(("" + attacker.name) + "");
 			}
 		#/
 	}
@@ -1272,7 +1272,7 @@ function cac_modified_vehicle_damage(victim, attacker, damage, meansofdeath, wea
 	/#
 		if(getdvarint(""))
 		{
-			println("" + final_damage / old_damage + "" + old_damage + "" + final_damage);
+			println((((("" + (final_damage / old_damage)) + "") + old_damage) + "") + final_damage);
 		}
 	#/
 	return int(final_damage);
@@ -1317,38 +1317,38 @@ function cac_modified_damage(victim, attacker, damage, mod, weapon, inflictor, h
 			/#
 				if(debug)
 				{
-					println("" + victim.name + "" + attacker.name + "");
+					println(((("" + victim.name) + "") + attacker.name) + "");
 				}
 			#/
 		}
 		else
 		{
-			final_damage = damage * 100 + level.cac_bulletdamage_data / 100;
+			final_damage = (damage * (100 + level.cac_bulletdamage_data)) / 100;
 			/#
 				if(debug)
 				{
-					println("" + attacker.name + "" + victim.name);
+					println((("" + attacker.name) + "") + victim.name);
 				}
 			#/
 		}
 	}
 	else if(victim hasperk("specialty_armorvest") && isprimarydamage(mod) && !isheaddamage(hitloc))
 	{
-		final_damage = damage * level.cac_armorvest_data * 0.01;
+		final_damage = damage * (level.cac_armorvest_data * 0.01);
 		/#
 			if(debug)
 			{
-				println("" + attacker.name + "" + victim.name);
+				println((("" + attacker.name) + "") + victim.name);
 			}
 		#/
 	}
 	else if(victim hasperk("specialty_fireproof") && isfiredamage(weapon, mod))
 	{
-		final_damage = damage * 100 - level.cac_fireproof_data / 100;
+		final_damage = damage * ((100 - level.cac_fireproof_data) / 100);
 		/#
 			if(debug)
 			{
-				println("" + attacker.name + "" + victim.name);
+				println((("" + attacker.name) + "") + victim.name);
 			}
 		#/
 	}
@@ -1363,11 +1363,11 @@ function cac_modified_damage(victim, attacker, damage, mod, weapon, inflictor, h
 		{
 			victim thread challenges::flakjacketprotected(weapon, attacker);
 		}
-		final_damage = int(damage * cac_data / 100);
+		final_damage = int(damage * (cac_data / 100));
 		/#
 			if(debug)
 			{
-				println("" + victim.name + "" + attacker.name + "");
+				println(((("" + victim.name) + "") + attacker.name) + "");
 			}
 		#/
 	}
@@ -1380,7 +1380,7 @@ function cac_modified_damage(victim, attacker, damage, mod, weapon, inflictor, h
 		victim.cac_debug_range = int(distance(attacker.origin, victim.origin));
 		if(debug)
 		{
-			println("" + final_damage / damage + "" + damage + "" + final_damage);
+			println((((("" + (final_damage / damage)) + "") + damage) + "") + final_damage);
 		}
 	#/
 	final_damage = int(final_damage);

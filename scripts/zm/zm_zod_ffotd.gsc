@@ -34,7 +34,7 @@ function main_start()
 		{
 			case 1:
 			{
-				var_fae9adb3.origin = var_fae9adb3.origin + vectorscale((-1, 0, 0), 7);
+				var_fae9adb3.origin = var_fae9adb3.origin + (vectorscale((-1, 0, 0), 7));
 				break;
 			}
 			case 4:

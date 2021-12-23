@@ -106,7 +106,7 @@ function set_mission_name(name)
 	if(isdefined(level.savename) && level.savename != name)
 	{
 		/#
-			errormsg("" + level.savename + "" + name + "");
+			errormsg(((("" + level.savename) + "") + name) + "");
 		#/
 	}
 	level.savename = name;
@@ -672,7 +672,7 @@ private function function_2c89c30c()
 	{
 		return 0;
 	}
-	if(isdefined(self.lastdamagetime) && self.lastdamagetime > gettime() - 1500)
+	if(isdefined(self.lastdamagetime) && self.lastdamagetime > (gettime() - 1500))
 	{
 		return 0;
 	}

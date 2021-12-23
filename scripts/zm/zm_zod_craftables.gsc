@@ -48,9 +48,9 @@ function include_craftables()
 	shared_pieces = getnumexpectedplayers() == 1;
 	var_16b36a95 = 1;
 	craftable_name = "police_box";
-	var_c157a58b = zm_craftables::generate_zombie_craftable_piece(craftable_name, "fuse_01", 32, 64, 0, undefined, &function_27ef9857, undefined, &function_6c41d7f2, undefined, undefined, undefined, "police_box" + "_" + "fuse_01", 1, undefined, undefined, &"ZM_ZOD_POLICE_BOX_PICKUP_FUSE", 4);
-	var_4f503650 = zm_craftables::generate_zombie_craftable_piece(craftable_name, "fuse_02", 32, 64, 0, undefined, &function_27ef9857, undefined, &function_6c41d7f2, undefined, undefined, undefined, "police_box" + "_" + "fuse_02", 1, undefined, undefined, &"ZM_ZOD_POLICE_BOX_PICKUP_FUSE", 4);
-	var_7552b0b9 = zm_craftables::generate_zombie_craftable_piece(craftable_name, "fuse_03", 32, 64, 0, undefined, &function_27ef9857, undefined, &function_6c41d7f2, undefined, undefined, undefined, "police_box" + "_" + "fuse_03", 1, undefined, undefined, &"ZM_ZOD_POLICE_BOX_PICKUP_FUSE", 4);
+	var_c157a58b = zm_craftables::generate_zombie_craftable_piece(craftable_name, "fuse_01", 32, 64, 0, undefined, &function_27ef9857, undefined, &function_6c41d7f2, undefined, undefined, undefined, ("police_box" + "_") + "fuse_01", 1, undefined, undefined, &"ZM_ZOD_POLICE_BOX_PICKUP_FUSE", 4);
+	var_4f503650 = zm_craftables::generate_zombie_craftable_piece(craftable_name, "fuse_02", 32, 64, 0, undefined, &function_27ef9857, undefined, &function_6c41d7f2, undefined, undefined, undefined, ("police_box" + "_") + "fuse_02", 1, undefined, undefined, &"ZM_ZOD_POLICE_BOX_PICKUP_FUSE", 4);
+	var_7552b0b9 = zm_craftables::generate_zombie_craftable_piece(craftable_name, "fuse_03", 32, 64, 0, undefined, &function_27ef9857, undefined, &function_6c41d7f2, undefined, undefined, undefined, ("police_box" + "_") + "fuse_03", 1, undefined, undefined, &"ZM_ZOD_POLICE_BOX_PICKUP_FUSE", 4);
 	if(shared_pieces)
 	{
 		var_c157a58b.is_shared = 1;
@@ -73,9 +73,9 @@ function include_craftables()
 	level flag::init("police_box_fuse_place");
 	zm_craftables::include_zombie_craftable(police_box);
 	craftable_name = "idgun";
-	idgun_part_heart = zm_craftables::generate_zombie_craftable_piece(craftable_name, "part_heart", 32, 64, 0, undefined, &onpickup_idgun_piece, undefined, undefined, undefined, undefined, undefined, "idgun" + "_" + "part_heart", 1, undefined, undefined, &"ZM_ZOD_IDGUN_PART_HEART", 2);
-	idgun_part_skeleton = zm_craftables::generate_zombie_craftable_piece(craftable_name, "part_skeleton", 32, 64, 0, undefined, &onpickup_idgun_piece, undefined, undefined, undefined, undefined, undefined, "idgun" + "_" + "part_skeleton", 1, undefined, undefined, &"ZM_ZOD_IDGUN_PART_SKELETON", 2);
-	idgun_part_xenomatter = zm_craftables::generate_zombie_craftable_piece(craftable_name, "part_xenomatter", 32, 64, 0, undefined, &onpickup_idgun_piece, undefined, undefined, undefined, undefined, undefined, "idgun" + "_" + "part_xenomatter", 1, undefined, undefined, &"ZM_ZOD_IDGUN_PART_XENOMATTER", 2);
+	idgun_part_heart = zm_craftables::generate_zombie_craftable_piece(craftable_name, "part_heart", 32, 64, 0, undefined, &onpickup_idgun_piece, undefined, undefined, undefined, undefined, undefined, ("idgun" + "_") + "part_heart", 1, undefined, undefined, &"ZM_ZOD_IDGUN_PART_HEART", 2);
+	idgun_part_skeleton = zm_craftables::generate_zombie_craftable_piece(craftable_name, "part_skeleton", 32, 64, 0, undefined, &onpickup_idgun_piece, undefined, undefined, undefined, undefined, undefined, ("idgun" + "_") + "part_skeleton", 1, undefined, undefined, &"ZM_ZOD_IDGUN_PART_SKELETON", 2);
+	idgun_part_xenomatter = zm_craftables::generate_zombie_craftable_piece(craftable_name, "part_xenomatter", 32, 64, 0, undefined, &onpickup_idgun_piece, undefined, undefined, undefined, undefined, undefined, ("idgun" + "_") + "part_xenomatter", 1, undefined, undefined, &"ZM_ZOD_IDGUN_PART_XENOMATTER", 2);
 	idgun_part_heart.client_field_state = undefined;
 	idgun_part_skeleton.client_field_state = undefined;
 	idgun_part_xenomatter.client_field_state = undefined;
@@ -91,9 +91,9 @@ function include_craftables()
 	level flag::init("part_skeleton" + "_found");
 	level flag::init("part_xenomatter" + "_found");
 	craftable_name = "second_idgun";
-	var_62ffc1ec = zm_craftables::generate_zombie_craftable_piece(craftable_name, "part_heart", 32, 64, 0, undefined, &onpickup_idgun_piece, undefined, undefined, undefined, undefined, undefined, "second_idgun" + "_" + "part_heart", 1, undefined, undefined, &"ZM_ZOD_IDGUN_PART_HEART", 3);
-	var_50a8320d = zm_craftables::generate_zombie_craftable_piece(craftable_name, "part_skeleton", 32, 64, 0, undefined, &onpickup_idgun_piece, undefined, undefined, undefined, undefined, undefined, "second_idgun" + "_" + "part_skeleton", 1, undefined, undefined, &"ZM_ZOD_IDGUN_PART_SKELETON", 3);
-	var_fa9ad3bb = zm_craftables::generate_zombie_craftable_piece(craftable_name, "part_xenomatter", 32, 64, 0, undefined, &onpickup_idgun_piece, undefined, undefined, undefined, undefined, undefined, "second_idgun" + "_" + "part_xenomatter", 1, undefined, undefined, &"ZM_ZOD_IDGUN_PART_XENOMATTER", 3);
+	var_62ffc1ec = zm_craftables::generate_zombie_craftable_piece(craftable_name, "part_heart", 32, 64, 0, undefined, &onpickup_idgun_piece, undefined, undefined, undefined, undefined, undefined, ("second_idgun" + "_") + "part_heart", 1, undefined, undefined, &"ZM_ZOD_IDGUN_PART_HEART", 3);
+	var_50a8320d = zm_craftables::generate_zombie_craftable_piece(craftable_name, "part_skeleton", 32, 64, 0, undefined, &onpickup_idgun_piece, undefined, undefined, undefined, undefined, undefined, ("second_idgun" + "_") + "part_skeleton", 1, undefined, undefined, &"ZM_ZOD_IDGUN_PART_SKELETON", 3);
+	var_fa9ad3bb = zm_craftables::generate_zombie_craftable_piece(craftable_name, "part_xenomatter", 32, 64, 0, undefined, &onpickup_idgun_piece, undefined, undefined, undefined, undefined, undefined, ("second_idgun" + "_") + "part_xenomatter", 1, undefined, undefined, &"ZM_ZOD_IDGUN_PART_XENOMATTER", 3);
 	var_62ffc1ec.client_field_state = undefined;
 	var_50a8320d.client_field_state = undefined;
 	var_fa9ad3bb.client_field_state = undefined;
@@ -237,15 +237,15 @@ function init_craftables()
 function register_clientfields()
 {
 	shared_bits = 1;
-	registerclientfield("world", "police_box" + "_" + "fuse_01", 1, shared_bits, "int", undefined, 0);
-	registerclientfield("world", "police_box" + "_" + "fuse_02", 1, shared_bits, "int", undefined, 0);
-	registerclientfield("world", "police_box" + "_" + "fuse_03", 1, shared_bits, "int", undefined, 0);
-	registerclientfield("world", "idgun" + "_" + "part_heart", 1, shared_bits, "int", undefined, 0);
-	registerclientfield("world", "idgun" + "_" + "part_skeleton", 1, shared_bits, "int", undefined, 0);
-	registerclientfield("world", "idgun" + "_" + "part_xenomatter", 1, shared_bits, "int", undefined, 0);
-	registerclientfield("world", "second_idgun" + "_" + "part_heart", 1, shared_bits, "int", undefined, 0);
-	registerclientfield("world", "second_idgun" + "_" + "part_skeleton", 1, shared_bits, "int", undefined, 0);
-	registerclientfield("world", "second_idgun" + "_" + "part_xenomatter", 1, shared_bits, "int", undefined, 0);
+	registerclientfield("world", ("police_box" + "_") + "fuse_01", 1, shared_bits, "int", undefined, 0);
+	registerclientfield("world", ("police_box" + "_") + "fuse_02", 1, shared_bits, "int", undefined, 0);
+	registerclientfield("world", ("police_box" + "_") + "fuse_03", 1, shared_bits, "int", undefined, 0);
+	registerclientfield("world", ("idgun" + "_") + "part_heart", 1, shared_bits, "int", undefined, 0);
+	registerclientfield("world", ("idgun" + "_") + "part_skeleton", 1, shared_bits, "int", undefined, 0);
+	registerclientfield("world", ("idgun" + "_") + "part_xenomatter", 1, shared_bits, "int", undefined, 0);
+	registerclientfield("world", ("second_idgun" + "_") + "part_heart", 1, shared_bits, "int", undefined, 0);
+	registerclientfield("world", ("second_idgun" + "_") + "part_skeleton", 1, shared_bits, "int", undefined, 0);
+	registerclientfield("world", ("second_idgun" + "_") + "part_xenomatter", 1, shared_bits, "int", undefined, 0);
 	foreach(var_37125a4d, character_name in level.zod_character_names)
 	{
 		registerclientfield("world", "holder_of_" + character_name, 1, 3, "int", undefined, 0);
@@ -489,7 +489,7 @@ function onpickup_ritual_piece(player)
 		level clientfield::set("quest_state_" + get_character_name_from_value(self.piecename), 4);
 		str_name = get_character_name_from_value(self.piecename);
 		level clientfield::set("ritual_state_" + str_name, 4);
-		level thread exploder::stop_exploder("ritual_light_" + str_name + "_fin");
+		level thread exploder::stop_exploder(("ritual_light_" + str_name) + "_fin");
 		player thread zm_zod_vo::function_2e3f1a98();
 	}
 	switch(self.piecename)
@@ -739,7 +739,7 @@ function onfullycrafted_ritual(player)
 */
 function onfullycrafted_ritual_internal(name)
 {
-	level flag::set("ritual_" + name + "_ready");
+	level flag::set(("ritual_" + name) + "_ready");
 	level clientfield::set("ritual_state_" + name, 1);
 	level clientfield::set("quest_state_" + name, 2);
 }
@@ -768,7 +768,7 @@ function onfullycrafted_idgun(player)
 			}
 		}
 		self.model.origin = self.origin;
-		self.model.angles = self.angles + vectorscale((0, -1, 0), 90);
+		self.model.angles = self.angles + (vectorscale((0, -1, 0), 90));
 		self.model setmodel("wpn_t7_zmb_zod_idg_world");
 		self.n_gun_index = level.idgun[0].n_gun_index;
 		self.weaponname = getweapon(level.idgun[self.n_gun_index].str_wpnname);

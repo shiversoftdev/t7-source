@@ -739,14 +739,14 @@ function patrol(start_path_node)
 	if(start_path_node.type == "BAD NODE")
 	{
 		/#
-			errormsg = "" + start_path_node.targetname + "" + int(start_path_node.origin[0]) + "" + int(start_path_node.origin[1]) + "" + int(start_path_node.origin[2]) + "";
+			errormsg = (((("" + start_path_node.targetname) + "") + int(start_path_node.origin[0]) + "") + int(start_path_node.origin[1]) + "") + int(start_path_node.origin[2]) + "";
 			iprintln(errormsg);
 			logprint(errormsg);
 		#/
 		return;
 	}
 	/#
-		assert(start_path_node.type == "" || isdefined(start_path_node.scriptbundlename), "" + start_path_node.targetname + "");
+		assert(start_path_node.type == "" || isdefined(start_path_node.scriptbundlename), ("" + start_path_node.targetname) + "");
 	#/
 	self notify(#"go_to_spawner_target");
 	self.target = undefined;

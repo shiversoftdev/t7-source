@@ -327,7 +327,7 @@ private function function_533483a3(room)
 		if(axis.size < 40)
 		{
 			var_e1a06452 = randomintrange(3, 10);
-			if(axis.size + var_e1a06452 > 40)
+			if((axis.size + var_e1a06452) > 40)
 			{
 				var_e1a06452 = 40 - axis.size;
 			}
@@ -609,7 +609,7 @@ function function_db531f2f(room)
 	level waittill(#"hash_c8bd32b9");
 	while(true)
 	{
-		if(room.var_74415e9d < 4 + getplayers().size)
+		if(room.var_74415e9d < (4 + getplayers().size))
 		{
 			spot = room.enemy_spawns[randomint(room.enemy_spawns.size)];
 			dropspot = spot.origin + vectorscale((0, 0, 1), 2000);
@@ -636,7 +636,7 @@ function function_db531f2f(room)
 				amws.script_noteworthy = "tankmaze_enemy";
 				amws thread function_a1151ae3(room);
 			}
-			wait(1 + 4 - getplayers().size);
+			wait(1 + (4 - getplayers().size));
 		}
 		wait(0.05);
 	}
@@ -690,7 +690,7 @@ function function_5f0b67a9(room)
 	}
 	else
 	{
-		totaltime = room.timeout - 1 * 1000;
+		totaltime = (room.timeout - 1) * 1000;
 	}
 	timeleft = gettime() + totaltime;
 	while(gettime() < timeleft)
@@ -831,7 +831,7 @@ function function_fe1ce5f1(einflictor, eattacker, idamage, idflags, smeansofdeat
 	{
 		return idamage;
 	}
-	var_8cfdcf73 = randomintrange(0, int(level.doa.rules.var_d55e6679 * scale * getdvarfloat("scr_doa_tankMazeIncScalar", 0.25)));
+	var_8cfdcf73 = randomintrange(0, int((level.doa.rules.var_d55e6679 * scale) * getdvarfloat("scr_doa_tankMazeIncScalar", 0.25)));
 	player.doa.var_d55e6679 = player.doa.var_d55e6679 - var_8cfdcf73;
 	if(var_b427d4ac > 1)
 	{
@@ -1031,8 +1031,8 @@ function function_ba487e2a(room)
 	room.title = &"CP_DOA_BO3_TITLE_ROOM_REDINS";
 	room.vox = "vox_doaa_redins_rally";
 	room.var_674e3329 = 1;
-	room.var_2f400c3b = math::clamp(2 + getplayers().size * 2, 4, 8);
-	room.var_462dd92 = 50 + room.var_2f400c3b * 5;
+	room.var_2f400c3b = math::clamp(2 + (getplayers().size * 2), 4, 8);
+	room.var_462dd92 = 50 + (room.var_2f400c3b * 5);
 	room.host_migration = &function_c2b99e74;
 	if(getdvarint("scr_doa_soak_think", 0) > 1)
 	{
@@ -1104,7 +1104,7 @@ function function_10aa3e48(room)
 {
 	level waittill(#"fade_in_complete");
 	level clientfield::set("redinstutorial", 1);
-	level clientfield::set("redinsinstruct", room.var_2f400c3b + room.var_b57e2384 << 4);
+	level clientfield::set("redinsinstruct", room.var_2f400c3b + (room.var_b57e2384 << 4));
 	level waittill(#"hash_97276c43");
 	wait(1);
 	level clientfield::set("startCountdown", 3);
@@ -1322,7 +1322,7 @@ function function_3ed913b4(room)
 			}
 			player.doa.bombs = room.var_2f400c3b - player.doa.var_de24aff7;
 			player.doa.boosters = player.doa.var_37efabf7;
-			if(player.doa.var_de24aff7 == room.var_2f400c3b - 1 && (!(isdefined(var_64c1db98) && var_64c1db98)))
+			if(player.doa.var_de24aff7 == (room.var_2f400c3b - 1) && (!(isdefined(var_64c1db98) && var_64c1db98)))
 			{
 				var_64c1db98 = 1;
 				playsoundatposition("evt_final_lap", (0, 0, 0));
@@ -1396,7 +1396,7 @@ function function_c218114a()
 	while(true)
 	{
 		self waittill(#"trigger", truck);
-		truck.var_f71159da = truck.var_f71159da | 1 << myflag;
+		truck.var_f71159da = truck.var_f71159da | (1 << myflag);
 		/#
 		#/
 	}
@@ -1417,7 +1417,7 @@ function function_bbb36dbe(flag)
 	{
 		level.doa.var_c93ed68a = 0;
 	}
-	level.doa.var_c93ed68a = level.doa.var_c93ed68a | 1 << flag;
+	level.doa.var_c93ed68a = level.doa.var_c93ed68a | (1 << flag);
 }
 
 /*
@@ -2225,7 +2225,7 @@ function function_2ea4cb82(room)
 	{
 		wait(room.timeout - 1);
 	}
-	if(room.var_efbfafed > getplayers().size * 3)
+	if(room.var_efbfafed > (getplayers().size * 3))
 	{
 		level notify(#"hash_16154574");
 	}
@@ -2482,9 +2482,9 @@ function function_dfbad276(number, startside)
 	{
 		spawn_point = spawn_locations[randomint(spawn_locations.size)];
 		dest_point = struct::get(spawn_point.target, "targetname");
-		trace = bullettrace(spawn_point.origin, spawn_point.origin + vectorscale((0, 0, -1), 500), 0, undefined);
+		trace = bullettrace(spawn_point.origin, spawn_point.origin + (vectorscale((0, 0, -1), 500)), 0, undefined);
 		spawn_point = (spawn_point.origin[0], spawn_point.origin[1], trace["position"][2]);
-		trace = bullettrace(dest_point.origin, dest_point.origin + vectorscale((0, 0, -1), 500), 0, undefined);
+		trace = bullettrace(dest_point.origin, dest_point.origin + (vectorscale((0, 0, -1), 500)), 0, undefined);
 		dest_point = (dest_point.origin[0], dest_point.origin[1], trace["position"][2]);
 		desired_angles = vectortoangles(dest_point - spawn_point);
 		var_3e02e245 = angleclamp180(desired_angles[1]);
@@ -2506,7 +2506,7 @@ function function_dfbad276(number, startside)
 			cow.sacred = 1;
 			cow thread namespace_eaa992c::function_285a2999("cow_sacred");
 		}
-		trigger = spawn("trigger_radius", cow.origin + vectorscale((0, 0, -1), 10), 3, 34, 100);
+		trigger = spawn("trigger_radius", cow.origin + (vectorscale((0, 0, -1), 10)), 3, 34, 100);
 		trigger.targetname = "cow";
 		trigger enablelinkto();
 		trigger linkto(cow);

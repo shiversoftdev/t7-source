@@ -104,7 +104,7 @@ function pack_clock_init()
 	hour_values["hand_time"] = hours;
 	hour_values["rotate"] = 30;
 	hour_values["rotate_bit"] = 0.008333334;
-	hour_values["first_rotate"] = minutes * 60 + seconds * hour_values["rotate_bit"];
+	hour_values["first_rotate"] = ((minutes * 60) + seconds) * hour_values["rotate_bit"];
 	minute_hand = getent(clientnum, "zom_clock_minute_hand", "targetname");
 	minute_values = [];
 	minute_values["hand_time"] = minutes;
@@ -133,7 +133,7 @@ function pack_clock_init()
 function pack_clock_run(time_values)
 {
 	self endon(#"entityshutdown");
-	self rotatepitch(time_values["hand_time"] * time_values["rotate"] * -1, 0.05);
+	self rotatepitch((time_values["hand_time"] * time_values["rotate"]) * -1, 0.05);
 	self waittill(#"rotatedone");
 	if(isdefined(time_values["first_rotate"]))
 	{
@@ -274,7 +274,7 @@ function play_fly_me_to_the_moon_fx(localclientnum, oldval, newval, bnewent, bin
 {
 	if(newval)
 	{
-		self.fx_spot = util::spawn_model(localclientnum, "tag_origin", self.origin + vectorscale((0, 0, -1), 19), vectorscale((1, 0, 0), 90));
+		self.fx_spot = util::spawn_model(localclientnum, "tag_origin", self.origin + (vectorscale((0, 0, -1), 19)), vectorscale((1, 0, 0), 90));
 		self.fx_spot linkto(self);
 		n_fx_id = playfxontag(localclientnum, level._effect["fx_mp_pipe_steam"], self.fx_spot, "tag_origin");
 		setfxignorepause(localclientnum, n_fx_id, 1);

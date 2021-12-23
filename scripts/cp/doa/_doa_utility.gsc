@@ -99,7 +99,7 @@ function stringtofloat(string)
 	decimal = 0;
 	for(i = floatparts[1].size - 1; i >= 0; i--)
 	{
-		decimal = decimal / 10 + int(floatparts[1][i]) / 10;
+		decimal = (decimal / 10) + (int(floatparts[1][i]) / 10);
 	}
 	if(whole >= 0)
 	{
@@ -321,7 +321,7 @@ function function_d0c69425(var_30d383f5)
 	{
 		wait(0.05);
 	}
-	timeout = gettime() + var_30d383f5 * 1000;
+	timeout = gettime() + (var_30d383f5 * 1000);
 	while(isdefined(level.var_a7749866) && gettime() < timeout)
 	{
 		wait(0.05);
@@ -1166,8 +1166,8 @@ function function_a98c85b2(location, timesec = 1)
 	{
 		timesec = 1;
 	}
-	increment = self.origin - location / timesec * 20;
-	var_afc5c189 = gettime() + timesec * 1000;
+	increment = (self.origin - location) / (timesec * 20);
+	var_afc5c189 = gettime() + (timesec * 1000);
 	while(gettime() < var_afc5c189)
 	{
 		self.origin = self.origin - increment;
@@ -1195,7 +1195,7 @@ function function_89a258a7()
 		if(isdefined(self.var_111c7bbb))
 		{
 			distsq = distancesquared(self.var_111c7bbb, self.origin);
-			if(distsq < 32 * 32)
+			if(distsq < (32 * 32))
 			{
 				continue;
 			}
@@ -1666,7 +1666,7 @@ function function_a0e51d80(point, timesec, size, color)
 {
 	/#
 		self endon(#"hash_b67acf30");
-		end = gettime() + timesec * 1000;
+		end = gettime() + (timesec * 1000);
 		halfwidth = int(size / 2);
 		l1 = point + (halfwidth * -1, 0, 0);
 		l2 = point + (halfwidth, 0, 0);
@@ -1697,7 +1697,7 @@ function debugorigin(timesec, size, color)
 {
 	/#
 		self endon(#"hash_c32e3b78");
-		end = gettime() + timesec * 1000;
+		end = gettime() + (timesec * 1000);
 		halfwidth = int(size / 2);
 		while(end > gettime())
 		{

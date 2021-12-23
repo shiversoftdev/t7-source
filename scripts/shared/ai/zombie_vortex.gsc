@@ -271,7 +271,7 @@ function start_timed_vortex(v_vortex_origin, n_vortex_radius, vortex_pull_durati
 				}
 				if(isdefined(e_player) && (!(isdefined(e_player.idgun_vision_on) && e_player.idgun_vision_on)))
 				{
-					if(distance(e_player.origin, v_vortex_origin) < float(n_vortex_radius / 2))
+					if(distance(e_player.origin, v_vortex_origin) < (float(n_vortex_radius / 2)))
 					{
 						e_player thread player_vortex_visionset("zm_idgun_vortex");
 					}
@@ -283,7 +283,7 @@ function start_timed_vortex(v_vortex_origin, n_vortex_radius, vortex_pull_durati
 	}
 	if(isdefined(should_explode) && should_explode)
 	{
-		n_time_to_wait_for_explosion = n_vortex_time_cl - n_vortex_time_sv + 0.35;
+		n_time_to_wait_for_explosion = (n_vortex_time_cl - n_vortex_time_sv) + 0.35;
 		wait(n_time_to_wait_for_explosion);
 		svortex.in_use = 0;
 		arrayremovevalue(level.vortex_manager.a_active_vorticies, s_active_vortex);
@@ -389,7 +389,7 @@ private function vortex_explosion(v_vortex_explosion_origin, eattacker, n_vortex
 			n_dist_mult = n_distance_sqr / n_radius_sqr;
 			v_fling = vectornormalize(ai_zombie.origin - v_vortex_explosion_origin);
 			v_fling = (v_fling[0], v_fling[1], abs(v_fling[2]));
-			v_fling = vectorscale(v_fling, 100 + 100 * n_dist_mult);
+			v_fling = vectorscale(v_fling, 100 + (100 * n_dist_mult));
 			if(!(isdefined(level.ignore_vortex_ragdoll) && level.ignore_vortex_ragdoll))
 			{
 				ai_zombie startragdoll();
@@ -510,7 +510,7 @@ function state_idgun_crush_update(params)
 			}
 			self.crush_anim_started = 1;
 		}
-		fly_ent.origin = fly_ent.origin + veh_to_black_hole_vec * 8;
+		fly_ent.origin = fly_ent.origin + (veh_to_black_hole_vec * 8);
 		wait(0.1);
 	}
 }

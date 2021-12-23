@@ -304,7 +304,7 @@ function rocket_raise(player_num)
 		level waittill(#"rl");
 		level clientfield::increment("raise_rockets");
 		rockets[i - 1] playsound("evt_rocket_move_up");
-		str_scene = "p7_fxanim_zmhd_moon_rocket_launch_0" + i + "_bundle";
+		str_scene = ("p7_fxanim_zmhd_moon_rocket_launch_0" + i) + "_bundle";
 		level thread scene::init(str_scene);
 	}
 	level waittill(#"rl");
@@ -356,13 +356,13 @@ function launch()
 	}
 	level._n_rockets++;
 	/#
-		println("" + level._n_rockets + "");
+		println(("" + level._n_rockets) + "");
 	#/
-	str_scene = "p7_fxanim_zmhd_moon_rocket_launch_0" + level._n_rockets + "_bundle";
+	str_scene = ("p7_fxanim_zmhd_moon_rocket_launch_0" + level._n_rockets) + "_bundle";
 	level thread zm_audio::sndmusicsystem_playstate("end_is_near");
 	level scene::play(str_scene);
 	/#
-		println("" + level._n_rockets + "");
+		println(("" + level._n_rockets) + "");
 	#/
 }
 

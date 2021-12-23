@@ -146,7 +146,7 @@ function onroundswitch()
 	{
 		game["switchedsides"] = 0;
 	}
-	if(game["teamScores"]["allies"] == level.scorelimit - 1 && game["teamScores"]["axis"] == level.scorelimit - 1)
+	if(game["teamScores"]["allies"] == (level.scorelimit - 1) && game["teamScores"]["axis"] == (level.scorelimit - 1))
 	{
 		aheadteam = getbetterteam();
 		if(aheadteam != game["defenders"])
@@ -724,7 +724,7 @@ function bombs()
 		/#
 			assert(isdefined(bombzone.bombdefusetrig));
 		#/
-		bombzone.bombdefusetrig.origin = bombzone.bombdefusetrig.origin + vectorscale((0, 0, -1), 10000);
+		bombzone.bombdefusetrig.origin = bombzone.bombdefusetrig.origin + (vectorscale((0, 0, -1), 10000));
 		bombzone.bombdefusetrig.label = label;
 	}
 	for(index = 0; index < level.bombzones.size; index++)
@@ -876,7 +876,7 @@ function onuseplantobject(player)
 			}
 			level.bombzones[index] gameobjects::disable_object();
 		}
-		thread sound::play_on_players("mus_sd_planted" + "_" + level.teampostfix[player.pers["team"]]);
+		thread sound::play_on_players(("mus_sd_planted" + "_") + level.teampostfix[player.pers["team"]]);
 		player notify(#"bomb_planted");
 		level thread popups::displayteammessagetoall(&"MP_EXPLOSIVES_PLANTED_BY", player);
 		if(isdefined(player.pers["plants"]))
@@ -1067,17 +1067,17 @@ function bombplanted(destroyedobj, player)
 	level thread bombplantedmusicdelay();
 	level.tickingobject = destroyedobj.visuals[0];
 	level.timelimitoverride = 1;
-	setgameendtime(int(gettime() + level.bombtimer * 1000));
+	setgameendtime(int(gettime() + (level.bombtimer * 1000)));
 	label = destroyedobj gameobjects::get_label();
 	setmatchflag("bomb_timer" + label, 1);
 	if(label == "_a")
 	{
-		setbombtimer("A", int(gettime() + level.bombtimer * 1000));
+		setbombtimer("A", int(gettime() + (level.bombtimer * 1000)));
 		setmatchflag("bomb_timer_a", 1);
 	}
 	else
 	{
-		setbombtimer("B", int(gettime() + level.bombtimer * 1000));
+		setbombtimer("B", int(gettime() + (level.bombtimer * 1000)));
 		setmatchflag("bomb_timer_b", 1);
 	}
 	bbprint("mpobjective", "gametime %d objtype %s label %s team %s playerx %d playery %d playerz %d", gettime(), "sd_bombplant", label, team, player.origin);
@@ -1238,17 +1238,17 @@ function sd_iskillboosting()
 	{
 		return 0;
 	}
-	if(game["totalKills"] > level.totalkillsmax * roundsplayed + 1)
+	if(game["totalKills"] > (level.totalkillsmax * (roundsplayed + 1)))
 	{
 		return 1;
 	}
-	if(self.kills > level.playerkillsmax * roundsplayed + 1)
+	if(self.kills > (level.playerkillsmax * (roundsplayed + 1)))
 	{
 		return 1;
 	}
 	if(level.teambased && (self.team == "allies" || self.team == "axis"))
 	{
-		if(game["totalKillsTeam"][self.team] > level.playerkillsmax * roundsplayed + 1)
+		if(game["totalKillsTeam"][self.team] > (level.playerkillsmax * (roundsplayed + 1)))
 		{
 			return 1;
 		}

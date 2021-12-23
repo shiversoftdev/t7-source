@@ -181,7 +181,7 @@ function zm_mantle_over_40_move_speed_override()
 		default:
 		{
 			/#
-				assertmsg("" + self.zombie_move_speed + "");
+				assertmsg(("" + self.zombie_move_speed) + "");
 			#/
 		}
 	}
@@ -329,7 +329,7 @@ function tank_get_jump_down_offset(s_pos)
 	v_right = anglestoright(self.angles);
 	v_fwd = anglestoforward(self.angles);
 	v_offset = s_pos.tank_offset;
-	return self.origin + v_offset[0] * v_fwd + v_offset[1] * v_right + v_offset[2] * v_up;
+	return (self.origin + (v_offset[0] * v_fwd)) + (v_offset[1] * v_right) + (v_offset[2] * v_up);
 }
 
 /*
@@ -953,7 +953,7 @@ function tank_call_boxes_update()
 	cooling = level.vh_tank flag::get("tank_cooldown");
 	foreach(var_483bd0a1, trig in a_trigs)
 	{
-		at_this_station = trig.script_noteworthy == "call_box_" + str_loc;
+		at_this_station = trig.script_noteworthy == ("call_box_" + str_loc);
 		trig setcursorhint("HINT_NOICON");
 		if(moving)
 		{
@@ -1196,7 +1196,7 @@ function tank_cooldown_timer()
 	self playloopsound("zmb_tank_loop", 1);
 	while(str_location_original == self.str_location_current)
 	{
-		self.n_cooldown_timer = self.n_cooldown_timer + self.n_players_on * 0.05;
+		self.n_cooldown_timer = self.n_cooldown_timer + (self.n_players_on * 0.05);
 		wait(0.05);
 	}
 }
@@ -1774,11 +1774,11 @@ function watch_zombie_fall_off_tank()
 */
 function in_range_2d(v1, v2, range, vert_allowance)
 {
-	if(abs(v1[2] - v2[2]) > vert_allowance)
+	if((abs(v1[2] - v2[2])) > vert_allowance)
 	{
 		return 0;
 	}
-	return distance2dsquared(v1, v2) < range * range;
+	return distance2dsquared(v1, v2) < (range * range);
 }
 
 /*
@@ -2206,11 +2206,11 @@ function tank_flamethrower_get_targets(str_tag, n_flamethrower_id)
 	v_tag_pos = self gettagorigin(str_tag);
 	v_tag_angles = self gettagangles(str_tag);
 	v_tag_fwd = anglestoforward(v_tag_angles);
-	v_kill_pos = v_tag_pos + v_tag_fwd * 80;
+	v_kill_pos = v_tag_pos + (v_tag_fwd * 80);
 	foreach(var_f92fcfd3, ai_zombie in a_zombies)
 	{
 		dist_sq = distance2dsquared(ai_zombie.origin, v_kill_pos);
-		if(dist_sq > 80 * 80)
+		if(dist_sq > (80 * 80))
 		{
 			continue;
 		}
@@ -2285,7 +2285,7 @@ function tank_flamethrower(str_tag, n_flamethrower_id)
 		wait(1);
 		if(n_flamethrower_id == 1)
 		{
-			self setturrettargetvec(self.origin + anglestoforward(self.angles) * 1000);
+			self setturrettargetvec(self.origin + (anglestoforward(self.angles) * 1000));
 		}
 		self flag::wait_till("tank_moving");
 		a_targets = tank_flamethrower_get_targets(str_tag, n_flamethrower_id);
@@ -2424,7 +2424,7 @@ function enemy_location_override()
 						tank_forward = vectornormalize(anglestoforward(level.vh_tank.angles));
 						tank_right = vectornormalize(anglestoright(level.vh_tank.angles));
 						tank.chase_pos = [];
-						tank.chase_pos[0] = level.vh_tank.origin + vectorscale(tank_forward, -164);
+						tank.chase_pos[0] = level.vh_tank.origin + (vectorscale(tank_forward, -164));
 						tank.chase_pos[1] = tank_front;
 						tank.chase_pos[2] = tank_back;
 					}

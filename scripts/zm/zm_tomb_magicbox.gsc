@@ -97,7 +97,7 @@ function custom_joker_movement()
 	m_lock rotateyaw(3000, 4, 4);
 	wait(3);
 	v_angles = anglestoforward(self.angles - vectorscale((0, 1, 0), 90));
-	m_lock moveto(m_lock.origin + 20 * v_angles, 0.5, 0.5);
+	m_lock moveto(m_lock.origin + (20 * v_angles), 0.5, 0.5);
 	m_lock waittill(#"movedone");
 	m_lock moveto(m_lock.origin + -100 * v_angles, 0.5, 0.5);
 	m_lock waittill(#"movedone");
@@ -119,8 +119,8 @@ function custom_magic_box_timer_til_despawn(magic_box)
 {
 	self endon(#"kill_weapon_movement");
 	putbacktime = 12;
-	v_float = anglestoforward(magic_box.angles - vectorscale((0, 1, 0), 90)) * 40;
-	self moveto(self.origin - v_float * 0.25, putbacktime, putbacktime * 0.5);
+	v_float = (anglestoforward(magic_box.angles - vectorscale((0, 1, 0), 90))) * 40;
+	self moveto(self.origin - (v_float * 0.25), putbacktime, putbacktime * 0.5);
 	wait(putbacktime);
 	if(isdefined(self))
 	{

@@ -339,7 +339,7 @@ function ai_activatesensoryoverload(target, var_9bc2efcb = 1)
 	{
 		type = self cybercom::function_5e3d3aa();
 		self orientmode("face default");
-		self animscripted("ai_cybercom_anim", self.origin, self.angles, "ai_base_rifle_" + type + "_exposed_cybercom_activate", "normal", %generic::root, 1, 0.3);
+		self animscripted("ai_cybercom_anim", self.origin, self.angles, ("ai_base_rifle_" + type) + "_exposed_cybercom_activate", "normal", %generic::root, 1, 0.3);
 		self waittill_match(#"ai_cybercom_anim");
 	}
 	weapon = getweapon("gadget_sensory_overload");
@@ -436,8 +436,8 @@ function sensory_overload(attacker, var_7d4fd98c)
 			base = "fem_rifle";
 		}
 		type = self cybercom::function_5e3d3aa();
-		variant = attacker cybercom::getanimationvariant(base + "_" + type);
-		self animscripted("intro_anim", self.origin, self.angles, "ai_" + base + "_" + type + "_exposed_sens_overload_react_intro" + variant, "normal", %generic::root, 1, 0.3);
+		variant = attacker cybercom::getanimationvariant((base + "_") + type);
+		self animscripted("intro_anim", self.origin, self.angles, (((("ai_" + base) + "_") + type) + "_exposed_sens_overload_react_intro") + variant, "normal", %generic::root, 1, 0.3);
 		self thread cybercom::stopanimscriptedonnotify("damage_pain", "intro_anim", 1, attacker, weapon);
 		self thread cybercom::stopanimscriptedonnotify("notify_melee_damage", "intro_anim", 1, attacker, weapon);
 		self waittill_match(#"intro_anim");
@@ -445,7 +445,7 @@ function sensory_overload(attacker, var_7d4fd98c)
 		if(isalive(self) && !self isragdoll())
 		{
 			self clientfield::set("sensory_overload", 0);
-			self animscripted("restart_anim", self.origin, self.angles, "ai_" + base + "_" + type + "_exposed_sens_overload_react_outro" + variant, "normal", %generic::root, 1, 0.3);
+			self animscripted("restart_anim", self.origin, self.angles, (((("ai_" + base) + "_") + type) + "_exposed_sens_overload_react_outro") + variant, "normal", %generic::root, 1, 0.3);
 			self thread cybercom::stopanimscriptedonnotify("damage_pain", "restart_anim", 1, attacker, weapon);
 			self thread cybercom::stopanimscriptedonnotify("notify_melee_damage", "restart_anim", 1, attacker, weapon);
 			self waittill_match(#"restart_anim");
@@ -495,7 +495,7 @@ function function_58831b5a(loops, attacker, weapon, variant, base, type)
 function function_e01b8059(attacker, weapon, variant, base, type)
 {
 	self endon(#"death");
-	self animscripted("sens_loop_anim", self.origin, self.angles, "ai_" + base + "_" + type + "_exposed_sens_overload_react_loop" + variant, "normal", %generic::body, 1, 0.2);
+	self animscripted("sens_loop_anim", self.origin, self.angles, (((("ai_" + base) + "_") + type) + "_exposed_sens_overload_react_loop") + variant, "normal", %generic::body, 1, 0.2);
 	self thread cybercom::stopanimscriptedonnotify("damage_pain", "sens_loop_anim", 1, attacker, weapon);
 	self thread cybercom::stopanimscriptedonnotify("breakout_overload_loop", "sens_loop_anim", 0, attacker, weapon);
 	self thread cybercom::stopanimscriptedonnotify("notify_melee_damage", "sens_loop_anim", 1, attacker, weapon);

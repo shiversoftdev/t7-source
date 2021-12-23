@@ -369,7 +369,7 @@ function onscoreclosemusic()
 			}
 		}
 		scoredif = topscore - runnerupscore;
-		if(topscore >= scorelimit * 0.5)
+		if(topscore >= (scorelimit * 0.5))
 		{
 			level notify(#"sndmusichalfway");
 			return;
@@ -478,7 +478,7 @@ function onstartgametype()
 		spawnlogic::place_spawn_points(spawning::gettdmstartspawnname(team));
 	}
 	spawning::updateallspawnpoints();
-	var_1210f0f7 = game["roundsplayed"] % 4 == 2 || game["roundsplayed"] % 4 == 3;
+	var_1210f0f7 = (game["roundsplayed"] % 4) == 2 || (game["roundsplayed"] % 4) == 3;
 	if(var_1210f0f7)
 	{
 		game["switchedsides"] = !game["switchedsides"];
@@ -1055,7 +1055,7 @@ function function_cdee7177()
 {
 	level endon(#"game_ended");
 	level endon(#"props_hide_over");
-	var_8cbf9eb6 = int(level.phsettings.prophidetime + gettime() / 1000);
+	var_8cbf9eb6 = int(level.phsettings.prophidetime + (gettime() / 1000));
 	totaltimepassed = 0;
 	while(true)
 	{
@@ -1068,7 +1068,7 @@ function function_cdee7177()
 		timepassed = int(hostmigration::waittillhostmigrationdone() / 1000);
 		totaltimepassed = totaltimepassed + timepassed;
 		timepassed = totaltimepassed;
-		var_c1ce6993 = var_8cbf9eb6 + timepassed - int(gettime() / 1000);
+		var_c1ce6993 = (var_8cbf9eb6 + timepassed) - (int(gettime() / 1000));
 		level.phcountdowntimer settimer(var_c1ce6993);
 		if(useprophudserver() && level.phsettings.propwhistletime > 0)
 		{
@@ -1284,7 +1284,7 @@ function propwhistle()
 	hostmigration::waitlongdurationwithhostmigrationpause(level.phsettings.prophidetime + level.phsettings.propwhistletime);
 	while(true)
 	{
-		if(time + var_33840fb2 - var_defcb34f < gettime())
+		if(((time + var_33840fb2) - var_defcb34f) < gettime())
 		{
 			var_2812d72a++;
 			if(useprophudserver())
@@ -1308,11 +1308,11 @@ function propwhistle()
 				}
 			}
 			time = gettime();
-			if(var_2812d72a % 2 == 0)
+			if((var_2812d72a % 2) == 0)
 			{
 				var_33840fb2 = max(var_33840fb2 - 5000, var_d97f029);
 			}
-			if(var_7335da26 >= globallogic_utils::gettimeremaining() - var_c3f83285)
+			if(var_7335da26 >= (globallogic_utils::gettimeremaining() - var_c3f83285))
 			{
 				if(useprophudserver())
 				{
@@ -1320,13 +1320,13 @@ function propwhistle()
 				}
 				return;
 			}
-			if(var_7335da26 * 2 + getteamplayersalive(game["defenders"]) * 2500 >= globallogic_utils::gettimeremaining() - var_c3f83285)
+			if((var_7335da26 * 2) + (getteamplayersalive(game["defenders"]) * 2500) >= (globallogic_utils::gettimeremaining() - var_c3f83285))
 			{
 				if(useprophudserver())
 				{
 					level.phwhistletimer.label = &"MP_PH_FINAL_WHISTLE";
 				}
-				var_7335da26 = var_7335da26 + getteamplayersalive(game["defenders"]) * 2500;
+				var_7335da26 = var_7335da26 + (getteamplayersalive(game["defenders"]) * 2500);
 			}
 			if(useprophudserver())
 			{
@@ -1469,9 +1469,9 @@ function propcleanup()
 	Parameters: 1
 	Flags: None
 */
-function propcleanupdelayed(var_e696ba8c)
+function propcleanupdelayed(propents)
 {
-	foreach(var_c2435400, prop in var_e696ba8c)
+	foreach(var_c2435400, prop in propents)
 	{
 		if(isdefined(prop))
 		{
@@ -1479,7 +1479,7 @@ function propcleanupdelayed(var_e696ba8c)
 		}
 	}
 	wait(0.05);
-	foreach(var_f2572748, prop in var_e696ba8c)
+	foreach(var_f2572748, prop in propents)
 	{
 		if(isdefined(prop))
 		{
@@ -1624,7 +1624,7 @@ function randgetpropsizetoallocate()
 	var_ce32b3a9 = 40 * isdefined(level.proplist[250]);
 	var_9e5e7c71 = 20 * isdefined(level.proplist[450]);
 	var_ff0ae5a1 = 10 * isdefined(level.proplist[550]);
-	randomrange = var_77353f29 + var_9c7a2639 + var_ce32b3a9 + var_9e5e7c71 + var_ff0ae5a1;
+	randomrange = (((var_77353f29 + var_9c7a2639) + var_ce32b3a9) + var_9e5e7c71) + var_ff0ae5a1;
 	randomval = randomint(randomrange);
 	if(randomval < var_77353f29)
 	{
@@ -1749,7 +1749,7 @@ function tablelookupbyrow(var_8c6b47e7, rowindex, columnindex)
 function populateproplist()
 {
 	mapname = getmapname();
-	var_8c6b47e7 = "gamedata/tables/mp/" + mapname + "_ph.csv";
+	var_8c6b47e7 = (("gamedata/tables/mp/") + mapname) + "_ph.csv";
 	var_f89cb9d0 = tablelookuprowcount(var_8c6b47e7);
 	for(rowindex = 0; rowindex < var_f89cb9d0; rowindex++)
 	{
@@ -1938,9 +1938,9 @@ function getpropsize(propsizetext)
 		default:
 		{
 			mapname = getmapname();
-			var_8c6b47e7 = "gamedata/tables/mp/" + mapname + "_ph.csv";
+			var_8c6b47e7 = (("gamedata/tables/mp/") + mapname) + "_ph.csv";
 			/#
-				assertmsg("" + propsizetext + "" + var_8c6b47e7 + "");
+				assertmsg(((("" + propsizetext) + "") + var_8c6b47e7) + "");
 			#/
 			propsize = 100;
 			break;
@@ -2227,7 +2227,7 @@ function ontimelimit()
 */
 function function_f666ecbf()
 {
-	var_de5f82e0 = globallogic_defaults::default_gettimelimit() * 60 * 1000;
+	var_de5f82e0 = (globallogic_defaults::default_gettimelimit() * 60) * 1000;
 	timepassed = globallogic_utils::gettimepassed();
 	var_fca3efa4 = int(min(var_de5f82e0, timepassed));
 	game["propSurvivalTime"][game["defenders"]] = game["propSurvivalTime"][game["defenders"]] + var_fca3efa4;
@@ -2682,7 +2682,7 @@ function function_b00e098a(var_e47d50e6, remainingtime)
 		fadeintime = 1;
 	}
 	fadeouttime = 1;
-	if(fadeintime + fadeouttime > remainingtime)
+	if((fadeintime + fadeouttime) > remainingtime)
 	{
 		fadeintime = 0;
 		fadeouttime = 0;
@@ -2726,7 +2726,7 @@ function function_b1b25534(var_e47d50e6, remainingtime)
 	{
 		self freezecontrols(1);
 		fadeouttime = 1;
-		if(fadeintime + fadeouttime > remainingtime)
+		if((fadeintime + fadeouttime) > remainingtime)
 		{
 			fadeintime = 0;
 			fadeouttime = 0;
@@ -2749,7 +2749,7 @@ function function_b1b25534(var_e47d50e6, remainingtime)
 */
 function function_d9c4b3d0()
 {
-	return gettime() - level.starttime - level.var_f2aa1432 / 1000;
+	return ((gettime() - level.starttime) - level.var_f2aa1432) / 1000;
 }
 
 /*
@@ -3284,7 +3284,7 @@ function function_c17c938d(winner, endtype, endreasontext, outcometext, team, wi
 				winnerscore = game["propScore"][otherteam];
 				loserscore = game["propScore"][team];
 			}
-			var_be546bcd = winnerscore << 8 + loserscore;
+			var_be546bcd = (winnerscore << 8) + loserscore;
 			self luinotifyevent(&"show_outcome", 6, outcometext, &"MP_PH_TIEBREAKER_KILL", int(matchbonus), winnerenum, notifyroundendtoui, var_be546bcd);
 			return 1;
 		}
@@ -3545,12 +3545,12 @@ function function_b37cf698(eattacker, einflictor, weapon, meansofdeath, damage, 
 			{
 				return;
 			}
-			scale = 1 - distance(self.origin, damageorigin) / radius;
+			scale = 1 - (distance(self.origin, damageorigin) / radius);
 			if(scale < 0)
 			{
 				scale = 0;
 			}
-			time = 0.25 + 4 * scale;
+			time = 0.25 + (4 * scale);
 			wait(0.05);
 			if(meansofdeath != "MOD_IMPACT")
 			{
@@ -3563,7 +3563,7 @@ function function_b37cf698(eattacker, einflictor, weapon, meansofdeath, damage, 
 					self shellshock("concussion_grenade_mp", time, 0);
 				}
 				self thread weapons::play_concussion_sound(time);
-				self.concussionendtime = gettime() + time * 1000;
+				self.concussionendtime = gettime() + (time * 1000);
 				self.lastconcussedby = eattacker;
 				if(self util::isprop())
 				{
@@ -4205,7 +4205,7 @@ function function_8e704405()
 		while(attempts > 0)
 		{
 			var_911938e0 = dist * rand;
-			newlocation = location.origin + dir * var_911938e0;
+			newlocation = location.origin + (dir * var_911938e0);
 			if(!function_5e31e74e(newlocation))
 			{
 				break;
@@ -4329,7 +4329,7 @@ function function_e14e11c4()
 */
 function function_a88142c8(player)
 {
-	var_47b5687d = gettime() - level.starttime - level.var_f2aa1432;
+	var_47b5687d = (gettime() - level.starttime) - level.var_f2aa1432;
 	player.var_efe75c2f++;
 	player.var_61add00c = player.var_61add00c + var_47b5687d;
 	player.var_24edba04 setvalue(player.var_efe75c2f);
@@ -4634,7 +4634,7 @@ function _updateclonepathing()
 		{
 			var_9bac6f63 = 1;
 		}
-		else if(self.lastknownpostime + clone_not_moving_poll_time <= gettime())
+		else if((self.lastknownpostime + clone_not_moving_poll_time) <= gettime())
 		{
 			if(distancesquared(self.lastknownpos, self.origin) < clone_not_moving_dist_sq)
 			{
@@ -4643,7 +4643,7 @@ function _updateclonepathing()
 			self.lastknownpos = self.origin;
 			self.lastknownpostime = gettime();
 		}
-		else if(self.var_20143a0c + var_38da5046 <= gettime() && level.var_e5ad813f.var_dffd326e != gettime())
+		else if((self.var_20143a0c + var_38da5046) <= gettime() && level.var_e5ad813f.var_dffd326e != gettime())
 		{
 			clones = function_41d2c44e();
 			if(clones.size > 0)

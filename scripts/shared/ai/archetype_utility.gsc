@@ -594,12 +594,12 @@ private function bb_getyawtocovernode()
 	disttonodesqr = distance2dsquared(self getnodeoffsetposition(self.node), self.origin);
 	if(isdefined(self.keepclaimednode) && self.keepclaimednode)
 	{
-		if(disttonodesqr > 64 * 64)
+		if(disttonodesqr > (64 * 64))
 		{
 			return 0;
 		}
 	}
-	else if(disttonodesqr > 24 * 24)
+	else if(disttonodesqr > (24 * 24))
 	{
 		return 0;
 	}
@@ -710,7 +710,7 @@ function bb_getcoverconcealed()
 */
 function bb_getcurrentlocationcovernodetype()
 {
-	if(isdefined(self.node) && distancesquared(self.origin, self.node.origin) < 48 * 48)
+	if(isdefined(self.node) && distancesquared(self.origin, self.node.origin) < (48 * 48))
 	{
 		return bb_getcurrentcovernodetype();
 	}
@@ -800,7 +800,7 @@ function bb_actorgetdamagelocation()
 	{
 		possiblehitlocations[possiblehitlocations.size] = "legs";
 	}
-	if(isdefined(self.lastdamagetime) && gettime() > self.lastdamagetime && gettime() <= self.lastdamagetime + 1000)
+	if(isdefined(self.lastdamagetime) && gettime() > self.lastdamagetime && gettime() <= (self.lastdamagetime + 1000))
 	{
 		if(isdefined(self.lastdamagelocation))
 		{
@@ -1077,8 +1077,8 @@ function actorgetpredictedyawtoenemy(entity, lookaheadtime)
 	}
 	selfpredictedpos = entity.origin;
 	moveangle = entity.angles[1] + entity getmotionangle();
-	selfpredictedpos = selfpredictedpos + (cos(moveangle), sin(moveangle), 0) * 200 * lookaheadtime;
-	yaw = vectortoangles(entity lastknownpos(entity.enemy) - selfpredictedpos)[1] - entity.angles[1];
+	selfpredictedpos = selfpredictedpos + (((cos(moveangle), sin(moveangle), 0) * 200) * lookaheadtime);
+	yaw = (vectortoangles(entity lastknownpos(entity.enemy) - selfpredictedpos)[1]) - entity.angles[1];
 	yaw = absangleclamp360(yaw);
 	entity.predictedyawtoenemy = yaw;
 	entity.predictedyawtoenemytime = gettime();
@@ -1159,7 +1159,7 @@ function bb_actorgetperfectenemyyaw()
 	{
 		return 0;
 	}
-	toenemyyaw = vectortoangles(enemy.origin - self.origin)[1] - self.angles[1];
+	toenemyyaw = (vectortoangles(enemy.origin - self.origin)[1]) - self.angles[1];
 	toenemyyaw = absangleclamp360(toenemyyaw);
 	/#
 		recordenttext("" + toenemyyaw, self, (1, 0, 0), "");
@@ -1267,7 +1267,7 @@ function getangleusingdirection(direction)
 	yawdiff = directionyaw - self.angles[1];
 	yawdiff = yawdiff * 0.002777778;
 	flooredyawdiff = floor(yawdiff + 0.5);
-	turnangle = yawdiff - flooredyawdiff * 360;
+	turnangle = (yawdiff - flooredyawdiff) * 360;
 	return absangleclamp360(turnangle);
 }
 
@@ -1522,18 +1522,18 @@ function bb_actorgettrackingturnyaw()
 	if(isdefined(self.enemy))
 	{
 		predictedpos = undefined;
-		if(distance2dsquared(self.enemy.origin, self.origin) < 180 * 180)
+		if(distance2dsquared(self.enemy.origin, self.origin) < (180 * 180))
 		{
 			predictedpos = self.enemy.origin;
 			self.newenemyreaction = 0;
 		}
-		else if(!issentient(self.enemy) || self lastknowntime(self.enemy) + 5000 >= gettime())
+		else if(!issentient(self.enemy) || (self lastknowntime(self.enemy) + 5000) >= gettime())
 		{
 			predictedpos = self lastknownpos(self.enemy);
 		}
 		if(isdefined(predictedpos))
 		{
-			turnyaw = absangleclamp360(self.angles[1] - vectortoangles(predictedpos - self.origin)[1]);
+			turnyaw = absangleclamp360(self.angles[1] - (vectortoangles(predictedpos - self.origin)[1]));
 			pixendevent();
 			return turnyaw;
 		}
@@ -1701,14 +1701,14 @@ function updatefrustrationlevel(entity)
 			{
 				entity.lastfrustrationboost = gettime();
 			}
-			if(entity.lastfrustrationboost + 5000 < gettime())
+			if((entity.lastfrustrationboost + 5000) < gettime())
 			{
 				entity.frustrationlevel++;
 				entity.lastfrustrationboost = gettime();
 				entity.frustrationlevel = clampfrustration(entity.frustrationlevel);
 			}
 		}
-		isawareofenemy = gettime() - entity lastknowntime(entity.enemy) < 10000;
+		isawareofenemy = (gettime() - entity lastknowntime(entity.enemy)) < 10000;
 		if(entity.frustrationlevel == 4)
 		{
 			hasseenenemy = entity seerecently(entity.enemy, 2);
@@ -2141,7 +2141,7 @@ function shouldchoosebettercover(behaviortreeentity)
 			{
 				color = (1, 0, 0);
 			}
-			recordenttext("" + shouldusecovernoderesult + "" + islookingaroundforenemy + "" + abouttoarriveatcover + "" + iswithineffectiverangealready + "" + shouldbeboredatcurrentcover, behaviortreeentity, color, "");
+			recordenttext((((((((("" + shouldusecovernoderesult) + "") + islookingaroundforenemy) + "") + abouttoarriveatcover) + "") + iswithineffectiverangealready) + "") + shouldbeboredatcurrentcover, behaviortreeentity, color, "");
 		#/
 	}
 	else
@@ -2269,7 +2269,7 @@ function haslowammo(behaviortreeentity)
 {
 	if(behaviortreeentity.weapon != level.weaponnone)
 	{
-		return behaviortreeentity.bulletsinclip < behaviortreeentity.weapon.clipsize * 0.2;
+		return behaviortreeentity.bulletsinclip < (behaviortreeentity.weapon.clipsize * 0.2);
 	}
 	return 0;
 }
@@ -2442,14 +2442,14 @@ function canseeenemywrapper()
 	}
 	node = self.node;
 	enemyeye = self.enemy geteye();
-	yawtoenemy = angleclamp180(node.angles[1] - vectortoangles(enemyeye - node.origin)[1]);
+	yawtoenemy = angleclamp180(node.angles[1] - (vectortoangles(enemyeye - node.origin)[1]));
 	if(node.type == "Cover Left" || node.type == "Cover Right")
 	{
 		if(yawtoenemy > 60 || yawtoenemy < -60)
 		{
 			return 0;
 		}
-		if(isdefined(node.spawnflags) && node.spawnflags & 4 == 4)
+		if(isdefined(node.spawnflags) && (node.spawnflags & 4) == 4)
 		{
 			if(node.type == "Cover Left" && yawtoenemy > 10)
 			{
@@ -2465,7 +2465,7 @@ function canseeenemywrapper()
 	if(node.type == "Cover Pillar")
 	{
 		/#
-			assert(!(isdefined(node.spawnflags) && node.spawnflags & 2048 == 2048) || (!(isdefined(node.spawnflags) && node.spawnflags & 1024 == 1024)));
+			assert(!(isdefined(node.spawnflags) && (node.spawnflags & 2048) == 2048) || (!(isdefined(node.spawnflags) && (node.spawnflags & 1024) == 1024)));
 		#/
 		canseefromleft = 1;
 		canseefromright = 1;
@@ -2514,7 +2514,7 @@ function calculatenodeoffsetposition(node, nodeoffset)
 {
 	right = anglestoright(node.angles);
 	forward = anglestoforward(node.angles);
-	return node.origin + vectorscale(right, nodeoffset[0]) + vectorscale(forward, nodeoffset[1]) + (0, 0, nodeoffset[2]);
+	return (node.origin + vectorscale(right, nodeoffset[0])) + vectorscale(forward, nodeoffset[1]) + (0, 0, nodeoffset[2]);
 }
 
 /*
@@ -2531,20 +2531,20 @@ function gethighestnodestance(node)
 	/#
 		assert(isdefined(node));
 	#/
-	if(isdefined(node.spawnflags) && node.spawnflags & 4 == 4)
+	if(isdefined(node.spawnflags) && (node.spawnflags & 4) == 4)
 	{
 		return "stand";
 	}
-	if(isdefined(node.spawnflags) && node.spawnflags & 8 == 8)
+	if(isdefined(node.spawnflags) && (node.spawnflags & 8) == 8)
 	{
 		return "crouch";
 	}
-	if(isdefined(node.spawnflags) && node.spawnflags & 16 == 16)
+	if(isdefined(node.spawnflags) && (node.spawnflags & 16) == 16)
 	{
 		return "prone";
 	}
 	/#
-		errormsg(node.type + "" + node.origin + "");
+		errormsg(((node.type + "") + node.origin) + "");
 	#/
 	if(node.type == "Cover Crouch" || node.type == "Cover Crouch Window" || node.type == "Conceal Crouch")
 	{
@@ -2570,15 +2570,15 @@ function isstanceallowedatnode(stance, node)
 	/#
 		assert(isdefined(node));
 	#/
-	if(stance == "stand" && (isdefined(node.spawnflags) && node.spawnflags & 4 == 4))
+	if(stance == "stand" && (isdefined(node.spawnflags) && (node.spawnflags & 4) == 4))
 	{
 		return 1;
 	}
-	if(stance == "crouch" && (isdefined(node.spawnflags) && node.spawnflags & 8 == 8))
+	if(stance == "crouch" && (isdefined(node.spawnflags) && (node.spawnflags & 8) == 8))
 	{
 		return 1;
 	}
-	if(stance == "prone" && (isdefined(node.spawnflags) && node.spawnflags & 16 == 16))
+	if(stance == "prone" && (isdefined(node.spawnflags) && (node.spawnflags & 16) == 16))
 	{
 		return 1;
 	}
@@ -2640,7 +2640,7 @@ function setcurrentweapon(weapon)
 	if(weapon != level.weaponnone)
 	{
 		/#
-			assert(isdefined(weapon.worldmodel), "" + weapon.name + "");
+			assert(isdefined(weapon.worldmodel), ("" + weapon.name) + "");
 		#/
 	}
 	self.weaponmodel = weapon.worldmodel;
@@ -2662,7 +2662,7 @@ function setprimaryweapon(weapon)
 	if(weapon != level.weaponnone)
 	{
 		/#
-			assert(isdefined(weapon.worldmodel), "" + weapon.name + "");
+			assert(isdefined(weapon.worldmodel), ("" + weapon.name) + "");
 		#/
 	}
 }
@@ -2683,7 +2683,7 @@ function setsecondaryweapon(weapon)
 	if(weapon != level.weaponnone)
 	{
 		/#
-			assert(isdefined(weapon.worldmodel), "" + weapon.name + "");
+			assert(isdefined(weapon.worldmodel), ("" + weapon.name) + "");
 		#/
 	}
 }
@@ -2729,7 +2729,7 @@ function releaseclaimnode(behaviortreeentity)
 */
 function getaimyawtoenemyfromnode(behaviortreeentity, node, enemy)
 {
-	return angleclamp180(vectortoangles(behaviortreeentity lastknownpos(behaviortreeentity.enemy) - node.origin)[1] - node.angles[1]);
+	return angleclamp180((vectortoangles(behaviortreeentity lastknownpos(behaviortreeentity.enemy) - node.origin)[1]) - node.angles[1]);
 }
 
 /*
@@ -2743,7 +2743,7 @@ function getaimyawtoenemyfromnode(behaviortreeentity, node, enemy)
 */
 function getaimpitchtoenemyfromnode(behaviortreeentity, node, enemy)
 {
-	return angleclamp180(vectortoangles(behaviortreeentity lastknownpos(behaviortreeentity.enemy) - node.origin)[0] - node.angles[0]);
+	return angleclamp180((vectortoangles(behaviortreeentity lastknownpos(behaviortreeentity.enemy) - node.origin)[0]) - node.angles[0]);
 }
 
 /*
@@ -2839,7 +2839,7 @@ function shouldstealth(behaviortreeentity)
 			behaviortreeentity.stealth_react_last = now;
 			return 1;
 		}
-		if(isdefined(behaviortreeentity.stealth_reacting) && behaviortreeentity.stealth_reacting || (isdefined(behaviortreeentity.stealth_react_last) && now - behaviortreeentity.stealth_react_last < 250))
+		if(isdefined(behaviortreeentity.stealth_reacting) && behaviortreeentity.stealth_reacting || (isdefined(behaviortreeentity.stealth_react_last) && (now - behaviortreeentity.stealth_react_last) < 250))
 		{
 			return 1;
 		}
@@ -2887,7 +2887,7 @@ function locomotionshouldstealth(behaviortreeentity)
 					goalpos = behaviortreeentity.pathgoalpos;
 				}
 				goaldistsq = distancesquared(behaviortreeentity.origin, goalpos);
-				if(goaldistsq <= 1936 && goaldistsq <= behaviortreeentity.goalradius * behaviortreeentity.goalradius)
+				if(goaldistsq <= 1936 && goaldistsq <= (behaviortreeentity.goalradius * behaviortreeentity.goalradius))
 				{
 					return 0;
 				}
@@ -3257,7 +3257,7 @@ function shouldnormalmelee(behaviortreeentity)
 */
 function shouldmelee(entity)
 {
-	if(isdefined(entity.lastshouldmeleeresult) && !entity.lastshouldmeleeresult && entity.lastshouldmeleechecktime + 50 >= gettime())
+	if(isdefined(entity.lastshouldmeleeresult) && !entity.lastshouldmeleeresult && (entity.lastshouldmeleechecktime + 50) >= gettime())
 	{
 		return 0;
 	}
@@ -3346,8 +3346,8 @@ function hascloseenemytomeleewithrange(entity, melee_range_sq)
 	}
 	predicitedposition = entity.enemy.origin + vectorscale(entity getenemyvelocity(), 0.25);
 	distsq = distancesquared(entity.origin, predicitedposition);
-	yawtoenemy = angleclamp180(entity.angles[1] - vectortoangles(entity.enemy.origin - entity.origin)[1]);
-	if(distsq <= 36 * 36)
+	yawtoenemy = angleclamp180(entity.angles[1] - (vectortoangles(entity.enemy.origin - entity.origin)[1]));
+	if(distsq <= (36 * 36))
 	{
 		return abs(yawtoenemy) <= 40;
 	}
@@ -3385,15 +3385,15 @@ function shouldchargemelee(entity)
 		}
 	}
 	enemydistsq = distancesquared(entity.origin, entity.enemy.origin);
-	if(enemydistsq < 64 * 64)
+	if(enemydistsq < (64 * 64))
 	{
 		return 0;
 	}
-	offset = entity.enemy.origin - vectornormalize(entity.enemy.origin - entity.origin) * 36;
+	offset = entity.enemy.origin - ((vectornormalize(entity.enemy.origin - entity.origin)) * 36);
 	chargedistsq = (isdefined(entity.melee_charge_rangesq) ? entity.melee_charge_rangesq : 140 * 140);
 	if(enemydistsq < chargedistsq && entity maymovetopoint(offset, 1, 1))
 	{
-		yawtoenemy = angleclamp180(entity.angles[1] - vectortoangles(entity.enemy.origin - entity.origin)[1]);
+		yawtoenemy = angleclamp180(entity.angles[1] - (vectortoangles(entity.enemy.origin - entity.origin)[1]));
 		return abs(yawtoenemy) <= 80;
 	}
 	return 0;
@@ -3412,9 +3412,9 @@ private function shouldattackinchargemelee(behaviortreeentity)
 {
 	if(isdefined(behaviortreeentity.enemy))
 	{
-		if(distancesquared(behaviortreeentity.origin, behaviortreeentity.enemy.origin) < 74 * 74)
+		if(distancesquared(behaviortreeentity.origin, behaviortreeentity.enemy.origin) < (74 * 74))
 		{
-			yawtoenemy = angleclamp180(behaviortreeentity.angles[1] - vectortoangles(behaviortreeentity.enemy.origin - behaviortreeentity.origin)[1]);
+			yawtoenemy = angleclamp180(behaviortreeentity.angles[1] - (vectortoangles(behaviortreeentity.enemy.origin - behaviortreeentity.origin)[1]));
 			if(abs(yawtoenemy) > 80)
 			{
 				return 0;
@@ -3600,12 +3600,12 @@ function isbalconydeath(behaviortreeentity)
 	{
 		return 0;
 	}
-	if(isdefined(behaviortreeentity.node.script_balconydeathchance) && randomint(100) > int(100 * behaviortreeentity.node.script_balconydeathchance))
+	if(isdefined(behaviortreeentity.node.script_balconydeathchance) && randomint(100) > (int(100 * behaviortreeentity.node.script_balconydeathchance)))
 	{
 		return 0;
 	}
 	distsq = distancesquared(behaviortreeentity.origin, behaviortreeentity.node.origin);
-	if(distsq > 16 * 16)
+	if(distsq > (16 * 16))
 	{
 		return 0;
 	}
@@ -3614,10 +3614,10 @@ function isbalconydeath(behaviortreeentity)
 		closest_player = util::get_closest_player(behaviortreeentity.origin, level.players[0].team);
 		if(isdefined(closest_player))
 		{
-			if(abs(closest_player.origin[2] - behaviortreeentity.origin[2]) < 100)
+			if((abs(closest_player.origin[2] - behaviortreeentity.origin[2])) < 100)
 			{
 				distance2dfromplayersq = distance2dsquared(closest_player.origin, behaviortreeentity.origin);
-				if(distance2dfromplayersq < 600 * 600)
+				if(distance2dfromplayersq < (600 * 600))
 				{
 					return 0;
 				}
@@ -3731,7 +3731,7 @@ function preshootlaserandglinton(ai)
 				{
 					type = (isdefined(ai.classname) ? "" + ai.classname : "");
 					/#
-						println("" + type + "");
+						println(("" + type) + "");
 					#/
 					playfxontag(sniper_glint, ai, "tag_eye");
 				}

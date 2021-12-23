@@ -96,7 +96,7 @@ function watchforproximityexplosion()
 		if(!localplayer util::is_player_view_linked_to_entity(localclientnum))
 		{
 			explosionradius = weapon.explosionradius;
-			if(distancesquared(localplayer.origin, position) < explosionradius * explosionradius)
+			if(distancesquared(localplayer.origin, position) < (explosionradius * explosionradius))
 			{
 				if(isdefined(owner_cent))
 				{

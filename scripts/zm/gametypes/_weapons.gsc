@@ -150,7 +150,7 @@ function updatelastheldweapontimings(newtime)
 {
 	if(isdefined(self.currentweapon) && isdefined(self.currentweaponstarttime))
 	{
-		totaltime = int(newtime - self.currentweaponstarttime / 1000);
+		totaltime = int((newtime - self.currentweaponstarttime) / 1000);
 		if(totaltime > 0)
 		{
 			self addweaponstat(self.currentweapon, "timeUsed", totaltime);
@@ -179,7 +179,7 @@ function updateweapontimings(newtime)
 	{
 		return;
 	}
-	totaltime = int(newtime - self.staticweaponsstarttime / 1000);
+	totaltime = int((newtime - self.staticweaponsstarttime) / 1000);
 	if(totaltime < 0)
 	{
 		return;
@@ -226,7 +226,7 @@ function updateweapontimings(newtime)
 		{
 			for(numspecialties = 0; numspecialties < level.maxspecialties; numspecialties++)
 			{
-				perk = self getloadoutitem(self.class_num, "specialty" + numspecialties + 1);
+				perk = self getloadoutitem(self.class_num, "specialty" + (numspecialties + 1));
 				if(perk != 0)
 				{
 					perksindexarray[perk] = 1;
@@ -353,7 +353,7 @@ function dropweaponfordeath(attacker)
 		/#
 			if(getdvarstring("") == "")
 			{
-				println("" + weapon.name + "");
+				println(("" + weapon.name) + "");
 			}
 		#/
 		return;
@@ -457,7 +457,7 @@ function watchpickup()
 	/#
 		if(getdvarstring("") == "")
 		{
-			println("" + weapon.name + "" + isdefined(self.ownersattacker));
+			println((("" + weapon.name) + "") + isdefined(self.ownersattacker));
 		}
 	#/
 	/#
@@ -690,9 +690,9 @@ function dropweaponstoground(origin, radius)
 	weapons = getdroppedweapons();
 	for(i = 0; i < weapons.size; i++)
 	{
-		if(distancesquared(origin, weapons[i].origin) < radius * radius)
+		if(distancesquared(origin, weapons[i].origin) < (radius * radius))
 		{
-			trace = bullettrace(weapons[i].origin, weapons[i].origin + vectorscale((0, 0, -1), 2000), 0, weapons[i]);
+			trace = bullettrace(weapons[i].origin, weapons[i].origin + (vectorscale((0, 0, -1), 2000)), 0, weapons[i]);
 			weapons[i].origin = trace["position"];
 		}
 	}
@@ -712,7 +712,7 @@ function dropgrenadestoground(origin, radius)
 	grenades = getentarray("grenade", "classname");
 	for(i = 0; i < grenades.size; i++)
 	{
-		if(distancesquared(origin, grenades[i].origin) < radius * radius)
+		if(distancesquared(origin, grenades[i].origin) < (radius * radius))
 		{
 			grenades[i] launch(vectorscale((1, 1, 1), 5));
 		}
@@ -816,7 +816,7 @@ function begingrenadetracking()
 	{
 		return;
 	}
-	if(gettime() - starttime > 1000)
+	if((gettime() - starttime) > 1000)
 	{
 		grenade.iscooked = 1;
 	}
@@ -958,7 +958,7 @@ function watchforthrowbacks()
 */
 function registergrenadelauncherduddvar(dvarstring, defaultvalue, minvalue, maxvalue)
 {
-	dvarstring = "scr_" + dvarstring + "_grenadeLauncherDudTime";
+	dvarstring = ("scr_" + dvarstring) + "_grenadeLauncherDudTime";
 	if(getdvarstring(dvarstring) == "")
 	{
 		setdvar(dvarstring, defaultvalue);
@@ -988,7 +988,7 @@ function registergrenadelauncherduddvar(dvarstring, defaultvalue, minvalue, maxv
 */
 function registerthrowngrenadeduddvar(dvarstring, defaultvalue, minvalue, maxvalue)
 {
-	dvarstring = "scr_" + dvarstring + "_thrownGrenadeDudTime";
+	dvarstring = ("scr_" + dvarstring) + "_thrownGrenadeDudTime";
 	if(getdvarstring(dvarstring) == "")
 	{
 		setdvar(dvarstring, defaultvalue);
@@ -1018,7 +1018,7 @@ function registerthrowngrenadeduddvar(dvarstring, defaultvalue, minvalue, maxval
 */
 function registerkillstreakdelay(dvarstring, defaultvalue, minvalue, maxvalue)
 {
-	dvarstring = "scr_" + dvarstring + "_killstreakDelayTime";
+	dvarstring = ("scr_" + dvarstring) + "_killstreakDelayTime";
 	if(getdvarstring(dvarstring) == "")
 	{
 		setdvar(dvarstring, defaultvalue);
@@ -1045,22 +1045,22 @@ function registerkillstreakdelay(dvarstring, defaultvalue, minvalue, maxvalue)
 */
 function turngrenadeintoadud(weapon, isthrowngrenade, player)
 {
-	if(level.roundstartexplosivedelay >= globallogic_utils::gettimepassed() / 1000)
+	if(level.roundstartexplosivedelay >= (globallogic_utils::gettimepassed() / 1000))
 	{
 		if(weapon.disallowatmatchstart || weaponhasattachment(weapon, "gl"))
 		{
-			timeleft = int(level.roundstartexplosivedelay - globallogic_utils::gettimepassed() / 1000);
+			timeleft = int(level.roundstartexplosivedelay - (globallogic_utils::gettimepassed() / 1000));
 			if(!timeleft)
 			{
 				timeleft = 1;
 			}
 			if(isthrowngrenade)
 			{
-				player iprintlnbold(&"MP_GRENADE_UNAVAILABLE_FOR_N", " " + timeleft + " ", &"EXE_SECONDS");
+				player iprintlnbold(&"MP_GRENADE_UNAVAILABLE_FOR_N", (" " + timeleft) + " ", &"EXE_SECONDS");
 			}
 			else
 			{
-				player iprintlnbold(&"MP_LAUNCHER_UNAVAILABLE_FOR_N", " " + timeleft + " ", &"EXE_SECONDS");
+				player iprintlnbold(&"MP_LAUNCHER_UNAVAILABLE_FOR_N", (" " + timeleft) + " ", &"EXE_SECONDS");
 			}
 			self makegrenadedud();
 		}
@@ -1144,7 +1144,7 @@ function getdamageableents(pos, radius, dolos, startradius)
 		}
 		playerpos = players[i].origin + vectorscale((0, 0, 1), 32);
 		distsq = distancesquared(pos, playerpos);
-		if(distsq < radius * radius && (!dolos || weapondamagetracepassed(pos, playerpos, startradius, undefined)))
+		if(distsq < (radius * radius) && (!dolos || weapondamagetracepassed(pos, playerpos, startradius, undefined)))
 		{
 			newent = spawnstruct();
 			newent.isplayer = 1;
@@ -1161,7 +1161,7 @@ function getdamageableents(pos, radius, dolos, startradius)
 	{
 		entpos = grenades[i].origin;
 		distsq = distancesquared(pos, entpos);
-		if(distsq < radius * radius && (!dolos || weapondamagetracepassed(pos, entpos, startradius, grenades[i])))
+		if(distsq < (radius * radius) && (!dolos || weapondamagetracepassed(pos, entpos, startradius, grenades[i])))
 		{
 			newent = spawnstruct();
 			newent.isplayer = 0;
@@ -1178,7 +1178,7 @@ function getdamageableents(pos, radius, dolos, startradius)
 	{
 		entpos = destructibles[i].origin;
 		distsq = distancesquared(pos, entpos);
-		if(distsq < radius * radius && (!dolos || weapondamagetracepassed(pos, entpos, startradius, destructibles[i])))
+		if(distsq < (radius * radius) && (!dolos || weapondamagetracepassed(pos, entpos, startradius, destructibles[i])))
 		{
 			newent = spawnstruct();
 			newent.isplayer = 0;
@@ -1195,7 +1195,7 @@ function getdamageableents(pos, radius, dolos, startradius)
 	{
 		entpos = destructables[i].origin;
 		distsq = distancesquared(pos, entpos);
-		if(distsq < radius * radius && (!dolos || weapondamagetracepassed(pos, entpos, startradius, destructables[i])))
+		if(distsq < (radius * radius) && (!dolos || weapondamagetracepassed(pos, entpos, startradius, destructables[i])))
 		{
 			newent = spawnstruct();
 			newent.isplayer = 0;
@@ -1284,12 +1284,12 @@ function onweapondamage(eattacker, einflictor, weapon, meansofdeath, damage)
 			{
 				radius = radius * 0.5;
 			}
-			scale = 1 - distance(self.origin, einflictor.origin) / radius;
+			scale = 1 - (distance(self.origin, einflictor.origin) / radius);
 			if(scale < 0)
 			{
 				scale = 0;
 			}
-			time = 2 + 4 * scale;
+			time = 2 + (4 * scale);
 			wait(0.05);
 			if(self hasperk("specialty_stunprotection"))
 			{
@@ -1300,7 +1300,7 @@ function onweapondamage(eattacker, einflictor, weapon, meansofdeath, damage)
 			{
 				self shellshock("concussion_grenade_mp", time, 0);
 			}
-			self.concussionendtime = gettime() + time * 1000;
+			self.concussionendtime = gettime() + (time * 1000);
 			break;
 		}
 		default:
@@ -1456,7 +1456,7 @@ function loadout_get_class_num()
 	{
 		return level.classtoclassnum[self.curclass];
 	}
-	class_num = int(self.curclass[self.curclass.size - 1]) - 1;
+	class_num = (int(self.curclass[self.curclass.size - 1])) - 1;
 	if(-1 == class_num)
 	{
 		class_num = 9;
@@ -1632,7 +1632,7 @@ function scavenger_think()
 					clip = clip * getdvarfloat("scavenger_clip_multiplier", 2);
 					clip = int(clip);
 					maxammo = weapon.maxammo;
-					if(stock < maxammo - clip)
+					if(stock < (maxammo - clip))
 					{
 						ammo = stock + clip;
 						player setweaponammostock(weapon, ammo);
@@ -1659,7 +1659,7 @@ function scavenger_think()
 		clip = clip * getdvarfloat("scavenger_clip_multiplier", 2);
 		clip = int(clip);
 		maxammo = weapon.maxammo;
-		if(stock < maxammo - clip)
+		if(stock < (maxammo - clip))
 		{
 			ammo = stock + clip;
 			player setweaponammostock(weapon, ammo);

@@ -261,7 +261,7 @@ function get_chest_pieces()
 		self.zbarrier zbarrierpieceuseboxriselogic(4);
 	}
 	self.unitrigger_stub = spawnstruct();
-	self.unitrigger_stub.origin = self.origin + anglestoright(self.angles) * -22.5;
+	self.unitrigger_stub.origin = self.origin + (anglestoright(self.angles) * -22.5);
 	self.unitrigger_stub.angles = self.angles;
 	self.unitrigger_stub.script_unitrigger_type = "unitrigger_box_use";
 	self.unitrigger_stub.script_width = 104;
@@ -524,7 +524,7 @@ function default_pandora_fx_func()
 {
 	self endon(#"death");
 	self.pandora_light = spawn("script_model", self.zbarrier.origin);
-	self.pandora_light.angles = self.zbarrier.angles + vectorscale((-1, 0, -1), 90);
+	self.pandora_light.angles = self.zbarrier.angles + (vectorscale((-1, 0, -1), 90));
 	self.pandora_light setmodel("tag_origin");
 	if(!(isdefined(level._box_initialized) && level._box_initialized))
 	{
@@ -876,7 +876,7 @@ function watch_for_emp_close()
 	while(true)
 	{
 		level waittill(#"emp_detonate", origin, radius);
-		if(distancesquared(origin, self.origin) < radius * radius)
+		if(distancesquared(origin, self.origin) < (radius * radius))
 		{
 			break;
 		}
@@ -956,7 +956,7 @@ function default_box_move_logic()
 	index = -1;
 	for(i = 0; i < level.chests.size; i++)
 	{
-		if(issubstr(level.chests[i].script_noteworthy, "move" + level.chest_moves + 1) && i != level.chest_index)
+		if(issubstr(level.chests[i].script_noteworthy, "move" + (level.chest_moves + 1)) && i != level.chest_index)
 		{
 			index = i;
 			break;
@@ -1389,7 +1389,7 @@ function decide_hide_show_hint(endon_notify, second_endon_notify, onlyplayer, ca
 		}
 		if(use_choke)
 		{
-			while(level._weapon_show_hint_choke > 4 && gettime() < last_update + 150)
+			while(level._weapon_show_hint_choke > 4 && gettime() < (last_update + 150))
 			{
 				wait(0.05);
 			}
@@ -1744,12 +1744,12 @@ function treasure_chest_weapon_spawn(chest, player, respin)
 			wait(2);
 			if(isdefined(self.weapon_model))
 			{
-				v_fly_away = self.origin + anglestoup(self.angles) * 500;
+				v_fly_away = self.origin + (anglestoup(self.angles) * 500);
 				self.weapon_model moveto(v_fly_away, 4, 3);
 			}
 			if(isdefined(self.weapon_model_dw))
 			{
-				v_fly_away = self.origin + anglestoup(self.angles) * 500;
+				v_fly_away = self.origin + (anglestoup(self.angles) * 500);
 				self.weapon_model_dw moveto(v_fly_away, 4, 3);
 			}
 			self.weapon_model waittill(#"movedone");
@@ -1889,7 +1889,7 @@ function timer_til_despawn(v_float)
 {
 	self endon(#"kill_weapon_movement");
 	putbacktime = 12;
-	self moveto(self.origin - v_float * 0.85, putbacktime, putbacktime * 0.5);
+	self moveto(self.origin - (v_float * 0.85), putbacktime, putbacktime * 0.5);
 	wait(putbacktime);
 	if(isdefined(self))
 	{

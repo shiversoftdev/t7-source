@@ -72,7 +72,7 @@ private function function_e9b3dfb0()
 */
 private function quadphasingservice(entity)
 {
-	if(isdefined(entity.var_a7d5f134) && entity.var_a7d5f134)
+	if(isdefined(entity.is_phasing) && entity.is_phasing)
 	{
 		return 0;
 	}
@@ -152,11 +152,11 @@ private function shouldphase(entity)
 	{
 		return 0;
 	}
-	if(isdefined(entity.var_a7d5f134) && entity.var_a7d5f134)
+	if(isdefined(entity.is_phasing) && entity.is_phasing)
 	{
 		return 0;
 	}
-	if(gettime() - entity.var_b7d765b3 < 2000)
+	if((gettime() - entity.var_b7d765b3) < 2000)
 	{
 		return 0;
 	}
@@ -207,7 +207,7 @@ private function shouldphase(entity)
 */
 private function phaseactionstart(entity)
 {
-	entity.var_a7d5f134 = 1;
+	entity.is_phasing = 1;
 	if(entity.var_3b07930a == "quad_phase_left")
 	{
 		entity.var_20535e44--;
@@ -230,7 +230,7 @@ private function phaseactionstart(entity)
 private function phaseactionterminate(entity)
 {
 	entity.var_b7d765b3 = gettime();
-	entity.var_a7d5f134 = 0;
+	entity.is_phasing = 0;
 }
 
 /*

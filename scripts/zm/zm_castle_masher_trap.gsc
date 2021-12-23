@@ -470,7 +470,7 @@ function function_8123d15a()
 		self waittill(#"movedone");
 		wait(0.25);
 		array::run_all(self.var_beb932f1, &show);
-		n_total_time = gettime() - n_start_time / 1000;
+		n_total_time = (gettime() - n_start_time) / 1000;
 	}
 	array::run_all(self.var_beb932f1, &hide);
 }

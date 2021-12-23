@@ -71,7 +71,7 @@ function animation_update(model, oldvalue, newvalue)
 	}
 	while(timesincelastupdate <= 1)
 	{
-		timesincelastupdate = getrealtime() - starttime / 1000;
+		timesincelastupdate = (getrealtime() - starttime) / 1000;
 		lerpvalue = lerpfloat(oldvalue, newvalue, timesincelastupdate) / 30;
 		setuimodelvalue(model, lerpvalue);
 		wait(0.016);
@@ -97,7 +97,7 @@ function update_bleedout_timer(localclientnum, oldval, newval, bnewent, binitial
 	{
 		level.laststands[playernum].lastbleedouttime = level.laststands[playernum].bleedouttime;
 	}
-	model = getuimodel(getuimodelforcontroller(localclientnum), "WorldSpaceIndicators.bleedOutModel" + playernum + ".bleedOutPercent");
+	model = getuimodel(getuimodelforcontroller(localclientnum), ("WorldSpaceIndicators.bleedOutModel" + playernum) + ".bleedOutPercent");
 	if(isdefined(model))
 	{
 		if(newval == 30)

@@ -50,9 +50,9 @@ function include_craftables()
 function register_clientfields()
 {
 	shared_bits = 1;
-	registerclientfield("world", "gravityspike" + "_" + "part_body", 1, shared_bits, "int", &zm_utility::setsharedinventoryuimodels, 0, 1);
-	registerclientfield("world", "gravityspike" + "_" + "part_guards", 1, shared_bits, "int", &zm_utility::setsharedinventoryuimodels, 0, 1);
-	registerclientfield("world", "gravityspike" + "_" + "part_handle", 1, shared_bits, "int", &zm_utility::setsharedinventoryuimodels, 0, 1);
+	registerclientfield("world", ("gravityspike" + "_") + "part_body", 1, shared_bits, "int", &zm_utility::setsharedinventoryuimodels, 0, 1);
+	registerclientfield("world", ("gravityspike" + "_") + "part_guards", 1, shared_bits, "int", &zm_utility::setsharedinventoryuimodels, 0, 1);
+	registerclientfield("world", ("gravityspike" + "_") + "part_handle", 1, shared_bits, "int", &zm_utility::setsharedinventoryuimodels, 0, 1);
 	clientfield::register("scriptmover", "craftable_powerup_fx", 1, 1, "int", &function_f1838e49, 0, 0);
 	clientfield::register("scriptmover", "craftable_teleport_fx", 1, 1, "int", &function_a43a3438, 0, 0);
 	clientfield::register("toplayer", "ZMUI_GRAVITYSPIKE_PART_PICKUP", 1, 1, "int", &zm_utility::zm_ui_infotext, 0, 1);

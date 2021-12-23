@@ -183,7 +183,7 @@ function setup_devgui_func(str_devgui_path, str_dvar, n_value, func, n_base_valu
 			n_base_value = -1;
 		}
 		setdvar(str_dvar, n_base_value);
-		adddebugcommand("" + str_devgui_path + "" + str_dvar + "" + n_value + "");
+		adddebugcommand(((((("" + str_devgui_path) + "") + str_dvar) + "") + n_value) + "");
 		while(true)
 		{
 			n_dvar = getdvarint(str_dvar);

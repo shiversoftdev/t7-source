@@ -341,11 +341,11 @@ function set_gadget_hero_weapon_status(weapon, status, time)
 	timestr = "";
 	if(isdefined(time))
 	{
-		timestr = "^3" + ", time: " + time;
+		timestr = (("^3") + ", time: ") + time;
 	}
 	if(getdvarint("scr_cpower_debug_prints") > 0)
 	{
-		self iprintlnbold("Hero Weapon " + weapon.name + ": " + status + timestr);
+		self iprintlnbold(((("Hero Weapon " + weapon.name) + ": ") + status) + timestr);
 	}
 }
 

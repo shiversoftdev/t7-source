@@ -65,7 +65,7 @@ function init_temple_geyser()
 		{
 			geysertrigger.top.angles = (0, 0, 0);
 		}
-		geysertrigger.trigger_dust = getent("trigger_" + geysertrigger.script_noteworthy + "_dust", "targetname");
+		geysertrigger.trigger_dust = getent(("trigger_" + geysertrigger.script_noteworthy) + "_dust", "targetname");
 		if(isdefined(geysertrigger.trigger_dust))
 		{
 			geysertrigger.trigger_dust thread geyser_trigger_dust_think();
@@ -209,7 +209,7 @@ function geyser_watch_for_player()
 		}
 		if(!self.geyser_active)
 		{
-			if(who.origin[2] - self.bottom.origin[2] > 70)
+			if((who.origin[2] - self.bottom.origin[2]) > 70)
 			{
 				continue;
 			}
@@ -237,7 +237,7 @@ function geyser_watch_for_player()
 				break;
 			}
 			earthquake(0.2, 0.1, self.bottom.origin, 100);
-			if(gettime() - starttime > 1800)
+			if((gettime() - starttime) > 1800)
 			{
 				self thread geyser_activate(playerstouching);
 				break;
@@ -341,7 +341,7 @@ function player_geyser_move(geyser)
 		self ghost();
 	}
 	self.geyser_dust_time = gettime() + 2000;
-	scale = geyser.top.origin[2] - self.origin[2] / geyser.top.origin[2] - geyser.bottom.origin[2];
+	scale = (geyser.top.origin[2] - self.origin[2]) / (geyser.top.origin[2] - geyser.bottom.origin[2]);
 	scale = math::clamp(scale, 0.4, 1);
 	mover = spawn("script_origin", self.origin);
 	self playerlinkto(mover);
@@ -366,7 +366,7 @@ function player_geyser_move(geyser)
 	}
 	else
 	{
-		self setvelocity(vel + vectorscale((0, -1, 0), 175));
+		self setvelocity(vel + (vectorscale((0, -1, 0), 175)));
 	}
 	wait(0.1);
 	self.riding_geyser = 0;

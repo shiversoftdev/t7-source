@@ -198,7 +198,7 @@ function do_gravity_spike_fx(localclientnum, owner, position)
 	{
 		fx = level._effect["groundhit_1p"];
 		fwd = anglestoforward(owner.angles);
-		playfx(localclientnum, fx, position + fwd * 100, fwd);
+		playfx(localclientnum, fx, position + (fwd * 100), fwd);
 	}
 	else
 	{
@@ -219,7 +219,7 @@ function do_gravity_spike_fx(localclientnum, owner, position)
 */
 function getideallocationforfx(startpos, fxindex, fxcount, defaultdistance, rotation)
 {
-	currentangle = 360 / fxcount * fxindex;
+	currentangle = (360 / fxcount) * fxindex;
 	coscurrent = cos(currentangle + rotation);
 	sincurrent = sin(currentangle + rotation);
 	return startpos + (defaultdistance * coscurrent, defaultdistance * sincurrent, 0);

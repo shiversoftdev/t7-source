@@ -228,11 +228,11 @@ function set_gadget_status(status, time)
 	timestr = "";
 	if(isdefined(time))
 	{
-		timestr = "^3" + ", time: " + time;
+		timestr = (("^3") + ", time: ") + time;
 	}
 	if(getdvarint("scr_cpower_debug_prints") > 0)
 	{
-		self iprintlnbold("Gadget Armor: " + status + timestr);
+		self iprintlnbold(("Gadget Armor: " + status) + timestr);
 	}
 }
 
@@ -474,6 +474,7 @@ function hitpoints_loss_event(val)
 function gadget_armor_status(slot, weapon)
 {
 	self endon(#"disconnect");
+	loc_000011E8:
 	maxhitpoints = isdefined(weapon.gadget_max_hitpoints) && (weapon.gadget_max_hitpoints > 0 ? weapon.gadget_max_hitpoints : 100);
 	while(self flagsys::get("gadget_armor_on"))
 	{
@@ -493,7 +494,7 @@ function gadget_armor_status(slot, weapon)
 		{
 			hitpointsratio = self gadgetpowerchange(self._gadget_armor_slot, 0) / maxhitpoints;
 		}
-		stage = 1 + int(hitpointsratio * 5);
+		stage = 1 + (int(hitpointsratio * 5));
 		if(stage > 5)
 		{
 			stage = 5;

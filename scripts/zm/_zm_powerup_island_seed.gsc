@@ -230,7 +230,7 @@ function function_f766ae15()
 	{
 		n_count = n_count + player clientfield::get_to_player("has_island_seed");
 	}
-	if(n_count == level.activeplayers.size * 3)
+	if(n_count == (level.activeplayers.size * 3))
 	{
 		return 0;
 	}
@@ -356,7 +356,7 @@ function function_af95a19e()
 	level endon(#"unloaded");
 	players = level.players;
 	level.var_e4f2021b = 2000;
-	score_to_drop = players.size * level.zombie_vars["zombie_score_start_" + players.size + "p"] + level.var_e4f2021b;
+	score_to_drop = (players.size * (level.zombie_vars[("zombie_score_start_" + players.size) + "p"])) + level.var_e4f2021b;
 	while(true)
 	{
 		players = level.players;

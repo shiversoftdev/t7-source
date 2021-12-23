@@ -398,7 +398,7 @@ private function function_649c2f65(enemy, weapon)
 }
 
 /*
-	Name: function_1383f19
+	Name: hit_enemy
 	Namespace: cybercom_gadget_unstoppable_force
 	Checksum: 0x61394378
 	Offset: 0x1208
@@ -406,7 +406,7 @@ private function function_649c2f65(enemy, weapon)
 	Parameters: 2
 	Flags: Linked
 */
-function function_1383f19(guy, weapon)
+function hit_enemy(guy, weapon)
 {
 	if(guy cybercom::islinked())
 	{
@@ -471,7 +471,7 @@ function watch_collisions(weapon)
 				self function_649c2f65(guy, weapon);
 				continue;
 			}
-			self function_1383f19(guy, weapon);
+			self hit_enemy(guy, weapon);
 		}
 		if(hit)
 		{
@@ -502,8 +502,8 @@ function function_518996b3()
 	}
 	forward = anglestoforward(self getplayerangles());
 	up = anglestoup(self getplayerangles());
-	segment_start = view_pos + 36 * forward;
-	segment_end = segment_start + 120 - 36 * forward;
+	segment_start = view_pos + (36 * forward);
+	segment_end = segment_start + ((120 - 36) * forward);
 	fling_force = getdvarint("scr_unstoppable_fling_force", 175);
 	fling_force_vlo = fling_force * 0.5;
 	fling_force_vhi = fling_force * 0.6;
@@ -528,7 +528,7 @@ function function_518996b3()
 			continue;
 		}
 		lateral = (lateral[0], lateral[1], 0);
-		validtargets[i].fling_vec = fling_force * forward + randomfloatrange(fling_force_vlo, fling_force_vhi) * up;
+		validtargets[i].fling_vec = (fling_force * forward) + (randomfloatrange(fling_force_vlo, fling_force_vhi) * up);
 		enemies[enemies.size] = validtargets[i];
 	}
 	return enemies;

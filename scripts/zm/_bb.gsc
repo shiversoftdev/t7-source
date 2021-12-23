@@ -219,7 +219,7 @@ function function_9e0ebd5(powerup, var_aa8e75f3, eventname)
 	bbprint("zmpowerups", "gametime %d roundnumber %d powerupname %s powerupx %d powerupy %d powerupz %d, eventname %s playerspawnid %d playername %s", gettime(), level.round_number, powerup.powerup_name, powerup.origin, eventname, playerspawnid, playername);
 	foreach(var_8ade4bac, player in level.players)
 	{
-		function_e367a93e(player, "powerup_" + powerup.powerup_name + "_" + eventname);
+		function_e367a93e(player, (("powerup_" + powerup.powerup_name) + "_") + eventname);
 	}
 }
 

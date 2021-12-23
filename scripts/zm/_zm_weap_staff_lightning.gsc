@@ -128,7 +128,7 @@ function staff_lightning_position_source(v_detonate, v_angles, str_weapon)
 	{
 		v_angles = (0, 0, 0);
 	}
-	e_ball_fx = spawn("script_model", v_detonate + anglestoforward(v_angles) * 100);
+	e_ball_fx = spawn("script_model", v_detonate + (anglestoforward(v_angles) * 100));
 	e_ball_fx.angles = v_angles;
 	e_ball_fx.str_weapon = str_weapon;
 	e_ball_fx setmodel("tag_origin");
@@ -136,7 +136,7 @@ function staff_lightning_position_source(v_detonate, v_angles, str_weapon)
 	e_ball_fx.n_damage_per_sec = get_lightning_ball_damage_per_sec(self.chargeshotlevel);
 	e_ball_fx clientfield::set("lightning_miss_fx", 1);
 	n_shot_range = staff_lightning_get_shot_range(self.chargeshotlevel);
-	v_end = v_detonate + anglestoforward(v_angles) * n_shot_range;
+	v_end = v_detonate + (anglestoforward(v_angles) * n_shot_range);
 	trace = bullettrace(v_detonate, v_end, 0, self);
 	if(trace["fraction"] != 1)
 	{

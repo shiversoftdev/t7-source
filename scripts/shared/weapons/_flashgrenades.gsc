@@ -38,7 +38,7 @@ function flashrumbleloop(duration)
 	self endon(#"stop_monitoring_flash");
 	self endon(#"flash_rumble_loop");
 	self notify(#"flash_rumble_loop");
-	goaltime = gettime() + duration * 1000;
+	goaltime = gettime() + (duration * 1000);
 	while(gettime() < goaltime)
 	{
 		self playrumbleonentity("damage_heavy");
@@ -213,7 +213,7 @@ function applyflash(duration, rumbleduration, attacker)
 		{
 			self shellshock("flashbang", self.flashduration, 0);
 		}
-		self.flashendtime = gettime() + self.flashduration * 1000;
+		self.flashendtime = gettime() + (self.flashduration * 1000);
 		self.lastflashedby = attacker;
 	}
 	if(isdefined(self.flashrumbleduration))

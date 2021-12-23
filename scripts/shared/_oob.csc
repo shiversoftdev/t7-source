@@ -130,9 +130,9 @@ function onoutofboundschange(localclientnum, oldval, newval, bnewent, binitialsn
 			localplayer.oob_effect_enabled = 1;
 			level.oob_sound_ent[localclientnum] playloopsound("uin_out_of_bounds_loop", 0.5);
 			oobmodel = getoobuimodel(localclientnum);
-			if(isdefined(level.oob_timekeep_ms) && isdefined(self.oob_start_time) && isdefined(self.oob_active_duration) && getservertime(0) - self.oob_end_time < level.oob_timekeep_ms)
+			if(isdefined(level.oob_timekeep_ms) && isdefined(self.oob_start_time) && isdefined(self.oob_active_duration) && (getservertime(0) - self.oob_end_time) < level.oob_timekeep_ms)
 			{
-				setuimodelvalue(oobmodel, getservertime(0, 1) + level.oob_timelimit_ms - self.oob_active_duration);
+				setuimodelvalue(oobmodel, getservertime(0, 1) + (level.oob_timelimit_ms - self.oob_active_duration));
 			}
 			else
 			{
@@ -151,7 +151,7 @@ function onoutofboundschange(localclientnum, oldval, newval, bnewent, binitialsn
 		{
 			self.oob_active_duration = 0;
 		}
-		self.oob_active_duration = self.oob_active_duration + self.oob_end_time - self.oob_start_time;
+		self.oob_active_duration = self.oob_active_duration + (self.oob_end_time - self.oob_start_time);
 	}
 	stopoutofboundseffects(localclientnum, localplayer);
 }

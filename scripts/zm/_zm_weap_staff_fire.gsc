@@ -142,14 +142,14 @@ function fire_spread_shots(w_weapon)
 	v_fwd = self getweaponforwarddir();
 	fire_angles = vectortoangles(v_fwd);
 	fire_origin = self getweaponmuzzlepoint();
-	trace = bullettrace(fire_origin, fire_origin + v_fwd * 100, 0, undefined);
+	trace = bullettrace(fire_origin, fire_origin + (v_fwd * 100), 0, undefined);
 	if(trace["fraction"] != 1)
 	{
 		return;
 	}
 	v_left_angles = (fire_angles[0], fire_angles[1] - 15, fire_angles[2]);
 	v_left = anglestoforward(v_left_angles);
-	e_proj = magicbullet(w_weapon, fire_origin + v_fwd * 50, fire_origin + v_left * 100, self);
+	e_proj = magicbullet(w_weapon, fire_origin + (v_fwd * 50), fire_origin + (v_left * 100), self);
 	e_proj.additional_shot = 1;
 	util::wait_network_frame();
 	util::wait_network_frame();
@@ -158,7 +158,7 @@ function fire_spread_shots(w_weapon)
 	fire_origin = self getweaponmuzzlepoint();
 	v_right_angles = (fire_angles[0], fire_angles[1] + 15, fire_angles[2]);
 	v_right = anglestoforward(v_right_angles);
-	e_proj = magicbullet(w_weapon, fire_origin + v_fwd * 50, fire_origin + v_right * 100, self);
+	e_proj = magicbullet(w_weapon, fire_origin + (v_fwd * 50), fire_origin + (v_right * 100), self);
 	e_proj.additional_shot = 1;
 }
 
@@ -188,7 +188,7 @@ function fire_staff_area_of_effect(e_attacker, w_weapon)
 	n_step_size = 0.2;
 	while(n_alive_time > 0)
 	{
-		if(n_alive_time - n_step_size <= 0)
+		if((n_alive_time - n_step_size) <= 0)
 		{
 			aoe_radius = aoe_radius * 2;
 		}
@@ -276,8 +276,8 @@ function fire_additional_shots(w_weapon)
 		{
 			v_player_angles = vectortoangles(self getweaponforwarddir());
 			n_player_pitch = v_player_angles[0];
-			n_player_pitch = n_player_pitch + 5 * i;
-			n_player_yaw = v_player_angles[1] + randomfloatrange(-15, 15);
+			n_player_pitch = n_player_pitch + (5 * i);
+			n_player_yaw = v_player_angles[1] + (randomfloatrange(-15, 15));
 			v_shot_angles = (n_player_pitch, n_player_yaw, v_player_angles[2]);
 			v_shot_start = self getweaponmuzzlepoint();
 			v_shot_end = v_shot_start + anglestoforward(v_shot_angles);
@@ -341,8 +341,8 @@ function staff_fire_zombie_hit_response_internal(mod, damageweapon, player, amou
 	}
 	if(mod != "MOD_BURNED" && mod != "MOD_GRENADE_SPLASH")
 	{
-		pct_from_center = amount - 1 / 10;
-		pct_damage = 0.5 + 0.5 * pct_from_center;
+		pct_from_center = (amount - 1) / 10;
+		pct_damage = 0.5 + (0.5 * pct_from_center);
 		if(isdefined(self.is_mechz) && self.is_mechz)
 		{
 			self thread mechz_flame_damage(damageweapon, player, pct_damage);

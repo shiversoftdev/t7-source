@@ -576,7 +576,7 @@ function function_97b4bacb(zombify, var_a621e856)
 */
 function function_15c7079(index)
 {
-	return "skipto" + index + "_";
+	return ("skipto" + index) + "_";
 }
 
 /*
@@ -594,11 +594,11 @@ private function function_4542e087()
 	{
 		return;
 	}
-	total_percentage = level.var_a9e78bf7["levelonezombies"] + level.var_a9e78bf7["leveltwozombies"] + level.var_a9e78bf7["levelthreezombies"];
+	total_percentage = (level.var_a9e78bf7["levelonezombies"] + level.var_a9e78bf7["leveltwozombies"]) + level.var_a9e78bf7["levelthreezombies"];
 	/#
 		assert(total_percentage == 100, "" + level.var_a9e78bf7[""]);
 	#/
-	total_percentage = level.var_a9e78bf7["walkpercent"] + level.var_a9e78bf7["runpercent"] + level.var_a9e78bf7["sprintpercent"];
+	total_percentage = (level.var_a9e78bf7["walkpercent"] + level.var_a9e78bf7["runpercent"]) + level.var_a9e78bf7["sprintpercent"];
 	/#
 		assert(total_percentage == 100, "" + level.var_a9e78bf7[""]);
 	#/
@@ -625,7 +625,7 @@ private function bzm_overridelocomotion(var_68d35041, var_dbe80e3b, var_5a7ff9f0
 	{
 		return;
 	}
-	total_percentage = var_68d35041 + var_dbe80e3b + var_5a7ff9f0;
+	total_percentage = (var_68d35041 + var_dbe80e3b) + var_5a7ff9f0;
 	/#
 		assert(total_percentage == 100, "" + level.var_a9e78bf7[""]);
 	#/

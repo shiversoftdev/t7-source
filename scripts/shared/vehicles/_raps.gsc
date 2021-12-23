@@ -185,7 +185,7 @@ function state_emped_update(params)
 	{
 		forward = vectornormalize((self getvelocity()[0], self getvelocity()[1], 0));
 		side = vectorcross(forward, (0, 0, 1)) * math::randomsign();
-		self setvehgoalpos(self.origin + side * 500 + forward * randomfloat(400), 0, 0);
+		self setvehgoalpos((self.origin + (side * 500)) + (forward * randomfloat(400)), 0, 0);
 		wait(0.6);
 		self clearvehgoalpos();
 		self util::waittill_any_timeout(1.5, "veh_collision", "change_state", "death");
@@ -321,7 +321,7 @@ function state_combat_update(params)
 		targetpos = raps_get_target_position();
 		if(isdefined(targetpos))
 		{
-			if(distancesquared(self.origin, targetpos) > 400 * 400 && self isposinclaimedlocation(targetpos))
+			if(distancesquared(self.origin, targetpos) > (400 * 400) && self isposinclaimedlocation(targetpos))
 			{
 				pixbeginevent("_raps::state_combat_update 2");
 				queryresult = positionquery_source_navigation(targetpos, 0, self.settings.max_move_dist, self.settings.max_move_dist, self.radius, self);
@@ -338,7 +338,7 @@ function state_combat_update(params)
 						}
 						point._scoredebug[""] = mapfloat(0, 200, 0, -200, distance(point.origin, queryresult.origin));
 					#/
-					point.score = point.score + mapfloat(0, 200, 0, -200, distance(point.origin, queryresult.origin));
+					point.score = point.score + (mapfloat(0, 200, 0, -200, distance(point.origin, queryresult.origin)));
 					/#
 						if(!isdefined(point._scoredebug))
 						{
@@ -346,7 +346,7 @@ function state_combat_update(params)
 						}
 						point._scoredebug[""] = mapfloat(50, 200, 0, -200, abs(point.origin[2] - queryresult.origin[2]));
 					#/
-					point.score = point.score + mapfloat(50, 200, 0, -200, abs(point.origin[2] - queryresult.origin[2]));
+					point.score = point.score + (mapfloat(50, 200, 0, -200, abs(point.origin[2] - queryresult.origin[2])));
 					if(point.inclaimedlocation === 1)
 					{
 						/#
@@ -441,7 +441,7 @@ function prevent_stuck()
 	previous_origin = undefined;
 	while(true)
 	{
-		if(isdefined(previous_origin) && distancesquared(previous_origin, self.origin) < 0.1 * 0.1 && (!(isdefined(level.bzm_worldpaused) && level.bzm_worldpaused)))
+		if(isdefined(previous_origin) && distancesquared(previous_origin, self.origin) < (0.1 * 0.1) && (!(isdefined(level.bzm_worldpaused) && level.bzm_worldpaused)))
 		{
 			count++;
 		}
@@ -473,7 +473,7 @@ function check_detonation_dist(origin, enemy)
 	{
 		enemy_look_dir_offst = anglestoforward(enemy.angles) * 30;
 		targetpoint = enemy.origin + enemy_look_dir_offst;
-		if(distance2dsquared(targetpoint, origin) < self.settings.detonation_distance * self.settings.detonation_distance && (abs(targetpoint[2] - origin[2]) < self.settings.detonation_distance || abs(targetpoint[2] - 20 - origin[2]) < self.settings.detonation_distance))
+		if(distance2dsquared(targetpoint, origin) < (self.settings.detonation_distance * self.settings.detonation_distance) && ((abs(targetpoint[2] - origin[2])) < self.settings.detonation_distance || (abs((targetpoint[2] - 20) - origin[2])) < self.settings.detonation_distance))
 		{
 			return 1;
 		}
@@ -598,23 +598,23 @@ function detonation_monitor()
 				}
 			}
 			disttoenemysquared = distancesquared(self.origin, self.enemy.origin);
-			if(disttoenemysquared < 250 * 250)
+			if(disttoenemysquared < (250 * 250))
 			{
-				if(lastdisttoenemysquared > 250 * 250 && (!(isdefined(self.servershortout) && self.servershortout)) && isdefined(self.sndalias["vehRapsClose250"]))
+				if(lastdisttoenemysquared > (250 * 250) && (!(isdefined(self.servershortout) && self.servershortout)) && isdefined(self.sndalias["vehRapsClose250"]))
 				{
 					self playsoundtoplayer(self.sndalias["vehRapsClose250"], self.enemy);
 				}
 			}
-			else if(disttoenemysquared < 750 * 750)
+			else if(disttoenemysquared < (750 * 750))
 			{
-				if(lastdisttoenemysquared > 750 * 750 && (!(isdefined(self.servershortout) && self.servershortout)) && isdefined(self.sndalias["vehRapsTargeting"]))
+				if(lastdisttoenemysquared > (750 * 750) && (!(isdefined(self.servershortout) && self.servershortout)) && isdefined(self.sndalias["vehRapsTargeting"]))
 				{
 					self playsoundtoplayer(self.sndalias["vehRapsTargeting"], self.enemy);
 				}
 			}
-			else if(disttoenemysquared < 1500 * 1500)
+			else if(disttoenemysquared < (1500 * 1500))
 			{
-				if(lastdisttoenemysquared > 1500 * 1500 && (!(isdefined(self.servershortout) && self.servershortout)) && isdefined(self.sndalias["vehRapsClose1500"]))
+				if(lastdisttoenemysquared > (1500 * 1500) && (!(isdefined(self.servershortout) && self.servershortout)) && isdefined(self.sndalias["vehRapsClose1500"]))
 				{
 					self playsoundtoplayer(self.sndalias["vehRapsClose1500"], self.enemy);
 				}
@@ -623,7 +623,7 @@ function detonation_monitor()
 			{
 				lastdisttoenemysquared = disttoenemysquared;
 			}
-			lastdisttoenemysquared = lastdisttoenemysquared + 10 * 10;
+			lastdisttoenemysquared = lastdisttoenemysquared + (10 * 10);
 		}
 	}
 }
@@ -668,10 +668,10 @@ function try_detonate()
 	}
 	jump_time = 0.5;
 	cur_time = gettime();
-	can_jump = cur_time - self.last_jump_chance_time > 1500;
+	can_jump = (cur_time - self.last_jump_chance_time) > 1500;
 	if(can_jump)
 	{
-		predicted_origin = self.origin + self getvelocity() * jump_time;
+		predicted_origin = self.origin + (self getvelocity() * jump_time);
 	}
 	if(isdefined(predicted_origin) && check_detonation_dist(predicted_origin, self.enemy))
 	{
@@ -680,7 +680,7 @@ function try_detonate()
 		{
 			self.last_jump_chance_time = cur_time;
 			jump_chance = self.settings.jump_chance;
-			if(self.enemy.origin[2] - 20 > predicted_origin[2])
+			if((self.enemy.origin[2] - 20) > predicted_origin[2])
 			{
 				jump_chance = self.settings.jump_chance * 2;
 			}
@@ -716,7 +716,7 @@ function try_detonate()
 				{
 					continue;
 				}
-				if(distancesquared(player.origin, self.origin) < self.settings.detonation_distance * self.settings.detonation_distance)
+				if(distancesquared(player.origin, self.origin) < (self.settings.detonation_distance * self.settings.detonation_distance))
 				{
 					trace = bullettrace(self.origin + (0, 0, self.radius), player.origin + (0, 0, self.radius), 1, self);
 					if(trace["fraction"] === 1 || isdefined(trace["entity"]))
@@ -774,7 +774,7 @@ function raps_get_target_position()
 	}
 	if(isdefined(self.enemy))
 	{
-		if(distancesquared(target_pos, target_pos_onnavmesh) > self.settings.detonation_distance * 0.9 * self.settings.detonation_distance * 0.9)
+		if(distancesquared(target_pos, target_pos_onnavmesh) > (self.settings.detonation_distance * 0.9) * (self.settings.detonation_distance * 0.9))
 		{
 			self setpersonalthreatbias(self.enemy, -2000, 5);
 		}
@@ -783,7 +783,7 @@ function raps_get_target_position()
 	{
 		enemy_vel_offset = enemy getvelocity() * 0.5;
 		enemy_look_dir_offset = anglestoforward(enemy.angles);
-		if(distance2dsquared(self.origin, enemy.origin) > 500 * 500)
+		if(distance2dsquared(self.origin, enemy.origin) > (500 * 500))
 		{
 			enemy_look_dir_offset = enemy_look_dir_offset * 110;
 		}
@@ -831,7 +831,7 @@ function path_update_interrupt()
 	{
 		if(isdefined(self.current_pathto_pos))
 		{
-			if(distance2dsquared(self.current_pathto_pos, self.goalpos) > self.goalradius * self.goalradius)
+			if(distance2dsquared(self.current_pathto_pos, self.goalpos) > (self.goalradius * self.goalradius))
 			{
 				wait(0.5);
 				self notify(#"near_goal");
@@ -839,7 +839,7 @@ function path_update_interrupt()
 			targetpos = raps_get_target_position();
 			if(isdefined(targetpos))
 			{
-				if(distancesquared(self.origin, targetpos) > 400 * 400)
+				if(distancesquared(self.origin, targetpos) > (400 * 400))
 				{
 					repath_range = self.settings.repath_range * 2;
 					wait(0.1);
@@ -848,7 +848,7 @@ function path_update_interrupt()
 				{
 					repath_range = self.settings.repath_range;
 				}
-				if(distance2dsquared(self.current_pathto_pos, targetpos) > repath_range * repath_range)
+				if(distance2dsquared(self.current_pathto_pos, targetpos) > (repath_range * repath_range))
 				{
 					if(isdefined(self.sndalias) && isdefined(self.sndalias["direction"]))
 					{
@@ -905,7 +905,7 @@ function path_update_interrupt()
 function collision_fx(normal)
 {
 	tilted = normal[2] < 0.6;
-	fx_origin = self.origin - normal * (tilted ? 28 : 10);
+	fx_origin = self.origin - (normal * (tilted ? 28 : 10));
 	if(isdefined(self.sndalias["vehRapsCollision"]))
 	{
 		self playsound(self.sndalias["vehRapsCollision"]);
@@ -934,7 +934,7 @@ function nudge_collision()
 		self setangularvelocity(ang_vel);
 		if(isalive(self) && vectordot(normal, (0, 0, 1)) < 0.5)
 		{
-			self setvehvelocity(self.velocity + normal * 400);
+			self setvehvelocity(self.velocity + (normal * 400));
 			self collision_fx(normal);
 		}
 	}
@@ -1003,7 +1003,7 @@ function raps_callback_damage(einflictor, eattacker, idamage, idflags, smeansofd
 	{
 		if(eattacker != self && isdefined(vdir) && lengthsquared(vdir) > 0.1 && (!isdefined(eattacker) || eattacker.team === self.team) && (!isdefined(einflictor) || einflictor.team === self.team))
 		{
-			self setvehvelocity(self.velocity + vectornormalize(vdir) * 300);
+			self setvehvelocity(self.velocity + (vectornormalize(vdir) * 300));
 			return 1;
 		}
 	}
@@ -1069,7 +1069,7 @@ function slow_raps(trigger)
 			self setspeedimmediate(trigger.script_int, 200, 200);
 		}
 	}
-	else if(isdefined(self._override_raps_combat_speed) && self._override_raps_combat_speed < 0.5 * self.settings.defaultmovespeed)
+	else if(isdefined(self._override_raps_combat_speed) && self._override_raps_combat_speed < (0.5 * self.settings.defaultmovespeed))
 	{
 		self setspeed(self._override_raps_combat_speed);
 	}

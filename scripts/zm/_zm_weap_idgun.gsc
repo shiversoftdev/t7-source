@@ -155,7 +155,7 @@ function function_2bd571b9()
 	while(true)
 	{
 		self waittill(#"projectile_impact", weapon, position, radius, attacker, normal);
-		position = function_6fbe2b2c(position + normal * 20);
+		position = function_6fbe2b2c(position + (normal * 20));
 		if(is_idgun_damage(weapon))
 		{
 			var_12edbbc6 = radius * 1.8;

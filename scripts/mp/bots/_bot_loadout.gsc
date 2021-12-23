@@ -417,7 +417,7 @@ function on_bot_connect()
 		return;
 	}
 	wait(0.1);
-	if(self getentitynumber() % 2 == 0)
+	if((self getentitynumber() % 2) == 0)
 	{
 		wait(0.05);
 	}
@@ -609,7 +609,7 @@ function choose_weapon(weaponclass, items)
 		{
 			break;
 		}
-		start = start + 1 % items.size;
+		start = (start + 1) % items.size;
 	}
 	self.claimed_items[self.claimed_items.size] = weapon;
 	self botclassadditem(weaponclass, weapon);
@@ -669,7 +669,7 @@ function choose_weapon_option(weaponclass, optiontype, primary)
 	maxprob = level.botweaponoptionsprob[optiontype][numoptions - 1];
 	if(!level.systemlink && self.pers["rank"] < 20)
 	{
-		maxprob = maxprob + 4 * maxprob * 20 - self.pers["rank"] / 20;
+		maxprob = maxprob + (4 * maxprob) * ((20 - self.pers["rank"]) / 20);
 	}
 	rnd = randomint(int(maxprob));
 	for(i = 0; i < numoptions; i++)

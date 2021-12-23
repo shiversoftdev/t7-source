@@ -462,7 +462,7 @@ function function_ef4c8536(localclientnum, var_2646032, var_72af98b3)
 	t = 0;
 	while(t <= var_72af98b3 && isdefined(self))
 	{
-		self.var_90b6339d = min(self.var_90b6339d, 1 - t / var_72af98b3);
+		self.var_90b6339d = min(self.var_90b6339d, 1 - (t / var_72af98b3));
 		filter::set_filter_blood_spatter_reveal(self, 5, self.var_90b6339d, 0);
 		wait(0.05);
 		t = t + 0.05;
@@ -713,7 +713,7 @@ function function_7d675424(type)
 	{
 		up = anglestoup(self.angles);
 		forward = anglestoforward(self.angles);
-		location = self.origin + 12 * forward;
+		location = self.origin + (12 * forward);
 		return location;
 	}
 	return undefined;
@@ -790,8 +790,8 @@ function function_10dcd1d5(var_4cc12170)
 		{
 			kiosk.fake_ent = [];
 		}
-		kiosk.var_80eeb471 = var_4cc12170 + "_plr_" + kiosk.origin;
-		kiosk.var_39a60f4a = var_4cc12170 + "_crs_" + kiosk.origin;
+		kiosk.var_80eeb471 = (var_4cc12170 + "_plr_") + kiosk.origin;
+		kiosk.var_39a60f4a = (var_4cc12170 + "_crs_") + kiosk.origin;
 		level.var_dc56ce87[kiosk.var_80eeb471] = kiosk;
 		level.var_104eabe[kiosk.var_39a60f4a] = kiosk;
 		clientfield::register("world", kiosk.var_80eeb471, 1, 4, "int", &function_fa828651, 0, 0);
@@ -881,7 +881,7 @@ function update_kiosk_state(localclientnum, oldval, newval, bnewent, binitialsna
 	{
 		self.beast_kiosk_fx[localclientnum] = [];
 	}
-	if(newval & 1 << n_entnum)
+	if(newval & (1 << n_entnum))
 	{
 		if(isdefined(self.beast_kiosk_fx[localclientnum]["disabled"]))
 		{
@@ -1348,7 +1348,7 @@ function function_4778b020(lo, hi)
 function function_4b2bbece(var_3ae5c24, var_1bfa7cb7, frac)
 {
 	frac0 = 1 - frac;
-	color = (frac0 * var_3ae5c24[0] + frac * var_1bfa7cb7[0], frac0 * var_3ae5c24[1] + frac * var_1bfa7cb7[1], frac0 * var_3ae5c24[2] + frac * var_1bfa7cb7[2]);
+	color = ((frac0 * var_3ae5c24[0]) + (frac * var_1bfa7cb7[0]), (frac0 * var_3ae5c24[1]) + (frac * var_1bfa7cb7[1]), (frac0 * var_3ae5c24[2]) + (frac * var_1bfa7cb7[2]));
 	return color;
 }
 

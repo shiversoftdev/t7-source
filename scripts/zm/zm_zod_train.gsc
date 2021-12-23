@@ -482,19 +482,19 @@ function debug_draw_paths()
 				for(i = 0; i < node_set.size; i++)
 				{
 					node = node_set[i];
-					node_pos = node.origin + vectorscale((0, 0, -1), 95);
+					node_pos = node.origin + (vectorscale((0, 0, -1), 95));
 					debugstar(node_pos, 1, (1, 0, 0));
 					if(isdefined(node.target))
 					{
 						node_target = getvehiclenode(node.target, "");
-						node_target_pos = node_target.origin + vectorscale((0, 0, -1), 70);
+						node_target_pos = node_target.origin + (vectorscale((0, 0, -1), 70));
 						line(node_pos, node_target_pos, (0, 1, 0), 0, 1);
 						debugstar(node_target_pos, 1, (0, 1, 0));
 					}
 					if(isdefined(node.target2))
 					{
 						var_dc338423 = getvehiclenode(node.target2, "");
-						var_e9bd3ba0 = var_dc338423.origin + vectorscale((0, 0, -1), 120);
+						var_e9bd3ba0 = var_dc338423.origin + (vectorscale((0, 0, -1), 120));
 						line(node_pos, var_e9bd3ba0, (0, 0, 1), 0, 1);
 						debugstar(var_e9bd3ba0, 1, (0, 0, 1));
 					}
@@ -505,7 +505,7 @@ function debug_draw_paths()
 			{
 				if(isdefined(ai.locked_in_train) && ai.locked_in_train)
 				{
-					print3d(ai.origin + vectorscale((0, 0, 1), 100), "" + self.m_a_zombies_locked_in.size + "", vectorscale((0, 1, 0), 255), 1);
+					print3d(ai.origin + vectorscale((0, 0, 1), 100), ("" + self.m_a_zombies_locked_in.size) + "", vectorscale((0, 1, 0), 255), 1);
 				}
 			}
 			wait(0.05);
@@ -536,22 +536,22 @@ function function_35ac589d()
 		var_6ffe9d93 = 240;
 		var_4dc5a359 = 12;
 		origin = self.var_36e768e4.origin;
-		origin = origin + vectorscale((0, 0, -1), 90);
+		origin = origin + (vectorscale((0, 0, -1), 90));
 		forward = anglestoforward(self.var_36e768e4.angles);
 		right = anglestoright(self.var_36e768e4.angles);
 		if(!self.m_b_facing_forward)
 		{
 			forward = -1 * forward;
 		}
-		var_bba032ca = origin + var_6ffe9d93 * forward;
+		var_bba032ca = origin + (var_6ffe9d93 * forward);
 		/#
 			line(origin, var_bba032ca, (1, 0, 0), 1, 1, duration);
 		#/
 		/#
-			line(var_bba032ca, var_bba032ca - var_4dc5a359 * forward - var_4dc5a359 * right, (1, 0, 0), 1, 1, duration);
+			line(var_bba032ca, (var_bba032ca - (var_4dc5a359 * forward)) - (var_4dc5a359 * right), (1, 0, 0), 1, 1, duration);
 		#/
 		/#
-			line(var_bba032ca, var_bba032ca - var_4dc5a359 * forward + var_4dc5a359 * right, (1, 0, 0), 1, 1, duration);
+			line(var_bba032ca, (var_bba032ca - (var_4dc5a359 * forward)) + (var_4dc5a359 * right), (1, 0, 0), 1, 1, duration);
 		#/
 		foreach(var_f8b1571, e_door in self.m_a_mdl_doors)
 		{
@@ -840,7 +840,7 @@ function function_eb9ee200(spawnpos)
 			continue;
 		}
 		porigin = e_player.origin;
-		if(abs(porigin[2] - spawnpos[2]) > 60)
+		if((abs(porigin[2] - spawnpos[2])) > 60)
 		{
 			continue;
 		}
@@ -930,17 +930,17 @@ function function_a9acf9e2()
 					}
 					case 1:
 					{
-						spawnpos = spawnpos + vectorscale((-1, -1, 0), 36);
+						spawnpos = spawnpos + (vectorscale((-1, -1, 0), 36));
 						break;
 					}
 					case 2:
 					{
-						spawnpos = spawnpos + vectorscale((1, -1, 0), 36);
+						spawnpos = spawnpos + (vectorscale((1, -1, 0), 36));
 						break;
 					}
 					case 3:
 					{
-						spawnpos = spawnpos + vectorscale((-1, 1, 0), 36);
+						spawnpos = spawnpos + (vectorscale((-1, 1, 0), 36));
 						break;
 					}
 					case 4:
@@ -1149,7 +1149,7 @@ function initialize(e_train)
 			continue;
 		}
 		/#
-			iprintlnbold("" + zm_zod_util::vec_to_string(e_ent.origin) + "");
+			iprintlnbold(("" + zm_zod_util::vec_to_string(e_ent.origin)) + "");
 		#/
 	}
 	function_6f6ab7a4();
@@ -1157,7 +1157,7 @@ function initialize(e_train)
 		if(!isdefined(self.m_e_volume))
 		{
 			/#
-				assertmsg("" + zm_zod_util::vec_to_string(self.var_36e768e4.origin) + "");
+				assertmsg(("" + zm_zod_util::vec_to_string(self.var_36e768e4.origin)) + "");
 			#/
 		}
 	#/
@@ -1578,10 +1578,10 @@ function run_gate(e_gate, a_jump_nodes)
 {
 	nd_start = self.var_c2e30cf8[e_gate.script_string].start_node;
 	v_open = e_gate.origin;
-	v_closed = v_open + anglestoforward(nd_start.angles) * 96;
+	v_closed = v_open + (anglestoforward(nd_start.angles) * 96);
 	if(self.var_c2e30cf8[e_gate.script_string].door_side == "right")
 	{
-		v_closed = v_open - anglestoforward(nd_start.angles) * 96;
+		v_closed = v_open - (anglestoforward(nd_start.angles) * 96);
 	}
 	b_open = 1;
 	while(true)
@@ -1630,9 +1630,9 @@ function get_door_open_pos(e_door)
 {
 	if(e_door.script_string == "front_door")
 	{
-		return e_door.script_origin.origin - anglestoforward(e_door.script_origin.angles) * 100;
+		return e_door.script_origin.origin - (anglestoforward(e_door.script_origin.angles) * 100);
 	}
-	return e_door.script_origin.origin + anglestoforward(e_door.script_origin.angles) * 100;
+	return e_door.script_origin.origin + (anglestoforward(e_door.script_origin.angles) * 100);
 }
 
 /*
@@ -1890,7 +1890,7 @@ function recalc_zombies_locked_in_train()
 			add_zombie_locked_in(zombie);
 		}
 		n_counter++;
-		if(n_counter % 3 == 0)
+		if((n_counter % 3) == 0)
 		{
 			util::wait_network_frame();
 		}
@@ -2251,7 +2251,7 @@ function get_zombies_locked_in()
 */
 function get_time_since_last_jumper()
 {
-	return float(gettime() - self.m_n_last_jumper_time) / 1000;
+	return (float(gettime() - self.m_n_last_jumper_time)) / 1000;
 }
 
 /*
@@ -2491,23 +2491,23 @@ function function_876255()
 		{
 			case "slums":
 			{
-				var_112666d8 = 1;
+				n_station = 1;
 				break;
 			}
 			case "theater":
 			{
-				var_112666d8 = 2;
+				n_station = 2;
 				break;
 			}
 			case "canal":
 			{
-				var_112666d8 = 3;
+				n_station = 3;
 				break;
 			}
 		}
 		foreach(var_66d97f79, var_19166ffe in var_6609d101)
 		{
-			var_19166ffe clientfield::set("train_map_light", var_112666d8);
+			var_19166ffe clientfield::set("train_map_light", n_station);
 		}
 		self flag::wait_till("moving");
 		foreach(var_3e5866ff, var_19166ffe in var_6609d101)
@@ -2622,11 +2622,11 @@ private autoexec function czmtrain()
 */
 function in_range_2d(v1, v2, range, vert_allowance)
 {
-	if(abs(v1[2] - v2[2]) > vert_allowance)
+	if((abs(v1[2] - v2[2])) > vert_allowance)
 	{
 		return 0;
 	}
-	return distance2dsquared(v1, v2) < range * range;
+	return distance2dsquared(v1, v2) < (range * range);
 }
 
 /*
@@ -2761,7 +2761,7 @@ function is_full()
 */
 function is_ready_for_jumper()
 {
-	return [[ level.o_zod_train ]]->get_time_since_last_jumper() > 10;
+	return ([[ level.o_zod_train ]]->get_time_since_last_jumper()) > 10;
 }
 
 /*

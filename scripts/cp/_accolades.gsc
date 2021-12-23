@@ -72,7 +72,7 @@ function __init__()
 		callback::on_connect(&on_player_connect);
 		callback::on_spawned(&on_player_spawned);
 		callback::on_disconnect(&on_player_disconnect);
-		level.var_f8718de3 = "MISSION_" + toupper(level.mission_name) + "_";
+		level.var_f8718de3 = ("MISSION_" + toupper(level.mission_name)) + "_";
 		level.var_d8f32e57 = int(tablelookup("gamedata/stats/cp/statsmilestones1.csv", 4, level.var_f8718de3 + "UNTOUCHED", 0));
 		register(level.var_f8718de3 + "UNTOUCHED", undefined, 1);
 		register(level.var_f8718de3 + "SCORE");
@@ -141,9 +141,9 @@ function function_50f58bd0(str_accolade, var_a3dc571a)
 	Parameters: 2
 	Flags: Linked
 */
-function function_464d3607(var_36b04a4a, var_3180ccbb)
+function function_464d3607(var_36b04a4a, is_state)
 {
-	if(isdefined(var_3180ccbb) && var_3180ccbb)
+	if(isdefined(is_state) && is_state)
 	{
 		return self getdstat("PlayerStatsByMap", level.var_deb20b04, "accolades", var_36b04a4a, "state");
 	}
@@ -159,9 +159,9 @@ function function_464d3607(var_36b04a4a, var_3180ccbb)
 	Parameters: 4
 	Flags: Linked
 */
-function function_ce95384b(var_36b04a4a, var_3180ccbb, value, var_b3982c20)
+function function_ce95384b(var_36b04a4a, is_state, value, var_b3982c20)
 {
-	if(isdefined(var_3180ccbb) && var_3180ccbb)
+	if(isdefined(is_state) && is_state)
 	{
 		self function_e2d5f2db(var_36b04a4a, value);
 		self setdstat("PlayerStatsByMap", level.var_deb20b04, "accolades", var_36b04a4a, "state", value);
@@ -259,7 +259,7 @@ function function_8992915e(var_36b04a4a, state)
 */
 function function_86373aa7(var_36b04a4a, value)
 {
-	self setnoncheckpointdata("accolades" + var_36b04a4a + "value", value);
+	self setnoncheckpointdata(("accolades" + var_36b04a4a) + "value", value);
 }
 
 /*
@@ -273,7 +273,7 @@ function function_86373aa7(var_36b04a4a, value)
 */
 function function_e2d5f2db(var_36b04a4a, state)
 {
-	self setnoncheckpointdata("accolades" + var_36b04a4a + "state", state);
+	self setnoncheckpointdata(("accolades" + var_36b04a4a) + "state", state);
 }
 
 /*
@@ -287,7 +287,7 @@ function function_e2d5f2db(var_36b04a4a, state)
 */
 function function_4f34644b(var_36b04a4a)
 {
-	return self getnoncheckpointdata("accolades" + var_36b04a4a + "value");
+	return self getnoncheckpointdata(("accolades" + var_36b04a4a) + "value");
 }
 
 /*
@@ -301,7 +301,7 @@ function function_4f34644b(var_36b04a4a)
 */
 function function_31381fa7(var_36b04a4a)
 {
-	return self getnoncheckpointdata("accolades" + var_36b04a4a + "state");
+	return self getnoncheckpointdata(("accolades" + var_36b04a4a) + "state");
 }
 
 /*
@@ -315,8 +315,8 @@ function function_31381fa7(var_36b04a4a)
 */
 function function_cc6b3591(var_36b04a4a)
 {
-	self clearnoncheckpointdata("accolades" + var_36b04a4a + "state");
-	self clearnoncheckpointdata("accolades" + var_36b04a4a + "value");
+	self clearnoncheckpointdata(("accolades" + var_36b04a4a) + "state");
+	self clearnoncheckpointdata(("accolades" + var_36b04a4a) + "value");
 }
 
 /*
@@ -571,7 +571,7 @@ function increment(str_accolade, n_val = 1, var_50f65478)
 		}
 		if(function_3a7fd23a(accolade.index) != 0)
 		{
-			if(str_accolade == level.var_f8718de3 + "SCORE")
+			if(str_accolade == (level.var_f8718de3 + "SCORE"))
 			{
 				accolade.current_value = accolade.current_value + n_val;
 				self function_92050191(accolade.index, accolade.current_value);
@@ -1015,7 +1015,7 @@ function function_1ea616fe()
 		var_87b86b14 = newclienthudelem(self);
 		foreach(str_accolade, s_accolade in level.accolades)
 		{
-			if(var_c74eaab3 % 7 == 6)
+			if((var_c74eaab3 % 7) == 6)
 			{
 				var_ab872594.x = x + 2;
 				var_ab872594.y = y + 2;
@@ -1059,14 +1059,14 @@ function function_1ea616fe()
 				var_16bed2ea = self function_520227e6(s_accolade.index) + "";
 				continue;
 			}
-			var_c06a516a = var_c06a516a + str_accolade + "";
+			var_c06a516a = var_c06a516a + (str_accolade + "");
 			var_1c70e53e = var_1c70e53e + self function_4f9d8dec(str_accolade).current_value;
 			if(isdefined(self function_4f9d8dec(str_accolade).is_completed) && self function_4f9d8dec(str_accolade).is_completed)
 			{
 				var_1c70e53e = var_1c70e53e + "";
 			}
 			var_1c70e53e = var_1c70e53e + "";
-			var_16bed2ea = var_16bed2ea + self function_520227e6(s_accolade.index) + "";
+			var_16bed2ea = var_16bed2ea + (self function_520227e6(s_accolade.index) + "");
 			var_c74eaab3++;
 		}
 		var_ab872594.x = x + 2;
@@ -1143,7 +1143,7 @@ function function_2d7075c8()
 		adddebugcommand("");
 		for(i = 0; i < level.accolades.size; i++)
 		{
-			adddebugcommand("" + i + "" + i + "" + i + "");
+			adddebugcommand(((((("" + i) + "") + i) + "") + i) + "");
 		}
 	#/
 }

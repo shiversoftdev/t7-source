@@ -128,9 +128,9 @@ function setupdevgui()
 			{
 				continue;
 			}
-			name = arena.name + "" + var_9ba2319f + "" + var_9c0bafd1 + "" + index;
+			name = (((((arena.name + "") + var_9ba2319f) + "") + var_9c0bafd1) + "") + index;
 			index++;
-			cmd = rootmenu + name + "" + arena.name + "";
+			cmd = (((rootmenu + name) + "") + arena.name) + "";
 			adddebugcommand(cmd);
 			var_9ba2319f = var_9ba2319f + level.doa.rules.var_88c0b67b;
 			var_9c0bafd1 = var_9c0bafd1 + level.doa.rules.var_88c0b67b;
@@ -138,7 +138,7 @@ function setupdevgui()
 		if(isdefined(world.var_e5cf1b41))
 		{
 			level.doa.dev_level_skipped = world.var_e5cf1b41 * 4;
-			doa_utility::debugmsg("" + world.var_e5cf1b41 + "" + level.doa.dev_level_skipped);
+			doa_utility::debugmsg((("" + world.var_e5cf1b41) + "") + level.doa.dev_level_skipped);
 			flag::clear("");
 			setdvar("", "");
 			wait(1);
@@ -237,7 +237,7 @@ function function_a4d5519a(pickup)
 	angles = (0, yaw, 0);
 	self setplayerangles(angles);
 	self.doa.var_3be905bb = 1;
-	doa_utility::debugmsg("Bot is boosting at pickup:" + pickup.def.gdtname + ".  Boosts Left:" + self.doa.boosters);
+	doa_utility::debugmsg((("Bot is boosting at pickup:" + pickup.def.gdtname) + ".  Boosts Left:") + self.doa.boosters);
 }
 
 /*
@@ -511,7 +511,7 @@ function devguithink()
 			wait(0.5);
 			continue;
 		}
-		doa_utility::debugmsg("Devgui Cmd-->" + cmd);
+		doa_utility::debugmsg(("Devgui Cmd-->") + cmd);
 		switch(cmd)
 		{
 			case "outro":
@@ -586,7 +586,7 @@ function devguithink()
 				{
 					level.var_cee29ae7 = 0;
 				}
-				doa_utility::debugmsg("camera debug FIX ARENA CAM LOC [" + (level.var_cee29ae7 == 1 ? "ON" : "OFF") + "]");
+				doa_utility::debugmsg(("camera debug FIX ARENA CAM LOC [" + (level.var_cee29ae7 == 1 ? "ON" : "OFF")) + "]");
 				level clientfield::set("debugCamera", level.var_cee29ae7);
 				level notify(#"hash_da8786df");
 				if(level.var_cee29ae7 == 1)
@@ -601,7 +601,7 @@ function devguithink()
 			case "fixedCamOn":
 			{
 				level.var_bbb7743c = !level.var_bbb7743c;
-				doa_utility::debugmsg("camera FIX CAM[" + (level.var_bbb7743c ? "ON" : "OFF") + "]");
+				doa_utility::debugmsg(("camera FIX CAM[" + (level.var_bbb7743c ? "ON" : "OFF")) + "]");
 				level clientfield::set("fixCameraOn", (level.var_bbb7743c ? 1 : 0));
 				break;
 			}
@@ -694,7 +694,7 @@ function devguithink()
 			case "fate":
 			{
 				type = getdvarint("scr_spawn_pickup");
-				doa_utility::debugmsg("Fating you ->" + type);
+				doa_utility::debugmsg(("Fating you ->") + type);
 				level.doa.fates_have_been_chosen = 1;
 				players = namespace_831a4a7c::function_5eb6e4d1();
 				for(i = 0; i < players.size; i++)
@@ -729,7 +729,7 @@ function devguithink()
 			case "arena":
 			{
 				world.var_e5cf1b41 = namespace_3ca3c537::function_5835533a(getdvarstring("scr_spawn_room_name"));
-				doa_utility::debugmsg("Advance To Arena =" + getdvarstring("scr_spawn_room_name") + " idx=" + world.var_e5cf1b41);
+				doa_utility::debugmsg((("Advance To Arena =" + getdvarstring("scr_spawn_room_name")) + " idx=") + world.var_e5cf1b41);
 				setdvar("scr_spawn_room_name", "");
 				adddebugcommand("map_restart");
 				break;
@@ -761,9 +761,9 @@ function devguithink()
 						}
 					}
 				}
-				level.doa.zombie_move_speed = level.doa.rules.var_e626be31 + round_number * level.doa.var_c9e1c854;
-				level.doa.zombie_health = level.doa.rules.var_6fa02512 + round_number * level.doa.zombie_health_inc;
-				doa_utility::debugmsg("Warp To Arena =" + getdvarstring("scr_spawn_room_name") + " idx=" + level.doa.var_b5c260bb);
+				level.doa.zombie_move_speed = level.doa.rules.var_e626be31 + (round_number * level.doa.var_c9e1c854);
+				level.doa.zombie_health = level.doa.rules.var_6fa02512 + (round_number * level.doa.zombie_health_inc);
+				doa_utility::debugmsg((("Warp To Arena =" + getdvarstring("scr_spawn_room_name")) + " idx=") + level.doa.var_b5c260bb);
 				setdvar("scr_spawn_room_name", "");
 				doa_utility::function_1ced251e();
 				break;
@@ -868,7 +868,7 @@ function function_5e6b8376(origin, radius, time, color = (0, 1, 0))
 		hemires = circleres / 2;
 		circleinc = 360 / circleres;
 		circleres++;
-		timer = gettime() + time * 1000;
+		timer = gettime() + (time * 1000);
 		while(gettime() < timer)
 		{
 			plotpoints = [];
@@ -878,7 +878,7 @@ function function_5e6b8376(origin, radius, time, color = (0, 1, 0))
 			angletoplayer = vectortoangles(origin - players[0].origin);
 			for(i = 0; i < circleres; i++)
 			{
-				plotpoints[plotpoints.size] = origin + vectorscale(anglestoforward(angletoplayer + (rad, 90, 0)), radius) + vectorscale((0, 0, 1), 12);
+				plotpoints[plotpoints.size] = (origin + (vectorscale(anglestoforward(angletoplayer + (rad, 90, 0)), radius))) + vectorscale((0, 0, 1), 12);
 				rad = rad + circleinc;
 			}
 			plotpoints(plotpoints, color, hangtime);
@@ -935,8 +935,8 @@ function drawcylinder(pos, rad, height, server_frames = 1, color = (0, 0, 0))
 		{
 			for(r = 0; r < 20; r++)
 			{
-				theta = r / 20 * 360;
-				theta2 = r + 1 / 20 * 360;
+				theta = (r / 20) * 360;
+				theta2 = ((r + 1) / 20) * 360;
 				line(pos + (cos(theta) * currad, sin(theta) * currad, 0), pos + (cos(theta2) * currad, sin(theta2) * currad, 0), color);
 				line(pos + (cos(theta) * currad, sin(theta) * currad, curheight), pos + (cos(theta2) * currad, sin(theta2) * currad, curheight), color);
 				line(pos + (cos(theta) * currad, sin(theta) * currad, 0), pos + (cos(theta) * currad, sin(theta) * currad, curheight), color);
@@ -970,8 +970,8 @@ function debugorigin()
 			left = vectorscale(right, -10);
 			right = vectorscale(right, 10);
 			line(self.origin, self.origin + forwardfar, (0.9, 0.7, 0.6), 0.9);
-			line(self.origin + forwardfar, self.origin + forwardclose + right, (0.9, 0.7, 0.6), 0.9);
-			line(self.origin + forwardfar, self.origin + forwardclose + left, (0.9, 0.7, 0.6), 0.9);
+			line(self.origin + forwardfar, (self.origin + forwardclose) + right, (0.9, 0.7, 0.6), 0.9);
+			line(self.origin + forwardfar, (self.origin + forwardclose) + left, (0.9, 0.7, 0.6), 0.9);
 			wait(0.05);
 		}
 	#/
@@ -988,7 +988,7 @@ function debugorigin()
 */
 function function_a0e51d80(point, timesec, size, color)
 {
-	end = gettime() + timesec * 1000;
+	end = gettime() + (timesec * 1000);
 	halfwidth = int(size / 2);
 	l1 = point + (halfwidth * -1, 0, 0);
 	l2 = point + (halfwidth, 0, 0);
@@ -1018,7 +1018,7 @@ function function_a0e51d80(point, timesec, size, color)
 */
 function debugline(p1, p2, timesec, color)
 {
-	end = gettime() + timesec * 1000;
+	end = gettime() + (timesec * 1000);
 	while(end > gettime())
 	{
 		/#

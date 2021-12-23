@@ -103,7 +103,7 @@ function function_47ecaed4(localclientnum)
 	{
 		level.var_ff4acd38[i] = var_8c9a6a50;
 		i++;
-		var_8c9a6a50 = getent(localclientnum, "lighthouse_light_ring_" + i + 1, "targetname");
+		var_8c9a6a50 = getent(localclientnum, "lighthouse_light_ring_" + (i + 1), "targetname");
 	}
 	for(;;)
 	{
@@ -112,7 +112,7 @@ function function_47ecaed4(localclientnum)
 		for(i = 0; i < 4; i++)
 		{
 			level.var_ff4acd38[i] show();
-			exploder::exploder("lighthouse_light_ring_" + i + 1);
+			exploder::exploder("lighthouse_light_ring_" + (i + 1));
 			wait(0.5);
 		}
 		exploder::exploder("lighthouse_light_spotlight");
@@ -142,7 +142,7 @@ function function_e9849e59(localclientnum)
 	for(i = 0; i < level.var_ff4acd38.size; i++)
 	{
 		level.var_ff4acd38[i] hide();
-		exploder::stop_exploder("lighthouse_light_ring_" + i + 1);
+		exploder::stop_exploder("lighthouse_light_ring_" + (i + 1));
 	}
 	exploder::stop_exploder("lighthouse_light_spotlight");
 }
@@ -161,7 +161,7 @@ function function_fe8322ed(localclientnum)
 	for(i = 0; i < level.var_ff4acd38.size; i++)
 	{
 		level.var_ff4acd38[i] show();
-		exploder::exploder("lighthouse_light_ring_" + i + 1);
+		exploder::exploder("lighthouse_light_ring_" + (i + 1));
 	}
 	exploder::exploder("lighthouse_light_spotlight");
 }

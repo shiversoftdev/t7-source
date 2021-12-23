@@ -157,7 +157,7 @@ function register_unitrigger_internal(unitrigger_stub, trigger_func)
 			{
 				unitrigger_stub.script_height = 64;
 			}
-			unitrigger_stub.test_radius_sq = unitrigger_stub.radius + 15 * unitrigger_stub.radius + 15;
+			unitrigger_stub.test_radius_sq = (unitrigger_stub.radius + 15) * (unitrigger_stub.radius + 15);
 			break;
 		}
 		case "unitrigger_box":
@@ -180,13 +180,13 @@ function register_unitrigger_internal(unitrigger_stub, trigger_func)
 			{
 				unitrigger_stub.radius = box_radius;
 			}
-			unitrigger_stub.test_radius_sq = box_radius + 15 * box_radius + 15;
+			unitrigger_stub.test_radius_sq = (box_radius + 15) * (box_radius + 15);
 			break;
 		}
 		default:
 		{
 			/#
-				println("" + unitrigger_stub.targetname + "");
+				println(("" + unitrigger_stub.targetname) + "");
 			#/
 			return;
 		}
@@ -303,7 +303,7 @@ function delay_delete_contact_ent()
 	while(true)
 	{
 		wait(1);
-		if(gettime() - self.last_used_time > 1000)
+		if((gettime() - self.last_used_time) > 1000)
 		{
 			self delete();
 			level._unitriggers.contact_ent = undefined;
@@ -1042,7 +1042,7 @@ function get_closest_unitriggers(org, array, dist = 9999999)
 		{
 			continue;
 		}
-		if(abs(origin[2] - org[2]) > 42)
+		if((abs(origin[2] - org[2])) > 42)
 		{
 			continue;
 		}

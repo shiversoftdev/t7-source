@@ -719,7 +719,7 @@ function player_slow_movement_speed_monitor()
 		}
 		if(self.n_move_scale != n_new_move_scale)
 		{
-			if(self.n_move_scale > n_new_move_scale + n_move_scale_delta)
+			if(self.n_move_scale > (n_new_move_scale + n_move_scale_delta))
 			{
 				self.n_move_scale = self.n_move_scale - n_move_scale_delta;
 			}
@@ -830,7 +830,7 @@ function dug_zombie_spawn_init(animname_set = 0)
 	self.flame_damage_time = 0;
 	self.meleedamage = 60;
 	self.no_powerups = 1;
-	self zm_spawner::zombie_history("zombie_spawn_init -> Spawned = " + self.origin);
+	self zm_spawner::zombie_history(("zombie_spawn_init -> Spawned = ") + self.origin);
 	self.thundergun_knockdown_func = level.basic_zombie_thundergun_knockdown;
 	self.tesla_head_gib_func = &zm_spawner::zombie_tesla_head_gib;
 	self.team = level.zombie_team;
@@ -879,12 +879,12 @@ function dug_zombie_think()
 	{
 		desired_origin = zombie_utility::get_desired_origin();
 		/#
-			assert(isdefined(desired_origin), "" + self.origin + "");
+			assert(isdefined(desired_origin), ("" + self.origin) + "");
 		#/
 		origin = desired_origin;
 		node = arraygetclosest(origin, level.exterior_goals);
 		self.entrance_nodes[self.entrance_nodes.size] = node;
-		self zm_spawner::zombie_history("zombie_think -> #1 entrance (script_forcegoal) origin = " + self.entrance_nodes[0].origin);
+		self zm_spawner::zombie_history(("zombie_think -> #1 entrance (script_forcegoal) origin = ") + self.entrance_nodes[0].origin);
 	}
 	else if(self zm_spawner::should_skip_teardown(find_flesh_struct_string))
 	{
@@ -924,7 +924,7 @@ function dug_zombie_think()
 			}
 		}
 		self.entrance_nodes[self.entrance_nodes.size] = node;
-		self zm_spawner::zombie_history("zombie_think -> #1 entrance origin = " + node.origin);
+		self zm_spawner::zombie_history(("zombie_think -> #1 entrance origin = ") + node.origin);
 		self thread zm_spawner::zombie_assure_node();
 	}
 	else
@@ -941,7 +941,7 @@ function dug_zombie_think()
 		for(i = 1; i < nodes.size; i++)
 		{
 			dist = distance(self.origin, nodes[i].origin);
-			if(dist - prev_dist > max_dist)
+			if((dist - prev_dist) > max_dist)
 			{
 				break;
 			}
@@ -954,7 +954,7 @@ function dug_zombie_think()
 			node = desired_nodes[randomint(desired_nodes.size)];
 		}
 		self.entrance_nodes = desired_nodes;
-		self zm_spawner::zombie_history("zombie_think -> #1 entrance origin = " + node.origin);
+		self zm_spawner::zombie_history(("zombie_think -> #1 entrance origin = ") + node.origin);
 		self thread zm_spawner::zombie_assure_node();
 	}
 	/#
@@ -1487,7 +1487,7 @@ function set_unitrigger_hint_string(str_message)
 	Parameters: 5
 	Flags: Linked
 */
-function tomb_spawn_trigger_radius(origin, radius, use_trigger = 0, var_3fe858d9, var_2d6ca912)
+function tomb_spawn_trigger_radius(origin, radius, use_trigger = 0, var_3fe858d9, func_visibility)
 {
 	trigger_stub = spawnstruct();
 	trigger_stub.origin = origin;
@@ -1506,9 +1506,9 @@ function tomb_spawn_trigger_radius(origin, radius, use_trigger = 0, var_3fe858d9
 		trigger_stub.func_update_msg = var_3fe858d9;
 		zm_unitrigger::unitrigger_force_per_player_triggers(trigger_stub, 1);
 	}
-	if(isdefined(var_2d6ca912))
+	if(isdefined(func_visibility))
 	{
-		trigger_stub.prompt_and_visibility_func = var_2d6ca912;
+		trigger_stub.prompt_and_visibility_func = func_visibility;
 	}
 	zm_unitrigger::register_unitrigger(trigger_stub, &tomb_unitrigger_think);
 	return trigger_stub;
@@ -1925,7 +1925,7 @@ function puzzle_orb_follow_return_path(s_start, n_element)
 			s_next = undefined;
 		}
 	}
-	v_start = a_path[a_path.size - 1].origin + vectorscale((0, 0, 1), 1000);
+	v_start = (a_path[a_path.size - 1].origin) + vectorscale((0, 0, 1), 1000);
 	e_model = spawn("script_model", v_start);
 	e_model setmodel(s_start.model);
 	e_model clientfield::set("element_glow_fx", n_element);
@@ -2181,7 +2181,7 @@ function capture_zombie_spawn_init(animname_set = 0)
 	self.flame_damage_time = 0;
 	self.meleedamage = 60;
 	self.no_powerups = 1;
-	self zm_spawner::zombie_history("zombie_spawn_init -> Spawned = " + self.origin);
+	self zm_spawner::zombie_history(("zombie_spawn_init -> Spawned = ") + self.origin);
 	self.thundergun_knockdown_func = level.basic_zombie_thundergun_knockdown;
 	self.tesla_head_gib_func = &zm_spawner::zombie_tesla_head_gib;
 	self.team = level.zombie_team;

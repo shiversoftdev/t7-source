@@ -101,43 +101,43 @@ function microwavegun_delete_hit_response_fx(localclientnum, tag)
 	Namespace: zm_weap_microwavegun
 	Checksum: 0xBF90A093
 	Offset: 0x608
-	Size: 0x126
+	Size: 0x17C
 	Parameters: 1
 	Flags: Linked
 */
-function microwavegun_bloat()
+function microwavegun_bloat(localclientnum)
 {
-System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
-Parameter name: index
-   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   at System.Collections.Generic.List`1.get_Item(Int32 index)
-   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 649
-   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 211
-/*
-No Output
-*/
-
-	/* ======== */
-
-/* 
-	Stack: 
-*/
-	/* ======== */
-
-/* 
-	Blocks: 
-	Cerberus.Logic.BasicBlock at 0x0608, end at 0x072F
-	Cerberus.Logic.IfBlock at 0x0682, end at 0x0696
-	Cerberus.Logic.IfBlock at 0x06D6, end at 0x0782
-	Cerberus.Logic.IfBlock at 0x070C, end at 0x0724
-	Cerberus.Logic.IfBlock at 0x0724, end at 0x072E
-	Cerberus.Logic.IfBlock at 0x0762, end at 0x0774
-*/
-	/* ======== */
-
+	self endon(#"entityshutdown");
+	durationmsec = 2500;
+	tag_pos = self gettagorigin("J_SpineLower");
+	bloat_max_fraction = 1;
+	if(!isdefined(tag_pos))
+	{
+		durationmsec = 1000;
+	}
+	self mapshaderconstant(localclientnum, 0, "scriptVector6", 0, 0, 0, 0);
+	begin_time = getrealtime();
+	while(true)
+	{
+		age = getrealtime() - begin_time;
+		bloat_fraction = age / durationmsec;
+		if(bloat_fraction > bloat_max_fraction)
+		{
+			bloat_fraction = bloat_max_fraction;
+		}
+		if(!isdefined(self))
+		{
+			return;
+		}
+		self mapshaderconstant(localclientnum, 0, "scriptVector6", 4 * bloat_fraction, 0, 0, 0);
+		if(bloat_fraction >= bloat_max_fraction)
+		{
+			break;
+		}
+		waitrealtime(0.05);
+	}
 }
 
-/*Unknown Op Code (0x1CD4) at 077C*/
 /*
 	Name: microwavegun_zombie_initial_hit_response
 	Namespace: zm_weap_microwavegun

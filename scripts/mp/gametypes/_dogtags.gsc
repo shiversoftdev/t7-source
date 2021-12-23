@@ -300,7 +300,7 @@ function on_spawn_player()
 {
 	if(level.rankedmatch || level.leaguematch)
 	{
-		if(isdefined(self.tacticalinsertiontime) && self.tacticalinsertiontime + 100 > gettime())
+		if(isdefined(self.tacticalinsertiontime) && (self.tacticalinsertiontime + 100) > gettime())
 		{
 			mindist = level.antiboostdistance;
 			mindistsqr = mindist * mindist;

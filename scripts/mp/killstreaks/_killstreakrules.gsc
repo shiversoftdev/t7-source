@@ -268,7 +268,7 @@ function killstreakstart(hardpointtype, team, hacked, displayteammessage)
 	level.matchrecorderkillstreakkills[killstreak_id] = 0;
 	level.killstreaks_triggered[killstreak_id] = killstreak_data;
 	/#
-		killstreak_debug_text("" + hardpointtype + "" + team + "" + killstreak_id);
+		killstreak_debug_text((((("" + hardpointtype) + "") + team) + "") + killstreak_id);
 	#/
 	return killstreak_id;
 }
@@ -370,7 +370,7 @@ function killstreakstop(hardpointtype, team, id)
 		{
 			idstr = id;
 		}
-		killstreak_debug_text("" + hardpointtype + "" + team + "" + idstr);
+		killstreak_debug_text((((("" + hardpointtype) + "") + team) + "") + idstr);
 	#/
 	keys = getarraykeys(level.killstreaktype[hardpointtype]);
 	foreach(var_df680d72, key in keys)
@@ -462,7 +462,7 @@ function iskillstreakallowed(hardpointtype, team)
 			if(level.killstreakrules[key].cur >= level.killstreakrules[key].max)
 			{
 				/#
-					killstreak_debug_text("" + key + "");
+					killstreak_debug_text(("" + key) + "");
 				#/
 				isallowed = 0;
 				break;
@@ -478,7 +478,7 @@ function iskillstreakallowed(hardpointtype, team)
 			{
 				isallowed = 0;
 				/#
-					killstreak_debug_text("" + key + "");
+					killstreak_debug_text(("" + key) + "");
 				#/
 				break;
 			}
@@ -503,7 +503,7 @@ function iskillstreakallowed(hardpointtype, team)
 		{
 			if(isdefined(level.empendtime))
 			{
-				secondsleft = int(level.empendtime - gettime() / 1000);
+				secondsleft = int((level.empendtime - gettime()) / 1000);
 				if(secondsleft > 0)
 				{
 					self iprintlnbold(&"KILLSTREAK_NOT_AVAILABLE_EMP_ACTIVE", secondsleft);
@@ -543,7 +543,7 @@ function killstreak_debug_text(text)
 		{
 			if(level.killstreak_rule_debug == 1)
 			{
-				iprintln("" + text + "");
+				iprintln(("" + text) + "");
 			}
 			else if(level.killstreak_rule_debug == 2)
 			{

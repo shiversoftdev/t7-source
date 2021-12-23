@@ -326,7 +326,7 @@ private function function_25411db1(upgraded = 0, secondary = 0, attacker, weapon
 		playfxontag(level._effect["puke_reaction"], self, "j_neck");
 		if(isdefined(self.voiceprefix) && isdefined(self.bcvoicenumber))
 		{
-			self thread battlechatter::do_sound(self.voiceprefix + self.bcvoicenumber + "_puke", 1);
+			self thread battlechatter::do_sound((self.voiceprefix + self.bcvoicenumber) + "_puke", 1);
 		}
 	}
 	else
@@ -336,7 +336,7 @@ private function function_25411db1(upgraded = 0, secondary = 0, attacker, weapon
 		{
 			if(isdefined(self.voiceprefix) && isdefined(self.bcvoicenumber))
 			{
-				self thread battlechatter::do_sound(self.voiceprefix + self.bcvoicenumber + "_exert_sonic", 1);
+				self thread battlechatter::do_sound((self.voiceprefix + self.bcvoicenumber) + "_exert_sonic", 1);
 			}
 		}
 	}
@@ -405,7 +405,7 @@ function function_da7ef8ba(target, var_9bc2efcb = 1, upgraded)
 	{
 		type = self cybercom::function_5e3d3aa();
 		self orientmode("face default");
-		self animscripted("ai_cybercom_anim", self.origin, self.angles, "ai_base_rifle_" + type + "_exposed_cybercom_activate");
+		self animscripted("ai_cybercom_anim", self.origin, self.angles, ("ai_base_rifle_" + type) + "_exposed_cybercom_activate");
 		self waittill_match(#"ai_cybercom_anim");
 	}
 	weapon = getweapon("gadget_mrpukey");

@@ -551,7 +551,7 @@ function margwaprocessfootstep(localclientnum, pos, surface, notetrack, bone)
 	n_margwa_dist = getdvarint("scr_margwa_footstep_eq_radius", 1000) * getdvarint("scr_margwa_footstep_eq_radius", 1000);
 	if(n_margwa_dist > 0)
 	{
-		n_scale = n_margwa_dist - n_dist / n_margwa_dist;
+		n_scale = (n_margwa_dist - n_dist) / n_margwa_dist;
 	}
 	else
 	{

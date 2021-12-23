@@ -238,7 +238,7 @@ function robot_head_trigger_think()
 */
 function place_staff(m_plinth)
 {
-	m_staff = getent("craftable_" + self.name + "_zm", "targetname");
+	m_staff = getent(("craftable_" + self.name) + "_zm", "targetname");
 	m_plinth.e_staff = self;
 	m_plinth.m_staff = m_staff;
 	m_plinth.v_old_angles = m_staff.angles;

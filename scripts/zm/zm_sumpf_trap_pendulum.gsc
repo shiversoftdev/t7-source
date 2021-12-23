@@ -91,7 +91,7 @@ function moveleverup()
 */
 function hint_string(string)
 {
-	if(string == &"ZOMBIE_BUTTON_BUY_TRAP")
+	if(string == (&"ZOMBIE_BUTTON_BUY_TRAP"))
 	{
 		self.is_available = 1;
 		self.zombie_cost = 750;
@@ -235,7 +235,7 @@ function blade_sounds()
 		wooshangle = 90;
 		wait(0.01);
 		angle = self.angles[0];
-		speed = int(abs(angle - lastangle)) % 360;
+		speed = (int(abs(angle - lastangle))) % 360;
 		relpos = int(abs(angle)) % 360;
 		lastrelpos = int(abs(lastangle)) % 360;
 		if(relpos == lastrelpos || speed < 7)
@@ -248,7 +248,7 @@ function blade_sounds()
 			blade_left playsound("zmb_blade_right");
 			blade_right playsound("zmb_blade_right");
 		}
-		if(relpos + 180 % 360 > wooshangle && lastrelpos + 180 % 360 <= wooshangle)
+		if(((relpos + 180) % 360) > wooshangle && ((lastrelpos + 180) % 360) <= wooshangle)
 		{
 			blade_left playsound("zmb_blade_right");
 			blade_right playsound("zmb_blade_right");
@@ -394,7 +394,7 @@ function zombiependamage(parent, who)
 		}
 		else if(level.my_time > 24)
 		{
-			adjustment = 30 - level.my_time / 6;
+			adjustment = (30 - level.my_time) / 6;
 		}
 		else
 		{

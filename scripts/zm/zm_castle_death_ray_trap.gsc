@@ -329,7 +329,7 @@ function function_65680b09(player)
 			}
 		}
 		wait(0.1);
-		n_total_time = gettime() - n_start_time / 1000;
+		n_total_time = (gettime() - n_start_time) / 1000;
 	}
 	level flag::clear("tesla_coil_on");
 	foreach(var_90e47a8f, player in level.players)
@@ -432,7 +432,7 @@ function function_383d6ca4(var_9ffdb9e2, var_2c11866b)
 	while(zm_utility::is_player_valid(self) && self function_55b881b7(var_2c11866b))
 	{
 		n_cur_time = gettime();
-		if(!isdefined(self.var_bf3163c8) || n_cur_time - self.var_bf3163c8 > 2000)
+		if(!isdefined(self.var_bf3163c8) || (n_cur_time - self.var_bf3163c8) > 2000)
 		{
 			self thread function_991ffb6c(var_9ffdb9e2);
 			self.var_bf3163c8 = n_cur_time;

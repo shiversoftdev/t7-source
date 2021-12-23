@@ -1129,7 +1129,7 @@ function function_523509c2()
 			var_9094458d = 0;
 			foreach(var_e15819ce, var_779fea3 in level.var_e0133c46)
 			{
-				if(isdefined(var_779fea3.var_168e6657) && var_779fea3.var_168e6657)
+				if(isdefined(var_779fea3.b_shown) && var_779fea3.b_shown)
 				{
 					var_9094458d = 1;
 					break;
@@ -1170,19 +1170,19 @@ function function_9a436d7f()
 {
 	level endon(#"hash_e87ace62");
 	self setcandamage(1);
-	self.var_168e6657 = 1;
+	self.b_shown = 1;
 	while(true)
 	{
 		self waittill(#"damage", n_damage, e_attacker);
 		if(isdefined(e_attacker.on_train) && e_attacker.on_train && level.o_zod_train flag::get("moving"))
 		{
 			self hide();
-			self.var_168e6657 = 0;
+			self.b_shown = 0;
 			level notify(#"hash_34141bc5");
 			e_attacker playsound("zmb_vocals_margwa_pain_small");
 			level waittill(#"hash_47c53d3");
 			self show();
-			self.var_168e6657 = 1;
+			self.b_shown = 1;
 			self thread function_8faf1d24(vectorscale((1, 0, 0), 255), "<3", 1, "damage");
 		}
 		else
@@ -1693,12 +1693,12 @@ function function_fa2d33a4()
 		var_9ef6b569 = level.var_cfee9316 * 5;
 		if(level.next_wasp_round <= var_9ef6b569)
 		{
-			level.next_wasp_round = 5 + level.wasp_round_count * 10 + randomintrange(-1, 1);
+			level.next_wasp_round = (5 + (level.wasp_round_count * 10)) + (randomintrange(-1, 1));
 			level.wasp_round_count++;
 		}
 		if(level.n_next_raps_round <= var_9ef6b569)
 		{
-			level.n_next_raps_round = 10 + level.raps_round_count * 10 + randomintrange(-1, 1);
+			level.n_next_raps_round = (10 + (level.raps_round_count * 10)) + (randomintrange(-1, 1));
 			level.raps_round_count++;
 		}
 		if(level.var_bf361dc0 < var_9ef6b569)
@@ -1711,7 +1711,7 @@ function function_fa2d33a4()
 				{
 					level.var_bf361dc0 = level.var_bf361dc0 + 2;
 				}
-				else if(level.var_bf361dc0 == level.n_next_raps_round + 1)
+				else if(level.var_bf361dc0 == (level.n_next_raps_round + 1))
 				{
 					level.var_bf361dc0 = level.var_bf361dc0 + 1;
 				}

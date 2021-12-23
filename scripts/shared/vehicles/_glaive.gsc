@@ -158,7 +158,7 @@ private function is_enemy_valid(target)
 	{
 		return 0;
 	}
-	if(distancesquared(self.owner.origin, target.origin) > self.settings.guardradius * self.settings.guardradius)
+	if(distancesquared(self.owner.origin, target.origin) > (self.settings.guardradius * self.settings.guardradius))
 	{
 		return 0;
 	}
@@ -258,7 +258,7 @@ private function glaive_target_selection()
 */
 function should_go_to_owner()
 {
-	b_is_lifetime_over = gettime() - self.starttime > self._glaive_settings_lifetime * 1000;
+	b_is_lifetime_over = (gettime() - self.starttime) > (self._glaive_settings_lifetime * 1000);
 	if(isdefined(b_is_lifetime_over) && b_is_lifetime_over)
 	{
 		return 1;
@@ -281,13 +281,13 @@ function should_go_to_owner()
 */
 function should_go_to_near_owner()
 {
-	if(isdefined(self.owner) && distancesquared(self.origin, self.owner.origin) > self.settings.guardradius * self.settings.guardradius)
+	if(isdefined(self.owner) && distancesquared(self.origin, self.owner.origin) > (self.settings.guardradius * self.settings.guardradius))
 	{
 		return 1;
 	}
 	if(isdefined(self.owner) && !self is_enemy_valid(self.glaiveenemy))
 	{
-		if(distance2dsquared(self.origin, self.owner.origin) > 160 * 160)
+		if(distance2dsquared(self.origin, self.owner.origin) > (160 * 160))
 		{
 			return 1;
 		}
@@ -357,10 +357,10 @@ function state_combat_update(params)
 			{
 				targetpos = self.glaiveenemy gettagorigin("j_chunk_head_bone");
 			}
-			targetpos = targetpos + self.glaiveenemy getvelocity() * 0.4;
+			targetpos = targetpos + (self.glaiveenemy getvelocity() * 0.4);
 			if(isdefined(targetpos))
 			{
-				if(distance2dsquared(self.origin, self.glaiveenemy.origin) < 80 * 80)
+				if(distance2dsquared(self.origin, self.glaiveenemy.origin) < (80 * 80))
 				{
 					self vehicle_ai::set_state("slash");
 				}
@@ -574,7 +574,7 @@ function state_slash_update(params)
 		target_enemies = getaiteamarray("axis");
 		foreach(var_c56cb562, target in target_enemies)
 		{
-			if(distance2dsquared(self.origin, target.origin) < 128 * 128)
+			if(distance2dsquared(self.origin, target.origin) < (128 * 128))
 			{
 				if(isdefined(target.archetype) && target.archetype == "margwa")
 				{
@@ -586,7 +586,7 @@ function state_slash_update(params)
 				{
 					target zombie_utility::gib_random_parts();
 					target startragdoll();
-					target launchragdoll(100 * vectornormalize(target.origin - self.origin));
+					target launchragdoll(100 * (vectornormalize(target.origin - self.origin)));
 				}
 			}
 		}
@@ -636,12 +636,12 @@ function go_to_near_owner()
 	self thread back_to_near_owner_check();
 	starttime = gettime();
 	self asmrequestsubstate("forward@movement");
-	while(gettime() - starttime < self._glaive_settings_lifetime * 1000 * 0.1)
+	while((gettime() - starttime) < ((self._glaive_settings_lifetime * 1000) * 0.1))
 	{
 		go_back_on_navvolume();
 		ownertargetpos = vehicle_ai::gettargetpos(self.owner, 1) - vectorscale((0, 0, 1), 4);
 		ownerforwardvec = anglestoforward(self.owner.angles);
-		targetpos = ownertargetpos + 80 * ownerforwardvec;
+		targetpos = ownertargetpos + (80 * ownerforwardvec);
 		searchcenter = self getclosestpointonnavvolume(ownertargetpos);
 		if(isdefined(searchcenter))
 		{
@@ -656,7 +656,7 @@ function go_to_near_owner()
 					}
 					point._scoredebug[""] = distancesquared(point.origin, targetpos) * -1;
 				#/
-				point.score = point.score + distancesquared(point.origin, targetpos) * -1;
+				point.score = point.score + (distancesquared(point.origin, targetpos) * -1);
 			}
 			vehicle_ai::positionquery_postprocess_sortscore(queryresult);
 			self vehicle_ai::positionquery_debugscores(queryresult);
@@ -694,7 +694,7 @@ function go_to_owner()
 	self thread back_to_owner_check();
 	starttime = gettime();
 	self asmrequestsubstate("forward@movement");
-	while(gettime() - starttime < self._glaive_settings_lifetime * 1000 * 0.3)
+	while((gettime() - starttime) < ((self._glaive_settings_lifetime * 1000) * 0.3))
 	{
 		go_back_on_navvolume();
 		targetpos = vehicle_ai::gettargetpos(self.owner, 1);
@@ -761,7 +761,7 @@ function go_to_owner()
 function back_to_owner_check()
 {
 	self endon(#"death");
-	while(isdefined(self.owner) && (abs(self.origin[2] - self.owner.origin[2]) > 80 * 80 || distance2dsquared(self.origin, self.owner.origin) > 80 * 80))
+	while(isdefined(self.owner) && ((abs(self.origin[2] - self.owner.origin[2])) > (80 * 80) || distance2dsquared(self.origin, self.owner.origin) > (80 * 80)))
 	{
 		wait(0.1);
 	}
@@ -780,7 +780,7 @@ function back_to_owner_check()
 function back_to_near_owner_check()
 {
 	self endon(#"death");
-	while(isdefined(self.owner) && (abs(self.origin[2] - self.owner.origin[2]) > 160 * 160 || distance2dsquared(self.origin, self.owner.origin) > 160 * 160 || !util::within_fov(self.owner.origin, self.owner.angles, self.origin, cos(60))))
+	while(isdefined(self.owner) && ((abs(self.origin[2] - self.owner.origin[2])) > (160 * 160) || distance2dsquared(self.origin, self.owner.origin) > (160 * 160) || !util::within_fov(self.owner.origin, self.owner.angles, self.origin, cos(60))))
 	{
 		wait(0.1);
 	}

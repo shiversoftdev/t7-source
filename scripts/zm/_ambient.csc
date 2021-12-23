@@ -153,8 +153,8 @@ function ambient_flak_rotate(point)
 		random_angle = (randomintrange(min_pitch, max_pitch) * -1, randomint(360), 0);
 		forward = anglestoforward(random_angle);
 		up = anglestoup(random_angle);
-		diff_forward = forward - point.forward / steps;
-		diff_up = up - point.up / steps;
+		diff_forward = (forward - point.forward) / steps;
+		diff_up = (up - point.up) / steps;
 		for(i = 0; i < steps; i++)
 		{
 			point.forward = point.forward + diff_forward;
@@ -396,7 +396,7 @@ function ambient_fakefire_think(point)
 		default:
 		{
 			/#
-				assertmsg("" + point.weaponinfo + "");
+				assertmsg(("" + point.weaponinfo) + "");
 			#/
 		}
 	}
@@ -406,7 +406,7 @@ function ambient_fakefire_think(point)
 		for(i = 0; i < burst; i++)
 		{
 			tracedist = 10000;
-			target = point.origin + vectorscale(anglestoforward(point.angles + (-3 + randomint(6), -5 + randomint(10), 0)), tracedist);
+			target = point.origin + (vectorscale(anglestoforward(point.angles + (-3 + randomint(6), -5 + randomint(10), 0)), tracedist));
 			if(randomint(100) <= 20)
 			{
 				bullettracer(point.origin, target);
@@ -454,12 +454,12 @@ function spin_fan()
 	if(!isdefined(self.speed))
 	{
 		self.speed = randomintrange(1, 100);
-		self.speed = self.speed % 10 + 1;
+		self.speed = (self.speed % 10) + 1;
 	}
 	if(self.speed < 1)
 	{
 		self.speed = randomintrange(1, 100);
-		self.speed = self.speed % 10 + 1;
+		self.speed = (self.speed % 10) + 1;
 	}
 	do_wobble = 0;
 	wobble = self.script_noteworthy;
@@ -516,7 +516,7 @@ function clocks_init(clientnum)
 	hour_values["hand_time"] = hours;
 	hour_values["rotate"] = 30;
 	hour_values["rotate_bit"] = 0.008333334;
-	hour_values["first_rotate"] = minutes * 60 + seconds * hour_values["rotate_bit"];
+	hour_values["first_rotate"] = ((minutes * 60) + seconds) * hour_values["rotate_bit"];
 	minute_hand = getentarray(clientnum, "minute_hand", "targetname");
 	minute_values = [];
 	minute_values["hand_time"] = minutes;
@@ -760,7 +760,7 @@ function arrow_spin_func()
 	}
 	while(true)
 	{
-		direction_change = model_direction_change + randomintrange(-11, 11);
+		direction_change = model_direction_change + (randomintrange(-11, 11));
 		speed_change = randomfloatrange(model_speed * 0.3, model_speed);
 		self rotateyaw(direction_change, speed_change);
 		self waittill(#"rotatedone");

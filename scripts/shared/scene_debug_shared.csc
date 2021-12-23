@@ -263,7 +263,7 @@ function create_scene_hud(scene_name, index)
 		{
 			if(index != 5)
 			{
-				alpha = 1 - abs(5 - index) / 5;
+				alpha = 1 - ((abs(5 - index)) / 5);
 			}
 		}
 		if(alpha == 0)
@@ -273,7 +273,7 @@ function create_scene_hud(scene_name, index)
 		hudelem = createluimenu(0, "");
 		setluimenudata(0, hudelem, "", scene_name);
 		setluimenudata(0, hudelem, "", 100);
-		setluimenudata(0, hudelem, "", 80 + index * 18);
+		setluimenudata(0, hudelem, "", 80 + (index * 18));
 		setluimenudata(0, hudelem, "", 1000);
 		openluimenu(0, hudelem);
 		return hudelem;
@@ -505,7 +505,7 @@ function scene_list_settext(hud_array, strings, num)
 	/#
 		for(i = 0; i < hud_array.size; i++)
 		{
-			index = i + num - 5;
+			index = i + (num - 5);
 			if(isdefined(strings[index]))
 			{
 				text = strings[index];
@@ -531,7 +531,7 @@ function scene_list_settext(hud_array, strings, num)
 			if(i == 5)
 			{
 				setluimenudata(0, hud_array[i], "", 1);
-				text = "" + text + "";
+				text = ("" + text) + "";
 			}
 			setluimenudata(0, hud_array[i], "", text);
 		}
@@ -662,9 +662,9 @@ function debug_display()
 			{
 				foreach(i, o_scene in self.scenes)
 				{
-					n_offset = 15 * i + 1;
+					n_offset = 15 * (i + 1);
 					print3d(self.origin - (0, 0, n_offset), [[ o_scene ]]->get_name(), (0.8, 0.2, 0.8), 1, 0.3, debug_frames);
-					print3d(self.origin - (0, 0, n_offset + 5), "" + (isdefined([[ o_scene ]]->get_state()) ? "" + [[ o_scene ]]->get_state() : "") + "", (0.8, 0.2, 0.8), 1, 0.15, debug_frames);
+					print3d(self.origin - (0, 0, n_offset + 5), ("" + (isdefined([[ o_scene ]]->get_state()) ? "" + ([[ o_scene ]]->get_state()) : "")) + "", (0.8, 0.2, 0.8), 1, 0.15, debug_frames);
 				}
 			}
 			else if(isdefined(self.scriptbundlename))

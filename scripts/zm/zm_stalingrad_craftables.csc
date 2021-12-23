@@ -48,9 +48,9 @@ function include_craftables()
 function register_clientfields()
 {
 	shared_bits = 1;
-	registerclientfield("world", "dragonride" + "_" + "part_transmitter", 12000, shared_bits, "int", &zm_utility::setsharedinventoryuimodels, 0);
-	registerclientfield("world", "dragonride" + "_" + "part_codes", 12000, shared_bits, "int", &zm_utility::setsharedinventoryuimodels, 0);
-	registerclientfield("world", "dragonride" + "_" + "part_map", 12000, shared_bits, "int", &zm_utility::setsharedinventoryuimodels, 0);
+	registerclientfield("world", ("dragonride" + "_") + "part_transmitter", 12000, shared_bits, "int", &zm_utility::setsharedinventoryuimodels, 0);
+	registerclientfield("world", ("dragonride" + "_") + "part_codes", 12000, shared_bits, "int", &zm_utility::setsharedinventoryuimodels, 0);
+	registerclientfield("world", ("dragonride" + "_") + "part_map", 12000, shared_bits, "int", &zm_utility::setsharedinventoryuimodels, 0);
 	clientfield::register("toplayer", "ZMUI_DRAGONRIDE_PART_PICKUP", 12000, 1, "int", &zm_utility::zm_ui_infotext, 0, 1);
 	clientfield::register("toplayer", "ZMUI_DRAGONRIDE_CRAFTED", 12000, 1, "int", &zm_utility::zm_ui_infotext, 0, 1);
 	clientfield::register("clientuimodel", "zmInventory.widget_dragonride_parts", 12000, 1, "int", undefined, 0, 0);

@@ -170,7 +170,7 @@ function get_hacked_timeout_duration_ms()
 	{
 		/#
 			/#
-				assertmsg("" + killstreak.killstreaktype + "");
+				assertmsg(("" + killstreak.killstreaktype) + "");
 			#/
 		#/
 		return;

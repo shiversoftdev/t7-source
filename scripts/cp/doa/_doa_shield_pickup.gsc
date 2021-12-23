@@ -112,7 +112,7 @@ function barrelupdate()
 	trigger thread function_80bf1f40(self, note, "zmb_pwup_barrel_impact");
 	org.barrel1 = barrel;
 	org.trigger1 = trigger;
-	barrel = spawn("script_model", self.origin + vectorscale((0, -1, 0), 90));
+	barrel = spawn("script_model", self.origin + (vectorscale((0, -1, 0), 90)));
 	barrel.targetname = "barrel2";
 	barrel setmodel(level.doa.var_f6947407);
 	barrel setplayercollision(0);
@@ -449,7 +449,7 @@ private function function_813e9dbd()
 	self endon(#"disconnect");
 	self endon(#"death");
 	level doa_utility::function_c8f4d63a();
-	self.doa.var_1a9bbba7 = gettime() + self doa_utility::function_1ded48e6(level.doa.rules.var_4f139db6) * 1000;
+	self.doa.var_1a9bbba7 = gettime() + (self doa_utility::function_1ded48e6(level.doa.rules.var_4f139db6) * 1000);
 	while(gettime() < self.doa.var_1a9bbba7)
 	{
 		wait(1);
@@ -503,7 +503,7 @@ function function_affe0c28()
 {
 	if(isdefined(self.doa.var_908e6b76) && self.doa.var_908e6b76)
 	{
-		self.doa.var_1a9bbba7 = gettime() + self doa_utility::function_1ded48e6(level.doa.rules.var_4f139db6) * 1000;
+		self.doa.var_1a9bbba7 = gettime() + (self doa_utility::function_1ded48e6(level.doa.rules.var_4f139db6) * 1000);
 		return;
 	}
 	self notify(#"hash_792240f4");
@@ -532,7 +532,7 @@ function function_affe0c28()
 function function_45123d3c(player)
 {
 	def = doa_pickups::function_bac08508(19);
-	blade = spawn("script_model", player.origin + vectorscale((0, -1, 0), 70));
+	blade = spawn("script_model", player.origin + (vectorscale((0, -1, 0), 70)));
 	blade.targetname = "blade";
 	blade setmodel(level.doa.var_97bbae9c);
 	blade setscale(def.scale);
@@ -648,7 +648,7 @@ private function function_f797c54(org, note)
 	self endon(note);
 	self endon(#"disconnect");
 	level doa_utility::function_c8f4d63a();
-	time_left = gettime() + self doa_utility::function_1ded48e6(level.doa.rules.var_fb13151a) * 1000;
+	time_left = gettime() + (self doa_utility::function_1ded48e6(level.doa.rules.var_fb13151a) * 1000);
 	while(gettime() < time_left)
 	{
 		wait(0.05);

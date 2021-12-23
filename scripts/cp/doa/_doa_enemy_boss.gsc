@@ -340,7 +340,7 @@ private function function_66efd1eb()
 				continue;
 			}
 			distsq = distancesquared(self.origin, player.origin);
-			if(distsq <= 128 * 128)
+			if(distsq <= (128 * 128))
 			{
 				self.ignoreall = 0;
 				if(getdvarint("scr_boss_debug", 0))
@@ -531,7 +531,7 @@ private function function_e5e28b1b()
 			if(isdefined(pickup))
 			{
 				distsq = distancesquared(self.origin, pickup.origin);
-				if(distsq < 72 * 72)
+				if(distsq < (72 * 72))
 				{
 					pickup thread doa_pickups::function_6b4a5f81();
 				}

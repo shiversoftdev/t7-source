@@ -261,7 +261,7 @@ function trace(from, to)
 */
 function can_see_projected_crosshair(target, target_origin, player_origin, player_forward, distance)
 {
-	crosshair = player_origin + player_forward * distance;
+	crosshair = player_origin + (player_forward * distance);
 	collided = target trace(target_origin, crosshair);
 	if(distance2dsquared(crosshair, collided) > 9)
 	{

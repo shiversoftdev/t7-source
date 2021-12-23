@@ -229,8 +229,8 @@ function function_cba091b7(slot, weapon)
 */
 function function_b4902c73(slot, weapon, waitnote, endnote)
 {
-	self notify(endnote + waitnote + weapon.name);
-	self endon(endnote + waitnote + weapon.name);
+	self notify((endnote + waitnote) + weapon.name);
+	self endon((endnote + waitnote) + weapon.name);
 	self endon(endnote);
 	self endon(#"disconnect");
 	self waittill(waitnote);
@@ -253,8 +253,8 @@ private function _camo_killreactivateonnotify(slot, note, durationmin = 300, dur
 {
 	self endon(#"active_camo_taken");
 	self endon(#"disconnect");
-	self notify("_camo_killReActivateOnNotify" + slot + note);
-	self endon("_camo_killReActivateOnNotify" + slot + note);
+	self notify(("_camo_killReActivateOnNotify" + slot) + note);
+	self endon(("_camo_killReActivateOnNotify" + slot) + note);
 	while(true)
 	{
 		self waittill(note, param);

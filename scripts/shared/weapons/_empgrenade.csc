@@ -201,7 +201,7 @@ function monitordistance(localclientnum)
 			#/
 			new_distance = getuimodelvalue(distance_to_closest_enemy_emp_ui_model);
 			range = max_radius_min_static - min_radius_max_static;
-			current_static_value = max_static_value - (range <= 0 ? max_static_value : new_distance - min_radius_max_static / range);
+			current_static_value = max_static_value - (range <= 0 ? max_static_value : (new_distance - min_radius_max_static) / range);
 			current_static_value = math::clamp(current_static_value, min_static_value, max_static_value);
 			emp_grenaded = localplayer clientfield::get_to_player("empd") == 1;
 			if(emp_grenaded && current_static_value < 1)

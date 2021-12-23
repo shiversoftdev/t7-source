@@ -419,7 +419,7 @@ function init(str_type, a_target_list, b_done = 0)
 */
 function complete(a_target_or_list)
 {
-	level notify("breadcrumb_" + self.m_str_type + "_complete");
+	level notify(("breadcrumb_" + self.m_str_type) + "_complete");
 	for(i = 0; i < 4; i++)
 	{
 		obj_id = self.m_a_player_game_obj[i];
@@ -571,7 +571,7 @@ private function set_player_objective(player, target)
 function do_player_breadcrumb(player)
 {
 	level endon("breadcrumb_" + self.m_str_type);
-	level endon("breadcrumb_" + self.m_str_type + "_complete");
+	level endon(("breadcrumb_" + self.m_str_type) + "_complete");
 	player endon(#"death");
 	str_trig_targetname = self.m_str_first_trig_targetname;
 	entnum = player getentitynumber();
@@ -1103,7 +1103,7 @@ function create_temp_icon(str_obj_type, str_obj_name, v_pos, v_offset = (0, 0, 0
 		default:
 		{
 			/#
-				assertmsg("" + str_obj_type + "");
+				assertmsg(("" + str_obj_type) + "");
 			#/
 			break;
 		}

@@ -768,7 +768,7 @@ function airless_vox_without_repeat()
 		if(isdefined(self) && (isdefined(self.in_low_gravity) && self.in_low_gravity))
 		{
 			level.player_is_speaking = 1;
-			self playsoundtoplayer("vox_plr_" + entity_num + "_location_airless_" + randomintrange(0, 5), self);
+			self playsoundtoplayer((("vox_plr_" + entity_num) + "_location_airless_") + randomintrange(0, 5), self);
 			wait(10);
 			level.player_is_speaking = 0;
 		}

@@ -328,7 +328,7 @@ function thread_hacking_progress()
 */
 function temp_player_lock_in_place(trigger)
 {
-	v_lock_position = trigger.origin + vectornormalize(anglestoforward(trigger.angles)) * 50;
+	v_lock_position = trigger.origin + (vectornormalize(anglestoforward(trigger.angles)) * 50);
 	v_lock_position_ground = bullettrace(v_lock_position, v_lock_position - vectorscale((0, 0, 1), 100), 0, undefined)["position"];
 	v_lock_angles = (0, vectortoangles(vectorscale(anglestoforward(trigger.angles), -1))[1], 0);
 	self.circuit_breaker_lock_ent = spawn("script_origin", v_lock_position_ground);

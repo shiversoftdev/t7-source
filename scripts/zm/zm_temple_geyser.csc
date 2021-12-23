@@ -26,91 +26,156 @@ function main()
 	Namespace: zm_temple_geyser
 	Checksum: 0xAAB74AA8
 	Offset: 0x230
-	Size: 0x10C
+	Size: 0x420
 	Parameters: 7
 	Flags: Linked
 */
-function geyser_player_setup_prone()
+function geyser_player_setup_prone(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwasdemojump)
 {
-System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
-Parameter name: index
-   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   at System.Collections.Generic.List`1.get_Item(Int32 index)
-   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 649
-   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 211
-/*
-No Output
-*/
-
-	/* ======== */
-
-/* 
-	Stack: 
-*/
-	/* ======== */
-
-/* 
-	Blocks: 
-	Cerberus.Logic.BasicBlock at 0x0230, end at 0x033D
-	Cerberus.Logic.IfBlock at 0x0282, end at 0x029E
-	Cerberus.Logic.IfBlock at 0x02B8, end at 0x033C
-	Cerberus.Logic.IfBlock at 0x02E6, end at 0x0316
-	Cerberus.Logic.IfBlock at 0x033C, end at 0x056E
-	Cerberus.Logic.IfBlock at 0x0344, end at 0x0362
-	Cerberus.Logic.IfBlock at 0x03D2, end at 0x0432
-	Cerberus.Logic.IfBlock at 0x0466, end at 0x04B6
-	Cerberus.Logic.ElseBlock at 0x0316, end at 0x033A
-*/
-	/* ======== */
-
+	if(isspectating(localclientnum, 0))
+	{
+		return;
+	}
+	player = getlocalplayers()[localclientnum];
+	if(player getentitynumber() == self getentitynumber())
+	{
+		if(newval)
+		{
+			self playrumbleonentity(localclientnum, "slide_rumble");
+		}
+		else
+		{
+			self stoprumble(localclientnum, "slide_rumble");
+		}
+		return;
+	}
+	if(newval)
+	{
+		if(localclientnum == 0)
+		{
+			self thread player_disconnect_tracker();
+		}
+		fake_player = spawn(localclientnum, self.origin + (vectorscale((0, 0, -1), 800)), "script_model");
+		fake_player.angles = self.angles;
+		fake_player setmodel(self.model);
+		if(self.model == "c_ger_richtofen_body")
+		{
+			fake_player attach("c_ger_richtofen_head", "J_Spine4");
+			fake_player attach("c_ger_richtofen_offcap", "J_Head");
+		}
+		fake_player.fake_weapon = spawn(localclientnum, self.origin, "script_model");
+		if(self.weapon != "none" && self.weapon != "syrette")
+		{
+			fake_player.fake_weapon useweaponhidetags(self.weapon);
+		}
+		else
+		{
+			self thread geyser_weapon_monitor(fake_player.fake_weapon);
+		}
+		fake_player.fake_weapon linkto(fake_player, "tag_weapon_right");
+		waitrealtime(0.016);
+		fake_player linkto(self, "tag_origin");
+		if(!isdefined(self.fake_player))
+		{
+			self.fake_player = [];
+		}
+		self.fake_player[localclientnum] = fake_player;
+		self thread wait_for_geyser_player_to_disconnect(localclientnum);
+	}
+	else if(!isdefined(self.fake_player) && !isdefined(self.fake_player[localclientnum]))
+	{
+		return;
+	}
+	str_notify = "player_geyser" + localclientnum;
+	self notify(str_notify);
+	self notify(#"end_geyser");
+	if(isdefined(self.fake_player[localclientnum].fake_weapon))
+	{
+		self.fake_player[localclientnum].fake_weapon delete();
+		self.fake_player[localclientnum].fake_weapon = undefined;
+	}
+	self.fake_player[localclientnum] delete();
+	self.fake_player[localclientnum] = undefined;
 }
 
-/*Unknown Op Code (0x0318) at 0508*/
 /*
 	Name: geyser_player_setup_stand
 	Namespace: zm_temple_geyser
 	Checksum: 0xB8739EAE
 	Offset: 0x658
-	Size: 0x10C
+	Size: 0x448
 	Parameters: 7
 	Flags: Linked
 */
-function geyser_player_setup_stand()
+function geyser_player_setup_stand(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwasdemojump)
 {
-System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
-Parameter name: index
-   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   at System.Collections.Generic.List`1.get_Item(Int32 index)
-   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 649
-   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 211
-/*
-No Output
-*/
-
-	/* ======== */
-
-/* 
-	Stack: 
-*/
-	/* ======== */
-
-/* 
-	Blocks: 
-	Cerberus.Logic.BasicBlock at 0x0658, end at 0x0765
-	Cerberus.Logic.IfBlock at 0x06AA, end at 0x06C6
-	Cerberus.Logic.IfBlock at 0x06E0, end at 0x0764
-	Cerberus.Logic.IfBlock at 0x070E, end at 0x073E
-	Cerberus.Logic.IfBlock at 0x0764, end at 0x09BE
-	Cerberus.Logic.IfBlock at 0x076C, end at 0x078A
-	Cerberus.Logic.IfBlock at 0x07FA, end at 0x085A
-	Cerberus.Logic.IfBlock at 0x088E, end at 0x08EE
-	Cerberus.Logic.ElseBlock at 0x073E, end at 0x0762
-*/
-	/* ======== */
-
+	if(isspectating(localclientnum, 0))
+	{
+		return;
+	}
+	player = getlocalplayers()[localclientnum];
+	if(player getentitynumber() == self getentitynumber())
+	{
+		if(newval)
+		{
+			self playrumbleonentity(localclientnum, "slide_rumble");
+		}
+		else
+		{
+			self stoprumble(localclientnum, "slide_rumble");
+		}
+		return;
+	}
+	if(newval)
+	{
+		if(localclientnum == 0)
+		{
+			self thread player_disconnect_tracker();
+		}
+		fake_player = spawn(localclientnum, self.origin + (vectorscale((0, 0, -1), 800)), "script_model");
+		fake_player.angles = self.angles;
+		fake_player setmodel(self.model);
+		if(self.model == "c_ger_richtofen_body")
+		{
+			fake_player attach("c_ger_richtofen_head", "J_Spine4");
+			fake_player attach("c_ger_richtofen_offcap", "J_Head");
+		}
+		fake_player.fake_weapon = spawn(localclientnum, self.origin, "script_model");
+		if(self.weapon.name != "none" && self.weapon.name != "syrette")
+		{
+			fake_player.fake_weapon useweaponhidetags(self.weapon);
+		}
+		else
+		{
+			self thread geyser_weapon_monitor(fake_player.fake_weapon);
+		}
+		fake_player.fake_weapon linkto(fake_player, "tag_weapon_right");
+		waitrealtime(0.016);
+		fake_player.origin = self.origin;
+		fake_player linkto(self, "tag_origin");
+		if(!isdefined(self.fake_player))
+		{
+			self.fake_player = [];
+		}
+		self.fake_player[localclientnum] = fake_player;
+		self thread wait_for_geyser_player_to_disconnect(localclientnum);
+	}
+	else if(!isdefined(self.fake_player) || !isdefined(self.fake_player[localclientnum]))
+	{
+		return;
+	}
+	str_notify = "player_geyser" + localclientnum;
+	self notify(str_notify);
+	self notify(#"end_geyser");
+	if(isdefined(self.fake_player[localclientnum].fake_weapon))
+	{
+		self.fake_player[localclientnum].fake_weapon delete();
+		self.fake_player[localclientnum].fake_weapon = undefined;
+	}
+	self.fake_player[localclientnum] delete();
+	self.fake_player[localclientnum] = undefined;
 }
 
-/*Unknown Op Code (0x1656) at 0940*/
 /*
 	Name: geyser_weapon_monitor
 	Namespace: zm_temple_geyser

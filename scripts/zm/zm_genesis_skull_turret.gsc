@@ -235,7 +235,7 @@ function function_4b8fea3(e_player)
 	self.var_5015d1a3 = undefined;
 	self flag::set("turret_cooldown");
 	function_677988();
-	if(isdefined(self.var_5319224a) && self.var_5319224a)
+	if(isdefined(self.b_locked) && self.b_locked)
 	{
 		self waittill(#"hash_e39db36d");
 	}
@@ -402,7 +402,7 @@ function function_cd048702(origin1, origin2, color)
 function function_f8f61ccb(d, n)
 {
 	perp = 2 * vectordot(d, n);
-	var_e47d2859 = d - perp * n;
+	var_e47d2859 = d - (perp * n);
 	return var_e47d2859;
 }
 
@@ -424,7 +424,7 @@ function function_f2c7fc31()
 		var_c18b4417 = 1;
 		v_position = self gettagorigin("tag_aim");
 		v_forward = anglestoforward(self gettagangles("tag_aim"));
-		a_trace = beamtrace(v_position, v_position + v_forward * 20000, 1, self);
+		a_trace = beamtrace(v_position, v_position + (v_forward * 20000), 1, self);
 		var_fc46c711 = a_trace["position"];
 		function_cd048702(v_position, var_fc46c711, (1, 1, 0));
 		render_debug_sphere(v_position, (1, 1, 0));
@@ -495,7 +495,7 @@ function function_f2c7fc31()
 				v_forward = function_f8f61ccb(v_forward, a_trace["normal"]);
 			}
 			v_position = var_fc46c711;
-			a_trace = beamtrace(v_position, v_position + v_forward * 20000, 1, self);
+			a_trace = beamtrace(v_position, v_position + (v_forward * 20000), 1, self);
 			var_fc46c711 = a_trace["position"];
 			function_cd048702(v_position, var_fc46c711, (1, 1, 0));
 			render_debug_sphere(var_fc46c711, (1, 0, 0));
@@ -773,7 +773,7 @@ function function_c4a9de44()
 			while(e_player attackbuttonpressed() && n_total_time < 0.15 && e_player function_1d6baeec(self))
 			{
 				n_current_time = gettime();
-				n_total_time = n_current_time - n_start_time / 1000;
+				n_total_time = (n_current_time - n_start_time) / 1000;
 				util::wait_network_frame();
 			}
 			if(n_total_time >= 0.15)
@@ -824,7 +824,7 @@ function sophia_beam_locked(w_weapon, e_player)
 		}
 	#/
 	self.var_827db0f2 = 1;
-	w_weapon.var_5319224a = 1;
+	w_weapon.b_locked = 1;
 	level.var_49483427++;
 	if(level.var_49483427 >= 4)
 	{
@@ -844,7 +844,7 @@ function sophia_beam_locked(w_weapon, e_player)
 	}
 	w_weapon notify(#"hash_e39db36d");
 	self.var_827db0f2 = undefined;
-	w_weapon.var_5319224a = undefined;
+	w_weapon.b_locked = undefined;
 }
 
 /*
@@ -881,7 +881,7 @@ function function_1d6baeec(var_618c7145)
 	}
 	v_position = e_turret gettagorigin("tag_aim");
 	v_forward = anglestoforward(e_turret gettagangles("tag_aim"));
-	a_trace = beamtrace(v_position, v_position + v_forward * 20000, 1, e_turret);
+	a_trace = beamtrace(v_position, v_position + (v_forward * 20000), 1, e_turret);
 	if(var_618c7145 === a_trace["entity"])
 	{
 		return 1;

@@ -140,7 +140,7 @@ function pers_upgrades_monitor()
 									fx_org = player.origin;
 									v_dir = anglestoforward(player getplayerangles());
 									v_up = anglestoup(player getplayerangles());
-									fx_org = fx_org + v_dir * 30 + v_up * 12;
+									fx_org = (fx_org + (v_dir * 30)) + (v_up * 12);
 								}
 								playfx(level._effect["upgrade_aquired"], fx_org);
 								level thread zm::disable_end_game_intermission(1.5);

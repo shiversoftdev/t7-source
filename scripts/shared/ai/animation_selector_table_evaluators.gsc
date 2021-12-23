@@ -258,7 +258,7 @@ private function evaluatehumanturnanimations(entity, animations)
 		}
 	#/
 	/#
-		record3dtext("" + gettime() + "", entity.origin, (1, 0.5, 0), "", entity);
+		record3dtext(("" + gettime()) + "", entity.origin, (1, 0.5, 0), "", entity);
 	#/
 	if(animations.size > 0)
 	{

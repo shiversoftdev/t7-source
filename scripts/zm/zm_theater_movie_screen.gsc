@@ -62,7 +62,7 @@ function monitorcurtain(curtorg)
 	clip = getent(self.target, "targetname");
 	while(isdefined(clip))
 	{
-		if(abs(curtorg[0] - self.origin[0]) >= 38)
+		if((abs(curtorg[0] - self.origin[0])) >= 38)
 		{
 			clip connectpaths();
 			clip notsolid();

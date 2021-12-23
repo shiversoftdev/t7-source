@@ -51,7 +51,7 @@ function __init__()
 				{
 					firstperson = 1;
 				}
-				if(index % 2 == 0)
+				if((index % 2) == 0)
 				{
 					islouder = 0;
 				}
@@ -79,7 +79,7 @@ function checksurfacetypeiscorrect(movetype, surfacetype)
 	/#
 		if(!isdefined(level.playerfootsounds[movetype][surfacetype]))
 		{
-			println("" + surfacetype + "");
+			println(("" + surfacetype) + "");
 			println("");
 			println("");
 			arraykeys = getarraykeys(level.playerfootsounds[movetype]);
@@ -286,7 +286,7 @@ function missing_ai_footstep_callback()
 		{
 			type = "";
 		}
-		println("" + type + "" + self._aitype + "");
+		println(((("" + type) + "") + self._aitype) + "");
 	#/
 }
 

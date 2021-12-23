@@ -78,7 +78,7 @@ function __main__()
 	Parameters: 1
 	Flags: Linked
 */
-function function_c4641d12(var_44b25b5c)
+function function_c4641d12(is_powered)
 {
 	level.var_1c602ba8 = struct::get_array("s_pap_tp");
 	level.pap_machine = self;
@@ -127,7 +127,7 @@ function function_c4641d12(var_44b25b5c)
 			{
 				wait(0.05);
 			}
-			e_clip = getent("pap_" + level.var_94c82bf8[level.var_2eccab0d].script_noteworthy + "_clip", "targetname");
+			e_clip = getent(("pap_" + level.var_94c82bf8[level.var_2eccab0d].script_noteworthy) + "_clip", "targetname");
 			e_clip function_2209afdf();
 			e_clip solid();
 			var_4a6273cc = getent("pap_debris_" + level.var_94c82bf8[level.var_2eccab0d].script_noteworthy, "targetname");
@@ -152,7 +152,7 @@ function function_c4641d12(var_44b25b5c)
 			self.zbarrier waittill(#"leave_anim_done");
 			var_4a6273cc = getent("pap_debris_" + level.var_94c82bf8[level.var_2eccab0d].script_noteworthy, "targetname");
 			var_4a6273cc hide();
-			e_clip = getent("pap_" + level.var_94c82bf8[level.var_2eccab0d].script_noteworthy + "_clip", "targetname");
+			e_clip = getent(("pap_" + level.var_94c82bf8[level.var_2eccab0d].script_noteworthy) + "_clip", "targetname");
 			e_clip notsolid();
 			var_3c7c9ebd clientfield::increment("pap_tp_fx");
 			var_94e7d6ca clientfield::increment("pap_tp_fx");
@@ -164,13 +164,13 @@ function function_c4641d12(var_44b25b5c)
 			exploder::exploder(var_56f90684);
 			self.origin = var_528227ee + vectorscale((0, 0, 1), 32);
 			self.angles = var_39796348;
-			self.zbarrier.origin = var_528227ee + vectorscale((0, 0, -1), 16);
+			self.zbarrier.origin = var_528227ee + (vectorscale((0, 0, -1), 16));
 			self.zbarrier.angles = var_39796348;
 			self thread function_5f17a55c();
 			wait(0.05);
 			e_brush = getent("pap_clip", "targetname");
-			var_f72d376e = vectornormalize(anglestoforward(level.var_94c82bf8[level.var_2eccab0d].angles + vectorscale((0, -1, 0), 90))) * 16;
-			e_brush.origin = var_528227ee + var_f72d376e + vectorscale((0, 0, 1), 64);
+			var_f72d376e = (vectornormalize(anglestoforward(level.var_94c82bf8[level.var_2eccab0d].angles + (vectorscale((0, -1, 0), 90))))) * 16;
+			e_brush.origin = (var_528227ee + var_f72d376e) + vectorscale((0, 0, 1), 64);
 			e_brush.angles = var_39796348 + vectorscale((0, 1, 0), 90);
 			e_brush function_88c193db();
 			self.zbarrier _zm_pack_a_punch::set_state_arriving();
@@ -259,7 +259,7 @@ function function_5f17a55c()
 function function_53bc4f86(pap_machine)
 {
 	e_clip = getent(self.script_string, "targetname");
-	e_clip.targetname = "pap_" + self.script_noteworthy + "_clip";
+	e_clip.targetname = ("pap_" + self.script_noteworthy) + "_clip";
 	var_4a6273cc = function_23193d81(self.script_noteworthy);
 	var_4a6273cc hide();
 	s_unitrigger_stub = spawnstruct();
@@ -430,7 +430,7 @@ function function_eb56512()
 	var_fc5d165 = arraygetclosest(s_pap_location.origin, level.var_94c82bf8);
 	level.var_c9f5f61 = getentarray(s_pap_location.target, "targetname");
 	scene::add_scene_func("p7_fxanim_zm_castle_pap_complete_reform_bundle", &function_335f66d5, "play");
-	var_fc5d165.origin = var_fc5d165.origin + vectorscale((0, 0, -1), 16);
+	var_fc5d165.origin = var_fc5d165.origin + (vectorscale((0, 0, -1), 16));
 	var_fc5d165 scene::play("p7_fxanim_zm_castle_pap_complete_reform_bundle");
 	var_fc5d165.origin = var_fc5d165.origin + vectorscale((0, 0, 1), 16);
 	level.var_2eccab0d = var_fc5d165.script_int;
@@ -438,18 +438,18 @@ function function_eb56512()
 	var_39796348 = level.var_94c82bf8[level.var_2eccab0d].angles;
 	level.pap_machine.origin = var_528227ee + vectorscale((0, 0, 1), 32);
 	level.pap_machine.angles = var_39796348;
-	level.pap_machine.zbarrier.origin = var_528227ee + vectorscale((0, 0, -1), 16);
+	level.pap_machine.zbarrier.origin = var_528227ee + (vectorscale((0, 0, -1), 16));
 	level.pap_machine.zbarrier.angles = var_39796348;
 	e_brush = getent("pap_clip", "targetname");
-	var_f72d376e = vectornormalize(anglestoforward(var_fc5d165.angles + vectorscale((0, -1, 0), 90))) * 16;
-	e_brush.origin = var_528227ee + var_f72d376e + vectorscale((0, 0, 1), 64);
+	var_f72d376e = (vectornormalize(anglestoforward(var_fc5d165.angles + (vectorscale((0, -1, 0), 90))))) * 16;
+	e_brush.origin = (var_528227ee + var_f72d376e) + vectorscale((0, 0, 1), 64);
 	e_brush.angles = var_39796348 + vectorscale((0, 1, 0), 90);
 	e_brush function_88c193db();
 	exploder::exploder(level.var_22ce1993[level.var_2eccab0d]);
 	exploder::exploder_stop(var_9e129aa9);
 	level.pap_machine.zbarrier thread function_a8c41b9();
 	level.pap_machine.zbarrier _zm_pack_a_punch::set_state_power_on();
-	e_clip = getent("pap_" + s_pap_location.script_noteworthy + "_clip", "targetname");
+	e_clip = getent(("pap_" + s_pap_location.script_noteworthy) + "_clip", "targetname");
 	e_clip notsolid();
 	exploder::exploder(var_6eb9e3e5[s_pap_location.script_noteworthy]);
 }
@@ -509,13 +509,13 @@ function function_335f66d5()
 function function_6591f9c7(var_b9d22a4b)
 {
 	level.var_e1ee8457++;
-	str_scenedef = "p7_fxanim_zm_castle_pap_part" + self.script_int + "_depart_bundle";
+	str_scenedef = ("p7_fxanim_zm_castle_pap_part" + self.script_int) + "_depart_bundle";
 	scene::play(str_scenedef, self);
-	var_f7c4d7b5 = "s_pap_chunk_" + var_b9d22a4b.script_noteworthy + self.script_int;
+	var_f7c4d7b5 = ("s_pap_chunk_" + var_b9d22a4b.script_noteworthy) + self.script_int;
 	var_5e73f984 = struct::get(var_f7c4d7b5, "targetname");
 	self.origin = var_5e73f984.origin;
 	self.angles = var_5e73f984.angles;
-	str_scenedef = "p7_fxanim_zm_castle_pap_part" + self.script_int + "_arrive_bundle";
+	str_scenedef = ("p7_fxanim_zm_castle_pap_part" + self.script_int) + "_arrive_bundle";
 	scene::play(str_scenedef, self);
 	foreach(var_ff243644, s_pap_location in level.var_1c602ba8)
 	{

@@ -110,7 +110,7 @@ function spawn_manager_can_spawn(spawngroupsize)
 	canspawngroup = activefree >= spawngroupsize && totalfree >= spawngroupsize && spawngroupsize > 0;
 	globalfree = level.spawn_manager_max_ai - level.spawn_manager_active_ai;
 	/#
-		assert(self.enable == level flag::get("" + self.sm_id + ""), "");
+		assert(self.enable == (level flag::get(("" + self.sm_id) + "")), "");
 	#/
 	if(self.script_forcespawn == 0)
 	{
@@ -135,7 +135,7 @@ function spawn_manager_spawn(maxdelay)
 	while(true)
 	{
 		ai = self spawner::spawn();
-		if(isdefined(ai) || gettime() - start > 1000 * maxdelay)
+		if(isdefined(ai) || (gettime() - start) > (1000 * maxdelay))
 		{
 			return ai;
 		}
@@ -290,7 +290,7 @@ function check_name(str_name)
 				if(sm.targetname === str_name || sm.name === str_name)
 				{
 					/#
-						assertmsg("" + str_name + "" + self.origin + "" + sm.origin);
+						assertmsg((((("" + str_name) + "") + self.origin) + "") + sm.origin);
 					#/
 				}
 			}
@@ -545,9 +545,9 @@ function spawn_manager_think()
 	isfirsttime = 1;
 	self.allspawners = getentarray(self.target, "targetname");
 	/#
-		assert(self.allspawners.size, "" + self.sm_id + "");
+		assert(self.allspawners.size, ("" + self.sm_id) + "");
 	#/
-	level flag::wait_till("sm_" + self.sm_id + "_enabled");
+	level flag::wait_till(("sm_" + self.sm_id) + "_enabled");
 	util::script_delay();
 	self spawn_manager_setup();
 	b_spawn_up = 1;
@@ -606,7 +606,7 @@ function spawn_manager_think()
 						spawnerfree = current_spawner.sm_active_count_max - current_spawner.activeai.size;
 						if(spawnerfree >= self.sm_group_size)
 						{
-							if(isdefined(current_spawner.spawnflags) && current_spawner.spawnflags & 32 == 32)
+							if(isdefined(current_spawner.spawnflags) && (current_spawner.spawnflags & 32) == 32)
 							{
 								priority_spawners[priority_spawners.size] = current_spawner;
 								continue;
@@ -625,7 +625,7 @@ function spawn_manager_think()
 					{
 						spawner = array::random(potential_spawners);
 					}
-					if(!(isdefined(spawner.spawnflags) && spawner.spawnflags & 64 == 64) && spawner.count < self.sm_group_size)
+					if(!(isdefined(spawner.spawnflags) && (spawner.spawnflags & 64) == 64) && spawner.count < self.sm_group_size)
 					{
 						self.sm_group_size = spawner.count;
 					}
@@ -669,15 +669,15 @@ function spawn_manager_think()
 		}
 		wait(0.05);
 		/#
-			assert(!level flag::get("" + self.sm_id + ""), "");
+			assert(!level flag::get(("" + self.sm_id) + ""), "");
 		#/
 		/#
-			assert(!level flag::get("" + self.sm_id + ""), "");
+			assert(!level flag::get(("" + self.sm_id) + ""), "");
 		#/
 		if(!(isdefined(self.script_forcespawn) && self.script_forcespawn))
 		{
 			numplayers = max(getplayers().size, 1);
-			wait(laststand::player_num_in_laststand() / numplayers * 8);
+			wait((laststand::player_num_in_laststand() / numplayers) * 8);
 		}
 	}
 	self spawn_manager_flag_complete();
@@ -743,15 +743,15 @@ function spawn_manager_kill_think()
 	sm_id = self.sm_id;
 	a_spawners = self.allspawners;
 	a_active_ai = self.activeai;
-	level flag::clear("sm_" + sm_id + "_enabled");
-	level flag::set("sm_" + sm_id + "_killed");
-	level flag::set("sm_" + sm_id + "_complete");
+	level flag::clear(("sm_" + sm_id) + "_enabled");
+	level flag::set(("sm_" + sm_id) + "_killed");
+	level flag::set(("sm_" + sm_id) + "_complete");
 	array::delete_all(a_spawners);
 	if(a_active_ai.size)
 	{
 		array::wait_till(a_active_ai, "death");
 	}
-	level flag::set("sm_" + sm_id + "_cleared");
+	level flag::set(("sm_" + sm_id) + "_cleared");
 	level.spawn_managers = array::remove_undefined(level.spawn_managers);
 }
 
@@ -974,7 +974,7 @@ function spawn_manager_wait()
 		diff = self.script_wait_max - self.script_wait_min;
 		if(abs(diff) > 0)
 		{
-			wait(randomfloatrange(self.script_wait_min, self.script_wait_min + diff * coop_scalar));
+			wait(randomfloatrange(self.script_wait_min, self.script_wait_min + (diff * coop_scalar)));
 		}
 		else
 		{
@@ -999,10 +999,10 @@ function spawn_manager_wait()
 */
 function spawn_manager_flags_setup()
 {
-	level flag::init("sm_" + self.sm_id + "_enabled");
-	level flag::init("sm_" + self.sm_id + "_complete");
-	level flag::init("sm_" + self.sm_id + "_killed");
-	level flag::init("sm_" + self.sm_id + "_cleared");
+	level flag::init(("sm_" + self.sm_id) + "_enabled");
+	level flag::init(("sm_" + self.sm_id) + "_complete");
+	level flag::init(("sm_" + self.sm_id) + "_killed");
+	level flag::init(("sm_" + self.sm_id) + "_cleared");
 }
 
 /*
@@ -1017,9 +1017,9 @@ function spawn_manager_flags_setup()
 function spawn_manager_flag_enabled()
 {
 	/#
-		assert(!level flag::get("" + self.sm_id + ""), "");
+		assert(!level flag::get(("" + self.sm_id) + ""), "");
 	#/
-	level flag::set("sm_" + self.sm_id + "_enabled");
+	level flag::set(("sm_" + self.sm_id) + "_enabled");
 }
 
 /*
@@ -1034,7 +1034,7 @@ function spawn_manager_flag_enabled()
 function spawn_manager_flag_disabled()
 {
 	self.enable = 0;
-	level flag::clear("sm_" + self.sm_id + "_enabled");
+	level flag::clear(("sm_" + self.sm_id) + "_enabled");
 }
 
 /*
@@ -1049,9 +1049,9 @@ function spawn_manager_flag_disabled()
 function spawn_manager_flag_killed()
 {
 	/#
-		assert(!level flag::get("" + self.sm_id + ""), "");
+		assert(!level flag::get(("" + self.sm_id) + ""), "");
 	#/
-	level flag::set("sm_" + self.sm_id + "_killed");
+	level flag::set(("sm_" + self.sm_id) + "_killed");
 }
 
 /*
@@ -1066,9 +1066,9 @@ function spawn_manager_flag_killed()
 function spawn_manager_flag_complete()
 {
 	/#
-		assert(!level flag::get("" + self.sm_id + ""), "");
+		assert(!level flag::get(("" + self.sm_id) + ""), "");
 	#/
-	level flag::set("sm_" + self.sm_id + "_complete");
+	level flag::set(("sm_" + self.sm_id) + "_complete");
 }
 
 /*
@@ -1083,9 +1083,9 @@ function spawn_manager_flag_complete()
 function spawn_manager_flag_cleared()
 {
 	/#
-		assert(!level flag::get("" + self.sm_id + ""), "");
+		assert(!level flag::get(("" + self.sm_id) + ""), "");
 	#/
-	level flag::set("sm_" + self.sm_id + "_cleared");
+	level flag::set(("sm_" + self.sm_id) + "_cleared");
 }
 
 /*
@@ -1120,16 +1120,16 @@ function use_trig_when_complete(spawn_manager_targetname, trig_name, trig_key, o
 	{
 		trigger = getent(trig_name, trig_key);
 		/#
-			assert(isdefined(trigger), "" + trig_key + "" + trig_name + "");
+			assert(isdefined(trigger), ((("" + trig_key) + "") + trig_name) + "");
 		#/
 		trigger endon(#"trigger");
 	}
-	if(level flag::exists("sm_" + spawn_manager_targetname + "_enabled"))
+	if(level flag::exists(("sm_" + spawn_manager_targetname) + "_enabled"))
 	{
-		level flag::wait_till("sm_" + spawn_manager_targetname + "_complete");
+		level flag::wait_till(("sm_" + spawn_manager_targetname) + "_complete");
 		trigger::use(trig_name, trig_key);
 	}
-	assertmsg("" + spawn_manager_targetname + "");
+	assertmsg(("" + spawn_manager_targetname) + "");
 }
 
 /*
@@ -1147,16 +1147,16 @@ function use_trig_when_cleared(spawn_manager_targetname, trig_name, trig_key, on
 	{
 		trigger = getent(trig_name, trig_key);
 		/#
-			assert(isdefined(trigger), "" + trig_key + "" + trig_name + "");
+			assert(isdefined(trigger), ((("" + trig_key) + "") + trig_name) + "");
 		#/
 		trigger endon(#"trigger");
 	}
-	if(level flag::exists("sm_" + spawn_manager_targetname + "_enabled"))
+	if(level flag::exists(("sm_" + spawn_manager_targetname) + "_enabled"))
 	{
-		level flag::wait_till("sm_" + spawn_manager_targetname + "_cleared");
+		level flag::wait_till(("sm_" + spawn_manager_targetname) + "_cleared");
 		trigger::use(trig_name, trig_key);
 	}
-	assertmsg("" + spawn_manager_targetname + "");
+	assertmsg(("" + spawn_manager_targetname) + "");
 }
 
 /*
@@ -1174,16 +1174,16 @@ function use_trig_when_enabled(spawn_manager_targetname, trig_name, trig_key, on
 	{
 		trigger = getent(trig_name, trig_key);
 		/#
-			assert(isdefined(trigger), "" + trig_key + "" + trig_name + "");
+			assert(isdefined(trigger), ((("" + trig_key) + "") + trig_name) + "");
 		#/
 		trigger endon(#"trigger");
 	}
-	if(level flag::exists("sm_" + spawn_manager_targetname + "_enabled"))
+	if(level flag::exists(("sm_" + spawn_manager_targetname) + "_enabled"))
 	{
-		level flag::wait_till("sm_" + spawn_manager_targetname + "_enabled");
+		level flag::wait_till(("sm_" + spawn_manager_targetname) + "_enabled");
 		trigger::use(trig_name, trig_key);
 	}
-	assertmsg("" + spawn_manager_targetname + "");
+	assertmsg(("" + spawn_manager_targetname) + "");
 }
 
 /*
@@ -1201,7 +1201,7 @@ function run_func_when_complete(spawn_manager_targetname, process, ent, var1, va
 		assert(isdefined(process), "");
 	#/
 	/#
-		assert(level flag::exists("" + spawn_manager_targetname + ""), "" + spawn_manager_targetname + "");
+		assert(level flag::exists(("" + spawn_manager_targetname) + ""), ("" + spawn_manager_targetname) + "");
 	#/
 	wait_till_complete(spawn_manager_targetname);
 	util::single_func(ent, process, var1, var2, var3, var4, var5);
@@ -1222,7 +1222,7 @@ function run_func_when_cleared(spawn_manager_targetname, process, ent, var1, var
 		assert(isdefined(process), "");
 	#/
 	/#
-		assert(level flag::exists("" + spawn_manager_targetname + ""), "" + spawn_manager_targetname + "");
+		assert(level flag::exists(("" + spawn_manager_targetname) + ""), ("" + spawn_manager_targetname) + "");
 	#/
 	wait_till_cleared(spawn_manager_targetname);
 	util::single_func(ent, process, var1, var2, var3, var4, var5);
@@ -1243,7 +1243,7 @@ function run_func_when_enabled(spawn_manager_targetname, process, ent, var1, var
 		assert(isdefined(process), "");
 	#/
 	/#
-		assert(level flag::exists("" + spawn_manager_targetname + ""), "" + spawn_manager_targetname + "");
+		assert(level flag::exists(("" + spawn_manager_targetname) + ""), ("" + spawn_manager_targetname) + "");
 	#/
 	wait_till_enabled(spawn_manager_targetname);
 	util::single_func(ent, process, var1, var2, var3, var4, var5);
@@ -1260,7 +1260,7 @@ function run_func_when_enabled(spawn_manager_targetname, process, ent, var1, var
 */
 function enable(spawn_manager_targetname, no_assert)
 {
-	if(level flag::exists("sm_" + spawn_manager_targetname + "_enabled"))
+	if(level flag::exists(("sm_" + spawn_manager_targetname) + "_enabled"))
 	{
 		foreach(var_caeb0bbe, sm in level.spawn_managers)
 		{
@@ -1274,7 +1274,7 @@ function enable(spawn_manager_targetname, no_assert)
 	else if(!(isdefined(no_assert) && no_assert))
 	{
 		/#
-			assertmsg("" + spawn_manager_targetname + "");
+			assertmsg(("" + spawn_manager_targetname) + "");
 		#/
 	}
 }
@@ -1290,7 +1290,7 @@ function enable(spawn_manager_targetname, no_assert)
 */
 function disable(spawn_manager_targetname, no_assert)
 {
-	if(level flag::exists("sm_" + spawn_manager_targetname + "_enabled"))
+	if(level flag::exists(("sm_" + spawn_manager_targetname) + "_enabled"))
 	{
 		foreach(var_d0107f70, sm in level.spawn_managers)
 		{
@@ -1304,7 +1304,7 @@ function disable(spawn_manager_targetname, no_assert)
 	else if(!(isdefined(no_assert) && no_assert))
 	{
 		/#
-			assertmsg("" + spawn_manager_targetname + "");
+			assertmsg(("" + spawn_manager_targetname) + "");
 		#/
 	}
 }
@@ -1320,7 +1320,7 @@ function disable(spawn_manager_targetname, no_assert)
 */
 function kill(spawn_manager_targetname, no_assert)
 {
-	if(level flag::exists("sm_" + spawn_manager_targetname + "_enabled"))
+	if(level flag::exists(("sm_" + spawn_manager_targetname) + "_enabled"))
 	{
 		foreach(var_341f5413, sm in level.spawn_managers)
 		{
@@ -1335,7 +1335,7 @@ function kill(spawn_manager_targetname, no_assert)
 	else if(!(isdefined(no_assert) && no_assert))
 	{
 		/#
-			assertmsg("" + spawn_manager_targetname + "");
+			assertmsg(("" + spawn_manager_targetname) + "");
 		#/
 	}
 }
@@ -1351,16 +1351,16 @@ function kill(spawn_manager_targetname, no_assert)
 */
 function is_enabled(spawn_manager_targetname)
 {
-	if(level flag::exists("sm_" + spawn_manager_targetname + "_enabled"))
+	if(level flag::exists(("sm_" + spawn_manager_targetname) + "_enabled"))
 	{
-		if(level flag::get("sm_" + spawn_manager_targetname + "_enabled"))
+		if(level flag::get(("sm_" + spawn_manager_targetname) + "_enabled"))
 		{
 			return 1;
 		}
 		return 0;
 	}
 	/#
-		assertmsg("" + spawn_manager_targetname + "");
+		assertmsg(("" + spawn_manager_targetname) + "");
 	#/
 }
 
@@ -1375,16 +1375,16 @@ function is_enabled(spawn_manager_targetname)
 */
 function is_complete(spawn_manager_targetname)
 {
-	if(level flag::exists("sm_" + spawn_manager_targetname + "_enabled"))
+	if(level flag::exists(("sm_" + spawn_manager_targetname) + "_enabled"))
 	{
-		if(level flag::get("sm_" + spawn_manager_targetname + "_complete"))
+		if(level flag::get(("sm_" + spawn_manager_targetname) + "_complete"))
 		{
 			return 1;
 		}
 		return 0;
 	}
 	/#
-		assertmsg("" + spawn_manager_targetname + "");
+		assertmsg(("" + spawn_manager_targetname) + "");
 	#/
 }
 
@@ -1399,16 +1399,16 @@ function is_complete(spawn_manager_targetname)
 */
 function is_cleared(spawn_manager_targetname)
 {
-	if(level flag::exists("sm_" + spawn_manager_targetname + "_enabled"))
+	if(level flag::exists(("sm_" + spawn_manager_targetname) + "_enabled"))
 	{
-		if(level flag::get("sm_" + spawn_manager_targetname + "_cleared"))
+		if(level flag::get(("sm_" + spawn_manager_targetname) + "_cleared"))
 		{
 			return 1;
 		}
 		return 0;
 	}
 	/#
-		assertmsg("" + spawn_manager_targetname + "");
+		assertmsg(("" + spawn_manager_targetname) + "");
 	#/
 }
 
@@ -1423,16 +1423,16 @@ function is_cleared(spawn_manager_targetname)
 */
 function is_killed(spawn_manager_targetname)
 {
-	if(level flag::exists("sm_" + spawn_manager_targetname + "_enabled"))
+	if(level flag::exists(("sm_" + spawn_manager_targetname) + "_enabled"))
 	{
-		if(level flag::get("sm_" + spawn_manager_targetname + "_killed"))
+		if(level flag::get(("sm_" + spawn_manager_targetname) + "_killed"))
 		{
 			return 1;
 		}
 		return 0;
 	}
 	/#
-		assertmsg("" + spawn_manager_targetname + "");
+		assertmsg(("" + spawn_manager_targetname) + "");
 	#/
 }
 
@@ -1447,11 +1447,11 @@ function is_killed(spawn_manager_targetname)
 */
 function wait_till_cleared(spawn_manager_targetname)
 {
-	if(level flag::exists("sm_" + spawn_manager_targetname + "_enabled"))
+	if(level flag::exists(("sm_" + spawn_manager_targetname) + "_enabled"))
 	{
-		level flag::wait_till("sm_" + spawn_manager_targetname + "_cleared");
+		level flag::wait_till(("sm_" + spawn_manager_targetname) + "_cleared");
 	}
-	assertmsg("" + spawn_manager_targetname + "");
+	assertmsg(("" + spawn_manager_targetname) + "");
 }
 
 /*
@@ -1471,12 +1471,12 @@ function wait_till_ai_remaining(spawn_manager_targetname, count_to_reach)
 	/#
 		assert(count_to_reach, "");
 	#/
-	if(level flag::exists("sm_" + spawn_manager_targetname + "_enabled"))
+	if(level flag::exists(("sm_" + spawn_manager_targetname) + "_enabled"))
 	{
-		level flag::wait_till("sm_" + spawn_manager_targetname + "_complete");
+		level flag::wait_till(("sm_" + spawn_manager_targetname) + "_complete");
 	}
-	assertmsg("" + spawn_manager_targetname + "");
-	if(level flag::get("sm_" + spawn_manager_targetname + "_cleared"))
+	assertmsg(("" + spawn_manager_targetname) + "");
+	if(level flag::get(("sm_" + spawn_manager_targetname) + "_cleared"))
 	{
 		return;
 	}
@@ -1497,11 +1497,11 @@ function wait_till_ai_remaining(spawn_manager_targetname, count_to_reach)
 */
 function wait_till_complete(spawn_manager_targetname)
 {
-	if(level flag::exists("sm_" + spawn_manager_targetname + "_enabled"))
+	if(level flag::exists(("sm_" + spawn_manager_targetname) + "_enabled"))
 	{
-		level flag::wait_till("sm_" + spawn_manager_targetname + "_complete");
+		level flag::wait_till(("sm_" + spawn_manager_targetname) + "_complete");
 	}
-	assertmsg("" + spawn_manager_targetname + "");
+	assertmsg(("" + spawn_manager_targetname) + "");
 }
 
 /*
@@ -1515,11 +1515,11 @@ function wait_till_complete(spawn_manager_targetname)
 */
 function wait_till_enabled(spawn_manager_targetname)
 {
-	if(level flag::exists("sm_" + spawn_manager_targetname + "_enabled"))
+	if(level flag::exists(("sm_" + spawn_manager_targetname) + "_enabled"))
 	{
-		level flag::wait_till("sm_" + spawn_manager_targetname + "_enabled");
+		level flag::wait_till(("sm_" + spawn_manager_targetname) + "_enabled");
 	}
-	assertmsg("" + spawn_manager_targetname + "");
+	assertmsg(("" + spawn_manager_targetname) + "");
 }
 
 /*
@@ -1533,11 +1533,11 @@ function wait_till_enabled(spawn_manager_targetname)
 */
 function wait_till_spawned_count(spawn_manager_targetname, count)
 {
-	if(level flag::exists("sm_" + spawn_manager_targetname + "_enabled"))
+	if(level flag::exists(("sm_" + spawn_manager_targetname) + "_enabled"))
 	{
-		level flag::wait_till("sm_" + spawn_manager_targetname + "_enabled");
+		level flag::wait_till(("sm_" + spawn_manager_targetname) + "_enabled");
 	}
-	assertmsg("" + spawn_manager_targetname + "");
+	assertmsg(("" + spawn_manager_targetname) + "");
 	spawn_manager = get_spawn_manager_array(spawn_manager_targetname);
 	/#
 		assert(spawn_manager.size, "");

@@ -306,7 +306,7 @@ private function hasaivsaienemy(behaviortreeentity)
 		#/
 		return 0;
 	}
-	if(abs(behaviortreeentity.origin[2] - behaviortreeentity.enemy.origin[2]) > 16)
+	if((abs(behaviortreeentity.origin[2] - behaviortreeentity.enemy.origin[2])) > 16)
 	{
 		/#
 			record3dtext("", behaviortreeentity.origin, (1, 0.5, 0), "", behaviortreeentity, 0.4);
@@ -411,7 +411,7 @@ private function hascloseaivsaienemy(behaviortreeentity)
 	{
 		selfpredictedpos = behaviortreeentity.origin;
 		moveangle = behaviortreeentity.angles[1] + behaviortreeentity getmotionangle();
-		selfpredictedpos = selfpredictedpos + (cos(moveangle), sin(moveangle), 0) * 200 * 0.2;
+		selfpredictedpos = selfpredictedpos + (((cos(moveangle), sin(moveangle), 0) * 200) * 0.2);
 		/#
 			record3dtext("" + distance(selfpredictedpos, animationstartorigin), behaviortreeentity.origin, (1, 0.5, 0), "", behaviortreeentity, 0.4);
 		#/
@@ -446,7 +446,7 @@ private function chooseaivsaimeleeanimations(behaviortreeentity)
 	if(!aivsaimeleebundleexists(behaviortreeentity, attacker_variant, defender_variant))
 	{
 		/#
-			record3dtext("" + behaviortreeentity.archetype + "" + behaviortreeentity.enemy.archetype + "" + attacker_variant + "" + defender_variant, behaviortreeentity.origin, (1, 0.5, 0), "", behaviortreeentity, 0.4);
+			record3dtext((((((("" + behaviortreeentity.archetype) + "") + behaviortreeentity.enemy.archetype) + "") + attacker_variant) + "") + defender_variant, behaviortreeentity.origin, (1, 0.5, 0), "", behaviortreeentity, 0.4);
 		#/
 		return 0;
 	}

@@ -160,7 +160,7 @@ function buildandvalidatefacialanimationlist(localclientnum)
 		foreach(var_a7d99a50, deathanim in deathanims)
 		{
 			/#
-				assert(!isanimlooping(localclientnum, deathanim), "" + deathanim + "");
+				assert(!isanimlooping(localclientnum, deathanim), ("" + deathanim) + "");
 			#/
 		}
 	}
@@ -205,9 +205,9 @@ private function facialanimationthink_getwaittime(localclientnum)
 	}
 	else
 	{
-		distance_factor = distancesq - min_wait_distance_sq / max_wait_distance_sq - min_wait_distance_sq;
+		distance_factor = (distancesq - min_wait_distance_sq) / (max_wait_distance_sq - min_wait_distance_sq);
 	}
-	return max_wait - min_wait * distance_factor + min_wait;
+	return ((max_wait - min_wait) * distance_factor) + min_wait;
 }
 
 /*

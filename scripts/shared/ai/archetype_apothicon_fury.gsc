@@ -407,7 +407,7 @@ function mocompapothiconfuryjukeinit(entity, mocompanim, mocompanimblendouttime,
 	movedeltavector = getmovedelta(mocompanim, 0, 1, entity);
 	landpos = entity localtoworldcoords(movedeltavector);
 	velocity = entity getvelocity();
-	predictedpos = entity.origin + velocity * 0.1;
+	predictedpos = entity.origin + (velocity * 0.1);
 	/#
 		recordcircle(landpos, 8, (0, 0, 1), "", entity);
 		record3dtext("" + distance(predictedpos, landpos), landpos, (0, 0, 1), "");
@@ -461,11 +461,11 @@ function mocompapothiconfuryjukeinit(entity, mocompanim, mocompanimblendouttime,
 	/#
 		if(heightdiff < 0)
 		{
-			record3dtext("" + distance(landpos, landposonground) + "" + entity.animationadjustmentinfoz.stepsize + "" + adjustduration, landposonground, (1, 0.5, 0), "");
+			record3dtext((((("" + distance(landpos, landposonground)) + "") + entity.animationadjustmentinfoz.stepsize) + "") + adjustduration, landposonground, (1, 0.5, 0), "");
 		}
 		else
 		{
-			record3dtext("" + distance(landpos, landposonground) + "" + entity.animationadjustmentinfoz.stepsize + "" + adjustduration, landposonground, (1, 0.5, 0), "");
+			record3dtext((((("" + distance(landpos, landposonground)) + "") + entity.animationadjustmentinfoz.stepsize) + "") + adjustduration, landposonground, (1, 0.5, 0), "");
 		}
 	#/
 }
@@ -566,7 +566,7 @@ private function runbamfreadjustmentanalysis(entity, mocompanim, mocompanimblend
 		{
 			meleeendposition = entity.enemy.origin;
 			enemyforwarddir = anglestoforward(entity.enemy.angles);
-			newmeleeendposition = meleeendposition + enemyforwarddir * randomintrange(30, 50);
+			newmeleeendposition = meleeendposition + (enemyforwarddir * randomintrange(30, 50));
 			newmeleeendposition = getclosestpointonnavmesh(newmeleeendposition, 20, 50);
 			if(isdefined(newmeleeendposition))
 			{
@@ -611,13 +611,13 @@ private function runbamfreadjustmentanalysis(entity, mocompanim, mocompanimblend
 		traceend = undefined;
 		if(zdiff < 0)
 		{
-			traceoffsetabove = zdiff * -1 + 30;
+			traceoffsetabove = (zdiff * -1) + 30;
 			tracestart = meleeendposition + (0, 0, traceoffsetabove);
-			traceend = meleeendposition + vectorscale((0, 0, -1), 70);
+			traceend = meleeendposition + (vectorscale((0, 0, -1), 70));
 		}
 		else
 		{
-			traceoffsetbelow = zdiff * -1 - 30;
+			traceoffsetbelow = (zdiff * -1) - 30;
 			tracestart = meleeendposition + vectorscale((0, 0, 1), 70);
 			traceend = meleeendposition + (0, 0, traceoffsetbelow);
 		}
@@ -654,11 +654,11 @@ private function runbamfreadjustmentanalysis(entity, mocompanim, mocompanimblend
 		/#
 			if(heightdiff < 0)
 			{
-				record3dtext("" + entity.animationadjustmentinfoz2.stepsize + "" + adjustduration, landposonground, (1, 0.5, 0), "");
+				record3dtext((("" + entity.animationadjustmentinfoz2.stepsize) + "") + adjustduration, landposonground, (1, 0.5, 0), "");
 			}
 			else
 			{
-				record3dtext("" + entity.animationadjustmentinfoz2.stepsize + "" + adjustduration, landposonground, (1, 0.5, 0), "");
+				record3dtext((("" + entity.animationadjustmentinfoz2.stepsize) + "") + adjustduration, landposonground, (1, 0.5, 0), "");
 			}
 		#/
 		meleeendposition = (meleeendposition[0], meleeendposition[1], landpos[2]);
@@ -673,7 +673,7 @@ private function runbamfreadjustmentanalysis(entity, mocompanim, mocompanimblend
 		entity.animationadjustmentinfoxy.xydirection = xydirection;
 		entity.animationadjustmentinfoxy.adjustmentstarted = 1;
 		/#
-			record3dtext("" + xydistance + "" + entity.animationadjustmentinfoxy.stepsize + "", meleeendposition, (0, 0, 1), "");
+			record3dtext(((("" + xydistance) + "") + entity.animationadjustmentinfoxy.stepsize) + "", meleeendposition, (0, 0, 1), "");
 		#/
 		entity.animationadjustmentinfoz.readjustmentstarted = 1;
 	}
@@ -720,13 +720,13 @@ function mocompapothiconfurybamfinit(entity, mocompanim, mocompanimblendouttime,
 	traceend = undefined;
 	if(zdiff < 0)
 	{
-		traceoffsetabove = zdiff * -1 + 30;
+		traceoffsetabove = (zdiff * -1) + 30;
 		tracestart = landpos + (0, 0, traceoffsetabove);
-		traceend = landpos + vectorscale((0, 0, -1), 70);
+		traceend = landpos + (vectorscale((0, 0, -1), 70));
 	}
 	else
 	{
-		traceoffsetbelow = zdiff * -1 - 30;
+		traceoffsetbelow = (zdiff * -1) - 30;
 		tracestart = landpos + vectorscale((0, 0, 1), 70);
 		traceend = landpos + (0, 0, traceoffsetbelow);
 	}
@@ -784,11 +784,11 @@ function mocompapothiconfurybamfinit(entity, mocompanim, mocompanimblendouttime,
 	/#
 		if(heightdiff < 0)
 		{
-			record3dtext("" + distance(landpos, landposonground) + "" + entity.animationadjustmentinfoz.stepsize + "" + adjustduration, landposonground, (1, 0.5, 0), "");
+			record3dtext((((("" + distance(landpos, landposonground)) + "") + entity.animationadjustmentinfoz.stepsize) + "") + adjustduration, landposonground, (1, 0.5, 0), "");
 		}
 		else
 		{
-			record3dtext("" + distance(landpos, landposonground) + "" + entity.animationadjustmentinfoz.stepsize + "" + adjustduration, landposonground, (1, 0.5, 0), "");
+			record3dtext((((("" + distance(landpos, landposonground)) + "") + entity.animationadjustmentinfoz.stepsize) + "") + adjustduration, landposonground, (1, 0.5, 0), "");
 		}
 	#/
 }
@@ -831,7 +831,7 @@ function mocompapothiconfurybamfupdate(entity, mocompanim, mocompanimblendouttim
 			}
 			if(isdefined(entity.animationadjustmentinfoxy))
 			{
-				adjustedorigin = adjustedorigin + entity.animationadjustmentinfoxy.xydirection * entity.animationadjustmentinfoxy.stepsize;
+				adjustedorigin = adjustedorigin + (entity.animationadjustmentinfoxy.xydirection * entity.animationadjustmentinfoxy.stepsize);
 			}
 		}
 		entity forceteleport(adjustedorigin, entity.angles);
@@ -919,7 +919,7 @@ function apothiconshouldmeleecondition(behaviortreeentity)
 	{
 		return 0;
 	}
-	yawtoenemy = angleclamp180(behaviortreeentity.angles[1] - vectortoangles(behaviortreeentity.enemy.origin - behaviortreeentity.origin)[1]);
+	yawtoenemy = angleclamp180(behaviortreeentity.angles[1] - (vectortoangles(behaviortreeentity.enemy.origin - behaviortreeentity.origin)[1]));
 	if(abs(yawtoenemy) > 60)
 	{
 		return 0;
@@ -1025,7 +1025,7 @@ function apothiconcanbamfinternal(entity, bamfafterjuke = 0)
 	{
 		distanceminthresholdsq = 250 * 250;
 	}
-	if(distancetoenemysq > distanceminthresholdsq && distancetoenemysq < 750 * 750)
+	if(distancetoenemysq > distanceminthresholdsq && distancetoenemysq < (750 * 750))
 	{
 		if(!util::within_fov(enemyorigin, entity.enemy.angles, entity.origin, 0.642))
 		{
@@ -1172,7 +1172,7 @@ function apothiconbamfland(entity)
 		entity orientmode("face direction", entity.enemy.origin - entity.origin);
 	}
 	entity clientfield::increment("bamf_land");
-	if(isdefined(entity.enemy) && isplayer(entity.enemy) && distancesquared(entity.enemy.origin, entity.origin) <= 250 * 250)
+	if(isdefined(entity.enemy) && isplayer(entity.enemy) && distancesquared(entity.enemy.origin, entity.origin) <= (250 * 250))
 	{
 		entity.enemy dodamage(25, entity.origin, entity, entity, undefined, "MOD_MELEE");
 	}
@@ -1210,7 +1210,7 @@ function apothiconmoveupdate(entity)
 		entity.move_anim_end_time = undefined;
 		return;
 	}
-	if(!(isdefined(entity.missinglegs) && entity.missinglegs) && gettime() - entity.movetime > 1000)
+	if(!(isdefined(entity.missinglegs) && entity.missinglegs) && (gettime() - entity.movetime) > 1000)
 	{
 		distsq = distance2dsquared(entity.origin, entity.moveorigin);
 		if(distsq < 144)
@@ -1250,7 +1250,7 @@ function apothiconknockdownservice(entity)
 	}
 	velocity = entity getvelocity();
 	predict_time = 0.5;
-	predicted_pos = entity.origin + velocity * predict_time;
+	predicted_pos = entity.origin + (velocity * predict_time);
 	move_dist_sq = distancesquared(predicted_pos, entity.origin);
 	speed = move_dist_sq / predict_time;
 	if(speed >= 10)
@@ -1576,7 +1576,7 @@ function apothiconcanjuke(entity)
 			return 0;
 		}
 	}
-	if(distance2dsquared(entity.origin, entity.enemy.origin) < 250 * 250)
+	if(distance2dsquared(entity.origin, entity.enemy.origin) < (250 * 250))
 	{
 		return 0;
 	}
@@ -1650,14 +1650,14 @@ function apothiconjukeinit(entity)
 function validatejuke(entity, entityradius, jukevector)
 {
 	velocity = entity getvelocity();
-	predictedpos = entity.origin + velocity * 0.1;
+	predictedpos = entity.origin + (velocity * 0.1);
 	jukelandpos = predictedpos + jukevector;
 	if(!isdefined(jukelandpos))
 	{
 		return undefined;
 	}
 	tracestart = jukelandpos + vectorscale((0, 0, 1), 70);
-	traceend = jukelandpos + vectorscale((0, 0, -1), 70);
+	traceend = jukelandpos + (vectorscale((0, 0, -1), 70));
 	trace = groundtrace(tracestart, traceend, 0, entity, 1, 1);
 	landposonground = trace["position"];
 	if(!isdefined(landposonground))

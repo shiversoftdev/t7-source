@@ -562,17 +562,17 @@ function calculate_offset_position(v_origin, v_angles, v_offset)
 	if(v_offset[0])
 	{
 		v_side = anglestoforward(v_angles);
-		v_pos = v_pos + v_offset[0] * v_side;
+		v_pos = v_pos + (v_offset[0] * v_side);
 	}
 	if(v_offset[1])
 	{
 		v_dir = anglestoright(v_angles);
-		v_pos = v_pos + v_offset[1] * v_dir;
+		v_pos = v_pos + (v_offset[1] * v_dir);
 	}
 	if(v_offset[2])
 	{
 		v_up = anglestoup(v_angles);
-		v_pos = v_pos + v_offset[2] * v_up;
+		v_pos = v_pos + (v_offset[2] * v_up);
 	}
 	return v_pos;
 }
@@ -856,16 +856,6 @@ function setup_door_scriptbundle(s_door_bundle, s_door_instance)
 	Parameters: 1
 	Flags: Linked
 */
-function door_open_update()
-{
-System.InvalidOperationException: Stack empty.
-   at System.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
-   at System.Collections.Generic.Stack`1.Pop()
-   at Cerberus.Logic.Decompiler.BuildExpression(ScriptOp startOp) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 1185
-   at Cerberus.Logic.Decompiler.ProcessInstruction(ScriptOp operation, DecompilerBlock block) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 2343
-   at Cerberus.Logic.Decompiler.DecompileBlock(DecompilerBlock decompilerBlock, Int32 tabs) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 998
-   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 222
-/*
 function door_open_update(c_door)
 {
 	str_unlock_method = "default";
@@ -875,34 +865,58 @@ function door_open_update(c_door)
 	}
 	b_auto_close = isdefined(c_door.m_s_bundle.door_closes) && c_door.m_s_bundle.door_closes && (!(isdefined(c_door.m_s_bundle.door_use_trigger) && c_door.m_s_bundle.door_use_trigger));
 	b_hold_open = isdefined(c_door.m_s_bundle.door_use_hold) && c_door.m_s_bundle.door_use_hold;
-
-*/
-
-	/* ======== */
-
-/* 
-	Stack: 
-*/
-	/* ======== */
-
-/* 
-	Blocks: 
-	Cerberus.Logic.BasicBlock at 0x2728, end at 0x2AF1
-	Cerberus.Logic.IfBlock at 0x2766, end at 0x279E
-	Cerberus.Logic.WhileLoop at 0x28AE, end at 0x2AEA
-	Cerberus.Logic.IfBlock at 0x28E2, end at 0x2AD2
-	Cerberus.Logic.IfBlock at 0x2904, end at 0x2ACE
-	Cerberus.Logic.IfBlock at 0x2924, end at 0x2A3E
-	Cerberus.Logic.IfBlock at 0x2946, end at 0x299A
-	Cerberus.Logic.IfBlock at 0x29C2, end at 0x2A3A
-	Cerberus.Logic.ElseIfBlock at 0x2A3E, end at 0x2ABE
-	Cerberus.Logic.IfBlock at 0x2A4E, end at 0x2A9E
-	Cerberus.Logic.ElseBlock at 0x2A9E, end at 0x2ABA
-	Cerberus.Logic.ElseBlock at 0x2ABE, end at 0x2ACE
-	Cerberus.Logic.ElseIfBlock at 0x2AD2, end at 0x2AEA
-*/
-	/* ======== */
-
+	b_manual_close = isdefined(c_door.m_s_bundle.door_use_trigger) && c_door.m_s_bundle.door_use_trigger && (isdefined(c_door.m_s_bundle.door_closes) && c_door.m_s_bundle.door_closes);
+	while(true)
+	{
+		c_door.m_e_trigger waittill(#"trigger", e_who);
+		c_door.m_e_trigger_player = e_who;
+		if(!c_door flag::get("open"))
+		{
+			if(!c_door flag::get("locked"))
+			{
+				if(b_hold_open || b_auto_close)
+				{
+					[[ c_door ]]->open();
+					if(b_hold_open)
+					{
+						e_who player_freeze_in_place(1);
+						e_who disableweapons();
+						e_who disableoffhandweapons();
+					}
+					door_wait_until_clear(c_door, e_who);
+					[[ c_door ]]->close();
+					if(b_hold_open)
+					{
+						wait(0.05);
+						c_door flag::wait_till_clear("animating");
+						e_who player_freeze_in_place(0);
+						e_who enableweapons();
+						e_who enableoffhandweapons();
+					}
+				}
+				else if(str_unlock_method == "key")
+				{
+					if(e_who player_has_key("door"))
+					{
+						e_who player_take_key("door");
+						[[ c_door ]]->open();
+					}
+					else
+					{
+						iprintlnbold("You need a key.");
+					}
+				}
+				else
+				{
+					[[ c_door ]]->open();
+				}
+			}
+		}
+		else if(b_manual_close)
+		{
+			[[ c_door ]]->close();
+		}
+	}
 }
 
 /*
@@ -1029,7 +1043,7 @@ function trigger_wait_until_clear(c_door)
 			self.ents_in_trigger = 0;
 			last_trigger_time = time;
 		}
-		dt = time - last_trigger_time / 1000;
+		dt = (time - last_trigger_time) / 1000;
 		if(dt >= 0.3)
 		{
 			break;

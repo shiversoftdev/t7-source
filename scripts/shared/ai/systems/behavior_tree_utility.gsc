@@ -46,7 +46,7 @@ function registerbehaviortreeactioninternal(actionname, startfuncptr, updatefunc
 		assert(isstring(actionname), "");
 	#/
 	/#
-		assert(!isdefined(level._behaviortreeactions[actionname]), "" + actionname + "");
+		assert(!isdefined(level._behaviortreeactions[actionname]), ("" + actionname) + "");
 	#/
 	level._behaviortreeactions[actionname] = array();
 	if(isdefined(startfuncptr))

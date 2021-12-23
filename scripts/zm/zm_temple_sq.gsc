@@ -233,7 +233,7 @@ function gong_watcher()
 		{
 			if(level._raised_crystals[i])
 			{
-				str_exploder = "fxexp_50" + i + 1;
+				str_exploder = "fxexp_50" + (i + 1);
 				exploder::exploder(str_exploder);
 				util::wait_network_frame();
 			}
@@ -244,7 +244,7 @@ function gong_watcher()
 		}
 		for(i = 0; i < level._raised_crystals.size; i++)
 		{
-			str_exploder = "fxexp_50" + i + 1;
+			str_exploder = "fxexp_50" + (i + 1);
 			exploder::stop_exploder(str_exploder);
 			util::wait_network_frame();
 		}
@@ -269,7 +269,7 @@ function watch_for_gongs_gone_bad()
 		{
 			if(level._raised_crystals[i])
 			{
-				str_exploder = "fxexp_51" + i + 1;
+				str_exploder = "fxexp_51" + (i + 1);
 				exploder::exploder(str_exploder);
 				util::wait_network_frame();
 			}
@@ -279,7 +279,7 @@ function watch_for_gongs_gone_bad()
 		wait(6);
 		for(i = 0; i < level._raised_crystals.size; i++)
 		{
-			str_exploder = "fxexp_51" + i + 1;
+			str_exploder = "fxexp_51" + (i + 1);
 			exploder::stop_exploder(str_exploder);
 			util::wait_network_frame();
 		}
@@ -477,7 +477,7 @@ function sundial_monitor()
 	if(!isdefined(self.original_pos))
 	{
 		self.original_pos = self.origin - anglestoup(self.angles);
-		self.off_pos = self.original_pos - anglestoup(self.angles) * 34;
+		self.off_pos = self.original_pos - (anglestoup(self.angles) * 34);
 	}
 	self.origin = self.off_pos;
 	level._sundial_buttons_pressed = 0;
@@ -506,19 +506,19 @@ function sundial_monitor()
 		amount = 8.5;
 		level waittill(#"timed_stage_75_percent");
 		self playsound("evt_sq_gen_sundial_timer");
-		self moveto(self.origin - anglestoup(self.angles) * amount, 1);
+		self moveto(self.origin - (anglestoup(self.angles) * amount), 1);
 		self thread short_dial_spin();
 		level waittill(#"timed_stage_50_percent");
 		self playsound("evt_sq_gen_sundial_timer");
-		self moveto(self.origin - anglestoup(self.angles) * amount, 1);
+		self moveto(self.origin - (anglestoup(self.angles) * amount), 1);
 		self thread short_dial_spin();
 		level waittill(#"timed_stage_25_percent");
 		self playsound("evt_sq_gen_sundial_timer");
-		self moveto(self.origin - anglestoup(self.angles) * amount, 1);
+		self moveto(self.origin - (anglestoup(self.angles) * amount), 1);
 		self thread short_dial_spin();
 		level waittill(#"timed_stage_10_seconds_to_go");
 		self thread play_one_second_increments();
-		self moveto(self.origin - anglestoup(self.angles) * amount, 10);
+		self moveto(self.origin - (anglestoup(self.angles) * amount), 10);
 		self thread spin_dial();
 		self waittill(#"movedone");
 		level._sundial_active = 0;
@@ -590,7 +590,7 @@ function sundial_button()
 	{
 		self.dont_rethread = 1;
 		self.on_pos = self.origin - anglestoup(self.angles);
-		self.off_pos = self.on_pos - anglestoup(self.angles) * 5.5;
+		self.off_pos = self.on_pos - (anglestoup(self.angles) * 5.5);
 		self moveto(self.off_pos, 0.01);
 	}
 	if(isdefined(self.trigger))
@@ -603,7 +603,7 @@ function sundial_button()
 	self moveto(self.on_pos, 0.25);
 	wait(0.25);
 	buttons = getentarray("sq_sundial_button", "targetname");
-	offset = anglestoforward(self.angles) * 5 - vectorscale((0, 0, 1), 16);
+	offset = (anglestoforward(self.angles) * 5) - vectorscale((0, 0, 1), 16);
 	self.trigger = spawn("trigger_radius_use", self.on_pos + offset, 0, 48, 32);
 	self.trigger triggerignoreteam();
 	self.trigger.radius = 48;
@@ -1085,7 +1085,7 @@ function rotate_skydome(n_time)
 	{
 		var_3557d539 = 360;
 	}
-	n_change = var_3557d539 / n_time / 0.1;
+	n_change = var_3557d539 / (n_time / 0.1);
 	while(var_3557d539 > 0)
 	{
 		level.var_9e9e4a20 = level.var_9e9e4a20 + n_change;
@@ -1358,7 +1358,7 @@ function get_crystal_from_script_int(num)
 */
 function is_crystal_raised(i)
 {
-	if(isdefined(level._raised_crystals[i - 1]) && level._raised_crystals[i - 1] == 1)
+	if(isdefined(level._raised_crystals[i - 1]) && (level._raised_crystals[i - 1]) == 1)
 	{
 		return 1;
 	}
@@ -1472,7 +1472,7 @@ function crystal_shrink_logic(hotsauce)
 	{
 		for(i = 0; i < bounce_path.size; i++)
 		{
-			if("" + bounce_path[i] == "M")
+			if(("" + bounce_path[i]) == "M")
 			{
 				if(zm_sidequests::sidequest_stage_active("sq", "BaG") && !level flag::get("meteorite_shrunk"))
 				{
@@ -1497,7 +1497,7 @@ function crystal_shrink_logic(hotsauce)
 					exploder::exploder("fxexp_529");
 				}
 			}
-			else if("" + bounce_path[i] == "R")
+			else if(("" + bounce_path[i]) == "R")
 			{
 				start playsound("evt_sq_bag_crystal_bounce_fail");
 				do_bounce_off(start, hotsauce);
@@ -1532,12 +1532,12 @@ function crystal_shrink_logic(hotsauce)
 			end playsound("evt_sq_bag_crystal_charge");
 			if(hotsauce)
 			{
-				str_exploder = "fxexp_" + end.script_int + 520;
+				str_exploder = "fxexp_" + (end.script_int + 520);
 				exploder::exploder(str_exploder);
 			}
 			else
 			{
-				str_exploder = "fxexp_" + end.script_int + 530;
+				str_exploder = "fxexp_" + (end.script_int + 530);
 				exploder::exploder(str_exploder);
 			}
 			wait(0.5);
@@ -1627,7 +1627,7 @@ function pack_a_punch_hide()
 	pap_machine_trig linkto(link_ent);
 	level._original_pap_spot = pap_machine_trig.origin;
 	pap_machine linkto(link_ent);
-	link_ent moveto(link_ent.origin + vectorscale((0, 0, -1), 350), 5);
+	link_ent moveto(link_ent.origin + (vectorscale((0, 0, -1), 350)), 5);
 	link_ent waittill(#"movedone");
 	pap_machine_trig unlink();
 	pap_machine unlink();

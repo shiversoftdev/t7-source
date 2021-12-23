@@ -123,7 +123,7 @@ function respawn_loop(v_pos, v_angles)
 		}
 		else
 		{
-			self.m_str_holding_hintstring = "Press ^3[{+usereload}]^7 to drop " + self.m_str_itemname;
+			self.m_str_holding_hintstring = ("Press ^3[{+usereload}]^7 to drop ") + self.m_str_itemname;
 			pickupitem_spawn(v_pos, v_angles);
 		}
 		self waittill(#"respawn_pickupitem");
@@ -151,7 +151,7 @@ function pickupitem_spawn(v_pos, v_angles)
 			playfxontag(self.m_fx_glow, self.m_e_model, "tag_origin");
 		}
 	}
-	self.m_str_pickup_hintstring = "Press and hold ^3[{+activate}]^7 to pick up " + self.m_str_itemname;
+	self.m_str_pickup_hintstring = ("Press and hold ^3[{+activate}]^7 to pick up ") + self.m_str_itemname;
 	if(!isdefined(self.m_e_body_trigger))
 	{
 		e_trigger = cbaseinteractable::spawn_body_trigger(v_pos);
@@ -650,7 +650,7 @@ function carry(e_triggerer)
 */
 function get_drop_prompt()
 {
-	return "Press ^3[{+usereload}]^7 to drop " + self.m_str_itemname;
+	return ("Press ^3[{+usereload}]^7 to drop ") + self.m_str_itemname;
 }
 
 /*
@@ -748,7 +748,7 @@ function show_carry_model(e_triggerer)
 	v_player_angles = v_player_angles + self.m_v_holding_offset_angle;
 	v_player_angles = anglestoforward(v_player_angles);
 	v_angles = e_triggerer.angles + self.m_v_holding_angle;
-	v_origin = v_eye_origin + v_player_angles * self.m_n_holding_distance;
+	v_origin = v_eye_origin + (v_player_angles * self.m_n_holding_distance);
 	if(!isdefined(self.m_str_carry_model))
 	{
 		if(isdefined(self.m_str_modelname))
@@ -769,7 +769,7 @@ function show_carry_model(e_triggerer)
 		v_player_angles = v_player_angles + self.m_v_holding_offset_angle;
 		v_player_angles = anglestoforward(v_player_angles);
 		self.m_e_carry_model.angles = e_triggerer.angles + self.m_v_holding_angle;
-		self.m_e_carry_model.origin = v_eye_origin + v_player_angles * self.m_n_holding_distance;
+		self.m_e_carry_model.origin = v_eye_origin + (v_player_angles * self.m_n_holding_distance);
 		wait(0.05);
 	}
 }

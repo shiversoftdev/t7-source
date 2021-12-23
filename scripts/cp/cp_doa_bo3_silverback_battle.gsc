@@ -147,8 +147,8 @@ function function_fc48f9f3()
 		if(level.doa.round_number < 64)
 		{
 			level.doa.round_number = 64;
-			level.doa.zombie_move_speed = level.doa.zombie_move_speed + level.doa.round_number * level.doa.var_c9e1c854;
-			level.doa.zombie_health = level.doa.zombie_health + level.doa.round_number * level.doa.zombie_health_inc;
+			level.doa.zombie_move_speed = level.doa.zombie_move_speed + (level.doa.round_number * level.doa.var_c9e1c854);
+			level.doa.zombie_health = level.doa.zombie_health + (level.doa.round_number * level.doa.zombie_health_inc);
 			namespace_d88e3a06::function_7a8a936b();
 			namespace_cdb9a8fe::function_691ef36b();
 			namespace_cdb9a8fe::function_703bb8b2(level.doa.round_number);
@@ -552,7 +552,7 @@ function function_ae39e30a(einflictor, eattacker, idamage, idflags, smeansofdeat
 		{
 			eattacker.doa.var_1f7cae53 = 0;
 		}
-		eattacker.doa.var_1f7cae53 = eattacker.doa.var_1f7cae53 + int(idamage * 0.2);
+		eattacker.doa.var_1f7cae53 = eattacker.doa.var_1f7cae53 + (int(idamage * 0.2));
 	}
 	if(isdefined(einflictor) && einflictor.team == self.team)
 	{
@@ -563,7 +563,7 @@ function function_ae39e30a(einflictor, eattacker, idamage, idflags, smeansofdeat
 		idamage = 0;
 	}
 	/#
-		doa_utility::debugmsg("" + self.targetname + "" + self.health - idamage);
+		doa_utility::debugmsg((("" + self.targetname) + "") + (self.health - idamage));
 	#/
 	return idamage;
 }
@@ -618,7 +618,7 @@ function function_fb3b78fe()
 	self useanimtree($generic);
 	while(true)
 	{
-		if(isdefined(self.damagedplayer) && self.damagedplayer && self.damagedplayer < gettime() + 1500)
+		if(isdefined(self.damagedplayer) && self.damagedplayer && self.damagedplayer < (gettime() + 1500))
 		{
 			if(self.var_15a6bfe6 > gettime())
 			{
@@ -969,9 +969,9 @@ function function_f5afb415(var_b84274b8, numattacks = 1)
 		playrumbleonposition("explosion_generic", self.origin);
 		dist = distance(targetorigin, self.origin) + 256;
 		forward = anglestoforward(var_b84274b8.angles);
-		targetspot = var_b84274b8.origin + forward * dist;
+		targetspot = var_b84274b8.origin + (forward * dist);
 		trace = bullettrace(var_b84274b8.origin + vectorscale((0, 0, 1), 30), targetspot + vectorscale((0, 0, 1), 30), 0, undefined);
-		targetspot = trace["position"] + forward * -64;
+		targetspot = trace["position"] + (forward * -64);
 		distsq = distancesquared(var_b84274b8.origin, targetspot);
 		var_65ef86fe = math::clamp(int(distsq / sqr64), 1, 9999);
 		traveltime = math::clamp(var_65ef86fe * getdvarfloat("scr_boss_silverback_travel_time64", 0.005), 0, 0.7);
@@ -1044,7 +1044,7 @@ function function_615e73a(var_b84274b8, numattacks = 1)
 		self thread namespace_eaa992c::function_285a2999("crater_dust");
 		playrumbleonposition("explosion_generic", self.origin);
 		height = 800;
-		timems = height / 1000 * 3000;
+		timems = (height / 1000) * 3000;
 		var_b84274b8.angles = self.angles;
 		var_b84274b8.origin = self.origin;
 		self linkto(var_b84274b8);
@@ -1151,7 +1151,7 @@ function function_b3eb3a0b(params)
 			self function_615e73a(var_b84274b8, attacks);
 			continue;
 		}
-		if(gettime() >= self.var_dc477b8d && function_e1938709() && isdefined(self.enemy) && randomint(100) < getdvarint("scr_boss_silverback_special_attack_chance_banana", 6) + self.var_b96cf2ea)
+		if(gettime() >= self.var_dc477b8d && function_e1938709() && isdefined(self.enemy) && randomint(100) < (getdvarint("scr_boss_silverback_special_attack_chance_banana", 6) + self.var_b96cf2ea))
 		{
 			banana1 = spawn("script_model", self.origin);
 			banana1.targetname = "banana1";
@@ -1216,7 +1216,7 @@ function function_b830b6d7(linktag, silverback)
 	silverback waittill(#"hash_5825c195");
 	self unlink();
 	forward = anglestoforward(silverback.angles);
-	target_point = silverback.origin + getdvarfloat("scr_boss_banana_influence_forward", 64) * forward + (randomfloatrange(getdvarfloat("scr_boss_banana_incluence_random", 2) * -1, getdvarfloat("scr_boss_banana_incluence_random", 2)), randomfloatrange(getdvarfloat("scr_boss_banana_incluence_random", 2) * -1, getdvarfloat("scr_boss_banana_incluence_random", 2)), getdvarfloat("scr_boss_banana_incluence_up", 130));
+	target_point = (silverback.origin + (getdvarfloat("scr_boss_banana_influence_forward", 64) * forward)) + (randomfloatrange(getdvarfloat("scr_boss_banana_incluence_random", 2) * -1, getdvarfloat("scr_boss_banana_incluence_random", 2)), randomfloatrange(getdvarfloat("scr_boss_banana_incluence_random", 2) * -1, getdvarfloat("scr_boss_banana_incluence_random", 2)), getdvarfloat("scr_boss_banana_incluence_up", 130));
 	vel = vectornormalize(target_point - self.origin);
 	vel = vel * getdvarfloat("scr_boss_banana_velocity", 0.8);
 	self physicslaunch(self.origin, vel);
@@ -1347,7 +1347,7 @@ private function function_a3a6c6d0()
 			if(isdefined(pickup))
 			{
 				distsq = distancesquared(self.origin, pickup.origin);
-				if(distsq < 72 * 72)
+				if(distsq < (72 * 72))
 				{
 					pickup thread doa_pickups::function_6b4a5f81();
 				}
@@ -1463,13 +1463,13 @@ function move_to_position_over_time(destination, timems, elevationdelta)
 {
 	self endon(#"death");
 	frames = timems / 50;
-	delta = destination - self.origin / frames;
+	delta = (destination - self.origin) / frames;
 	stoptime = gettime() + timems;
 	var_4f4b0e1a = 0;
 	if(isdefined(elevationdelta))
 	{
-		deltaz = elevationdelta / frames / 2;
-		stoptimeup = gettime() + timems / 2;
+		deltaz = elevationdelta / (frames / 2);
+		stoptimeup = gettime() + (timems / 2);
 		while(true)
 		{
 			time = gettime();

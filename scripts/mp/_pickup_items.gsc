@@ -254,7 +254,7 @@ function get_item_from_string_perk(perks_string)
 	if(!isdefined(level.perkspecialties[perks_string]))
 	{
 		/#
-			util::error("" + perks_string + "" + self.origin);
+			util::error((("" + perks_string) + "") + self.origin);
 		#/
 		return;
 	}
@@ -769,7 +769,7 @@ function on_touch_weapon(player)
 	{
 		if(had_weapon)
 		{
-			player setweaponammostock(weapon, ammo_in_reserve + self.script_ammo_clip + self.script_ammo_extra);
+			player setweaponammostock(weapon, (ammo_in_reserve + self.script_ammo_clip) + self.script_ammo_extra);
 		}
 		else if(self.script_ammo_clip >= 0)
 		{

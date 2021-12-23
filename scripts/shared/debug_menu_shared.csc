@@ -76,7 +76,7 @@ function set_item_color(localclientnum, index, color)
 	model = getuimodel(parentmodel, "color");
 	if(isvec(color))
 	{
-		color = "" + color[0] * 255 + " " + color[1] * 255 + " " + color[2] * 255;
+		color = ((("" + (color[0] * 255)) + " ") + (color[1] * 255) + " ") + (color[2] * 255);
 	}
 	setuimodelvalue(model, color);
 }

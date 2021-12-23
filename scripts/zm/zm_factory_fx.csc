@@ -153,7 +153,7 @@ function perk_wire_fx_client(clientnum, init_targetname, done_notify)
 		if(isdefined(targ.target))
 		{
 			/#
-				println("" + clientnum + "" + targ.target);
+				println((("" + clientnum) + "") + targ.target);
 			#/
 			target = struct::get(targ.target, "targetname");
 			mover moveto(target.origin, 0.1);
@@ -362,12 +362,12 @@ function get_guide_struct_angles(ent)
 function teleporter_map_light(index, on_msg)
 {
 	level waittill(#"pl1");
-	exploder::exploder("map_lgt_" + level.teleport_pad_names[index] + "_red");
+	exploder::exploder(("map_lgt_" + level.teleport_pad_names[index]) + "_red");
 	level waittill(on_msg);
-	exploder::stop_exploder("map_lgt_" + level.teleport_pad_names[index] + "_red");
-	exploder::exploder("map_lgt_" + level.teleport_pad_names[index] + "_green");
-	level thread scene::play("fxanim_diff_engine_zone_" + level.teleport_pad_names[index] + "1", "targetname");
-	level thread scene::play("fxanim_diff_engine_zone_" + level.teleport_pad_names[index] + "2", "targetname");
+	exploder::stop_exploder(("map_lgt_" + level.teleport_pad_names[index]) + "_red");
+	exploder::exploder(("map_lgt_" + level.teleport_pad_names[index]) + "_green");
+	level thread scene::play(("fxanim_diff_engine_zone_" + level.teleport_pad_names[index]) + "1", "targetname");
+	level thread scene::play(("fxanim_diff_engine_zone_" + level.teleport_pad_names[index]) + "2", "targetname");
 	level thread scene::play("fxanim_powerline_" + level.teleport_pad_names[index], "targetname");
 }
 

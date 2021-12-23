@@ -49,7 +49,7 @@ function function_97bd83a7(localclientnum, oldval, newval, bnewent, binitialsnap
 */
 function function_b2ce2a08(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
-	playfx(localclientnum, level._effect["water_splash"], self.origin + vectorscale((0, 0, -1), 48));
+	playfx(localclientnum, level._effect["water_splash"], self.origin + (vectorscale((0, 0, -1), 48)));
 }
 
 /*

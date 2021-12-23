@@ -72,7 +72,7 @@ function init(s_objdef, o_bundle, e_ent, localclientnum)
 function log(str_msg)
 {
 	/#
-		println([[ self._o_bundle ]]->get_type() + "" + [[ self._o_bundle ]]->get_name() + "" + (isdefined(self._s.name) ? "" + self._s.name : (isdefined("") ? "" + "" : "")) + "" + str_msg);
+		println((((([[ self._o_bundle ]]->get_type()) + "") + ([[ self._o_bundle ]]->get_name()) + "") + (isdefined(self._s.name) ? "" + self._s.name : (isdefined("") ? "" + "" : "")) + "") + str_msg);
 	#/
 }
 
@@ -93,7 +93,7 @@ function error(condition, str_msg)
 		{
 			scriptbundle::error_on_screen(str_msg);
 		}
-		assertmsg([[ self._o_bundle ]]->get_type() + "" + [[ self._o_bundle ]]->get_name() + "" + (isdefined(self._s.name) ? "" + self._s.name : (isdefined("") ? "" + "" : "")) + "" + str_msg);
+		assertmsg((((([[ self._o_bundle ]]->get_type()) + "") + ([[ self._o_bundle ]]->get_name()) + "") + (isdefined(self._s.name) ? "" + self._s.name : (isdefined("") ? "" + "" : "")) + "") + str_msg);
 		thread [[ self._o_bundle ]]->on_error();
 		return 1;
 	}
@@ -313,7 +313,7 @@ function remove_object(o_object)
 function log(str_msg)
 {
 	/#
-		println(self._s.type + "" + self._str_name + "" + str_msg);
+		println((((self._s.type + "") + self._str_name) + "") + str_msg);
 	#/
 }
 
@@ -333,7 +333,7 @@ function error(condition, str_msg)
 		if(self._testing)
 		{
 		}
-		assertmsg(self._s.type + "" + self._str_name + "" + str_msg);
+		assertmsg((((self._s.type + "") + self._str_name) + "") + str_msg);
 		thread [[ self ]]->on_error();
 		return 1;
 	}

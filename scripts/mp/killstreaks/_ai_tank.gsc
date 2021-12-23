@@ -182,7 +182,7 @@ function crateland(crate, category, owner, team, context)
 		return;
 	}
 	origin = crate.origin;
-	cratebottom = bullettrace(origin, origin + vectorscale((0, 0, -1), 50), 0, crate);
+	cratebottom = bullettrace(origin, origin + (vectorscale((0, 0, -1), 50)), 0, crate);
 	if(isdefined(cratebottom))
 	{
 		origin = cratebottom["position"] + (0, 0, 1);
@@ -455,21 +455,21 @@ function tank_think_debug()
 		/#
 			print3d(self.origin, target_text, text_color, text_alpha, text_scale, server_frames_to_persist);
 		#/
-		duration_text = "Duration: " + self.killstreak_end_time - gettime() * 0.001;
+		duration_text = "Duration: " + ((self.killstreak_end_time - gettime()) * 0.001);
 		/#
 			print3d(self.origin + vectorscale((0, 0, 1), 12), duration_text, text_color, text_alpha, text_scale, server_frames_to_persist);
 		#/
 		can_see_text = "Can see: ";
 		if(tank_is_idle)
 		{
-			can_see_text = can_see_text + "---";
+			can_see_text = can_see_text + ("---");
 		}
 		else
 		{
 			can_see_text = can_see_text + (self vehcansee(target_entity) ? "yes" : "no");
 		}
 		/#
-			print3d(self.origin + vectorscale((0, 0, -1), 12), can_see_text, text_color, text_alpha, text_scale, server_frames_to_persist);
+			print3d(self.origin + (vectorscale((0, 0, -1), 12)), can_see_text, text_color, text_alpha, text_scale, server_frames_to_persist);
 		#/
 		movement_type_text = "Movement: ";
 		if(isdefined(self.debug_ai_movement_type))
@@ -478,10 +478,10 @@ function tank_think_debug()
 		}
 		else
 		{
-			movement_type_text = movement_type_text + "---";
+			movement_type_text = movement_type_text + ("---");
 		}
 		/#
-			print3d(self.origin + vectorscale((0, 0, -1), 24), movement_type_text, text_color, text_alpha, text_scale, server_frames_to_persist);
+			print3d(self.origin + (vectorscale((0, 0, -1), 24)), movement_type_text, text_color, text_alpha, text_scale, server_frames_to_persist);
 		#/
 		if(isdefined(self.debug_ai_move_to_point))
 		{
@@ -583,7 +583,7 @@ function kill_monitor()
 		{
 			continue;
 		}
-		if(!self.controlled && last_kill_vo + kill_vo_spacing < gettime())
+		if(!self.controlled && (last_kill_vo + kill_vo_spacing) < gettime())
 		{
 			self killstreaks::play_pilot_dialog_on_owner("kill", "ai_tank_drop", self.killstreak_id);
 			last_kill_vo = gettime();
@@ -742,7 +742,7 @@ function tank_damage_think()
 		self.maxhealth = 999999;
 		self.health = self.maxhealth;
 		/#
-			self.damage_debug = damage + "" + weapon.name + "";
+			self.damage_debug = ((damage + "") + weapon.name) + "";
 		#/
 		if(weapon.isemp && mod == "MOD_GRENADE_SPLASH")
 		{
@@ -777,7 +777,7 @@ function tank_damage_think()
 				{
 					if(attacker hasperk("specialty_armorpiercing"))
 					{
-						damage = damage + int(damage * level.cac_armorpiercing_data);
+						damage = damage + (int(damage * level.cac_armorpiercing_data));
 					}
 				}
 				if(weapon.weapclass == "spread")
@@ -811,7 +811,7 @@ function tank_damage_think()
 			self notify(#"death", attacker, mod, weapon);
 			return;
 		}
-		if(!low_health && self.damagetaken > maxhealth / 1.8)
+		if(!low_health && self.damagetaken > (maxhealth / 1.8))
 		{
 			self killstreaks::play_pilot_dialog_on_owner("damaged", "ai_tank_drop", self.killstreak_id);
 			self thread tank_low_health_fx();
@@ -832,7 +832,7 @@ function tank_damage_think()
 function tank_low_health_fx()
 {
 	self endon(#"death");
-	self.damage_fx = spawn("script_model", self gettagorigin("tag_origin") + vectorscale((0, 0, -1), 14));
+	self.damage_fx = spawn("script_model", self gettagorigin("tag_origin") + (vectorscale((0, 0, -1), 14)));
 	if(!isdefined(self.damage_fx))
 	{
 		return;
@@ -889,7 +889,7 @@ function tank_stun(duration)
 	self notify(#"stunned");
 	self clearvehgoalpos();
 	forward = anglestoforward(self.angles);
-	forward = self.origin + forward * 128;
+	forward = self.origin + (forward * 128);
 	forward = forward - vectorscale((0, 0, 1), 64);
 	self setturrettargetvec(forward);
 	self disablegunnerfiring(0, 1);
@@ -939,7 +939,7 @@ function emp_crazy_death()
 	randomangle = randomint(360);
 	while(time < 1.45)
 	{
-		self setturrettargetvec(self.origin + anglestoforward((randomintrange(305, 315), int(randomangle + time * 180), 0)) * 100);
+		self setturrettargetvec(self.origin + ((anglestoforward((randomintrange(305, 315), int(randomangle + (time * 180)), 0))) * 100));
 		if(time > 0.2)
 		{
 			self fireweapon(1);
@@ -1159,7 +1159,7 @@ function tank_get_player_enemies(on_radar)
 			}
 			if(on_radar)
 			{
-				if(time - player.lastfiretime > 3000 && !tank_has_radar())
+				if((time - player.lastfiretime) > 3000 && !tank_has_radar())
 				{
 					continue;
 				}
@@ -1231,7 +1231,7 @@ function valid_target(target, team, owner)
 		{
 			return 0;
 		}
-		if(isdefined(target.lastspawntime) && gettime() - target.lastspawntime < 3000)
+		if(isdefined(target.lastspawntime) && (gettime() - target.lastspawntime) < 3000)
 		{
 			return 0;
 		}
@@ -1509,9 +1509,9 @@ function watchwater()
 	{
 		wait(0.3);
 		trace = physicstrace(self.origin + (0, 0, 42), self.origin + (0, 0, 12), vectorscale((-1, -1, -1), 2), vectorscale((1, 1, 1), 2), self, 4);
-		inwater = trace["fraction"] < 42 - 36 / 42 - 12 && trace["fraction"] != 1;
-		watertracedistancefromend = 42 - 12 - trace["fraction"] * 42 - 12;
-		static_alpha = min(1, watertracedistancefromend / 36 - 12);
+		inwater = trace["fraction"] < (42 - 36) / (42 - 12) && trace["fraction"] != 1;
+		watertracedistancefromend = (42 - 12) - (trace["fraction"] * (42 - 12));
+		static_alpha = min(1, watertracedistancefromend / (36 - 12));
 		if(isdefined(self.owner) && self.controlled)
 		{
 			self.owner clientfield::set_to_player("static_postfx", (static_alpha > 0 ? 1 : 0));
@@ -1672,10 +1672,10 @@ function tank_debug_health()
 				level.ai_tank_text.alpha = 0;
 				return;
 			}
-			width = self.health / self.maxhealth * 300;
+			width = (self.health / self.maxhealth) * 300;
 			width = int(max(width, 1));
 			level.ai_tank_bar setshader("", width, 8);
-			str = self.health + "" + self.damage_debug;
+			str = (self.health + "") + self.damage_debug;
 			level.ai_tank_text settext(str);
 		}
 	#/

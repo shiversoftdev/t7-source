@@ -278,7 +278,7 @@ function killcam_move(start_origin, end_origin, time)
 	end_angles = (0, 0, 0);
 	if(move_to_dist > 0)
 	{
-		move_to_pos = start_origin + delta * move_to_dist;
+		move_to_pos = start_origin + (delta * move_to_dist);
 		self moveto(move_to_pos, time, 0, time * level.weaponlightninggunkillcamdecelpercent);
 		end_angles = vectortoangles(delta);
 	}

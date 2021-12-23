@@ -34,7 +34,7 @@ function clamp(val, val_min, val_max)
 */
 function linear_map(num, min_a, max_a, min_b, max_b)
 {
-	return clamp(num - min_a / max_a - min_a * max_b - min_b + min_b, min_b, max_b);
+	return clamp((num - min_a) / (max_a - min_a) * (max_b - min_b) + min_b, min_b, max_b);
 }
 
 /*
@@ -49,14 +49,14 @@ function linear_map(num, min_a, max_a, min_b, max_b)
 function lag(desired, curr, k, dt)
 {
 	r = 0;
-	if(k * dt >= 1 || k <= 0)
+	if((k * dt) >= 1 || k <= 0)
 	{
 		r = desired;
 	}
 	else
 	{
 		err = desired - curr;
-		r = curr + k * err * dt;
+		r = curr + ((k * err) * dt);
 	}
 	return r;
 }
@@ -106,7 +106,7 @@ function array_std_deviation(array, mean)
 	tmp = [];
 	for(i = 0; i < array.size; i++)
 	{
-		tmp[i] = array[i] - mean * array[i] - mean;
+		tmp[i] = (array[i] - mean) * (array[i] - mean);
 	}
 	total = 0;
 	for(i = 0; i < tmp.size; i++)
@@ -127,7 +127,7 @@ function array_std_deviation(array, mean)
 */
 function vector_compare(vec1, vec2)
 {
-	return abs(vec1[0] - vec2[0]) < 0.001 && abs(vec1[1] - vec2[1]) < 0.001 && abs(vec1[2] - vec2[2]) < 0.001;
+	return (abs(vec1[0] - vec2[0])) < 0.001 && (abs(vec1[1] - vec2[1])) < 0.001 && (abs(vec1[2] - vec2[2])) < 0.001;
 }
 
 /*
@@ -155,14 +155,14 @@ function random_vector(max_length)
 */
 function angle_dif(oldangle, newangle)
 {
-	outvalue = oldangle - newangle % 360;
+	outvalue = (oldangle - newangle) % 360;
 	if(outvalue < 0)
 	{
 		outvalue = outvalue + 360;
 	}
 	if(outvalue > 180)
 	{
-		outvalue = outvalue - 360 * -1;
+		outvalue = (outvalue - 360) * -1;
 	}
 	return outvalue;
 }

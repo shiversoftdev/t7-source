@@ -133,7 +133,7 @@ private function function_bdc90f38(entity)
 	{
 		return 0;
 	}
-	if(isdefined(entity.last_claw_time) && gettime() - self.last_claw_time < level.mechz_claw_cooldown_time)
+	if(isdefined(entity.last_claw_time) && (gettime() - self.last_claw_time) < level.mechz_claw_cooldown_time)
 	{
 		return 0;
 	}
@@ -466,10 +466,8 @@ private function function_31c4b972()
 */
 private function function_90832db7()
 {
-	~self.m_claw;
-	self.fx_field = self.fx_field & 256;
-	~self.fx_field;
-	self.fx_field = self.fx_field & 64;
+	self.fx_field = self.fx_field & (~256);
+	self.fx_field = self.fx_field & (~64);
 	self clientfield::set("mechz_fx", self.fx_field);
 	self function_9bfd96c8();
 	if(isdefined(self.m_claw))
@@ -578,7 +576,7 @@ private function function_9bfd96c8(bopenclaw)
 		if(!isdefined(self.e_grabbed._fall_down_anchor))
 		{
 			trace_start = self.e_grabbed.origin + vectorscale((0, 0, 1), 70);
-			trace_end = self.e_grabbed.origin + vectorscale((0, 0, -1), 500);
+			trace_end = self.e_grabbed.origin + (vectorscale((0, 0, -1), 500));
 			drop_trace = playerphysicstrace(trace_start, trace_end) + vectorscale((0, 0, 1), 24);
 			self.e_grabbed unlink();
 			self.e_grabbed setorigin(drop_trace);
@@ -719,7 +717,7 @@ private function function_6028875a()
 {
 	if(isdefined(self.explosive_dmg_taken_on_grab_start))
 	{
-		if(isdefined(self.e_grabbed) && self.explosive_dmg_taken - self.explosive_dmg_taken_on_grab_start > self.mechz_explosive_dmg_to_cancel_claw)
+		if(isdefined(self.e_grabbed) && (self.explosive_dmg_taken - self.explosive_dmg_taken_on_grab_start) > self.mechz_explosive_dmg_to_cancel_claw)
 		{
 			self.show_pain_from_explosive_dmg = 1;
 			self thread function_9bfd96c8();
@@ -944,8 +942,7 @@ private function function_672f9804()
 	self.m_claw setanim(%mechz_claw::ai_zombie_mech_grapple_arm_closed_idle, 1, 0.2, 1);
 	self.m_claw.fx_ent delete();
 	self.m_claw.fx_ent = undefined;
-	~self.m_claw;
-	self.fx_field = self.fx_field & 256;
+	self.fx_field = self.fx_field & (~256);
 	self clientfield::set("mechz_fx", self.fx_field);
 	self clientfield::set("mechz_wpn_source", 0);
 	level flag::clear("mechz_launching_claw");

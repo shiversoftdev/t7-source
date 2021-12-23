@@ -842,7 +842,7 @@ function gadget_checkheroabilitykill(attacker)
 			case "gadget_heat_wave":
 			case "gadget_speed_burst":
 			{
-				if(isdefined(attacker.heroabilityactive) || (isdefined(attacker.heroabilitydectivatetime) && attacker.heroabilitydectivatetime > gettime() - 100))
+				if(isdefined(attacker.heroabilityactive) || (isdefined(attacker.heroabilitydectivatetime) && attacker.heroabilitydectivatetime > (gettime() - 100)))
 				{
 					heroabilitystat = 1;
 				}
@@ -852,7 +852,7 @@ function gadget_checkheroabilitykill(attacker)
 			case "gadget_flashback":
 			case "gadget_resurrect":
 			{
-				if(isdefined(attacker.heroabilityactive) || (isdefined(attacker.heroabilitydectivatetime) && attacker.heroabilitydectivatetime > gettime() - 6000))
+				if(isdefined(attacker.heroabilityactive) || (isdefined(attacker.heroabilitydectivatetime) && attacker.heroabilitydectivatetime > (gettime() - 6000)))
 				{
 					heroabilitystat = 1;
 				}
@@ -863,7 +863,7 @@ function gadget_checkheroabilitykill(attacker)
 				if(isdefined(attacker.visionpulsespottedenemytime))
 				{
 					timecutoff = gettime();
-					if(attacker.visionpulsespottedenemytime + 10000 > timecutoff)
+					if((attacker.visionpulsespottedenemytime + 10000) > timecutoff)
 					{
 						for(i = 0; i < attacker.visionpulsespottedenemy.size; i++)
 						{
@@ -887,7 +887,7 @@ function gadget_checkheroabilitykill(attacker)
 					heroabilitystat = 1;
 					break;
 				}
-				else if(isdefined(attacker.combatefficiencylastontime) && attacker.combatefficiencylastontime > gettime() - 100)
+				else if(isdefined(attacker.combatefficiencylastontime) && attacker.combatefficiencylastontime > (gettime() - 100))
 				{
 					heroabilitystat = 1;
 					break;
@@ -1094,7 +1094,7 @@ function abilities_devgui_player_connect()
 function abilities_devgui_add_player_commands(root, pname, index)
 {
 	/#
-		add_cmd_with_root = "" + root + pname + "";
+		add_cmd_with_root = (("" + root) + pname) + "";
 		pid = "" + index;
 		menu_index = 1;
 		menu_index = abilities_devgui_add_gadgets(add_cmd_with_root, pid, menu_index);
@@ -1118,7 +1118,7 @@ function abilities_devgui_add_player_command(root, pid, cmdname, menu_index, cmd
 		{
 			argdvar = "";
 		}
-		adddebugcommand(root + cmdname + "" + "" + "" + pid + "" + "" + "" + cmddvar + "" + "" + "" + argdvar + "");
+		adddebugcommand((((((((((((((root + cmdname) + "") + "") + "") + pid) + "") + "") + "") + cmddvar) + "") + "") + "") + argdvar) + "");
 	#/
 }
 
@@ -1134,7 +1134,7 @@ function abilities_devgui_add_player_command(root, pid, cmdname, menu_index, cmd
 function abilities_devgui_add_power(add_cmd_with_root, pid, menu_index)
 {
 	/#
-		root = add_cmd_with_root + "" + menu_index + "";
+		root = ((add_cmd_with_root + "") + menu_index) + "";
 		abilities_devgui_add_player_command(root, pid, "", 1, "", "");
 		abilities_devgui_add_player_command(root, pid, "", 2, "", "");
 		menu_index++;
@@ -1191,7 +1191,7 @@ function abilities_devgui_add_player_weapons(root, pid, a_weapons, weapon_type, 
 	/#
 		if(isdefined(a_weapons))
 		{
-			player_devgui_root = root + weapon_type + "";
+			player_devgui_root = (root + weapon_type) + "";
 			for(i = 0; i < a_weapons.size; i++)
 			{
 				abilities_devgui_add_player_weap_command(player_devgui_root, pid, a_weapons[i].name, i + 1);
@@ -1213,7 +1213,7 @@ function abilities_devgui_add_player_weapons(root, pid, a_weapons, weapon_type, 
 function abilities_devgui_add_player_weap_command(root, pid, weap_name, cmdindex)
 {
 	/#
-		adddebugcommand(root + weap_name + "" + "" + "" + pid + "" + "" + "" + "" + "" + "" + "" + weap_name + "");
+		adddebugcommand((((((((((((((root + weap_name) + "") + "") + "") + pid) + "") + "") + "") + "") + "") + "") + "") + weap_name) + "");
 	#/
 }
 
@@ -1233,7 +1233,7 @@ function abilities_devgui_player_disconnect()
 		{
 			return;
 		}
-		remove_cmd_with_root = "" + level.abilities_devgui_base + self.playername + "";
+		remove_cmd_with_root = (("" + level.abilities_devgui_base) + self.playername) + "";
 		util::add_queued_debug_command(remove_cmd_with_root);
 	#/
 }

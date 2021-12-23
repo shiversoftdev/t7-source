@@ -434,7 +434,7 @@ function players_in_position(in_position)
 			self.in_position_start_time = gettime();
 		}
 		time = gettime();
-		dt = time - self.in_position_start_time / 1000;
+		dt = (time - self.in_position_start_time) / 1000;
 		if(dt >= 0)
 		{
 			return 1;
@@ -508,7 +508,7 @@ function is_player_in_gather_position(e_player)
 	{
 		v_start_pos = (e_player.origin[0], e_player.origin[1], e_player.origin[2] + 32);
 		v_end_pos = (self.m_v_gather_position[0], self.m_v_gather_position[1], self.m_v_gather_position[2]);
-		if(e_player.origin[2] - v_end_pos[2] < -64)
+		if((e_player.origin[2] - v_end_pos[2]) < -64)
 		{
 			player_valid = 0;
 		}
@@ -578,8 +578,8 @@ function teleport_player_into_position(e_player)
 	a_players = get_players_playing();
 	while(true)
 	{
-		x_offset = randomfloatrange(210 - 42 * -1, 210 - 42);
-		y_offset = randomfloatrange(210 - 42 * -1, 210 - 42);
+		x_offset = randomfloatrange((210 - 42) * -1, 210 - 42);
+		y_offset = randomfloatrange((210 - 42) * -1, 210 - 42);
 		e_player.zoom_pos = (self.m_v_gather_position[0] + x_offset, self.m_v_gather_position[1] + y_offset, self.m_v_gather_position[2]);
 		reject = 0;
 		for(i = 0; i < a_players.size; i++)
@@ -760,7 +760,7 @@ function start_player_timer(total_time)
 function get_time_remaining()
 {
 	time = gettime();
-	dt = time - self.e_gameobject.start_time / 1000;
+	dt = (time - self.e_gameobject.start_time) / 1000;
 	time_remaining = self.e_gameobject.total_time - dt;
 	return time_remaining;
 }
@@ -874,7 +874,7 @@ private autoexec function cteamgather()
 function setup_teamgather(v_interact_pos, v_interact_angles, e_interact_entity)
 {
 	v_forward = anglestoforward(v_interact_angles);
-	v_gather_pos = v_interact_pos + v_forward * -100;
+	v_gather_pos = v_interact_pos + (v_forward * -100);
 	v_start = (v_gather_pos[0], v_gather_pos[1], v_gather_pos[2] + 20);
 	v_end = (v_gather_pos[0], v_gather_pos[1], v_gather_pos[2] - 100);
 	v_trace = bullettrace(v_start, v_end, 0, undefined);

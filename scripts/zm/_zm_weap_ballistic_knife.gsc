@@ -132,9 +132,9 @@ function on_spawn_retrieve_trigger(watcher, player)
 	}
 	else
 	{
-		trigger_pos[0] = retrievable_model.origin[0] + 10 * normal[0];
-		trigger_pos[1] = retrievable_model.origin[1] + 10 * normal[1];
-		trigger_pos[2] = retrievable_model.origin[2] + 10 * normal[2];
+		trigger_pos[0] = retrievable_model.origin[0] + (10 * normal[0]);
+		trigger_pos[1] = retrievable_model.origin[1] + (10 * normal[1]);
+		trigger_pos[2] = retrievable_model.origin[2] + (10 * normal[2]);
 	}
 	if(isdefined(level.ballistic_knife_autorecover) && level.ballistic_knife_autorecover)
 	{
@@ -353,7 +353,7 @@ function drop_knives_to_ground(player)
 	for(;;)
 	{
 		level waittill(#"drop_objects_to_ground", origin, radius);
-		if(distancesquared(origin, self.origin) < radius * radius)
+		if(distancesquared(origin, self.origin) < (radius * radius))
 		{
 			self physicslaunch((0, 0, 1), vectorscale((1, 1, 1), 5));
 			self thread update_retrieve_trigger(player);

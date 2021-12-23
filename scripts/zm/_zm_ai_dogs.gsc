@@ -225,7 +225,7 @@ function dog_round_spawning()
 			wait(0.1);
 		}
 		num_player_valid = zm_utility::get_number_of_valid_players();
-		while(zombie_utility::get_current_zombie_count() >= num_player_valid * 2)
+		while(zombie_utility::get_current_zombie_count() >= (num_player_valid * 2))
 		{
 			wait(2);
 			num_player_valid = zm_utility::get_number_of_valid_players();
@@ -290,7 +290,7 @@ function waiting_for_next_dog_spawn(count, max)
 	{
 		default_wait = 1.5;
 	}
-	default_wait = default_wait - count / max;
+	default_wait = default_wait - (count / max);
 	default_wait = max(default_wait, 0.05);
 	wait(default_wait);
 }
@@ -681,7 +681,7 @@ function dog_init()
 	self.flame_damage_time = 0;
 	self.meleedamage = 40;
 	self.thundergun_knockdown_func = &dog_thundergun_knockdown;
-	self zm_spawner::zombie_history("zombie_dog_spawn_init -> Spawned = " + self.origin);
+	self zm_spawner::zombie_history(("zombie_dog_spawn_init -> Spawned = ") + self.origin);
 	if(isdefined(level.achievement_monitor_func))
 	{
 		self [[level.achievement_monitor_func]]();
@@ -829,7 +829,7 @@ function dog_behind_audio()
 		players = getplayers();
 		for(i = 0; i < players.size; i++)
 		{
-			dogangle = angleclamp180(vectortoangles(self.origin - players[i].origin)[1] - players[i].angles[1]);
+			dogangle = angleclamp180((vectortoangles(self.origin - players[i].origin)[1]) - players[i].angles[1]);
 			if(isalive(players[i]) && !isdefined(players[i].revivetrigger))
 			{
 				if(abs(dogangle) > 90 && distance2d(self.origin, players[i].origin) > 100)

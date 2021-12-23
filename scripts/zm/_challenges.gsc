@@ -257,12 +257,12 @@ function challengekills(data, time)
 	{
 		player addplayerstat("kill_while_satellite_active", 1);
 	}
-	if(isdefined(attacker.tacticalinsertiontime) && attacker.tacticalinsertiontime + 5000 > time)
+	if(isdefined(attacker.tacticalinsertiontime) && (attacker.tacticalinsertiontime + 5000) > time)
 	{
 		player addplayerstat("kill_after_tac_insert", 1);
 		player addweaponstat(level.weapontacticalinsertion, "CombatRecordStat", 1);
 	}
-	if(isdefined(victim.tacticalinsertiontime) && victim.tacticalinsertiontime + 5000 > time)
+	if(isdefined(victim.tacticalinsertiontime) && (victim.tacticalinsertiontime + 5000) > time)
 	{
 		player addweaponstat(level.weapontacticalinsertion, "headshots", 1);
 	}
@@ -328,12 +328,12 @@ function challengekills(data, time)
 	}
 	if(isdefined(player.laststunnedby))
 	{
-		if(player.laststunnedby == victim && player.laststunnedtime + 5000 > time)
+		if(player.laststunnedby == victim && (player.laststunnedtime + 5000) > time)
 		{
 			player addplayerstat("kill_enemy_who_shocked_you", 1);
 		}
 	}
-	if(isdefined(victim.laststunnedby) && victim.laststunnedtime + 5000 > time)
+	if(isdefined(victim.laststunnedby) && (victim.laststunnedtime + 5000) > time)
 	{
 		isstunned = 1;
 		if(victim.laststunnedby == player)
@@ -486,7 +486,7 @@ function challengekills(data, time)
 		}
 		else if(weapon.isriotshield)
 		{
-			if(victim.lastfiretime + 3000 > time)
+			if((victim.lastfiretime + 3000) > time)
 			{
 				player addweaponstat(weapon, "shield_melee_while_enemy_shooting", 1);
 			}

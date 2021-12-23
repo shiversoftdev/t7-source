@@ -716,7 +716,7 @@ function gadget_resurrect_secondary_deathcam_time()
 		{
 			resurrect_time = weapon.gadget_resurrect_duration;
 		}
-		time_left = resurrect_time - gettime() - self.resurrect_available_time;
+		time_left = resurrect_time - (gettime() - self.resurrect_available_time);
 		if(time_left > 0)
 		{
 			return time_left / 1000;
@@ -860,7 +860,7 @@ function watch_rejack_suicide()
 			{
 				starttime = gettime();
 			}
-			if(starttime + 500 < gettime())
+			if((starttime + 500) < gettime())
 			{
 				self rejack_suicide();
 				self playsound("mpl_rejack_suicide");

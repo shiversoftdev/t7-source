@@ -160,13 +160,13 @@ function devgui_notif_getchallengestablename(tableid)
 	/#
 		if(sessionmodeiscampaigngame())
 		{
-			return "" + tableid + "";
+			return ("" + tableid) + "";
 		}
 		if(sessionmodeiszombiesgame())
 		{
-			return "" + tableid + "";
+			return ("" + tableid) + "";
 		}
-		return "" + tableid + "";
+		return ("" + tableid) + "";
 	#/
 }
 
@@ -246,12 +246,12 @@ function function_9a14a686()
 		{
 			return;
 		}
-		if(getdvarint("", -999) == -999)
+		if((getdvarint("", -999)) == -999)
 		{
 			setdvar("", 0);
 		}
 		var_deda26ca = "";
-		util::function_e2ac06bb(var_deda26ca + "", "" + "" + "");
+		util::function_e2ac06bb(var_deda26ca + "", ("" + "") + "");
 		while(true)
 		{
 			if(getdvarint("", 0) > 0)
@@ -319,8 +319,8 @@ function notif_devgui_rank()
 			{
 				display_level = "" + display_level;
 			}
-			adddebugcommand(notif_rank_devgui_base + display_level + "" + "" + "" + "" + i + "");
-			if(i % 10 == 0)
+			adddebugcommand(((((((notif_rank_devgui_base + display_level) + "") + "") + "") + "") + i) + "");
+			if((i % 10) == 0)
 			{
 				wait(0.05);
 			}
@@ -464,8 +464,8 @@ function notif_devgui_gun_rank()
 			{
 				foreach(attachment, attachment_data in attachment_group[""])
 				{
-					devgui_cmd_gun_path = notif_gun_rank_devgui_base + group_name + "" + gun_group[gun][""] + "" + attachment;
-					adddebugcommand(devgui_cmd_gun_path + "" + "" + "" + "" + "" + attachment_data[""] + "" + "" + "" + attachment_data[""] + "" + "" + "" + gun_group[gun][""] + "" + "" + "" + attachment_data[""] + "");
+					devgui_cmd_gun_path = ((((notif_gun_rank_devgui_base + group_name) + "") + gun_group[gun][""]) + "") + attachment;
+					adddebugcommand(((((((((((((((((((devgui_cmd_gun_path + "") + "") + "") + "") + "") + attachment_data[""]) + "") + "") + "") + attachment_data[""]) + "") + "") + "") + gun_group[gun][""]) + "") + "") + "") + attachment_data[""]) + "");
 				}
 			}
 			wait(0.05);
@@ -538,9 +538,9 @@ function notif_devgui_challenges()
 						challengetierstring = "" + challengetier;
 					}
 					name = tablelookupcolumnforrow(tablename, j, 5);
-					devgui_cmd_challenge_path = notif_challenges_devgui_base + type + "" + makelocalizedstring(name) + "" + challengetierstring + "" + challengeid;
-					adddebugcommand(devgui_cmd_challenge_path + "" + "" + "" + "" + "" + j + "" + "" + "" + i + "");
-					if(int(challengeid) % 10 == 0)
+					devgui_cmd_challenge_path = (((((notif_challenges_devgui_base + type) + "") + makelocalizedstring(name) + "") + challengetierstring) + "") + challengeid;
+					adddebugcommand(((((((((((devgui_cmd_challenge_path + "") + "") + "") + "") + "") + j) + "") + "") + "") + i) + "");
+					if((int(challengeid) % 10) == 0)
 					{
 						wait(0.05);
 					}

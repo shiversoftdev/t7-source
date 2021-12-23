@@ -414,11 +414,11 @@ function setup_inaccessible_zombie_attack_points()
 function set_attack_point_as_inaccessible(str_zone, n_index)
 {
 	/#
-		assert(isdefined(level.zone_capture.zones[str_zone]), "" + str_zone + "");
+		assert(isdefined(level.zone_capture.zones[str_zone]), ("" + str_zone) + "");
 	#/
 	level.zone_capture.zones[str_zone] flag::wait_till("zone_initialized");
 	/#
-		assert(isdefined(level.zone_capture.zones[str_zone].zombie_attack_points[n_index]), "" + n_index + "" + str_zone);
+		assert(isdefined(level.zone_capture.zones[str_zone].zombie_attack_points[n_index]), (("" + n_index) + "") + str_zone);
 	#/
 	level.zone_capture.zones[str_zone].zombie_attack_points[n_index].inaccessible = 1;
 }
@@ -621,7 +621,7 @@ function register_elements_powered_by_zone_capture_generators()
 function register_perk_machine_for_zone(str_zone_name, str_perk_name, str_machine_targetname, func_perk_fx_think)
 {
 	/#
-		assert(isdefined(level.zone_capture.zones[str_zone_name]), "" + str_zone_name + "");
+		assert(isdefined(level.zone_capture.zones[str_zone_name]), ("" + str_zone_name) + "");
 	#/
 	if(!isdefined(level.zone_capture.zones[str_zone_name].perk_machines))
 	{
@@ -648,7 +648,7 @@ function register_perk_machine_for_zone(str_zone_name, str_perk_name, str_machin
 function register_random_perk_machine_for_zone(str_zone_name, str_identifier)
 {
 	/#
-		assert(isdefined(level.zone_capture.zones[str_zone_name]), "" + str_zone_name + "");
+		assert(isdefined(level.zone_capture.zones[str_zone_name]), ("" + str_zone_name) + "");
 	#/
 	if(!isdefined(level.zone_capture.zones[str_zone_name].perk_machines_random))
 	{
@@ -684,7 +684,7 @@ function register_random_perk_machine_for_zone(str_zone_name, str_identifier)
 function register_mystery_box_for_zone(str_zone_name, str_identifier)
 {
 	/#
-		assert(isdefined(level.zone_capture.zones[str_zone_name]), "" + str_zone_name + "");
+		assert(isdefined(level.zone_capture.zones[str_zone_name]), ("" + str_zone_name) + "");
 	#/
 	if(!isdefined(level.zone_capture.zones[str_zone_name].mystery_boxes))
 	{
@@ -945,7 +945,7 @@ function init_capture_zone()
 		level.zone_capture.zones = [];
 	}
 	/#
-		assert(!isdefined(level.zone_capture.zones[self.script_noteworthy]), "" + self.script_noteworthy + "");
+		assert(!isdefined(level.zone_capture.zones[self.script_noteworthy]), ("" + self.script_noteworthy) + "");
 	#/
 	self.n_current_progress = 0;
 	self.n_last_progress = 0;
@@ -953,7 +953,7 @@ function init_capture_zone()
 	self.str_zone = zm_zonemgr::get_zone_from_position(self.origin, 1);
 	self.sndent = spawn("script_origin", self.origin);
 	/#
-		assert(isdefined(self.script_int), "" + self.script_noteworthy + "");
+		assert(isdefined(self.script_int), ("" + self.script_noteworthy) + "");
 	#/
 	self flag::init("attacked_by_recapture_zombies");
 	self flag::init("current_recapture_target_zone");
@@ -1082,8 +1082,8 @@ function setup_zombie_attack_points()
 	self.zombie_attack_points = [];
 	v_right = anglestoright(self.angles);
 	self add_attack_points_from_anchor_origin(self.origin, 0, 52);
-	self add_attack_points_from_anchor_origin(self.origin + v_right * 170, 4, 32);
-	self add_attack_points_from_anchor_origin(self.origin + v_right * -1 * 170, 8, 32);
+	self add_attack_points_from_anchor_origin(self.origin + (v_right * 170), 4, 32);
+	self add_attack_points_from_anchor_origin(self.origin + ((v_right * -1) * 170), 8, 32);
 }
 
 /*
@@ -1099,10 +1099,10 @@ function add_attack_points_from_anchor_origin(v_origin, n_start_index, n_scale)
 {
 	v_forward = anglestoforward(self.angles);
 	v_right = anglestoright(self.angles);
-	self.zombie_attack_points[n_start_index] = init_attack_point(v_origin + v_forward * n_scale, v_origin);
-	self.zombie_attack_points[n_start_index + 1] = init_attack_point(v_origin + v_right * n_scale, v_origin);
-	self.zombie_attack_points[n_start_index + 2] = init_attack_point(v_origin + v_forward * -1 * n_scale, v_origin);
-	self.zombie_attack_points[n_start_index + 3] = init_attack_point(v_origin + v_right * -1 * n_scale, v_origin);
+	self.zombie_attack_points[n_start_index] = init_attack_point(v_origin + (v_forward * n_scale), v_origin);
+	self.zombie_attack_points[n_start_index + 1] = init_attack_point(v_origin + (v_right * n_scale), v_origin);
+	self.zombie_attack_points[n_start_index + 2] = init_attack_point(v_origin + ((v_forward * -1) * n_scale), v_origin);
+	self.zombie_attack_points[n_start_index + 3] = init_attack_point(v_origin + ((v_right * -1) * n_scale), v_origin);
 }
 
 /*
@@ -2838,7 +2838,7 @@ function get_progress_rate(n_players_in_zone, n_players_total)
 		}
 		else
 		{
-			n_rate = level.zone_capture.rate_capture * n_players_in_zone / n_players_total;
+			n_rate = level.zone_capture.rate_capture * (n_players_in_zone / n_players_total);
 		}
 	}
 	else
@@ -3101,7 +3101,7 @@ function get_players_in_capture_zone()
 	a_players_in_capture_zone = [];
 	foreach(var_9f9b6c9f, player in getplayers())
 	{
-		if(zombie_utility::is_player_valid(player) && distance2dsquared(player.origin, self.origin) < 48400 && player.origin[2] > self.origin[2] + -20)
+		if(zombie_utility::is_player_valid(player) && distance2dsquared(player.origin, self.origin) < 48400 && player.origin[2] > (self.origin[2] + -20))
 		{
 			if(!isdefined(a_players_in_capture_zone))
 			{
@@ -3128,7 +3128,7 @@ function get_players_in_capture_zone()
 */
 function get_update_rate(n_duration)
 {
-	n_change_per_update = 100 / n_duration * 0.1;
+	n_change_per_update = (100 / n_duration) * 0.1;
 	return n_change_per_update;
 }
 
@@ -3276,11 +3276,11 @@ function can_start_generator_power_up_anim()
 	{
 		self.n_time_started_generator = 0;
 	}
-	if(!isdefined(self.lowammowarningnoreloadcolor2))
+	if(!isdefined(self.n_time_start_anim))
 	{
-		self.lowammowarningnoreloadcolor2 = getanimlength(%generic::p7_fxanim_zm_ori_generator_start_anim);
+		self.n_time_start_anim = getanimlength(%generic::p7_fxanim_zm_ori_generator_start_anim);
 	}
-	return self.n_current_progress > self.n_last_progress && gettime() - self.n_time_started_generator * 0.001 > self.lowammowarningnoreloadcolor2;
+	return self.n_current_progress > self.n_last_progress && ((gettime() - self.n_time_started_generator) * 0.001) > self.n_time_start_anim;
 }
 
 /*
@@ -3998,7 +3998,7 @@ function drop_max_ammo_at_death_location()
 {
 	if(isdefined(self))
 	{
-		v_powerup_origin = groundtrace(self.origin + vectorscale((0, 0, 1), 10), self.origin + vectorscale((0, 0, -1), 150), 0, undefined, 1)["position"];
+		v_powerup_origin = groundtrace(self.origin + vectorscale((0, 0, 1), 10), self.origin + (vectorscale((0, 0, -1), 150)), 0, undefined, 1)["position"];
 	}
 	if(isdefined(v_powerup_origin))
 	{
@@ -4141,8 +4141,8 @@ function zone_capture_complete_vo()
 	e_vo_origin = spawn("script_origin", self.origin);
 	e_vo_origin playsoundwithnotify("vox_maxi_generator_process_complete_0", "vox_maxi_generator_process_complete_0_done");
 	e_vo_origin waittill(#"vox_maxi_generator_process_complete_0_done");
-	e_vo_origin playsoundwithnotify("vox_maxi_generator_" + self.script_int + "_activated_0", "vox_maxi_generator_" + self.script_int + "_activated_0_done");
-	e_vo_origin waittill("vox_maxi_generator_" + self.script_int + "_activated_0_done");
+	e_vo_origin playsoundwithnotify(("vox_maxi_generator_" + self.script_int) + "_activated_0", ("vox_maxi_generator_" + self.script_int) + "_activated_0_done");
+	e_vo_origin waittill(("vox_maxi_generator_" + self.script_int) + "_activated_0_done");
 	e_vo_origin delete();
 }
 
@@ -4175,8 +4175,8 @@ function generator_interrupted_vo()
 function generator_compromised_vo()
 {
 	e_vo_origin = spawn("script_origin", self.origin);
-	e_vo_origin playsoundwithnotify("vox_maxi_generator_" + self.script_int + "_compromised_0", "vox_maxi_generator_" + self.script_int + "_compromised_0_done");
-	e_vo_origin waittill("vox_maxi_generator_" + self.script_int + "_compromised_0_done");
+	e_vo_origin playsoundwithnotify(("vox_maxi_generator_" + self.script_int) + "_compromised_0", ("vox_maxi_generator_" + self.script_int) + "_compromised_0_done");
+	e_vo_origin waittill(("vox_maxi_generator_" + self.script_int) + "_compromised_0_done");
 	e_vo_origin delete();
 }
 
@@ -4192,8 +4192,8 @@ function generator_compromised_vo()
 function generator_deactivated_vo()
 {
 	e_vo_origin = spawn("script_origin", self.origin);
-	e_vo_origin playsoundwithnotify("vox_maxi_generator_" + self.script_int + "_deactivated_0", "vox_maxi_generator_" + self.script_int + "_deactivated_0_done");
-	e_vo_origin waittill("vox_maxi_generator_" + self.script_int + "_deactivated_0_done");
+	e_vo_origin playsoundwithnotify(("vox_maxi_generator_" + self.script_int) + "_deactivated_0", ("vox_maxi_generator_" + self.script_int) + "_deactivated_0_done");
+	e_vo_origin waittill(("vox_maxi_generator_" + self.script_int) + "_deactivated_0_done");
 	e_vo_origin delete();
 }
 

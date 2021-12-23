@@ -141,7 +141,7 @@ function clone_fade(localclientnum)
 		elapsedtime = float(elapsedtime / 1000);
 		if(elapsedtime < 1)
 		{
-			amount = 1 - elapsedtime / 1;
+			amount = 1 - (elapsedtime / 1);
 			self mapshaderconstant(localclientnum, 0, "scriptVector3", 1, 1, 0, amount);
 		}
 		else

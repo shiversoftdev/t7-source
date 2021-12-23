@@ -282,7 +282,7 @@ function setup_locker_double_doors(str_left_door_name, str_right_door_name, cent
 		if(isdefined(center_point_offset))
 		{
 			v_forward = anglestoforward(e_left_door.angles);
-			v_search_pos = e_left_door.origin + v_forward * center_point_offset;
+			v_search_pos = e_left_door.origin + (v_forward * center_point_offset);
 		}
 		else
 		{
@@ -329,7 +329,7 @@ function get_closest_ent_from_array(v_pos, a_ents)
 */
 function create_locker_doors(e_left_door, e_right_door, door_open_angle, door_open_time)
 {
-	v_locker_pos = e_left_door.origin + e_right_door.origin / 2;
+	v_locker_pos = (e_left_door.origin + e_right_door.origin) / 2;
 	n_trigger_radius = 48;
 	e_trigger = create_locker_trigger(v_locker_pos, n_trigger_radius, "Press [{+activate}] to open");
 	e_trigger waittill(#"trigger");

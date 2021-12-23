@@ -160,7 +160,7 @@ function teamoutcomenotify(winner, isround, endreasontext)
 	outcometitle setcod7decodefx(200, duration, 600);
 	outcometext setpulsefx(100, duration, 1000);
 	iconspacing = 100;
-	currentx = level.teamcount - 1 * -1 * iconspacing / 2;
+	currentx = (((level.teamcount - 1) * -1) * iconspacing) / 2;
 	teamicons = [];
 	teamicons[team] = hud::createicon(game["icons"][team], iconsize, iconsize);
 	teamicons[team] hud::setparent(outcometext);
@@ -231,7 +231,7 @@ function teamoutcomenotify(winner, isround, endreasontext)
 	{
 		matchbonus = hud::createfontstring(font, 2);
 		matchbonus hud::setparent(outcometext);
-		matchbonus hud::setpoint("TOP", "BOTTOM", 0, iconsize + spacing * 3 + teamscores[team].height);
+		matchbonus hud::setpoint("TOP", "BOTTOM", 0, (iconsize + (spacing * 3)) + teamscores[team].height);
 		matchbonus.glowalpha = 1;
 		matchbonus.hidewheninmenu = 0;
 		matchbonus.archived = 0;
@@ -559,7 +559,7 @@ function wageroutcomenotify(winner, endreasontext)
 	cpincrement = 9999;
 	if(isdefined(playercphudelems[0]))
 	{
-		cpincrement = int(playercphudelems[0].targetvalue / countupduration / 0.05);
+		cpincrement = int(playercphudelems[0].targetvalue / (countupduration / 0.05));
 		if(cpincrement < 1)
 		{
 			cpincrement = 1;
@@ -741,7 +741,7 @@ function teamwageroutcomenotify(winner, isroundend, endreasontext)
 	{
 		matchbonus = hud::createfontstring(font, 2);
 		matchbonus hud::setparent(outcometext);
-		matchbonus hud::setpoint("TOP", "BOTTOM", 0, iconsize + spacing * 3 + teamscores[team].height);
+		matchbonus hud::setpoint("TOP", "BOTTOM", 0, (iconsize + (spacing * 3)) + teamscores[team].height);
 		matchbonus.glowalpha = 1;
 		matchbonus.hidewheninmenu = 0;
 		matchbonus.archived = 0;

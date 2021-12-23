@@ -223,7 +223,7 @@ function function_2df3c740()
 		{
 			return 0;
 		}
-		trace = groundtrace(self.origin + vectorscale((0, 0, 1), 15), self.origin + vectorscale((0, 0, -1), 1000), 0, undefined);
+		trace = groundtrace(self.origin + vectorscale((0, 0, 1), 15), self.origin + (vectorscale((0, 0, -1), 1000)), 0, undefined);
 		ground_pos = trace["position"];
 		if(isdefined(ground_pos))
 		{

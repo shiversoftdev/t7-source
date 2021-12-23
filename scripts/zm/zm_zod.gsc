@@ -1860,7 +1860,7 @@ function zombie_is_target_reachable(player)
 	Parameters: 4
 	Flags: Linked
 */
-function function_17c00a4f(var_9165799c, var_25cf04a1, var_e8c4df7b, var_202b5b6a)
+function function_17c00a4f(var_9165799c, var_25cf04a1, var_e8c4df7b, player_area)
 {
 	var_15a343e3 = function_6b75e74c(var_e8c4df7b);
 	var_2473d928 = var_15a343e3["01"];
@@ -1877,21 +1877,21 @@ function function_17c00a4f(var_9165799c, var_25cf04a1, var_e8c4df7b, var_202b5b6
 		{
 			return 0;
 		}
-		if(var_202b5b6a == 1)
+		if(player_area == 1)
 		{
 			return 1;
 		}
 		var_25cf04a1++;
 	}
-	if(var_25cf04a1 == 1 && var_202b5b6a == 2)
+	if(var_25cf04a1 == 1 && player_area == 2)
 	{
 		return var_a5dc72fd && var_da02e380 || var_7fd9f894;
 	}
-	if(var_25cf04a1 == 2 && var_202b5b6a == 3)
+	if(var_25cf04a1 == 2 && player_area == 3)
 	{
 		return var_a5dc72fd && var_7fd9f894 || var_da02e380;
 	}
-	if(var_25cf04a1 == 1 && var_202b5b6a == 3)
+	if(var_25cf04a1 == 1 && player_area == 3)
 	{
 		return var_7fd9f894 && var_da02e380 || var_a5dc72fd;
 	}
@@ -2710,7 +2710,7 @@ function zm_override_ai_aftermath_powerup_drop(e_enemy, v_pos)
 	else
 	{
 		power_up_origin = v_pos;
-		trace = groundtrace(power_up_origin + vectorscale((0, 0, 1), 100), power_up_origin + vectorscale((0, 0, -1), 1000), 0, undefined);
+		trace = groundtrace(power_up_origin + vectorscale((0, 0, 1), 100), power_up_origin + (vectorscale((0, 0, -1), 1000)), 0, undefined);
 		power_up_origin = trace["position"];
 		if(isdefined(power_up_origin))
 		{
@@ -2848,7 +2848,7 @@ function function_48fda59a()
 					n_start_time = gettime();
 				}
 				n_time = gettime();
-				var_be13851f = n_time - n_start_time / 1000;
+				var_be13851f = (n_time - n_start_time) / 1000;
 				if(var_be13851f >= 80)
 				{
 					a_zombies = getaiteamarray(level.zombie_team);

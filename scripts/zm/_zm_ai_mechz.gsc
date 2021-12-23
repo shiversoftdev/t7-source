@@ -325,7 +325,7 @@ function function_b8e0ce15(e_player)
 	{
 		var_3bb42832 = math::clamp(var_3bb42832, 0, level.var_f4dc2834);
 	}
-	n_damage = var_3bb42832 * 0.25 / 0.2;
+	n_damage = (var_3bb42832 * 0.25) / 0.2;
 	self dodamage(n_damage, self getcentroid(), e_player, e_player, undefined, "MOD_PROJECTILE_SPLASH", 0, getweapon("thundergun"));
 }
 
@@ -373,15 +373,15 @@ function spawn_mechz(s_location, flyin = 0)
 			v_dir = vectornormalize(v_dir);
 			v_angles = vectortoangles(v_dir);
 			var_89f898ad = zm_utility::flat_angle(v_angles);
-			var_6ea4ef96 = s_location;
-			queryresult = positionquery_source_navigation(var_6ea4ef96.origin, 0, 32, 20, 4);
+			s_spawn_location = s_location;
+			queryresult = positionquery_source_navigation(s_spawn_location.origin, 0, 32, 20, 4);
 			if(queryresult.data.size)
 			{
 				v_ground_position = array::random(queryresult.data).origin;
 			}
 			if(!isdefined(v_ground_position))
 			{
-				trace = bullettrace(var_6ea4ef96.origin, var_6ea4ef96.origin + vectorscale((0, 0, -1), 256), 0, s_location);
+				trace = bullettrace(s_spawn_location.origin, s_spawn_location.origin + (vectorscale((0, 0, -1), 256)), 0, s_location);
 				v_ground_position = trace["position"];
 			}
 			var_1750e965 = v_ground_position;
@@ -465,7 +465,7 @@ function function_c441eaba(var_678a2319)
 		{
 			player dodamage(100, var_678a2319, self, self);
 		}
-		scale = var_44615973 - dist_sq / var_44615973;
+		scale = (var_44615973 - dist_sq) / var_44615973;
 		if(scale <= 0 || scale >= 1)
 		{
 			return;
@@ -591,7 +591,7 @@ function function_817c85eb(e_player, v_attack_source, n_push_away, n_lift_height
 		while(10 > n_total_time && e_player.gravityspikes_state === 3)
 		{
 			util::wait_network_frame();
-			n_total_time = gettime() - n_start_time / 1000;
+			n_total_time = (gettime() - n_start_time) / 1000;
 		}
 		self scene::stop("cin_zm_dlc1_mechz_dth_deathray_01");
 		self thread function_bb84a54(self);

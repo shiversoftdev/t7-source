@@ -197,7 +197,7 @@ function function_4745b0a9(flash_origin)
 		}
 		else
 		{
-			var_ff8b2f91 = var_bfff29b1 - dist_sq / var_b79af7d4;
+			var_ff8b2f91 = (var_bfff29b1 - dist_sq) / var_b79af7d4;
 			var_6e07e9bc = var_ff8b2f91 * 0.5;
 			flash_time = 1 - var_6e07e9bc;
 		}

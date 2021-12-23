@@ -602,7 +602,7 @@ function challengekills(data)
 		{
 			util::function_522d8c7d(1);
 		}
-		if(time - data.attacker_swimming_end <= 2000 && time - data.attacker_doublejump_begin <= 2000)
+		if((time - data.attacker_swimming_end) <= 2000 && (time - data.attacker_doublejump_begin) <= 2000)
 		{
 			player addplayerstat("kill_after_doublejump_out_of_water", 1);
 		}
@@ -665,7 +665,7 @@ function challengekills(data)
 			{
 				if(isdefined(player.smokegrenadetime) && isdefined(player.smokegrenadeposition))
 				{
-					if(player.smokegrenadetime + 14000 > time)
+					if((player.smokegrenadetime + 14000) > time)
 					{
 						if(player util::is_looking_at(player.smokegrenadeposition) || distancesquared(player.origin, player.smokegrenadeposition) < 40000)
 						{
@@ -730,7 +730,7 @@ function challengekills(data)
 		{
 			player addplayerstat("dr_lung", 1);
 		}
-		if(isdefined(attackerlastfastreloadtime) && time - attackerlastfastreloadtime <= 5000 && player weaponhasattachmentandunlocked(weapon, "fastreload"))
+		if(isdefined(attackerlastfastreloadtime) && (time - attackerlastfastreloadtime) <= 5000 && player weaponhasattachmentandunlocked(weapon, "fastreload"))
 		{
 			player addplayerstat("kills_after_reload_fastreload", 1);
 		}
@@ -825,7 +825,7 @@ function challengekills(data)
 			awarded_kill_enemy_that_blinded_you = 1;
 		}
 	}
-	if(!awarded_kill_enemy_that_blinded_you && isdefined(attackerlaststunnedtime) && attackerlaststunnedtime + 5000 > time)
+	if(!awarded_kill_enemy_that_blinded_you && isdefined(attackerlaststunnedtime) && (attackerlaststunnedtime + 5000) > time)
 	{
 		if(attackerlaststunnedby === victim && !playerhastacticalmask)
 		{
@@ -965,7 +965,7 @@ function challengekills(data)
 		}
 		if(player util::has_purchased_perk_equipped("specialty_jetcharger"))
 		{
-			if(attacker_doublejump_begin > attacker_doublejump_end || attacker_doublejump_end + 3000 > time || (attacker_slide_begin > attacker_slide_end || attacker_slide_end + 3000 > time))
+			if(attacker_doublejump_begin > attacker_doublejump_end || (attacker_doublejump_end + 3000) > time || (attacker_slide_begin > attacker_slide_end || (attacker_slide_end + 3000) > time))
 			{
 				player addplayerstat("kills_after_jumping_or_sliding", 1);
 				if(player util::has_purchased_perk_equipped("specialty_overcharge"))
@@ -1050,7 +1050,7 @@ function challengekills(data)
 				recentlysurvivedflak = 0;
 				if(isdefined(player.challenge_lastsurvivewithflaktime))
 				{
-					if(player.challenge_lastsurvivewithflaktime + 3000 > time)
+					if((player.challenge_lastsurvivewithflaktime + 3000) > time)
 					{
 						recentlysurvivedflak = 1;
 					}
@@ -1058,7 +1058,7 @@ function challengekills(data)
 				recentlystunned = 0;
 				if(isdefined(player.laststunnedtime))
 				{
-					if(player.laststunnedtime + 2000 > time)
+					if((player.laststunnedtime + 2000) > time)
 					{
 						recentlystunned = 1;
 					}
@@ -1091,7 +1091,7 @@ function challengekills(data)
 		{
 			if(bulletkill)
 			{
-				if(attackerwassprinting || attacker_sprint_end + 3000 > time)
+				if(attackerwassprinting || (attacker_sprint_end + 3000) > time)
 				{
 					player addplayerstat("kills_after_sprint_fasthands", 1);
 					if(player util::has_gung_ho_perk_purchased_and_equipped())
@@ -1130,7 +1130,7 @@ function challengekills(data)
 		}
 		if(player util::has_jetquiet_perk_purchased_and_equipped())
 		{
-			if(attackerdoublejumping || attacker_doublejump_end + 3000 > time)
+			if(attackerdoublejumping || (attacker_doublejump_end + 3000) > time)
 			{
 				player addplayerstat("kill_blast_doublejump", 1);
 				if(player util::has_ghost_perk_purchased_and_equipped())
@@ -1206,7 +1206,7 @@ function challengekills(data)
 			{
 				secondaryattachmentstotal = player.secondaryloadoutweapon.attachments.size;
 			}
-			if(primaryattachmentstotal + secondaryattachmentstotal >= 5)
+			if((primaryattachmentstotal + secondaryattachmentstotal) >= 5)
 			{
 				gunfighteroverkillactive = 1;
 			}
@@ -1273,7 +1273,7 @@ function challengekills(data)
 					{
 						continue;
 					}
-					if(distancesquared(bouncingbettyinfo.origin, victimorigin) < 400 * 400)
+					if(distancesquared(bouncingbettyinfo.origin, victimorigin) < (400 * 400))
 					{
 						should_award_kill_near_plant_engineer_hardwired = 1;
 						break;
@@ -1288,7 +1288,7 @@ function challengekills(data)
 					{
 						continue;
 					}
-					if(distancesquared(proximitygrenadeinfo.origin, victimorigin) < 400 * 400)
+					if(distancesquared(proximitygrenadeinfo.origin, victimorigin) < (400 * 400))
 					{
 						should_award_kill_near_plant_engineer_hardwired = 1;
 						break;
@@ -1624,7 +1624,7 @@ function checkkillstreak5(baseweapon, player)
 	if(isdefined(player.weaponkillsthisspawn[baseweapon]))
 	{
 		player.weaponkillsthisspawn[baseweapon]++;
-		if(player.weaponkillsthisspawn[baseweapon] % 5 == 0)
+		if((player.weaponkillsthisspawn[baseweapon] % 5) == 0)
 		{
 			player addweaponstat(baseweapon, "killstreak_5", 1);
 		}
@@ -1646,7 +1646,7 @@ function checkkillstreak5(baseweapon, player)
 */
 function checkdualwield(baseweapon, player, attacker, time, attackerwassprinting, attacker_sprint_end)
 {
-	if(attackerwassprinting || attacker_sprint_end + 1000 > time)
+	if(attackerwassprinting || (attacker_sprint_end + 1000) > time)
 	{
 		if(attacker util::has_gung_ho_perk_purchased_and_equipped())
 		{
@@ -1919,7 +1919,7 @@ function callbackendherospecialistemp()
 		empowner addplayerstat("end_enemy_specialist_ability_with_emp", 1);
 		return;
 	}
-	if(isdefined(self.empstarttime) && self.empstarttime > gettime() - 100)
+	if(isdefined(self.empstarttime) && self.empstarttime > (gettime() - 100))
 	{
 		if(isdefined(self.empedby) && isplayer(self.empedby))
 		{

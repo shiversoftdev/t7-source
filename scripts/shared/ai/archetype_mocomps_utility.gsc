@@ -217,11 +217,11 @@ private function debuglocoexplosion(entity)
 		startyawforward = anglestoforward((0, entity.angles[1], 0));
 		damageyawforward = anglestoforward((0, entity.damageyaw - entity.angles[1], 0));
 		starttime = gettime();
-		while(gettime() - starttime < 10000)
+		while((gettime() - starttime) < 10000)
 		{
 			recordsphere(startorigin, 5, (1, 0, 0), "", entity);
-			recordline(startorigin, startorigin + startyawforward * 100, (0, 0, 1), "", entity);
-			recordline(startorigin, startorigin + damageyawforward * 100, (1, 0, 0), "", entity);
+			recordline(startorigin, startorigin + (startyawforward * 100), (0, 0, 1), "", entity);
+			recordline(startorigin, startorigin + (damageyawforward * 100), (1, 0, 0), "", entity);
 			wait(0.05);
 		}
 	#/
@@ -322,7 +322,7 @@ private function mocompadjusttocoverupdate(entity, mocompanim, mocompanimblendou
 		movevector = vectornormalize(movevector) * 1;
 	}
 	entity forceteleport(entity.origin + movevector, entity.angles, 0);
-	normalizedtime = entity getanimtime(mocompanim) * getanimlength(mocompanim) + mocompanimblendouttime / mocompduration;
+	normalizedtime = ((entity getanimtime(mocompanim) * getanimlength(mocompanim)) + mocompanimblendouttime) / mocompduration;
 	if(normalizedtime > entity.mocompanglestarttime)
 	{
 		entity orientmode("face angle", entity.nodeoffsetangles);
@@ -333,9 +333,9 @@ private function mocompadjusttocoverupdate(entity, mocompanim, mocompanimblendou
 		{
 			record3dtext(entity.mocompanglestarttime, entity.origin + vectorscale((0, 0, 1), 5), (0, 1, 0), "");
 			hiptagorigin = entity gettagorigin("");
-			recordline(entity.nodeoffsetorigin, entity.nodeoffsetorigin + entity.nodeoffsetforward * 30, (1, 0.5, 0), "", entity);
-			recordline(entity.adjustnode.origin, entity.adjustnode.origin + entity.nodeforward * 20, (0, 1, 0), "", entity);
-			recordline(entity.origin, entity.origin + anglestoforward(entity.angles) * 10, (1, 0, 0), "", entity);
+			recordline(entity.nodeoffsetorigin, entity.nodeoffsetorigin + (entity.nodeoffsetforward * 30), (1, 0.5, 0), "", entity);
+			recordline(entity.adjustnode.origin, entity.adjustnode.origin + (entity.nodeforward * 20), (0, 1, 0), "", entity);
+			recordline(entity.origin, entity.origin + (anglestoforward(entity.angles) * 10), (1, 0, 0), "", entity);
 			recordline(hiptagorigin, (hiptagorigin[0], hiptagorigin[1], entity.origin[2]), (0, 0, 1), "", entity);
 		}
 	#/

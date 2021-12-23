@@ -143,7 +143,7 @@ private function riotshieldshouldflinch(entity)
 	{
 		return 0;
 	}
-	if(entity.damagelocation == "riotshield" && entity.flinchcount >= 5 && entity.lastflinchtime + 1500 >= gettime())
+	if(entity.damagelocation == "riotshield" && entity.flinchcount >= 5 && (entity.lastflinchtime + 1500) >= gettime())
 	{
 		return 0;
 	}
@@ -246,7 +246,7 @@ private function riotshieldadvanceonenemyservice(behaviortreeentity)
 	}
 	if(isdefined(behaviortreeentity.timeatchosennode))
 	{
-		if(gettime() - behaviortreeentity.timeatchosennode > behaviortreeentity.timeatnodemax)
+		if((gettime() - behaviortreeentity.timeatchosennode) > behaviortreeentity.timeatnodemax)
 		{
 			toolongatnode = 1;
 			behaviortreeentity.timeatchosennode = undefined;
@@ -336,7 +336,7 @@ private function riotshieldunarmedtargetservice(behaviortreeentity)
 			enemy = enemies[index];
 			enemydistance = distancesquared(behaviortreeentity.origin, enemy.origin);
 			checkenemy = 0;
-			if(enemydistance > behaviortreeentity.goalradius * behaviortreeentity.goalradius)
+			if(enemydistance > (behaviortreeentity.goalradius * behaviortreeentity.goalradius))
 			{
 				continue;
 			}
@@ -396,7 +396,7 @@ private function riotshieldunarmedadvanceonenemyservice(behaviortreeentity)
 			recordline(behaviortreeentity.favoriteenemy.origin, behaviortreeentity.origin, (1, 0.5, 0), "", behaviortreeentity);
 		#/
 		enemydistance = distancesquared(behaviortreeentity.favoriteenemy.origin, behaviortreeentity.origin);
-		if(enemydistance < behaviortreeentity.goalradius * behaviortreeentity.goalradius)
+		if(enemydistance < (behaviortreeentity.goalradius * behaviortreeentity.goalradius))
 		{
 			behaviortreeentity useposition(behaviortreeentity.favoriteenemy.origin);
 			return 1;

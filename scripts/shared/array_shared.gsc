@@ -1503,7 +1503,7 @@ function quicksortmid(array, start, end, compare_func)
 	{
 		compare_func = &quicksort_compare;
 	}
-	if(end - start >= 1)
+	if((end - start) >= 1)
 	{
 		pivot = array[start];
 		while(k > i)

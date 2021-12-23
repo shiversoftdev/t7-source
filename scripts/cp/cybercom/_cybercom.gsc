@@ -124,7 +124,7 @@ function function_beff8cf9()
 function ability_on(slot, weapon)
 {
 	self gadgetsetactivatetime(slot, gettime());
-	if(!isdefined(self.spawntime) || gettime() - self.spawntime > 200)
+	if(!isdefined(self.spawntime) || (gettime() - self.spawntime) > 200)
 	{
 		if(getdvarint("ai_awarenessEnabled") && isdefined(weapon) && issubstr(weapon.name, "hijack"))
 		{

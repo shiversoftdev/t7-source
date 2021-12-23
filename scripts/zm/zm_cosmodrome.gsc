@@ -707,7 +707,7 @@ function function_49998a6e()
 	anchor = getent(start_chest.target, "targetname");
 	anchortarget = getent(anchor.target, "targetname");
 	level.pandora_light = spawn("script_model", anchortarget.origin);
-	level.pandora_light.angles = anchortarget.angles + vectorscale((-1, 0, 0), 90);
+	level.pandora_light.angles = anchortarget.angles + (vectorscale((-1, 0, 0), 90));
 	level.pandora_light setmodel("tag_origin");
 	playfxontag(level._effect["lght_marker"], level.pandora_light, "tag_origin");
 }
@@ -905,7 +905,7 @@ function assign_lowest_unused_character_index()
 	}
 	if(charindexarray.size > 0)
 	{
-		if(n_characters_defined == players.size - 1)
+		if(n_characters_defined == (players.size - 1))
 		{
 			if(!(isdefined(level.has_richtofen) && level.has_richtofen))
 			{
@@ -1658,10 +1658,10 @@ function function_b8df7e30(var_416e7c7f)
 	Parameters: 1
 	Flags: Linked
 */
-function function_83393018(var_a48bee9b)
+function function_83393018(b_cooldown)
 {
 	/#
-		level.var_a1879e28 = var_a48bee9b;
+		level.var_a1879e28 = b_cooldown;
 	#/
 }
 

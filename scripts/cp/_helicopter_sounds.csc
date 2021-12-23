@@ -150,7 +150,7 @@ function command_parser()
 				{
 					if(isdefined(tokens[1]))
 					{
-						println("" + tokens[0] + "" + tokens[1]);
+						println((("" + tokens[0]) + "") + tokens[1]);
 					}
 					else
 					{
@@ -161,13 +161,13 @@ function command_parser()
 				}
 				else if(!isdefined(tokens[2]))
 				{
-					println("" + tokens[0] + "" + tokens[1]);
+					println((("" + tokens[0]) + "") + tokens[1]);
 					println("");
 					success = 0;
 				}
 				else if(!isdefined(tokens[3]))
 				{
-					println("" + tokens[0] + "" + tokens[1]);
+					println((("" + tokens[0]) + "") + tokens[1]);
 					println("");
 					success = 0;
 				}
@@ -510,7 +510,7 @@ function start_helicopter_sounds(localclientnum)
 			default:
 			{
 				/#
-					println("" + self.vehicletype + "");
+					println(("" + self.vehicletype) + "");
 				#/
 				break;
 			}
@@ -520,7 +520,7 @@ function start_helicopter_sounds(localclientnum)
 		/#
 			if(getdvarint("") > 0)
 			{
-				iprintlnbold("" + self.vehicletype + "");
+				iprintlnbold(("" + self.vehicletype) + "");
 			}
 		#/
 	}
@@ -583,7 +583,7 @@ function heli_sound_play(heli_bone)
 		default:
 		{
 			/#
-				println("" + heli_bone.type + "");
+				println(("" + heli_bone.type) + "");
 			#/
 			break;
 		}
@@ -952,7 +952,7 @@ function aircraft_dustkick(localclientnum)
 			dotracethisframe = numframespertrace;
 			trace = bullettrace(trace_ent.origin, trace_ent.origin - vectorscale((0, 0, 1), 100000), 0, trace_ent);
 			d = distance(trace_ent.origin, trace["position"]);
-			repeatrate = d - minheight / maxheight - minheight * slowestrepeatwait - fastestrepeatwait + fastestrepeatwait;
+			repeatrate = (d - minheight) / (maxheight - minheight) * (slowestrepeatwait - fastestrepeatwait) + fastestrepeatwait;
 		}
 		if(!isdefined(trace))
 		{
@@ -985,11 +985,11 @@ function aircraft_dustkick(localclientnum)
 			/#
 				if(isdefined(self.vehicletype))
 				{
-					println("" + trace[""] + "" + self.vehicletype);
+					println((("" + trace[""]) + "") + self.vehicletype);
 				}
 				else
 				{
-					println("" + trace[""] + "");
+					println(("" + trace[""]) + "");
 				}
 			#/
 			return;

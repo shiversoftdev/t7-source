@@ -325,7 +325,7 @@ function buildoffsetlist(startoffset, depth, offset_x, offset_y)
 			{
 				y = i * offset_y;
 				total_y = offset_y * startingindex;
-				y = y - total_y / 2;
+				y = y - (total_y / 2);
 			}
 			offsets[startingindex + i] = startoffset + (x, y, 0);
 		}

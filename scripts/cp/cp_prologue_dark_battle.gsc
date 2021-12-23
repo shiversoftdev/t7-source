@@ -368,16 +368,16 @@ function function_62e89023(b_open = 1, var_abf03d83 = 1)
 	v_side = anglestoright(var_280d5f68.angles);
 	if(b_open)
 	{
-		v_pos_left = var_280d5f68.origin + v_side * 52 * -1;
+		v_pos_left = var_280d5f68.origin + (v_side * (52 * -1));
 		var_280d5f68 moveto(v_pos_left, n_open_time);
-		v_pos_right = var_3c301126.origin + v_side * 52;
+		v_pos_right = var_3c301126.origin + (v_side * 52);
 		var_3c301126 moveto(v_pos_right, n_open_time);
 	}
 	else
 	{
-		v_pos_left = var_280d5f68.origin + v_side * 52;
+		v_pos_left = var_280d5f68.origin + (v_side * 52);
 		var_280d5f68 moveto(v_pos_left, n_open_time);
-		v_pos_right = var_3c301126.origin + v_side * 52 * -1;
+		v_pos_right = var_3c301126.origin + (v_side * (52 * -1));
 		var_3c301126 moveto(v_pos_right, n_open_time);
 	}
 	var_3c301126 waittill(#"movedone");
@@ -878,7 +878,7 @@ function move_target(e_target, e_shooter)
 	v_right = anglestoright(e_target.angles);
 	var_7dad3ff1 = v_right * 50;
 	var_a0d5e21e = var_7dad3ff1 + e_target.origin;
-	var_58670eab = var_7dad3ff1 * -1 + e_target.origin;
+	var_58670eab = (var_7dad3ff1 * -1) + e_target.origin;
 	var_67766dec = e_target.origin;
 	var_20b9665f = e_target.origin + vectorscale((0, 0, 1), 50);
 	while(isdefined(e_shooter) && e_shooter.firing_at_something == 1)
@@ -931,7 +931,7 @@ function fire_random_direction(height_offset)
 		new_angles = (0, random_yaw, 0);
 		vector = anglestoforward(new_angles);
 		height_offset_vector = (0, 0, height_offset);
-		end_point = self.origin + height_offset_vector + vector * distance;
+		end_point = (self.origin + height_offset_vector) + (vector * distance);
 		var_a03ca40a = spawn("script_origin", end_point);
 		var_a03ca40a.health = 1000;
 		duration = 1.5;
@@ -1109,7 +1109,7 @@ function vtol_tackle_main(b_starting)
 	level cp_prologue_util::spawn_coop_player_replacement("skipto_vtol_tackle_ai");
 	foreach(var_c7e59655, ai_ally in level.var_681ad194)
 	{
-		ai_ally thread hangar::ai_teleport("ally_0" + ai_ally.var_a89679b6 + "_vtol_tackle_node");
+		ai_ally thread hangar::ai_teleport(("ally_0" + ai_ally.var_a89679b6) + "_vtol_tackle_node");
 		ai_ally function_b243f34();
 	}
 	level thread objectives::breadcrumb("dark_battle_breadcrumb_5");
@@ -1416,7 +1416,7 @@ function function_ecf2e565()
 			continue;
 		}
 		var_30299a05 = (randomintrange(-150, 150), randomintrange(-150, 150), randomintrange(-150, 150));
-		magicbullet(getweapon("turret_bo3_mil_vtol_nrc"), veh_vtol gettagorigin("tag_gunner_barrel3") + vectorscale((0, -1, 0), 40), self.origin + var_30299a05);
+		magicbullet(getweapon("turret_bo3_mil_vtol_nrc"), veh_vtol gettagorigin("tag_gunner_barrel3") + (vectorscale((0, -1, 0), 40)), self.origin + var_30299a05);
 		wait(0.05);
 	}
 }

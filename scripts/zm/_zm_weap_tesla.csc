@@ -65,29 +65,149 @@ function player_init()
 	Namespace: _zm_weap_tesla
 	Checksum: 0x308FBEA
 	Offset: 0x5E8
-	Size: 0x0
+	Size: 0x1B8
 	Parameters: 1
 	Flags: Linked
 */
 function tesla_fx_rail(localclientnum)
 {
+	self endon(#"disconnect");
+	self endon(#"entityshutdown");
+	for(;;)
+	{
+		waitrealtime(randomfloatrange(8, 12));
+		if(!level.tesla_play_fx[localclientnum])
+		{
+			continue;
+		}
+		if(!level.tesla_play_rail)
+		{
+			continue;
+		}
+		currentweapon = getcurrentweapon(localclientnum);
+		if(currentweapon != level.weaponzmteslagun && currentweapon != level.weaponzmteslagunupgraded)
+		{
+			continue;
+		}
+		if(isads(localclientnum) || isthrowinggrenade(localclientnum) || ismeleeing(localclientnum) || isonturret(localclientnum))
+		{
+			continue;
+		}
+		if(getweaponammoclip(localclientnum, currentweapon) <= 0)
+		{
+			continue;
+		}
+		fx = level._effect["tesla_viewmodel_rail"];
+		if(currentweapon == level.weaponzmteslagunupgraded)
+		{
+			fx = level._effect["tesla_viewmodel_rail_upgraded"];
+		}
+		playviewmodelfx(localclientnum, fx, "tag_flash");
+		playsound(localclientnum, "wpn_tesla_effects", (0, 0, 0));
+	}
 }
 
-/*Unknown Op Code (0x0B28) at 0630*/
 /*
 	Name: tesla_fx_tube
 	Namespace: _zm_weap_tesla
 	Checksum: 0x5C5F757E
 	Offset: 0x7A8
-	Size: 0x0
+	Size: 0x350
 	Parameters: 1
 	Flags: Linked
 */
 function tesla_fx_tube(localclientnum)
 {
+	self endon(#"disconnect");
+	self endon(#"entityshutdown");
+	for(;;)
+	{
+		waitrealtime(0.1);
+		if(!level.tesla_play_fx[localclientnum])
+		{
+			continue;
+		}
+		w_current = getcurrentweapon(localclientnum);
+		if(w_current != level.weaponzmteslagun && w_current != level.weaponzmteslagunupgraded)
+		{
+			continue;
+		}
+		if(isthrowinggrenade(localclientnum) || ismeleeing(localclientnum) || isonturret(localclientnum))
+		{
+			continue;
+		}
+		n_ammo = getweaponammoclip(localclientnum, w_current);
+		if(n_ammo <= 0)
+		{
+			self clear_tesla_tube_effect(localclientnum);
+			continue;
+		}
+		str_fx = level._effect["tesla_viewmodel_tube"];
+		if(w_current == level.weaponzmteslagunupgraded)
+		{
+			switch(n_ammo)
+			{
+				case 1:
+				case 2:
+				{
+					str_fx = level._effect["tesla_viewmodel_tube3_upgraded"];
+					n_tint = 2;
+					break;
+				}
+				case 3:
+				case 4:
+				{
+					str_fx = level._effect["tesla_viewmodel_tube2_upgraded"];
+					n_tint = 1;
+					break;
+				}
+				default:
+				{
+					str_fx = level._effect["tesla_viewmodel_tube_upgraded"];
+					n_tint = 0;
+					break;
+				}
+			}
+		}
+		else
+		{
+			switch(n_ammo)
+			{
+				case 1:
+				{
+					str_fx = level._effect["tesla_viewmodel_tube3"];
+					n_tint = 2;
+					break;
+				}
+				case 2:
+				{
+					str_fx = level._effect["tesla_viewmodel_tube2"];
+					n_tint = 1;
+					break;
+				}
+				default:
+				{
+					str_fx = level._effect["tesla_viewmodel_tube"];
+					n_tint = 0;
+					break;
+				}
+			}
+		}
+		if(self.str_tesla_current_tube_effect === str_fx)
+		{
+			continue;
+			continue;
+		}
+		if(isdefined(self.n_tesla_tube_fx_id))
+		{
+			deletefx(localclientnum, self.n_tesla_tube_fx_id, 1);
+		}
+		self.str_tesla_current_tube_effect = str_fx;
+		self.n_tesla_tube_fx_id = playviewmodelfx(localclientnum, str_fx, "tag_brass");
+		self mapshaderconstant(localclientnum, 0, "scriptVector2", 0, 1, n_tint, 0);
+	}
 }
 
-/*Unknown Op Code (0x0540) at 07F0*/
 /*
 	Name: tesla_notetrack_think
 	Namespace: _zm_weap_tesla
@@ -123,39 +243,26 @@ function tesla_notetrack_think()
 	Namespace: _zm_weap_tesla
 	Checksum: 0x8011AB1B
 	Offset: 0xB88
-	Size: 0x0
+	Size: 0xA0
 	Parameters: 1
 	Flags: Linked
 */
-function tesla_happy()
+function tesla_happy(localclientnum)
 {
-System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
-Parameter name: index
-   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   at System.Collections.Generic.List`1.get_Item(Int32 index)
-   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 649
-   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 211
-/*
-No Output
-*/
-
-	/* ======== */
-
-/* 
-	Stack: 
-*/
-	/* ======== */
-
-/* 
-	Blocks: 
-	Cerberus.Logic.BasicBlock at 0x0B88, end at 0x0B89
-	Cerberus.Logic.IfBlock at 0x0BBE, end at 0x0C22
-*/
-	/* ======== */
-
+	for(;;)
+	{
+		level waittill(#"tgh");
+		currentweapon = getcurrentweapon(localclientnum);
+		if(currentweapon == level.weaponzmteslagun || currentweapon == level.weaponzmteslagunupgraded)
+		{
+			playsound(localclientnum, "wpn_tesla_happy", (0, 0, 0));
+			level.tesla_play_rail = 0;
+			waitrealtime(2);
+			level.tesla_play_rail = 1;
+		}
+	}
 }
 
-/*Unknown Op Code (0x1C63) at 0C12*/
 /*
 	Name: tesla_change_watcher
 	Namespace: _zm_weap_tesla

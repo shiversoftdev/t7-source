@@ -85,39 +85,24 @@ function sndueb(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname
 	Namespace: zm_castle_ee_side
 	Checksum: 0xF12D3C0E
 	Offset: 0x648
-	Size: 0x0
+	Size: 0x13C
 	Parameters: 7
 	Flags: Linked
 */
-function callback_exploding_death_fx()
+function callback_exploding_death_fx(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
-System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
-Parameter name: index
-   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   at System.Collections.Generic.List`1.get_Item(Int32 index)
-   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 649
-   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 211
-/*
-No Output
-*/
-
-	/* ======== */
-
-/* 
-	Stack: 
-*/
-	/* ======== */
-
-/* 
-	Blocks: 
-	Cerberus.Logic.BasicBlock at 0x0648, end at 0x0649
-	Cerberus.Logic.IfBlock at 0x069A, end at 0x0782
-*/
-	/* ======== */
-
+	if(newval == 1)
+	{
+		v_pos = self gettagorigin("j_spine4");
+		v_angles = self gettagangles("j_spine4");
+		var_e6ddb5de = util::spawn_model(localclientnum, "tag_origin", v_pos, v_angles);
+		playfxontag(localclientnum, level._effect["exploding_death"], var_e6ddb5de, "tag_origin");
+		var_e6ddb5de playsound(localclientnum, "evt_ai_explode");
+		waitrealtime(6);
+		var_e6ddb5de delete();
+	}
 }
 
-/*Unknown Op Code (0x023D) at 0766*/
 /*
 	Name: plunger_charged_strike
 	Namespace: zm_castle_ee_side

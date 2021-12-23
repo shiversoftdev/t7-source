@@ -209,7 +209,7 @@ function onstartgametype()
 	level.spawn_start = [];
 	foreach(var_51a3be6c, team in level.teams)
 	{
-		level.spawn_start[team] = spawnlogic::get_spawnpoint_array("mp_ctf_spawn_" + team + "_start");
+		level.spawn_start[team] = spawnlogic::get_spawnpoint_array(("mp_ctf_spawn_" + team) + "_start");
 	}
 	thread updategametypedvars();
 	thread ctf();
@@ -236,7 +236,7 @@ function shouldplayovertimeround()
 	}
 	if(!level.scoreroundwinbased)
 	{
-		if(game["teamScores"]["allies"] == game["teamScores"]["axis"] && (util::hitroundlimit() || game["teamScores"]["allies"] == level.scorelimit - 1))
+		if(game["teamScores"]["allies"] == game["teamScores"]["axis"] && (util::hitroundlimit() || game["teamScores"]["allies"] == (level.scorelimit - 1)))
 		{
 			return 1;
 		}
@@ -245,7 +245,7 @@ function shouldplayovertimeround()
 	{
 		alliesroundswon = util::getroundswon("allies");
 		axisroundswon = util::getroundswon("axis");
-		if(level.roundwinlimit > 0 && axisroundswon == level.roundwinlimit - 1 && alliesroundswon == level.roundwinlimit - 1)
+		if(level.roundwinlimit > 0 && axisroundswon == (level.roundwinlimit - 1) && alliesroundswon == (level.roundwinlimit - 1))
 		{
 			return 1;
 		}
@@ -269,13 +269,13 @@ function shouldplayovertimeround()
 function minutesandsecondsstring(milliseconds)
 {
 	minutes = floor(milliseconds / 60000);
-	milliseconds = milliseconds - minutes * 60000;
+	milliseconds = milliseconds - (minutes * 60000);
 	seconds = floor(milliseconds / 1000);
 	if(seconds < 10)
 	{
-		return minutes + ":0" + seconds;
+		return (minutes + ":0") + seconds;
 	}
-	return minutes + ":" + seconds;
+	return (minutes + ":") + seconds;
 }
 
 /*

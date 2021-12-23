@@ -86,7 +86,7 @@ function __main__()
 			{
 				ents[i] hide();
 				ents[i] notsolid();
-				if(isdefined(ents[i].spawnflags) && ents[i].spawnflags & 1 == 1)
+				if(isdefined(ents[i].spawnflags) && (ents[i].spawnflags & 1) == 1)
 				{
 					ents[i] connectpaths();
 				}
@@ -179,7 +179,7 @@ function __main__()
 		}
 		ent.v["exploder"] = exploder.script_exploder;
 		/#
-			assert(isdefined(exploder.script_exploder), "" + exploder.origin + "");
+			assert(isdefined(exploder.script_exploder), ("" + exploder.origin) + "");
 		#/
 		if(!isdefined(ent.v["delay"]))
 		{
@@ -680,7 +680,7 @@ function reportexploderids()
 		println("");
 		for(i = 0; i < keys.size; i++)
 		{
-			println(keys[i] + "" + level._exploder_ids[keys[i]]);
+			println((keys[i] + "") + level._exploder_ids[keys[i]]);
 		}
 	#/
 }
@@ -791,7 +791,7 @@ function activate_individual_exploder(num)
 	if(!level.clientscripts || !isdefined(level._exploder_ids[int(self.v["exploder"])]) || isdefined(self.v["exploder_server"]))
 	{
 		/#
-			println("" + self.v[""] + "");
+			println(("" + self.v[""]) + "");
 		#/
 		if(isdefined(self.v["firefx"]))
 		{
@@ -986,7 +986,7 @@ function earthquake()
 {
 	earthquake_name = self.v["earthquake"];
 	/#
-		assert(isdefined(level.earthquake) && isdefined(level.earthquake[earthquake_name]), "" + earthquake_name + "");
+		assert(isdefined(level.earthquake) && isdefined(level.earthquake[earthquake_name]), ("" + earthquake_name) + "");
 	#/
 	self exploder_delay();
 	eq = level.earthquake[earthquake_name];
@@ -1013,7 +1013,7 @@ function rumble()
 	else
 	{
 		/#
-			println("" + self.v[""] + "");
+			println(("" + self.v[""]) + "");
 		#/
 		n_rumble_threshold_squared = 16384;
 	}

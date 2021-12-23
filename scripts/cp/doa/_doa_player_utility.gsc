@@ -627,7 +627,7 @@ function shield_trigger_think(player, var_c1ff53d9, thresh)
 			speed = lengthsquared(v_velocity);
 			/#
 			#/
-			ok = speed < thresh * thresh;
+			ok = speed < (thresh * thresh);
 		}
 		if(!ok)
 		{
@@ -945,7 +945,7 @@ function function_832d21c2()
 	self thread namespace_eaa992c::function_285a2999("boots");
 	self.doa.fast_feet = 1;
 	self.doa.var_d5c84825 = undefined;
-	timeleft = gettime() + self doa_utility::function_1ded48e6(level.doa.rules.player_speed_time) * 1000;
+	timeleft = gettime() + (self doa_utility::function_1ded48e6(level.doa.rules.player_speed_time) * 1000);
 	while(isdefined(self.doa.fast_feet) && self.doa.fast_feet && gettime() < timeleft)
 	{
 		wait(0.05);
@@ -996,12 +996,12 @@ function function_3840375a(speed = level.doa.rules.var_ee067ec)
 	if(speed == 0)
 	{
 		self thread namespace_eaa992c::function_285a2999("web_contact");
-		timeleft = gettime() + level.doa.rules.var_dec839f3 * 1000;
+		timeleft = gettime() + (level.doa.rules.var_dec839f3 * 1000);
 	}
 	else if(speed == level.doa.rules.var_ee067ec)
 	{
 		self thread namespace_eaa992c::function_285a2999("slow_feet");
-		timeleft = gettime() + level.doa.rules.var_353018d2 * 1000;
+		timeleft = gettime() + (level.doa.rules.var_353018d2 * 1000);
 	}
 	self.doa.var_d5c84825 = 1;
 	self.doa.fast_feet = undefined;
@@ -1053,7 +1053,7 @@ function function_6e1ed82()
 	{
 		norm_move = self getnormalizedmovement();
 		var_11533e3b = length(norm_move);
-		idx = idx + 1 % 20;
+		idx = (idx + 1) % 20;
 		if(isdefined(var_11533e3b) && var_11533e3b > 0.5)
 		{
 			samples[idx] = norm_move;
@@ -1711,12 +1711,12 @@ function function_5e373fc6()
 		return;
 	}
 	v_dir = anglestoforward(self.angles);
-	self.doa.var_b5d64970 = gettime() + getdvarint("scr_doa_secondary_firerate", int(getdvarfloat("scr_doa_secondary_firerate_frac", 0.65) * 1000));
+	self.doa.var_b5d64970 = gettime() + (getdvarint("scr_doa_secondary_firerate", int(getdvarfloat("scr_doa_secondary_firerate_frac", 0.65) * 1000)));
 	self thread missile_logic(target1);
-	magicbullet(self.doa.var_5af6f9a9, v_spawn, v_spawn + 50 * v_dir, self);
+	magicbullet(self.doa.var_5af6f9a9, v_spawn, v_spawn + (50 * v_dir), self);
 	wait(0.05);
 	self thread missile_logic(target2);
-	magicbullet(self.doa.var_5af6f9a9, v_spawn, v_spawn + 50 * v_dir, self);
+	magicbullet(self.doa.var_5af6f9a9, v_spawn, v_spawn + (50 * v_dir), self);
 }
 
 /*
@@ -1789,18 +1789,18 @@ function function_71dab8e8(amount = 1)
 	{
 		return;
 	}
-	self.doa.var_91c268dc = self.doa.var_91c268dc + int(getdvarint("scr_doa_weapon_increment", 64) * amount);
+	self.doa.var_91c268dc = self.doa.var_91c268dc + (int(getdvarint("scr_doa_weapon_increment", 64) * amount));
 	if(self.doa.var_91c268dc >= getdvarint("scr_doa_weapon_increment_range", 1024))
 	{
 		if(self.doa.weaponlevel < 2)
 		{
 			var_2e3af952 = self.doa.weaponlevel;
-			self.doa.weaponlevel = self.doa.weaponlevel + int(self.doa.var_91c268dc / getdvarint("scr_doa_weapon_increment_range", 1024));
+			self.doa.weaponlevel = self.doa.weaponlevel + (int(self.doa.var_91c268dc / getdvarint("scr_doa_weapon_increment_range", 1024)));
 			if(self.doa.weaponlevel > 2)
 			{
 				self.doa.weaponlevel = 2;
 			}
-			self.doa.var_91c268dc = self.doa.var_91c268dc - self.doa.weaponlevel - var_2e3af952 * getdvarint("scr_doa_weapon_increment_range", 1024);
+			self.doa.var_91c268dc = self.doa.var_91c268dc - (self.doa.weaponlevel - var_2e3af952) * getdvarint("scr_doa_weapon_increment_range", 1024);
 			graceperiod = gettime() + 2000;
 			if(isdefined(self.doa.var_c2b9d7d0) && self.doa.var_c2b9d7d0 < graceperiod)
 			{
@@ -1812,7 +1812,7 @@ function function_71dab8e8(amount = 1)
 				self playsoundtoplayer("zmb_weapon_upgraded", self);
 			}
 			/#
-				doa_utility::debugmsg("" + self.name + "" + self.doa.weaponlevel + "" + self.doa.var_e1eb317e[self.doa.weaponlevel].name);
+				doa_utility::debugmsg((((("" + self.name) + "") + self.doa.weaponlevel) + "") + self.doa.var_e1eb317e[self.doa.weaponlevel].name);
 			#/
 		}
 		else
@@ -1854,7 +1854,7 @@ function updateweapon()
 		self.doa.var_f303ab59 = 0;
 		if(self isfiring())
 		{
-			decay = int(decay * getdvarint("scr_doa_weapon_increment_decayscale", 5) - self.doa.var_7c1bcaf3);
+			decay = int(decay * (getdvarint("scr_doa_weapon_increment_decayscale", 5) - self.doa.var_7c1bcaf3));
 		}
 		self.doa.var_91c268dc = self.doa.var_91c268dc - decay;
 		if(self.doa.var_91c268dc < 0)
@@ -1869,7 +1869,7 @@ function updateweapon()
 		self function_baa7411e(self.doa.var_e1eb317e[self.doa.weaponlevel]);
 		self thread function_f2507519(level.doa.arena_round_number == 3);
 		/#
-			doa_utility::debugmsg("" + self.name + "" + self.doa.weaponlevel + "" + self.doa.var_e1eb317e[self.doa.weaponlevel].name);
+			doa_utility::debugmsg((((("" + self.name) + "") + self.doa.weaponlevel) + "") + self.doa.var_e1eb317e[self.doa.weaponlevel].name);
 		#/
 	}
 	if(self.doa.var_a2d31b4a == self.doa.default_weap.name && (isdefined(self.doa.var_1b58e8ba) && self.doa.weaponlevel <= self.doa.var_1b58e8ba))
@@ -1946,7 +1946,7 @@ function function_d5f89a15(name, weaponpickup = 0)
 		self.doa.var_91c268dc = getdvarint("scr_doa_weapon_increment_range", 1024) - 1;
 	}
 	/#
-		doa_utility::debugmsg("" + self.name + "" + self.doa.var_a2d31b4a + "" + isdefined(fill) && (fill ? "" : ""));
+		doa_utility::debugmsg((((("" + self.name) + "") + self.doa.var_a2d31b4a) + "") + (isdefined(fill) && (fill ? "" : "")));
 		self thread function_1318d1e4();
 	#/
 }
@@ -2070,7 +2070,7 @@ function function_7e85dbee()
 	}
 	if(var_b427d4ac > 1)
 	{
-		var_516eed4b = doa_utility::clamp(int(randomfloatrange(0.3, 0.5) * var_b427d4ac - 1 * 4), 3);
+		var_516eed4b = doa_utility::clamp(int(randomfloatrange(0.3, 0.5) * ((var_b427d4ac - 1) * 4)), 3);
 		level thread doa_pickups::spawnubertreasure(self.origin, var_516eed4b, 85, 1, 1);
 	}
 }
@@ -2125,14 +2125,14 @@ function function_3682cfe4(einflictor, attacker, idamage, smeansofdeath, sweapon
 	self.deaths = math::clamp(self.deaths + 1, 0, 1023);
 	self.dead = 1;
 	/#
-		doa_utility::debugmsg("" + smeansofdeath + "" + idamage);
+		doa_utility::debugmsg((("" + smeansofdeath) + "") + idamage);
 		if(isdefined(einflictor))
 		{
-			doa_utility::debugmsg("" + einflictor getentitynumber() + "" + einflictor.classname + (isdefined(einflictor.targetname) ? "" + einflictor.targetname : ""));
+			doa_utility::debugmsg(((("" + einflictor getentitynumber()) + "") + einflictor.classname) + (isdefined(einflictor.targetname) ? "" + einflictor.targetname : ""));
 		}
 		if(isdefined(attacker))
 		{
-			doa_utility::debugmsg("" + attacker getentitynumber() + "" + attacker.classname + (isdefined(attacker.targetname) ? "" + attacker.targetname : ""));
+			doa_utility::debugmsg(((("" + attacker getentitynumber()) + "") + attacker.classname) + (isdefined(attacker.targetname) ? "" + attacker.targetname : ""));
 		}
 	#/
 	if(self.doa.lives == 0)
@@ -2562,7 +2562,7 @@ function function_2b1d321f(player, downedplayer)
 		{
 			distsq = 9999999;
 		}
-		if(distsq > 48 * 48)
+		if(distsq > (48 * 48))
 		{
 			found = undefined;
 			foreach(var_9c71663b, savior in downedplayer.doa.var_b08ad9f8)
@@ -2638,7 +2638,7 @@ function function_b1958e58()
 		curtime = gettime();
 		foreach(var_7dcd64e1, savior in self.doa.var_b08ad9f8)
 		{
-			if(curtime - savior.timestamp > getdvarint("scr_doa_playrevive_delay", 250))
+			if((curtime - savior.timestamp) > getdvarint("scr_doa_playrevive_delay", 250))
 			{
 				self.doa.var_22d93250++;
 			}
@@ -2712,7 +2712,7 @@ function function_27202201()
 		self.var_9ea856f6 = self.var_9ea856f6 - 1;
 		if(self.doa.var_22d93250 > 0)
 		{
-			amount = int(math::clamp(self.doa.var_22d93250 - 1 + 3, 3, 5));
+			amount = int(math::clamp((self.doa.var_22d93250 - 1) + 3, 3, 5));
 			if(mayspawnentity())
 			{
 				playsoundatposition("evt_revive", self.origin);

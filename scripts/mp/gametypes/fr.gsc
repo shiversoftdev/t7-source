@@ -528,8 +528,8 @@ function get_current_track_time(player)
 	curtime = gettime();
 	dt = curtime - player.prev_time;
 	frac = getfirsttouchfraction(player, self, player.prev_origin, player.origin);
-	current_time = curtime - level.frgame.trackstarttime + level.frgame.bulletpenalty * 1000 + level.frgame.userspawns * 5000 - level.frgame.totalpausedtime;
-	return int(current_time - dt * 1 - frac);
+	current_time = (curtime - level.frgame.trackstarttime) + (level.frgame.bulletpenalty * 1000) + (level.frgame.userspawns * 5000) - level.frgame.totalpausedtime;
+	return int(current_time - (dt * (1 - frac)));
 }
 
 /*
@@ -941,12 +941,12 @@ function dumphighscores()
 	/#
 		for(i = 0; i < level.frgame.activetrack.highscores.size; i++)
 		{
-			println(i + 1 + "" + level.frgame.activetrack.highscores[i].time);
+			println(((i + 1) + "") + level.frgame.activetrack.highscores[i].time);
 			if(i == 0)
 			{
 				for(j = 0; j < level.frgame.activetrack.fastestruncheckpointtimes.size; j++)
 				{
-					println("" + j + "" + level.frgame.activetrack.fastestruncheckpointtimes[j]);
+					println((("" + j) + "") + level.frgame.activetrack.fastestruncheckpointtimes[j]);
 				}
 			}
 		}
@@ -966,7 +966,7 @@ function play_fault_vo()
 {
 	current_time = gettime();
 	fault_vo_interval = 20000;
-	if(current_time - level.frgame.lastplayedfaultvotime < fault_vo_interval)
+	if((current_time - level.frgame.lastplayedfaultvotime) < fault_vo_interval)
 	{
 		return;
 	}
@@ -1214,8 +1214,8 @@ function ignorebulletsfired(weapon)
 	{
 		return 0;
 	}
-	grace_period = weapon.firetime * 4 * 1000;
-	if(level.frgame.activespawnpoint.weaponobject.targetshottime + grace_period >= gettime())
+	grace_period = (weapon.firetime * 4) * 1000;
+	if((level.frgame.activespawnpoint.weaponobject.targetshottime + grace_period) >= gettime())
 	{
 		return 1;
 	}

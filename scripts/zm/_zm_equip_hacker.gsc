@@ -273,14 +273,14 @@ function should_pooled_object_exist()
 			{
 				if(self.entity != players[i])
 				{
-					if(distance2dsquared(players[i].origin, self.entity.origin) <= self.radius * self.radius)
+					if(distance2dsquared(players[i].origin, self.entity.origin) <= (self.radius * self.radius))
 					{
 						return 1;
 					}
 				}
 				continue;
 			}
-			if(distance2dsquared(players[i].origin, self.origin) <= self.radius * self.radius)
+			if(distance2dsquared(players[i].origin, self.origin) <= (self.radius * self.radius))
 			{
 				return 1;
 			}
@@ -406,7 +406,7 @@ function register_hackable(name, callback_func, qualifier_func)
 	if(!isdefined(structs))
 	{
 		/#
-			println("" + name + "");
+			println(("" + name) + "");
 		#/
 		return;
 	}

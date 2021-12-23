@@ -125,8 +125,8 @@ function function_92b4b156()
 	level flag::wait_till("writing_on_the_wall_complete");
 	var_cb382f = struct::get("weapon_swapper_model", "targetname");
 	var_cb382f.angles = vectorscale((0, 1, 0), 90);
-	var_bf2da7b6 = struct::get("weapon_swapper_fx", "targetname");
-	v_fx_pos = var_bf2da7b6.origin;
+	s_fx_pos = struct::get("weapon_swapper_fx", "targetname");
+	v_fx_pos = s_fx_pos.origin;
 	var_c59a59e1 = 0;
 	var_3bb6997f = undefined;
 	var_81f963f4 = spawn("trigger_radius_use", var_cb382f.origin, 0, 100, 100);

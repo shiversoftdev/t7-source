@@ -176,7 +176,7 @@ function wasp_round_spawning()
 	n_wave_count = 10;
 	if(level.players.size > 1)
 	{
-		n_wave_count = n_wave_count * level.players.size * 0.75;
+		n_wave_count = n_wave_count * (level.players.size * 0.75);
 	}
 	wasp_health_increase();
 	level.zombie_total = int(n_wave_count * 1);
@@ -261,7 +261,7 @@ function spawn_wasp()
 			}
 		}
 		v_spawn_origin = spawn_point.origin;
-		v_ground = bullettrace(spawn_point.origin + vectorscale((0, 0, 1), 60), spawn_point.origin + vectorscale((0, 0, 1), 60) + vectorscale((0, 0, -1), 100000), 0, undefined)["position"];
+		v_ground = bullettrace(spawn_point.origin + vectorscale((0, 0, 1), 60), (spawn_point.origin + vectorscale((0, 0, 1), 60)) + (vectorscale((0, 0, -1), 100000)), 0, undefined)["position"];
 		if(distancesquared(v_ground, spawn_point.origin) < 3600)
 		{
 			v_spawn_origin = v_ground + vectorscale((0, 0, 1), 60);
@@ -392,7 +392,7 @@ function ready_to_spawn_wasp()
 {
 	n_wasps_alive = get_current_wasp_count();
 	b_wasp_count_at_max = n_wasps_alive >= 16;
-	b_wasp_count_per_player_at_max = n_wasps_alive >= level.players.size * 5;
+	b_wasp_count_per_player_at_max = n_wasps_alive >= (level.players.size * 5);
 	if(b_wasp_count_at_max || b_wasp_count_per_player_at_max || !level flag::get("spawn_zombies"))
 	{
 		return 0;
@@ -462,7 +462,7 @@ function parasite_drop_item(v_parasite_origin)
 				v_position = v_start;
 				while(n_distance_moved <= n_distance_to_target)
 				{
-					v_position = v_position + v_dir * n_step;
+					v_position = v_position + (v_dir * n_step);
 					if(zm_utility::check_point_in_enabled_zone(v_position, 1, level.active_zones))
 					{
 						n_height_diff = abs(v_target[2] - v_position[2]);
@@ -473,7 +473,7 @@ function parasite_drop_item(v_parasite_origin)
 					}
 					n_distance_moved = n_distance_moved + n_step;
 				}
-				trace = bullettrace(v_position, v_position + vectorscale((0, 0, -1), 256), 0, undefined);
+				trace = bullettrace(v_position, v_position + (vectorscale((0, 0, -1), 256)), 0, undefined);
 				v_ground_position = trace["position"];
 				if(isdefined(v_ground_position))
 				{
@@ -794,7 +794,7 @@ function wasp_round_tracker()
 			}
 			else
 			{
-				level.next_wasp_round = 5 + level.wasp_round_count * 10 + randomintrange(-1, 1);
+				level.next_wasp_round = (5 + (level.wasp_round_count * 10)) + (randomintrange(-1, 1));
 			}
 			/#
 				getplayers()[0] iprintln("" + level.next_wasp_round);
@@ -949,7 +949,7 @@ function wasp_init()
 	self thread wasp_cleanup_failsafe();
 	level thread zm_spawner::zombie_death_event(self);
 	self thread zm_spawner::enemy_death_detection();
-	self zm_spawner::zombie_history("zombie_wasp_spawn_init -> Spawned = " + self.origin);
+	self zm_spawner::zombie_history(("zombie_wasp_spawn_init -> Spawned = ") + self.origin);
 	if(isdefined(level.achievement_monitor_func))
 	{
 		self [[level.achievement_monitor_func]]();
@@ -988,13 +988,13 @@ function wasp_cleanup_failsafe()
 		}
 		else
 		{
-			n_delta_time = n_current_time - n_check_time / 1000;
+			n_delta_time = (n_current_time - n_check_time) / 1000;
 			if(n_delta_time >= 20)
 			{
 				break;
 			}
 		}
-		n_delta_time = n_current_time - n_wasp_created_time / 1000;
+		n_delta_time = (n_current_time - n_wasp_created_time) / 1000;
 		if(n_delta_time >= 150)
 		{
 			break;
@@ -1111,7 +1111,7 @@ function wasp_behind_audio()
 		players = getplayers();
 		for(i = 0; i < players.size; i++)
 		{
-			waspangle = angleclamp180(vectortoangles(self.origin - players[i].origin)[1] - players[i].angles[1]);
+			waspangle = angleclamp180((vectortoangles(self.origin - players[i].origin)[1]) - players[i].angles[1]);
 			if(isalive(players[i]) && !isdefined(players[i].revivetrigger))
 			{
 				if(abs(waspangle) > 90 && distance2d(self.origin, players[i].origin) > 100)
@@ -1241,7 +1241,7 @@ function watch_player_melee()
 		{
 			continue;
 		}
-		if(abs(peye[2] - self.origin[2]) > 64)
+		if((abs(peye[2] - self.origin[2])) > 64)
 		{
 			continue;
 		}

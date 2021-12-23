@@ -517,7 +517,7 @@ function qrdrone_watch_distance()
 				if(isdefined(self.heliinproximity))
 				{
 					dist = distance(self.origin, self.heliinproximity.origin);
-					staticalpha = 1 - dist - 150 / 150;
+					staticalpha = 1 - ((dist - 150) / 150);
 				}
 				else
 				{

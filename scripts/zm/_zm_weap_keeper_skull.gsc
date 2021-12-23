@@ -328,7 +328,7 @@ function function_f51dbd0a()
 	else if(isdefined(var_553c631c) && var_553c631c && isdefined(self.first_node) && isdefined(self.saved_attacking_spot_index))
 	{
 		forwardvec = anglestoforward(self.first_node.angles);
-		var_9f8b01da = self.first_node.attack_spots[self.saved_attacking_spot_index] + forwardvec * 75;
+		var_9f8b01da = self.first_node.attack_spots[self.saved_attacking_spot_index] + (forwardvec * 75);
 		var_9f8b01da = getclosestpointonnavmesh(var_9f8b01da);
 		self forceteleport(var_9f8b01da, self getangles());
 	}

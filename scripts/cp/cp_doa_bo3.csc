@@ -197,7 +197,7 @@ function function_62423327(arena)
 			arena.var_f3114f93 = &function_787f2b69;
 			arena.var_aad78940 = 99;
 			arena.var_f4f1abf3 = 1;
-			arena.var_dd94482c = 1 + 8 + 4;
+			arena.var_dd94482c = (1 + 8) + 4;
 			arena.var_ecf7ec70 = 0;
 			break;
 		}
@@ -220,7 +220,7 @@ function function_62423327(arena)
 		{
 			arena.var_f3114f93 = &function_b5e8546d;
 			arena.var_aad78940 = 99;
-			arena.var_dd94482c = 1 + 8 + 4;
+			arena.var_dd94482c = (1 + 8) + 4;
 			arena.var_ecf7ec70 = 2;
 			break;
 		}
@@ -411,7 +411,7 @@ function function_7183a31d(fieldname, diff)
 {
 	level notify(#"hash_7183a31d");
 	level endon(#"hash_7183a31d");
-	setuimodelvalue(createuimodel(level.var_7e2a814c, "gtxt0"), "+" + diff);
+	setuimodelvalue(createuimodel(level.var_7e2a814c, "gtxt0"), ("+") + diff);
 	wait(2);
 	setuimodelvalue(createuimodel(level.var_7e2a814c, "gtxt0"), "");
 }

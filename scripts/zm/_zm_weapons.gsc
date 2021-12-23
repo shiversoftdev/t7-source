@@ -567,7 +567,7 @@ function updatelastheldweapontimingszm(newtime)
 	if(isdefined(self.currentweapon) && isdefined(self.currenttime))
 	{
 		curweapon = self.currentweapon;
-		totaltime = int(newtime - self.currenttime / 1000);
+		totaltime = int((newtime - self.currenttime) / 1000);
 		if(totaltime > 0)
 		{
 			self addweaponstat(curweapon, "timeUsed", totaltime);
@@ -595,7 +595,7 @@ function updateweapontimingszm(newtime)
 	{
 		return;
 	}
-	totaltime = int(newtime - self.staticweaponsstarttime / 1000);
+	totaltime = int((newtime - self.staticweaponsstarttime) / 1000);
 	if(totaltime < 0)
 	{
 		return;
@@ -747,7 +747,7 @@ function add_zombie_weapon(weapon_name, upgrade_name, hint, cost, weaponvo, weap
 	}
 	struct.weapon = weapon;
 	struct.upgrade = upgrade;
-	struct.weapon_classname = "weapon_" + weapon_name + "_zm";
+	struct.weapon_classname = ("weapon_" + weapon_name) + "_zm";
 	if(isdefined(level.weapon_cost_client_filled) && level.weapon_cost_client_filled)
 	{
 		struct.hint = &"ZOMBIE_WEAPONCOSTONLY_CFILL";
@@ -1113,7 +1113,7 @@ function init_spawnable_weapon_upgrade()
 	match_string = level.scr_zm_ui_gametype;
 	if("" != location)
 	{
-		match_string = match_string + "_" + location;
+		match_string = (match_string + "_") + location;
 	}
 	match_string_plus_space = " " + match_string;
 	for(i = 0; i < spawnable_weapon_spawns.size; i++)
@@ -1141,7 +1141,7 @@ function init_spawnable_weapon_upgrade()
 	tempmodel = spawn("script_model", (0, 0, 0));
 	for(i = 0; i < spawn_list.size; i++)
 	{
-		clientfieldname = spawn_list[i].zombie_weapon_upgrade + "_" + spawn_list[i].origin;
+		clientfieldname = (spawn_list[i].zombie_weapon_upgrade + "_") + spawn_list[i].origin;
 		numbits = 2;
 		if(isdefined(level._wallbuy_override_num_bits))
 		{
@@ -1179,7 +1179,7 @@ function init_spawnable_weapon_upgrade()
 		unitrigger_stub.script_length = bounds[0] * 0.25;
 		unitrigger_stub.script_width = bounds[1];
 		unitrigger_stub.script_height = bounds[2];
-		unitrigger_stub.origin = unitrigger_stub.origin - anglestoright(unitrigger_stub.angles) * unitrigger_stub.script_length * 0.4;
+		unitrigger_stub.origin = unitrigger_stub.origin - (anglestoright(unitrigger_stub.angles) * (unitrigger_stub.script_length * 0.4));
 		unitrigger_stub.target = spawn_list[i].target;
 		unitrigger_stub.targetname = spawn_list[i].targetname;
 		unitrigger_stub.cursor_hint = "HINT_NOICON";
@@ -1291,7 +1291,7 @@ function add_dynamic_wallbuy(weapon, wallbuy, pristine)
 	unitrigger_stub.script_length = bounds[0] * 0.25;
 	unitrigger_stub.script_width = bounds[1];
 	unitrigger_stub.script_height = bounds[2];
-	unitrigger_stub.origin = unitrigger_stub.origin - anglestoright(unitrigger_stub.angles) * unitrigger_stub.script_length * 0.4;
+	unitrigger_stub.origin = unitrigger_stub.origin - (anglestoright(unitrigger_stub.angles) * (unitrigger_stub.script_length * 0.4));
 	unitrigger_stub.target = spawned_wallbuy.target;
 	unitrigger_stub.targetname = "weapon_upgrade";
 	unitrigger_stub.cursor_hint = "HINT_NOICON";
@@ -1831,7 +1831,7 @@ function random_attachment(weapon, exclude)
 	{
 		while(true)
 		{
-			idx = randomint(attachments.size - lo) + lo;
+			idx = (randomint(attachments.size - lo)) + lo;
 			if(!isdefined(exclude) || attachments[idx] != exclude)
 			{
 				return attachments[idx];
@@ -2731,7 +2731,7 @@ function weapon_show(player)
 		yaw = weapon_yaw + 90;
 	}
 	self.og_origin = self.origin;
-	self.origin = self.origin + anglestoforward((0, yaw, 0)) * 8;
+	self.origin = self.origin + (anglestoforward((0, yaw, 0)) * 8);
 	wait(0.05);
 	self show();
 	zm_utility::play_sound_at_pos("weapon_show", self.origin, self);
@@ -2758,7 +2758,7 @@ function get_pack_a_punch_camo_index(prev_pap_index)
 		if(isdefined(prev_pap_index))
 		{
 			camo_variant = prev_pap_index + 1;
-			if(camo_variant >= level.pack_a_punch_camo_index + level.pack_a_punch_camo_index_number_variants)
+			if(camo_variant >= (level.pack_a_punch_camo_index + level.pack_a_punch_camo_index_number_variants))
 			{
 				camo_variant = level.pack_a_punch_camo_index;
 			}
@@ -3215,7 +3215,7 @@ function ammo_give(weapon)
 			clipcount = self getweaponammoclip(weapon);
 			dw_clipcount = self getweaponammoclip(weapon.dualwieldweapon);
 			currstock = self getammocount(weapon);
-			if(currstock - clipcount + dw_clipcount >= stockmax)
+			if(((currstock - clipcount) + dw_clipcount) >= stockmax)
 			{
 				give_ammo = 0;
 			}
@@ -3866,7 +3866,7 @@ function autofill_wallbuys_init()
 		wallbuy.zombie_weapon_upgrade = weapon.name;
 		wallbuy.weapon = weapon;
 		right = anglestoright(wallbuy.angles);
-		wallbuy.origin = wallbuy.origin - right * 2;
+		wallbuy.origin = wallbuy.origin - (right * 2);
 		wallbuy.target = "autofill_wallbuy_" + index;
 		target_struct = spawnstruct();
 		target_struct.targetname = wallbuy.target;
@@ -3897,7 +3897,7 @@ function autofill_wallbuys_init()
 		wallbuy.zombie_weapon_upgrade = weapon.name;
 		wallbuy.weapon = weapon;
 		right = anglestoright(wallbuy.angles);
-		wallbuy.origin = wallbuy.origin - right * 2;
+		wallbuy.origin = wallbuy.origin - (right * 2);
 		wallbuy.target = "autofill_wallbuy_" + index;
 		target_struct = spawnstruct();
 		target_struct.targetname = wallbuy.target;

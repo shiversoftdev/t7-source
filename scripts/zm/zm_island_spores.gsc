@@ -305,10 +305,10 @@ function function_c77e825c()
 	Parameters: 2
 	Flags: Linked
 */
-function function_dcef79ff(var_8963ba33, e_attacker)
+function function_dcef79ff(b_hero_weapon, e_attacker)
 {
 	var_f9f788a6 = self.var_f9f788a6;
-	self thread function_4c6beece(var_f9f788a6, var_8963ba33, e_attacker);
+	self thread function_4c6beece(var_f9f788a6, b_hero_weapon, e_attacker);
 	self notify(#"hash_dcef79ff");
 	if(var_f9f788a6 == 1)
 	{
@@ -330,7 +330,7 @@ function function_dcef79ff(var_8963ba33, e_attacker)
 	Parameters: 3
 	Flags: Linked
 */
-function function_4c6beece(var_f9f788a6, var_8963ba33, e_attacker)
+function function_4c6beece(var_f9f788a6, b_hero_weapon, e_attacker)
 {
 	if(var_f9f788a6 == 1)
 	{
@@ -350,7 +350,7 @@ function function_4c6beece(var_f9f788a6, var_8963ba33, e_attacker)
 		var_66bbb0c0 = 76;
 		s_org = self.var_5991aaed;
 	}
-	self thread spore_cloud_fx(var_8963ba33, var_f9f788a6);
+	self thread spore_cloud_fx(b_hero_weapon, var_f9f788a6);
 	playsoundatposition("zmb_spore_eject", self.origin);
 	var_6d602035 = self function_cc07e4ad(var_66bbb0c0, s_org);
 	while(var_d7bb540a > 0)
@@ -358,8 +358,8 @@ function function_4c6beece(var_f9f788a6, var_8963ba33, e_attacker)
 		var_d7bb540a = var_d7bb540a - 0.25;
 		a_e_enemies = var_6d602035 array::get_touching(getaiteamarray("axis"));
 		a_e_players = var_6d602035 array::get_touching(level.players);
-		array::thread_all(a_e_enemies, &function_ba7a3b74, 1, var_8963ba33, e_attacker);
-		array::thread_all(a_e_players, &function_ba7a3b74, 0, var_8963ba33, undefined);
+		array::thread_all(a_e_enemies, &function_ba7a3b74, 1, b_hero_weapon, e_attacker);
+		array::thread_all(a_e_players, &function_ba7a3b74, 0, b_hero_weapon, undefined);
 		wait(0.25);
 	}
 	self clientfield::set("spore_cloud_fx", 0);
@@ -376,9 +376,9 @@ function function_4c6beece(var_f9f788a6, var_8963ba33, e_attacker)
 	Parameters: 2
 	Flags: Linked
 */
-function spore_cloud_fx(var_8963ba33, var_f9f788a6)
+function spore_cloud_fx(b_hero_weapon, var_f9f788a6)
 {
-	n_base_value = (var_8963ba33 ? 0 : 3);
+	n_base_value = (b_hero_weapon ? 0 : 3);
 	self clientfield::set("spore_cloud_fx", var_f9f788a6 + n_base_value);
 }
 
@@ -407,7 +407,7 @@ function function_cc07e4ad(var_66bbb0c0, s_org)
 	Parameters: 3
 	Flags: Linked
 */
-function function_ba7a3b74(is_enemy, var_8963ba33, e_attacker)
+function function_ba7a3b74(is_enemy, b_hero_weapon, e_attacker)
 {
 	if(!isdefined(self.var_d07c64b6))
 	{
@@ -421,7 +421,7 @@ function function_ba7a3b74(is_enemy, var_8963ba33, e_attacker)
 			if(!self.var_d07c64b6)
 			{
 				self.var_d07c64b6 = 1;
-				if(var_8963ba33)
+				if(b_hero_weapon)
 				{
 					self clientfield::set("spore_trail_enemy_fx", 1);
 					self thread function_94e2552f();
@@ -462,7 +462,7 @@ function function_ba7a3b74(is_enemy, var_8963ba33, e_attacker)
 				{
 					e_attacker notify(#"update_challenge_3_1");
 				}
-				if(var_8963ba33)
+				if(b_hero_weapon)
 				{
 					a_enemies = array::get_all_closest(self.origin, getaiteamarray("axis"), undefined, undefined, 128);
 					array::run_all(a_enemies, &dodamage, 1000, self.origin);
@@ -477,7 +477,7 @@ function function_ba7a3b74(is_enemy, var_8963ba33, e_attacker)
 		{
 			if(!self.var_d07c64b6)
 			{
-				if(var_8963ba33)
+				if(b_hero_weapon)
 				{
 					self.var_d07c64b6 = 1;
 					self dodamage(self.health / 2, self.origin);
@@ -502,7 +502,7 @@ function function_ba7a3b74(is_enemy, var_8963ba33, e_attacker)
 				self thread function_703ef5e8();
 				wait(5);
 			}
-			else if(var_8963ba33)
+			else if(b_hero_weapon)
 			{
 				self clientfield::set("spore_trail_player_fx", 1);
 				self clientfield::set_to_player("spore_camera_fx", 1);

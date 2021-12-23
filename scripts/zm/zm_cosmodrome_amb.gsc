@@ -488,22 +488,22 @@ function doll_egg(num)
 		{
 			case 0:
 			{
-				alias = "vox_egg_doll_response_" + num + "_0";
+				alias = ("vox_egg_doll_response_" + num) + "_0";
 				break;
 			}
 			case 1:
 			{
-				alias = "vox_egg_doll_response_" + num + "_1";
+				alias = ("vox_egg_doll_response_" + num) + "_1";
 				break;
 			}
 			case 3:
 			{
-				alias = "vox_egg_doll_response_" + num + "_2";
+				alias = ("vox_egg_doll_response_" + num) + "_2";
 				break;
 			}
 			case 2:
 			{
-				alias = "vox_egg_doll_response_" + num + "_3";
+				alias = ("vox_egg_doll_response_" + num) + "_3";
 				break;
 			}
 		}
@@ -576,7 +576,7 @@ function function_5b4692c9()
 function function_2e4843da()
 {
 	self.var_ac086ffb = util::spawn_model(self.model, self.origin, self.angles);
-	e_trig = spawn("trigger_radius", self.origin + vectorscale((0, 0, -1), 120), 0, 175, 200);
+	e_trig = spawn("trigger_radius", self.origin + (vectorscale((0, 0, -1), 120)), 0, 175, 200);
 	e_trig.targetname = "sndzhdeggtrig";
 	e_trig.s_target = self;
 	e_trig waittill(#"hash_de264026");

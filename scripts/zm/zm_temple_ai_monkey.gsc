@@ -182,7 +182,7 @@ function monkey_getmonkeyspawnlocation(mindist, checkvisible, skipstartarea)
 			barriers = array_randomize_knuth(zone.barriers);
 			for(i = 0; i < barriers.size; i++)
 			{
-				text = "Zone: " + zonecounter + " Barrier: " + i;
+				text = (("Zone: " + zonecounter) + " Barrier: ") + i;
 				if(barriers[i] barrier_test(zone, self, mindist, checkvisible))
 				{
 					location = getbarrierattacklocation(barriers[i]);
@@ -317,7 +317,7 @@ function printtext(text, red)
 	{
 		level.printoffsets = [];
 	}
-	originstr = "(" + self.origin[0] + "," + self.origin[1] + "," + self.origin[2] + ")";
+	originstr = ((((("(" + self.origin[0]) + ",") + self.origin[1]) + ",") + self.origin[2]) + ")";
 	if(!isdefined(level.printoffsets[originstr]))
 	{
 		level.printoffsets[originstr] = (0, 0, 0);
@@ -376,7 +376,7 @@ function _get_non_visible_barriers(barriers)
 			cansee = 0;
 			for(j = 0; j < players.size; j++)
 			{
-				if(abs(barriers[i].origin[2] - players[j].origin[2]) < 200)
+				if((abs(barriers[i].origin[2] - players[j].origin[2])) < 200)
 				{
 					if(barriers[i] player_can_see_me(players[j]))
 					{
@@ -420,7 +420,7 @@ function player_can_see_me(player)
 	{
 		banzaivsplayerfovbuffer = 0.2;
 	}
-	playercanseeme = anglefromcenter <= playerfov * 0.5 * 1 - banzaivsplayerfovbuffer;
+	playercanseeme = anglefromcenter <= (playerfov * 0.5) * (1 - banzaivsplayerfovbuffer);
 	return playercanseeme;
 }
 
@@ -456,7 +456,7 @@ function function_16882cf8(loc, color)
 function getbarrierattacklocation(barrier)
 {
 	forward = anglestoforward(barrier.angles);
-	attack_location = barrier.origin + forward * 80;
+	attack_location = barrier.origin + (forward * 80);
 	attack_location = getclosestpointonnavmesh(attack_location, 200);
 	return attack_location;
 }
@@ -525,7 +525,7 @@ function _setup_zone_info()
 	{
 		goal = level.exterior_goals[i];
 		forward = anglestoforward(goal.angles);
-		checkent.origin = goal.origin + forward * 100;
+		checkent.origin = goal.origin + (forward * 100);
 		zonename = checkent _ent_getzonename();
 		valid = isdefined(zonename) && isdefined(level.zones[zonename]);
 		if(!valid)
@@ -1114,7 +1114,7 @@ function escape_monkey_counter(haspowerup)
 	{
 		level.monkey_escape_with_powerup_count++;
 	}
-	if(level.monkey_escape_with_powerup_count % 5 == 0)
+	if((level.monkey_escape_with_powerup_count % 5) == 0)
 	{
 		level thread launch_monkey();
 	}
@@ -1941,7 +1941,7 @@ function monkey_ambient_watch_for_power_up()
 			{
 				break;
 			}
-			if(n_index < self.var_188503aa.size - 2)
+			if(n_index < (self.var_188503aa.size - 2))
 			{
 				n_index++;
 			}
@@ -1966,7 +1966,7 @@ function monkey_ambient_watch_for_power_up()
 */
 function monkey_ambient_level_set_next_sound()
 {
-	level.ambient_monkey_next_sound_time = gettime() + randomfloatrange(3, 6) * 1000;
+	level.ambient_monkey_next_sound_time = gettime() + (randomfloatrange(3, 6) * 1000);
 }
 
 /*
@@ -1980,7 +1980,7 @@ function monkey_ambient_level_set_next_sound()
 */
 function monkey_ambient_set_next_sound()
 {
-	self.next_sound_time = gettime() + randomfloatrange(6, 12) * 1000;
+	self.next_sound_time = gettime() + (randomfloatrange(6, 12) * 1000);
 }
 
 /*

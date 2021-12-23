@@ -147,7 +147,7 @@ function init_zombie_run_cycle()
 	{
 		if(level.round_number >= level.speed_change_round)
 		{
-			speed_percent = 0.2 + level.round_number - level.speed_change_round * 0.2;
+			speed_percent = 0.2 + ((level.round_number - level.speed_change_round) * 0.2);
 			speed_percent = min(speed_percent, 1);
 			change_round_max = int(level.speed_change_max * speed_percent);
 			change_left = change_round_max - level.speed_change_num;
@@ -651,7 +651,7 @@ function check_point_in_enabled_zone(origin, zone_is_active, player_zones = gete
 */
 function round_up_to_ten(score)
 {
-	new_score = score - score % 10;
+	new_score = score - (score % 10);
 	if(new_score < score)
 	{
 		new_score = new_score + 10;
@@ -671,7 +671,7 @@ function round_up_to_ten(score)
 function round_up_score(score, value)
 {
 	score = int(score);
-	new_score = score - score % value;
+	new_score = score - (score % value);
 	if(new_score < score)
 	{
 		new_score = new_score + value;
@@ -931,21 +931,21 @@ function generated_radius_attract_positions(forward, offset, num_positions, attr
 	failed = 0;
 	degs_per_pos = 360 / num_positions;
 	i = offset;
-	while(i < 360 + offset)
+	while(i < (360 + offset))
 	{
 		altforward = forward * attract_radius;
-		rotated_forward = (cos(i) * altforward[0] - sin(i) * altforward[1], sin(i) * altforward[0] + cos(i) * altforward[1], altforward[2]);
+		rotated_forward = ((cos(i) * altforward[0]) - (sin(i) * altforward[1]), (sin(i) * altforward[0]) + (cos(i) * altforward[1]), altforward[2]);
 		if(isdefined(level.poi_positioning_func))
 		{
 			pos = [[level.poi_positioning_func]](self.origin, rotated_forward);
 		}
 		else if(isdefined(level.use_alternate_poi_positioning) && level.use_alternate_poi_positioning)
 		{
-			pos = zm_server_throttle::server_safe_ground_trace("poi_trace", 10, self.origin + rotated_forward + vectorscale((0, 0, 1), 10));
+			pos = zm_server_throttle::server_safe_ground_trace("poi_trace", 10, (self.origin + rotated_forward) + vectorscale((0, 0, 1), 10));
 		}
 		else
 		{
-			pos = zm_server_throttle::server_safe_ground_trace("poi_trace", 10, self.origin + rotated_forward + vectorscale((0, 0, 1), 100));
+			pos = zm_server_throttle::server_safe_ground_trace("poi_trace", 10, (self.origin + rotated_forward) + vectorscale((0, 0, 1), 100));
 		}
 		if(!isdefined(pos))
 		{
@@ -955,7 +955,7 @@ function generated_radius_attract_positions(forward, offset, num_positions, attr
 		{
 			if(isdefined(self) && isdefined(self.origin))
 			{
-				if(self.origin[2] >= pos[2] - epsilon && self.origin[2] - pos[2] <= 150)
+				if(self.origin[2] >= (pos[2] - epsilon) && (self.origin[2] - pos[2]) <= 150)
 				{
 					pos_array = [];
 					pos_array[0] = pos;
@@ -976,7 +976,7 @@ function generated_radius_attract_positions(forward, offset, num_positions, attr
 				failed++;
 			}
 		}
-		else if(abs(pos[2] - self.origin[2]) < 60)
+		else if((abs(pos[2] - self.origin[2])) < 60)
 		{
 			pos_array = [];
 			pos_array[0] = pos;
@@ -1923,7 +1923,7 @@ function get_number_of_valid_players()
 */
 function in_revive_trigger()
 {
-	if(isdefined(self.rt_time) && self.rt_time + 100 >= gettime())
+	if(isdefined(self.rt_time) && (self.rt_time + 100) >= gettime())
 	{
 		return self.in_rt_cached;
 	}
@@ -3139,8 +3139,8 @@ function fake_physicslaunch(target_pos, power)
 	dist = distance(start_pos, target_pos);
 	time = dist / power;
 	delta = target_pos - start_pos;
-	drop = 0.5 * gravity * time * time;
-	velocity = (delta[0] / time, delta[1] / time, delta[2] - drop / time);
+	drop = (0.5 * gravity) * (time * time);
+	velocity = (delta[0] / time, delta[1] / time, (delta[2] - drop) / time);
 	level thread draw_line_ent_to_pos(self, target_pos);
 	self movegravity(velocity, time);
 	return time;
@@ -3203,7 +3203,7 @@ function set_hint_string(ent, default_ref, cost)
 	}
 	if(isdefined(level.legacy_hint_system) && level.legacy_hint_system)
 	{
-		ref = ref + "_" + cost;
+		ref = (ref + "_") + cost;
 		self sethintstring(get_zombie_hint(ref));
 	}
 	else
@@ -3238,7 +3238,7 @@ function get_hint_string(ent, default_ref, cost)
 	}
 	if(isdefined(level.legacy_hint_system) && level.legacy_hint_system && isdefined(cost))
 	{
-		ref = ref + "_" + cost;
+		ref = (ref + "_") + cost;
 	}
 	return get_zombie_hint(ref);
 }
@@ -3272,7 +3272,7 @@ function unitrigger_set_hint_string(ent, default_ref, cost)
 		}
 		if(isdefined(level.legacy_hint_system) && level.legacy_hint_system)
 		{
-			ref = ref + "_" + cost;
+			ref = (ref + "_") + cost;
 			trigger sethintstring(get_zombie_hint(ref));
 			continue;
 		}
@@ -3334,7 +3334,7 @@ function play_sound_at_pos(ref, pos, ent)
 	if(!isdefined(level.zombie_sounds[ref]))
 	{
 		/#
-			assertmsg("" + ref + "");
+			assertmsg(("" + ref) + "");
 		#/
 		return;
 	}
@@ -3368,7 +3368,7 @@ function play_sound_on_ent(ref)
 	if(!isdefined(level.zombie_sounds[ref]))
 	{
 		/#
-			assertmsg("" + ref + "");
+			assertmsg(("" + ref) + "");
 		#/
 		return;
 	}
@@ -3397,7 +3397,7 @@ function play_loopsound_on_ent(ref)
 	if(!isdefined(level.zombie_sounds[ref]))
 	{
 		/#
-			assertmsg("" + ref + "");
+			assertmsg(("" + ref) + "");
 		#/
 		return;
 	}
@@ -3424,7 +3424,7 @@ function string_to_float(string)
 	decimal = 0;
 	for(i = floatparts[1].size - 1; i >= 0; i--)
 	{
-		decimal = decimal / 10 + int(floatparts[1][i]) / 10;
+		decimal = (decimal / 10) + (int(floatparts[1][i]) / 10);
 	}
 	if(whole >= 0)
 	{
@@ -3504,7 +3504,7 @@ function hudelem_count()
 			{
 				max = level.hudelem_count;
 			}
-			println("" + level.hudelem_count + "" + max + "");
+			println(((("" + level.hudelem_count) + "") + max) + "");
 			wait(0.05);
 		}
 	#/
@@ -3673,8 +3673,8 @@ function drawcylinder(pos, rad, height)
 		curheight = height;
 		for(r = 0; r < 20; r++)
 		{
-			theta = r / 20 * 360;
-			theta2 = r + 1 / 20 * 360;
+			theta = (r / 20) * 360;
+			theta2 = ((r + 1) / 20) * 360;
 			line(pos + (cos(theta) * currad, sin(theta) * currad, 0), pos + (cos(theta2) * currad, sin(theta2) * currad, 0));
 			line(pos + (cos(theta) * currad, sin(theta) * currad, curheight), pos + (cos(theta2) * currad, sin(theta2) * currad, curheight));
 			line(pos + (cos(theta) * currad, sin(theta) * currad, 0), pos + (cos(theta) * currad, sin(theta) * currad, curheight));
@@ -3776,7 +3776,7 @@ function debug_attack_spots_taken()
 				}
 				circle(self.attack_spots[i], 12, (0, 1, 0), 0, 1, 1);
 			}
-			msg = "" + count + "" + self.attack_spots_taken.size;
+			msg = (("" + count) + "") + self.attack_spots_taken.size;
 			print3d(self.origin, msg);
 		}
 	#/
@@ -3795,7 +3795,7 @@ function float_print3d(msg, time)
 {
 	/#
 		self endon(#"death");
-		time = gettime() + time * 1000;
+		time = gettime() + (time * 1000);
 		offset = vectorscale((0, 0, 1), 72);
 		while(gettime() < time)
 		{
@@ -3818,10 +3818,10 @@ function float_print3d(msg, time)
 function do_player_vo(snd, variation_count)
 {
 	index = get_player_index(self);
-	sound = "zmb_vox_plr_" + index + "_" + snd;
+	sound = (("zmb_vox_plr_" + index) + "_") + snd;
 	if(isdefined(variation_count))
 	{
-		sound = sound + "_" + randomintrange(0, variation_count);
+		sound = (sound + "_") + randomintrange(0, variation_count);
 	}
 	if(!isdefined(level.player_is_speaking))
 	{
@@ -4224,7 +4224,7 @@ function shock_onpain()
 function shock_onexplosion(damage, shocktype, shocklight)
 {
 	time = 0;
-	scaled_damage = 100 * damage / self.maxhealth;
+	scaled_damage = (100 * damage) / self.maxhealth;
 	if(scaled_damage >= 90)
 	{
 		time = 4;
@@ -5275,7 +5275,7 @@ function array_flag_wait_any_thread(flag_name, condition)
 */
 function groundpos(origin)
 {
-	return bullettrace(origin, origin + vectorscale((0, 0, -1), 100000), 0, self)["position"];
+	return bullettrace(origin, origin + (vectorscale((0, 0, -1), 100000)), 0, self)["position"];
 }
 
 /*
@@ -5289,7 +5289,7 @@ function groundpos(origin)
 */
 function groundpos_ignore_water(origin)
 {
-	return bullettrace(origin, origin + vectorscale((0, 0, -1), 100000), 0, self, 1)["position"];
+	return bullettrace(origin, origin + (vectorscale((0, 0, -1), 100000)), 0, self, 1)["position"];
 }
 
 /*
@@ -5303,7 +5303,7 @@ function groundpos_ignore_water(origin)
 */
 function groundpos_ignore_water_new(origin)
 {
-	return groundtrace(origin, origin + vectorscale((0, 0, -1), 100000), 0, self, 1)["position"];
+	return groundtrace(origin, origin + (vectorscale((0, 0, -1), 100000)), 0, self, 1)["position"];
 }
 
 /*
@@ -5694,7 +5694,7 @@ function track_players_intersection_tracker()
 				}
 				playeri_origin = players[i].origin;
 				playerj_origin = players[j].origin;
-				if(abs(playeri_origin[2] - playerj_origin[2]) > 60)
+				if((abs(playeri_origin[2] - playerj_origin[2])) > 60)
 				{
 					continue;
 				}
@@ -6163,7 +6163,7 @@ function general_vox_timer(timer, type)
 {
 	level endon(#"end_game");
 	/#
-		println("" + type + "" + timer + "");
+		println(((("" + type) + "") + timer) + "");
 	#/
 	while(timer > 0)
 	{
@@ -6172,7 +6172,7 @@ function general_vox_timer(timer, type)
 	}
 	level.votimer[type] = timer;
 	/#
-		println("" + type + "" + timer + "");
+		println(((("" + type) + "") + timer) + "");
 	#/
 }
 
@@ -6265,7 +6265,7 @@ function set_demo_intermission_point()
 	{
 		location = level.default_start_location;
 	}
-	match_string = level.scr_zm_ui_gametype + "_" + location;
+	match_string = (level.scr_zm_ui_gametype + "_") + location;
 	for(i = 0; i < spawnpoints.size; i++)
 	{
 		if(isdefined(spawnpoints[i].script_string))
@@ -6429,7 +6429,7 @@ function sq_refresh_player_navcard_hud_internal()
 		}
 		if(hasit)
 		{
-			navcard_bits = navcard_bits + 1 << i;
+			navcard_bits = navcard_bits + (1 << i);
 		}
 	}
 	util::wait_network_frame();
@@ -6713,12 +6713,12 @@ function link_changes_internal_internal(list, func)
 				if(isdefined(list[keys[i]].ignore_on_migrate[node_keys[j]]) && list[keys[i]].ignore_on_migrate[node_keys[j]])
 				{
 					/#
-						println("" + keys[i] + "" + node_keys[j] + "");
+						println(((("" + keys[i]) + "") + node_keys[j]) + "");
 					#/
 					continue;
 				}
 				/#
-					println("" + keys[i] + "" + node_keys[j]);
+					println((("" + keys[i]) + "") + node_keys[j]);
 				#/
 				[[func]](node, list[keys[i]].links[node_keys[j]]);
 			}
@@ -7244,7 +7244,7 @@ function slowdown_ai(str_type)
 	self endon(#"starting_slowdown_ai");
 	self endon(#"death");
 	/#
-		assert(isdefined(level.a_s_slowdowns[str_type]), "" + str_type + "");
+		assert(isdefined(level.a_s_slowdowns[str_type]), ("" + str_type) + "");
 	#/
 	if(!isdefined(self.a_n_slowdown_timeouts))
 	{
@@ -7496,7 +7496,7 @@ private function function_e33a692a(type)
 {
 	var_44222444 = self getdstat("dashboardingTrackingHistory", "currentDashboardingTrackingHistoryIndex");
 	self setdstat("dashboardingTrackingHistory", "quitType", var_44222444, type);
-	var_36d3e544 = var_44222444 + 1 % 32;
+	var_36d3e544 = (var_44222444 + 1) % 32;
 	if(var_36d3e544 == 0)
 	{
 		self setdstat("dashboardingTrackingHistory", "bufferFull", 1);

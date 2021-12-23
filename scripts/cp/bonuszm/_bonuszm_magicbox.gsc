@@ -87,7 +87,7 @@ function __main__()
 	{
 		if(mapname == "cp_mi_cairo_lotus")
 		{
-			if(distancesquared(mdl_mobile_armory.origin, (-7469, 1031, 4029)) < 22500)
+			if((distancesquared(mdl_mobile_armory.origin, (-7469, 1031, 4029))) < 22500)
 			{
 				var_9ff80c52 = 1;
 			}
@@ -193,7 +193,7 @@ function function_309dd42b(mdl_mobile_armory)
 	var_9fd18135 = getentarray("bonuszm_magicbox", "script_noteworthy");
 	self.var_b8eeb0fe = arraygetclosest(e_trigger.origin, var_9fd18135);
 	self.var_b8eeb0fe.origin = mdl_mobile_armory.origin;
-	self.var_b8eeb0fe.angles = mdl_mobile_armory.angles + vectorscale((0, -1, 0), 90);
+	self.var_b8eeb0fe.angles = mdl_mobile_armory.angles + (vectorscale((0, -1, 0), 90));
 	self.var_b8eeb0fe hidezbarrierpiece(1);
 	if(isdefined(mdl_mobile_armory.script_linkto))
 	{

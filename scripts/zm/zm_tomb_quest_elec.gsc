@@ -472,7 +472,7 @@ function update_relay_fx_and_sound()
 			{
 				v_offset = anglestoright(s_relay.e_switch.angles) * 1;
 				s_relay.e_fx = spawn("script_model", s_relay.e_switch.origin + v_offset);
-				s_relay.e_fx.angles = s_relay.e_switch.angles + vectorscale((0, 0, -1), 90);
+				s_relay.e_fx.angles = s_relay.e_switch.angles + (vectorscale((0, 0, -1), 90));
 				s_relay.e_fx setmodel("tag_origin");
 				playfxontag(level._effect["fx_tomb_sparks_sm"], s_relay.e_fx, "tag_origin");
 			}
@@ -548,7 +548,7 @@ function relay_switch_run()
 		self.trigger_stub waittill(#"trigger", e_user);
 		n_tries++;
 		level notify(#"vo_try_puzzle_lightning2", e_user);
-		self.position = self.position + 1 % 4;
+		self.position = (self.position + 1) % 4;
 		str_target_relay = self.connections[self.position];
 		if(isdefined(str_target_relay))
 		{
@@ -557,11 +557,11 @@ function relay_switch_run()
 				level notify(#"vo_puzzle_good", e_user);
 			}
 		}
-		else if(n_tries % 8 == 0)
+		else if((n_tries % 8) == 0)
 		{
 			level notify(#"vo_puzzle_confused", e_user);
 		}
-		else if(n_tries % 4 == 0)
+		else if((n_tries % 4) == 0)
 		{
 			level notify(#"vo_puzzle_bad", e_user);
 		}

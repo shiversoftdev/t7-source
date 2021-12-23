@@ -93,7 +93,7 @@ function timeuntilroundend()
 {
 	if(level.gameended)
 	{
-		timepassed = gettime() - level.gameendtime / 1000;
+		timepassed = (gettime() - level.gameendtime) / 1000;
 		timeremaining = level.postroundtime - timepassed;
 		if(timeremaining < 0)
 		{
@@ -113,8 +113,8 @@ function timeuntilroundend()
 	{
 		return undefined;
 	}
-	timepassed = gettimepassed() - level.starttime / 1000;
-	timeremaining = level.timelimit * 60 - timepassed;
+	timepassed = (gettimepassed() - level.starttime) / 1000;
+	timeremaining = (level.timelimit * 60) - timepassed;
 	return timeremaining + level.postroundtime;
 }
 
@@ -129,7 +129,7 @@ function timeuntilroundend()
 */
 function gettimeremaining()
 {
-	return level.timelimit * 60 * 1000 - gettimepassed();
+	return ((level.timelimit * 60) * 1000) - gettimepassed();
 }
 
 /*
@@ -206,17 +206,17 @@ function assertproperplacement()
 {
 	/#
 		numplayers = level.placement[""].size;
-		for(i = 0; i < numplayers - 1; i++)
+		for(i = 0; i < (numplayers - 1); i++)
 		{
 			if(isdefined(level.placement[""][i]) && isdefined(level.placement[""][i + 1]))
 			{
-				if(level.placement[""][i].score < level.placement[""][i + 1].score)
+				if(level.placement[""][i].score < (level.placement[""][i + 1].score))
 				{
 					println("");
 					for(i = 0; i < numplayers; i++)
 					{
 						player = level.placement[""][i];
-						println("" + i + "" + player.name + "" + player.score);
+						println((((("" + i) + "") + player.name) + "") + player.score);
 					}
 					/#
 						assertmsg("");
@@ -330,7 +330,7 @@ function gametimer()
 	{
 		if(!level.timerstopped)
 		{
-			game["timepassed"] = game["timepassed"] + gettime() - prevtime;
+			game["timepassed"] = game["timepassed"] + (gettime() - prevtime);
 		}
 		prevtime = gettime();
 		wait(1);
@@ -354,9 +354,9 @@ function gettimepassed()
 	}
 	if(level.timerstopped)
 	{
-		return level.timerpausetime - level.starttime - level.discardtime;
+		return (level.timerpausetime - level.starttime) - level.discardtime;
 	}
-	return gettime() - level.starttime - level.discardtime;
+	return (gettime() - level.starttime) - level.discardtime;
 }
 
 /*
@@ -394,7 +394,7 @@ function resumetimer()
 		return;
 	}
 	level.timerstopped = 0;
-	level.discardtime = level.discardtime + gettime() - level.timerpausetime;
+	level.discardtime = level.discardtime + (gettime() - level.timerpausetime);
 }
 
 /*
@@ -435,7 +435,7 @@ function getscoreperminute(team)
 	#/
 	scorelimit = level.scorelimit;
 	timelimit = level.timelimit;
-	minutespassed = gettimepassed() / 60000 + 0.0001;
+	minutespassed = (gettimepassed() / 60000) + 0.0001;
 	if(isplayer(self))
 	{
 		return globallogic_score::_getplayerscore(self) / minutespassed;
@@ -660,7 +660,7 @@ function isexcluded(entity, entitylist)
 function waitfortimeornotifies(desireddelay)
 {
 	startedwaiting = gettime();
-	waitedtime = gettime() - startedwaiting / 1000;
+	waitedtime = (gettime() - startedwaiting) / 1000;
 	if(waitedtime < desireddelay)
 	{
 		wait(desireddelay - waitedtime);
@@ -684,11 +684,11 @@ function logteamwinstring(wintype, winner)
 		log_string = wintype;
 		if(isdefined(winner))
 		{
-			log_string = log_string + "" + winner;
+			log_string = (log_string + "") + winner;
 		}
 		foreach(var_4e9c4bc4, team in level.teams)
 		{
-			log_string = log_string + "" + team + "" + game[""][team];
+			log_string = (((log_string + "") + team) + "") + game[""][team];
 		}
 		print(log_string);
 	#/

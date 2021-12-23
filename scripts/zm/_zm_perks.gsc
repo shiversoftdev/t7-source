@@ -1312,7 +1312,7 @@ function perk_pause(perk)
 				player thread [[level._custom_perks[perk].player_thread_take]](1);
 			}
 			/#
-				println("" + player.name + "" + perk + "");
+				println(((("" + player.name) + "") + perk) + "");
 			#/
 		}
 	}
@@ -1346,7 +1346,7 @@ function perk_unpause(perk)
 			player set_perk_clientfield(perk, 1);
 			player setperk(perk);
 			/#
-				println("" + player.name + "" + perk + "");
+				println(((("" + player.name) + "") + perk) + "");
 			#/
 			player perk_set_max_health_if_jugg(perk, 0, 0);
 			if(isdefined(level._custom_perks[perk]) && isdefined(level._custom_perks[perk].player_thread_give))
@@ -1529,7 +1529,7 @@ function perk_machine_spawn_init()
 	{
 		location = level.default_start_location;
 	}
-	match_string = level.scr_zm_ui_gametype + "_perks_" + location;
+	match_string = (level.scr_zm_ui_gametype + "_perks_") + location;
 	a_s_spawn_pos = [];
 	if(isdefined(level.override_perk_targetname))
 	{

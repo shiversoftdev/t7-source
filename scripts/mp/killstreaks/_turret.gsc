@@ -184,7 +184,7 @@ function onplaceturret(turret)
 		player killstreaks::play_killstreak_start_dialog("autoturret", player.pers["team"], turret.killstreakid);
 		level thread popups::displaykillstreakteammessagetoall("autoturret", player);
 		player addweaponstat(getweapon("autoturret"), "used", 1);
-		turret.vehicle.killstreak_end_time = gettime() + 90000 + 5000;
+		turret.vehicle.killstreak_end_time = (gettime() + 90000) + 5000;
 	}
 	turret.vehicle enable(0, 0);
 	target_set(turret.vehicle, vectorscale((0, 0, 1), 36));
@@ -330,7 +330,7 @@ function onpickupturret(turret)
 */
 function onturretdamage(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, vdamageorigin, psoffsettime, damagefromunderneath, modelindex, partname, vsurfacenormal)
 {
-	empdamage = int(idamage + self.healthdefault * 1 + 0.5);
+	empdamage = int((idamage + (self.healthdefault * 1)) + 0.5);
 	idamage = self killstreaks::ondamageperweapon("autoturret", eattacker, idamage, idflags, smeansofdeath, weapon, self.maxhealth, undefined, self.maxhealth * 0.4, undefined, empdamage, undefined, 1, 1);
 	self.damagetaken = self.damagetaken + idamage;
 	if(self.controlled)
@@ -545,7 +545,7 @@ function createturretinfluencer(name)
 	{
 		return;
 	}
-	projected_point = turret.origin + vectorscale(anglestoforward(turret.angles), preset["radius"] * 0.7);
+	projected_point = turret.origin + (vectorscale(anglestoforward(turret.angles), preset["radius"] * 0.7));
 	return spawning::create_enemy_influencer(name, turret.origin, turret.team);
 }
 
@@ -695,7 +695,7 @@ function turretscanning()
 		}
 		else
 		{
-			turretvehicle setturrettargetrelativeangles((0, turret_data.rightarc - 10 * -1, 0), 0);
+			turretvehicle setturrettargetrelativeangles((0, (turret_data.rightarc - 10) * -1, 0), 0);
 			turretvehicle.scanpos = "left";
 		}
 		wait(2.5);

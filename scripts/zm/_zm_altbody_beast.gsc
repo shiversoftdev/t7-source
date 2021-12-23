@@ -681,8 +681,8 @@ function function_10dcd1d5(var_4cc12170)
 	level.var_8ad0ec05 = struct::get_array(var_4cc12170, "targetname");
 	foreach(var_35de897, kiosk in level.var_8ad0ec05)
 	{
-		kiosk.var_80eeb471 = var_4cc12170 + "_plr_" + kiosk.origin;
-		kiosk.var_39a60f4a = var_4cc12170 + "_crs_" + kiosk.origin;
+		kiosk.var_80eeb471 = (var_4cc12170 + "_plr_") + kiosk.origin;
+		kiosk.var_39a60f4a = (var_4cc12170 + "_crs_") + kiosk.origin;
 		clientfield::register("world", kiosk.var_80eeb471, 1, 4, "int");
 		kiosk thread _kiosk_cooldown();
 	}
@@ -708,12 +708,11 @@ function update_kiosk_effects()
 			n_players_allowed = level clientfield::get(kiosk.var_80eeb471);
 			if(kiosk_allowed(kiosk))
 			{
-				n_players_allowed = n_players_allowed | 1 << n_ent_num;
+				n_players_allowed = n_players_allowed | (1 << n_ent_num);
 			}
 			else
 			{
-				~n_players_allowed;
-				n_players_allowed = n_players_allowed & 1 << n_ent_num;
+				n_players_allowed = n_players_allowed & (~(1 << n_ent_num));
 			}
 			level clientfield::set(kiosk.var_80eeb471, n_players_allowed);
 		}
@@ -837,7 +836,7 @@ function _kiosk_cooldown()
 	self endon(#"_kiosk_cooldown");
 	self.is_cooling_down = 1;
 	n_start_round = round_number();
-	while(round_number() - n_start_round < 1)
+	while((round_number() - n_start_round) < 1)
 	{
 		level waittill(#"start_of_round");
 	}
@@ -853,11 +852,11 @@ function _kiosk_cooldown()
 	Parameters: 1
 	Flags: Linked
 */
-function function_fd8fb00d(var_a48bee9b = 1)
+function function_fd8fb00d(b_cooldown = 1)
 {
 	foreach(var_8f2ca8b6, kiosk in level.var_8ad0ec05)
 	{
-		if(var_a48bee9b)
+		if(b_cooldown)
 		{
 			if(!(isdefined(kiosk.is_cooling_down) && kiosk.is_cooling_down))
 			{
@@ -1052,11 +1051,11 @@ function player_stance_hold_think_internal()
 	self.beast_cancel_timer = gettime();
 	build_time = 1000;
 	self thread player_beast_cancel_bar(self.beast_cancel_timer, build_time);
-	while(isdefined(self) && self player_continue_cancel() && gettime() - self.beast_cancel_timer < build_time)
+	while(isdefined(self) && self player_continue_cancel() && (gettime() - self.beast_cancel_timer) < build_time)
 	{
 		wait(0.05);
 	}
-	if(isdefined(self) && self player_continue_cancel() && gettime() - self.beast_cancel_timer >= build_time)
+	if(isdefined(self) && self player_continue_cancel() && (gettime() - self.beast_cancel_timer) >= build_time)
 	{
 		self notify(#"exit_succeed");
 	}
@@ -1100,9 +1099,9 @@ function player_progress_bar_update(start_time, build_time)
 	self endon(#"disconnect");
 	self endon(#"player_exit_beastmode");
 	self endon(#"exit_failed");
-	while(isdefined(self) && gettime() - start_time < build_time)
+	while(isdefined(self) && (gettime() - start_time) < build_time)
 	{
-		progress = gettime() - start_time / build_time;
+		progress = (gettime() - start_time) / build_time;
 		if(progress < 0)
 		{
 			progress = 0;
@@ -1500,7 +1499,7 @@ function player_watch_melee()
 			self player_take_mana(0.03);
 			forward = anglestoforward(self getplayerangles());
 			up = anglestoup(self getplayerangles());
-			var_1a423f4f = self.origin + 15 * up + 30 * forward;
+			var_1a423f4f = (self.origin + (15 * up)) + (30 * forward);
 			level notify(#"beast_melee", self, var_1a423f4f);
 			self radiusdamage(var_1a423f4f, 48, 5000, 5000, self, "MOD_MELEE");
 		}
@@ -1545,7 +1544,7 @@ function player_beast_melee_juke(weapon)
 	self endon(#"weapon_melee_power");
 	self endon(#"weapon_melee_charge");
 	start_time = gettime();
-	while(start_time + 3000 > gettime())
+	while((start_time + 3000) > gettime())
 	{
 		self playrumbleonentity("zod_beast_juke");
 		wait(0.1);
@@ -1712,7 +1711,7 @@ function function_8ee03bb5(weapon)
 	}
 	forward = anglestoforward(self getplayerangles());
 	up = anglestoup(self getplayerangles());
-	center = self.origin + 16 * up + 24 * forward;
+	center = (self.origin + (16 * up)) + (24 * forward);
 	if(shocklevel > 1)
 	{
 		playfx(level._effect["beast_shock_aoe"], center);
@@ -1916,7 +1915,7 @@ function function_77a9a8f6(weapon, rumble, length)
 	self endon(#"grapple_landed");
 	self endon(#"grapple_cancel");
 	start_time = gettime();
-	while(start_time + 3000 > gettime())
+	while((start_time + 3000) > gettime())
 	{
 		self playrumbleonentity(rumble);
 		wait(length);
@@ -2053,7 +2052,7 @@ function player_watch_grapple_landing(origin)
 	self waittill(#"grapple_landed", weapon, target);
 	if(distance2dsquared(self.origin, origin) > 1024)
 	{
-		self setorigin(origin + vectorscale((0, 0, -1), 60));
+		self setorigin(origin + (vectorscale((0, 0, -1), 60)));
 	}
 }
 
@@ -2423,7 +2422,7 @@ function lightning_slow_zombie(zombie)
 	zombie thread lightning_slow_zombie_fx(zombie);
 	while(isdefined(zombie) && isalive(zombie) && zombie.animation_rate > 0.03)
 	{
-		zombie.animation_rate = zombie.animation_rate - 0.97 * 0.05;
+		zombie.animation_rate = zombie.animation_rate - (0.97 * 0.05);
 		if(zombie.animation_rate < 0.03)
 		{
 			zombie.animation_rate = 0.03;
@@ -2439,7 +2438,7 @@ function lightning_slow_zombie(zombie)
 	}
 	while(isdefined(zombie) && isalive(zombie) && zombie.animation_rate < 1)
 	{
-		zombie.animation_rate = zombie.animation_rate + 0.97 * 0.1;
+		zombie.animation_rate = zombie.animation_rate + (0.97 * 0.1);
 		if(zombie.animation_rate > 1)
 		{
 			zombie.animation_rate = 1;
@@ -2522,7 +2521,7 @@ function function_d7b8b2f5()
 				n_start_time = gettime();
 			}
 			n_current_time = gettime();
-			n_time = n_current_time - n_start_time / 1000;
+			n_time = (n_current_time - n_start_time) / 1000;
 			if(n_time >= level.var_87ee6f27)
 			{
 				self notify(#"altbody_end");
@@ -2562,8 +2561,8 @@ function beastmode_devgui()
 		for(i = 0; i < players.size; i++)
 		{
 			ip1 = i + 1;
-			adddebugcommand("" + players[i].name + "" + ip1 + "");
-			adddebugcommand("" + players[i].name + "" + ip1 + "");
+			adddebugcommand(((("" + players[i].name) + "") + ip1) + "");
+			adddebugcommand(((("" + players[i].name) + "") + ip1) + "");
 		}
 	#/
 }

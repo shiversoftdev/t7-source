@@ -174,7 +174,7 @@ function warpalltoplayer(team, player)
 			angles = target getplayerangles();
 			yaw = (0, angles[1], 0);
 			forward = anglestoforward(yaw);
-			spawn_origin = origin + forward * 128 + vectorscale((0, 0, 1), 16);
+			spawn_origin = (origin + (forward * 128)) + vectorscale((0, 0, 1), 16);
 			if(!bullettracepassed(target geteye(), spawn_origin, 0, target))
 			{
 				spawn_origin = undefined;
@@ -245,7 +245,7 @@ function updatedevsettingszm()
 				{
 					location = level.default_start_location;
 				}
-				match_string = level.scr_zm_ui_gametype + "" + location;
+				match_string = (level.scr_zm_ui_gametype + "") + location;
 				if(level.streamdumpteamindex < level.teams.size)
 				{
 					structs = struct::get_array("", "");
@@ -286,8 +286,8 @@ function updatedevsettingszm()
 					averageangles = (0, 0, 0);
 					foreach(var_32495fea, spawnpoint in spawnpoints)
 					{
-						averageorigin = averageorigin + spawnpoint.origin / numpoints;
-						averageangles = averageangles + spawnpoint.angles / numpoints;
+						averageorigin = averageorigin + (spawnpoint.origin / numpoints);
+						averageangles = averageangles + (spawnpoint.angles / numpoints);
 					}
 					level.players[0] setplayerangles(averageangles);
 					level.players[0] setorigin(averageorigin);
@@ -571,8 +571,8 @@ function updatedevsettings()
 					averageangles = (0, 0, 0);
 					foreach(var_9dd63bcf, spawnpoint in level.spawn_start[teamname])
 					{
-						averageorigin = averageorigin + spawnpoint.origin / numpoints;
-						averageangles = averageangles + spawnpoint.angles / numpoints;
+						averageorigin = averageorigin + (spawnpoint.origin / numpoints);
+						averageangles = averageangles + (spawnpoint.angles / numpoints);
 					}
 					level.players[0] setplayerangles(averageangles);
 					level.players[0] setorigin(averageorigin);
@@ -807,7 +807,7 @@ function devgui_health_debug()
 		for(;;)
 		{
 			wait(0.05);
-			width = self.health / self.maxhealth * 300;
+			width = (self.health / self.maxhealth) * 300;
 			width = int(max(width, 1));
 			self.debug_health_bar setshader("", width, 8);
 			self.debug_health_text setvalue(self.health);
@@ -835,7 +835,7 @@ function giveextraperks()
 		for(i = 0; i < perks.size; i++)
 		{
 			/#
-				println("" + self.name + "" + perks[i] + "");
+				println(((("" + self.name) + "") + perks[i]) + "");
 			#/
 			self setperk(perks[i]);
 		}
@@ -1021,10 +1021,10 @@ function showonespawnpoint(spawn_point, color, notification, height, print)
 		right = anglestoright(spawn_point.angles);
 		forward = vectorscale(forward, 16);
 		right = vectorscale(right, 16);
-		a = center + forward - right;
-		b = center + forward + right;
-		c = center - forward + right;
-		d = center - forward - right;
+		a = (center + forward) - right;
+		b = (center + forward) + right;
+		c = (center - forward) + right;
+		d = (center - forward) - right;
 		thread lineuntilnotified(a, b, color, 0, notification);
 		thread lineuntilnotified(b, c, color, 0, notification);
 		thread lineuntilnotified(c, d, color, 0, notification);
@@ -1049,8 +1049,8 @@ function showonespawnpoint(spawn_point, color, notification, height, print)
 		arrowhead_forward = vectorscale(arrowhead_forward, 24);
 		arrowhead_right = vectorscale(arrowhead_right, 8);
 		a = center + arrow_forward;
-		b = center + arrowhead_forward - arrowhead_right;
-		c = center + arrowhead_forward + arrowhead_right;
+		b = (center + arrowhead_forward) - arrowhead_right;
+		c = (center + arrowhead_forward) + arrowhead_right;
 		thread lineuntilnotified(center, a, color, 0, notification);
 		thread lineuntilnotified(a, b, color, 0, notification);
 		thread lineuntilnotified(a, c, color, 0, notification);
@@ -1707,9 +1707,9 @@ function draworiginlines()
 		red = (1, 0, 0);
 		green = (0, 1, 0);
 		blue = (0, 0, 1);
-		line(self.origin, self.origin + anglestoforward(self.angles) * 10, red);
-		line(self.origin, self.origin + anglestoright(self.angles) * 10, green);
-		line(self.origin, self.origin + anglestoup(self.angles) * 10, blue);
+		line(self.origin, self.origin + (anglestoforward(self.angles) * 10), red);
+		line(self.origin, self.origin + (anglestoright(self.angles) * 10), green);
+		line(self.origin, self.origin + (anglestoup(self.angles) * 10), blue);
 	#/
 }
 
@@ -1769,7 +1769,7 @@ function draworigintext(textcolor, textalpha, textscale, textoffset)
 		{
 			textoffset = (0, 0, 0);
 		}
-		originstring = "" + self.origin[0] + "" + self.origin[1] + "" + self.origin[2] + "";
+		originstring = ((((("" + self.origin[0]) + "") + self.origin[1]) + "") + self.origin[2]) + "";
 		print3d(self.origin + textoffset, originstring, textcolor, textalpha, textscale);
 	#/
 }

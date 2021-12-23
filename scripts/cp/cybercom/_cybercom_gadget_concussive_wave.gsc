@@ -213,7 +213,7 @@ function ai_activateconcussivewave(damage, var_9bc2efcb = 1)
 	{
 		type = self cybercom::function_5e3d3aa();
 		self orientmode("face default");
-		self animscripted("ai_cybercom_anim", self.origin, self.angles, "ai_base_rifle_" + type + "_exposed_cybercom_activate");
+		self animscripted("ai_cybercom_anim", self.origin, self.angles, ("ai_base_rifle_" + type) + "_exposed_cybercom_activate");
 		self waittill_match(#"ai_cybercom_anim");
 	}
 	self create_concussion_wave(damage);
@@ -332,7 +332,7 @@ function create_damage_wave(damage, attacker)
 			}
 			if(enemy.archetype == "robot")
 			{
-				if(length(attacker.origin - enemy.origin) < var_7c2e0a1a)
+				if((length(attacker.origin - enemy.origin)) < var_7c2e0a1a)
 				{
 					enemy thread function_74fb2002(randomfloatrange(1, 2.5), attacker, weapon);
 				}

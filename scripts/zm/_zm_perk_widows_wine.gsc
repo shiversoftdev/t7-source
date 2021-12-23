@@ -228,10 +228,10 @@ function widows_wine_perk_activate()
 		}
 	}
 	/#
-		assert(!isdefined(self.check_override_wallbuy_purchase) || self.check_override_wallbuy_purchase == &widows_wine_override_wallbuy_purchase);
+		assert(!isdefined(self.check_override_wallbuy_purchase) || self.check_override_wallbuy_purchase == (&widows_wine_override_wallbuy_purchase));
 	#/
 	/#
-		assert(!isdefined(self.check_override_melee_wallbuy_purchase) || self.check_override_melee_wallbuy_purchase == &widows_wine_override_melee_wallbuy_purchase);
+		assert(!isdefined(self.check_override_melee_wallbuy_purchase) || self.check_override_melee_wallbuy_purchase == (&widows_wine_override_melee_wallbuy_purchase));
 	#/
 	self.check_override_wallbuy_purchase = &widows_wine_override_wallbuy_purchase;
 	self.check_override_melee_wallbuy_purchase = &widows_wine_override_melee_wallbuy_purchase;
@@ -453,7 +453,7 @@ function widows_wine_cocoon_zombie_score(e_player, duration, max_score)
 		self.ww_points_given = 0;
 	}
 	start_time = gettime();
-	end_time = start_time + duration * 1000;
+	end_time = start_time + (duration * 1000);
 	while(gettime() < end_time && self.ww_points_given < max_score)
 	{
 		e_player zm_score::add_to_player_score(10);

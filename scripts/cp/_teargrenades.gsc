@@ -149,21 +149,21 @@ function tear(pos)
 		{
 			continue;
 		}
-		time = gettime() - starttime / 1000;
+		time = (gettime() - starttime) / 1000;
 		currad = level.tearradius;
 		curheight = level.tearheight;
 		if(time < level.teargasfillduration)
 		{
-			currad = currad * time / level.teargasfillduration;
-			curheight = curheight * time / level.teargasfillduration;
+			currad = currad * (time / level.teargasfillduration);
+			curheight = curheight * (time / level.teargasfillduration);
 		}
-		offset = player.origin + vectorscale((0, 0, 1), 32) - pos;
+		offset = (player.origin + vectorscale((0, 0, 1), 32)) - pos;
 		offset2d = (offset[0], offset[1], 0);
-		if(lengthsquared(offset2d) > currad * currad)
+		if(lengthsquared(offset2d) > (currad * currad))
 		{
 			continue;
 		}
-		if(player.origin[2] - pos[2] > curheight)
+		if((player.origin[2] - pos[2]) > curheight)
 		{
 			continue;
 		}
@@ -210,7 +210,7 @@ function teargassuffering()
 	}
 	while(true)
 	{
-		if(gettime() - self.teargasstarttime > level.tearsufferingduration * 1000)
+		if((gettime() - self.teargasstarttime) > (level.tearsufferingduration * 1000))
 		{
 			break;
 		}
@@ -242,13 +242,13 @@ function drawcylinder(pos, rad, height)
 			curheight = height;
 			if(time < level.teargasfillduration)
 			{
-				currad = currad * time / level.teargasfillduration;
-				curheight = curheight * time / level.teargasfillduration;
+				currad = currad * (time / level.teargasfillduration);
+				curheight = curheight * (time / level.teargasfillduration);
 			}
 			for(r = 0; r < 20; r++)
 			{
-				theta = r / 20 * 360;
-				theta2 = r + 1 / 20 * 360;
+				theta = (r / 20) * 360;
+				theta2 = ((r + 1) / 20) * 360;
 				line(pos + (cos(theta) * currad, sin(theta) * currad, 0), pos + (cos(theta2) * currad, sin(theta2) * currad, 0));
 				line(pos + (cos(theta) * currad, sin(theta) * currad, curheight), pos + (cos(theta2) * currad, sin(theta2) * currad, curheight));
 				line(pos + (cos(theta) * currad, sin(theta) * currad, 0), pos + (cos(theta) * currad, sin(theta) * currad, curheight));

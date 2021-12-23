@@ -188,7 +188,7 @@ function homepad_loop()
 function teleport_pad_init(pad)
 {
 	telepad = struct::get_array("telepad_" + pad, "targetname");
-	telepad_loop = struct::get_array("telepad_" + pad + "_looper", "targetname");
+	telepad_loop = struct::get_array(("telepad_" + pad) + "_looper", "targetname");
 	homepad = struct::get_array("homepad", "targetname");
 	level waittill("tp" + pad);
 	array::thread_all(telepad_loop, &telepad_loop);
@@ -227,7 +227,7 @@ function teleportation_audio(pad)
 		level waittill("tpw" + pad);
 		if(isdefined(self.script_sound))
 		{
-			if(self.targetname == "telepad_" + pad)
+			if(self.targetname == ("telepad_" + pad))
 			{
 				playsound(0, self.script_sound + "_warmup", self.origin);
 				wait(2);
@@ -276,41 +276,35 @@ function pa_single_init()
 	Namespace: zm_factory_amb
 	Checksum: 0xC8C2FAF3
 	Offset: 0xCF0
-	Size: 0x0
+	Size: 0x186
 	Parameters: 1
 	Flags: None
 */
-function pa_countdown()
+function pa_countdown(pad)
 {
-System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
-Parameter name: index
-   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   at System.Collections.Generic.List`1.get_Item(Int32 index)
-   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 649
-   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 211
-/*
-No Output
-*/
-
-	/* ======== */
-
-/* 
-	Stack: 
-*/
-	/* ======== */
-
-/* 
-	Blocks: 
-	Cerberus.Logic.BasicBlock at 0x0CF0, end at 0x0CF1
-	Cerberus.Logic.IfBlock at 0x0D1A, end at 0x0E6E
-	Cerberus.Logic.IfBlock at 0x0D84, end at 0x0E1A
-	Cerberus.Logic.IfBlock at 0x0DBC, end at 0x0DEA
-*/
-	/* ======== */
-
+	level endon("scd" + pad);
+	while(true)
+	{
+		level waittill("pac" + pad);
+		playsound(0, "evt_pa_buzz", self.origin);
+		self thread pa_play_dialog("vox_pa_audio_link_start");
+		for(count = 30; count > 0; count--)
+		{
+			play = count == 20 || count == 15 || count <= 10;
+			if(play)
+			{
+				playsound(0, "vox_pa_audio_link_" + count, self.origin);
+			}
+			playsound(0, "evt_clock_tick_1sec", (0, 0, 0));
+			waitrealtime(1);
+		}
+		playsound(0, "evt_pa_buzz", self.origin);
+		wait(1.2);
+		self thread pa_play_dialog("vox_pa_audio_link_fail");
+	}
+	wait(1);
 }
 
-/*Unknown Op Code (0x0CE3) at 0E0E*/
 /*
 	Name: pa_countdown_success
 	Namespace: zm_factory_amb
@@ -354,39 +348,25 @@ function pa_teleport(pad)
 	Namespace: zm_factory_amb
 	Checksum: 0xBD0CF2A4
 	Offset: 0xF80
-	Size: 0x0
+	Size: 0xC8
 	Parameters: 1
 	Flags: None
 */
-function pa_electric_trap()
+function pa_electric_trap(location)
 {
-System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
-Parameter name: index
-   at System.ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument argument, ExceptionResource resource)
-   at System.Collections.Generic.List`1.get_Item(Int32 index)
-   at Cerberus.Logic.Decompiler.FindElseIfStatements() in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 649
-   at Cerberus.Logic.Decompiler..ctor(ScriptExport function, ScriptBase script) in D:\Modding\Call of Duty\t89-dec\Cerberus.Logic\Decompiler\Decompiler.cs:line 211
-/*
-No Output
-*/
-
-	/* ======== */
-
-/* 
-	Stack: 
-*/
-	/* ======== */
-
-/* 
-	Blocks: 
-	Cerberus.Logic.BasicBlock at 0x0F80, end at 0x0F81
-	Cerberus.Logic.IfBlock at 0x0F8A, end at 0x1046
-*/
-	/* ======== */
-
+	while(true)
+	{
+		level waittill(location);
+		playsound(0, "evt_pa_buzz", self.origin);
+		wait(1.2);
+		self thread pa_play_dialog("vox_pa_trap_inuse_" + location);
+		waitrealtime(48.5);
+		playsound(0, "evt_pa_buzz", self.origin);
+		wait(1.2);
+		self thread pa_play_dialog("vox_pa_trap_active_" + location);
+	}
 }
 
-/*Unknown Op Code (0x195B) at 0FF0*/
 /*
 	Name: pa_play_dialog
 	Namespace: zm_factory_amb

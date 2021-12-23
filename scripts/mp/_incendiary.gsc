@@ -174,7 +174,7 @@ function generatelocations(position, owner, normal, killcament)
 	if(normal[2] < 0.1)
 	{
 		black = vectorscale((1, 1, 1), 0.1);
-		trace = hitpos(startpos, startpos + normal * -1 * 70 + (0, 0, -1) * 70, black);
+		trace = hitpos(startpos, (startpos + ((normal * -1) * 70)) + ((0, 0, -1) * 70), black);
 		traceposition = trace["position"];
 		incendiarygrenade = getweapon("incendiary_fire");
 		if(trace["fraction"] < 0.9)
@@ -198,7 +198,7 @@ function generatelocations(position, owner, normal, killcament)
 */
 function getlocationforfx(startpos, fxindex, fxcount, defaultdistance, rotation)
 {
-	currentangle = 360 / fxcount * fxindex;
+	currentangle = (360 / fxcount) * fxindex;
 	coscurrent = cos(currentangle + rotation);
 	sincurrent = sin(currentangle + rotation);
 	return startpos + (defaultdistance * coscurrent, defaultdistance * sincurrent, 0);
@@ -245,7 +245,7 @@ function spawnalllocs(owner, startpos, normal, multiplier, rotation, killcament,
 			locations["normal"][count] = trace["normal"];
 			continue;
 		}
-		average = startpos / 2 + traceposition / 2;
+		average = (startpos / 2) + (traceposition / 2);
 		trace = hitpos(average, average - (0, 0, defaultdropdistance), locations["color"][count]);
 		if(trace["fraction"] != 1)
 		{

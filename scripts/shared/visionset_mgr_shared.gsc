@@ -51,7 +51,7 @@ function __init__()
 	Parameters: 8
 	Flags: Linked
 */
-function register_info(type, name, var_829cb7a3, priority, lerp_step_count, should_activate_per_player, lerp_thread, ref_count_lerp_thread)
+function register_info(type, name, version, priority, lerp_step_count, should_activate_per_player, lerp_thread, ref_count_lerp_thread)
 {
 	/#
 		assert(level.vsmgr_initializing, "");
@@ -61,10 +61,10 @@ function register_info(type, name, var_829cb7a3, priority, lerp_step_count, shou
 	add_sorted_name_key(type, lower_name);
 	add_sorted_priority_key(type, lower_name, priority);
 	level.vsmgr[type].info[lower_name] = spawnstruct();
-	level.vsmgr[type].info[lower_name] add_info(type, lower_name, var_829cb7a3, priority, lerp_step_count, should_activate_per_player, lerp_thread, ref_count_lerp_thread);
-	if(level.vsmgr[type].highest_version < var_829cb7a3)
+	level.vsmgr[type].info[lower_name] add_info(type, lower_name, version, priority, lerp_step_count, should_activate_per_player, lerp_thread, ref_count_lerp_thread);
+	if(level.vsmgr[type].highest_version < version)
 	{
-		level.vsmgr[type].highest_version = var_829cb7a3;
+		level.vsmgr[type].highest_version = version;
 	}
 }
 
@@ -228,10 +228,10 @@ function timeout_lerp_thread_per_player(player, timeout, opt_param_2, opt_param_
 function duration_lerp_thread(duration, max_duration)
 {
 	start_time = gettime();
-	end_time = start_time + int(duration * 1000);
+	end_time = start_time + (int(duration * 1000));
 	if(isdefined(max_duration))
 	{
-		start_time = end_time - int(max_duration * 1000);
+		start_time = end_time - (int(max_duration * 1000));
 	}
 	while(true)
 	{
@@ -262,10 +262,10 @@ function duration_lerp_thread(duration, max_duration)
 function duration_lerp_thread_per_player(player, duration, max_duration)
 {
 	start_time = gettime();
-	end_time = start_time + int(duration * 1000);
+	end_time = start_time + (int(duration * 1000));
 	if(isdefined(max_duration))
 	{
-		start_time = end_time - int(max_duration * 1000);
+		start_time = end_time - (int(max_duration * 1000));
 	}
 	while(true)
 	{
@@ -292,7 +292,7 @@ function duration_lerp_thread_per_player(player, duration, max_duration)
 function ramp_in_thread_per_player(player, duration)
 {
 	start_time = gettime();
-	end_time = start_time + int(duration * 1000);
+	end_time = start_time + (int(duration * 1000));
 	while(true)
 	{
 		lerp = calc_ramp_in_lerp(start_time, end_time);
@@ -339,7 +339,7 @@ function ramp_in_out_thread_hold_func()
 function ramp_in_out_thread(ramp_in, full_period, ramp_out)
 {
 	start_time = gettime();
-	end_time = start_time + int(ramp_in * 1000);
+	end_time = start_time + (int(ramp_in * 1000));
 	while(true)
 	{
 		lerp = calc_ramp_in_lerp(start_time, end_time);
@@ -365,7 +365,7 @@ function ramp_in_out_thread(ramp_in, full_period, ramp_out)
 	}
 	level notify(#"kill_ramp_in_out_thread_hold_func");
 	start_time = gettime();
-	end_time = start_time + int(ramp_out * 1000);
+	end_time = start_time + (int(ramp_out * 1000));
 	while(true)
 	{
 		lerp = calc_remaining_duration_lerp(start_time, end_time);
@@ -395,7 +395,7 @@ function ramp_in_out_thread(ramp_in, full_period, ramp_out)
 function ramp_in_out_thread_per_player_internal(player, ramp_in, full_period, ramp_out)
 {
 	start_time = gettime();
-	end_time = start_time + int(ramp_in * 1000);
+	end_time = start_time + (int(ramp_in * 1000));
 	while(true)
 	{
 		lerp = calc_ramp_in_lerp(start_time, end_time);
@@ -416,7 +416,7 @@ function ramp_in_out_thread_per_player_internal(player, ramp_in, full_period, ra
 		wait(full_period);
 	}
 	start_time = gettime();
-	end_time = start_time + int(ramp_out * 1000);
+	end_time = start_time + (int(ramp_out * 1000));
 	while(true)
 	{
 		lerp = calc_remaining_duration_lerp(start_time, end_time);
@@ -535,7 +535,7 @@ function finalize_clientfields()
 function finalize_type_clientfields()
 {
 	/#
-		println("" + self.type + "");
+		println(("" + self.type) + "");
 	#/
 	if(1 >= self.info.size)
 	{
@@ -552,7 +552,7 @@ function finalize_type_clientfields()
 			self.cf_lerp_bit_count = self.info[self.sorted_name_keys[i]].lerp_bit_count;
 		}
 		/#
-			println("" + self.info[self.sorted_name_keys[i]].name + "" + self.info[self.sorted_name_keys[i]].var_829cb7a3 + "" + self.info[self.sorted_name_keys[i]].lerp_step_count + "");
+			println(((((("" + self.info[self.sorted_name_keys[i]].name) + "") + self.info[self.sorted_name_keys[i]].version) + "") + self.info[self.sorted_name_keys[i]].lerp_step_count) + "");
 		#/
 	}
 	clientfield::register("toplayer", self.cf_slot_name, self.highest_version, self.cf_slot_bit_count, "int");
@@ -582,16 +582,16 @@ function validate_info(type, name, priority)
 		}
 	}
 	/#
-		assert(i < keys.size, "" + type + "");
+		assert(i < keys.size, ("" + type) + "");
 	#/
 	keys = getarraykeys(level.vsmgr[type].info);
 	for(i = 0; i < keys.size; i++)
 	{
 		/#
-			assert(level.vsmgr[type].info[keys[i]].name != name, "" + type + "" + name + "");
+			assert(level.vsmgr[type].info[keys[i]].name != name, ((("" + type) + "") + name) + "");
 		#/
 		/#
-			assert(level.vsmgr[type].info[keys[i]].priority != priority, "" + type + "" + priority + "" + name + "" + level.vsmgr[type].info[keys[i]].name + "");
+			assert(level.vsmgr[type].info[keys[i]].priority != priority, ((((((("" + type) + "") + priority) + "") + name) + "") + level.vsmgr[type].info[keys[i]].name) + "");
 		#/
 	}
 }
@@ -647,11 +647,11 @@ function add_sorted_priority_key(type, name, priority)
 	Parameters: 8
 	Flags: Linked
 */
-function add_info(type, name, var_829cb7a3, priority, lerp_step_count, should_activate_per_player, lerp_thread, ref_count_lerp_thread)
+function add_info(type, name, version, priority, lerp_step_count, should_activate_per_player, lerp_thread, ref_count_lerp_thread)
 {
 	self.type = type;
 	self.name = name;
-	self.var_829cb7a3 = var_829cb7a3;
+	self.version = version;
 	self.priority = priority;
 	self.lerp_step_count = lerp_step_count;
 	self.lerp_bit_count = getminbitcountfornum(lerp_step_count);
@@ -932,12 +932,12 @@ function deactivate_per_player(type, name, player)
 */
 function calc_ramp_in_lerp(start_time, end_time)
 {
-	if(0 >= end_time - start_time)
+	if(0 >= (end_time - start_time))
 	{
 		return 1;
 	}
 	now = gettime();
-	frac = float(now - start_time) / float(end_time - start_time);
+	frac = (float(now - start_time)) / (float(end_time - start_time));
 	return math::clamp(frac, 0, 1);
 }
 
@@ -952,12 +952,12 @@ function calc_ramp_in_lerp(start_time, end_time)
 */
 function calc_remaining_duration_lerp(start_time, end_time)
 {
-	if(0 >= end_time - start_time)
+	if(0 >= (end_time - start_time))
 	{
 		return 0;
 	}
 	now = gettime();
-	frac = float(end_time - now) / float(end_time - start_time);
+	frac = (float(end_time - now)) / (float(end_time - start_time));
 	return math::clamp(frac, 0, 1);
 }
 

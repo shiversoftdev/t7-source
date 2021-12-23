@@ -359,7 +359,7 @@ function function_2d46be95(var_13f5941c)
 	}
 	else
 	{
-		var_e7d83b48 = 0.01 * 100 - 0.67 * var_e7d83b48;
+		var_e7d83b48 = 0.01 * (100 - (0.67 * var_e7d83b48));
 		self.var_ea382ca4.color = (var_e7d83b48, 1, var_e7d83b48);
 	}
 	self.var_ea382ca4 setvalue(var_13f5941c);

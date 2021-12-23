@@ -191,7 +191,7 @@ function unlock_zones()
 		zm_zonemgr::zone_init(str_zonename);
 		zm_zonemgr::enable_zone(str_zonename);
 	}
-	zm_zonemgr::add_adjacent_zone(self.m_str_areaname + "_district_zone_B", str_zonename, "enter_" + self.m_str_areaname + "_district_high_from_B");
+	zm_zonemgr::add_adjacent_zone(self.m_str_areaname + "_district_zone_B", str_zonename, ("enter_" + self.m_str_areaname) + "_district_high_from_B");
 }
 
 /*

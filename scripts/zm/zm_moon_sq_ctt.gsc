@@ -443,10 +443,10 @@ function add_tank(tank_name, other_tank_name)
 		tank_trigger.tank = tank_model;
 		tank_trigger.fill = 0;
 		scalar = 1;
-		scalar = scalar + getplayers().size - 1 * 0.33;
+		scalar = scalar + ((getplayers().size - 1) * 0.33);
 		tank_trigger.max_fill = int(25 * scalar);
 		max_fill = struct::get(tank_model.target, "targetname");
-		tank_trigger.tank.fill_step = max_fill.origin[2] - tank_model.origin[2] + 53 / tank_trigger.max_fill;
+		tank_trigger.tank.fill_step = (max_fill.origin[2] - (tank_model.origin[2] + 53)) / tank_trigger.max_fill;
 		tank_fill_model = util::spawn_model(max_fill.model, tank_trigger.tank.origin + vectorscale((0, 0, 1), 2));
 		tank_fill_model ghost();
 		tank_trigger.fill_model = tank_fill_model;

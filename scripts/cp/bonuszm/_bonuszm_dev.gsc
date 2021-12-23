@@ -41,37 +41,37 @@ function function_17186302()
 		{
 			if(isdefined(level.var_a9e78bf7) && getdvarstring("") == "")
 			{
-				printtoprightln("" + "" + level.var_a9e78bf7[""]);
-				printtoprightln("" + "" + level.var_a9e78bf7[""]);
-				printtoprightln("" + "" + level.var_a9e78bf7[""]);
-				printtoprightln("" + "" + level.var_a9e78bf7[""]);
-				printtoprightln("" + "" + level.var_a9e78bf7[""]);
-				printtoprightln("" + "" + level.var_a9e78bf7[""]);
-				printtoprightln("" + "" + level.var_a9e78bf7[""]);
-				printtoprightln("" + "" + level.var_a9e78bf7[""]);
-				printtoprightln("" + "" + level.var_a9e78bf7[""]);
-				printtoprightln("" + "" + level.var_a9e78bf7[""]);
-				printtoprightln("" + "" + level.var_a9e78bf7[""]);
-				printtoprightln("" + "" + level.var_a9e78bf7[""]);
-				printtoprightln("" + "" + level.var_a9e78bf7[""]);
-				printtoprightln("" + "" + level.var_a9e78bf7[""]);
-				printtoprightln("" + "" + level.var_a9e78bf7[""]);
-				printtoprightln("" + "" + level.var_a9e78bf7[""]);
-				printtoprightln("" + "" + level.var_a9e78bf7[""]);
-				printtoprightln("" + "" + level.var_a9e78bf7[""]);
-				printtoprightln("" + "" + level.var_a9e78bf7[""]);
-				printtoprightln("" + "" + "" + level.var_b1955bd6 + "" + level.var_d0e37460 + "" + level.var_a9e78bf7[""]);
-				printtoprightln("" + "" + level.var_a9e78bf7[""]);
-				printtoprightln("" + "" + level.var_a9e78bf7[""]);
-				printtoprightln("" + "" + level.var_a9e78bf7[""]);
-				printtoprightln("" + "" + level.var_a9e78bf7[""]);
-				printtoprightln("" + "" + level.var_a9e78bf7[""]);
-				printtoprightln("" + "" + level.var_a9e78bf7[""]);
-				printtoprightln("" + "" + level.var_a9e78bf7[""]);
-				printtoprightln("" + "" + level.var_a9e78bf7[""]);
-				printtoprightln("" + "" + level.var_a9e78bf7[""]);
-				printtoprightln("" + "" + level.var_a9e78bf7[""]);
-				printtoprightln("" + "" + level.var_a9e78bf7[""]);
+				printtoprightln(("" + "") + level.var_a9e78bf7[""]);
+				printtoprightln(("" + "") + level.var_a9e78bf7[""]);
+				printtoprightln(("" + "") + level.var_a9e78bf7[""]);
+				printtoprightln(("" + "") + level.var_a9e78bf7[""]);
+				printtoprightln(("" + "") + level.var_a9e78bf7[""]);
+				printtoprightln(("" + "") + level.var_a9e78bf7[""]);
+				printtoprightln(("" + "") + level.var_a9e78bf7[""]);
+				printtoprightln(("" + "") + level.var_a9e78bf7[""]);
+				printtoprightln(("" + "") + level.var_a9e78bf7[""]);
+				printtoprightln(("" + "") + level.var_a9e78bf7[""]);
+				printtoprightln(("" + "") + level.var_a9e78bf7[""]);
+				printtoprightln(("" + "") + level.var_a9e78bf7[""]);
+				printtoprightln(("" + "") + level.var_a9e78bf7[""]);
+				printtoprightln(("" + "") + level.var_a9e78bf7[""]);
+				printtoprightln(("" + "") + level.var_a9e78bf7[""]);
+				printtoprightln(("" + "") + level.var_a9e78bf7[""]);
+				printtoprightln(("" + "") + level.var_a9e78bf7[""]);
+				printtoprightln(("" + "") + level.var_a9e78bf7[""]);
+				printtoprightln(("" + "") + level.var_a9e78bf7[""]);
+				printtoprightln((((((("" + "") + "") + level.var_b1955bd6) + "") + level.var_d0e37460) + "") + level.var_a9e78bf7[""]);
+				printtoprightln(("" + "") + level.var_a9e78bf7[""]);
+				printtoprightln(("" + "") + level.var_a9e78bf7[""]);
+				printtoprightln(("" + "") + level.var_a9e78bf7[""]);
+				printtoprightln(("" + "") + level.var_a9e78bf7[""]);
+				printtoprightln(("" + "") + level.var_a9e78bf7[""]);
+				printtoprightln(("" + "") + level.var_a9e78bf7[""]);
+				printtoprightln(("" + "") + level.var_a9e78bf7[""]);
+				printtoprightln(("" + "") + level.var_a9e78bf7[""]);
+				printtoprightln(("" + "") + level.var_a9e78bf7[""]);
+				printtoprightln(("" + "") + level.var_a9e78bf7[""]);
+				printtoprightln(("" + "") + level.var_a9e78bf7[""]);
 			}
 			wait(0.05);
 		}
@@ -116,11 +116,11 @@ function function_10489e30()
 				}
 				if(isdefined(level.current_skipto))
 				{
-					level.var_c7b985ff settext(prefix + "" + level.current_skipto);
+					level.var_c7b985ff settext((prefix + "") + level.current_skipto);
 				}
 				else
 				{
-					level.var_c7b985ff settext(prefix + "" + "");
+					level.var_c7b985ff settext((prefix + "") + "");
 				}
 			}
 			else if(isdefined(level.var_c7b985ff))

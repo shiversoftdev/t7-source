@@ -241,11 +241,11 @@ function function_77876867()
 private function function_dd3e35df(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	animdist = abs(getmovedelta(mocompanim, 0, 1)[2]);
-	self.ground_pos = bullettrace(self.var_7531a5e3.origin, self.var_7531a5e3.origin + vectorscale((0, 0, -1), 100000), 0, self)["position"];
-	physdist = abs(self.origin[2] - self.ground_pos[2] - 60);
+	self.ground_pos = bullettrace(self.var_7531a5e3.origin, self.var_7531a5e3.origin + (vectorscale((0, 0, -1), 100000)), 0, self)["position"];
+	physdist = abs((self.origin[2] - self.ground_pos[2]) - 60);
 	cycles = physdist / animdist;
 	time = cycles * getanimlength(mocompanim);
-	self.var_2826ab5d = gettime() + time * 1000;
+	self.var_2826ab5d = gettime() + (time * 1000);
 }
 
 /*
@@ -542,7 +542,7 @@ function begin_quad_introduction(quad_round_name)
 	{
 		level flag::clear("dog_round");
 	}
-	if(level.next_dog_round == level.round_number + 1)
+	if(level.next_dog_round == (level.round_number + 1))
 	{
 		level.next_dog_round++;
 	}
@@ -765,7 +765,7 @@ function intro_quad_spawn()
 		spawn_a_quad_zombie(second_spawners);
 		wait(0.2);
 		spawned++;
-		if(spawned > level.quads_per_round * 2)
+		if(spawned > (level.quads_per_round * 2))
 		{
 			break;
 		}
@@ -791,19 +791,19 @@ function intro_quad_spawn()
 */
 function manage_zombie_spawn_delay(start_timer)
 {
-	if(gettime() - start_timer < 15000)
+	if((gettime() - start_timer) < 15000)
 	{
 		level.zombie_vars["zombie_spawn_delay"] = randomintrange(30, 45);
 	}
-	else if(gettime() - start_timer < 25000)
+	else if((gettime() - start_timer) < 25000)
 	{
 		level.zombie_vars["zombie_spawn_delay"] = randomintrange(15, 30);
 	}
-	else if(gettime() - start_timer < 35000)
+	else if((gettime() - start_timer) < 35000)
 	{
 		level.zombie_vars["zombie_spawn_delay"] = randomintrange(10, 15);
 	}
-	else if(gettime() - start_timer < 50000)
+	else if((gettime() - start_timer) < 50000)
 	{
 		level.zombie_vars["zombie_spawn_delay"] = randomintrange(5, 10);
 	}

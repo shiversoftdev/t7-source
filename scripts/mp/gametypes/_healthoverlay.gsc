@@ -157,7 +157,7 @@ function player_health_regen()
 			{
 				regentime = int(regentime / getdvarfloat("perk_healthRegenMultiplier"));
 			}
-			if(gettime() - hurttime < regentime)
+			if((gettime() - hurttime) < regentime)
 			{
 				continue;
 			}
@@ -165,7 +165,7 @@ function player_health_regen()
 			{
 				continue;
 			}
-			if(gettime() - lastsoundtime_recover > regentime)
+			if((gettime() - lastsoundtime_recover) > regentime)
 			{
 				lastsoundtime_recover = gettime();
 				self notify(#"snd_breathing_better");
@@ -178,7 +178,7 @@ function player_health_regen()
 				{
 					veryhurttime = int(veryhurttime / getdvarfloat("perk_healthRegenMultiplier"));
 				}
-				if(gettime() > hurttime + veryhurttime)
+				if(gettime() > (hurttime + veryhurttime))
 				{
 					newhealth = newhealth + regenrate;
 				}

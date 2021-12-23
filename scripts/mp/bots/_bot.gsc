@@ -353,7 +353,7 @@ function do_supplydrop(maxrange = 1400)
 	{
 		randomangle = (0, randomint(360), 0);
 		randomvec = anglestoforward(randomangle);
-		point = closestcrate.origin + randomvec * 39;
+		point = closestcrate.origin + (randomvec * 39);
 		if(self botsetgoal(point))
 		{
 			self thread watch_crate(closestcrate);
@@ -722,7 +722,7 @@ function get_enemies(on_radar = 0)
 				i--;
 				continue;
 			}
-			if(gettime() - enemies[i].lastfiretime > 2000)
+			if((gettime() - enemies[i].lastfiretime) > 2000)
 			{
 				arrayremoveindex(enemies, i);
 				i--;
@@ -768,9 +768,9 @@ function set_rank()
 		human_ranks[human_ranks.size] = 10;
 	}
 	human_avg = math::array_average(human_ranks);
-	while(bot_ranks.size + human_ranks.size < 5)
+	while((bot_ranks.size + human_ranks.size) < 5)
 	{
-		r = human_avg + randomintrange(-5, 5);
+		r = human_avg + (randomintrange(-5, 5));
 		rank = math::clamp(r, 0, level.maxrank);
 		human_ranks[human_ranks.size] = rank;
 	}

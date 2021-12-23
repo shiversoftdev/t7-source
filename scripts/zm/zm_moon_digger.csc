@@ -224,7 +224,7 @@ function do_digger_digging_earthquake_rumble(localclientnum, quake_ent)
 			return;
 		}
 		player earthquake(randomfloatrange(0.12, 0.17), 3, quake_ent.origin, 1500);
-		if(distancesquared(quake_ent.origin, player.origin) < dist && abs(quake_ent.origin[2] - player.origin[2]) < 750)
+		if(distancesquared(quake_ent.origin, player.origin) < dist && (abs(quake_ent.origin[2] - player.origin[2])) < 750)
 		{
 			player playrumbleonentity(localclientnum, "grenade_rumble");
 		}

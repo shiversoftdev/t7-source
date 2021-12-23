@@ -53,7 +53,7 @@ function debug_jet()
 			{
 				print3d(struct.origin + offset, "", self.jet_color, 1, scale, 10);
 				scale = scale * 1.7;
-				offset = offset + dir * 6;
+				offset = offset + (dir * 6);
 			}
 			wait(1);
 		}
@@ -73,7 +73,7 @@ function ignite_jet()
 {
 	level endon(#"end_game");
 	self playsound("evt_sq_ptt_gas_ignite");
-	str_exploder = "fxexp_" + self.script_int + 10;
+	str_exploder = "fxexp_" + (self.script_int + 10);
 	exploder::exploder(str_exploder);
 	level waittill(#"sq_ptt_over");
 	exploder::stop_exploder(str_exploder);
@@ -151,7 +151,7 @@ function function_d9c0ed6()
 			/#
 				if(getdvarint("") == 2)
 				{
-					wait(self.owner_ent.script_int - 99 * 2);
+					wait((self.owner_ent.script_int - 99) * 2);
 					self notify(#"hash_c1510355");
 				}
 			#/

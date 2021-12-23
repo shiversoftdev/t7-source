@@ -163,7 +163,7 @@ function teamscorelimitcheck(rulescorepercent)
 		minscorepercentageleft = 100;
 		foreach(var_372a7541, team in level.teams)
 		{
-			scorepercentageleft = 100 - game["teamScores"][team] / level.scorelimit * 100;
+			scorepercentageleft = 100 - ((game["teamScores"][team] / level.scorelimit) * 100);
 			if(minscorepercentageleft > scorepercentageleft)
 			{
 				minscorepercentageleft = scorepercentageleft;
@@ -234,7 +234,7 @@ function dm_rules()
 				highestscore = players[i].pointstowin;
 			}
 		}
-		scorepercentageleft = 100 - highestscore / level.scorelimit * 100;
+		scorepercentageleft = 100 - ((highestscore / level.scorelimit) * 100);
 		/#
 			updatedebughud(3, "", int(scorepercentageleft));
 		#/
@@ -576,7 +576,7 @@ function sessionadvertismentcreatedebughud(linenum, alignx)
 		debug_hud.alignx = "";
 		debug_hud.aligny = "";
 		debug_hud.x = alignx;
-		debug_hud.y = -50 + linenum * 15;
+		debug_hud.y = -50 + (linenum * 15);
 		debug_hud.foreground = 1;
 		debug_hud.font = "";
 		debug_hud.fontscale = 1.5;

@@ -121,17 +121,17 @@ function watchforexplosionnotetracks(localclientnum, up, forward)
 		{
 			case "explode_1st":
 			{
-				playfx(localclientnum, level._effect["fx_betty_exp"], self.origin + up * level.explode_1st_offset, up, forward);
+				playfx(localclientnum, level._effect["fx_betty_exp"], self.origin + (up * level.explode_1st_offset), up, forward);
 				break;
 			}
 			case "explode_2nd":
 			{
-				playfx(localclientnum, level._effect["fx_betty_exp"], self.origin + up * level.explode_2nd_offset, up, forward);
+				playfx(localclientnum, level._effect["fx_betty_exp"], self.origin + (up * level.explode_2nd_offset), up, forward);
 				break;
 			}
 			case "explode_main":
 			{
-				playfx(localclientnum, level._effect["fx_betty_exp"], self.origin + up * level.explode_main_offset, up, forward);
+				playfx(localclientnum, level._effect["fx_betty_exp"], self.origin + (up * level.explode_main_offset), up, forward);
 				playfx(localclientnum, level._effect["fx_betty_exp_death"], self.origin, up, forward);
 				break;
 			}

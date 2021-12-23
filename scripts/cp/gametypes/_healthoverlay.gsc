@@ -91,8 +91,8 @@ function update_regen_delay_progress(duration)
 	while(remaining > 0)
 	{
 		wait(duration / 5);
-		remaining = remaining - duration / 5;
-		self.lastregendelayprogress = 1 - remaining / duration + 0.05;
+		remaining = remaining - (duration / 5);
+		self.lastregendelayprogress = (1 - (remaining / duration)) + 0.05;
 		if(self.lastregendelayprogress > 1)
 		{
 			self.lastregendelayprogress = 1;
@@ -182,17 +182,17 @@ function player_health_regen()
 			{
 				regentime = int(regentime / getdvarfloat("perk_healthRegenMultiplier"));
 			}
-			regendelayprogress = gettime() - hurttime / regentime;
+			regendelayprogress = (gettime() - hurttime) / regentime;
 			if(regendelayprogress < 1)
 			{
-				if(!isdefined(self.lastregendelayprogress) || int(self.lastregendelayprogress * 5) != int(regendelayprogress * 5))
+				if(!isdefined(self.lastregendelayprogress) || (int(self.lastregendelayprogress * 5)) != (int(regendelayprogress * 5)))
 				{
 					self.lastregendelayprogress = regendelayprogress;
 					player setcontrolleruimodelvalue("hudItems.regenDelayProgress", regendelayprogress);
 				}
 				continue;
 			}
-			if(gettime() - lastsoundtime_recover > regentime)
+			if((gettime() - lastsoundtime_recover) > regentime)
 			{
 				lastsoundtime_recover = gettime();
 				self notify(#"snd_breathing_better");
@@ -205,12 +205,12 @@ function player_health_regen()
 				{
 					veryhurttime = int(veryhurttime / getdvarfloat("perk_healthRegenMultiplier"));
 				}
-				regendelayprogress = gettime() - hurttime / veryhurttime;
+				regendelayprogress = (gettime() - hurttime) / veryhurttime;
 				if(regendelayprogress >= 1)
 				{
 					newhealth = newhealth + regenrate;
 				}
-				else if(!isdefined(self.lastregendelayprogress) || int(self.lastregendelayprogress * 5) != int(regendelayprogress * 5))
+				else if(!isdefined(self.lastregendelayprogress) || (int(self.lastregendelayprogress * 5)) != (int(regendelayprogress * 5)))
 				{
 					self.lastregendelayprogress = regendelayprogress;
 					player setcontrolleruimodelvalue("hudItems.regenDelayProgress", regendelayprogress);

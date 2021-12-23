@@ -152,7 +152,7 @@ function function_850a0f8d(var_80c5df, start_index)
 {
 	for(index = 1; index < 6; index++)
 	{
-		var_93a57fde = start_index + index % 6;
+		var_93a57fde = (start_index + index) % 6;
 		abilityindex = function_d3ef9004(var_93a57fde);
 		if(self iscybercomindexenabled(var_80c5df, abilityindex))
 		{
@@ -522,7 +522,7 @@ function castinganimationwatcher(localclientnum)
 	{
 		self waittill(#"gadget_casting_anim");
 		curtime = gettime();
-		if(self.cybercom.lastcastat + 1000 < curtime)
+		if((self.cybercom.lastcastat + 1000) < curtime)
 		{
 			cyber_arm_pulse(localclientnum, 0, 0);
 			self.cybercom.lastcastat = curtime;
@@ -1061,7 +1061,7 @@ private function function_a4cd6b9a()
 	var_13ff0d3c = function_66be631b();
 	var_86067c77 = function_66be631b();
 	var_6004020e = function_66be631b();
-	name = var_461b88f6 + var_13ff0d3c + ":" + var_86067c77 + var_6004020e;
+	name = (((var_461b88f6 + var_13ff0d3c) + ":") + var_86067c77) + var_6004020e;
 	return name;
 }
 
@@ -1147,7 +1147,7 @@ function function_38e32940()
 				}
 				else
 				{
-					var_9fd3593c = 0.2 - var_191c13e8 / var_a36d3ca2 * 0.09999999;
+					var_9fd3593c = (0.2 - var_191c13e8) / (var_a36d3ca2 * 0.09999999);
 					var_b608e411 = var_b608e411 + var_9fd3593c;
 					self setarmpulseposition(var_b608e411);
 				}
@@ -1161,7 +1161,7 @@ function function_38e32940()
 				}
 				else
 				{
-					var_9fd3593c = var_968d78d2 - 0.2 / var_b6fa88aa - var_a36d3ca2 * 0.09999999;
+					var_9fd3593c = (var_968d78d2 - 0.2) / ((var_b6fa88aa - var_a36d3ca2) * 0.09999999);
 					var_b608e411 = var_b608e411 + var_9fd3593c;
 					self setarmpulseposition(var_b608e411);
 				}
@@ -1171,7 +1171,7 @@ function function_38e32940()
 			{
 				if(current_time > var_293e9a7b)
 				{
-					var_9fd3593c = 1 - var_968d78d2 / total_time - current_time * 0.09999999;
+					var_9fd3593c = (1 - var_968d78d2) / ((total_time - current_time) * 0.09999999);
 					var_f13af102 = 3;
 				}
 				break;
@@ -1267,7 +1267,7 @@ function function_2aa9d708(model, range, start)
 	while(val <= 1)
 	{
 		setuimodelvalue(model, val);
-		totaltime = getrealtime() - starttime / 1000 + start;
+		totaltime = ((getrealtime() - starttime) / 1000) + start;
 		val = math::clamp(totaltime / range, 0, 1);
 		wait(0.016);
 	}
@@ -1294,7 +1294,7 @@ function function_9439eecf(localclientnum, oldval, newval, bnewent, binitialsnap
 	if(newval > 0)
 	{
 		range = newval & 31;
-		start = newval >> 5 / 128 * range;
+		start = ((newval >> 5) / 128) * range;
 		self thread function_2aa9d708(model, range, start);
 	}
 	else
@@ -1353,7 +1353,7 @@ function function_806d1a61(localclientnum, oldval, newval, bnewent, binitialsnap
 function function_62d5481c(localclientnum, var_5a8c2a63, var_191d8f6d)
 {
 	controllermodel = getuimodelforcontroller(localclientnum);
-	var_e4d4320f = "AbilityWheel.Selected" + var_5a8c2a63 + 1;
+	var_e4d4320f = "AbilityWheel.Selected" + (var_5a8c2a63 + 1);
 	selected = getuimodel(controllermodel, var_e4d4320f);
 	setuimodelvalue(selected, var_191d8f6d + 1);
 }

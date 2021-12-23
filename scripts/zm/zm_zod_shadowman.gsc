@@ -392,7 +392,7 @@ function function_b6c7fd80()
 			}
 		}
 		n_player_count = level.activeplayers.size;
-		var_d6a1b83c = 0.5 + 0.5 * n_player_count - 1 / 3;
+		var_d6a1b83c = 0.5 + (0.5 * ((n_player_count - 1) / 3));
 		var_9bd75db5 = 1000 * var_d6a1b83c;
 		var_e3b39dfc = 0;
 		if(var_90530d3 >= var_9bd75db5)
@@ -848,7 +848,7 @@ function function_fcd226a8(n_move_duration)
 	self function_a3821eb5(n_move_duration);
 	var_9eb45ed3 = array("boxer", "detective", "femme", "magician");
 	str_charname = array::random(var_9eb45ed3);
-	level clientfield::set("ee_keeper_" + str_charname + "_state", 6);
+	level clientfield::set(("ee_keeper_" + str_charname) + "_state", 6);
 	wait(n_move_duration);
 }
 
@@ -869,7 +869,7 @@ function function_e44c4f1b(n_move_duration)
 	var_9eb45ed3 = array("boxer", "detective", "femme", "magician");
 	foreach(var_9017479d, str_charname in var_9eb45ed3)
 	{
-		level clientfield::set("ee_keeper_" + str_charname + "_state", 6);
+		level clientfield::set(("ee_keeper_" + str_charname) + "_state", 6);
 	}
 	wait(n_move_duration);
 }
@@ -1443,16 +1443,16 @@ function function_f38a6a2a(var_8661a082)
 		var_5543272f[var_5543272f.size] = var_c9a88def[i];
 	}
 	var_e1b2953e = var_9e546be.size;
-	var_bc0b7719 = var_8661a082 - var_e1b2953e;
-	var_4162cc72 = abs(var_bc0b7719);
+	n_diff = var_8661a082 - var_e1b2953e;
+	var_4162cc72 = abs(n_diff);
 	for(i = 0; i < var_4162cc72; i++)
 	{
-		if(var_bc0b7719 > 0)
+		if(n_diff > 0)
 		{
 			var_5543272f[i].active = 1;
 			continue;
 		}
-		if(var_bc0b7719 < 0)
+		if(n_diff < 0)
 		{
 			var_9e546be[i].active = 0;
 		}

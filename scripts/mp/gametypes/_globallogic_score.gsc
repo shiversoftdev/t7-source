@@ -61,7 +61,7 @@ function updatematchbonusscores(winner)
 		gamelength = min(gamelength, 1200);
 		if(level.gametype == "twar" && game["roundsplayed"] > 0)
 		{
-			gamelength = gamelength + level.timelimit * 60;
+			gamelength = gamelength + (level.timelimit * 60);
 		}
 	}
 	else
@@ -114,19 +114,19 @@ function updatematchbonusscores(winner)
 			spm = player rank::getspm();
 			if(winningteam == "tie")
 			{
-				playerscore = int(winnerscale * gamelength / 60 * spm * totaltimeplayed / gamelength);
+				playerscore = int((winnerscale * ((gamelength / 60) * spm)) * (totaltimeplayed / gamelength));
 				player thread givematchbonus("tie", playerscore);
 				player.matchbonus = playerscore;
 			}
 			else if(isdefined(player.pers["team"]) && player.pers["team"] == winningteam)
 			{
-				playerscore = int(winnerscale * gamelength / 60 * spm * totaltimeplayed / gamelength);
+				playerscore = int((winnerscale * ((gamelength / 60) * spm)) * (totaltimeplayed / gamelength));
 				player thread givematchbonus("win", playerscore);
 				player.matchbonus = playerscore;
 			}
 			else if(isdefined(player.pers["team"]) && player.pers["team"] != "spectator")
 			{
-				playerscore = int(loserscale * gamelength / 60 * spm * totaltimeplayed / gamelength);
+				playerscore = int((loserscale * ((gamelength / 60) * spm)) * (totaltimeplayed / gamelength));
 				player thread givematchbonus("loss", playerscore);
 				player.matchbonus = playerscore;
 			}
@@ -169,13 +169,13 @@ function updatematchbonusscores(winner)
 		}
 		if(iswinner)
 		{
-			playerscore = int(winnerscale * gamelength / 60 * spm * totaltimeplayed / gamelength);
+			playerscore = int((winnerscale * ((gamelength / 60) * spm)) * (totaltimeplayed / gamelength));
 			player thread givematchbonus("win", playerscore);
 			player.matchbonus = playerscore;
 		}
 		else
 		{
-			playerscore = int(loserscale * gamelength / 60 * spm * totaltimeplayed / gamelength);
+			playerscore = int((loserscale * ((gamelength / 60) * spm)) * (totaltimeplayed / gamelength));
 			player thread givematchbonus("loss", playerscore);
 			player.matchbonus = playerscore;
 		}
@@ -375,7 +375,7 @@ function roundtonearestfive(score)
 	{
 		return score - rounding;
 	}
-	return score + 5 - rounding;
+	return score + (5 - rounding);
 }
 
 /*
@@ -398,7 +398,7 @@ function giveplayermomentumnotification(score, label, descvalue, countstowardram
 	score = score;
 	if(score > 0 && self hasperk("specialty_earnmoremomentum"))
 	{
-		score = roundtonearestfive(int(score * getdvarfloat("perk_killstreakMomentumMultiplier") + 0.5));
+		score = roundtonearestfive(int((score * getdvarfloat("perk_killstreakMomentumMultiplier")) + 0.5));
 	}
 	if(isalive(self))
 	{
@@ -869,7 +869,7 @@ function setplayermomentumdebug()
 				}
 				if(isdefined(player.killstreak))
 				{
-					_setplayermomentum(player, int(2000 * momentumpercent / 100));
+					_setplayermomentum(player, int(2000 * (momentumpercent / 100)));
 				}
 			}
 		}
@@ -1225,7 +1225,7 @@ function onteamscore_postprocess(team)
 	{
 		return;
 	}
-	if(gettime() - level.laststatustime < 5000)
+	if((gettime() - level.laststatustime) < 5000)
 	{
 		return;
 	}
@@ -2114,7 +2114,7 @@ function processassist(killedplayer, damagedone, weapon)
 	{
 		assist_level_value = 3;
 	}
-	assist_level = assist_level + "_" + assist_level_value * 25;
+	assist_level = (assist_level + "_") + (assist_level_value * 25);
 	self incpersstat("assists", 1, 1, 1);
 	self.assists = self getpersstat("assists");
 	if(isdefined(weapon))

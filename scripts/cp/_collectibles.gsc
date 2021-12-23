@@ -310,7 +310,7 @@ function function_8765a33c(var_e81a1399)
 	}
 	else
 	{
-		var_837a6185.index = int(getsubstr(var_e81a1399.model, var_e81a1399.model.size - 2)) - 1;
+		var_837a6185.index = (int(getsubstr(var_e81a1399.model, var_e81a1399.model.size - 2))) - 1;
 	}
 	return var_837a6185;
 }
@@ -459,7 +459,7 @@ function function_a8d8b9c7()
 */
 function function_8acd43fd(var_5c0b5b64, value)
 {
-	self setnoncheckpointdata("collectibles" + var_5c0b5b64 + "value", value);
+	self setnoncheckpointdata(("collectibles" + var_5c0b5b64) + "value", value);
 }
 
 /*
@@ -473,7 +473,7 @@ function function_8acd43fd(var_5c0b5b64, value)
 */
 function function_70b41d41(var_5c0b5b64)
 {
-	return self getnoncheckpointdata("collectibles" + var_5c0b5b64 + "value");
+	return self getnoncheckpointdata(("collectibles" + var_5c0b5b64) + "value");
 }
 
 /*
@@ -489,7 +489,7 @@ function function_d100c544()
 {
 	foreach(var_4e9e4903, collectible in level.collectibles)
 	{
-		self clearnoncheckpointdata("collectibles" + collectible.index + "value");
+		self clearnoncheckpointdata(("collectibles" + collectible.index) + "value");
 	}
 }
 

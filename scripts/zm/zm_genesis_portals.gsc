@@ -153,7 +153,7 @@ function create_portal(str_id, var_776628b2)
 	{
 		level flag::wait_till(var_776628b2);
 	}
-	level thread function_53e2c53d(str_areaname);
+	level thread portal_activate(str_areaname);
 	level thread portal_open(str_areaname);
 	var_6bca29ec = "close_portal_" + str_id;
 	var_2c5f1c2a = "open_portal_" + str_id;
@@ -164,7 +164,7 @@ function create_portal(str_id, var_776628b2)
 		level.var_ccae6720 = 1;
 		function_4a4784d4(str_areaname, 0);
 		level util::waittill_any("open_all_portals", var_2c5f1c2a);
-		level thread function_53e2c53d(str_areaname);
+		level thread portal_activate(str_areaname);
 		level.var_ccae6720 = 0;
 		function_4a4784d4(str_areaname, 1);
 	}
@@ -196,14 +196,14 @@ function function_a90ab0d7()
 		{
 			continue;
 		}
-		level thread function_53e2c53d(self.stub.str_areaname);
+		level thread portal_activate(self.stub.str_areaname);
 		level thread portal_open(self.stub.str_areaname);
 		break;
 	}
 }
 
 /*
-	Name: function_53e2c53d
+	Name: portal_activate
 	Namespace: zm_genesis_portals
 	Checksum: 0xDF02BAF4
 	Offset: 0x11D0
@@ -211,7 +211,7 @@ function function_a90ab0d7()
 	Parameters: 1
 	Flags: Linked
 */
-function function_53e2c53d(str_areaname)
+function portal_activate(str_areaname)
 {
 	switch(str_areaname)
 	{
@@ -437,7 +437,7 @@ function portal_teleport_player(show_fx = 1, a_s_port_locs, str_zone, var_6d359b
 	a_ai_enemies = arraysort(a_ai_enemies, var_6d359b2e, 1, 99, 768);
 	array::thread_all(a_ai_enemies, &ai_delay_cleanup);
 	level.n_cleanup_manager_restart_time = 4 + 15;
-	level.n_cleanup_manager_restart_time = level.n_cleanup_manager_restart_time + gettime() / 1000;
+	level.n_cleanup_manager_restart_time = level.n_cleanup_manager_restart_time + (gettime() / 1000);
 	image_room = struct::get("teleport_room_" + n_pos, "targetname");
 	var_d9543609 = undefined;
 	if(self hasweapon(level.ballweapon))
@@ -761,7 +761,7 @@ function function_cfc89ca()
 	self.var_fe12a779["prototype"] = 0;
 	while(true)
 	{
-		if(isdefined(self.var_a3d40b8) && (!(isdefined(self.var_122a2dda) && self.var_122a2dda)))
+		if(isdefined(self.var_a3d40b8) && (!(isdefined(self.is_flung) && self.is_flung)))
 		{
 			switch(self.var_a3d40b8)
 			{

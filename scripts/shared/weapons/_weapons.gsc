@@ -165,7 +165,7 @@ function update_last_held_weapon_timings(newtime)
 {
 	if(isdefined(self.currentweapon) && isdefined(self.currentweaponstarttime))
 	{
-		totaltime = int(newtime - self.currentweaponstarttime / 1000);
+		totaltime = int((newtime - self.currentweaponstarttime) / 1000);
 		if(totaltime > 0)
 		{
 			weaponpickedup = 0;
@@ -202,7 +202,7 @@ function update_timings(newtime)
 	{
 		return;
 	}
-	totaltime = int(newtime - self.staticweaponsstarttime / 1000);
+	totaltime = int((newtime - self.staticweaponsstarttime) / 1000);
 	if(totaltime < 0)
 	{
 		return;
@@ -250,7 +250,7 @@ function update_timings(newtime)
 		{
 			for(numspecialties = 0; numspecialties < level.maxspecialties; numspecialties++)
 			{
-				perk = self getloadoutitem(self.class_num, "specialty" + numspecialties + 1);
+				perk = self getloadoutitem(self.class_num, "specialty" + (numspecialties + 1));
 				if(perk != 0)
 				{
 					perksindexarray[perk] = 1;
@@ -390,7 +390,7 @@ function drop_for_death(attacker, sweapon, smeansofdeath)
 		/#
 			if(getdvarstring("") == "")
 			{
-				println("" + weapon.name + "");
+				println(("" + weapon.name) + "");
 			}
 		#/
 		return;
@@ -521,7 +521,7 @@ function watch_pickup()
 	/#
 		if(getdvarstring("") == "")
 		{
-			println("" + weapon.name + "" + isdefined(self.ownersattacker));
+			println((("" + weapon.name) + "") + isdefined(self.ownersattacker));
 		}
 	#/
 	/#
@@ -760,9 +760,9 @@ function drop_all_to_ground(origin, radius)
 	weapons = getdroppedweapons();
 	for(i = 0; i < weapons.size; i++)
 	{
-		if(distancesquared(origin, weapons[i].origin) < radius * radius)
+		if(distancesquared(origin, weapons[i].origin) < (radius * radius))
 		{
-			trace = bullettrace(weapons[i].origin, weapons[i].origin + vectorscale((0, 0, -1), 2000), 0, weapons[i]);
+			trace = bullettrace(weapons[i].origin, weapons[i].origin + (vectorscale((0, 0, -1), 2000)), 0, weapons[i]);
 			weapons[i].origin = trace["position"];
 		}
 	}
@@ -782,7 +782,7 @@ function drop_grenades_to_ground(origin, radius)
 	grenades = getentarray("grenade", "classname");
 	for(i = 0; i < grenades.size; i++)
 	{
-		if(distancesquared(origin, grenades[i].origin) < radius * radius)
+		if(distancesquared(origin, grenades[i].origin) < (radius * radius))
 		{
 			grenades[i] launch(vectorscale((1, 1, 1), 5));
 		}
@@ -1173,11 +1173,11 @@ function turn_grenade_into_a_dud(weapon, isthrowngrenade, player)
 			}
 			if(isthrowngrenade)
 			{
-				player iprintlnbold(&"MP_GRENADE_UNAVAILABLE_FOR_N", " " + timeleft + " ", &"EXE_SECONDS");
+				player iprintlnbold(&"MP_GRENADE_UNAVAILABLE_FOR_N", (" " + timeleft) + " ", &"EXE_SECONDS");
 			}
 			else
 			{
-				player iprintlnbold(&"MP_LAUNCHER_UNAVAILABLE_FOR_N", " " + timeleft + " ", &"EXE_SECONDS");
+				player iprintlnbold(&"MP_LAUNCHER_UNAVAILABLE_FOR_N", (" " + timeleft) + " ", &"EXE_SECONDS");
 			}
 			self makegrenadedud();
 		}
@@ -1261,7 +1261,7 @@ function get_damageable_ents(pos, radius, dolos, startradius)
 		}
 		playerpos = players[i].origin + vectorscale((0, 0, 1), 32);
 		distsq = distancesquared(pos, playerpos);
-		if(distsq < radius * radius && (!dolos || damage_trace_passed(pos, playerpos, startradius, undefined)))
+		if(distsq < (radius * radius) && (!dolos || damage_trace_passed(pos, playerpos, startradius, undefined)))
 		{
 			newent = spawnstruct();
 			newent.isplayer = 1;
@@ -1278,7 +1278,7 @@ function get_damageable_ents(pos, radius, dolos, startradius)
 	{
 		entpos = grenades[i].origin;
 		distsq = distancesquared(pos, entpos);
-		if(distsq < radius * radius && (!dolos || damage_trace_passed(pos, entpos, startradius, grenades[i])))
+		if(distsq < (radius * radius) && (!dolos || damage_trace_passed(pos, entpos, startradius, grenades[i])))
 		{
 			newent = spawnstruct();
 			newent.isplayer = 0;
@@ -1295,7 +1295,7 @@ function get_damageable_ents(pos, radius, dolos, startradius)
 	{
 		entpos = destructibles[i].origin;
 		distsq = distancesquared(pos, entpos);
-		if(distsq < radius * radius && (!dolos || damage_trace_passed(pos, entpos, startradius, destructibles[i])))
+		if(distsq < (radius * radius) && (!dolos || damage_trace_passed(pos, entpos, startradius, destructibles[i])))
 		{
 			newent = spawnstruct();
 			newent.isplayer = 0;
@@ -1312,7 +1312,7 @@ function get_damageable_ents(pos, radius, dolos, startradius)
 	{
 		entpos = destructables[i].origin;
 		distsq = distancesquared(pos, entpos);
-		if(distsq < radius * radius && (!dolos || damage_trace_passed(pos, entpos, startradius, destructables[i])))
+		if(distsq < (radius * radius) && (!dolos || damage_trace_passed(pos, entpos, startradius, destructables[i])))
 		{
 			newent = spawnstruct();
 			newent.isplayer = 0;
@@ -1335,7 +1335,7 @@ function get_damageable_ents(pos, radius, dolos, startradius)
 			}
 			entpos = dog.origin;
 			distsq = distancesquared(pos, entpos);
-			if(distsq < radius * radius && (!dolos || damage_trace_passed(pos, entpos, startradius, dog)))
+			if(distsq < (radius * radius) && (!dolos || damage_trace_passed(pos, entpos, startradius, dog)))
 			{
 				newent = spawnstruct();
 				newent.isplayer = 0;
@@ -1379,7 +1379,7 @@ function damage_trace(from, to, startradius, ignore)
 {
 	midpos = undefined;
 	diff = to - from;
-	if(lengthsquared(diff) < startradius * startradius)
+	if(lengthsquared(diff) < (startradius * startradius))
 	{
 		midpos = to;
 	}
@@ -1487,12 +1487,12 @@ function on_damage(eattacker, einflictor, weapon, meansofdeath, damage)
 			{
 				radius = radius * 0.5;
 			}
-			scale = 1 - distance(self.origin, einflictor.origin) / radius;
+			scale = 1 - (distance(self.origin, einflictor.origin) / radius);
 			if(scale < 0)
 			{
 				scale = 0;
 			}
-			time = 0.25 + 4 * scale;
+			time = 0.25 + (4 * scale);
 			wait(0.05);
 			if(meansofdeath != "MOD_IMPACT")
 			{
@@ -1505,7 +1505,7 @@ function on_damage(eattacker, einflictor, weapon, meansofdeath, damage)
 					self shellshock("concussion_grenade_mp", time, 0);
 				}
 				self thread play_concussion_sound(time);
-				self.concussionendtime = gettime() + time * 1000;
+				self.concussionendtime = gettime() + (time * 1000);
 				self.lastconcussedby = eattacker;
 			}
 			break;
@@ -1809,7 +1809,7 @@ function scavenger_think()
 			clip = 1;
 		}
 		maxammo = weapon.maxammo;
-		if(stock < maxammo - clip)
+		if(stock < (maxammo - clip))
 		{
 			ammo = stock + clip;
 			player setweaponammostock(weapon, ammo);
@@ -1872,7 +1872,7 @@ function scavenger_hud_create()
 			width = int(width * 0.5);
 			height = int(height * 0.5);
 		}
-		self.scavenger_icon.x = width * -1 / 2;
+		self.scavenger_icon.x = (width * -1) / 2;
 		self.scavenger_icon.y = 16;
 		self.scavenger_icon setshader("hud_scavenger_pickup", width, height);
 	}
@@ -2042,7 +2042,7 @@ function ninebang_doninebang(attacker, weapon, pos, cooktime)
 	maxdelay = 0.3;
 	explosionradiussq = weapon.explosionradius * weapon.explosionradius;
 	explosionradiusminsq = weapon.explosioninnerradius * weapon.explosioninnerradius;
-	cookstages = cooktime / weapon.cookoffholdtime * maxstages + 1;
+	cookstages = ((cooktime / weapon.cookoffholdtime) * maxstages) + 1;
 	detonations = 0;
 	if(cookstages < 2)
 	{
@@ -2093,12 +2093,12 @@ function ninebang_doninebang(attacker, weapon, pos, cooktime)
 			}
 			else
 			{
-				percent_distance = 1 - dist - explosionradiusminsq / explosionradiussq - explosionradiusminsq;
+				percent_distance = 1 - (dist - explosionradiusminsq) / (explosionradiussq - explosionradiusminsq);
 			}
 			forward = anglestoforward(player getplayerangles());
 			toblast = pos - vieworigin;
 			toblast = vectornormalize(toblast);
-			percent_angle = 0.5 * 1 + vectordot(forward, toblast);
+			percent_angle = 0.5 * (1 + vectordot(forward, toblast));
 			player notify(#"flashbang", percent_distance, percent_angle, attacker);
 		}
 		wait(randomfloatrange(mindelay, maxdelay));
@@ -2208,7 +2208,7 @@ function track_multi_detonation(ownerent, weapon, cooktime)
 function multi_detonation_get_cluster_launch_dir(index, multival)
 {
 	pitch = 45;
-	yaw = -180 + 360 / multival * index;
+	yaw = -180 + ((360 / multival) * index);
 	angles = (pitch, yaw, 45);
 	dir = anglestoforward(angles);
 	return dir;

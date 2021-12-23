@@ -255,7 +255,7 @@ function function_b8ba462e(localclientnum, b_on = 1)
 	self endon(#"hash_67a9e087");
 	level endon(#"demo_jump");
 	n_start_time = gettime();
-	n_end_time = n_start_time + 2 * 1000;
+	n_end_time = n_start_time + (2 * 1000);
 	b_is_updating = 1;
 	if(isdefined(b_on) && b_on)
 	{

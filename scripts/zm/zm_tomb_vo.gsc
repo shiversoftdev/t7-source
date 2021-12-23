@@ -338,7 +338,7 @@ function tomb_audio_get_mod_type_override(impact, mod, weapon, zombie, instakill
 	{
 		return "thundergun";
 	}
-	if(zombie.damageweapon.name == "shotgun_energy+holo+quickdraw" || zombie.damageweapon.name == "pistol_energy+fastreload+reddot+steadyaim" || zombie.damageweapon.name == "shotgun_energy_upgraded+extclip+holo+quickdraw" || zombie.damageweapon.name == "pistol_energy_upgraded+extclip+fastreload+reddot+steadyaim")
+	if(zombie.damageweapon.name == ("shotgun_energy+holo+quickdraw") || zombie.damageweapon.name == ("pistol_energy+fastreload+reddot+steadyaim") || zombie.damageweapon.name == ("shotgun_energy_upgraded+extclip+holo+quickdraw") || zombie.damageweapon.name == ("pistol_energy_upgraded+extclip+fastreload+reddot+steadyaim"))
 	{
 		return "default";
 	}
@@ -469,7 +469,7 @@ function tomb_custom_zombie_oh_shit_vox()
 		{
 			if(isdefined(zombs[i].favoriteenemy) && zombs[i].favoriteenemy == self || !isdefined(zombs[i].favoriteenemy))
 			{
-				if(distancesquared(zombs[i].origin, self.origin) < n_distance * n_distance)
+				if(distancesquared(zombs[i].origin, self.origin) < (n_distance * n_distance))
 				{
 					close_zombs++;
 				}
@@ -1040,7 +1040,7 @@ function discover_pack_a_punch()
 		}
 		if(!e_player.discover_pap_vo_played)
 		{
-			if(vectordot(anglestoforward(e_player getplayerangles()), vectornormalize(s_lookat.origin - e_player.origin)) > 0.8 && e_player can_player_speak())
+			if((vectordot(anglestoforward(e_player getplayerangles()), vectornormalize(s_lookat.origin - e_player.origin))) > 0.8 && e_player can_player_speak())
 			{
 				e_player.discover_pap_vo_played = 1;
 				e_player zm_audio::create_and_play_dialog("general", "pap_discovered");
@@ -1467,7 +1467,7 @@ function play_category_on_player_character_if_present(category, character_name)
 			break;
 		}
 	}
-	vox_line = vox_line_prefix + category + "_0";
+	vox_line = (vox_line_prefix + category) + "_0";
 	play_line_on_player_character_if_present(vox_line, character_name);
 }
 
@@ -1516,7 +1516,7 @@ function play_line_on_player_character_if_present(vox_line, character_name)
 	if(isdefined(player_character))
 	{
 		/#
-			iprintln("" + character_name + "" + vox_line);
+			iprintln((("" + character_name) + "") + vox_line);
 		#/
 		player_character playsoundwithnotify(vox_line, "sound_done" + vox_line);
 		player_character waittill("sound_done" + vox_line);
@@ -1722,8 +1722,8 @@ function game_start_vo()
 		{
 			continue;
 		}
-		e_speaker playsoundwithnotify(a_game_start_convo["line_" + line_number][e_speaker.character_name], "sound_done" + a_game_start_convo["line_" + line_number][e_speaker.character_name]);
-		e_speaker waittill("sound_done" + a_game_start_convo["line_" + line_number][e_speaker.character_name]);
+		e_speaker playsoundwithnotify(a_game_start_convo["line_" + line_number][e_speaker.character_name], "sound_done" + (a_game_start_convo["line_" + line_number][e_speaker.character_name]));
+		e_speaker waittill("sound_done" + (a_game_start_convo["line_" + line_number][e_speaker.character_name]));
 	}
 	set_players_dontspeak(0);
 	level flag::clear("story_vo_playing");
@@ -1901,7 +1901,7 @@ function get_left_behind_plea()
 	{
 		pl_num = 3;
 	}
-	return "vox_plr_" + pl_num + "_miss_tank_" + randomint(3);
+	return (("vox_plr_" + pl_num) + "_miss_tank_") + randomint(3);
 }
 
 /*
@@ -2180,8 +2180,8 @@ function round_one_end_vo()
 		{
 			continue;
 		}
-		e_speaker playsoundwithnotify(a_convo["line_" + line_number][e_speaker.character_name], "sound_done" + a_convo["line_" + line_number][e_speaker.character_name]);
-		e_speaker waittill("sound_done" + a_convo["line_" + line_number][e_speaker.character_name]);
+		e_speaker playsoundwithnotify(a_convo["line_" + line_number][e_speaker.character_name], "sound_done" + (a_convo["line_" + line_number][e_speaker.character_name]));
+		e_speaker waittill("sound_done" + (a_convo["line_" + line_number][e_speaker.character_name]));
 	}
 	set_players_dontspeak(0);
 	level flag::clear("story_vo_playing");
@@ -2475,7 +2475,7 @@ function tomb_drone_built_vo(s_craftable)
 	{
 		vox_line = "vox_plr_2_maxis_drone_5_0";
 		/#
-			iprintln("" + self.character_name + "" + vox_line);
+			iprintln((("" + self.character_name) + "") + vox_line);
 		#/
 		self playsoundwithnotify(vox_line, "sound_done" + vox_line);
 		self waittill("sound_done" + vox_line);
@@ -2565,6 +2565,7 @@ function set_players_dontspeak(bool)
 		}
 		foreach(var_87b59a10, player in players)
 		{
+			var_91a28485 = getnextarraykey(var_7095611e);
 			while(isdefined(player) && (isdefined(player.isspeaking) && player.isspeaking))
 			{
 				wait(0.1);
@@ -3007,6 +3008,7 @@ function samanthasay(vox_line, e_source, b_wait_for_nearby_speakers = 0, intro_l
 		{
 			foreach(var_4b404489, player in nearbyplayers)
 			{
+				var_96cd4938 = getnextarraykey(var_8665d32b);
 				while(isdefined(player) && (isdefined(player.isspeaking) && player.isspeaking))
 				{
 					wait(0.05);
@@ -3076,6 +3078,7 @@ function maxissay(vox_line, m_spot_override, b_wait_for_nearby_speakers)
 		{
 			foreach(var_dc77b43d, player in nearbyplayers)
 			{
+				var_86ef2afc = getnextarraykey(var_16600e5f);
 				while(isdefined(player) && (isdefined(player.isspeaking) && player.isspeaking))
 				{
 					wait(0.05);
@@ -3125,7 +3128,7 @@ function richtofenrespondvoplay(vox_category, b_richtofen_first = 0, str_flag)
 	{
 		if(self.character_name == "Richtofen")
 		{
-			str_vox_line = "vox_plr_" + self.characterindex + "_" + vox_category + "_0";
+			str_vox_line = ((("vox_plr_" + self.characterindex) + "_") + vox_category) + "_0";
 			self playsoundwithnotify(str_vox_line, "rich_done");
 			self waittill(#"rich_done");
 			wait(0.5);
@@ -3133,7 +3136,7 @@ function richtofenrespondvoplay(vox_category, b_richtofen_first = 0, str_flag)
 			{
 				if(player.character_name != "Richtofen" && distance2d(player.origin, self.origin) < 800)
 				{
-					str_vox_line = "vox_plr_" + player.characterindex + "_" + vox_category + "_0";
+					str_vox_line = ((("vox_plr_" + player.characterindex) + "_") + vox_category) + "_0";
 					player playsoundwithnotify(str_vox_line, "rich_done");
 					player waittill(#"rich_done");
 				}
@@ -3145,7 +3148,7 @@ function richtofenrespondvoplay(vox_category, b_richtofen_first = 0, str_flag)
 			{
 				if(player.character_name == "Richtofen" && distance2d(player.origin, self.origin) < 800)
 				{
-					str_vox_line = "vox_plr_" + player.characterindex + "_" + vox_category + "_0";
+					str_vox_line = ((("vox_plr_" + player.characterindex) + "_") + vox_category) + "_0";
 					player playsoundwithnotify(str_vox_line, "rich_done");
 					player waittill(#"rich_done");
 					wait(0.5);
@@ -3153,7 +3156,7 @@ function richtofenrespondvoplay(vox_category, b_richtofen_first = 0, str_flag)
 			}
 			if(isdefined(self))
 			{
-				str_vox_line = "vox_plr_" + self.characterindex + "_" + vox_category + "_0";
+				str_vox_line = ((("vox_plr_" + self.characterindex) + "_") + vox_category) + "_0";
 				self playsoundwithnotify(str_vox_line, "rich_response");
 				self waittill(#"rich_response");
 			}
@@ -3165,7 +3168,7 @@ function richtofenrespondvoplay(vox_category, b_richtofen_first = 0, str_flag)
 		{
 			if(player.character_name != "Richtofen" && distance2d(player.origin, self.origin) < 800)
 			{
-				str_vox_line = "vox_plr_" + player.characterindex + "_" + vox_category + "_0";
+				str_vox_line = ((("vox_plr_" + player.characterindex) + "_") + vox_category) + "_0";
 				player playsoundwithnotify(str_vox_line, "rich_done");
 				player waittill(#"rich_done");
 				wait(0.5);
@@ -3173,14 +3176,14 @@ function richtofenrespondvoplay(vox_category, b_richtofen_first = 0, str_flag)
 		}
 		if(isdefined(self))
 		{
-			str_vox_line = "vox_plr_" + self.characterindex + "_" + vox_category + "_0";
+			str_vox_line = ((("vox_plr_" + self.characterindex) + "_") + vox_category) + "_0";
 			self playsoundwithnotify(str_vox_line, "rich_done");
 			self waittill(#"rich_done");
 		}
 	}
 	else
 	{
-		str_vox_line = "vox_plr_" + self.characterindex + "_" + vox_category + "_0";
+		str_vox_line = ((("vox_plr_" + self.characterindex) + "_") + vox_category) + "_0";
 		self playsoundwithnotify(str_vox_line, "rich_response");
 		self waittill(#"rich_response");
 		wait(0.5);
@@ -3188,7 +3191,7 @@ function richtofenrespondvoplay(vox_category, b_richtofen_first = 0, str_flag)
 		{
 			if(player.character_name == "Richtofen" && distance2d(player.origin, self.origin) < 800)
 			{
-				str_vox_line = "vox_plr_" + player.characterindex + "_" + vox_category + "_0";
+				str_vox_line = ((("vox_plr_" + player.characterindex) + "_") + vox_category) + "_0";
 				player playsoundwithnotify(str_vox_line, "rich_done");
 				player waittill(#"rich_done");
 			}
@@ -3235,7 +3238,7 @@ function wunderfizz_used_vo()
 	self.has_used_perk_random = 1;
 	for(i = 1; i < 4; i++)
 	{
-		vox_line = "vox_plr_2_discover_wonder_" + i + "_0";
+		vox_line = ("vox_plr_2_discover_wonder_" + i) + "_0";
 		self playsoundwithnotify(vox_line, "sound_done" + vox_line);
 		self waittill("sound_done" + vox_line);
 		wait(0.1);
@@ -3335,7 +3338,7 @@ function sam_promises_conversation()
 		self.vo_promises_playing = undefined;
 		return;
 	}
-	a_promises = level.vo_promises[self.character_name + "_" + self.n_vo_promises];
+	a_promises = level.vo_promises[(self.character_name + "_") + self.n_vo_promises];
 	self.n_vo_promises++;
 	self thread sam_promises_cooldown();
 	level.sam_talking = 1;

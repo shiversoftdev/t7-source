@@ -156,9 +156,9 @@ function function_c2bbb7df()
 {
 	/#
 		mapname = getdvarstring("");
-		adddebugcommand("" + mapname + "");
-		adddebugcommand("" + mapname + "");
-		adddebugcommand("" + mapname + "");
+		adddebugcommand(("" + mapname) + "");
+		adddebugcommand(("" + mapname) + "");
+		adddebugcommand(("" + mapname) + "");
 		level thread function_eaf0b837();
 	#/
 }
@@ -392,7 +392,7 @@ function nuked_mannequin_init()
 		}
 	}
 	level.mannequin_count = mannequins.size;
-	remove_count = mannequins.size - keep_count - var_c5761915;
+	remove_count = (mannequins.size - keep_count) - var_c5761915;
 	remove_count = math::clamp(remove_count, 0, remove_count);
 	mannequins = array::randomize(mannequins);
 	for(i = 0; i < mannequins.size; i++)
@@ -450,9 +450,9 @@ function function_5fdaba50()
 	}
 	/#
 		mapname = getdvarstring("");
-		adddebugcommand("" + mapname + "");
-		adddebugcommand("" + mapname + "");
-		adddebugcommand("" + mapname + "");
+		adddebugcommand(("" + mapname) + "");
+		adddebugcommand(("" + mapname) + "");
+		adddebugcommand(("" + mapname) + "");
 		level thread function_339cd93d();
 		level thread function_599f53a6();
 		level thread function_d77bb766();
@@ -680,7 +680,7 @@ function nuked_mannequin_filter(destructibles)
 */
 function mannequin_headless(notifytype, attacker, weapon)
 {
-	if(gettime() < level.mannequin_time + getdvarint("mannequin_timelimit", 120) * 1000)
+	if(gettime() < (level.mannequin_time + (getdvarint("mannequin_timelimit", 120) * 1000)))
 	{
 		level.headless_mannequin_count++;
 		if(level.headless_mannequin_count == getdvarint("mannequin_headless_count", 28))
@@ -819,7 +819,7 @@ function function_33cfa2(notifytype, attacker, weapon)
 */
 function function_240b22bd(notifytype, attacker, weapon)
 {
-	if(gettime() < level.mannequin_time + getdvarint("mannequin_timelimit", 120) * 1000)
+	if(gettime() < (level.mannequin_time + (getdvarint("mannequin_timelimit", 120) * 1000)))
 	{
 		level.var_ce9a2d1f++;
 		if(level.var_ce9a2d1f == getdvarint("mannequin_limbless_count", 56))

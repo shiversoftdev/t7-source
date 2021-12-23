@@ -348,7 +348,7 @@ function camo_bread_crumb_wait(slot, weapon)
 	while(true)
 	{
 		currenttime = gettime();
-		if(currenttime - starttime > self._gadgets_player[slot].gadget_breadcrumbduration)
+		if((currenttime - starttime) > self._gadgets_player[slot].gadget_breadcrumbduration)
 		{
 			return;
 		}
@@ -499,12 +499,12 @@ function set_camo_reveal_status(status, time)
 	self._gadget_camo_reveal_status = undefined;
 	if(isdefined(time))
 	{
-		timestr = ", ^3time: " + time;
+		timestr = (", ^3time: ") + time;
 		self._gadget_camo_reveal_status = status;
 	}
 	if(getdvarint("scr_cpower_debug_prints") > 0)
 	{
-		self iprintlnbold("Camo Reveal: " + status + timestr);
+		self iprintlnbold(("Camo Reveal: " + status) + timestr);
 	}
 }
 

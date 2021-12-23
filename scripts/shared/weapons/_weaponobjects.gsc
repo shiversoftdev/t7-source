@@ -971,7 +971,7 @@ function addweaponobjecttowatcher(watchername, weapon_instance)
 {
 	watcher = getweaponobjectwatcher(watchername);
 	/#
-		assert(isdefined(watcher), "" + watchername + "");
+		assert(isdefined(watcher), ("" + watchername) + "");
 	#/
 	self addweaponobject(watcher, weapon_instance);
 }
@@ -1854,7 +1854,7 @@ function proximityalarmloop(watcher, owner)
 			}
 			radius = self.weapon.proximityalarmouterradius;
 			distancesqr = distancesquared(self.origin, entity.origin);
-			if(radius * radius < distancesqr)
+			if((radius * radius) < distancesqr)
 			{
 				continue;
 			}
@@ -1868,7 +1868,7 @@ function proximityalarmloop(watcher, owner)
 				break;
 			}
 			radius = self.weapon.proximityalarminnerradius;
-			if(radius * radius < distancesqr)
+			if((radius * radius) < distancesqr)
 			{
 				continue;
 			}
@@ -1999,7 +1999,7 @@ function watchweaponobjectspawn(notify_type)
 			cleanweaponobjectarray(watcher);
 			if(weapon.maxinstancesallowed)
 			{
-				if(watcher.objectarray.size > weapon.maxinstancesallowed - 1)
+				if(watcher.objectarray.size > (weapon.maxinstancesallowed - 1))
 				{
 					watcher thread waitandfizzleout(watcher.objectarray[0], 0.1);
 					watcher.objectarray[0] = undefined;
@@ -2135,15 +2135,15 @@ function showcone(angle, range, color)
 		forward = anglestoforward(self.angles);
 		right = vectorcross(forward, (0, 0, 1));
 		up = vectorcross(forward, right);
-		fullforward = forward * range * cos(angle);
+		fullforward = (forward * range) * cos(angle);
 		sideamnt = range * sin(angle);
 		while(true)
 		{
 			prevpoint = (0, 0, 0);
 			for(i = 0; i <= 20; i++)
 			{
-				coneangle = i / 20 * 360;
-				point = start + fullforward + sideamnt * right * cos(coneangle) + up * sin(coneangle);
+				coneangle = (i / 20) * 360;
+				point = (start + fullforward) + (sideamnt * (right * cos(coneangle)) + (up * sin(coneangle)));
 				if(i > 0)
 				{
 					line(start, point, color);
@@ -2175,7 +2175,7 @@ function weaponobjectdetectionmovable(ownerteam)
 	{
 		return;
 	}
-	self.detectid = "rcBomb" + gettime() + randomint(1000000);
+	self.detectid = ("rcBomb" + gettime()) + randomint(1000000);
 }
 
 /*
@@ -2224,7 +2224,7 @@ function weaponobjectdetectiontrigger_wait(ownerteam)
 function weaponobjectdetectiontrigger(ownerteam)
 {
 	trigger = spawn("trigger_radius", self.origin - vectorscale((0, 0, 1), 128), 0, 512, 256);
-	trigger.detectid = "trigger" + gettime() + randomint(1000000);
+	trigger.detectid = ("trigger" + gettime()) + randomint(1000000);
 	trigger sethintlowpriority(1);
 	self util::waittill_any("death", "hacked", "detonating");
 	trigger notify(#"end_detection");
@@ -2455,7 +2455,7 @@ function hackerresult(player, owner)
 		return 0;
 	}
 	self thread hackerunfreezeplayer(player);
-	while(time + hacktime * 1000 > gettime())
+	while((time + (hacktime * 1000)) > gettime())
 	{
 		if(!canhack(player, owner, 0))
 		{
@@ -2928,7 +2928,7 @@ function shouldaffectweaponobject(object, watcher)
 {
 	radius = object.weapon.explosionradius;
 	distancesqr = distancesquared(self.origin, object.origin);
-	if(radius * radius < distancesqr)
+	if((radius * radius) < distancesqr)
 	{
 		return 0;
 	}
@@ -2990,7 +2990,7 @@ function testkillbrushonstationary(a_killbrushes, player)
 			{
 				continue;
 			}
-			if(isdefined(self.spawnflags) && self.spawnflags & 2 == 2)
+			if(isdefined(self.spawnflags) && (self.spawnflags & 2) == 2)
 			{
 				continue;
 			}
@@ -3034,7 +3034,7 @@ function deleteonkillbrush(player)
 				{
 					continue;
 				}
-				if(isdefined(self.spawnflags) && self.spawnflags & 2 == 2)
+				if(isdefined(self.spawnflags) && (self.spawnflags & 2) == 2)
 				{
 					continue;
 				}
@@ -3274,7 +3274,7 @@ function showheadicon(trigger)
 	self.bombsquadids[triggerdetectid] = 1;
 	self.bombsquadicons[useid].x = trigger.origin[0];
 	self.bombsquadicons[useid].y = trigger.origin[1];
-	self.bombsquadicons[useid].z = trigger.origin[2] + 24 + 128;
+	self.bombsquadicons[useid].z = (trigger.origin[2] + 24) + 128;
 	self.bombsquadicons[useid] fadeovertime(0.25);
 	self.bombsquadicons[useid].alpha = 1;
 	self.bombsquadicons[useid].detectid = trigger.detectid;

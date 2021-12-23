@@ -304,7 +304,7 @@ function menuautoassign(comingfrommenu)
 				continue;
 			}
 			count++;
-			if(count == clientnum + 1)
+			if(count == (clientnum + 1))
 			{
 				assignment = team;
 				break;
@@ -516,7 +516,7 @@ function beginclasschoice()
 	if(level.disableclassselection == 1 || (isdefined(self.disableclassselection) && self.disableclassselection) || getdvarint("migration_soak") == 1)
 	{
 		started_waiting = gettime();
-		while(!self isstreamerready(-1, 1) && started_waiting + 90000 > gettime())
+		while(!self isstreamerready(-1, 1) && (started_waiting + 90000) > gettime())
 		{
 			wait(0.05);
 		}
@@ -720,7 +720,7 @@ function menuclass(response, forcedclass)
 		timepassed = undefined;
 		if(isdefined(self.respawntimerstarttime))
 		{
-			timepassed = gettime() - self.respawntimerstarttime / 1000;
+			timepassed = (gettime() - self.respawntimerstarttime) / 1000;
 		}
 		self thread [[level.spawnclient]](timepassed);
 		self.respawntimerstarttime = undefined;

@@ -988,7 +988,7 @@ function assign_lowest_unused_character_index()
 	}
 	if(charindexarray.size > 0)
 	{
-		if(n_characters_defined == a_players.size - 1)
+		if(n_characters_defined == (a_players.size - 1))
 		{
 			if(!(isdefined(level.var_c7ffdf5) && level.var_c7ffdf5))
 			{

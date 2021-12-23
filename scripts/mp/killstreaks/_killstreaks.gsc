@@ -149,7 +149,7 @@ function init()
 	/#
 		level.killstreak_init_end_time = getmillisecondsraw();
 		elapsed_time = level.killstreak_init_end_time - level.killstreak_init_start_time;
-		println("" + elapsed_time + "");
+		println(("" + elapsed_time) + "");
 	#/
 	callback::on_spawned(&on_player_spawned);
 	callback::on_joined_team(&on_joined_team);
@@ -177,7 +177,7 @@ function register(killstreaktype, killstreakweaponname, killstreakmenuname, kill
 		assert(isdefined(killstreaktype), "");
 	#/
 	/#
-		assert(!isdefined(level.killstreaks[killstreaktype]), "" + killstreaktype + "");
+		assert(!isdefined(level.killstreaks[killstreaktype]), ("" + killstreaktype) + "");
 	#/
 	/#
 		assert(isdefined(killstreakusefunction), "" + killstreaktype);
@@ -451,9 +451,9 @@ function register_dev_dvars(killstreaktype)
 		/#
 			assert(isdefined(level.killstreaks[killstreaktype]), "");
 		#/
-		level.killstreaks[killstreaktype].devdvar = "" + killstreaktype + "";
-		level.killstreaks[killstreaktype].devenemydvar = "" + killstreaktype + "";
-		level.killstreaks[killstreaktype].devtimeoutdvar = "" + killstreaktype + "";
+		level.killstreaks[killstreaktype].devdvar = ("" + killstreaktype) + "";
+		level.killstreaks[killstreaktype].devenemydvar = ("" + killstreaktype) + "";
+		level.killstreaks[killstreaktype].devtimeoutdvar = ("" + killstreaktype) + "";
 		setdvar(level.killstreaks[killstreaktype].devtimeoutdvar, 0);
 		level thread register_devgui(killstreaktype);
 	#/
@@ -477,7 +477,7 @@ function register_dev_debug_dvar(killstreaktype)
 		/#
 			assert(isdefined(level.killstreaks[killstreaktype]), "");
 		#/
-		level.killstreaks[killstreaktype].devdebugdvar = "" + killstreaktype + "";
+		level.killstreaks[killstreaktype].devdebugdvar = ("" + killstreaktype) + "";
 		devgui_scorestreak_command_debugdvar(killstreaktype, level.killstreaks[killstreaktype].devdebugdvar);
 	#/
 }
@@ -525,7 +525,7 @@ function register_devgui(killstreaktype)
 function devgui_scorestreak_command_givedvar(killstreaktype, give_type, dvar)
 {
 	/#
-		devgui_scorestreak_command(killstreaktype, give_type, "" + dvar + "");
+		devgui_scorestreak_command(killstreaktype, give_type, ("" + dvar) + "");
 	#/
 }
 
@@ -573,7 +573,7 @@ function devgui_scorestreak_command_debugdvar(killstreaktype, dvar)
 function devgui_scorestreak_dvar_toggle(killstreaktype, title, dvar)
 {
 	setdvar(dvar, 0);
-	devgui_scorestreak_command(killstreaktype, "Toggle " + title, "toggle " + dvar + " 1 0");
+	devgui_scorestreak_command(killstreaktype, "Toggle " + title, ("toggle " + dvar) + " 1 0");
 }
 
 /*
@@ -596,7 +596,7 @@ function devgui_scorestreak_command(killstreaktype, title, command)
 		#/
 		root = "";
 		user_name = makelocalizedstring(level.killstreaks[killstreaktype].uiname);
-		adddebugcommand(root + user_name + "" + killstreaktype + "" + title + "" + command + "");
+		adddebugcommand((((((((root + user_name) + "") + killstreaktype) + "") + title) + "") + command) + "");
 	#/
 }
 
@@ -752,10 +752,10 @@ function get_level(index, killstreak)
 	{
 		if(isdefined(self.killstreak[index]) && killstreak == self.killstreak[index])
 		{
-			killsrequired = getdvarint("custom_killstreak_" + index + 1 + "_kills");
+			killsrequired = getdvarint((("custom_killstreak_" + index) + 1) + "_kills");
 			if(killsrequired)
 			{
-				killstreaklevel = getdvarint("custom_killstreak_" + index + 1 + "_kills");
+				killstreaklevel = getdvarint((("custom_killstreak_" + index) + 1) + "_kills");
 			}
 		}
 	}
@@ -781,7 +781,7 @@ function give_if_streak_count_matches(index, killstreak, streakcount)
 		}
 		if(isdefined(killstreak))
 		{
-			println("" + killstreak + "");
+			println(("" + killstreak) + "");
 		}
 		if(!is_available(killstreak))
 		{
@@ -1244,7 +1244,7 @@ function give_weapon(weapon, isinventory, usestoredammo)
 			{
 				return weapon.maxammo;
 			}
-			if(isdefined(usestoredammo) && usestoredammo && self.pers["killstreak_ammo_count"][self.pers["killstreak_ammo_count"].size - 1] > 0)
+			if(isdefined(usestoredammo) && usestoredammo && (self.pers["killstreak_ammo_count"][self.pers["killstreak_ammo_count"].size - 1]) > 0)
 			{
 				switch(weapon.name)
 				{
@@ -1666,7 +1666,7 @@ function remove_used_killstreak(killstreak, killstreakid, take_weapon_after_use 
 		self thread take_weapon_after_use(get_killstreak_weapon(killstreak));
 	}
 	arraysize = self.pers["killstreaks"].size;
-	for(i = killstreakindex; i < arraysize - 1; i++)
+	for(i = killstreakindex; i < (arraysize - 1); i++)
 	{
 		self.pers["killstreaks"][i] = self.pers["killstreaks"][i + 1];
 		self.pers["killstreak_has_been_used"][i] = self.pers["killstreak_has_been_used"][i + 1];
@@ -2112,7 +2112,7 @@ function should_delay_killstreak(killstreaktype)
 	{
 		return 0;
 	}
-	if(level.roundstartkillstreakdelay < gettime() - level.starttime - level.discardtime / 1000)
+	if(level.roundstartkillstreakdelay < (((gettime() - level.starttime) - level.discardtime) / 1000))
 	{
 		return 0;
 	}
@@ -2222,12 +2222,12 @@ function get_xp_amount_for_killstreak(killstreaktype)
 */
 function display_unavailable_time()
 {
-	timeleft = int(level.roundstartkillstreakdelay - globallogic_utils::gettimepassed() / 1000);
+	timeleft = int(level.roundstartkillstreakdelay - (globallogic_utils::gettimepassed() / 1000));
 	if(timeleft <= 0)
 	{
 		timeleft = 1;
 	}
-	self iprintlnbold(&"MP_UNAVAILABLE_FOR_N", " " + timeleft + " ", &"EXE_SECONDS");
+	self iprintlnbold(&"MP_UNAVAILABLE_FOR_N", (" " + timeleft) + " ", &"EXE_SECONDS");
 }
 
 /*
@@ -2358,7 +2358,7 @@ function should_give_killstreak(weapon)
 */
 function point_is_in_danger_area(point, targetpos, radius)
 {
-	return distance2d(point, targetpos) <= radius * 1.25;
+	return distance2d(point, targetpos) <= (radius * 1.25);
 }
 
 /*
@@ -3938,7 +3938,7 @@ function update_player_threat(player)
 	heli = self;
 	player.threatlevel = 0;
 	dist = distance(player.origin, heli.origin);
-	player.threatlevel = player.threatlevel + level.heli_visual_range - dist / level.heli_visual_range * 100;
+	player.threatlevel = player.threatlevel + (((level.heli_visual_range - dist) / level.heli_visual_range) * 100);
 	if(isdefined(heli.attacker) && player == heli.attacker)
 	{
 		player.threatlevel = player.threatlevel + 100;
@@ -3949,7 +3949,7 @@ function update_player_threat(player)
 	}
 	if(isdefined(player.score))
 	{
-		player.threatlevel = player.threatlevel + player.score * 2;
+		player.threatlevel = player.threatlevel + (player.score * 2);
 	}
 	if(player weapons::has_launcher())
 	{
@@ -3994,7 +3994,7 @@ function update_non_player_threat(non_player)
 	heli = self;
 	non_player.threatlevel = 0;
 	dist = distance(non_player.origin, heli.origin);
-	non_player.threatlevel = non_player.threatlevel + level.heli_visual_range - dist / level.heli_visual_range * 100;
+	non_player.threatlevel = non_player.threatlevel + (((level.heli_visual_range - dist) / level.heli_visual_range) * 100);
 	if(non_player.threatlevel <= 0)
 	{
 		non_player.threatlevel = 1;
@@ -4015,7 +4015,7 @@ function update_actor_threat(actor)
 	heli = self;
 	actor.threatlevel = 0;
 	dist = distance(actor.origin, heli.origin);
-	actor.threatlevel = actor.threatlevel + level.heli_visual_range - dist / level.heli_visual_range * 100;
+	actor.threatlevel = actor.threatlevel + (((level.heli_visual_range - dist) / level.heli_visual_range) * 100);
 	if(isdefined(actor.owner))
 	{
 		if(isdefined(heli.attacker) && actor.owner == heli.attacker)
@@ -4028,7 +4028,7 @@ function update_actor_threat(actor)
 		}
 		if(isdefined(actor.owner.score))
 		{
-			actor.threatlevel = actor.threatlevel + actor.owner.score * 4;
+			actor.threatlevel = actor.threatlevel + (actor.owner.score * 4);
 		}
 		if(isdefined(actor.owner.antithreat))
 		{
@@ -4055,7 +4055,7 @@ function update_dog_threat(dog)
 	heli = self;
 	dog.threatlevel = 0;
 	dist = distance(dog.origin, heli.origin);
-	dog.threatlevel = dog.threatlevel + level.heli_visual_range - dist / level.heli_visual_range * 100;
+	dog.threatlevel = dog.threatlevel + (((level.heli_visual_range - dist) / level.heli_visual_range) * 100);
 }
 
 /*
@@ -4093,7 +4093,7 @@ function update_missile_player_threat(player)
 {
 	player.missilethreatlevel = 0;
 	dist = distance(player.origin, self.origin);
-	player.missilethreatlevel = player.missilethreatlevel + level.heli_missile_range - dist / level.heli_missile_range * 100;
+	player.missilethreatlevel = player.missilethreatlevel + (((level.heli_missile_range - dist) / level.heli_missile_range) * 100);
 	if(self missile_valid_target_check(player) == 0)
 	{
 		player.missilethreatlevel = 1;
@@ -4103,7 +4103,7 @@ function update_missile_player_threat(player)
 	{
 		player.missilethreatlevel = player.missilethreatlevel + 100;
 	}
-	player.missilethreatlevel = player.missilethreatlevel + player.score * 4;
+	player.missilethreatlevel = player.missilethreatlevel + (player.score * 4);
 	if(isdefined(player.antithreat))
 	{
 		player.missilethreatlevel = player.missilethreatlevel - player.antithreat;
@@ -4258,7 +4258,7 @@ function is_ricochet_protected(player)
 */
 function is_killstreak_start_blocked()
 {
-	return isdefined(self.dart_thrown_time) && gettime() - self.dart_thrown_time < 1500;
+	return isdefined(self.dart_thrown_time) && (gettime() - self.dart_thrown_time) < 1500;
 }
 
 /*
@@ -4274,7 +4274,7 @@ function debug_ricochet_protection()
 {
 	/#
 		debug_wait = 0.5;
-		debug_frames = int(debug_wait / 0.05) + 1;
+		debug_frames = (int(debug_wait / 0.05)) + 1;
 		while(true)
 		{
 			if(getdvarint("", 0) == 0)

@@ -104,7 +104,7 @@ function __init__()
 	a_str_names = array("boxer", "detective", "femme", "magician");
 	for(i = 0; i < 4; i++)
 	{
-		clientfield::register("toplayer", "check_" + a_str_names[i] + "_memento", 1, 1, "int");
+		clientfield::register("toplayer", ("check_" + a_str_names[i]) + "_memento", 1, 1, "int");
 	}
 	level flag::init("keeper_sword_locker");
 	n_bits = getminbitcountfornum(6);
@@ -114,7 +114,7 @@ function __init__()
 	a_str_names = array("boxer", "detective", "femme", "magician");
 	foreach(var_c976e1e5, str_name in a_str_names)
 	{
-		relic_placed = getent("quest_ritual_relic_" + str_name + "_placed", "targetname");
+		relic_placed = getent(("quest_ritual_relic_" + str_name) + "_placed", "targetname");
 		relic_placed ghost();
 		a_e_clip = getentarray("ritual_clip_" + str_name, "targetname");
 		foreach(var_99630e9d, e_clip in a_e_clip)
@@ -220,7 +220,7 @@ function function_70a7429b(var_25bc1c51)
 		var_f7225255 = dist2 < 4096;
 		if(var_f7225255 != var_33e67e27)
 		{
-			self clientfield::set_to_player("check_" + a_str_names[var_25bc1c51] + "_memento", var_f7225255);
+			self clientfield::set_to_player(("check_" + a_str_names[var_25bc1c51]) + "_memento", var_f7225255);
 			var_33e67e27 = var_f7225255;
 		}
 		wait(0.1);
@@ -586,7 +586,7 @@ function reveal_personal_item(str_id)
 function function_984725d6(str_name)
 {
 	var_d16bd3a3 = getent("ritual_zombie_spawner", "targetname");
-	level flag::wait_till("memento_" + str_name + "_found");
+	level flag::wait_till(("memento_" + str_name) + "_found");
 	if(level.var_a80c1a9a !== 1)
 	{
 		level.var_a80c1a9a = 0;
@@ -639,8 +639,8 @@ function function_58fe842c()
 {
 	e_spawner = getent("ritual_zombie_spawner", "targetname");
 	var_eb09d2ff = getent("keeper_subway_welcome", "targetname");
-	var_594645f = 0;
-	while(!var_594645f)
+	b_triggered = 0;
+	while(!b_triggered)
 	{
 		var_eb09d2ff waittill(#"trigger", e_triggerer);
 		if(zm_utility::is_player_valid(e_triggerer) && (!(isdefined(e_triggerer.beastmode) && e_triggerer.beastmode)))
@@ -671,7 +671,7 @@ function function_58fe842c()
 			}
 			wait(3);
 			level clientfield::set("keeper_subway_fx", 0);
-			var_594645f = 1;
+			b_triggered = 1;
 		}
 	}
 }
@@ -719,11 +719,11 @@ function function_12370901(str_fieldname, n_place_index, b_on)
 	n_val = level clientfield::get(str_fieldname);
 	if(b_on)
 	{
-		n_val = n_val | 1 << n_place_index;
+		n_val = n_val | (1 << n_place_index);
 	}
 	else
 	{
-		n_val = n_val & !(1 << n_place_index);
+		n_val = n_val & (!(1 << n_place_index));
 	}
 	level clientfield::set(str_fieldname, n_val);
 }
@@ -964,7 +964,7 @@ function ritual_prereq(str_name)
 		return 1;
 	}
 	b_is_quest_key_available = level clientfield::get("quest_key");
-	if(level clientfield::get("ritual_state_" + str_name) == 2)
+	if((level clientfield::get("ritual_state_" + str_name)) == 2)
 	{
 		b_has_ritual_previously_been_started = 1;
 	}
@@ -990,7 +990,7 @@ function ritual_prereq(str_name)
 */
 function ritual_start(str_name, e_triggerer)
 {
-	level notify("ritual_" + str_name + "_start");
+	level notify(("ritual_" + str_name) + "_start");
 	level flag::clear("zombie_drop_powerups");
 	level flag::set("ritual_in_progress");
 	level flag::clear("can_spawn_margwa");
@@ -1112,8 +1112,8 @@ function ritual_end()
 */
 function ritual_think(str_name)
 {
-	var_bfb1dae2 = "ritual_" + str_name + "_succeed";
-	var_d135f7ae = "ritual_" + str_name + "_fail";
+	var_bfb1dae2 = ("ritual_" + str_name) + "_succeed";
+	var_d135f7ae = ("ritual_" + str_name) + "_fail";
 	level endon(var_bfb1dae2);
 	level endon(var_d135f7ae);
 	level thread function_cc04ada(var_bfb1dae2, var_d135f7ae);
@@ -1247,16 +1247,16 @@ function ritual_succeed(str_name, var_6ec814a1)
 		#/
 		ritual_end();
 		level thread function_b600b7f6(str_name);
-		level notify("ritual_" + str_name + "_succeed");
-		level flag::set("ritual_" + str_name + "_complete");
+		level notify(("ritual_" + str_name) + "_succeed");
+		level flag::set(("ritual_" + str_name) + "_complete");
 		level clientfield::set("ritual_state_" + str_name, 3);
 		level clientfield::set("quest_state_" + str_name, 3);
 		wait(getanimlength("p7_fxanim_zm_zod_redemption_key_ritual_end_anim"));
 		if(str_name === "magician")
 		{
 			exploder::stop_exploder("fx_exploder_magician_candles");
-			hidemiscmodels("ritual_candles_" + str_name + "_on");
-			showmiscmodels("ritual_candles_" + str_name + "_off");
+			hidemiscmodels(("ritual_candles_" + str_name) + "_on");
+			showmiscmodels(("ritual_candles_" + str_name) + "_off");
 		}
 		mdl_relic = level zm_craftables::get_craftable_piece_model("ritual_pap", "relic_" + str_name);
 		if(isdefined(mdl_relic))
@@ -1317,7 +1317,7 @@ function ritual_fail(str_name)
 		ritual_pap_fail();
 	}
 	set_key_availability(1);
-	level notify("ritual_" + str_name + "_fail");
+	level notify(("ritual_" + str_name) + "_fail");
 	level clientfield::set("ritual_progress", 0);
 	wait(1);
 	level clientfield::set("ritual_current", 0);
@@ -1347,12 +1347,12 @@ function set_ritual_barrier(str_name, b_on)
 		{
 			e_clip.origin = e_clip.origin + vectorscale((0, 0, 1), 128);
 			e_clip setvisibletoall();
-			exploder::exploder("fx_exploder_ritual_" + str_name + "_barrier");
+			exploder::exploder(("fx_exploder_ritual_" + str_name) + "_barrier");
 			continue;
 		}
 		e_clip.origin = e_clip.origin - vectorscale((0, 0, 1), 128);
 		e_clip setinvisibletoall();
-		exploder::stop_exploder("fx_exploder_ritual_" + str_name + "_barrier");
+		exploder::stop_exploder(("fx_exploder_ritual_" + str_name) + "_barrier");
 	}
 }
 
@@ -1408,7 +1408,7 @@ function ritual_pap_succeed()
 	exploder::exploder("fx_exploder_ritual_gatestone_portal");
 	for(i = 1; i < 5; i++)
 	{
-		exploder::stop_exploder("fx_exploder_ritual_pap_basin_" + i + "_path");
+		exploder::stop_exploder(("fx_exploder_ritual_pap_basin_" + i) + "_path");
 		e_basin = get_worm_basin("pap_basin_" + i);
 		e_basin clientfield::set("gateworm_basin_fx", 2);
 		e_basin playloopsound("zmb_zod_ritual_pap_worm_firelvl2", 1);
@@ -1416,7 +1416,7 @@ function ritual_pap_succeed()
 	a_str_gateworm_held = array("relic_boxer", "relic_detective", "relic_femme", "relic_magician");
 	foreach(var_64090632, str_gateworm_held in a_str_gateworm_held)
 	{
-		mdl_gateworm = getent("quest_ritual_" + str_gateworm_held + "_placed", "targetname");
+		mdl_gateworm = getent(("quest_ritual_" + str_gateworm_held) + "_placed", "targetname");
 		mdl_gateworm movez(64, 3);
 		mdl_gateworm rotateyaw(180, 3);
 	}
@@ -1554,14 +1554,14 @@ function setup_pap_door()
 */
 function pap_door_watch_for_ritual(str_name)
 {
-	self hidepart("tag_ritual_" + str_name + "_on");
-	self showpart("tag_ritual_" + str_name + "_off");
-	level flag::wait_till("ritual_" + str_name + "_complete");
-	self showpart("tag_ritual_" + str_name + "_on");
-	self hidepart("tag_ritual_" + str_name + "_off");
+	self hidepart(("tag_ritual_" + str_name) + "_on");
+	self showpart(("tag_ritual_" + str_name) + "_off");
+	level flag::wait_till(("ritual_" + str_name) + "_complete");
+	self showpart(("tag_ritual_" + str_name) + "_on");
+	self hidepart(("tag_ritual_" + str_name) + "_off");
 	level flag::wait_till("pap_door_open");
-	self hidepart("tag_ritual_" + str_name + "_on");
-	self hidepart("tag_ritual_" + str_name + "_off");
+	self hidepart(("tag_ritual_" + str_name) + "_on");
+	self hidepart(("tag_ritual_" + str_name) + "_off");
 }
 
 /*
@@ -1779,19 +1779,19 @@ function is_holding_relic(characterindex)
 	who_has_relic_detective = level clientfield::get("holder_of_" + "detective");
 	who_has_relic_femme = level clientfield::get("holder_of_" + "femme");
 	who_has_relic_magician = level clientfield::get("holder_of_" + "magician");
-	if(someone_has_relic_boxer === 4 && who_has_relic_boxer === characterindex + 1)
+	if(someone_has_relic_boxer === 4 && who_has_relic_boxer === (characterindex + 1))
 	{
 		return "relic_boxer";
 	}
-	if(someone_has_relic_detective === 4 && who_has_relic_detective === characterindex + 1)
+	if(someone_has_relic_detective === 4 && who_has_relic_detective === (characterindex + 1))
 	{
 		return "relic_detective";
 	}
-	if(someone_has_relic_femme === 4 && who_has_relic_femme === characterindex + 1)
+	if(someone_has_relic_femme === 4 && who_has_relic_femme === (characterindex + 1))
 	{
 		return "relic_femme";
 	}
-	if(someone_has_relic_magician === 4 && who_has_relic_magician === characterindex + 1)
+	if(someone_has_relic_magician === 4 && who_has_relic_magician === (characterindex + 1))
 	{
 		return "relic_magician";
 	}
@@ -1943,7 +1943,7 @@ function basin_trigger_thread()
 */
 function function_5eb042a7(str_flag, str_gateworm_held, var_71740755)
 {
-	mdl_gateworm = getent("quest_ritual_" + str_gateworm_held + "_placed", "targetname");
+	mdl_gateworm = getent(("quest_ritual_" + str_gateworm_held) + "_placed", "targetname");
 	if(var_71740755)
 	{
 		e_basin = get_worm_basin(str_flag);
@@ -2021,7 +2021,7 @@ function watch_wallrun(var_e7fbc48, str_flag)
 	while(true)
 	{
 		flag::wait_till(str_flag);
-		exploder::exploder("fx_exploder_ritual_" + str_flag + "_path");
+		exploder::exploder(("fx_exploder_ritual_" + str_flag) + "_path");
 		gatestone_increment_power();
 		set_frieze_power(var_e7fbc48, 1);
 		if(var_e7fbc48)
@@ -2034,7 +2034,7 @@ function watch_wallrun(var_e7fbc48, str_flag)
 		}
 		flag::wait_till_clear(str_flag);
 		gatestone_decrement_power();
-		exploder::stop_exploder("fx_exploder_ritual_" + str_flag + "_path");
+		exploder::stop_exploder(("fx_exploder_ritual_" + str_flag) + "_path");
 		set_frieze_power(var_e7fbc48, 0);
 	}
 }
@@ -2068,12 +2068,12 @@ function set_frieze_power(var_e7fbc48, b_on)
 		mdl_frieze animation::first_frame("p7_fxanim_zm_zod_frieze_fall_anim");
 		t_wallrun triggerenable(1);
 		t_wallrun sethintstring("");
-		exploder::exploder("fx_exploder_ritual_frieze_" + str_side + "_wallrun");
+		exploder::exploder(("fx_exploder_ritual_frieze_" + str_side) + "_wallrun");
 		level notify(#"hash_7107ea51");
 	}
 	else
 	{
-		exploder::stop_exploder("fx_exploder_ritual_frieze_" + str_side + "_wallrun");
+		exploder::stop_exploder(("fx_exploder_ritual_frieze_" + str_side) + "_wallrun");
 		t_wallrun triggerenable(0);
 		mdl_frieze animation::play("p7_fxanim_zm_zod_frieze_fall_anim");
 	}
@@ -2170,7 +2170,7 @@ function gatestone_deactivate_power_level_indicator()
 {
 	if(level.gatestone.n_power_level > 0)
 	{
-		exploder::stop_exploder("fx_exploder_ritual_gatestone_" + level.gatestone.n_power_level + "_glow");
+		exploder::stop_exploder(("fx_exploder_ritual_gatestone_" + level.gatestone.n_power_level) + "_glow");
 	}
 }
 
@@ -2187,7 +2187,7 @@ function gatestone_activate_power_level_indicator()
 {
 	if(level.gatestone.n_power_level > 0 && level.gatestone.n_power_level < 5)
 	{
-		exploder::exploder("fx_exploder_ritual_gatestone_" + level.gatestone.n_power_level + "_glow");
+		exploder::exploder(("fx_exploder_ritual_gatestone_" + level.gatestone.n_power_level) + "_glow");
 	}
 }
 
@@ -2280,17 +2280,17 @@ function watch_island(var_f7225255, str_flag)
 	}
 	e_island = getent("pap_chamber_middle_island_" + str_side, "targetname");
 	e_island ghost();
-	e_clip = getent("pap_chamber_middle_island_" + str_side + "_clip", "targetname");
+	e_clip = getent(("pap_chamber_middle_island_" + str_side) + "_clip", "targetname");
 	e_clip setinvisibletoall();
 	while(true)
 	{
 		flag::wait_till(str_flag);
 		gatestone_increment_power();
-		exploder::exploder("fx_exploder_ritual_" + str_flag + "_path");
+		exploder::exploder(("fx_exploder_ritual_" + str_flag) + "_path");
 		function_c3e5d4f(var_f7225255, 1);
 		flag::wait_till_clear(str_flag);
 		gatestone_decrement_power();
-		exploder::stop_exploder("fx_exploder_ritual_" + str_flag + "_path");
+		exploder::stop_exploder(("fx_exploder_ritual_" + str_flag) + "_path");
 		function_c3e5d4f(var_f7225255, 0);
 	}
 }
@@ -2318,21 +2318,21 @@ function function_c3e5d4f(var_f7225255, b_on)
 	}
 	e_island = getent("pap_chamber_middle_island_" + str_side, "targetname");
 	e_island useanimtree($generic);
-	e_clip = getent("pap_chamber_middle_island_" + str_side + "_clip", "targetname");
+	e_clip = getent(("pap_chamber_middle_island_" + str_side) + "_clip", "targetname");
 	if(b_on)
 	{
 		var_4539ae4a = struct::get("quest_ritual_pap_bridgeimpacts_" + str_side, "targetname");
 		level thread function_7107ea51(e_island, var_4539ae4a);
 		e_island show();
-		e_island animation::play("p7_fxanim_zm_zod_pap_bridge_0" + var_ea5390b2 + "_rise_anim");
-		e_island animation::first_frame("p7_fxanim_zm_zod_pap_bridge_0" + var_ea5390b2 + "_fall_anim");
+		e_island animation::play(("p7_fxanim_zm_zod_pap_bridge_0" + var_ea5390b2) + "_rise_anim");
+		e_island animation::first_frame(("p7_fxanim_zm_zod_pap_bridge_0" + var_ea5390b2) + "_fall_anim");
 		e_clip setvisibletoall();
 		level notify(#"hash_7107ea51");
 	}
 	else
 	{
 		e_clip setinvisibletoall();
-		e_island animation::play("p7_fxanim_zm_zod_pap_bridge_0" + var_ea5390b2 + "_fall_anim");
+		e_island animation::play(("p7_fxanim_zm_zod_pap_bridge_0" + var_ea5390b2) + "_fall_anim");
 		e_island ghost();
 	}
 }
@@ -2589,7 +2589,7 @@ function function_c0a29676()
 	for(i = 1; i < 5; i++)
 	{
 		str_flag = "pap_basin_" + i;
-		exploder::exploder("fx_exploder_ritual_" + str_flag + "_path");
+		exploder::exploder(("fx_exploder_ritual_" + str_flag) + "_path");
 		str_gateworm_held = "relic_boxer";
 		function_5eb042a7(str_flag, var_f99f027c[i - 1], 1);
 		flag::set(str_flag);

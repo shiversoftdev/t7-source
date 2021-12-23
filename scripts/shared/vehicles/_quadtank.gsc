@@ -222,8 +222,8 @@ function state_off_enter(params)
 	self vehicle::toggle_sounds(0);
 	self vehicle::toggle_exhaust_fx(0);
 	angles = self gettagangles("tag_flash");
-	target_vec = self.origin + anglestoforward((0, angles[1], 0)) * 1000;
-	target_vec = target_vec + vectorscale((0, 0, -1), 500);
+	target_vec = self.origin + (anglestoforward((0, angles[1], 0)) * 1000);
+	target_vec = target_vec + (vectorscale((0, 0, -1), 500));
 	self settargetorigin(target_vec);
 	self set_side_turrets_enabled(0);
 	self thread quadtank_disabletrophy();
@@ -267,7 +267,7 @@ function bootup()
 	self playsound("veh_quadtank_power_up");
 	self vehicle_ai::blink_lights_for_time(1.5);
 	angles = self gettagangles("tag_flash");
-	target_vec = self.origin + anglestoforward((0, angles[1], 0)) * 1000;
+	target_vec = self.origin + (anglestoforward((0, angles[1], 0)) * 1000);
 	self.turretrotscale = 0.3;
 	driver = self getseatoccupant(0);
 	if(!isdefined(driver))
@@ -656,7 +656,7 @@ function quadtank_disabletrophy()
 	self vehicle_ai::cooldown("trophy_down", self.settings.trophysystemdowntime);
 	while(!self vehicle_ai::iscooldownready("trophy_down") || self vehicle_ai::get_current_state() === "off")
 	{
-		if(vehicle_ai::getcooldownleft("trophy_down") < 0.5 * self.settings.trophysystemdowntime && (self.damage_during_trophy_down >= self.settings.trophysystemdisablethreshold || self.spike_hits_during_trophy_down >= 5))
+		if(vehicle_ai::getcooldownleft("trophy_down") < (0.5 * self.settings.trophysystemdowntime) && (self.damage_during_trophy_down >= self.settings.trophysystemdisablethreshold || self.spike_hits_during_trophy_down >= 5))
 		{
 			self vehicle_ai::clearcooldown("trophy_down");
 		}
@@ -795,22 +795,22 @@ function quadtank_turret_scan(scan_forever)
 			}
 			case 1:
 			{
-				target_vec = self.origin + anglestoforward((0, self.angles[1], 0)) * 1000;
+				target_vec = self.origin + (anglestoforward((0, self.angles[1], 0)) * 1000);
 				break;
 			}
 			case 2:
 			{
-				target_vec = self.origin + anglestoforward((0, self.angles[1] + 30, 0)) * 1000;
+				target_vec = self.origin + ((anglestoforward((0, self.angles[1] + 30, 0))) * 1000);
 				break;
 			}
 			case 3:
 			{
-				target_vec = self.origin + anglestoforward((0, self.angles[1], 0)) * 1000;
+				target_vec = self.origin + (anglestoforward((0, self.angles[1], 0)) * 1000);
 				break;
 			}
 			case 4:
 			{
-				target_vec = self.origin + anglestoforward((0, self.angles[1] - 30, 0)) * 1000;
+				target_vec = self.origin + ((anglestoforward((0, self.angles[1] - 30, 0))) * 1000);
 				break;
 			}
 		}
@@ -1031,7 +1031,7 @@ function attack_thread_rocket()
 		}
 		if(isdefined(self.enemy) && vehicle_ai::iscooldownready("javelin_rocket_launcher", 0.5))
 		{
-			if(isvehicle(self.enemy) || distance2dsquared(self.origin, self.enemy.origin) >= 800 * 800)
+			if(isvehicle(self.enemy) || distance2dsquared(self.origin, self.enemy.origin) >= (800 * 800))
 			{
 				usejavelin = !self vehseenrecently(self.enemy, 3) || randomint(100) < 3;
 			}
@@ -1054,7 +1054,7 @@ function attack_thread_rocket()
 				{
 					origin = self.enemy.origin;
 					eye = self.enemy geteye();
-					offset = (0, 0, origin[2] - eye[2] - 5);
+					offset = (0, 0, (origin[2] - eye[2]) - 5);
 				}
 				vehicle_ai::setturrettarget(self.enemy, 0, offset);
 			}
@@ -1066,7 +1066,7 @@ function attack_thread_rocket()
 			}
 			wait(1);
 			msg = self util::waittill_any_timeout(2, "turret_on_target");
-			if(isdefined(self.enemy) && distance2dsquared(self.origin, self.enemy.origin) > 350 * 350)
+			if(isdefined(self.enemy) && distance2dsquared(self.origin, self.enemy.origin) > (350 * 350))
 			{
 				fired = 0;
 				for(i = 0; i < 4 && isdefined(self.enemy); i++)
@@ -1159,7 +1159,7 @@ function path_update_interrupt()
 					}
 				}
 			}
-			if(distance2dsquared(self.current_pathto_pos, self.goalpos) > self.goalradius * self.goalradius)
+			if(distance2dsquared(self.current_pathto_pos, self.goalpos) > (self.goalradius * self.goalradius))
 			{
 				wait(1);
 				self.move_now = 1;
@@ -1283,7 +1283,7 @@ function quadtank_movementupdate()
 		if(self.getreadytofire !== 1)
 		{
 			goalpos = vehicle_ai::findnewposition(80);
-			if(isdefined(goalpos) && (distance2dsquared(goalpos, self.origin) > 50 * 50 || abs(goalpos[2] - self.origin[2]) > self.height))
+			if(isdefined(goalpos) && (distance2dsquared(goalpos, self.origin) > (50 * 50) || (abs(goalpos[2] - self.origin[2])) > self.height))
 			{
 				self setspeed(self.settings.defaultmovespeed, 5, 5);
 				self setvehgoalpos(goalpos, 0, 1);
@@ -1355,7 +1355,7 @@ function quadtank_player_fireupdate()
 */
 function do_melee(shoulddodamage, enemy)
 {
-	if(!isalive(enemy) || distancesquared(enemy.origin, self.origin) > 270 * 270)
+	if(!isalive(enemy) || distancesquared(enemy.origin, self.origin) > (270 * 270))
 	{
 		return 0;
 	}
@@ -1392,7 +1392,7 @@ function do_melee(shoulddodamage, enemy)
 		}
 		direction = vectornormalize(direction);
 		strength = 1000;
-		enemy setvelocity(enemy getvelocity() + direction * strength);
+		enemy setvelocity(enemy getvelocity() + (direction * strength));
 		enemy trigger_player_shock_fx();
 		enemy dodamage(15, self.origin, self);
 	}
@@ -1539,7 +1539,7 @@ function quadtankcallback_vehicledamage(einflictor, eattacker, idamage, idflags,
 		idamage = 250;
 	}
 	num_players = getplayers().size;
-	maxdamage = self.healthdefault * 0.2 - 0.025 * num_players;
+	maxdamage = self.healthdefault * (0.2 - (0.025 * num_players));
 	if(smeansofdeath !== "MOD_UNKNOWN" && idamage > maxdamage)
 	{
 		idamage = maxdamage;
@@ -1548,7 +1548,7 @@ function quadtankcallback_vehicledamage(einflictor, eattacker, idamage, idflags,
 	driver = self getseatoccupant(0);
 	if(smeansofdeath != "MOD_UNKNOWN" && !vehicle_ai::entityisarchetype(eattacker, "quadtank"))
 	{
-		if(self.damage_during_trophy_down + idamage > self.settings.trophysystemdisablethreshold && self.trophy_disables < 4 && !isdefined(driver))
+		if((self.damage_during_trophy_down + idamage) > self.settings.trophysystemdisablethreshold && self.trophy_disables < 4 && !isdefined(driver))
 		{
 			idamage = max(1, self.settings.trophysystemdisablethreshold - self.damage_during_trophy_down);
 		}
@@ -1709,7 +1709,7 @@ function side_turret_is_target_in_view_score(v_target, n_index)
 	{
 		return 0;
 	}
-	return abs(n_ang_yaw) / 90 * 800;
+	return (abs(n_ang_yaw) / 90) * 800;
 }
 
 /*
@@ -1749,7 +1749,7 @@ function _get_best_target_quadtank_side_turret(a_potential_targets, n_index)
 		}
 		if(e_target === other_turret_target)
 		{
-			f_score = f_score + 100 + takeeasyononetarget;
+			f_score = f_score + (100 + takeeasyononetarget);
 		}
 		if(issentient(e_target) && e_target attackedrecently(self, 2))
 		{
@@ -1903,7 +1903,7 @@ function javeline_incoming(projectile)
 		if(isdefined(self.enemy) && isdefined(self.enemy.origin))
 		{
 			projectiledistance = distancesquared(projectile.origin, self.enemy.origin);
-			if(projectiledistance <= distance * distance)
+			if(projectiledistance <= (distance * distance))
 			{
 				projectile playsound(alias);
 				return;
@@ -1935,7 +1935,7 @@ function railgun_sound(projectile)
 		if(isdefined(players[0]) && isdefined(players[0].origin))
 		{
 			projectiledistance = distancesquared(projectile.origin, players[0].origin);
-			if(projectiledistance <= distance * distance)
+			if(projectiledistance <= (distance * distance))
 			{
 				projectile playsound(alais);
 				return;

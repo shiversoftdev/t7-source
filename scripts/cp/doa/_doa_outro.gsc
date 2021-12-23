@@ -296,7 +296,7 @@ function function_5e04bf78()
 	silverback thread namespace_eaa992c::function_285a2999("crater_dust");
 	playrumbleonposition("explosion_generic", silverback.origin);
 	height = 800;
-	timems = height / 1000 * 3000;
+	timems = (height / 1000) * 3000;
 	org.angles = silverback.angles;
 	org.origin = silverback.origin;
 	silverback linkto(org);
@@ -374,7 +374,7 @@ function function_5e04bf78()
 			level notify(#"hash_de8df0f3");
 			level thread function_46882430(&"DOA_HAHAHA", mech.driver.origin + vectorscale((0, 0, 1), 145), 2);
 		}
-		if(rounds % 10 == 0)
+		if((rounds % 10) == 0)
 		{
 			if(isdefined(faketarget))
 			{
@@ -588,7 +588,7 @@ function function_1aaa038(droporigin)
 			gem setmodel(var_9f9a4e58[randomint(var_9f9a4e58.size)]);
 			target_point = gem.origin + (randomint(2), randomint(2), 12);
 			vel = target_point - gem.origin;
-			gem.origin = gem.origin + 4 * vel;
+			gem.origin = gem.origin + (4 * vel);
 			vel = vel * randomfloatrange(0.5, 3);
 			gem physicslaunch(gem.origin, vel);
 			gem thread doa_utility::function_783519c1("podiumAllDone", 1);
@@ -1069,7 +1069,7 @@ function function_b7bde10a(podium)
 	level waittill(#"hash_314666df");
 	playermodel = podium.playermodel;
 	right = anglestoright(playermodel.angles);
-	offset = playermodel.origin + vectorscale((0, 0, 1), 80) + 30 * right;
+	offset = (playermodel.origin + vectorscale((0, 0, 1), 80)) + (30 * right);
 	playermodel thread function_e4d4b80(%generic::ch_new_06_01_chase_vign_sitting_civs_right_civ01_loop);
 	wait(6);
 	playermodel thread namespace_1a381543::function_90118d8c("zmb_end_4thplace_1");
@@ -1113,7 +1113,7 @@ function function_4d8b6e1e()
 	}
 	for(i = 1; i < players.size; i++)
 	{
-		for(j = i; j > 0 && int(players[j - 1] namespace_64c6b720::function_93ccc5da()) < int(players[j] namespace_64c6b720::function_93ccc5da()); j--)
+		for(j = i; j > 0 && (int(players[j - 1] namespace_64c6b720::function_93ccc5da())) < int(players[j] namespace_64c6b720::function_93ccc5da()); j--)
 		{
 			array::swap(players, j, j - 1);
 		}

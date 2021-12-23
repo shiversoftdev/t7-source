@@ -169,7 +169,7 @@ function teamoutcomenotify(winner, endtype, endreasontext)
 				winningtime = game[level.gametype + "_overtime_time_to_beat"];
 			}
 		}
-		else if(isdefined(game[level.gametype + "_overtime_first_winner"]) && game[level.gametype + "_overtime_first_winner"] == "tie")
+		else if(isdefined(game[level.gametype + "_overtime_first_winner"]) && (game[level.gametype + "_overtime_first_winner"]) == "tie")
 		{
 			winningtime = game[level.gametype + "_overtime_best_time"];
 		}
@@ -178,11 +178,11 @@ function teamoutcomenotify(winner, endtype, endreasontext)
 			winningtime = undefined;
 			if(winner == "tie" && isdefined(game[level.gametype + "_overtime_first_winner"]))
 			{
-				if(game[level.gametype + "_overtime_first_winner"] == "allies")
+				if((game[level.gametype + "_overtime_first_winner"]) == "allies")
 				{
 					winnerenum = 1;
 				}
-				else if(game[level.gametype + "_overtime_first_winner"] == "axis")
+				else if((game[level.gametype + "_overtime_first_winner"]) == "axis")
 				{
 					winnerenum = 2;
 				}
@@ -191,9 +191,9 @@ function teamoutcomenotify(winner, endtype, endreasontext)
 			{
 				winningtime = game[level.gametype + "_overtime_time_to_beat"];
 			}
-			if(isdefined(game[level.gametype + "_overtime_best_time"]) && (!isdefined(winningtime) || winningtime > game[level.gametype + "_overtime_best_time"]))
+			if(isdefined(game[level.gametype + "_overtime_best_time"]) && (!isdefined(winningtime) || winningtime > (game[level.gametype + "_overtime_best_time"])))
 			{
-				if(game[level.gametype + "_overtime_first_winner"] !== winner)
+				if((game[level.gametype + "_overtime_first_winner"]) !== winner)
 				{
 					losingtime = winningtime;
 				}
@@ -273,7 +273,7 @@ function teamoutcomenotify(winner, endtype, endreasontext)
 	{
 		foreach(var_c50aeb12, team in level.teams)
 		{
-			if(endreasontext == game["strings"][team + "_eliminated"])
+			if(endreasontext == (game["strings"][team + "_eliminated"]))
 			{
 				endreasontext = game["strings"]["cod_caster_team_eliminated"];
 				break;
@@ -550,7 +550,7 @@ function wageroutcomenotify(winner, endreasontext)
 	cpincrement = 9999;
 	if(isdefined(playercphudelems[0]))
 	{
-		cpincrement = int(playercphudelems[0].targetvalue / countupduration / 0.05);
+		cpincrement = int(playercphudelems[0].targetvalue / (countupduration / 0.05));
 		if(cpincrement < 1)
 		{
 			cpincrement = 1;
@@ -744,7 +744,7 @@ function teamwageroutcomenotify(winner, isroundend, endreasontext)
 	{
 		matchbonus = hud::createfontstring(font, 2);
 		matchbonus hud::setparent(outcometext);
-		matchbonus hud::setpoint("TOP", "BOTTOM", 0, iconsize + spacing * 3 + teamscores[team].height);
+		matchbonus hud::setpoint("TOP", "BOTTOM", 0, (iconsize + (spacing * 3)) + teamscores[team].height);
 		matchbonus.glowalpha = 1;
 		matchbonus.hidewheninmenu = 0;
 		matchbonus.archived = 0;

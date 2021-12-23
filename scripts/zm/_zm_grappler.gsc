@@ -54,7 +54,7 @@ function __main__()
 }
 
 /*
-	Name: function_7eaac04b
+	Name: start_grapple
 	Namespace: zm_grappler
 	Checksum: 0xE69FE55D
 	Offset: 0x2E8
@@ -62,7 +62,7 @@ function __main__()
 	Parameters: 4
 	Flags: Linked
 */
-function function_7eaac04b(var_683c052c, var_a2613153, n_type, n_speed = 1800)
+function start_grapple(var_683c052c, var_a2613153, n_type, n_speed = 1800)
 {
 	/#
 		assert(n_type == 2);
@@ -178,7 +178,7 @@ private function function_63b4b8a5(var_365c612)
 	{
 		return;
 	}
-	if(var_365c612 != isdefined(self.var_14f171d3) && self.var_14f171d3)
+	if(var_365c612 != (isdefined(self.var_14f171d3) && self.var_14f171d3))
 	{
 		self.var_14f171d3 = var_365c612;
 		if(isplayer(self))

@@ -104,7 +104,7 @@ function function_7892610e()
 	{
 		wait(0.5);
 		n_current_time = gettime();
-		n_total_time = n_current_time - n_start_time / 1000;
+		n_total_time = (n_current_time - n_start_time) / 1000;
 		if(n_total_time >= 28)
 		{
 			break;
@@ -122,32 +122,32 @@ function function_7892610e()
 	Parameters: 1
 	Flags: Linked
 */
-function function_ed573cc2(var_d858aeb5)
+function function_ed573cc2(n_position)
 {
-	var_7ec6c170 = self bgb::function_c219b050();
+	v_powerup = self bgb::function_c219b050();
 	v_up = vectorscale((0, 0, 1), 5);
-	var_8e2dcc47 = var_7ec6c170 + anglestoforward(self.angles) * 60 + v_up;
-	var_682b51de = var_8e2dcc47 + anglestoforward(self.angles) * 60 + v_up;
-	switch(var_d858aeb5)
+	var_8e2dcc47 = (v_powerup + (anglestoforward(self.angles) * 60)) + v_up;
+	var_682b51de = (var_8e2dcc47 + (anglestoforward(self.angles) * 60)) + v_up;
+	switch(n_position)
 	{
 		case 1:
 		{
-			v_origin = var_7ec6c170 + anglestoright(self.angles) * -60 + v_up;
+			v_origin = (v_powerup + (anglestoright(self.angles) * -60)) + v_up;
 			break;
 		}
 		case 2:
 		{
-			v_origin = var_7ec6c170;
+			v_origin = v_powerup;
 			break;
 		}
 		case 3:
 		{
-			v_origin = var_7ec6c170 + anglestoright(self.angles) * 60 + v_up;
+			v_origin = (v_powerup + (anglestoright(self.angles) * 60)) + v_up;
 			break;
 		}
 		case 4:
 		{
-			v_origin = var_8e2dcc47 + anglestoright(self.angles) * -60 + v_up;
+			v_origin = (var_8e2dcc47 + (anglestoright(self.angles) * -60)) + v_up;
 			break;
 		}
 		case 5:
@@ -157,12 +157,12 @@ function function_ed573cc2(var_d858aeb5)
 		}
 		case 6:
 		{
-			v_origin = var_8e2dcc47 + anglestoright(self.angles) * 60 + v_up;
+			v_origin = (var_8e2dcc47 + (anglestoright(self.angles) * 60)) + v_up;
 			break;
 		}
 		case 7:
 		{
-			v_origin = var_682b51de + anglestoright(self.angles) * -60 + v_up;
+			v_origin = (var_682b51de + (anglestoright(self.angles) * -60)) + v_up;
 			break;
 		}
 		case 8:
@@ -172,12 +172,12 @@ function function_ed573cc2(var_d858aeb5)
 		}
 		case 9:
 		{
-			v_origin = var_682b51de + anglestoright(self.angles) * 60 + v_up;
+			v_origin = (var_682b51de + (anglestoright(self.angles) * 60)) + v_up;
 			break;
 		}
 		default:
 		{
-			v_origin = var_7ec6c170;
+			v_origin = v_powerup;
 			break;
 		}
 	}

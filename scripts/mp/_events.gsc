@@ -97,7 +97,7 @@ function add_round_score_event(score, notify_string, client_notify_string)
 	#/
 	if(level.roundscorelimit > 0)
 	{
-		roundscoretobeat = level.roundscorelimit * game["roundsplayed"] + score;
+		roundscoretobeat = (level.roundscorelimit * game["roundsplayed"]) + score;
 		if(level.teambased)
 		{
 			level thread score_team_event_monitor(roundscoretobeat, notify_string, client_notify_string);

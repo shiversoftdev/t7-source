@@ -420,7 +420,7 @@ function function_e68e3c0d(localclientnum, name, off, tag, kill = 0)
 		/#
 			loc_000043C8:
 			loc_000043FC:
-			namespace_693feb87::debugmsg("" + (isdefined(self.name) ? self.name : "") + "" + name + "" + (isdefined(tag) ? tag : "") + "" + (off ? "" : "") + "" + localclientnum);
+			namespace_693feb87::debugmsg((((((("" + (isdefined(self.name) ? self.name : "")) + "") + name) + "") + (isdefined(tag) ? tag : "") + "") + (off ? "" : "") + "") + localclientnum);
 		#/
 	}
 	if(off)
@@ -807,7 +807,7 @@ function function_f6008bb4(localclientnum, oldval, newval, bnewent, binitialsnap
 		return;
 	}
 	self.var_c5998995 = gettime() + getdvarint("scr_doa_burn_interval", 1500);
-	self function_7829d7af(localclientnum, (newval == 666 ? 1 << level.var_de2ea8e7.size - 1 : undefined));
+	self function_7829d7af(localclientnum, (newval == 666 ? (1 << level.var_de2ea8e7.size) - 1 : undefined));
 }
 
 /*
