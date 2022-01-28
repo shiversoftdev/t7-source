@@ -212,7 +212,7 @@ function on_player_spawned(local_client_num)
 	Parameters: 2
 	Flags: Linked
 */
-function array_equal(a, b)
+function array_equal(&a, &b)
 {
 	/#
 		if(isdefined(a) && isdefined(b) && isarray(a) && isarray(b) && a.size == b.size)

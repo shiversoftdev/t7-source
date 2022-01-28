@@ -886,7 +886,7 @@ function function_33a60aeb()
 	Parameters: 1
 	Flags: Linked
 */
-function update_escort_robot_path(patharray)
+function update_escort_robot_path(&patharray)
 {
 	arrayinsert(patharray, (929, 626, -56.875), 10);
 }

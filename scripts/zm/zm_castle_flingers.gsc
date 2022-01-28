@@ -273,7 +273,7 @@ function unitrigger_refresh_message()
 	Parameters: 2
 	Flags: Linked
 */
-function function_3dcd0982(array, var_8d88ae81)
+function function_3dcd0982(&array, var_8d88ae81)
 {
 	return array::filter(array, 0, &function_a78c631a, var_8d88ae81);
 }

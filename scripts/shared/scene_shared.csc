@@ -2042,7 +2042,7 @@ function _trigger_stop(trig)
 	Parameters: 4
 	Flags: Linked, Variadic
 */
-function add_scene_func(str_scenedef, func, str_state = "play", vararg)
+function add_scene_func(str_scenedef, func, str_state = "play", ...)
 {
 	/#
 		/#

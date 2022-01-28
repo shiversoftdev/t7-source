@@ -244,7 +244,7 @@ function function_1f8cb1fa()
 	Parameters: 4
 	Flags: Linked
 */
-function function_64bc2503(queue, flag, waitfunc, var_a6cc22d4 = 0)
+function function_64bc2503(&queue, flag, waitfunc, var_a6cc22d4 = 0)
 {
 	self endon(#"death");
 	if(!var_a6cc22d4)

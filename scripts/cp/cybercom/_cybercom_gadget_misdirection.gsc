@@ -306,7 +306,7 @@ function function_7074260(point)
 	Parameters: 2
 	Flags: Linked
 */
-function function_10cd71b(decoy, potentialtargets)
+function function_10cd71b(decoy, &potentialtargets)
 {
 	mins = vectorscale((1, 1, 1), 1000000);
 	maxs = vectorscale((-1, -1, -1), 1000000);
@@ -397,7 +397,7 @@ function initthreatbias()
 	Parameters: 1
 	Flags: Linked
 */
-function function_4adc7dc8(potentialtargets)
+function function_4adc7dc8(&potentialtargets)
 {
 	decoy = spawn("script_model", self.origin);
 	if(!isdefined(decoy))

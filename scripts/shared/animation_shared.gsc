@@ -569,7 +569,7 @@ function add_notetrack_func(funcname, func)
 	Parameters: 4
 	Flags: Linked, Variadic
 */
-function add_global_notetrack_handler(str_note, func, pass_notify_params, vararg)
+function add_global_notetrack_handler(str_note, func, pass_notify_params, ...)
 {
 	if(!isdefined(level._animnotetrackhandlers))
 	{

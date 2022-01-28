@@ -2614,7 +2614,7 @@ function assign_ents(a_ents)
 	Parameters: 2
 	Flags: Linked
 */
-function _assign_ents_by_name(a_objects, a_ents)
+function _assign_ents_by_name(&a_objects, &a_ents)
 {
 	if(a_ents.size)
 	{
@@ -2650,7 +2650,7 @@ function _assign_ents_by_name(a_objects, a_ents)
 	Parameters: 4
 	Flags: Linked
 */
-function _assign_ents_by_type(a_objects, a_ents, str_type, func_test)
+function _assign_ents_by_type(&a_objects, &a_ents, str_type, func_test)
 {
 	if(a_ents.size)
 	{
@@ -3914,7 +3914,7 @@ function wait_till_scene_ready(o_exclude, b_ignore_streamer = 0)
 	Parameters: 1
 	Flags: Linked
 */
-function wait_till_objects_ready(array)
+function wait_till_objects_ready(&array)
 {
 	do
 	{
@@ -5448,7 +5448,7 @@ function _trigger_stop(trig)
 	Parameters: 4
 	Flags: Linked, Variadic
 */
-function add_scene_func(str_scenedef, func, str_state = "play", vararg)
+function add_scene_func(str_scenedef, func, str_state = "play", ...)
 {
 	/#
 		/#

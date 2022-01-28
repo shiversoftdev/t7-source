@@ -310,7 +310,7 @@ function waittill_level_string(msg, ent, otherent)
 	Parameters: 1
 	Flags: Linked, Variadic
 */
-function waittill_multiple(vararg)
+function waittill_multiple(...)
 {
 	s_tracker = spawnstruct();
 	s_tracker._wait_count = 0;
@@ -372,7 +372,7 @@ function break_glass(n_radius = 50)
 	Parameters: 1
 	Flags: Variadic
 */
-function waittill_multiple_ents(vararg)
+function waittill_multiple_ents(...)
 {
 	a_ents = [];
 	a_notifies = [];
@@ -504,7 +504,7 @@ function waittill_any_return(string1, string2, string3, string4, string5, string
 	Parameters: 1
 	Flags: Linked, Variadic
 */
-function waittill_any_ex(vararg)
+function waittill_any_ex(...)
 {
 	s_common = spawnstruct();
 	e_current = self;
@@ -3927,7 +3927,7 @@ function auto_delete(n_mode = 1, n_min_time_alive = 0, n_dist_horizontal = 0, n_
 	Parameters: 5
 	Flags: None
 */
-function query_ents(a_kvps_match, b_match_all = 1, a_kvps_ingnore, b_ignore_spawners = 0, b_match_substrings = 0)
+function query_ents(&a_kvps_match, b_match_all = 1, &a_kvps_ingnore, b_ignore_spawners = 0, b_match_substrings = 0)
 {
 	a_ret = [];
 	if(b_match_substrings)
@@ -3999,7 +3999,7 @@ function query_ents(a_kvps_match, b_match_all = 1, a_kvps_ingnore, b_ignore_spaw
 	Parameters: 4
 	Flags: Linked
 */
-function _query_ents_by_substring_helper(a_ents, str_value, str_key = "targetname", b_ignore_spawners = 0)
+function _query_ents_by_substring_helper(&a_ents, str_value, str_key = "targetname", b_ignore_spawners = 0)
 {
 	a_ret = [];
 	foreach(var_27bd264b, ent in a_ents)

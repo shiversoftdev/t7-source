@@ -656,7 +656,7 @@ function entity_set_visible(localclientnum, player, onoff)
 	Parameters: 2
 	Flags: Linked
 */
-function add_remove_list(a = [], on_off)
+function add_remove_list(&a = [], on_off)
 {
 	if(on_off)
 	{
@@ -680,7 +680,7 @@ function add_remove_list(a = [], on_off)
 	Parameters: 1
 	Flags: Linked
 */
-function clean_deleted(array)
+function clean_deleted(&array)
 {
 	done = 0;
 	while(!done && array.size > 0)

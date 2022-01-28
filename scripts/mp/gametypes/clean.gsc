@@ -1193,7 +1193,7 @@ function function_2f8f0719(player, victim)
 	Parameters: 2
 	Flags: None
 */
-function function_3b21342e(times, time_threshold)
+function function_3b21342e(&times, time_threshold)
 {
 	for(i = 0; i < times.size; i++)
 	{

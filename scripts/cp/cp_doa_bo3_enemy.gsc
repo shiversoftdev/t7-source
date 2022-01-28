@@ -1443,7 +1443,7 @@ function function_b9980eda(spawner, loc, def, teleport = 1)
 	Parameters: 2
 	Flags: Linked
 */
-function function_ef4fa49d(spots, mindist = 300)
+function function_ef4fa49d(&spots, mindist = 300)
 {
 	mindistsq = mindist * mindist;
 	newspots = [];

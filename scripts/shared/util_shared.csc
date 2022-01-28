@@ -141,7 +141,7 @@ function waittill_string(msg, ent)
 	Parameters: 1
 	Flags: Variadic
 */
-function waittill_multiple(vararg)
+function waittill_multiple(...)
 {
 	s_tracker = spawnstruct();
 	s_tracker._wait_count = 0;
@@ -164,7 +164,7 @@ function waittill_multiple(vararg)
 	Parameters: 1
 	Flags: Variadic
 */
-function waittill_multiple_ents(vararg)
+function waittill_multiple_ents(...)
 {
 	a_ents = [];
 	a_notifies = [];
@@ -296,7 +296,7 @@ function waittill_any_return(string1, string2, string3, string4, string5, string
 	Parameters: 1
 	Flags: Linked, Variadic
 */
-function waittill_any_ex(vararg)
+function waittill_any_ex(...)
 {
 	s_common = spawnstruct();
 	e_current = self;
@@ -956,7 +956,7 @@ function timer_wait(n_wait)
 	Parameters: 2
 	Flags: Linked
 */
-function add_remove_list(a = [], on_off)
+function add_remove_list(&a = [], on_off)
 {
 	if(on_off)
 	{
@@ -980,7 +980,7 @@ function add_remove_list(a = [], on_off)
 	Parameters: 1
 	Flags: Linked
 */
-function clean_deleted(array)
+function clean_deleted(&array)
 {
 	done = 0;
 	while(!done && array.size > 0)

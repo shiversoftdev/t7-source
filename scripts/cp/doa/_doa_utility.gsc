@@ -341,7 +341,7 @@ function function_d0c69425(var_30d383f5)
 	Parameters: 3
 	Flags: Linked
 */
-function getclosestto(origin, entarray, maxdist = 2048)
+function getclosestto(origin, &entarray, maxdist = 2048)
 {
 	if(!isdefined(entarray))
 	{
@@ -367,7 +367,7 @@ function getclosestto(origin, entarray, maxdist = 2048)
 	Parameters: 3
 	Flags: Linked
 */
-function getarrayitemswithin(origin, entarray, minsq)
+function getarrayitemswithin(origin, &entarray, minsq)
 {
 	items = [];
 	if(isdefined(entarray) && entarray.size)
@@ -397,7 +397,7 @@ function getarrayitemswithin(origin, entarray, minsq)
 	Parameters: 1
 	Flags: Linked
 */
-function getclosesttome(entarray)
+function getclosesttome(&entarray)
 {
 	return getclosestto(self.origin, entarray);
 }

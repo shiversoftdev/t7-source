@@ -620,7 +620,7 @@ function debug_draw_robot_path()
 	Parameters: 1
 	Flags: None
 */
-function debug_draw_approximate_robot_path_to_goal(goalpatharray)
+function debug_draw_approximate_robot_path_to_goal(&goalpatharray)
 {
 	/#
 		if((isdefined(getdvarint("")) ? getdvarint("") : 0) == 0)
@@ -1727,7 +1727,7 @@ function set_goal_to_point_on_path(recursioncount = 0)
 	Parameters: 2
 	Flags: None
 */
-function is_path_distance_to_goal_too_long(patharray, toolongthreshold)
+function is_path_distance_to_goal_too_long(&patharray, toolongthreshold)
 {
 	/#
 		debug_draw_approximate_robot_path_to_goal(patharray);

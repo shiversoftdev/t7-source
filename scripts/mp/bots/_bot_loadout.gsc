@@ -132,7 +132,7 @@ function build_classes()
 	Parameters: 2
 	Flags: Linked
 */
-function pick_item(pickeditems, items)
+function pick_item(&pickeditems, items)
 {
 	if(!isdefined(items) || items.size <= 0)
 	{

@@ -16,7 +16,7 @@
 	Parameters: 8
 	Flags: Linked
 */
-function filter(array, b_keep_keys, func_filter, arg1, arg2, arg3, arg4, arg5)
+function filter(&array, b_keep_keys, func_filter, arg1, arg2, arg3, arg4, arg5)
 {
 	a_new = [];
 	foreach(key, val in array)
@@ -55,7 +55,7 @@ function filter(array, b_keep_keys, func_filter, arg1, arg2, arg3, arg4, arg5)
 	Parameters: 2
 	Flags: Linked
 */
-function remove_dead(array, b_keep_keys)
+function remove_dead(&array, b_keep_keys)
 {
 	return filter(array, b_keep_keys, &_filter_dead);
 }
@@ -83,7 +83,7 @@ function _filter_undefined(val)
 	Parameters: 2
 	Flags: Linked
 */
-function remove_undefined(array, b_keep_keys)
+function remove_undefined(&array, b_keep_keys)
 {
 	return filter(array, b_keep_keys, &_filter_undefined);
 }
@@ -97,7 +97,7 @@ function remove_undefined(array, b_keep_keys)
 	Parameters: 2
 	Flags: Linked
 */
-function cleanup(array, b_keep_empty_arrays = 0)
+function cleanup(&array, b_keep_empty_arrays = 0)
 {
 	a_keys = getarraykeys(array);
 	for(i = a_keys.size - 1; i >= 0; i--)
@@ -124,7 +124,7 @@ function cleanup(array, b_keep_empty_arrays = 0)
 	Parameters: 3
 	Flags: Linked
 */
-function filter_classname(array, b_keep_keys, str_classname)
+function filter_classname(&array, b_keep_keys, str_classname)
 {
 	return filter(array, b_keep_keys, &_filter_classname, str_classname);
 }
@@ -138,7 +138,7 @@ function filter_classname(array, b_keep_keys, str_classname)
 	Parameters: 2
 	Flags: None
 */
-function get_touching(array, b_keep_keys)
+function get_touching(&array, b_keep_keys)
 {
 	return filter(array, b_keep_keys, &istouching);
 }
@@ -181,7 +181,7 @@ function remove_index(array, index, b_keep_keys)
 	Parameters: 2
 	Flags: Linked
 */
-function delete_all(array, is_struct)
+function delete_all(&array, is_struct)
 {
 	foreach(var_4c737ae4, ent in array)
 	{
@@ -212,7 +212,7 @@ function delete_all(array, is_struct)
 	Parameters: 2
 	Flags: Linked
 */
-function notify_all(array, str_notify)
+function notify_all(&array, str_notify)
 {
 	foreach(var_32d69962, elem in array)
 	{
@@ -229,7 +229,7 @@ function notify_all(array, str_notify)
 	Parameters: 8
 	Flags: Linked
 */
-function thread_all(entities, func, arg1, arg2, arg3, arg4, arg5, arg6)
+function thread_all(&entities, func, arg1, arg2, arg3, arg4, arg5, arg6)
 {
 	/#
 		assert(isdefined(entities), "");
@@ -304,7 +304,7 @@ function thread_all(entities, func, arg1, arg2, arg3, arg4, arg5, arg6)
 	Parameters: 7
 	Flags: Linked
 */
-function thread_all_ents(entities, func, arg1, arg2, arg3, arg4, arg5)
+function thread_all_ents(&entities, func, arg1, arg2, arg3, arg4, arg5)
 {
 	/#
 		assert(isdefined(entities), "");
@@ -338,7 +338,7 @@ function thread_all_ents(entities, func, arg1, arg2, arg3, arg4, arg5)
 	Parameters: 8
 	Flags: Linked
 */
-function run_all(entities, func, arg1, arg2, arg3, arg4, arg5, arg6)
+function run_all(&entities, func, arg1, arg2, arg3, arg4, arg5, arg6)
 {
 	/#
 		assert(isdefined(entities), "");
@@ -439,7 +439,7 @@ function exclude(array, array_exclude)
 	Parameters: 3
 	Flags: Linked
 */
-function add(array, item, allow_dupes = 1)
+function add(&array, item, allow_dupes = 1)
 {
 	if(isdefined(item))
 	{
@@ -459,7 +459,7 @@ function add(array, item, allow_dupes = 1)
 	Parameters: 3
 	Flags: Linked
 */
-function add_sorted(array, item, allow_dupes = 1)
+function add_sorted(&array, item, allow_dupes = 1)
 {
 	if(isdefined(item))
 	{
@@ -486,7 +486,7 @@ function add_sorted(array, item, allow_dupes = 1)
 	Parameters: 3
 	Flags: Linked
 */
-function wait_till(array, notifies, n_timeout)
+function wait_till(&array, notifies, n_timeout)
 {
 	if(isdefined(n_timeout))
 	{
@@ -518,7 +518,7 @@ function wait_till(array, notifies, n_timeout)
 	Parameters: 4
 	Flags: None
 */
-function wait_till_match(array, str_notify, str_match, n_timeout)
+function wait_till_match(&array, str_notify, str_match, n_timeout)
 {
 	if(isdefined(n_timeout))
 	{
@@ -601,7 +601,7 @@ function update_waitlogic_tracker(s_tracker)
 	Parameters: 2
 	Flags: None
 */
-function flag_wait(array, str_flag)
+function flag_wait(&array, str_flag)
 {
 	do
 	{
@@ -629,7 +629,7 @@ function flag_wait(array, str_flag)
 	Parameters: 2
 	Flags: Linked
 */
-function flagsys_wait(array, str_flag)
+function flagsys_wait(&array, str_flag)
 {
 	do
 	{
@@ -657,7 +657,7 @@ function flagsys_wait(array, str_flag)
 	Parameters: 2
 	Flags: Linked, Variadic
 */
-function flagsys_wait_any_flag(array, vararg)
+function flagsys_wait_any_flag(&array, ...)
 {
 	do
 	{
@@ -696,7 +696,7 @@ function flagsys_wait_any_flag(array, vararg)
 	Parameters: 2
 	Flags: None
 */
-function flagsys_wait_any(array, str_flag)
+function flagsys_wait_any(&array, str_flag)
 {
 	foreach(var_27bf66f1, ent in array)
 	{
@@ -717,7 +717,7 @@ function flagsys_wait_any(array, str_flag)
 	Parameters: 2
 	Flags: None
 */
-function flag_wait_clear(array, str_flag)
+function flag_wait_clear(&array, str_flag)
 {
 	do
 	{
@@ -744,7 +744,7 @@ function flag_wait_clear(array, str_flag)
 	Parameters: 3
 	Flags: Linked
 */
-function flagsys_wait_clear(array, str_flag, n_timeout)
+function flagsys_wait_clear(&array, str_flag, n_timeout)
 {
 	if(isdefined(n_timeout))
 	{
@@ -947,7 +947,7 @@ function remove_keys(array)
 	Parameters: 3
 	Flags: Linked
 */
-function swap(array, index1, index2)
+function swap(&array, index1, index2)
 {
 	temp = array[index1];
 	array[index1] = array[index2];
@@ -963,7 +963,7 @@ function swap(array, index1, index2)
 	Parameters: 3
 	Flags: Linked
 */
-function pop(array, index, b_keep_keys = 1)
+function pop(&array, index, b_keep_keys = 1)
 {
 	if(array.size > 0)
 	{
@@ -990,7 +990,7 @@ function pop(array, index, b_keep_keys = 1)
 	Parameters: 2
 	Flags: Linked
 */
-function pop_front(array, b_keep_keys = 1)
+function pop_front(&array, b_keep_keys = 1)
 {
 	keys = getarraykeys(array);
 	index = keys[keys.size - 1];
@@ -1006,7 +1006,7 @@ function pop_front(array, b_keep_keys = 1)
 	Parameters: 3
 	Flags: Linked
 */
-function push(array, val, index)
+function push(&array, val, index)
 {
 	if(!isdefined(index))
 	{
@@ -1031,7 +1031,7 @@ function push(array, val, index)
 	Parameters: 2
 	Flags: None
 */
-function push_front(array, val)
+function push_front(&array, val)
 {
 	push(array, val, 0);
 }
@@ -1045,7 +1045,7 @@ function push_front(array, val)
 	Parameters: 3
 	Flags: None
 */
-function get_closest(org, array, dist)
+function get_closest(org, &array, dist)
 {
 	/#
 		assert(0, "");
@@ -1061,7 +1061,7 @@ function get_closest(org, array, dist)
 	Parameters: 3
 	Flags: None
 */
-function get_farthest(org, array, dist = undefined)
+function get_farthest(org, &array, dist = undefined)
 {
 	/#
 		assert(0, "");
@@ -1105,7 +1105,7 @@ function fartherfunc(dist1, dist2)
 	Parameters: 5
 	Flags: None
 */
-function get_all_farthest(org, array, a_exclude, n_max = array.size, n_maxdist)
+function get_all_farthest(org, &array, a_exclude, n_max = array.size, n_maxdist)
 {
 	a_ret = exclude(array, a_exclude);
 	if(isdefined(n_maxdist))
@@ -1128,7 +1128,7 @@ function get_all_farthest(org, array, a_exclude, n_max = array.size, n_maxdist)
 	Parameters: 5
 	Flags: Linked
 */
-function get_all_closest(org, array, a_exclude, n_max = array.size, n_maxdist)
+function get_all_closest(org, &array, a_exclude, n_max = array.size, n_maxdist)
 {
 	a_ret = exclude(array, a_exclude);
 	if(isdefined(n_maxdist))
@@ -1151,7 +1151,7 @@ function get_all_closest(org, array, a_exclude, n_max = array.size, n_maxdist)
 	Parameters: 1
 	Flags: Linked
 */
-function alphabetize(array)
+function alphabetize(&array)
 {
 	return sort_by_value(array, 1);
 }
@@ -1165,7 +1165,7 @@ function alphabetize(array)
 	Parameters: 2
 	Flags: Linked
 */
-function sort_by_value(array, b_lowest_first = 0)
+function sort_by_value(&array, b_lowest_first = 0)
 {
 	return merge_sort(array, &_sort_by_value_compare_func, b_lowest_first);
 }
@@ -1197,7 +1197,7 @@ function _sort_by_value_compare_func(val1, val2, b_lowest_first)
 	Parameters: 2
 	Flags: Linked
 */
-function sort_by_script_int(a_ents, b_lowest_first = 0)
+function sort_by_script_int(&a_ents, b_lowest_first = 0)
 {
 	return merge_sort(a_ents, &_sort_by_script_int_compare_func, b_lowest_first);
 }
@@ -1229,7 +1229,7 @@ function _sort_by_script_int_compare_func(e1, e2, b_lowest_first)
 	Parameters: 3
 	Flags: Linked
 */
-function merge_sort(current_list, func_sort, param)
+function merge_sort(&current_list, func_sort, param)
 {
 	if(current_list.size <= 1)
 	{
@@ -1327,7 +1327,7 @@ function merge(left, right, func_sort, param)
 	Parameters: 3
 	Flags: None
 */
-function insertion_sort(a, comparefunc, val)
+function insertion_sort(&a, comparefunc, val)
 {
 	if(!isdefined(a))
 	{
@@ -1355,7 +1355,7 @@ function insertion_sort(a, comparefunc, val)
 	Parameters: 7
 	Flags: None
 */
-function spread_all(entities, func, arg1, arg2, arg3, arg4, arg5)
+function spread_all(&entities, func, arg1, arg2, arg3, arg4, arg5)
 {
 	/#
 		assert(isdefined(entities), "");
@@ -1390,7 +1390,7 @@ function spread_all(entities, func, arg1, arg2, arg3, arg4, arg5)
 	Parameters: 2
 	Flags: None
 */
-function wait_till_touching(a_ents, e_volume)
+function wait_till_touching(&a_ents, e_volume)
 {
 	while(!is_touching(a_ents, e_volume))
 	{
@@ -1407,7 +1407,7 @@ function wait_till_touching(a_ents, e_volume)
 	Parameters: 2
 	Flags: Linked
 */
-function is_touching(a_ents, e_volume)
+function is_touching(&a_ents, e_volume)
 {
 	foreach(var_6982f916, e_ent in a_ents)
 	{

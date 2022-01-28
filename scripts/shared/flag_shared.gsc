@@ -220,7 +220,7 @@ function get(str_flag)
 	Parameters: 1
 	Flags: None
 */
-function get_any(array)
+function get_any(&array)
 {
 	foreach(var_811f8866, str_flag in array)
 	{

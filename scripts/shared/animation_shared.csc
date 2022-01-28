@@ -259,7 +259,7 @@ function add_notetrack_func(funcname, func)
 	Parameters: 3
 	Flags: Linked, Variadic
 */
-function add_global_notetrack_handler(str_note, func, vararg)
+function add_global_notetrack_handler(str_note, func, ...)
 {
 	if(!isdefined(level._animnotetrackhandlers))
 	{

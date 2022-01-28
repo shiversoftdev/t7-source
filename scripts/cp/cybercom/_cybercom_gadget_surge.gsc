@@ -784,7 +784,7 @@ function ai_activatesurge(target, var_9bc2efcb = 1, upgraded = 0)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _tryfindpathtobest(enemies, maxattempts = 3)
+private function _tryfindpathtobest(&enemies, maxattempts = 3)
 {
 	while(maxattempts > 0 && enemies.size > 0)
 	{

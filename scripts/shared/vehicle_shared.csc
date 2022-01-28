@@ -476,7 +476,7 @@ function lights_on(localclientnum, team)
 	Parameters: 6
 	Flags: Linked
 */
-function addanimtolist(animitem, liston, listoff, playwhenoff, id, maxid)
+function addanimtolist(animitem, &liston, &listoff, playwhenoff, id, maxid)
 {
 	if(isdefined(animitem) && id <= maxid)
 	{
@@ -1511,7 +1511,7 @@ function field_toggle_lockon_handler(localclientnum, oldval, newval, bnewent, bi
 	Parameters: 6
 	Flags: Linked
 */
-function addfxandtagtolists(fx, tag, fxlist, taglist, id, maxid)
+function addfxandtagtolists(fx, tag, &fxlist, &taglist, id, maxid)
 {
 	if(isdefined(fx) && isdefined(tag) && id <= maxid)
 	{
