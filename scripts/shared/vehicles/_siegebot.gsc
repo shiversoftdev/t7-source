@@ -27,7 +27,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("siegebot", &__init__, undefined, undefined);
 }
@@ -373,7 +373,7 @@ function emped_exit(params)
 */
 function emped_reenter(params)
 {
-	return 0;
+	return false;
 }
 
 /*
@@ -505,7 +505,7 @@ function getnextmoveposition_unaware()
 	positionquery_filter_distancetogoal(queryresult, self);
 	vehicle_ai::positionquery_filter_outofgoalanchor(queryresult);
 	forward = anglestoforward(self.angles);
-	foreach(var_87692dbf, point in queryresult.data)
+	foreach(point in queryresult.data)
 	{
 		/#
 			if(!isdefined(point._scoredebug))
@@ -680,7 +680,7 @@ function state_jump_enter(params)
 	params.scaleforward = 40;
 	params.gravityforce = vectorscale((0, 0, -1), 6);
 	params.upbyheight = 50;
-	params.landingstate = "land@jump";
+	params.coptermodel = "land@jump";
 	self pain_toggle(0);
 	self stopmovementandsetbrake();
 }
@@ -770,7 +770,7 @@ function state_jump_update(params)
 		if(self.jump.linkent.origin[2] < heightthreshold && (oldheight > heightthreshold || (oldverticlespeed > 0 && velocity[2] < 0)))
 		{
 			self notify(#"start_landing");
-			self asmrequestsubstate(params.landingstate);
+			self asmrequestsubstate(params.coptermodel);
 		}
 		if(0)
 		{
@@ -782,13 +782,13 @@ function state_jump_update(params)
 	}
 	self.jump.linkent.origin = (self.jump.linkent.origin[0], self.jump.linkent.origin[1], 0) + (0, 0, goal[2]);
 	self notify(#"land_crush");
-	foreach(var_3b4a0f61, player in level.players)
+	foreach(player in level.players)
 	{
 		player._takedamage_old = player.takedamage;
 		player.takedamage = 0;
 	}
 	self radiusdamage(self.origin + vectorscale((0, 0, 1), 15), self.radiusdamageradius, self.radiusdamagemax, self.radiusdamagemin, self, "MOD_EXPLOSIVE");
-	foreach(var_3138b682, player in level.players)
+	foreach(player in level.players)
 	{
 		player.takedamage = player._takedamage_old;
 		player._takedamage_old = undefined;
@@ -816,7 +816,7 @@ function state_jump_update(params)
 	self.jump.in_air = 0;
 	self notify(#"jump_finished");
 	vehicle_ai::cooldown("jump", 7);
-	self vehicle_ai::waittill_asm_complete(params.landingstate, 3);
+	self vehicle_ai::waittill_asm_complete(params.coptermodel, 3);
 	self vehicle_ai::evaluate_connections();
 }
 
@@ -911,7 +911,7 @@ function getnextmoveposition_tactical()
 		positionquery_filter_sight(queryresult, self.enemy.origin, self geteye() - self.origin, self, 0, self.enemy);
 		self vehicle_ai::positionquery_filter_engagementdist(queryresult, self.enemy, self.settings.engagementdistmin, self.settings.engagementdistmax);
 	}
-	foreach(var_7da172e3, point in queryresult.data)
+	foreach(point in queryresult.data)
 	{
 		/#
 			if(!isdefined(point._scoredebug))

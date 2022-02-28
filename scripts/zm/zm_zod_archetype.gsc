@@ -14,7 +14,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	zombie_utility::register_ignore_player_handler("margwa", &function_478e89a7);
 	zombie_utility::register_ignore_player_handler("zombie", &function_478e89a7);
@@ -31,10 +31,10 @@ autoexec function init()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_478e89a7()
+function private function_478e89a7()
 {
 	self.ignore_player = [];
-	foreach(var_c81d16d, player in level.players)
+	foreach(player in level.players)
 	{
 		if(isdefined(player.teleporting) && player.teleporting)
 		{
@@ -79,9 +79,9 @@ function raps_can_reach_inaccessible_location()
 {
 	if([[ level.o_zod_train ]]->is_touching_train_volume(self))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -100,9 +100,9 @@ function is_player_accessible_to_raps(player)
 		var_d3443466 = [[ level.o_zod_train ]]->function_3e62f527();
 		if(!(isdefined(self.locked_in_train) && self.locked_in_train) && (!(isdefined(var_d3443466) && var_d3443466)))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 

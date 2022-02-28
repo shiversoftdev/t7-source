@@ -67,10 +67,10 @@ function pers_revive_active()
 	{
 		if(isdefined(self.pers_upgrades_awarded["revive"]) && self.pers_upgrades_awarded["revive"])
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -105,10 +105,10 @@ function pers_mulit_kill_headshot_active()
 	{
 		if(isdefined(self.pers_upgrades_awarded) && (isdefined(self.pers_upgrades_awarded["multikill_headshots"]) && self.pers_upgrades_awarded["multikill_headshots"]))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -165,13 +165,16 @@ function cash_back_player_drinks_perk()
 				self thread cash_back_money_reward();
 				self thread cash_back_player_prone_check(1);
 			}
-			else if(self.pers["pers_cash_back_bought"] < level.pers_cash_back_num_perks_required)
-			{
-				self zm_stats::increment_client_stat("pers_cash_back_bought", 0);
-			}
 			else
 			{
-				self thread cash_back_player_prone_check(0);
+				if(self.pers["pers_cash_back_bought"] < level.pers_cash_back_num_perks_required)
+				{
+					self zm_stats::increment_client_stat("pers_cash_back_bought", 0);
+				}
+				else
+				{
+					self thread cash_back_player_prone_check(0);
+				}
 			}
 		}
 	}
@@ -411,10 +414,10 @@ function pers_jugg_active()
 	{
 		if(isdefined(self.pers_upgrades_awarded) && (isdefined(self.pers_upgrades_awarded["jugg"]) && self.pers_upgrades_awarded["jugg"]))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -651,10 +654,10 @@ function is_pers_double_points_active()
 	{
 		if(isdefined(level.pers_double_points_active) && level.pers_double_points_active)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -725,7 +728,7 @@ function pers_upgrade_perk_lose_save()
 		self.a_saved_primaries = self getweaponslistprimaries();
 		self.a_saved_primaries_weapons = [];
 		index = 0;
-		foreach(var_22395638, weapon in self.a_saved_primaries)
+		foreach(weapon in self.a_saved_primaries)
 		{
 			self.a_saved_primaries_weapons[index] = zm_weapons::get_player_weapondata(self, weapon);
 			index++;
@@ -1356,9 +1359,9 @@ function pers_nube_player_ranked_as_nube(player)
 {
 	if(player.pers_num_nube_kills >= level.pers_numb_num_kills_unlock)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1465,13 +1468,16 @@ function pers_nube_should_we_give_raygun(player_has_weapon, player, weapon_buy)
 	{
 		player_has_weapon = 1;
 	}
-	else if(pers_nube_player_ranked_as_nube(player) && player_has_olympia && player_has_raygun == 0)
+	else
 	{
-		player_has_weapon = 0;
-	}
-	else if(isdefined(player.pers_upgrades_awarded["nube"]) && player.pers_upgrades_awarded["nube"] && player_has_raygun)
-	{
-		player_has_weapon = 1;
+		if(pers_nube_player_ranked_as_nube(player) && player_has_olympia && player_has_raygun == 0)
+		{
+			player_has_weapon = 0;
+		}
+		else if(isdefined(player.pers_upgrades_awarded["nube"]) && player.pers_upgrades_awarded["nube"] && player_has_raygun)
+		{
+			player_has_weapon = 1;
+		}
 	}
 	return player_has_weapon;
 }
@@ -1490,7 +1496,7 @@ function pers_nube_ammo_hint_string(player, weapon)
 	ammo_cost = 0;
 	if(!zm_pers_upgrades::is_pers_system_active())
 	{
-		return 0;
+		return false;
 	}
 	if(weapon.name == "rottweil72")
 	{
@@ -1498,11 +1504,11 @@ function pers_nube_ammo_hint_string(player, weapon)
 	}
 	if(!ammo_cost)
 	{
-		return 0;
+		return false;
 	}
 	self.stub.hint_string = &"ZOMBIE_WEAPONAMMOONLY";
 	self sethintstring(self.stub.hint_string, ammo_cost);
-	return 1;
+	return true;
 }
 
 /*

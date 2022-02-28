@@ -64,13 +64,13 @@ function function_622ad391()
 	level.var_de98e3ce.var_179b5b71 = 0;
 	level thread function_fa149742();
 	level flag::wait_till("dragon_egg_acquired");
-	foreach(var_1c6d03e, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player clientfield::set_player_uimodel("zmInventory.progress_egg", 0.2);
 	}
 	level thread function_5d1a6241();
 	level flag::wait_till("egg_awakened");
-	foreach(var_cf345ee5, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player clientfield::set_player_uimodel("zmInventory.progress_egg", 0.4);
 	}
@@ -78,7 +78,7 @@ function function_622ad391()
 	level.var_de98e3ce.var_f22951fa = 0;
 	level thread function_e8c061f7();
 	level waittill(#"hash_68bf9f79");
-	foreach(var_fdefe801, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player clientfield::set_player_uimodel("zmInventory.progress_egg", 0.6);
 	}
@@ -86,7 +86,7 @@ function function_622ad391()
 	level.var_de98e3ce.var_56c226f4 = 0;
 	level thread function_ba9bd748();
 	level waittill(#"hash_b227a45b");
-	foreach(var_a6459b26, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player clientfield::set_player_uimodel("zmInventory.progress_egg", 0.8);
 	}
@@ -94,7 +94,7 @@ function function_622ad391()
 	level.var_de98e3ce.var_b57ab994 = 0;
 	level thread function_cf16e2bc();
 	level waittill(#"hash_9b46a273");
-	foreach(var_b4699140, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player clientfield::set_player_uimodel("zmInventory.progress_egg", 1);
 	}
@@ -119,7 +119,7 @@ function function_fa149742()
 	var_200dbf9d thread function_a3a149a9();
 	level waittill(#"hash_698d88e1");
 	var_9c840b49 = struct::get_array("dragon_egg_pickup", "targetname");
-	foreach(var_32d69962, var_21e43ff6 in var_9c840b49)
+	foreach(var_21e43ff6 in var_9c840b49)
 	{
 		var_21e43ff6 zm_unitrigger::create_unitrigger(&"ZM_STALINGRAD_EGG_PICKUP", 64, &function_61ab1070, &function_cee6cb2a);
 	}
@@ -155,10 +155,10 @@ function function_61ab1070(player)
 	if(level flag::get("dragon_egg_acquired"))
 	{
 		self sethintstring("");
-		return 0;
+		return false;
 	}
 	self sethintstring(&"ZM_STALINGRAD_EGG_PICKUP");
-	return 1;
+	return true;
 }
 
 /*
@@ -199,7 +199,7 @@ function function_9a76ebf9(s_stub)
 {
 	var_e0c16f1a = getent("pavlov_boards_egg", "targetname");
 	var_e0c16f1a delete();
-	foreach(var_7e4e54bc, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player playsound("zmb_drag_egg_pickup");
 		player clientfield::set_player_uimodel("zmInventory.piece_egg", 1);
@@ -222,7 +222,7 @@ function function_5d1a6241()
 	level flag::wait_till("dragon_egg_acquired");
 	level clientfield::set("force_stream_dragon_egg", 1);
 	level.var_de98e3ce.var_9cd2418f = struct::get_array("egg_cook_loc");
-	foreach(var_706613a0, s_loc in level.var_de98e3ce.var_9cd2418f)
+	foreach(s_loc in level.var_de98e3ce.var_9cd2418f)
 	{
 		s_loc.var_a1914ebb = 0;
 		s_loc zm_unitrigger::create_unitrigger(&"ZM_STALINGRAD_EGG_PLACE", 32, &function_3e93cfea, &function_48a9eab7);
@@ -243,25 +243,25 @@ function function_3e93cfea(e_player)
 	if(level flag::get("egg_awakened"))
 	{
 		self sethintstring("");
-		return 0;
+		return false;
 	}
 	if(level flag::get("egg_cooled_hazard") && self.stub.related_parent.var_a1914ebb)
 	{
 		self sethintstring(&"ZM_STALINGRAD_EGG_RETRIEVE");
-		return 1;
+		return true;
 	}
 	if(level flag::get("egg_bathed_in_flame") && self.stub.related_parent.var_a1914ebb)
 	{
 		self sethintstring(&"ZM_STALINGRAD_EGG_TOO_HOT");
-		return 0;
+		return false;
 	}
 	if(level flag::get("dragon_egg_acquired") && !level flag::get("egg_placed_in_hazard"))
 	{
 		self sethintstring(&"ZM_STALINGRAD_EGG_PLACE");
-		return 1;
+		return true;
 	}
 	self sethintstring("");
-	return 0;
+	return false;
 }
 
 /*
@@ -307,7 +307,7 @@ function function_48a9eab7()
 */
 function function_d0ba871e()
 {
-	foreach(var_28ee6433, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player clientfield::set_player_uimodel("zmInventory.piece_egg", 0);
 	}
@@ -331,7 +331,7 @@ function function_d0ba871e()
 function function_2455dd71(s_stub)
 {
 	level.var_de98e3ce.var_d54b9ade.var_62ceb838 delete();
-	foreach(var_66b88250, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player clientfield::set_player_uimodel("zmInventory.piece_egg", 1);
 	}
@@ -404,7 +404,7 @@ function function_8d5fd156(e_attacker)
 */
 function function_ba9bd748()
 {
-	foreach(var_b057f17e, player in level.players)
+	foreach(player in level.players)
 	{
 		player function_5ae27dcc();
 	}
@@ -527,13 +527,13 @@ function function_efaf3bd6(var_da90aa4c, str_damagemod)
 {
 	if(str_damagemod === "MOD_MELEE")
 	{
-		return 1;
+		return true;
 	}
 	if(var_da90aa4c.name === "dragonshield" || var_da90aa4c.name === "dragonshield_upgraded")
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -550,10 +550,10 @@ function function_cf2a342(player)
 	if(!level flag::get("egg_placed_incubator") && !level flag::get("gauntlet_quest_complete"))
 	{
 		self sethintstring(&"ZM_STALINGRAD_EGG_INCUBATE");
-		return 1;
+		return true;
 	}
 	self sethintstring("");
-	return 0;
+	return false;
 }
 
 /*
@@ -601,16 +601,16 @@ function function_59a929b0(s_stub)
 	var_2bf0ed11 = getentarray("pavlov_gate_collision", "targetname");
 	var_50e0150f = getentarray("pavlov_gate_visual", "targetname");
 	var_6f3f4356 = getnodearray("pavlovs_lockdown_stair_traverse", "targetname");
-	foreach(var_9dd63bcf, e_collision in var_2bf0ed11)
+	foreach(e_collision in var_2bf0ed11)
 	{
 		e_collision solid();
 		e_collision disconnectpaths();
 	}
-	foreach(var_b9c75d59, e_gate in var_50e0150f)
+	foreach(e_gate in var_50e0150f)
 	{
 		e_gate movez(600, 0.25);
 	}
-	foreach(var_1f6933ad, var_b0a376a4 in var_6f3f4356)
+	foreach(var_b0a376a4 in var_6f3f4356)
 	{
 		unlinktraversal(var_b0a376a4);
 	}
@@ -631,16 +631,16 @@ function function_59a929b0(s_stub)
 	level function_fd19472b();
 	level thread zm_stalingrad_vo::function_e4acaa37("vox_soph_whelp_quest_lockdown_end_0");
 	var_734c1c5a scene::play("p7_fxanim_zm_stal_dragon_incubator_finish_bundle");
-	foreach(var_1b2f7001, e_collision in var_2bf0ed11)
+	foreach(e_collision in var_2bf0ed11)
 	{
 		e_collision notsolid();
 		e_collision connectpaths();
 	}
-	foreach(var_3720918b, e_gate in var_50e0150f)
+	foreach(e_gate in var_50e0150f)
 	{
 		e_gate movez(-600, 0.25);
 	}
-	foreach(var_27bf66f1, var_b0a376a4 in var_6f3f4356)
+	foreach(var_b0a376a4 in var_6f3f4356)
 	{
 		linktraversal(var_b0a376a4);
 	}
@@ -874,12 +874,12 @@ function function_f621bb41()
 function function_1a7c9b89(var_a48df19e)
 {
 	var_604d90e0 = getentarray("lockdown_lights_" + var_a48df19e, "targetname");
-	foreach(var_829cb1c6, e_light in var_604d90e0)
+	foreach(e_light in var_604d90e0)
 	{
 		e_light fx::play("pavlov_lockdown_light", e_light.origin, e_light.angles, "lockdown_complete", 1);
 	}
 	level flag::wait_till("lockdown_complete");
-	foreach(var_9fe61d7c, e_light in var_604d90e0)
+	foreach(e_light in var_604d90e0)
 	{
 		e_light notify(#"lockdown_complete");
 		e_light kill();
@@ -919,20 +919,20 @@ function function_86e242(e_player)
 	if(!isdefined(var_21e43ff6))
 	{
 		self sethintstring("");
-		return 0;
+		return false;
 	}
 	if(!level flag::get("egg_cooled_incubator"))
 	{
 		self sethintstring(&"ZM_STALINGRAD_EGG_TOO_HOT");
-		return 0;
+		return false;
 	}
 	if(level.var_de98e3ce.var_987fcd7a && !level flag::get("gauntlet_quest_complete"))
 	{
 		self sethintstring(&"ZM_STALINGRAD_EGG_RETRIEVE");
-		return 1;
+		return true;
 	}
 	self sethintstring("");
-	return 0;
+	return false;
 }
 
 /*
@@ -950,7 +950,7 @@ function function_d29c33e()
 	self.var_62ceb838 delete();
 	zm_unitrigger::unregister_unitrigger(self.s_unitrigger);
 	level flag::set("gauntlet_quest_complete");
-	foreach(var_6f8ec018, e_player in level.activeplayers)
+	foreach(e_player in level.activeplayers)
 	{
 		e_player flag::set("flag_player_completed_challenge_4");
 		level scoreevents::processscoreevent("team_challenge_stalingrad", e_player);

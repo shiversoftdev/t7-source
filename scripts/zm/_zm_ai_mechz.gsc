@@ -39,7 +39,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_ai_mechz", &__init__, &__main__, undefined);
 }
@@ -97,7 +97,7 @@ function __init__()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function __main__()
+function private __main__()
 {
 	if(!isdefined(level.var_98b48f9c))
 	{
@@ -116,7 +116,7 @@ private function __main__()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_f20c04a4()
+function private function_f20c04a4()
 {
 	behaviortreenetworkutility::registerbehaviortreescriptapi("zmMechzTargetService", &function_c28caf48);
 }
@@ -130,15 +130,15 @@ private function function_f20c04a4()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_c28caf48(entity)
+function private function_c28caf48(entity)
 {
 	if(isdefined(entity.ignoreall) && entity.ignoreall)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(entity.destroy_octobomb))
 	{
-		return 0;
+		return false;
 	}
 	player = zm_utility::get_closest_valid_player(self.origin, self.ignore_player);
 	entity.favoriteenemy = player;
@@ -156,7 +156,7 @@ private function function_c28caf48(entity)
 			if(isdefined(level.b_mechz_true_ignore) && level.b_mechz_true_ignore)
 			{
 				entity setgoal(entity.origin);
-				return 0;
+				return false;
 			}
 		#/
 		if(isdefined(level.no_target_override))
@@ -167,7 +167,7 @@ private function function_c28caf48(entity)
 		{
 			entity setgoal(entity.origin);
 		}
-		return 0;
+		return false;
 	}
 	if(isdefined(level.enemy_location_override_func))
 	{
@@ -175,7 +175,7 @@ private function function_c28caf48(entity)
 		if(isdefined(enemy_ground_pos))
 		{
 			entity setgoal(enemy_ground_pos);
-			return 1;
+			return true;
 		}
 	}
 	playerpos = player.origin;
@@ -187,10 +187,10 @@ private function function_c28caf48(entity)
 	if(isdefined(targetpos))
 	{
 		entity setgoal(targetpos);
-		return 1;
+		return true;
 	}
 	entity setgoal(entity.origin);
-	return 0;
+	return false;
 }
 
 /*
@@ -220,7 +220,7 @@ function function_48cabef5()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_3d5df242()
+function private function_3d5df242()
 {
 	self.b_ignore_cleanup = 1;
 	self.is_mechz = 1;
@@ -244,7 +244,7 @@ private function function_3d5df242()
 	Parameters: 10
 	Flags: Linked, Private
 */
-private function function_ed70c868(einflictor, eattacker, idamage, idflags, smeansofdeath, sweapon, vpoint, vdir, shitloc, psoffsettime)
+function private function_ed70c868(einflictor, eattacker, idamage, idflags, smeansofdeath, sweapon, vpoint, vdir, shitloc, psoffsettime)
 {
 	if(isdefined(eattacker) && eattacker.archetype === "mechz" && smeansofdeath === "MOD_MELEE")
 	{
@@ -266,9 +266,9 @@ function function_58655f2a()
 {
 	if(!(isdefined(self.stun) && self.stun) && self.stumble_stun_cooldown_time < gettime())
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -397,11 +397,14 @@ function spawn_mechz(s_location, flyin = 0)
 				ai thread function_c441eaba(var_1750e965);
 				ai thread function_bbdc1f34(var_1750e965);
 			}
-			else if(isdefined(level.var_7d2a391d))
+			else
 			{
-				ai thread [[level.var_7d2a391d]]();
+				if(isdefined(level.var_7d2a391d))
+				{
+					ai thread [[level.var_7d2a391d]]();
+				}
+				ai.b_flyin_done = 1;
 			}
-			ai.b_flyin_done = 1;
 			ai thread function_bb048b27();
 			ai.ignore_round_robbin_death = 1;
 			/#
@@ -449,7 +452,7 @@ function function_c441eaba(var_678a2319)
 	var_44615973 = 2250000;
 	self waittill(#"hash_f93797a6");
 	a_zombies = getaiarchetypearray("zombie");
-	foreach(var_be251cee, e_zombie in a_zombies)
+	foreach(e_zombie in a_zombies)
 	{
 		dist_sq = distancesquared(e_zombie.origin, var_678a2319);
 		if(dist_sq <= var_b54110bd)
@@ -458,7 +461,7 @@ function function_c441eaba(var_678a2319)
 		}
 	}
 	a_players = getplayers();
-	foreach(var_8d26aabf, player in a_players)
+	foreach(player in a_players)
 	{
 		dist_sq = distancesquared(player.origin, var_678a2319);
 		if(dist_sq <= var_b54110bd)
@@ -508,7 +511,7 @@ function function_bbdc1f34(var_678a2319)
 	while(true)
 	{
 		a_players = getplayers();
-		foreach(var_6c62ab1c, player in a_players)
+		foreach(player in a_players)
 		{
 			dist_sq = distancesquared(player.origin, var_678a2319);
 			if(dist_sq <= var_f0dad551)
@@ -520,7 +523,7 @@ function function_bbdc1f34(var_678a2319)
 			}
 		}
 		a_zombies = zm_elemental_zombie::function_d41418b8();
-		foreach(var_5abe976f, e_zombie in a_zombies)
+		foreach(e_zombie in a_zombies)
 		{
 			dist_sq = distancesquared(e_zombie.origin, var_678a2319);
 			if(dist_sq <= var_f0dad551 && self.var_e05d0be2 !== 1)
@@ -663,7 +666,7 @@ function function_1add8026(mechz)
 {
 	flametrigger = mechz.flametrigger;
 	a_zombies = zm_elemental_zombie::function_d41418b8();
-	foreach(var_4dc1e15a, zombie in a_zombies)
+	foreach(zombie in a_zombies)
 	{
 		if(zombie istouching(flametrigger) && zombie.var_e05d0be2 !== 1)
 		{
@@ -713,7 +716,7 @@ function function_949a3fdf()
 	v_origin = self.origin;
 	a_ai = getaispeciesarray(level.zombie_team);
 	a_ai_kill_zombies = arraysortclosest(a_ai, v_origin, 18, 0, 200);
-	foreach(var_3635f2a4, ai_enemy in a_ai_kill_zombies)
+	foreach(ai_enemy in a_ai_kill_zombies)
 	{
 		if(isdefined(ai_enemy))
 		{
@@ -783,31 +786,34 @@ function function_3efae612(zombie)
 		zombie.knockdown_direction = "front";
 		zombie.getup_direction = "getup_back";
 	}
-	else if(dot < 0.5 && dot > -0.5)
+	else
 	{
-		dot = vectordot(zombie_to_mechz_2d, zombie_right_2d);
-		if(dot > 0)
+		if(dot < 0.5 && dot > -0.5)
 		{
-			zombie.knockdown_direction = "right";
-			if(math::cointoss())
+			dot = vectordot(zombie_to_mechz_2d, zombie_right_2d);
+			if(dot > 0)
 			{
-				zombie.getup_direction = "getup_back";
+				zombie.knockdown_direction = "right";
+				if(math::cointoss())
+				{
+					zombie.getup_direction = "getup_back";
+				}
+				else
+				{
+					zombie.getup_direction = "getup_belly";
+				}
 			}
 			else
 			{
+				zombie.knockdown_direction = "left";
 				zombie.getup_direction = "getup_belly";
 			}
 		}
 		else
 		{
-			zombie.knockdown_direction = "left";
+			zombie.knockdown_direction = "back";
 			zombie.getup_direction = "getup_belly";
 		}
-	}
-	else
-	{
-		zombie.knockdown_direction = "back";
-		zombie.getup_direction = "getup_belly";
 	}
 }
 
@@ -823,7 +829,7 @@ function function_3efae612(zombie)
 function function_55483494()
 {
 	a_zombies = getaiarchetypearray("zombie");
-	foreach(var_a3a3ed4c, zombie in a_zombies)
+	foreach(zombie in a_zombies)
 	{
 		dist_sq = distancesquared(self.origin, zombie.origin);
 		if(zombie function_10d36217(self) && dist_sq <= 12544)
@@ -854,14 +860,14 @@ function function_10d36217(mechz)
 	enemy_dot = vectordot(facing_yaw_vec, enemy_yaw_vec);
 	if(enemy_dot < 0.7)
 	{
-		return 0;
+		return false;
 	}
 	enemy_angles = vectortoangles(enemy_vec);
 	if(abs(angleclamp180(enemy_angles[0])) > 45)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -919,7 +925,7 @@ function function_75a79bb5()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_fbad70fd()
+function private function_fbad70fd()
 {
 	/#
 		level flagsys::wait_till("");
@@ -936,7 +942,7 @@ private function function_fbad70fd()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_94a24a91(cmd)
+function private function_94a24a91(cmd)
 {
 	/#
 		players = getplayers();

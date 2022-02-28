@@ -17,7 +17,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_stalingrad_ee_main", &__init__, undefined, undefined);
 }
@@ -100,11 +100,14 @@ function function_d1216748(localclientnum, oldval, newval, bnewent, binitialsnap
 		}
 		self.n_fx_id = playfxontag(localclientnum, level._effect["ee_anomaly_loop"], self, "tag_origin");
 	}
-	else if(isdefined(self.n_fx_id))
+	else
 	{
-		stopfx(localclientnum, self.n_fx_id);
+		if(isdefined(self.n_fx_id))
+		{
+			stopfx(localclientnum, self.n_fx_id);
+		}
+		self.n_fx_id = playfxontag(localclientnum, level._effect["ee_anomaly_talk"], self, "tag_origin");
 	}
-	self.n_fx_id = playfxontag(localclientnum, level._effect["ee_anomaly_talk"], self, "tag_origin");
 }
 
 /*
@@ -147,15 +150,18 @@ function function_5bdec411(localclientnum, oldval, newval, bnewent, binitialsnap
 		}
 		self.camerascannerfx = playfxontag(localclientnum, level._effect["ee_drone_cam"], self, "tag_flash");
 	}
-	else if(isdefined(self.camerascannerfx))
+	else
 	{
-		stopfx(localclientnum, self.camerascannerfx);
-		self.camerascannerfx = undefined;
-	}
-	if(isdefined(self.var_734c069))
-	{
-		self stoploopsound(self.var_734c069);
-		self.var_734c069 = undefined;
+		if(isdefined(self.camerascannerfx))
+		{
+			stopfx(localclientnum, self.camerascannerfx);
+			self.camerascannerfx = undefined;
+		}
+		if(isdefined(self.var_734c069))
+		{
+			self stoploopsound(self.var_734c069);
+			self.var_734c069 = undefined;
+		}
 	}
 }
 

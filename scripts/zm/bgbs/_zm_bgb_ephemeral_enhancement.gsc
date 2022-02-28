@@ -22,7 +22,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_bgb_ephemeral_enhancement", &__init__, undefined, "bgb");
 }
@@ -58,7 +58,7 @@ function __init__()
 */
 function validation()
 {
-	if(isdefined(self bgb::function_e2bcf80c()) && self bgb::function_e2bcf80c())
+	if(isdefined(self bgb::get_active()) && self bgb::get_active())
 	{
 		return 0;
 	}

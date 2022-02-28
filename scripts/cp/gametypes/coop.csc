@@ -13,7 +13,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	registerclientfield("playercorpse", "hide_body", 1, 1, "int", &function_d630ecfc, 0);
 	registerclientfield("toplayer", "killcam_menu", 1, 1, "int", &function_9f1677e1, 0);

@@ -21,7 +21,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	level.var_785a0d1e = &function_785a0d1e;
 	level.var_3b3eeb2e = [];
@@ -42,19 +42,19 @@ autoexec function init()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_b68ea33d()
+function private function_b68ea33d()
 {
 	if(isdefined(self.zone_name))
 	{
-		foreach(var_de433bf3, zone in level.var_3b3eeb2e)
+		foreach(zone in level.var_3b3eeb2e)
 		{
 			if(self.zone_name == zone)
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -66,7 +66,7 @@ private function function_b68ea33d()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_785a0d1e()
+function private function_785a0d1e()
 {
 	if(isdefined(self.favoriteenemy))
 	{
@@ -76,20 +76,20 @@ private function function_785a0d1e()
 			{
 				if(!self function_b68ea33d())
 				{
-					return 1;
+					return true;
 				}
 			}
 			else if(self function_b68ea33d())
 			{
-				return 1;
+				return true;
 			}
 		}
 		if(!self zm_zod::zombie_is_target_reachable(self.favoriteenemy))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -219,9 +219,9 @@ function function_8303722e()
 	var_73d2bce8 = level.zm_loc_types["margwa_location"].size < 1;
 	if(var_f52ee0b1 || var_73d2bce8 || !level flag::get("spawn_zombies") || !level flag::get("can_spawn_margwa"))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*

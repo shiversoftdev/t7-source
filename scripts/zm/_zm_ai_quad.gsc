@@ -29,7 +29,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_ai_quad", &__init__, undefined, undefined);
 }
@@ -50,14 +50,14 @@ function __init__()
 	{
 		register_overlay();
 	}
-	animationstatenetwork::registernotetrackhandlerfunction("quad_melee", &function_b783ed6b);
+	animationstatenetwork::registernotetrackhandlerfunction("quad_melee", &quadnotetrackmeleefire);
 	behaviortreenetworkutility::registerbehaviortreescriptapi("quadDeathAction", &quaddeathaction);
 	level thread aat::register_immunity("zm_aat_dead_wire", "zombie_quad", 1, 1, 1);
 	level thread aat::register_immunity("zm_aat_turned", "zombie_quad", 1, 1, 1);
 }
 
 /*
-	Name: function_b783ed6b
+	Name: quadnotetrackmeleefire
 	Namespace: zm_ai_quad
 	Checksum: 0x3F12100B
 	Offset: 0x630
@@ -65,7 +65,7 @@ function __init__()
 	Parameters: 1
 	Flags: Linked
 */
-function function_b783ed6b(entity)
+function quadnotetrackmeleefire(entity)
 {
 	entity melee();
 	/#
@@ -498,7 +498,7 @@ function quad_trail()
 function quad_post_death(einflictor, attacker, idamage, smeansofdeath, weapon, vdir, shitloc, psoffsettime)
 {
 	self zm_spawner::zombie_death_animscript();
-	return 0;
+	return false;
 }
 
 /*

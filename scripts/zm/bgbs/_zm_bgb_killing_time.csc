@@ -18,7 +18,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_bgb_killing_time", &__init__, undefined, undefined);
 }
@@ -117,7 +117,7 @@ function function_a81107fc(localclientnum, oldval, newval, bnewent, binitialsnap
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_10dcbf51(localclientnum, fxobj)
+function private function_10dcbf51(localclientnum, fxobj)
 {
 	fxobj playsound(localclientnum, "evt_ai_explode");
 	wait(1);

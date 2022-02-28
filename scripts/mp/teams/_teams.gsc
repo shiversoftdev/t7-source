@@ -19,7 +19,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("teams", &__init__, undefined, undefined);
 }
@@ -164,7 +164,7 @@ function track_played_time()
 	{
 		self.pers["totalTimePlayed"] = 0;
 	}
-	foreach(var_1db7f1c8, team in level.teams)
+	foreach(team in level.teams)
 	{
 		self.timeplayed[team] = 0;
 	}
@@ -255,7 +255,7 @@ function update_played_time()
 	pixbeginevent("updatePlayedTime");
 	if(level.rankedmatch || level.leaguematch)
 	{
-		foreach(var_7edb8e34, team in level.teams)
+		foreach(team in level.teams)
 		{
 			if(self.timeplayed[team])
 			{
@@ -288,7 +288,7 @@ function update_played_time()
 	{
 		return;
 	}
-	foreach(var_f18192b, team in level.teams)
+	foreach(team in level.teams)
 	{
 		self.timeplayed[team] = 0;
 	}
@@ -387,11 +387,11 @@ function count_players()
 {
 	players = level.players;
 	playercounts = [];
-	foreach(var_85736445, team in level.teams)
+	foreach(team in level.teams)
 	{
 		playercounts[team] = 0;
 	}
-	foreach(var_d006e2d8, player in level.players)
+	foreach(player in level.players)
 	{
 		if(player == self)
 		{
@@ -418,7 +418,7 @@ function count_players()
 function track_free_played_time()
 {
 	self endon(#"disconnect");
-	foreach(var_a785ca5e, team in level.teams)
+	foreach(team in level.teams)
 	{
 		self.timeplayed[team] = 0;
 	}
@@ -546,7 +546,7 @@ function getteamindex(team)
 */
 function getenemyteam(player_team)
 {
-	foreach(var_7e447106, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(team == player_team)
 		{
@@ -573,7 +573,7 @@ function getenemyteam(player_team)
 function getenemyplayers()
 {
 	enemies = [];
-	foreach(var_e4279757, player in level.players)
+	foreach(player in level.players)
 	{
 		if(player.team == "spectator")
 		{
@@ -607,7 +607,7 @@ function getenemyplayers()
 function getfriendlyplayers()
 {
 	friendlies = [];
-	foreach(var_4db1acdd, player in level.players)
+	foreach(player in level.players)
 	{
 		if(player.team == self.team && player != self)
 		{

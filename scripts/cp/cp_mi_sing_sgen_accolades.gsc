@@ -101,7 +101,7 @@ function function_d5c2bb53()
 function function_b5ffeeac()
 {
 	callback::on_ai_killed(&function_6b1e8f3c);
-	foreach(var_b1eaf32f, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player.var_f329477a = undefined;
 	}
@@ -159,7 +159,7 @@ function function_6b1e8f3c(params)
 */
 function function_3fafea6d()
 {
-	foreach(var_ef795c4e, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player.var_370e0a49 = 0;
 	}
@@ -263,21 +263,21 @@ function function_3dc86a1(params)
 {
 	if(params.weapon.type == "melee")
 	{
-		return 1;
+		return true;
 	}
 	if(params.smeansofdeath == "MOD_MELEE_WEAPON_BUTT")
 	{
-		return 1;
+		return true;
 	}
 	if(params.weapon.name == "hero_gravity_spikes_cyebercom")
 	{
-		return 1;
+		return true;
 	}
 	if(params.weapon.name == "hero_gravity_spikes_cyebercom_upgraded")
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -291,7 +291,7 @@ function function_3dc86a1(params)
 */
 function function_3be7776b()
 {
-	foreach(var_86ffd44, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player function_c05b6c67();
 	}
@@ -605,7 +605,7 @@ function function_bc2458f5()
 {
 	if(!level flag::get("flood_runner_escaped"))
 	{
-		foreach(var_749ec62d, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			player notify(#"hash_ff15c287");
 		}
@@ -623,7 +623,7 @@ function function_bc2458f5()
 */
 function function_c75f9c25()
 {
-	foreach(var_6c62ab1c, player in level.players)
+	foreach(player in level.players)
 	{
 		player notify(#"hash_4b80918a");
 	}
@@ -640,7 +640,7 @@ function function_c75f9c25()
 */
 function function_f3915502()
 {
-	foreach(var_eb9a29d, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player function_79aac6ce();
 	}
@@ -699,7 +699,7 @@ function function_962154a7()
 */
 function function_fde8c3ce()
 {
-	foreach(var_61ca7ae5, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		if(!player.var_bae308b3)
 		{
@@ -734,7 +734,7 @@ function function_e85e2afd(e_attacker)
 function function_a07abde9()
 {
 	callback::on_ai_killed(&function_89c51083);
-	foreach(var_3774249d, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player.var_9dbb738f = undefined;
 	}

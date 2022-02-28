@@ -159,7 +159,7 @@ function function_d9c0ed6()
 		}
 		while(level.var_4e4c9791.size > 0)
 		{
-			foreach(var_804320bd, zombie in level.var_4e4c9791)
+			foreach(zombie in level.var_4e4c9791)
 			{
 				if(zombie istouching(self))
 				{

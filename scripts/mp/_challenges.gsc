@@ -25,7 +25,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("challenges", &__init__, undefined, undefined);
 }
@@ -750,63 +750,69 @@ function challengekills(data)
 			player addplayerstat("kill_while_wallrunning_2_walls", 1);
 		}
 	}
-	else if(weapon_utils::ismeleemod(meansofdeath) && !isdefined(killstreak))
+	else
 	{
-		player addplayerstat("melee", 1);
-		if(weapon_utils::ispunch(weapon))
+		if(weapon_utils::ismeleemod(meansofdeath) && !isdefined(killstreak))
 		{
-			player addplayerstat("kill_enemy_with_fists", 1);
-		}
-		checkkillstreak5(baseweapon, player);
-	}
-	else if(weaponpurchased)
-	{
-		if(weapon == player.grenadetypeprimary)
-		{
-			if(player.challenge_scavengedcount > 0)
+			player addplayerstat("melee", 1);
+			if(weapon_utils::ispunch(weapon))
 			{
-				player.challenge_resuppliednamekills++;
-				if(player.challenge_resuppliednamekills >= 3)
+				player addplayerstat("kill_enemy_with_fists", 1);
+			}
+			checkkillstreak5(baseweapon, player);
+		}
+		else
+		{
+			if(weaponpurchased)
+			{
+				if(weapon == player.grenadetypeprimary)
 				{
-					player addplayerstat("kills_3_resupplied_nade_one_life", 1);
-					player.challenge_resuppliednamekills = 0;
+					if(player.challenge_scavengedcount > 0)
+					{
+						player.challenge_resuppliednamekills++;
+						if(player.challenge_resuppliednamekills >= 3)
+						{
+							player addplayerstat("kills_3_resupplied_nade_one_life", 1);
+							player.challenge_resuppliednamekills = 0;
+						}
+						player.challenge_scavengedcount--;
+					}
 				}
-				player.challenge_scavengedcount--;
+				if(isdefined(inflictoriscooked))
+				{
+					if(inflictoriscooked == 1 && weapon.rootweapon.name != "hatchet")
+					{
+						player addplayerstat("kill_with_cooked_grenade", 1);
+					}
+				}
+				if(victimlaststunnedby === player)
+				{
+					if(weaponclass == "weapon_grenade")
+					{
+						player addplayerstat("kill_stun_lethal", 1);
+					}
+				}
+				if(baseweapon == level.weaponspecialcrossbow)
+				{
+					if(weapon.isdualwield)
+					{
+						checkdualwield(baseweapon, player, attacker, time, attackerwassprinting, attacker_sprint_end);
+					}
+				}
+				if(baseweapon == level.weaponshotgunenergy)
+				{
+					if(isdefined(victim.firsttimedamaged) && victim.firsttimedamaged == time)
+					{
+						player addplayerstat("kill_enemy_one_bullet_shotgun", 1);
+						player addweaponstat(weapon, "kill_enemy_one_bullet_shotgun", 1);
+					}
+				}
 			}
-		}
-		if(isdefined(inflictoriscooked))
-		{
-			if(inflictoriscooked == 1 && weapon.rootweapon.name != "hatchet")
+			if(baseweapon.forcedamagehitlocation || baseweapon == level.weaponspecialcrossbow || baseweapon == level.weaponshotgunenergy || baseweapon == level.weaponspecialdiscgun || baseweapon == level.weaponballisticknife || baseweapon == level.weaponlauncherex41)
 			{
-				player addplayerstat("kill_with_cooked_grenade", 1);
+				checkkillstreak5(baseweapon, player);
 			}
 		}
-		if(victimlaststunnedby === player)
-		{
-			if(weaponclass == "weapon_grenade")
-			{
-				player addplayerstat("kill_stun_lethal", 1);
-			}
-		}
-		if(baseweapon == level.weaponspecialcrossbow)
-		{
-			if(weapon.isdualwield)
-			{
-				checkdualwield(baseweapon, player, attacker, time, attackerwassprinting, attacker_sprint_end);
-			}
-		}
-		if(baseweapon == level.weaponshotgunenergy)
-		{
-			if(isdefined(victim.firsttimedamaged) && victim.firsttimedamaged == time)
-			{
-				player addplayerstat("kill_enemy_one_bullet_shotgun", 1);
-				player addweaponstat(weapon, "kill_enemy_one_bullet_shotgun", 1);
-			}
-		}
-	}
-	if(baseweapon.forcedamagehitlocation || baseweapon == level.weaponspecialcrossbow || baseweapon == level.weaponshotgunenergy || baseweapon == level.weaponspecialdiscgun || baseweapon == level.weaponballisticknife || baseweapon == level.weaponlauncherex41)
-	{
-		checkkillstreak5(baseweapon, player);
 	}
 	if(isdefined(attacker.tookweaponfrom[weapon]) && isdefined(attacker.tookweaponfrom[weapon].previousowner))
 	{
@@ -886,7 +892,7 @@ function challengekills(data)
 			if(victimattackersthisspawn.size > 5)
 			{
 				attackercount = 0;
-				foreach(var_1d25397b, attacking_player in victimattackersthisspawn)
+				foreach(attacking_player in victimattackersthisspawn)
 				{
 					if(!isdefined(attacking_player))
 					{
@@ -1018,7 +1024,7 @@ function challengekills(data)
 			{
 				activekillstreaks = victim killstreaks::getactivekillstreaks();
 				awarded_kill_blindeye_ghost_aircraft = 0;
-				foreach(var_a85ba213, activestreak in activekillstreaks)
+				foreach(activestreak in activekillstreaks)
 				{
 					if(awarded_kill_blindeye_ghost_aircraft)
 					{
@@ -1267,7 +1273,7 @@ function challengekills(data)
 			should_award_kill_near_plant_engineer_hardwired = 0;
 			if(isdefined(victimactivebouncingbetties))
 			{
-				foreach(var_b6728ccf, bouncingbettyinfo in victimactivebouncingbetties)
+				foreach(bouncingbettyinfo in victimactivebouncingbetties)
 				{
 					if(!isdefined(bouncingbettyinfo) || !isdefined(bouncingbettyinfo.origin))
 					{
@@ -1282,7 +1288,7 @@ function challengekills(data)
 			}
 			if(isdefined(victimactiveproximitygrenades) && should_award_kill_near_plant_engineer_hardwired == 0)
 			{
-				foreach(var_496859b6, proximitygrenadeinfo in victimactiveproximitygrenades)
+				foreach(proximitygrenadeinfo in victimactiveproximitygrenades)
 				{
 					if(!isdefined(proximitygrenadeinfo) || !isdefined(proximitygrenadeinfo.origin))
 					{
@@ -1501,7 +1507,7 @@ function completed_specific_challenge(target_value, challenge_name)
 */
 function tally_completed_challenge(target_value, challenge_name)
 {
-	return (self completed_specific_challenge(target_value, challenge_name) ? 1 : 0);
+	return true;
 }
 
 /*

@@ -18,7 +18,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("perks", &__init__, undefined, undefined);
 }
@@ -221,12 +221,12 @@ function array_equal(&a, &b)
 			{
 				if(!a[i] === b[i])
 				{
-					return 0;
+					return false;
 				}
 			}
-			return 1;
+			return true;
 		}
-		return 0;
+		return false;
 	#/
 }
 
@@ -276,7 +276,7 @@ function get_players(local_client_num)
 	entities = getentarray(local_client_num);
 	if(isdefined(entities))
 	{
-		foreach(var_f18192b, ent in entities)
+		foreach(ent in entities)
 		{
 			if(ent isplayer())
 			{
@@ -302,7 +302,7 @@ function monitor_tracker_existing_players(local_client_num)
 	self endon(#"monitor_tracker_existing_players");
 	self notify(#"monitor_tracker_existing_players");
 	players = getplayers(local_client_num);
-	foreach(var_ca53498e, player in players)
+	foreach(player in players)
 	{
 		if(isdefined(player) && player != self)
 		{
@@ -504,7 +504,7 @@ function killtrackerfx_on_death(local_client_num)
 	self.killtrackerfx = killtrackerfx;
 	self waittill(#"entityshutdown");
 	servertime = getservertime(local_client_num);
-	foreach(var_4121b5ed, killfxstruct in killtrackerfx.array)
+	foreach(killfxstruct in killtrackerfx.array)
 	{
 		if(isdefined(killfxstruct) && (killfxstruct.time + 5000) > servertime)
 		{
@@ -549,13 +549,16 @@ function gettrackerfxposition(local_client_num)
 				fx = "player/fx_plyr_flying_tracker_r";
 			}
 		}
-		else if(playfastfx)
-		{
-			fx = "player/fx_plyr_flying_tracker_lf";
-		}
 		else
 		{
-			fx = "player/fx_plyr_flying_tracker_l";
+			if(playfastfx)
+			{
+				fx = "player/fx_plyr_flying_tracker_lf";
+			}
+			else
+			{
+				fx = "player/fx_plyr_flying_tracker_l";
+			}
 		}
 	}
 	else
@@ -573,13 +576,16 @@ function gettrackerfxposition(local_client_num)
 				fx = "player/fx_plyr_footstep_tracker_r";
 			}
 		}
-		else if(playfastfx)
-		{
-			fx = "player/fx_plyr_footstep_tracker_lf";
-		}
 		else
 		{
-			fx = "player/fx_plyr_footstep_tracker_l";
+			if(playfastfx)
+			{
+				fx = "player/fx_plyr_footstep_tracker_lf";
+			}
+			else
+			{
+				fx = "player/fx_plyr_footstep_tracker_l";
+			}
 		}
 	}
 	pos = self.origin + offset;
@@ -673,7 +679,7 @@ function monitor_detectnearbyenemies(local_client_num)
 		players = getplayers(local_client_num);
 		clones = getclones(local_client_num);
 		sixthsenseents = arraycombine(players, clones, 0, 0);
-		foreach(var_f52cf598, sixthsenseent in sixthsenseents)
+		foreach(sixthsenseent in sixthsenseents)
 		{
 			if(sixthsenseent isfriendly(local_client_num, 1) || sixthsenseent == localplayer)
 			{

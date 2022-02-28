@@ -77,25 +77,34 @@ function function_2a1f20f9(localclientnum, oldval, newval, bnewent, binitialsnap
 		self thread postfx::playpostfxbundle("pstfx_arrow_demongate");
 		playsound(0, "zmb_ee_resurrect_enter_circle", (0, 0, 0));
 	}
-	else if(newval == 2)
-	{
-		self thread postfx::playpostfxbundle("pstfx_arrow_rune");
-		playsound(0, "zmb_ee_resurrect_enter_circle", (0, 0, 0));
-	}
-	else if(newval == 3)
-	{
-		self thread postfx::playpostfxbundle("pstfx_arrow_elemental");
-		playsound(0, "zmb_ee_resurrect_enter_circle", (0, 0, 0));
-	}
-	else if(newval == 4)
-	{
-		self thread postfx::playpostfxbundle("pstfx_arrow_wolf");
-		playsound(0, "zmb_ee_resurrect_enter_circle", (0, 0, 0));
-	}
 	else
 	{
-		self thread postfx::stoppostfxbundle();
-		playsound(0, "zmb_ee_resurrect_leave_circle", (0, 0, 0));
+		if(newval == 2)
+		{
+			self thread postfx::playpostfxbundle("pstfx_arrow_rune");
+			playsound(0, "zmb_ee_resurrect_enter_circle", (0, 0, 0));
+		}
+		else
+		{
+			if(newval == 3)
+			{
+				self thread postfx::playpostfxbundle("pstfx_arrow_elemental");
+				playsound(0, "zmb_ee_resurrect_enter_circle", (0, 0, 0));
+			}
+			else
+			{
+				if(newval == 4)
+				{
+					self thread postfx::playpostfxbundle("pstfx_arrow_wolf");
+					playsound(0, "zmb_ee_resurrect_enter_circle", (0, 0, 0));
+				}
+				else
+				{
+					self thread postfx::stoppostfxbundle();
+					playsound(0, "zmb_ee_resurrect_leave_circle", (0, 0, 0));
+				}
+			}
+		}
 	}
 }
 
@@ -135,13 +144,16 @@ function channeling_stone_glow(localclientnum, oldval, newval, bnewent, binitial
 			wait(0.01);
 		}
 	}
-	else if(newval == 2)
-	{
-		self mapshaderconstant(localclientnum, 0, "scriptVector2", 0, 1, 0);
-	}
 	else
 	{
-		self mapshaderconstant(localclientnum, 0, "scriptVector2", 0, 0, 0);
+		if(newval == 2)
+		{
+			self mapshaderconstant(localclientnum, 0, "scriptVector2", 0, 1, 0);
+		}
+		else
+		{
+			self mapshaderconstant(localclientnum, 0, "scriptVector2", 0, 0, 0);
+		}
 	}
 }
 

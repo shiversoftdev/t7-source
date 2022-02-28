@@ -33,7 +33,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_island_side_ee_song", &__init__, undefined, undefined);
 }
@@ -196,20 +196,20 @@ function function_aed87222(cmd)
 			case "":
 			{
 				level.var_c911c0a2[0] function_f86c981f();
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				level.var_c911c0a2[1] function_f86c981f();
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				level.var_c911c0a2[2] function_f86c981f();
-				return 1;
+				return true;
 			}
 		}
-		return 0;
+		return false;
 	#/
 }
 
@@ -271,7 +271,7 @@ function function_76bcb530()
 		return;
 	}
 	var_f59c3cb2 = array::sort_by_script_int(var_f59c3cb2, 1);
-	foreach(var_e9159ec2, pod in var_f59c3cb2)
+	foreach(pod in var_f59c3cb2)
 	{
 		pod thread function_69208549();
 	}

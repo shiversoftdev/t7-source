@@ -103,7 +103,7 @@ function hackerloopfx()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _hacked_callback(hacker)
+function private _hacked_callback(hacker)
 {
 	killstreak = self;
 	originalowner = killstreak.owner;
@@ -212,18 +212,26 @@ function _update_health(hacker)
 	{
 		killstreak [[killstreak.hackedhealthupdatecallback]](hacker);
 	}
-	else if(issentient(killstreak))
+	else
 	{
-		hackedhealth = killstreak_bundles::get_hacked_health(killstreak.killstreaktype);
-		/#
-			assert(isdefined(hackedhealth));
-		#/
-		if(self.health > hackedhealth)
+		if(issentient(killstreak))
 		{
-			self.health = hackedhealth;
+			hackedhealth = killstreak_bundles::get_hacked_health(killstreak.killstreaktype);
+			/#
+				assert(isdefined(hackedhealth));
+			#/
+			if(self.health > hackedhealth)
+			{
+				self.health = hackedhealth;
+			}
+		}
+		else
+		{
+			/#
+				hacker iprintlnbold("");
+			#/
 		}
 	}
-	hacker iprintlnbold("");
 }
 
 /*

@@ -78,7 +78,7 @@ function onstartgametype()
 	spawning::create_map_placed_influencers();
 	level.spawnmins = (0, 0, 0);
 	level.spawnmaxs = (0, 0, 0);
-	foreach(var_c236bcb0, team in level.teams)
+	foreach(team in level.teams)
 	{
 		util::setobjectivetext(team, &"OBJECTIVES_TDM");
 		util::setobjectivehinttext(team, &"OBJECTIVES_TDM_HINT");
@@ -95,7 +95,7 @@ function onstartgametype()
 	}
 	spawning::updateallspawnpoints();
 	level.spawn_start = [];
-	foreach(var_70e1f623, team in level.teams)
+	foreach(team in level.teams)
 	{
 		level.spawn_start[team] = spawnlogic::get_spawnpoint_array(spawning::gettdmstartspawnname(team));
 	}
@@ -168,7 +168,7 @@ function onroundswitch()
 	game["switchedsides"] = !game["switchedsides"];
 	if(level.scoreroundwinbased)
 	{
-		foreach(var_e9159ec2, team in level.teams)
+		foreach(team in level.teams)
 		{
 			[[level._setteamscore]](team, game["roundswon"][team]);
 		}
@@ -188,7 +188,7 @@ function onroundendgame(roundwinner)
 {
 	if(level.scoreroundwinbased)
 	{
-		foreach(var_71be5dcc, team in level.teams)
+		foreach(team in level.teams)
 		{
 			[[level._setteamscore]](team, game["roundswon"][team]);
 		}
@@ -216,7 +216,7 @@ function onscoreclosemusic()
 		scorelimitcheck = scorelimit - 10;
 		topscore = 0;
 		runnerupscore = 0;
-		foreach(var_f2d46208, team in level.teams)
+		foreach(team in level.teams)
 		{
 			score = [[level._getteamscore]](team);
 			if(score > topscore)

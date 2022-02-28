@@ -69,7 +69,7 @@ function function_9a03e439()
 	thread function_55b919e6();
 	var_58b16a23 = getentarray("random_perk_machine", "script_notify");
 	a_s_random_perk_locs = struct::get_array("perk_random_machine_location", "targetname");
-	foreach(var_3ffee1ad, var_5bca5a82 in var_58b16a23)
+	foreach(var_5bca5a82 in var_58b16a23)
 	{
 		str_zone = zm_zonemgr::get_zone_from_position(var_5bca5a82.origin, 1);
 		switch(str_zone)
@@ -90,7 +90,7 @@ function function_9a03e439()
 				break;
 			}
 		}
-		foreach(var_c5bb5761, var_d2fb40be in a_s_random_perk_locs)
+		foreach(var_d2fb40be in a_s_random_perk_locs)
 		{
 			if(zm_zonemgr::get_zone_from_position(var_d2fb40be.origin, 1) == str_zone)
 			{

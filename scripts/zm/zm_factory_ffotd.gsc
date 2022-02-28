@@ -74,7 +74,7 @@ function function_1c45822c()
 {
 	level waittill(#"start_zombie_round_logic");
 	var_5381c01a = struct::get_array("player_respawn_point", "targetname");
-	foreach(var_27c94aa7, s_respawn in var_5381c01a)
+	foreach(s_respawn in var_5381c01a)
 	{
 		if(s_respawn.script_noteworthy === "reciever_zone")
 		{

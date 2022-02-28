@@ -21,7 +21,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_castle_ee_bossfight", &__init__, undefined, undefined);
 }
@@ -131,20 +131,23 @@ function boss_mpd_fx(localclientnum, oldval, newval, bnewent, binitialsnap, fiel
 		self.var_20e08654 = playfxontag(localclientnum, level._effect["boss_mpd_mist"], self, "j_robe_front_03");
 		self.var_40ad10ca = playfxontag(localclientnum, level._effect["boss_mpd_mouth"], self, "j_head");
 	}
-	else if(isdefined(self.var_3b5b8133))
+	else
 	{
-		deletefx(localclientnum, self.var_3b5b8133, 0);
-		self.var_3b5b8133 = undefined;
-	}
-	if(isdefined(self.var_20e08654))
-	{
-		deletefx(localclientnum, self.var_20e08654, 0);
-		self.var_20e08654 = undefined;
-	}
-	if(isdefined(self.var_40ad10ca))
-	{
-		deletefx(localclientnum, self.var_40ad10ca, 0);
-		self.var_40ad10ca = undefined;
+		if(isdefined(self.var_3b5b8133))
+		{
+			deletefx(localclientnum, self.var_3b5b8133, 0);
+			self.var_3b5b8133 = undefined;
+		}
+		if(isdefined(self.var_20e08654))
+		{
+			deletefx(localclientnum, self.var_20e08654, 0);
+			self.var_20e08654 = undefined;
+		}
+		if(isdefined(self.var_40ad10ca))
+		{
+			deletefx(localclientnum, self.var_40ad10ca, 0);
+			self.var_40ad10ca = undefined;
+		}
 	}
 }
 
@@ -165,20 +168,23 @@ function boss_fx(localclientnum, oldval, newval, bnewent, binitialsnap, fieldnam
 		self.var_20e08654 = playfxontag(localclientnum, level._effect["boss_mist"], self, "j_robe_front_03");
 		self.var_40ad10ca = playfxontag(localclientnum, level._effect["boss_mouth"], self, "j_head");
 	}
-	else if(isdefined(self.var_3b5b8133))
+	else
 	{
-		deletefx(localclientnum, self.var_3b5b8133, 0);
-		self.var_3b5b8133 = undefined;
-	}
-	if(isdefined(self.var_20e08654))
-	{
-		deletefx(localclientnum, self.var_20e08654, 0);
-		self.var_20e08654 = undefined;
-	}
-	if(isdefined(self.var_40ad10ca))
-	{
-		deletefx(localclientnum, self.var_40ad10ca, 0);
-		self.var_40ad10ca = undefined;
+		if(isdefined(self.var_3b5b8133))
+		{
+			deletefx(localclientnum, self.var_3b5b8133, 0);
+			self.var_3b5b8133 = undefined;
+		}
+		if(isdefined(self.var_20e08654))
+		{
+			deletefx(localclientnum, self.var_20e08654, 0);
+			self.var_20e08654 = undefined;
+		}
+		if(isdefined(self.var_40ad10ca))
+		{
+			deletefx(localclientnum, self.var_40ad10ca, 0);
+			self.var_40ad10ca = undefined;
+		}
 	}
 }
 
@@ -358,13 +364,16 @@ function boss_elemental_storm_explode_fx(localclientnum, oldval, newval, bnewent
 		}
 		self.var_b1fe1ee = playfxontag(localclientnum, level._effect["boss_elemental_storm_explode_loop"], self, "tag_origin");
 	}
-	else if(isdefined(self.var_b1fe1ee))
+	else
 	{
-		deletefx(localclientnum, self.var_b1fe1ee, 0);
-		self.var_53f7dac0 = undefined;
+		if(isdefined(self.var_b1fe1ee))
+		{
+			deletefx(localclientnum, self.var_b1fe1ee, 0);
+			self.var_53f7dac0 = undefined;
+		}
+		wait(0.4);
+		self.var_53f7dac0 = playfxontag(localclientnum, level._effect["boss_elemental_storm_explode_end"], self, "tag_origin");
 	}
-	wait(0.4);
-	self.var_53f7dac0 = playfxontag(localclientnum, level._effect["boss_elemental_storm_explode_end"], self, "tag_origin");
 }
 
 /*
@@ -429,18 +438,21 @@ function boss_demongate_cast_fx(localclientnum, oldval, newval, bnewent, binitia
 		wait(0.45);
 		self.var_fd0edd83 = playfxontag(localclientnum, level._effect["boss_demongate_portal_loop"], self, "tag_weapon_right");
 	}
-	else if(isdefined(self.var_fd0edd83))
+	else
 	{
-		playfx(localclientnum, level._effect["boss_demongate_portal_close"], self.origin, anglestoforward(self.angles));
+		if(isdefined(self.var_fd0edd83))
+		{
+			playfx(localclientnum, level._effect["boss_demongate_portal_close"], self.origin, anglestoforward(self.angles));
+		}
+		if(isdefined(self.var_4b6fd850))
+		{
+			self stoploopsound(self.var_4b6fd850, 1);
+			self.var_4b6fd850 = undefined;
+		}
+		wait(0.45);
+		deletefx(localclientnum, self.var_fd0edd83, 0);
+		self.var_fd0edd83 = undefined;
 	}
-	if(isdefined(self.var_4b6fd850))
-	{
-		self stoploopsound(self.var_4b6fd850, 1);
-		self.var_4b6fd850 = undefined;
-	}
-	wait(0.45);
-	deletefx(localclientnum, self.var_fd0edd83, 0);
-	self.var_fd0edd83 = undefined;
 }
 
 /*
@@ -464,18 +476,21 @@ function boss_demongate_chomper_fx(localclientnum, oldval, newval, bnewent, bini
 		self.var_a581816a = playfxontag(localclientnum, level._effect["boss_demongate_chomper_trail"], self, "tag_fx");
 		self.var_965cdbdb = self playloopsound("zmb_keeper_demongate_chomper_lp", 1);
 	}
-	else if(isdefined(self.var_a581816a))
+	else
 	{
-		deletefx(localclientnum, self.var_a581816a, 0);
-		self.var_a581816a = undefined;
+		if(isdefined(self.var_a581816a))
+		{
+			deletefx(localclientnum, self.var_a581816a, 0);
+			self.var_a581816a = undefined;
+		}
+		if(isdefined(self.var_965cdbdb))
+		{
+			self stoploopsound(self.var_965cdbdb, 0.5);
+			self.var_965cdbdb = undefined;
+		}
+		self playsound(0, "zmb_keeper_demongate_chomper_disappear");
+		playfxontag(localclientnum, level._effect["boss_demongate_chomper_despawn"], self, "tag_fx");
 	}
-	if(isdefined(self.var_965cdbdb))
-	{
-		self stoploopsound(self.var_965cdbdb, 0.5);
-		self.var_965cdbdb = undefined;
-	}
-	self playsound(0, "zmb_keeper_demongate_chomper_disappear");
-	playfxontag(localclientnum, level._effect["boss_demongate_chomper_despawn"], self, "tag_fx");
 }
 
 /*

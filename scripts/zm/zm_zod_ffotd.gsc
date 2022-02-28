@@ -27,7 +27,7 @@ function main_start()
 	level.var_42792b8b = 1;
 	var_aab32ea1 = struct::get("zone_canal_junction", "script_noteworthy");
 	var_eab52f41 = struct::get_array(var_aab32ea1.target, "targetname");
-	foreach(var_4a103a8c, var_fae9adb3 in var_eab52f41)
+	foreach(var_fae9adb3 in var_eab52f41)
 	{
 		var_fae9adb3.origin = var_fae9adb3.origin + vectorscale((0, 0, 1), 12);
 		switch(var_fae9adb3.script_int)

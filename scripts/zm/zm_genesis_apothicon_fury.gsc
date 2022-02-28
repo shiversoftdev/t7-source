@@ -36,7 +36,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_genesis_apothicon_fury", &__init__, undefined, undefined);
 }
@@ -154,7 +154,7 @@ function function_21bbe70d(v_origin, v_angles, var_8d71b2b8)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_7ba80ea7()
+function private function_7ba80ea7()
 {
 	self.is_zombie = 1;
 	zombiehealth = level.zombie_health;
@@ -166,13 +166,16 @@ private function function_7ba80ea7()
 	{
 		self.maxhealth = zombiehealth * 1.2;
 	}
-	else if(level.round_number <= 50)
-	{
-		self.maxhealth = zombiehealth * 1.5;
-	}
 	else
 	{
-		self.maxhealth = zombiehealth * 1.7;
+		if(level.round_number <= 50)
+		{
+			self.maxhealth = zombiehealth * 1.5;
+		}
+		else
+		{
+			self.maxhealth = zombiehealth * 1.7;
+		}
 	}
 	if(!isdefined(self.maxhealth) || self.maxhealth <= 0 || self.maxhealth > 2147483647 || self.maxhealth != self.maxhealth)
 	{
@@ -190,7 +193,7 @@ private function function_7ba80ea7()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_1be68e3f()
+function private function_1be68e3f()
 {
 	self endon(#"death");
 	while(true)
@@ -389,7 +392,7 @@ function function_1dcdd145()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_bc2e7a98()
+function private function_bc2e7a98()
 {
 	/#
 		level flagsys::wait_till("");
@@ -406,7 +409,7 @@ private function function_bc2e7a98()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_744725d0(cmd)
+function private function_744725d0(cmd)
 {
 	if(cmd == "apothicon_fury_spawn")
 	{
@@ -418,59 +421,74 @@ private function function_744725d0(cmd)
 			level thread function_21bbe70d(origin, angles, 1);
 		}
 	}
-	else if(cmd == "apothicon_fury_walk")
+	else
 	{
-		ais = getaiarchetypearray("apothicon_fury");
-		foreach(var_fec26bf4, ai in ais)
+		if(cmd == "apothicon_fury_walk")
 		{
-			ai ai::set_behavior_attribute("move_speed", "walk");
-		}
-	}
-	else if(cmd == "apothicon_fury_sprint")
-	{
-		ais = getaiarchetypearray("apothicon_fury");
-		foreach(var_3668fa0a, ai in ais)
-		{
-			ai ai::set_behavior_attribute("move_speed", "sprint");
-		}
-	}
-	else if(cmd == "apothicon_fury_run")
-	{
-		ais = getaiarchetypearray("apothicon_fury");
-		foreach(var_dc96d9c8, ai in ais)
-		{
-			ai ai::set_behavior_attribute("move_speed", "run");
-		}
-	}
-	else if(cmd == "apothicon_fury_disable_bamf")
-	{
-		ais = getaiarchetypearray("apothicon_fury");
-		foreach(var_93e00c42, ai in ais)
-		{
-			ai ai::set_behavior_attribute("can_bamf", 0);
-			ai ai::set_behavior_attribute("can_juke", 0);
-		}
-	}
-	else if(cmd == "apothicon_fury_force_furious")
-	{
-		ais = getaiarchetypearray("apothicon_fury");
-		foreach(var_8855c9e5, ai in ais)
-		{
-			if(!(isdefined(ai.isfurious) && ai.isfurious))
+			ais = getaiarchetypearray("apothicon_fury");
+			foreach(ai in ais)
 			{
-				apothiconfurybehavior::apothiconfuriousmodeinit(ai);
+				ai ai::set_behavior_attribute("move_speed", "walk");
 			}
-		}
-	}
-	else if(cmd == "apothicon_fury_debug_health")
-	{
-		if(isdefined(level.var_2db0d4e8) && level.var_2db0d4e8)
-		{
-			level.var_2db0d4e8 = 0;
 		}
 		else
 		{
-			level.var_2db0d4e8 = 1;
+			if(cmd == "apothicon_fury_sprint")
+			{
+				ais = getaiarchetypearray("apothicon_fury");
+				foreach(ai in ais)
+				{
+					ai ai::set_behavior_attribute("move_speed", "sprint");
+				}
+			}
+			else
+			{
+				if(cmd == "apothicon_fury_run")
+				{
+					ais = getaiarchetypearray("apothicon_fury");
+					foreach(ai in ais)
+					{
+						ai ai::set_behavior_attribute("move_speed", "run");
+					}
+				}
+				else
+				{
+					if(cmd == "apothicon_fury_disable_bamf")
+					{
+						ais = getaiarchetypearray("apothicon_fury");
+						foreach(ai in ais)
+						{
+							ai ai::set_behavior_attribute("can_bamf", 0);
+							ai ai::set_behavior_attribute("can_juke", 0);
+						}
+					}
+					else
+					{
+						if(cmd == "apothicon_fury_force_furious")
+						{
+							ais = getaiarchetypearray("apothicon_fury");
+							foreach(ai in ais)
+							{
+								if(!(isdefined(ai.isfurious) && ai.isfurious))
+								{
+									apothiconfurybehavior::apothiconfuriousmodeinit(ai);
+								}
+							}
+						}
+						else if(cmd == "apothicon_fury_debug_health")
+						{
+							if(isdefined(level.var_2db0d4e8) && level.var_2db0d4e8)
+							{
+								level.var_2db0d4e8 = 0;
+							}
+							else
+							{
+								level.var_2db0d4e8 = 1;
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 	if(getdvarint("zombie_apothicon_health") > 0)

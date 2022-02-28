@@ -39,7 +39,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("cybercom", &init, &main, undefined);
 }
@@ -354,7 +354,7 @@ function on_player_spawned()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_b1497851(menu)
+function private function_b1497851(menu)
 {
 	self.cybercom.var_5e76d31b = 1;
 }
@@ -368,7 +368,7 @@ private function function_b1497851(menu)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_4d11675a(menu, response)
+function private function_4d11675a(menu, response)
 {
 	self.cybercom.var_5e76d31b = 0;
 }
@@ -560,7 +560,7 @@ function _cybercom_notify_toggle_on()
 		{
 			level clientfield::set("cybercom_disabled", 0);
 			setdvar("cybercom_enabled", 1);
-			foreach(var_1561be84, player in getplayers())
+			foreach(player in getplayers())
 			{
 				player enablecybercom();
 			}
@@ -592,7 +592,7 @@ function _cybercom_notify_toggle_off()
 		{
 			level clientfield::set("cybercom_disabled", 1);
 			setdvar("cybercom_enabled", 0);
-			foreach(var_1938a6c1, player in getplayers())
+			foreach(player in getplayers())
 			{
 				player disablecybercom();
 			}

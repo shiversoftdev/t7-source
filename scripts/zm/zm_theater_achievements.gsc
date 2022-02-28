@@ -21,7 +21,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_theater_achievements", &__init__, undefined, undefined);
 }
@@ -76,13 +76,13 @@ function achievement_sound_func(achievement_name_lower)
 */
 function onplayerconnect()
 {
-	self thread function_f2597520();
+	self thread achievement_ive_seen_some_things();
 	self thread function_24b05d89();
 	self thread function_6c831509();
 }
 
 /*
-	Name: function_f2597520
+	Name: achievement_ive_seen_some_things
 	Namespace: zm_theater_achievements
 	Checksum: 0xB1DD48B2
 	Offset: 0x400
@@ -90,7 +90,7 @@ function onplayerconnect()
 	Parameters: 0
 	Flags: Linked
 */
-function function_f2597520()
+function achievement_ive_seen_some_things()
 {
 	level endon(#"end_game");
 	self endon(#"disconnect");
@@ -183,7 +183,7 @@ function function_1abfde35(e_attacker)
 		var_3500dd7a = e_attacker.activated_by_player;
 		var_3500dd7a.var_386853b6[self.archetype]--;
 		var_fc3072e7 = 1;
-		foreach(var_a289c895, n_targets in var_3500dd7a.var_386853b6)
+		foreach(n_targets in var_3500dd7a.var_386853b6)
 		{
 			if(n_targets > 0)
 			{

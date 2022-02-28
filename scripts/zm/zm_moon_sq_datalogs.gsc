@@ -84,8 +84,8 @@ function log_qualifier()
 {
 	if(isdefined(self._has_log))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 

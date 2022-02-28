@@ -19,7 +19,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("factory_cleanup", &__init__, &__main__, undefined);
 }
@@ -75,7 +75,7 @@ function force_check_now()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function cleanup_main()
+function private cleanup_main()
 {
 	n_next_eval = 0;
 	while(true)
@@ -112,7 +112,7 @@ private function cleanup_main()
 		}
 		n_next_eval = n_next_eval + 3000;
 		a_ai_enemies = getaiteamarray("axis");
-		foreach(var_1db7f1c8, ai_enemy in a_ai_enemies)
+		foreach(ai_enemy in a_ai_enemies)
 		{
 			if(level.n_cleanups_processed_this_frame >= 1)
 			{
@@ -165,7 +165,7 @@ function do_cleanup_check(n_override_cleanup_dist)
 	{
 		n_dist_sq_min = 10000000;
 		e_closest_player = level.activeplayers[0];
-		foreach(var_b6a7dd8, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			n_dist_sq = distancesquared(self.origin, player.origin);
 			if(n_dist_sq < n_dist_sq_min)
@@ -178,13 +178,16 @@ function do_cleanup_check(n_override_cleanup_dist)
 		{
 			n_cleanup_dist_sq = n_override_cleanup_dist;
 		}
-		else if(isdefined(e_closest_player) && player_ahead_of_me(e_closest_player))
-		{
-			n_cleanup_dist_sq = 189225;
-		}
 		else
 		{
-			n_cleanup_dist_sq = 250000;
+			if(isdefined(e_closest_player) && player_ahead_of_me(e_closest_player))
+			{
+				n_cleanup_dist_sq = 189225;
+			}
+			else
+			{
+				n_cleanup_dist_sq = 250000;
+			}
 		}
 		if(n_dist_sq_min >= n_cleanup_dist_sq)
 		{
@@ -202,13 +205,13 @@ function do_cleanup_check(n_override_cleanup_dist)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function delete_zombie_noone_looking()
+function private delete_zombie_noone_looking()
 {
 	if(isdefined(self.in_the_ground) && self.in_the_ground)
 	{
 		return;
 	}
-	foreach(var_8f437e80, player in level.players)
+	foreach(player in level.players)
 	{
 		if(player.sessionstate == "spectator")
 		{
@@ -261,7 +264,7 @@ private function delete_zombie_noone_looking()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function player_can_see_me(player)
+function private player_can_see_me(player)
 {
 	v_player_angles = player getplayerangles();
 	v_player_forward = anglestoforward(v_player_angles);
@@ -270,9 +273,9 @@ private function player_can_see_me(player)
 	n_dot = vectordot(v_player_forward, v_player_to_self);
 	if(n_dot < 0.766)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -284,7 +287,7 @@ private function player_can_see_me(player)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function player_ahead_of_me(player)
+function private player_ahead_of_me(player)
 {
 	v_player_angles = player getplayerangles();
 	v_player_forward = anglestoforward(v_player_angles);
@@ -292,9 +295,9 @@ private function player_ahead_of_me(player)
 	n_dot = vectordot(v_player_forward, v_dir);
 	if(n_dot < 0)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -364,10 +367,10 @@ function get_adjacencies_to_zone(str_zone)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function get_wait_locations_in_zones(a_zones)
+function private get_wait_locations_in_zones(a_zones)
 {
 	a_wait_locations = [];
-	foreach(var_4ac760c6, zone in a_zones)
+	foreach(zone in a_zones)
 	{
 		a_wait_locations = arraycombine(a_wait_locations, level.zones[zone].a_loc_types["dog_location"], 0, 0);
 	}
@@ -383,7 +386,7 @@ private function get_wait_locations_in_zones(a_zones)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function get_farthest_wait_location(a_wait_locations)
+function private get_farthest_wait_location(a_wait_locations)
 {
 	if(!isdefined(a_wait_locations) || a_wait_locations.size == 0)
 	{
@@ -412,7 +415,7 @@ private function get_farthest_wait_location(a_wait_locations)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function get_wait_locations_in_zone(zone)
+function private get_wait_locations_in_zone(zone)
 {
 	if(isdefined(level.zones[zone].a_loc_types["dog_location"]))
 	{

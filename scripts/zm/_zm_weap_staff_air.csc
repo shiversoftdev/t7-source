@@ -15,7 +15,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_weap_staff_air", &__init__, undefined, undefined);
 }
@@ -158,17 +158,20 @@ function function_c6b66912(localclientnum, oldval, newval, bnewent, binitialsnap
 			self.sndent thread function_3a4d4e97();
 		}
 	}
-	else if(isdefined(level.var_c6b66912))
+	else
 	{
-		self.is_active = 0;
-		level.var_654c7116[localclientnum] = undefined;
-		stopfx(localclientnum, level.var_c6b66912);
-	}
-	if(isdefined(self.sndent))
-	{
-		self.sndent stoploopsound(self.sndent.n_id, 1.5);
-		self.sndent delete();
-		self.sndent = undefined;
+		if(isdefined(level.var_c6b66912))
+		{
+			self.is_active = 0;
+			level.var_654c7116[localclientnum] = undefined;
+			stopfx(localclientnum, level.var_c6b66912);
+		}
+		if(isdefined(self.sndent))
+		{
+			self.sndent stoploopsound(self.sndent.n_id, 1.5);
+			self.sndent delete();
+			self.sndent = undefined;
+		}
 	}
 }
 

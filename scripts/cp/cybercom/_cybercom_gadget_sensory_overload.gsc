@@ -201,37 +201,37 @@ function _is_primed(slot, weapon)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _lock_requirement(target)
+function private _lock_requirement(target)
 {
 	if(target cybercom::cybercom_aicheckoptout("cybercom_sensoryoverload"))
 	{
 		self cybercom::function_29bf9dee(target, 2);
-		return 0;
+		return false;
 	}
 	if(isdefined(target.is_disabled) && target.is_disabled)
 	{
 		self cybercom::function_29bf9dee(target, 6);
-		return 0;
+		return false;
 	}
 	if(isvehicle(target) || !isdefined(target.archetype))
 	{
 		self cybercom::function_29bf9dee(target, 2);
-		return 0;
+		return false;
 	}
 	if(target.archetype != "human" && target.archetype != "human_riotshield" && target.archetype != "warlord")
 	{
 		self cybercom::function_29bf9dee(target, 2);
-		return 0;
+		return false;
 	}
 	if(isactor(target) && target cybercom::function_78525729() != "stand" && target cybercom::function_78525729() != "crouch")
 	{
-		return 0;
+		return false;
 	}
 	if(isactor(target) && !target isonground() && !target cybercom::function_421746e0())
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -243,7 +243,7 @@ private function _lock_requirement(target)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _get_valid_targets(weapon)
+function private _get_valid_targets(weapon)
 {
 	return arraycombine(getaiteamarray("axis"), getaiteamarray("team3"), 0, 0);
 }
@@ -257,11 +257,11 @@ private function _get_valid_targets(weapon)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _activate_sensory_overload(slot, weapon)
+function private _activate_sensory_overload(slot, weapon)
 {
 	aborted = 0;
 	fired = 0;
-	foreach(var_58d913cb, item in self.cybercom.lock_targets)
+	foreach(item in self.cybercom.lock_targets)
 	{
 		if(isdefined(item.target) && (isdefined(item.inrange) && item.inrange))
 		{
@@ -321,7 +321,7 @@ function ai_activatesensoryoverload(target, var_9bc2efcb = 1)
 	validtargets = [];
 	if(isarray(target))
 	{
-		foreach(var_97c0d835, guy in target)
+		foreach(guy in target)
 		{
 			if(!_lock_requirement(guy))
 			{
@@ -330,20 +330,23 @@ function ai_activatesensoryoverload(target, var_9bc2efcb = 1)
 			validtargets[validtargets.size] = guy;
 		}
 	}
-	else if(!_lock_requirement(target))
+	else
 	{
-		return;
+		if(!_lock_requirement(target))
+		{
+			return;
+		}
+		validtargets[validtargets.size] = target;
 	}
-	validtargets[validtargets.size] = target;
 	if(isdefined(var_9bc2efcb) && var_9bc2efcb)
 	{
 		type = self cybercom::function_5e3d3aa();
 		self orientmode("face default");
 		self animscripted("ai_cybercom_anim", self.origin, self.angles, ("ai_base_rifle_" + type) + "_exposed_cybercom_activate", "normal", %generic::root, 1, 0.3);
-		self waittill_match(#"ai_cybercom_anim");
+		self waittillmatch(#"ai_cybercom_anim");
 	}
 	weapon = getweapon("gadget_sensory_overload");
-	foreach(var_f2d46208, guy in validtargets)
+	foreach(guy in validtargets)
 	{
 		if(!cybercom::targetisvalid(guy, weapon))
 		{
@@ -412,43 +415,46 @@ function sensory_overload(attacker, var_7d4fd98c)
 	if(self.archetype == "warlord")
 	{
 		self dodamage(2, self.origin, (isdefined(attacker) ? attacker : undefined), undefined, "none", "MOD_UNKNOWN", 0, weapon, -1, 1);
-		self waittill_match(#"bhtn_action_terminate");
-		self clientfield::set("sensory_overload", 0);
-	}
-	else if(self.archetype == "human_riotshield")
-	{
-		while(loops)
-		{
-			self dodamage(2, self.origin, (isdefined(attacker) ? attacker : undefined), undefined, "none", "MOD_UNKNOWN", 0, weapon, -1, 1);
-			self waittill_match(#"bhtn_action_terminate");
-			loops--;
-		}
+		self waittillmatch(#"bhtn_action_terminate");
 		self clientfield::set("sensory_overload", 0);
 	}
 	else
 	{
-		/#
-			assert(self.archetype == "");
-		#/
-		base = "base_rifle";
-		if(isdefined(self.voiceprefix) && getsubstr(self.voiceprefix, 7) == "f")
+		if(self.archetype == "human_riotshield")
 		{
-			base = "fem_rifle";
-		}
-		type = self cybercom::function_5e3d3aa();
-		variant = attacker cybercom::getanimationvariant((base + "_") + type);
-		self animscripted("intro_anim", self.origin, self.angles, (((("ai_" + base) + "_") + type) + "_exposed_sens_overload_react_intro") + variant, "normal", %generic::root, 1, 0.3);
-		self thread cybercom::stopanimscriptedonnotify("damage_pain", "intro_anim", 1, attacker, weapon);
-		self thread cybercom::stopanimscriptedonnotify("notify_melee_damage", "intro_anim", 1, attacker, weapon);
-		self waittill_match(#"intro_anim");
-		function_58831b5a(loops, attacker, weapon, variant, base, type);
-		if(isalive(self) && !self isragdoll())
-		{
+			while(loops)
+			{
+				self dodamage(2, self.origin, (isdefined(attacker) ? attacker : undefined), undefined, "none", "MOD_UNKNOWN", 0, weapon, -1, 1);
+				self waittillmatch(#"bhtn_action_terminate");
+				loops--;
+			}
 			self clientfield::set("sensory_overload", 0);
-			self animscripted("restart_anim", self.origin, self.angles, (((("ai_" + base) + "_") + type) + "_exposed_sens_overload_react_outro") + variant, "normal", %generic::root, 1, 0.3);
-			self thread cybercom::stopanimscriptedonnotify("damage_pain", "restart_anim", 1, attacker, weapon);
-			self thread cybercom::stopanimscriptedonnotify("notify_melee_damage", "restart_anim", 1, attacker, weapon);
-			self waittill_match(#"restart_anim");
+		}
+		else
+		{
+			/#
+				assert(self.archetype == "");
+			#/
+			base = "base_rifle";
+			if(isdefined(self.voiceprefix) && getsubstr(self.voiceprefix, 7) == "f")
+			{
+				base = "fem_rifle";
+			}
+			type = self cybercom::function_5e3d3aa();
+			variant = attacker cybercom::getanimationvariant((base + "_") + type);
+			self animscripted("intro_anim", self.origin, self.angles, (((("ai_" + base) + "_") + type) + "_exposed_sens_overload_react_intro") + variant, "normal", %generic::root, 1, 0.3);
+			self thread cybercom::stopanimscriptedonnotify("damage_pain", "intro_anim", 1, attacker, weapon);
+			self thread cybercom::stopanimscriptedonnotify("notify_melee_damage", "intro_anim", 1, attacker, weapon);
+			self waittillmatch(#"intro_anim");
+			function_58831b5a(loops, attacker, weapon, variant, base, type);
+			if(isalive(self) && !self isragdoll())
+			{
+				self clientfield::set("sensory_overload", 0);
+				self animscripted("restart_anim", self.origin, self.angles, (((("ai_" + base) + "_") + type) + "_exposed_sens_overload_react_outro") + variant, "normal", %generic::root, 1, 0.3);
+				self thread cybercom::stopanimscriptedonnotify("damage_pain", "restart_anim", 1, attacker, weapon);
+				self thread cybercom::stopanimscriptedonnotify("notify_melee_damage", "restart_anim", 1, attacker, weapon);
+				self waittillmatch(#"restart_anim");
+			}
 		}
 	}
 	self stoploopsound(0.75);
@@ -499,7 +505,7 @@ function function_e01b8059(attacker, weapon, variant, base, type)
 	self thread cybercom::stopanimscriptedonnotify("damage_pain", "sens_loop_anim", 1, attacker, weapon);
 	self thread cybercom::stopanimscriptedonnotify("breakout_overload_loop", "sens_loop_anim", 0, attacker, weapon);
 	self thread cybercom::stopanimscriptedonnotify("notify_melee_damage", "sens_loop_anim", 1, attacker, weapon);
-	self waittill_match(#"hash_3b87dc07");
+	self waittillmatch(#"hash_3b87dc07");
 }
 
 /*

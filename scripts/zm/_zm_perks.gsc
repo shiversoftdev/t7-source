@@ -427,29 +427,29 @@ function vending_trigger_can_player_use(player)
 {
 	if(player laststand::player_is_in_laststand() || (isdefined(player.intermission) && player.intermission))
 	{
-		return 0;
+		return false;
 	}
 	if(player zm_utility::in_revive_trigger())
 	{
-		return 0;
+		return false;
 	}
 	if(!player zm_magicbox::can_buy_weapon())
 	{
-		return 0;
+		return false;
 	}
 	if(player isthrowinggrenade())
 	{
-		return 0;
+		return false;
 	}
 	if(player isswitchingweapons())
 	{
-		return 0;
+		return false;
 	}
 	if(player.is_drinking > 0)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -484,7 +484,7 @@ function vending_trigger_think()
 					start_on = 1;
 				}
 				players = getplayers();
-				foreach(var_d7450ace, player in players)
+				foreach(player in players)
 				{
 					if(!isdefined(player.lives))
 					{
@@ -589,7 +589,7 @@ function vending_trigger_think()
 		sound = "evt_bottle_dispense";
 		playsoundatposition(sound, self.origin);
 		player zm_score::minus_to_player_score(current_cost);
-		bb::function_91f32a58(player, self, current_cost, perk, 0, "_perk", "_purchased");
+		bb::logpurchaseevent(player, self, current_cost, perk, 0, "_perk", "_purchased");
 		perkhash = -1;
 		if(isdefined(level._custom_perks[perk]) && isdefined(level._custom_perks[perk].var_2c8ee667))
 		{
@@ -682,7 +682,7 @@ function return_retained_perks()
 	if(isdefined(self._retain_perks_array))
 	{
 		keys = getarraykeys(self._retain_perks_array);
-		foreach(var_f590bd27, perk in keys)
+		foreach(perk in keys)
 		{
 			if(isdefined(self._retain_perks_array[perk]) && self._retain_perks_array[perk])
 			{
@@ -1232,10 +1232,10 @@ function quantum_bomb_give_nearest_perk_validation(position)
 	{
 		if(distancesquared(vending_triggers[i].origin, position) < range_squared)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1369,7 +1369,7 @@ function perk_unpause(perk)
 function perk_pause_all_perks(power_zone)
 {
 	vending_triggers = getentarray("zombie_vending", "targetname");
-	foreach(var_6fae5e3b, trigger in vending_triggers)
+	foreach(trigger in vending_triggers)
 	{
 		if(!isdefined(power_zone))
 		{
@@ -1395,7 +1395,7 @@ function perk_pause_all_perks(power_zone)
 function perk_unpause_all_perks(power_zone)
 {
 	vending_triggers = getentarray("zombie_vending", "targetname");
-	foreach(var_74c27af8, trigger in vending_triggers)
+	foreach(trigger in vending_triggers)
 	{
 		if(!isdefined(power_zone))
 		{
@@ -1422,9 +1422,9 @@ function has_perk_paused(perk)
 {
 	if(isdefined(self.disabled_perks) && isdefined(self.disabled_perks[perk]) && self.disabled_perks[perk])
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1539,12 +1539,12 @@ function perk_machine_spawn_init()
 	{
 		structs = struct::get_array("zm_perk_machine", "targetname");
 	}
-	foreach(var_7afde913, struct in structs)
+	foreach(struct in structs)
 	{
 		if(isdefined(struct.script_string))
 		{
 			tokens = strtok(struct.script_string, " ");
-			foreach(var_3e5a1edb, token in tokens)
+			foreach(token in tokens)
 			{
 				if(token == match_string)
 				{
@@ -1568,7 +1568,7 @@ function perk_machine_spawn_init()
 		}
 		n_random_perks_assigned = 0;
 	}
-	foreach(var_383eee33, s_spawn_pos in a_s_spawn_pos)
+	foreach(s_spawn_pos in a_s_spawn_pos)
 	{
 		perk = s_spawn_pos.script_noteworthy;
 		if(isdefined(perk) && isdefined(s_spawn_pos.model))
@@ -1769,14 +1769,14 @@ function players_are_in_perk_area(perk_machine)
 	in_area = 0;
 	players = getplayers();
 	dist_check = 9216;
-	foreach(var_39eb0851, player in players)
+	foreach(player in players)
 	{
 		if(distancesquared(player.origin, perk_area_origin) < dist_check)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1799,7 +1799,7 @@ function perk_hostmigration()
 		if(isdefined(level._custom_perks) && level._custom_perks.size > 0)
 		{
 			a_keys = getarraykeys(level._custom_perks);
-			foreach(var_1169efd7, key in a_keys)
+			foreach(key in a_keys)
 			{
 				if(isdefined(level._custom_perks[key].radiant_machine_name) && isdefined(level._custom_perks[key].machine_light_effect))
 				{
@@ -1822,7 +1822,7 @@ function perk_hostmigration()
 function host_migration_func(s_custom_perk, keyname)
 {
 	a_machines = getentarray(s_custom_perk.radiant_machine_name, "targetname");
-	foreach(var_b1da5295, perk in a_machines)
+	foreach(perk in a_machines)
 	{
 		if(isdefined(perk.model) && perk.model == level.machine_assets[keyname].on_model)
 		{
@@ -1844,7 +1844,7 @@ function host_migration_func(s_custom_perk, keyname)
 function spare_change(str_trigger = "audio_bump_trigger", str_sound = "zmb_perks_bump_bottle")
 {
 	a_t_audio = getentarray(str_trigger, "targetname");
-	foreach(var_9e0a3670, t_audio_bump in a_t_audio)
+	foreach(t_audio_bump in a_t_audio)
 	{
 		if(t_audio_bump.script_sound === str_sound)
 		{

@@ -41,7 +41,7 @@ function ignore_triggers(timer)
 */
 function is_encounter()
 {
-	return 0;
+	return false;
 }
 
 /*
@@ -157,7 +157,7 @@ function spawn_buildkit_weapon_model(localclientnum, weapon, camo, origin, angle
 */
 function is_classic()
 {
-	return 1;
+	return true;
 }
 
 /*
@@ -315,12 +315,12 @@ function umbra_fix_trigger(localclientnum, pos, height, radius, umbra_name)
 			/#
 				drawcylinder(pos, radius, height, (0, 1, 0));
 			#/
-			return 1;
+			return true;
 		}
 	}
 	/#
 		drawcylinder(pos, radius, height, (1, 0, 0));
 	#/
-	return 0;
+	return false;
 }
 

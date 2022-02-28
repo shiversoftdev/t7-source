@@ -24,7 +24,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_perk_sleight_of_hand", &__init__, undefined, undefined);
 }

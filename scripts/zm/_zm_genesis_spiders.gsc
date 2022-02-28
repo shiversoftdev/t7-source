@@ -47,7 +47,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_ai_spiders", &__init__, &__main__, undefined);
 }
@@ -312,7 +312,7 @@ function function_7c1ef59b()
 	self.maxhealth = level.var_fda270a4;
 	self.health = self.maxhealth;
 	self.no_gib = 1;
-	self.var_3940f450 = 1;
+	self.b_is_spider = 1;
 	self.no_eye_glow = 1;
 	self.custom_player_shellshock = &function_c685a92b;
 	self.team = level.zombie_team;
@@ -522,7 +522,7 @@ function function_2a424152()
 */
 function spider_round_fx()
 {
-	foreach(var_1561be84, player in level.players)
+	foreach(player in level.players)
 	{
 		player clientfield::increment_to_player("spider_round_fx");
 		player clientfield::increment_to_player("spider_round_ring_fx");
@@ -697,9 +697,9 @@ function function_c1730af7()
 	var_72a71294 = var_621b3c65 >= (level.players.size * 4);
 	if(var_8817ee62 || var_72a71294 || !level flag::get("spawn_zombies"))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -715,7 +715,7 @@ function function_c9adb887()
 {
 	var_388bdc38 = getentarray("zombie_spider", "targetname");
 	var_aa45da74 = var_388bdc38.size;
-	foreach(var_111e1722, var_c79d3f71 in var_388bdc38)
+	foreach(var_c79d3f71 in var_388bdc38)
 	{
 		if(!isalive(var_c79d3f71))
 		{
@@ -1039,7 +1039,7 @@ function function_f602171e()
 	{
 		wait(6);
 		level flag::clear("spider_round_in_progress");
-		foreach(var_56b25c54, player in level.players)
+		foreach(player in level.players)
 		{
 			player clientfield::increment_to_player("spider_end_of_round_reset", 1);
 		}
@@ -1121,17 +1121,20 @@ function function_f4bd92a2(n_to_spawn, s_spawn_point)
 				level flag::set("spider_clips");
 			}
 		}
-		else if(!isdefined(s_spawn_point))
+		else
 		{
-			s_spawn_point = function_570247b9(var_19764360);
-		}
-		ai = zombie_utility::spawn_zombie(level.var_c38a4fee[0]);
-		if(isdefined(ai))
-		{
-			s_spawn_point thread function_49e57a3b(ai, s_spawn_point);
-			level.zombie_total--;
-			var_c46ed637++;
-			level flag::set("spider_clips");
+			if(!isdefined(s_spawn_point))
+			{
+				s_spawn_point = function_570247b9(var_19764360);
+			}
+			ai = zombie_utility::spawn_zombie(level.var_c38a4fee[0]);
+			if(isdefined(ai))
+			{
+				s_spawn_point thread function_49e57a3b(ai, s_spawn_point);
+				level.zombie_total--;
+				var_c46ed637++;
+				level flag::set("spider_clips");
+			}
 		}
 		function_1abf8192();
 	}
@@ -1400,15 +1403,15 @@ function function_7be01d65(str_zone)
 	e_zone = level.zones[str_zone];
 	for(i = 0; i < e_zone.volumes.size; i++)
 	{
-		foreach(var_f77b89db, player in level.players)
+		foreach(player in level.players)
 		{
 			if(zm_utility::is_player_valid(player, 0, 0) && player istouching(e_zone.volumes[i]))
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1469,9 +1472,9 @@ function function_8457e10f(cmd)
 				a_enemies = getaiteamarray(level.zombie_team);
 				if(a_enemies.size > 0)
 				{
-					foreach(var_93d94f5e, e_enemy in a_enemies)
+					foreach(e_enemy in a_enemies)
 					{
-						if(isdefined(e_enemy.var_3940f450) && e_enemy.var_3940f450)
+						if(isdefined(e_enemy.b_is_spider) && e_enemy.b_is_spider)
 						{
 							e_enemy kill();
 						}

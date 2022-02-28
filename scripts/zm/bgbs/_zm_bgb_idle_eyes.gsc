@@ -19,7 +19,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_bgb_idle_eyes", &__init__, undefined, "bgb");
 }
@@ -42,16 +42,16 @@ function __init__()
 	bgb::register("zm_bgb_idle_eyes", "activated", 3, undefined, undefined, &validation, &activation);
 	bgb::function_4cda71bf("zm_bgb_idle_eyes", 1);
 	bgb::function_336ffc4e("zm_bgb_idle_eyes");
-	if(!isdefined(level.var_c2d3ebc0))
+	if(!isdefined(level.vsmgr_prio_visionset_zm_bgb_idle_eyes))
 	{
-		level.var_c2d3ebc0 = 112;
+		level.vsmgr_prio_visionset_zm_bgb_idle_eyes = 112;
 	}
-	visionset_mgr::register_info("visionset", "zm_bgb_idle_eyes", 1, level.var_c2d3ebc0, 31, 1, &visionset_mgr::ramp_in_out_thread_per_player, 0);
-	if(!isdefined(level.var_384c0a48))
+	visionset_mgr::register_info("visionset", "zm_bgb_idle_eyes", 1, level.vsmgr_prio_visionset_zm_bgb_idle_eyes, 31, 1, &visionset_mgr::ramp_in_out_thread_per_player, 0);
+	if(!isdefined(level.vsmgr_prio_overlay_zm_bgb_idle_eyes))
 	{
-		level.var_384c0a48 = 112;
+		level.vsmgr_prio_overlay_zm_bgb_idle_eyes = 112;
 	}
-	visionset_mgr::register_info("overlay", "zm_bgb_idle_eyes", 1, level.var_384c0a48, 1, 1);
+	visionset_mgr::register_info("overlay", "zm_bgb_idle_eyes", 1, level.vsmgr_prio_overlay_zm_bgb_idle_eyes, 1, 1);
 }
 
 /*
@@ -65,7 +65,7 @@ function __init__()
 */
 function validation()
 {
-	return !(isdefined(self bgb::function_e2bcf80c()) && self bgb::function_e2bcf80c());
+	return !(isdefined(self bgb::get_active()) && self bgb::get_active());
 }
 
 /*
@@ -83,7 +83,7 @@ function activation()
 	var_7092e170 = arraycopy(level.activeplayers);
 	array::thread_all(var_7092e170, &zm_utility::increment_ignoreme);
 	self.bgb_idle_eyes_active = 1;
-	if(!bgb::function_f345a8ce("zm_bgb_idle_eyes"))
+	if(!bgb::increment_ref_count("zm_bgb_idle_eyes"))
 	{
 		if(isdefined(level.no_target_override))
 		{
@@ -146,7 +146,7 @@ function deactivate(var_7092e170)
 {
 	var_7092e170 = array::remove_undefined(var_7092e170);
 	array::thread_all(var_7092e170, &zm_utility::decrement_ignoreme);
-	if(bgb::function_72936116("zm_bgb_idle_eyes"))
+	if(bgb::decrement_ref_count("zm_bgb_idle_eyes"))
 	{
 		return;
 	}

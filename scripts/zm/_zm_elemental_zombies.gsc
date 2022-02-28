@@ -33,7 +33,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_elemental_zombie", &__init__, undefined, undefined);
 }
@@ -65,7 +65,7 @@ function __init__()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function register_clientfields()
+function private register_clientfields()
 {
 	clientfield::register("actor", "sparky_zombie_spark_fx", 1, 1, "int");
 	clientfield::register("actor", "sparky_zombie_death_fx", 1, 1, "int");
@@ -396,7 +396,7 @@ function function_2d0e7f4(cmd)
 				a_zombies = function_d41418b8();
 				if(a_zombies.size > 0)
 				{
-					foreach(var_6810cc7c, zombie in a_zombies)
+					foreach(zombie in a_zombies)
 					{
 						zombie function_1b1bb1b();
 					}
@@ -408,7 +408,7 @@ function function_2d0e7f4(cmd)
 				a_zombies = function_d41418b8();
 				if(a_zombies.size > 0)
 				{
-					foreach(var_936318a0, zombie in a_zombies)
+					foreach(zombie in a_zombies)
 					{
 						zombie function_f4defbc2();
 					}

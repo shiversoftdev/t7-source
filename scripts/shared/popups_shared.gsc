@@ -22,7 +22,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("popups", &__init__, undefined, undefined);
 }
@@ -393,14 +393,14 @@ function notif_devgui_gun_rank()
 		a_weapons[""] = [];
 		a_weapons[""] = [];
 		gun_levels_table = devgui_notif_getgunleveltablename();
-		foreach(var_2ebe9ca, weapon in level.tbl_weaponids)
+		foreach(weapon in level.tbl_weaponids)
 		{
 			gun = [];
 			gun[""] = weapon[""];
 			gun[""] = getitemindexfromref(weapon[""]);
 			gun[""] = [];
 			gun_weapon_attachments = strtok(weapon[""], "");
-			foreach(index, attachment in gun_weapon_attachments)
+			foreach(attachment in gun_weapon_attachments)
 			{
 				gun[""][attachment] = [];
 				gun[""][attachment][""] = getattachmenttableindex(attachment);
@@ -586,28 +586,40 @@ function notif_devgui_challenges_think()
 			{
 				type = 0;
 			}
-			else if(type == "")
-			{
-				itemindex = 4;
-				type = 3;
-			}
-			else if(type == "")
-			{
-				itemindex = 1;
-				type = 4;
-			}
-			else if(type == "")
-			{
-				type = 2;
-			}
-			else if(type == "")
-			{
-				type = 5;
-			}
 			else
 			{
-				itemindex = 23;
-				type = 1;
+				if(type == "")
+				{
+					itemindex = 4;
+					type = 3;
+				}
+				else
+				{
+					if(type == "")
+					{
+						itemindex = 1;
+						type = 4;
+					}
+					else
+					{
+						if(type == "")
+						{
+							type = 2;
+						}
+						else
+						{
+							if(type == "")
+							{
+								type = 5;
+							}
+							else
+							{
+								itemindex = 23;
+								type = 1;
+							}
+						}
+					}
+				}
 			}
 			xpreward = int(tablelookupcolumnforrow(tablename, row, 6));
 			challengeid = int(tablelookupcolumnforrow(tablename, row, 0));
@@ -802,9 +814,9 @@ function shoulddisplayteammessages()
 {
 	if(level.hardcoremode == 1 || level.splitscreen == 1)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -983,23 +995,26 @@ function displaypopupswaiter()
 			self hud_message::shownotifymessage(nextnotifydata, duration);
 			wait(duration);
 		}
-		else if(self.messagenotifyqueue.size > 0)
+		else
 		{
-			nextnotifydata = self.messagenotifyqueue[0];
-			arrayremoveindex(self.messagenotifyqueue, 0, 0);
-			if(isdefined(nextnotifydata.duration))
+			if(self.messagenotifyqueue.size > 0)
 			{
-				duration = nextnotifydata.duration;
+				nextnotifydata = self.messagenotifyqueue[0];
+				arrayremoveindex(self.messagenotifyqueue, 0, 0);
+				if(isdefined(nextnotifydata.duration))
+				{
+					duration = nextnotifydata.duration;
+				}
+				else
+				{
+					duration = level.regulargamemessages.waittime;
+				}
+				self hud_message::shownotifymessage(nextnotifydata, duration);
 			}
 			else
 			{
-				duration = level.regulargamemessages.waittime;
+				wait(1);
 			}
-			self hud_message::shownotifymessage(nextnotifydata, duration);
-		}
-		else
-		{
-			wait(1);
 		}
 	}
 }

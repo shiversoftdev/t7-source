@@ -21,7 +21,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_bgb_eye_candy", &__init__, undefined, undefined);
 }
@@ -94,7 +94,7 @@ function function_7021da92(localclientnum, oldval, newval, bnewent, binitialsnap
 function function_a358ec33(localclientnum)
 {
 	var_307a62d0 = getentarray(localclientnum);
-	foreach(var_5dc54105, entity in var_307a62d0)
+	foreach(entity in var_307a62d0)
 	{
 		if(isdefined(entity.var_d8bd114f) && entity.var_d8bd114f && isdefined(self.var_73021e86))
 		{
@@ -115,7 +115,7 @@ function function_a358ec33(localclientnum)
 function function_c1a20a24(localclientnum)
 {
 	var_307a62d0 = getentarray(localclientnum);
-	foreach(var_b41743b4, entity in var_307a62d0)
+	foreach(entity in var_307a62d0)
 	{
 		if(isdefined(entity.var_d8bd114f) && entity.var_d8bd114f)
 		{

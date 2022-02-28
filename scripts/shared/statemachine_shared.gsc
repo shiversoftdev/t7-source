@@ -50,7 +50,7 @@ function clear()
 {
 	if(isdefined(self.states) && isarray(self.states))
 	{
-		foreach(var_3c27f970, state in self.states)
+		foreach(state in self.states)
 		{
 			state.connections_notify = undefined;
 			state.connections_utility = undefined;
@@ -174,14 +174,14 @@ function set_state(name, state_params)
 	state = self.states[name];
 	if(!isdefined(self.owner))
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(state))
 	{
 		/#
 			assertmsg((("" + name) + "") + self.name);
 		#/
-		return 0;
+		return false;
 	}
 	reenter = self.current_state === state;
 	if(isdefined(state.reenter_func) && reenter)
@@ -190,7 +190,7 @@ function set_state(name, state_params)
 	}
 	if(reenter && shouldreenter !== 1)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.current_state))
 	{
@@ -221,7 +221,7 @@ function set_state(name, state_params)
 	{
 		self.owner thread [[self.current_state.update_func]](self.current_state.state_params);
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -236,7 +236,7 @@ function set_state(name, state_params)
 function threadnotifyconnections(state)
 {
 	self notify(#"_cancel_connections");
-	foreach(var_73525cf6, connection in state.connections_notify)
+	foreach(connection in state.connections_notify)
 	{
 		/#
 			assert(connection.type == 0);
@@ -437,7 +437,7 @@ function evaluate_connections(eval_func, params)
 	scorearray = [];
 	best_connection = undefined;
 	best_score = -1;
-	foreach(var_eefd79cb, connection in self.current_state.connections_utility)
+	foreach(connection in self.current_state.connections_utility)
 	{
 		/#
 			assert(connection.type == 1);

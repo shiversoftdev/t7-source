@@ -31,7 +31,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	function_ee90a52a();
 	setdvar("tu5_zmPathDistanceCheckTolarance", 20);
@@ -49,15 +49,15 @@ autoexec function init()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_ee90a52a()
+function private function_ee90a52a()
 {
-	animationstatenetwork::registeranimationmocomp("mocomp_teleport_traversal@zombie", &function_5683b5d5, undefined, undefined);
+	animationstatenetwork::registeranimationmocomp("mocomp_teleport_traversal@zombie", &teleporttraversalmocompstart, undefined, undefined);
 	behaviortreenetworkutility::registerbehaviortreescriptapi("zodShouldMove", &zodshouldmove);
 	spawner::add_archetype_spawn_function("zombie", &function_5bf6989a);
 }
 
 /*
-	Name: function_5683b5d5
+	Name: teleporttraversalmocompstart
 	Namespace: zm_asylum_zombie
 	Checksum: 0xA12EF3A8
 	Offset: 0x4E8
@@ -65,7 +65,7 @@ private function function_ee90a52a()
 	Parameters: 5
 	Flags: Linked
 */
-function function_5683b5d5(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function teleporttraversalmocompstart(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	entity orientmode("face angle", entity.angles[1]);
 	entity animmode("normal");
@@ -93,44 +93,44 @@ function zodshouldmove(entity)
 {
 	if(isdefined(entity.zombie_tesla_hit) && entity.zombie_tesla_hit && (!(isdefined(entity.tesla_death) && entity.tesla_death)))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(entity.pushed) && entity.pushed)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(entity.knockdown) && entity.knockdown)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(entity.grapple_is_fatal) && entity.grapple_is_fatal)
 	{
-		return 0;
+		return false;
 	}
 	if(level.wait_and_revive)
 	{
 		if(!(isdefined(entity.var_1e3fb1c) && entity.var_1e3fb1c))
 		{
-			return 0;
+			return false;
 		}
 	}
 	if(isdefined(entity.stumble))
 	{
-		return 0;
+		return false;
 	}
 	if(zombiebehavior::zombieshouldmeleecondition(entity))
 	{
-		return 0;
+		return false;
 	}
 	if(entity haspath())
 	{
-		return 1;
+		return true;
 	}
 	if(isdefined(entity.keep_moving) && entity.keep_moving)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -142,7 +142,7 @@ function zodshouldmove(entity)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_5bf6989a()
+function private function_5bf6989a()
 {
 	self.cant_move_cb = &function_9f18c3b1;
 }
@@ -156,7 +156,7 @@ private function function_5bf6989a()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_9f18c3b1()
+function private function_9f18c3b1()
 {
 	self pushactors(0);
 	self.enablepushtime = gettime() + 1000;

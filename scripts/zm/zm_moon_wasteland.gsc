@@ -1089,21 +1089,30 @@ function nml_dog_health_increase()
 	{
 		level.nml_dog_health = 100;
 	}
-	else if(level.nml_timer >= 4 && level.nml_timer < 6)
+	else
 	{
-		level.nml_dog_health = 400;
-	}
-	else if(level.nml_timer >= 6 && level.nml_timer < 15)
-	{
-		level.nml_dog_health = 800;
-	}
-	else if(level.nml_timer >= 15 && level.nml_timer < 30)
-	{
-		level.nml_dog_health = 1200;
-	}
-	else if(level.nml_timer >= 30)
-	{
-		level.nml_dog_health = 1600;
+		if(level.nml_timer >= 4 && level.nml_timer < 6)
+		{
+			level.nml_dog_health = 400;
+		}
+		else
+		{
+			if(level.nml_timer >= 6 && level.nml_timer < 15)
+			{
+				level.nml_dog_health = 800;
+			}
+			else
+			{
+				if(level.nml_timer >= 15 && level.nml_timer < 30)
+				{
+					level.nml_dog_health = 1200;
+				}
+				else if(level.nml_timer >= 30)
+				{
+					level.nml_dog_health = 1600;
+				}
+			}
+		}
 	}
 }
 
@@ -1138,33 +1147,33 @@ function nml_cansidestep()
 {
 	if((gettime() - self.a.lastsidesteptime) < level.nml_reaction_interval)
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(self.enemy))
 	{
-		return 0;
+		return false;
 	}
 	if(self.a.pose != "stand")
 	{
-		return 0;
+		return false;
 	}
 	distsqfromenemy = distancesquared(self.origin, self.enemy.origin);
 	if(distsqfromenemy < level.nml_min_reaction_dist_sq)
 	{
-		return 0;
+		return false;
 	}
 	if(distsqfromenemy > level.nml_max_reaction_dist_sq)
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(self.pathgoalpos) || distancesquared(self.origin, self.pathgoalpos) < level.nml_min_reaction_dist_sq)
 	{
-		return 0;
+		return false;
 	}
 	if(abs(self getmotionangle()) > 15)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 

@@ -44,7 +44,7 @@ function callback_vehiclespawned(spawner)
 	{
 		if(isdefined(level.a_vehicle_types[self.vehicletype]))
 		{
-			foreach(var_622a73d9, func in level.a_vehicle_types[self.vehicletype])
+			foreach(func in level.a_vehicle_types[self.vehicletype])
 			{
 				util::single_thread(self, func["function"], func["param1"], func["param2"], func["param3"], func["param4"]);
 			}
@@ -62,7 +62,7 @@ function callback_vehiclespawned(spawner)
 		}
 		if(isdefined(str_targetname) && isdefined(level.a_vehicle_targetnames[str_targetname]))
 		{
-			foreach(var_bc17a9c7, func in level.a_vehicle_targetnames[str_targetname])
+			foreach(func in level.a_vehicle_targetnames[str_targetname])
 			{
 				util::single_thread(self, func["function"], func["param1"], func["param2"], func["param3"], func["param4"]);
 			}
@@ -232,21 +232,27 @@ function callback_vehicledamage(einflictor, eattacker, idamage, idflags, smeanso
 					return;
 				}
 			}
-			else if(level.friendlyfire == 1)
+			else
 			{
-				damageteammates = 0;
-			}
-			else if(level.friendlyfire == 2)
-			{
-				if(!allowfriendlyfiredamage(einflictor, eattacker, smeansofdeath, weapon))
+				if(level.friendlyfire == 1)
 				{
-					return;
+					damageteammates = 0;
 				}
-			}
-			else if(level.friendlyfire == 3)
-			{
-				idamage = int(idamage * 0.5);
-				damageteammates = 0;
+				else
+				{
+					if(level.friendlyfire == 2)
+					{
+						if(!allowfriendlyfiredamage(einflictor, eattacker, smeansofdeath, weapon))
+						{
+							return;
+						}
+					}
+					else if(level.friendlyfire == 3)
+					{
+						idamage = int(idamage * 0.5);
+						damageteammates = 0;
+					}
+				}
 			}
 			if(idamage < 1)
 			{
@@ -256,40 +262,43 @@ function callback_vehicledamage(einflictor, eattacker, idamage, idflags, smeanso
 			self globallogic_player::giveattackerandinflictorownerassist(eattacker, einflictor, idamage, smeansofdeath, weapon);
 			self finishvehicledamage(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, psoffsettime, damagefromunderneath, modelindex, partname, damageteammates);
 		}
-		else if(!level.hardcoremode && isdefined(self.owner) && isdefined(eattacker) && isdefined(eattacker.owner) && self.owner == eattacker.owner)
-		{
-			return;
-		}
-		if(!level.teambased && isdefined(self.targetname) && self.targetname == "rcbomb")
-		{
-		}
-		else if(isdefined(self.owner) && isdefined(eattacker) && self.owner == eattacker)
-		{
-			return;
-		}
-		if(idamage < 1)
-		{
-			idamage = 1;
-		}
-		if(issubstr(smeansofdeath, "MOD_GRENADE") && isdefined(einflictor) && isdefined(einflictor.iscooked))
-		{
-			self.wascooked = gettime();
-		}
 		else
 		{
-			self.wascooked = undefined;
-		}
-		attacker_seat = undefined;
-		if(isdefined(eattacker))
-		{
-			attacker_seat = self getoccupantseat(eattacker);
-		}
-		self.lastdamagewasfromenemy = isdefined(eattacker) && !isdefined(attacker_seat);
-		self globallogic_player::giveattackerandinflictorownerassist(eattacker, einflictor, idamage, smeansofdeath, weapon);
-		self finishvehicledamage(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, psoffsettime, damagefromunderneath, modelindex, partname, 0);
-		if(level.gametype == "hack" && !weapon.isemp)
-		{
-			idamage = 0;
+			if(!level.hardcoremode && isdefined(self.owner) && isdefined(eattacker) && isdefined(eattacker.owner) && self.owner == eattacker.owner)
+			{
+				return;
+			}
+			if(!level.teambased && isdefined(self.targetname) && self.targetname == "rcbomb")
+			{
+			}
+			else if(isdefined(self.owner) && isdefined(eattacker) && self.owner == eattacker)
+			{
+				return;
+			}
+			if(idamage < 1)
+			{
+				idamage = 1;
+			}
+			if(issubstr(smeansofdeath, "MOD_GRENADE") && isdefined(einflictor) && isdefined(einflictor.iscooked))
+			{
+				self.wascooked = gettime();
+			}
+			else
+			{
+				self.wascooked = undefined;
+			}
+			attacker_seat = undefined;
+			if(isdefined(eattacker))
+			{
+				attacker_seat = self getoccupantseat(eattacker);
+			}
+			self.lastdamagewasfromenemy = isdefined(eattacker) && !isdefined(attacker_seat);
+			self globallogic_player::giveattackerandinflictorownerassist(eattacker, einflictor, idamage, smeansofdeath, weapon);
+			self finishvehicledamage(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, psoffsettime, damagefromunderneath, modelindex, partname, 0);
+			if(level.gametype == "hack" && !weapon.isemp)
+			{
+				idamage = 0;
+			}
 		}
 		if(isdefined(eattacker) && eattacker != self)
 		{
@@ -392,19 +401,25 @@ function callback_vehicleradiusdamage(einflictor, eattacker, idamage, finnerdama
 					return;
 				}
 			}
-			else if(level.friendlyfire == 1)
+			else
 			{
-			}
-			else if(level.friendlyfire == 2)
-			{
-				if(!allowfriendlyfiredamage(einflictor, eattacker, smeansofdeath, weapon))
+				if(level.friendlyfire == 1)
 				{
-					return;
 				}
-			}
-			else if(level.friendlyfire == 3)
-			{
-				idamage = int(idamage * 0.5);
+				else
+				{
+					if(level.friendlyfire == 2)
+					{
+						if(!allowfriendlyfiredamage(einflictor, eattacker, smeansofdeath, weapon))
+						{
+							return;
+						}
+					}
+					else if(level.friendlyfire == 3)
+					{
+						idamage = int(idamage * 0.5);
+					}
+				}
 			}
 			if(idamage < 1)
 			{
@@ -413,15 +428,18 @@ function callback_vehicleradiusdamage(einflictor, eattacker, idamage, finnerdama
 			self.lastdamagewasfromenemy = 0;
 			self finishvehicleradiusdamage(einflictor, eattacker, idamage, finnerdamage, fouterdamage, idflags, smeansofdeath, weapon, vpoint, fradius, fconeanglecos, vconedir, psoffsettime);
 		}
-		else if(!level.hardcoremode && isdefined(self.owner) && isdefined(eattacker.owner) && self.owner == eattacker.owner)
+		else
 		{
-			return;
+			if(!level.hardcoremode && isdefined(self.owner) && isdefined(eattacker.owner) && self.owner == eattacker.owner)
+			{
+				return;
+			}
+			if(idamage < 1)
+			{
+				idamage = 1;
+			}
+			self finishvehicleradiusdamage(einflictor, eattacker, idamage, finnerdamage, fouterdamage, idflags, smeansofdeath, weapon, vpoint, fradius, fconeanglecos, vconedir, psoffsettime);
 		}
-		if(idamage < 1)
-		{
-			idamage = 1;
-		}
-		self finishvehicleradiusdamage(einflictor, eattacker, idamage, finnerdamage, fouterdamage, idflags, smeansofdeath, weapon, vpoint, fradius, fconeanglecos, vconedir, psoffsettime);
 	}
 }
 

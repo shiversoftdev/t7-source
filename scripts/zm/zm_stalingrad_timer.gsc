@@ -27,7 +27,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_stalingrad_timer", &__init__, &__main__, undefined);
 }
@@ -59,7 +59,7 @@ function __main__()
 	clientfield::register("world", "time_attack_reward", 12000, 3, "int");
 	level flag::init("time_attack_weapon_awarded");
 	level flag::wait_till("start_zombie_round_logic");
-	foreach(var_56a0317c, s_wallbuy in level._spawned_wallbuys)
+	foreach(s_wallbuy in level._spawned_wallbuys)
 	{
 		if(s_wallbuy.zombie_weapon_upgrade == "melee_wrench")
 		{
@@ -87,10 +87,10 @@ function function_6ac3689a(player)
 		self setvisibletoplayer(player);
 		self.stub.hint_string = zm_weapons::get_weapon_hint(self.weapon);
 		self sethintstring(self.stub.hint_string);
-		return 1;
+		return true;
 	}
 	self setinvisibletoplayer(player);
-	return 0;
+	return false;
 }
 
 /*
@@ -282,9 +282,9 @@ function function_86419da()
 	Parameters: 1
 	Flags: Linked
 */
-function function_cc8ae246(var_a83adb54)
+function function_cc8ae246(str_reward)
 {
-	switch(var_a83adb54)
+	switch(str_reward)
 	{
 		case 5:
 		{

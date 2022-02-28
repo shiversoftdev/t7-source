@@ -109,21 +109,21 @@ function shouldaddrankxp(player)
 {
 	if(sessionmodeiscampaignzombiesgame())
 	{
-		return 0;
+		return false;
 	}
 	if(level.gametype == "fr")
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(level.rankcap) || level.rankcap == 0)
 	{
-		return 1;
+		return true;
 	}
 	if(player.pers["plevel"] > 0 || player.pers["rank"] > level.rankcap)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -157,9 +157,9 @@ function isregisteredevent(type)
 {
 	if(isdefined(level.scoreinfo[type]))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -328,13 +328,13 @@ function killstreakweaponsallowedscore(type)
 {
 	if(getdvarint("teamOpsEnabled") == 1)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(level.scoreinfo[type]["allowKillstreakWeapons"]) && level.scoreinfo[type]["allowKillstreakWeapons"] == 1)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -350,9 +350,9 @@ function is_hero_score_event_restricted(event)
 {
 	if(!isdefined(level.scoreinfo[event]["allow_hero"]) || level.scoreinfo[event]["allow_hero"] != 1)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -486,7 +486,7 @@ function hero_ability_kill_event(ability, victim_ability)
 	{
 		return;
 	}
-	foreach(var_f4755e17, event_func in level.hero_ability_kill_events)
+	foreach(event_func in level.hero_ability_kill_events)
 	{
 		if(isdefined(event_func))
 		{
@@ -510,7 +510,7 @@ function hero_ability_multikill_event(killcount, ability)
 	{
 		return;
 	}
-	foreach(var_dc96d9c8, event_func in level.hero_ability_multikill_events)
+	foreach(event_func in level.hero_ability_multikill_events)
 	{
 		if(isdefined(event_func))
 		{
@@ -534,7 +534,7 @@ function hero_weapon_multikill_event(killcount, weapon)
 	{
 		return;
 	}
-	foreach(var_9df16521, event_func in level.hero_weapon_multikill_events)
+	foreach(event_func in level.hero_weapon_multikill_events)
 	{
 		if(isdefined(event_func))
 		{
@@ -558,7 +558,7 @@ function thief_shutdown_enemy_event()
 	{
 		return;
 	}
-	foreach(var_343f2964, event_func in level.thief_shutdown_enemy_event)
+	foreach(event_func in level.thief_shutdown_enemy_event)
 	{
 		if(isdefined(event_func))
 		{

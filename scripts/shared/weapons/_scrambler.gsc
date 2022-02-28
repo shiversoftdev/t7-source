@@ -244,7 +244,7 @@ function checkscramblerstun()
 	scramblers = getentarray("grenade", "classname");
 	if(isdefined(self.name) && self.name == "scrambler")
 	{
-		return 0;
+		return false;
 	}
 	for(i = 0; i < scramblers.size; i++)
 	{
@@ -269,9 +269,9 @@ function checkscramblerstun()
 		flattenedscramblerorigin = (scrambler.origin[0], scrambler.origin[1], 0);
 		if(distancesquared(flattenedselforigin, flattenedscramblerorigin) < level.scramblerouterradiussq)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 

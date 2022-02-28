@@ -31,7 +31,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_powerup_castle_tram_token", &__init__, undefined, undefined);
 }
@@ -124,9 +124,9 @@ function function_ed4d87a3(player)
 	if(player clientfield::get_to_player("has_castle_tram_token"))
 	{
 		player notify(#"tram_token_used");
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -203,7 +203,7 @@ function show_infotext_for_duration(str_infotext, n_duration)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function function_1cb39173(var_1d640f59, str_widget_clientuimodel, var_18bfcc38)
+function private function_1cb39173(var_1d640f59, str_widget_clientuimodel, var_18bfcc38)
 {
 	level notify(#"widget_ui_override");
 	self endon(#"disconnect");

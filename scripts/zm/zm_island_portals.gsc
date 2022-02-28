@@ -31,7 +31,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_genesis_portals", &__init__, undefined, undefined);
 }
@@ -103,7 +103,7 @@ function create_portal(str_id, var_fc699b20, var_776628b2)
 	str_areaname = str_id;
 	s_loc = struct::get(str_areaname, "targetname");
 	var_1693bd2 = getnodearray(str_areaname + "_portal_node", "script_noteworthy");
-	foreach(var_cf345ee5, var_9110bac3 in var_1693bd2)
+	foreach(var_9110bac3 in var_1693bd2)
 	{
 		setenablenode(var_9110bac3, 0);
 	}
@@ -122,14 +122,17 @@ function create_portal(str_id, var_fc699b20, var_776628b2)
 		s_loc.unitrigger_stub.prompt_and_visibility_func = &function_16fca6d;
 		zm_unitrigger::register_static_unitrigger(s_loc.unitrigger_stub, &function_a90ab0d7);
 	}
-	else if(isdefined(var_776628b2))
-	{
-		level flag::wait_till(var_776628b2);
-		level thread function_e0c93f92(str_areaname);
-	}
 	else
 	{
-		level thread function_e0c93f92(str_areaname);
+		if(isdefined(var_776628b2))
+		{
+			level flag::wait_till(var_776628b2);
+			level thread function_e0c93f92(str_areaname);
+		}
+		else
+		{
+			level thread function_e0c93f92(str_areaname);
+		}
 	}
 }
 
@@ -221,7 +224,7 @@ function portal_open(str_areaname, var_14429fc9 = 0)
 		level clientfield::set("portal_state_" + str_areaname, 2);
 	}
 	var_1693bd2 = getnodearray(str_areaname + "_portal_node", "script_noteworthy");
-	foreach(var_25b968fa, var_9110bac3 in var_1693bd2)
+	foreach(var_9110bac3 in var_1693bd2)
 	{
 		setenablenode(var_9110bac3, 1);
 	}
@@ -231,7 +234,7 @@ function portal_open(str_areaname, var_14429fc9 = 0)
 	var_50fc4fb = getentarrayfromarray(a_t_portal_bottom, "teleport_trigger", "targetname");
 	var_ebfa395[0].e_dest = var_50fc4fb[0];
 	var_50fc4fb[0].e_dest = var_ebfa395[0];
-	foreach(var_4e3a8174, var_9110bac3 in var_1693bd2)
+	foreach(var_9110bac3 in var_1693bd2)
 	{
 		var_e8b9ac31 = distancesquared(var_9110bac3.origin, var_ebfa395[0].origin);
 		var_6d6d9e09 = distancesquared(var_9110bac3.origin, var_50fc4fb[0].origin);
@@ -321,13 +324,16 @@ function portal_teleport_player(player, show_fx = 1)
 	{
 		desired_origin = image_room.origin + prone_offset;
 	}
-	else if(player getstance() == "crouch")
-	{
-		desired_origin = image_room.origin + crouch_offset;
-	}
 	else
 	{
-		desired_origin = image_room.origin + stand_offset;
+		if(player getstance() == "crouch")
+		{
+			desired_origin = image_room.origin + crouch_offset;
+		}
+		else
+		{
+			desired_origin = image_room.origin + stand_offset;
+		}
 	}
 	player.teleport_origin = spawn("script_model", player.origin);
 	player.teleport_origin setmodel("tag_origin");
@@ -356,7 +362,7 @@ function portal_teleport_player(player, show_fx = 1)
 		{
 			var_cefa4b63 = 1;
 			s_pos = array::random(self.a_s_port_locs);
-			foreach(var_d004e599, var_3bc10d31 in a_players)
+			foreach(var_3bc10d31 in a_players)
 			{
 				var_f2c93934 = distance(var_3bc10d31.origin, s_pos.origin);
 				if(var_f2c93934 < 32)
@@ -380,7 +386,7 @@ function portal_teleport_player(player, show_fx = 1)
 	level clientfield::increment("pulse_" + self.e_dest.script_noteworthy);
 	a_ai = getaiarray();
 	a_aoe_ai = arraysortclosest(a_ai, s_pos.origin, a_ai.size, 0, 200);
-	foreach(var_3b6438ed, ai in a_aoe_ai)
+	foreach(ai in a_aoe_ai)
 	{
 		if(isactor(ai))
 		{

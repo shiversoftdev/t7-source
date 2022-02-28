@@ -23,7 +23,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_weap_staff_revive", &__init__, undefined, undefined);
 }
@@ -97,7 +97,7 @@ function staff_revive_impact(v_explode_point)
 	n_closest_dist_sq = 1024;
 	playsoundatposition("wpn_revivestaff_proj_impact", v_explode_point);
 	a_e_players = getplayers();
-	foreach(var_c8a7a0b7, e_player in a_e_players)
+	foreach(e_player in a_e_players)
 	{
 		if(e_player == self || !e_player laststand::player_is_in_laststand())
 		{

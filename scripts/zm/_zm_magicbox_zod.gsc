@@ -40,7 +40,7 @@ function init()
 	level.custom_magicbox_float_height = 40;
 	level.magic_box_zbarrier_state_func = &set_magic_box_zbarrier_state;
 	level thread handle_fire_sale();
-	level thread function_cb604665();
+	level thread custom_magicbox_host_migration();
 }
 
 /*
@@ -111,7 +111,7 @@ function custom_magic_box_fx()
 }
 
 /*
-	Name: function_49998a6e
+	Name: custom_pandora_fx_func
 	Namespace: zm_magicbox_zod
 	Checksum: 0xDEFABCEE
 	Offset: 0x870
@@ -119,7 +119,7 @@ function custom_magic_box_fx()
 	Parameters: 0
 	Flags: Linked
 */
-function function_49998a6e()
+function custom_pandora_fx_func()
 {
 	self endon(#"death");
 	self.pandora_light = util::spawn_model("tag_origin", self.zbarrier.origin, vectorscale((-1, 0, -1), 90));
@@ -150,7 +150,7 @@ function custom_pandora_show_func()
 	{
 		if(!isdefined(level.pandora_fx_func))
 		{
-			level.pandora_fx_func = &function_49998a6e;
+			level.pandora_fx_func = &custom_pandora_fx_func;
 		}
 		self thread [[level.pandora_fx_func]]();
 	}
@@ -423,12 +423,12 @@ function handle_fire_sale()
 {
 	while(true)
 	{
-		var_7c8b59c1 = level util::waittill_any_return("fire_sale_off", "fire_sale_on");
+		str_firesale_status = level util::waittill_any_return("fire_sale_off", "fire_sale_on");
 		for(i = 0; i < level.chests.size; i++)
 		{
 			if(level.chest_index != i && isdefined(level.chests[i].was_temp))
 			{
-				if(var_7c8b59c1 == "fire_sale_on")
+				if(str_firesale_status == "fire_sale_on")
 				{
 					level.chests[i].zbarrier clientfield::set("magicbox_amb_sound", 1);
 					level.chests[i].zbarrier clientfield::set("magicbox_open_fx", 3);
@@ -442,7 +442,7 @@ function handle_fire_sale()
 }
 
 /*
-	Name: function_cb604665
+	Name: custom_magicbox_host_migration
 	Namespace: zm_magicbox_zod
 	Checksum: 0x925F6A23
 	Offset: 0x1478
@@ -450,7 +450,7 @@ function handle_fire_sale()
 	Parameters: 0
 	Flags: Linked
 */
-function function_cb604665()
+function custom_magicbox_host_migration()
 {
 	level endon(#"end_game");
 	level notify(#"mb_hostmigration");
@@ -462,7 +462,7 @@ function function_cb604665()
 		{
 			continue;
 		}
-		foreach(var_c0a5b83e, chest in level.chests)
+		foreach(chest in level.chests)
 		{
 			if(!(isdefined(chest.hidden) && chest.hidden))
 			{

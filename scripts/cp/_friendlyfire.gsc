@@ -17,7 +17,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("friendlyfire", &__init__, undefined, undefined);
 }
@@ -181,24 +181,24 @@ function debug_friendlyfire()
 		debug_health_bar_right_bound.alpha = 1;
 		debug_health_bar_right_bound.foreground = 1;
 		debug_health_bar_right_bound setshader("", 4, 21);
-		var_d2572fe4 = newclienthudelem(self);
-		var_d2572fe4.alignx = "";
-		var_d2572fe4.aligny = "";
-		var_d2572fe4.x = lbound + (((level.friendlyfirepoints[""] * -1) / fullpts) * bar_width);
-		var_d2572fe4.y = ypos + 9;
-		var_d2572fe4.sort = 2;
-		var_d2572fe4.alpha = 1;
-		var_d2572fe4.foreground = 1;
-		var_d2572fe4 setshader("", 4, 4);
-		var_5c31876e = newclienthudelem(self);
-		var_5c31876e.alignx = "";
-		var_5c31876e.aligny = "";
-		var_5c31876e.x = lbound + (((level.friendlyfirepoints[""] * -1) / fullpts) * bar_width);
-		var_5c31876e.y = ypos - 9;
-		var_5c31876e.sort = 2;
-		var_5c31876e.alpha = 1;
-		var_5c31876e.foreground = 1;
-		var_5c31876e setshader("", 4, 4);
+		debug_health_bar_0_top = newclienthudelem(self);
+		debug_health_bar_0_top.alignx = "";
+		debug_health_bar_0_top.aligny = "";
+		debug_health_bar_0_top.x = lbound + (((level.friendlyfirepoints[""] * -1) / fullpts) * bar_width);
+		debug_health_bar_0_top.y = ypos + 9;
+		debug_health_bar_0_top.sort = 2;
+		debug_health_bar_0_top.alpha = 1;
+		debug_health_bar_0_top.foreground = 1;
+		debug_health_bar_0_top setshader("", 4, 4);
+		debug_health_bar_0_bottom = newclienthudelem(self);
+		debug_health_bar_0_bottom.alignx = "";
+		debug_health_bar_0_bottom.aligny = "";
+		debug_health_bar_0_bottom.x = lbound + (((level.friendlyfirepoints[""] * -1) / fullpts) * bar_width);
+		debug_health_bar_0_bottom.y = ypos - 9;
+		debug_health_bar_0_bottom.sort = 2;
+		debug_health_bar_0_bottom.alpha = 1;
+		debug_health_bar_0_bottom.foreground = 1;
+		debug_health_bar_0_bottom setshader("", 4, 4);
 		for(;;)
 		{
 			if(getdvarstring("") == "")
@@ -210,8 +210,8 @@ function debug_friendlyfire()
 				debug_health_bar.alpha = 1;
 				debug_health_bar_left_bound.alpha = 1;
 				debug_health_bar_right_bound.alpha = 1;
-				var_d2572fe4.alpha = 1;
-				var_5c31876e.alpha = 1;
+				debug_health_bar_0_top.alpha = 1;
+				debug_health_bar_0_bottom.alpha = 1;
 			}
 			else
 			{
@@ -222,8 +222,8 @@ function debug_friendlyfire()
 				debug_health_bar.alpha = 0;
 				debug_health_bar_left_bound.alpha = 0;
 				debug_health_bar_right_bound.alpha = 0;
-				var_d2572fe4.alpha = 0;
-				var_5c31876e.alpha = 0;
+				debug_health_bar_0_top.alpha = 0;
+				debug_health_bar_0_bottom.alpha = 0;
 			}
 			xpos = ((level.friendlyfirepoints[""] - self.participation) / fullpts) * bar_width;
 			debug_health_bar.x = rbound - xpos;
@@ -358,15 +358,18 @@ function friendly_fire_callback(entity, damage, attacker, method)
 			attacker.participation = attacker.participation + level.friendlyfirepoints["civ_kill_points"];
 			debug_log(("Civilian killed: -") + (0 - level.friendlyfirepoints["civ_kill_points"]));
 		}
-		else if(isdefined(entity) && isdefined(entity.ff_kill_penalty))
-		{
-			attacker.participation = attacker.participation + entity.ff_kill_penalty;
-			debug_log(("Friendly killed with custom penalty: -") + (0 - entity.ff_kill_penalty));
-		}
 		else
 		{
-			attacker.participation = attacker.participation + level.friendlyfirepoints["friend_kill_points"];
-			debug_log(("Friendly killed: -") + (0 - level.friendlyfirepoints["friend_kill_points"]));
+			if(isdefined(entity) && isdefined(entity.ff_kill_penalty))
+			{
+				attacker.participation = attacker.participation + entity.ff_kill_penalty;
+				debug_log(("Friendly killed with custom penalty: -") + (0 - entity.ff_kill_penalty));
+			}
+			else
+			{
+				attacker.participation = attacker.participation + level.friendlyfirepoints["friend_kill_points"];
+				debug_log(("Friendly killed: -") + (0 - level.friendlyfirepoints["friend_kill_points"]));
+			}
 		}
 	}
 	else
@@ -493,15 +496,18 @@ function friendly_fire_think(entity)
 					debug_log(("Civilian killed: -") + (0 - level.friendlyfirepoints["civ_kill_points"]));
 				}
 			}
-			else if(isdefined(entity) && isdefined(entity.ff_kill_penalty))
-			{
-				attacker.participation = attacker.participation + entity.ff_kill_penalty;
-				debug_log(("Friendly killed with custom penalty: -") + (0 - entity.ff_kill_penalty));
-			}
 			else
 			{
-				attacker.participation = attacker.participation + level.friendlyfirepoints["friend_kill_points"];
-				debug_log(("Friendly killed: -") + (0 - level.friendlyfirepoints["friend_kill_points"]));
+				if(isdefined(entity) && isdefined(entity.ff_kill_penalty))
+				{
+					attacker.participation = attacker.participation + entity.ff_kill_penalty;
+					debug_log(("Friendly killed with custom penalty: -") + (0 - entity.ff_kill_penalty));
+				}
+				else
+				{
+					attacker.participation = attacker.participation + level.friendlyfirepoints["friend_kill_points"];
+					debug_log(("Friendly killed: -") + (0 - level.friendlyfirepoints["friend_kill_points"]));
+				}
 			}
 		}
 		else
@@ -583,9 +589,9 @@ function savecommit_aftergrenade()
 		/#
 			println("");
 		#/
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

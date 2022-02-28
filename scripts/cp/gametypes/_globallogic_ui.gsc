@@ -72,21 +72,21 @@ function isanyaiattackingtheplayer(playerent)
 {
 	ais = getaiteamarray("axis");
 	ais = arraycombine(ais, getaiteamarray("team3"), 0, 0);
-	foreach(var_83c7bb6e, ai in ais)
+	foreach(ai in ais)
 	{
 		if(issentient(ai))
 		{
 			if(ai attackedrecently(playerent, 10))
 			{
-				return 1;
+				return true;
 			}
 			if(ai.enemy === playerent && isdefined(ai.weapon) && ai.weapon.name === "none" && distancesquared(ai.origin, playerent.origin) < (240 * 240))
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -102,17 +102,17 @@ function isanyaiawareofplayer(playerent)
 {
 	ais = getaiteamarray("axis");
 	ais = arraycombine(ais, getaiteamarray("team3"), 0, 0);
-	foreach(var_b5c1db6c, ai in ais)
+	foreach(ai in ais)
 	{
 		if(issentient(ai))
 		{
 			if((ai lastknowntime(playerent) + 4000) >= gettime())
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -256,7 +256,7 @@ function freegameplayhudelems()
 function teamplayercountsequal(playercounts)
 {
 	count = undefined;
-	foreach(var_a72202cf, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(!isdefined(count))
 		{
@@ -265,10 +265,10 @@ function teamplayercountsequal(playercounts)
 		}
 		if(count != playercounts[team])
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -284,7 +284,7 @@ function teamwithlowestplayercount(playercounts, ignore_team)
 {
 	count = 9999;
 	lowest_team = undefined;
-	foreach(var_7e4e54bc, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(count > playercounts[team])
 		{
@@ -374,7 +374,7 @@ function menuautoassign(comingfrommenu)
 function teamscoresequal()
 {
 	score = undefined;
-	foreach(var_1edd0b54, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(!isdefined(score))
 		{
@@ -383,10 +383,10 @@ function teamscoresequal()
 		}
 		if(score != getteamscore(team))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -402,7 +402,7 @@ function teamwithlowestscore()
 {
 	score = 99999999;
 	lowest_team = undefined;
-	foreach(var_e54fe87b, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(score > getteamscore(team))
 		{
@@ -918,7 +918,7 @@ function menuclass(response)
 			}
 			if(self isweaponviewonlylinked())
 			{
-				return 0;
+				return false;
 			}
 		}
 		if(game["state"] == "playing")

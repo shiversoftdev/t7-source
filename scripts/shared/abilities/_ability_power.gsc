@@ -19,7 +19,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("ability_power", &__init__, undefined, undefined);
 }
@@ -108,16 +108,16 @@ function is_weapon_or_variant_same_as_gadget(weapon, gadget)
 {
 	if(weapon == gadget)
 	{
-		return 1;
+		return true;
 	}
 	if(isdefined(level.weaponlightninggun) && gadget == level.weaponlightninggun)
 	{
 		if(isdefined(level.weaponlightninggunarc) && weapon == level.weaponlightninggunarc)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*

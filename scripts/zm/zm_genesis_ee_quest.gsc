@@ -54,7 +54,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_genesis_ee_quest", &__init__, undefined, undefined);
 }
@@ -222,18 +222,21 @@ function function_3c2e817d()
 		{
 			var_765a3ab1++;
 		}
-		else if(n_shot == 1)
-		{
-			var_765a3ab1 = 2;
-		}
 		else
 		{
-			var_765a3ab1 = 1;
+			if(n_shot == 1)
+			{
+				var_765a3ab1 = 2;
+			}
+			else
+			{
+				var_765a3ab1 = 1;
+			}
 		}
 		wait(0.1);
 	}
 	level flag::set("character_stones_done");
-	foreach(var_56a87db, var_7387f97 in level.var_753f10ae)
+	foreach(var_7387f97 in level.var_753f10ae)
 	{
 		playfx(level._effect["portal_3p"], var_7387f97.origin);
 		var_7387f97 delete();
@@ -399,7 +402,7 @@ function function_7914cbc8()
 */
 function function_ccdb680e(var_be748f8, b_on)
 {
-	foreach(var_f0b78e47, var_dda74d31 in var_be748f8)
+	foreach(var_dda74d31 in var_be748f8)
 	{
 		if(isdefined(var_dda74d31))
 		{
@@ -476,7 +479,7 @@ function function_be26578d(var_f5e9fb6c)
 	var_bbd61432 thread function_bde2ec4(var_f5e9fb6c);
 	var_b44af04e delete();
 	level flag::wait_till("placed_audio" + var_f5e9fb6c);
-	foreach(var_2812fa03, var_4d544c7f in var_3a557c26)
+	foreach(var_4d544c7f in var_3a557c26)
 	{
 		var_4d544c7f struct::delete();
 	}
@@ -515,9 +518,9 @@ function function_3877f225(var_b44af04e)
 		self.var_2fd11bbd = 0;
 		self scene::stop("cin_zm_dlc4_keeper_prtctr_ee_idle");
 		self playsoundontag("zmb_keeperprot_attack_large", "tag_eye");
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -582,7 +585,7 @@ function function_5516baeb(b_valid_poi)
 {
 	if(level flag::get("placed_audio1") && !level flag::get("acm_done"))
 	{
-		foreach(var_9f84532c, var_d72f41af in level.var_4bf2a542)
+		foreach(var_d72f41af in level.var_4bf2a542)
 		{
 			if(self istouching(var_d72f41af) && (!(isdefined(var_d72f41af.var_b06a11e0) && var_d72f41af.var_b06a11e0)))
 			{
@@ -1066,7 +1069,7 @@ function function_9449053f()
 		}
 	#/
 	level notify(#"hash_deeb3634");
-	foreach(var_31fe46b, player in level.players)
+	foreach(player in level.players)
 	{
 		player clientfield::set("sophia_delete_local", 1);
 	}
@@ -1124,7 +1127,7 @@ function function_ab34209c()
 		{
 			while(b_pause)
 			{
-				foreach(var_911972a9, e_player in level.activeplayers)
+				foreach(e_player in level.activeplayers)
 				{
 					if(distancesquared(e_player.origin, nd_current.origin) < 640000)
 					{
@@ -1162,10 +1165,10 @@ function function_9594f10()
 	{
 		if(distancesquared(level.activeplayers[i].origin, var_648aa72d.origin) < n_dist)
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1358,9 +1361,9 @@ function function_86b1188c(n_distance, var_d21815c4, var_441f84ff)
 	var_2931dc75 = distancesquared(var_d21815c4.origin, var_441f84ff.origin);
 	if(var_2931dc75 <= var_31dc18aa)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1425,7 +1428,7 @@ function function_b87c7e9a()
 	{
 		a_ai = getaiteamarray(level.zombie_team);
 		var_20a550ba = arraysortclosest(a_ai, self.origin, a_ai.size, 0, 100);
-		foreach(var_8a5f13ad, ai_zombie in var_20a550ba)
+		foreach(ai_zombie in var_20a550ba)
 		{
 			if(!(isdefined(ai_zombie.knockdown) && ai_zombie.knockdown))
 			{
@@ -1693,7 +1696,7 @@ function function_d3e3222b()
 	{
 		var_a29f8103[i] showpart(((("page" + (i + 1)) + "_") + level.var_6000c357[i]) + "_jnt", var_a29f8103[i].model, 1);
 		var_63727ec8 = array::exclude(level.var_6000c357, level.var_6000c357[i]);
-		foreach(var_c40cb0d9, var_8b87b28 in var_63727ec8)
+		foreach(var_8b87b28 in var_63727ec8)
 		{
 			var_a29f8103[i] hidepart(((("page" + (i + 1)) + "_") + var_8b87b28) + "_jnt", var_a29f8103[i].model, 1);
 		}
@@ -1703,7 +1706,7 @@ function function_d3e3222b()
 	self scene::play("p7_fxanim_zm_gen_book_zombie_close_bundle");
 	self scene::init("p7_fxanim_zm_gen_book_zombie_open_01_bundle");
 	self notify(#"hash_5c016997");
-	foreach(var_29073582, e_player in level.activeplayers)
+	foreach(e_player in level.activeplayers)
 	{
 		e_player function_26801553();
 	}
@@ -1723,7 +1726,7 @@ function function_ea1417b1()
 	self endon(#"hash_5c016997");
 	while(true)
 	{
-		foreach(var_f94b209, e_player in level.activeplayers)
+		foreach(e_player in level.activeplayers)
 		{
 			if(distancesquared(self.origin, e_player.origin) < 10000)
 			{
@@ -1946,7 +1949,7 @@ function function_54e04357()
 {
 	var_edface0 = 3;
 	var_5420f48f = array("castle", "sheffield", "prison", "verrucht");
-	foreach(var_35e14682, e_player in level.activeplayers)
+	foreach(e_player in level.activeplayers)
 	{
 		var_7685fe6c = array::random(var_5420f48f);
 		var_5420f48f = array::exclude(var_5420f48f, var_7685fe6c);
@@ -2102,7 +2105,7 @@ function function_27b96bc()
 		}
 		else if(isdefined(var_cb6acc3e) && var_766335a0 != var_cb6acc3e && distancesquared(var_766335a0, var_cb6acc3e) < 40000)
 		{
-			foreach(var_8633ddfb, var_f03dd5b1 in level.var_6e907685)
+			foreach(var_f03dd5b1 in level.var_6e907685)
 			{
 				var_32769d76 = pointonsegmentnearesttopoint(var_766335a0, var_cb6acc3e, var_f03dd5b1.origin);
 				var_7dac19aa = var_32769d76 - var_f03dd5b1.origin;
@@ -2322,7 +2325,7 @@ function function_1661918a()
 function ee_ending()
 {
 	level flag::wait_till("ending_room");
-	foreach(var_1e55e293, player in level.players)
+	foreach(player in level.players)
 	{
 		player.var_4870991a = 1;
 	}
@@ -2330,7 +2333,7 @@ function ee_ending()
 	scene::add_scene_func("genesis_ee_sams_room", &function_1f70c707, "play");
 	level clientfield::set("ee_quest_state", 12);
 	var_221e828b = struct::get_array("sams_room_pos", "script_noteworthy");
-	foreach(var_78546f76, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		e_player zm_utility::create_streamer_hint(var_221e828b[0].origin, var_221e828b[0].angles, 1);
 	}
@@ -2355,7 +2358,7 @@ function ee_ending()
 */
 function function_1f70c707(a_ents)
 {
-	foreach(var_b2020ca2, e_object in a_ents)
+	foreach(e_object in a_ents)
 	{
 		if(e_object.model === "p7_zm_gen_dark_arena_sphere_metal")
 		{
@@ -2453,7 +2456,7 @@ function function_43af724a()
 */
 function function_64e4c3ee(var_a5efd39d = 1)
 {
-	foreach(var_498f02a4, e_player in level.activeplayers)
+	foreach(e_player in level.activeplayers)
 	{
 		if(var_a5efd39d)
 		{
@@ -2509,7 +2512,7 @@ function function_5db6ba34(var_1a60ad71 = 1)
 	wait(0.5);
 	a_ai_zombies = getaiteamarray(level.zombie_team);
 	var_6b1085eb = [];
-	foreach(var_3ddfc6e5, ai_zombie in a_ai_zombies)
+	foreach(ai_zombie in a_ai_zombies)
 	{
 		ai_zombie.no_powerups = 1;
 		ai_zombie.deathpoints_already_given = 1;
@@ -2564,7 +2567,7 @@ function function_5db6ba34(var_1a60ad71 = 1)
 	}
 	var_6cbdc65 = [];
 	var_c94c86a8 = getentarray("mechz", "targetname");
-	foreach(var_7c8e3322, ai_mechz in var_c94c86a8)
+	foreach(ai_mechz in var_c94c86a8)
 	{
 		var_63b71acf = 0;
 		if(isdefined(ai_mechz.no_damage_points) && ai_mechz.no_damage_points)
@@ -2669,7 +2672,7 @@ function function_14d67389(n_val)
 			level flag::set("");
 			level flag::set("");
 			level flag::set("");
-			foreach(var_f3e6755, e_player in level.activeplayers)
+			foreach(e_player in level.activeplayers)
 			{
 				level thread _zm_weap_octobomb::octobomb_give(e_player);
 			}
@@ -2765,7 +2768,7 @@ function function_2e1bc559(n_val)
 {
 	/#
 		var_2efcd138 = getentarray("", "");
-		foreach(var_a3d5304b, var_c5653cf3 in var_2efcd138)
+		foreach(var_c5653cf3 in var_2efcd138)
 		{
 			var_c5653cf3 thread function_156b5313();
 		}

@@ -353,7 +353,7 @@ function waittill_any_array_return(a_notifies)
 		self endon(#"entityshutdown");
 	}
 	s_tracker = spawnstruct();
-	foreach(var_b5262e4, str_notify in a_notifies)
+	foreach(str_notify in a_notifies)
 	{
 		if(isdefined(str_notify))
 		{
@@ -673,29 +673,44 @@ function single_thread(entity, func, arg1, arg2, arg3, arg4, arg5, arg6)
 	{
 		entity thread [[func]](arg1, arg2, arg3, arg4, arg5, arg6);
 	}
-	else if(isdefined(arg5))
-	{
-		entity thread [[func]](arg1, arg2, arg3, arg4, arg5);
-	}
-	else if(isdefined(arg4))
-	{
-		entity thread [[func]](arg1, arg2, arg3, arg4);
-	}
-	else if(isdefined(arg3))
-	{
-		entity thread [[func]](arg1, arg2, arg3);
-	}
-	else if(isdefined(arg2))
-	{
-		entity thread [[func]](arg1, arg2);
-	}
-	else if(isdefined(arg1))
-	{
-		entity thread [[func]](arg1);
-	}
 	else
 	{
-		entity thread [[func]]();
+		if(isdefined(arg5))
+		{
+			entity thread [[func]](arg1, arg2, arg3, arg4, arg5);
+		}
+		else
+		{
+			if(isdefined(arg4))
+			{
+				entity thread [[func]](arg1, arg2, arg3, arg4);
+			}
+			else
+			{
+				if(isdefined(arg3))
+				{
+					entity thread [[func]](arg1, arg2, arg3);
+				}
+				else
+				{
+					if(isdefined(arg2))
+					{
+						entity thread [[func]](arg1, arg2);
+					}
+					else
+					{
+						if(isdefined(arg1))
+						{
+							entity thread [[func]](arg1);
+						}
+						else
+						{
+							entity thread [[func]]();
+						}
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -1104,11 +1119,11 @@ function is_valid_type_for_callback(type)
 		case "turret":
 		case "vehicle":
 		{
-			return 1;
+			return true;
 		}
 		default:
 		{
-			return 0;
+			return false;
 		}
 	}
 }
@@ -1299,15 +1314,15 @@ function friend_not_foe(localclientindex, predicted)
 			owner = self getowner(localclientindex);
 			if(isdefined(owner) && owner == player)
 			{
-				return 1;
+				return true;
 			}
 		}
 		else if(self.team == team)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1330,10 +1345,10 @@ function friend_not_foe_team(localclientindex, team, predicted)
 	{
 		if(player.team == team)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1352,20 +1367,20 @@ function isenemyplayer(player)
 	#/
 	if(!player isplayer())
 	{
-		return 0;
+		return false;
 	}
 	if(player.team != "free")
 	{
 		if(player.team == self.team)
 		{
-			return 0;
+			return false;
 		}
 	}
 	else if(player == self)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1381,13 +1396,13 @@ function is_player_view_linked_to_entity(localclientnum)
 {
 	if(self isdriving(localclientnum))
 	{
-		return 1;
+		return true;
 	}
 	if(self islocalplayerweaponviewonlylinked())
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1459,9 +1474,9 @@ function is_gib_restricted_build()
 {
 	if(!(ismaturecontentenabled() && isshowgibsenabled()))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1572,17 +1587,17 @@ function ent_already_in_trigger(trig)
 {
 	if(!isdefined(self._triggers))
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(self._triggers[trig getentitynumber()]))
 	{
-		return 0;
+		return false;
 	}
 	if(!self._triggers[trig getentitynumber()])
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1869,11 +1884,11 @@ function is_safehouse(str_next_map = tolower(getdvarstring("mapname")))
 		case "cp_sh_mobile":
 		case "cp_sh_singapore":
 		{
-			return 1;
+			return true;
 		}
 		default:
 		{
-			return 0;
+			return false;
 		}
 	}
 }
@@ -1906,20 +1921,23 @@ function button_held_think(which_button)
 					self._holding_button[which_button] = 0;
 				}
 			}
-			else if(self [[level._button_funcs[which_button]]]())
+			else
 			{
-				if(time_started == 0)
+				if(self [[level._button_funcs[which_button]]]())
 				{
-					time_started = gettime();
+					if(time_started == 0)
+					{
+						time_started = gettime();
+					}
+					if((gettime() - time_started) > 250)
+					{
+						self._holding_button[which_button] = 1;
+					}
 				}
-				if((gettime() - time_started) > 250)
+				else if(time_started != 0)
 				{
-					self._holding_button[which_button] = 1;
+					time_started = 0;
 				}
-			}
-			else if(time_started != 0)
-			{
-				time_started = 0;
 			}
 			wait(0.016);
 		}

@@ -35,7 +35,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_genesis_undercroft_low_grav", &__init__, &__main__, undefined);
 }
@@ -107,7 +107,7 @@ function function_3fa7f11a()
 	var_15ed352b = getentarray("grav_pad_trigger", "targetname");
 	level.var_4a455ac4 = 0;
 	level.var_eca8388c = [];
-	foreach(var_1127fad8, var_3b9a12e0 in var_15ed352b)
+	foreach(var_3b9a12e0 in var_15ed352b)
 	{
 		var_3b9a12e0 thread function_e49e9c09();
 		var_4de8678a = getent(var_3b9a12e0.target, "targetname");
@@ -118,7 +118,7 @@ function function_3fa7f11a()
 	{
 		wait(0.05);
 	}
-	foreach(var_b1eaf32f, var_3b9a12e0 in var_15ed352b)
+	foreach(var_3b9a12e0 in var_15ed352b)
 	{
 		var_544a882 = getent(var_3b9a12e0.target, "targetname");
 	}
@@ -496,7 +496,7 @@ function function_c3e8e4a4()
 {
 	s_loc = struct::get("perk_powerup_loc", "targetname");
 	level._powerup_timeout_override = &function_e4e4f426;
-	foreach(var_6b780c35, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		var_6e4b5e90 = level thread zm_powerups::specific_powerup_drop("free_perk", s_loc.origin, undefined, undefined, undefined, e_player);
 	}
@@ -537,11 +537,11 @@ function detect_reentry()
 		{
 			if(self.var_8665ab89 == gettime())
 			{
-				return 1;
+				return true;
 			}
 		}
 		self.var_8665ab89 = gettime();
-		return 0;
+		return false;
 	#/
 }
 
@@ -582,14 +582,14 @@ function function_e41a2453(cmd)
 			{
 				if(level detect_reentry())
 				{
-					return 1;
+					return true;
 				}
 				level notify(#"hash_9c3be857");
 				level thread function_5f1fa8cd(9999);
-				return 1;
+				return true;
 			}
 		}
-		return 0;
+		return false;
 	#/
 }
 

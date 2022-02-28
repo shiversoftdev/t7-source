@@ -34,20 +34,20 @@
 #using scripts\shared\util_shared;
 #using scripts\shared\vehicle_shared;
 
-#namespace namespace_ab720c84;
+#namespace hostage_1;
 
 /*
-	Name: function_7af85b91
-	Namespace: namespace_ab720c84
+	Name: hostage_1_start
+	Namespace: hostage_1
 	Checksum: 0x2E6DB1B7
 	Offset: 0x2260
 	Size: 0xE4
 	Parameters: 1
 	Flags: Linked
 */
-function function_7af85b91(str_objective)
+function hostage_1_start(str_objective)
 {
-	function_8176e458();
+	hostage_1_precache();
 	spawner::add_spawn_function_group("fuel_tunnel_ai", "script_noteworthy", &cp_prologue_util::ai_idle_then_alert, "fuel_tunnel_alerted", 1024);
 	if(!isdefined(level.ai_hendricks))
 	{
@@ -56,34 +56,34 @@ function function_7af85b91(str_objective)
 		skipto::teleport_ai(str_objective);
 	}
 	level.ai_hendricks.ignoreme = 1;
-	level thread function_dbff3ab4();
+	level thread hostage_1_main();
 }
 
 /*
-	Name: function_8176e458
-	Namespace: namespace_ab720c84
+	Name: hostage_1_precache
+	Namespace: hostage_1
 	Checksum: 0xA59F99FE
 	Offset: 0x2350
 	Size: 0x44
 	Parameters: 0
 	Flags: Linked
 */
-function function_8176e458()
+function hostage_1_precache()
 {
 	level thread scene::init("cin_pro_06_01_hostage_vign_rollgrenade");
 	level thread scene::init("p7_fxanim_cp_prologue_underground_truck_explode_bundle");
 }
 
 /*
-	Name: function_dbff3ab4
-	Namespace: namespace_ab720c84
+	Name: hostage_1_main
+	Namespace: hostage_1
 	Checksum: 0x69E2F064
 	Offset: 0x23A0
 	Size: 0x1A4
 	Parameters: 0
 	Flags: Linked
 */
-function function_dbff3ab4()
+function hostage_1_main()
 {
 	level thread cp_prologue_util::function_950d1c3b(1);
 	level thread function_ca7de8e8();
@@ -105,7 +105,7 @@ function function_dbff3ab4()
 
 /*
 	Name: function_5d78fd66
-	Namespace: namespace_ab720c84
+	Namespace: hostage_1
 	Checksum: 0xDD03FE32
 	Offset: 0x2550
 	Size: 0x34
@@ -120,7 +120,7 @@ function function_5d78fd66()
 
 /*
 	Name: function_ca7de8e8
-	Namespace: namespace_ab720c84
+	Namespace: hostage_1
 	Checksum: 0x77D354A1
 	Offset: 0x2590
 	Size: 0x3A4
@@ -130,7 +130,7 @@ function function_5d78fd66()
 function function_ca7de8e8()
 {
 	a_ai_enemies = getaiteamarray("axis");
-	foreach(var_96e4708c, ai_enemy in a_ai_enemies)
+	foreach(ai_enemy in a_ai_enemies)
 	{
 		ai_enemy delete();
 	}
@@ -156,7 +156,7 @@ function function_ca7de8e8()
 
 /*
 	Name: function_b7afdf3a
-	Namespace: namespace_ab720c84
+	Namespace: hostage_1
 	Checksum: 0x7666D252
 	Offset: 0x2940
 	Size: 0x3C
@@ -171,7 +171,7 @@ function function_b7afdf3a()
 
 /*
 	Name: function_e14a508d
-	Namespace: namespace_ab720c84
+	Namespace: hostage_1
 	Checksum: 0xF63C9D09
 	Offset: 0x2988
 	Size: 0xBA
@@ -192,7 +192,7 @@ function function_e14a508d()
 
 /*
 	Name: function_e93a75b6
-	Namespace: namespace_ab720c84
+	Namespace: hostage_1
 	Checksum: 0xC6C793A0
 	Offset: 0x2A50
 	Size: 0xA6
@@ -210,7 +210,7 @@ function function_e93a75b6(einflictor, eattacker, idamage, idflags, smeansofdeat
 
 /*
 	Name: function_88ddc4d5
-	Namespace: namespace_ab720c84
+	Namespace: hostage_1
 	Checksum: 0xFEF665F4
 	Offset: 0x2B00
 	Size: 0xEC
@@ -228,7 +228,7 @@ function function_88ddc4d5()
 
 /*
 	Name: function_70b550de
-	Namespace: namespace_ab720c84
+	Namespace: hostage_1
 	Checksum: 0x5246F697
 	Offset: 0x2BF8
 	Size: 0x8C
@@ -245,7 +245,7 @@ function function_70b550de(a_ents)
 
 /*
 	Name: function_f41e9505
-	Namespace: namespace_ab720c84
+	Namespace: hostage_1
 	Checksum: 0x56FC34CE
 	Offset: 0x2C90
 	Size: 0x34
@@ -260,7 +260,7 @@ function function_f41e9505()
 
 /*
 	Name: function_ee3c7f46
-	Namespace: namespace_ab720c84
+	Namespace: hostage_1
 	Checksum: 0x480C41F4
 	Offset: 0x2CD0
 	Size: 0x214
@@ -280,13 +280,16 @@ function function_ee3c7f46()
 	{
 		n_num_to_spawn = 1;
 	}
-	else if(a_players.size == 2)
-	{
-		n_num_to_spawn = 2;
-	}
 	else
 	{
-		n_num_to_spawn = 5;
+		if(a_players.size == 2)
+		{
+			n_num_to_spawn = 2;
+		}
+		else
+		{
+			n_num_to_spawn = 5;
+		}
 	}
 	if(n_num_to_spawn > a_ai.size)
 	{
@@ -303,7 +306,7 @@ function function_ee3c7f46()
 
 /*
 	Name: function_3964d78d
-	Namespace: namespace_ab720c84
+	Namespace: hostage_1
 	Checksum: 0xF1761E99
 	Offset: 0x2EF0
 	Size: 0x2AC
@@ -354,7 +357,7 @@ function function_3964d78d()
 
 /*
 	Name: function_672c874
-	Namespace: namespace_ab720c84
+	Namespace: hostage_1
 	Checksum: 0x2B96221
 	Offset: 0x31A8
 	Size: 0x40C
@@ -376,7 +379,7 @@ function function_672c874()
 	physicsexplosionsphere(s_struct.origin, 255, 254, 0.3, 25, 400);
 	wait(0.1);
 	var_ff31c6f9 = getentarray("truck_red_barrel", "script_noteworthy");
-	foreach(var_bcccd2c2, piece in var_ff31c6f9)
+	foreach(piece in var_ff31c6f9)
 	{
 		if(isdefined(piece) && piece.targetname == "destructible")
 		{
@@ -408,7 +411,7 @@ function function_672c874()
 
 /*
 	Name: function_5dc67e92
-	Namespace: namespace_ab720c84
+	Namespace: hostage_1
 	Checksum: 0x2B08FDA
 	Offset: 0x35C0
 	Size: 0x1E4
@@ -449,7 +452,7 @@ function function_5dc67e92()
 
 /*
 	Name: function_386e6074
-	Namespace: namespace_ab720c84
+	Namespace: hostage_1
 	Checksum: 0x142C6A1C
 	Offset: 0x37B0
 	Size: 0xD4
@@ -468,7 +471,7 @@ function function_386e6074()
 
 /*
 	Name: function_bbaa282a
-	Namespace: namespace_ab720c84
+	Namespace: hostage_1
 	Checksum: 0xE7148E9B
 	Offset: 0x3890
 	Size: 0xA4
@@ -487,7 +490,7 @@ function function_bbaa282a()
 
 /*
 	Name: function_7a05bbf
-	Namespace: namespace_ab720c84
+	Namespace: hostage_1
 	Checksum: 0x55BEDAC1
 	Offset: 0x3940
 	Size: 0xA4
@@ -515,7 +518,7 @@ function function_7a05bbf()
 
 /*
 	Name: function_1ddfda41
-	Namespace: namespace_ab720c84
+	Namespace: hostage_1
 	Checksum: 0x9D3E02FE
 	Offset: 0x39F0
 	Size: 0x204
@@ -555,7 +558,7 @@ function function_1ddfda41()
 
 /*
 	Name: function_50d18609
-	Namespace: namespace_ab720c84
+	Namespace: hostage_1
 	Checksum: 0x272BDFC6
 	Offset: 0x3C00
 	Size: 0xCC
@@ -577,7 +580,7 @@ function function_50d18609()
 
 /*
 	Name: function_8b6e6abe
-	Namespace: namespace_ab720c84
+	Namespace: hostage_1
 	Checksum: 0x74021E69
 	Offset: 0x3CD8
 	Size: 0x224
@@ -597,7 +600,7 @@ function function_8b6e6abe()
 	self ai::force_goal(nd_node);
 	wait(1);
 	a_enemy = spawner::get_ai_group_ai("tunnel_1st_contact_guys");
-	foreach(var_9156795c, enemy in a_enemy)
+	foreach(enemy in a_enemy)
 	{
 		if(isdefined(enemy) && isalive(enemy))
 		{
@@ -613,7 +616,7 @@ function function_8b6e6abe()
 
 /*
 	Name: function_c9d7d48a
-	Namespace: namespace_ab720c84
+	Namespace: hostage_1
 	Checksum: 0x870848CA
 	Offset: 0x3F08
 	Size: 0x264
@@ -658,7 +661,7 @@ function function_c9d7d48a()
 
 /*
 	Name: function_5729b9e7
-	Namespace: namespace_ab720c84
+	Namespace: hostage_1
 	Checksum: 0x4F67794E
 	Offset: 0x4178
 	Size: 0x34
@@ -673,7 +676,7 @@ function function_5729b9e7(a_ents)
 
 /*
 	Name: function_6ae70954
-	Namespace: namespace_ab720c84
+	Namespace: hostage_1
 	Checksum: 0x7E6F6AA2
 	Offset: 0x41B8
 	Size: 0x214
@@ -683,31 +686,31 @@ function function_5729b9e7(a_ents)
 function function_6ae70954(open_door)
 {
 	exploder::exploder("fx_exploder_door_vacuum");
-	var_bcc5e65a = getent("holdingcells_entrydoor_1", "targetname");
-	var_96c36bf1 = getent("holdingcells_entrydoor_2", "targetname");
+	m_door1 = getent("holdingcells_entrydoor_1", "targetname");
+	m_door2 = getent("holdingcells_entrydoor_2", "targetname");
 	if(open_door)
 	{
 		exploder::exploder("light_exploder_prison_door");
-		var_bcc5e65a movex(64, 1, 0.1, 0.2);
-		var_bcc5e65a playsound("evt_fueldepot_door_open");
+		m_door1 movex(64, 1, 0.1, 0.2);
+		m_door1 playsound("evt_fueldepot_door_open");
 		wait(0.25);
-		var_96c36bf1 movex(64, 1, 0.1, 0.2);
-		var_96c36bf1 playsound("evt_fueldepot_door_open");
+		m_door2 movex(64, 1, 0.1, 0.2);
+		m_door2 playsound("evt_fueldepot_door_open");
 	}
 	else
 	{
 		exploder::stop_exploder("light_exploder_prison_door");
-		var_96c36bf1 movex(-64, 1, 0.1, 0.2);
-		var_96c36bf1 playsound("evt_fueldepot_door_close");
+		m_door2 movex(-64, 1, 0.1, 0.2);
+		m_door2 playsound("evt_fueldepot_door_close");
 		wait(0.25);
-		var_bcc5e65a movex(-64, 1, 0.1, 0.2);
-		var_bcc5e65a playsound("evt_fueldepot_door_close");
+		m_door1 movex(-64, 1, 0.1, 0.2);
+		m_door1 playsound("evt_fueldepot_door_close");
 	}
 }
 
 /*
 	Name: watch_player_fire
-	Namespace: namespace_ab720c84
+	Namespace: hostage_1
 	Checksum: 0x426FCB2E
 	Offset: 0x43D8
 	Size: 0x3C
@@ -723,7 +726,7 @@ function watch_player_fire()
 
 /*
 	Name: hend_fuel_depot_otr_dialog
-	Namespace: namespace_ab720c84
+	Namespace: hostage_1
 	Checksum: 0xE9884A88
 	Offset: 0x4420
 	Size: 0x74
@@ -741,7 +744,7 @@ function hend_fuel_depot_otr_dialog()
 
 /*
 	Name: spawn_machine_gunner
-	Namespace: namespace_ab720c84
+	Namespace: hostage_1
 	Checksum: 0x7072E264
 	Offset: 0x44A0
 	Size: 0x40
@@ -756,7 +759,7 @@ function spawn_machine_gunner()
 
 /*
 	Name: function_d9bab593
-	Namespace: namespace_ab720c84
+	Namespace: hostage_1
 	Checksum: 0xE59D1A0F
 	Offset: 0x44E8
 	Size: 0x284
@@ -798,7 +801,7 @@ function function_d9bab593(str_trigger, str_door, str_spawners, var_137809d6, va
 
 /*
 	Name: function_12ac9114
-	Namespace: namespace_ab720c84
+	Namespace: hostage_1
 	Checksum: 0xF943C0B0
 	Offset: 0x4778
 	Size: 0x194
@@ -1216,7 +1219,7 @@ function function_b0c29b02(e_player)
 {
 	self.trigger triggerenable(0);
 	self gameobjects::disable_object();
-	foreach(var_7106a867, var_12195048 in level.activeplayers)
+	foreach(var_12195048 in level.activeplayers)
 	{
 		var_12195048 util::set_low_ready(1);
 		var_12195048 thread function_db5cf0d5();
@@ -1285,7 +1288,7 @@ function function_b8d7b823(a_ents)
 	level.ai_hendricks thread dialog::say("hend_three_two_go_0");
 	level thread namespace_21b2c1f2::function_2f85277b();
 	wait(1);
-	foreach(var_19424359, e_player in level.activeplayers)
+	foreach(e_player in level.activeplayers)
 	{
 		e_player util::set_low_ready(0);
 	}
@@ -1303,7 +1306,7 @@ function function_b8d7b823(a_ents)
 */
 function function_53775c4d(a_ents)
 {
-	foreach(var_fee520f9, ai_guard in a_ents)
+	foreach(ai_guard in a_ents)
 	{
 		ai_guard.var_c54411a6 = 1;
 		ai_guard.cybercomtargetstatusoverride = 0;
@@ -1847,7 +1850,7 @@ function function_9793598c()
 	level thread function_51da5fc6();
 	trigger::wait_till("t_lift_reinforcements", undefined, undefined, 0);
 	a_spawners = getentarray("sp_stairs_guy_wave2", "targetname");
-	foreach(var_1dda0010, sp_spawner in a_spawners)
+	foreach(sp_spawner in a_spawners)
 	{
 		sp_spawner spawner::spawn();
 	}
@@ -2262,7 +2265,7 @@ function function_4d214c02(delay)
 	wait(delay);
 	while(!(isdefined(level.var_b100689e) && level.var_b100689e))
 	{
-		foreach(var_eb69284, player in level.players)
+		foreach(player in level.players)
 		{
 			player playrumbleonentity("cp_prologue_rumble_lift");
 		}
@@ -2277,7 +2280,7 @@ function function_4d214c02(delay)
 		{
 			break;
 		}
-		foreach(var_9674b2a7, player in level.players)
+		foreach(player in level.players)
 		{
 			player playrumbleonentity("cp_prologue_rumble_lift");
 		}
@@ -2364,7 +2367,7 @@ function cleanup(spawn_mgr_name, ai_groups_name)
 {
 	spawn_manager::kill(spawn_mgr_name);
 	var_db932442 = spawner::get_ai_group_ai(ai_groups_name);
-	foreach(var_96eb5582, ai_dude in var_db932442)
+	foreach(ai_dude in var_db932442)
 	{
 		if(isalive(ai_dude))
 		{
@@ -2703,17 +2706,17 @@ function function_f2f20b35()
 	light_lift = getent("light_lift", "targetname");
 	light_lift linkto(self);
 	var_51875481 = getentarray("light_lift_02", "targetname");
-	foreach(var_7164bd9c, light in var_51875481)
+	foreach(light in var_51875481)
 	{
 		light linkto(self);
 	}
 	var_51875481 = getentarray("light_lift_03", "targetname");
-	foreach(var_b358598f, light in var_51875481)
+	foreach(light in var_51875481)
 	{
 		light linkto(self);
 	}
 	var_51875481 = getentarray("light_lift_panel_anim01", "targetname");
-	foreach(var_899a0c95, light in var_51875481)
+	foreach(light in var_51875481)
 	{
 		light linkto(self);
 	}
@@ -2750,15 +2753,18 @@ function function_45ed0d4b(open_door, move_time)
 		var_3d3eb4dd moveto(v_dest, move_time);
 		level.var_1dd14818 = 1;
 	}
-	else if(level.var_1dd14818 == 0)
+	else
 	{
-		return;
+		if(level.var_1dd14818 == 0)
+		{
+			return;
+		}
+		v_dest = var_507d66a5.origin + (v_up * (move_amount * -1));
+		var_507d66a5 moveto(v_dest, move_time);
+		v_dest = var_3d3eb4dd.origin + (v_up * move_amount);
+		var_3d3eb4dd moveto(v_dest, move_time);
+		level.var_1dd14818 = 0;
 	}
-	v_dest = var_507d66a5.origin + (v_up * (move_amount * -1));
-	var_507d66a5 moveto(v_dest, move_time);
-	v_dest = var_3d3eb4dd.origin + (v_up * move_amount);
-	var_3d3eb4dd moveto(v_dest, move_time);
-	level.var_1dd14818 = 0;
 	var_3d3eb4dd playsound("evt_freight_elev_door_start");
 	snd_door = spawn("script_origin", var_3d3eb4dd.origin);
 	snd_door linkto(var_3d3eb4dd);
@@ -2812,7 +2818,7 @@ function function_5517d018()
 			}
 		}
 	}
-	foreach(var_93930b21, player in level.players)
+	foreach(player in level.players)
 	{
 		if(player istouching(e_volume))
 		{

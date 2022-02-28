@@ -17,7 +17,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("challenges", &__init__, undefined, undefined);
 }
@@ -59,7 +59,7 @@ function init()
 		registerchallengescallback("roundEnd", &challengeroundend);
 	}
 	callback::on_connect(&on_player_connect);
-	foreach(var_3c27f970, team in level.teams)
+	foreach(team in level.teams)
 	{
 		initteamchallenges(team);
 	}
@@ -475,37 +475,46 @@ function challengekills(data, time)
 			player addplayerstat("kill_enemy_with_tacknife", 1);
 			player bladekill();
 		}
-		else if(weapon == level.weaponballisticknife)
+		else
 		{
-			player bladekill();
-			player addweaponstat(weapon, "ballistic_knife_melee", 1);
-		}
-		else if(weapon == level.weaponbasemelee || weapon == level.weaponbasemeleeheld)
-		{
-			player bladekill();
-		}
-		else if(weapon.isriotshield)
-		{
-			if((victim.lastfiretime + 3000) > time)
+			if(weapon == level.weaponballisticknife)
 			{
-				player addweaponstat(weapon, "shield_melee_while_enemy_shooting", 1);
+				player bladekill();
+				player addweaponstat(weapon, "ballistic_knife_melee", 1);
+			}
+			else
+			{
+				if(weapon == level.weaponbasemelee || weapon == level.weaponbasemeleeheld)
+				{
+					player bladekill();
+				}
+				else if(weapon.isriotshield)
+				{
+					if((victim.lastfiretime + 3000) > time)
+					{
+						player addweaponstat(weapon, "shield_melee_while_enemy_shooting", 1);
+					}
+				}
 			}
 		}
 	}
-	else if(isdefined(ownerweaponatlaunch))
+	else
 	{
-		if(weaponhasattachment(ownerweaponatlaunch, "stackfire"))
+		if(isdefined(ownerweaponatlaunch))
 		{
-			player addplayerstat("KILL_CROSSBOW_STACKFIRE", 1);
+			if(weaponhasattachment(ownerweaponatlaunch, "stackfire"))
+			{
+				player addplayerstat("KILL_CROSSBOW_STACKFIRE", 1);
+			}
 		}
-	}
-	if(weapon == level.weaponballisticknife)
-	{
-		player bladekill();
-		if(isdefined(player.retreivedblades) && player.retreivedblades > 0)
+		if(weapon == level.weaponballisticknife)
 		{
-			player.retreivedblades--;
-			player addweaponstat(weapon, "kill_retrieved_blade", 1);
+			player bladekill();
+			if(isdefined(player.retreivedblades) && player.retreivedblades > 0)
+			{
+				player.retreivedblades--;
+				player addweaponstat(weapon, "kill_retrieved_blade", 1);
+			}
 		}
 	}
 	lethalgrenadekill = 0;

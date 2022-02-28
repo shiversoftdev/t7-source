@@ -22,7 +22,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	spawner::add_archetype_spawn_function("zombie_dog", &function_9f8cfcf5);
 }
@@ -109,25 +109,31 @@ function function_33aa4940()
 			var_88369d66 = 1;
 		}
 	}
-	else if(level.round_number > 25)
+	else
 	{
-		if(randomfloat(100) < 3)
+		if(level.round_number > 25)
 		{
-			var_88369d66 = 1;
+			if(randomfloat(100) < 3)
+			{
+				var_88369d66 = 1;
+			}
 		}
-	}
-	else if(level.round_number > 20)
-	{
-		if(randomfloat(100) < 2)
+		else
 		{
-			var_88369d66 = 1;
-		}
-	}
-	else if(level.round_number > 15)
-	{
-		if(randomfloat(100) < 1)
-		{
-			var_88369d66 = 1;
+			if(level.round_number > 20)
+			{
+				if(randomfloat(100) < 2)
+				{
+					var_88369d66 = 1;
+				}
+			}
+			else if(level.round_number > 15)
+			{
+				if(randomfloat(100) < 1)
+				{
+					var_88369d66 = 1;
+				}
+			}
 		}
 	}
 	if(var_88369d66)

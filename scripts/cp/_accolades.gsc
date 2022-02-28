@@ -24,7 +24,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("accolades", &__init__, &__main__, undefined);
 }
@@ -166,11 +166,14 @@ function function_ce95384b(var_36b04a4a, is_state, value, var_b3982c20)
 		self function_e2d5f2db(var_36b04a4a, value);
 		self setdstat("PlayerStatsByMap", level.var_deb20b04, "accolades", var_36b04a4a, "state", value);
 	}
-	else if(isdefined(var_b3982c20) && var_b3982c20)
+	else
 	{
-		self function_86373aa7(var_36b04a4a, value);
+		if(isdefined(var_b3982c20) && var_b3982c20)
+		{
+			self function_86373aa7(var_36b04a4a, value);
+		}
+		self setdstat("PlayerStatsByMap", level.var_deb20b04, "accolades", var_36b04a4a, "value", value);
 	}
-	self setdstat("PlayerStatsByMap", level.var_deb20b04, "accolades", var_36b04a4a, "value", value);
 	/#
 		self.var_eb7d74bb = 1;
 	#/
@@ -332,7 +335,7 @@ function function_77b3b4d1()
 {
 	if(self == level)
 	{
-		foreach(var_ceb87c62, player in level.players)
+		foreach(player in level.players)
 		{
 			player function_77b3b4d1();
 		}
@@ -364,7 +367,7 @@ function function_77b3b4d1()
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_9ba543a3(str_accolade, var_eb856299)
+function private function_9ba543a3(str_accolade, var_eb856299)
 {
 	var_51ccabeb = tablelookuprownum("gamedata/stats/cp/statsmilestones1.csv", 4, str_accolade);
 	var_35cb50ff = tablelookupcolumnforrow("gamedata/stats/cp/statsmilestones1.csv", var_51ccabeb, 2);
@@ -380,7 +383,7 @@ private function function_9ba543a3(str_accolade, var_eb856299)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_214e644a()
+function private function_214e644a()
 {
 	return isdefined(level.var_837b3a61) && level.var_837b3a61 || sessionmodeiscampaignzombiesgame();
 }
@@ -557,7 +560,7 @@ function increment(str_accolade, n_val = 1, var_50f65478)
 	}
 	if(self == level)
 	{
-		foreach(var_5c6b7473, player in level.players)
+		foreach(player in level.players)
 		{
 			player increment(str_accolade);
 		}
@@ -631,7 +634,7 @@ function increment(str_accolade, n_val = 1, var_50f65478)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _increment_by_notify(str_accolade, str_notify)
+function private _increment_by_notify(str_accolade, str_notify)
 {
 	self endon(#"hash_115de864");
 	self endon(#"disconnect");
@@ -660,7 +663,7 @@ private function _increment_by_notify(str_accolade, str_notify)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_115de864()
+function private function_115de864()
 {
 	self notify(#"hash_115de864");
 	accolades = [];
@@ -865,7 +868,7 @@ function function_cf1b719a()
 	{
 		return;
 	}
-	foreach(str_accolade, s_accolade in level.accolades)
+	foreach(s_accolade in level.accolades)
 	{
 		self function_cc6b3591(s_accolade.index);
 	}
@@ -882,7 +885,7 @@ function function_cf1b719a()
 */
 function on_player_disconnect()
 {
-	foreach(str_accolade, s_accolade in level.accolades)
+	foreach(s_accolade in level.accolades)
 	{
 		if(self function_3a7fd23a(s_accolade.index) == 1)
 		{
@@ -966,15 +969,15 @@ function function_7aaf1e5d()
 	/#
 		if(isdefined(self.var_ab872594))
 		{
-			foreach(var_3a558cc4, var_ab872594 in self.var_ab872594)
+			foreach(var_ab872594 in self.var_ab872594)
 			{
 				var_ab872594 destroy();
 			}
-			foreach(var_a24ba320, var_5922e3b8 in self.var_5922e3b8)
+			foreach(var_5922e3b8 in self.var_5922e3b8)
 			{
 				var_5922e3b8 destroy();
 			}
-			foreach(var_6a69600c, var_eda8fa83 in self.var_87b86b14)
+			foreach(var_eda8fa83 in self.var_87b86b14)
 			{
 				var_eda8fa83 destroy();
 			}
@@ -1182,7 +1185,7 @@ function function_4c436dfe()
 		{
 			continue;
 		}
-		foreach(var_caf4df84, e_player in level.players)
+		foreach(e_player in level.players)
 		{
 			foreach(str_accolade, s_accolade in level.accolades)
 			{
@@ -1263,7 +1266,7 @@ function commit(map_name = level.script)
 	}
 	if(self == level)
 	{
-		foreach(var_917c3cbf, player in level.players)
+		foreach(player in level.players)
 		{
 			player commit(map_name);
 			player function_cf1b719a();

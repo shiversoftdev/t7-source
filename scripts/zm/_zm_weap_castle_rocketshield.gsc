@@ -23,25 +23,25 @@
 #using scripts\zm\craftables\_zm_craft_shield;
 #using scripts\zm\zm_castle_vo;
 
-#namespace namespace_48e69557;
+#namespace castle_rocketshield;
 
 /*
 	Name: __init__sytem__
-	Namespace: namespace_48e69557
+	Namespace: castle_rocketshield
 	Checksum: 0x57B348D5
 	Offset: 0x610
 	Size: 0x3C
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_weap_castle_rocketshield", &__init__, &__main__, undefined);
 }
 
 /*
 	Name: __init__
-	Namespace: namespace_48e69557
+	Namespace: castle_rocketshield
 	Checksum: 0x17500068
 	Offset: 0x658
 	Size: 0x13C
@@ -62,7 +62,7 @@ function __init__()
 
 /*
 	Name: __main__
-	Namespace: namespace_48e69557
+	Namespace: castle_rocketshield
 	Checksum: 0x252E4DC0
 	Offset: 0x7A0
 	Size: 0x214
@@ -94,7 +94,7 @@ function __main__()
 
 /*
 	Name: on_player_connect
-	Namespace: namespace_48e69557
+	Namespace: castle_rocketshield
 	Checksum: 0x62E18907
 	Offset: 0x9C0
 	Size: 0x34
@@ -109,7 +109,7 @@ function on_player_connect()
 
 /*
 	Name: function_e8141489
-	Namespace: namespace_48e69557
+	Namespace: castle_rocketshield
 	Checksum: 0xEEB34BCD
 	Offset: 0xA00
 	Size: 0x74
@@ -133,7 +133,7 @@ function function_e8141489()
 
 /*
 	Name: function_bbf98b84
-	Namespace: namespace_48e69557
+	Namespace: castle_rocketshield
 	Checksum: 0xD687ADAA
 	Offset: 0xA80
 	Size: 0x60
@@ -155,7 +155,7 @@ function function_bbf98b84()
 
 /*
 	Name: on_player_spawned
-	Namespace: namespace_48e69557
+	Namespace: castle_rocketshield
 	Checksum: 0xD5FE91F9
 	Offset: 0xAE8
 	Size: 0x4C
@@ -171,7 +171,7 @@ function on_player_spawned()
 
 /*
 	Name: player_watch_ammo_change
-	Namespace: namespace_48e69557
+	Namespace: castle_rocketshield
 	Checksum: 0x85C7760
 	Offset: 0xB40
 	Size: 0xC8
@@ -198,7 +198,7 @@ function player_watch_ammo_change()
 
 /*
 	Name: player_watch_max_ammo
-	Namespace: namespace_48e69557
+	Namespace: castle_rocketshield
 	Checksum: 0x275F5D62
 	Offset: 0xC10
 	Size: 0x68
@@ -222,7 +222,7 @@ function player_watch_max_ammo()
 
 /*
 	Name: check_weapon_ammo
-	Namespace: namespace_48e69557
+	Namespace: castle_rocketshield
 	Checksum: 0xD01E0872
 	Offset: 0xC80
 	Size: 0x64
@@ -241,7 +241,7 @@ function check_weapon_ammo(weapon)
 
 /*
 	Name: player_watch_shield_juke
-	Namespace: namespace_48e69557
+	Namespace: castle_rocketshield
 	Checksum: 0x46241C3F
 	Offset: 0xCF0
 	Size: 0xF6
@@ -270,7 +270,7 @@ function player_watch_shield_juke()
 
 /*
 	Name: riotshield_melee_juke
-	Namespace: namespace_48e69557
+	Namespace: castle_rocketshield
 	Checksum: 0x51E891B7
 	Offset: 0xDF0
 	Size: 0x2C8
@@ -310,7 +310,7 @@ function riotshield_melee_juke(weapon)
 		{
 			[[level.riotshield_melee_juke_callback]](enemies);
 		}
-		foreach(var_64dbd143, zombie in enemies)
+		foreach(zombie in enemies)
 		{
 			self playsound("zmb_rocketshield_imp");
 			zombie thread riotshield::riotshield_fling_zombie(self, zombie.fling_vec, 0);
@@ -335,7 +335,7 @@ function riotshield_melee_juke(weapon)
 
 /*
 	Name: function_92debe0a
-	Namespace: namespace_48e69557
+	Namespace: castle_rocketshield
 	Checksum: 0x206269EE
 	Offset: 0x10C0
 	Size: 0x15E
@@ -346,13 +346,13 @@ function function_92debe0a()
 {
 	/#
 		level waittill(#"start_of_round");
-		foreach(var_c3ab2da7, player in getplayers())
+		foreach(player in getplayers())
 		{
 		}
 		while(true)
 		{
 			level waittill(#"start_of_round");
-			foreach(var_c7670038, player in getplayers())
+			foreach(player in getplayers())
 			{
 				if(isdefined(player.hasriotshield) && player.hasriotshield)
 				{
@@ -365,7 +365,7 @@ function function_92debe0a()
 
 /*
 	Name: riotshield_get_juke_enemies_in_range
-	Namespace: namespace_48e69557
+	Namespace: castle_rocketshield
 	Checksum: 0x5B8FC41F
 	Offset: 0x1228
 	Size: 0x356
@@ -420,7 +420,7 @@ function riotshield_get_juke_enemies_in_range()
 
 /*
 	Name: spawn_recharge_tanks
-	Namespace: namespace_48e69557
+	Namespace: castle_rocketshield
 	Checksum: 0xE1EC2936
 	Offset: 0x1588
 	Size: 0x23C
@@ -436,14 +436,14 @@ function spawn_recharge_tanks()
 	/#
 		level thread function_fc8bb1d(a_e_spawnpoints);
 	#/
-	foreach(var_51ec704f, e_spawnpoint in a_e_spawnpoints)
+	foreach(e_spawnpoint in a_e_spawnpoints)
 	{
 		if(isdefined(e_spawnpoint.spawned) && e_spawnpoint.spawned)
 		{
 			n_spawned++;
 		}
 	}
-	foreach(var_164e5aaa, e_spawnpoint in a_e_spawnpoints)
+	foreach(e_spawnpoint in a_e_spawnpoints)
 	{
 		if(n_spawned < n_charges)
 		{
@@ -462,7 +462,7 @@ function spawn_recharge_tanks()
 
 /*
 	Name: create_bottle_unitrigger
-	Namespace: namespace_48e69557
+	Namespace: castle_rocketshield
 	Checksum: 0xBA21900C
 	Offset: 0x17D0
 	Size: 0x290
@@ -507,7 +507,7 @@ function create_bottle_unitrigger(v_origin, v_angles)
 
 /*
 	Name: function_fc8bb1d
-	Namespace: namespace_48e69557
+	Namespace: castle_rocketshield
 	Checksum: 0xD96273ED
 	Offset: 0x1A68
 	Size: 0x166
@@ -524,7 +524,7 @@ function function_fc8bb1d(a_spawnpoints)
 			n_debug = getdvarint("", 0);
 			if(n_debug > 0)
 			{
-				foreach(var_d7450ace, spawnpoint in a_spawnpoints)
+				foreach(spawnpoint in a_spawnpoints)
 				{
 					v_color = (1, 1, 1);
 					if(isdefined(spawnpoint.spawned) && spawnpoint.spawned)
@@ -541,7 +541,7 @@ function function_fc8bb1d(a_spawnpoints)
 
 /*
 	Name: bottle_trigger_visibility
-	Namespace: namespace_48e69557
+	Namespace: castle_rocketshield
 	Checksum: 0x6D69E46F
 	Offset: 0x1BD8
 	Size: 0xCA
@@ -565,7 +565,7 @@ function bottle_trigger_visibility(player)
 
 /*
 	Name: shield_recharge_trigger_think
-	Namespace: namespace_48e69557
+	Namespace: castle_rocketshield
 	Checksum: 0xD2301469
 	Offset: 0x1CB0
 	Size: 0xA4
@@ -596,7 +596,7 @@ function shield_recharge_trigger_think()
 
 /*
 	Name: bottle_trigger_activate
-	Namespace: namespace_48e69557
+	Namespace: castle_rocketshield
 	Checksum: 0xDB8F4B56
 	Offset: 0x1D60
 	Size: 0x10A
@@ -619,7 +619,7 @@ function bottle_trigger_activate(trig_stub, player)
 
 /*
 	Name: function_3f94d6cf
-	Namespace: namespace_48e69557
+	Namespace: castle_rocketshield
 	Checksum: 0xC244A8D0
 	Offset: 0x1E78
 	Size: 0xDA
@@ -644,7 +644,7 @@ function function_3f94d6cf()
 
 /*
 	Name: function_e2f5a93
-	Namespace: namespace_48e69557
+	Namespace: castle_rocketshield
 	Checksum: 0x1B44271F
 	Offset: 0x1F60
 	Size: 0xCE
@@ -677,7 +677,7 @@ function function_e2f5a93(cmd)
 
 /*
 	Name: detect_reentry
-	Namespace: namespace_48e69557
+	Namespace: castle_rocketshield
 	Checksum: 0xF37CD911
 	Offset: 0x2038
 	Size: 0x36
@@ -691,17 +691,17 @@ function detect_reentry()
 		{
 			if(self.devgui_preserve_time == gettime())
 			{
-				return 1;
+				return true;
 			}
 		}
 		self.devgui_preserve_time = gettime();
-		return 0;
+		return false;
 	#/
 }
 
 /*
 	Name: function_3796f8bc
-	Namespace: namespace_48e69557
+	Namespace: castle_rocketshield
 	Checksum: 0x5CEB888F
 	Offset: 0x2078
 	Size: 0x154

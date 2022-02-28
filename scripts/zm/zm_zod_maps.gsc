@@ -36,7 +36,7 @@ function function_ca1a937()
 	level flag::wait_till("all_players_spawned");
 	level flag::wait_till("zones_initialized");
 	var_1fb56ce6 = getentarray("map_city", "targetname");
-	foreach(var_c81d16d, var_4d3ce43f in var_1fb56ce6)
+	foreach(var_4d3ce43f in var_1fb56ce6)
 	{
 		switch(var_4d3ce43f.script_string)
 		{

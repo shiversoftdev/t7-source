@@ -65,7 +65,7 @@ function main_end()
 	if(level flag::get("solo_game"))
 	{
 		a_t_doors = getentarray("zombie_door", "targetname");
-		foreach(var_1127fad8, t_door in a_t_doors)
+		foreach(t_door in a_t_doors)
 		{
 			if(t_door.zombie_cost >= 1000)
 			{

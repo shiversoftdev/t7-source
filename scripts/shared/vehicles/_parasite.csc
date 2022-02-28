@@ -20,7 +20,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function main()
+function autoexec main()
 {
 	clientfield::register("vehicle", "parasite_tell_fx", 1, 1, "int", &parasitetellfxhandler, 0, 0);
 	clientfield::register("toplayer", "parasite_damage", 1, 1, "counter", &parasite_damage, 0, 0);
@@ -37,7 +37,7 @@ autoexec function main()
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function parasitetellfxhandler(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private parasitetellfxhandler(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	if(isdefined(self.tellfxhandle))
 	{
@@ -65,7 +65,7 @@ private function parasitetellfxhandler(localclientnum, oldvalue, newvalue, bnewe
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function parasite_damage(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private parasite_damage(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	if(newvalue)
 	{
@@ -82,7 +82,7 @@ private function parasite_damage(localclientnum, oldvalue, newvalue, bnewent, bi
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function parasitesecondarydeathfxhandler(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private parasitesecondarydeathfxhandler(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	settings = struct::get_script_bundle("vehiclecustomsettings", "parasitesettings");
 	if(isdefined(settings))
@@ -104,7 +104,7 @@ private function parasitesecondarydeathfxhandler(localclientnum, oldvalue, newva
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _setup_(localclientnum)
+function private _setup_(localclientnum)
 {
 	self mapshaderconstant(localclientnum, 0, "scriptVector2", 0.1);
 	if(isdefined(level.debug_keyline_zombies) && level.debug_keyline_zombies)

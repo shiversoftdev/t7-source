@@ -167,22 +167,25 @@ function playsoundonplayers(sound, team)
 			level.players[0] playlocalsound(sound);
 		}
 	}
-	else if(isdefined(team))
-	{
-		for(i = 0; i < level.players.size; i++)
-		{
-			player = level.players[i];
-			if(isdefined(player.pers["team"]) && player.pers["team"] == team)
-			{
-				player playlocalsound(sound);
-			}
-		}
-	}
 	else
 	{
-		for(i = 0; i < level.players.size; i++)
+		if(isdefined(team))
 		{
-			level.players[i] playlocalsound(sound);
+			for(i = 0; i < level.players.size; i++)
+			{
+				player = level.players[i];
+				if(isdefined(player.pers["team"]) && player.pers["team"] == team)
+				{
+					player playlocalsound(sound);
+				}
+			}
+		}
+		else
+		{
+			for(i = 0; i < level.players.size; i++)
+			{
+				level.players[i] playlocalsound(sound);
+			}
 		}
 	}
 }
@@ -681,7 +684,7 @@ function getteammask(team)
 function getotherteamsmask(skip_team)
 {
 	mask = 0;
-	foreach(var_653d9b93, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(team == skip_team)
 		{
@@ -1091,9 +1094,9 @@ function ispressbuild()
 	buildtype = getdvarstring("buildType");
 	if(isdefined(buildtype) && buildtype == "press")
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

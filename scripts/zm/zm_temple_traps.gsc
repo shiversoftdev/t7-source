@@ -759,10 +759,10 @@ function ent_in_array(ent, _array)
 	{
 		if(_array[i] == ent)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1154,21 +1154,24 @@ function maze_cell_watch()
 				self.trigger thread zombie_normal_trigger_exit(who);
 			}
 		}
-		else if(isplayer(who))
+		else
 		{
-			if(who is_player_on_path())
+			if(isplayer(who))
 			{
-				continue;
+				if(who is_player_on_path())
+				{
+					continue;
+				}
+				if(who.sessionstate == "spectator")
+				{
+					continue;
+				}
+				self.trigger thread watch_slow_trigger_exit(who);
 			}
-			if(who.sessionstate == "spectator")
+			else if(isdefined(who.animname) && who.animname == "zombie")
 			{
-				continue;
+				self.trigger thread zombie_slow_trigger_exit(who);
 			}
-			self.trigger thread watch_slow_trigger_exit(who);
-		}
-		else if(isdefined(who.animname) && who.animname == "zombie")
-		{
-			self.trigger thread zombie_slow_trigger_exit(who);
 		}
 	}
 }
@@ -1264,14 +1267,14 @@ function zombie_slow_trigger_exit(zombie)
 */
 function is_in_array(array, item)
 {
-	foreach(var_eb05ab1e, index in array)
+	foreach(index in array)
 	{
 		if(index == item)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*

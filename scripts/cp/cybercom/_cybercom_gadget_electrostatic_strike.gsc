@@ -308,37 +308,37 @@ function function_4830484e(attacker)
 {
 	if(!isdefined(self))
 	{
-		return 0;
+		return false;
 	}
 	if(self cybercom::cybercom_aicheckoptout("cybercom_es_strike"))
 	{
-		return 0;
+		return false;
 	}
 	if(!isalive(self))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self._ai_melee_opponent))
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(self.archetype))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.magic_bullet_shield) && self.magic_bullet_shield)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self._ai_melee_opponent))
 	{
-		return 0;
+		return false;
 	}
 	if(self.team == attacker.team)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -433,40 +433,49 @@ function electrostaticcontact(attacker, source, upgraded = 0, contactpoint, seco
 		}
 		self dodamage(self.health, source.origin, (isdefined(attacker) ? attacker : undefined), undefined, "none", "MOD_UNKNOWN", 512, level.cybercom.electro_strike.human_weapon, -1, 1);
 	}
-	else if(self.archetype == "warlord")
+	else
 	{
-		self dodamage(getdvarint("scr_es_upgraded_damage", 80), self.origin, (isdefined(attacker) ? attacker : undefined), undefined, undefined, "MOD_UNKNOWN", 0, level.cybercom.electro_strike.var_bf0de5fb, -1, 1);
-	}
-	else if(self.archetype == "robot")
-	{
-		self ai::set_behavior_attribute("can_gib", 0);
-		if(isdefined(secondary) && secondary)
+		if(self.archetype == "warlord")
 		{
-			self dodamage(getdvarint("scr_es_damage", 5), source.origin, (isdefined(attacker) ? attacker : undefined), undefined, "none", "MOD_MELEE", 512, level.cybercom.electro_strike.var_f492f9d5, -1, 1);
+			self dodamage(getdvarint("scr_es_upgraded_damage", 80), self.origin, (isdefined(attacker) ? attacker : undefined), undefined, undefined, "MOD_UNKNOWN", 0, level.cybercom.electro_strike.var_bf0de5fb, -1, 1);
 		}
 		else
 		{
-			self dodamage(self.health, source.origin, (isdefined(attacker) ? attacker : undefined), undefined, "none", "MOD_UNKNOWN", 512, level.cybercom.electro_strike.robot_weapon, -1, 1);
+			if(self.archetype == "robot")
+			{
+				self ai::set_behavior_attribute("can_gib", 0);
+				if(isdefined(secondary) && secondary)
+				{
+					self dodamage(getdvarint("scr_es_damage", 5), source.origin, (isdefined(attacker) ? attacker : undefined), undefined, "none", "MOD_MELEE", 512, level.cybercom.electro_strike.var_f492f9d5, -1, 1);
+				}
+				else
+				{
+					self dodamage(self.health, source.origin, (isdefined(attacker) ? attacker : undefined), undefined, "none", "MOD_UNKNOWN", 512, level.cybercom.electro_strike.robot_weapon, -1, 1);
+				}
+				self ai::set_behavior_attribute("robot_lights", 1);
+				if(!(isdefined(self.is_disabled) && self.is_disabled) && isalive(self))
+				{
+					self thread cybercom_gadget_system_overload::system_overload(attacker, undefined, undefined, 0);
+				}
+				wait(2.5);
+				if(isdefined(self))
+				{
+					self ai::set_behavior_attribute("robot_lights", 2);
+				}
+			}
+			else
+			{
+				if(isvehicle(self))
+				{
+					self dodamage(getdvarint("scr_es_damage", 5), source.origin, (isdefined(attacker) ? attacker : undefined), undefined, "none", "MOD_GRENADE", 0, level.cybercom.electro_strike.vehicle_weapon);
+					self playsound("gdt_cybercore_amws_shutdown");
+				}
+				else
+				{
+					self dodamage(getdvarint("scr_es_damage", 5), source.origin, (isdefined(attacker) ? attacker : undefined), undefined, "none", "MOD_UNKNOWN", 512, level.cybercom.electro_strike.other_weapon);
+				}
+			}
 		}
-		self ai::set_behavior_attribute("robot_lights", 1);
-		if(!(isdefined(self.is_disabled) && self.is_disabled) && isalive(self))
-		{
-			self thread cybercom_gadget_system_overload::system_overload(attacker, undefined, undefined, 0);
-		}
-		wait(2.5);
-		if(isdefined(self))
-		{
-			self ai::set_behavior_attribute("robot_lights", 2);
-		}
-	}
-	else if(isvehicle(self))
-	{
-		self dodamage(getdvarint("scr_es_damage", 5), source.origin, (isdefined(attacker) ? attacker : undefined), undefined, "none", "MOD_GRENADE", 0, level.cybercom.electro_strike.vehicle_weapon);
-		self playsound("gdt_cybercore_amws_shutdown");
-	}
-	else
-	{
-		self dodamage(getdvarint("scr_es_damage", 5), source.origin, (isdefined(attacker) ? attacker : undefined), undefined, "none", "MOD_UNKNOWN", 512, level.cybercom.electro_strike.other_weapon);
 	}
 }
 
@@ -496,7 +505,7 @@ function electrostaticarc(player, upgraded)
 	enemies = [];
 	prospects = arraycombine(getaiteamarray("axis"), getaiteamarray("team3"), 0, 0);
 	potential_enemies = util::get_array_of_closest(self.origin, prospects);
-	foreach(var_67243056, enemy in potential_enemies)
+	foreach(enemy in potential_enemies)
 	{
 		if(!isdefined(enemy))
 		{
@@ -529,7 +538,7 @@ function electrostaticarc(player, upgraded)
 		enemies[enemies.size] = enemy;
 	}
 	i = 0;
-	foreach(var_a35a4f49, guy in enemies)
+	foreach(guy in enemies)
 	{
 		player thread challenges::function_96ed590f("cybercom_uses_esdamage");
 		self thread _electrodischargearcdmg(guy, player, upgraded);
@@ -550,7 +559,7 @@ function electrostaticarc(player, upgraded)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function _electrodischargearcdmg(target, player, upgraded)
+function private _electrodischargearcdmg(target, player, upgraded)
 {
 	if(!isdefined(self) || !isdefined(target))
 	{

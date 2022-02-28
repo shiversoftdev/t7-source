@@ -170,7 +170,7 @@ function function_6c559425()
 		return;
 	}
 	var_5c75060b = skipto::function_23eda99c();
-	foreach(var_9d8c8c73, mapname in var_5c75060b)
+	foreach(mapname in var_5c75060b)
 	{
 		var_2b7a9536 = skipto::function_97bb1111(mapname);
 		self function_3b38bcc7(mapname, "hasBeenCompleted", "completed");
@@ -494,7 +494,7 @@ function callback_playerconnect()
 	self.waitingtospawn = 0;
 	self.wantsafespawn = 0;
 	self.deathcount = 0;
-	self.var_5df1dd49 = gettime();
+	self.connectedtime = gettime();
 	self.meleekills = 0;
 	self.wasaliveatmatchstart = 0;
 	self.grenadesused = 0;
@@ -583,29 +583,32 @@ function callback_playerconnect()
 			self thread spectating::set_permissions();
 		}
 	}
-	else if(self.pers["team"] == "spectator")
-	{
-		self setclientscriptmainmenu(game["menu_start_menu"]);
-		[[level.spawnspectator]]();
-		self.sessionteam = "spectator";
-		self.sessionstate = "spectator";
-		self thread spectate_player_watcher();
-	}
 	else
 	{
-		self.sessionteam = self.pers["team"];
-		self.sessionstate = "dead";
-		self globallogic_ui::updateobjectivetext();
-		[[level.spawnspectator]]();
-		if(globallogic_utils::isvalidclass(self.pers["class"]))
+		if(self.pers["team"] == "spectator")
 		{
-			self thread [[level.spawnclient]]();
+			self setclientscriptmainmenu(game["menu_start_menu"]);
+			[[level.spawnspectator]]();
+			self.sessionteam = "spectator";
+			self.sessionstate = "spectator";
+			self thread spectate_player_watcher();
 		}
 		else
 		{
-			self globallogic_ui::showmainmenuforteam();
+			self.sessionteam = self.pers["team"];
+			self.sessionstate = "dead";
+			self globallogic_ui::updateobjectivetext();
+			[[level.spawnspectator]]();
+			if(globallogic_utils::isvalidclass(self.pers["class"]))
+			{
+				self thread [[level.spawnclient]]();
+			}
+			else
+			{
+				self globallogic_ui::showmainmenuforteam();
+			}
+			self thread spectating::set_permissions();
 		}
-		self thread spectating::set_permissions();
 	}
 	if(self.sessionteam != "spectator")
 	{
@@ -743,13 +746,16 @@ function spectate_player_watcher()
 				}
 				self.watchingactiveclient = 1;
 			}
-			else if(self.watchingactiveclient)
+			else
 			{
-				[[level.onspawnspectator]]();
-				self freezecontrols(1);
-				self hud_message::setshoutcasterwaitingmessage();
+				if(self.watchingactiveclient)
+				{
+					[[level.onspawnspectator]]();
+					self freezecontrols(1);
+					self hud_message::setshoutcasterwaitingmessage();
+				}
+				self.watchingactiveclient = 0;
 			}
-			self.watchingactiveclient = 0;
 			wait(0.5);
 		}
 	}
@@ -1295,17 +1301,20 @@ function callback_playerdamage(einflictor, eattacker, idamage, idflags, smeansof
 				idamage = idamage * 0;
 			}
 		}
-		else if(idflags & 128)
-		{
-			if(isdefined(einflictor) && isdefined(einflictor.stucktoplayer) && einflictor.stucktoplayer == self)
-			{
-				idamage = 101;
-			}
-			shitloc = "none";
-		}
 		else
 		{
-			return;
+			if(idflags & 128)
+			{
+				if(isdefined(einflictor) && isdefined(einflictor.stucktoplayer) && einflictor.stucktoplayer == self)
+				{
+					idamage = 101;
+				}
+				shitloc = "none";
+			}
+			else
+			{
+				return;
+			}
 		}
 	}
 	if(!idflags & 2048)
@@ -1433,66 +1442,72 @@ function callback_playerdamage(einflictor, eattacker, idamage, idflags, smeansof
 					self finishplayerdamagewrapper(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, vdamageorigin, psoffsettime, boneindex, vsurfacenormal);
 				}
 			}
-			else if(level.friendlyfire == 2 && isalive(eattacker))
+			else
 			{
-				idamage = int(idamage * 0.5);
-				if(idamage < 1)
+				if(level.friendlyfire == 2 && isalive(eattacker))
 				{
-					idamage = 1;
+					idamage = int(idamage * 0.5);
+					if(idamage < 1)
+					{
+						idamage = 1;
+					}
+					eattacker.lastdamagewasfromenemy = 0;
+					eattacker.friendlydamage = 1;
+					eattacker finishplayerdamagewrapper(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, vdamageorigin, psoffsettime, boneindex, vsurfacenormal);
+					eattacker.friendlydamage = undefined;
 				}
-				eattacker.lastdamagewasfromenemy = 0;
-				eattacker.friendlydamage = 1;
-				eattacker finishplayerdamagewrapper(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, vdamageorigin, psoffsettime, boneindex, vsurfacenormal);
-				eattacker.friendlydamage = undefined;
-			}
-			else if(level.friendlyfire == 3 && isalive(eattacker))
-			{
-				idamage = int(idamage * 0.5);
-				if(idamage < 1)
+				else if(level.friendlyfire == 3 && isalive(eattacker))
 				{
-					idamage = 1;
+					idamage = int(idamage * 0.5);
+					if(idamage < 1)
+					{
+						idamage = 1;
+					}
+					self.lastdamagewasfromenemy = 0;
+					eattacker.lastdamagewasfromenemy = 0;
+					self finishplayerdamagewrapper(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, vdamageorigin, psoffsettime, boneindex, vsurfacenormal);
+					eattacker.friendlydamage = 1;
+					eattacker finishplayerdamagewrapper(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, vdamageorigin, psoffsettime, boneindex, vsurfacenormal);
+					eattacker.friendlydamage = undefined;
 				}
-				self.lastdamagewasfromenemy = 0;
-				eattacker.lastdamagewasfromenemy = 0;
-				self finishplayerdamagewrapper(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, vdamageorigin, psoffsettime, boneindex, vsurfacenormal);
-				eattacker.friendlydamage = 1;
-				eattacker finishplayerdamagewrapper(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, vdamageorigin, psoffsettime, boneindex, vsurfacenormal);
-				eattacker.friendlydamage = undefined;
 			}
 			friendly = 1;
 			pixmarker("END: PlayerDamage player");
 		}
-		else if(idamage < 1)
-		{
-			idamage = 1;
-		}
-		giveattackerandinflictorownerassist(eattacker, einflictor, idamage, smeansofdeath, weapon);
-		if(isdefined(eattacker))
-		{
-			level.lastlegitimateattacker = eattacker;
-		}
-		if(smeansofdeath == "MOD_GRENADE" || smeansofdeath == "MOD_GRENADE_SPLASH" && isdefined(einflictor) && isdefined(einflictor.iscooked))
-		{
-			self.wascooked = gettime();
-		}
 		else
 		{
-			self.wascooked = undefined;
-		}
-		self.lastdamagewasfromenemy = isdefined(eattacker) && eattacker != self;
-		if(self.lastdamagewasfromenemy)
-		{
-			if(isplayer(eattacker))
+			if(idamage < 1)
 			{
-				if(isdefined(eattacker.damagedplayers[self.clientid]) == 0)
-				{
-					eattacker.damagedplayers[self.clientid] = spawnstruct();
-				}
-				eattacker.damagedplayers[self.clientid].time = gettime();
-				eattacker.damagedplayers[self.clientid].entity = self;
+				idamage = 1;
 			}
+			giveattackerandinflictorownerassist(eattacker, einflictor, idamage, smeansofdeath, weapon);
+			if(isdefined(eattacker))
+			{
+				level.lastlegitimateattacker = eattacker;
+			}
+			if(smeansofdeath == "MOD_GRENADE" || smeansofdeath == "MOD_GRENADE_SPLASH" && isdefined(einflictor) && isdefined(einflictor.iscooked))
+			{
+				self.wascooked = gettime();
+			}
+			else
+			{
+				self.wascooked = undefined;
+			}
+			self.lastdamagewasfromenemy = isdefined(eattacker) && eattacker != self;
+			if(self.lastdamagewasfromenemy)
+			{
+				if(isplayer(eattacker))
+				{
+					if(isdefined(eattacker.damagedplayers[self.clientid]) == 0)
+					{
+						eattacker.damagedplayers[self.clientid] = spawnstruct();
+					}
+					eattacker.damagedplayers[self.clientid].time = gettime();
+					eattacker.damagedplayers[self.clientid].entity = self;
+				}
+			}
+			self finishplayerdamagewrapper(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, vdamageorigin, psoffsettime, boneindex, vsurfacenormal);
 		}
-		self finishplayerdamagewrapper(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, vdamageorigin, psoffsettime, boneindex, vsurfacenormal);
 		if(isdefined(eattacker) && isplayer(eattacker) && eattacker != self)
 		{
 			if(damagefeedback::dodamagefeedback(weapon, einflictor, idamage, smeansofdeath))
@@ -1550,7 +1565,7 @@ function callback_playerdamage(einflictor, eattacker, idamage, idflags, smeansof
 			lpattackguid = "";
 			lpattackname = "";
 		}
-		bb::function_2aa586aa(eattacker, self, weapon, idamage, smeansofdeath, shitloc, 0, var_f23089ea);
+		bb::logdamage(eattacker, self, weapon, idamage, smeansofdeath, shitloc, 0, var_f23089ea);
 		logprint(((((((((((((((((((((((("D;" + lpselfguid) + ";") + lpselfnum) + ";") + lpselfteam) + ";") + lpselfname) + ";") + lpattackguid) + ";") + lpattacknum) + ";") + lpattackerteam) + ";") + lpattackname) + ";") + weapon.name) + ";") + idamage) + ";") + smeansofdeath) + ";") + shitloc) + "\n");
 	}
 	pixendevent();
@@ -1639,10 +1654,10 @@ function isaikillstreakdamage(weapon, einflictor)
 	{
 		if(weapon.name != "ai_tank_drone_rocket" || isdefined(einflictor.firedbyai))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1685,7 +1700,7 @@ function finishplayerdamagewrapper(einflictor, eattacker, idamage, idflags, smea
 */
 function allowedassistweapon(weapon)
 {
-	return 0;
+	return false;
 }
 
 /*
@@ -1811,23 +1826,26 @@ function playerkilled_obituary(attacker, einflictor, weapon, smeansofdeath)
 		level.lastobituaryplayercount = 0;
 		level.lastobituaryplayer = undefined;
 	}
-	else if(isdefined(level.lastobituaryplayer) && level.lastobituaryplayer == attacker)
-	{
-		level.lastobituaryplayercount++;
-	}
 	else
 	{
-		level notify(#"reset_obituary_count");
-		level.lastobituaryplayer = attacker;
-		level.lastobituaryplayercount = 1;
-	}
-	level thread scoreevents::decrementlastobituaryplayercountafterfade();
-	if(level.lastobituaryplayercount >= 4)
-	{
-		level notify(#"reset_obituary_count");
-		level.lastobituaryplayercount = 0;
-		level.lastobituaryplayer = undefined;
-		self thread scoreevents::uninterruptedobitfeedkills(attacker, weapon);
+		if(isdefined(level.lastobituaryplayer) && level.lastobituaryplayer == attacker)
+		{
+			level.lastobituaryplayercount++;
+		}
+		else
+		{
+			level notify(#"reset_obituary_count");
+			level.lastobituaryplayer = attacker;
+			level.lastobituaryplayercount = 1;
+		}
+		level thread scoreevents::decrementlastobituaryplayercountafterfade();
+		if(level.lastobituaryplayercount >= 4)
+		{
+			level notify(#"reset_obituary_count");
+			level.lastobituaryplayercount = 0;
+			level.lastobituaryplayer = undefined;
+			self thread scoreevents::uninterruptedobitfeedkills(attacker, weapon);
+		}
 	}
 	if(level.teambased && isdefined(attacker.pers) && self.team == attacker.team && smeansofdeath == "MOD_GRENADE" && level.friendlyfire == 0)
 	{
@@ -1936,13 +1954,16 @@ function playerkilled_teamkill(einflictor, attacker, smeansofdeath, weapon, shit
 		{
 			teamkilldelay = 1;
 		}
-		else if(attacker.pers["teamkills_nostats"] > 1 && globallogic_utils::gettimepassed() < (8000 + (attacker.pers["teamkills_nostats"] * 1000)))
-		{
-			teamkilldelay = 1;
-		}
 		else
 		{
-			teamkilldelay = attacker teamkilldelay();
+			if(attacker.pers["teamkills_nostats"] > 1 && globallogic_utils::gettimepassed() < (8000 + (attacker.pers["teamkills_nostats"] * 1000)))
+			{
+				teamkilldelay = 1;
+			}
+			else
+			{
+				teamkilldelay = attacker teamkilldelay();
+			}
 		}
 		if(teamkilldelay > 0)
 		{
@@ -2326,63 +2347,69 @@ function callback_playerkilled(einflictor, attacker, idamage, smeansofdeath, wea
 			if(level.teambased && self.team == attacker.team && smeansofdeath == "MOD_GRENADE" && level.friendlyfire == 0)
 			{
 			}
-			else if(level.teambased && self.team == attacker.team)
-			{
-				wasteamkill = 1;
-				self playerkilled_teamkill(einflictor, attacker, smeansofdeath, weapon, shitloc);
-			}
 			else
 			{
-				self playerkilled_kill(einflictor, attacker, smeansofdeath, weapon, shitloc);
-				if(level.teambased)
+				if(level.teambased && self.team == attacker.team)
 				{
-					awardassists = 1;
+					wasteamkill = 1;
+					self playerkilled_teamkill(einflictor, attacker, smeansofdeath, weapon, shitloc);
+				}
+				else
+				{
+					self playerkilled_kill(einflictor, attacker, smeansofdeath, weapon, shitloc);
+					if(level.teambased)
+					{
+						awardassists = 1;
+					}
 				}
 			}
 			pixendevent();
 		}
 	}
-	else if(isdefined(attacker) && (attacker.classname == "trigger_hurt" || attacker.classname == "worldspawn"))
-	{
-		lpattacknum = -1;
-		lpattackguid = "";
-		lpattackname = "";
-		lpattackteam = "world";
-		thread scoreevents::processscoreevent("suicide", self);
-		self globallogic_score::incpersstat("suicides", 1);
-		self.suicides = self globallogic_score::getpersstat("suicides");
-		self.suicide = 1;
-		awardassists = 1;
-		if(level.maxsuicidesbeforekick > 0 && level.maxsuicidesbeforekick <= self.suicides)
-		{
-			self notify(#"teamkillkicked");
-			self suicidekick();
-		}
-	}
 	else
 	{
-		lpattacknum = -1;
-		lpattackguid = "";
-		lpattackname = "";
-		lpattackteam = "world";
-		wassuicide = 1;
-		if(isdefined(einflictor) && isdefined(einflictor.killcament))
+		if(isdefined(attacker) && (attacker.classname == "trigger_hurt" || attacker.classname == "worldspawn"))
 		{
-			lpattacknum = self getentitynumber();
-			wassuicide = 0;
-		}
-		if(isdefined(attacker) && isdefined(attacker.team) && isdefined(level.teams[attacker.team]))
-		{
-			if(attacker.team != self.team)
+			lpattacknum = -1;
+			lpattackguid = "";
+			lpattackname = "";
+			lpattackteam = "world";
+			thread scoreevents::processscoreevent("suicide", self);
+			self globallogic_score::incpersstat("suicides", 1);
+			self.suicides = self globallogic_score::getpersstat("suicides");
+			self.suicide = 1;
+			awardassists = 1;
+			if(level.maxsuicidesbeforekick > 0 && level.maxsuicidesbeforekick <= self.suicides)
 			{
-				if(level.teambased)
-				{
-					globallogic_score::giveteamscore("kill", attacker.team, attacker, self);
-				}
-				wassuicide = 0;
+				self notify(#"teamkillkicked");
+				self suicidekick();
 			}
 		}
-		awardassists = 1;
+		else
+		{
+			lpattacknum = -1;
+			lpattackguid = "";
+			lpattackname = "";
+			lpattackteam = "world";
+			wassuicide = 1;
+			if(isdefined(einflictor) && isdefined(einflictor.killcament))
+			{
+				lpattacknum = self getentitynumber();
+				wassuicide = 0;
+			}
+			if(isdefined(attacker) && isdefined(attacker.team) && isdefined(level.teams[attacker.team]))
+			{
+				if(attacker.team != self.team)
+				{
+					if(level.teambased)
+					{
+						globallogic_score::giveteamscore("kill", attacker.team, attacker, self);
+					}
+					wassuicide = 0;
+				}
+			}
+			awardassists = 1;
+		}
 	}
 	if(!level.ingraceperiod)
 	{
@@ -2418,7 +2445,7 @@ function callback_playerkilled(einflictor, attacker, idamage, smeansofdeath, wea
 	{
 		self.attackers = [];
 	}
-	bb::function_2aa586aa(attacker, self, weapon, idamage, smeansofdeath, shitloc, 1, !wasinlaststand);
+	bb::logdamage(attacker, self, weapon, idamage, smeansofdeath, shitloc, 1, !wasinlaststand);
 	logprint(((((((((((((((((((((((("K;" + lpselfguid) + ";") + lpselfnum) + ";") + lpselfteam) + ";") + lpselfname) + ";") + lpattackguid) + ";") + lpattacknum) + ";") + lpattackteam) + ";") + lpattackname) + ";") + weapon.name) + ";") + idamage) + ";") + smeansofdeath) + ";") + shitloc) + "\n");
 	attackerstring = "none";
 	if(isplayer(attacker))
@@ -2478,26 +2505,35 @@ function callback_playerkilled(einflictor, attacker, idamage, smeansofdeath, wea
 			{
 				lpattacknum = self.var_afe5253c.var_a21e8eb8;
 			}
-			else if(self.var_afe5253c.attackernum >= 0)
+			else
 			{
-				lpattacknum = self.var_afe5253c.attackernum;
+				if(self.var_afe5253c.attackernum >= 0)
+				{
+					lpattacknum = self.var_afe5253c.attackernum;
+				}
+				else if(self.var_afe5253c.var_a21e8eb8 >= 0)
+				{
+					lpattacknum = self.var_afe5253c.var_a21e8eb8;
+				}
 			}
-			else if(self.var_afe5253c.var_a21e8eb8 >= 0)
+		}
+		else
+		{
+			if(isdefined(einflictor) && attacker == self)
 			{
-				lpattacknum = self.var_afe5253c.var_a21e8eb8;
+				lpattacknum = einflictor getentitynumber();
 			}
-		}
-		else if(isdefined(einflictor) && attacker == self)
-		{
-			lpattacknum = einflictor getentitynumber();
-		}
-		else if(isdefined(attacker))
-		{
-			lpattacknum = attacker getentitynumber();
-		}
-		else if(isdefined(einflictor))
-		{
-			lpattacknum = einflictor getentitynumber();
+			else
+			{
+				if(isdefined(attacker))
+				{
+					lpattacknum = attacker getentitynumber();
+				}
+				else if(isdefined(einflictor))
+				{
+					lpattacknum = einflictor getentitynumber();
+				}
+			}
 		}
 	}
 	self.var_ebd83169 = 1;
@@ -2527,17 +2563,20 @@ function callback_playerkilled(einflictor, attacker, idamage, smeansofdeath, wea
 	{
 		wait(0.25);
 	}
-	else if(isdefined(body))
+	else
 	{
-		codesetclientfield(body, "hide_body", 1);
+		if(isdefined(body))
+		{
+			codesetclientfield(body, "hide_body", 1);
+		}
+		self.pers["incaps"]++;
+		self.incaps = self.pers["incaps"];
+		self addplayerstat("INCAPS", 1);
+		var_e7ce5f85 = self getdstat("PlayerStatsList", "INCAPS", "statValue");
+		self setnoncheckpointdata("INCAPS", var_e7ce5f85);
+		namespace_5f11fb0b::function_8e835895(einflictor, attacker, idamage, smeansofdeath, weapon, vdir, shitloc, psoffsettime, deathanimduration);
+		self util::waittill_any_timeout(5, "cp_deathcam_ended");
 	}
-	self.pers["incaps"]++;
-	self.incaps = self.pers["incaps"];
-	self addplayerstat("INCAPS", 1);
-	var_e7ce5f85 = self getdstat("PlayerStatsList", "INCAPS", "statValue");
-	self setnoncheckpointdata("INCAPS", var_e7ce5f85);
-	namespace_5f11fb0b::function_8e835895(einflictor, attacker, idamage, smeansofdeath, weapon, vdir, shitloc, psoffsettime, deathanimduration);
-	self util::waittill_any_timeout(5, "cp_deathcam_ended");
 	defaultplayerdeathwatchtime = 4;
 	if(sessionmodeiscampaigngame() && level.players.size > 1)
 	{
@@ -2727,14 +2766,14 @@ function shouldteamkillkick(teamkilldelay)
 	{
 		if(globallogic_utils::gettimepassed() >= 5000)
 		{
-			return 1;
+			return true;
 		}
 		if(self.pers["teamkills_nostats"] > 1)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2778,13 +2817,13 @@ function ignoreteamkills(weapon, smeansofdeath)
 {
 	if(smeansofdeath == "MOD_MELEE" || smeansofdeath == "MOD_MELEE_ASSASSINATE")
 	{
-		return 0;
+		return false;
 	}
 	if(weapon.ignoreteamkills)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2880,11 +2919,11 @@ function is_explosive_ragdoll(weapon, inflictor)
 {
 	if(!isdefined(weapon))
 	{
-		return 0;
+		return false;
 	}
 	if(weapon.name == "destructible_car" || weapon.name == "explodable_barrel")
 	{
-		return 1;
+		return true;
 	}
 	if(weapon.projexplosiontype == "grenade")
 	{
@@ -2892,11 +2931,11 @@ function is_explosive_ragdoll(weapon, inflictor)
 		{
 			if(inflictor.stucktoplayer == self)
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2925,13 +2964,16 @@ function start_explosive_ragdoll(dir, weapon)
 			y = dir[1] * y;
 		}
 	}
-	else if(math::cointoss())
+	else
 	{
-		x = x * -1;
-	}
-	if(math::cointoss())
-	{
-		y = y * -1;
+		if(math::cointoss())
+		{
+			x = x * -1;
+		}
+		if(math::cointoss())
+		{
+			y = y * -1;
+		}
 	}
 	self startragdoll();
 	self launchragdoll((x, y, z));
@@ -3300,7 +3342,7 @@ function function_ece4ca01()
 {
 	if(self == level)
 	{
-		foreach(var_cd1d14cb, player in level.players)
+		foreach(player in level.players)
 		{
 			player function_ece4ca01();
 		}
@@ -3308,7 +3350,7 @@ function function_ece4ca01()
 	else if(isplayer(self))
 	{
 		a_w_weapons = self getweaponslist();
-		foreach(var_d72e6daa, weapon in a_w_weapons)
+		foreach(weapon in a_w_weapons)
 		{
 			if(isdefined(weapon.isheroweapon) && weapon.isheroweapon)
 			{
@@ -3336,7 +3378,7 @@ function function_ece4ca01()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_7a152f99(statname)
+function private function_7a152f99(statname)
 {
 	var_9792a8bf = self getdstat("PlayerStatsByMap", getrootmapname(), "currentStats", statname);
 	var_56aa772d = self getdstat("PlayerStatsList", statname, "statValue");
@@ -3361,7 +3403,7 @@ function function_a5ac6877()
 			next_map = getrootmapname();
 			if(isdefined(next_map))
 			{
-				foreach(var_30adf853, player in level.players)
+				foreach(player in level.players)
 				{
 					player function_4cef9872(next_map);
 				}
@@ -3432,7 +3474,7 @@ function function_4cef9872(var_5df3645b)
 	array::add(var_b4728b19, "ASSISTS");
 	array::add(var_b4728b19, "INCAPS");
 	array::add(var_b4728b19, "REVIVES");
-	foreach(var_bc05ec5d, stat in var_b4728b19)
+	foreach(stat in var_b4728b19)
 	{
 		statvalue = self getdstat("PlayerStatsList", stat, "statValue");
 		self setdstat("PlayerStatsByMap", var_5df3645b, "currentStats", stat, statvalue);
@@ -3463,7 +3505,7 @@ function function_4cef9872(var_5df3645b)
 */
 function recordactiveplayersendgamematchrecordstats()
 {
-	foreach(var_3909535e, player in level.players)
+	foreach(player in level.players)
 	{
 		recordplayermatchend(player);
 		recordplayerstats(player, "presentAtEnd", 1);

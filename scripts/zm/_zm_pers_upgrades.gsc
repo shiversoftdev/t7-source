@@ -77,13 +77,13 @@ function is_pers_system_active()
 {
 	if(!zm_utility::is_classic())
 	{
-		return 0;
+		return false;
 	}
 	if(is_pers_system_disabled())
 	{
-		return 0;
+		return false;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -97,7 +97,7 @@ function is_pers_system_active()
 */
 function is_pers_system_disabled()
 {
-	return 0;
+	return false;
 }
 
 /*
@@ -539,11 +539,11 @@ function is_insta_kill_upgraded_and_active()
 		{
 			if(isdefined(self.pers_upgrades_awarded["insta_kill"]) && self.pers_upgrades_awarded["insta_kill"])
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*

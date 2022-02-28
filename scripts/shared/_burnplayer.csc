@@ -17,7 +17,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("burnplayer", &__init__, undefined, undefined);
 }
@@ -233,7 +233,7 @@ function burn_on_postfx()
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function _burntag(localclientnum, tag, postfix)
+function private _burntag(localclientnum, tag, postfix)
 {
 	if(isdefined(self) && self hasdobj(localclientnum))
 	{
@@ -254,7 +254,7 @@ private function _burntag(localclientnum, tag, postfix)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _burntagson(localclientnum, tags)
+function private _burntagson(localclientnum, tags)
 {
 	if(!isdefined(self))
 	{
@@ -283,7 +283,7 @@ private function _burntagson(localclientnum, tags)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _burnbody(localclientnum)
+function private _burnbody(localclientnum)
 {
 	self endon(#"entityshutdown");
 	self thread _burntagson(localclientnum, level.burntags);
@@ -298,7 +298,7 @@ private function _burnbody(localclientnum)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function _burntagswatchend(localclientnum, fxarray, burnsound)
+function private _burntagswatchend(localclientnum, fxarray, burnsound)
 {
 	self endon(#"entityshutdown");
 	self waittill(#"burn_off");
@@ -308,7 +308,7 @@ private function _burntagswatchend(localclientnum, fxarray, burnsound)
 	}
 	if(isdefined(fxarray))
 	{
-		foreach(var_b2c75ad8, fx in fxarray)
+		foreach(fx in fxarray)
 		{
 			stopfx(localclientnum, fx);
 		}
@@ -324,7 +324,7 @@ private function _burntagswatchend(localclientnum, fxarray, burnsound)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function _burntagswatchclear(localclientnum, fxarray, burnsound)
+function private _burntagswatchclear(localclientnum, fxarray, burnsound)
 {
 	self endon(#"burn_off");
 	self waittill(#"entityshutdown");
@@ -334,7 +334,7 @@ private function _burntagswatchclear(localclientnum, fxarray, burnsound)
 	}
 	if(isdefined(fxarray))
 	{
-		foreach(var_c3132459, fx in fxarray)
+		foreach(fx in fxarray)
 		{
 			stopfx(localclientnum, fx);
 		}

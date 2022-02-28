@@ -691,43 +691,67 @@ function get(override)
 		self.airank = "none";
 		str_nationality = "civilian";
 	}
-	else if(self is_special_agent_member(str_classname))
+	else
 	{
-		str_nationality = "agent";
-	}
-	else if(issubstr(str_classname, "_sco_"))
-	{
-		self.airank = "none";
-		str_nationality = "chinese";
-	}
-	else if(issubstr(str_classname, "_egypt_"))
-	{
-		str_nationality = "egyptian";
-	}
-	else if(self is_police_member(str_classname))
-	{
-		str_nationality = "police";
-	}
-	else if(self is_seal_member(str_classname))
-	{
-		str_nationality = "seal";
-	}
-	else if(self is_navy_member(str_classname))
-	{
-		str_nationality = "navy";
-	}
-	else if(self is_security_member(str_classname))
-	{
-		str_nationality = "security";
-	}
-	else if(issubstr(str_classname, "_soviet_"))
-	{
-		self.airank = "none";
-		str_nationality = "russian";
-	}
-	else if(issubstr(str_classname, "_ally_sing_"))
-	{
-		str_nationality = "singapore_police";
+		if(self is_special_agent_member(str_classname))
+		{
+			str_nationality = "agent";
+		}
+		else
+		{
+			if(issubstr(str_classname, "_sco_"))
+			{
+				self.airank = "none";
+				str_nationality = "chinese";
+			}
+			else
+			{
+				if(issubstr(str_classname, "_egypt_"))
+				{
+					str_nationality = "egyptian";
+				}
+				else
+				{
+					if(self is_police_member(str_classname))
+					{
+						str_nationality = "police";
+					}
+					else
+					{
+						if(self is_seal_member(str_classname))
+						{
+							str_nationality = "seal";
+						}
+						else
+						{
+							if(self is_navy_member(str_classname))
+							{
+								str_nationality = "navy";
+							}
+							else
+							{
+								if(self is_security_member(str_classname))
+								{
+									str_nationality = "security";
+								}
+								else
+								{
+									if(issubstr(str_classname, "_soviet_"))
+									{
+										self.airank = "none";
+										str_nationality = "russian";
+									}
+									else if(issubstr(str_classname, "_ally_sing_"))
+									{
+										str_nationality = "singapore_police";
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 	initialize_nationality(str_nationality);
 	get_name_for_nationality(str_nationality);
@@ -812,83 +836,113 @@ function get_name_for_nationality(nationality)
 	{
 		self [[level._override_rank_func]](lastname);
 	}
-	else if(isdefined(self.airank) && self.airank == "none")
-	{
-		self.propername = lastname;
-		return;
-	}
-	rank = randomint(100);
-	if(nationality == "seal")
-	{
-		if(rank > 20)
-		{
-			fullname = "PO " + lastname;
-			self.airank = "petty officer";
-		}
-		else if(rank > 10)
-		{
-			fullname = "CPO " + lastname;
-			self.airank = "chief petty officer";
-		}
-		else
-		{
-			fullname = "Lt. " + lastname;
-			self.airank = "lieutenant";
-		}
-	}
-	else if(nationality == "navy")
-	{
-		if(rank > 60)
-		{
-			fullname = "SN " + lastname;
-			self.airank = "seaman";
-		}
-		else if(rank > 20)
-		{
-			fullname = "PO " + lastname;
-			self.airank = "petty officer";
-		}
-		else
-		{
-			fullname = "CPO " + lastname;
-			self.airank = "chief petty officer";
-		}
-	}
-	else if(nationality == "police")
-	{
-		fullname = "Officer " + lastname;
-		self.airank = "police officer";
-	}
-	else if(nationality == "agent")
-	{
-		fullname = "Agent " + lastname;
-		self.airank = "special agent";
-	}
-	else if(nationality == "security")
-	{
-		fullname = "Officer " + lastname;
-	}
-	else if(nationality == "singapore_police")
-	{
-		fullname = "Officer " + lastname;
-		self.airank = "police officer";
-	}
-	else if(rank > 20)
-	{
-		fullname = "Pvt. " + lastname;
-		self.airank = "private";
-	}
-	else if(rank > 10)
-	{
-		fullname = "Cpl. " + lastname;
-		self.airank = "corporal";
-	}
 	else
 	{
-		fullname = "Sgt. " + lastname;
-		self.airank = "sergeant";
+		if(isdefined(self.airank) && self.airank == "none")
+		{
+			self.propername = lastname;
+			return;
+		}
+		rank = randomint(100);
+		if(nationality == "seal")
+		{
+			if(rank > 20)
+			{
+				fullname = "PO " + lastname;
+				self.airank = "petty officer";
+			}
+			else
+			{
+				if(rank > 10)
+				{
+					fullname = "CPO " + lastname;
+					self.airank = "chief petty officer";
+				}
+				else
+				{
+					fullname = "Lt. " + lastname;
+					self.airank = "lieutenant";
+				}
+			}
+		}
+		else
+		{
+			if(nationality == "navy")
+			{
+				if(rank > 60)
+				{
+					fullname = "SN " + lastname;
+					self.airank = "seaman";
+				}
+				else
+				{
+					if(rank > 20)
+					{
+						fullname = "PO " + lastname;
+						self.airank = "petty officer";
+					}
+					else
+					{
+						fullname = "CPO " + lastname;
+						self.airank = "chief petty officer";
+					}
+				}
+			}
+			else
+			{
+				if(nationality == "police")
+				{
+					fullname = "Officer " + lastname;
+					self.airank = "police officer";
+				}
+				else
+				{
+					if(nationality == "agent")
+					{
+						fullname = "Agent " + lastname;
+						self.airank = "special agent";
+					}
+					else
+					{
+						if(nationality == "security")
+						{
+							fullname = "Officer " + lastname;
+						}
+						else
+						{
+							if(nationality == "singapore_police")
+							{
+								fullname = "Officer " + lastname;
+								self.airank = "police officer";
+							}
+							else
+							{
+								if(rank > 20)
+								{
+									fullname = "Pvt. " + lastname;
+									self.airank = "private";
+								}
+								else
+								{
+									if(rank > 10)
+									{
+										fullname = "Cpl. " + lastname;
+										self.airank = "corporal";
+									}
+									else
+									{
+										fullname = "Sgt. " + lastname;
+										self.airank = "sergeant";
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		self.propername = fullname;
 	}
-	self.propername = fullname;
 }
 
 /*
@@ -904,9 +958,9 @@ function is_seal_member(str_classname)
 {
 	if(issubstr(str_classname, "_seal_"))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -922,9 +976,9 @@ function is_navy_member(str_classname)
 {
 	if(issubstr(str_classname, "_navy_"))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -940,9 +994,9 @@ function is_police_member(str_classname)
 {
 	if(issubstr(str_classname, "_lapd_") || issubstr(str_classname, "_swat_"))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -958,9 +1012,9 @@ function is_security_member(str_classname)
 {
 	if(issubstr(str_classname, "_security_"))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -976,9 +1030,9 @@ function is_special_agent_member(str_classname)
 {
 	if(issubstr(str_classname, "_sstactical_"))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1058,13 +1112,13 @@ function issubstr_match_any(str_match, str_search_array)
 	/#
 		assert(str_search_array.size, "");
 	#/
-	foreach(var_60711f9a, str_search in str_search_array)
+	foreach(str_search in str_search_array)
 	{
 		if(issubstr(str_match, str_search))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 

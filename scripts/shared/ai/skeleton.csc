@@ -15,7 +15,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("skeleton", &__init__, undefined, undefined);
 }
@@ -29,7 +29,7 @@ autoexec function __init__sytem__()
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function precache()
+function autoexec precache()
 {
 }
 
@@ -88,7 +88,7 @@ function zombiehandler(localclientnum, oldvalue, newvalue, bnewent, binitialsnap
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function _gibcallback(localclientnum, entity, gibflag)
+function private _gibcallback(localclientnum, entity, gibflag)
 {
 	switch(gibflag)
 	{

@@ -140,7 +140,7 @@ function checkfor_radio_override()
 {
 	if(!isdefined(level.glass))
 	{
-		return 1;
+		return true;
 	}
 	for(i = 0; i < level.glass.size; i++)
 	{
@@ -151,12 +151,12 @@ function checkfor_radio_override()
 				glass_origin = level.glass[i].fxpos_array[j].origin;
 				if(distancesquared(glass_origin, self.origin) < 2500)
 				{
-					return 1;
+					return true;
 				}
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -355,7 +355,7 @@ function player_4_override()
 {
 	level.player_4_vox_override = 1;
 	level.zmannouncerprefix = "vox_zmbar_";
-	foreach(var_4e9e4903, player in level.players)
+	foreach(player in level.players)
 	{
 		if(isdefined(player.characterindex) && player.characterindex == 2)
 		{
@@ -496,13 +496,16 @@ function weapon_type_check_custom(weapon, magic_box)
 					return "favorite_upgrade";
 				}
 			}
-			else if(weapon == getweapon("spas"))
+			else
 			{
-				return "favorite";
-			}
-			else if(weapon == getweapon("mp40_upgraded"))
-			{
-				return "favorite_upgrade";
+				if(weapon == getweapon("spas"))
+				{
+					return "favorite";
+				}
+				else if(weapon == getweapon("mp40_upgraded"))
+				{
+					return "favorite_upgrade";
+				}
 			}
 			break;
 		}
@@ -544,9 +547,9 @@ function waitfor_override()
 {
 	if(isdefined(level.music_override) && level.music_override)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -629,7 +632,7 @@ function do_mooncomp_vox(alias)
 	{
 		return;
 	}
-	foreach(var_5ede318f, speaker in level.var_2ff0efb3)
+	foreach(speaker in level.var_2ff0efb3)
 	{
 		playsoundatposition(alias, speaker.origin);
 		wait(0.05);
@@ -894,7 +897,7 @@ function function_3630300b()
 	var_d1f154fd = array::sort_by_script_int(var_d1f154fd, 1);
 	level.var_aa39de8 = 0;
 	wait(1);
-	foreach(var_33307d3b, var_6d450235 in var_d1f154fd)
+	foreach(var_6d450235 in var_d1f154fd)
 	{
 		var_6d450235 thread function_b8227f87();
 		wait(1);
@@ -904,7 +907,7 @@ function function_3630300b()
 		wait(0.1);
 	}
 	wait(1);
-	return 1;
+	return true;
 }
 
 /*

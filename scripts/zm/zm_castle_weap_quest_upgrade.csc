@@ -313,22 +313,28 @@ function function_b2c9069f(localclientnum, oldval, newval, bnewent, binitialsnap
 		self function_60670dd4(localclientnum, "o_zm_dlc1_chomper_demongate_swarm_trophy_room_solo_idle");
 		self playsound(0, "zmb_demon_skulls_appear", self.origin);
 	}
-	else if(newval == 2)
-	{
-		self function_60670dd4(localclientnum, "o_zm_dlc1_chomper_demongate_swarm_trophy_room_solo_idle_b");
-		self playsound(0, "zmb_demon_skulls_appear", self.origin);
-	}
-	else if(newval == 3)
-	{
-		if(isdefined(self.var_89028fd1))
-		{
-			self.var_89028fd1 setmodel("c_zom_chomper");
-		}
-	}
 	else
 	{
-		self scene::stop(1);
-		self notify(#"hash_24d9d4f5");
+		if(newval == 2)
+		{
+			self function_60670dd4(localclientnum, "o_zm_dlc1_chomper_demongate_swarm_trophy_room_solo_idle_b");
+			self playsound(0, "zmb_demon_skulls_appear", self.origin);
+		}
+		else
+		{
+			if(newval == 3)
+			{
+				if(isdefined(self.var_89028fd1))
+				{
+					self.var_89028fd1 setmodel("c_zom_chomper");
+				}
+			}
+			else
+			{
+				self scene::stop(1);
+				self notify(#"hash_24d9d4f5");
+			}
+		}
 	}
 }
 
@@ -803,17 +809,20 @@ function function_475de8c4(localclientnum, oldval, newval, bnewent, binitialsnap
 		}
 		self.n_fx_id = playfx(localclientnum, level._effect["beacon_fire"], self.origin);
 	}
-	else if(newval == 2)
+	else
 	{
-		if(isdefined(self.n_fx_id))
+		if(newval == 2)
 		{
-			deletefx(localclientnum, self.n_fx_id, 1);
+			if(isdefined(self.n_fx_id))
+			{
+				deletefx(localclientnum, self.n_fx_id, 1);
+			}
+			self.n_fx_id = playfx(localclientnum, level._effect["beacon_fire_charged"], self.origin);
 		}
-		self.n_fx_id = playfx(localclientnum, level._effect["beacon_fire_charged"], self.origin);
-	}
-	else if(isdefined(self.n_fx_id))
-	{
-		stopfx(localclientnum, self.n_fx_id);
+		else if(isdefined(self.n_fx_id))
+		{
+			stopfx(localclientnum, self.n_fx_id);
+		}
 	}
 }
 
@@ -860,48 +869,51 @@ function function_6103d0f7(localclientnum, oldval, newval, bnewent, binitialsnap
 			wait(0.01);
 		}
 	}
-	else if(newval == 2)
-	{
-		n_start_time = gettime();
-		n_end_time = n_start_time + (0.2 * 1000);
-		var_c8a6e70a = self.n_shader_value;
-		b_is_updating = 1;
-		while(b_is_updating)
-		{
-			n_time = gettime();
-			if(n_time >= n_end_time)
-			{
-				self.n_shader_value = 1;
-				b_is_updating = 0;
-			}
-			else
-			{
-				self.n_shader_value = mapfloat(n_start_time, n_end_time, var_c8a6e70a, 1, n_time);
-			}
-			self mapshaderconstant(localclientnum, 0, "scriptVector2", 0, self.n_shader_value, 0);
-			wait(0.01);
-		}
-	}
 	else
 	{
-		n_start_time = gettime();
-		n_end_time = n_start_time + (0.2 * 1000);
-		var_c8a6e70a = self.n_shader_value;
-		b_is_updating = 1;
-		while(b_is_updating)
+		if(newval == 2)
 		{
-			n_time = gettime();
-			if(n_time >= n_end_time)
+			n_start_time = gettime();
+			n_end_time = n_start_time + (0.2 * 1000);
+			var_c8a6e70a = self.n_shader_value;
+			b_is_updating = 1;
+			while(b_is_updating)
 			{
-				self.n_shader_value = 0;
-				b_is_updating = 0;
+				n_time = gettime();
+				if(n_time >= n_end_time)
+				{
+					self.n_shader_value = 1;
+					b_is_updating = 0;
+				}
+				else
+				{
+					self.n_shader_value = mapfloat(n_start_time, n_end_time, var_c8a6e70a, 1, n_time);
+				}
+				self mapshaderconstant(localclientnum, 0, "scriptVector2", 0, self.n_shader_value, 0);
+				wait(0.01);
 			}
-			else
+		}
+		else
+		{
+			n_start_time = gettime();
+			n_end_time = n_start_time + (0.2 * 1000);
+			var_c8a6e70a = self.n_shader_value;
+			b_is_updating = 1;
+			while(b_is_updating)
 			{
-				self.n_shader_value = mapfloat(n_start_time, n_end_time, var_c8a6e70a, 0, n_time);
+				n_time = gettime();
+				if(n_time >= n_end_time)
+				{
+					self.n_shader_value = 0;
+					b_is_updating = 0;
+				}
+				else
+				{
+					self.n_shader_value = mapfloat(n_start_time, n_end_time, var_c8a6e70a, 0, n_time);
+				}
+				self mapshaderconstant(localclientnum, 0, "scriptVector2", 0, self.n_shader_value, 0);
+				wait(0.01);
 			}
-			self mapshaderconstant(localclientnum, 0, "scriptVector2", 0, self.n_shader_value, 0);
-			wait(0.01);
 		}
 	}
 }
@@ -925,17 +937,20 @@ function function_f51349bf(localclientnum, oldval, newval, bnewent, binitialsnap
 		}
 		self.n_fx_id = playfx(localclientnum, level._effect["battery_uncharged"], self.origin, anglestoforward(self.angles), (0, 0, 1));
 	}
-	else if(newval == 2)
+	else
 	{
-		if(isdefined(self.n_fx_id))
+		if(newval == 2)
+		{
+			if(isdefined(self.n_fx_id))
+			{
+				deletefx(localclientnum, self.n_fx_id, 1);
+			}
+			self.n_fx_id = playfx(localclientnum, level._effect["battery_charged"], self.origin, anglestoforward(self.angles), (0, 0, 1));
+		}
+		else if(isdefined(self.n_fx_id))
 		{
 			deletefx(localclientnum, self.n_fx_id, 1);
 		}
-		self.n_fx_id = playfx(localclientnum, level._effect["battery_charged"], self.origin, anglestoforward(self.angles), (0, 0, 1));
-	}
-	else if(isdefined(self.n_fx_id))
-	{
-		deletefx(localclientnum, self.n_fx_id, 1);
 	}
 }
 
@@ -981,7 +996,7 @@ function function_e92d950c(localclientnum, oldval, newval, bnewent, binitialsnap
 {
 	if(isdefined(level.var_9128852d))
 	{
-		foreach(var_ac76146c, n_fx_id in level.var_9128852d)
+		foreach(n_fx_id in level.var_9128852d)
 		{
 			if(isdefined(n_fx_id))
 			{
@@ -1484,17 +1499,20 @@ function function_aefa4e67(localclientnum, oldval, newval, bnewent, binitialsnap
 		var_a975b59c = "wolf_hold_head";
 		var_2072b44e = "wolf_hold_body";
 	}
-	else if(newval == 2)
+	else
 	{
-		var_a975b59c = "wolf_walk_head";
-		var_2072b44e = "wolf_walk_body";
-		self.var_96ef984f = playfxontag(localclientnum, level._effect["wolf_trail"], self, "j_mainroot");
-	}
-	else if(newval == 3)
-	{
-		var_a975b59c = "wolf_run_head";
-		var_2072b44e = "wolf_run_body";
-		self.var_96ef984f = playfxontag(localclientnum, level._effect["wolf_trail"], self, "j_mainroot");
+		if(newval == 2)
+		{
+			var_a975b59c = "wolf_walk_head";
+			var_2072b44e = "wolf_walk_body";
+			self.var_96ef984f = playfxontag(localclientnum, level._effect["wolf_trail"], self, "j_mainroot");
+		}
+		else if(newval == 3)
+		{
+			var_a975b59c = "wolf_run_head";
+			var_2072b44e = "wolf_run_body";
+			self.var_96ef984f = playfxontag(localclientnum, level._effect["wolf_trail"], self, "j_mainroot");
+		}
 	}
 	self.var_d0e1c4f7 = playfxontag(localclientnum, level._effect[var_a975b59c], self, "j_head");
 	self.var_c35be71d = playfxontag(localclientnum, level._effect[var_2072b44e], self, "spine3_jnt");

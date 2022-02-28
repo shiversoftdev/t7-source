@@ -39,7 +39,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	clientfield::register("playercorpse", "hide_body", 1, 1, "int");
 	clientfield::register("toplayer", "killcam_menu", 1, 1, "int");
@@ -174,7 +174,7 @@ function function_a67d9d08()
 		util::cleanupactorcorpses();
 		level thread lui::screen_fade(1.25, 0, 1, "black", 1);
 		matchrecorderincrementheaderstat("checkpointRestoreCount", 1);
-		foreach(var_9954d75f, player in level.players)
+		foreach(player in level.players)
 		{
 			player closemenu(game["menu_start_menu"]);
 			if(player flagsys::get("mobile_armory_in_use"))
@@ -239,7 +239,7 @@ function onstartgametype()
 	spawning::create_map_placed_influencers();
 	level.spawnmins = (0, 0, 0);
 	level.spawnmaxs = (0, 0, 0);
-	foreach(var_b999d4c8, team in level.playerteams)
+	foreach(team in level.playerteams)
 	{
 		util::setobjectivetext(team, &"OBJECTIVES_COOP");
 		util::setobjectivehinttext(team, &"OBJECTIVES_COOP_HINT");
@@ -260,9 +260,9 @@ function onstartgametype()
 		spawnlogic::add_spawn_points("allies", "cp_coop_respawn");
 		spawning::updateallspawnpoints();
 	}
-	foreach(var_7771f716, player in level.players)
+	foreach(player in level.players)
 	{
-		bb::function_bea1c67c("_level", player, "start");
+		bb::logobjectivestatuschange("_level", player, "start");
 	}
 }
 
@@ -293,17 +293,20 @@ function onspawnplayer(predictedspawn = 0, question)
 		self predictspawnpoint(spawnpoint["origin"], spawnpoint["angles"]);
 		self.predicted_spawn_point = spawnpoint;
 	}
-	else if(isdefined(self.var_10aaa336))
+	else
 	{
-		spawnpoint["origin"] = self.var_10aaa336;
-		self.var_10aaa336 = undefined;
+		if(isdefined(self.var_10aaa336))
+		{
+			spawnpoint["origin"] = self.var_10aaa336;
+			self.var_10aaa336 = undefined;
+		}
+		if(isdefined(self.var_7e4a3c90))
+		{
+			spawnpoint["angles"] = self.var_7e4a3c90;
+			self.var_7e4a3c90 = undefined;
+		}
+		self spawn(spawnpoint["origin"], spawnpoint["angles"], "coop");
 	}
-	if(isdefined(self.var_7e4a3c90))
-	{
-		spawnpoint["angles"] = self.var_7e4a3c90;
-		self.var_7e4a3c90 = undefined;
-	}
-	self spawn(spawnpoint["origin"], spawnpoint["angles"], "coop");
 	self thread function_51525e38();
 	pixendevent();
 }
@@ -328,7 +331,7 @@ function onscoreclosemusic()
 		scorelimitcheck = scorelimit - 10;
 		topscore = 0;
 		runnerupscore = 0;
-		foreach(var_2995431, team in level.teams)
+		foreach(team in level.teams)
 		{
 			score = [[level._getteamscore]](team);
 			if(score > topscore)
@@ -378,7 +381,7 @@ function onplayerkilled(einflictor, attacker, idamage, smeansofdeath, weapon, vd
 		primaries = self getweaponslistprimaries();
 		if(isdefined(primaries))
 		{
-			foreach(var_f51cc11b, primary_weapon in primaries)
+			foreach(primary_weapon in primaries)
 			{
 				if(primary_weapon !== self.secondaryloadoutweapon)
 				{
@@ -439,10 +442,10 @@ function onplayerkilled(einflictor, attacker, idamage, smeansofdeath, weapon, vd
 function function_5ed5738a(var_b90e5c2c, var_c878636f)
 {
 	level.var_ad1a71f5 = 1;
-	foreach(var_466030b3, player in level.players)
+	foreach(player in level.players)
 	{
 		player util::show_hud(0);
-		bb::function_bea1c67c(level.skipto_point, player, "restart");
+		bb::logobjectivestatuschange(level.skipto_point, player, "restart");
 		player util::freeze_player_controls(1);
 		player.var_c8430b0a = 1;
 		if(isdefined(var_b90e5c2c))
@@ -481,7 +484,7 @@ function function_5ed5738a(var_b90e5c2c, var_c878636f)
 	{
 		if(isdefined(level.var_3a9f9a38) && level.var_3a9f9a38)
 		{
-			foreach(var_85f7b780, player in level.players)
+			foreach(player in level.players)
 			{
 				if(isdefined(player.var_acfedf1c) && player.var_acfedf1c)
 				{
@@ -498,7 +501,7 @@ function function_5ed5738a(var_b90e5c2c, var_c878636f)
 		screen_faded = 1;
 		if(isdefined(level.var_3a9f9a38) && level.var_3a9f9a38)
 		{
-			foreach(var_1c6da1fa, player in level.players)
+			foreach(player in level.players)
 			{
 				if(isdefined(player.var_acfedf1c) && player.var_acfedf1c)
 				{
@@ -516,7 +519,7 @@ function function_5ed5738a(var_b90e5c2c, var_c878636f)
 	{
 		wait(1000);
 	}
-	foreach(var_615ccfa0, player in level.players)
+	foreach(player in level.players)
 	{
 		player notify(#"hash_1528244e");
 		player cameraactivate(0);
@@ -698,7 +701,7 @@ function onplayerbleedout()
 {
 	if(!(isdefined(level.var_ee7cb602) && level.var_ee7cb602))
 	{
-		foreach(var_6058072d, player in level.players)
+		foreach(player in level.players)
 		{
 			if(player != self && player.sessionstate != "dead" && player.sessionstate != "spectator" && (!(isdefined(player.laststand) && player.laststand)))
 			{
@@ -740,7 +743,7 @@ function wait_to_spawn()
 	if(isdefined(level.is_safehouse) && level.is_safehouse || (isdefined(level.inprematchperiod) && level.inprematchperiod) || !isdefined(self.var_a90a3829))
 	{
 		self.var_a90a3829 = 1;
-		return 1;
+		return true;
 	}
 	if(self issplitscreen())
 	{
@@ -751,7 +754,7 @@ function wait_to_spawn()
 		util::setlowermessage(game["strings"]["waiting_to_spawn"], 15);
 	}
 	level util::waittill_any_timeout(15, "objective_changed");
-	return 1;
+	return true;
 }
 
 /*
@@ -769,7 +772,7 @@ function respawn_spectators_on_objective_change()
 	while(true)
 	{
 		level waittill(#"objective_changed");
-		foreach(var_da9b9179, player in level.players)
+		foreach(player in level.players)
 		{
 			if(player.sessionstate == "spectator" && globallogic_utils::isvalidclass(player.curclass))
 			{
@@ -792,9 +795,9 @@ function spawnedasspectator()
 {
 	if(!isdefined(self.var_a90a3829))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -816,7 +819,7 @@ function function_e9f7384d()
 	}
 	a_weaponlist = self getweaponslist();
 	a_heroweapons = [];
-	foreach(var_c2fc4e8f, weapon in a_weaponlist)
+	foreach(weapon in a_weaponlist)
 	{
 		if(isdefined(weapon.isheroweapon) && weapon.isheroweapon)
 		{
@@ -902,12 +905,15 @@ function function_51525e38()
 				self thread function_e9b4a63b();
 				var_a151e229 = 1;
 			}
-			else if(var_a151e229)
+			else
 			{
-				self.var_928b1776 = gettime();
+				if(var_a151e229)
+				{
+					self.var_928b1776 = gettime();
+				}
+				self notify(#"hash_79135cb3");
+				var_a151e229 = 0;
 			}
-			self notify(#"hash_79135cb3");
-			var_a151e229 = 0;
 		}
 	}
 }

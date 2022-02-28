@@ -103,7 +103,7 @@ function function_3dd4e95e(str_rumble)
 	self endon(#"death");
 	level endon(#"apothicon_trapped");
 	n_max_dist_sq = 5000 * 5000;
-	foreach(var_1c3886, e_player in level.activeplayers)
+	foreach(e_player in level.activeplayers)
 	{
 		n_dist = distancesquared(e_player.origin, self.origin);
 		if(n_dist < n_max_dist_sq)
@@ -199,7 +199,7 @@ function function_d5419c08()
 	s_unitrigger = self zm_unitrigger::create_dyn_unitrigger(&"ZM_GENESIS_APOTHICON_TRAP_READY", undefined, &function_f94d9124);
 	s_unitrigger.inactive_reassess_time = 0.1;
 	a_e_parts = getentarray(self.target, "targetname");
-	foreach(var_24dd0151, e_part in a_e_parts)
+	foreach(e_part in a_e_parts)
 	{
 		if(e_part.script_noteworthy === "clip")
 		{
@@ -260,10 +260,10 @@ function function_f94d9124(e_player)
 	if(level flag::get("apothicon_trapped") || !level flag::get("apothicon_near_trap"))
 	{
 		self sethintstring(&"");
-		return 0;
+		return false;
 	}
 	self sethintstring(&"ZM_GENESIS_APOTHICON_TRAP_READY");
-	return 1;
+	return true;
 }
 
 /*
@@ -280,10 +280,10 @@ function function_d9879865(e_player)
 	if(level flag::get("apothicon_trapped"))
 	{
 		self sethintstring(&"");
-		return 0;
+		return false;
 	}
 	self sethintstring(&"ZM_GENESIS_APOTHICON_DOOR");
-	return 1;
+	return true;
 }
 
 /*

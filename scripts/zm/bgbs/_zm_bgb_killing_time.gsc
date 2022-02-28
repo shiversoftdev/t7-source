@@ -21,7 +21,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_bgb_killing_time", &__init__, undefined, "bgb");
 }
@@ -43,7 +43,7 @@ function __init__()
 	}
 	level flag::init("world_is_paused");
 	bgb::register("zm_bgb_killing_time", "activated", 1, undefined, undefined, &validation, &activation);
-	bgb::function_3422638b("zm_bgb_killing_time", &actor_damage_override);
+	bgb::register_actor_damage_override("zm_bgb_killing_time", &actor_damage_override);
 	zm::register_vehicle_damage_callback(&vehicle_damage_override);
 	clientfield::register("actor", "zombie_instakill_fx", 1, 1, "int");
 	clientfield::register("toplayer", "instakill_upgraded_fx", 1, 1, "int");
@@ -94,7 +94,7 @@ function validation()
 	Parameters: 13
 	Flags: Linked, Private
 */
-private function actor_damage_override(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, psoffsettime, damagefromunderneath, modelindex, partname)
+function private actor_damage_override(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, psoffsettime, damagefromunderneath, modelindex, partname)
 {
 	if(self.archetype !== "zombie")
 	{
@@ -137,7 +137,7 @@ private function actor_damage_override(einflictor, eattacker, idamage, idflags, 
 	Parameters: 15
 	Flags: Linked, Private
 */
-private function vehicle_damage_override(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, vdamageorigin, psoffsettime, damagefromunderneath, modelindex, partname, vsurfacenormal)
+function private vehicle_damage_override(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, vdamageorigin, psoffsettime, damagefromunderneath, modelindex, partname, vsurfacenormal)
 {
 	if(isdefined(self.var_a0e2dfff) && self.var_a0e2dfff)
 	{
@@ -180,7 +180,7 @@ function function_eb0b4e74()
 	/#
 		assert(!isdefined(self.var_b3258f2e));
 	#/
-	foreach(var_2671007b, player in level.players)
+	foreach(player in level.players)
 	{
 		player clientfield::set_to_player("instakill_upgraded_fx", 1);
 	}
@@ -214,7 +214,7 @@ function function_f2925308()
 		self.var_d63e841a = 0;
 		self stoploopsound(0.5);
 		self playsound("zmb_bgb_killingtime_end");
-		foreach(var_442809, player in level.players)
+		foreach(player in level.players)
 		{
 			self clientfield::set_to_player("instakill_upgraded_fx", 0);
 		}

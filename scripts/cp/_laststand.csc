@@ -15,7 +15,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	level.laststands = [];
 	for(i = 0; i < 4; i++)
@@ -106,15 +106,18 @@ function update_bleedout_timer(localclientnum, oldval, newval, bnewent, binitial
 			level.laststands[playernum].lastbleedouttime = 0;
 			setuimodelvalue(model, 1);
 		}
-		else if(newval == 29)
-		{
-			level.laststands[playernum] notify(#"new_val");
-			level.laststands[playernum] thread animation_update(model, 30, 28);
-		}
 		else
 		{
-			level.laststands[playernum] notify(#"new_val");
-			level.laststands[playernum] thread animation_update(model, level.laststands[playernum].lastbleedouttime, level.laststands[playernum].bleedouttime);
+			if(newval == 29)
+			{
+				level.laststands[playernum] notify(#"new_val");
+				level.laststands[playernum] thread animation_update(model, 30, 28);
+			}
+			else
+			{
+				level.laststands[playernum] notify(#"new_val");
+				level.laststands[playernum] thread animation_update(model, level.laststands[playernum].lastbleedouttime, level.laststands[playernum].bleedouttime);
+			}
 		}
 	}
 }

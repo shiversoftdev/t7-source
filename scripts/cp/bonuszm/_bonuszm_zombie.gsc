@@ -36,7 +36,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	behaviortreenetworkutility::registerbehaviortreescriptapi("bonuszmZombieTraversalDoesAnimationExist", &function_6de9fa37);
 	behaviortreenetworkutility::registerbehaviortreeaction("bonuszmSpecialTraverseAction", &function_88e9d5da, undefined, &function_dd1fc89b);
@@ -52,7 +52,7 @@ autoexec function init()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_6de9fa37(entity)
+function private function_6de9fa37(entity)
 {
 	/#
 		assert(isdefined(entity.traversestartnode));
@@ -68,7 +68,7 @@ private function function_6de9fa37(entity)
 					iprintln("" + entity.traversestartnode.animscript);
 				}
 			#/
-			return 0;
+			return false;
 		}
 		if(isdefined(entity.traverseendnode) && !issubstr(entity.traversestartnode.animscript, "human"))
 		{
@@ -78,9 +78,9 @@ private function function_6de9fa37(entity)
 					iprintln("" + entity.traversestartnode.animscript);
 				}
 			#/
-			return 0;
+			return false;
 		}
-		return 1;
+		return true;
 	}
 	blackboard::setblackboardattribute(entity, "_traversal_type", entity.traversestartnode.animscript);
 	if(entity.missinglegs === 1)
@@ -93,7 +93,7 @@ private function function_6de9fa37(entity)
 	}
 	if(isdefined(animationresults["animation"]))
 	{
-		return 1;
+		return true;
 	}
 	/#
 		if(isdefined(entity.traversestartnode.animscript))
@@ -101,7 +101,7 @@ private function function_6de9fa37(entity)
 			iprintln("" + entity.traversestartnode.animscript);
 		}
 	#/
-	return 0;
+	return false;
 }
 
 /*
@@ -113,7 +113,7 @@ private function function_6de9fa37(entity)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_88e9d5da(entity, asmstatename)
+function private function_88e9d5da(entity, asmstatename)
 {
 	animationstatenetworkutility::requeststate(entity, asmstatename);
 	entity ghost();
@@ -131,7 +131,7 @@ private function function_88e9d5da(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_dd1fc89b(entity, asmstatename)
+function private function_dd1fc89b(entity, asmstatename)
 {
 	entity clientfield::set("zombie_appear_vanish_fx", 3);
 	entity show();
@@ -148,7 +148,7 @@ private function function_dd1fc89b(entity, asmstatename)
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function function_26c42b09(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function private function_26c42b09(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	entity orientmode("face angle", entity.angles[1]);
 	entity setrepairpaths(0);
@@ -157,13 +157,16 @@ private function function_26c42b09(entity, mocompanim, mocompanimblendouttime, m
 	{
 		rate = 1.5;
 	}
-	else if(locomotionspeed == "locomotion_speed_run")
-	{
-		rate = 2;
-	}
 	else
 	{
-		rate = 3;
+		if(locomotionspeed == "locomotion_speed_run")
+		{
+			rate = 2;
+		}
+		else
+		{
+			rate = 3;
+		}
 	}
 	entity asmsetanimationrate(rate);
 	if(entity haspath())
@@ -187,7 +190,7 @@ private function function_26c42b09(entity, mocompanim, mocompanimblendouttime, m
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function function_47268b78(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function private function_47268b78(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	entity.blockingpain = 0;
 	entity setrepairpaths(1);

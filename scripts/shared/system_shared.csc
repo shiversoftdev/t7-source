@@ -80,7 +80,7 @@ function run_post_systems()
 		#/
 		if(isarray(func.reqs))
 		{
-			foreach(var_420fd479, req in func.reqs)
+			foreach(req in func.reqs)
 			{
 				thread exec_post_system(req);
 			}
@@ -143,7 +143,7 @@ function run_pre_systems()
 	{
 		if(isarray(func.reqs))
 		{
-			foreach(var_9d8c8c73, req in func.reqs)
+			foreach(req in func.reqs)
 			{
 				thread exec_pre_system(req);
 			}

@@ -193,21 +193,21 @@ function _is_primed(slot, weapon)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _lock_requirement(target, secondary = 0)
+function private _lock_requirement(target, secondary = 0)
 {
 	if(target cybercom::cybercom_aicheckoptout("cybercom_surge"))
 	{
 		self cybercom::function_29bf9dee(target, 2);
-		return 0;
+		return false;
 	}
 	if(isdefined(target.is_disabled) && target.is_disabled)
 	{
 		self cybercom::function_29bf9dee(target, 6);
-		return 0;
+		return false;
 	}
 	if(isactor(target) && target cybercom::function_78525729() != "stand" && target cybercom::function_78525729() != "crouch")
 	{
-		return 0;
+		return false;
 	}
 	if(isactor(target) && target.archetype != "robot")
 	{
@@ -217,20 +217,20 @@ private function _lock_requirement(target, secondary = 0)
 		else
 		{
 			self cybercom::function_29bf9dee(target, 2);
-			return 0;
+			return false;
 		}
 	}
 	if(!isactor(target) && !isvehicle(target))
 	{
 		self cybercom::function_29bf9dee(target, 2);
-		return 0;
+		return false;
 	}
 	if(isvehicle(target))
 	{
 		if(!isdefined(target.archetype))
 		{
 			self cybercom::function_29bf9dee(target, 2);
-			return 0;
+			return false;
 		}
 		switch(target.archetype)
 		{
@@ -245,15 +245,15 @@ private function _lock_requirement(target, secondary = 0)
 			default:
 			{
 				self cybercom::function_29bf9dee(target, 2);
-				return 0;
+				return false;
 			}
 		}
 	}
 	if(isactor(target) && !target isonground() && !target cybercom::function_421746e0())
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -265,7 +265,7 @@ private function _lock_requirement(target, secondary = 0)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _get_valid_targets(weapon)
+function private _get_valid_targets(weapon)
 {
 	return arraycombine(getaiteamarray("axis"), getaiteamarray("team3"), 0, 0);
 }
@@ -279,12 +279,12 @@ private function _get_valid_targets(weapon)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _activate_surge(slot, weapon)
+function private _activate_surge(slot, weapon)
 {
 	upgraded = self hascybercomability("cybercom_surge") == 2;
 	aborted = 0;
 	fired = 0;
-	foreach(var_66c26606, item in self.cybercom.lock_targets)
+	foreach(item in self.cybercom.lock_targets)
 	{
 		if(isdefined(item.target) && (isdefined(item.inrange) && item.inrange))
 		{
@@ -331,7 +331,7 @@ private function _activate_surge(slot, weapon)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function _surge_vehicle(upgraded = 0, secondary = 0, attacker)
+function private _surge_vehicle(upgraded = 0, secondary = 0, attacker)
 {
 	self endon(#"death");
 	self.ignoreall = 1;
@@ -344,16 +344,19 @@ private function _surge_vehicle(upgraded = 0, secondary = 0, attacker)
 			self kill();
 		}
 	}
-	else if(self.archetype == "turret")
+	else
 	{
-		radiusdamage(self.origin, 128, 300, 100, self, "MOD_EXPLOSIVE");
-		if(isalive(self))
+		if(self.archetype == "turret")
 		{
-			self kill();
+			radiusdamage(self.origin, 128, 300, 100, self, "MOD_EXPLOSIVE");
+			if(isalive(self))
+			{
+				self kill();
+			}
+			return;
 		}
-		return;
+		self notify(#"surge", attacker);
 	}
-	self notify(#"surge", attacker);
 }
 
 /*
@@ -365,7 +368,7 @@ private function _surge_vehicle(upgraded = 0, secondary = 0, attacker)
 	Parameters: 4
 	Flags: Linked, Private
 */
-private function _surge(upgraded = 0, secondary = 0, attacker, weapon)
+function private _surge(upgraded = 0, secondary = 0, attacker, weapon)
 {
 	self endon(#"death");
 	self notify(#"hash_f8c5dd60", weapon, attacker);
@@ -433,7 +436,7 @@ function function_e4f42bf7(attacker, weapon, var_a360d6f5)
 	self endon(#"death");
 	self thread function_c1b2cc5a(var_a360d6f5);
 	self dodamage(2, self.origin, (isdefined(attacker) ? attacker : undefined), undefined, "none", "MOD_UNKNOWN", 0, weapon, -1, 1);
-	self waittill_match(#"bhtn_action_terminate");
+	self waittillmatch(#"bhtn_action_terminate");
 	self notify(#"hash_a738dd0", "specialpain");
 }
 
@@ -479,7 +482,7 @@ function function_b8a5c1a6(attacker)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_a405f422()
+function private function_a405f422()
 {
 	self endon(#"death");
 	starttime = gettime();
@@ -507,7 +510,7 @@ private function function_a405f422()
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function function_d007b404(upgraded, enemy, attacker)
+function private function_d007b404(upgraded, enemy, attacker)
 {
 	self endon(#"death");
 	enemy endon(#"death");
@@ -533,11 +536,11 @@ private function function_d007b404(upgraded, enemy, attacker)
 	Parameters: 2
 	Flags: Private
 */
-private function function_3e26e5ce(upgraded, attacker)
+function private function_3e26e5ce(upgraded, attacker)
 {
 	self endon(#"death");
 	enemies = self function_3e621fd5(self.origin + vectorscale((0, 0, 1), 50), getdvarint("scr_surge_radius", 220), getdvarint("scr_surge_count", 4));
-	foreach(var_99b6a1af, enemy in enemies)
+	foreach(enemy in enemies)
 	{
 		if(enemy == self)
 		{
@@ -556,14 +559,14 @@ private function function_3e26e5ce(upgraded, attacker)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_2a105d32(attacker)
+function private function_2a105d32(attacker)
 {
 	self notify(#"hash_2a105d32");
 	self endon(#"hash_2a105d32");
 	origin = self.origin;
 	self clientfield::set("robot_mind_control_explosion", 1);
 	enemies = function_3e621fd5(origin, getdvarint("scr_surge_blowradius", 128), getdvarint("scr_surge_count", 4));
-	foreach(var_1561be84, guy in enemies)
+	foreach(guy in enemies)
 	{
 		if(guy.archetype == "human")
 		{
@@ -599,13 +602,13 @@ private function function_2a105d32(attacker)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function function_3e621fd5(origin, distance, max)
+function private function_3e621fd5(origin, distance, max)
 {
 	weapon = getweapon("gadget_surge");
 	distance_squared = distance * distance;
 	enemies = [];
 	potential_enemies = util::get_array_of_closest(origin, _get_valid_targets());
-	foreach(var_8853cca6, enemy in potential_enemies)
+	foreach(enemy in potential_enemies)
 	{
 		if(!isdefined(enemy))
 		{
@@ -652,7 +655,7 @@ private function function_3e621fd5(origin, distance, max)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _electrodischargearcfx(target, traveltime)
+function private _electrodischargearcfx(target, traveltime)
 {
 	if(!isdefined(self) || !isdefined(target))
 	{
@@ -682,7 +685,7 @@ private function _electrodischargearcfx(target, traveltime)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function function_d09562d9(target, time, tag)
+function private function_d09562d9(target, time, tag)
 {
 	self endon(#"disconnect");
 	self endon(#"death");
@@ -742,7 +745,7 @@ function ai_activatesurge(target, var_9bc2efcb = 1, upgraded = 0)
 	validtargets = [];
 	if(isarray(target))
 	{
-		foreach(var_1cea959c, guy in target)
+		foreach(guy in target)
 		{
 			if(!_lock_requirement(guy))
 			{
@@ -751,20 +754,23 @@ function ai_activatesurge(target, var_9bc2efcb = 1, upgraded = 0)
 			validtargets[validtargets.size] = guy;
 		}
 	}
-	else if(!_lock_requirement(target))
+	else
 	{
-		return;
+		if(!_lock_requirement(target))
+		{
+			return;
+		}
+		validtargets[validtargets.size] = target;
 	}
-	validtargets[validtargets.size] = target;
 	if(isdefined(var_9bc2efcb) && var_9bc2efcb)
 	{
 		type = self cybercom::function_5e3d3aa();
 		self orientmode("face default");
 		self animscripted("ai_cybercom_anim", self.origin, self.angles, ("ai_base_rifle_" + type) + "_exposed_cybercom_activate");
-		self waittill_match(#"ai_cybercom_anim");
+		self waittillmatch(#"ai_cybercom_anim");
 	}
 	weapon = getweapon("gadget_surge");
-	foreach(var_4131ea6a, guy in validtargets)
+	foreach(guy in validtargets)
 	{
 		if(!cybercom::targetisvalid(guy, weapon))
 		{
@@ -784,7 +790,7 @@ function ai_activatesurge(target, var_9bc2efcb = 1, upgraded = 0)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _tryfindpathtobest(&enemies, maxattempts = 3)
+function private _tryfindpathtobest(&enemies, maxattempts = 3)
 {
 	while(maxattempts > 0 && enemies.size > 0)
 	{

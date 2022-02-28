@@ -33,11 +33,11 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	initzmbehaviorsandasm();
 	level thread zm_remaster_zombie::update_closest_player();
-	level.last_valid_position_override = &function_2df3c740;
+	level.last_valid_position_override = &moon_last_valid_position;
 }
 
 /*
@@ -49,16 +49,16 @@ autoexec function init()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function initzmbehaviorsandasm()
+function private initzmbehaviorsandasm()
 {
 	spawner::add_archetype_spawn_function("zombie", &function_7a726580);
-	behaviortreenetworkutility::registerbehaviortreescriptapi("moonZombieKilledByMicrowaveGunDw", &function_3679b8f9);
-	behaviortreenetworkutility::registerbehaviortreescriptapi("moonZombieKilledByMicrowaveGun", &function_8defac52);
+	behaviortreenetworkutility::registerbehaviortreescriptapi("moonZombieKilledByMicrowaveGunDw", &killedbymicrowavegundw);
+	behaviortreenetworkutility::registerbehaviortreescriptapi("moonZombieKilledByMicrowaveGun", &killedbymicrowavegun);
 	behaviortreenetworkutility::registerbehaviortreescriptapi("moonShouldMoveLowg", &moonshouldmovelowg);
 }
 
 /*
-	Name: function_5683b5d5
+	Name: teleporttraversalmocompstart
 	Namespace: zm_moon_zombie
 	Checksum: 0xFCA9F6F4
 	Offset: 0x520
@@ -66,7 +66,7 @@ private function initzmbehaviorsandasm()
 	Parameters: 5
 	Flags: None
 */
-function function_5683b5d5(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function teleporttraversalmocompstart(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	entity orientmode("face angle", entity.angles[1]);
 	entity animmode("normal");
@@ -94,44 +94,44 @@ function zodshouldmove(entity)
 {
 	if(isdefined(entity.zombie_tesla_hit) && entity.zombie_tesla_hit && (!(isdefined(entity.tesla_death) && entity.tesla_death)))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(entity.pushed) && entity.pushed)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(entity.knockdown) && entity.knockdown)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(entity.grapple_is_fatal) && entity.grapple_is_fatal)
 	{
-		return 0;
+		return false;
 	}
 	if(level.wait_and_revive)
 	{
 		if(!(isdefined(entity.var_1e3fb1c) && entity.var_1e3fb1c))
 		{
-			return 0;
+			return false;
 		}
 	}
 	if(isdefined(entity.stumble))
 	{
-		return 0;
+		return false;
 	}
 	if(zombiebehavior::zombieshouldmeleecondition(entity))
 	{
-		return 0;
+		return false;
 	}
 	if(entity haspath())
 	{
-		return 1;
+		return true;
 	}
 	if(isdefined(entity.keep_moving) && entity.keep_moving)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -143,14 +143,14 @@ function zodshouldmove(entity)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_7a726580()
+function private function_7a726580()
 {
-	self.cant_move_cb = &function_2a29252b;
-	self.closest_player_override = &zm_remaster_zombie::function_3ff94b60;
+	self.cant_move_cb = &moon_cant_move_cb;
+	self.closest_player_override = &zm_remaster_zombie::remaster_closest_player;
 }
 
 /*
-	Name: function_2a29252b
+	Name: moon_cant_move_cb
 	Namespace: zm_moon_zombie
 	Checksum: 0x437A67E1
 	Offset: 0x8A0
@@ -158,14 +158,14 @@ private function function_7a726580()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_2a29252b()
+function private moon_cant_move_cb()
 {
 	self pushactors(0);
 	self.enablepushtime = gettime() + 1000;
 }
 
 /*
-	Name: function_3679b8f9
+	Name: killedbymicrowavegundw
 	Namespace: zm_moon_zombie
 	Checksum: 0xB0447E76
 	Offset: 0x8D8
@@ -173,13 +173,13 @@ private function function_2a29252b()
 	Parameters: 1
 	Flags: Linked
 */
-function function_3679b8f9(entity)
+function killedbymicrowavegundw(entity)
 {
 	return isdefined(entity.microwavegun_dw_death) && entity.microwavegun_dw_death;
 }
 
 /*
-	Name: function_8defac52
+	Name: killedbymicrowavegun
 	Namespace: zm_moon_zombie
 	Checksum: 0x35DF044E
 	Offset: 0x910
@@ -187,7 +187,7 @@ function function_3679b8f9(entity)
 	Parameters: 1
 	Flags: Linked
 */
-function function_8defac52(entity)
+function killedbymicrowavegun(entity)
 {
 	return isdefined(entity.microwavegun_death) && entity.microwavegun_death;
 }
@@ -207,7 +207,7 @@ function moonshouldmovelowg(entity)
 }
 
 /*
-	Name: function_2df3c740
+	Name: moon_last_valid_position
 	Namespace: zm_moon_zombie
 	Checksum: 0x486B431E
 	Offset: 0x980
@@ -215,13 +215,13 @@ function moonshouldmovelowg(entity)
 	Parameters: 0
 	Flags: Linked
 */
-function function_2df3c740()
+function moon_last_valid_position()
 {
 	if(isdefined(self.in_low_gravity) && self.in_low_gravity)
 	{
 		if(self isonground())
 		{
-			return 0;
+			return false;
 		}
 		trace = groundtrace(self.origin + vectorscale((0, 0, 1), 15), self.origin + (vectorscale((0, 0, -1), 1000)), 0, undefined);
 		ground_pos = trace["position"];
@@ -230,10 +230,10 @@ function function_2df3c740()
 			if(ispointonnavmesh(ground_pos, self))
 			{
 				self.last_valid_position = ground_pos;
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 

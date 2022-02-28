@@ -194,13 +194,16 @@ function function_c052f9b8()
 		{
 			setsoundcontext("train", "country");
 		}
-		else if(isdefined(level.var_1c69bb12.var_308c43c8) && level.var_1c69bb12.var_308c43c8)
-		{
-			setsoundcontext("train", "city");
-		}
 		else
 		{
-			setsoundcontext("train", "tunnel");
+			if(isdefined(level.var_1c69bb12.var_308c43c8) && level.var_1c69bb12.var_308c43c8)
+			{
+				setsoundcontext("train", "city");
+			}
+			else
+			{
+				setsoundcontext("train", "tunnel");
+			}
 		}
 	}
 }
@@ -264,7 +267,7 @@ function function_6fae68d7()
 	trigs = getentarray(0, "sndCaptureZone", "targetname");
 	if(isdefined(trigs))
 	{
-		foreach(var_96e4708c, trig in trigs)
+		foreach(trig in trigs)
 		{
 			trig.players = 0;
 			trig.active = 0;
@@ -422,7 +425,7 @@ function function_3599b48b(localclientnum, oldval, newval, bnewent, binitialsnap
 	}
 	if(newval)
 	{
-		foreach(var_df9c4f31, s_struct in var_92c47b0e)
+		foreach(s_struct in var_92c47b0e)
 		{
 			var_61bcec7 = s_struct.script_string;
 			if(s_struct.script_string == "lightning")
@@ -445,7 +448,7 @@ function function_3599b48b(localclientnum, oldval, newval, bnewent, binitialsnap
 	}
 	else
 	{
-		foreach(var_f6095d41, fxid in level.var_8f027e99)
+		foreach(fxid in level.var_8f027e99)
 		{
 			stopfx(localclientnum, fxid);
 			fxid = undefined;
@@ -690,30 +693,36 @@ function command_parser()
 					println("");
 					success = 0;
 				}
-				else if(!isdefined(tokens[1]))
+				else
 				{
-					if(isdefined(tokens[1]))
+					if(!isdefined(tokens[1]))
 					{
-						println((("" + tokens[0]) + "") + tokens[1]);
+						if(isdefined(tokens[1]))
+						{
+							println((("" + tokens[0]) + "") + tokens[1]);
+						}
+						else
+						{
+							println("" + tokens[0]);
+						}
+						println("");
+						success = 0;
 					}
 					else
 					{
-						println("" + tokens[0]);
+						if(!isdefined(tokens[2]))
+						{
+							println((("" + tokens[0]) + "") + tokens[1]);
+							println("");
+							success = 0;
+						}
+						else if(!isdefined(tokens[3]))
+						{
+							println((("" + tokens[0]) + "") + tokens[1]);
+							println("");
+							success = 0;
+						}
 					}
-					println("");
-					success = 0;
-				}
-				else if(!isdefined(tokens[2]))
-				{
-					println((("" + tokens[0]) + "") + tokens[1]);
-					println("");
-					success = 0;
-				}
-				else if(!isdefined(tokens[3]))
-				{
-					println((("" + tokens[0]) + "") + tokens[1]);
-					println("");
-					success = 0;
 				}
 				if(success)
 				{
@@ -1304,13 +1313,16 @@ function function_6442a8c2(localclientnum, weapon, chargeshotlevel)
 		{
 			alias = "wpn_waterstaff_charge_";
 		}
-		else if(weaponname == "staff_lightning_upgraded")
+		else
 		{
-			alias = "wpn_lightningstaff_charge_";
-		}
-		else if(weaponname == "staff_air_upgraded")
-		{
-			alias = "wpn_airstaff_charge_";
+			if(weaponname == "staff_lightning_upgraded")
+			{
+				alias = "wpn_lightningstaff_charge_";
+			}
+			else if(weaponname == "staff_air_upgraded")
+			{
+				alias = "wpn_airstaff_charge_";
+			}
 		}
 		self.var_710dd188 = self.var_d159d52b playloopsound(alias + "loop", 1.5);
 		playsound(localclientnum, alias + self.var_4dde9ce5, (0, 0, 0));
@@ -1526,7 +1538,15 @@ function function_d19cb2f8()
 			}
 		}
 	}
-	println("");
+	else
+	{
+		/#
+			println("");
+		#/
+		if(getdvarint("") > 0)
+		{
+		}
+	}
 }
 
 /*

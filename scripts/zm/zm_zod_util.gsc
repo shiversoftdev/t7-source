@@ -28,7 +28,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_zod_util", &__init__, &__main__, undefined);
 }
@@ -63,7 +63,7 @@ function __main__()
 	#/
 	if(isdefined(level.zombie_spawn_callbacks))
 	{
-		foreach(var_d431e314, fn in level.zombie_spawn_callbacks)
+		foreach(fn in level.zombie_spawn_callbacks)
 		{
 			add_zod_zombie_spawn_func(fn);
 		}
@@ -131,7 +131,7 @@ function tag_origin_free()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function tag_origin_expire()
+function private tag_origin_expire()
 {
 	self endon(#"reallocated_from_pool");
 	wait(20);
@@ -148,14 +148,14 @@ private function tag_origin_expire()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function watch_zombie_death()
+function private watch_zombie_death()
 {
 	self waittill(#"death", e_attacker, str_means_of_death, weapon);
 	if(isdefined(self))
 	{
 		if(isdefined(level.zombie_death_callbacks))
 		{
-			foreach(var_1c6d03e, fn_callback in level.zombie_death_callbacks)
+			foreach(fn_callback in level.zombie_death_callbacks)
 			{
 				self thread [[fn_callback]](e_attacker, str_means_of_death, weapon);
 			}
@@ -259,7 +259,7 @@ function unitrigger_allow_beastmode()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function unitrigger_think()
+function private unitrigger_think()
 {
 	self endon(#"kill_trigger");
 	self.stub thread unitrigger_refresh_message();
@@ -308,9 +308,9 @@ function teleport_player(struct_targetname)
 	self disableweapons();
 	self disableoffhandweapons();
 	wait(2);
-	foreach(var_9954d75f, s_dest in a_dest)
+	foreach(s_dest in a_dest)
 	{
-		foreach(var_4d4fe28d, e_player in level.players)
+		foreach(e_player in level.players)
 		{
 			if(distance2dsquared(e_player.origin, s_dest.origin) > 10000)
 			{
@@ -361,7 +361,7 @@ function set_unitrigger_hint_string(str_message, param1)
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function spawn_unitrigger(origin, angles, radius_or_dims, use_trigger = 0, func_per_player_msg)
+function private spawn_unitrigger(origin, angles, radius_or_dims, use_trigger = 0, func_per_player_msg)
 {
 	trigger_stub = spawnstruct();
 	trigger_stub.origin = origin;
@@ -481,7 +481,7 @@ function on_player_connect()
 		self waittill(#"bled_out");
 		if(isdefined(level.bled_out_callbacks))
 		{
-			foreach(var_5d14d4b6, fn in level.bled_out_callbacks)
+			foreach(fn in level.bled_out_callbacks)
 			{
 				self thread [[fn]]();
 			}
@@ -575,7 +575,7 @@ function set_rumble_to_player(n_rumbletype, var_d00db512)
 function function_3a7a7013(n_rumbletype, n_radius, v_origin, var_d00db512)
 {
 	var_699d80d5 = n_radius * n_radius;
-	foreach(var_d45abeb7, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		if(isdefined(player) && distance2dsquared(player.origin, v_origin) <= var_699d80d5)
 		{

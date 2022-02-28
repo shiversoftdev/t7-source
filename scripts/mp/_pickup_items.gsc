@@ -21,7 +21,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("pickup_items", &__init__, undefined, undefined);
 }
@@ -74,7 +74,7 @@ function start_gametype()
 	pickup_triggers = getentarray("pickup_item", "targetname");
 	pickup_models = getentarray("pickup_model", "targetname");
 	visuals = [];
-	foreach(var_5dc54105, trigger in pickup_triggers)
+	foreach(trigger in pickup_triggers)
 	{
 		visuals[0] = get_visual_for_trigger(trigger, pickup_models);
 		/#
@@ -100,7 +100,7 @@ function start_gametype()
 */
 function get_visual_for_trigger(trigger, pickup_models)
 {
-	foreach(var_43ba6c31, model in pickup_models)
+	foreach(model in pickup_models)
 	{
 		if(model istouchingswept(trigger))
 		{
@@ -337,7 +337,7 @@ function init_items_for_pickup()
 	items_string = self.script_parameters;
 	items_array = strtok(items_string, " ");
 	items = [];
-	foreach(var_743cfbdd, item_string in items_array)
+	foreach(item_string in items_array)
 	{
 		items[items.size] = self get_item_from_string(item_string);
 	}
@@ -557,7 +557,7 @@ function respawn_pickup()
 */
 function respawn_all_pickups()
 {
-	foreach(var_289bce9a, item in level.pickup_items)
+	foreach(item in level.pickup_items)
 	{
 		item respawn_pickup();
 	}
@@ -631,7 +631,7 @@ function on_touch_health(player)
 */
 function on_touch_perk(player)
 {
-	foreach(var_9822a285, specialty in self.current_item.specialties)
+	foreach(specialty in self.current_item.specialties)
 	{
 		player setperk(specialty);
 	}
@@ -649,7 +649,7 @@ function on_touch_perk(player)
 function has_active_gadget()
 {
 	weapons = self getweaponslist(1);
-	foreach(var_f51cc11b, weapon in weapons)
+	foreach(weapon in weapons)
 	{
 		if(!weapon.isgadget)
 		{
@@ -662,10 +662,10 @@ function has_active_gadget()
 		slot = self gadgetgetslot(weapon);
 		if(self gadgetisactive(slot))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -680,7 +680,7 @@ function has_active_gadget()
 function take_player_gadgets()
 {
 	weapons = self getweaponslist(1);
-	foreach(var_70c7ddf0, weapon in weapons)
+	foreach(weapon in weapons)
 	{
 		if(weapon.isgadget)
 		{
@@ -701,7 +701,7 @@ function take_player_gadgets()
 function take_offhand_weapon(offhandslot)
 {
 	weapons = self getweaponslist(1);
-	foreach(var_a35a4f49, weapon in weapons)
+	foreach(weapon in weapons)
 	{
 		if(weapon.offhandslot == offhandslot)
 		{
@@ -724,13 +724,13 @@ function should_switch_to_pickup_weapon(weapon)
 {
 	if(weapon.isgadget)
 	{
-		return 0;
+		return false;
 	}
 	if(weapon.isgrenadeweapon)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -751,7 +751,7 @@ function on_touch_weapon(player)
 	{
 		if(player has_active_gadget())
 		{
-			return 0;
+			return false;
 		}
 		player take_player_gadgets();
 	}
@@ -763,7 +763,7 @@ function on_touch_weapon(player)
 	player giveweapon(weapon);
 	if(!player hasweapon(weapon))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.script_ammo_clip) && isdefined(self.script_ammo_extra))
 	{
@@ -771,13 +771,16 @@ function on_touch_weapon(player)
 		{
 			player setweaponammostock(weapon, (ammo_in_reserve + self.script_ammo_clip) + self.script_ammo_extra);
 		}
-		else if(self.script_ammo_clip >= 0)
+		else
 		{
-			player setweaponammoclip(weapon, self.script_ammo_clip);
-		}
-		if(self.script_ammo_extra >= 0)
-		{
-			player setweaponammostock(weapon, self.script_ammo_extra);
+			if(self.script_ammo_clip >= 0)
+			{
+				player setweaponammoclip(weapon, self.script_ammo_clip);
+			}
+			if(self.script_ammo_extra >= 0)
+			{
+				player setweaponammostock(weapon, self.script_ammo_extra);
+			}
 		}
 	}
 	if(weapon.isgadget)
@@ -789,6 +792,6 @@ function on_touch_weapon(player)
 	{
 		player switchtoweapon(weapon);
 	}
-	return 1;
+	return true;
 }
 

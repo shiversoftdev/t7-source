@@ -249,7 +249,7 @@ function function_b4902c73(slot, weapon, waitnote, endnote)
 	Parameters: 4
 	Flags: Private
 */
-private function _camo_killreactivateonnotify(slot, note, durationmin = 300, durationmax = 1000)
+function private _camo_killreactivateonnotify(slot, note, durationmin = 300, durationmax = 1000)
 {
 	self endon(#"active_camo_taken");
 	self endon(#"disconnect");
@@ -271,7 +271,7 @@ private function _camo_killreactivateonnotify(slot, note, durationmin = 300, dur
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function _camo_createfalsetarget()
+function private _camo_createfalsetarget()
 {
 	self notify(#"delete_false_target");
 	self endon(#"delete_false_target");
@@ -305,7 +305,7 @@ private function _camo_createfalsetarget()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_c51ef296(fakeent)
+function private function_c51ef296(fakeent)
 {
 	fakeent endon(#"death");
 	self endon(#"disconnect");
@@ -325,7 +325,7 @@ private function function_c51ef296(fakeent)
 	Parameters: 0
 	Flags: Private
 */
-private function _active_cammo_reactivate()
+function private _active_cammo_reactivate()
 {
 	self notify(#"_active_cammo_reactivate");
 	self endon(#"_active_cammo_reactivate");

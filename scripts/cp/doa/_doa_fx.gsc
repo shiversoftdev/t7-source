@@ -255,7 +255,7 @@ function function_64bc2503(&queue, flag, waitfunc, var_a6cc22d4 = 0)
 	if(queue.size >= 16)
 	{
 		/#
-			foreach(var_14aedbb, item in queue)
+			foreach(item in queue)
 			{
 				doa_utility::debugmsg("" + item);
 			}
@@ -377,17 +377,20 @@ function function_2fc7e62f(victim, damage, attacker, dir, smeansofdeath, weapon)
 	{
 		playfx(level._effect["impact_raygun1"], victim.origin + vectorscale((0, 0, 1), 40));
 	}
-	else if(weapon == level.doa.var_e30c10ec)
-	{
-		playfx(level._effect["impact_raygun2"], victim.origin + vectorscale((0, 0, 1), 40));
-		if(isdefined(attacker))
-		{
-			attacker notify(#"hash_21f7a743", victim);
-		}
-	}
 	else
 	{
-		playfx(level._effect["impact_raygun"], victim.origin + vectorscale((0, 0, 1), 40));
+		if(weapon == level.doa.var_e30c10ec)
+		{
+			playfx(level._effect["impact_raygun2"], victim.origin + vectorscale((0, 0, 1), 40));
+			if(isdefined(attacker))
+			{
+				attacker notify(#"hash_21f7a743", victim);
+			}
+		}
+		else
+		{
+			playfx(level._effect["impact_raygun"], victim.origin + vectorscale((0, 0, 1), 40));
+		}
 	}
 }
 
@@ -474,15 +477,18 @@ function function_2aa1c0b3(victim, damage, attacker, dir, smeansofdeath, weapon)
 		victim clientfield::set("burnType", 2);
 		victim.var_7aac5112 = 2;
 	}
-	else if(issubstr(weapon.name, "_2"))
-	{
-		victim clientfield::set("burnType", 3);
-		victim.var_7aac5112 = 3;
-	}
 	else
 	{
-		victim clientfield::set("burnType", 1);
-		victim.var_7aac5112 = 1;
+		if(issubstr(weapon.name, "_2"))
+		{
+			victim clientfield::set("burnType", 3);
+			victim.var_7aac5112 = 3;
+		}
+		else
+		{
+			victim clientfield::set("burnType", 1);
+			victim.var_7aac5112 = 1;
+		}
 	}
 	victim.burning = 1;
 	wait(0.05);
@@ -540,7 +546,7 @@ function function_32bcda58(var_7aac5112, attacker)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_9fc6e261(type)
+function private function_9fc6e261(type)
 {
 	self waittill(#"actor_corpse", corpse);
 	wait(0.05);

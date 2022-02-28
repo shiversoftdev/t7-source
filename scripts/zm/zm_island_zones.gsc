@@ -33,7 +33,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_island_zones", &__init__, undefined, undefined);
 }
@@ -133,7 +133,7 @@ function function_45a8888c()
 	level thread function_2043d032();
 	level thread function_87fe8382();
 	a_t_doors = getentarray("zombie_door", "targetname");
-	foreach(var_e8393719, t_door in a_t_doors)
+	foreach(t_door in a_t_doors)
 	{
 		if(t_door.script_noteworthy === "vine_door")
 		{
@@ -231,7 +231,7 @@ function function_feb4ddde()
 	var_4c616d31 = self.target + "_vine";
 	var_593fa92c = struct::get_array(var_4c616d31 + "_fx", "targetname");
 	var_9649126c = struct::get_array(var_4c616d31, "targetname");
-	foreach(var_4d4fe28d, s_scene in var_9649126c)
+	foreach(s_scene in var_9649126c)
 	{
 		if(isdefined(s_scene) && isdefined(s_scene.var_4165e349))
 		{
@@ -240,7 +240,7 @@ function function_feb4ddde()
 			s_scene thread scene::play();
 		}
 	}
-	foreach(var_c3132459, var_52d911b7 in var_593fa92c)
+	foreach(var_52d911b7 in var_593fa92c)
 	{
 		level fx::play("vine_door_electric_source_open_fx", var_52d911b7.origin, var_52d911b7.angles, 2);
 		level fx::play("vine_door_electric_source_idle_fx", var_52d911b7.origin, var_52d911b7.angles);

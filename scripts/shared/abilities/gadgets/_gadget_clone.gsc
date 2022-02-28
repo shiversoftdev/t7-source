@@ -28,7 +28,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("gadget_clone", &__init__, undefined, undefined);
 }
@@ -149,7 +149,7 @@ function killclones(player)
 {
 	if(isdefined(player._clone))
 	{
-		foreach(var_a931e47c, clone in player._clone)
+		foreach(clone in player._clone)
 		{
 			if(isdefined(clone))
 			{
@@ -210,7 +210,7 @@ function calculatespawnorigin(origin, angles, clonedistance)
 	{
 		zoffests[2] = -5;
 	}
-	foreach(var_157bd6b7, zoff in zoffests)
+	foreach(zoff in zoffests)
 	{
 		for(i = 0; i < testangles.size; i++)
 		{
@@ -424,7 +424,7 @@ function gadget_clone_on(slot, weapon)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function _updateclonepathing()
+function private _updateclonepathing()
 {
 	self endon(#"death");
 	while(true)
@@ -516,7 +516,7 @@ function _cloneorbfx(endpos, traveltime)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _clonecopyplayerlook(clone, player)
+function private _clonecopyplayerlook(clone, player)
 {
 	if(getdvarint("tu1_gadgetCloneCopyLook", 1))
 	{
@@ -554,7 +554,7 @@ private function _clonecopyplayerlook(clone, player)
 	Parameters: 4
 	Flags: Linked, Private
 */
-private function _configureclone(clone, player, forward, spawntime)
+function private _configureclone(clone, player, forward, spawntime)
 {
 	clone.isaiclone = 1;
 	clone.propername = "";
@@ -619,7 +619,7 @@ private function _configureclone(clone, player, forward, spawntime)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function _playdematerialization()
+function private _playdematerialization()
 {
 	if(isdefined(self))
 	{
@@ -638,7 +638,7 @@ private function _playdematerialization()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function _clonewatchdeath()
+function private _clonewatchdeath()
 {
 	self waittill(#"death");
 	if(isdefined(self))
@@ -659,7 +659,7 @@ private function _clonewatchdeath()
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function _configurecloneteam(clone, player, ishacked)
+function private _configurecloneteam(clone, player, ishacked)
 {
 	if(ishacked == 0)
 	{
@@ -681,7 +681,7 @@ private function _configurecloneteam(clone, player, ishacked)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _show(spawntime)
+function private _show(spawntime)
 {
 	self endon(#"death");
 	wait(spawntime);
@@ -722,7 +722,7 @@ function gadget_clone_off(slot, weapon)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function _clonedamaged()
+function private _clonedamaged()
 {
 	self endon(#"death");
 	self clientfield::set("clone_damaged", 1);
@@ -878,7 +878,7 @@ function _clonefakefire()
 		if(isdefined(clone.fakefireweapon) && clone.fakefireweapon != level.weaponnone)
 		{
 			players = getplayers();
-			foreach(var_a24ba320, player in players)
+			foreach(player in players)
 			{
 				if(isdefined(player) && isalive(player) && player getteam() != clone.team)
 				{
@@ -917,21 +917,27 @@ function _cloneselectweapon(player)
 	{
 		weapon = ball;
 	}
-	else if(isdefined(playerweapon.worldmodel) && _testplayerweapon(playerweapon, items["primary"]))
-	{
-		weapon = playerweapon;
-	}
-	else if(isdefined(level.var_7ce7fbed))
-	{
-		weapon = [[level.var_7ce7fbed]](player);
-	}
 	else
 	{
-		weapon = undefined;
-	}
-	if(!isdefined(weapon))
-	{
-		weapon = _chooseweapon(player);
+		if(isdefined(playerweapon.worldmodel) && _testplayerweapon(playerweapon, items["primary"]))
+		{
+			weapon = playerweapon;
+		}
+		else
+		{
+			if(isdefined(level.var_7ce7fbed))
+			{
+				weapon = [[level.var_7ce7fbed]](player);
+			}
+			else
+			{
+				weapon = undefined;
+			}
+			if(!isdefined(weapon))
+			{
+				weapon = _chooseweapon(player);
+			}
+		}
 	}
 	if(isdefined(weapon))
 	{
@@ -994,7 +1000,7 @@ function _clonebuilditemlist(player)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _chooseweapon(player)
+function private _chooseweapon(player)
 {
 	classnum = randomint(10);
 	for(i = 0; i < 10; i++)
@@ -1017,20 +1023,20 @@ private function _chooseweapon(player)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _testplayerweapon(playerweapon, items)
+function private _testplayerweapon(playerweapon, items)
 {
 	if(!isdefined(items) || !items.size || !isdefined(playerweapon))
 	{
-		return 0;
+		return false;
 	}
 	for(i = 0; i < items.size; i++)
 	{
 		displayname = items[i];
 		if(playerweapon.displayname == displayname)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 

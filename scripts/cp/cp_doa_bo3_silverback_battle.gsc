@@ -72,7 +72,7 @@ function init()
 */
 function function_d8e6314c()
 {
-	foreach(var_43ba6c31, var_2e488485 in level.doa.var_155f5b81)
+	foreach(var_2e488485 in level.doa.var_155f5b81)
 	{
 		if(isdefined(var_2e488485))
 		{
@@ -157,7 +157,7 @@ function function_fc48f9f3()
 	level thread namespace_cdb9a8fe::function_87703158(1);
 	var_e5c8b9e7 = level.doa.var_bc9b7c71;
 	level.doa.var_bc9b7c71 = &function_8b1dfb44;
-	foreach(var_157bd6b7, player in namespace_831a4a7c::function_5eb6e4d1())
+	foreach(player in namespace_831a4a7c::function_5eb6e4d1())
 	{
 		player notify(#"hash_d28ba89d");
 	}
@@ -196,7 +196,7 @@ function function_fc48f9f3()
 		org delete();
 		level clientfield::set("cameraHeight", 0);
 	}
-	foreach(var_b2c75ad8, player in namespace_831a4a7c::function_5eb6e4d1())
+	foreach(player in namespace_831a4a7c::function_5eb6e4d1())
 	{
 		player freezecontrols(0);
 	}
@@ -227,7 +227,7 @@ function function_fc48f9f3()
 	level flag::clear("doa_round_active");
 	if(isdefined(level.doa.var_2c8bf5cd))
 	{
-		foreach(var_32495fea, margwa in level.doa.var_2c8bf5cd)
+		foreach(margwa in level.doa.var_2c8bf5cd)
 		{
 			margwa kill(margwa.origin);
 		}
@@ -235,7 +235,7 @@ function function_fc48f9f3()
 	doa_utility::function_1ced251e();
 	level thread doa_utility::function_c5f3ece8(&"CP_DOA_BO3_SILVERBACK_DEFEATED", undefined, 6, (1, 0, 0));
 	wait(4);
-	foreach(var_f2d46208, player in getplayers())
+	foreach(player in getplayers())
 	{
 		if(isdefined(player.doa.var_1f7cae53))
 		{
@@ -261,7 +261,7 @@ function function_fc48f9f3()
 	level thread doa_pickups::spawnmoneyglob(1, 15, randomfloatrange(2, 4));
 	var_249f9545 = struct::get_array("boss_player_end_spot");
 	i = 0;
-	foreach(var_ed697aa1, player in getplayers())
+	foreach(player in getplayers())
 	{
 		player namespace_cdb9a8fe::function_fe0946ac(var_249f9545[i].origin);
 		player thread namespace_831a4a7c::function_f2507519(0);
@@ -279,7 +279,7 @@ function function_fc48f9f3()
 	namespace_3ca3c537::function_4586479a(0);
 	function_d8e6314c();
 	level thread function_14ba3248();
-	foreach(var_56a87db, player in getplayers())
+	foreach(player in getplayers())
 	{
 		player thread namespace_693feb87::initialblack(24);
 	}
@@ -304,11 +304,11 @@ function function_fc48f9f3()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_14ba3248()
+function private function_14ba3248()
 {
 	level endon(#"hash_629939b8");
 	wait(16);
-	foreach(var_83174f1f, player in getplayers())
+	foreach(player in getplayers())
 	{
 		player notify(#"menuresponse", "FullscreenMovie", "finished_movie_playback");
 	}
@@ -323,14 +323,14 @@ private function function_14ba3248()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_72e0a286()
+function private function_72e0a286()
 {
 	level endon(#"hash_a95298f3");
 	while(true)
 	{
 		wait(1);
 		valid = [];
-		foreach(var_d8bff18b, var_2e488485 in level.doa.var_155f5b81)
+		foreach(var_2e488485 in level.doa.var_155f5b81)
 		{
 			if(isdefined(var_2e488485) && var_2e488485.health > 0)
 			{
@@ -354,7 +354,7 @@ private function function_72e0a286()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_b4195d47()
+function private function_b4195d47()
 {
 	level thread function_28eb6914();
 	level clientfield::set("activateBanner", 5);
@@ -394,7 +394,7 @@ function function_28eb6914(ent)
 		while(level.doa.var_155f5b81.size)
 		{
 			var_9386082f = 0;
-			foreach(var_3c50d513, var_2e488485 in level.doa.var_155f5b81)
+			foreach(var_2e488485 in level.doa.var_155f5b81)
 			{
 				if(!isdefined(var_2e488485))
 				{
@@ -418,7 +418,7 @@ function function_28eb6914(ent)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_eb6ee9e0()
+function private function_eb6ee9e0()
 {
 	level endon(#"doa_game_is_over");
 	self waittill(#"death");
@@ -435,7 +435,7 @@ private function function_eb6ee9e0()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_b90daa04(delay)
+function private function_b90daa04(delay)
 {
 	level endon(#"doa_game_is_over");
 	level endon(#"hash_a95298f3");
@@ -519,7 +519,7 @@ function function_b8a39218()
 	level endon(#"doa_game_is_over");
 	self waittill(#"death");
 	players = getplayers();
-	foreach(var_80c111d8, player in players)
+	foreach(player in players)
 	{
 		if(!isdefined(player.doa))
 		{
@@ -577,7 +577,7 @@ function function_ae39e30a(einflictor, eattacker, idamage, idflags, smeansofdeat
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_a733cd6a(mech)
+function private function_a733cd6a(mech)
 {
 	level endon(#"doa_game_is_over");
 	level.doa.var_6fb37836 = mech;
@@ -627,12 +627,12 @@ function function_fb3b78fe()
 			}
 			self.var_15a6bfe6 = gettime() + randomintrange(5000, 15000);
 			self animscripted("mech_taunt", self.origin, self.angles, "ai_zombie_doa_simianaut_mech_idle_taunt");
-			self waittill_match(#"hash_3b8ce577");
+			self waittillmatch(#"hash_3b8ce577");
 		}
 		else
 		{
 			self animscripted("mech_idle", self.origin, self.angles, "ai_zombie_doa_simianaut_mech_idle");
-			self waittill_match(#"hash_4b135fff");
+			self waittillmatch(#"hash_4b135fff");
 		}
 	}
 }
@@ -646,13 +646,13 @@ function function_fb3b78fe()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_c64a860f(driver)
+function private function_c64a860f(driver)
 {
 	level endon(#"doa_game_is_over");
 	level waittill(#"hash_ae3ed999");
 	driver playsound("zmb_simianaut_roar");
 	driver animscripted("mech_eject", driver.origin, driver.angles, "ai_zombie_doa_simianaut_mech_idle_eject");
-	driver waittill_match(#"hash_165e6714");
+	driver waittillmatch(#"hash_165e6714");
 	loc = spawnstruct();
 	loc.angles = (0, 0, 0);
 	loc.origin = driver.origin;
@@ -679,7 +679,7 @@ private function function_c64a860f(driver)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_19b9f1d6()
+function private function_19b9f1d6()
 {
 	level endon(#"doa_game_is_over");
 	self.var_d3627554 = int(self.health * 0.8);
@@ -729,22 +729,22 @@ function function_6441ddee(ent)
 {
 	if(!isdefined(ent))
 	{
-		return 0;
+		return false;
 	}
 	if(!isplayer(ent))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(ent.doa) && isdefined(ent.doa.vehicle))
 	{
-		return 0;
+		return false;
 	}
 	safezone = namespace_3ca3c537::function_dc34896f();
 	if(!ent istouching(safezone))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -801,9 +801,9 @@ function function_ec5c4c1c(params)
 	level endon(#"doa_game_is_over");
 	self playsound("zmb_simianaut_roar");
 	self animscripted("pissedoff", self.origin, self.angles, "ai_zombie_doa_simianaut_ground_pound");
-	self waittill_match(#"pissedoff");
+	self waittillmatch(#"pissedoff");
 	playfx(level._effect["ground_pound"], self.origin);
-	self waittill_match(#"pissedoff");
+	self waittillmatch(#"pissedoff");
 	self playsound("zmb_simianaut_roar");
 	self thread function_f61639be();
 	self thread function_a3a6c6d0();
@@ -920,22 +920,25 @@ function function_c8f8a134()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_f98533fb(rate)
+function private function_f98533fb(rate)
 {
 	if(rate == "walk")
 	{
 		self.zombie_move_speed = "walk";
 		self asmsetanimationrate(1);
 	}
-	else if(rate == "run")
+	else
 	{
-		self.zombie_move_speed = "run";
-		self asmsetanimationrate(0.98);
-	}
-	else if(rate == "sprint")
-	{
-		self.zombie_move_speed = "sprint";
-		self asmsetanimationrate(0.96);
+		if(rate == "run")
+		{
+			self.zombie_move_speed = "run";
+			self asmsetanimationrate(0.98);
+		}
+		else if(rate == "sprint")
+		{
+			self.zombie_move_speed = "sprint";
+			self asmsetanimationrate(0.96);
+		}
 	}
 }
 
@@ -953,7 +956,7 @@ function function_f5afb415(var_b84274b8, numattacks = 1)
 	self endon(#"death");
 	self playsound("zmb_simianaut_roar");
 	self animscripted("pissedoff", self.origin, self.angles, "ai_zombie_doa_simianaut_taunt");
-	self waittill_match(#"pissedoff");
+	self waittillmatch(#"pissedoff");
 	sqr64 = 64 * 64;
 	var_b84274b8.angles = self.angles;
 	var_b84274b8.origin = self.origin;
@@ -1010,7 +1013,7 @@ function function_615e73a(var_b84274b8, numattacks = 1)
 	self endon(#"death");
 	self playsound("zmb_simianaut_roar");
 	self animscripted("pissedoff", self.origin, self.angles, "ai_zombie_doa_simianaut_taunt");
-	self waittill_match(#"pissedoff");
+	self waittillmatch(#"pissedoff");
 	while(numattacks)
 	{
 		numattacks--;
@@ -1019,17 +1022,20 @@ function function_615e73a(var_b84274b8, numattacks = 1)
 		{
 			self.favoriteenemy = players[0];
 		}
-		else if(isdefined(self.enemy))
-		{
-			arrayremovevalue(players, self.enemy);
-		}
-		if(players.size == 1)
-		{
-			self.favoriteenemy = players[0];
-		}
 		else
 		{
-			self.favoriteenemy = players[randomint(players.size)];
+			if(isdefined(self.enemy))
+			{
+				arrayremovevalue(players, self.enemy);
+			}
+			if(players.size == 1)
+			{
+				self.favoriteenemy = players[0];
+			}
+			else
+			{
+				self.favoriteenemy = players[randomint(players.size)];
+			}
 		}
 		if(isdefined(self.favoriteenemy) && function_6441ddee(self.favoriteenemy))
 		{
@@ -1059,7 +1065,7 @@ function function_615e73a(var_b84274b8, numattacks = 1)
 		self unlink();
 		self playsound("zmb_simianaut_roar");
 		self animscripted("pissedoff", self.origin, self.angles, "ai_zombie_doa_simianaut_attack_v1");
-		self waittill_match(#"pissedoff");
+		self waittillmatch(#"pissedoff");
 		if(isdefined(self.var_a09d9abe))
 		{
 			self.var_a09d9abe unlink();
@@ -1099,7 +1105,7 @@ function function_b3eb3a0b(params)
 		{
 			self playsound("zmb_simianaut_roar");
 			self animscripted("pissedoff", self.origin, self.angles, "ai_zombie_doa_simianaut_taunt");
-			self waittill_match(#"pissedoff");
+			self waittillmatch(#"pissedoff");
 			continue;
 		}
 		if(gettime() >= self.var_dc477b8d && isdefined(self.enemy) && isplayer(self.enemy) && randomint(100) < getdvarint("scr_boss_silverback_special_attack_chance_boost", 10))
@@ -1109,17 +1115,23 @@ function function_b3eb3a0b(params)
 			{
 				attacks = 5;
 			}
-			else if(roll < 15)
-			{
-				attacks = 3;
-			}
-			else if(roll < 35)
-			{
-				attacks = 2;
-			}
 			else
 			{
-				attacks = 1;
+				if(roll < 15)
+				{
+					attacks = 3;
+				}
+				else
+				{
+					if(roll < 35)
+					{
+						attacks = 2;
+					}
+					else
+					{
+						attacks = 1;
+					}
+				}
 			}
 			self function_f5afb415(var_b84274b8, attacks);
 			self.var_dc477b8d = gettime() + getdvarint("scr_boss_silverback_special_attack_cooldown", 4000);
@@ -1176,7 +1188,7 @@ function function_b3eb3a0b(params)
 				var_b84274b8 waittill(#"rotatedone");
 				self unlink();
 				self animscripted("pissedoff", self.origin, self.angles, "ai_zombie_doa_simianaut_attack_v1");
-				self waittill_match(#"pissedoff");
+				self waittillmatch(#"pissedoff");
 				self notify(#"hash_5825c195", "fire", "end");
 			}
 			self.var_dc477b8d = gettime() + getdvarint("scr_boss_silverback_special_attack_cooldown", 4000);
@@ -1246,7 +1258,7 @@ function function_b830b6d7(linktag, silverback)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_c2d22e21()
+function private function_c2d22e21()
 {
 	self endon(#"death");
 	while(true)
@@ -1272,7 +1284,7 @@ private function function_c2d22e21()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_df12b0c9(target)
+function private function_df12b0c9(target)
 {
 	if(!isdefined(target))
 	{
@@ -1300,7 +1312,7 @@ private function function_df12b0c9(target)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_5659ec29(var_c840292d)
+function private function_5659ec29(var_c840292d)
 {
 	self notify(#"hash_5659ec29");
 	self endon(#"death");
@@ -1335,7 +1347,7 @@ private function function_5659ec29(var_c840292d)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_a3a6c6d0()
+function private function_a3a6c6d0()
 {
 	self endon(#"death");
 	while(true)
@@ -1375,7 +1387,7 @@ function function_f61639be(dist = 72)
 	while(isdefined(self))
 	{
 		players = namespace_831a4a7c::function_5eb6e4d1();
-		foreach(var_a6523276, player in players)
+		foreach(player in players)
 		{
 			if(!isdefined(player))
 			{
@@ -1482,13 +1494,16 @@ function move_to_position_over_time(destination, timems, elevationdelta)
 				deltaplus = delta + (0, 0, deltaz);
 				var_4f4b0e1a = 1;
 			}
-			else if(isdefined(var_4f4b0e1a) && var_4f4b0e1a)
+			else
 			{
-				level notify(#"move_to_pos_downward_cycle");
-				self notify(#"move_to_pos_downward_cycle");
+				if(isdefined(var_4f4b0e1a) && var_4f4b0e1a)
+				{
+					level notify(#"move_to_pos_downward_cycle");
+					self notify(#"move_to_pos_downward_cycle");
+				}
+				var_4f4b0e1a = 0;
+				deltaplus = delta - (0, 0, deltaz);
 			}
-			var_4f4b0e1a = 0;
-			deltaplus = delta - (0, 0, deltaz);
 			newspot = self.origin + deltaplus;
 			if(!var_4f4b0e1a && newspot[2] < destination[2])
 			{

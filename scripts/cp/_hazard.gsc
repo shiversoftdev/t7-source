@@ -17,7 +17,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("hazard", &__init__, undefined, undefined);
 }
@@ -158,7 +158,7 @@ function function_b6af57a8()
 			continue;
 		}
 		var_8601d520 = getarraykeys(level.hazards);
-		foreach(var_69bce69a, str_name in var_8601d520)
+		foreach(str_name in var_8601d520)
 		{
 			self do_damage(str_name, 3, undefined);
 			wait(0.1);
@@ -228,14 +228,14 @@ function do_damage(str_name, n_damage, e_ent, disable_ui)
 	}
 	if(scene::is_igc_active())
 	{
-		return 0;
+		return false;
 	}
 	s_hazard = level.hazards[str_name];
 	self.hazard_damage[str_name] = min(self.hazard_damage[str_name] + n_damage, s_hazard.n_max_protection);
 	if(self.hazard_damage[str_name] < s_hazard.n_max_protection)
 	{
 		self thread _fill_hazard_protection(str_name, e_ent, disable_ui);
-		return 1;
+		return true;
 	}
 	switch(str_name)
 	{
@@ -255,7 +255,7 @@ function do_damage(str_name, n_damage, e_ent, disable_ui)
 		}
 	}
 	self dodamage(self.health, self.origin, undefined, undefined, undefined, str_mod);
-	return 0;
+	return false;
 }
 
 /*
@@ -318,7 +318,7 @@ function function_459e5eff(str_name, var_5b9ad5b3 = 1)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function _fill_hazard_protection(str_name, e_ent, disable_ui)
+function private _fill_hazard_protection(str_name, e_ent, disable_ui)
 {
 	self notify("_hazard_protection_" + str_name);
 	self endon("_hazard_protection_" + str_name);
@@ -379,7 +379,12 @@ private function _fill_hazard_protection(str_name, e_ent, disable_ui)
 		}
 		self.hazard_ui_models[str_ui_model] = 0;
 	}
-	assert("");
+	else
+	{
+		/#
+			assert("");
+		#/
+	}
 }
 
 /*
@@ -472,7 +477,7 @@ function function_8b413656(var_d2eebe84, e_ent)
 		}
 	}
 	var_b45ec125 = array(0.5, 0.3, 0.2, 0.15, 0.1, 0.5);
-	foreach(var_e2d14a6a, num in var_b45ec125)
+	foreach(num in var_b45ec125)
 	{
 		if(var_d2eebe84 != 0 && var_d2eebe84 <= num)
 		{

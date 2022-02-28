@@ -16,7 +16,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_perk_electric_cherry", &__init__, undefined, undefined);
 }
@@ -110,19 +110,28 @@ function electric_cherry_reload_attack_fx(localclientnum, oldval, newval, bnewen
 	{
 		self.electric_cherry_reload_fx = playfxontag(localclientnum, level._effect["electric_cherry_explode"], self, "tag_origin");
 	}
-	else if(newval == 2)
+	else
 	{
-		self.electric_cherry_reload_fx = playfxontag(localclientnum, level._effect["electric_cherry_explode"], self, "tag_origin");
+		if(newval == 2)
+		{
+			self.electric_cherry_reload_fx = playfxontag(localclientnum, level._effect["electric_cherry_explode"], self, "tag_origin");
+		}
+		else
+		{
+			if(newval == 3)
+			{
+				self.electric_cherry_reload_fx = playfxontag(localclientnum, level._effect["electric_cherry_explode"], self, "tag_origin");
+			}
+			else
+			{
+				if(isdefined(self.electric_cherry_reload_fx))
+				{
+					stopfx(localclientnum, self.electric_cherry_reload_fx);
+				}
+				self.electric_cherry_reload_fx = undefined;
+			}
+		}
 	}
-	else if(newval == 3)
-	{
-		self.electric_cherry_reload_fx = playfxontag(localclientnum, level._effect["electric_cherry_explode"], self, "tag_origin");
-	}
-	else if(isdefined(self.electric_cherry_reload_fx))
-	{
-		stopfx(localclientnum, self.electric_cherry_reload_fx);
-	}
-	self.electric_cherry_reload_fx = undefined;
 }
 
 /*
@@ -150,11 +159,14 @@ function tesla_death_fx_callback(localclientnum, oldval, newval, bnewent, biniti
 		self.n_death_fx = playfxontag(localclientnum, level._effect["tesla_death_cherry"], self, str_tag);
 		setfxignorepause(localclientnum, self.n_death_fx, 1);
 	}
-	else if(isdefined(self.n_death_fx))
+	else
 	{
-		deletefx(localclientnum, self.n_death_fx, 1);
+		if(isdefined(self.n_death_fx))
+		{
+			deletefx(localclientnum, self.n_death_fx, 1);
+		}
+		self.n_death_fx = undefined;
 	}
-	self.n_death_fx = undefined;
 }
 
 /*
@@ -184,15 +196,18 @@ function tesla_shock_eyes_fx_callback(localclientnum, oldval, newval, bnewent, b
 		self.n_shock_fx = playfxontag(localclientnum, level._effect["tesla_death_cherry"], self, str_tag);
 		setfxignorepause(localclientnum, self.n_shock_fx, 1);
 	}
-	else if(isdefined(self.n_shock_eyes_fx))
+	else
 	{
-		deletefx(localclientnum, self.n_shock_eyes_fx, 1);
-		self.n_shock_eyes_fx = undefined;
-	}
-	if(isdefined(self.n_shock_fx))
-	{
-		deletefx(localclientnum, self.n_shock_fx, 1);
-		self.n_shock_fx = undefined;
+		if(isdefined(self.n_shock_eyes_fx))
+		{
+			deletefx(localclientnum, self.n_shock_eyes_fx, 1);
+			self.n_shock_eyes_fx = undefined;
+		}
+		if(isdefined(self.n_shock_fx))
+		{
+			deletefx(localclientnum, self.n_shock_fx, 1);
+			self.n_shock_fx = undefined;
+		}
 	}
 }
 

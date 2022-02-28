@@ -126,15 +126,18 @@ function update_sound(local_client_num, bnewent, newval, oldval)
 		playsound(local_client_num, "uin_c4_proximity_alarm_start", (0, 0, 0));
 		self._proximity_alarm_snd_ent playloopsound("uin_c4_proximity_alarm_loop", 0.1);
 	}
-	else if(newval == 1)
+	else
 	{
-	}
-	else if(newval == 0 && isdefined(oldval) && oldval != newval)
-	{
-		playsound(local_client_num, "uin_c4_proximity_alarm_stop", (0, 0, 0));
-		if(isdefined(self._proximity_alarm_snd_ent))
+		if(newval == 1)
 		{
-			self._proximity_alarm_snd_ent stopallloopsounds(0.5);
+		}
+		else if(newval == 0 && isdefined(oldval) && oldval != newval)
+		{
+			playsound(local_client_num, "uin_c4_proximity_alarm_stop", (0, 0, 0));
+			if(isdefined(self._proximity_alarm_snd_ent))
+			{
+				self._proximity_alarm_snd_ent stopallloopsounds(0.5);
+			}
 		}
 	}
 }
@@ -251,15 +254,18 @@ function updateenemyequipment(local_client_num, newval)
 		self duplicate_render::set_item_friendly_equipment(local_client_num, 0);
 		self duplicate_render::set_item_enemy_equipment(local_client_num, newval);
 	}
-	else if(friend && isdefined(watcher) && watcher duplicate_render::show_friendly_outlines(local_client_num))
-	{
-		self duplicate_render::set_item_enemy_equipment(local_client_num, 0);
-		self duplicate_render::set_item_friendly_equipment(local_client_num, newval);
-	}
 	else
 	{
-		self duplicate_render::set_item_enemy_equipment(local_client_num, 0);
-		self duplicate_render::set_item_friendly_equipment(local_client_num, 0);
+		if(friend && isdefined(watcher) && watcher duplicate_render::show_friendly_outlines(local_client_num))
+		{
+			self duplicate_render::set_item_enemy_equipment(local_client_num, 0);
+			self duplicate_render::set_item_friendly_equipment(local_client_num, newval);
+		}
+		else
+		{
+			self duplicate_render::set_item_enemy_equipment(local_client_num, 0);
+			self duplicate_render::set_item_friendly_equipment(local_client_num, 0);
+		}
 	}
 }
 

@@ -29,7 +29,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("loadout", &__init__, undefined, undefined);
 }
@@ -271,10 +271,10 @@ function is_attachment_excluded(attachment)
 	{
 		if(attachment == level.attachmentexclusions[exclusionindex])
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -364,23 +364,40 @@ function weapon_class_register(weaponname, weapon_type)
 	{
 		level.primary_weapon_array[getweapon(weaponname)] = 1;
 	}
-	else if(issubstr("weapon_pistol", weapon_type))
+	else
 	{
-		level.side_arm_array[getweapon(weaponname)] = 1;
+		if(issubstr("weapon_pistol", weapon_type))
+		{
+			level.side_arm_array[getweapon(weaponname)] = 1;
+		}
+		else
+		{
+			if(weapon_type == "weapon_grenade")
+			{
+				level.grenade_array[getweapon(weaponname)] = 1;
+			}
+			else
+			{
+				if(weapon_type == "weapon_explosive")
+				{
+					level.inventory_array[getweapon(weaponname)] = 1;
+				}
+				else
+				{
+					if(weapon_type == "weapon_rifle")
+					{
+						level.inventory_array[getweapon(weaponname)] = 1;
+					}
+					else
+					{
+						/#
+							assert(0, "" + weapon_type);
+						#/
+					}
+				}
+			}
+		}
 	}
-	else if(weapon_type == "weapon_grenade")
-	{
-		level.grenade_array[getweapon(weaponname)] = 1;
-	}
-	else if(weapon_type == "weapon_explosive")
-	{
-		level.inventory_array[getweapon(weaponname)] = 1;
-	}
-	else if(weapon_type == "weapon_rifle")
-	{
-		level.inventory_array[getweapon(weaponname)] = 1;
-	}
-	assert(0, "" + weapon_type);
 }
 
 /*
@@ -595,9 +612,9 @@ function isequipmentallowed(equipment_name)
 {
 	if(equipment_name == level.weapontacticalinsertion.name && level.disabletacinsert)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -717,7 +734,12 @@ function giveloadout(team, weaponclass, var_dc236bc8, altplayer)
 			{
 				class_num = array::random(level.classtoclassnum);
 			}
-			assert(0, ("" + weaponclass) + "");
+			else
+			{
+				/#
+					assert(0, ("" + weaponclass) + "");
+				#/
+			}
 		}
 		self.class_num = class_num;
 		pixendevent();
@@ -830,7 +852,7 @@ function giveloadout(team, weaponclass, var_dc236bc8, altplayer)
 	if(isdefined(self.var_82325a18))
 	{
 		var_82325a18 = strtok(self.var_82325a18, ",");
-		foreach(var_7c31b6b, weaponname in var_82325a18)
+		foreach(weaponname in var_82325a18)
 		{
 			heroweapon = getweapon(weaponname);
 			self giveweapon(heroweapon);
@@ -1332,44 +1354,50 @@ function cac_modified_damage(victim, attacker, damage, mod, weapon, inflictor, h
 			#/
 		}
 	}
-	else if(victim hasperk("specialty_armorvest") && isprimarydamage(mod) && !isheaddamage(hitloc))
+	else
 	{
-		final_damage = damage * (level.cac_armorvest_data * 0.01);
-		/#
-			if(debug)
-			{
-				println((("" + attacker.name) + "") + victim.name);
-			}
-		#/
-	}
-	else if(victim hasperk("specialty_fireproof") && isfiredamage(weapon, mod))
-	{
-		final_damage = damage * ((100 - level.cac_fireproof_data) / 100);
-		/#
-			if(debug)
-			{
-				println((("" + attacker.name) + "") + victim.name);
-			}
-		#/
-	}
-	else if(victim hasperk("specialty_flakjacket") && isexplosivedamage(mod) && !weapon.ignoresflakjacket && !victim grenadestuck(inflictor))
-	{
-		cac_data = (level.hardcoremode ? level.cac_flakjacket_hardcore_data : level.cac_flakjacket_data);
-		if(level.teambased && attacker.team != victim.team)
+		if(victim hasperk("specialty_armorvest") && isprimarydamage(mod) && !isheaddamage(hitloc))
 		{
-			victim thread challenges::flakjacketprotected(weapon, attacker);
+			final_damage = damage * (level.cac_armorvest_data * 0.01);
+			/#
+				if(debug)
+				{
+					println((("" + attacker.name) + "") + victim.name);
+				}
+			#/
 		}
-		else if(attacker != victim)
+		else
 		{
-			victim thread challenges::flakjacketprotected(weapon, attacker);
-		}
-		final_damage = int(damage * (cac_data / 100));
-		/#
-			if(debug)
+			if(victim hasperk("specialty_fireproof") && isfiredamage(weapon, mod))
 			{
-				println(((("" + victim.name) + "") + attacker.name) + "");
+				final_damage = damage * ((100 - level.cac_fireproof_data) / 100);
+				/#
+					if(debug)
+					{
+						println((("" + attacker.name) + "") + victim.name);
+					}
+				#/
 			}
-		#/
+			else if(victim hasperk("specialty_flakjacket") && isexplosivedamage(mod) && !weapon.ignoresflakjacket && !victim grenadestuck(inflictor))
+			{
+				cac_data = (level.hardcoremode ? level.cac_flakjacket_hardcore_data : level.cac_flakjacket_data);
+				if(level.teambased && attacker.team != victim.team)
+				{
+					victim thread challenges::flakjacketprotected(weapon, attacker);
+				}
+				else if(attacker != victim)
+				{
+					victim thread challenges::flakjacketprotected(weapon, attacker);
+				}
+				final_damage = int(damage * (cac_data / 100));
+				/#
+					if(debug)
+					{
+						println(((("" + victim.name) + "") + attacker.name) + "");
+					}
+				#/
+			}
+		}
 	}
 	/#
 		victim.cac_debug_damage_type = tolower(mod);
@@ -1409,10 +1437,10 @@ function isexplosivedamage(meansofdeath)
 		case "MOD_GRENADE_SPLASH":
 		case "MOD_PROJECTILE_SPLASH":
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1456,9 +1484,9 @@ function isfiredamage(weapon, meansofdeath)
 {
 	if(weapon.doesfiredamage && (meansofdeath == "MOD_BURNED" || meansofdeath == "MOD_GRENADE" || meansofdeath == "MOD_GRENADE_SPLASH"))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

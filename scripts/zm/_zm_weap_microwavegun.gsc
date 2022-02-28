@@ -26,7 +26,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_weap_microwavegun", &__init__, undefined, undefined);
 }
@@ -60,10 +60,10 @@ function __init__()
 	animationstatenetwork::registernotetrackhandlerfunction("explode", &function_f8d8850f);
 	level thread microwavegun_on_player_connect();
 	level._microwaveable_objects = [];
-	level.var_12fcda98 = getweapon("microwavegun");
-	level.var_6ae86bb = getweapon("microwavegun_upgraded");
-	level.var_9c43352b = getweapon("microwavegundw");
-	level.var_5736548e = getweapon("microwavegundw_upgraded");
+	level.w_microwavegun = getweapon("microwavegun");
+	level.w_microwavegun_upgraded = getweapon("microwavegun_upgraded");
+	level.w_microwavegundw = getweapon("microwavegundw");
+	level.w_microwavegundw_upgraded = getweapon("microwavegundw_upgraded");
 	callback::on_spawned(&on_player_spawned);
 }
 
@@ -99,13 +99,13 @@ function function_8f95fde5()
 	{
 		self waittill(#"weapon_give", weapon);
 		weapon = zm_weapons::get_nonalternate_weapon(weapon);
-		if(weapon == level.var_9c43352b || weapon == level.var_5736548e)
+		if(weapon == level.w_microwavegundw || weapon == level.w_microwavegundw_upgraded)
 		{
 			self clientfield::set_player_uimodel("hudItems.showDpadLeft_WaveGun", 1);
 			self.var_59dcbbd4 = zm_weapons::is_weapon_upgraded(weapon);
 			self thread function_1402f75f();
 		}
-		else if(!self zm_weapons::has_weapon_or_upgrade(level.var_9c43352b))
+		else if(!self zm_weapons::has_weapon_or_upgrade(level.w_microwavegundw))
 		{
 			self clientfield::set_player_uimodel("hudItems.showDpadLeft_WaveGun", 0);
 			self clientfield::set_player_uimodel("hudItems.dpadLeftAmmo", 0);
@@ -137,11 +137,11 @@ function function_1402f75f()
 		{
 			if(self.var_59dcbbd4)
 			{
-				ammocount = self getammocount(level.var_6ae86bb);
+				ammocount = self getammocount(level.w_microwavegun_upgraded);
 			}
 			else
 			{
-				ammocount = self getammocount(level.var_12fcda98);
+				ammocount = self getammocount(level.w_microwavegun);
 			}
 			self clientfield::set_player_uimodel("hudItems.dpadLeftAmmo", ammocount);
 		}
@@ -216,9 +216,9 @@ function wait_for_microwavegun_fired()
 	{
 		self waittill(#"weapon_fired");
 		currentweapon = self getcurrentweapon();
-		if(currentweapon == level.var_12fcda98 || currentweapon == level.var_6ae86bb)
+		if(currentweapon == level.w_microwavegun || currentweapon == level.w_microwavegun_upgraded)
 		{
-			self thread microwavegun_fired(currentweapon == level.var_6ae86bb);
+			self thread microwavegun_fired(currentweapon == level.w_microwavegun_upgraded);
 		}
 	}
 }
@@ -444,13 +444,16 @@ function microwavegun_sizzle_zombie(player, sizzle_vec, index)
 			self clientfield::set("toggle_microwavegun_expand_response", 1);
 			self thread microwavegun_sizzle_death_ending();
 		}
-		else if(isdefined(self.animname) && self.animname != "astro_zombie")
+		else
 		{
-			self thread setup_microwavegun_vox(player, 6);
+			if(isdefined(self.animname) && self.animname != "astro_zombie")
+			{
+				self thread setup_microwavegun_vox(player, 6);
+			}
+			self clientfield::set("toggle_microwavegun_hit_response", 1);
+			self.nodeathragdoll = 1;
+			self.handle_death_notetracks = &microwavegun_handle_death_notetracks;
 		}
-		self clientfield::set("toggle_microwavegun_hit_response", 1);
-		self.nodeathragdoll = 1;
-		self.handle_death_notetracks = &microwavegun_handle_death_notetracks;
 	}
 }
 
@@ -641,9 +644,9 @@ function microwavegun_zombie_damage_response(str_mod, str_hit_location, v_hit_or
 	if(self is_microwavegun_dw_damage())
 	{
 		self thread microwavegun_dw_zombie_hit_response_internal(str_mod, self.damageweapon, e_attacker);
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -663,7 +666,7 @@ function microwavegun_zombie_death_response()
 		{
 			level thread [[level.hero_power_update]](self.attacker, self);
 		}
-		return 1;
+		return true;
 	}
 	if(self enemy_killed_by_microwavegun())
 	{
@@ -671,9 +674,9 @@ function microwavegun_zombie_death_response()
 		{
 			level thread [[level.hero_power_update]](self.attacker, self);
 		}
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -715,7 +718,7 @@ function enemy_killed_by_dw_microwavegun()
 */
 function is_microwavegun_damage()
 {
-	return isdefined(self.damageweapon) && (self.damageweapon == level.var_12fcda98 || self.damageweapon == level.var_6ae86bb) && (self.damagemod != "MOD_GRENADE" && self.damagemod != "MOD_GRENADE_SPLASH");
+	return isdefined(self.damageweapon) && (self.damageweapon == level.w_microwavegun || self.damageweapon == level.w_microwavegun_upgraded) && (self.damagemod != "MOD_GRENADE" && self.damagemod != "MOD_GRENADE_SPLASH");
 }
 
 /*
@@ -752,7 +755,7 @@ function microwavegun_sound_thread()
 		{
 			continue;
 		}
-		if(result == "weapon_change" || result == "grenade_fire" && self getcurrentweapon() == level.var_12fcda98)
+		if(result == "weapon_change" || result == "grenade_fire" && self getcurrentweapon() == level.w_microwavegun)
 		{
 			self playloopsound("tesla_idle", 0.25);
 			continue;

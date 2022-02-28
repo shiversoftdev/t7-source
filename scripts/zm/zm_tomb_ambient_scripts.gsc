@@ -115,7 +115,7 @@ function get_unused_struct(a_structs)
 	b_no_unused_structs = 0;
 	while(!a_valid_structs.size)
 	{
-		foreach(var_b41743b4, struct in a_structs)
+		foreach(struct in a_structs)
 		{
 			if(!isdefined(struct.used) || b_no_unused_structs)
 			{

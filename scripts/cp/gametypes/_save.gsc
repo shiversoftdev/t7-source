@@ -24,7 +24,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("save", &__init__, undefined, undefined);
 }
@@ -52,7 +52,7 @@ function __init__()
 	{
 		world.playerdata = [];
 	}
-	foreach(var_1911c85d, trig in trigger::get_all())
+	foreach(trig in trigger::get_all())
 	{
 		if(isdefined(trig.var_d981bb2d) && trig.var_d981bb2d)
 		{
@@ -199,7 +199,7 @@ function clear_mission_data()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function get_player_unique_id()
+function private get_player_unique_id()
 {
 	return self.playername;
 }
@@ -342,10 +342,10 @@ function function_37ae30c6()
 	keys = getarraykeys(world.playerdata[var_c98fc56a]);
 	if(isdefined(keys))
 	{
-		foreach(var_14aedbb, key in keys)
+		foreach(key in keys)
 		{
 			key_found = 0;
-			foreach(var_8f437e80, player in level.players)
+			foreach(player in level.players)
 			{
 				if(key === player get_player_unique_id())
 				{
@@ -402,7 +402,7 @@ function function_fb150717()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_74fcb9ca()
+function private function_74fcb9ca()
 {
 	level notify(#"checkpoint_save");
 	level endon(#"checkpoint_save");
@@ -472,7 +472,7 @@ function function_152fdd8c(delay)
 	if(function_f6ab8f28())
 	{
 		wait(0.2);
-		foreach(var_6810cc7c, player in level.players)
+		foreach(player in level.players)
 		{
 			player player::generate_weapon_data();
 			player set_player_data("saved_weapon", player._generated_current_weapon.name);
@@ -512,40 +512,40 @@ function function_319d38eb()
 {
 	if(isdefined(level.missionfailed) && level.missionfailed)
 	{
-		return 0;
+		return false;
 	}
-	foreach(var_bf4d6e12, player in level.players)
+	foreach(player in level.players)
 	{
 		if(!isalive(player))
 		{
-			return 0;
+			return false;
 		}
 		if(player clientfield::get("burn"))
 		{
-			return 0;
+			return false;
 		}
 		if(player laststand::player_is_in_laststand())
 		{
-			return 0;
+			return false;
 		}
 		if(player.sessionstate == "spectator")
 		{
 			if(isdefined(self.firstspawn))
 			{
-				return 0;
+				return false;
 			}
-			return 1;
+			return true;
 		}
 		if(player oob::isoutofbounds())
 		{
-			return 0;
+			return false;
 		}
 		if(isdefined(player.burning) && player.burning)
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -557,7 +557,7 @@ function function_319d38eb()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_1add9d4a(var_c36855a9)
+function private function_1add9d4a(var_c36855a9)
 {
 	level notify(#"hash_1add9d4a");
 	level endon(#"hash_1add9d4a");
@@ -608,18 +608,18 @@ function function_147f4ca3()
 {
 	if(isdefined(level.var_cc93e6eb) && level.var_cc93e6eb)
 	{
-		return 0;
+		return false;
 	}
 	if(getdvarint("scr_no_checkpoints", 0))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(level.missionfailed) && level.missionfailed)
 	{
-		return 0;
+		return false;
 	}
 	var_3d59bfa3 = 0;
-	foreach(var_e6a63568, player in level.players)
+	foreach(player in level.players)
 	{
 		if(player function_2c89c30c())
 		{
@@ -629,27 +629,27 @@ function function_147f4ca3()
 	var_24cd4120 = level.players.size;
 	if(var_3d59bfa3 < var_24cd4120)
 	{
-		return 0;
+		return false;
 	}
 	if(!function_8dc86b60())
 	{
-		return 0;
+		return false;
 	}
 	if(!function_a3a9b003())
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(level.var_67e1f60e))
 	{
-		foreach(var_e8b72834, func in level.var_67e1f60e)
+		foreach(func in level.var_67e1f60e)
 		{
 			if(!level [[func]]())
 			{
-				return 0;
+				return false;
 			}
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -661,7 +661,7 @@ function function_147f4ca3()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_2c89c30c()
+function private function_2c89c30c()
 {
 	healthfraction = 1;
 	if(isdefined(self.health) && isdefined(self.maxhealth) && self.maxhealth > 0)
@@ -670,65 +670,65 @@ private function function_2c89c30c()
 	}
 	if(healthfraction < 0.7)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.lastdamagetime) && self.lastdamagetime > (gettime() - 1500))
 	{
-		return 0;
+		return false;
 	}
 	if(self clientfield::get("burn"))
 	{
-		return 0;
+		return false;
 	}
 	if(self ismeleeing())
 	{
-		return 0;
+		return false;
 	}
 	if(self isthrowinggrenade())
 	{
-		return 0;
+		return false;
 	}
 	if(self isfiring())
 	{
-		return 0;
+		return false;
 	}
 	if(self util::isflashed())
 	{
-		return 0;
+		return false;
 	}
 	if(self laststand::player_is_in_laststand())
 	{
-		return 0;
+		return false;
 	}
 	if(self.sessionstate == "spectator")
 	{
 		if(isdefined(self.firstspawn))
 		{
-			return 0;
+			return false;
 		}
-		return 1;
+		return true;
 	}
 	if(self oob::isoutofbounds())
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.burning) && self.burning)
 	{
-		return 0;
+		return false;
 	}
 	if(self flagsys::get("mobile_armory_in_use"))
 	{
-		return 0;
+		return false;
 	}
-	foreach(var_615ccfa0, weapon in self getweaponslist())
+	foreach(weapon in self getweaponslist())
 	{
 		fraction = self getfractionmaxammo(weapon);
 		if(fraction > 0.1)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -740,14 +740,14 @@ private function function_2c89c30c()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_a3a9b003()
+function private function_a3a9b003()
 {
 	if(!getdvarint("tu1_saveGameAiProximityCheck", 1))
 	{
-		return 1;
+		return true;
 	}
 	ais = getaiteamarray("axis");
-	foreach(var_9c9809d6, ai in ais)
+	foreach(ai in ais)
 	{
 		if(!isdefined(ai))
 		{
@@ -768,10 +768,10 @@ private function function_a3a9b003()
 		playerproximity = ai function_2808d83d();
 		if(playerproximity <= 80)
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -783,34 +783,34 @@ private function function_a3a9b003()
 	Parameters: 0
 	Flags: Private
 */
-private function function_f70dd749()
+function private function_f70dd749()
 {
 	if(!isdefined(self.enemy))
 	{
-		return 1;
+		return true;
 	}
 	if(!isplayer(self.enemy))
 	{
-		return 1;
+		return true;
 	}
 	if(isdefined(self.melee) && isdefined(self.melee.target) && isplayer(self.melee.target))
 	{
-		return 0;
+		return false;
 	}
 	playerproximity = self function_2808d83d();
 	if(playerproximity < 500)
 	{
-		return 0;
+		return false;
 	}
 	if(playerproximity > 1000 || playerproximity < 0)
 	{
-		return 1;
+		return true;
 	}
 	if(isactor(self) && self cansee(self.enemy) && self canshootenemy())
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -825,7 +825,7 @@ private function function_f70dd749()
 function function_2808d83d()
 {
 	mindist = -1;
-	foreach(var_b2bc6603, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		dist = distance(player.origin, self.origin);
 		if(dist < mindist || mindist < 0)
@@ -845,12 +845,12 @@ function function_2808d83d()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_8dc86b60()
+function private function_8dc86b60()
 {
 	var_db6b9d9f = 0;
-	foreach(var_4551848a, grenade in getentarray("grenade", "classname"))
+	foreach(grenade in getentarray("grenade", "classname"))
 	{
-		foreach(var_6142a614, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			distsq = distancesquared(grenade.origin, player.origin);
 			if(distsq < 90000)
@@ -861,8 +861,8 @@ private function function_8dc86b60()
 	}
 	if(var_db6b9d9f > 0 && var_db6b9d9f >= level.activeplayers.size)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 

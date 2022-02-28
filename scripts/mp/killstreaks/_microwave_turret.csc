@@ -17,7 +17,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("microwave_turret", &__init__, undefined, undefined);
 }
@@ -402,7 +402,7 @@ function microwavefxhash(trace, origin, name)
 function cleanupfx(localclientnum, microwavefxent)
 {
 	self util::waittill_any("entityshutdown", "beam_stop");
-	foreach(var_83174f1f, handle in microwavefxent.fxhandles)
+	foreach(handle in microwavefxent.fxhandles)
 	{
 		if(isdefined(handle))
 		{

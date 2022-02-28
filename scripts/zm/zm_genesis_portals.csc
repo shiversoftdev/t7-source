@@ -29,7 +29,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_genesis_portals", &__init__, undefined, undefined);
 }
@@ -252,14 +252,14 @@ function function_7e1ae25a(localclientnum, oldval, newval, bnewent, binitialsnap
 	}
 	if(newval)
 	{
-		foreach(var_cae08306, str_exploder in var_2cedcd81)
+		foreach(str_exploder in var_2cedcd81)
 		{
 			exploder::exploder(str_exploder);
 		}
 	}
 	else
 	{
-		foreach(var_2646a272, str_exploder in var_2cedcd81)
+		foreach(str_exploder in var_2cedcd81)
 		{
 			exploder::stop_exploder(str_exploder);
 		}

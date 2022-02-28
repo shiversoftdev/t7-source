@@ -243,15 +243,18 @@ function powerup_hud_monitor()
 						powerup_on = player.zombie_vars[on_name];
 					}
 				}
-				else if(isdefined(level.zombie_vars[player.team][time_name]))
+				else
 				{
-					powerup_timer = level.zombie_vars[player.team][time_name];
-					powerup_on = level.zombie_vars[player.team][on_name];
-				}
-				else if(isdefined(level.zombie_vars[time_name]))
-				{
-					powerup_timer = level.zombie_vars[time_name];
-					powerup_on = level.zombie_vars[on_name];
+					if(isdefined(level.zombie_vars[player.team][time_name]))
+					{
+						powerup_timer = level.zombie_vars[player.team][time_name];
+						powerup_on = level.zombie_vars[player.team][on_name];
+					}
+					else if(isdefined(level.zombie_vars[time_name]))
+					{
+						powerup_timer = level.zombie_vars[time_name];
+						powerup_on = level.zombie_vars[on_name];
+					}
 				}
 				if(isdefined(powerup_timer) && isdefined(powerup_on))
 				{
@@ -400,7 +403,7 @@ function minigun_no_drop()
 	{
 		if(players[i].zombie_vars["zombie_powerup_minigun_on"] == 1)
 		{
-			return 1;
+			return true;
 		}
 	}
 	if(!level flag::get("power_on"))
@@ -409,15 +412,15 @@ function minigun_no_drop()
 		{
 			if(!isdefined(level.solo_lives_given) || level.solo_lives_given == 0)
 			{
-				return 1;
+				return true;
 			}
 		}
 		else
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -714,17 +717,20 @@ function powerup_drop(drop_point)
 	{
 		debug = "zm_bgb_power_vacuum";
 	}
-	else if(rand_drop > 2)
-	{
-		if(!level.zombie_vars["zombie_drop_item"])
-		{
-			return;
-		}
-		debug = "score";
-	}
 	else
 	{
-		debug = "random";
+		if(rand_drop > 2)
+		{
+			if(!level.zombie_vars["zombie_drop_item"])
+			{
+				return;
+			}
+			debug = "score";
+		}
+		else
+		{
+			debug = "random";
+		}
 	}
 	playable_area = getentarray("player_volume", "script_noteworthy");
 	level.powerup_drop_count++;
@@ -755,7 +761,7 @@ function powerup_drop(drop_point)
 	}
 	powerup powerup_setup();
 	print_powerup_drop(powerup.powerup_name, debug);
-	bb::function_9e0ebd5(powerup, undefined, "_dropped");
+	bb::logpowerupevent(powerup, undefined, "_dropped");
 	powerup thread powerup_timeout();
 	powerup thread powerup_wobble();
 	powerup thread powerup_grab();
@@ -884,7 +890,12 @@ function powerup_setup(powerup_override, powerup_team, powerup_location, powerup
 	{
 		self.powerup_player = powerup_player;
 	}
-	assert(!(isdefined(struct.player_specific) && struct.player_specific), "");
+	else
+	{
+		/#
+			assert(!(isdefined(struct.player_specific) && struct.player_specific), "");
+		#/
+	}
 	self.powerup_name = struct.powerup_name;
 	self.hint = struct.hint;
 	self.only_affects_grabber = struct.only_affects_grabber;
@@ -1003,15 +1014,23 @@ function powerup_zombie_grab(powerup_team)
 				continue;
 			}
 		}
-		else if(isdefined(level._zombiemode_powerup_zombie_grab))
+		else
 		{
-			level thread [[level._zombiemode_powerup_zombie_grab]](self);
+			if(isdefined(level._zombiemode_powerup_zombie_grab))
+			{
+				level thread [[level._zombiemode_powerup_zombie_grab]](self);
+			}
+			if(isdefined(level._game_mode_powerup_zombie_grab))
+			{
+				level thread [[level._game_mode_powerup_zombie_grab]](self, who);
+			}
+			else
+			{
+				/#
+					println("");
+				#/
+			}
 		}
-		if(isdefined(level._game_mode_powerup_zombie_grab))
-		{
-			level thread [[level._game_mode_powerup_zombie_grab]](self, who);
-		}
-		println("");
 		level thread zm_audio::sndannouncerplayvox(self.powerup_name);
 		wait(0.1);
 		playsoundatposition("zmb_powerup_grabbed", self.origin);
@@ -1047,13 +1066,16 @@ function powerup_grab(powerup_team)
 			grabbers = [];
 			grabbers[0] = self.powerup_player;
 		}
-		else if(isdefined(level.powerup_grab_get_players_override))
-		{
-			grabbers = [[level.powerup_grab_get_players_override]]();
-		}
 		else
 		{
-			grabbers = getplayers();
+			if(isdefined(level.powerup_grab_get_players_override))
+			{
+				grabbers = [[level.powerup_grab_get_players_override]]();
+			}
+			else
+			{
+				grabbers = getplayers();
+			}
 		}
 		for(i = 0; i < grabbers.size; i++)
 		{
@@ -1120,13 +1142,18 @@ function powerup_grab(powerup_team)
 							{
 								level thread [[level._zombiemode_powerup_grab]](self, player);
 							}
-							println("");
+							else
+							{
+								/#
+									println("");
+								#/
+							}
 							break;
 						}
 					}
 				}
 				demo::bookmark("zm_player_powerup_grabbed", gettime(), player);
-				bb::function_9e0ebd5(self, player, "_grabbed");
+				bb::logpowerupevent(self, player, "_grabbed");
 				if(isdefined(self.var_2c8ee667))
 				{
 					player recordmapevent(23, gettime(), grabber.origin, level.round_number, self.var_2c8ee667);
@@ -1143,13 +1170,16 @@ function powerup_grab(powerup_team)
 				{
 					playfx(level._effect["powerup_grabbed_solo"], self.origin);
 				}
-				else if(self.any_team)
-				{
-					playfx(level._effect["powerup_grabbed_caution"], self.origin);
-				}
 				else
 				{
-					playfx(level._effect["powerup_grabbed"], self.origin);
+					if(self.any_team)
+					{
+						playfx(level._effect["powerup_grabbed_caution"], self.origin);
+					}
+					else
+					{
+						playfx(level._effect["powerup_grabbed"], self.origin);
+					}
 				}
 				if(isdefined(self.stolen) && self.stolen)
 				{
@@ -1300,17 +1330,23 @@ function powerup_wobble_fx()
 	{
 		self clientfield::set("powerup_fx", 2);
 	}
-	else if(self.any_team)
-	{
-		self clientfield::set("powerup_fx", 4);
-	}
-	else if(self.zombie_grabbable)
-	{
-		self clientfield::set("powerup_fx", 3);
-	}
 	else
 	{
-		self clientfield::set("powerup_fx", 1);
+		if(self.any_team)
+		{
+			self clientfield::set("powerup_fx", 4);
+		}
+		else
+		{
+			if(self.zombie_grabbable)
+			{
+				self clientfield::set("powerup_fx", 3);
+			}
+			else
+			{
+				self clientfield::set("powerup_fx", 1);
+			}
+		}
 	}
 }
 
@@ -1448,7 +1484,7 @@ function powerup_timeout()
 		wait(0.1);
 	}
 	self notify(#"powerup_timedout");
-	bb::function_9e0ebd5(self, undefined, "_timedout");
+	bb::logpowerupevent(self, undefined, "_timedout");
 	self powerup_delete();
 }
 
@@ -1651,9 +1687,9 @@ function check_for_rare_drop_override(pos)
 {
 	if(level flagsys::get("ape_round"))
 	{
-		return 0;
+		return false;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1672,10 +1708,10 @@ function tesla_powerup_active()
 	{
 		if(players[i].zombie_vars["zombie_powerup_tesla_on"])
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1749,9 +1785,9 @@ function is_carpenter_boards_upgraded()
 {
 	if(isdefined(level.pers_carpenter_boards_active) && level.pers_carpenter_boards_active == 1)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1765,7 +1801,7 @@ function is_carpenter_boards_upgraded()
 */
 function func_should_never_drop()
 {
-	return 0;
+	return false;
 }
 
 /*
@@ -1779,7 +1815,7 @@ function func_should_never_drop()
 */
 function func_should_always_drop()
 {
-	return 1;
+	return true;
 }
 
 /*
@@ -1854,7 +1890,7 @@ function get_powerups(origin, radius)
 	if(isdefined(origin) && isdefined(radius))
 	{
 		powerups = [];
-		foreach(var_3342ec6a, powerup in level.active_powerups)
+		foreach(powerup in level.active_powerups)
 		{
 			if(distancesquared(origin, powerup.origin) < (radius * radius))
 			{
@@ -1879,13 +1915,13 @@ function should_award_stat(powerup_name)
 {
 	if(powerup_name == "teller_withdrawl" || powerup_name == "blue_monkey" || powerup_name == "free_perk" || powerup_name == "bonus_points_player")
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(level.zombie_statless_powerups) && isdefined(level.zombie_statless_powerups[powerup_name]) && level.zombie_statless_powerups[powerup_name])
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*

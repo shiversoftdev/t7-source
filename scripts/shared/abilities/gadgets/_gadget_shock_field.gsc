@@ -21,7 +21,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("gadget_shock_field", &__init__, undefined, undefined);
 }
@@ -180,7 +180,7 @@ function shock_field_think(slot, weapon)
 			return;
 		}
 		entities = getdamageableentarray(self.origin, weapon.gadget_shockfield_radius);
-		foreach(var_8fbf6103, entity in entities)
+		foreach(entity in entities)
 		{
 			if(isplayer(entity))
 			{

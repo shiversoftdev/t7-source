@@ -25,7 +25,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_stalingrad_mounted_mg", &__init__, &__main__, undefined);
 }
@@ -79,30 +79,30 @@ function function_f734357f(e_player)
 	if(e_player zm_hero_weapon::is_hero_weapon_in_use())
 	{
 		self sethintstring("");
-		return 0;
+		return false;
 	}
 	if(e_player.is_drinking > 0)
 	{
 		self sethintstring("");
-		return 0;
+		return false;
 	}
 	if(level flag::get("lockdown_active") && level.var_1dfcc9b2.var_22bf30b7 !== 1)
 	{
 		self sethintstring("");
-		return 0;
+		return false;
 	}
 	if(self.stub.b_enabled == 1 && self.stub.b_in_use == 0)
 	{
 		self sethintstring(&"ZM_STALINGRAD_MOUNTED_MG_ACTIVATE", self.stub.hint_parm1);
-		return 1;
+		return true;
 	}
 	if(self.stub.b_enabled == 0 && self.stub.b_in_use == 0)
 	{
 		self sethintstring(&"ZM_STALINGRAD_MOUNTED_MG_COOLDOWN");
-		return 0;
+		return false;
 	}
 	self sethintstring("");
-	return 0;
+	return false;
 }
 
 /*

@@ -34,7 +34,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	initthrasherbehaviorsandasm();
 	spawner::add_archetype_spawn_function("human_clone", &archetypecloneblackboardinit);
@@ -50,7 +50,7 @@ autoexec function init()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function initthrasherbehaviorsandasm()
+function private initthrasherbehaviorsandasm()
 {
 }
 
@@ -63,7 +63,7 @@ private function initthrasherbehaviorsandasm()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function archetypecloneblackboardinit()
+function private archetypecloneblackboardinit()
 {
 	entity = self;
 	blackboard::createblackboardforentity(entity);
@@ -84,7 +84,7 @@ private function archetypecloneblackboardinit()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function archetypecloneonanimscriptedcallback(entity)
+function private archetypecloneonanimscriptedcallback(entity)
 {
 	entity.__blackboard = undefined;
 	entity archetypecloneblackboardinit();
@@ -99,7 +99,7 @@ private function archetypecloneonanimscriptedcallback(entity)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function perfectinfothread()
+function private perfectinfothread()
 {
 	entity = self;
 	entity endon(#"death");
@@ -122,7 +122,7 @@ private function perfectinfothread()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function clonespawnsetup()
+function private clonespawnsetup()
 {
 	entity = self;
 	entity.ignoreme = 1;

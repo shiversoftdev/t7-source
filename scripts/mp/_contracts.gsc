@@ -24,7 +24,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("contracts", &__init__, undefined, undefined);
 }
@@ -206,7 +206,7 @@ function watch_contract_debug()
 				if(isdefined(level.players))
 				{
 					new_index = getdvarint("", 0);
-					foreach(var_e6446b18, player in level.players)
+					foreach(player in level.players)
 					{
 						if(!isdefined(player))
 						{
@@ -231,7 +231,7 @@ function watch_contract_debug()
 				if(isdefined(level.players))
 				{
 					new_index = getdvarint("", 0);
-					foreach(var_8707636f, player in level.players)
+					foreach(player in level.players)
 					{
 						if(!isdefined(player))
 						{
@@ -258,7 +258,7 @@ function watch_contract_debug()
 				{
 					test_slot = getdvarint("", 9);
 					iprintln("");
-					foreach(var_420e5213, player in level.players)
+					foreach(player in level.players)
 					{
 						if(!isdefined(player))
 						{
@@ -308,21 +308,21 @@ function is_contract_active(challenge_index)
 {
 	if(!isplayer(self))
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(self.pers["contracts"]))
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(self.pers["contracts"][challenge_index]))
 	{
-		return 0;
+		return false;
 	}
 	if(self.pers["contracts"][challenge_index].table_row == -1)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -591,48 +591,51 @@ function add_active_stat(contract_index, delta = 1)
 			self award_loot_xp_due(award_daily_contract());
 			self set_contract_stat(2, "award_given", 1);
 		}
-		else if(slot == 0 || slot == 1)
+		else
 		{
-			other_slot = 1;
-			if(slot == 1)
+			if(slot == 0 || slot == 1)
 			{
-				other_slot = 0;
-			}
-			foreach(c_index, c_data in self.pers["contracts"])
-			{
-				if(c_data.slot == other_slot)
+				other_slot = 1;
+				if(slot == 1)
 				{
-					if(c_data.target_value <= get_contract_stat(other_slot, "progress"))
+					other_slot = 0;
+				}
+				foreach(c_data in self.pers["contracts"])
+				{
+					if(c_data.slot == other_slot)
 					{
-						display_rewards = 1;
-						self award_loot_xp_due(award_weekly_contract());
-						self set_contract_stat(0, "award_given", 1);
-						self set_contract_stat(1, "award_given", 1);
+						if(c_data.target_value <= get_contract_stat(other_slot, "progress"))
+						{
+							display_rewards = 1;
+							self award_loot_xp_due(award_weekly_contract());
+							self set_contract_stat(0, "award_given", 1);
+							self set_contract_stat(1, "award_given", 1);
+						}
+						break;
 					}
-					break;
 				}
 			}
-		}
-		else if(slot == 3)
-		{
-			event = &"mp_special_contract_complete";
-			display_rewards = 1;
-			absolute_stat_path = self.pers["contracts"][contract_index].absolute_stat_path;
-			if(absolute_stat_path != "")
+			else if(slot == 3)
 			{
-				set_contract_award_stat_from_path(absolute_stat_path, 1);
+				event = &"mp_special_contract_complete";
+				display_rewards = 1;
+				absolute_stat_path = self.pers["contracts"][contract_index].absolute_stat_path;
+				if(absolute_stat_path != "")
+				{
+					set_contract_award_stat_from_path(absolute_stat_path, 1);
+				}
+				calling_card_stat = self.pers["contracts"][contract_index].calling_card_stat;
+				if(calling_card_stat != "")
+				{
+					set_contract_award_stat("calling_card", calling_card_stat);
+				}
+				weapon_camo_stat = self.pers["contracts"][contract_index].weapon_camo_stat;
+				if(weapon_camo_stat != "")
+				{
+					set_contract_award_stat("weapon_camo", weapon_camo_stat);
+				}
+				self set_contract_stat(3, "award_given", 1);
 			}
-			calling_card_stat = self.pers["contracts"][contract_index].calling_card_stat;
-			if(calling_card_stat != "")
-			{
-				set_contract_award_stat("calling_card", calling_card_stat);
-			}
-			weapon_camo_stat = self.pers["contracts"][contract_index].weapon_camo_stat;
-			if(weapon_camo_stat != "")
-			{
-				set_contract_award_stat("weapon_camo", weapon_camo_stat);
-			}
-			self set_contract_stat(3, "award_given", 1);
 		}
 		/#
 			test_slot = getdvarint("", 9);

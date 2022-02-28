@@ -162,9 +162,9 @@ function bhb_teleport_loc_check(grenade, model, info)
 	{
 		model clientfield::set("toggle_black_hole_deployed", 1);
 		level thread teleport_target(grenade, model);
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -975,7 +975,7 @@ function bhb_combo_loc_check(grenade, model, info)
 	{
 		grenade function_510c4845();
 	}
-	return 0;
+	return false;
 }
 
 /*

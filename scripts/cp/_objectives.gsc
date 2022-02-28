@@ -13,696 +13,643 @@
 #using scripts\shared\trigger_shared;
 #using scripts\shared\util_shared;
 
-#namespace cobjective;
-
-/*
-	Name: __constructor
-	Namespace: cobjective
-	Checksum: 0x99EC1590
-	Offset: 0x3B0
-	Size: 0x4
-	Parameters: 0
-	Flags: Linked
-*/
-function __constructor()
+class cobjective 
 {
-}
+	var m_a_game_obj;
+	var m_a_targets;
+	var m_str_type;
 
-/*
-	Name: init
-	Namespace: cobjective
-	Checksum: 0xD71AF9BB
-	Offset: 0x3C0
-	Size: 0x1DC
-	Parameters: 3
-	Flags: Linked
-*/
-function init(str_type, a_target_list, b_done = 0)
-{
-	self.m_a_targets = [];
-	self.m_a_game_obj = [];
-	self.m_str_type = str_type;
-	if(b_done)
+	/*
+		Name: constructor
+		Namespace: cobjective
+		Checksum: 0x99EC1590
+		Offset: 0x3B0
+		Size: 0x4
+		Parameters: 0
+		Flags: Linked
+	*/
+	constructor()
 	{
-		gobj_id = gameobjects::get_next_obj_id();
-		self.m_a_game_obj = array(gobj_id);
-		objective_add(gobj_id, "done", (0, 0, 0), istring(str_type));
 	}
-	else if(isdefined(a_target_list) && a_target_list.size > 0)
+
+	/*
+		Name: destructor
+		Namespace: cobjective
+		Checksum: 0x99EC1590
+		Offset: 0x1000
+		Size: 0x4
+		Parameters: 0
+		Flags: Linked
+	*/
+	destructor()
 	{
-		foreach(var_e498c241, target in a_target_list)
+	}
+
+	/*
+		Name: is_breadcrumb
+		Namespace: cobjective
+		Checksum: 0xE72E69A1
+		Offset: 0xFF0
+		Size: 0x6
+		Parameters: 0
+		Flags: Linked
+	*/
+	function is_breadcrumb()
+	{
+		return false;
+	}
+
+	/*
+		Name: get_id_for_target
+		Namespace: cobjective
+		Checksum: 0xA755AAC
+		Offset: 0xF28
+		Size: 0xBA
+		Parameters: 1
+		Flags: Linked
+	*/
+	function get_id_for_target(e_target)
+	{
+		foreach(i, obj_id in m_a_game_obj)
 		{
-			add_target(target);
-		}
-	}
-	else
-	{
-		gobj_id = gameobjects::get_next_obj_id();
-		self.m_a_game_obj = array(gobj_id);
-		objective_add(gobj_id, "active", (0, 0, 0), istring(str_type));
-	}
-}
-
-/*
-	Name: update_value
-	Namespace: cobjective
-	Checksum: 0x7B090724
-	Offset: 0x5A8
-	Size: 0x4C
-	Parameters: 2
-	Flags: Linked
-*/
-function update_value(str_menu_data_name, value)
-{
-	gobj_id = self.m_a_game_obj[0];
-	objective_setuimodelvalue(gobj_id, str_menu_data_name, value);
-}
-
-/*
-	Name: update_counter
-	Namespace: cobjective
-	Checksum: 0xC55BE099
-	Offset: 0x600
-	Size: 0x5C
-	Parameters: 2
-	Flags: Linked
-*/
-function update_counter(x_val, y_val)
-{
-	update_value("obj_x", x_val);
-	if(isdefined(y_val))
-	{
-		update_value("obj_y", y_val);
-	}
-}
-
-/*
-	Name: add_target
-	Namespace: cobjective
-	Checksum: 0x38F22E8A
-	Offset: 0x668
-	Size: 0x1AC
-	Parameters: 1
-	Flags: Linked
-*/
-function add_target(target)
-{
-	if(isinarray(self.m_a_targets, target))
-	{
-		return;
-	}
-	gobj_id = undefined;
-	if(self.m_a_targets.size < self.m_a_game_obj.size)
-	{
-		gobj_id = self.m_a_game_obj[self.m_a_game_obj.size - 1];
-	}
-	else
-	{
-		gobj_id = gameobjects::get_next_obj_id();
-		array::add(self.m_a_game_obj, gobj_id);
-	}
-	if(isvec(target) || isentity(target))
-	{
-		objective_add(gobj_id, "active", target, istring(self.m_str_type));
-	}
-	else
-	{
-		objective_add(gobj_id, "active", target.origin, istring(self.m_str_type));
-	}
-	array::add(self.m_a_targets, target);
-	/#
-		assert(self.m_a_targets.size == self.m_a_game_obj.size);
-	#/
-}
-
-/*
-	Name: complete
-	Namespace: cobjective
-	Checksum: 0xB18F993A
-	Offset: 0x820
-	Size: 0x26C
-	Parameters: 1
-	Flags: Linked
-*/
-function complete(a_target_or_list)
-{
-	if(a_target_or_list.size > 0)
-	{
-		foreach(var_e3bb182, target in a_target_or_list)
-		{
-			for(i = self.m_a_targets.size - 1; i >= 0; i--)
+			ent = m_a_targets[i];
+			if(isdefined(ent) && ent == e_target)
 			{
-				if(self.m_a_targets[i] == target)
-				{
-					objective_state(self.m_a_game_obj[i], "done");
-					arrayremoveindex(self.m_a_game_obj, i);
-					arrayremoveindex(self.m_a_targets, i);
-					break;
-				}
+				return obj_id;
+			}
+		}
+		return -1;
+	}
+
+	/*
+		Name: show_for_target
+		Namespace: cobjective
+		Checksum: 0xF39D87D3
+		Offset: 0xE50
+		Size: 0xCC
+		Parameters: 1
+		Flags: Linked
+	*/
+	function show_for_target(e_target)
+	{
+		foreach(i, obj_id in m_a_game_obj)
+		{
+			ent = m_a_targets[i];
+			if(isdefined(ent) && ent == e_target)
+			{
+				objective_state(obj_id, "active");
+				return;
 			}
 		}
 	}
-	else
+
+	/*
+		Name: hide_for_target
+		Namespace: cobjective
+		Checksum: 0xEA5D996C
+		Offset: 0xD78
+		Size: 0xCC
+		Parameters: 1
+		Flags: Linked
+	*/
+	function hide_for_target(e_target)
 	{
-		foreach(var_ef795c4e, n_gobj_id in self.m_a_game_obj)
+		foreach(i, obj_id in m_a_game_obj)
 		{
-			objective_state(n_gobj_id, "done");
-		}
-		for(i = self.m_a_targets.size - 1; i >= 0; i--)
-		{
-			arrayremoveindex(self.m_a_game_obj, i);
-			arrayremoveindex(self.m_a_targets, i);
-		}
-	}
-	if(self.m_a_game_obj.size == 0)
-	{
-		arrayremovevalue(level.a_objectives, self, 1);
-	}
-}
-
-/*
-	Name: hide
-	Namespace: cobjective
-	Checksum: 0x8B597FFD
-	Offset: 0xA98
-	Size: 0x162
-	Parameters: 1
-	Flags: Linked
-*/
-function hide(e_player)
-{
-	if(isdefined(e_player))
-	{
-		/#
-			assert(isplayer(e_player), "");
-		#/
-		foreach(var_88ece713, obj_id in self.m_a_game_obj)
-		{
-			objective_setinvisibletoplayer(obj_id, e_player);
-		}
-	}
-	else
-	{
-		foreach(var_984e11ad, obj_id in self.m_a_game_obj)
-		{
-			objective_setinvisibletoall(obj_id);
-		}
-	}
-}
-
-/*
-	Name: show
-	Namespace: cobjective
-	Checksum: 0x395B10E7
-	Offset: 0xC08
-	Size: 0x162
-	Parameters: 1
-	Flags: Linked
-*/
-function show(e_player)
-{
-	if(isdefined(e_player))
-	{
-		/#
-			assert(isplayer(e_player), "");
-		#/
-		foreach(var_d8c9d541, obj_id in self.m_a_game_obj)
-		{
-			objective_setvisibletoplayer(obj_id, e_player);
-		}
-	}
-	else
-	{
-		foreach(var_4d4fe28d, obj_id in self.m_a_game_obj)
-		{
-			objective_setvisibletoall(obj_id);
-		}
-	}
-}
-
-/*
-	Name: hide_for_target
-	Namespace: cobjective
-	Checksum: 0xEA5D996C
-	Offset: 0xD78
-	Size: 0xCC
-	Parameters: 1
-	Flags: Linked
-*/
-function hide_for_target(e_target)
-{
-	foreach(i, obj_id in self.m_a_game_obj)
-	{
-		ent = self.m_a_targets[i];
-		if(isdefined(ent) && ent == e_target)
-		{
-			objective_state(obj_id, "invisible");
-			return;
-		}
-	}
-}
-
-/*
-	Name: show_for_target
-	Namespace: cobjective
-	Checksum: 0xF39D87D3
-	Offset: 0xE50
-	Size: 0xCC
-	Parameters: 1
-	Flags: Linked
-*/
-function show_for_target(e_target)
-{
-	foreach(i, obj_id in self.m_a_game_obj)
-	{
-		ent = self.m_a_targets[i];
-		if(isdefined(ent) && ent == e_target)
-		{
-			objective_state(obj_id, "active");
-			return;
-		}
-	}
-}
-
-/*
-	Name: get_id_for_target
-	Namespace: cobjective
-	Checksum: 0xA755AAC
-	Offset: 0xF28
-	Size: 0xBA
-	Parameters: 1
-	Flags: Linked
-*/
-function get_id_for_target(e_target)
-{
-	foreach(i, obj_id in self.m_a_game_obj)
-	{
-		ent = self.m_a_targets[i];
-		if(isdefined(ent) && ent == e_target)
-		{
-			return obj_id;
-		}
-	}
-	return -1;
-}
-
-/*
-	Name: is_breadcrumb
-	Namespace: cobjective
-	Checksum: 0xE72E69A1
-	Offset: 0xFF0
-	Size: 0x6
-	Parameters: 0
-	Flags: Linked
-*/
-function is_breadcrumb()
-{
-	return 0;
-}
-
-/*
-	Name: __destructor
-	Namespace: cobjective
-	Checksum: 0x99EC1590
-	Offset: 0x1000
-	Size: 0x4
-	Parameters: 0
-	Flags: Linked
-*/
-function __destructor()
-{
-}
-
-#namespace objectives;
-
-/*
-	Name: cobjective
-	Namespace: objectives
-	Checksum: 0x415A5E31
-	Offset: 0x1010
-	Size: 0x296
-	Parameters: 0
-	Flags: AutoExec, Private
-*/
-private autoexec function cobjective()
-{
-	classes.cobjective[0] = spawnstruct();
-	classes.cobjective[0].__vtable[1606033458] = &cobjective::__destructor;
-	classes.cobjective[0].__vtable[167654991] = &cobjective::is_breadcrumb;
-	classes.cobjective[0].__vtable[-379745077] = &cobjective::get_id_for_target;
-	classes.cobjective[0].__vtable[-1058346386] = &cobjective::show_for_target;
-	classes.cobjective[0].__vtable[1724316027] = &cobjective::hide_for_target;
-	classes.cobjective[0].__vtable[1223845734] = &cobjective::show;
-	classes.cobjective[0].__vtable[1355607693] = &cobjective::hide;
-	classes.cobjective[0].__vtable[835524660] = &cobjective::complete;
-	classes.cobjective[0].__vtable[1443065110] = &cobjective::add_target;
-	classes.cobjective[0].__vtable[462299743] = &cobjective::update_counter;
-	classes.cobjective[0].__vtable[-1714438864] = &cobjective::update_value;
-	classes.cobjective[0].__vtable[-1017222485] = &cobjective::init;
-	classes.cobjective[0].__vtable[-1690805083] = &cobjective::__constructor;
-}
-
-#namespace cbreadcrumbobjective;
-
-/*
-	Name: __constructor
-	Namespace: cbreadcrumbobjective
-	Checksum: 0xD613FFF
-	Offset: 0x12B0
-	Size: 0x14
-	Parameters: 0
-	Flags: Linked
-*/
-function __constructor()
-{
-	cobjective::__constructor();
-}
-
-/*
-	Name: init
-	Namespace: cbreadcrumbobjective
-	Checksum: 0xC2FABE03
-	Offset: 0x12D0
-	Size: 0x17C
-	Parameters: 3
-	Flags: Linked
-*/
-function init(str_type, a_target_list, b_done = 0)
-{
-	cobjective::init(str_type, a_target_list, b_done);
-	self.m_str_first_trig_targetname = "";
-	self.m_done = b_done;
-	self.m_a_player_game_obj = [];
-	for(i = 0; i < 4; i++)
-	{
-		obj_id = gameobjects::get_next_obj_id();
-		self.m_a_player_game_obj[i] = obj_id;
-		if(self.m_done)
-		{
-			objective_add(obj_id, "done", (0, 0, 0), istring(self.m_str_type));
-			continue;
-		}
-		objective_add(obj_id, "empty", (0, 0, 0), istring(self.m_str_type));
-	}
-	obj_id = self.m_a_game_obj[0];
-	objective_setinvisibletoall(obj_id);
-}
-
-/*
-	Name: complete
-	Namespace: cbreadcrumbobjective
-	Checksum: 0xED9E6446
-	Offset: 0x1458
-	Size: 0x124
-	Parameters: 1
-	Flags: Linked
-*/
-function complete(a_target_or_list)
-{
-	level notify(("breadcrumb_" + self.m_str_type) + "_complete");
-	for(i = 0; i < 4; i++)
-	{
-		obj_id = self.m_a_player_game_obj[i];
-		objective_state(obj_id, "done");
-	}
-	foreach(var_acd59c19, player in level.players)
-	{
-		player.v_current_active_breadcrumb = undefined;
-	}
-	cobjective::complete(a_target_or_list);
-}
-
-/*
-	Name: hide
-	Namespace: cbreadcrumbobjective
-	Checksum: 0x811D1AB3
-	Offset: 0x1588
-	Size: 0xFE
-	Parameters: 1
-	Flags: Linked
-*/
-function hide(e_player)
-{
-	if(isdefined(e_player))
-	{
-		/#
-			assert(isplayer(e_player), "");
-		#/
-		entnum = e_player getentitynumber();
-		obj_id = self.m_a_player_game_obj[entnum];
-		objective_setinvisibletoplayer(obj_id, e_player);
-	}
-	else
-	{
-		for(i = 0; i < 4; i++)
-		{
-			obj_id = self.m_a_player_game_obj[i];
-			objective_setinvisibletoplayerbyindex(obj_id, i);
-		}
-	}
-}
-
-/*
-	Name: show
-	Namespace: cbreadcrumbobjective
-	Checksum: 0x30F9045
-	Offset: 0x1690
-	Size: 0xFE
-	Parameters: 1
-	Flags: Linked
-*/
-function show(e_player)
-{
-	if(isdefined(e_player))
-	{
-		/#
-			assert(isplayer(e_player), "");
-		#/
-		entnum = e_player getentitynumber();
-		obj_id = self.m_a_player_game_obj[entnum];
-		objective_setvisibletoplayer(obj_id, e_player);
-	}
-	else
-	{
-		for(i = 0; i < 4; i++)
-		{
-			obj_id = self.m_a_player_game_obj[i];
-			objective_setvisibletoplayerbyindex(obj_id, i);
-		}
-	}
-}
-
-/*
-	Name: start
-	Namespace: cbreadcrumbobjective
-	Checksum: 0x33D25588
-	Offset: 0x1798
-	Size: 0xAA
-	Parameters: 1
-	Flags: Linked
-*/
-function start(str_trig_targetname)
-{
-	self.m_str_first_trig_targetname = str_trig_targetname;
-	self.m_done = 0;
-	foreach(var_289bce9a, player in level.players)
-	{
-		add_player(player);
-	}
-}
-
-/*
-	Name: add_player
-	Namespace: cbreadcrumbobjective
-	Checksum: 0x7D679BC9
-	Offset: 0x1850
-	Size: 0xB4
-	Parameters: 1
-	Flags: Linked
-*/
-function add_player(player)
-{
-	entnum = player getentitynumber();
-	obj_id = self.m_a_player_game_obj[entnum];
-	objective_setinvisibletoall(obj_id);
-	objective_setvisibletoplayer(obj_id, player);
-	objective_state(obj_id, "active");
-	thread do_player_breadcrumb(player);
-}
-
-/*
-	Name: set_player_objective
-	Namespace: cbreadcrumbobjective
-	Checksum: 0xDF5C259E
-	Offset: 0x1910
-	Size: 0x134
-	Parameters: 2
-	Flags: Linked, Private
-*/
-private function set_player_objective(player, target)
-{
-	entnum = player getentitynumber();
-	obj_id = self.m_a_player_game_obj[entnum];
-	n_breadcrumb_height = 72;
-	v_pos = target;
-	if(!isvec(target))
-	{
-		v_pos = target.origin;
-		if(isdefined(target.script_height))
-		{
-			n_breadcrumb_height = target.script_height;
-		}
-	}
-	v_pos = util::ground_position(v_pos, 300, n_breadcrumb_height);
-	player.v_current_active_breadcrumb = v_pos;
-	objective_position(obj_id, v_pos);
-	objective_state(obj_id, "active");
-}
-
-/*
-	Name: do_player_breadcrumb
-	Namespace: cbreadcrumbobjective
-	Checksum: 0xFF77E1AB
-	Offset: 0x1A50
-	Size: 0x2DC
-	Parameters: 1
-	Flags: Linked
-*/
-function do_player_breadcrumb(player)
-{
-	level endon("breadcrumb_" + self.m_str_type);
-	level endon(("breadcrumb_" + self.m_str_type) + "_complete");
-	player endon(#"death");
-	str_trig_targetname = self.m_str_first_trig_targetname;
-	entnum = player getentitynumber();
-	obj_id = self.m_a_player_game_obj[entnum];
-	objective_setvisibletoplayer(obj_id, player);
-	do
-	{
-		t_current = getent(str_trig_targetname, "targetname");
-		if(isdefined(t_current))
-		{
-			if(isdefined(t_current.target))
+			ent = m_a_targets[i];
+			if(isdefined(ent) && ent == e_target)
 			{
-				if(isdefined(t_current.script_flag_true))
+				objective_state(obj_id, "invisible");
+				return;
+			}
+		}
+	}
+
+	/*
+		Name: show
+		Namespace: cobjective
+		Checksum: 0x395B10E7
+		Offset: 0xC08
+		Size: 0x162
+		Parameters: 1
+		Flags: Linked
+	*/
+	function show(e_player)
+	{
+		if(isdefined(e_player))
+		{
+			/#
+				assert(isplayer(e_player), "");
+			#/
+			foreach(obj_id in m_a_game_obj)
+			{
+				objective_setvisibletoplayer(obj_id, e_player);
+			}
+		}
+		else
+		{
+			foreach(obj_id in m_a_game_obj)
+			{
+				objective_setvisibletoall(obj_id);
+			}
+		}
+	}
+
+	/*
+		Name: hide
+		Namespace: cobjective
+		Checksum: 0x8B597FFD
+		Offset: 0xA98
+		Size: 0x162
+		Parameters: 1
+		Flags: Linked
+	*/
+	function hide(e_player)
+	{
+		if(isdefined(e_player))
+		{
+			/#
+				assert(isplayer(e_player), "");
+			#/
+			foreach(obj_id in m_a_game_obj)
+			{
+				objective_setinvisibletoplayer(obj_id, e_player);
+			}
+		}
+		else
+		{
+			foreach(obj_id in m_a_game_obj)
+			{
+				objective_setinvisibletoall(obj_id);
+			}
+		}
+	}
+
+	/*
+		Name: complete
+		Namespace: cobjective
+		Checksum: 0xB18F993A
+		Offset: 0x820
+		Size: 0x26C
+		Parameters: 1
+		Flags: Linked
+	*/
+	function complete(a_target_or_list)
+	{
+		if(a_target_or_list.size > 0)
+		{
+			foreach(target in a_target_or_list)
+			{
+				for(i = m_a_targets.size - 1; i >= 0; i--)
 				{
-					objective_setinvisibletoplayer(obj_id, player);
-					level flag::wait_till(t_current.script_flag_true);
-					objective_setvisibletoplayer(obj_id, player);
+					if(m_a_targets[i] == target)
+					{
+						objective_state(m_a_game_obj[i], "done");
+						arrayremoveindex(m_a_game_obj, i);
+						arrayremoveindex(m_a_targets, i);
+						break;
+					}
 				}
-				s_current = struct::get(t_current.target, "targetname");
-				if(isdefined(s_current))
+			}
+		}
+		else
+		{
+			foreach(n_gobj_id in m_a_game_obj)
+			{
+				objective_state(n_gobj_id, "done");
+			}
+			for(i = m_a_targets.size - 1; i >= 0; i--)
+			{
+				arrayremoveindex(m_a_game_obj, i);
+				arrayremoveindex(m_a_targets, i);
+			}
+		}
+		if(m_a_game_obj.size == 0)
+		{
+			arrayremovevalue(level.a_objectives, self, 1);
+		}
+	}
+
+	/*
+		Name: add_target
+		Namespace: cobjective
+		Checksum: 0x38F22E8A
+		Offset: 0x668
+		Size: 0x1AC
+		Parameters: 1
+		Flags: Linked
+	*/
+	function add_target(target)
+	{
+		if(isinarray(m_a_targets, target))
+		{
+			return;
+		}
+		gobj_id = undefined;
+		if(m_a_targets.size < m_a_game_obj.size)
+		{
+			gobj_id = m_a_game_obj[m_a_game_obj.size - 1];
+		}
+		else
+		{
+			gobj_id = gameobjects::get_next_obj_id();
+			array::add(m_a_game_obj, gobj_id);
+		}
+		if(isvec(target) || isentity(target))
+		{
+			objective_add(gobj_id, "active", target, istring(m_str_type));
+		}
+		else
+		{
+			objective_add(gobj_id, "active", target.origin, istring(m_str_type));
+		}
+		array::add(m_a_targets, target);
+		/#
+			assert(m_a_targets.size == m_a_game_obj.size);
+		#/
+	}
+
+	/*
+		Name: update_counter
+		Namespace: cobjective
+		Checksum: 0xC55BE099
+		Offset: 0x600
+		Size: 0x5C
+		Parameters: 2
+		Flags: Linked
+	*/
+	function update_counter(x_val, y_val)
+	{
+		update_value("obj_x", x_val);
+		if(isdefined(y_val))
+		{
+			update_value("obj_y", y_val);
+		}
+	}
+
+	/*
+		Name: update_value
+		Namespace: cobjective
+		Checksum: 0x7B090724
+		Offset: 0x5A8
+		Size: 0x4C
+		Parameters: 2
+		Flags: Linked
+	*/
+	function update_value(str_menu_data_name, value)
+	{
+		gobj_id = m_a_game_obj[0];
+		objective_setuimodelvalue(gobj_id, str_menu_data_name, value);
+	}
+
+	/*
+		Name: init
+		Namespace: cobjective
+		Checksum: 0xD71AF9BB
+		Offset: 0x3C0
+		Size: 0x1DC
+		Parameters: 3
+		Flags: Linked
+	*/
+	function init(str_type, a_target_list, b_done = 0)
+	{
+		m_a_targets = [];
+		m_a_game_obj = [];
+		m_str_type = str_type;
+		if(b_done)
+		{
+			gobj_id = gameobjects::get_next_obj_id();
+			m_a_game_obj = array(gobj_id);
+			objective_add(gobj_id, "done", (0, 0, 0), istring(str_type));
+		}
+		else
+		{
+			if(isdefined(a_target_list) && a_target_list.size > 0)
+			{
+				foreach(target in a_target_list)
 				{
-					set_player_objective(player, s_current);
+					add_target(target);
+				}
+			}
+			else
+			{
+				gobj_id = gameobjects::get_next_obj_id();
+				m_a_game_obj = array(gobj_id);
+				objective_add(gobj_id, "active", (0, 0, 0), istring(str_type));
+			}
+		}
+	}
+
+}
+
+class cbreadcrumbobjective : cobjective
+{
+	var m_done;
+	var m_str_type;
+	var m_str_first_trig_targetname;
+	var m_a_player_game_obj;
+	var m_a_game_obj;
+
+	/*
+		Name: constructor
+		Namespace: cbreadcrumbobjective
+		Checksum: 0xD613FFF
+		Offset: 0x12B0
+		Size: 0x14
+		Parameters: 0
+		Flags: Linked
+	*/
+	constructor()
+	{
+	}
+
+	/*
+		Name: destructor
+		Namespace: cbreadcrumbobjective
+		Checksum: 0x76F0669B
+		Offset: 0x1D60
+		Size: 0x14
+		Parameters: 0
+		Flags: Linked
+	*/
+	destructor()
+	{
+	}
+
+	/*
+		Name: is_done
+		Namespace: cbreadcrumbobjective
+		Checksum: 0xEF999E9C
+		Offset: 0x1D48
+		Size: 0xA
+		Parameters: 0
+		Flags: Linked
+	*/
+	function is_done()
+	{
+		return m_done;
+	}
+
+	/*
+		Name: is_breadcrumb
+		Namespace: cbreadcrumbobjective
+		Checksum: 0x3FE0C49D
+		Offset: 0x1D38
+		Size: 0x8
+		Parameters: 0
+		Flags: Linked
+	*/
+	function is_breadcrumb()
+	{
+		return true;
+	}
+
+	/*
+		Name: do_player_breadcrumb
+		Namespace: cbreadcrumbobjective
+		Checksum: 0xFF77E1AB
+		Offset: 0x1A50
+		Size: 0x2DC
+		Parameters: 1
+		Flags: Linked
+	*/
+	function do_player_breadcrumb(player)
+	{
+		level endon("breadcrumb_" + m_str_type);
+		level endon(("breadcrumb_" + m_str_type) + "_complete");
+		player endon(#"death");
+		str_trig_targetname = m_str_first_trig_targetname;
+		entnum = player getentitynumber();
+		obj_id = m_a_player_game_obj[entnum];
+		objective_setvisibletoplayer(obj_id, player);
+		do
+		{
+			t_current = getent(str_trig_targetname, "targetname");
+			if(isdefined(t_current))
+			{
+				if(isdefined(t_current.target))
+				{
+					if(isdefined(t_current.script_flag_true))
+					{
+						objective_setinvisibletoplayer(obj_id, player);
+						level flag::wait_till(t_current.script_flag_true);
+						objective_setvisibletoplayer(obj_id, player);
+					}
+					s_current = struct::get(t_current.target, "targetname");
+					if(isdefined(s_current))
+					{
+						set_player_objective(player, s_current);
+					}
+					else
+					{
+						set_player_objective(player, t_current);
+					}
 				}
 				else
 				{
 					set_player_objective(player, t_current);
 				}
+				str_trig_targetname = t_current.target;
+				t_current trigger::wait_till(undefined, undefined, player);
 			}
 			else
 			{
-				set_player_objective(player, t_current);
+				str_trig_targetname = undefined;
 			}
-			str_trig_targetname = t_current.target;
-			t_current trigger::wait_till(undefined, undefined, player);
+		}
+		while(isdefined(str_trig_targetname));
+		objective_setinvisibletoplayer(obj_id, player);
+		foreach(player in level.players)
+		{
+			player.v_current_active_breadcrumb = undefined;
+		}
+		m_done = 1;
+	}
+
+	/*
+		Name: set_player_objective
+		Namespace: cbreadcrumbobjective
+		Checksum: 0xDF5C259E
+		Offset: 0x1910
+		Size: 0x134
+		Parameters: 2
+		Flags: Linked, Private
+	*/
+	function private set_player_objective(player, target)
+	{
+		entnum = player getentitynumber();
+		obj_id = m_a_player_game_obj[entnum];
+		n_breadcrumb_height = 72;
+		v_pos = target;
+		if(!isvec(target))
+		{
+			v_pos = target.origin;
+			if(isdefined(target.script_height))
+			{
+				n_breadcrumb_height = target.script_height;
+			}
+		}
+		v_pos = util::ground_position(v_pos, 300, n_breadcrumb_height);
+		player.v_current_active_breadcrumb = v_pos;
+		objective_position(obj_id, v_pos);
+		objective_state(obj_id, "active");
+	}
+
+	/*
+		Name: add_player
+		Namespace: cbreadcrumbobjective
+		Checksum: 0x7D679BC9
+		Offset: 0x1850
+		Size: 0xB4
+		Parameters: 1
+		Flags: Linked
+	*/
+	function add_player(player)
+	{
+		entnum = player getentitynumber();
+		obj_id = m_a_player_game_obj[entnum];
+		objective_setinvisibletoall(obj_id);
+		objective_setvisibletoplayer(obj_id, player);
+		objective_state(obj_id, "active");
+		thread do_player_breadcrumb(player);
+	}
+
+	/*
+		Name: start
+		Namespace: cbreadcrumbobjective
+		Checksum: 0x33D25588
+		Offset: 0x1798
+		Size: 0xAA
+		Parameters: 1
+		Flags: Linked
+	*/
+	function start(str_trig_targetname)
+	{
+		m_str_first_trig_targetname = str_trig_targetname;
+		m_done = 0;
+		foreach(player in level.players)
+		{
+			add_player(player);
+		}
+	}
+
+	/*
+		Name: show
+		Namespace: cbreadcrumbobjective
+		Checksum: 0x30F9045
+		Offset: 0x1690
+		Size: 0xFE
+		Parameters: 1
+		Flags: Linked
+	*/
+	function show(e_player)
+	{
+		if(isdefined(e_player))
+		{
+			/#
+				assert(isplayer(e_player), "");
+			#/
+			entnum = e_player getentitynumber();
+			obj_id = m_a_player_game_obj[entnum];
+			objective_setvisibletoplayer(obj_id, e_player);
 		}
 		else
 		{
-			str_trig_targetname = undefined;
+			for(i = 0; i < 4; i++)
+			{
+				obj_id = m_a_player_game_obj[i];
+				objective_setvisibletoplayerbyindex(obj_id, i);
+			}
 		}
 	}
-	while(isdefined(str_trig_targetname));
-	objective_setinvisibletoplayer(obj_id, player);
-	foreach(var_3f3b212a, player in level.players)
+
+	/*
+		Name: hide
+		Namespace: cbreadcrumbobjective
+		Checksum: 0x811D1AB3
+		Offset: 0x1588
+		Size: 0xFE
+		Parameters: 1
+		Flags: Linked
+	*/
+	function hide(e_player)
 	{
-		player.v_current_active_breadcrumb = undefined;
+		if(isdefined(e_player))
+		{
+			/#
+				assert(isplayer(e_player), "");
+			#/
+			entnum = e_player getentitynumber();
+			obj_id = m_a_player_game_obj[entnum];
+			objective_setinvisibletoplayer(obj_id, e_player);
+		}
+		else
+		{
+			for(i = 0; i < 4; i++)
+			{
+				obj_id = m_a_player_game_obj[i];
+				objective_setinvisibletoplayerbyindex(obj_id, i);
+			}
+		}
 	}
-	self.m_done = 1;
-}
 
-/*
-	Name: is_breadcrumb
-	Namespace: cbreadcrumbobjective
-	Checksum: 0x3FE0C49D
-	Offset: 0x1D38
-	Size: 0x8
-	Parameters: 0
-	Flags: Linked
-*/
-function is_breadcrumb()
-{
-	return 1;
-}
+	/*
+		Name: complete
+		Namespace: cbreadcrumbobjective
+		Checksum: 0xED9E6446
+		Offset: 0x1458
+		Size: 0x124
+		Parameters: 1
+		Flags: Linked
+	*/
+	function complete(a_target_or_list)
+	{
+		level notify(("breadcrumb_" + m_str_type) + "_complete");
+		for(i = 0; i < 4; i++)
+		{
+			obj_id = m_a_player_game_obj[i];
+			objective_state(obj_id, "done");
+		}
+		foreach(player in level.players)
+		{
+			player.v_current_active_breadcrumb = undefined;
+		}
+		cobjective::complete(a_target_or_list);
+	}
 
-/*
-	Name: is_done
-	Namespace: cbreadcrumbobjective
-	Checksum: 0xEF999E9C
-	Offset: 0x1D48
-	Size: 0xA
-	Parameters: 0
-	Flags: Linked
-*/
-function is_done()
-{
-	return self.m_done;
-}
+	/*
+		Name: init
+		Namespace: cbreadcrumbobjective
+		Checksum: 0xC2FABE03
+		Offset: 0x12D0
+		Size: 0x17C
+		Parameters: 3
+		Flags: Linked
+	*/
+	function init(str_type, a_target_list, b_done = 0)
+	{
+		cobjective::init(str_type, a_target_list, b_done);
+		m_str_first_trig_targetname = "";
+		m_done = b_done;
+		m_a_player_game_obj = [];
+		for(i = 0; i < 4; i++)
+		{
+			obj_id = gameobjects::get_next_obj_id();
+			m_a_player_game_obj[i] = obj_id;
+			if(m_done)
+			{
+				objective_add(obj_id, "done", (0, 0, 0), istring(m_str_type));
+				continue;
+			}
+			objective_add(obj_id, "empty", (0, 0, 0), istring(m_str_type));
+		}
+		obj_id = m_a_game_obj[0];
+		objective_setinvisibletoall(obj_id);
+	}
 
-/*
-	Name: __destructor
-	Namespace: cbreadcrumbobjective
-	Checksum: 0x76F0669B
-	Offset: 0x1D60
-	Size: 0x14
-	Parameters: 0
-	Flags: Linked
-*/
-function __destructor()
-{
-	cobjective::__destructor();
 }
 
 #namespace objectives;
-
-/*
-	Name: cbreadcrumbobjective
-	Namespace: objectives
-	Checksum: 0x3055588A
-	Offset: 0x1D80
-	Size: 0x4D6
-	Parameters: 0
-	Flags: AutoExec, Private
-*/
-private autoexec function cbreadcrumbobjective()
-{
-	classes.cbreadcrumbobjective[0] = spawnstruct();
-	classes.cbreadcrumbobjective[0].__vtable[1606033458] = &cobjective::__destructor;
-	classes.cbreadcrumbobjective[0].__vtable[167654991] = &cobjective::is_breadcrumb;
-	classes.cbreadcrumbobjective[0].__vtable[-379745077] = &cobjective::get_id_for_target;
-	classes.cbreadcrumbobjective[0].__vtable[-1058346386] = &cobjective::show_for_target;
-	classes.cbreadcrumbobjective[0].__vtable[1724316027] = &cobjective::hide_for_target;
-	classes.cbreadcrumbobjective[0].__vtable[1223845734] = &cobjective::show;
-	classes.cbreadcrumbobjective[0].__vtable[1355607693] = &cobjective::hide;
-	classes.cbreadcrumbobjective[0].__vtable[835524660] = &cobjective::complete;
-	classes.cbreadcrumbobjective[0].__vtable[1443065110] = &cobjective::add_target;
-	classes.cbreadcrumbobjective[0].__vtable[462299743] = &cobjective::update_counter;
-	classes.cbreadcrumbobjective[0].__vtable[-1714438864] = &cobjective::update_value;
-	classes.cbreadcrumbobjective[0].__vtable[-1017222485] = &cobjective::init;
-	classes.cbreadcrumbobjective[0].__vtable[-1690805083] = &cobjective::__constructor;
-	classes.cbreadcrumbobjective[0].__vtable[1606033458] = &cbreadcrumbobjective::__destructor;
-	classes.cbreadcrumbobjective[0].__vtable[-1590644052] = &cbreadcrumbobjective::is_done;
-	classes.cbreadcrumbobjective[0].__vtable[167654991] = &cbreadcrumbobjective::is_breadcrumb;
-	classes.cbreadcrumbobjective[0].__vtable[476493010] = &cbreadcrumbobjective::do_player_breadcrumb;
-	classes.cbreadcrumbobjective[0].__vtable[-486393183] = &cbreadcrumbobjective::set_player_objective;
-	classes.cbreadcrumbobjective[0].__vtable[1544512362] = &cbreadcrumbobjective::add_player;
-	classes.cbreadcrumbobjective[0].__vtable[55554463] = &cbreadcrumbobjective::start;
-	classes.cbreadcrumbobjective[0].__vtable[1223845734] = &cbreadcrumbobjective::show;
-	classes.cbreadcrumbobjective[0].__vtable[1355607693] = &cbreadcrumbobjective::hide;
-	classes.cbreadcrumbobjective[0].__vtable[835524660] = &cbreadcrumbobjective::complete;
-	classes.cbreadcrumbobjective[0].__vtable[-1017222485] = &cbreadcrumbobjective::init;
-	classes.cbreadcrumbobjective[0].__vtable[-1690805083] = &cbreadcrumbobjective::__constructor;
-}
 
 /*
 	Name: __init__sytem__
@@ -713,7 +660,7 @@ private autoexec function cbreadcrumbobjective()
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("objectives", &__init__, undefined, undefined);
 }
@@ -767,26 +714,25 @@ function set(str_obj_type, a_target_or_list, b_breadcrumb)
 		o_objective = level.a_objectives[str_obj_type];
 		if(isdefined(a_target_or_list))
 		{
-			foreach(var_61ca7ae5, target in a_target_or_list)
+			foreach(target in a_target_or_list)
 			{
 				[[ o_objective ]]->add_target(target);
 			}
 		}
 	}
-	else if(b_breadcrumb)
-	{
-		object = new cbreadcrumbobjective();
-		[[ object ]]->__constructor();
-		o_objective = object;
-	}
 	else
 	{
-		object = new cobjective();
-		[[ object ]]->__constructor();
-		o_objective = object;
+		if(b_breadcrumb)
+		{
+			o_objective = new cbreadcrumbobjective();
+		}
+		else
+		{
+			o_objective = new cobjective();
+		}
+		[[ o_objective ]]->init(str_obj_type, a_target_or_list);
+		level.a_objectives[str_obj_type] = o_objective;
 	}
-	[[ o_objective ]]->init(str_obj_type, a_target_or_list);
-	level.a_objectives[str_obj_type] = o_objective;
 	return o_objective;
 }
 
@@ -814,20 +760,19 @@ function complete(str_obj_type, a_target_or_list)
 		o_objective = level.a_objectives[str_obj_type];
 		[[ o_objective ]]->complete(a_target_or_list);
 	}
-	else if(str_obj_type == "cp_waypoint_breadcrumb")
-	{
-		object = new cbreadcrumbobjective();
-		[[ object ]]->__constructor();
-		o_objective = object;
-	}
 	else
 	{
-		object = new cobjective();
-		[[ object ]]->__constructor();
-		o_objective = object;
+		if(str_obj_type == "cp_waypoint_breadcrumb")
+		{
+			o_objective = new cbreadcrumbobjective();
+		}
+		else
+		{
+			o_objective = new cobjective();
+		}
+		[[ o_objective ]]->init(str_obj_type, undefined, 1);
+		level.a_objectives[str_obj_type] = o_objective;
 	}
-	[[ o_objective ]]->init(str_obj_type, undefined, 1);
-	level.a_objectives[str_obj_type] = o_objective;
 }
 
 /*
@@ -934,7 +879,12 @@ function hide(str_obj_type, e_player)
 		o_objective = level.a_objectives[str_obj_type];
 		[[ o_objective ]]->hide(e_player);
 	}
-	assert(0, "");
+	else
+	{
+		/#
+			assert(0, "");
+		#/
+	}
 }
 
 /*
@@ -953,7 +903,12 @@ function hide_for_target(str_obj_type, e_target)
 		o_objective = level.a_objectives[str_obj_type];
 		[[ o_objective ]]->hide_for_target(e_target);
 	}
-	assert(0, "");
+	else
+	{
+		/#
+			assert(0, "");
+		#/
+	}
 }
 
 /*
@@ -972,7 +927,12 @@ function show(str_obj_type, e_player)
 		o_objective = level.a_objectives[str_obj_type];
 		[[ o_objective ]]->show(e_player);
 	}
-	assert(0, "");
+	else
+	{
+		/#
+			assert(0, "");
+		#/
+	}
 }
 
 /*
@@ -991,7 +951,12 @@ function show_for_target(str_obj_type, e_target)
 		o_objective = level.a_objectives[str_obj_type];
 		[[ o_objective ]]->show_for_target(e_target);
 	}
-	assert(0, "");
+	else
+	{
+		/#
+			assert(0, "");
+		#/
+	}
 }
 
 /*
@@ -1031,7 +996,7 @@ function get_id_for_target(str_obj_type, e_target)
 */
 function event_message(istr_message)
 {
-	foreach(var_26a0864b, player in level.players)
+	foreach(player in level.players)
 	{
 		util::show_event_message(player, istring(istr_message));
 	}
@@ -1136,11 +1101,11 @@ function destroy_temp_icon()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function on_player_spawned()
+function private on_player_spawned()
 {
 	if(isdefined(level.a_objectives))
 	{
-		foreach(var_c5e897e5, o_objective in level.a_objectives)
+		foreach(o_objective in level.a_objectives)
 		{
 			if([[ o_objective ]]->is_breadcrumb() && !([[ o_objective ]]->is_done()))
 			{

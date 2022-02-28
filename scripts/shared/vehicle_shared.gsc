@@ -28,7 +28,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("vehicle_shared", &__init__, &__main__, undefined);
 }
@@ -245,7 +245,7 @@ function trigger_process(trigger)
 				#/
 				return;
 			}
-			foreach(var_3154dd4d, vehicle in arraycopy(level.vehicle_startmovegroup[trigger.script_vehiclestartmove]))
+			foreach(vehicle in arraycopy(level.vehicle_startmovegroup[trigger.script_vehiclestartmove]))
 			{
 				if(isdefined(vehicle))
 				{
@@ -585,13 +585,13 @@ function islastnode(node)
 {
 	if(!isdefined(node.target))
 	{
-		return 1;
+		return true;
 	}
 	if(!isdefined(getvehiclenode(node.target, "targetname")) && !isdefined(get_vehiclenode_any_dynamic(node.target)))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -694,34 +694,46 @@ function paths(node)
 			{
 				self god_on();
 			}
-			else if(currentpoint.script_noteworthy == "godoff")
+			else
 			{
-				self god_off();
-			}
-			else if(currentpoint.script_noteworthy == "drivepath")
-			{
-				self drivepath();
-			}
-			else if(currentpoint.script_noteworthy == "lockpath")
-			{
-				self startpath();
-			}
-			else if(currentpoint.script_noteworthy == "brake")
-			{
-				if(self.isphysicsvehicle)
+				if(currentpoint.script_noteworthy == "godoff")
 				{
-					self setbrake(1);
+					self god_off();
 				}
-				self setspeed(0, 60, 60);
-			}
-			else if(currentpoint.script_noteworthy == "resumespeed")
-			{
-				accel = 30;
-				if(isdefined(currentpoint.script_float))
+				else
 				{
-					accel = currentpoint.script_float;
+					if(currentpoint.script_noteworthy == "drivepath")
+					{
+						self drivepath();
+					}
+					else
+					{
+						if(currentpoint.script_noteworthy == "lockpath")
+						{
+							self startpath();
+						}
+						else
+						{
+							if(currentpoint.script_noteworthy == "brake")
+							{
+								if(self.isphysicsvehicle)
+								{
+									self setbrake(1);
+								}
+								self setspeed(0, 60, 60);
+							}
+							else if(currentpoint.script_noteworthy == "resumespeed")
+							{
+								accel = 30;
+								if(isdefined(currentpoint.script_float))
+								{
+									accel = currentpoint.script_float;
+								}
+								self resumespeed(accel);
+							}
+						}
+					}
 				}
-				self resumespeed(accel);
 			}
 		}
 		if(isdefined(currentpoint.script_crashtypeoverride))
@@ -943,7 +955,12 @@ function get_on_path(path_start, str_key = "targetname")
 				assertmsg("" + self.targetname);
 			#/
 		}
-		assertmsg("" + self.targetname);
+		else
+		{
+			/#
+				assertmsg("" + self.targetname);
+			#/
+		}
 	}
 	if(isdefined(self.hasstarted))
 	{
@@ -1911,7 +1928,7 @@ function setup_triggers()
 function setup_nodes()
 {
 	a_nodes = getallvehiclenodes();
-	foreach(var_9e450823, node in a_nodes)
+	foreach(node in a_nodes)
 	{
 		if(isdefined(node.script_flag_set))
 		{
@@ -1954,7 +1971,7 @@ function setup_spawners(a_veh_spawners)
 {
 	spawnvehicles = [];
 	groups = [];
-	foreach(var_f95891f6, spawner in a_veh_spawners)
+	foreach(spawner in a_veh_spawners)
 	{
 		if(isdefined(spawner.script_vehiclespawngroup))
 		{
@@ -1972,11 +1989,11 @@ function setup_spawners(a_veh_spawners)
 		}
 	}
 	waittillframeend();
-	foreach(var_d990882f, spawngroup in groups)
+	foreach(spawngroup in groups)
 	{
 		a_veh_spawners = spawnvehicles[spawngroup];
 		level.vehicle_spawners[spawngroup] = [];
-		foreach(var_bd9f66a5, sp in a_veh_spawners)
+		foreach(sp in a_veh_spawners)
 		{
 			if(sp.count < 1)
 			{
@@ -2019,11 +2036,14 @@ function _vehicle_life()
 		{
 			self.health = self.script_startinghealth;
 		}
-		else if(self.healthdefault == -1)
+		else
 		{
-			return;
+			if(self.healthdefault == -1)
+			{
+				return;
+			}
+			self.health = self.healthdefault;
 		}
-		self.health = self.healthdefault;
 	}
 }
 
@@ -2053,13 +2073,13 @@ function is_cheap()
 {
 	if(!isdefined(self.script_cheap))
 	{
-		return 0;
+		return false;
 	}
 	if(!self.script_cheap)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -2075,13 +2095,13 @@ function has_helicopter_dust_kickup()
 {
 	if(!(isdefined(self.vehicleclass) && self.vehicleclass == "plane"))
 	{
-		return 0;
+		return false;
 	}
 	if(is_cheap())
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -2266,9 +2286,9 @@ function attacker_is_on_my_team(attacker)
 {
 	if(isdefined(attacker) && isdefined(attacker.team) && isdefined(self.team) && attacker.team == self.team)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2284,13 +2304,13 @@ function attacker_troop_is_on_my_team(attacker)
 {
 	if(isdefined(self.team) && self.team == "allies" && isdefined(attacker) && isdefined(level.player) && attacker == level.player)
 	{
-		return 1;
+		return true;
 	}
 	if(isai(attacker) && attacker.team == self.team)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2306,18 +2326,18 @@ function bullet_shielded(type)
 {
 	if(!isdefined(self.script_bulletshield))
 	{
-		return 0;
+		return false;
 	}
 	type = tolower(type);
 	if(!isdefined(type) || !issubstr(type, "bullet"))
 	{
-		return 0;
+		return false;
 	}
 	if(self.script_bulletshield)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2351,13 +2371,13 @@ function friendly_fire_shield_callback(attacker, amount, type)
 {
 	if(!isdefined(self.friendlyfire_shield) || !self.friendlyfire_shield)
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(attacker) && self.team != "neutral" || attacker_is_on_my_team(attacker) || attacker_troop_is_on_my_team(attacker) || is_destructible() || bullet_shielded(type))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2399,13 +2419,16 @@ function _vehicle_bad_place()
 		{
 			bp_radius = 200;
 		}
-		else if(speed > 5 && speed < 8)
-		{
-			bp_radius = 350;
-		}
 		else
 		{
-			bp_radius = 500;
+			if(speed > 5 && speed < 8)
+			{
+				bp_radius = 350;
+			}
+			else
+			{
+				bp_radius = 500;
+			}
 		}
 		if(isdefined(self.badplacemodifier))
 		{
@@ -2681,7 +2704,7 @@ function setup_targetname_spawners()
 	level.vehicle_targetname_array = [];
 	vehicles = getentarray("script_vehicle", "classname");
 	n_highest_group = 0;
-	foreach(var_869f8c01, vh in vehicles)
+	foreach(vh in vehicles)
 	{
 		if(isdefined(vh.script_vehiclespawngroup))
 		{
@@ -2732,7 +2755,7 @@ function simple_spawn(name, b_supress_assert = 0)
 		if(array.size > 0)
 		{
 			keys = getarraykeys(array);
-			foreach(var_8bde06c7, key in keys)
+			foreach(key in keys)
 			{
 				vehicle_array = _scripted_spawn(key);
 				vehicles = arraycombine(vehicles, vehicle_array, 1, 0);
@@ -3274,9 +3297,9 @@ function update_damage_fx_level(currenthealth, damage, maxhealth)
 	if(newdamagelevel > 0)
 	{
 		self set_damage_fx_level(newdamagelevel);
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -3707,14 +3730,14 @@ function is_corpse(veh)
 	{
 		if(isdefined(veh.isacorpse) && veh.isacorpse)
 		{
-			return 1;
+			return true;
 		}
 		if(isdefined(veh.classname) && veh.classname == "script_vehicle_corpse")
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -3730,21 +3753,21 @@ function is_on(vehicle)
 {
 	if(!isdefined(self.viewlockedentity))
 	{
-		return 0;
+		return false;
 	}
 	if(self.viewlockedentity == vehicle)
 	{
-		return 1;
+		return true;
 	}
 	if(!isdefined(self.groundentity))
 	{
-		return 0;
+		return false;
 	}
 	if(self.groundentity == vehicle)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -3852,7 +3875,7 @@ function add_hijack_function(veh_targetname, spawn_func, param1, param2, param3,
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function _watch_for_hijacked_vehicles()
+function private _watch_for_hijacked_vehicles()
 {
 	while(true)
 	{
@@ -3865,7 +3888,7 @@ private function _watch_for_hijacked_vehicles()
 		waittillframeend();
 		if(isdefined(str_targetname) && isdefined(level.a_vehicle_hijack_targetnames) && isdefined(level.a_vehicle_hijack_targetnames[str_targetname]))
 		{
-			foreach(var_9a120358, func in level.a_vehicle_hijack_targetnames[str_targetname])
+			foreach(func in level.a_vehicle_hijack_targetnames[str_targetname])
 			{
 				util::single_thread(clone, func["function"], func["param1"], func["param2"], func["param3"], func["param4"]);
 			}
@@ -4020,7 +4043,7 @@ function get_closest_attacker_with_missile_locked_on_to_me(monitored_entity)
 	view_origin = player getplayercamerapos();
 	view_forward = anglestoforward(player getplayerangles());
 	remaining_locked_on_flags = 0;
-	foreach(var_b5a5713a, target_ent in monitored_entity.target_group)
+	foreach(target_ent in monitored_entity.target_group)
 	{
 		if(isdefined(target_ent) && isdefined(target_ent.locked_on))
 		{
@@ -4166,7 +4189,7 @@ function player_is_driver()
 {
 	if(!isalive(self))
 	{
-		return 0;
+		return false;
 	}
 	vehicle = self getvehicleoccupied();
 	if(isdefined(vehicle))
@@ -4174,10 +4197,10 @@ function player_is_driver()
 		seat = vehicle getoccupantseat(self);
 		if(isdefined(seat) && seat == 0)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -4194,7 +4217,7 @@ function vehicle_spawner_tool()
 	/#
 		allvehicles = getentarray("", "");
 		vehicletypes = [];
-		foreach(var_e528949, veh in allvehicles)
+		foreach(veh in allvehicles)
 		{
 			vehicletypes[veh.vehicletype] = veh.model;
 		}
@@ -4335,7 +4358,7 @@ function _spline_debug()
 		while(true)
 		{
 			level flag::wait_till("");
-			foreach(var_f43f04ec, nd in getallvehiclenodes())
+			foreach(nd in getallvehiclenodes())
 			{
 				nd show_node_debug_info();
 			}

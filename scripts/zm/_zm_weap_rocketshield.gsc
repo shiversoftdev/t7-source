@@ -33,7 +33,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_weap_rocketshield", &__init__, &__main__, undefined);
 }
@@ -331,7 +331,7 @@ function riotshield_melee_juke(weapon)
 		{
 			[[level.riotshield_melee_juke_callback]](enemies);
 		}
-		foreach(var_2e7277ad, zombie in enemies)
+		foreach(zombie in enemies)
 		{
 			self playsound("zmb_rocketshield_imp");
 			zombie thread riotshield::riotshield_fling_zombie(self, zombie.fling_vec, 0);
@@ -362,13 +362,13 @@ function function_92debe0a()
 {
 	/#
 		level waittill(#"start_of_round");
-		foreach(var_ed697aa1, player in getplayers())
+		foreach(player in getplayers())
 		{
 		}
 		while(true)
 		{
 			level waittill(#"start_of_round");
-			foreach(var_95a9c2b, player in getplayers())
+			foreach(player in getplayers())
 			{
 				if(isdefined(player.hasriotshield) && player.hasriotshield)
 				{
@@ -452,14 +452,14 @@ function spawn_recharge_tanks()
 	/#
 		level thread function_fc8bb1d(a_e_spawnpoints);
 	#/
-	foreach(var_d45abeb7, e_spawnpoint in a_e_spawnpoints)
+	foreach(e_spawnpoint in a_e_spawnpoints)
 	{
 		if(isdefined(e_spawnpoint.spawned) && e_spawnpoint.spawned)
 		{
 			n_spawned++;
 		}
 	}
-	foreach(var_a446eb6f, e_spawnpoint in a_e_spawnpoints)
+	foreach(e_spawnpoint in a_e_spawnpoints)
 	{
 		if(n_spawned < n_charges)
 		{
@@ -540,7 +540,7 @@ function function_fc8bb1d(a_spawnpoints)
 			n_debug = getdvarint("", 0);
 			if(n_debug > 0)
 			{
-				foreach(var_1938a6c1, spawnpoint in a_spawnpoints)
+				foreach(spawnpoint in a_spawnpoints)
 				{
 					v_color = (1, 1, 1);
 					if(isdefined(spawnpoint.spawned) && spawnpoint.spawned)
@@ -714,11 +714,11 @@ function detect_reentry()
 		{
 			if(self.devgui_preserve_time == gettime())
 			{
-				return 1;
+				return true;
 			}
 		}
 		self.devgui_preserve_time = gettime();
-		return 0;
+		return false;
 	#/
 }
 

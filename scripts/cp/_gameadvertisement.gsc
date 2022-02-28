@@ -161,7 +161,7 @@ function teamscorelimitcheck(rulescorepercent)
 	if(level.scorelimit)
 	{
 		minscorepercentageleft = 100;
-		foreach(var_372a7541, team in level.teams)
+		foreach(team in level.teams)
 		{
 			scorepercentageleft = 100 - ((game["teamScores"][team] / level.scorelimit) * 100);
 			if(minscorepercentageleft > scorepercentageleft)
@@ -173,14 +173,14 @@ function teamscorelimitcheck(rulescorepercent)
 				/#
 					updatedebughud(3, "", int(scorepercentageleft));
 				#/
-				return 0;
+				return false;
 			}
 		}
 		/#
 			updatedebughud(3, "", int(minscorepercentageleft));
 		#/
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -200,10 +200,10 @@ function timelimitcheck(ruletimeleft)
 		timeleft = globallogic_utils::gettimeremaining();
 		if(ruletimeleft >= timeleft)
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -240,14 +240,14 @@ function dm_rules()
 		#/
 		if(rulescorepercent >= scorepercentageleft)
 		{
-			return 0;
+			return false;
 		}
 	}
 	if(timelimitcheck(ruletimeleft) == 0)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -269,13 +269,13 @@ function tdm_rules()
 	#/
 	if(teamscorelimitcheck(rulescorepercent) == 0)
 	{
-		return 0;
+		return false;
 	}
 	if(timelimitcheck(ruletimeleft) == 0)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -302,18 +302,18 @@ function dom_rules()
 	{
 		if(teamscorelimitcheck(rulescorepercent) == 0)
 		{
-			return 0;
+			return false;
 		}
 	}
 	if(timelimitcheck(ruletimeleft) == 0)
 	{
-		return 0;
+		return false;
 	}
 	if(ruleround <= currentround)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -346,7 +346,7 @@ function sd_rules()
 		updatedebughud(1, "", ruleround);
 	#/
 	maxroundswon = 0;
-	foreach(var_7771f716, team in level.teams)
+	foreach(team in level.teams)
 	{
 		roundswon = game["teamScores"][team];
 		if(maxroundswon < roundswon)
@@ -358,13 +358,13 @@ function sd_rules()
 			/#
 				updatedebughud(3, "", maxroundswon);
 			#/
-			return 0;
+			return false;
 		}
 	}
 	/#
 		updatedebughud(3, "", maxroundswon);
 	#/
-	return 1;
+	return true;
 }
 
 /*
@@ -400,9 +400,9 @@ function ctf_rules()
 	#/
 	if(ruleround <= roundsplayed)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -424,13 +424,13 @@ function koth_rules()
 	#/
 	if(teamscorelimitcheck(rulescorepercent) == 0)
 	{
-		return 0;
+		return false;
 	}
 	if(timelimitcheck(ruletimeleft) == 0)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -461,7 +461,7 @@ function oic_rules()
 	/#
 		updatedebughud(1, "", 0);
 	#/
-	return 0;
+	return false;
 }
 
 /*
@@ -483,13 +483,13 @@ function sas_rules()
 	#/
 	if(teamscorelimitcheck(rulescorepercent) == 0)
 	{
-		return 0;
+		return false;
 	}
 	if(timelimitcheck(ruletimeleft) == 0)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -508,7 +508,7 @@ function gun_rules()
 		updatedebughud(1, "", ruleweaponsleft);
 	#/
 	minweaponsleft = level.gunprogression.size;
-	foreach(var_32ab2a3a, player in level.players)
+	foreach(player in level.players)
 	{
 		weaponsleft = level.gunprogression.size - player.gunprogress;
 		if(minweaponsleft > weaponsleft)
@@ -520,13 +520,13 @@ function gun_rules()
 			/#
 				updatedebughud(3, "", minweaponsleft);
 			#/
-			return 0;
+			return false;
 		}
 	}
 	/#
 		updatedebughud(3, "", minweaponsleft);
 	#/
-	return 1;
+	return true;
 }
 
 /*
@@ -548,13 +548,13 @@ function shrp_rules()
 	#/
 	if(teamscorelimitcheck(rulescorepercent) == 0)
 	{
-		return 0;
+		return false;
 	}
 	if(timelimitcheck(ruletimeleft) == 0)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -713,34 +713,37 @@ function sessionadvertismentupdatedebughud()
 					sessionadverthud_4a = undefined;
 					sessionadverthud_4b = undefined;
 				}
-				else if(level.sessionadvertstatus == 1)
-				{
-					sessionadverthud_0.color = (1, 1, 1);
-				}
 				else
 				{
-					sessionadverthud_0.color = vectorscale((1, 0, 0), 0.9);
-				}
-				sessionadverthud_0 settext(level.sessionadverthud_0_text);
-				if(level.sessionadverthud_1a_text != "")
-				{
-					sessionadverthud_1a settext(level.sessionadverthud_1a_text);
-					sessionadverthud_1b setvalue(level.sessionadverthud_1b_text);
-				}
-				if(level.sessionadverthud_2a_text != "")
-				{
-					sessionadverthud_2a settext(level.sessionadverthud_2a_text);
-					sessionadverthud_2b setvalue(level.sessionadverthud_2b_text);
-				}
-				if(level.sessionadverthud_3a_text != "")
-				{
-					sessionadverthud_3a settext(level.sessionadverthud_3a_text);
-					sessionadverthud_3b setvalue(level.sessionadverthud_3b_text);
-				}
-				if(level.sessionadverthud_4a_text != "")
-				{
-					sessionadverthud_4a settext(level.sessionadverthud_4a_text);
-					sessionadverthud_4b setvalue(level.sessionadverthud_4b_text);
+					if(level.sessionadvertstatus == 1)
+					{
+						sessionadverthud_0.color = (1, 1, 1);
+					}
+					else
+					{
+						sessionadverthud_0.color = vectorscale((1, 0, 0), 0.9);
+					}
+					sessionadverthud_0 settext(level.sessionadverthud_0_text);
+					if(level.sessionadverthud_1a_text != "")
+					{
+						sessionadverthud_1a settext(level.sessionadverthud_1a_text);
+						sessionadverthud_1b setvalue(level.sessionadverthud_1b_text);
+					}
+					if(level.sessionadverthud_2a_text != "")
+					{
+						sessionadverthud_2a settext(level.sessionadverthud_2a_text);
+						sessionadverthud_2b setvalue(level.sessionadverthud_2b_text);
+					}
+					if(level.sessionadverthud_3a_text != "")
+					{
+						sessionadverthud_3a settext(level.sessionadverthud_3a_text);
+						sessionadverthud_3b setvalue(level.sessionadverthud_3b_text);
+					}
+					if(level.sessionadverthud_4a_text != "")
+					{
+						sessionadverthud_4a settext(level.sessionadverthud_4a_text);
+						sessionadverthud_4b setvalue(level.sessionadverthud_4b_text);
+					}
 				}
 			}
 		}

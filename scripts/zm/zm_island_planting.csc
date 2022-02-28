@@ -63,26 +63,32 @@ function plant_growth_siege_anims(localclientnum, oldval, newval, bnewent, binit
 		self.var_600eec00 siegecmd("set_anim", "p7_fxanim_zm_island_plant_bulb_grow1_idle_sanim", "loop");
 		self.var_a32dfd4 siegecmd("set_anim", "p7_fxanim_zm_island_plant_roots_grow1_idle_sanim", "loop");
 	}
-	else if(newval == 2)
-	{
-		self endon(#"hash_d6c6e49");
-		self notify(#"hash_336ee8b2");
-		self.var_600eec00 siegecmd("set_anim", "p7_fxanim_zm_island_plant_bulb_grow2_sanim", "unloop");
-		self.var_a32dfd4 siegecmd("set_anim", "p7_fxanim_zm_island_plant_roots_grow2_sanim", "unloop");
-		n_wait_time = getanimlength("p7_fxanim_zm_island_plant_bulb_grow2_sanim");
-		wait(n_wait_time);
-		self.var_600eec00 siegecmd("set_anim", "p7_fxanim_zm_island_plant_bulb_grow2_idle_sanim", "loop");
-		self.var_a32dfd4 siegecmd("set_anim", "p7_fxanim_zm_island_plant_roots_grow2_idle_sanim", "loop");
-	}
-	else if(newval == 3)
-	{
-		self notify(#"hash_d6c6e49");
-		self.var_600eec00 siegecmd("set_anim", "p7_fxanim_zm_island_plant_bulb_open_sanim", "unloop");
-		self.var_a32dfd4 siegecmd("set_anim", "p7_fxanim_zm_island_plant_roots_open_sanim", "unloop");
-	}
 	else
 	{
-		self.var_600eec00 siegecmd("set_anim", "p7_fxanim_zm_island_plant_bulb_dead_sanim", "unloop");
+		if(newval == 2)
+		{
+			self endon(#"hash_d6c6e49");
+			self notify(#"hash_336ee8b2");
+			self.var_600eec00 siegecmd("set_anim", "p7_fxanim_zm_island_plant_bulb_grow2_sanim", "unloop");
+			self.var_a32dfd4 siegecmd("set_anim", "p7_fxanim_zm_island_plant_roots_grow2_sanim", "unloop");
+			n_wait_time = getanimlength("p7_fxanim_zm_island_plant_bulb_grow2_sanim");
+			wait(n_wait_time);
+			self.var_600eec00 siegecmd("set_anim", "p7_fxanim_zm_island_plant_bulb_grow2_idle_sanim", "loop");
+			self.var_a32dfd4 siegecmd("set_anim", "p7_fxanim_zm_island_plant_roots_grow2_idle_sanim", "loop");
+		}
+		else
+		{
+			if(newval == 3)
+			{
+				self notify(#"hash_d6c6e49");
+				self.var_600eec00 siegecmd("set_anim", "p7_fxanim_zm_island_plant_bulb_open_sanim", "unloop");
+				self.var_a32dfd4 siegecmd("set_anim", "p7_fxanim_zm_island_plant_roots_open_sanim", "unloop");
+			}
+			else
+			{
+				self.var_600eec00 siegecmd("set_anim", "p7_fxanim_zm_island_plant_bulb_dead_sanim", "unloop");
+			}
+		}
 	}
 }
 
@@ -342,14 +348,17 @@ function zombie_or_grenade_spawned_from_minor_cache_plant(localclientnum, oldval
 	{
 		self.var_7fec15a0 = playfxontag(localclientnum, level._effect["cache_slime"], self, "plant_cache_major_feeler_03_03_jnt");
 	}
-	else if(newval == 2)
+	else
 	{
-		self.var_7fec15a0 = playfxontag(localclientnum, level._effect["cache_slime_small"], self, "plant_cache_major_feeler_03_03_jnt");
-	}
-	else if(isdefined(self.var_7fec15a0))
-	{
-		deletefx(localclientnum, self.var_7fec15a0, 0);
-		self.var_7fec15a0 = undefined;
+		if(newval == 2)
+		{
+			self.var_7fec15a0 = playfxontag(localclientnum, level._effect["cache_slime_small"], self, "plant_cache_major_feeler_03_03_jnt");
+		}
+		else if(isdefined(self.var_7fec15a0))
+		{
+			deletefx(localclientnum, self.var_7fec15a0, 0);
+			self.var_7fec15a0 = undefined;
+		}
 	}
 }
 

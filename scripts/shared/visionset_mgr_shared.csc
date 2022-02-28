@@ -17,7 +17,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("visionset_mgr", &__init__, undefined, undefined);
 }
@@ -395,17 +395,17 @@ function validate_info(type, name, version)
 	#/
 	if(version > level.vsmgr[type].server_version)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(level.vsmgr[type].info[name]) && version < level.vsmgr[type].info[name].version)
 	{
 		if(version < level.vsmgr[type].info[name].version)
 		{
-			return 0;
+			return false;
 		}
 		level.vsmgr[type].info[name] = undefined;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -464,7 +464,7 @@ function register_info(type, name, version, lerp_step_count)
 	lower_name = tolower(name);
 	if(!validate_info(type, lower_name, version))
 	{
-		return 0;
+		return false;
 	}
 	add_sorted_name_key(type, lower_name);
 	level.vsmgr[type].info[lower_name] = spawnstruct();
@@ -473,7 +473,7 @@ function register_info(type, name, version, lerp_step_count)
 	{
 		level.vsmgr[type].highest_version = version;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -724,11 +724,14 @@ function demo_spectate_monitor()
 			}
 			level.vsmgr_is_spectating = 1;
 		}
-		else if(isdefined(level.vsmgr_is_spectating) && level.vsmgr_is_spectating)
+		else
 		{
-			level notify(#"visionset_mgr_reset");
+			if(isdefined(level.vsmgr_is_spectating) && level.vsmgr_is_spectating)
+			{
+				level notify(#"visionset_mgr_reset");
+			}
+			level.vsmgr_is_spectating = 0;
 		}
-		level.vsmgr_is_spectating = 0;
 		wait(0.016);
 	}
 }
@@ -792,10 +795,10 @@ function killcam_visionset_vehicle_mismatch(visionset_to, visionset_vehicle, veh
 	{
 		if(isdefined(self.vehicletype) && self.vehicletype != vehicletype)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -813,10 +816,10 @@ function killcam_visionset_player_mismatch(visionset_to, visionset_vehicle)
 	{
 		if(!self isplayer())
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -890,13 +893,16 @@ function visionset_update_cb(localclientnum, type)
 			visionsetnakedlerp(localclientnum, curr_info.visionset_to, level._fv2vs_prev_visionsets[localclientnum], state.curr_lerp);
 		}
 	}
-	else if(curr_info.visionset_type == 6)
-	{
-		visionsetlaststandlerp(localclientnum, curr_info.visionset_to, curr_info.visionset_from, state.curr_lerp);
-	}
 	else
 	{
-		visionsetnakedlerp(localclientnum, curr_info.visionset_to, curr_info.visionset_from, state.curr_lerp);
+		if(curr_info.visionset_type == 6)
+		{
+			visionsetlaststandlerp(localclientnum, curr_info.visionset_to, curr_info.visionset_from, state.curr_lerp);
+		}
+		else
+		{
+			visionsetnakedlerp(localclientnum, curr_info.visionset_to, curr_info.visionset_from, state.curr_lerp);
+		}
 	}
 }
 
@@ -1098,25 +1104,37 @@ function overlay_update_cb(localclientnum, type)
 				{
 					enablespeedblur(localclientnum, curr_info.amount, curr_info.inner_radius, curr_info.outer_radius, curr_info.velocity_should_scale, curr_info.velocity_scale, curr_info.blur_in, curr_info.blur_out, curr_info.should_offset);
 				}
-				else if(isdefined(curr_info.blur_out))
-				{
-					enablespeedblur(localclientnum, curr_info.amount, curr_info.inner_radius, curr_info.outer_radius, curr_info.velocity_should_scale, curr_info.velocity_scale, curr_info.blur_in, curr_info.blur_out);
-				}
-				else if(isdefined(curr_info.blur_in))
-				{
-					enablespeedblur(localclientnum, curr_info.amount, curr_info.inner_radius, curr_info.outer_radius, curr_info.velocity_should_scale, curr_info.velocity_scale, curr_info.blur_in);
-				}
-				else if(isdefined(curr_info.velocity_scale))
-				{
-					enablespeedblur(localclientnum, curr_info.amount, curr_info.inner_radius, curr_info.outer_radius, curr_info.velocity_should_scale, curr_info.velocity_scale);
-				}
-				else if(isdefined(curr_info.velocity_should_scale))
-				{
-					enablespeedblur(localclientnum, curr_info.amount, curr_info.inner_radius, curr_info.outer_radius, curr_info.velocity_should_scale);
-				}
 				else
 				{
-					enablespeedblur(localclientnum, curr_info.amount, curr_info.inner_radius, curr_info.outer_radius);
+					if(isdefined(curr_info.blur_out))
+					{
+						enablespeedblur(localclientnum, curr_info.amount, curr_info.inner_radius, curr_info.outer_radius, curr_info.velocity_should_scale, curr_info.velocity_scale, curr_info.blur_in, curr_info.blur_out);
+					}
+					else
+					{
+						if(isdefined(curr_info.blur_in))
+						{
+							enablespeedblur(localclientnum, curr_info.amount, curr_info.inner_radius, curr_info.outer_radius, curr_info.velocity_should_scale, curr_info.velocity_scale, curr_info.blur_in);
+						}
+						else
+						{
+							if(isdefined(curr_info.velocity_scale))
+							{
+								enablespeedblur(localclientnum, curr_info.amount, curr_info.inner_radius, curr_info.outer_radius, curr_info.velocity_should_scale, curr_info.velocity_scale);
+							}
+							else
+							{
+								if(isdefined(curr_info.velocity_should_scale))
+								{
+									enablespeedblur(localclientnum, curr_info.amount, curr_info.inner_radius, curr_info.outer_radius, curr_info.velocity_should_scale);
+								}
+								else
+								{
+									enablespeedblur(localclientnum, curr_info.amount, curr_info.inner_radius, curr_info.outer_radius);
+								}
+							}
+						}
+					}
 				}
 			}
 			break;

@@ -18,7 +18,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("emp", &__init__, undefined, undefined);
 }
@@ -60,7 +60,7 @@ function monitor_emp_killstreaks()
 		has_at_least_one_active_enemy_turret = 0;
 		arrayremovevalue(level.emp_killstreaks, undefined);
 		local_players = getlocalplayers();
-		foreach(var_fa345d7d, local_player in local_players)
+		foreach(local_player in local_players)
 		{
 			if(local_player islocalplayer() == 0)
 			{
@@ -91,7 +91,7 @@ function get_closest_enemy_emp_killstreak(local_player)
 {
 	closest_emp = undefined;
 	closest_emp_distance_squared = 99999999;
-	foreach(var_7ca2abe5, emp in level.emp_killstreaks)
+	foreach(emp in level.emp_killstreaks)
 	{
 		if(emp.owner == local_player || emp.team == local_player.team)
 		{

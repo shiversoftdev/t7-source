@@ -20,7 +20,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_bgb_profit_sharing", &__init__, undefined, "bgb");
 }
@@ -126,7 +126,7 @@ function add_to_player_score_override(n_points, str_awarded_by, var_1ed9bd9b)
 	}
 	if(!var_1ed9bd9b)
 	{
-		foreach(var_8e14c94b, e_player in level.players)
+		foreach(e_player in level.players)
 		{
 			if(isdefined(e_player) && "zm_bgb_profit_sharing" == e_player bgb::get_enabled())
 			{
@@ -139,7 +139,7 @@ function add_to_player_score_override(n_points, str_awarded_by, var_1ed9bd9b)
 	}
 	else if(isdefined(self.var_6638f10b) && self.var_6638f10b.size > 0)
 	{
-		foreach(var_1c6d03e, e_player in self.var_6638f10b)
+		foreach(e_player in self.var_6638f10b)
 		{
 			if(isdefined(e_player))
 			{

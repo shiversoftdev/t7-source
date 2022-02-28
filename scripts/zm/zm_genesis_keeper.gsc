@@ -50,7 +50,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_genesis_keeper", &__init__, undefined, undefined);
 }
@@ -86,7 +86,7 @@ function __init__()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_cf48298e()
+function private function_cf48298e()
 {
 	behaviortreenetworkutility::registerbehaviortreescriptapi("genesisKeeperDeathStart", &function_9d655978);
 }
@@ -157,7 +157,7 @@ function function_51dd865c()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_85d4833b()
+function private function_85d4833b()
 {
 	level flagsys::wait_till("start_zombie_round_logic");
 	zm_devgui::add_custom_devgui_callback(&function_e361808);
@@ -194,7 +194,7 @@ function keeper_death()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_e361808(cmd)
+function private function_e361808(cmd)
 {
 	switch(cmd)
 	{
@@ -225,7 +225,7 @@ private function function_e361808(cmd)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_dfdf3fc1()
+function private function_dfdf3fc1()
 {
 	self endon(#"death");
 	self.spawn_time = gettime();
@@ -605,7 +605,7 @@ function function_cb6b3469()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function archetypezombieonanimscriptedcallback(entity)
+function private archetypezombieonanimscriptedcallback(entity)
 {
 	entity.__blackboard = undefined;
 	entity function_cb6b3469();

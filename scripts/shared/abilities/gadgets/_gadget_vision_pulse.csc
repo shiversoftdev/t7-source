@@ -22,7 +22,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("gadget_vision_pulse", &__init__, undefined, undefined);
 }
@@ -163,13 +163,16 @@ function do_vision_world_pulse(localclientnum)
 		{
 			irisamount = elapsedtime / 200;
 		}
-		else if(elapsedtime < (2000 * 0.6))
-		{
-			irisamount = 1 - (elapsedtime / 1000);
-		}
 		else
 		{
-			irisamount = 0;
+			if(elapsedtime < (2000 * 0.6))
+			{
+				irisamount = 1 - (elapsedtime / 1000);
+			}
+			else
+			{
+				irisamount = 0;
+			}
 		}
 		amount = 1 - (elapsedtime / 2000);
 		pulseradius = getvisionpulseradius(localclientnum);
@@ -196,9 +199,9 @@ function vision_pulse_owner_valid(owner)
 {
 	if(isdefined(owner) && owner isplayer() && isalive(owner))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

@@ -414,7 +414,7 @@ function resetteamscores()
 {
 	if(level.scoreroundwinbased || util::isfirstround())
 	{
-		foreach(var_4e9e4903, team in level.teams)
+		foreach(team in level.teams)
 		{
 			game["teamScores"][team] = 0;
 		}
@@ -486,7 +486,7 @@ function updateteamscores(team)
 */
 function updateallteamscores()
 {
-	foreach(var_7220281c, team in level.teams)
+	foreach(team in level.teams)
 	{
 		updateteamscores(team);
 	}
@@ -519,7 +519,7 @@ function gethighestteamscoreteam()
 {
 	score = 0;
 	winning_teams = [];
-	foreach(var_dbaa3da2, team in level.teams)
+	foreach(team in level.teams)
 	{
 		team_score = game["teamScores"][team];
 		if(team_score > score)
@@ -548,16 +548,16 @@ function areteamarraysequal(teamsa, teamsb)
 {
 	if(teamsa.size != teamsb.size)
 	{
-		return 0;
+		return false;
 	}
-	foreach(var_a35a4f49, team in teamsa)
+	foreach(team in teamsa)
 	{
 		if(!isdefined(teamsb[team]))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -600,7 +600,7 @@ function onteamscore(score, team)
 	level.laststatustime = gettime();
 	if(iswinning.size == 1)
 	{
-		foreach(var_9cb23362, team in iswinning)
+		foreach(team in iswinning)
 		{
 			if(isdefined(level.waswinning[team]))
 			{
@@ -614,7 +614,7 @@ function onteamscore(score, team)
 	}
 	if(level.waswinning.size == 1)
 	{
-		foreach(var_c107828e, team in level.waswinning)
+		foreach(team in level.waswinning)
 		{
 			if(isdefined(iswinning[team]))
 			{
@@ -854,7 +854,7 @@ function trackattackeedeath(attackername, rank, xp, prestige, xuid)
 */
 function default_iskillboosting()
 {
-	return 0;
+	return false;
 }
 
 /*

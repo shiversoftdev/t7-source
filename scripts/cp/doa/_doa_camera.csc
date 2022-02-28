@@ -185,7 +185,7 @@ function function_d207ecc1(localclientnum, delta_time)
 			var_2fda52e5 = var_2fda52e5 - (level.var_7a2e3b7d * 450);
 			var_2fda52e5 = var_2fda52e5 + (vectorscale((0, 0, -1), 500));
 		}
-		foreach(var_98786fb6, player in level.localplayers)
+		foreach(player in level.localplayers)
 		{
 			if(!isdefined(player))
 			{
@@ -201,7 +201,7 @@ function function_d207ecc1(localclientnum, delta_time)
 				var_831d16a9 = level.doa.arenas[level.doa.current_arena].var_790aac0e[2];
 				level.doa.arenas[level.doa.current_arena].var_790aac0e = (var_cf220b7b, var_a91f9112, var_831d16a9);
 			#/
-			foreach(var_4adf7bba, player in level.localplayers)
+			foreach(player in level.localplayers)
 			{
 				if(!isdefined(player))
 				{
@@ -213,7 +213,7 @@ function function_d207ecc1(localclientnum, delta_time)
 		}
 		else
 		{
-			foreach(var_32d69962, player in level.localplayers)
+			foreach(player in level.localplayers)
 			{
 				if(!isdefined(player))
 				{
@@ -242,7 +242,7 @@ function function_d207ecc1(localclientnum, delta_time)
 		var_f51225df = anglestoforward(angles) * -1;
 		var_aa43a214 = anglestoup(angles);
 	}
-	foreach(var_b545f8e9, player in players)
+	foreach(player in players)
 	{
 		origin = player.origin;
 		vehicle = getplayervehicle(player);
@@ -255,7 +255,7 @@ function function_d207ecc1(localclientnum, delta_time)
 	}
 	if(isarray(level.var_172ed9a1))
 	{
-		foreach(var_9d10a9f0, target in level.var_172ed9a1)
+		foreach(target in level.var_172ed9a1)
 		{
 			if(!isdefined(target))
 			{
@@ -368,7 +368,7 @@ function function_d207ecc1(localclientnum, delta_time)
 		{
 			cam_pos = level.doa.var_db180da.origin;
 		}
-		foreach(var_826deedc, player in level.localplayers)
+		foreach(player in level.localplayers)
 		{
 			if(!isdefined(player))
 			{

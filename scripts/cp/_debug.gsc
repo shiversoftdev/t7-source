@@ -24,7 +24,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	/#
 		system::register("", &__init__, undefined, undefined);
@@ -767,7 +767,7 @@ function debug_ik_on_actors()
 		togglelegik = getdvarstring("") == "";
 		toggleheadik = getdvarstring("") == "";
 		ais = getactorarray();
-		foreach(var_3b4a0f61, ai in ais)
+		foreach(ai in ais)
 		{
 			if(togglelegik)
 			{
@@ -914,20 +914,23 @@ function debug_nuke()
 				}
 			}
 		}
-		else if(dvar == "")
+		else
 		{
-			ai = getaiteamarray("");
-			for(i = 0; i < ai.size; i++)
+			if(dvar == "")
 			{
-				ai[i] dodamage(ai[i].health, (0, 0, 0), player);
+				ai = getaiteamarray("");
+				for(i = 0; i < ai.size; i++)
+				{
+					ai[i] dodamage(ai[i].health, (0, 0, 0), player);
+				}
 			}
-		}
-		else if(dvar == "")
-		{
-			ai = getaispeciesarray("", "");
-			for(i = 0; i < ai.size; i++)
+			else if(dvar == "")
 			{
-				ai[i] dodamage(ai[i].health, (0, 0, 0), player);
+				ai = getaispeciesarray("", "");
+				for(i = 0; i < ai.size; i++)
+				{
+					ai[i] dodamage(ai[i].health, (0, 0, 0), player);
+				}
 			}
 		}
 		setdvar("", "");
@@ -1094,9 +1097,9 @@ function islookingatorigin(origin)
 		vectordot = vectordot(anglevec, normalvec);
 		if(vectordot > insidedot)
 		{
-			return 1;
+			return true;
 		}
-		return 0;
+		return false;
 	#/
 }
 
@@ -1556,17 +1559,20 @@ function draw_animsounds_in_hud()
 			}
 			level.animsound_input = "";
 		}
-		else if(players[0] buttonpressed(""))
-		{
-			if(level.animsound_input != "")
-			{
-				level.animsound_selected++;
-			}
-			level.animsound_input = "";
-		}
 		else
 		{
-			level.animsound_input = "";
+			if(players[0] buttonpressed(""))
+			{
+				if(level.animsound_input != "")
+				{
+					level.animsound_selected++;
+				}
+				level.animsound_input = "";
+			}
+			else
+			{
+				level.animsound_input = "";
+			}
 		}
 		for(i = 0; i < level.animsound_hudlimit; i++)
 		{
@@ -1917,7 +1923,7 @@ function function_2ceda325()
 			{
 				fprintln(file, "");
 			}
-			foreach(var_adcf2899, deadnpctypecount in level.a_npcdeaths)
+			foreach(deadnpctypecount in level.a_npcdeaths)
 			{
 				fprintln(file, (((((deadnpctypecount.strscoretype + "") + deadnpctypecount.icount) + "") + deadnpctypecount.ikilledbyplayercount) + "") + deadnpctypecount.ixpvaluesum);
 			}
@@ -2321,9 +2327,9 @@ function dvar_turned_on(val)
 	/#
 		if(val <= 0)
 		{
-			return 0;
+			return false;
 		}
-		return 1;
+		return true;
 	#/
 }
 
@@ -2584,15 +2590,18 @@ function debug_realtime_engage_dist()
 							hudobj_changecolor(hudobjarray, (1, 1, 0));
 						}
 					}
-					else if(tracedist < engagedistmin)
+					else
 					{
-						hudobj_changecolor(hudobjarray, (1, 0, 0));
-						hudobjarray engagedist_hud_changetext("", tracedist);
-					}
-					else if(tracedist > engagedistmax)
-					{
-						hudobj_changecolor(hudobjarray, (1, 0, 0));
-						hudobjarray engagedist_hud_changetext("", tracedist);
+						if(tracedist < engagedistmin)
+						{
+							hudobj_changecolor(hudobjarray, (1, 0, 0));
+							hudobjarray engagedist_hud_changetext("", tracedist);
+						}
+						else if(tracedist > engagedistmax)
+						{
+							hudobj_changecolor(hudobjarray, (1, 0, 0));
+							hudobjarray engagedist_hud_changetext("", tracedist);
+						}
 					}
 				}
 			}
@@ -2649,39 +2658,48 @@ function engagedist_hud_changetext(engagedisttype, units)
 			self[2] settext("");
 			self[3].alpha = 0;
 		}
-		else if(engagedisttype == "")
+		else
 		{
-			self[1] setvalue(units);
-			self[2] settext("");
-			self[3].alpha = 0;
-		}
-		else if(engagedisttype == "")
-		{
-			amountunder = level.weaponengagedistvalues.engagedistmin - units;
-			self[1] setvalue(units);
-			self[3] setvalue(amountunder);
-			self[3].alpha = 1;
-			if(level.lastdisttype != engagedisttype)
+			if(engagedisttype == "")
 			{
+				self[1] setvalue(units);
 				self[2] settext("");
+				self[3].alpha = 0;
 			}
-		}
-		else if(engagedisttype == "")
-		{
-			amountover = units - level.weaponengagedistvalues.engagedistmax;
-			self[1] setvalue(units);
-			self[3] setvalue(amountover);
-			self[3].alpha = 1;
-			if(level.lastdisttype != engagedisttype)
+			else
 			{
-				self[2] settext("");
+				if(engagedisttype == "")
+				{
+					amountunder = level.weaponengagedistvalues.engagedistmin - units;
+					self[1] setvalue(units);
+					self[3] setvalue(amountunder);
+					self[3].alpha = 1;
+					if(level.lastdisttype != engagedisttype)
+					{
+						self[2] settext("");
+					}
+				}
+				else
+				{
+					if(engagedisttype == "")
+					{
+						amountover = units - level.weaponengagedistvalues.engagedistmax;
+						self[1] setvalue(units);
+						self[3] setvalue(amountover);
+						self[3].alpha = 1;
+						if(level.lastdisttype != engagedisttype)
+						{
+							self[2] settext("");
+						}
+					}
+					else if(engagedisttype == "")
+					{
+						self[1] setvalue(units);
+						self[2] settext("");
+						self[3].alpha = 0;
+					}
+				}
 			}
-		}
-		else if(engagedisttype == "")
-		{
-			self[1] setvalue(units);
-			self[2] settext("");
-			self[3].alpha = 0;
 		}
 		level.lastdisttype = engagedisttype;
 	#/
@@ -2726,25 +2744,34 @@ function debug_ai_engage_dist()
 							drawcolor = (0, 1, 0);
 							drawstring = "";
 						}
-						else if(dist < engagedistmin && dist >= engagedistfalloffmin)
+						else
 						{
-							drawcolor = (1, 1, 0);
-							drawstring = "";
-						}
-						else if(dist > engagedistmax && dist <= engagedistfalloffmax)
-						{
-							drawcolor = (1, 1, 0);
-							drawstring = "";
-						}
-						else if(dist > engagedistfalloffmax)
-						{
-							drawcolor = (1, 0, 0);
-							drawstring = "";
-						}
-						else if(dist < engagedistfalloffmin)
-						{
-							drawcolor = (1, 0, 0);
-							drawstring = "";
+							if(dist < engagedistmin && dist >= engagedistfalloffmin)
+							{
+								drawcolor = (1, 1, 0);
+								drawstring = "";
+							}
+							else
+							{
+								if(dist > engagedistmax && dist <= engagedistfalloffmax)
+								{
+									drawcolor = (1, 1, 0);
+									drawstring = "";
+								}
+								else
+								{
+									if(dist > engagedistfalloffmax)
+									{
+										drawcolor = (1, 0, 0);
+										drawstring = "";
+									}
+									else if(dist < engagedistfalloffmin)
+									{
+										drawcolor = (1, 0, 0);
+										drawstring = "";
+									}
+								}
+							}
 						}
 						scale = dist / 1000;
 						print3d(ai.origin + vectorscale((0, 0, 1), 67), (drawstring + "") + dist, drawcolor, 1, scale);
@@ -2769,7 +2796,7 @@ function bot_count()
 {
 	/#
 		count = 0;
-		foreach(var_3660d383, player in level.players)
+		foreach(player in level.players)
 		{
 			if(player istestclient())
 			{
@@ -2793,7 +2820,7 @@ function function_6a200458()
 {
 	/#
 		count = 0;
-		foreach(var_177984ed, player in level.players)
+		foreach(player in level.players)
 		{
 			if(!player istestclient())
 			{
@@ -2964,7 +2991,7 @@ function dynamic_ai_spawner_find_spawners()
 		level.aitypes = [];
 		level.aitype_index = 0;
 		var_7b3173a8 = [];
-		foreach(var_a9acc57e, spawner in spawners)
+		foreach(spawner in spawners)
 		{
 			if(!isdefined(var_7b3173a8[spawner.classname]))
 			{
@@ -3048,29 +3075,35 @@ function spawn_guy_placement()
 				spawn.fixednode = 0;
 				wait(0.3);
 			}
-			else if(self buttonpressed(""))
+			else
 			{
-				level.dynamic_spawn_dummy_model hide();
-				level.aitype_index++;
-				if(level.aitype_index >= level.aitypes.size)
+				if(self buttonpressed(""))
 				{
-					level.aitype_index = 0;
+					level.dynamic_spawn_dummy_model hide();
+					level.aitype_index++;
+					if(level.aitype_index >= level.aitypes.size)
+					{
+						level.aitype_index = 0;
+					}
+					wait(0.3);
 				}
-				wait(0.3);
-			}
-			else if(self buttonpressed(""))
-			{
-				level.dynamic_spawn_dummy_model hide();
-				level.aitype_index--;
-				if(level.aitype_index < 0)
+				else
 				{
-					level.aitype_index = level.aitypes.size - 1;
+					if(self buttonpressed(""))
+					{
+						level.dynamic_spawn_dummy_model hide();
+						level.aitype_index--;
+						if(level.aitype_index < 0)
+						{
+							level.aitype_index = level.aitypes.size - 1;
+						}
+						wait(0.3);
+					}
+					else if(self buttonpressed(""))
+					{
+						setdvar("", "");
+					}
 				}
-				wait(0.3);
-			}
-			else if(self buttonpressed(""))
-			{
-				setdvar("", "");
 			}
 			wait(0.05);
 		}
@@ -3531,7 +3564,7 @@ function debug_info_screen(text_array, time, fade_in_bg_time, fade_out_bg_time, 
 		if(isarray(text_array))
 		{
 			start_y = 0 - ((text_array.size * spacing) / 2);
-			foreach(var_e101a114, text in text_array)
+			foreach(text in text_array)
 			{
 				if(isplayer(self))
 				{
@@ -3544,17 +3577,20 @@ function debug_info_screen(text_array, time, fade_in_bg_time, fade_out_bg_time, 
 				text_elems[text_elems.size - 1] settext(text);
 			}
 		}
-		else if(isplayer(self))
-		{
-			text_elems[text_elems.size] = hud::createfontstring("", font_size);
-		}
 		else
 		{
-			text_elems[text_elems.size] = hud::createserverfontstring("", font_size);
+			if(isplayer(self))
+			{
+				text_elems[text_elems.size] = hud::createfontstring("", font_size);
+			}
+			else
+			{
+				text_elems[text_elems.size] = hud::createserverfontstring("", font_size);
+			}
+			text_elems[text_elems.size - 1] settext(text);
 		}
-		text_elems[text_elems.size - 1] settext(text);
 		text_num = 0;
-		foreach(var_3f1aa050, text_elem in text_elems)
+		foreach(text_elem in text_elems)
 		{
 			text_elem.horzalign = "";
 			text_elem.vertalign = "";
@@ -3582,7 +3618,7 @@ function debug_info_screen(text_array, time, fade_in_bg_time, fade_out_bg_time, 
 		wait(time);
 		if(fade_out_text_time > 0)
 		{
-			foreach(var_7357f16e, text_elem in text_elems)
+			foreach(text_elem in text_elems)
 			{
 				text_elem fadeovertime(fade_out_text_time);
 				text_elem.alpha = 0;
@@ -3599,7 +3635,7 @@ function debug_info_screen(text_array, time, fade_in_bg_time, fade_out_bg_time, 
 			}
 			background destroy();
 		}
-		foreach(var_9aee6b01, text_elem in text_elems)
+		foreach(text_elem in text_elems)
 		{
 			text_elem destroy();
 		}

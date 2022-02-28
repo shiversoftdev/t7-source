@@ -17,7 +17,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("menus", &__init__, undefined, undefined);
 }
@@ -53,7 +53,7 @@ function init()
 	game["menu_class"] = "class";
 	game["menu_changeclass"] = "ChooseClass_InGame";
 	game["menu_changeclass_offline"] = "ChooseClass_InGame";
-	foreach(var_3c27f970, team in level.teams)
+	foreach(team in level.teams)
 	{
 		game["menu_changeclass_" + team] = "ChooseClass_InGame";
 	}

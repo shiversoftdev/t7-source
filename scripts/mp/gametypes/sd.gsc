@@ -347,15 +347,18 @@ function onplayerkilled(einflictor, attacker, idamage, smeansofdeath, weapon, vd
 			self recordkillmodifier("defending");
 			scoreevents::processscoreevent("killed_defender", attacker, self, weapon);
 		}
-		else if(isdefined(attacker.pers["defends"]))
+		else
 		{
-			attacker.pers["defends"]++;
-			attacker.defends = attacker.pers["defends"];
+			if(isdefined(attacker.pers["defends"]))
+			{
+				attacker.pers["defends"]++;
+				attacker.defends = attacker.pers["defends"];
+			}
+			attacker medals::defenseglobalcount();
+			attacker thread challenges::killedbaseoffender(currentobjective, weapon);
+			self recordkillmodifier("assaulting");
+			scoreevents::processscoreevent("killed_attacker", attacker, self, weapon);
 		}
-		attacker medals::defenseglobalcount();
-		attacker thread challenges::killedbaseoffender(currentobjective, weapon);
-		self recordkillmodifier("assaulting");
-		scoreevents::processscoreevent("killed_attacker", attacker, self, weapon);
 	}
 	if(isplayer(attacker) && attacker.pers["team"] != self.pers["team"] && isdefined(self.isbombcarrier) && self.isbombcarrier == 1)
 	{
@@ -461,17 +464,20 @@ function ondeadevent(team)
 			sd_endgamewithkillcam(game["defenders"], game["strings"][game["attackers"] + "_eliminated"]);
 		}
 	}
-	else if(team == game["attackers"])
+	else
 	{
-		if(level.bombplanted)
+		if(team == game["attackers"])
 		{
-			return;
+			if(level.bombplanted)
+			{
+				return;
+			}
+			sd_endgamewithkillcam(game["defenders"], game["strings"][game["attackers"] + "_eliminated"]);
 		}
-		sd_endgamewithkillcam(game["defenders"], game["strings"][game["attackers"] + "_eliminated"]);
-	}
-	else if(team == game["defenders"])
-	{
-		sd_endgamewithkillcam(game["attackers"], game["strings"][game["defenders"] + "_eliminated"]);
+		else if(team == game["defenders"])
+		{
+			sd_endgamewithkillcam(game["attackers"], game["strings"][game["defenders"] + "_eliminated"]);
+		}
 	}
 }
 
@@ -660,7 +666,7 @@ function bombs()
 		level.sdbomb.allowweapons = 1;
 		level.sdbomb.onpickup = &onpickup;
 		level.sdbomb.ondrop = &ondrop;
-		foreach(var_1f58edd7, visual in level.sdbomb.visuals)
+		foreach(visual in level.sdbomb.visuals)
 		{
 			visual.team = "free";
 		}
@@ -715,7 +721,7 @@ function bombs()
 				break;
 			}
 		}
-		foreach(var_5d86d383, visual in bombzone.visuals)
+		foreach(visual in bombzone.visuals)
 		{
 			visual.team = "free";
 		}
@@ -1171,7 +1177,7 @@ function bombplanted(destroyedobj, player)
 		exploder::exploder(destroyedobj.exploderindex);
 	}
 	defuseobject gameobjects::destroy_object();
-	foreach(var_ab90ad3c, zone in level.bombzones)
+	foreach(zone in level.bombzones)
 	{
 		zone gameobjects::disable_object();
 	}
@@ -1236,24 +1242,24 @@ function sd_iskillboosting()
 	roundsplayed = util::getroundsplayed();
 	if(level.playerkillsmax == 0)
 	{
-		return 0;
+		return false;
 	}
 	if(game["totalKills"] > (level.totalkillsmax * (roundsplayed + 1)))
 	{
-		return 1;
+		return true;
 	}
 	if(self.kills > (level.playerkillsmax * (roundsplayed + 1)))
 	{
-		return 1;
+		return true;
 	}
 	if(level.teambased && (self.team == "allies" || self.team == "axis"))
 	{
 		if(game["totalKillsTeam"][self.team] > (level.playerkillsmax * (roundsplayed + 1)))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*

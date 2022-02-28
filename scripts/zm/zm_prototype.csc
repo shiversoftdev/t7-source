@@ -46,7 +46,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_prototype", &__init__, undefined, undefined);
 }
@@ -76,7 +76,7 @@ function __init__()
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function function_d9af860b()
+function autoexec function_d9af860b()
 {
 	level.aat_in_use = 1;
 	level.bgb_in_use = 1;

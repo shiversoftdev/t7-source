@@ -31,7 +31,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_weap_octobomb", &__init__, &__main__, undefined);
 }
@@ -503,7 +503,7 @@ function move_away_from_edges()
 	queryresult = positionquery_source_navigation(self.origin, 0, 200, 100, 2, 20);
 	if(queryresult.data.size)
 	{
-		foreach(var_3b6438ed, point in queryresult.data)
+		foreach(point in queryresult.data)
 		{
 			if(bullettracepassed(point.origin + vectorscale((0, 0, 1), 20), v_orig + vectorscale((0, 0, 1), 20), 0, self, undefined, 0, 0))
 			{
@@ -672,7 +672,7 @@ function do_tentacle_burst(e_player, is_upgraded)
 			a_ai_potential_targets = [[level.octobomb_targets]](a_ai_potential_targets);
 		}
 		a_ai_targets = arraysortclosest(a_ai_potential_targets, self.origin, a_ai_potential_targets.size, 0, 100);
-		foreach(var_b8892b60, ai_target in a_ai_targets)
+		foreach(ai_target in a_ai_targets)
 		{
 			if(isalive(ai_target))
 			{
@@ -871,7 +871,7 @@ function special_attractor_spawn(e_player, max_attract_dist)
 	while(true)
 	{
 		a_ai_zombies = array::get_all_closest(self.origin, getaiteamarray(level.zombie_team), undefined, undefined, max_attract_dist * 1.5);
-		foreach(var_d99d9e5e, ai_zombie in a_ai_zombies)
+		foreach(ai_zombie in a_ai_zombies)
 		{
 			if(isvehicle(ai_zombie))
 			{
@@ -1218,7 +1218,7 @@ function octobomb_devgui()
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function setup_devgui_func(str_devgui_path, str_dvar, n_value, func, n_base_value = -1)
+function private setup_devgui_func(str_devgui_path, str_dvar, n_value, func, n_base_value = -1)
 {
 	setdvar(str_dvar, n_base_value);
 	adddebugcommand(((((("devgui_cmd \"" + str_devgui_path) + "\" \"") + str_dvar) + " ") + n_value) + "\"\n");
@@ -1253,7 +1253,7 @@ function devgui_octobomb_give(n_player_index)
 	}
 	else if(n_player_index === 4)
 	{
-		foreach(var_466bca8a, player in players)
+		foreach(player in players)
 		{
 			octobomb_give(player);
 		}

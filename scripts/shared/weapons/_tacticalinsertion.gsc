@@ -68,10 +68,10 @@ function istacspawntouchingcrates(origin, angles)
 	{
 		if(crate_ents[i] istouchingvolume(origin + vectorscale((0, 0, 1), 40), mins, maxs))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -87,7 +87,7 @@ function overridespawn(ispredictedspawn)
 {
 	if(!isdefined(self.tacticalinsertion))
 	{
-		return 0;
+		return false;
 	}
 	origin = self.tacticalinsertion.origin;
 	angles = self.tacticalinsertion.angles;
@@ -98,11 +98,11 @@ function overridespawn(ispredictedspawn)
 	}
 	if(team != self.team)
 	{
-		return 0;
+		return false;
 	}
 	if(istacspawntouchingcrates(origin))
 	{
-		return 0;
+		return false;
 	}
 	if(!ispredictedspawn)
 	{
@@ -111,7 +111,7 @@ function overridespawn(ispredictedspawn)
 		self setspawnclientflag("SCDFL_DISABLE_LOGGING");
 		self addweaponstat(level.weapontacticalinsertion, "used", 1);
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -530,7 +530,7 @@ function cancel_text_create()
 function gettacticalinsertions()
 {
 	tac_inserts = [];
-	foreach(var_1b1f3b84, player in level.players)
+	foreach(player in level.players)
 	{
 		if(isdefined(player.tacticalinsertion))
 		{

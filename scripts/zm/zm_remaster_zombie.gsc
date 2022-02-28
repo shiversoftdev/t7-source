@@ -31,7 +31,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	initzmbehaviorsandasm();
 	setdvar("tu5_zmPathDistanceCheckTolarance", 20);
@@ -49,15 +49,15 @@ autoexec function init()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function initzmbehaviorsandasm()
+function private initzmbehaviorsandasm()
 {
-	animationstatenetwork::registeranimationmocomp("mocomp_teleport_traversal@zombie", &function_5683b5d5, undefined, undefined);
+	animationstatenetwork::registeranimationmocomp("mocomp_teleport_traversal@zombie", &teleporttraversalmocompstart, undefined, undefined);
 	behaviortreenetworkutility::registerbehaviortreescriptapi("zodShouldMove", &shouldmove);
 	spawner::add_archetype_spawn_function("zombie", &function_9fb7c76f);
 }
 
 /*
-	Name: function_5683b5d5
+	Name: teleporttraversalmocompstart
 	Namespace: zm_remaster_zombie
 	Checksum: 0x304ADC98
 	Offset: 0x4F0
@@ -65,7 +65,7 @@ private function initzmbehaviorsandasm()
 	Parameters: 5
 	Flags: Linked
 */
-function function_5683b5d5(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function teleporttraversalmocompstart(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	entity orientmode("face angle", entity.angles[1]);
 	entity animmode("normal");
@@ -93,44 +93,44 @@ function shouldmove(entity)
 {
 	if(isdefined(entity.zombie_tesla_hit) && entity.zombie_tesla_hit && (!(isdefined(entity.tesla_death) && entity.tesla_death)))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(entity.pushed) && entity.pushed)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(entity.knockdown) && entity.knockdown)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(entity.grapple_is_fatal) && entity.grapple_is_fatal)
 	{
-		return 0;
+		return false;
 	}
 	if(level.wait_and_revive)
 	{
 		if(!(isdefined(entity.var_1e3fb1c) && entity.var_1e3fb1c))
 		{
-			return 0;
+			return false;
 		}
 	}
 	if(isdefined(entity.stumble))
 	{
-		return 0;
+		return false;
 	}
 	if(zombiebehavior::zombieshouldmeleecondition(entity))
 	{
-		return 0;
+		return false;
 	}
 	if(entity haspath())
 	{
-		return 1;
+		return true;
 	}
 	if(isdefined(entity.keep_moving) && entity.keep_moving)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -142,7 +142,7 @@ function shouldmove(entity)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_9fb7c76f()
+function private function_9fb7c76f()
 {
 	self.cant_move_cb = &function_f05a4eb4;
 }
@@ -156,14 +156,14 @@ private function function_9fb7c76f()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_f05a4eb4()
+function private function_f05a4eb4()
 {
 	self pushactors(0);
 	self.enablepushtime = gettime() + 1000;
 }
 
 /*
-	Name: function_9b05f3fc
+	Name: remaster_validate_last_closest_player
 	Namespace: zm_remaster_zombie
 	Checksum: 0x688943FF
 	Offset: 0x890
@@ -171,14 +171,14 @@ private function function_f05a4eb4()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_9b05f3fc(players)
+function private remaster_validate_last_closest_player(players)
 {
 	if(isdefined(self.last_closest_player) && (isdefined(self.last_closest_player.am_i_valid) && self.last_closest_player.am_i_valid))
 	{
 		return;
 	}
 	self.need_closest_player = 1;
-	foreach(var_576f72aa, player in players)
+	foreach(player in players)
 	{
 		if(isdefined(player.am_i_valid) && player.am_i_valid)
 		{
@@ -190,7 +190,7 @@ private function function_9b05f3fc(players)
 }
 
 /*
-	Name: function_3ff94b60
+	Name: remaster_closest_player
 	Namespace: zm_remaster_zombie
 	Checksum: 0x5F28E87F
 	Offset: 0x998
@@ -198,7 +198,7 @@ private function function_9b05f3fc(players)
 	Parameters: 2
 	Flags: Linked
 */
-function function_3ff94b60(origin, players)
+function remaster_closest_player(origin, players)
 {
 	if(players.size == 0)
 	{
@@ -227,7 +227,7 @@ function function_3ff94b60(origin, players)
 	}
 	if(isdefined(level.last_closest_time) && level.last_closest_time >= level.time)
 	{
-		self function_9b05f3fc(players);
+		self remaster_validate_last_closest_player(players);
 		return self.last_closest_player;
 	}
 	if(isdefined(self.need_closest_player) && self.need_closest_player)
@@ -264,7 +264,7 @@ function function_3ff94b60(origin, players)
 	{
 		self zm_utility::approximate_path_dist(closest);
 	}
-	self function_9b05f3fc(players);
+	self remaster_validate_last_closest_player(players);
 	return self.last_closest_player;
 }
 
@@ -284,7 +284,7 @@ function update_closest_player()
 	{
 		reset_closest_player = 1;
 		zombies = zombie_utility::get_round_enemy_array();
-		foreach(var_6104e906, zombie in zombies)
+		foreach(zombie in zombies)
 		{
 			if(isdefined(zombie.need_closest_player) && zombie.need_closest_player)
 			{
@@ -294,7 +294,7 @@ function update_closest_player()
 		}
 		if(reset_closest_player)
 		{
-			foreach(var_51a3be6c, zombie in zombies)
+			foreach(zombie in zombies)
 			{
 				if(isdefined(zombie.need_closest_player))
 				{

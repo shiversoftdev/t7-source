@@ -33,7 +33,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_island_side_ee_distant_monster", &__init__, undefined, undefined);
 }
@@ -100,7 +100,7 @@ function function_e94b80b9()
 	var_d95fb733 = 0;
 	do
 	{
-		foreach(var_53b3e826, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			if(zm_utility::is_player_valid(player) && player hasweapon(level.var_c003f5b, 1))
 			{
@@ -181,15 +181,15 @@ function function_603ad7e1(cmd)
 			case "":
 			{
 				function_549b07cb();
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				level.var_7b18dfab = !level.var_7b18dfab;
-				return 1;
+				return true;
 			}
 		}
-		return 0;
+		return false;
 	#/
 }
 

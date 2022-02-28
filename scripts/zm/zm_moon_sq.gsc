@@ -139,7 +139,7 @@ function watch_for_respawn()
 	{
 		self waittill(#"spawned_player");
 		waittillframeend();
-		foreach(var_7d71ed13, perk in level._sq_perk_array)
+		foreach(perk in level._sq_perk_array)
 		{
 			if(!self hasperk(perk))
 			{
@@ -408,7 +408,7 @@ function sidequest_logic()
 */
 function do_launch()
 {
-	foreach(var_be251cee, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		if(e_player bgb::is_active("zm_bgb_killing_time"))
 		{
@@ -779,7 +779,7 @@ function sd_init()
 	level flag::wait_till("start_zombie_round_logic");
 	level.var_c920d4c5 = struct::get("sd_bowl", "targetname");
 	var_5e8fec3f = struct::get_array("sd_start", "script_noteworthy");
-	foreach(var_3784591a, s_start in var_5e8fec3f)
+	foreach(s_start in var_5e8fec3f)
 	{
 		var_12a1091 = util::spawn_model(s_start.model, s_start.origin, s_start.angles);
 		var_12a1091.targetname = s_start.targetname;
@@ -830,7 +830,7 @@ function function_4ee03f50()
 {
 	var_5e8fec3f = struct::get_array("sd_start", "script_noteworthy");
 	a_flags = [];
-	foreach(var_c5cf7f78, s_start in var_5e8fec3f)
+	foreach(s_start in var_5e8fec3f)
 	{
 		if(!isdefined(a_flags))
 		{
@@ -978,11 +978,14 @@ function function_69090b83()
 			}
 			level notify(#"hash_d7362b52");
 		}
-		else if(level flag::get("sd_large_complete"))
+		else
 		{
-			return;
+			if(level flag::get("sd_large_complete"))
+			{
+				return;
+			}
+			level notify(#"hash_9b391ed5");
 		}
-		level notify(#"hash_9b391ed5");
 		if(n_dist <= 256)
 		{
 			self clientfield::set("sd", 1);

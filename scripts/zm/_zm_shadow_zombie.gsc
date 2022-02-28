@@ -33,7 +33,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_shadow_zombie", &__init__, undefined, undefined);
 }
@@ -68,7 +68,7 @@ function __init__()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function register_clientfields()
+function private register_clientfields()
 {
 	clientfield::register("actor", "shadow_zombie_clientfield_aura_fx", 15000, 1, "int");
 	clientfield::register("actor", "shadow_zombie_clientfield_death_fx", 15000, 1, "int");
@@ -193,7 +193,7 @@ function function_ada13668(v_origin, n_duration, var_526fc172 = 0)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_57b55fe1(n_duration)
+function private function_57b55fe1(n_duration)
 {
 	wait(n_duration);
 	if(isdefined(self))
@@ -215,7 +215,7 @@ private function function_57b55fe1(n_duration)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_48fccb59(var_7478a6b4 = undefined)
+function private function_48fccb59(var_7478a6b4 = undefined)
 {
 	if(isdefined(var_7478a6b4))
 	{
@@ -259,14 +259,14 @@ private function function_48fccb59(var_7478a6b4 = undefined)
 function function_ab84e253(v_origin, n_radius)
 {
 	var_5a3ad5d6 = n_radius * n_radius;
-	foreach(var_a9a0a0e0, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		if(isdefined(player) && distance2dsquared(player.origin, v_origin) <= var_5a3ad5d6)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -296,7 +296,7 @@ function function_71c88f2b()
 				a_zombies = zm_elemental_zombie::function_d41418b8();
 				if(a_zombies.size > 0)
 				{
-					foreach(var_6104e906, zombie in a_zombies)
+					foreach(zombie in a_zombies)
 					{
 						zombie function_1b2b62b();
 					}

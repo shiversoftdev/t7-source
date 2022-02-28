@@ -30,7 +30,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_genesis_zones", &__init__, &__main__, undefined);
 }
@@ -83,14 +83,14 @@ function player_out_of_playable_area_override()
 {
 	if(isdefined(self.b_teleporting) && self.b_teleporting || (isdefined(self.b_teleported) && self.b_teleported) || (isdefined(self.var_5aef0317) && self.var_5aef0317) || (isdefined(self.is_flung) && self.is_flung))
 	{
-		return 0;
+		return false;
 	}
 	b_result = zm_genesis_ffotd::function_d51867e();
 	if(b_result)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*

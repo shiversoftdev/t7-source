@@ -25,7 +25,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("character_customization", &__init__, undefined, undefined);
 }
@@ -48,7 +48,7 @@ function __init__()
 	level.extra_cam_render_character_body_item_func_callback = &process_character_body_item_extracam_request;
 	level.extra_cam_render_character_helmet_item_func_callback = &process_character_helmet_item_extracam_request;
 	level.extra_cam_render_character_head_item_func_callback = &process_character_head_item_extracam_request;
-	level.model_type_bones = associativearray("helmet", "", "head", "");
+	level.intercom_dialog = associativearray("helmet", "", "head", "");
 	if(!isdefined(level.liveccdata))
 	{
 		level.liveccdata = [];
@@ -230,14 +230,14 @@ function update_model_attachment(localclientnum, data_struct, attached_model, sl
 		assert(isdefined(data_struct.attached_model_anims));
 	#/
 	/#
-		assert(isdefined(level.model_type_bones));
+		assert(isdefined(level.intercom_dialog));
 	#/
 	if(force_update || attached_model !== data_struct.attached_models[slot] || model_anim !== data_struct.attached_model_anims[slot])
 	{
 		bone = slot;
-		if(isdefined(level.model_type_bones[slot]))
+		if(isdefined(level.intercom_dialog[slot]))
 		{
-			bone = level.model_type_bones[slot];
+			bone = level.intercom_dialog[slot];
 		}
 		/#
 			assert(isdefined(bone));
@@ -501,90 +501,126 @@ function set_showcase_weapon(data_struct, mode, localclientnum, xuid, characteri
 			weapon_group = "weapon_smg_ppsh";
 		}
 	}
-	else if(weapon_group == "weapon_assault")
+	else
 	{
-		if(weapon_root_name == "ar_m14")
+		if(weapon_group == "weapon_assault")
 		{
-			weapon_group = "weapon_shotgun_olympia";
+			if(weapon_root_name == "ar_m14")
+			{
+				weapon_group = "weapon_shotgun_olympia";
+			}
 		}
-	}
-	else if(weapon_group == "weapon_pistol" && weapon_is_dual_wield)
-	{
-		weapon_group = "weapon_pistol_dw";
-	}
-	else if(weapon_group == "weapon_smg")
-	{
-		if(weapon_root_name == "smg_ppsh")
+		else
 		{
-			weapon_group = "weapon_smg_ppsh";
-		}
-		else if(weapon_root_name == "smg_sten2")
-		{
-			weapon_group = "weapon_knuckles";
-		}
-	}
-	else if(weapon_group == "weapon_cqb")
-	{
-		if(weapon_root_name == "shotgun_olympia")
-		{
-			weapon_group = "weapon_shotgun_olympia";
-		}
-	}
-	else if(weapon_group == "weapon_special")
-	{
-		if(weapon_root_name == "special_crossbow" || weapon_root_name == "special_discgun")
-		{
-			weapon_group = "weapon_smg";
-		}
-		else if(weapon_root_name == "special_crossbow_dw")
-		{
-			weapon_group = "weapon_pistol_dw";
-		}
-		else if(weapon_root_name == "knife_ballistic")
-		{
-			weapon_group = "weapon_knife_ballistic";
-		}
-	}
-	else if(weapon_group == "weapon_knife")
-	{
-		if(weapon_root_name == "melee_knuckles" || weapon_root_name == "melee_boxing")
-		{
-			weapon_group = "weapon_knuckles";
-		}
-		else if(weapon_root_name == "melee_chainsaw" || weapon_root_name == "melee_boneglass" || weapon_root_name == "melee_crescent")
-		{
-			weapon_group = "weapon_chainsaw";
-		}
-		else if(weapon_root_name == "melee_improvise" || weapon_root_name == "melee_shovel")
-		{
-			weapon_group = "weapon_improvise";
-		}
-		else if(weapon_root_name == "melee_wrench" || weapon_root_name == "melee_crowbar" || weapon_root_name == "melee_shockbaton")
-		{
-			weapon_group = "weapon_wrench";
-		}
-		else if(weapon_root_name == "melee_nunchuks")
-		{
-			weapon_group = "weapon_nunchucks";
-		}
-		else if(weapon_root_name == "melee_sword" || weapon_root_name == "melee_bat" || weapon_root_name == "melee_fireaxe" || weapon_root_name == "melee_mace" || weapon_root_name == "melee_katana")
-		{
-			weapon_group = "weapon_sword";
-		}
-		else if(weapon_root_name == "melee_prosthetic")
-		{
-			weapon_group = "weapon_prosthetic";
-		}
-	}
-	else if(weapon_group == "miscweapon")
-	{
-		if(weapon_root_name == "blackjack_coin")
-		{
-			weapon_group = "brawler";
-		}
-		else if(weapon_root_name == "blackjack_cards")
-		{
-			weapon_group = "brawler";
+			if(weapon_group == "weapon_pistol" && weapon_is_dual_wield)
+			{
+				weapon_group = "weapon_pistol_dw";
+			}
+			else
+			{
+				if(weapon_group == "weapon_smg")
+				{
+					if(weapon_root_name == "smg_ppsh")
+					{
+						weapon_group = "weapon_smg_ppsh";
+					}
+					else if(weapon_root_name == "smg_sten2")
+					{
+						weapon_group = "weapon_knuckles";
+					}
+				}
+				else
+				{
+					if(weapon_group == "weapon_cqb")
+					{
+						if(weapon_root_name == "shotgun_olympia")
+						{
+							weapon_group = "weapon_shotgun_olympia";
+						}
+					}
+					else
+					{
+						if(weapon_group == "weapon_special")
+						{
+							if(weapon_root_name == "special_crossbow" || weapon_root_name == "special_discgun")
+							{
+								weapon_group = "weapon_smg";
+							}
+							else
+							{
+								if(weapon_root_name == "special_crossbow_dw")
+								{
+									weapon_group = "weapon_pistol_dw";
+								}
+								else if(weapon_root_name == "knife_ballistic")
+								{
+									weapon_group = "weapon_knife_ballistic";
+								}
+							}
+						}
+						else
+						{
+							if(weapon_group == "weapon_knife")
+							{
+								if(weapon_root_name == "melee_knuckles" || weapon_root_name == "melee_boxing")
+								{
+									weapon_group = "weapon_knuckles";
+								}
+								else
+								{
+									if(weapon_root_name == "melee_chainsaw" || weapon_root_name == "melee_boneglass" || weapon_root_name == "melee_crescent")
+									{
+										weapon_group = "weapon_chainsaw";
+									}
+									else
+									{
+										if(weapon_root_name == "melee_improvise" || weapon_root_name == "melee_shovel")
+										{
+											weapon_group = "weapon_improvise";
+										}
+										else
+										{
+											if(weapon_root_name == "melee_wrench" || weapon_root_name == "melee_crowbar" || weapon_root_name == "melee_shockbaton")
+											{
+												weapon_group = "weapon_wrench";
+											}
+											else
+											{
+												if(weapon_root_name == "melee_nunchuks")
+												{
+													weapon_group = "weapon_nunchucks";
+												}
+												else
+												{
+													if(weapon_root_name == "melee_sword" || weapon_root_name == "melee_bat" || weapon_root_name == "melee_fireaxe" || weapon_root_name == "melee_mace" || weapon_root_name == "melee_katana")
+													{
+														weapon_group = "weapon_sword";
+													}
+													else if(weapon_root_name == "melee_prosthetic")
+													{
+														weapon_group = "weapon_prosthetic";
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+							else if(weapon_group == "miscweapon")
+							{
+								if(weapon_root_name == "blackjack_coin")
+								{
+									weapon_group = "brawler";
+								}
+								else if(weapon_root_name == "blackjack_cards")
+								{
+									weapon_group = "brawler";
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 	if(data_struct.charactermode === 0)
@@ -685,20 +721,20 @@ function is_character_streamed(data_struct)
 	{
 		if(!data_struct.charactermodel isstreamed())
 		{
-			return 0;
+			return false;
 		}
 	}
-	foreach(var_111e1722, ent in data_struct.attached_entities)
+	foreach(ent in data_struct.attached_entities)
 	{
 		if(isdefined(ent))
 		{
 			if(!ent isstreamed())
 			{
-				return 0;
+				return false;
 			}
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -716,7 +752,7 @@ function setup_character_streaming(data_struct)
 	{
 		data_struct.charactermodel sethighdetail(1, data_struct.alt_render_mode);
 	}
-	foreach(var_874f0433, ent in data_struct.attached_entities)
+	foreach(ent in data_struct.attached_entities)
 	{
 		if(isdefined(ent))
 		{
@@ -1000,9 +1036,9 @@ function reaper_body3_hack(params)
 	{
 		params.weapon_right = "wpn_t7_loot_hero_reaper3_minigun_prop";
 		params.weapon = getweapon("hero_minigun_body3");
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

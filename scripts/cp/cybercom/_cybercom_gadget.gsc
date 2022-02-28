@@ -217,18 +217,18 @@ function ismeleeability(ability)
 	{
 		if(ability.type == 1 && ability.flag == 64)
 		{
-			return 1;
+			return true;
 		}
 		if(ability.type == 2 && ability.flag == 2)
 		{
-			return 1;
+			return true;
 		}
 		if(ability.type == 0 && ability.flag == 16)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -363,7 +363,7 @@ function giveability(name, upgrade)
 */
 function function_edff667f()
 {
-	foreach(var_da183bb7, ability in level.cybercom.abilities)
+	foreach(ability in level.cybercom.abilities)
 	{
 		self giveability(ability.name, 1);
 	}
@@ -438,7 +438,7 @@ function equipability(name, var_a67a6c08 = 0)
 		}
 		abilities = getabilitiesfortype(self.cybercom.lastequipped.type);
 		abilityindex = 1;
-		foreach(var_6ddd91d9, ability in abilities)
+		foreach(ability in abilities)
 		{
 			if(ability.name == self.cybercom.lastequipped.name)
 			{
@@ -453,7 +453,7 @@ function equipability(name, var_a67a6c08 = 0)
 	{
 		self thread function_cae3643b();
 	}
-	bb::function_42ffd679(self, "equipped", name);
+	bb::logcybercomevent(self, "equipped", name);
 	var_6f5af609 = int(tablelookup("gamedata/stats/cp/cp_statstable.csv", 4, ability.name, 0));
 	if(isdefined(self.var_768ee804))
 	{
@@ -472,7 +472,7 @@ function equipability(name, var_a67a6c08 = 0)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_cae3643b()
+function private function_cae3643b()
 {
 	waittillframeend();
 	self gadgetpowerset(0, 100);
@@ -492,7 +492,7 @@ private function function_cae3643b()
 function takeallabilities()
 {
 	abilities = self getavailableabilities();
-	foreach(var_4121b5ed, ability in abilities)
+	foreach(ability in abilities)
 	{
 		self abilitytaken(ability);
 	}
@@ -521,7 +521,7 @@ function takeallabilities()
 */
 function getabilitybyname(name)
 {
-	foreach(var_12e32073, ability in level.cybercom.abilities)
+	foreach(ability in level.cybercom.abilities)
 	{
 		if(!isdefined(ability))
 		{
@@ -546,7 +546,7 @@ function getabilitybyname(name)
 function getabilitybyweaponname(name)
 {
 	weapon = getweapon(name);
-	foreach(var_cab513de, ability in level.cybercom.abilities)
+	foreach(ability in level.cybercom.abilities)
 	{
 		if(isdefined(ability.weapon) && weapon.name == ability.weapon.name)
 		{
@@ -570,7 +570,7 @@ function function_1a6a2760(weapon)
 	{
 		return;
 	}
-	foreach(var_653d9b93, ability in level.cybercom.abilities)
+	foreach(ability in level.cybercom.abilities)
 	{
 		if(isdefined(ability.weapon) && weapon == ability.weapon)
 		{
@@ -594,7 +594,7 @@ function function_1a6a2760(weapon)
 */
 function getabilitybyflag(type, flag)
 {
-	foreach(var_466030b3, ability in level.cybercom.abilities)
+	foreach(ability in level.cybercom.abilities)
 	{
 		if(ability.type == type && ability.flag == flag)
 		{
@@ -620,7 +620,7 @@ function getavailableabilities()
 	{
 		return abilities;
 	}
-	foreach(var_f399f3e7, ability in level.cybercom.abilities)
+	foreach(ability in level.cybercom.abilities)
 	{
 		ccomabilitystatus = self hascybercomability(ability.name);
 		if(ccomabilitystatus != 0)
@@ -643,7 +643,7 @@ function getavailableabilities()
 function getabilitiesfortype(type)
 {
 	abilities = [];
-	foreach(var_28fd98ea, ability in level.cybercom.abilities)
+	foreach(ability in level.cybercom.abilities)
 	{
 		if(ability.type == type)
 		{

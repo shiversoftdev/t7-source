@@ -22,7 +22,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("oed", &__init__, &__main__, undefined);
 }
@@ -266,7 +266,7 @@ function disable_thermal()
 function toggle_thermal_mode_for_players(b_enabled = 1)
 {
 	level.b_enhanced_vision_enabled = b_enabled;
-	foreach(var_4bbbe363, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		e_player.b_enhanced_vision_enabled = b_enabled;
 	}
@@ -431,7 +431,7 @@ function tmode_activate_on_player(b_enabled = 1, b_playsound = 1, b_turnoffev = 
 function init_heroes()
 {
 	a_e_heroes = getentarray();
-	foreach(var_b2bd7722, e_hero in a_e_heroes)
+	foreach(e_hero in a_e_heroes)
 	{
 		if(isdefined(e_hero.is_hero) && e_hero.is_hero)
 		{
@@ -452,7 +452,7 @@ function init_heroes()
 function toggle_tac_mode_for_players(b_enabled = 1)
 {
 	level.b_tactical_mode_enabled = b_enabled;
-	foreach(var_9aa33dd5, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		e_player.b_tactical_mode_enabled = b_enabled;
 	}
@@ -537,7 +537,7 @@ function disable_keyline()
 */
 function toggle_sitrep_for_players(b_active = 1)
 {
-	foreach(var_cf1a46b2, player in level.players)
+	foreach(player in level.players)
 	{
 		player.sitrep_active = !(isdefined(player.sitrep_active) && player.sitrep_active);
 		player clientfield::set_to_player("sitrep_toggle", player.sitrep_active);

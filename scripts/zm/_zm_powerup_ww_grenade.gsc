@@ -30,7 +30,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_powerup_ww_grenade", &__init__, undefined, undefined);
 }
@@ -53,7 +53,7 @@ function __init__()
 		zm_powerups::powerup_set_player_specific("ww_grenade", 1);
 	}
 	/#
-		level thread function_39ac3091();
+		level thread ww_grenade_devgui();
 	#/
 }
 
@@ -97,7 +97,7 @@ function ww_grenade_powerup(item, player)
 }
 
 /*
-	Name: function_39ac3091
+	Name: ww_grenade_devgui
 	Namespace: zm_powerup_ww_grenade
 	Checksum: 0xCC671CC9
 	Offset: 0x630
@@ -105,12 +105,12 @@ function ww_grenade_powerup(item, player)
 	Parameters: 0
 	Flags: Linked
 */
-function function_39ac3091()
+function ww_grenade_devgui()
 {
 	/#
 		level flagsys::wait_till("");
 		wait(1);
-		zm_devgui::add_custom_devgui_callback(&function_dcedd7b5);
+		zm_devgui::add_custom_devgui_callback(&ww_grenade_devgui_callback);
 		adddebugcommand("");
 		adddebugcommand("");
 	#/
@@ -132,16 +132,16 @@ function detect_reentry()
 		{
 			if(self.var_2654b40c == gettime())
 			{
-				return 1;
+				return true;
 			}
 		}
 		self.var_2654b40c = gettime();
-		return 0;
+		return false;
 	#/
 }
 
 /*
-	Name: function_dcedd7b5
+	Name: ww_grenade_devgui_callback
 	Namespace: zm_powerup_ww_grenade
 	Checksum: 0x68D49251
 	Offset: 0x6F8
@@ -149,7 +149,7 @@ function detect_reentry()
 	Parameters: 1
 	Flags: Linked
 */
-function function_dcedd7b5(cmd)
+function ww_grenade_devgui_callback(cmd)
 {
 	/#
 		players = getplayers();
@@ -162,7 +162,7 @@ function function_dcedd7b5(cmd)
 				{
 					return 1;
 				}
-				array::thread_all(players, &zm_devgui::function_9589a11f, cmd, 1);
+				array::thread_all(players, &zm_devgui::zombie_devgui_give_powerup_player, cmd, 1);
 				return 1;
 			}
 			case "":
@@ -171,7 +171,7 @@ function function_dcedd7b5(cmd)
 				{
 					return 1;
 				}
-				array::thread_all(players, &zm_devgui::function_9589a11f, getsubstr(cmd, 5), 0);
+				array::thread_all(players, &zm_devgui::zombie_devgui_give_powerup_player, getsubstr(cmd, 5), 0);
 				return 1;
 			}
 		}

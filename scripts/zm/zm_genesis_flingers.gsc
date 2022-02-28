@@ -104,7 +104,7 @@ function function_5ecbd7cb()
 			a_ai_zombies = function_3dcd0982(a_ai_zombies, vol_fling);
 			if(a_ai_zombies.size)
 			{
-				foreach(var_f3de8f22, ai_zombie in a_ai_zombies)
+				foreach(ai_zombie in a_ai_zombies)
 				{
 					if(math::cointoss())
 					{
@@ -198,7 +198,7 @@ function function_86ef1da5()
 {
 	while(true)
 	{
-		foreach(var_cd41ef9, e_player in level.activeplayers)
+		foreach(e_player in level.activeplayers)
 		{
 			if(zombie_utility::is_player_valid(e_player) && distance(e_player.origin, self.origin) <= 525 && e_player util::is_looking_at(self.origin, 0.85, 0))
 			{
@@ -352,34 +352,37 @@ function function_e9d3c391(var_a89f74ed, v_fling, nd_start, var_173065cc)
 		self thread function_e905a9df(var_a89f74ed, var_173065cc);
 		self thread cleanup_vehicle(var_413ea50f);
 	}
-	else if(self.isdog)
+	else
 	{
-		self kill();
-	}
-	else if(self.archetype === "zombie")
-	{
-		self.is_flung = 1;
-		self pathmode("dont move");
-		self setplayercollision(0);
-		self.mdl_anchor = util::spawn_model("tag_origin", nd_start.origin, nd_start.angles);
-		self linkto(self.mdl_anchor);
-		nd_next = getvehiclenode(nd_start.target, "targetname");
-		n_distance = distance(nd_start.origin, nd_next.origin);
-		n_time = n_distance / 600;
-		self.mdl_anchor moveto(nd_next.origin, n_time);
-		self.mdl_anchor waittill(#"movedone");
-		self unlink();
-		self pathmode("dont move");
-		self startragdoll();
-		self launchragdoll(v_fling * randomfloatrange(0.17, 0.21));
-		util::wait_network_frame();
-		self dodamage(self.health, self.origin);
-		level.zombie_total++;
-		while(self istouching(var_a89f74ed))
+		if(self.isdog)
 		{
-			wait(0.1);
+			self kill();
 		}
-		self.is_flung = undefined;
+		else if(self.archetype === "zombie")
+		{
+			self.is_flung = 1;
+			self pathmode("dont move");
+			self setplayercollision(0);
+			self.mdl_anchor = util::spawn_model("tag_origin", nd_start.origin, nd_start.angles);
+			self linkto(self.mdl_anchor);
+			nd_next = getvehiclenode(nd_start.target, "targetname");
+			n_distance = distance(nd_start.origin, nd_next.origin);
+			n_time = n_distance / 600;
+			self.mdl_anchor moveto(nd_next.origin, n_time);
+			self.mdl_anchor waittill(#"movedone");
+			self unlink();
+			self pathmode("dont move");
+			self startragdoll();
+			self launchragdoll(v_fling * randomfloatrange(0.17, 0.21));
+			util::wait_network_frame();
+			self dodamage(self.health, self.origin);
+			level.zombie_total++;
+			while(self istouching(var_a89f74ed))
+			{
+				wait(0.1);
+			}
+			self.is_flung = undefined;
+		}
 	}
 }
 
@@ -700,7 +703,7 @@ function function_29c06608()
 {
 	a_ai = getaiteamarray(level.zombie_team);
 	var_5e3331b2 = arraysortclosest(a_ai, self.origin, a_ai.size, 0, 128);
-	foreach(var_b758f3c5, ai_zombie in var_5e3331b2)
+	foreach(ai_zombie in var_5e3331b2)
 	{
 		if(ai_zombie.archetype === "zombie")
 		{
@@ -715,7 +718,7 @@ function function_29c06608()
 	}
 	util::wait_network_frame();
 	var_1317e1d1 = arraysortclosest(a_ai, self.origin, a_ai.size, 0, 200);
-	foreach(var_2d73003b, ai_zombie in var_1317e1d1)
+	foreach(ai_zombie in var_1317e1d1)
 	{
 		if(isalive(ai_zombie) && ai_zombie.archetype === "zombie")
 		{
@@ -748,31 +751,34 @@ function zombie_slam_direction(ai_zombie)
 		ai_zombie.knockdown_direction = "front";
 		ai_zombie.getup_direction = "getup_back";
 	}
-	else if(v_dot < 0.5 && v_dot > -0.5)
+	else
 	{
-		v_dot = vectordot(v_zombie_to_player_2d, v_zombie_right_2d);
-		if(v_dot > 0)
+		if(v_dot < 0.5 && v_dot > -0.5)
 		{
-			ai_zombie.knockdown_direction = "right";
-			if(math::cointoss())
+			v_dot = vectordot(v_zombie_to_player_2d, v_zombie_right_2d);
+			if(v_dot > 0)
 			{
-				ai_zombie.getup_direction = "getup_back";
+				ai_zombie.knockdown_direction = "right";
+				if(math::cointoss())
+				{
+					ai_zombie.getup_direction = "getup_back";
+				}
+				else
+				{
+					ai_zombie.getup_direction = "getup_belly";
+				}
 			}
 			else
 			{
+				ai_zombie.knockdown_direction = "left";
 				ai_zombie.getup_direction = "getup_belly";
 			}
 		}
 		else
 		{
-			ai_zombie.knockdown_direction = "left";
+			ai_zombie.knockdown_direction = "back";
 			ai_zombie.getup_direction = "getup_belly";
 		}
-	}
-	else
-	{
-		ai_zombie.knockdown_direction = "back";
-		ai_zombie.getup_direction = "getup_belly";
 	}
 	wait(1);
 	ai_zombie.knockdown = 0;
@@ -810,9 +816,9 @@ function function_485001bf(e_player)
 	if(isdefined(e_player.var_8dbb72b1) && e_player.var_8dbb72b1[self.stub.script_string] === 1)
 	{
 		self sethintstring(&"ZM_GENESIS_JUMP_PAD_COOLDOWN");
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*

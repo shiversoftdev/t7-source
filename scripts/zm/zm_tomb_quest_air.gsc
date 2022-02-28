@@ -51,7 +51,7 @@ function main()
 function air_puzzle_1_init()
 {
 	level.a_ceiling_rings = getentarray("ceiling_ring", "script_noteworthy");
-	foreach(var_bc17a9c7, e_ring in level.a_ceiling_rings)
+	foreach(e_ring in level.a_ceiling_rings)
 	{
 		e_ring ceiling_ring_init();
 	}
@@ -106,14 +106,14 @@ function air_puzzle_1_run()
 function check_puzzle_solved()
 {
 	num_solved = 0;
-	foreach(var_da19be1d, e_ring in level.a_ceiling_rings)
+	foreach(e_ring in level.a_ceiling_rings)
 	{
 		if(e_ring.script_int != e_ring.position)
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -228,17 +228,23 @@ function ceiling_ring_run()
 			{
 				var_a9ffa3fc = 1;
 			}
-			else if(issubstr(self.targetname, "02") && var_234d771c > var_8218dfc8 && var_234d771c <= var_ad195647)
+			else
 			{
-				var_a9ffa3fc = 1;
-			}
-			else if(issubstr(self.targetname, "03") && var_234d771c > var_ad195647 && var_234d771c <= var_104a0542)
-			{
-				var_a9ffa3fc = 1;
-			}
-			else if(issubstr(self.targetname, "04") && var_234d771c > var_104a0542 && var_234d771c <= var_9d64b269)
-			{
-				var_a9ffa3fc = 1;
+				if(issubstr(self.targetname, "02") && var_234d771c > var_8218dfc8 && var_234d771c <= var_ad195647)
+				{
+					var_a9ffa3fc = 1;
+				}
+				else
+				{
+					if(issubstr(self.targetname, "03") && var_234d771c > var_ad195647 && var_234d771c <= var_104a0542)
+					{
+						var_a9ffa3fc = 1;
+					}
+					else if(issubstr(self.targetname, "04") && var_234d771c > var_104a0542 && var_234d771c <= var_9d64b269)
+					{
+						var_a9ffa3fc = 1;
+					}
+				}
 			}
 			if(var_a9ffa3fc)
 			{
@@ -271,7 +277,7 @@ function ceiling_ring_run()
 function air_puzzle_2_init()
 {
 	a_smoke_pos = struct::get_array("puzzle_smoke_origin", "targetname");
-	foreach(var_c3132459, s_smoke_pos in a_smoke_pos)
+	foreach(s_smoke_pos in a_smoke_pos)
 	{
 		s_smoke_pos.detector_brush = getent(s_smoke_pos.target, "targetname");
 		s_smoke_pos.detector_brush ghost();
@@ -290,16 +296,16 @@ function air_puzzle_2_init()
 function air_puzzle_2_run()
 {
 	a_smoke_pos = struct::get_array("puzzle_smoke_origin", "targetname");
-	foreach(var_cfa31b49, s_smoke_pos in a_smoke_pos)
+	foreach(s_smoke_pos in a_smoke_pos)
 	{
 		s_smoke_pos thread air_puzzle_smoke();
 	}
-	var_3481edfa = level.a_elemental_staffs["staff_air"].w_weapon;
+	w_staff_air = level.a_elemental_staffs["staff_air"].w_weapon;
 	while(true)
 	{
 		level waittill(#"air_puzzle_smoke_solved");
 		all_smoke_solved = 1;
-		foreach(var_743cfbdd, s_smoke_pos in a_smoke_pos)
+		foreach(s_smoke_pos in a_smoke_pos)
 		{
 			if(!s_smoke_pos.solved)
 			{
@@ -309,9 +315,9 @@ function air_puzzle_2_run()
 		if(all_smoke_solved)
 		{
 			a_players = getplayers();
-			foreach(var_bc6b0872, e_player in a_players)
+			foreach(e_player in a_players)
 			{
-				if(e_player hasweapon(var_3481edfa))
+				if(e_player hasweapon(w_staff_air))
 				{
 					e_player thread zm_tomb_vo::say_puzzle_completion_line(2);
 					break;

@@ -113,10 +113,10 @@ function gadget_is_camo_suit_flickering()
 	{
 		if(self ability_player::gadget_is_flickering(slot))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -148,10 +148,10 @@ function is_weapon_gadget(weapon)
 	{
 		if(gadget_key == weapon)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -195,13 +195,16 @@ function gadget_reset(gadgetweapon, changedclass, roundbased, firstround)
 		{
 			self gadgetpowerset(slot, self.pers["held_gadgets_power"][gadgetweapon]);
 		}
-		else if(isdefined(self.pers["held_gadgets_power"]) && isdefined(self.pers[#"hash_c35f137f"]) && isdefined(self.pers["held_gadgets_power"][self.pers[#"hash_c35f137f"]]))
+		else
 		{
-			self gadgetpowerset(slot, self.pers["held_gadgets_power"][self.pers[#"hash_c35f137f"]]);
-		}
-		else if(isdefined(self.pers["held_gadgets_power"]) && isdefined(self.pers[#"hash_65987563"]) && isdefined(self.pers["held_gadgets_power"][self.pers[#"hash_65987563"]]))
-		{
-			self gadgetpowerset(slot, self.pers["held_gadgets_power"][self.pers[#"hash_65987563"]]);
+			if(isdefined(self.pers["held_gadgets_power"]) && isdefined(self.pers[#"hash_c35f137f"]) && isdefined(self.pers["held_gadgets_power"][self.pers[#"hash_c35f137f"]]))
+			{
+				self gadgetpowerset(slot, self.pers["held_gadgets_power"][self.pers[#"hash_c35f137f"]]);
+			}
+			else if(isdefined(self.pers["held_gadgets_power"]) && isdefined(self.pers[#"hash_65987563"]) && isdefined(self.pers["held_gadgets_power"][self.pers[#"hash_65987563"]]))
+			{
+				self gadgetpowerset(slot, self.pers["held_gadgets_power"][self.pers[#"hash_65987563"]]);
+			}
 		}
 		resetonclasschange = changedclass && gadgetweapon.gadget_power_reset_on_class_change;
 		resetonfirstround = !isdefined(self.firstspawn) && (!roundbased || firstround);
@@ -245,10 +248,10 @@ function gadget_is_active(gadgettype)
 	{
 		if(self ability_player::gadget_is_in_use(slot))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -265,8 +268,8 @@ function gadget_has_type(gadgettype)
 	slot = self gadget_slot_for_type(gadgettype);
 	if(slot >= 0 && slot < 3)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 

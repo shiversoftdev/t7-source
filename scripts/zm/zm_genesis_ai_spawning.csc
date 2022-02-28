@@ -31,7 +31,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_genesis_ai_spawning", &__init__, undefined, undefined);
 }
@@ -75,13 +75,16 @@ function chaos_postfx_set(localclientnum, oldval, newval, bnewent, binitialsnap,
 		self.var_d8f5e78d = playfxoncamera(localclientnum, level._effect["chaos_1p_light"]);
 		function_3c75e14b(localclientnum, 1);
 	}
-	else if(isdefined(self.var_d8f5e78d))
+	else
 	{
-		stopfx(localclientnum, self.var_d8f5e78d);
-		self.var_d8f5e78d = undefined;
+		if(isdefined(self.var_d8f5e78d))
+		{
+			stopfx(localclientnum, self.var_d8f5e78d);
+			self.var_d8f5e78d = undefined;
+		}
+		function_3c75e14b(localclientnum, 0);
+		self thread postfx::exitpostfxbundle();
 	}
-	function_3c75e14b(localclientnum, 0);
-	self thread postfx::exitpostfxbundle();
 }
 
 /*

@@ -19,7 +19,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("threat_detector", &__init__, undefined, undefined);
 }
@@ -90,7 +90,7 @@ function sensorgrenadethink(sensorent, sensorhandle, localclientnum)
 	while(true)
 	{
 		players = getplayers(localclientnum);
-		foreach(var_b20650e8, player in players)
+		foreach(player in players)
 		{
 			if(self util::isenemyplayer(player))
 			{
@@ -137,7 +137,7 @@ function clearthreatdetectorondelete(sensorent, sensorhandle, localclientnum)
 		}
 	}
 	players = getplayers(localclientnum);
-	foreach(var_39a91352, player in players)
+	foreach(player in players)
 	{
 		if(self util::isenemyplayer(player))
 		{

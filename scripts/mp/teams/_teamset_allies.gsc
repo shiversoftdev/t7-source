@@ -16,7 +16,7 @@
 function main()
 {
 	init("free");
-	foreach(var_7477e7c9, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(team == "axis")
 		{

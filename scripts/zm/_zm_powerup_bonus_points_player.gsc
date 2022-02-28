@@ -26,7 +26,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_powerup_bonus_points_player", &__init__, undefined, undefined);
 }
@@ -42,7 +42,7 @@ autoexec function __init__sytem__()
 */
 function __init__()
 {
-	zm_powerups::register_powerup("bonus_points_player", &function_17a48195);
+	zm_powerups::register_powerup("bonus_points_player", &grab_bonus_points_player);
 	if(tolower(getdvarstring("g_gametype")) != "zcleansed")
 	{
 		zm_powerups::add_zombie_powerup("bonus_points_player", "zombie_z_money_icon", &"ZOMBIE_POWERUP_BONUS_POINTS", &zm_powerups::func_should_never_drop, 1, 0, 0);
@@ -50,7 +50,7 @@ function __init__()
 }
 
 /*
-	Name: function_17a48195
+	Name: grab_bonus_points_player
 	Namespace: zm_powerup_bonus_points_player
 	Checksum: 0xAE29B89
 	Offset: 0x3F8
@@ -58,7 +58,7 @@ function __init__()
 	Parameters: 1
 	Flags: Linked
 */
-function function_17a48195(player)
+function grab_bonus_points_player(player)
 {
 	level thread bonus_points_player_powerup(self, player);
 	player thread zm_powerups::powerup_vo("bonus_points_solo");

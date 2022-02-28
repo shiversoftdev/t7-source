@@ -20,7 +20,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("_zm_weap_elemental_bow", &__init__, &__main__, undefined);
 }
@@ -44,9 +44,7 @@ function __init__()
 	callback::on_connect(&function_c45ac6ae);
 	setdvar("bg_chargeShotUseOneAmmoForMultipleBullets", 0);
 	setdvar("bg_zm_dlc1_chargeShotMultipleBulletsForFullCharge", 2);
-	object = new throttle();
-	[[ object ]]->__constructor();
-	level.var_d6de2706 = object;
+	level.var_d6de2706 = new throttle();
 	[[ level.var_d6de2706 ]]->initialize(6, 0.1);
 }
 
@@ -254,13 +252,13 @@ function function_67b18bd9(str_weapon_name)
 {
 	if(!isdefined(str_weapon_name))
 	{
-		return 0;
+		return false;
 	}
 	if(str_weapon_name == "elemental_bow" || str_weapon_name == "elemental_bow2" || str_weapon_name == "elemental_bow3" || str_weapon_name == "elemental_bow4" || str_weapon_name == "elemental_bow_demongate" || str_weapon_name == "elemental_bow_demongate2" || str_weapon_name == "elemental_bow_demongate3" || str_weapon_name == "elemental_bow_demongate4" || str_weapon_name == "elemental_bow_rune_prison" || str_weapon_name == "elemental_bow_rune_prison_ricochet" || str_weapon_name == "elemental_bow_rune_prison2" || str_weapon_name == "elemental_bow_rune_prison3" || str_weapon_name == "elemental_bow_rune_prison4" || str_weapon_name == "elemental_bow_rune_prison4_ricochet" || str_weapon_name == "elemental_bow_storm" || str_weapon_name == "elemental_bow_storm_ricochet" || str_weapon_name == "elemental_bow_storm2" || str_weapon_name == "elemental_bow_storm3" || str_weapon_name == "elemental_bow_storm4" || str_weapon_name == "elemental_bow_storm4_ricochet" || str_weapon_name == "elemental_bow_wolf_howl" || str_weapon_name == "elemental_bow_wolf_howl2" || str_weapon_name == "elemental_bow_wolf_howl3" || str_weapon_name == "elemental_bow_wolf_howl4")
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -276,13 +274,13 @@ function function_db107e59(str_weapon_name)
 {
 	if(!isdefined(str_weapon_name))
 	{
-		return 0;
+		return false;
 	}
 	if(str_weapon_name == "elemental_bow4" || str_weapon_name == "elemental_bow_demongate4" || str_weapon_name == "elemental_bow_rune_prison4" || str_weapon_name == "elemental_bow_rune_prison4_ricochet" || str_weapon_name == "elemental_bow_storm4" || str_weapon_name == "elemental_bow_storm4_ricochet" || str_weapon_name == "elemental_bow_wolf_howl4")
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -298,7 +296,7 @@ function function_b252290e(str_weapon_name, var_93fff756)
 {
 	if(!isdefined(str_weapon_name))
 	{
-		return 0;
+		return false;
 	}
 	switch(var_93fff756)
 	{
@@ -306,7 +304,7 @@ function function_b252290e(str_weapon_name, var_93fff756)
 		{
 			if(str_weapon_name == "elemental_bow" || str_weapon_name == "elemental_bow2" || str_weapon_name == "elemental_bow3" || str_weapon_name == "elemental_bow4")
 			{
-				return 1;
+				return true;
 			}
 			break;
 		}
@@ -314,7 +312,7 @@ function function_b252290e(str_weapon_name, var_93fff756)
 		{
 			if(str_weapon_name == "elemental_bow_demongate" || str_weapon_name == "elemental_bow_demongate2" || str_weapon_name == "elemental_bow_demongate3" || str_weapon_name == "elemental_bow_demongate4")
 			{
-				return 1;
+				return true;
 			}
 			break;
 		}
@@ -322,7 +320,7 @@ function function_b252290e(str_weapon_name, var_93fff756)
 		{
 			if(str_weapon_name == "elemental_bow_rune_prison" || str_weapon_name == "elemental_bow_rune_prison_ricochet" || str_weapon_name == "elemental_bow_rune_prison2" || str_weapon_name == "elemental_bow_rune_prison3" || str_weapon_name == "elemental_bow_rune_prison4" || str_weapon_name == "elemental_bow_rune_prison4_ricochet")
 			{
-				return 1;
+				return true;
 			}
 			break;
 		}
@@ -330,7 +328,7 @@ function function_b252290e(str_weapon_name, var_93fff756)
 		{
 			if(str_weapon_name == "elemental_bow_storm" || str_weapon_name == "elemental_bow_storm_ricochet" || str_weapon_name == "elemental_bow_storm2" || str_weapon_name == "elemental_bow_storm3" || str_weapon_name == "elemental_bow_storm4" || str_weapon_name == "elemental_bow_storm4_ricochet")
 			{
-				return 1;
+				return true;
 			}
 			break;
 		}
@@ -338,7 +336,7 @@ function function_b252290e(str_weapon_name, var_93fff756)
 		{
 			if(str_weapon_name == "elemental_bow_wolf_howl" || str_weapon_name == "elemental_bow_wolf_howl2" || str_weapon_name == "elemental_bow_wolf_howl3" || str_weapon_name == "elemental_bow_wolf_howl4")
 			{
-				return 1;
+				return true;
 			}
 			break;
 		}
@@ -350,7 +348,7 @@ function function_b252290e(str_weapon_name, var_93fff756)
 			break;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -366,13 +364,13 @@ function function_ea37b2fe(str_weapon_name)
 {
 	if(!isdefined(str_weapon_name))
 	{
-		return 0;
+		return false;
 	}
 	if(str_weapon_name == "elemental_bow_demongate" || str_weapon_name == "elemental_bow_demongate2" || str_weapon_name == "elemental_bow_demongate3" || str_weapon_name == "elemental_bow_demongate4" || str_weapon_name == "elemental_bow_rune_prison" || str_weapon_name == "elemental_bow_rune_prison_ricochet" || str_weapon_name == "elemental_bow_rune_prison2" || str_weapon_name == "elemental_bow_rune_prison3" || str_weapon_name == "elemental_bow_rune_prison4" || str_weapon_name == "elemental_bow_rune_prison4_ricochet" || str_weapon_name == "elemental_bow_storm" || str_weapon_name == "elemental_bow_storm_ricochet" || str_weapon_name == "elemental_bow_storm2" || str_weapon_name == "elemental_bow_storm3" || str_weapon_name == "elemental_bow_storm4" || str_weapon_name == "elemental_bow_storm4_ricochet" || str_weapon_name == "elemental_bow_wolf_howl" || str_weapon_name == "elemental_bow_wolf_howl2" || str_weapon_name == "elemental_bow_wolf_howl3" || str_weapon_name == "elemental_bow_wolf_howl4")
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -481,17 +479,23 @@ function function_b78fcfc7(e_player, var_48369d98, v_position)
 		{
 			var_26680fd5 = function_dc4f8831(0.15, 0.03);
 		}
-		else if(var_48369d98 == "elemental_bow4")
-		{
-			var_26680fd5 = function_dc4f8831(0.25, 0.12);
-		}
-		else if(!issubstr(var_48369d98, "4"))
-		{
-			var_26680fd5 = 0.1;
-		}
 		else
 		{
-			var_26680fd5 = 0.35;
+			if(var_48369d98 == "elemental_bow4")
+			{
+				var_26680fd5 = function_dc4f8831(0.25, 0.12);
+			}
+			else
+			{
+				if(!issubstr(var_48369d98, "4"))
+				{
+					var_26680fd5 = 0.1;
+				}
+				else
+				{
+					var_26680fd5 = 0.35;
+				}
+			}
 		}
 		var_40955aed = (var_3bb42832 * var_26680fd5) / 0.2;
 		var_40955aed = var_40955aed * var_c36342f3;
@@ -514,15 +518,18 @@ function function_dc4f8831(var_eaae98a2, var_c01c8d5c)
 	{
 		var_26680fd5 = var_eaae98a2;
 	}
-	else if(level.mechz_health > level.var_42fd61f0)
-	{
-		var_26680fd5 = var_c01c8d5c;
-	}
 	else
 	{
-		var_d82dde4a = level.mechz_health - level.var_c1f907b2;
-		var_caabb734 = var_d82dde4a / level.var_42ee1b54;
-		var_26680fd5 = var_eaae98a2 - ((var_eaae98a2 - var_c01c8d5c) * var_caabb734);
+		if(level.mechz_health > level.var_42fd61f0)
+		{
+			var_26680fd5 = var_c01c8d5c;
+		}
+		else
+		{
+			var_d82dde4a = level.mechz_health - level.var_c1f907b2;
+			var_caabb734 = var_d82dde4a / level.var_42ee1b54;
+			var_26680fd5 = var_eaae98a2 - ((var_eaae98a2 - var_c01c8d5c) * var_caabb734);
+		}
 	}
 	return var_26680fd5;
 }
@@ -587,31 +594,34 @@ function function_d1e69389(var_63f884ec)
 			self.knockdown_direction = "front";
 			self.getup_direction = "getup_back";
 		}
-		else if(v_dot < 0.5 && v_dot > -0.5)
+		else
 		{
-			v_dot = vectordot(var_a87a26a1, v_zombie_right);
-			if(v_dot > 0)
+			if(v_dot < 0.5 && v_dot > -0.5)
 			{
-				self.knockdown_direction = "right";
-				if(math::cointoss())
+				v_dot = vectordot(var_a87a26a1, v_zombie_right);
+				if(v_dot > 0)
 				{
-					self.getup_direction = "getup_back";
+					self.knockdown_direction = "right";
+					if(math::cointoss())
+					{
+						self.getup_direction = "getup_back";
+					}
+					else
+					{
+						self.getup_direction = "getup_belly";
+					}
 				}
 				else
 				{
+					self.knockdown_direction = "left";
 					self.getup_direction = "getup_belly";
 				}
 			}
 			else
 			{
-				self.knockdown_direction = "left";
+				self.knockdown_direction = "back";
 				self.getup_direction = "getup_belly";
 			}
-		}
-		else
-		{
-			self.knockdown_direction = "back";
-			self.getup_direction = "getup_belly";
 		}
 		wait(2.5);
 		self setplayercollision(1);

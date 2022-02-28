@@ -18,7 +18,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function main()
+function autoexec main()
 {
 	clientfield::register("vehicle", "glaive_blood_fx", 1, 1, "int", &glaivebloodfxhandler, 0, 0);
 }
@@ -32,7 +32,7 @@ autoexec function main()
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function glaivebloodfxhandler(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private glaivebloodfxhandler(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	if(isdefined(self.bloodfxhandle))
 	{

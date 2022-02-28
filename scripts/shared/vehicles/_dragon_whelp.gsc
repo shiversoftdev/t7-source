@@ -28,7 +28,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("dragon", &__init__, undefined, undefined);
 }
@@ -127,49 +127,49 @@ function defaultrole()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function is_enemy_valid(target)
+function private is_enemy_valid(target)
 {
 	if(!isdefined(target))
 	{
-		return 0;
+		return false;
 	}
 	if(!isalive(target))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.intermission) && self.intermission)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(target.ignoreme) && target.ignoreme)
 	{
-		return 0;
+		return false;
 	}
 	if(target isnotarget())
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(target._dragon_ignoreme) && target._dragon_ignoreme)
 	{
-		return 0;
+		return false;
 	}
 	if(distancesquared(self.owner.origin, target.origin) > (self.settings.guardradius * self.settings.guardradius))
 	{
-		return 0;
+		return false;
 	}
 	if(self vehcansee(target))
 	{
-		return 1;
+		return true;
 	}
 	if(isactor(target) && target cansee(self.owner))
 	{
-		return 1;
+		return true;
 	}
 	if(isvehicle(target) && target vehcansee(self.owner))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -181,12 +181,12 @@ private function is_enemy_valid(target)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function get_dragon_enemy()
+function private get_dragon_enemy()
 {
 	dragon_enemies = getaiteamarray("axis");
 	distsqr = 10000 * 10000;
 	best_enemy = undefined;
-	foreach(var_f4baf6cb, enemy in dragon_enemies)
+	foreach(enemy in dragon_enemies)
 	{
 		newdistsqr = distance2dsquared(enemy.origin, self.owner.origin);
 		if(is_enemy_valid(enemy))
@@ -196,15 +196,18 @@ private function get_dragon_enemy()
 				newdistsqr = max(distance2d(enemy.origin, self.owner.origin) - 700, 0);
 				newdistsqr = newdistsqr * newdistsqr;
 			}
-			else if(enemy.archetype === "sentinel_drone")
+			else
 			{
-				newdistsqr = max(distance2d(enemy.origin, self.owner.origin) - 500, 0);
-				newdistsqr = newdistsqr * newdistsqr;
-			}
-			else if(enemy === self.dragonenemy)
-			{
-				newdistsqr = max(distance2d(enemy.origin, self.owner.origin) - 300, 0);
-				newdistsqr = newdistsqr * newdistsqr;
+				if(enemy.archetype === "sentinel_drone")
+				{
+					newdistsqr = max(distance2d(enemy.origin, self.owner.origin) - 500, 0);
+					newdistsqr = newdistsqr * newdistsqr;
+				}
+				else if(enemy === self.dragonenemy)
+				{
+					newdistsqr = max(distance2d(enemy.origin, self.owner.origin) - 300, 0);
+					newdistsqr = newdistsqr * newdistsqr;
+				}
 			}
 			if(newdistsqr < distsqr)
 			{
@@ -225,7 +228,7 @@ private function get_dragon_enemy()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function dragon_target_selection()
+function private dragon_target_selection()
 {
 	self endon(#"death");
 	for(;;)
@@ -277,7 +280,7 @@ function state_power_up_update(params)
 	self endon(#"death");
 	closest_distsqr = 10000 * 10000;
 	closest = undefined;
-	foreach(var_ed697aa1, powerup in level.active_powerups)
+	foreach(powerup in level.active_powerups)
 	{
 		powerup.navvolumeorigin = self getclosestpointonnavvolume(powerup.origin, 100);
 		if(!isdefined(powerup.navvolumeorigin))
@@ -323,17 +326,17 @@ function should_go_for_power_up(from_state, to_state, connection)
 {
 	if(level.whelp_no_power_up_pickup === 1)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.dragonenemy))
 	{
-		return 0;
+		return false;
 	}
 	if(level.active_powerups.size < 1)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -385,7 +388,7 @@ function state_combat_update(params)
 				ownerforward = anglestoforward(self.owner.angles);
 				best_point = undefined;
 				best_score = -999999;
-				foreach(var_e3caefb, point in queryresult.data)
+				foreach(point in queryresult.data)
 				{
 					distsqr = distance2dsquared(point.origin, ownerorigin);
 					if(distsqr > (idealdisttoowner * idealdisttoowner))
@@ -550,7 +553,7 @@ function go_back_on_navvolume()
 	{
 		best_point = undefined;
 		best_score = 999999;
-		foreach(var_1171aa34, point in queryresult.data)
+		foreach(point in queryresult.data)
 		{
 			point.score = abs(point.origin[2] - queryresult.origin[2]);
 			if(point.score < best_score)
@@ -585,7 +588,7 @@ function go_back_on_navvolume()
 */
 function dragon_allowfriendlyfiredamage(einflictor, eattacker, smeansofdeath, weapon)
 {
-	return 0;
+	return false;
 }
 
 /*

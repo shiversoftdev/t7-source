@@ -77,63 +77,78 @@ function teamoutcomenotify(winner, endtype, endreasontext)
 		outcometext = game["strings"]["halftime"];
 		notifyroundendtoui = 1;
 	}
-	else if(endtype == "intermission")
+	else
 	{
-		outcometext = game["strings"]["intermission"];
-		notifyroundendtoui = 1;
-	}
-	else if(endtype == "overtime")
-	{
-		outcometext = game["strings"]["overtime"];
-		notifyroundendtoui = 1;
-	}
-	else if(endtype == "roundend")
-	{
-		if(winner == "tie")
+		if(endtype == "intermission")
 		{
-			outcometext = game["strings"]["round_draw"];
-		}
-		else if(isdefined(self.pers["team"]) && winner == team)
-		{
-			outcometext = game["strings"]["round_win"];
-			overridespectator = 1;
+			outcometext = game["strings"]["intermission"];
+			notifyroundendtoui = 1;
 		}
 		else
 		{
-			outcometext = game["strings"]["round_loss"];
-			if(isdefined(level.enddefeatreasontext))
+			if(endtype == "overtime")
 			{
-				endreasontext = level.enddefeatreasontext;
+				outcometext = game["strings"]["overtime"];
+				notifyroundendtoui = 1;
 			}
-			overridespectator = 1;
-		}
-		notifyroundendtoui = 1;
-	}
-	else if(endtype == "gameend")
-	{
-		if(winner == "tie")
-		{
-			outcometext = game["strings"]["draw"];
-		}
-		else if(isdefined(self.pers["team"]) && winner == team)
-		{
-			outcometext = game["strings"]["victory"];
-			overridespectator = 1;
-		}
-		else
-		{
-			outcometext = game["strings"]["defeat"];
-			if(isdefined(level.enddefeatreasontext))
+			else
 			{
-				endreasontext = level.enddefeatreasontext;
+				if(endtype == "roundend")
+				{
+					if(winner == "tie")
+					{
+						outcometext = game["strings"]["round_draw"];
+					}
+					else
+					{
+						if(isdefined(self.pers["team"]) && winner == team)
+						{
+							outcometext = game["strings"]["round_win"];
+							overridespectator = 1;
+						}
+						else
+						{
+							outcometext = game["strings"]["round_loss"];
+							if(isdefined(level.enddefeatreasontext))
+							{
+								endreasontext = level.enddefeatreasontext;
+							}
+							overridespectator = 1;
+						}
+					}
+					notifyroundendtoui = 1;
+				}
+				else if(endtype == "gameend")
+				{
+					if(winner == "tie")
+					{
+						outcometext = game["strings"]["draw"];
+					}
+					else
+					{
+						if(isdefined(self.pers["team"]) && winner == team)
+						{
+							outcometext = game["strings"]["victory"];
+							overridespectator = 1;
+						}
+						else
+						{
+							outcometext = game["strings"]["defeat"];
+							if(isdefined(level.enddefeatreasontext))
+							{
+								endreasontext = level.enddefeatreasontext;
+							}
+							if(level.rankedmatch || level.leaguematch && self.pers["lateJoin"] === 1)
+							{
+								endreasontext = game["strings"]["join_in_progress_loss"];
+							}
+							overridespectator = 1;
+						}
+					}
+					notifyroundendtoui = 0;
+				}
 			}
-			if(level.rankedmatch || level.leaguematch && self.pers["lateJoin"] === 1)
-			{
-				endreasontext = game["strings"]["join_in_progress_loss"];
-			}
-			overridespectator = 1;
 		}
-		notifyroundendtoui = 0;
 	}
 	matchbonus = 0;
 	if(isdefined(self.pers["totalMatchBonus"]))
@@ -156,133 +171,145 @@ function teamoutcomenotify(winner, endtype, endreasontext)
 	if(isdefined(level.var_c17c938d) && [[level.var_c17c938d]](winner, endtype, endreasontext, outcometext, team, winnerenum, notifyroundendtoui, matchbonus))
 	{
 	}
-	else if(level.gametype == "ctf" || level.gametype == "escort" || level.gametype == "ball" && isdefined(game["overtime_round"]))
+	else
 	{
-		if(game["overtime_round"] == 1)
+		if(level.gametype == "ctf" || level.gametype == "escort" || level.gametype == "ball" && isdefined(game["overtime_round"]))
 		{
-			if(isdefined(game[level.gametype + "_overtime_first_winner"]))
+			if(game["overtime_round"] == 1)
 			{
-				winner = game[level.gametype + "_overtime_first_winner"];
-			}
-			if(isdefined(winner) && winner != "tie")
-			{
-				winningtime = game[level.gametype + "_overtime_time_to_beat"];
-			}
-		}
-		else if(isdefined(game[level.gametype + "_overtime_first_winner"]) && (game[level.gametype + "_overtime_first_winner"]) == "tie")
-		{
-			winningtime = game[level.gametype + "_overtime_best_time"];
-		}
-		else
-		{
-			winningtime = undefined;
-			if(winner == "tie" && isdefined(game[level.gametype + "_overtime_first_winner"]))
-			{
-				if((game[level.gametype + "_overtime_first_winner"]) == "allies")
+				if(isdefined(game[level.gametype + "_overtime_first_winner"]))
 				{
-					winnerenum = 1;
+					winner = game[level.gametype + "_overtime_first_winner"];
 				}
-				else if((game[level.gametype + "_overtime_first_winner"]) == "axis")
+				if(isdefined(winner) && winner != "tie")
 				{
-					winnerenum = 2;
+					winningtime = game[level.gametype + "_overtime_time_to_beat"];
 				}
 			}
-			if(isdefined(game[level.gametype + "_overtime_time_to_beat"]))
+			else
 			{
-				winningtime = game[level.gametype + "_overtime_time_to_beat"];
-			}
-			if(isdefined(game[level.gametype + "_overtime_best_time"]) && (!isdefined(winningtime) || winningtime > (game[level.gametype + "_overtime_best_time"])))
-			{
-				if((game[level.gametype + "_overtime_first_winner"]) !== winner)
+				if(isdefined(game[level.gametype + "_overtime_first_winner"]) && (game[level.gametype + "_overtime_first_winner"]) == "tie")
 				{
-					losingtime = winningtime;
-				}
-				winningtime = game[level.gametype + "_overtime_best_time"];
-				if(winner === "tie")
-				{
-					winningtime = 0;
-				}
-			}
-		}
-		if(level.gametype == "escort" && winner === "tie")
-		{
-			winnerenum = 0;
-			if(!(isdefined(level.finalgameend) && level.finalgameend))
-			{
-				if(game["defenders"] == team)
-				{
-					outcometext = game["strings"]["round_win"];
+					winningtime = game[level.gametype + "_overtime_best_time"];
 				}
 				else
 				{
-					outcometext = game["strings"]["round_loss"];
+					winningtime = undefined;
+					if(winner == "tie" && isdefined(game[level.gametype + "_overtime_first_winner"]))
+					{
+						if((game[level.gametype + "_overtime_first_winner"]) == "allies")
+						{
+							winnerenum = 1;
+						}
+						else if((game[level.gametype + "_overtime_first_winner"]) == "axis")
+						{
+							winnerenum = 2;
+						}
+					}
+					if(isdefined(game[level.gametype + "_overtime_time_to_beat"]))
+					{
+						winningtime = game[level.gametype + "_overtime_time_to_beat"];
+					}
+					if(isdefined(game[level.gametype + "_overtime_best_time"]) && (!isdefined(winningtime) || winningtime > (game[level.gametype + "_overtime_best_time"])))
+					{
+						if((game[level.gametype + "_overtime_first_winner"]) !== winner)
+						{
+							losingtime = winningtime;
+						}
+						winningtime = game[level.gametype + "_overtime_best_time"];
+						if(winner === "tie")
+						{
+							winningtime = 0;
+						}
+					}
+				}
+				if(level.gametype == "escort" && winner === "tie")
+				{
+					winnerenum = 0;
+					if(!(isdefined(level.finalgameend) && level.finalgameend))
+					{
+						if(game["defenders"] == team)
+						{
+							outcometext = game["strings"]["round_win"];
+						}
+						else
+						{
+							outcometext = game["strings"]["round_loss"];
+						}
+					}
 				}
 			}
-		}
-		if(!isdefined(winningtime))
-		{
-			winningtime = 0;
-		}
-		if(!isdefined(losingtime))
-		{
-			losingtime = 0;
-		}
-		if(winningtime == 0 && losingtime == 0)
-		{
-			winnerenum = 0;
-		}
-		if(team == "spectator" && overridespectator)
-		{
-			outcometext = game["strings"]["cod_caster_team_wins"];
-			notifyroundendtoui = 0;
-		}
-		self luinotifyevent(&"show_outcome", 7, outcometext, endreasontext, int(matchbonus), winnerenum, notifyroundendtoui, int(winningtime / 1000), int(losingtime / 1000));
-	}
-	else if(level.gametype == "ball" && isdefined(winner) && winner != "tie" && game["roundsplayed"] < level.roundlimit && isdefined(game["round_time_to_beat"]) && !isdefined(game["overtime_round"]))
-	{
-		winningtime = game["round_time_to_beat"];
-		if(!isdefined(losingtime))
-		{
-			losingtime = 0;
-		}
-		switch(winner)
-		{
-			case "allies":
+			if(!isdefined(winningtime))
 			{
-				winnerenum = 1;
-				break;
+				winningtime = 0;
 			}
-			case "axis":
+			if(!isdefined(losingtime))
 			{
-				winnerenum = 2;
-				break;
+				losingtime = 0;
 			}
-			default:
+			if(winningtime == 0 && losingtime == 0)
 			{
 				winnerenum = 0;
 			}
-		}
-		if(team == "spectator" && overridespectator)
-		{
-			outcometext = game["strings"]["cod_caster_team_wins"];
-			notifyroundendtoui = 0;
-		}
-		self luinotifyevent(&"show_outcome", 7, outcometext, endreasontext, int(matchbonus), winnerenum, notifyroundendtoui, int(winningtime / 1000), int(losingtime / 1000));
-	}
-	else if(team == "spectator" && overridespectator)
-	{
-		foreach(var_c50aeb12, team in level.teams)
-		{
-			if(endreasontext == (game["strings"][team + "_eliminated"]))
+			if(team == "spectator" && overridespectator)
 			{
-				endreasontext = game["strings"]["cod_caster_team_eliminated"];
-				break;
+				outcometext = game["strings"]["cod_caster_team_wins"];
+				notifyroundendtoui = 0;
+			}
+			self luinotifyevent(&"show_outcome", 7, outcometext, endreasontext, int(matchbonus), winnerenum, notifyroundendtoui, int(winningtime / 1000), int(losingtime / 1000));
+		}
+		else
+		{
+			if(level.gametype == "ball" && isdefined(winner) && winner != "tie" && game["roundsplayed"] < level.roundlimit && isdefined(game["round_time_to_beat"]) && !isdefined(game["overtime_round"]))
+			{
+				winningtime = game["round_time_to_beat"];
+				if(!isdefined(losingtime))
+				{
+					losingtime = 0;
+				}
+				switch(winner)
+				{
+					case "allies":
+					{
+						winnerenum = 1;
+						break;
+					}
+					case "axis":
+					{
+						winnerenum = 2;
+						break;
+					}
+					default:
+					{
+						winnerenum = 0;
+					}
+				}
+				if(team == "spectator" && overridespectator)
+				{
+					outcometext = game["strings"]["cod_caster_team_wins"];
+					notifyroundendtoui = 0;
+				}
+				self luinotifyevent(&"show_outcome", 7, outcometext, endreasontext, int(matchbonus), winnerenum, notifyroundendtoui, int(winningtime / 1000), int(losingtime / 1000));
+			}
+			else
+			{
+				if(team == "spectator" && overridespectator)
+				{
+					foreach(team in level.teams)
+					{
+						if(endreasontext == (game["strings"][team + "_eliminated"]))
+						{
+							endreasontext = game["strings"]["cod_caster_team_eliminated"];
+							break;
+						}
+					}
+					outcometext = game["strings"]["cod_caster_team_wins"];
+					notifyroundendtoui = 0;
+				}
+				self luinotifyevent(&"show_outcome", 5, outcometext, endreasontext, int(matchbonus), winnerenum, notifyroundendtoui);
 			}
 		}
-		outcometext = game["strings"]["cod_caster_team_wins"];
-		notifyroundendtoui = 0;
 	}
-	self luinotifyevent(&"show_outcome", 5, outcometext, endreasontext, int(matchbonus), winnerenum, notifyroundendtoui);
 }
 
 /*
@@ -369,23 +396,32 @@ function outcomenotify(winner, isroundend, endreasontext)
 	{
 		outcometext = game["strings"]["game_over"];
 	}
-	else if(players[0].pointstowin == 0)
-	{
-		outcometext = game["strings"]["tie"];
-	}
-	else if(self isintop(players, 1))
-	{
-		outcometext = game["strings"]["victory"];
-		overridespectator = 1;
-	}
-	else if(self isintop(players, 3))
-	{
-		outcometext = game["strings"]["top3"];
-	}
 	else
 	{
-		outcometext = game["strings"]["defeat"];
-		overridespectator = 1;
+		if(players[0].pointstowin == 0)
+		{
+			outcometext = game["strings"]["tie"];
+		}
+		else
+		{
+			if(self isintop(players, 1))
+			{
+				outcometext = game["strings"]["victory"];
+				overridespectator = 1;
+			}
+			else
+			{
+				if(self isintop(players, 3))
+				{
+					outcometext = game["strings"]["top3"];
+				}
+				else
+				{
+					outcometext = game["strings"]["defeat"];
+					overridespectator = 1;
+				}
+			}
+		}
 	}
 	matchbonus = 0;
 	if(isdefined(self.pers["totalMatchBonus"]))
@@ -456,20 +492,26 @@ function wageroutcomenotify(winner, endreasontext)
 		outcometitle.color = (1, 1, 0);
 		outcometitle.glowcolor = (1, 0, 0);
 	}
-	else if(isdefined(level.dontcalcwagerwinnings) && level.dontcalcwagerwinnings == 1)
-	{
-		outcometitle settext(game["strings"]["wager_topwinners"]);
-		outcometitle.color = (0.42, 0.68, 0.46);
-	}
-	else if(isdefined(self.wagerwinnings) && self.wagerwinnings > 0)
-	{
-		outcometitle settext(game["strings"]["wager_inthemoney"]);
-		outcometitle.color = (0.42, 0.68, 0.46);
-	}
 	else
 	{
-		outcometitle settext(game["strings"]["wager_loss"]);
-		outcometitle.color = (0.73, 0.29, 0.19);
+		if(isdefined(level.dontcalcwagerwinnings) && level.dontcalcwagerwinnings == 1)
+		{
+			outcometitle settext(game["strings"]["wager_topwinners"]);
+			outcometitle.color = (0.42, 0.68, 0.46);
+		}
+		else
+		{
+			if(isdefined(self.wagerwinnings) && self.wagerwinnings > 0)
+			{
+				outcometitle settext(game["strings"]["wager_inthemoney"]);
+				outcometitle.color = (0.42, 0.68, 0.46);
+			}
+			else
+			{
+				outcometitle settext(game["strings"]["wager_loss"]);
+				outcometitle.color = (0.73, 0.29, 0.19);
+			}
+		}
 	}
 	outcometitle.glowalpha = 1;
 	outcometitle.hidewheninmenu = 0;
@@ -650,32 +692,41 @@ function teamwageroutcomenotify(winner, isroundend, endreasontext)
 		outcometitle.color = (1, 1, 1);
 		winner = "allies";
 	}
-	else if(winner == "overtime")
+	else
 	{
-		outcometitle settext(game["strings"]["overtime"]);
-		outcometitle.color = (1, 1, 1);
-	}
-	else if(isdefined(self.pers["team"]) && winner == team)
-	{
-		if(isroundend)
+		if(winner == "overtime")
 		{
-			outcometitle settext(game["strings"]["round_win"]);
+			outcometitle settext(game["strings"]["overtime"]);
+			outcometitle.color = (1, 1, 1);
 		}
 		else
 		{
-			outcometitle settext(game["strings"]["victory"]);
+			if(isdefined(self.pers["team"]) && winner == team)
+			{
+				if(isroundend)
+				{
+					outcometitle settext(game["strings"]["round_win"]);
+				}
+				else
+				{
+					outcometitle settext(game["strings"]["victory"]);
+				}
+				outcometitle.color = (0.42, 0.68, 0.46);
+			}
+			else
+			{
+				if(isroundend)
+				{
+					outcometitle settext(game["strings"]["round_loss"]);
+				}
+				else
+				{
+					outcometitle settext(game["strings"]["defeat"]);
+				}
+				outcometitle.color = (0.73, 0.29, 0.19);
+			}
 		}
-		outcometitle.color = (0.42, 0.68, 0.46);
 	}
-	else if(isroundend)
-	{
-		outcometitle settext(game["strings"]["round_loss"]);
-	}
-	else
-	{
-		outcometitle settext(game["strings"]["defeat"]);
-	}
-	outcometitle.color = (0.73, 0.29, 0.19);
 	if(!isdefined(level.dontshowendreason) || !level.dontshowendreason)
 	{
 		outcometext settext(endreasontext);
@@ -693,7 +744,7 @@ function teamwageroutcomenotify(winner, isroundend, endreasontext)
 	teamicons[team].alpha = 1;
 	teamicons[team].immunetodemogamehudsettings = 1;
 	teamicons[team].immunetodemofreecamera = 1;
-	foreach(var_4d8d9f9b, enemyteam in level.teams)
+	foreach(enemyteam in level.teams)
 	{
 		if(team == enemyteam)
 		{
@@ -721,7 +772,7 @@ function teamwageroutcomenotify(winner, isroundend, endreasontext)
 	teamscores[team].immunetodemogamehudsettings = 1;
 	teamscores[team].immunetodemofreecamera = 1;
 	teamscores[team] setpulsefx(100, duration, 1000);
-	foreach(var_30b1df2a, enemyteam in level.teams)
+	foreach(enemyteam in level.teams)
 	{
 		if(team == enemyteam)
 		{
@@ -792,14 +843,14 @@ function resetoutcomenotify(hudelemlist1, hudelemlist2, hudelem3, hudelem4, hude
 	destroyhudelem(hudelem10);
 	if(isdefined(hudelemlist1))
 	{
-		foreach(var_9fe61d7c, elem in hudelemlist1)
+		foreach(elem in hudelemlist1)
 		{
 			destroyhudelem(elem);
 		}
 	}
 	if(isdefined(hudelemlist2))
 	{
-		foreach(var_3a6ea531, elem in hudelemlist2)
+		foreach(elem in hudelemlist2)
 		{
 			destroyhudelem(elem);
 		}

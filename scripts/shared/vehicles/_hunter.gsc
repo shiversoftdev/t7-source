@@ -29,7 +29,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("hunter", &__init__, undefined, undefined);
 }
@@ -177,7 +177,7 @@ function hunter_spawndrones()
 	self.dronesowned = [];
 	if(0)
 	{
-		foreach(var_a6459b26, dronetag in self.droneattachtags)
+		foreach(dronetag in self.droneattachtags)
 		{
 			origin = self gettagorigin(dronetag);
 			angles = self gettagangles(dronetag);
@@ -319,7 +319,7 @@ function shut_off_fx()
 function kill_drones()
 {
 	self endon(#"death");
-	foreach(var_1c0bd7aa, drone in self.dronesowned)
+	foreach(drone in self.dronesowned)
 	{
 		if(isalive(drone) && distance2dsquared(self.origin, drone.origin) < (80 * 80))
 		{
@@ -651,7 +651,7 @@ function state_strafe_update(params)
 	positionquery_filter_distancetogoal(queryresult, self);
 	positionquery_filter_inclaimedlocation(queryresult, self);
 	self vehicle_ai::positionquery_filter_outofgoalanchor(queryresult, 200);
-	foreach(var_c56cb562, point in queryresult.data)
+	foreach(point in queryresult.data)
 	{
 		distancetopointsqr = distancesquared(point.origin, self.origin);
 		if(distancetopointsqr < (distancethreshold * 0.5))
@@ -717,7 +717,7 @@ function state_strafe_update(params)
 	}
 	vehicle_ai::positionquery_postprocess_sortscore(queryresult);
 	self vehicle_ai::positionquery_debugscores(queryresult);
-	foreach(var_6b6e287f, point in queryresult.data)
+	foreach(point in queryresult.data)
 	{
 		self.current_pathto_pos = point.origin;
 		foundpath = self setvehgoalpos(self.current_pathto_pos, 1, 1);
@@ -783,7 +783,7 @@ function getnextmoveposition_tactical(enemy)
 	self vehicle_ai::positionquery_filter_engagementdist(queryresult, enemy, self.settings.engagementdistmin, self.settings.engagementdistmax);
 	self vehicle_ai::positionquery_filter_random(queryresult, 0, 30);
 	goalheight = enemy.origin[2] + (0.5 * (self.settings.engagementheightmin + self.settings.engagementheightmax));
-	foreach(var_c586cd95, point in queryresult.data)
+	foreach(point in queryresult.data)
 	{
 		if(!point.visibility)
 		{
@@ -889,7 +889,7 @@ function movement_thread_stayindistance()
 				queryresult = positionquery_source_navigation(self.origin, 0, 800, 400, 1.5 * self.radius);
 				positionquery_filter_sight(queryresult, self.origin, (0, 0, 0), self, 1);
 				getbackpoint = undefined;
-				foreach(var_6ce7fe1d, point in queryresult.data)
+				foreach(point in queryresult.data)
 				{
 					if(point.visibility === 1)
 					{
@@ -1253,13 +1253,16 @@ function hunter_fire_one_missile(launcher_index, target, offset, blinklights, wa
 		{
 			missile = magicbullet(weapon, origin, target.origin + offset, self, target, offset);
 		}
-		else if(isvec(target))
-		{
-			missile = magicbullet(weapon, origin, target + offset, self);
-		}
 		else
 		{
-			missile = magicbullet(weapon, origin, target.origin + offset, self);
+			if(isvec(target))
+			{
+				missile = magicbullet(weapon, origin, target + offset, self);
+			}
+			else
+			{
+				missile = magicbullet(weapon, origin, target.origin + offset, self);
+			}
 		}
 	}
 }
@@ -1368,13 +1371,16 @@ function is_valid_target(target, do_trace)
 	{
 		target_is_valid = 0;
 	}
-	else if(issentient(target) && (target isnotarget() || target ai::is_dead_sentient()))
+	else
 	{
-		target_is_valid = 0;
-	}
-	else if(isdefined(target.origin) && !is_point_in_view(target.origin, do_trace))
-	{
-		target_is_valid = 0;
+		if(issentient(target) && (target isnotarget() || target ai::is_dead_sentient()))
+		{
+			target_is_valid = 0;
+		}
+		else if(isdefined(target.origin) && !is_point_in_view(target.origin, do_trace))
+		{
+			target_is_valid = 0;
+		}
 	}
 	return target_is_valid;
 }
@@ -1392,7 +1398,7 @@ function get_enemies_in_view(do_trace)
 {
 	validenemyarray = [];
 	enemyarray = getenemyarray(1, 1);
-	foreach(var_1aff6633, enemy in enemyarray)
+	foreach(enemy in enemyarray)
 	{
 		if(is_valid_target(enemy, do_trace))
 		{
@@ -1519,38 +1525,44 @@ function hunter_frontscanning()
 			offset = vectorscale((1, 0, 0), 50) + ((math::randomsign() * randomfloatrange(1, 2)) * pitchrange, (math::randomsign() * randomfloatrange(1, 2)) * yawrange, 0);
 			scannerdirection = anglestoforward(self.angles + offset);
 		}
-		else if(!isdefined(self.enemy))
-		{
-			if(0)
-			{
-				self.frontscanner.sndscanningent playloopsound("veh_hunter_scanner_loop", 1);
-			}
-			offsetfactorpitch = offsetfactorpitch + pitchstep;
-			offsetfactoryaw = offsetfactoryaw + yawstep;
-			offset = vectorscale((1, 0, 0), 50) + (sin(offsetfactorpitch) * pitchrange, cos(offsetfactoryaw) * yawrange, 0);
-			scannerdirection = anglestoforward(self.angles + offset);
-			enemies = get_enemies_in_view(1);
-			if(enemies.size > 0)
-			{
-				closest_enemy = arraygetclosest(self.origin, enemies);
-				self.favoriteenemy = closest_enemy;
-				/#
-					line(scannerorigin, closest_enemy.origin, (0, 1, 0), 1, 3);
-				#/
-			}
-		}
-		else if(self is_point_in_view(self.enemy.origin, 1))
-		{
-			self notify(#"hunter_lockontargetinsight");
-		}
 		else
 		{
-			self notify(#"hunter_lockontargetoutsight");
-		}
-		scannerdirection = vectornormalize(self.enemy.origin - scannerorigin);
-		if(0)
-		{
-			self.frontscanner.sndscanningent stoploopsound(1);
+			if(!isdefined(self.enemy))
+			{
+				if(0)
+				{
+					self.frontscanner.sndscanningent playloopsound("veh_hunter_scanner_loop", 1);
+				}
+				offsetfactorpitch = offsetfactorpitch + pitchstep;
+				offsetfactoryaw = offsetfactoryaw + yawstep;
+				offset = vectorscale((1, 0, 0), 50) + (sin(offsetfactorpitch) * pitchrange, cos(offsetfactoryaw) * yawrange, 0);
+				scannerdirection = anglestoforward(self.angles + offset);
+				enemies = get_enemies_in_view(1);
+				if(enemies.size > 0)
+				{
+					closest_enemy = arraygetclosest(self.origin, enemies);
+					self.favoriteenemy = closest_enemy;
+					/#
+						line(scannerorigin, closest_enemy.origin, (0, 1, 0), 1, 3);
+					#/
+				}
+			}
+			else
+			{
+				if(self is_point_in_view(self.enemy.origin, 1))
+				{
+					self notify(#"hunter_lockontargetinsight");
+				}
+				else
+				{
+					self notify(#"hunter_lockontargetoutsight");
+				}
+				scannerdirection = vectornormalize(self.enemy.origin - scannerorigin);
+				if(0)
+				{
+					self.frontscanner.sndscanningent stoploopsound(1);
+				}
+			}
 		}
 		targetlocation = scannerorigin + (scannerdirection * 1000);
 		self hunter_scanner_settargetposition(targetlocation);

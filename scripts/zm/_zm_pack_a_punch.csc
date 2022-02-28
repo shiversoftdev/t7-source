@@ -22,7 +22,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_pack_a_punch", &__init__, undefined, undefined);
 }
@@ -57,15 +57,18 @@ function pap_working_fx_handler(localclientnum, oldval, newval, bnewent, binitia
 	{
 		pap_play_fx(localclientnum, 0, "base_jnt");
 	}
-	else if(isdefined(self.n_pap_fx))
+	else
 	{
-		stopfx(localclientnum, self.n_pap_fx);
-		self.n_pap_fx = undefined;
-	}
-	wait(1);
-	if(isdefined(self.mdl_fx))
-	{
-		self.mdl_fx delete();
+		if(isdefined(self.n_pap_fx))
+		{
+			stopfx(localclientnum, self.n_pap_fx);
+			self.n_pap_fx = undefined;
+		}
+		wait(1);
+		if(isdefined(self.mdl_fx))
+		{
+			self.mdl_fx delete();
+		}
 	}
 }
 
@@ -78,7 +81,7 @@ function pap_working_fx_handler(localclientnum, oldval, newval, bnewent, binitia
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function pap_play_fx(localclientnum, n_piece_index, str_tag)
+function private pap_play_fx(localclientnum, n_piece_index, str_tag)
 {
 	mdl_piece = self zbarriergetpiece(n_piece_index);
 	if(isdefined(self.mdl_fx))

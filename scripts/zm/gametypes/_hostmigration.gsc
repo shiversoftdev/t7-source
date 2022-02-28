@@ -196,7 +196,7 @@ function callback_hostmigration()
 		zombies = getaiteamarray(level.zombie_team);
 		if(isdefined(zombies) && zombies.size > 0)
 		{
-			foreach(var_fc5be8d7, zombie in zombies)
+			foreach(zombie in zombies)
 			{
 				if(!isdefined(zombie._host_migration_link_entity))
 				{
@@ -210,7 +210,7 @@ function callback_hostmigration()
 		zombies = getaiteamarray(level.zombie_team);
 		if(isdefined(zombies) && zombies.size > 0)
 		{
-			foreach(var_157bd6b7, zombie in zombies)
+			foreach(zombie in zombies)
 			{
 				zombie.no_powerups = 1;
 				zombie.marked_for_recycle = 1;
@@ -230,7 +230,7 @@ function callback_hostmigration()
 	thread locktimer();
 	if(isdefined(level.b_host_migration_force_player_respawn) && level.b_host_migration_force_player_respawn)
 	{
-		foreach(var_f0e2fd6f, player in level.players)
+		foreach(player in level.players)
 		{
 			if(zm_utility::is_player_valid(player, 0, 0))
 			{
@@ -241,7 +241,7 @@ function callback_hostmigration()
 	zombies = getaiteamarray(level.zombie_team);
 	if(isdefined(zombies) && zombies.size > 0)
 	{
-		foreach(var_be508c16, zombie in zombies)
+		foreach(zombie in zombies)
 		{
 			if(isdefined(zombie._host_migration_link_entity))
 			{
@@ -261,14 +261,14 @@ function callback_hostmigration()
 		level flag::clear("spawn_zombies");
 	}
 	hostmigrationwait();
-	foreach(var_f18192b, player in level.players)
+	foreach(player in level.players)
 	{
 		player thread post_migration_invulnerability();
 	}
 	zombies = getaiteamarray(level.zombie_team);
 	if(isdefined(zombies) && zombies.size > 0)
 	{
-		foreach(var_25b968fa, zombie in zombies)
+		foreach(zombie in zombies)
 		{
 			if(isdefined(zombie._host_migration_link_entity))
 			{
@@ -360,7 +360,7 @@ function host_migration_respawn()
 		self setorigin(new_origin.origin);
 		self setplayerangles(angles);
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -761,12 +761,12 @@ function hostmigration_put_player_in_better_place()
 		structs = struct::get_array("initial_spawn", "script_noteworthy");
 		if(isdefined(structs))
 		{
-			foreach(var_614c89ca, struct in structs)
+			foreach(struct in structs)
 			{
 				if(isdefined(struct.script_string))
 				{
 					tokens = strtok(struct.script_string, " ");
-					foreach(var_ad517e9c, token in tokens)
+					foreach(token in tokens)
 					{
 						if(token == match_string)
 						{

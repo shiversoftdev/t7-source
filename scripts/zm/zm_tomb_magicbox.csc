@@ -14,7 +14,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("tomb_magicbox", &__init__, undefined, undefined);
 }
@@ -76,22 +76,22 @@ function magicbox_open_fx(localclientnum, oldval, newval, bnewent, binitialsnap,
 		self.fx_obj.angles = self.angles;
 		self.fx_obj setmodel("tag_origin");
 	}
-	if(!isdefined(self.var_9b17c542))
+	if(!isdefined(self.fx_obj_2))
 	{
-		self.var_9b17c542 = spawn(localclientnum, self.origin, "script_model");
-		self.var_9b17c542.angles = self.angles;
-		self.var_9b17c542 setmodel("tag_origin");
+		self.fx_obj_2 = spawn(localclientnum, self.origin, "script_model");
+		self.fx_obj_2.angles = self.angles;
+		self.fx_obj_2 setmodel("tag_origin");
 	}
 	if(newval == 0)
 	{
 		stopfx(localclientnum, self.fx_obj.curr_open_fx);
-		self.var_9b17c542 stoploopsound(1);
+		self.fx_obj_2 stoploopsound(1);
 		self notify(#"magicbox_portal_finished");
 	}
 	else if(newval == 1)
 	{
 		self.fx_obj.curr_open_fx = playfxontag(localclientnum, level._effect["box_is_open"], self.fx_obj, "tag_origin");
-		self.var_9b17c542 playloopsound("zmb_hellbox_open_effect");
+		self.fx_obj_2 playloopsound("zmb_hellbox_open_effect");
 		self thread fx_magicbox_portal(localclientnum);
 	}
 }
@@ -108,9 +108,9 @@ function magicbox_open_fx(localclientnum, oldval, newval, bnewent, binitialsnap,
 function fx_magicbox_portal(localclientnum)
 {
 	wait(0.5);
-	self.var_9b17c542.curr_portal_fx = playfxontag(localclientnum, level._effect["box_portal"], self.var_9b17c542, "tag_origin");
+	self.fx_obj_2.curr_portal_fx = playfxontag(localclientnum, level._effect["box_portal"], self.fx_obj_2, "tag_origin");
 	self waittill(#"magicbox_portal_finished");
-	stopfx(localclientnum, self.var_9b17c542.curr_portal_fx);
+	stopfx(localclientnum, self.fx_obj_2.curr_portal_fx);
 }
 
 /*
@@ -171,26 +171,32 @@ function magicbox_ambient_fx(localclientnum, oldval, newval, bnewent, binitialsn
 		playsound(0, "zmb_hellbox_leave", self.fx_obj.origin);
 		stopfx(localclientnum, self.fx_obj.curr_amb_fx);
 	}
-	else if(newval == 1)
+	else
 	{
-		self.fx_obj.curr_amb_fx_power = playfxontag(localclientnum, level._effect["box_unpowered"], self.fx_obj, "tag_origin");
-		self.fx_obj.curr_amb_fx = playfxontag(localclientnum, level._effect["box_here_ambient"], self.fx_obj, "tag_origin");
-		self.fx_obj playloopsound("zmb_hellbox_amb_low");
-		playsound(0, "zmb_hellbox_arrive", self.fx_obj.origin);
-	}
-	else if(newval == 2)
-	{
-		self.fx_obj.curr_amb_fx_power = playfxontag(localclientnum, level._effect["box_powered"], self.fx_obj, "tag_origin");
-		self.fx_obj.curr_amb_fx = playfxontag(localclientnum, level._effect["box_here_ambient"], self.fx_obj, "tag_origin");
-		self.fx_obj playloopsound("zmb_hellbox_amb_high");
-		playsound(0, "zmb_hellbox_arrive", self.fx_obj.origin);
-	}
-	else if(newval == 3)
-	{
-		self.fx_obj.curr_amb_fx_power = playfxontag(localclientnum, level._effect["box_unpowered"], self.fx_obj, "tag_origin");
-		self.fx_obj.curr_amb_fx = playfxontag(localclientnum, level._effect["box_gone_ambient"], self.fx_obj, "tag_origin");
-		self.fx_obj playloopsound("zmb_hellbox_amb_high");
-		playsound(0, "zmb_hellbox_leave", self.fx_obj.origin);
+		if(newval == 1)
+		{
+			self.fx_obj.curr_amb_fx_power = playfxontag(localclientnum, level._effect["box_unpowered"], self.fx_obj, "tag_origin");
+			self.fx_obj.curr_amb_fx = playfxontag(localclientnum, level._effect["box_here_ambient"], self.fx_obj, "tag_origin");
+			self.fx_obj playloopsound("zmb_hellbox_amb_low");
+			playsound(0, "zmb_hellbox_arrive", self.fx_obj.origin);
+		}
+		else
+		{
+			if(newval == 2)
+			{
+				self.fx_obj.curr_amb_fx_power = playfxontag(localclientnum, level._effect["box_powered"], self.fx_obj, "tag_origin");
+				self.fx_obj.curr_amb_fx = playfxontag(localclientnum, level._effect["box_here_ambient"], self.fx_obj, "tag_origin");
+				self.fx_obj playloopsound("zmb_hellbox_amb_high");
+				playsound(0, "zmb_hellbox_arrive", self.fx_obj.origin);
+			}
+			else if(newval == 3)
+			{
+				self.fx_obj.curr_amb_fx_power = playfxontag(localclientnum, level._effect["box_unpowered"], self.fx_obj, "tag_origin");
+				self.fx_obj.curr_amb_fx = playfxontag(localclientnum, level._effect["box_gone_ambient"], self.fx_obj, "tag_origin");
+				self.fx_obj playloopsound("zmb_hellbox_amb_high");
+				playsound(0, "zmb_hellbox_leave", self.fx_obj.origin);
+			}
+		}
 	}
 }
 

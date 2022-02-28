@@ -211,7 +211,7 @@ function setabilitiesbyflags(flags)
 	}
 	self setcybercomflags();
 	self updatecybercomflags();
-	foreach(var_70e1f623, ability in self.cybercom.ccom_abilities)
+	foreach(ability in self.cybercom.ccom_abilities)
 	{
 		status = self hascybercomability(ability.name);
 		if(status == 0)
@@ -220,7 +220,7 @@ function setabilitiesbyflags(flags)
 		}
 		self cybercom_gadget::meleeabilitygiven(ability, status == 2);
 	}
-	foreach(var_40ce22db, ability in level._cybercom_rig_ability)
+	foreach(ability in level._cybercom_rig_ability)
 	{
 		status = self hascybercomrig(ability.name);
 		if(status == 0)
@@ -263,7 +263,7 @@ function function_8b088b97(cybercore_type)
 {
 	debugmsg("CYBERCORE: " + cybercore_type);
 	abilities = cybercom_gadget::getabilitiesfortype(cybercore_type);
-	foreach(var_b2c75ad8, ability in abilities)
+	foreach(ability in abilities)
 	{
 		itemindex = getitemindexfromref(ability.name);
 		if(self isitempurchased(itemindex))
@@ -347,7 +347,7 @@ function function_1adaa876(var_e4230c26, var_f4132a83)
 	self setcybercomactivetype(var_e4230c26);
 	abilities = cybercom_gadget::getabilitiesfortype(var_e4230c26);
 	abilityindex = 1;
-	foreach(var_b999d4c8, ability in abilities)
+	foreach(ability in abilities)
 	{
 		if(self hascybercomability(ability.name))
 		{
@@ -424,44 +424,44 @@ function function_674d724c(class_num_for_global_weapons, var_f4132a83, var_f69e7
 function function_4b8ac464(class_num, class_num_for_global_weapons, var_f4132a83, altplayer)
 {
 	self clearcybercomability();
-	var_40cc9116 = self getloadoutitemref(class_num, "cybercom_tacrig1");
-	var_1aca16ad = self getloadoutitemref(class_num, "cybercom_tacrig2");
+	rig1 = self getloadoutitemref(class_num, "cybercom_tacrig1");
+	rig2 = self getloadoutitemref(class_num, "cybercom_tacrig2");
 	if(isdefined(altplayer))
 	{
-		var_40cc9116 = altplayer getloadoutitemref(class_num, "cybercom_tacrig1");
-		var_1aca16ad = altplayer getloadoutitemref(class_num, "cybercom_tacrig2");
+		rig1 = altplayer getloadoutitemref(class_num, "cybercom_tacrig1");
+		rig2 = altplayer getloadoutitemref(class_num, "cybercom_tacrig2");
 	}
-	if(strendswith(var_40cc9116, "_pro"))
+	if(strendswith(rig1, "_pro"))
 	{
-		var_40cc9116 = getsubstr(var_40cc9116, 0, var_40cc9116.size - 4);
-		var_65303699 = 1;
-	}
-	else
-	{
-		var_65303699 = 0;
-	}
-	if(strendswith(var_1aca16ad, "_pro"))
-	{
-		var_1aca16ad = getsubstr(var_1aca16ad, 0, var_1aca16ad.size - 4);
-		var_2e518e8 = 1;
+		rig1 = getsubstr(rig1, 0, rig1.size - 4);
+		rig1_upgraded = 1;
 	}
 	else
 	{
-		var_2e518e8 = 0;
+		rig1_upgraded = 0;
+	}
+	if(strendswith(rig2, "_pro"))
+	{
+		rig2 = getsubstr(rig2, 0, rig2.size - 4);
+		rig2_upgraded = 1;
+	}
+	else
+	{
+		rig2_upgraded = 0;
 	}
 	if(isdefined(self.var_8201758a) && self.var_8201758a)
 	{
-		var_65303699 = 1;
-		var_2e518e8 = 1;
+		rig1_upgraded = 1;
+		rig2_upgraded = 1;
 	}
 	else if(class_num < 5)
 	{
-		var_65303699 = self function_cc812e3b(var_40cc9116);
-		var_2e518e8 = self function_cc812e3b(var_1aca16ad);
+		rig1_upgraded = self function_cc812e3b(rig1);
+		rig2_upgraded = self function_cc812e3b(rig2);
 		if(isdefined(altplayer))
 		{
-			var_65303699 = altplayer function_cc812e3b(var_40cc9116);
-			var_2e518e8 = altplayer function_cc812e3b(var_1aca16ad);
+			rig1_upgraded = altplayer function_cc812e3b(rig1);
+			rig2_upgraded = altplayer function_cc812e3b(rig2);
 		}
 	}
 	self cybercom_tacrig::takeallrigabilities();
@@ -470,26 +470,26 @@ function function_4b8ac464(class_num, class_num_for_global_weapons, var_f4132a83
 		saved_rig1 = self savegame::get_player_data("saved_rig1", undefined);
 		if(isdefined(saved_rig1))
 		{
-			var_40cc9116 = saved_rig1;
-			var_65303699 = self savegame::get_player_data("saved_rig1_upgraded", undefined);
-			var_1aca16ad = self savegame::get_player_data("saved_rig2", undefined);
-			var_2e518e8 = self savegame::get_player_data("saved_rig2_upgraded", undefined);
+			rig1 = saved_rig1;
+			rig1_upgraded = self savegame::get_player_data("saved_rig1_upgraded", undefined);
+			rig2 = self savegame::get_player_data("saved_rig2", undefined);
+			rig2_upgraded = self savegame::get_player_data("saved_rig2_upgraded", undefined);
 			/#
-				assert(isdefined(var_65303699));
+				assert(isdefined(rig1_upgraded));
 			#/
 		}
 	}
-	self cybercom_tacrig::giverigability(var_40cc9116, var_65303699, 0, 0);
-	self cybercom_tacrig::giverigability(var_1aca16ad, var_2e518e8, 1, 0);
+	self cybercom_tacrig::giverigability(rig1, rig1_upgraded, 0, 0);
+	self cybercom_tacrig::giverigability(rig2, rig2_upgraded, 1, 0);
 	if(!self flag::exists("in_training_sim") || !self flag::get("in_training_sim"))
 	{
-		self savegame::set_player_data("saved_rig1", var_40cc9116);
-		self savegame::set_player_data("saved_rig1_upgraded", var_65303699);
-		self savegame::set_player_data("saved_rig2", var_1aca16ad);
-		self savegame::set_player_data("saved_rig2_upgraded", var_2e518e8);
+		self savegame::set_player_data("saved_rig1", rig1);
+		self savegame::set_player_data("saved_rig1_upgraded", rig1_upgraded);
+		self savegame::set_player_data("saved_rig2", rig2);
+		self savegame::set_player_data("saved_rig2_upgraded", rig2_upgraded);
 	}
-	debugmsg((("RIG1: " + var_40cc9116) + " UPGRADED:") + var_65303699);
-	debugmsg((("RIG2: " + var_1aca16ad) + " UPGRADED:") + var_2e518e8);
+	debugmsg((("RIG1: " + rig1) + " UPGRADED:") + rig1_upgraded);
+	debugmsg((("RIG2: " + rig2) + " UPGRADED:") + rig2_upgraded);
 	self thread function_674d724c(class_num_for_global_weapons, var_f4132a83);
 }
 
@@ -684,14 +684,14 @@ function function_f5c296aa(weapon)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _lock_fired_watcher(weapon)
+function private _lock_fired_watcher(weapon)
 {
 	self endon(#"disconnect");
 	self endon(#"death");
 	self endon(#"ccom_stop_lock_on");
 	event = self util::waittill_any_return(weapon.name + "_fired");
 	level notify(#"ccom_lock_fired", self, weapon);
-	foreach(var_8e751135, item in self.cybercom.lock_targets)
+	foreach(item in self.cybercom.lock_targets)
 	{
 		if(isdefined(item.target))
 		{
@@ -714,7 +714,7 @@ private function _lock_fired_watcher(weapon)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _lock_sighttest(target, var_b3464abe = 1)
+function private _lock_sighttest(target, var_b3464abe = 1)
 {
 	eyepos = self geteye();
 	if(!isdefined(target))
@@ -848,23 +848,26 @@ function targetisvalid(target, weapon, lockreq = 1)
 			return 0;
 		}
 	}
-	else if(isdefined(target.magic_bullet_shield) && target.magic_bullet_shield)
+	else
 	{
-		return 0;
-	}
-	if(isactor(target) && target isinscriptedstate())
-	{
-		if(isdefined(self.rider_info))
+		if(isdefined(target.magic_bullet_shield) && target.magic_bullet_shield)
 		{
-			if(isdefined(self.rider_info.position) && issubstr(self.rider_info.position, "gunner"))
+			return 0;
+		}
+		if(isactor(target) && target isinscriptedstate())
+		{
+			if(isdefined(self.rider_info))
 			{
-				return 1;
+				if(isdefined(self.rider_info.position) && issubstr(self.rider_info.position, "gunner"))
+				{
+					return 1;
+				}
 			}
 		}
-	}
-	if(isdefined(target.allowdeath) && !target.allowdeath)
-	{
-		return 0;
+		if(isdefined(target.allowdeath) && !target.allowdeath)
+		{
+			return 0;
+		}
 	}
 	if(lockreq && isdefined(self.cybercom) && isdefined(self.cybercom.targetlockrequirementcb))
 	{
@@ -1063,7 +1066,7 @@ function weapon_lock_clearslot(slot, note, clearprogress)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _weapon_lock_targetwatchfordeath(player)
+function private _weapon_lock_targetwatchfordeath(player)
 {
 	self endon(#"ccom_lost_lock");
 	self notify(#"_weapon_lock_targetwatchfordeath");
@@ -1383,7 +1386,7 @@ function function_b5f4e597(weapon)
 			{
 				enemies = arraycombine(getaiteamarray("axis"), getaiteamarray("team3"), 0, 0);
 			}
-			foreach(var_22e7ee32, enemy in enemies)
+			foreach(enemy in enemies)
 			{
 				distsq = distancesquared(self.origin, enemy.origin);
 				if(distsq > maxrangesqr)
@@ -1456,7 +1459,7 @@ function function_f5799ee1()
 		return;
 	}
 	var_4eb8cd67 = [];
-	foreach(var_c2435400, target in self.cybercom.var_4eb8cd67)
+	foreach(target in self.cybercom.var_4eb8cd67)
 	{
 		if(!isdefined(target))
 		{
@@ -1465,7 +1468,7 @@ function function_f5799ee1()
 		found = 0;
 		if(self.cybercom.lock_targets.size)
 		{
-			foreach(var_f2572748, var_9ddde835 in self.cybercom.lock_targets)
+			foreach(var_9ddde835 in self.cybercom.lock_targets)
 			{
 				if(!isdefined(var_9ddde835.target))
 				{
@@ -1549,7 +1552,7 @@ function function_17fea3ed(slot, weapon, maxtargets)
 		var_ab2554ab = [];
 		playerforward = anglestoforward(self getplayerangles());
 		var_6f14dd02 = self gettagorigin("tag_aim");
-		foreach(var_a4ce7922, enemy in enemies)
+		foreach(enemy in enemies)
 		{
 			center = enemy getcentroid();
 			dirtotarget = vectornormalize(center - var_6f14dd02);
@@ -1576,7 +1579,7 @@ function function_17fea3ed(slot, weapon, maxtargets)
 		}
 		validtargets = [];
 		potentialtargets = [];
-		foreach(var_52293d87, enemy in var_ab2554ab)
+		foreach(enemy in var_ab2554ab)
 		{
 			if(!isdefined(enemy))
 			{
@@ -1590,7 +1593,7 @@ function function_17fea3ed(slot, weapon, maxtargets)
 		}
 		var_304647c9 = dots.size;
 		dots = [];
-		foreach(var_95b0d8a4, target in validtargets)
+		foreach(target in validtargets)
 		{
 			newitem = spawnstruct();
 			newitem.dot = target.var_4ddba9ea;
@@ -1600,7 +1603,7 @@ function function_17fea3ed(slot, weapon, maxtargets)
 		if(dots.size)
 		{
 			i = 0;
-			foreach(var_ef82f8e6, item in dots)
+			foreach(item in dots)
 			{
 				i++;
 				if(i > maxtargets)
@@ -1611,7 +1614,7 @@ function function_17fea3ed(slot, weapon, maxtargets)
 				{
 					if(isdefined(item.target.var_ced13b2f) && item.target.var_ced13b2f && self weapon_lock_alreadylocked(item.target) == -1)
 					{
-						foreach(var_ccc649c, other in self.cybercom.var_4eb8cd67)
+						foreach(other in self.cybercom.var_4eb8cd67)
 						{
 							if(other == item.target)
 							{
@@ -1796,7 +1799,7 @@ function function_58c312f2()
 		return;
 	}
 	self cybercom_initentityfields();
-	foreach(var_e18a5e4e, ability in level.cybercom.abilities)
+	foreach(ability in level.cybercom.abilities)
 	{
 		if(!isdefined(ability))
 		{
@@ -1871,23 +1874,23 @@ function cybercom_aicheckoptout(name)
 {
 	if(!isdefined(self))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.nocybercom) && self.nocybercom)
 	{
-		return 1;
+		return true;
 	}
 	self cybercom_initentityfields();
 	flag = cybercom_aioptoutgetflag(name);
 	if(!isdefined(flag))
 	{
-		return 0;
+		return false;
 	}
 	if(self.cybercom.optoutflags & flag)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1924,7 +1927,7 @@ function notifymeonmatchend(note, animname)
 {
 	self endon(note);
 	self endon(#"death");
-	self waittill_match(animname);
+	self waittillmatch(animname);
 	self notify(note, "end");
 }
 
@@ -1971,26 +1974,26 @@ function function_421746e0()
 	{
 		if(self.allowdeath == 0)
 		{
-			return 0;
+			return false;
 		}
 	}
 	if(isdefined(self.var_770a8906) && self.var_770a8906)
 	{
-		return 1;
+		return true;
 	}
 	if(isdefined(self.rider_info))
 	{
-		return 1;
+		return true;
 	}
 	if(isdefined(self.archetype) && self.archetype == "robot" && !function_76e3026d(self))
 	{
-		return 1;
+		return true;
 	}
 	if(isactor(self) && !self isonground())
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2231,13 +2234,13 @@ function function_76e3026d(entity)
 {
 	if(isdefined(entity.missinglegs) && entity.missinglegs)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(entity.iscrawler) && entity.iscrawler)
 	{
-		return 0;
+		return false;
 	}
-	return (gibserverutils::isgibbed(entity, 384) == 0 ? 1 : 0);
+	return true;
 }
 
 /*
@@ -2273,7 +2276,7 @@ function function_adc40f11(weapon, fired)
 		self notify(weapon.name + "_fired");
 		level notify(weapon.name + "_fired");
 		self notify(#"hash_81c0052c", weapon);
-		bb::function_42ffd679(self, "fired", weapon);
+		bb::logcybercomevent(self, "fired", weapon);
 		self gadgettargetresult(1);
 	}
 	else
@@ -2453,13 +2456,16 @@ function function_5ad6b98d(eattacker, eplayer, idamage)
 	{
 		damage_scale = var_31dd08f5.var_974cd16f;
 	}
-	else if(distancetoplayer < 1500)
-	{
-		damage_scale = var_31dd08f5.var_e909f6f0;
-	}
 	else
 	{
-		damage_scale = var_31dd08f5.var_3d1b9c0c;
+		if(distancetoplayer < 1500)
+		{
+			damage_scale = var_31dd08f5.var_e909f6f0;
+		}
+		else
+		{
+			damage_scale = var_31dd08f5.var_3d1b9c0c;
+		}
 	}
 	return idamage * damage_scale;
 }
@@ -2477,8 +2483,8 @@ function function_1be27df7()
 {
 	if(isdefined(self.currentweapon) && (self.currentweapon == getweapon("gadget_unstoppable_force") || self.currentweapon == getweapon("gadget_unstoppable_force_upgraded")))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 

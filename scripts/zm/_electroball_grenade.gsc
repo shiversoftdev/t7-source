@@ -22,7 +22,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("electroball_grenade", &__init__, undefined, undefined);
 }
@@ -472,7 +472,7 @@ function function_cb55123a()
 		{
 			if(!isdefined(level.var_a9284ac8) || (gettime() - level.var_a9284ac8) >= 0.5)
 			{
-				foreach(var_73487940, ai_zombie in var_82aacc64)
+				foreach(ai_zombie in var_82aacc64)
 				{
 					dist_sq = distancesquared(self.origin, ai_zombie.origin);
 					if(dist_sq <= 9216 && ai_zombie.is_elemental_zombie !== 1 && ai_zombie.var_3531cf2b !== 1)

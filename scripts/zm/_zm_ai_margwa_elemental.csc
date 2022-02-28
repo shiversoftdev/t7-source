@@ -7,18 +7,18 @@
 
 #using_animtree("generic");
 
-#namespace namespace_3de4ab6f;
+#namespace zm_ai_margwa_elemental;
 
 /*
 	Name: init
-	Namespace: namespace_3de4ab6f
+	Namespace: zm_ai_margwa_elemental
 	Checksum: 0xF1A5B2F1
 	Offset: 0x708
 	Size: 0x40A
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	callback::add_weapon_type("launcher_shadow_margwa", &function_894980af);
 	clientfield::register("actor", "margwa_elemental_type", 15000, 3, "int", &function_1fb4e300, 0, 0);
@@ -51,14 +51,14 @@ autoexec function init()
 
 /*
 	Name: function_1fb4e300
-	Namespace: namespace_3de4ab6f
+	Namespace: zm_ai_margwa_elemental
 	Checksum: 0xDECC5C06
 	Offset: 0xB20
 	Size: 0xFE
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function function_1fb4e300(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
+function private function_1fb4e300(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
 	self util::waittill_dobj(localclientnum);
 	switch(newval)
@@ -88,7 +88,7 @@ private function function_1fb4e300(localclientnum, oldval, newval, bnewent, bini
 
 /*
 	Name: death_ray_shock_fx
-	Namespace: namespace_3de4ab6f
+	Namespace: zm_ai_margwa_elemental
 	Checksum: 0xF052BFF3
 	Offset: 0xC28
 	Size: 0x124
@@ -119,7 +119,7 @@ function death_ray_shock_fx(localclientnum, oldval, newval, bnewent, binitialsna
 
 /*
 	Name: function_7772592b
-	Namespace: namespace_3de4ab6f
+	Namespace: zm_ai_margwa_elemental
 	Checksum: 0x3B93DCD7
 	Offset: 0xD58
 	Size: 0x4C
@@ -136,7 +136,7 @@ function function_7772592b(localclientnum)
 
 /*
 	Name: function_51adc559
-	Namespace: namespace_3de4ab6f
+	Namespace: zm_ai_margwa_elemental
 	Checksum: 0x32D3F892
 	Offset: 0xDB0
 	Size: 0x52
@@ -155,14 +155,14 @@ function function_51adc559(localclientnum)
 
 /*
 	Name: function_fd0bfd3
-	Namespace: namespace_3de4ab6f
+	Namespace: zm_ai_margwa_elemental
 	Checksum: 0x123F4FC3
 	Offset: 0xE10
 	Size: 0x6C
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_fd0bfd3(localclientnum)
+function private function_fd0bfd3(localclientnum)
 {
 	self.margwa_roar_effect = level._effect["margwa_fire_roar"];
 	self.margwa_spawn_effect = level._effect["margwa_fire_spawn"];
@@ -172,14 +172,14 @@ private function function_fd0bfd3(localclientnum)
 
 /*
 	Name: function_8a262a34
-	Namespace: namespace_3de4ab6f
+	Namespace: zm_ai_margwa_elemental
 	Checksum: 0x2D004102
 	Offset: 0xE88
 	Size: 0x3C
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_8a262a34(localclientnum)
+function private function_8a262a34(localclientnum)
 {
 	self.margwa_roar_effect = level._effect["margwa_electric_roar"];
 	self.margwa_spawn_effect = level._effect["margwa_electric_spawn"];
@@ -187,14 +187,14 @@ private function function_8a262a34(localclientnum)
 
 /*
 	Name: function_ec63e97f
-	Namespace: namespace_3de4ab6f
+	Namespace: zm_ai_margwa_elemental
 	Checksum: 0xAFE35AA0
 	Offset: 0xED0
 	Size: 0x6C
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_ec63e97f(localclientnum)
+function private function_ec63e97f(localclientnum)
 {
 	self.margwa_roar_effect = level._effect["margwa_shadow_roar"];
 	self.margwa_spawn_effect = level._effect["margwa_shadow_spawn"];
@@ -204,14 +204,14 @@ private function function_ec63e97f(localclientnum)
 
 /*
 	Name: function_78f9b77d
-	Namespace: namespace_3de4ab6f
+	Namespace: zm_ai_margwa_elemental
 	Checksum: 0x323CD0E
 	Offset: 0xF48
 	Size: 0x3C
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_78f9b77d(localclientnum)
+function private function_78f9b77d(localclientnum)
 {
 	self.margwa_roar_effect = level._effect["margwa_light_roar"];
 	self.margwa_spawn_effect = level._effect["margwa_light_spawn"];
@@ -219,42 +219,42 @@ private function function_78f9b77d(localclientnum)
 
 /*
 	Name: function_740a099a
-	Namespace: namespace_3de4ab6f
+	Namespace: zm_ai_margwa_elemental
 	Checksum: 0x2EB17811
 	Offset: 0xF90
 	Size: 0x34
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_740a099a(localclientnum)
+function private function_740a099a(localclientnum)
 {
 	playfxontag(localclientnum, self.margwa_spawn_effect, self, "tag_origin");
 }
 
 /*
 	Name: function_c46381fc
-	Namespace: namespace_3de4ab6f
+	Namespace: zm_ai_margwa_elemental
 	Checksum: 0x9A1BC5AB
 	Offset: 0xFD0
 	Size: 0x64
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function function_c46381fc(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
+function private function_c46381fc(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
 	playfxontag(localclientnum, "dlc4/genesis/fx_margwa_attack_fire", self, "tag_origin");
 }
 
 /*
 	Name: function_345693f6
-	Namespace: namespace_3de4ab6f
+	Namespace: zm_ai_margwa_elemental
 	Checksum: 0xF5A8F9A5
 	Offset: 0x1040
 	Size: 0x94
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function function_345693f6(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
+function private function_345693f6(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
 	if(newval == 1)
 	{
@@ -264,14 +264,14 @@ private function function_345693f6(localclientnum, oldval, newval, bnewent, bini
 
 /*
 	Name: function_abb174cf
-	Namespace: namespace_3de4ab6f
+	Namespace: zm_ai_margwa_elemental
 	Checksum: 0xE4975A6
 	Offset: 0x10E0
 	Size: 0x2E4
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function function_abb174cf(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
+function private function_abb174cf(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
 	if(newval == 1)
 	{
@@ -309,14 +309,14 @@ private function function_abb174cf(localclientnum, oldval, newval, bnewent, bini
 
 /*
 	Name: shadow_margwa_attack_portal_fx
-	Namespace: namespace_3de4ab6f
+	Namespace: zm_ai_margwa_elemental
 	Checksum: 0x6AB63B7C
 	Offset: 0x13D0
 	Size: 0x294
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function shadow_margwa_attack_portal_fx(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
+function private shadow_margwa_attack_portal_fx(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
 	if(newval == 1)
 	{
@@ -347,7 +347,7 @@ private function shadow_margwa_attack_portal_fx(localclientnum, oldval, newval, 
 
 /*
 	Name: function_894980af
-	Namespace: namespace_3de4ab6f
+	Namespace: zm_ai_margwa_elemental
 	Checksum: 0xE59A765E
 	Offset: 0x1670
 	Size: 0x7C

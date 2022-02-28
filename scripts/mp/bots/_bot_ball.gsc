@@ -152,7 +152,7 @@ function bot_idle()
 	}
 	triggers = [];
 	balls = array::randomize(level.balls);
-	foreach(var_df802866, ball in balls)
+	foreach(ball in balls)
 	{
 		if(!isdefined(ball.carrier) && !ball.in_goal)
 		{

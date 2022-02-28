@@ -10,67 +10,54 @@
 #using scripts\shared\util_shared;
 #using scripts\shared\visionset_mgr_shared;
 
-#namespace ccontainer;
-
-/*
-	Name: __constructor
-	Namespace: ccontainer
-	Checksum: 0x99EC1590
-	Offset: 0x2D0
-	Size: 0x4
-	Parameters: 0
-	Flags: None
-*/
-function __constructor()
+class ccontainer 
 {
-}
+	var m_e_container;
 
-/*
-	Name: __destructor
-	Namespace: ccontainer
-	Checksum: 0x99EC1590
-	Offset: 0x2E0
-	Size: 0x4
-	Parameters: 0
-	Flags: None
-*/
-function __destructor()
-{
-}
+	/*
+		Name: constructor
+		Namespace: ccontainer
+		Checksum: 0x99EC1590
+		Offset: 0x2D0
+		Size: 0x4
+		Parameters: 0
+		Flags: None
+	*/
+	constructor()
+	{
+	}
 
-/*
-	Name: init_xmodel
-	Namespace: ccontainer
-	Checksum: 0x528395A8
-	Offset: 0x2F0
-	Size: 0x62
-	Parameters: 3
-	Flags: None
-*/
-function init_xmodel(str_xmodel = "script_origin", v_origin, v_angles)
-{
-	self.m_e_container = util::spawn_model(str_xmodel, v_origin, v_angles);
-	return self.m_e_container;
+	/*
+		Name: destructor
+		Namespace: ccontainer
+		Checksum: 0x99EC1590
+		Offset: 0x2E0
+		Size: 0x4
+		Parameters: 0
+		Flags: None
+	*/
+	destructor()
+	{
+	}
+
+	/*
+		Name: init_xmodel
+		Namespace: ccontainer
+		Checksum: 0x528395A8
+		Offset: 0x2F0
+		Size: 0x62
+		Parameters: 3
+		Flags: None
+	*/
+	function init_xmodel(str_xmodel = "script_origin", v_origin, v_angles)
+	{
+		m_e_container = util::spawn_model(str_xmodel, v_origin, v_angles);
+		return m_e_container;
+	}
+
 }
 
 #namespace containers;
-
-/*
-	Name: ccontainer
-	Namespace: containers
-	Checksum: 0xCE7D1FC7
-	Offset: 0x360
-	Size: 0xB6
-	Parameters: 0
-	Flags: AutoExec, Private
-*/
-private autoexec function ccontainer()
-{
-	classes.ccontainer[0] = spawnstruct();
-	classes.ccontainer[0].__vtable[-1234449151] = &ccontainer::init_xmodel;
-	classes.ccontainer[0].__vtable[1606033458] = &ccontainer::__destructor;
-	classes.ccontainer[0].__vtable[-1690805083] = &ccontainer::__constructor;
-}
 
 /*
 	Name: __init__sytem__
@@ -81,7 +68,7 @@ private autoexec function ccontainer()
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("containers", &__init__, undefined, undefined);
 }
@@ -98,7 +85,7 @@ autoexec function __init__sytem__()
 function __init__()
 {
 	a_containers = struct::get_array("scriptbundle_containers", "classname");
-	foreach(var_b20650e8, s_instance in a_containers)
+	foreach(s_instance in a_containers)
 	{
 		c_container = s_instance init();
 		if(isdefined(c_container))
@@ -138,9 +125,7 @@ function init()
 */
 function setup_container_scriptbundle(s_bundle, s_container_instance)
 {
-	object = new ccontainer();
-	[[ object ]]->__constructor();
-	c_container = object;
+	c_container = new ccontainer();
 	c_container.m_s_container_bundle = s_bundle;
 	c_container.m_s_fxanim_bundle = struct::get_script_bundle("scene", s_bundle.theeffectbundle);
 	c_container.m_s_container_instance = s_container_instance;

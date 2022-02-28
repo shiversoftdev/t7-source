@@ -152,7 +152,7 @@ function function_fb6d201d()
 		b_player_is_ahead = 0;
 		var_a8dc514 = 0;
 		b_wait_for_player = 0;
-		foreach(var_c236bcb0, player in level.players)
+		foreach(player in level.players)
 		{
 			if(!isalive(player))
 			{
@@ -191,13 +191,16 @@ function function_fb6d201d()
 			{
 				self.n_speed = 35;
 			}
-			else if(n_closest_dist_sq <= 562500 || b_player_is_ahead)
-			{
-				self.n_speed = 25;
-			}
 			else
 			{
-				self.n_speed = 5;
+				if(n_closest_dist_sq <= 562500 || b_player_is_ahead)
+				{
+					self.n_speed = 25;
+				}
+				else
+				{
+					self.n_speed = 5;
+				}
 			}
 			if(level flag::get("drone_scanning"))
 			{
@@ -304,14 +307,14 @@ function function_4f6daa65(b_on = 1)
 	if(b_on)
 	{
 		self clientfield::set("extra_cam_ent", 1);
-		foreach(var_e35821c2, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			player.menu_pip = player openluimenu("drone_pip");
 		}
 	}
 	else
 	{
-		foreach(var_da183bb7, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			if(isdefined(player.menu_pip))
 			{
@@ -332,7 +335,7 @@ function function_4f6daa65(b_on = 1)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function close_menu_with_delay(menuhandle, delay)
+function private close_menu_with_delay(menuhandle, delay)
 {
 	self setluimenudata(menuhandle, "close_current_menu", 1);
 	wait(delay);

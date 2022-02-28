@@ -81,12 +81,15 @@ function function_67b53ed4(localclientnum, oldval, newval, bnewent, binitialsnap
 			self thread function_63119d2(self.var_b6689566, self.var_1abec487, self.var_7d73c1cd);
 			self.var_1abec487 = self.var_7d73c1cd;
 		}
-		else if(!isdefined(self.var_1abec487))
+		else
 		{
-			self.var_1abec487 = self.var_7d73c1cd + 0.1;
+			if(!isdefined(self.var_1abec487))
+			{
+				self.var_1abec487 = self.var_7d73c1cd + 0.1;
+			}
+			self thread function_63119d2(self.var_b6689566, self.var_1abec487, self.var_7d73c1cd);
+			self.var_1abec487 = self.var_7d73c1cd;
 		}
-		self thread function_63119d2(self.var_b6689566, self.var_1abec487, self.var_7d73c1cd);
-		self.var_1abec487 = self.var_7d73c1cd;
 	}
 }
 

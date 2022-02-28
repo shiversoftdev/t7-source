@@ -94,18 +94,24 @@ function ee_zombie_killed_override(einflictor, attacker, idamage, smeansofdeath,
 		{
 			level thread zm_tomb_ee_main::ee_samantha_say("vox_sam_generic_encourage_3");
 		}
-		else if(level.n_ee_portal_souls == floor(33.33333))
+		else
 		{
-			level thread zm_tomb_ee_main::ee_samantha_say("vox_sam_generic_encourage_4");
-		}
-		else if(level.n_ee_portal_souls == floor(66.66666))
-		{
-			level thread zm_tomb_ee_main::ee_samantha_say("vox_sam_generic_encourage_5");
-		}
-		else if(level.n_ee_portal_souls == 100)
-		{
-			level thread zm_tomb_ee_main::ee_samantha_say("vox_sam_generic_encourage_0");
-			level flag::set("ee_souls_absorbed");
+			if(level.n_ee_portal_souls == floor(33.33333))
+			{
+				level thread zm_tomb_ee_main::ee_samantha_say("vox_sam_generic_encourage_4");
+			}
+			else
+			{
+				if(level.n_ee_portal_souls == floor(66.66666))
+				{
+					level thread zm_tomb_ee_main::ee_samantha_say("vox_sam_generic_encourage_5");
+				}
+				else if(level.n_ee_portal_souls == 100)
+				{
+					level thread zm_tomb_ee_main::ee_samantha_say("vox_sam_generic_encourage_0");
+					level flag::set("ee_souls_absorbed");
+				}
+			}
 		}
 		self clientfield::set("ee_zombie_soul_portal", 1);
 	}

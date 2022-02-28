@@ -38,7 +38,7 @@ function init_structs()
 	clientfield::register("clientuimodel", "zmInventory.capture_generator_wheel_widget", 21000, 1, "int", undefined, 0, 0);
 	clientfield::register("zbarrier", "pap_emissive_fx", 21000, 1, "int", &pap_emissive_fx, 0, 0);
 	a_s_generator = struct::get_array("s_generator", "targetname");
-	foreach(var_52c9493f, struct in a_s_generator)
+	foreach(struct in a_s_generator)
 	{
 		clientfield::register("world", struct.script_noteworthy, 21000, 7, "float", &function_a6f34d1c, 0, 0);
 		clientfield::register("world", "state_" + struct.script_noteworthy, 21000, 3, "int", &function_d56a2c4b, 0, 0);

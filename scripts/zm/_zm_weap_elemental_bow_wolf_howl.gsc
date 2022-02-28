@@ -32,7 +32,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("_zm_weap_elemental_bow_wolf_howl", &__init__, &__main__, undefined);
 }
@@ -369,7 +369,7 @@ function function_2abb74b7(e_player, var_8f0f462c, var_c807e383)
 			{
 				var_ccc78552 = 32;
 			}
-			foreach(var_3668fa0a, ai_enemy in var_7478bee7)
+			foreach(ai_enemy in var_7478bee7)
 			{
 				v_enemy_origin = ai_enemy getcentroid();
 				var_32769d76 = pointonsegmentnearesttopoint(var_718ba60a, var_a2b66881, v_enemy_origin);
@@ -522,13 +522,16 @@ function function_720f6454(var_63f884ec)
 	{
 		n_damage = level.zombie_health;
 	}
-	else if(self.archetype === "zombie")
-	{
-		n_damage = level.zombie_health * 0.5;
-	}
 	else
 	{
-		n_damage = 0;
+		if(self.archetype === "zombie")
+		{
+			n_damage = level.zombie_health * 0.5;
+		}
+		else
+		{
+			n_damage = 0;
+		}
 	}
 	if(n_damage > 0)
 	{
@@ -588,7 +591,7 @@ function function_6b3aa15a(v_hit_pos, var_8f0f462c)
 	var_7478bee7 = array::get_all_closest(v_hit_pos, var_ae2cfcc2, undefined, undefined, 256);
 	var_7478bee7 = array::filter(var_7478bee7, 0, &zm_weap_elemental_bow::function_5aec3adc);
 	var_7478bee7 = array::filter(var_7478bee7, 0, &function_e02cfeee);
-	foreach(var_1c6da1fa, ai_enemy in var_7478bee7)
+	foreach(ai_enemy in var_7478bee7)
 	{
 		ai_enemy thread function_720f6454(v_hit_pos);
 	}
@@ -711,9 +714,9 @@ function function_5fded2aa(mod, hit_location, hit_origin, e_player, amount, weap
 			self notify(#"hash_8985bb6f");
 			self thread function_88bf0c4e(e_player, amount, hit_origin, weapon);
 		}
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

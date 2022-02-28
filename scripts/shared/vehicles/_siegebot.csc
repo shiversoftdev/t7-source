@@ -17,7 +17,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function main()
+function autoexec main()
 {
 	vehicle::add_vehicletype_callback("siegebot", &_setup_);
 }

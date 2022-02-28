@@ -52,7 +52,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_genesis_ai_spawning", &__init__, undefined, undefined);
 }
@@ -269,17 +269,23 @@ function function_5a772555()
 	{
 		n_num = 18;
 	}
-	else if(a_players.size == 2)
-	{
-		n_num = 21;
-	}
-	else if(a_players.size == 3)
-	{
-		n_num = 24;
-	}
 	else
 	{
-		n_num = 30;
+		if(a_players.size == 2)
+		{
+			n_num = 21;
+		}
+		else
+		{
+			if(a_players.size == 3)
+			{
+				n_num = 24;
+			}
+			else
+			{
+				n_num = 30;
+			}
+		}
 	}
 	if(level.var_8cd70c57 > 1)
 	{
@@ -302,7 +308,7 @@ function function_3586b759()
 	zm_genesis_wasp::parasite_round_fx();
 	wait(0.5);
 	level clientfield::set("chaos_fog_bank_switch", 1);
-	foreach(var_9e5f1066, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		visionset_mgr::activate("visionset", "zm_chaos_organge", e_player);
 		e_player clientfield::set_to_player("chaos_postfx_set", 1);
@@ -340,7 +346,7 @@ function function_a61de87c()
 	level.zombie_ai_limit = level.zombie_vars["zombie_max_ai"];
 	zm_genesis_wasp::parasite_round_fx();
 	level clientfield::set("chaos_fog_bank_switch", 0);
-	foreach(var_a917cc49, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		visionset_mgr::deactivate("visionset", "zm_chaos_organge", e_player);
 		e_player clientfield::set_to_player("chaos_postfx_set", 0);
@@ -482,22 +488,25 @@ function function_1fe60e52()
 		level.var_c4336559["apothicon_fury"] = 0;
 		level.var_c4336559["keeper"] = 0;
 	}
-	else if(level.var_8cd70c57 == 2)
-	{
-		level.var_c4336559["parasite"] = int(var_f3f94801 * 0.6);
-		level.var_c4336559["apothicon_fury"] = int(var_f3f94801 * 0.4);
-		level.var_c4336559["keeper"] = 0;
-	}
 	else
 	{
-		level.var_c4336559["parasite"] = int(var_f3f94801 * 0.5);
-		level.var_c4336559["apothicon_fury"] = int(var_f3f94801 * 0.3);
-		level.var_c4336559["keeper"] = int(var_f3f94801 * 0.2);
+		if(level.var_8cd70c57 == 2)
+		{
+			level.var_c4336559["parasite"] = int(var_f3f94801 * 0.6);
+			level.var_c4336559["apothicon_fury"] = int(var_f3f94801 * 0.4);
+			level.var_c4336559["keeper"] = 0;
+		}
+		else
+		{
+			level.var_c4336559["parasite"] = int(var_f3f94801 * 0.5);
+			level.var_c4336559["apothicon_fury"] = int(var_f3f94801 * 0.3);
+			level.var_c4336559["keeper"] = int(var_f3f94801 * 0.2);
+		}
 	}
 	var_a126d2f9 = int(level.var_c4336559["parasite"] * 0.1);
 	level.var_c4336559["parasite"] = level.var_c4336559["parasite"] + var_a126d2f9;
 	level.zombie_total = 0;
-	foreach(var_dfc9d7c2, n_total in level.var_c4336559)
+	foreach(n_total in level.var_c4336559)
 	{
 		level.zombie_total = level.zombie_total + n_total;
 	}
@@ -519,17 +528,23 @@ function function_6647fb88()
 	{
 		n_num = 15;
 	}
-	else if(a_players.size == 2)
-	{
-		n_num = 16;
-	}
-	else if(a_players.size == 3)
-	{
-		n_num = 17;
-	}
 	else
 	{
-		n_num = 18;
+		if(a_players.size == 2)
+		{
+			n_num = 16;
+		}
+		else
+		{
+			if(a_players.size == 3)
+			{
+				n_num = 17;
+			}
+			else
+			{
+				n_num = 18;
+			}
+		}
 	}
 	return n_num;
 }
@@ -783,13 +798,16 @@ function spawn_zombie()
 	{
 		ai_zombie zm_shadow_zombie::function_1b2b62b();
 	}
-	else if(n_random < 12)
+	else
 	{
-		ai_zombie zm_light_zombie::function_a35db70f();
-	}
-	else if(n_random < 35)
-	{
-		ai_zombie zm_utility::make_supersprinter();
+		if(n_random < 12)
+		{
+			ai_zombie zm_light_zombie::function_a35db70f();
+		}
+		else if(n_random < 35)
+		{
+			ai_zombie zm_utility::make_supersprinter();
+		}
 	}
 	return ai_zombie;
 }
@@ -872,23 +890,29 @@ function function_fd8b24f5()
 			var_c0692329 = 1;
 		}
 	}
-	else if(level.round_number > 20)
+	else
 	{
-		if(n_random < 4)
+		if(level.round_number > 20)
 		{
-			var_c0692329 = 1;
+			if(n_random < 4)
+			{
+				var_c0692329 = 1;
+			}
 		}
-	}
-	else if(level.round_number > 15)
-	{
-		if(n_random < 3)
+		else
 		{
-			var_c0692329 = 1;
+			if(level.round_number > 15)
+			{
+				if(n_random < 3)
+				{
+					var_c0692329 = 1;
+				}
+			}
+			else if(n_random < 2)
+			{
+				var_c0692329 = 1;
+			}
 		}
-	}
-	else if(n_random < 2)
-	{
-		var_c0692329 = 1;
 	}
 	if(var_c0692329)
 	{

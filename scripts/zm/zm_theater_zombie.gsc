@@ -32,7 +32,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	setdvar("scr_zm_use_code_enemy_selection", 0);
 	level.closest_player_override = &function_4fbc4348;
@@ -50,7 +50,7 @@ autoexec function init()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_ce2310c1(player)
+function private function_ce2310c1(player)
 {
 	return !(isdefined(player.is_teleporting) && player.is_teleporting) && (!(isdefined(player.inteleportation) && player.inteleportation));
 }
@@ -64,14 +64,14 @@ private function function_ce2310c1(player)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_9b4b4134(players)
+function private function_9b4b4134(players)
 {
 	if(isdefined(self.last_closest_player) && (isdefined(self.last_closest_player.am_i_valid) && self.last_closest_player.am_i_valid) && function_ce2310c1(self.last_closest_player))
 	{
 		return;
 	}
 	self.need_closest_player = 1;
-	foreach(var_3ffee1ad, player in players)
+	foreach(player in players)
 	{
 		if(function_ce2310c1(player) && (isdefined(player.am_i_valid) && player.am_i_valid))
 		{
@@ -187,7 +187,7 @@ function update_closest_player()
 	{
 		reset_closest_player = 1;
 		zombies = zombie_utility::get_round_enemy_array();
-		foreach(var_a4de089d, zombie in zombies)
+		foreach(zombie in zombies)
 		{
 			if(isdefined(zombie.need_closest_player) && zombie.need_closest_player)
 			{
@@ -197,7 +197,7 @@ function update_closest_player()
 		}
 		if(reset_closest_player)
 		{
-			foreach(var_e453067f, zombie in zombies)
+			foreach(zombie in zombies)
 			{
 				if(isdefined(zombie.need_closest_player))
 				{

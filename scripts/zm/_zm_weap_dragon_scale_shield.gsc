@@ -27,25 +27,25 @@
 #using scripts\zm\_zm_weapons;
 #using scripts\zm\craftables\_zm_craft_shield;
 
-#namespace namespace_8215525;
+#namespace dragon_scale_shield;
 
 /*
 	Name: __init__sytem__
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0x88D4C809
 	Offset: 0x958
 	Size: 0x3C
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_weap_dragonshield", &__init__, &__main__, undefined);
 }
 
 /*
 	Name: __init__
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0xDED349F0
 	Offset: 0x9A0
 	Size: 0x49C
@@ -91,7 +91,7 @@ function __init__()
 
 /*
 	Name: __main__
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0xFF136AA5
 	Offset: 0xE48
 	Size: 0x17C
@@ -118,7 +118,7 @@ function __main__()
 
 /*
 	Name: on_player_connect
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0xD74ED34A
 	Offset: 0xFD0
 	Size: 0x1C
@@ -132,7 +132,7 @@ function on_player_connect()
 
 /*
 	Name: watchfirstuse
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0x2BDD36E6
 	Offset: 0xFF8
 	Size: 0xAC
@@ -159,7 +159,7 @@ function watchfirstuse()
 
 /*
 	Name: on_player_spawned
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0x5F865FD2
 	Offset: 0x10B0
 	Size: 0x7C
@@ -177,7 +177,7 @@ function on_player_spawned()
 
 /*
 	Name: function_98962bde
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0xF9520209
 	Offset: 0x1138
 	Size: 0xA0
@@ -202,7 +202,7 @@ function function_98962bde()
 
 /*
 	Name: player_watch_ammo_change
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0xE1F05A13
 	Offset: 0x11E0
 	Size: 0xC8
@@ -229,7 +229,7 @@ function player_watch_ammo_change()
 
 /*
 	Name: player_watch_max_ammo
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0x7819E21A
 	Offset: 0x12B0
 	Size: 0x68
@@ -253,7 +253,7 @@ function player_watch_max_ammo()
 
 /*
 	Name: check_weapon_ammo
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0x7A1738AE
 	Offset: 0x1320
 	Size: 0x64
@@ -272,7 +272,7 @@ function check_weapon_ammo(weapon)
 
 /*
 	Name: should_shield_absorb_damage
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0x3F026E8B
 	Offset: 0x1390
 	Size: 0x14A
@@ -297,7 +297,7 @@ function should_shield_absorb_damage(einflictor, eattacker, idamage, idflags, sm
 
 /*
 	Name: function_247d568b
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0x8B78A4DF
 	Offset: 0x14E8
 	Size: 0x7C
@@ -314,7 +314,7 @@ function function_247d568b(idamage, bheld, fromcode = 0, smod = "MOD_UNKNOWN")
 
 /*
 	Name: riotshield_damage_absorb_callback
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0x4798668F
 	Offset: 0x1570
 	Size: 0x24
@@ -327,7 +327,7 @@ function riotshield_damage_absorb_callback(eattacker, idamage, shitloc, smeansof
 
 /*
 	Name: function_71d88f26
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0x4C466E01
 	Offset: 0x15A0
 	Size: 0xE4
@@ -353,7 +353,7 @@ function function_71d88f26(weapon)
 
 /*
 	Name: function_f894ad3e
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0x9794B1E0
 	Offset: 0x1690
 	Size: 0x158
@@ -383,7 +383,7 @@ function function_f894ad3e()
 
 /*
 	Name: function_c9b3ba45
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0x92627D0
 	Offset: 0x17F0
 	Size: 0x54
@@ -401,7 +401,7 @@ function function_c9b3ba45(e_attacker)
 
 /*
 	Name: function_3f5e8a65
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0x2970F0F7
 	Offset: 0x1850
 	Size: 0x4C
@@ -421,7 +421,7 @@ function function_3f5e8a65()
 
 /*
 	Name: burninate
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0x454D0BC0
 	Offset: 0x18A8
 	Size: 0xA6
@@ -445,7 +445,7 @@ function burninate(w_weapon)
 
 /*
 	Name: function_8b8bd269
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0xD64C0CFB
 	Offset: 0x1958
 	Size: 0x238
@@ -491,7 +491,7 @@ function function_8b8bd269(n_clientfield)
 
 /*
 	Name: function_459dacdd
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0xC56DC6D3
 	Offset: 0x1B98
 	Size: 0x976
@@ -616,7 +616,7 @@ function function_459dacdd()
 
 /*
 	Name: function_8e9a1613
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0x3B641B81
 	Offset: 0x2518
 	Size: 0x8C
@@ -640,7 +640,7 @@ function function_8e9a1613(msg, color)
 
 /*
 	Name: function_64bd9bf5
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0xFECE0A27
 	Offset: 0x25B0
 	Size: 0x190
@@ -688,7 +688,7 @@ function function_64bd9bf5(player, fling_vec, index)
 
 /*
 	Name: zombie_knockdown
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0x1434C65
 	Offset: 0x2748
 	Size: 0x200
@@ -741,7 +741,7 @@ function zombie_knockdown(player, gib)
 
 /*
 	Name: function_2d1a5562
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0xDDF66692
 	Offset: 0x2950
 	Size: 0x23C
@@ -770,26 +770,32 @@ function function_2d1a5562()
 		}
 		getupanim = "zm_dragonshield_getup_belly_early";
 	}
-	else if(self.damageyaw > -135 && self.damageyaw < -45)
-	{
-		fallanim = "zm_dragonshield_fall_left";
-		getupanim = "zm_dragonshield_getup_belly_early";
-	}
-	else if(self.damageyaw > 45 && self.damageyaw < 135)
-	{
-		fallanim = "zm_dragonshield_fall_right";
-		getupanim = "zm_dragonshield_getup_belly_early";
-	}
 	else
 	{
-		fallanim = "zm_dragonshield_fall_back";
-		if(randomint(100) < 50)
+		if(self.damageyaw > -135 && self.damageyaw < -45)
 		{
-			getupanim = "zm_dragonshield_getup_back_early";
+			fallanim = "zm_dragonshield_fall_left";
+			getupanim = "zm_dragonshield_getup_belly_early";
 		}
 		else
 		{
-			getupanim = "zm_dragonshield_getup_back_late";
+			if(self.damageyaw > 45 && self.damageyaw < 135)
+			{
+				fallanim = "zm_dragonshield_fall_right";
+				getupanim = "zm_dragonshield_getup_belly_early";
+			}
+			else
+			{
+				fallanim = "zm_dragonshield_fall_back";
+				if(randomint(100) < 50)
+				{
+					getupanim = "zm_dragonshield_getup_back_early";
+				}
+				else
+				{
+					getupanim = "zm_dragonshield_getup_back_late";
+				}
+			}
 		}
 	}
 	self setanimstatefromasd(fallanim);
@@ -804,7 +810,7 @@ function function_2d1a5562()
 
 /*
 	Name: function_c25e3d4b
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0x70E869A4
 	Offset: 0x2B98
 	Size: 0x88
@@ -827,7 +833,7 @@ function function_c25e3d4b(player, gib)
 
 /*
 	Name: function_21b74baa
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0x9A1EA5BB
 	Offset: 0x2C28
 	Size: 0x94
@@ -845,7 +851,7 @@ function function_21b74baa(note)
 
 /*
 	Name: function_41f7c503
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0x327520DD
 	Offset: 0x2CC8
 	Size: 0xD4
@@ -872,7 +878,7 @@ function function_41f7c503(player, fling, gib, knockdown)
 
 /*
 	Name: function_a3a9c2dc
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0xD4AC19C9
 	Offset: 0x2DA8
 	Size: 0xCC
@@ -897,7 +903,7 @@ function function_a3a9c2dc()
 
 /*
 	Name: function_6f901616
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0xFE4FB03F
 	Offset: 0x2E80
 	Size: 0x146
@@ -942,7 +948,7 @@ function function_6f901616(cmd)
 
 /*
 	Name: detect_reentry
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0x4C8619CA
 	Offset: 0x2FD0
 	Size: 0x36
@@ -956,17 +962,17 @@ function detect_reentry()
 		{
 			if(self.devgui_preserve_time == gettime())
 			{
-				return 1;
+				return true;
 			}
 		}
 		self.devgui_preserve_time = gettime();
-		return 0;
+		return false;
 	#/
 }
 
 /*
 	Name: function_f685a6db
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0x20DE0634
 	Offset: 0x3010
 	Size: 0x154
@@ -1010,7 +1016,7 @@ function function_f685a6db()
 
 /*
 	Name: function_eeac5a22
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0x637E728C
 	Offset: 0x3170
 	Size: 0xE6

@@ -147,9 +147,9 @@ function wire_qualifier()
 {
 	if(isdefined(self._has_wire) && self._has_wire)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -303,7 +303,7 @@ function ctvg_validation(position)
 	{
 		level notify(#"ctvg_validation");
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -340,9 +340,9 @@ function bhb_teleport_loc_check(grenade, model, info)
 		spot clientfield::set("toggle_black_hole_deployed", 1);
 		spot thread delete_soon();
 		level thread teleport_target(grenade, plates);
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -531,9 +531,9 @@ function bucket_qualifier()
 	}
 	if(ent_num == 2)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -554,9 +554,9 @@ function wrong_press_qualifier()
 	}
 	if(ent_num != 2)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

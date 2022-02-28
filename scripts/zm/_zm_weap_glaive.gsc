@@ -41,7 +41,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_weap_glaive", &__init__, undefined, undefined);
 }
@@ -84,9 +84,7 @@ function __init__()
 	}
 	level.glaive_damage_locations = array("left_arm_upper", "left_arm_lower", "left_hand", "right_arm_upper", "right_arm_lower", "right_hand");
 	level thread function_e97f78f0();
-	object = new throttle();
-	[[ object ]]->__constructor();
-	level.var_b31b9421 = object;
+	level.var_b31b9421 = new throttle();
 	[[ level.var_b31b9421 ]]->initialize(6, 0.1);
 }
 
@@ -267,7 +265,7 @@ function function_5c998ffc(wpn_excalibur, wpn_autokill, wpn_cur, wpn_prev)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function watch_sword_equipped()
+function private watch_sword_equipped()
 {
 	self endon(#"disconnect");
 	wpn_excalibur = self get_correct_sword_for_player_character_at_level(1);
@@ -290,15 +288,15 @@ private function watch_sword_equipped()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function gib_check(damage_percent)
+function private gib_check(damage_percent)
 {
 	self.override_damagelocation = "none";
 	if(damage_percent > 99.8)
 	{
 		self.override_damagelocation = "neck";
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -310,29 +308,29 @@ private function gib_check(damage_percent)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function gib_head_check(damage_location)
+function private gib_head_check(damage_location)
 {
 	if(self.override_damagelocation === "neck")
 	{
-		return 1;
+		return true;
 	}
 	if(!isdefined(damage_location))
 	{
-		return 0;
+		return false;
 	}
 	if(damage_location == "head")
 	{
-		return 1;
+		return true;
 	}
 	if(damage_location == "helmet")
 	{
-		return 1;
+		return true;
 	}
 	if(damage_location == "neck")
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -344,7 +342,7 @@ private function gib_head_check(damage_location)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function excalibur_think(wpn_excalibur)
+function private excalibur_think(wpn_excalibur)
 {
 	self endon(#"hash_b29853d8");
 	self endon(#"disconnect");
@@ -369,12 +367,12 @@ private function excalibur_think(wpn_excalibur)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function do_excalibur(wpn_excalibur)
+function private do_excalibur(wpn_excalibur)
 {
 	view_pos = self getweaponmuzzlepoint();
 	forward_view_angles = self getweaponforwarddir();
 	zombie_list = getaiteamarray(level.zombie_team);
-	foreach(var_2ed441fd, ai in zombie_list)
+	foreach(ai in zombie_list)
 	{
 		if(!isdefined(ai) || !isalive(ai))
 		{
@@ -440,7 +438,7 @@ function electrocute_actor(ai, wpn_excalibur)
 	ai notify(#"bhtn_action_notify", "electrocute");
 	function_72ca5a88();
 	ai.tesla_death = 0;
-	ai thread function_fe8a580e(ai.origin, ai.origin, self);
+	ai thread arc_damage_init(ai.origin, ai.origin, self);
 	ai thread tesla_death(self);
 }
 
@@ -480,7 +478,7 @@ function tesla_death(player)
 }
 
 /*
-	Name: function_fe8a580e
+	Name: arc_damage_init
 	Namespace: zm_weap_glaive
 	Checksum: 0xA990EBBD
 	Offset: 0x1930
@@ -488,7 +486,7 @@ function tesla_death(player)
 	Parameters: 3
 	Flags: Linked
 */
-function function_fe8a580e(hit_location, hit_origin, player)
+function arc_damage_init(hit_location, hit_origin, player)
 {
 	player endon(#"disconnect");
 	if(isdefined(self.zombie_tesla_hit) && self.zombie_tesla_hit)
@@ -523,12 +521,15 @@ function chop_actor(ai, upgraded, leftswing, weapon = level.weaponnone)
 		[[ level.var_b31b9421 ]]->waitinqueue(ai);
 		ai dodamage(9317, self.origin, self, self, "none", "MOD_UNKNOWN", 0, weapon);
 	}
-	else if(3594 >= ai.health)
+	else
 	{
-		ai.ignoremelee = 1;
+		if(3594 >= ai.health)
+		{
+			ai.ignoremelee = 1;
+		}
+		[[ level.var_b31b9421 ]]->waitinqueue(ai);
+		ai dodamage(3594, self.origin, self, self, "none", "MOD_UNKNOWN", 0, weapon);
 	}
-	[[ level.var_b31b9421 ]]->waitinqueue(ai);
-	ai dodamage(3594, self.origin, self, self, "none", "MOD_UNKNOWN", 0, weapon);
 	ai blood_death_fx(leftswing, upgraded);
 	util::wait_network_frame();
 }
@@ -574,7 +575,7 @@ function function_862aadab(random_gibs)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function blood_death_fx(var_d98455ab, var_26ba0d4c)
+function private blood_death_fx(var_d98455ab, var_26ba0d4c)
 {
 	if(self.archetype == "zombie")
 	{
@@ -589,13 +590,16 @@ private function blood_death_fx(var_d98455ab, var_26ba0d4c)
 				self clientfield::increment("zombie_slice_l", 1);
 			}
 		}
-		else if(isdefined(var_26ba0d4c) && var_26ba0d4c)
-		{
-			self clientfield::increment("zombie_slice_r", 2);
-		}
 		else
 		{
-			self clientfield::increment("zombie_slice_r", 1);
+			if(isdefined(var_26ba0d4c) && var_26ba0d4c)
+			{
+				self clientfield::increment("zombie_slice_r", 2);
+			}
+			else
+			{
+				self clientfield::increment("zombie_slice_r", 1);
+			}
 		}
 	}
 }
@@ -614,7 +618,7 @@ function chop_zombies(first_time, var_10ee11e, leftswing, weapon = level.weaponn
 	view_pos = self getweaponmuzzlepoint();
 	forward_view_angles = self getweaponforwarddir();
 	zombie_list = getaiteamarray(level.zombie_team);
-	foreach(var_d353f905, ai in zombie_list)
+	foreach(ai in zombie_list)
 	{
 		if(!isdefined(ai) || !isalive(ai))
 		{
@@ -694,7 +698,7 @@ function swordarc_swipe(player, var_10ee11e)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function arc_attack_think(weapon, var_10ee11e)
+function private arc_attack_think(weapon, var_10ee11e)
 {
 	self endon(#"hash_b29853d8");
 	self endon(#"disconnect");
@@ -715,7 +719,7 @@ private function arc_attack_think(weapon, var_10ee11e)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function autokill_think(wpn_autokill)
+function private autokill_think(wpn_autokill)
 {
 	self endon(#"hash_b29853d8");
 	self endon(#"disconnect");
@@ -760,7 +764,7 @@ function function_86ee93a8()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_729af361(vh_glaive)
+function private function_729af361(vh_glaive)
 {
 	self endon(#"disconnect");
 	self endon(#"hash_b29853d8");
@@ -793,7 +797,7 @@ private function function_729af361(vh_glaive)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function send_autokill_sword(wpn_autokill)
+function private send_autokill_sword(wpn_autokill)
 {
 	a_sp_glaive = getspawnerarray("glaive_spawner", "script_noteworthy");
 	sp_glaive = a_sp_glaive[0];
@@ -841,7 +845,7 @@ function function_e97f78f0()
 {
 	while(true)
 	{
-		foreach(var_5c9a375d, player in getplayers())
+		foreach(player in getplayers())
 		{
 			if(isdefined(player.sword_power) && !player.sword_allowed)
 			{

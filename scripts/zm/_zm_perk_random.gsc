@@ -25,7 +25,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_perk_random", &__init__, &__main__, undefined);
 }
@@ -92,7 +92,7 @@ function __main__()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function setup_perk_random_machines()
+function private setup_perk_random_machines()
 {
 	waittillframeend();
 	level.perk_bottle_weapon_array = arraycombine(level.machine_assets, level._custom_perks, 0, 1);
@@ -112,7 +112,7 @@ private function setup_perk_random_machines()
 */
 function perk_random_machine_init()
 {
-	foreach(var_8fbf6103, machine in level.perk_random_machines)
+	foreach(machine in level.perk_random_machines)
 	{
 		if(!isdefined(machine.cost))
 		{
@@ -138,7 +138,7 @@ function perk_random_machine_init()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function init_starting_perk_random_machine_location()
+function private init_starting_perk_random_machine_location()
 {
 	b_starting_machine_found = 0;
 	for(i = 0; i < level.perk_random_machines.size; i++)
@@ -220,14 +220,14 @@ function perk_random_machine_stub_update_prompt(player)
 	self setcursorhint("HINT_NOICON");
 	if(!self trigger_visible_to_player(player))
 	{
-		return 0;
+		return false;
 	}
 	self.hint_parm1 = undefined;
 	n_power_on = is_power_on(self.stub.script_int);
 	if(!n_power_on)
 	{
 		self.hint_string = &"ZOMBIE_NEED_POWER";
-		return 0;
+		return false;
 	}
 	if(self.stub.trigger_target.state == "idle" || self.stub.trigger_target.state == "vending")
 	{
@@ -239,17 +239,17 @@ function perk_random_machine_stub_update_prompt(player)
 			{
 				self.hint_parm1 = n_purchase_limit;
 			}
-			return 0;
+			return false;
 		}
 		if(isdefined(self.stub.trigger_target.machine_user))
 		{
 			if(isdefined(self.stub.trigger_target.grab_perk_hint) && self.stub.trigger_target.grab_perk_hint)
 			{
 				self.hint_string = &"ZOMBIE_RANDOM_PERK_PICKUP";
-				return 1;
+				return true;
 			}
 			self.hint_string = "";
-			return 0;
+			return false;
 		}
 		n_purchase_limit = player zm_utility::get_player_perk_purchase_limit();
 		if(!player zm_utility::can_player_purchase_perk())
@@ -259,14 +259,14 @@ function perk_random_machine_stub_update_prompt(player)
 			{
 				self.hint_parm1 = n_purchase_limit;
 			}
-			return 0;
+			return false;
 		}
 		self.hint_string = &"ZOMBIE_RANDOM_PERK_BUY";
 		self.hint_parm1 = level._random_zombie_perk_cost;
-		return 1;
+		return true;
 	}
 	self.hint_string = &"ZOMBIE_RANDOM_PERK_ELSEWHERE";
-	return 0;
+	return false;
 }
 
 /*
@@ -295,14 +295,14 @@ function trigger_visible_to_player(player)
 	}
 	if(!visible)
 	{
-		return 0;
+		return false;
 	}
 	if(player player_has_all_available_perks())
 	{
-		return 0;
+		return false;
 	}
 	self setvisibletoplayer(player);
-	return 1;
+	return true;
 }
 
 /*
@@ -320,10 +320,10 @@ function player_has_all_available_perks()
 	{
 		if(!self hasperk(level._random_perk_machine_perk_list[i]))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -339,22 +339,22 @@ function can_buy_perk()
 {
 	if(isdefined(self.is_drinking) && self.is_drinking > 0)
 	{
-		return 0;
+		return false;
 	}
 	current_weapon = self getcurrentweapon();
 	if(zm_utility::is_placeable_mine(current_weapon) || zm_equipment::is_equipment_that_blocks_purchase(current_weapon))
 	{
-		return 0;
+		return false;
 	}
 	if(self zm_utility::in_revive_trigger())
 	{
-		return 0;
+		return false;
 	}
 	if(current_weapon == level.weaponnone)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -585,13 +585,16 @@ function wait_for_power()
 		str_wait = "power_on" + self.script_int;
 		level flag::wait_till(str_wait);
 	}
-	else if(isdefined(level.zm_custom_perk_random_power_flag))
-	{
-		level flag::wait_till(level.zm_custom_perk_random_power_flag);
-	}
 	else
 	{
-		level flag::wait_till("power_on");
+		if(isdefined(level.zm_custom_perk_random_power_flag))
+		{
+			level flag::wait_till(level.zm_custom_perk_random_power_flag);
+		}
+		else
+		{
+			level flag::wait_till("power_on");
+		}
 	}
 	self thread set_perk_random_machine_state("away");
 }
@@ -1075,13 +1078,16 @@ function is_power_on(n_power_index)
 		str_power = "power_on" + n_power_index;
 		n_power_on = level flag::get(str_power);
 	}
-	else if(isdefined(level.zm_custom_perk_random_power_flag))
-	{
-		n_power_on = level flag::get(level.zm_custom_perk_random_power_flag);
-	}
 	else
 	{
-		n_power_on = level flag::get("power_on");
+		if(isdefined(level.zm_custom_perk_random_power_flag))
+		{
+			n_power_on = level flag::get(level.zm_custom_perk_random_power_flag);
+		}
+		else
+		{
+			n_power_on = level flag::get("power_on");
+		}
 	}
 	return n_power_on;
 }

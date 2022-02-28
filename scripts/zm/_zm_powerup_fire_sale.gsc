@@ -25,7 +25,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_powerup_fire_sale", &__init__, undefined, undefined);
 }
@@ -142,11 +142,11 @@ function firesale_chest_is_leaving()
 		{
 			if(level.chests[i].zbarrier.state === "leaving" || level.chests[i].zbarrier.state === "open" || level.chests[i].zbarrier.state === "close" || level.chests[i].zbarrier.state === "closing")
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -281,9 +281,9 @@ function func_should_drop_fire_sale()
 {
 	if(level.zombie_vars["zombie_powerup_fire_sale_on"] == 1 || level.chest_moves < 1 || (isdefined(level.disable_firesale_drop) && level.disable_firesale_drop))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -298,7 +298,7 @@ function func_should_drop_fire_sale()
 function sndfiresalemusic_start()
 {
 	array = level.chests;
-	foreach(var_f2d46208, struct in array)
+	foreach(struct in array)
 	{
 		if(!isdefined(struct.sndent))
 		{
@@ -325,7 +325,7 @@ function sndfiresalemusic_start()
 function sndfiresalemusic_stop()
 {
 	array = level.chests;
-	foreach(var_a2f884f9, struct in array)
+	foreach(struct in array)
 	{
 		if(isdefined(struct.sndent))
 		{

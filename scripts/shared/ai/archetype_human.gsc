@@ -35,7 +35,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	spawner::add_archetype_spawn_function("human", &archetypehumanblackboardinit);
 	spawner::add_archetype_spawn_function("human", &archetypehumaninit);
@@ -55,7 +55,7 @@ autoexec function init()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function archetypehumaninit()
+function private archetypehumaninit()
 {
 	entity = self;
 	aiutility::addaioverridedamagecallback(entity, &damageoverride);
@@ -78,7 +78,7 @@ private function archetypehumaninit()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function archetypehumanblackboardinit()
+function private archetypehumanblackboardinit()
 {
 	blackboard::createblackboardforentity(self);
 	ai::createinterfaceforentity(self);
@@ -108,7 +108,7 @@ private function archetypehumanblackboardinit()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function archetypehumanonbehavecallback(entity)
+function private archetypehumanonbehavecallback(entity)
 {
 	if(aiutility::isatcovercondition(entity))
 	{
@@ -129,7 +129,7 @@ private function archetypehumanonbehavecallback(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function archetypehumanonanimscriptedcallback(entity)
+function private archetypehumanonanimscriptedcallback(entity)
 {
 	entity.__blackboard = undefined;
 	entity archetypehumanblackboardinit();
@@ -146,7 +146,7 @@ private function archetypehumanonanimscriptedcallback(entity)
 	Parameters: 8
 	Flags: Linked, Private
 */
-private function humangibkilledoverride(inflictor, attacker, damage, meansofdeath, weapon, dir, hitloc, offsettime)
+function private humangibkilledoverride(inflictor, attacker, damage, meansofdeath, weapon, dir, hitloc, offsettime)
 {
 	entity = self;
 	if(math::cointoss())
@@ -192,7 +192,7 @@ private function humangibkilledoverride(inflictor, attacker, damage, meansofdeat
 	Parameters: 4
 	Flags: Private
 */
-private function trygibbinghead(entity, damage, hitloc, isexplosive)
+function private trygibbinghead(entity, damage, hitloc, isexplosive)
 {
 	if(isexplosive)
 	{
@@ -213,7 +213,7 @@ private function trygibbinghead(entity, damage, hitloc, isexplosive)
 	Parameters: 4
 	Flags: Linked, Private
 */
-private function trygibbinglimb(entity, damage, hitloc, isexplosive)
+function private trygibbinglimb(entity, damage, hitloc, isexplosive)
 {
 	if(isexplosive)
 	{
@@ -227,23 +227,29 @@ private function trygibbinglimb(entity, damage, hitloc, isexplosive)
 			gibserverutils::gibleftarm(entity);
 		}
 	}
-	else if(isinarray(array("left_hand", "left_arm_lower", "left_arm_upper"), hitloc))
+	else
 	{
-		gibserverutils::gibleftarm(entity);
-	}
-	else if(isinarray(array("right_hand", "right_arm_lower", "right_arm_upper"), hitloc))
-	{
-		gibserverutils::gibrightarm(entity);
-	}
-	else if(isinarray(array("torso_upper"), hitloc) && math::cointoss())
-	{
-		if(math::cointoss())
+		if(isinarray(array("left_hand", "left_arm_lower", "left_arm_upper"), hitloc))
 		{
 			gibserverutils::gibleftarm(entity);
 		}
 		else
 		{
-			gibserverutils::gibrightarm(entity);
+			if(isinarray(array("right_hand", "right_arm_lower", "right_arm_upper"), hitloc))
+			{
+				gibserverutils::gibrightarm(entity);
+			}
+			else if(isinarray(array("torso_upper"), hitloc) && math::cointoss())
+			{
+				if(math::cointoss())
+				{
+					gibserverutils::gibleftarm(entity);
+				}
+				else
+				{
+					gibserverutils::gibrightarm(entity);
+				}
+			}
 		}
 	}
 }
@@ -257,7 +263,7 @@ private function trygibbinglimb(entity, damage, hitloc, isexplosive)
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function trygibbinglegs(entity, damage, hitloc, isexplosive, attacker)
+function private trygibbinglegs(entity, damage, hitloc, isexplosive, attacker)
 {
 	if(isexplosive)
 	{
@@ -266,32 +272,41 @@ private function trygibbinglegs(entity, damage, hitloc, isexplosive, attacker)
 		{
 			gibserverutils::gibrightleg(entity);
 		}
-		else if(randomchance < 0.66)
+		else
+		{
+			if(randomchance < 0.66)
+			{
+				gibserverutils::gibleftleg(entity);
+			}
+			else
+			{
+				gibserverutils::giblegs(entity);
+			}
+		}
+	}
+	else
+	{
+		if(isinarray(array("left_leg_upper", "left_leg_lower", "left_foot"), hitloc))
 		{
 			gibserverutils::gibleftleg(entity);
 		}
 		else
 		{
-			gibserverutils::giblegs(entity);
-		}
-	}
-	else if(isinarray(array("left_leg_upper", "left_leg_lower", "left_foot"), hitloc))
-	{
-		gibserverutils::gibleftleg(entity);
-	}
-	else if(isinarray(array("right_leg_upper", "right_leg_lower", "right_foot"), hitloc))
-	{
-		gibserverutils::gibrightleg(entity);
-	}
-	else if(isinarray(array("torso_lower"), hitloc) && math::cointoss())
-	{
-		if(math::cointoss())
-		{
-			gibserverutils::gibleftleg(entity);
-		}
-		else
-		{
-			gibserverutils::gibrightleg(entity);
+			if(isinarray(array("right_leg_upper", "right_leg_lower", "right_foot"), hitloc))
+			{
+				gibserverutils::gibrightleg(entity);
+			}
+			else if(isinarray(array("torso_lower"), hitloc) && math::cointoss())
+			{
+				if(math::cointoss())
+				{
+					gibserverutils::gibleftleg(entity);
+				}
+				else
+				{
+					gibserverutils::gibrightleg(entity);
+				}
+			}
 		}
 	}
 }
@@ -345,13 +360,16 @@ function cqbattributecallback(entity, attribute, oldvalue, value)
 	{
 		entity asmchangeanimmappingtable(2);
 	}
-	else if(entity ai::get_behavior_attribute("useAnimationOverride"))
-	{
-		entity asmchangeanimmappingtable(1);
-	}
 	else
 	{
-		entity asmchangeanimmappingtable(0);
+		if(entity ai::get_behavior_attribute("useAnimationOverride"))
+		{
+			entity asmchangeanimmappingtable(1);
+		}
+		else
+		{
+			entity asmchangeanimmappingtable(0);
+		}
 	}
 }
 

@@ -15,7 +15,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("plunger_knife", &__init__, &__main__, undefined);
 }
@@ -29,7 +29,7 @@ autoexec function __init__sytem__()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function __init__()
+function private __init__()
 {
 }
 
@@ -42,7 +42,7 @@ private function __init__()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function __main__()
+function private __main__()
 {
 	cost = 3000;
 	zm_melee_weapon::init("knife_plunger", "zombie_plunger_flourish", undefined, undefined, cost, "bowie_upgrade", &"ZMWEAPON_NONE", "plunger", undefined);

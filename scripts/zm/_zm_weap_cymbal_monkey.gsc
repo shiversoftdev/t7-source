@@ -554,17 +554,17 @@ function move_valid_poi_to_navmesh(valid_poi)
 {
 	if(!(isdefined(valid_poi) && valid_poi))
 	{
-		return 0;
+		return false;
 	}
 	if(ispointonnavmesh(self.origin))
 	{
-		return 1;
+		return true;
 	}
 	v_orig = self.origin;
 	queryresult = positionquery_source_navigation(self.origin, 0, level.valid_poi_max_radius, level.valid_poi_half_height, level.valid_poi_inner_spacing, level.valid_poi_radius_from_edges);
 	if(queryresult.data.size)
 	{
-		foreach(var_a794ff15, point in queryresult.data)
+		foreach(point in queryresult.data)
 		{
 			height_offset = abs(self.origin[2] - point.origin[2]);
 			if(height_offset > level.valid_poi_height)
@@ -574,11 +574,11 @@ function move_valid_poi_to_navmesh(valid_poi)
 			if(bullettracepassed(point.origin + vectorscale((0, 0, 1), 20), v_orig + vectorscale((0, 0, 1), 20), 0, self, undefined, 0, 0))
 			{
 				self.origin = point.origin;
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -686,7 +686,7 @@ function pulse_damage(e_owner, model)
 	while(true)
 	{
 		a_ai_targets = getaiteamarray("axis");
-		foreach(var_48e2032, ai_target in a_ai_targets)
+		foreach(ai_target in a_ai_targets)
 		{
 			if(isdefined(ai_target))
 			{
@@ -737,13 +737,16 @@ function do_monkey_sound(model, info)
 		{
 			self playsoundtoteam("zmb_monkey_song", "allies");
 		}
-		else if(self.weapon.name == "cymbal_monkey_upgraded")
-		{
-			self playsound("zmb_monkey_song_upgraded");
-		}
 		else
 		{
-			self playsound("zmb_monkey_song");
+			if(self.weapon.name == "cymbal_monkey_upgraded")
+			{
+				self playsound("zmb_monkey_song_upgraded");
+			}
+			else
+			{
+				self playsound("zmb_monkey_song");
+			}
 		}
 	}
 	if(!self.monk_scream_vox)

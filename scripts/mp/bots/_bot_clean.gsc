@@ -84,7 +84,7 @@ function bot_idle()
 	}
 	if(randomint(10) < self.carriedtacos)
 	{
-		foreach(var_c5bb5761, hub in level.cleandeposithubs)
+		foreach(hub in level.cleandeposithubs)
 		{
 			if(hub.interactteam == "any")
 			{
@@ -117,13 +117,13 @@ function look_for_taco(radius)
 	besttaco = get_best_taco(radius);
 	if(!isdefined(besttaco))
 	{
-		return 0;
+		return false;
 	}
 	self.targettaco = besttaco;
 	self.targettacodroptime = besttaco.droptime;
 	self bot::path_to_point_in_trigger(besttaco.trigger);
 	self bot::sprint_to_goal();
-	return 1;
+	return true;
 }
 
 /*
@@ -140,7 +140,7 @@ function get_best_taco(radius)
 	radiussq = radius * radius;
 	besttaco = undefined;
 	besttacodistsq = undefined;
-	foreach(var_778a120a, taco in level.tacos)
+	foreach(taco in level.tacos)
 	{
 		if(taco.interactteam == "none" || !ispointonnavmesh(taco.origin, self))
 		{

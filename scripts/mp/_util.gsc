@@ -560,7 +560,7 @@ function getteammask(team)
 function getotherteamsmask(skip_team)
 {
 	mask = 0;
-	foreach(var_8855c9e5, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(team == skip_team)
 		{
@@ -596,7 +596,7 @@ function wait_endon(waittime, endonstring, endonstring2, endonstring3, endonstri
 		self endon(endonstring4);
 	}
 	wait(waittime);
-	return 1;
+	return true;
 }
 
 /*
@@ -766,17 +766,17 @@ function ent_already_in_trigger(trig)
 {
 	if(!isdefined(self._triggers))
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(self._triggers[trig getentitynumber()]))
 	{
-		return 0;
+		return false;
 	}
 	if(!self._triggers[trig getentitynumber()])
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1132,9 +1132,9 @@ function ispressbuild()
 	buildtype = getdvarstring("buildType");
 	if(isdefined(buildtype) && buildtype == "press")
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1624,7 +1624,7 @@ function player_contract_event(event_name, param1 = undefined, param2 = undefine
 		case 0:
 		default:
 		{
-			foreach(var_1859a1b1, event_func in level.player_contract_events[event_name].events)
+			foreach(event_func in level.player_contract_events[event_name].events)
 			{
 				if(isdefined(event_func))
 				{
@@ -1635,7 +1635,7 @@ function player_contract_event(event_name, param1 = undefined, param2 = undefine
 		}
 		case 1:
 		{
-			foreach(var_681a6914, event_func in level.player_contract_events[event_name].events)
+			foreach(event_func in level.player_contract_events[event_name].events)
 			{
 				if(isdefined(event_func))
 				{
@@ -1646,7 +1646,7 @@ function player_contract_event(event_name, param1 = undefined, param2 = undefine
 		}
 		case 2:
 		{
-			foreach(var_5cf30226, event_func in level.player_contract_events[event_name].events)
+			foreach(event_func in level.player_contract_events[event_name].events)
 			{
 				if(isdefined(event_func))
 				{
@@ -1657,7 +1657,7 @@ function player_contract_event(event_name, param1 = undefined, param2 = undefine
 		}
 		case 3:
 		{
-			foreach(var_dd1e677b, event_func in level.player_contract_events[event_name].events)
+			foreach(event_func in level.player_contract_events[event_name].events)
 			{
 				if(isdefined(event_func))
 				{
@@ -1706,12 +1706,12 @@ function is_objective_game(game_type)
 		case "gun":
 		case "tdm":
 		{
-			return 0;
+			return false;
 			break;
 		}
 		default:
 		{
-			return 1;
+			return true;
 		}
 	}
 }

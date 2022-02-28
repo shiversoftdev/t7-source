@@ -127,7 +127,7 @@ function init()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_8d3603b3()
+function private function_8d3603b3()
 {
 	self.non_attacker_func = &function_4d1bc672;
 	self.non_attack_func_takes_attacker = 1;
@@ -147,10 +147,10 @@ private function function_8d3603b3()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_a3dfb444()
+function private function_a3dfb444()
 {
 	self.var_ba00c27 = [];
-	foreach(var_73525cf6, var_d67b360d in level.mechz_armor_info)
+	foreach(var_d67b360d in level.mechz_armor_info)
 	{
 		armor_state = spawnstruct();
 		armor_state.index = self.var_ba00c27.size;
@@ -178,7 +178,7 @@ private function function_a3dfb444()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_dbf487d9()
+function private function_dbf487d9()
 {
 	self.actor_damage_func = &mechz_damage_override;
 	self.faceplate_health = level.mechz_health * level.mechz_helmet_health_percentage;
@@ -196,9 +196,9 @@ private function function_dbf487d9()
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function mechz_instakill_override(player, mod, hit_location)
+function private mechz_instakill_override(player, mod, hit_location)
 {
-	return 1;
+	return true;
 }
 
 /*
@@ -216,7 +216,7 @@ function function_4d1bc672(damage, weapon, attacker = undefined)
 	{
 		self.var_32854687 = 1;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -258,7 +258,7 @@ function mechz_setup_armor_pieces()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_e597e389()
+function private function_e597e389()
 {
 	behaviortreenetworkutility::registerbehaviortreescriptapi("tombMechzGetTankTagService", &function_b6ebb97d);
 	behaviortreenetworkutility::registerbehaviortreescriptapi("tombMechzGetJumpPosService", &function_4f9821c3);
@@ -293,7 +293,7 @@ private function function_e597e389()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_b6ebb97d(entity)
+function private function_b6ebb97d(entity)
 {
 	if(level.vh_tank flag::get("tank_moving"))
 	{
@@ -331,7 +331,7 @@ private function function_b6ebb97d(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_4f9821c3(entity)
+function private function_4f9821c3(entity)
 {
 	if(!level.vh_tank flag::get("tank_moving"))
 	{
@@ -363,21 +363,21 @@ private function function_4f9821c3(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_c9cd5bdd(entity)
+function private function_c9cd5bdd(entity)
 {
 	if(isdefined(entity.force_jump))
 	{
-		return 1;
+		return true;
 	}
 	if(!isdefined(entity.jump_pos))
 	{
-		return 0;
+		return false;
 	}
 	if(distancesquared(entity.origin, entity.jump_pos.origin) > 100)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -389,29 +389,29 @@ private function function_c9cd5bdd(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_9ea85604(entity)
+function private function_9ea85604(entity)
 {
 	/#
 		if(isdefined(entity.shoot_flame) && entity.shoot_flame)
 		{
-			return 1;
+			return true;
 		}
 	#/
 	if(entity.berserk === 1)
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(entity.var_afe67307))
 	{
-		return 0;
+		return false;
 	}
 	distance2d = distance2dsquared(entity.origin, entity.var_afe67307);
 	distance = distancesquared(entity.origin, entity.var_afe67307);
 	if(distance2d > 100)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -423,7 +423,7 @@ private function function_9ea85604(entity)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_b47192a9(entity, asmstatename)
+function private function_b47192a9(entity, asmstatename)
 {
 	return isdefined(self.var_32854687) && self.var_32854687;
 }
@@ -437,7 +437,7 @@ private function function_b47192a9(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_4bbd0723(entity, asmstatename)
+function private function_4bbd0723(entity, asmstatename)
 {
 	return isdefined(self.robot_stomped) && self.robot_stomped;
 }
@@ -451,15 +451,15 @@ private function function_4bbd0723(entity, asmstatename)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function mechzshouldshowpain(entity)
+function private mechzshouldshowpain(entity)
 {
 	if(entity.partdestroyed === 1)
 	{
-		return 1;
+		return true;
 	}
 	if(entity.show_pain_from_explosive_dmg === 1)
 	{
-		return 1;
+		return true;
 	}
 }
 
@@ -472,7 +472,7 @@ private function mechzshouldshowpain(entity)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_6f434f2b(entity, asmstatename)
+function private function_6f434f2b(entity, asmstatename)
 {
 	entity setfreecameralockonallowed(0);
 	entity thread mechz_jump_vo();
@@ -488,7 +488,7 @@ private function function_6f434f2b(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_e3577caa(entity, asmstatename)
+function private function_e3577caa(entity, asmstatename)
 {
 	entity ghost();
 	entity.mechz_hidden = 1;
@@ -513,7 +513,7 @@ private function function_e3577caa(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_7efad7ec(entity, asmstatename)
+function private function_7efad7ec(entity, asmstatename)
 {
 	if(entity.var_1ea3b675 > level.time)
 	{
@@ -535,7 +535,7 @@ private function function_7efad7ec(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_58e29f36(entity, asmstatename)
+function private function_58e29f36(entity, asmstatename)
 {
 	entity.var_1ea3b675 = undefined;
 	var_be0ab0a1 = get_best_mechz_spawn_pos(1);
@@ -564,7 +564,7 @@ private function function_58e29f36(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_647ea967(entity, asmstatename)
+function private function_647ea967(entity, asmstatename)
 {
 	entity solid();
 	entity setfreecameralockonallowed(1);
@@ -581,7 +581,7 @@ private function function_647ea967(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_13bab4e7(entity, asmstatename)
+function private function_13bab4e7(entity, asmstatename)
 {
 	entity function_97cf5f();
 	entity.var_5819fc = level.time + (level.mechz_robot_knockdown_time * 1000);
@@ -596,7 +596,7 @@ private function function_13bab4e7(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_a833c7b2(entity, asmstatename)
+function private function_a833c7b2(entity, asmstatename)
 {
 	if(entity.var_5819fc > level.time)
 	{
@@ -614,7 +614,7 @@ private function function_a833c7b2(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_e260a84c(entity, asmstatename)
+function private function_e260a84c(entity, asmstatename)
 {
 	entity.var_5819fc = undefined;
 	entity.robot_stomped = undefined;
@@ -629,7 +629,7 @@ private function function_e260a84c(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_84bcf2d9(entity, asmstatename)
+function private function_84bcf2d9(entity, asmstatename)
 {
 	entity.doing_tank_sweep = 1;
 	return mechzbehavior::mechzshootflameactionstart(entity, asmstatename);
@@ -644,7 +644,7 @@ private function function_84bcf2d9(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_f10762(entity, asmstatename)
+function private function_f10762(entity, asmstatename)
 {
 	entity.doing_tank_sweep = undefined;
 	return mechzbehavior::mechzshootflameactionend(entity, asmstatename);
@@ -659,7 +659,7 @@ private function function_f10762(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_f7a84bd6(entity, asmstatename)
+function private function_f7a84bd6(entity, asmstatename)
 {
 	entity function_97cf5f();
 	entity show();
@@ -676,7 +676,7 @@ private function function_f7a84bd6(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_9dc92f99(entity, asmstatename)
+function private function_9dc92f99(entity, asmstatename)
 {
 	if(entity.var_918f1b56 > level.time)
 	{
@@ -694,7 +694,7 @@ private function function_9dc92f99(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_5276dd35(entity, asmstatename)
+function private function_5276dd35(entity, asmstatename)
 {
 	if(!level.vh_tank flag::get("tank_moving") && entity istouching(level.vh_tank))
 	{
@@ -719,7 +719,7 @@ private function function_5276dd35(entity, asmstatename)
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function function_744a18d6(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function private function_744a18d6(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	entity orientmode("face direction", vectornormalize(level.vh_tank.origin - entity.origin));
 }
@@ -733,7 +733,7 @@ private function function_744a18d6(entity, mocompanim, mocompanimblendouttime, m
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function function_6024ae49(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function private function_6024ae49(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	entity animmode("noclip", 0);
 }
@@ -747,7 +747,7 @@ private function function_6024ae49(entity, mocompanim, mocompanimblendouttime, m
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function function_3b00a84(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function private function_3b00a84(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	entity animmode("noclip", 0);
 	if(isdefined(entity.traversestartnode))
@@ -767,7 +767,7 @@ private function function_3b00a84(entity, mocompanim, mocompanimblendouttime, mo
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function function_5e254e4f(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function private function_5e254e4f(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	entity setrepairpaths(1);
 	if(isdefined(entity.traverseendnode))
@@ -794,7 +794,7 @@ private function function_5e254e4f(entity, mocompanim, mocompanimblendouttime, m
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_97cf5f()
+function private function_97cf5f()
 {
 	v_trace_start = self.origin + vectorscale((0, 0, 1), 100);
 	v_trace_end = self.origin - vectorscale((0, 0, 1), 500);
@@ -847,7 +847,7 @@ function function_eeec66f5(mechz)
 	flametrigger = mechz.flametrigger;
 	do_tank_sweep_auto_damage = isdefined(self.doing_tank_sweep) && self.doing_tank_sweep && !level.vh_tank flag::get("tank_moving");
 	a_zombies = zm_elemental_zombie::function_d41418b8();
-	foreach(var_3e3658b7, zombie in a_zombies)
+	foreach(zombie in a_zombies)
 	{
 		if(do_tank_sweep_auto_damage && zombie zm_tomb_tank::entity_on_tank() || zombie istouching(flametrigger) && zombie.var_e05d0be2 !== 1)
 		{
@@ -869,7 +869,7 @@ function function_8166f050(entity)
 {
 	do_tank_sweep_auto_damage = isdefined(self.doing_tank_sweep) && self.doing_tank_sweep && !level.vh_tank flag::get("tank_moving");
 	players = getplayers();
-	foreach(var_1ab27c5f, player in players)
+	foreach(player in players)
 	{
 		if(!(isdefined(player.is_burning) && player.is_burning))
 		{
@@ -968,7 +968,7 @@ function mechz_round_tracker()
 		if(level.next_mechz_round <= level.round_number)
 		{
 			a_zombies = getaispeciesarray(level.zombie_team, "all");
-			foreach(var_da9b9179, zombie in a_zombies)
+			foreach(zombie in a_zombies)
 			{
 				if(isdefined(zombie.is_mechz) && zombie.is_mechz && isalive(zombie))
 				{
@@ -984,17 +984,23 @@ function mechz_round_tracker()
 			{
 				level.mechz_zombie_per_round = 1;
 			}
-			else if(level.mechz_round_count < 2)
-			{
-				level.mechz_zombie_per_round = 1;
-			}
-			else if(level.mechz_round_count < 5)
-			{
-				level.mechz_zombie_per_round = 2;
-			}
 			else
 			{
-				level.mechz_zombie_per_round = 3;
+				if(level.mechz_round_count < 2)
+				{
+					level.mechz_zombie_per_round = 1;
+				}
+				else
+				{
+					if(level.mechz_round_count < 5)
+					{
+						level.mechz_zombie_per_round = 2;
+					}
+					else
+					{
+						level.mechz_zombie_per_round = 3;
+					}
+				}
 			}
 			level.mechz_left_to_spawn = level.mechz_zombie_per_round;
 			mechz_spawning = level.mechz_left_to_spawn;
@@ -1146,7 +1152,7 @@ function get_best_mechz_spawn_pos(ignore_used_positions = 0)
 	else if(level.mechz_locations.size > 0)
 	{
 		var_634f9cbb = array::randomize(level.mechz_locations);
-		foreach(var_6752a507, location in var_634f9cbb)
+		foreach(location in var_634f9cbb)
 		{
 			str_zone = zm_zonemgr::get_zone_from_position(location.origin, 0);
 			if(isdefined(str_zone))
@@ -1311,20 +1317,23 @@ function mechz_damage_override(inflictor, attacker, damage, flags, meansofdeath,
 				}
 			}
 		}
-		else if(isdefined(self.e_grabbed) && (shitloc === "left_hand" || shitloc === "left_arm_lower" || shitloc === "left_arm_upper"))
+		else
 		{
-			if(isdefined(self.e_grabbed))
+			if(isdefined(self.e_grabbed) && (shitloc === "left_hand" || shitloc === "left_arm_lower" || shitloc === "left_arm_upper"))
 			{
-				self.show_pain_from_explosive_dmg = 1;
+				if(isdefined(self.e_grabbed))
+				{
+					self.show_pain_from_explosive_dmg = 1;
+				}
+				if(isdefined(level.mechz_left_arm_damage_callback))
+				{
+					self [[level.mechz_left_arm_damage_callback]]();
+				}
 			}
-			if(isdefined(level.mechz_left_arm_damage_callback))
+			else if(shitloc == "head")
 			{
-				self [[level.mechz_left_arm_damage_callback]]();
+				final_damage = damage * n_mechz_headshot_modifier;
 			}
-		}
-		else if(shitloc == "head")
-		{
-			final_damage = damage * n_mechz_headshot_modifier;
 		}
 		attacker mechzserverutils::show_hit_marker();
 	}
@@ -1365,7 +1374,7 @@ function mechz_damage_override(inflictor, attacker, damage, flags, meansofdeath,
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function mechz_launch_armor_piece()
+function private mechz_launch_armor_piece()
 {
 	if(!isdefined(self.next_armor_piece))
 	{
@@ -1433,7 +1442,7 @@ function response_to_air_raid_siren_vo()
 		return;
 	}
 	a_players = array::randomize(a_players);
-	foreach(var_d8b934a7, player in a_players)
+	foreach(player in a_players)
 	{
 		if(zombie_utility::is_player_valid(player))
 		{
@@ -1477,7 +1486,7 @@ function start_see_mech_zombie_vo()
 {
 	wait(1);
 	a_zombies = getaispeciesarray(level.zombie_team, "all");
-	foreach(var_3b44639c, zombie in a_zombies)
+	foreach(zombie in a_zombies)
 	{
 		if(isdefined(zombie.is_mechz) && zombie.is_mechz)
 		{
@@ -1491,7 +1500,7 @@ function start_see_mech_zombie_vo()
 	}
 	if(isalive(ai_mechz))
 	{
-		foreach(var_12b43fa5, player in a_players)
+		foreach(player in a_players)
 		{
 			player thread player_looking_at_mechz_watcher(ai_mechz);
 		}
@@ -1573,7 +1582,7 @@ function play_shoot_arm_hint_vo()
 			return;
 		}
 		a_players = getplayers();
-		foreach(var_8cf7c9f1, player in a_players)
+		foreach(player in a_players)
 		{
 			if(player == self.e_grabbed)
 			{
@@ -1622,7 +1631,7 @@ function shoot_mechz_head_vo()
 {
 	self endon(#"death");
 	a_players = getplayers();
-	foreach(var_b4b569f5, player in a_players)
+	foreach(player in a_players)
 	{
 		if(isdefined(self.e_grabbed) && self.e_grabbed == player)
 		{
@@ -1654,7 +1663,7 @@ function shoot_mechz_head_vo()
 function mechz_jump_vo()
 {
 	a_players = getplayers();
-	foreach(var_13f2719e, player in a_players)
+	foreach(player in a_players)
 	{
 		if(distancesquared(self.origin, player.origin) < 1000000)
 		{
@@ -1684,7 +1693,7 @@ function mechz_stomped_by_giant_robot_vo()
 	self endon(#"death");
 	wait(5);
 	a_players = getplayers();
-	foreach(var_577a0cbb, player in a_players)
+	foreach(player in a_players)
 	{
 		if(distancesquared(self.origin, player.origin) < 1000000)
 		{
@@ -1738,7 +1747,7 @@ function function_27b9fdd3()
 	{
 		return a_spawn_locs[0];
 	}
-	foreach(var_54300fbd, s_loc in var_fffe05f0)
+	foreach(s_loc in var_fffe05f0)
 	{
 		str_zone = zm_zonemgr::get_zone_from_position(s_loc.origin, 0);
 		if(isdefined(str_zone))

@@ -17,7 +17,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("player", &__init__, undefined, undefined);
 }
@@ -99,21 +99,27 @@ function last_valid_position()
 			wait(0.1);
 			continue;
 		}
-		else if(ispointonnavmesh(self.origin, self))
-		{
-			self.last_valid_position = self.origin;
-		}
-		else if(!ispointonnavmesh(self.origin, self) && ispointonnavmesh(self.last_valid_position, self) && distance2dsquared(self.origin, self.last_valid_position) < (32 * 32))
-		{
-			wait(0.1);
-			continue;
-		}
 		else
 		{
-			position = getclosestpointonnavmesh(self.origin, 100, 15);
-			if(isdefined(position))
+			if(ispointonnavmesh(self.origin, self))
 			{
-				self.last_valid_position = position;
+				self.last_valid_position = self.origin;
+			}
+			else
+			{
+				if(!ispointonnavmesh(self.origin, self) && ispointonnavmesh(self.last_valid_position, self) && distance2dsquared(self.origin, self.last_valid_position) < (32 * 32))
+				{
+					wait(0.1);
+					continue;
+				}
+				else
+				{
+					position = getclosestpointonnavmesh(self.origin, 100, 15);
+					if(isdefined(position))
+					{
+						self.last_valid_position = position;
+					}
+				}
 			}
 		}
 		wait(0.1);
@@ -152,7 +158,7 @@ function take_weapons()
 				self._current_weapon = a_weapon_list[0];
 			}
 		}
-		foreach(var_c236bcb0, weapon in a_weapon_list)
+		foreach(weapon in a_weapon_list)
 		{
 			if(isdefined(weapon.dniweapon) && weapon.dniweapon)
 			{
@@ -208,7 +214,7 @@ function generate_weapon_data()
 				self._generated_current_weapon = a_weapon_list[0];
 			}
 		}
-		foreach(var_2646a272, weapon in a_weapon_list)
+		foreach(weapon in a_weapon_list)
 		{
 			if(isdefined(weapon.dniweapon) && weapon.dniweapon)
 			{
@@ -240,7 +246,7 @@ function give_back_weapons(b_immediate = 0)
 {
 	if(isdefined(self._weapons))
 	{
-		foreach(var_8cc4e06f, weapondata in self._weapons)
+		foreach(weapondata in self._weapons)
 		{
 			weapondata_give(weapondata);
 		}

@@ -103,25 +103,34 @@ function one_inch_punch_melee_attack()
 			self giveweapon(level.var_e27d2514);
 			self zm_utility::set_player_melee_weapon(level.var_e27d2514);
 		}
-		else if(self.str_punch_element == "fire")
-		{
-			self giveweapon(level.var_4f241554);
-			self zm_utility::set_player_melee_weapon(level.var_4f241554);
-		}
-		else if(self.str_punch_element == "ice")
-		{
-			self giveweapon(level.var_af96dd85);
-			self zm_utility::set_player_melee_weapon(level.var_af96dd85);
-		}
-		else if(self.str_punch_element == "lightning")
-		{
-			self giveweapon(level.var_590c486e);
-			self zm_utility::set_player_melee_weapon(level.var_590c486e);
-		}
 		else
 		{
-			self giveweapon(level.var_75ef78a0);
-			self zm_utility::set_player_melee_weapon(level.var_75ef78a0);
+			if(self.str_punch_element == "fire")
+			{
+				self giveweapon(level.var_4f241554);
+				self zm_utility::set_player_melee_weapon(level.var_4f241554);
+			}
+			else
+			{
+				if(self.str_punch_element == "ice")
+				{
+					self giveweapon(level.var_af96dd85);
+					self zm_utility::set_player_melee_weapon(level.var_af96dd85);
+				}
+				else
+				{
+					if(self.str_punch_element == "lightning")
+					{
+						self giveweapon(level.var_590c486e);
+						self zm_utility::set_player_melee_weapon(level.var_590c486e);
+					}
+					else
+					{
+						self giveweapon(level.var_75ef78a0);
+						self zm_utility::set_player_melee_weapon(level.var_75ef78a0);
+					}
+				}
+			}
 		}
 	}
 	else
@@ -180,7 +189,7 @@ function monitor_melee_swipe()
 		}
 		a_zombies = getaispeciesarray(level.zombie_team, "all");
 		a_zombies = util::get_array_of_closest(self.origin, a_zombies, undefined, undefined, 100);
-		foreach(var_4c491cdb, zombie in a_zombies)
+		foreach(zombie in a_zombies)
 		{
 			if(self is_player_facing(zombie, v_punch_yaw) && distancesquared(self.origin, zombie.origin) <= (4096 * range_mod))
 			{
@@ -219,9 +228,9 @@ function is_player_facing(zombie, v_punch_yaw)
 	}
 	if(yaw_diff < 35)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -469,20 +478,26 @@ function knockdown_zombie_animate()
 			animation_side = "back";
 		}
 	}
-	else if(self.damageyaw > 75 && self.damageyaw < 135)
-	{
-		animation_direction = "left";
-		animation_side = "belly";
-	}
-	else if(self.damageyaw > -135 && self.damageyaw < -75)
-	{
-		animation_direction = "right";
-		animation_side = "belly";
-	}
 	else
 	{
-		animation_direction = "front";
-		animation_side = "belly";
+		if(self.damageyaw > 75 && self.damageyaw < 135)
+		{
+			animation_direction = "left";
+			animation_side = "belly";
+		}
+		else
+		{
+			if(self.damageyaw > -135 && self.damageyaw < -75)
+			{
+				animation_direction = "right";
+				animation_side = "belly";
+			}
+			else
+			{
+				animation_direction = "front";
+				animation_side = "belly";
+			}
+		}
 	}
 	self thread knockdown_zombie_animate_state();
 	self setanimstatefromasd(("zm_punch_fall_" + animation_direction) + animation_legs);

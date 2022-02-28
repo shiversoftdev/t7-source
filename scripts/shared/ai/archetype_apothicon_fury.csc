@@ -16,7 +16,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function main()
+function autoexec main()
 {
 	ai::add_archetype_spawn_function("apothicon_fury", &apothiconspawnsetup);
 	if(ai::shouldregisterclientfieldforarchetype("apothicon_fury"))
@@ -81,7 +81,7 @@ function apothiconstartloopingeffects(localclientnum)
 */
 function apothiconstoploopingeffects(localclientnum)
 {
-	foreach(var_19fc6744, fx in self.loopingeffects)
+	foreach(fx in self.loopingeffects)
 	{
 		killfx(localclientnum, fx);
 	}
@@ -172,25 +172,37 @@ function apothiconfiredamageeffect(localclientnum, oldval, newval, bnewent, bini
 	{
 		tag = array::random(array("J_Hip_LE", "J_Knee_LE"));
 	}
-	else if(newval == 4)
-	{
-		tag = array::random(array("J_Shoulder_RI", "J_Shoulder_RI_tr", "J_Elbow_RI"));
-	}
-	else if(newval == 5)
-	{
-		tag = array::random(array("J_Shoulder_LE", "J_Shoulder_LE_tr", "J_Elbow_LE"));
-	}
-	else if(newval == 3)
-	{
-		tag = array::random(array("J_MainRoot"));
-	}
-	else if(newval == 2)
-	{
-		tag = array::random(array("J_SpineUpper", "J_Clavicle_RI", "J_Clavicle_LE"));
-	}
 	else
 	{
-		tag = array::random(array("J_Neck", "J_Head", "J_Helmet"));
+		if(newval == 4)
+		{
+			tag = array::random(array("J_Shoulder_RI", "J_Shoulder_RI_tr", "J_Elbow_RI"));
+		}
+		else
+		{
+			if(newval == 5)
+			{
+				tag = array::random(array("J_Shoulder_LE", "J_Shoulder_LE_tr", "J_Elbow_LE"));
+			}
+			else
+			{
+				if(newval == 3)
+				{
+					tag = array::random(array("J_MainRoot"));
+				}
+				else
+				{
+					if(newval == 2)
+					{
+						tag = array::random(array("J_SpineUpper", "J_Clavicle_RI", "J_Clavicle_LE"));
+					}
+					else
+					{
+						tag = array::random(array("J_Neck", "J_Head", "J_Helmet"));
+					}
+				}
+			}
+		}
 	}
 	fx = playfxontag(localclientnum, level._effect["dlc4/genesis/fx_apothicon_fury_impact"], self, tag);
 }

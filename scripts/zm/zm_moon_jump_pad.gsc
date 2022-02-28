@@ -169,29 +169,32 @@ function moon_low_gravity_velocity(ent_start_point, struct_end_point)
 			}
 		#/
 	}
-	else if(z_dist >= 135)
+	else
 	{
-		z_dist = z_dist * 0.2;
-		forward_scaling = 0.7;
-		/#
-			if(getdvarint(""))
-			{
-				z_dist = z_dist * getdvarfloat("");
-				forward_scaling = getdvarfloat("");
-			}
-		#/
-	}
-	else if(z_dist < 0)
-	{
-		z_dist = z_dist * 0.1;
-		forward_scaling = 0.95;
-		/#
-			if(getdvarint(""))
-			{
-				z_dist = z_dist * getdvarfloat("");
-				forward_scaling = getdvarfloat("");
-			}
-		#/
+		if(z_dist >= 135)
+		{
+			z_dist = z_dist * 0.2;
+			forward_scaling = 0.7;
+			/#
+				if(getdvarint(""))
+				{
+					z_dist = z_dist * getdvarfloat("");
+					forward_scaling = getdvarfloat("");
+				}
+			#/
+		}
+		else if(z_dist < 0)
+		{
+			z_dist = z_dist * 0.1;
+			forward_scaling = 0.95;
+			/#
+				if(getdvarint(""))
+				{
+					z_dist = z_dist * getdvarfloat("");
+					forward_scaling = getdvarfloat("");
+				}
+			#/
+		}
 	}
 	n_reduction = 0.035;
 	/#
@@ -382,20 +385,26 @@ function moon_biodome_powerup_temptation(struct_array)
 			wait(15);
 			rotation++;
 		}
-		else if(rotation == 1)
-		{
-			wait(7.5);
-			rotation++;
-		}
-		else if(rotation == 2)
-		{
-			wait(2.5);
-			rotation++;
-		}
 		else
 		{
-			wait(1.5);
-			rotation++;
+			if(rotation == 1)
+			{
+				wait(7.5);
+				rotation++;
+			}
+			else
+			{
+				if(rotation == 2)
+				{
+					wait(2.5);
+					rotation++;
+				}
+				else
+				{
+					wait(1.5);
+					rotation++;
+				}
+			}
 		}
 		temptation_index++;
 		if(temptation_index >= temptation_array.size)

@@ -73,7 +73,7 @@ function on_localclient_connect(localclientnum)
 function on_player_spawned(localclientnum)
 {
 	players = getplayers(localclientnum);
-	foreach(var_240dc023, player in players)
+	foreach(player in players)
 	{
 		if(player util::isenemyplayer(self))
 		{
@@ -150,7 +150,7 @@ function setup_fx(localclientnum)
 		effects["allies"] = "ui/fx_uplink_goal_marker";
 		effects["axis"] = "ui/fx_uplink_goal_marker";
 	}
-	foreach(var_19e1098b, goal in level.goals)
+	foreach(goal in level.goals)
 	{
 		thread setup_goal_fx(localclientnum, goal, effects);
 		thread resetondemojump(localclientnum, goal, effects);

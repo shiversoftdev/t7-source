@@ -273,28 +273,31 @@ function setpoint(point, relativepoint, xoffset, yoffset, movetime = 0)
 		offsetx = 0;
 		xfactor = 0;
 	}
-	else if(relativex == "center" || element.alignx == "center")
-	{
-		offsetx = int(element.width / 2);
-		if(relativex == "left" || element.alignx == "right")
-		{
-			xfactor = -1;
-		}
-		else
-		{
-			xfactor = 1;
-		}
-	}
 	else
 	{
-		offsetx = element.width;
-		if(relativex == "left")
+		if(relativex == "center" || element.alignx == "center")
 		{
-			xfactor = -1;
+			offsetx = int(element.width / 2);
+			if(relativex == "left" || element.alignx == "right")
+			{
+				xfactor = -1;
+			}
+			else
+			{
+				xfactor = 1;
+			}
 		}
 		else
 		{
-			xfactor = 1;
+			offsetx = element.width;
+			if(relativex == "left")
+			{
+				xfactor = -1;
+			}
+			else
+			{
+				xfactor = 1;
+			}
 		}
 	}
 	self.x = element.x + (offsetx * xfactor);
@@ -303,28 +306,31 @@ function setpoint(point, relativepoint, xoffset, yoffset, movetime = 0)
 		offsety = 0;
 		yfactor = 0;
 	}
-	else if(relativey == "middle" || element.aligny == "middle")
-	{
-		offsety = int(element.height / 2);
-		if(relativey == "top" || element.aligny == "bottom")
-		{
-			yfactor = -1;
-		}
-		else
-		{
-			yfactor = 1;
-		}
-	}
 	else
 	{
-		offsety = element.height;
-		if(relativey == "top")
+		if(relativey == "middle" || element.aligny == "middle")
 		{
-			yfactor = -1;
+			offsety = int(element.height / 2);
+			if(relativey == "top" || element.aligny == "bottom")
+			{
+				yfactor = -1;
+			}
+			else
+			{
+				yfactor = 1;
+			}
 		}
 		else
 		{
-			yfactor = 1;
+			offsety = element.height;
+			if(relativey == "top")
+			{
+				yfactor = -1;
+			}
+			else
+			{
+				yfactor = 1;
+			}
 		}
 	}
 	self.y = element.y + (offsety * yfactor);
@@ -363,13 +369,16 @@ function setpointbar(point, relativepoint, xoffset, yoffset)
 	{
 		self.bar.x = self.x;
 	}
-	else if(self.alignx == "right")
-	{
-		self.bar.x = self.x - self.width;
-	}
 	else
 	{
-		self.bar.x = self.x - (int(self.width / 2));
+		if(self.alignx == "right")
+		{
+			self.bar.x = self.x - self.width;
+		}
+		else
+		{
+			self.bar.x = self.x - (int(self.width / 2));
+		}
 	}
 	if(self.aligny == "top")
 	{
@@ -1061,11 +1070,14 @@ function flashthread()
 			}
 			wait(0.7);
 		}
-		else if(!self.hidden && self.alpha != 1)
+		else
 		{
-			self.alpha = 1;
+			if(!self.hidden && self.alpha != 1)
+			{
+				self.alpha = 1;
+			}
+			wait(0.05);
 		}
-		wait(0.05);
 	}
 }
 

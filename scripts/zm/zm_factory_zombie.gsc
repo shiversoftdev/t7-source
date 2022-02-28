@@ -24,7 +24,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	initzmfactorybehaviorsandasm();
 	level.zombie_init_done = &function_f06eec12;
@@ -44,7 +44,7 @@ autoexec function init()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function initzmfactorybehaviorsandasm()
+function private initzmfactorybehaviorsandasm()
 {
 	behaviortreenetworkutility::registerbehaviortreescriptapi("ZmFactoryTraversalService", &zmfactorytraversalservice);
 	animationstatenetwork::registeranimationmocomp("mocomp_idle_special_factory", &mocompidlespecialfactorystart, undefined, &mocompidlespecialfactoryterminate);
@@ -64,9 +64,9 @@ function zmfactorytraversalservice(entity)
 	if(isdefined(entity.traversestartnode))
 	{
 		entity pushactors(0);
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -78,7 +78,7 @@ function zmfactorytraversalservice(entity)
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function mocompidlespecialfactorystart(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function private mocompidlespecialfactorystart(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	if(isdefined(entity.enemyoverride) && isdefined(entity.enemyoverride[1]))
 	{
@@ -101,7 +101,7 @@ private function mocompidlespecialfactorystart(entity, mocompanim, mocompanimble
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function mocompidlespecialfactoryterminate(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function private mocompidlespecialfactoryterminate(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 }
 
@@ -128,14 +128,14 @@ function function_f06eec12()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function factory_validate_last_closest_player(players)
+function private factory_validate_last_closest_player(players)
 {
 	if(isdefined(self.last_closest_player) && (isdefined(self.last_closest_player.am_i_valid) && self.last_closest_player.am_i_valid))
 	{
 		return;
 	}
 	self.need_closest_player = 1;
-	foreach(var_39a91352, player in players)
+	foreach(player in players)
 	{
 		if(isdefined(player.am_i_valid) && player.am_i_valid)
 		{
@@ -155,7 +155,7 @@ private function factory_validate_last_closest_player(players)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function factory_closest_player(origin, players)
+function private factory_closest_player(origin, players)
 {
 	if(players.size == 0)
 	{
@@ -230,14 +230,14 @@ private function factory_closest_player(origin, players)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function update_closest_player()
+function private update_closest_player()
 {
 	level waittill(#"start_of_round");
 	while(true)
 	{
 		reset_closest_player = 1;
 		zombies = zombie_utility::get_round_enemy_array();
-		foreach(var_14aedbb, zombie in zombies)
+		foreach(zombie in zombies)
 		{
 			if(isdefined(zombie.need_closest_player) && zombie.need_closest_player)
 			{
@@ -247,7 +247,7 @@ private function update_closest_player()
 		}
 		if(reset_closest_player)
 		{
-			foreach(var_a72202cf, zombie in zombies)
+			foreach(zombie in zombies)
 			{
 				if(isdefined(zombie.need_closest_player))
 				{

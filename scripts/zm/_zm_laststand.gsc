@@ -31,7 +31,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_laststand", &__init__, undefined, undefined);
 }
@@ -451,9 +451,9 @@ function laststand_has_players_weapons_returned(e_player)
 {
 	if(isdefined(e_player.laststandpistol))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -660,13 +660,16 @@ function bleed_out()
 	{
 		self thread [[level.player_becomes_zombie]]();
 	}
-	else if(isdefined(level.is_specops_level) && level.is_specops_level)
-	{
-		self thread [[level.spawnspectator]]();
-	}
 	else
 	{
-		self set_ignoreme(0);
+		if(isdefined(level.is_specops_level) && level.is_specops_level)
+		{
+			self thread [[level.spawnspectator]]();
+		}
+		else
+		{
+			self set_ignoreme(0);
+		}
 	}
 }
 
@@ -842,25 +845,25 @@ function can_suicide()
 {
 	if(!isalive(self))
 	{
-		return 0;
+		return false;
 	}
 	if(!self laststand::player_is_in_laststand())
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(self.suicideprompt))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.is_zombie) && self.is_zombie)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(level.intermission) && level.intermission)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -999,7 +1002,7 @@ function revive_trigger_think(t_secondary)
 			{
 				if(isdefined(level.a_revive_success_perk_func))
 				{
-					foreach(var_5ac2ae17, func in level.a_revive_success_perk_func)
+					foreach(func in level.a_revive_success_perk_func)
 					{
 						self [[func]]();
 					}
@@ -1090,43 +1093,43 @@ function can_revive(e_revivee, ignore_sight_checks = 0, ignore_touch_checks = 0)
 {
 	if(!isdefined(e_revivee.revivetrigger))
 	{
-		return 0;
+		return false;
 	}
 	if(!isalive(self))
 	{
-		return 0;
+		return false;
 	}
 	if(self laststand::player_is_in_laststand())
 	{
-		return 0;
+		return false;
 	}
 	if(self.team != e_revivee.team)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.is_zombie) && self.is_zombie)
 	{
-		return 0;
+		return false;
 	}
 	if(self zm_utility::has_powerup_weapon())
 	{
-		return 0;
+		return false;
 	}
 	if(self zm_utility::has_hero_weapon())
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(level.can_revive_use_depthinwater_test) && level.can_revive_use_depthinwater_test && e_revivee depthinwater() > 10)
 	{
-		return 1;
+		return true;
 	}
 	if(isdefined(level.can_revive) && ![[level.can_revive]](e_revivee))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(level.can_revive_game_module) && ![[level.can_revive_game_module]](e_revivee))
 	{
-		return 0;
+		return false;
 	}
 	if(!ignore_sight_checks && isdefined(level.revive_trigger_should_ignore_sight_checks))
 	{
@@ -1140,25 +1143,25 @@ function can_revive(e_revivee, ignore_sight_checks = 0, ignore_touch_checks = 0)
 	{
 		if(!self istouching(e_revivee.revivetrigger))
 		{
-			return 0;
+			return false;
 		}
 	}
 	if(!ignore_sight_checks)
 	{
 		if(!self laststand::is_facing(e_revivee))
 		{
-			return 0;
+			return false;
 		}
 		if(!sighttracepassed(self.origin + vectorscale((0, 0, 1), 50), e_revivee.origin + vectorscale((0, 0, 1), 30), 0, undefined))
 		{
-			return 0;
+			return false;
 		}
 		if(!bullettracepassed(self.origin + vectorscale((0, 0, 1), 50), e_revivee.origin + vectorscale((0, 0, 1), 30), 0, undefined))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1780,11 +1783,11 @@ function can_revive_via_override(e_revivee)
 		{
 			if(self [[self.a_s_revive_overrides[i].func_can_revive]](e_revivee))
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1805,11 +1808,11 @@ function is_reviving_via_override(e_revivee)
 			if(self [[self.a_s_revive_overrides[i].func_is_reviving]](e_revivee))
 			{
 				self.s_revive_override_used = self.a_s_revive_overrides[i];
-				return 1;
+				return true;
 			}
 		}
 	}
 	self.s_revive_override_used = undefined;
-	return 0;
+	return false;
 }
 

@@ -23,7 +23,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_zod_pods", &__init__, undefined, undefined);
 }
@@ -87,44 +87,44 @@ function update_fungus_pod_level(localclientnum, oldval, newval, bnewent, biniti
 	if(isdemoplaying() && getnumfreeentities(localclientnum) < 100)
 	{
 		var_2a6bebf9 = getnumfreeentities(localclientnum);
-		if(!isdefined(self.var_8486ae6a))
+		if(!isdefined(self.n_pod_level))
 		{
-			self.var_8486ae6a = 1;
+			self.n_pod_level = 1;
 		}
 		return;
 	}
-	if(!isdefined(self.var_8486ae6a))
+	if(!isdefined(self.n_pod_level))
 	{
-		self.var_8486ae6a = 1;
+		self.n_pod_level = 1;
 	}
 	switch(newval)
 	{
 		case 0:
 		case 4:
 		{
-			self thread scene_play(("p7_fxanim_zm_zod_fungus_pod_stage" + self.var_8486ae6a) + "_death_bundle", var_165d49f6);
-			self.var_8486ae6a = 0;
+			self thread scene_play(("p7_fxanim_zm_zod_fungus_pod_stage" + self.n_pod_level) + "_death_bundle", var_165d49f6);
+			self.n_pod_level = 0;
 			break;
 		}
 		case 1:
 		{
 			self thread scene_play("p7_fxanim_zm_zod_fungus_pod_stage1_bundle", var_165d49f6);
 			self.ambient_fx = playfx(localclientnum, "zombie/fx_fungus_pod_ambient_sm_zod_zmb", self.origin);
-			self.var_8486ae6a = newval;
+			self.n_pod_level = newval;
 			break;
 		}
 		case 2:
 		{
 			self thread scene_play("p7_fxanim_zm_zod_fungus_pod_stage2_bundle", var_165d49f6);
 			self.ambient_fx = playfx(localclientnum, "zombie/fx_fungus_pod_ambient_md_zod_zmb", self.origin);
-			self.var_8486ae6a = newval;
+			self.n_pod_level = newval;
 			break;
 		}
 		case 3:
 		{
 			self thread scene_play("p7_fxanim_zm_zod_fungus_pod_stage3_bundle", var_165d49f6);
 			self.ambient_fx = playfx(localclientnum, "zombie/fx_fungus_pod_ambient_lg_zod_zmb", self.origin);
-			self.var_8486ae6a = newval;
+			self.n_pod_level = newval;
 			break;
 		}
 	}
@@ -180,12 +180,12 @@ function play_harvested_fx(localclientnum, oldval, newval, bnewent, binitialsnap
 	}
 	v_origin = self.origin;
 	v_angles = anglestoforward(self.angles);
-	var_8486ae6a = self.var_8486ae6a;
+	n_pod_level = self.n_pod_level;
 	if(isdefined(self.ambient_fx))
 	{
 		stopfx(localclientnum, self.ambient_fx);
 	}
-	switch(var_8486ae6a)
+	switch(n_pod_level)
 	{
 		case 1:
 		{

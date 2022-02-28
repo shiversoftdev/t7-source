@@ -175,14 +175,17 @@ function function_d4effeda(localclientnum, oldval, newval, bnewent, binitialsnap
 	{
 		self.var_b01b7371 = playfxontag(localclientnum, level._effect["SPORE_TRAIL_GOOD"], self, "j_spine4");
 	}
-	else if(newval == 2)
+	else
 	{
-		self.var_b01b7371 = playfxontag(localclientnum, level._effect["SPORE_TRAIL"], self, "j_spine4");
-	}
-	else if(isdefined(self.var_b01b7371))
-	{
-		stopfx(localclientnum, self.var_b01b7371);
-		self.var_b01b7371 = undefined;
+		if(newval == 2)
+		{
+			self.var_b01b7371 = playfxontag(localclientnum, level._effect["SPORE_TRAIL"], self, "j_spine4");
+		}
+		else if(isdefined(self.var_b01b7371))
+		{
+			stopfx(localclientnum, self.var_b01b7371);
+			self.var_b01b7371 = undefined;
+		}
 	}
 }
 
@@ -477,13 +480,16 @@ function spore_camera_fx(localclientnum, oldval, newval, bnewent, binitialsnap, 
 	{
 		self thread function_4ff31749(localclientnum, 1);
 	}
-	else if(newval == 2)
-	{
-		self thread function_4ff31749(localclientnum, 0);
-	}
 	else
 	{
-		self thread function_b8071fc(localclientnum);
+		if(newval == 2)
+		{
+			self thread function_4ff31749(localclientnum, 0);
+		}
+		else
+		{
+			self thread function_b8071fc(localclientnum);
+		}
 	}
 }
 

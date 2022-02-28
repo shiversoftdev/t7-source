@@ -20,7 +20,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_bgb_round_robbin", &__init__, undefined, "bgb");
 }
@@ -56,25 +56,25 @@ function validation()
 {
 	if(!level flag::get("spawn_zombies"))
 	{
-		return 0;
+		return false;
 	}
 	zombies = getaiteamarray(level.zombie_team);
 	if(!isdefined(zombies) || zombies.size < 1)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(level.var_35efa94c))
 	{
 		if(![[level.var_35efa94c]]())
 		{
-			return 0;
+			return false;
 		}
 	}
 	if(isdefined(level.var_dfd95560) && level.var_dfd95560)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -90,7 +90,7 @@ function activation()
 {
 	level.var_dfd95560 = 1;
 	function_8824774d(level.round_number + 1);
-	foreach(var_309db713, player in level.players)
+	foreach(player in level.players)
 	{
 		if(zm_utility::is_player_valid(player))
 		{
@@ -113,13 +113,13 @@ function function_b10a9b0c(zombie)
 {
 	if(!isdefined(zombie))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(zombie.ignore_round_robbin_death) && zombie.ignore_round_robbin_death || (isdefined(zombie.marked_for_death) && zombie.marked_for_death) || zm_utility::is_magic_bullet_shield_enabled(zombie))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -154,7 +154,7 @@ function function_8824774d(target_round)
 	if(isdefined(zombies))
 	{
 		e_last = undefined;
-		foreach(var_f93fbae, zombie in zombies)
+		foreach(zombie in zombies)
 		{
 			if(function_b10a9b0c(zombie))
 			{
@@ -170,7 +170,7 @@ function function_8824774d(target_round)
 	util::wait_network_frame();
 	if(isdefined(zombies))
 	{
-		foreach(var_d6596e6e, zombie in zombies)
+		foreach(zombie in zombies)
 		{
 			if(!function_b10a9b0c(zombie))
 			{

@@ -17,7 +17,7 @@
 */
 function init()
 {
-	level.var_25ef5fab = getweapon("beacon");
+	level.w_beacon = getweapon("beacon");
 	level.var_67735adb = "wpn_t7_zmb_hd_g_strike_world";
 	level._effect["beacon_glow"] = "dlc5/tomb/fx_tomb_beacon_glow";
 	level._effect["beacon_launch_fx"] = "dlc5/tomb/fx_tomb_beacon_launch";
@@ -45,13 +45,16 @@ function function_59491961(localclientnum, oldval, newval, bnewent, binitialsnap
 	{
 		ai_robot = level.a_giant_robots[localclientnum][0];
 	}
-	else if(issubstr(fieldname, 1))
-	{
-		ai_robot = level.a_giant_robots[localclientnum][1];
-	}
 	else
 	{
-		ai_robot = level.a_giant_robots[localclientnum][2];
+		if(issubstr(fieldname, 1))
+		{
+			ai_robot = level.a_giant_robots[localclientnum][1];
+		}
+		else
+		{
+			ai_robot = level.a_giant_robots[localclientnum][2];
+		}
 	}
 	if(newval == 1)
 	{

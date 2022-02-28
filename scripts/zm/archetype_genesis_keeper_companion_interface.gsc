@@ -2,11 +2,11 @@
 #using scripts\shared\ai\systems\ai_interface;
 #using scripts\zm\archetype_genesis_keeper_companion;
 
-#namespace namespace_170b115c;
+#namespace keepercompanioninterface;
 
 /*
 	Name: function_e7b6b58c
-	Namespace: namespace_170b115c
+	Namespace: keepercompanioninterface
 	Checksum: 0x5FD19CFF
 	Offset: 0x108
 	Size: 0x3C

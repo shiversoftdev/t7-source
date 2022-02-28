@@ -516,14 +516,14 @@ function givecrateweapon(weapon_name)
 	if(currentweapon == weapon || self hasweapon(weapon))
 	{
 		self givemaxammo(weapon);
-		return 1;
+		return true;
 	}
 	if(currentweapon.issupplydropweapon || isdefined(level.grenade_array[currentweapon]) || isdefined(level.inventory_array[currentweapon]))
 	{
 		self takeweapon(self.lastdroppableweapon);
 		self giveweapon(weapon);
 		self switchtoweapon(weapon);
-		return 1;
+		return true;
 	}
 	self addweaponstat(weapon, "used", 1);
 	givespecializedcrateweapon(weapon);
@@ -531,7 +531,7 @@ function givecrateweapon(weapon_name)
 	self switchtoweapon(weapon);
 	self waittill(#"weapon_change", newweapon);
 	self killstreak_weapons::usekillstreakweaponfromcrate(weapon);
-	return 1;
+	return true;
 }
 
 /*
@@ -573,7 +573,7 @@ function usesupplydropmarker(package_contents_id, context)
 		if(!isdefined(notifystring) || notifystring != trigger_event)
 		{
 			cleanup(context, player);
-			return 0;
+			return false;
 		}
 		if(isdefined(player.markerposition))
 		{
@@ -584,7 +584,7 @@ function usesupplydropmarker(package_contents_id, context)
 	if(supplydropweapon == level.weaponnone)
 	{
 		cleanup(context, player);
-		return 0;
+		return false;
 	}
 	if(isdefined(self))
 	{
@@ -593,10 +593,10 @@ function usesupplydropmarker(package_contents_id, context)
 		if(self hasweapon(supplydropweapon) || self getammocount(supplydropweapon))
 		{
 			cleanup(context, player);
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -613,9 +613,9 @@ function issupplydropgrenadeallowed(killstreak)
 	if(!self killstreakrules::iskillstreakallowed(killstreak, self.team))
 	{
 		self killstreaks::switch_to_last_non_killstreak_weapon();
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -657,7 +657,7 @@ function deldroplocation(killstreak_id)
 */
 function islocationgood(location, context)
 {
-	foreach(var_d8bee06c, droplocation in level.droplocations)
+	foreach(droplocation in level.droplocations)
 	{
 		if(distance2dsquared(droplocation, location) < 3600)
 		{
@@ -759,7 +759,7 @@ function use_killstreak_death_machine(killstreak)
 {
 	if(!self killstreakrules::iskillstreakallowed(killstreak, self.team))
 	{
-		return 0;
+		return false;
 	}
 	weapon = getweapon("minigun");
 	currentweapon = self getcurrentweapon();
@@ -769,7 +769,7 @@ function use_killstreak_death_machine(killstreak)
 		self giveweapon(weapon);
 		self switchtoweapon(weapon);
 		self setblockweaponpickup(weapon, 1);
-		return 1;
+		return true;
 	}
 	level thread popups::displayteammessagetoall(&"KILLSTREAK_MINIGUN_INBOUND", self);
 	level weapons::add_limited_weapon(weapon, self, 3);
@@ -777,7 +777,7 @@ function use_killstreak_death_machine(killstreak)
 	self giveweapon(weapon);
 	self switchtoweapon(weapon);
 	self setblockweaponpickup(weapon, 1);
-	return 1;
+	return true;
 }
 
 /*
@@ -793,7 +793,7 @@ function use_killstreak_grim_reaper(killstreak)
 {
 	if(!self killstreakrules::iskillstreakallowed(killstreak, self.team))
 	{
-		return 0;
+		return false;
 	}
 	weapon = getweapon("m202_flash");
 	currentweapon = self getcurrentweapon();
@@ -803,7 +803,7 @@ function use_killstreak_grim_reaper(killstreak)
 		self giveweapon(weapon);
 		self switchtoweapon(weapon);
 		self setblockweaponpickup(weapon, 1);
-		return 1;
+		return true;
 	}
 	level thread popups::displayteammessagetoall(&"KILLSTREAK_M202_FLASH_INBOUND", self);
 	level weapons::add_limited_weapon(weapon, self, 3);
@@ -811,7 +811,7 @@ function use_killstreak_grim_reaper(killstreak)
 	self giveweapon(weapon);
 	self switchtoweapon(weapon);
 	self setblockweaponpickup(weapon, 1);
-	return 1;
+	return true;
 }
 
 /*
@@ -828,7 +828,7 @@ function use_killstreak_tv_guided_missile(killstreak)
 	if(!killstreakrules::iskillstreakallowed(killstreak, self.team))
 	{
 		self iprintlnbold(level.killstreaks[killstreak].notavailabletext);
-		return 0;
+		return false;
 	}
 	weapon = getweapon("m220_tow");
 	currentweapon = self getcurrentweapon();
@@ -838,7 +838,7 @@ function use_killstreak_tv_guided_missile(killstreak)
 		self giveweapon(weapon);
 		self switchtoweapon(weapon);
 		self setblockweaponpickup(weapon, 1);
-		return 1;
+		return true;
 	}
 	level thread popups::displayteammessagetoall(&"KILLSTREAK_M220_TOW_INBOUND", self);
 	level weapons::add_limited_weapon(weapon, self, 3);
@@ -846,7 +846,7 @@ function use_killstreak_tv_guided_missile(killstreak)
 	self giveweapon(weapon);
 	self switchtoweapon(weapon);
 	self setblockweaponpickup(weapon, 1);
-	return 1;
+	return true;
 }
 
 /*
@@ -863,7 +863,7 @@ function use_killstreak_mp40(killstreak)
 	if(!killstreakrules::iskillstreakallowed(killstreak, self.team))
 	{
 		self iprintlnbold(level.killstreaks[killstreak].notavailabletext);
-		return 0;
+		return false;
 	}
 	weapon = getweapon("mp40_blinged");
 	currentweapon = self getcurrentweapon();
@@ -873,7 +873,7 @@ function use_killstreak_mp40(killstreak)
 		self giveweapon(weapon);
 		self switchtoweapon(weapon);
 		self setblockweaponpickup(weapon, 1);
-		return 1;
+		return true;
 	}
 	level thread popups::displayteammessagetoall(&"KILLSTREAK_MP40_INBOUND", self);
 	level weapons::add_limited_weapon(weapon, self, 3);
@@ -881,7 +881,7 @@ function use_killstreak_mp40(killstreak)
 	self giveweapon(weapon);
 	self switchtoweapon(weapon);
 	self setblockweaponpickup(weapon, 1);
-	return 1;
+	return true;
 }
 
 /*
@@ -1114,20 +1114,26 @@ function supplydropgrenadetimeout(team, killstreak_id, weapon)
 		killstreakrules::killstreakstop("ai_tank_drop", team, killstreak_id);
 		self notify(#"cleanup_marker");
 	}
-	else if(weapon.name == "inventory_ai_tank_drop")
+	else
 	{
-		killstreakrules::killstreakstop("inventory_ai_tank_drop", team, killstreak_id);
-		self notify(#"cleanup_marker");
-	}
-	else if(weapon.name == "combat_robot_drop")
-	{
-		killstreakrules::killstreakstop("combat_robot_drop", team, killstreak_id);
-		self notify(#"cleanup_marker");
-	}
-	else if(weapon.name == "inventory_combat_robot_drop")
-	{
-		killstreakrules::killstreakstop("inventory_combat_robot_drop", team, killstreak_id);
-		self notify(#"cleanup_marker");
+		if(weapon.name == "inventory_ai_tank_drop")
+		{
+			killstreakrules::killstreakstop("inventory_ai_tank_drop", team, killstreak_id);
+			self notify(#"cleanup_marker");
+		}
+		else
+		{
+			if(weapon.name == "combat_robot_drop")
+			{
+				killstreakrules::killstreakstop("combat_robot_drop", team, killstreak_id);
+				self notify(#"cleanup_marker");
+			}
+			else if(weapon.name == "inventory_combat_robot_drop")
+			{
+				killstreakrules::killstreakstop("inventory_combat_robot_drop", team, killstreak_id);
+				self notify(#"cleanup_marker");
+			}
+		}
 	}
 	self delete();
 }
@@ -1249,14 +1255,17 @@ function geticonforcrate()
 			{
 				return self.cratetype.objective;
 			}
-			else if(self.cratetype.name == "inventory_ai_tank_drop")
-			{
-				icon = "t7_hud_ks_drone_amws";
-			}
 			else
 			{
-				killstreak = killstreaks::get_menu_name(self.cratetype.name);
-				icon = level.killstreakicons[killstreak];
+				if(self.cratetype.name == "inventory_ai_tank_drop")
+				{
+					icon = "t7_hud_ks_drone_amws";
+				}
+				else
+				{
+					killstreak = killstreaks::get_menu_name(self.cratetype.name);
+					icon = level.killstreakicons[killstreak];
+				}
 			}
 			jump loc_00005A5C;
 		}
@@ -1349,7 +1358,7 @@ function crateactivate(hacker)
 	if(level.teambased)
 	{
 		objective_team(crateobjid, self.team);
-		foreach(var_c5c4abec, team in level.teams)
+		foreach(team in level.teams)
 		{
 			if(self.team == team)
 			{
@@ -1371,34 +1380,37 @@ function crateactivate(hacker)
 			self.enemyobjid[self.enemyobjid.size] = crateobjid;
 		}
 	}
-	else if(!self.visibletoall)
+	else
 	{
-		objective_setinvisibletoall(crateobjid);
-		enemycrateobjid = gameobjects::get_next_obj_id();
-		objective_add(enemycrateobjid, "invisible", self.origin);
-		objective_icon(enemycrateobjid, "compass_supply_drop_white");
-		objective_setcolor(enemycrateobjid, &"EnemyOrange");
-		objective_state(enemycrateobjid, "active");
+		if(!self.visibletoall)
+		{
+			objective_setinvisibletoall(crateobjid);
+			enemycrateobjid = gameobjects::get_next_obj_id();
+			objective_add(enemycrateobjid, "invisible", self.origin);
+			objective_icon(enemycrateobjid, "compass_supply_drop_white");
+			objective_setcolor(enemycrateobjid, &"EnemyOrange");
+			objective_state(enemycrateobjid, "active");
+			if(isplayer(self.owner))
+			{
+				objective_setinvisibletoplayer(enemycrateobjid, self.owner);
+			}
+			self.enemyobjid[self.enemyobjid.size] = enemycrateobjid;
+		}
 		if(isplayer(self.owner))
 		{
-			objective_setinvisibletoplayer(enemycrateobjid, self.owner);
+			objective_setvisibletoplayer(crateobjid, self.owner);
 		}
-		self.enemyobjid[self.enemyobjid.size] = enemycrateobjid;
-	}
-	if(isplayer(self.owner))
-	{
-		objective_setvisibletoplayer(crateobjid, self.owner);
-	}
-	if(isdefined(self.hacker))
-	{
-		objective_setinvisibletoplayer(crateobjid, self.hacker);
-		crateobjid = gameobjects::get_next_obj_id();
-		objective_add(crateobjid, "invisible", self.origin);
-		objective_icon(crateobjid, "compass_supply_drop_black");
-		objective_state(crateobjid, "active");
-		objective_setinvisibletoall(crateobjid);
-		objective_setvisibletoplayer(crateobjid, self.hacker);
-		self.hackerobjid = crateobjid;
+		if(isdefined(self.hacker))
+		{
+			objective_setinvisibletoplayer(crateobjid, self.hacker);
+			crateobjid = gameobjects::get_next_obj_id();
+			objective_add(crateobjid, "invisible", self.origin);
+			objective_icon(crateobjid, "compass_supply_drop_black");
+			objective_state(crateobjid, "active");
+			objective_setinvisibletoall(crateobjid);
+			objective_setvisibletoplayer(crateobjid, self.hacker);
+			self.hackerobjid = crateobjid;
+		}
 	}
 	if(!self.visibletoall && isdefined(icon))
 	{
@@ -1463,7 +1475,7 @@ function cratedeactivate()
 	}
 	if(isdefined(self.enemyobjid))
 	{
-		foreach(var_23539c38, objid in self.enemyobjid)
+		foreach(objid in self.enemyobjid)
 		{
 			objective_delete(objid);
 			gameobjects::release_obj_id(objid);
@@ -1710,7 +1722,7 @@ function cratedelete(drop_all_to_ground)
 	}
 	if(isdefined(self.enemyobjid))
 	{
-		foreach(var_9e6dfdff, objid in self.enemyobjid)
+		foreach(objid in self.enemyobjid)
 		{
 			objective_delete(objid);
 			gameobjects::release_obj_id(objid);
@@ -2510,7 +2522,7 @@ function is_touching_crate()
 	extraboundary = vectorscale((1, 1, 1), 10);
 	players = getplayers();
 	crate_bottom_point = self.origin;
-	foreach(var_296d1504, player in level.players)
+	foreach(player in level.players)
 	{
 		if(isdefined(player) && isalive(player))
 		{
@@ -2528,7 +2540,7 @@ function is_touching_crate()
 		self is_equipment_touching_crate(player);
 	}
 	vehicles = getentarray("script_vehicle", "classname");
-	foreach(var_d1ed2632, vehicle in vehicles)
+	foreach(vehicle in vehicles)
 	{
 		if(isvehicle(vehicle))
 		{
@@ -2778,9 +2790,9 @@ function useholdthink(player, usetime)
 	}
 	if(isdefined(result) && result)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2796,41 +2808,41 @@ function continueholdthinkloop(player)
 {
 	if(!isdefined(self))
 	{
-		return 0;
+		return false;
 	}
 	if(self.curprogress >= self.usetime)
 	{
-		return 0;
+		return false;
 	}
 	if(!isalive(player))
 	{
-		return 0;
+		return false;
 	}
 	if(player.throwinggrenade)
 	{
-		return 0;
+		return false;
 	}
 	if(!player usebuttonpressed())
 	{
-		return 0;
+		return false;
 	}
 	if(player meleebuttonpressed())
 	{
-		return 0;
+		return false;
 	}
 	if(player isinvehicle())
 	{
-		return 0;
+		return false;
 	}
 	if(player isweaponviewonlylinked())
 	{
-		return 0;
+		return false;
 	}
 	if(player isremotecontrolling())
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -2935,15 +2947,18 @@ function personalusebar(object)
 		capturecratestate = 2;
 		self playlocalsound("evt_hacker_hacking");
 	}
-	else if(self hasperk("specialty_showenemyequipment") && isdefined(object.hacker) && (object.owner == self || (level.teambased && object.owner.team == self.team)))
-	{
-		capturecratestate = 3;
-		self playlocalsound("evt_hacker_hacking");
-	}
 	else
 	{
-		capturecratestate = 1;
-		self.is_capturing_own_supply_drop = object.owner === self && (!isdefined(object.originalowner) || object.originalowner == self);
+		if(self hasperk("specialty_showenemyequipment") && isdefined(object.hacker) && (object.owner == self || (level.teambased && object.owner.team == self.team)))
+		{
+			capturecratestate = 3;
+			self playlocalsound("evt_hacker_hacking");
+		}
+		else
+		{
+			capturecratestate = 1;
+			self.is_capturing_own_supply_drop = object.owner === self && (!isdefined(object.originalowner) || object.originalowner == self);
+		}
 	}
 	lastrate = -1;
 	while(isalive(self) && isdefined(object) && object.inuse && !level.gameended)
@@ -3297,7 +3312,7 @@ function supplydropheliendpath(origin, drop_direction)
 		tries++;
 	}
 	leave_nodes = getentarray("heli_leave", "targetname");
-	foreach(var_cb8da888, node in leave_nodes)
+	foreach(node in leave_nodes)
 	{
 		goalpath.path = airsupport::gethelipath(origin, node.origin);
 		if(isdefined(goalpath.path))

@@ -15,7 +15,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("hud", &__init__, undefined, undefined);
 }
@@ -56,7 +56,7 @@ function init()
 	level.uiparent.height = 0;
 	level.uiparent.children = [];
 	level.fontheight = 12;
-	foreach(var_cddc14b9, team in level.teams)
+	foreach(team in level.teams)
 	{
 		level.hud[team] = spawnstruct();
 	}

@@ -17,7 +17,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	level.zm_variant_type_max = [];
 	level.zm_variant_type_max["walk"] = [];
@@ -81,33 +81,33 @@ function mannequinspawnsetup(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function mannequinshouldmelee(entity)
+function private mannequinshouldmelee(entity)
 {
 	if(!isdefined(entity.enemy))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(entity.marked_for_death))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(entity.ignoremelee) && entity.ignoremelee)
 	{
-		return 0;
+		return false;
 	}
 	if(distance2dsquared(entity.origin, entity.enemy.origin) > (64 * 64))
 	{
-		return 0;
+		return false;
 	}
 	if((abs(entity.origin[2] - entity.enemy.origin[2])) > 72)
 	{
-		return 0;
+		return false;
 	}
 	yawtoenemy = angleclamp180(entity.angles[1] - (vectortoangles(entity.enemy.origin - entity.origin)[1]));
 	if(abs(yawtoenemy) > 45)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 

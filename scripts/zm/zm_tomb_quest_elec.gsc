@@ -86,7 +86,7 @@ function electric_puzzle_watch_staff()
 				{
 					a_piano_keys[n_index] notify(#"piano_key_shot");
 					a_players = getplayers();
-					foreach(var_53b3e826, e_player in a_players)
+					foreach(e_player in a_players)
 					{
 						if(e_player hasweapon(var_dc8ace48))
 						{
@@ -162,10 +162,10 @@ function show_chord_debug(a_chord_notes)
 			a_chord_notes = [];
 		}
 		a_piano_keys = struct::get_array("", "");
-		foreach(var_cc48158f, e_key in a_piano_keys)
+		foreach(e_key in a_piano_keys)
 		{
 			e_key notify(#"stop_debug_position");
-			foreach(var_5a40a654, note in a_chord_notes)
+			foreach(note in a_chord_notes)
 			{
 				if(note == e_key.script_string)
 				{
@@ -189,7 +189,7 @@ function show_chord_debug(a_chord_notes)
 function piano_run_chords()
 {
 	a_chords = struct::get_array("piano_chord", "targetname");
-	foreach(var_7c874e2c, s_chord in a_chords)
+	foreach(s_chord in a_chords)
 	{
 		s_chord.notes = strtok(s_chord.script_string, " ");
 		/#
@@ -198,7 +198,7 @@ function piano_run_chords()
 	}
 	var_dc8ace48 = level.a_elemental_staffs["staff_lightning"].w_weapon;
 	a_chord_order = array("a_minor", "e_minor", "d_minor");
-	foreach(var_7d71ed13, chord_name in a_chord_order)
+	foreach(chord_name in a_chord_order)
 	{
 		s_chord = struct::get("piano_chord_" + chord_name, "script_noteworthy");
 		/#
@@ -211,9 +211,9 @@ function piano_run_chords()
 			if(level.a_piano_keys_playing.size == 3)
 			{
 				correct_notes_playing = 0;
-				foreach(var_32d69962, played_note in level.a_piano_keys_playing)
+				foreach(played_note in level.a_piano_keys_playing)
 				{
-					foreach(var_e6d1a490, requested_note in s_chord.notes)
+					foreach(requested_note in s_chord.notes)
 					{
 						if(requested_note == played_note)
 						{
@@ -228,7 +228,7 @@ function piano_run_chords()
 				else
 				{
 					a_players = getplayers();
-					foreach(var_3057fb51, e_player in a_players)
+					foreach(e_player in a_players)
 					{
 						if(e_player hasweapon(var_dc8ace48))
 						{
@@ -239,7 +239,7 @@ function piano_run_chords()
 			}
 		}
 		a_players = getplayers();
-		foreach(var_db487352, e_player in a_players)
+		foreach(e_player in a_players)
 		{
 			if(e_player hasweapon(var_dc8ace48))
 			{
@@ -314,7 +314,7 @@ function electric_puzzle_2_init()
 	level.electric_relays["air"] = spawnstruct();
 	level.electric_relays["ice"] = spawnstruct();
 	level.electric_relays["village"] = spawnstruct();
-	foreach(var_c3ab2da7, s_relay in level.electric_relays)
+	foreach(s_relay in level.electric_relays)
 	{
 		s_relay.connections = [];
 	}
@@ -334,7 +334,7 @@ function electric_puzzle_2_init()
 	level.electric_relays["ice"].position = 1;
 	level.electric_relays["village"].position = 1;
 	a_switches = getentarray("puzzle_relay_switch", "script_noteworthy");
-	foreach(var_b9659309, e_switch in a_switches)
+	foreach(e_switch in a_switches)
 	{
 		level.electric_relays[e_switch.script_string].e_switch = e_switch;
 	}
@@ -366,7 +366,7 @@ function electric_puzzle_2_run()
 */
 function electric_puzzle_2_cleanup()
 {
-	foreach(var_110fdfe4, s_relay in level.electric_relays)
+	foreach(s_relay in level.electric_relays)
 	{
 		if(isdefined(s_relay.trigger_stub))
 		{
@@ -394,7 +394,7 @@ function electric_puzzle_2_cleanup()
 */
 function kill_all_relay_power()
 {
-	foreach(var_70c9db2f, s_relay in level.electric_relays)
+	foreach(s_relay in level.electric_relays)
 	{
 		s_relay.receiving_power = 0;
 		s_relay.sending_power = 0;
@@ -455,7 +455,7 @@ function update_relay_fx_and_sound()
 	{
 		return;
 	}
-	foreach(var_261b334a, s_relay in level.electric_relays)
+	foreach(s_relay in level.electric_relays)
 	{
 		if(s_relay.sending_power)
 		{
@@ -557,13 +557,16 @@ function relay_switch_run()
 				level notify(#"vo_puzzle_good", e_user);
 			}
 		}
-		else if((n_tries % 8) == 0)
+		else
 		{
-			level notify(#"vo_puzzle_confused", e_user);
-		}
-		else if((n_tries % 4) == 0)
-		{
-			level notify(#"vo_puzzle_bad", e_user);
+			if((n_tries % 8) == 0)
+			{
+				level notify(#"vo_puzzle_confused", e_user);
+			}
+			else if((n_tries % 4) == 0)
+			{
+				level notify(#"vo_puzzle_bad", e_user);
+			}
 		}
 		self update_relay_rotation();
 		update_relays();

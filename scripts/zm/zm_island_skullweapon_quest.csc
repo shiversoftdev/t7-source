@@ -71,7 +71,7 @@ function keeper_spawn_portals(localclientnum, oldval, newval, bnewent, binitials
 function function_46df8306(localclientnum, str_name, b_on = 1)
 {
 	a_s_spawn_points = struct::get_array(str_name, "targetname");
-	foreach(var_e498c241, s_spawn_point in a_s_spawn_points)
+	foreach(s_spawn_point in a_s_spawn_points)
 	{
 		s_spawn_point function_267f859f(localclientnum, level._effect["keeper_spawn"], b_on);
 		if(!isdefined(s_spawn_point.var_d52fc488))
@@ -109,7 +109,7 @@ function function_46df8306(localclientnum, str_name, b_on = 1)
 function function_f58977cd(localclientnum, str_name, b_on = 1)
 {
 	a_s_spawn_points = struct::get_array(str_name, "targetname");
-	foreach(var_f536d94e, s_spawn_point in a_s_spawn_points)
+	foreach(s_spawn_point in a_s_spawn_points)
 	{
 		s_spawn_point function_267f859f(localclientnum, level._effect["ritual_portal_start"], b_on);
 		s_spawn_point function_267f859f(localclientnum, level._effect["ritual_portal_loop"], b_on);
@@ -213,7 +213,7 @@ function function_4dcbb3a6(localclientnum, var_f2e38849, n_fx_type = 1)
 	var_f4fc4e39[3] = level._effect["ritual_progress_skull_50"];
 	var_f4fc4e39[4] = level._effect["ritual_progress_skull_25"];
 	var_d9cf2ecd = struct::get_array("s_skulltar_skull_pos", "targetname");
-	foreach(var_1abd7134, var_89669ffb in var_d9cf2ecd)
+	foreach(var_89669ffb in var_d9cf2ecd)
 	{
 		if(var_89669ffb.script_special == var_f2e38849)
 		{
@@ -222,7 +222,7 @@ function function_4dcbb3a6(localclientnum, var_f2e38849, n_fx_type = 1)
 		}
 	}
 	var_14c8adef = struct::get_array("s_skulltar_base_pos", "targetname");
-	foreach(var_73525cf6, var_9915798f in var_14c8adef)
+	foreach(var_9915798f in var_14c8adef)
 	{
 		if(var_9915798f.script_special == var_f2e38849)
 		{
@@ -282,11 +282,14 @@ function skullquest_finish_start_fx(localclientnum, oldval, newval, bnewent, bin
 	{
 		self.var_2c75d806 = playfxontag(localclientnum, level._effect["skullquest_finish_start"], self, "tag_origin");
 	}
-	else if(isdefined(self.var_2c75d806))
+	else
 	{
-		stopfx(localclientnum, self.var_2c75d806);
+		if(isdefined(self.var_2c75d806))
+		{
+			stopfx(localclientnum, self.var_2c75d806);
+		}
+		self.var_2c75d806 = undefined;
 	}
-	self.var_2c75d806 = undefined;
 }
 
 /*
@@ -304,11 +307,14 @@ function skullquest_finish_trail_fx(localclientnum, oldval, newval, bnewent, bin
 	{
 		self.var_8d24a0fa = playfxontag(localclientnum, level._effect["skullquest_finish_trail"], self, "tag_origin");
 	}
-	else if(isdefined(self.var_8d24a0fa))
+	else
 	{
-		stopfx(localclientnum, self.var_8d24a0fa);
+		if(isdefined(self.var_8d24a0fa))
+		{
+			stopfx(localclientnum, self.var_8d24a0fa);
+		}
+		self.var_8d24a0fa = undefined;
 	}
-	self.var_8d24a0fa = undefined;
 }
 
 /*
@@ -326,11 +332,14 @@ function skullquest_finish_end_fx(localclientnum, oldval, newval, bnewent, binit
 	{
 		self.var_f88006a5 = playfxontag(localclientnum, level._effect["skullquest_finish_end"], self, "tag_origin");
 	}
-	else if(isdefined(self.var_f88006a5))
+	else
 	{
-		stopfx(localclientnum, self.var_f88006a5);
+		if(isdefined(self.var_f88006a5))
+		{
+			stopfx(localclientnum, self.var_f88006a5);
+		}
+		self.var_f88006a5 = undefined;
 	}
-	self.var_f88006a5 = undefined;
 }
 
 /*
@@ -348,11 +357,14 @@ function skullquest_finish_done_glow_fx(localclientnum, oldval, newval, bnewent,
 	{
 		self.var_f88006a5 = playfxontag(localclientnum, level._effect["skullquest_skull_done_glow"], self, "tag_origin");
 	}
-	else if(isdefined(self.var_f88006a5))
+	else
 	{
-		stopfx(localclientnum, self.var_f88006a5);
+		if(isdefined(self.var_f88006a5))
+		{
+			stopfx(localclientnum, self.var_f88006a5);
+		}
+		self.var_f88006a5 = undefined;
 	}
-	self.var_f88006a5 = undefined;
 }
 
 /*
@@ -379,28 +391,31 @@ function keeper_fx(localclientnum, oldval, newval, bnewent, binitialsnap, fieldn
 				self.sndlooper = self playloopsound("zmb_keeper_looper");
 			}
 		}
-		else if(isdefined(self.var_341f7209))
+		else
 		{
-			stopfx(localclientnum, self.var_341f7209);
+			if(isdefined(self.var_341f7209))
+			{
+				stopfx(localclientnum, self.var_341f7209);
+			}
+			self.var_341f7209 = undefined;
+			if(isdefined(self.var_c5e3cf4b))
+			{
+				stopfx(localclientnum, self.var_c5e3cf4b);
+			}
+			self.var_c5e3cf4b = undefined;
+			if(isdefined(self.var_2d3cc156))
+			{
+				stopfx(localclientnum, self.var_2d3cc156);
+			}
+			self.var_2d3cc156 = undefined;
+			v_origin = self gettagorigin("j_spineupper");
+			v_angles = self gettagangles("j_spineupper");
+			if(isdefined(v_origin) && isdefined(v_angles))
+			{
+				playfx(localclientnum, level._effect["keeper_death"], v_origin, v_angles);
+			}
+			self stopallloopsounds(1);
 		}
-		self.var_341f7209 = undefined;
-		if(isdefined(self.var_c5e3cf4b))
-		{
-			stopfx(localclientnum, self.var_c5e3cf4b);
-		}
-		self.var_c5e3cf4b = undefined;
-		if(isdefined(self.var_2d3cc156))
-		{
-			stopfx(localclientnum, self.var_2d3cc156);
-		}
-		self.var_2d3cc156 = undefined;
-		v_origin = self gettagorigin("j_spineupper");
-		v_angles = self gettagangles("j_spineupper");
-		if(isdefined(v_origin) && isdefined(v_angles))
-		{
-			playfx(localclientnum, level._effect["keeper_death"], v_origin, v_angles);
-		}
-		self stopallloopsounds(1);
 	}
 }
 
@@ -433,18 +448,21 @@ function ritual_attacker_fx(localclientnum, oldval, newval, bnewent, binitialsna
 				self.sndlooper = self playloopsound("zmb_keeper_looper");
 			}
 		}
-		else if(isdefined(self.var_341f7209))
+		else
 		{
-			stopfx(localclientnum, self.var_341f7209);
-			self.var_341f7209 = undefined;
+			if(isdefined(self.var_341f7209))
+			{
+				stopfx(localclientnum, self.var_341f7209);
+				self.var_341f7209 = undefined;
+			}
+			v_origin = self gettagorigin("tag_origin");
+			v_angles = self gettagangles("tag_origin");
+			if(isdefined(v_origin) && isdefined(v_angles))
+			{
+				playfx(localclientnum, level._effect["keeper_death"], v_origin, v_angles);
+			}
+			self stopallloopsounds(1);
 		}
-		v_origin = self gettagorigin("tag_origin");
-		v_angles = self gettagangles("tag_origin");
-		if(isdefined(v_origin) && isdefined(v_angles))
-		{
-			playfx(localclientnum, level._effect["keeper_death"], v_origin, v_angles);
-		}
-		self stopallloopsounds(1);
 	}
 }
 

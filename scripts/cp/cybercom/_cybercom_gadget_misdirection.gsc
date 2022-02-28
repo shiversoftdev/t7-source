@@ -206,13 +206,13 @@ function _is_primed(slot, weapon)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _get_valid_targets(weapon)
+function private _get_valid_targets(weapon)
 {
 	playerforward = anglestoforward(self getplayerangles());
 	enemies = arraycombine(getaiteamarray("axis"), getaiteamarray("team3"), 0, 0);
 	enemies = arraysort(enemies, self.origin, 1);
 	valid = [];
-	foreach(var_b4699140, guy in enemies)
+	foreach(guy in enemies)
 	{
 		if(isvehicle(guy))
 		{
@@ -255,7 +255,7 @@ private function _get_valid_targets(weapon)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _activate_misdirection(slot, weapon)
+function private _activate_misdirection(slot, weapon)
 {
 	targets = _get_valid_targets(weapon);
 	self.cybercom.var_1beb8e5f = [];
@@ -268,11 +268,11 @@ private function _activate_misdirection(slot, weapon)
 			util::wait_network_frame();
 		}
 	}
-	foreach(var_984e11ad, decoy in self.cybercom.var_1beb8e5f)
+	foreach(decoy in self.cybercom.var_1beb8e5f)
 	{
 		decoy thread function_7ca046a9(self.cybercom.misdirection_lifetime, self);
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -286,15 +286,15 @@ private function _activate_misdirection(slot, weapon)
 */
 function function_7074260(point)
 {
-	foreach(var_40bfeb9d, var_d3c532e6 in self.cybercom.var_1beb8e5f)
+	foreach(var_d3c532e6 in self.cybercom.var_1beb8e5f)
 	{
 		distsq = distance2dsquared(point, var_d3c532e6.origin);
 		if(distsq < (getdvarint("scr_misdirection_decoy_spacingSQR", getdvarint("scr_misdirection_decoy_spacing", 90) * getdvarint("scr_misdirection_decoy_spacing", 90))))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -314,7 +314,7 @@ function function_10cd71b(decoy, &potentialtargets)
 	playerforward = (playerforward[0], playerforward[1], 0);
 	var_81ca05ac = anglestoright(self getplayerangles());
 	var_81ca05ac = (var_81ca05ac[0], var_81ca05ac[1], 0);
-	foreach(var_9d10a9f0, target in potentialtargets)
+	foreach(target in potentialtargets)
 	{
 		origin = target.origin;
 		mins = function_44a2ae85(origin, mins);
@@ -375,7 +375,7 @@ function function_10cd71b(decoy, &potentialtargets)
 function initthreatbias()
 {
 	aiarray = getaiarray();
-	foreach(var_c3ab2da7, ai in aiarray)
+	foreach(ai in aiarray)
 	{
 		if(ai === self)
 		{
@@ -411,7 +411,7 @@ function function_4adc7dc8(&potentialtargets)
 	decoy.var_e42818a3 = 1;
 	decoy ghost();
 	decoy initthreatbias();
-	foreach(var_936318a0, target in potentialtargets)
+	foreach(target in potentialtargets)
 	{
 		v_trace = bullettrace(self.origin + vectorscale((0, 0, 1), 24), target.origin + vectorscale((0, 0, 1), 24), 1, self)["position"];
 		dir = vectornormalize(v_trace - self.origin);

@@ -18,7 +18,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("tomb_magicbox", &__init__, undefined, undefined);
 }
@@ -161,7 +161,7 @@ function wait_then_create_base_magic_box_fx()
 	{
 		wait(0.5);
 	}
-	foreach(var_df802866, chest in level.chests)
+	foreach(chest in level.chests)
 	{
 		chest.zbarrier clientfield::set("magicbox_initial_fx", 1);
 	}

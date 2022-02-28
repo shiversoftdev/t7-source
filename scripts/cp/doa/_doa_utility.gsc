@@ -60,9 +60,9 @@ function isexplosivedamage(damage_mod)
 {
 	if(damage_mod == "MOD_GRENADE" || damage_mod == "MOD_GRENADE_SPLASH" || damage_mod == "MOD_PROJECTILE" || damage_mod == "MOD_PROJECTILE_SPLASH" || damage_mod == "MOD_EXPLOSIVE")
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -224,7 +224,7 @@ function function_a5821e05(time = 1)
 		debugmsg("" + level.var_a7749866);
 	#/
 	level thread function_1d62c13a();
-	foreach(var_a6459b26, player in getplayers())
+	foreach(player in getplayers())
 	{
 		player freezecontrols(1);
 		player thread namespace_831a4a7c::function_4519b17(1);
@@ -253,14 +253,14 @@ function function_c85960dd(hold_black_time = 1.2, unfreeze = 1)
 		debugmsg("");
 	#/
 	wait(hold_black_time);
-	foreach(var_157bd6b7, player in getplayers())
+	foreach(player in getplayers())
 	{
 		player notify(#"hash_ff28e404");
 	}
 	level lui::screen_fade_in(1.5);
 	if(unfreeze)
 	{
-		foreach(var_70e1f623, player in getplayers())
+		foreach(player in getplayers())
 		{
 			player freezecontrols(0);
 			player thread namespace_831a4a7c::function_4519b17(0);
@@ -731,7 +731,7 @@ function function_2f0d697f(spawner)
 {
 	count = 0;
 	ai = function_fb2ad2fb();
-	foreach(var_6b780c35, guy in ai)
+	foreach(guy in ai)
 	{
 		if(isdefined(guy.spawner) && guy.spawner == spawner)
 		{
@@ -784,7 +784,7 @@ function function_fe180f6f(count = 1)
 	var_54a85fb0 = 4;
 	var_76cfbf10 = 0;
 	enemies = function_fb2ad2fb();
-	foreach(var_d458c178, guy in enemies)
+	foreach(guy in enemies)
 	{
 		if(count <= 0)
 		{
@@ -827,7 +827,7 @@ function killallenemy(all = 0)
 	var_54a85fb0 = 4;
 	var_76cfbf10 = 0;
 	enemies = function_fb2ad2fb();
-	foreach(var_4f001353, guy in enemies)
+	foreach(guy in enemies)
 	{
 		if(!isdefined(guy))
 		{
@@ -930,7 +930,7 @@ function function_308fa126(num = 5)
 	players = getplayers();
 	if(isdefined(level.doa.arenas[level.doa.current_arena].var_1d2ed40))
 	{
-		foreach(var_615ccfa0, spot in level.doa.arenas[level.doa.current_arena].var_1d2ed40)
+		foreach(spot in level.doa.arenas[level.doa.current_arena].var_1d2ed40)
 		{
 			locs[locs.size] = spot.origin;
 			num--;
@@ -942,7 +942,7 @@ function function_308fa126(num = 5)
 	}
 	if(isdefined(level.doa.var_3361a074))
 	{
-		foreach(var_1cea959c, spot in level.doa.var_3361a074)
+		foreach(spot in level.doa.var_3361a074)
 		{
 			locs[locs.size] = spot.origin;
 			num--;
@@ -952,7 +952,7 @@ function function_308fa126(num = 5)
 			}
 		}
 	}
-	foreach(var_f7fe2942, player in players)
+	foreach(player in players)
 	{
 		if(isdefined(player.vehicle))
 		{
@@ -982,7 +982,7 @@ function function_8fc4387a(num = 5)
 	locs = [];
 	if(isdefined(level.doa.arenas[level.doa.current_arena].var_1d2ed40))
 	{
-		foreach(var_b33959a5, spot in level.doa.arenas[level.doa.current_arena].var_1d2ed40)
+		foreach(spot in level.doa.arenas[level.doa.current_arena].var_1d2ed40)
 		{
 			locs[locs.size] = spot;
 			num--;
@@ -994,7 +994,7 @@ function function_8fc4387a(num = 5)
 	}
 	if(isdefined(level.doa.var_3361a074))
 	{
-		foreach(var_69b302e4, spot in level.doa.var_3361a074)
+		foreach(spot in level.doa.var_3361a074)
 		{
 			locs[locs.size] = spot;
 			num--;
@@ -1758,14 +1758,14 @@ function set_lighting_state(state)
 */
 function function_5233dbc0()
 {
-	foreach(var_c50330b5, player in getplayers())
+	foreach(player in getplayers())
 	{
 		if(isdefined(player.doa) && isdefined(player.doa.vehicle))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*

@@ -16,7 +16,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_trap_electric", &__init__, undefined, undefined);
 }
@@ -34,7 +34,7 @@ function __init__()
 {
 	visionset_mgr::register_overlay_info_style_electrified("zm_trap_electric", 1, 15, 1.25);
 	a_traps = struct::get_array("trap_electric", "targetname");
-	foreach(var_9a7a6232, trap in a_traps)
+	foreach(trap in a_traps)
 	{
 		clientfield::register("world", trap.script_noteworthy, 1, 1, "int", &trap_fx_monitor, 0, 0);
 	}
@@ -61,7 +61,7 @@ function trap_fx_monitor(localclientnum, oldval, newval, bnewent, binitialsnap, 
 		exploder::stop_exploder(exploder_name);
 	}
 	fire_points = struct::get_array(fieldname, "targetname");
-	foreach(var_3c27f970, point in fire_points)
+	foreach(point in fire_points)
 	{
 		if(!isdefined(point.script_noteworthy))
 		{

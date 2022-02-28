@@ -50,7 +50,7 @@ function init_stage()
 	/#
 		if(getplayers().size == 1)
 		{
-			getplayers()[0] giveweapon(level.var_953f69a0);
+			getplayers()[0] giveweapon(level.w_shrink_ray_upgraded);
 		}
 	#/
 }
@@ -374,7 +374,7 @@ function lgs_crystal()
 	for(i = 0; i < players.size; i++)
 	{
 		currentweapon = players[i] getcurrentweapon();
-		if(currentweapon == level.var_f812085 || currentweapon == level.var_953f69a0)
+		if(currentweapon == level.w_shrink_ray || currentweapon == level.w_shrink_ray_upgraded)
 		{
 			players[i] thread zm_audio::create_and_play_dialog("eggs", "quest3", 4);
 		}

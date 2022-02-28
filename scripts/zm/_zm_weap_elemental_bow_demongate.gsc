@@ -33,7 +33,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("_zm_weap_elemental_bow_demongate", &__init__, &__main__, undefined);
 }
@@ -229,7 +229,7 @@ function function_292e5297()
 	self endon(#"hash_d6e52217");
 	while(true)
 	{
-		foreach(var_bc6b0872, e_player in level.activeplayers)
+		foreach(e_player in level.activeplayers)
 		{
 			if(isdefined(e_player) && (!(isdefined(e_player.var_fbdab725) && e_player.var_fbdab725)))
 			{
@@ -313,7 +313,7 @@ function function_a9eddc64(position, v_angles, n_count = 1)
 	var_5f2cce52 = level.var_ecd0c077.size - 12;
 	if(var_5f2cce52 > 0)
 	{
-		foreach(var_cf1c43f1, var_c7cc4fbd in level.var_ecd0c077)
+		foreach(var_c7cc4fbd in level.var_ecd0c077)
 		{
 			if(!var_c7cc4fbd flag::get("chomper_attacking") && (!(isdefined(var_c7cc4fbd.var_e3146903) && var_c7cc4fbd.var_e3146903)))
 			{
@@ -566,15 +566,18 @@ function function_b6e7ec91(e_player)
 		{
 			n_wait_time = 0.8;
 		}
-		else if(self.target_enemy.archetype === "mechz")
-		{
-			n_wait_time = 2.6;
-			self.var_fcd07456 = 0;
-		}
 		else
 		{
-			n_wait_time = randomfloatrange(2, 3);
-			self.target_enemy setplayercollision(0);
+			if(self.target_enemy.archetype === "mechz")
+			{
+				n_wait_time = 2.6;
+				self.var_fcd07456 = 0;
+			}
+			else
+			{
+				n_wait_time = randomfloatrange(2, 3);
+				self.target_enemy setplayercollision(0);
+			}
 		}
 		self.target_enemy util::waittill_notify_or_timeout("death", n_wait_time);
 		self notify(#"hash_368634cd");
@@ -640,22 +643,31 @@ function function_3c03253d(var_aad66aa4, var_7364b0dd)
 	{
 		self.target_enemy ai::set_ignoreall(1);
 	}
-	else if(self.target_enemy.archetype === "mechz")
-	{
-		self thread function_c5e710f7();
-	}
-	else if(isvehicle(self.target_enemy))
-	{
-		self.target_enemy.ignoreall = 1;
-	}
-	else if(isdefined(var_7364b0dd) && var_7364b0dd)
-	{
-		self.target_enemy scene::play("ai_zm_dlc1_zombie_demongate_chomper_attack_crawler", array(self.target_enemy, self));
-	}
 	else
 	{
-		self.target_enemy scene::init("ai_zm_dlc1_zombie_demongate_chomper_attack_0" + var_aad66aa4, array(self.target_enemy, self));
-		self.target_enemy scene::play("ai_zm_dlc1_zombie_demongate_chomper_attack_0" + var_aad66aa4, array(self.target_enemy, self));
+		if(self.target_enemy.archetype === "mechz")
+		{
+			self thread function_c5e710f7();
+		}
+		else
+		{
+			if(isvehicle(self.target_enemy))
+			{
+				self.target_enemy.ignoreall = 1;
+			}
+			else
+			{
+				if(isdefined(var_7364b0dd) && var_7364b0dd)
+				{
+					self.target_enemy scene::play("ai_zm_dlc1_zombie_demongate_chomper_attack_crawler", array(self.target_enemy, self));
+				}
+				else
+				{
+					self.target_enemy scene::init("ai_zm_dlc1_zombie_demongate_chomper_attack_0" + var_aad66aa4, array(self.target_enemy, self));
+					self.target_enemy scene::play("ai_zm_dlc1_zombie_demongate_chomper_attack_0" + var_aad66aa4, array(self.target_enemy, self));
+				}
+			}
+		}
 	}
 }
 

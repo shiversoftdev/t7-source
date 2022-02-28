@@ -197,46 +197,46 @@ function _is_primed(slot, weapon)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _lock_requirement(target)
+function private _lock_requirement(target)
 {
 	if(!isdefined(target))
 	{
-		return 0;
+		return false;
 	}
 	if(target cybercom::cybercom_aicheckoptout("cybercom_systemoverload"))
 	{
 		self cybercom::function_29bf9dee(target, 2);
-		return 0;
+		return false;
 	}
 	if(isdefined(target.hijacked) && target.hijacked)
 	{
 		self cybercom::function_29bf9dee(target, 4);
-		return 0;
+		return false;
 	}
 	if(isdefined(target.is_disabled) && target.is_disabled)
 	{
 		self cybercom::function_29bf9dee(target, 6);
-		return 0;
+		return false;
 	}
 	if(isactor(target) && target cybercom::function_78525729() != "stand" && target cybercom::function_78525729() != "crouch")
 	{
-		return 0;
+		return false;
 	}
 	if(isactor(target) && target.archetype != "robot")
 	{
 		self cybercom::function_29bf9dee(target, 2);
-		return 0;
+		return false;
 	}
 	if(!isactor(target) && !isvehicle(target))
 	{
 		self cybercom::function_29bf9dee(target, 2);
-		return 0;
+		return false;
 	}
 	if(isactor(target) && !target isonground() && !target cybercom::function_421746e0())
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -248,7 +248,7 @@ private function _lock_requirement(target)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _get_valid_targets(weapon)
+function private _get_valid_targets(weapon)
 {
 	return arraycombine(getaiteamarray("axis"), getaiteamarray("team3"), 0, 0);
 }
@@ -262,11 +262,11 @@ private function _get_valid_targets(weapon)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _activate_system_overload(slot, weapon)
+function private _activate_system_overload(slot, weapon)
 {
 	aborted = 0;
 	fired = 0;
-	foreach(var_a4de089d, item in self.cybercom.lock_targets)
+	foreach(item in self.cybercom.lock_targets)
 	{
 		if(isdefined(item.target) && (isdefined(item.inrange) && item.inrange))
 		{
@@ -313,7 +313,7 @@ private function _activate_system_overload(slot, weapon)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _system_overload_vehicle(attacker, weapon)
+function private _system_overload_vehicle(attacker, weapon)
 {
 	if(isdefined(self.var_7c04bee3) && gettime() < self.var_7c04bee3)
 	{
@@ -355,7 +355,7 @@ function ai_activatesystemoverload(target, var_9bc2efcb = 1, disabletimemsec)
 	validtargets = [];
 	if(isarray(target))
 	{
-		foreach(var_2e7277ad, guy in target)
+		foreach(guy in target)
 		{
 			if(!_lock_requirement(guy))
 			{
@@ -364,20 +364,23 @@ function ai_activatesystemoverload(target, var_9bc2efcb = 1, disabletimemsec)
 			validtargets[validtargets.size] = guy;
 		}
 	}
-	else if(!_lock_requirement(target))
+	else
 	{
-		return;
+		if(!_lock_requirement(target))
+		{
+			return;
+		}
+		validtargets[validtargets.size] = target;
 	}
-	validtargets[validtargets.size] = target;
 	if(isdefined(var_9bc2efcb) && var_9bc2efcb)
 	{
 		type = self cybercom::function_5e3d3aa();
 		self orientmode("face default");
 		self animscripted("ai_cybercom_anim", self.origin, self.angles, ("ai_base_rifle_" + type) + "_exposed_cybercom_activate");
-		self waittill_match(#"ai_cybercom_anim");
+		self waittillmatch(#"ai_cybercom_anim");
 	}
 	weapon = getweapon("gadget_system_overload");
-	foreach(var_396e6f73, guy in validtargets)
+	foreach(guy in validtargets)
 	{
 		if(!cybercom::targetisvalid(guy, weapon))
 		{
@@ -421,13 +424,16 @@ function system_overload(attacker, disabletimemsec, weapon = getweapon("gadget_s
 	{
 		disabletime = disabletimemsec;
 	}
-	else if(isdefined(attacker.cybercom) && isdefined(attacker.cybercom.system_overload_lifetime))
-	{
-		disabletime = attacker.cybercom.system_overload_lifetime;
-	}
 	else
 	{
-		disabletime = getdvarfloat("scr_system_overload_lifetime", 6.3) * 1000;
+		if(isdefined(attacker.cybercom) && isdefined(attacker.cybercom.system_overload_lifetime))
+		{
+			disabletime = attacker.cybercom.system_overload_lifetime;
+		}
+		else
+		{
+			disabletime = getdvarfloat("scr_system_overload_lifetime", 6.3) * 1000;
+		}
 	}
 	self clientfield::set("cybercom_sysoverload", 1);
 	wait(randomfloatrange(0, 0.75));
@@ -447,7 +453,7 @@ function system_overload(attacker, disabletimemsec, weapon = getweapon("gadget_s
 	self thread cybercom::stopanimscriptedonnotify("damage_pain", "shutdown_anim", 1, attacker, weapon);
 	self thread cybercom::stopanimscriptedonnotify("notify_melee_damage", "shutdown_anim", 1, attacker, weapon);
 	self thread cybercom::stopanimscriptedonnotify("breakout_sysoverload_loop", "shutdown_anim", 0, attacker, weapon);
-	self waittill_match(#"shutdown_anim");
+	self waittillmatch(#"shutdown_anim");
 	waittillframeend();
 	self ai::set_behavior_attribute("robot_lights", 2);
 	self.ignoreall = 1;
@@ -458,7 +464,7 @@ function system_overload(attacker, disabletimemsec, weapon = getweapon("gadget_s
 			blackboard::setblackboardattribute(self, "_stance", "crouch");
 		}
 		self dodamage(2, self.origin, (isdefined(attacker) ? attacker : undefined), undefined, "none", "MOD_UNKNOWN", 0, weapon, -1, 1);
-		self waittill_match(#"bhtn_action_terminate");
+		self waittillmatch(#"bhtn_action_terminate");
 	}
 	if(isalive(self) && !self isragdoll())
 	{
@@ -468,7 +474,7 @@ function system_overload(attacker, disabletimemsec, weapon = getweapon("gadget_s
 		self animscripted("restart_anim", self.origin, self.angles, ("ai_robot_base_" + type) + "_shutdown_2_alert");
 		self thread cybercom::stopanimscriptedonnotify("damage_pain", "restart_anim", 1, attacker, weapon);
 		self thread cybercom::stopanimscriptedonnotify("notify_melee_damage", "restart_anim", 1, attacker, weapon);
-		self waittill_match(#"restart_anim");
+		self waittillmatch(#"restart_anim");
 		if(var_c60a5dd5)
 		{
 			blackboard::setblackboardattribute(self, "_stance", "crouch");

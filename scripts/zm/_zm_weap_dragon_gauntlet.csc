@@ -17,7 +17,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_weap_dragon_gauntlet", &__init__, undefined, undefined);
 }
@@ -160,7 +160,7 @@ function function_99aba1a5(localclientnum)
 {
 	if(isdefined(self.var_11d5152b) && self.var_11d5152b.size > 0)
 	{
-		foreach(var_778a120a, fx in self.var_11d5152b)
+		foreach(fx in self.var_11d5152b)
 		{
 			stopfx(localclientnum, fx);
 		}
@@ -180,7 +180,7 @@ function function_7645efdb(localclientnum)
 {
 	if(isdefined(self.var_a7abd31) && self.var_a7abd31.size > 0)
 	{
-		foreach(var_e3bb182, fx in self.var_a7abd31)
+		foreach(fx in self.var_a7abd31)
 		{
 			stopfx(localclientnum, fx);
 		}
@@ -226,7 +226,7 @@ function function_3011ccf6(localclientnum)
 		{
 			if(isdefined(self.var_4d73e75b) && self.var_4d73e75b.size > 0)
 			{
-				foreach(var_7edb8e34, fx in self.var_4d73e75b)
+				foreach(fx in self.var_4d73e75b)
 				{
 					stopfx(localclientnum, fx);
 				}

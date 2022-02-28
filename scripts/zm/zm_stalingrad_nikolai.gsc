@@ -72,7 +72,7 @@ function function_cf4e4fc1()
 	wait(0.05);
 	level.var_cf6e9729 thread function_d9ffbd23();
 	level flag::wait_till("nikolai_complete");
-	foreach(var_716a1f9, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		e_player.var_4222bc21 = 1;
 	}
@@ -97,7 +97,7 @@ function function_a21082e5()
 {
 	var_77857680 = getentarray("boss_arena_blocker", "targetname");
 	n_wait = getanimlength("ai_zm_dlc3_russian_mech_dth");
-	foreach(var_a6459b26, player in level.players)
+	foreach(player in level.players)
 	{
 		if(player laststand::player_is_in_laststand())
 		{
@@ -119,13 +119,13 @@ function function_a21082e5()
 	var_5b2e05a8 = struct::get_array("boss_complete_return_point", "targetname");
 	n_player = 0;
 	zm_stalingrad_util::function_4da6e8(1);
-	foreach(var_73609434, player in level.players)
+	foreach(player in level.players)
 	{
 		player setorigin(var_5b2e05a8[n_player].origin);
 		player setplayerangles(var_5b2e05a8[n_player].angles);
 		n_player++;
 	}
-	foreach(var_96e4708c, var_f26a7c29 in var_77857680)
+	foreach(var_f26a7c29 in var_77857680)
 	{
 		var_f26a7c29 delete();
 		util::wait_network_frame();
@@ -151,7 +151,7 @@ function function_885ea49f()
 	level endon(#"intermission");
 	var_77857680 = getentarray("dragon_boss_blocker", "targetname");
 	var_3e7d18ce = getentarray("dragon_boss_blocker_clip", "targetname");
-	foreach(var_f4baf6cb, var_9c1f0837 in var_3e7d18ce)
+	foreach(var_9c1f0837 in var_3e7d18ce)
 	{
 		var_9c1f0837 disconnectpaths();
 	}
@@ -159,12 +159,12 @@ function function_885ea49f()
 	var_c341c732 disconnectpaths();
 	var_c341c732 notsolid();
 	level flag::wait_till("nikolai_start");
-	foreach(var_9954d75f, var_9c1f0837 in var_3e7d18ce)
+	foreach(var_9c1f0837 in var_3e7d18ce)
 	{
 		var_9c1f0837 connectpaths();
 		var_9c1f0837 delete();
 	}
-	foreach(var_811f8866, var_f26a7c29 in var_77857680)
+	foreach(var_f26a7c29 in var_77857680)
 	{
 		var_f26a7c29 delete();
 	}
@@ -345,7 +345,7 @@ function function_6afa5293()
 	util::wait_network_frame();
 	var_41b8920e = struct::get_array("s_nikolai_debug_player", "targetname");
 	n_player = 0;
-	foreach(var_c7670038, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player setorigin(var_41b8920e[n_player].origin);
 		player setplayerangles(var_41b8920e[n_player].angles);
@@ -500,13 +500,16 @@ function function_c291114d()
 		{
 			func_override = &function_29d15688;
 		}
-		else if(level flag::exists(""))
+		else
 		{
-			func_override = &function_960cbfc1;
-		}
-		else if(level flag::exists(""))
-		{
-			func_override = &function_8b21fdfe;
+			if(level flag::exists(""))
+			{
+				func_override = &function_960cbfc1;
+			}
+			else if(level flag::exists(""))
+			{
+				func_override = &function_8b21fdfe;
+			}
 		}
 		if(isdefined(func_override))
 		{
@@ -599,7 +602,7 @@ function function_f56920ff(var_d4d0fbf9)
 		self function_1d0e6184();
 	}
 	e_enemy = self.favoriteenemy;
-	foreach(var_a7313786, var_eb96527b in level.var_cf6e9729.var_9310b6ba)
+	foreach(var_eb96527b in level.var_cf6e9729.var_9310b6ba)
 	{
 		if(e_enemy istouching(var_eb96527b))
 		{
@@ -780,7 +783,7 @@ function function_f75d4706(s_pos, str_pos)
 {
 	if(s_pos.script_string == str_pos)
 	{
-		return 0;
+		return false;
 	}
 	switch(str_pos)
 	{
@@ -788,7 +791,7 @@ function function_f75d4706(s_pos, str_pos)
 		{
 			if(s_pos.script_string == "south")
 			{
-				return 0;
+				return false;
 			}
 			break;
 		}
@@ -796,7 +799,7 @@ function function_f75d4706(s_pos, str_pos)
 		{
 			if(s_pos.script_string == "west")
 			{
-				return 0;
+				return false;
 			}
 			break;
 		}
@@ -804,7 +807,7 @@ function function_f75d4706(s_pos, str_pos)
 		{
 			if(s_pos.script_string == "north")
 			{
-				return 0;
+				return false;
 			}
 			break;
 		}
@@ -812,12 +815,12 @@ function function_f75d4706(s_pos, str_pos)
 		{
 			if(s_pos.script_string == "east")
 			{
-				return 0;
+				return false;
 			}
 			break;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -916,7 +919,7 @@ function function_3c68f919(var_74557a8b)
 			break;
 		}
 	}
-	foreach(var_a24ba320, var_1da6c387 in self.var_62fb9a9f)
+	foreach(var_1da6c387 in self.var_62fb9a9f)
 	{
 		if(var_1da6c387.script_string == str_target)
 		{
@@ -956,7 +959,7 @@ function function_1d0e6184()
 	var_3a73aa84 = undefined;
 	while(!isdefined(var_3a73aa84))
 	{
-		foreach(var_250c8721, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			if(zombie_utility::is_player_valid(player, 1))
 			{
@@ -991,7 +994,7 @@ function function_1d0e6184()
 function function_211641b9()
 {
 	level endon(#"nikolai_complete");
-	foreach(var_f58ebfe8, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		e_player.var_b3a9099 = 0;
 	}
@@ -1130,7 +1133,7 @@ function function_b79713c()
 	level.var_79ad3656 = 0;
 	var_8cdc0866 = struct::get_array("boss_arena_spawn", "targetname");
 	var_8cdc0866 = array::filter(var_8cdc0866, 0, &function_dc342bfa);
-	foreach(var_a4f2651b, var_c2b68b3f in var_8cdc0866)
+	foreach(var_c2b68b3f in var_8cdc0866)
 	{
 		var_c2b68b3f thread function_cb725ad1();
 		wait(randomfloatrange(0.12, 0.55));
@@ -1267,7 +1270,7 @@ function function_716d82f6()
 	self endon(#"death");
 	a_players = arraycopy(level.activeplayers);
 	a_players = array::randomize(a_players);
-	foreach(var_10fe41d1, player in a_players)
+	foreach(player in a_players)
 	{
 		v_target_pos = player.origin + vectorscale((0, 0, 1), 48);
 		var_64d7d15b = sentinel_drone::sentinel_canseeenemy(self.origin, v_target_pos);

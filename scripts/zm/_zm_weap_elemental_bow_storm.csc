@@ -20,7 +20,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("_zm_weap_elemental_bow_storm", &__init__, undefined, undefined);
 }
@@ -120,13 +120,16 @@ function elem_storm_fx(localclientnum, oldval, newval, bnewent, binitialsnap, fi
 	{
 		self.var_53f7dac0 = playfxontag(localclientnum, level._effect["elem_storm_whirlwind_loop"], self, "tag_origin");
 	}
-	else if(isdefined(self.var_53f7dac0))
+	else
 	{
-		deletefx(localclientnum, self.var_53f7dac0, 0);
-		self.var_53f7dac0 = undefined;
+		if(isdefined(self.var_53f7dac0))
+		{
+			deletefx(localclientnum, self.var_53f7dac0, 0);
+			self.var_53f7dac0 = undefined;
+		}
+		wait(0.4);
+		playfx(localclientnum, level._effect["elem_storm_whirlwind_end"], self.origin);
 	}
-	wait(0.4);
-	playfx(localclientnum, level._effect["elem_storm_whirlwind_end"], self.origin);
 }
 
 /*

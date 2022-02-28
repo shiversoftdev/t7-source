@@ -227,7 +227,7 @@ function function_9b921991()
 */
 function giveperks()
 {
-	foreach(var_9d10a9f0, perkname in level.var_e9a58782)
+	foreach(perkname in level.var_e9a58782)
 	{
 		self setperk(perkname);
 	}
@@ -301,31 +301,40 @@ function onplayerkilled(einflictor, attacker, idamage, smeansofdeath, weapon, vd
 			attacker globallogic_score::givepointstowin(level.pointspermeleekill);
 			onplayerscore(undefined, attacker, undefined);
 		}
-		else if(weapon == level.weapon_sas_primary_weapon)
+		else
 		{
-			attacker.killswithprimary++;
-			if(attacker.killswithbothawarded == 0 && attacker.killswithsecondary > 0)
+			if(weapon == level.weapon_sas_primary_weapon)
 			{
-				attacker.killswithbothawarded = 1;
+				attacker.killswithprimary++;
+				if(attacker.killswithbothawarded == 0 && attacker.killswithsecondary > 0)
+				{
+					attacker.killswithbothawarded = 1;
+				}
+				attacker globallogic_score::givepointstowin(level.pointsperprimarykill);
+				onplayerscore(undefined, attacker, undefined);
 			}
-			attacker globallogic_score::givepointstowin(level.pointsperprimarykill);
-			onplayerscore(undefined, attacker, undefined);
-		}
-		else if(weapon == level.weapon_sas_primary_grenade_weapon)
-		{
-			attacker globallogic_score::givepointstowin(level.pointsperprimarygrenadekill);
-			onplayerscore(undefined, attacker, undefined);
-		}
-		else if(weapon == level.weapon_sas_secondary_weapon)
-		{
-			attacker.killswithsecondary++;
-			if(attacker.killswithbothawarded == 0 && attacker.killswithprimary > 0)
+			else
 			{
-				attacker.killswithbothawarded = 1;
+				if(weapon == level.weapon_sas_primary_grenade_weapon)
+				{
+					attacker globallogic_score::givepointstowin(level.pointsperprimarygrenadekill);
+					onplayerscore(undefined, attacker, undefined);
+				}
+				else
+				{
+					if(weapon == level.weapon_sas_secondary_weapon)
+					{
+						attacker.killswithsecondary++;
+						if(attacker.killswithbothawarded == 0 && attacker.killswithprimary > 0)
+						{
+							attacker.killswithbothawarded = 1;
+						}
+					}
+					attacker globallogic_score::givepointstowin(level.pointspersecondarykill);
+					onplayerscore(undefined, attacker, undefined);
+				}
 			}
 		}
-		attacker globallogic_score::givepointstowin(level.pointspersecondarykill);
-		onplayerscore(undefined, attacker, undefined);
 		if(isdefined(level.setbackweapon) && weapon == level.setbackweapon)
 		{
 			self.pers["humiliated"]++;
@@ -464,7 +473,7 @@ function onstartgametype()
 	spawning::create_map_placed_influencers();
 	level.spawnmins = (0, 0, 0);
 	level.spawnmaxs = (0, 0, 0);
-	foreach(var_f51cc11b, team in level.teams)
+	foreach(team in level.teams)
 	{
 		setupteam(team);
 	}

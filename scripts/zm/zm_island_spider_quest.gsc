@@ -230,7 +230,7 @@ function function_c225d3aa()
 function function_f7244a06(n_index)
 {
 	var_297c6282 = getent("spider_queen_start_fight", "targetname");
-	foreach(var_5b1d0dfd, player in level.players)
+	foreach(player in level.players)
 	{
 		if(zm_utility::is_player_valid(player) && player istouching(var_297c6282))
 		{
@@ -482,7 +482,7 @@ function function_e949d1d7()
 	while(true)
 	{
 		var_c0d42e55 = [];
-		foreach(var_c237ba29, player in level.players)
+		foreach(player in level.players)
 		{
 			if(zm_utility::is_player_valid(player) && player istouching(var_297c6282))
 			{
@@ -542,15 +542,18 @@ function function_82ae321c(n_stage)
 			level scene::play("cin_t7_ai_zm_dlc2_spider_queen_backwall_outro", self);
 		}
 	}
-	else if(n_stage == 2)
-	{
-		level scene::play("cin_t7_ai_zm_dlc2_spider_queen_arm_attack_pain_react_phase_2", self);
-	}
 	else
 	{
-		level scene::play("cin_t7_ai_zm_dlc2_spider_queen_arm_attack_pain_react_phase_3", self);
+		if(n_stage == 2)
+		{
+			level scene::play("cin_t7_ai_zm_dlc2_spider_queen_arm_attack_pain_react_phase_2", self);
+		}
+		else
+		{
+			level scene::play("cin_t7_ai_zm_dlc2_spider_queen_arm_attack_pain_react_phase_3", self);
+		}
+		level flag::clear("spider_queen_perform_leg_attack");
 	}
-	level flag::clear("spider_queen_perform_leg_attack");
 	self thread function_9b964659();
 	self thread function_b6ea5d0d();
 	level thread scene::play("cin_t7_ai_zm_dlc2_spider_queen_idle", self);
@@ -619,7 +622,7 @@ function function_a38800f6()
 	var_297c6282 = getent("spider_queen_start_fight", "targetname");
 	while(true)
 	{
-		foreach(var_a97b93d8, player in level.players)
+		foreach(player in level.players)
 		{
 			if(zm_utility::is_player_valid(player) && player istouching(var_297c6282))
 			{
@@ -763,13 +766,16 @@ function function_291b262e(var_a857d88e, var_27730eaa)
 		{
 			var_679258c3 = array::random(var_dc084637);
 		}
-		else if(level.var_4e5986ea == 3)
-		{
-			var_679258c3 = array::random(var_6a00d6fc);
-		}
 		else
 		{
-			var_679258c3 = array::random(var_90035165);
+			if(level.var_4e5986ea == 3)
+			{
+				var_679258c3 = array::random(var_6a00d6fc);
+			}
+			else
+			{
+				var_679258c3 = array::random(var_90035165);
+			}
 		}
 		level scene::play(var_679258c3, self);
 		level scene::play("cin_t7_ai_zm_dlc2_spider_queen_arm_attack_outro", self);
@@ -936,15 +942,18 @@ function function_9ee2204c(var_85683d05)
 			var_e70fce50 = "fxexp_712";
 			var_e066ed22 = s_left;
 		}
-		else if(self.script_noteworthy == "center")
-		{
-			var_e70fce50 = "fxexp_711";
-			var_e066ed22 = s_center;
-		}
 		else
 		{
-			var_e70fce50 = "fxexp_710";
-			var_e066ed22 = s_right;
+			if(self.script_noteworthy == "center")
+			{
+				var_e70fce50 = "fxexp_711";
+				var_e066ed22 = s_center;
+			}
+			else
+			{
+				var_e70fce50 = "fxexp_710";
+				var_e066ed22 = s_right;
+			}
 		}
 		var_e066ed22 function_bcafc53d(var_85683d05);
 		exploder::exploder(var_e70fce50);
@@ -1367,54 +1376,54 @@ function function_a4e9dacc(cmd)
 			case "":
 			{
 				level flag::set("");
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				level.var_5bb615cd = level.var_dd315d9c;
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				level.var_5bb615cd = level.var_f6f57e72;
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				level notify(#"hash_9a8b82c3");
 				level thread function_bd62f75b();
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				level notify(#"hash_9a8b82c3");
 				level thread function_31e22463();
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				level notify(#"hash_9a8b82c3");
 				level thread function_11d7e2b1();
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				level notify(#"hash_9a8b82c3");
 				level thread function_14f05ea8();
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				level flag::set("");
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				array::thread_all(level.players, &function_10abb15e);
-				return 1;
+				return true;
 			}
 		}
-		return 0;
+		return false;
 	#/
 }
 
@@ -1605,7 +1614,7 @@ function function_3420bc2f(wpn_new)
 {
 	/#
 		var_c5716cdc = self getweaponslist(1);
-		foreach(var_8920e1b4, weapon in var_c5716cdc)
+		foreach(weapon in var_c5716cdc)
 		{
 			if(weapon.type === "")
 			{
@@ -1694,16 +1703,16 @@ function function_65f4b50(player)
 	{
 		self sethintstring("");
 		player zm_audio::create_and_play_dialog("general", "sigh");
-		return 0;
+		return false;
 	}
 	if(!player zm_utility::can_player_purchase_perk())
 	{
 		self sethintstring("");
 		player zm_audio::create_and_play_dialog("general", "sigh");
-		return 0;
+		return false;
 	}
 	self sethintstring(&"ZM_ISLAND_SPIDER_QUEEN_WINE");
-	return 1;
+	return true;
 }
 
 /*

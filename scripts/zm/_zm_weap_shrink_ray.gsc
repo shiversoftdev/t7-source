@@ -23,7 +23,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_weap_shrink_ray", &__init__, &__main__, undefined);
 }
@@ -49,8 +49,8 @@ function __init__()
 	level._effect["unshrink"] = "dlc5/zmb_weapon/fx_shrink_ray_zombie_unshrink";
 	callback::on_spawned(&function_37ce705e);
 	level.var_c50bd012 = [];
-	level.var_f812085 = getweapon("shrink_ray");
-	level.var_953f69a0 = getweapon("shrink_ray_upgraded");
+	level.w_shrink_ray = getweapon("shrink_ray");
+	level.w_shrink_ray_upgraded = getweapon("shrink_ray_upgraded");
 	zm::register_player_damage_callback(&function_19171a77);
 }
 
@@ -133,9 +133,9 @@ function function_37ce705e()
 	{
 		self waittill(#"weapon_fired");
 		currentweapon = self getcurrentweapon();
-		if(currentweapon == level.var_f812085 || currentweapon == level.var_953f69a0)
+		if(currentweapon == level.w_shrink_ray || currentweapon == level.w_shrink_ray_upgraded)
 		{
-			self thread function_fe7a4182(currentweapon == level.var_953f69a0);
+			self thread function_fe7a4182(currentweapon == level.w_shrink_ray_upgraded);
 		}
 	}
 }
@@ -264,34 +264,43 @@ function shrink_zombie(upgraded, attacker)
 		{
 			var_50d1f39 = 0.75;
 		}
-		else if(self.var_bb09c29a == 1)
-		{
-			var_50d1f39 = 1.5;
-		}
 		else
 		{
-			var_50d1f39 = 2.5;
-		}
-	}
-	else if(self.animname == "napalm_zombie")
-	{
-		if(self.var_bb09c29a == 0)
-		{
-			var_50d1f39 = 0.75;
-		}
-		else if(self.var_bb09c29a == 1)
-		{
-			var_50d1f39 = 1.5;
-		}
-		else
-		{
-			var_50d1f39 = 2.5;
+			if(self.var_bb09c29a == 1)
+			{
+				var_50d1f39 = 1.5;
+			}
+			else
+			{
+				var_50d1f39 = 2.5;
+			}
 		}
 	}
 	else
 	{
-		var_50d1f39 = 2.5;
-		var_50d1f39 = var_50d1f39 + randomfloatrange(0, 0.5);
+		if(self.animname == "napalm_zombie")
+		{
+			if(self.var_bb09c29a == 0)
+			{
+				var_50d1f39 = 0.75;
+			}
+			else
+			{
+				if(self.var_bb09c29a == 1)
+				{
+					var_50d1f39 = 1.5;
+				}
+				else
+				{
+					var_50d1f39 = 2.5;
+				}
+			}
+		}
+		else
+		{
+			var_50d1f39 = 2.5;
+			var_50d1f39 = var_50d1f39 + randomfloatrange(0, 0.5);
+		}
 	}
 	if(upgraded)
 	{
@@ -339,104 +348,107 @@ function shrink_zombie(upgraded, attacker)
 			self launchragdoll(fling_vec);
 		}
 	}
-	else if(self function_f23d2379())
-	{
-		self function_6140a171(attacker);
-	}
 	else
 	{
-		self playsound("evt_shrink");
-		self.var_2209ea1b thread zm_audio::create_and_play_dialog("kill", "shrink");
-		self thread function_259d2f7a("shrink", "J_MainRoot");
-		var_939fbc94 = self.meleedamage;
-		self.meleedamage = 5;
-		self.no_gib = 1;
-		self zombie_utility::zombie_eye_glow_stop();
-		attachedmodels = [];
-		attachedtags = [];
-		hatmodel = self.hatmodel;
-		var_36333499 = self getattachsize();
-		for(i = var_36333499 - 1; i >= 0; i--)
+		if(self function_f23d2379())
 		{
-			model = self getattachmodelname(i);
-			tag = self getattachtagname(i);
-			var_4f32ff14 = isdefined(self.hatmodel) && self.hatmodel == model;
-			if(var_4f32ff14)
+			self function_6140a171(attacker);
+		}
+		else
+		{
+			self playsound("evt_shrink");
+			self.var_2209ea1b thread zm_audio::create_and_play_dialog("kill", "shrink");
+			self thread function_259d2f7a("shrink", "J_MainRoot");
+			var_939fbc94 = self.meleedamage;
+			self.meleedamage = 5;
+			self.no_gib = 1;
+			self zombie_utility::zombie_eye_glow_stop();
+			attachedmodels = [];
+			attachedtags = [];
+			hatmodel = self.hatmodel;
+			var_36333499 = self getattachsize();
+			for(i = var_36333499 - 1; i >= 0; i--)
 			{
-				self.hatmodel = undefined;
-			}
-			attachedmodels[attachedmodels.size] = model;
-			attachedtags[attachedtags.size] = tag;
-			self detach(model);
-			var_89a773f5 = level.shrink_models[model];
-			if(isdefined(var_89a773f5))
-			{
-				self attach(var_89a773f5);
+				model = self getattachmodelname(i);
+				tag = self getattachtagname(i);
+				var_4f32ff14 = isdefined(self.hatmodel) && self.hatmodel == model;
 				if(var_4f32ff14)
 				{
-					self.hatmodel = var_89a773f5;
+					self.hatmodel = undefined;
+				}
+				attachedmodels[attachedmodels.size] = model;
+				attachedtags[attachedtags.size] = tag;
+				self detach(model);
+				var_89a773f5 = level.shrink_models[model];
+				if(isdefined(var_89a773f5))
+				{
+					self attach(var_89a773f5);
+					if(var_4f32ff14)
+					{
+						self.hatmodel = var_89a773f5;
+					}
 				}
 			}
+			var_87aa5c26 = level.shrink_models[self.model];
+			if(isdefined(var_87aa5c26))
+			{
+				self setmodel(var_87aa5c26);
+			}
+			if(!self.missinglegs)
+			{
+				self setphysparams(8, -2, 32);
+			}
+			else
+			{
+				self allowpitchangle(0);
+				neworigin = self.origin + vectorscale((0, 0, 1), 10);
+				self teleport(neworigin, self.angles);
+				self setphysparams(8, -16, 10);
+			}
+			self.health = 1;
+			self thread function_6d284e94();
+			self thread function_643fa9c8();
+			self thread watch_for_death();
+			self.zombie_board_tear_down_callback = &function_8b44a1f8;
+			if(isdefined(self._zombie_shrink_callback))
+			{
+				self [[self._zombie_shrink_callback]]();
+			}
+			wait(var_50d1f39);
+			self playsound("evt_unshrink");
+			self thread function_259d2f7a("unshrink", "J_MainRoot");
+			wait(0.5);
+			self.zombie_board_tear_down_callback = undefined;
+			if(isdefined(self._zombie_unshrink_callback))
+			{
+				self [[self._zombie_unshrink_callback]]();
+			}
+			var_36333499 = self getattachsize();
+			for(i = var_36333499 - 1; i >= 0; i--)
+			{
+				model = self getattachmodelname(i);
+				tag = self getattachtagname(i);
+				self detach(model);
+			}
+			self.hatmodel = hatmodel;
+			for(i = 0; i < attachedmodels.size; i++)
+			{
+				self attach(attachedmodels[i]);
+			}
+			self setmodel(var_cd13f0ff);
+			if(!self.missinglegs)
+			{
+				self setphysparams(15, 0, 72);
+			}
+			else
+			{
+				self setphysparams(15, 0, 24);
+				self allowpitchangle(1);
+			}
+			self.health = health;
+			self.meleedamage = var_939fbc94;
+			self.no_gib = 0;
 		}
-		var_87aa5c26 = level.shrink_models[self.model];
-		if(isdefined(var_87aa5c26))
-		{
-			self setmodel(var_87aa5c26);
-		}
-		if(!self.missinglegs)
-		{
-			self setphysparams(8, -2, 32);
-		}
-		else
-		{
-			self allowpitchangle(0);
-			neworigin = self.origin + vectorscale((0, 0, 1), 10);
-			self teleport(neworigin, self.angles);
-			self setphysparams(8, -16, 10);
-		}
-		self.health = 1;
-		self thread function_6d284e94();
-		self thread function_643fa9c8();
-		self thread watch_for_death();
-		self.zombie_board_tear_down_callback = &function_8b44a1f8;
-		if(isdefined(self._zombie_shrink_callback))
-		{
-			self [[self._zombie_shrink_callback]]();
-		}
-		wait(var_50d1f39);
-		self playsound("evt_unshrink");
-		self thread function_259d2f7a("unshrink", "J_MainRoot");
-		wait(0.5);
-		self.zombie_board_tear_down_callback = undefined;
-		if(isdefined(self._zombie_unshrink_callback))
-		{
-			self [[self._zombie_unshrink_callback]]();
-		}
-		var_36333499 = self getattachsize();
-		for(i = var_36333499 - 1; i >= 0; i--)
-		{
-			model = self getattachmodelname(i);
-			tag = self getattachtagname(i);
-			self detach(model);
-		}
-		self.hatmodel = hatmodel;
-		for(i = 0; i < attachedmodels.size; i++)
-		{
-			self attach(attachedmodels[i]);
-		}
-		self setmodel(var_cd13f0ff);
-		if(!self.missinglegs)
-		{
-			self setphysparams(15, 0, 72);
-		}
-		else
-		{
-			self setphysparams(15, 0, 24);
-			self allowpitchangle(1);
-		}
-		self.health = health;
-		self.meleedamage = var_939fbc94;
-		self.no_gib = 0;
 	}
 	self zombie_utility::zombie_eye_glow();
 	if(isactor(self))
@@ -462,17 +474,17 @@ function function_f23d2379()
 {
 	if(isdefined(self getlinkedent()))
 	{
-		return 1;
+		return true;
 	}
 	if(isdefined(self.sliding) && self.sliding)
 	{
-		return 1;
+		return true;
 	}
 	if(isdefined(self.in_the_ceiling) && self.in_the_ceiling)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

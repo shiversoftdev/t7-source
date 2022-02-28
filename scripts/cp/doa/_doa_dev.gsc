@@ -94,7 +94,7 @@ function function_35d58a26()
 		wait(0.05);
 	}
 	doa_utility::debugmsg("Hail to the King baby!");
-	foreach(var_c8a7a0b7, player in namespace_831a4a7c::function_5eb6e4d1())
+	foreach(player in namespace_831a4a7c::function_5eb6e4d1())
 	{
 		player thread function_92c840a6(1);
 	}
@@ -122,7 +122,7 @@ function setupdevgui()
 		index = 1;
 		var_9ba2319f = index;
 		var_9c0bafd1 = level.doa.rules.var_88c0b67b;
-		foreach(var_420fd479, arena in level.doa.arenas)
+		foreach(arena in level.doa.arenas)
 		{
 			if(isdefined(arena.var_63b4dab3) && arena.var_63b4dab3)
 			{
@@ -145,7 +145,7 @@ function setupdevgui()
 			doa_utility::killallenemy();
 			world.var_e5cf1b41 = undefined;
 			doa_utility::debugmsg("");
-			foreach(var_cf345ee5, player in namespace_831a4a7c::function_5eb6e4d1())
+			foreach(player in namespace_831a4a7c::function_5eb6e4d1())
 			{
 				player thread function_92c840a6(5);
 			}
@@ -330,7 +330,7 @@ function function_a3bba13d()
 	adddebugcommand("set bot_AllowMovement 0; set bot_PressAttackBtn 1; set bot_PressMeleeBtn 0; set scr_botsAllowKillstreaks 0; set bot_AllowGrenades 1");
 	while(level.var_1575b6db)
 	{
-		foreach(var_7e4e54bc, guy in namespace_831a4a7c::function_5eb6e4d1())
+		foreach(guy in namespace_831a4a7c::function_5eb6e4d1())
 		{
 			if(!isdefined(guy))
 			{
@@ -390,7 +390,7 @@ function function_a3bba13d()
 		if(level.doa.var_b1698a42.var_cadf4b04.size > 0)
 		{
 			i = 0;
-			foreach(var_f6095d41, guy in namespace_831a4a7c::function_5eb6e4d1())
+			foreach(guy in namespace_831a4a7c::function_5eb6e4d1())
 			{
 				if(guy arecontrolsfrozen() == 0)
 				{
@@ -422,7 +422,7 @@ function function_a3bba13d()
 				{
 					wait(5);
 				}
-				foreach(var_eb0d657b, exit in level.doa.exits_open)
+				foreach(exit in level.doa.exits_open)
 				{
 					exit thread doa_utility::function_a4d1f25e("trigger", randomfloatrange(0.5, 1));
 				}
@@ -489,7 +489,7 @@ function devguithink()
 			setdvar("scr_doa_kingme_soak_think", 0);
 			setdvar("scr_doa_soak_think", 1);
 			doa_utility::debugmsg("Hail to the King baby!");
-			foreach(var_47db1770, player in namespace_831a4a7c::function_5eb6e4d1())
+			foreach(player in namespace_831a4a7c::function_5eb6e4d1())
 			{
 				player thread function_92c840a6();
 			}
@@ -591,7 +591,7 @@ function devguithink()
 				level notify(#"hash_da8786df");
 				if(level.var_cee29ae7 == 1)
 				{
-					foreach(var_58ada4a3, player in getplayers())
+					foreach(player in getplayers())
 					{
 						player thread function_f24eee41();
 					}
@@ -636,7 +636,7 @@ function devguithink()
 			case "king":
 			{
 				doa_utility::debugmsg("Hail to the King baby!");
-				foreach(var_cd97797e, player in namespace_831a4a7c::function_5eb6e4d1())
+				foreach(player in namespace_831a4a7c::function_5eb6e4d1())
 				{
 					player thread function_92c840a6();
 				}
@@ -740,7 +740,7 @@ function devguithink()
 				level.doa.var_b5c260bb = namespace_3ca3c537::function_5835533a(getdvarstring("scr_spawn_room_name"));
 				level.doa.arena_round_number = level.doa.rules.var_88c0b67b - 1;
 				round_number = level.doa.var_b5c260bb * level.doa.rules.var_88c0b67b;
-				foreach(var_ecd6c254, room in level.doa.var_ec2bff7b)
+				foreach(room in level.doa.var_ec2bff7b)
 				{
 					if(round_number > room.var_5281efe5)
 					{
@@ -751,7 +751,7 @@ function devguithink()
 				while(var_7dce6dce)
 				{
 					var_7dce6dce = 0;
-					foreach(var_42ed1005, room in level.doa.var_ec2bff7b)
+					foreach(room in level.doa.var_ec2bff7b)
 					{
 						if(isdefined(room.var_6f369ab4) && room.var_57ce7582.size >= room.var_6f369ab4)
 						{

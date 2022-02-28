@@ -21,7 +21,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_weap_nesting_dolls", &__init__, undefined, undefined);
 }
@@ -37,7 +37,7 @@ autoexec function __init__sytem__()
 */
 function __init__()
 {
-	level.var_21ae0b78 = getweapon("nesting_dolls");
+	level.w_nesting_dolls = getweapon("nesting_dolls");
 	level.var_3a1d655b = getweapon("nesting_dolls_single");
 	level.nesting_dolls_launch_speed = 500;
 	level.nesting_dolls_launch_angle = 45;
@@ -121,15 +121,15 @@ function player_give_nesting_dolls()
 	self nesting_dolls_create_randomized_indices(0);
 	var_1c3c9c82 = level.nesting_dolls_data[self.nesting_dolls_randomized_indices[0][0]].id;
 	weapon_options = self calcweaponoptions(var_1c3c9c82, 0, 0);
-	if(self hasweapon(level.var_21ae0b78))
+	if(self hasweapon(level.w_nesting_dolls))
 	{
-		self updateweaponoptions(level.var_21ae0b78, weapon_options);
+		self updateweaponoptions(level.w_nesting_dolls, weapon_options);
 	}
 	else
 	{
-		self giveweapon(level.var_21ae0b78, weapon_options);
+		self giveweapon(level.w_nesting_dolls, weapon_options);
 	}
-	self zm_utility::set_player_tactical_grenade(level.var_21ae0b78);
+	self zm_utility::set_player_tactical_grenade(level.w_nesting_dolls);
 	self thread player_handle_nesting_dolls();
 }
 
@@ -596,7 +596,7 @@ function get_thrown_nesting_dolls()
 	while(true)
 	{
 		self waittill(#"grenade_fire", grenade, weapon);
-		if(weapon == level.var_21ae0b78)
+		if(weapon == level.w_nesting_dolls)
 		{
 			return grenade;
 		}
@@ -734,10 +734,10 @@ function nesting_dolls_setup_next_doll_throw()
 		next_id = 0;
 	}
 	self nesting_dolls_create_randomized_indices(next_id);
-	if(self hasweapon(level.var_21ae0b78))
+	if(self hasweapon(level.w_nesting_dolls))
 	{
 		cammo = level.nesting_dolls_data[self.nesting_dolls_randomized_indices[next_id][0]].id;
-		self updateweaponoptions(level.var_21ae0b78, self calcweaponoptions(cammo, 0, 0));
+		self updateweaponoptions(level.w_nesting_dolls, self calcweaponoptions(cammo, 0, 0));
 	}
 }
 

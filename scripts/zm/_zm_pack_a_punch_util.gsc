@@ -243,7 +243,7 @@ function update_hint_string(player)
 	Parameters: 4
 	Flags: Linked, Private
 */
-private function pap_weapon_move_in(player, trigger, origin_offset, angles_offset)
+function private pap_weapon_move_in(player, trigger, origin_offset, angles_offset)
 {
 	level endon(#"pack_a_punch_off");
 	trigger endon(#"pap_player_disconnected");
@@ -258,7 +258,7 @@ private function pap_weapon_move_in(player, trigger, origin_offset, angles_offse
 	Parameters: 4
 	Flags: Linked, Private
 */
-private function pap_weapon_move_out(player, trigger, origin_offset, interact_offset)
+function private pap_weapon_move_out(player, trigger, origin_offset, interact_offset)
 {
 	level endon(#"pack_a_punch_off");
 	trigger endon(#"pap_player_disconnected");

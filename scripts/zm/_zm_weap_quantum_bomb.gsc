@@ -27,7 +27,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_weap_quantum_bomb", &__init__, undefined, undefined);
 }
@@ -46,7 +46,7 @@ function __init__()
 	level.quantum_bomb_register_result_func = &quantum_bomb_register_result;
 	level.quantum_bomb_deregister_result_func = &quantum_bomb_deregister_result;
 	level.quantum_bomb_in_playable_area_validation_func = &quantum_bomb_in_playable_area_validation;
-	level.var_17bac01d = getweapon("quantum_bomb");
+	level.w_quantum_bomb = getweapon("quantum_bomb");
 	init();
 }
 
@@ -329,8 +329,8 @@ function quantum_bomb_select_result(position)
 */
 function player_give_quantum_bomb()
 {
-	self giveweapon(level.var_17bac01d);
-	self zm_utility::set_player_tactical_grenade(level.var_17bac01d);
+	self giveweapon(level.w_quantum_bomb);
+	self zm_utility::set_player_tactical_grenade(level.w_quantum_bomb);
 	self thread player_handle_quantum_bomb();
 }
 
@@ -399,7 +399,7 @@ function get_thrown_quantum_bomb()
 	while(true)
 	{
 		self waittill(#"grenade_fire", grenade, weapname);
-		if(weapname == level.var_17bac01d)
+		if(weapname == level.w_quantum_bomb)
 		{
 			return grenade;
 		}
@@ -418,7 +418,7 @@ function get_thrown_quantum_bomb()
 */
 function quantum_bomb_default_validation(position)
 {
-	return 1;
+	return true;
 }
 
 /*
@@ -500,17 +500,17 @@ function function_29e8b3fc(w_weapon)
 {
 	if(w_weapon == level.weaponnone)
 	{
-		return 1;
+		return true;
 	}
 	if(w_weapon.type == "projectile")
 	{
 		if(w_weapon.weapclass == "pistol" || w_weapon.weapclass == "pistol spread")
 		{
-			return 0;
+			return false;
 		}
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -534,7 +534,7 @@ function quantum_bomb_random_weapon_starburst_result(position)
 	#/
 	a_weapons_list = [];
 	var_dd341085 = getarraykeys(level.zombie_weapons);
-	foreach(var_4e9e4903, var_134a15b0 in var_dd341085)
+	foreach(var_134a15b0 in var_dd341085)
 	{
 		if(!var_134a15b0.ismeleeweapon && !var_134a15b0.isgrenadeweapon && !var_134a15b0.islauncher && !function_29e8b3fc(var_134a15b0))
 		{
@@ -682,7 +682,7 @@ function quantum_bomb_auto_revive_validation(position)
 {
 	if(level flag::get("solo_game"))
 	{
-		return 0;
+		return false;
 	}
 	players = getplayers();
 	for(i = 0; i < players.size; i++)
@@ -690,10 +690,10 @@ function quantum_bomb_auto_revive_validation(position)
 		player = players[i];
 		if(player laststand::player_is_in_laststand())
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -827,13 +827,16 @@ function quantum_bomb_teleport(struct_dest)
 	{
 		destination = struct_dest.origin + prone_offset;
 	}
-	else if(self getstance() == "crouch")
-	{
-		destination = struct_dest.origin + crouch_offset;
-	}
 	else
 	{
-		destination = struct_dest.origin + stand_offset;
+		if(self getstance() == "crouch")
+		{
+			destination = struct_dest.origin + crouch_offset;
+		}
+		else
+		{
+			destination = struct_dest.origin + stand_offset;
+		}
 	}
 	if(isdefined(level._black_hole_teleport_override))
 	{
@@ -890,20 +893,23 @@ function quantum_bomb_zombie_speed_buff_result(position)
 		{
 			fast_sprint = zombie [[zombie.fastsprintfunc]]();
 		}
-		else if(isdefined(zombie.in_low_gravity) && zombie.in_low_gravity)
+		else
 		{
-			if(zombie.missinglegs)
+			if(isdefined(zombie.in_low_gravity) && zombie.in_low_gravity)
 			{
-				fast_sprint = "crawl_low_g_super_sprint";
+				if(zombie.missinglegs)
+				{
+					fast_sprint = "crawl_low_g_super_sprint";
+				}
+				else
+				{
+					fast_sprint = "low_g_super_sprint";
+				}
 			}
-			else
+			else if(zombie.missinglegs)
 			{
-				fast_sprint = "low_g_super_sprint";
+				fast_sprint = "crawl_super_sprint";
 			}
-		}
-		else if(zombie.missinglegs)
-		{
-			fast_sprint = "crawl_super_sprint";
 		}
 		if(zombie.isdog)
 		{
@@ -971,7 +977,7 @@ function quantum_bomb_fling_zombie(player, fling_vec)
 	{
 		return;
 	}
-	self dodamage(self.health + 666, player.origin, player, player, 0, "MOD_UNKNOWN", 0, level.var_17bac01d);
+	self dodamage(self.health + 666, player.origin, player, player, 0, "MOD_UNKNOWN", 0, level.w_quantum_bomb);
 	if(self.health <= 0)
 	{
 		self startragdoll();

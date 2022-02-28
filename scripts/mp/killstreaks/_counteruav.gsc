@@ -45,7 +45,7 @@ function init()
 	level.counter_uav_offsets = buildoffsetlist((0, 0, 0), 3, 450, 450);
 	if(level.teambased)
 	{
-		foreach(var_4a103a8c, team in level.teams)
+		foreach(team in level.teams)
 		{
 			level.activecounteruavs[team] = 0;
 			level.counter_uav_position_index[team] = 0;
@@ -223,7 +223,7 @@ function getfirstavailableoffsetindex()
 	{
 		available_offsets[i] = 1;
 	}
-	foreach(var_3057fb51, cuav in level.counter_uav_entities)
+	foreach(cuav in level.counter_uav_entities)
 	{
 		if(isdefined(cuav))
 		{
@@ -294,7 +294,7 @@ function debugdrawoffsetlist()
 {
 	/#
 		baseposition = level.counter_uav_positions[0];
-		foreach(var_e6446b18, offset in level.counter_uav_offsets)
+		foreach(offset in level.counter_uav_offsets)
 		{
 			util::debug_sphere(baseposition + offset, 24, (0.95, 0.05, 0.05), 0.75, 9999999);
 		}
@@ -346,17 +346,17 @@ function activatecounteruav()
 {
 	if(self killstreakrules::iskillstreakallowed("counteruav", self.team) == 0)
 	{
-		return 0;
+		return false;
 	}
 	killstreak_id = self killstreakrules::killstreakstart("counteruav", self.team);
 	if(killstreak_id == -1)
 	{
-		return 0;
+		return false;
 	}
 	counteruav = spawncounteruav(self, killstreak_id);
 	if(!isdefined(counteruav))
 	{
-		return 0;
+		return false;
 	}
 	counteruav setscale(1);
 	counteruav clientfield::set("enemyvehicle", 1);
@@ -373,7 +373,7 @@ function activatecounteruav()
 	counteruav killstreaks::play_pilot_dialog_on_owner("arrive", "counteruav", killstreak_id);
 	counteruav thread killstreaks::player_killstreak_threat_tracking("counteruav");
 	self addweaponstat(getweapon("counteruav"), "used", 1);
-	return 1;
+	return true;
 }
 
 /*
@@ -690,7 +690,7 @@ function enemycounteruavactive()
 {
 	if(level.teambased)
 	{
-		foreach(var_99acbdf9, team in level.teams)
+		foreach(team in level.teams)
 		{
 			if(team == self.team)
 			{
@@ -698,22 +698,22 @@ function enemycounteruavactive()
 			}
 			if(teamhasactivecounteruav(team))
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
 	else
 	{
 		enemies = self teams::getenemyplayers();
-		foreach(var_f7ff26bb, player in enemies)
+		foreach(player in enemies)
 		{
 			if(player hasactivecounteruav())
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -772,7 +772,7 @@ function addactivecounteruav()
 	if(level.teambased)
 	{
 		level.activecounteruavs[self.team]++;
-		foreach(var_5cc522b, team in level.teams)
+		foreach(team in level.teams)
 		{
 			if(team == self.team)
 			{
@@ -879,7 +879,7 @@ function watchcounteruavs()
 	while(true)
 	{
 		level waittill(#"counter_uav_updated");
-		foreach(var_5e66a5e, player in level.players)
+		foreach(player in level.players)
 		{
 			if(player enemycounteruavactive())
 			{
@@ -902,7 +902,7 @@ function watchcounteruavs()
 */
 function hideallcounteruavstosameteam()
 {
-	foreach(var_a83d61df, counteruav in level.counter_uav_entities)
+	foreach(counteruav in level.counter_uav_entities)
 	{
 		if(isdefined(counteruav))
 		{

@@ -18,7 +18,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_genesis_util", &__init__, &__main__, undefined);
 }
@@ -387,11 +387,14 @@ function rq_gateworm_magic(localclientnum, oldval, newval, bnewent, binitialsnap
 		self.var_7bd93049 = playfxontag(localclientnum, level._effect["rq_gateworm_dissolve"], self, "tag_origin");
 		self thread rq_gateworm_dissolve(localclientnum, "scriptVector2");
 	}
-	else if(isdefined(self.var_7bd93049))
+	else
 	{
-		killfx(localclientnum, self.var_1ac96e93);
+		if(isdefined(self.var_7bd93049))
+		{
+			killfx(localclientnum, self.var_1ac96e93);
+		}
+		playfxontag(localclientnum, level._effect["rq_gateworm_magic_explo"], self, "j_head_1");
 	}
-	playfxontag(localclientnum, level._effect["rq_gateworm_magic_explo"], self, "j_head_1");
 }
 
 /*
@@ -460,14 +463,17 @@ function rq_rune_glow(localclientnum, oldval, newval, bnewent, binitialsnap, fie
 			self.var_a20d5c5c = self playloopsound("zmb_main_searchparty_rune_lp", 1);
 		}
 	}
-	else if(isdefined(self.n_fx))
+	else
 	{
-		killfx(localclientnum, self.var_fc9c3ea1);
-	}
-	if(isdefined(self.var_a20d5c5c))
-	{
-		self stoploopsound(self.var_a20d5c5c);
-		self.var_a20d5c5c = undefined;
+		if(isdefined(self.n_fx))
+		{
+			killfx(localclientnum, self.var_fc9c3ea1);
+		}
+		if(isdefined(self.var_a20d5c5c))
+		{
+			self stoploopsound(self.var_a20d5c5c);
+			self.var_a20d5c5c = undefined;
+		}
 	}
 }
 

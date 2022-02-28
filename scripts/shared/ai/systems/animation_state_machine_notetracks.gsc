@@ -12,7 +12,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function initnotetrackhandler()
+function autoexec initnotetrackhandler()
 {
 	level._notetrack_handler = [];
 }
@@ -26,7 +26,7 @@ autoexec function initnotetrackhandler()
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function runnotetrackhandler(entity, notetracks)
+function private runnotetrackhandler(entity, notetracks)
 {
 	/#
 		assert(isarray(notetracks));
@@ -46,7 +46,7 @@ private function runnotetrackhandler(entity, notetracks)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function handlenotetrack(entity, notetrack)
+function private handlenotetrack(entity, notetrack)
 {
 	notetrackhandler = level._notetrack_handler[notetrack];
 	if(!isdefined(notetrackhandler))

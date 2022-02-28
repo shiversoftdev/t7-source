@@ -235,7 +235,7 @@ function recallzipswitch(dir)
 function function_3c93cd15()
 {
 	var_68782483 = getentarray("zipline_buy_trigger", "targetname");
-	foreach(var_cfa31b49, e_trigger in var_68782483)
+	foreach(e_trigger in var_68782483)
 	{
 		e_trigger setinvisibletoplayer(self);
 	}
@@ -253,13 +253,13 @@ function function_3c93cd15()
 function function_73a6adde()
 {
 	level endon(#"end_game");
-	foreach(var_d6e3407e, player in level.players)
+	foreach(player in level.players)
 	{
 		self setinvisibletoplayer(player);
 	}
 	while(true)
 	{
-		foreach(var_ccd1e79f, player in level.players)
+		foreach(player in level.players)
 		{
 			if(player istouching(self) && (!(isdefined(player.var_ff423fef) && player.var_ff423fef)))
 			{
@@ -584,7 +584,7 @@ function activatezip(rider)
 			prevdist = undefined;
 			playerspot = undefined;
 			playerorg = peeps[i] getorigin();
-			foreach(var_42701c63, var_bcd49665 in var_d496a1ae)
+			foreach(var_bcd49665 in var_d496a1ae)
 			{
 				attachorg = self.zip gettagorigin(var_bcd49665);
 				dist = distance2d(playerorg, attachorg);

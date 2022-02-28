@@ -37,7 +37,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_weap_dragon_gauntlet", &__init__, undefined, undefined);
 }
@@ -53,9 +53,9 @@ autoexec function __init__sytem__()
 */
 function __init__()
 {
-	level.var_207d01be = getweapon("dragon_gauntlet_flamethrower");
+	level.weapon_dragon_gauntlet = getweapon("dragon_gauntlet_flamethrower");
 	level.var_ae0fff53 = getweapon("dragon_gauntlet");
-	zm_hero_weapon::register_hero_recharge_event(level.var_207d01be, &function_fa885ef2);
+	zm_hero_weapon::register_hero_recharge_event(level.weapon_dragon_gauntlet, &function_fa885ef2);
 	zm_hero_weapon::register_hero_recharge_event(level.var_ae0fff53, &function_fa885ef2);
 	callback::on_connect(&function_44774881);
 	callback::on_player_killed(&function_421902c5);
@@ -66,9 +66,7 @@ function __init__()
 	zm_hero_weapon::register_hero_weapon_wield_unwield_callbacks("dragon_gauntlet", &function_f79afde0, &function_d638417f);
 	zm_hero_weapon::register_hero_weapon_power_callbacks("dragon_gauntlet", &function_cd7dbd9d, &function_2f36d185);
 	zm::register_actor_damage_callback(&function_cb315e40);
-	object = new throttle();
-	[[ object ]]->__constructor();
-	level.var_af9cd4ca = object;
+	level.var_af9cd4ca = new throttle();
 	[[ level.var_af9cd4ca ]]->initialize(6, 0.05);
 	/#
 		level thread function_a23fb854();
@@ -84,14 +82,14 @@ function __init__()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_44774881()
+function private function_44774881()
 {
 	self endon(#"disconnect");
 	self endon(#"bled_out");
 	self endon(#"death");
 	self endon(#"hash_b24d78f");
 	self function_36f6c07f(0);
-	self.var_207d01be = level.var_207d01be;
+	self.weapon_dragon_gauntlet = level.weapon_dragon_gauntlet;
 	self.var_ae0fff53 = level.var_ae0fff53;
 	self.var_d15b9a33 = "spawner_bo3_dragon_whelp";
 	self.var_956fba75 = 0;
@@ -108,15 +106,15 @@ private function function_44774881()
 	{
 		self waittill(#"new_hero_weapon", weapon);
 	}
-	while(weapon != self.var_207d01be);
+	while(weapon != self.weapon_dragon_gauntlet);
 	if(isdefined(self.var_85466cc5) && isdefined(self.var_85466cc5["dragon_gauntlet_flamethrower"]))
 	{
-		self setweaponammoclip(level.var_207d01be, self.var_85466cc5["dragon_gauntlet_flamethrower"]);
+		self setweaponammoclip(level.weapon_dragon_gauntlet, self.var_85466cc5["dragon_gauntlet_flamethrower"]);
 		self.var_85466cc5 = undefined;
 	}
 	else
 	{
-		self setweaponammoclip(self.var_207d01be, self.var_207d01be.clipsize);
+		self setweaponammoclip(self.weapon_dragon_gauntlet, self.weapon_dragon_gauntlet.clipsize);
 	}
 	if(isdefined(self.var_f7f91f37))
 	{
@@ -177,13 +175,13 @@ function function_421902c5()
 function function_99a68dd()
 {
 	player = self;
-	player zm_weapons::weapon_give(self.var_207d01be, 0, 1);
+	player zm_weapons::weapon_give(self.weapon_dragon_gauntlet, 0, 1);
 	player thread zm_equipment::show_hint_text(&"DLC3_WEAP_DRAGON_GAUNTLET_USE_HINT", 3);
 	player.var_8afc8427 = 100;
 	player.hero_power = 100;
 	player gadgetpowerset(0, 100);
-	player zm_hero_weapon::set_hero_weapon_state(self.var_207d01be, 2);
-	player setweaponammoclip(self.var_207d01be, self.var_207d01be.clipsize);
+	player zm_hero_weapon::set_hero_weapon_state(self.weapon_dragon_gauntlet, 2);
+	player setweaponammoclip(self.weapon_dragon_gauntlet, self.weapon_dragon_gauntlet.clipsize);
 	player.var_fd007e55 = 1;
 }
 
@@ -238,7 +236,7 @@ function function_712b36f9(var_40c4a571)
 		self thread zm_equipment::show_hint_text(&"DLC3_WEAP_DRAGON_GAUNTLET_FLAMETHROWER_HINT", 3);
 		self.var_956fba75 = self.var_956fba75 + 1;
 	}
-	self thread zm_hero_weapon::continue_draining_hero_weapon(self.var_207d01be);
+	self thread zm_hero_weapon::continue_draining_hero_weapon(self.weapon_dragon_gauntlet);
 	self.var_4c8e9f40 = gettime() + 1000;
 	self thread function_c0093887();
 	self thread function_22a08c51(var_40c4a571);
@@ -332,7 +330,7 @@ function function_d638417f(var_dabe8ae8)
 	if(isdefined(self.var_cc844f4c) && self.var_cc844f4c)
 	{
 		self thread zm_hero_weapon::continue_draining_hero_weapon(self.var_ae0fff53);
-		self thread zm_hero_weapon::continue_draining_hero_weapon(self.var_207d01be);
+		self thread zm_hero_weapon::continue_draining_hero_weapon(self.weapon_dragon_gauntlet);
 	}
 }
 
@@ -352,7 +350,7 @@ function weapon_change_watcher()
 	while(true)
 	{
 		self waittill(#"weapon_change", w_current, w_previous);
-		if(w_current === level.var_207d01be)
+		if(w_current === level.weapon_dragon_gauntlet)
 		{
 			if(self.var_f2a52896 === "wpn_t7_zmb_dlc3_gauntlet_dragon_elbow_upg_world")
 			{
@@ -361,19 +359,22 @@ function weapon_change_watcher()
 			self.var_f2a52896 = "wpn_t7_zmb_dlc3_gauntlet_dragon_elbow_world";
 			self attach(self.var_f2a52896, "J_Elbow_RI");
 		}
-		else if(w_current === level.var_ae0fff53)
+		else
 		{
-			if(self.var_f2a52896 === "wpn_t7_zmb_dlc3_gauntlet_dragon_elbow_world")
+			if(w_current === level.var_ae0fff53)
+			{
+				if(self.var_f2a52896 === "wpn_t7_zmb_dlc3_gauntlet_dragon_elbow_world")
+				{
+					self detach(self.var_f2a52896, "J_Elbow_RI");
+				}
+				self.var_f2a52896 = "wpn_t7_zmb_dlc3_gauntlet_dragon_elbow_upg_world";
+				self attach(self.var_f2a52896, "J_Elbow_RI");
+			}
+			else if(isdefined(self.var_f2a52896))
 			{
 				self detach(self.var_f2a52896, "J_Elbow_RI");
+				self.var_f2a52896 = undefined;
 			}
-			self.var_f2a52896 = "wpn_t7_zmb_dlc3_gauntlet_dragon_elbow_upg_world";
-			self attach(self.var_f2a52896, "J_Elbow_RI");
-		}
-		else if(isdefined(self.var_f2a52896))
-		{
-			self detach(self.var_f2a52896, "J_Elbow_RI");
-			self.var_f2a52896 = undefined;
 		}
 		if(isdefined(w_previous) && w_previous.name !== "none" && zm_utility::is_hero_weapon(w_current) && !zm_utility::is_hero_weapon(w_previous))
 		{
@@ -451,7 +452,7 @@ function function_c0093887()
 			wait(0.05);
 			continue;
 		}
-		if(self adsbuttonpressed() && self getcurrentweapon() === self.var_207d01be && (!(isdefined(self.var_a0a9409e) && self.var_a0a9409e)) && (!isdefined(level.var_163a43e4) || !is_in_array(self, level.var_163a43e4)))
+		if(self adsbuttonpressed() && self getcurrentweapon() === self.weapon_dragon_gauntlet && (!(isdefined(self.var_a0a9409e) && self.var_a0a9409e)) && (!isdefined(level.var_163a43e4) || !is_in_array(self, level.var_163a43e4)))
 		{
 			self disableweaponcycling();
 			self function_f5802b55();
@@ -482,15 +483,15 @@ function is_in_array(item, array)
 {
 	if(isdefined(array))
 	{
-		foreach(var_d458c178, index in array)
+		foreach(index in array)
 		{
 			if(index == item)
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -540,8 +541,8 @@ function function_d7a4275d()
 			self disableweaponcycling();
 			self function_22d7caeb();
 			self.var_8afc8427 = self gadgetpowerget(0);
-			self switchtoweapon(self.var_207d01be);
-			while(self getcurrentweapon() !== self.var_207d01be)
+			self switchtoweapon(self.weapon_dragon_gauntlet);
+			while(self getcurrentweapon() !== self.weapon_dragon_gauntlet)
 			{
 				wait(0.05);
 			}
@@ -667,7 +668,7 @@ function function_345e492a(var_ebcc1e01, radius)
 	{
 		return;
 	}
-	foreach(var_b9e1758c, enemy in a_enemies_in_range)
+	foreach(enemy in a_enemies_in_range)
 	{
 		if(!isdefined(enemy) || (isdefined(enemy.var_96906507) && enemy.var_96906507))
 		{
@@ -715,7 +716,7 @@ function function_fa885ef2(e_player, ai_enemy)
 	{
 		return;
 	}
-	if(ai_enemy.damageweapon === level.var_207d01be || ai_enemy.damageweapon === level.var_ae0fff53)
+	if(ai_enemy.damageweapon === level.weapon_dragon_gauntlet || ai_enemy.damageweapon === level.var_ae0fff53)
 	{
 		return;
 	}
@@ -786,7 +787,7 @@ function function_2f36d185(weapon)
 	{
 		self setweaponammoclip(weapon, 0);
 	}
-	if(current_weapon === self.var_207d01be || current_weapon === self.var_ae0fff53)
+	if(current_weapon === self.weapon_dragon_gauntlet || current_weapon === self.var_ae0fff53)
 	{
 		if(isdefined(self.var_a1ee595) && !issubstr(self.var_a1ee595.name, "minigun"))
 		{
@@ -947,7 +948,7 @@ function function_cb315e40(inflictor, attacker, damage, flags, meansofdeath, wea
 {
 	if(isdefined(attacker) && isplayer(attacker))
 	{
-		if(isdefined(weapon) && weapon === level.var_207d01be)
+		if(isdefined(weapon) && weapon === level.weapon_dragon_gauntlet)
 		{
 			if(meansofdeath === "MOD_BURNED")
 			{
@@ -1030,7 +1031,7 @@ function function_a23fb854()
 		wait(0.05);
 		level waittill(#"start_zombie_round_logic");
 		wait(0.05);
-		var_40c4a571 = self.var_207d01be;
+		var_40c4a571 = self.weapon_dragon_gauntlet;
 		equipment_id = var_40c4a571.name;
 		str_cmd = ("" + equipment_id) + "";
 		adddebugcommand(str_cmd);
@@ -1049,7 +1050,7 @@ function function_a23fb854()
 			equipment_id = getdvarstring("");
 			if(equipment_id != "")
 			{
-				foreach(var_b77eb728, player in getplayers())
+				foreach(player in getplayers())
 				{
 					if(equipment_id == var_40c4a571.name)
 					{
@@ -1061,7 +1062,7 @@ function function_a23fb854()
 			equipment_id = getdvarstring("");
 			if(equipment_id != "")
 			{
-				foreach(var_fd493b58, player in getplayers())
+				foreach(player in getplayers())
 				{
 					if(equipment_id == var_40c4a571.name)
 					{
@@ -1075,7 +1076,7 @@ function function_a23fb854()
 			equipment_id = getdvarstring("");
 			if(equipment_id != "")
 			{
-				foreach(var_e6a7eb89, player in getplayers())
+				foreach(player in getplayers())
 				{
 					if(equipment_id == var_40c4a571.name)
 					{
@@ -1089,7 +1090,7 @@ function function_a23fb854()
 			equipment_id = getdvarstring("");
 			if(equipment_id != "")
 			{
-				foreach(var_e87d2957, player in getplayers())
+				foreach(player in getplayers())
 				{
 					if(equipment_id == var_40c4a571.name)
 					{
@@ -1101,7 +1102,7 @@ function function_a23fb854()
 			string = getdvarstring("");
 			if(string === "")
 			{
-				foreach(var_b4ad837e, player in getplayers())
+				foreach(player in getplayers())
 				{
 					player thread function_82f11e44();
 				}
@@ -1110,7 +1111,7 @@ function function_a23fb854()
 			string = getdvarstring("");
 			if(string === "")
 			{
-				foreach(var_359929b1, player in getplayers())
+				foreach(player in getplayers())
 				{
 					player function_c2e5ffc1();
 				}

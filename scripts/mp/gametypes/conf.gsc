@@ -98,7 +98,7 @@ function onstartgametype()
 	}
 	level.spawnmins = (0, 0, 0);
 	level.spawnmaxs = (0, 0, 0);
-	foreach(var_832f6a13, team in level.teams)
+	foreach(team in level.teams)
 	{
 		util::setobjectivetext(team, &"OBJECTIVES_CONF");
 		util::setobjectivehinttext(team, &"OBJECTIVES_CONF_HINT");
@@ -115,7 +115,7 @@ function onstartgametype()
 	}
 	spawning::updateallspawnpoints();
 	level.spawn_start = [];
-	foreach(var_9d8c8c73, team in level.teams)
+	foreach(team in level.teams)
 	{
 		level.spawn_start[team] = spawnlogic::get_spawnpoint_array(spawning::gettdmstartspawnname(team));
 	}
@@ -183,12 +183,12 @@ function onuse(player)
 	else
 	{
 		/#
-			/#
-				assert(isdefined(player.lastkillconfirmedtime));
-			#/
-			/#
-				assert(isdefined(player.lastkillconfirmedcount));
-			#/
+			assert(isdefined(player.lastkillconfirmedtime));
+			assert(isdefined(player.lastkillconfirmedcount));
+		#/
+		/#
+		#/
+		/#
 		#/
 		player.pers["killsconfirmed"]++;
 		player.killsconfirmed = player.pers["killsconfirmed"];

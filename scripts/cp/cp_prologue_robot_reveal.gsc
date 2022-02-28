@@ -126,7 +126,7 @@ function robot_horde_main()
 	level thread objectives::breadcrumb("breadcrumb_robot_horde");
 	level thread function_96157f5d();
 	a_ai_allies = cp_prologue_util::get_ai_allies();
-	foreach(var_518797a1, ai_ally in a_ai_allies)
+	foreach(ai_ally in a_ai_allies)
 	{
 		ai_ally ai::set_behavior_attribute("cqb", 1);
 	}
@@ -138,7 +138,7 @@ function robot_horde_main()
 	a_ai_allies[a_ai_allies.size] = level.ai_khalil;
 	a_ai_allies[a_ai_allies.size] = level.ai_pallas;
 	a_ai_allies[a_ai_allies.size] = level.ai_hyperion;
-	foreach(var_b4699140, ai_ally in a_ai_allies)
+	foreach(ai_ally in a_ai_allies)
 	{
 		ai_ally ai::set_ignoreall(1);
 		ai_ally ai::set_ignoreme(1);
@@ -152,7 +152,7 @@ function robot_horde_main()
 	level.ai_theia ai::set_ignoreall(0);
 	level.ai_pallas ai::set_ignoreall(0);
 	level.ai_hyperion ai::set_ignoreall(0);
-	foreach(var_e2e9655e, ai_ally in a_ai_allies)
+	foreach(ai_ally in a_ai_allies)
 	{
 		ai_ally ai::set_ignoreall(0);
 		ai_ally thread function_54900cca();
@@ -160,7 +160,7 @@ function robot_horde_main()
 	level thread remove_clips();
 	wait(8);
 	level flag::set("open_fire");
-	foreach(var_7edb8e34, ai_ally in a_ai_allies)
+	foreach(ai_ally in a_ai_allies)
 	{
 		ai_ally ai::set_behavior_attribute("cqb", 0);
 	}
@@ -310,7 +310,7 @@ function function_f7a7c69a()
 {
 	var_ede59fe8 = getent("player_inside_garage", "targetname");
 	a_ai_allies = cp_prologue_util::get_ai_allies();
-	foreach(var_b9659309, ai_ally in a_ai_allies)
+	foreach(ai_ally in a_ai_allies)
 	{
 		var_53b8ce9a = getnextarraykey(var_e32153e3);
 		while(isalive(ai_ally) && !ai_ally istouching(var_ede59fe8))
@@ -414,7 +414,7 @@ function function_c2619de1()
 {
 	var_9869c63b = getent("t_kill_robots_inside_garage", "targetname");
 	a_ai_enemies = getaiteamarray("axis");
-	foreach(var_d65a6be7, ai_enemy in a_ai_enemies)
+	foreach(ai_enemy in a_ai_enemies)
 	{
 		if(isalive(ai_enemy))
 		{
@@ -439,7 +439,7 @@ function function_c2619de1()
 */
 function function_d105c430()
 {
-	foreach(var_8d26aabf, player in level.players)
+	foreach(player in level.players)
 	{
 		player thread function_51a9314a();
 	}
@@ -777,7 +777,7 @@ function function_e3231637(var_8a4b0c9)
 {
 	if(isdefined(level.var_681ad194))
 	{
-		foreach(var_40b4f6c8, e_soldier in level.var_681ad194)
+		foreach(e_soldier in level.var_681ad194)
 		{
 			e_soldier ai::set_pacifist(var_8a4b0c9);
 			if(var_8a4b0c9)
@@ -842,7 +842,7 @@ function remove_clips()
 {
 	level flag::wait_till("cyber_soldiers_kill_robots");
 	clips = getentarray("robot_clip", "targetname");
-	foreach(var_e1c0a102, clip in clips)
+	foreach(clip in clips)
 	{
 		clip delete();
 	}

@@ -15,7 +15,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("fx", &__init__, undefined, undefined);
 }
@@ -85,11 +85,14 @@ function create_effect(type, fxid)
 	{
 		ent = spawnstruct();
 	}
-	else if(!isdefined(level._fake_createfx_struct))
+	else
 	{
-		level._fake_createfx_struct = spawnstruct();
+		if(!isdefined(level._fake_createfx_struct))
+		{
+			level._fake_createfx_struct = spawnstruct();
+		}
+		ent = level._fake_createfx_struct;
 	}
-	ent = level._fake_createfx_struct;
 	level.createfxent[level.createfxent.size] = ent;
 	ent.v = [];
 	ent.v["type"] = type;
@@ -189,13 +192,16 @@ function _play_fx_delete(ent, time_to_delete_or_notify = -1)
 	{
 		ent util::waittill_either("death", time_to_delete_or_notify);
 	}
-	else if(time_to_delete_or_notify > 0)
-	{
-		ent util::waittill_any_timeout(time_to_delete_or_notify, "death");
-	}
 	else
 	{
-		ent waittill(#"death");
+		if(time_to_delete_or_notify > 0)
+		{
+			ent util::waittill_any_timeout(time_to_delete_or_notify, "death");
+		}
+		else
+		{
+			ent waittill(#"death");
+		}
 	}
 	if(isdefined(self))
 	{

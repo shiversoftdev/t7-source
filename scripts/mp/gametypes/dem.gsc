@@ -431,26 +431,39 @@ function onplayerkilled(einflictor, attacker, idamage, smeansofdeath, weapon, vd
 				self recordkillmodifier("defending");
 				scoreevents::processscoreevent("killed_defender", attacker, self, weapon);
 			}
-			attacker iprintlnbold("");
-		}
-		else if(!isdefined(attacker.dem_defends))
-		{
-			attacker.dem_defends = 0;
-		}
-		attacker.dem_defends++;
-		if(level.playerdefensivemax >= attacker.dem_defends)
-		{
-			if(isdefined(attacker.pers["defends"]))
+			else
 			{
-				attacker.pers["defends"]++;
-				attacker.defends = attacker.pers["defends"];
+				/#
+					attacker iprintlnbold("");
+				#/
 			}
-			attacker medals::defenseglobalcount();
-			attacker thread challenges::killedbaseoffender(bombzone.trigger, weapon);
-			self recordkillmodifier("assaulting");
-			scoreevents::processscoreevent("killed_attacker", attacker, self, weapon);
 		}
-		attacker iprintlnbold("");
+		else
+		{
+			if(!isdefined(attacker.dem_defends))
+			{
+				attacker.dem_defends = 0;
+			}
+			attacker.dem_defends++;
+			if(level.playerdefensivemax >= attacker.dem_defends)
+			{
+				if(isdefined(attacker.pers["defends"]))
+				{
+					attacker.pers["defends"]++;
+					attacker.defends = attacker.pers["defends"];
+				}
+				attacker medals::defenseglobalcount();
+				attacker thread challenges::killedbaseoffender(bombzone.trigger, weapon);
+				self recordkillmodifier("assaulting");
+				scoreevents::processscoreevent("killed_attacker", attacker, self, weapon);
+			}
+			else
+			{
+				/#
+					attacker iprintlnbold("");
+				#/
+			}
+		}
 	}
 	if(self.isplanting == 1)
 	{
@@ -504,7 +517,7 @@ function checkallowspectating()
 */
 function dem_endgame(winningteam, endreasontext)
 {
-	foreach(var_7acf5319, bombzone in level.bombzones)
+	foreach(bombzone in level.bombzones)
 	{
 		bombzone gameobjects::set_visible_team("none");
 	}
@@ -541,17 +554,20 @@ function ondeadevent(team)
 			dem_endgame(game["defenders"], game["strings"][game["attackers"] + "_eliminated"]);
 		}
 	}
-	else if(team == game["attackers"])
+	else
 	{
-		if(level.bombplanted)
+		if(team == game["attackers"])
 		{
-			return;
+			if(level.bombplanted)
+			{
+				return;
+			}
+			dem_endgame(game["defenders"], game["strings"][game["attackers"] + "_eliminated"]);
 		}
-		dem_endgame(game["defenders"], game["strings"][game["attackers"] + "_eliminated"]);
-	}
-	else if(team == game["defenders"])
-	{
-		dem_endgame(game["attackers"], game["strings"][game["defenders"] + "_eliminated"]);
+		else if(team == game["defenders"])
+		{
+			dem_endgame(game["attackers"], game["strings"][game["defenders"] + "_eliminated"]);
+		}
 	}
 }
 
@@ -588,28 +604,31 @@ function ontimelimit()
 	{
 		dem_endgame("tie", game["strings"]["time_limit_reached"]);
 	}
-	else if(level.teambased)
+	else
 	{
-		bombzonesleft = 0;
-		for(index = 0; index < level.bombzones.size; index++)
+		if(level.teambased)
 		{
-			if(!isdefined(level.bombzones[index].bombexploded) || !level.bombzones[index].bombexploded)
+			bombzonesleft = 0;
+			for(index = 0; index < level.bombzones.size; index++)
 			{
-				bombzonesleft++;
+				if(!isdefined(level.bombzones[index].bombexploded) || !level.bombzones[index].bombexploded)
+				{
+					bombzonesleft++;
+				}
 			}
-		}
-		if(bombzonesleft == 0)
-		{
-			dem_endgame(game["attackers"], game["strings"]["target_destroyed"]);
+			if(bombzonesleft == 0)
+			{
+				dem_endgame(game["attackers"], game["strings"]["target_destroyed"]);
+			}
+			else
+			{
+				dem_endgame(game["defenders"], game["strings"]["time_limit_reached"]);
+			}
 		}
 		else
 		{
-			dem_endgame(game["defenders"], game["strings"]["time_limit_reached"]);
+			dem_endgame("tie", game["strings"]["time_limit_reached"]);
 		}
-	}
-	else
-	{
-		dem_endgame("tie", game["strings"]["time_limit_reached"]);
 	}
 }
 
@@ -804,7 +823,7 @@ function bombs()
 				trigger delete();
 				defusetrig delete();
 				visuals[0] delete();
-				foreach(var_74262613, clip in clipbrushes)
+				foreach(clip in clipbrushes)
 				{
 					clip delete();
 				}
@@ -819,7 +838,7 @@ function bombs()
 			trigger delete();
 			defusetrig delete();
 			visuals[0] delete();
-			foreach(var_9cf9d426, clip in clipbrushes)
+			foreach(clip in clipbrushes)
 			{
 				clip delete();
 			}
@@ -857,7 +876,7 @@ function bombs()
 				break;
 			}
 		}
-		foreach(var_146c2ac8, visual in bombzone.visuals)
+		foreach(visual in bombzone.visuals)
 		{
 			visual.team = "free";
 		}
@@ -1049,7 +1068,12 @@ function onuseobject(player)
 			scoreevents::processscoreevent("planted_bomb", player);
 			player recordgameevent("plant");
 		}
-		player iprintlnbold("");
+		else
+		{
+			/#
+				player iprintlnbold("");
+			#/
+		}
 		level thread popups::displayteammessagetoall(&"MP_EXPLOSIVES_PLANTED_BY", player);
 		globallogic_audio::leader_dialog("bombPlanted");
 	}
@@ -1075,7 +1099,12 @@ function onuseobject(player)
 			scoreevents::processscoreevent("defused_bomb", player);
 			player recordgameevent("defuse");
 		}
-		player iprintlnbold("");
+		else
+		{
+			/#
+				player iprintlnbold("");
+			#/
+		}
 		level thread popups::displayteammessagetoall(&"MP_EXPLOSIVES_DEFUSED_BY", player);
 		thread globallogic_audio::set_music_on_team("DEM_WE_DEFUSE", team, 5);
 		thread globallogic_audio::set_music_on_team("DEM_THEY_DEFUSE", enemyteam, 5);
@@ -1261,7 +1290,7 @@ function bombplanted(destroyedobj, player)
 	explosionorigin = destroyedobj.curorigin;
 	level.ddbombmodel[destroyedobj.label] delete();
 	clips = getentarray("bombzone_clip" + destroyedobj.label, "targetname");
-	foreach(var_43807ead, clip in clips)
+	foreach(clip in clips)
 	{
 		clip delete();
 	}
@@ -1388,13 +1417,13 @@ function shouldplayovertimeround()
 {
 	if(isdefined(game["overtime_round"]))
 	{
-		return 0;
+		return false;
 	}
 	if(game["teamScores"]["allies"] == (level.scorelimit - 1) && game["teamScores"]["axis"] == (level.scorelimit - 1))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1550,16 +1579,16 @@ function isscoreboosting(player, flag)
 {
 	if(!level.rankedmatch)
 	{
-		return 0;
+		return false;
 	}
 	if(player.eventsperminute > level.playereventslpm)
 	{
-		return 1;
+		return true;
 	}
 	if(flag.eventsperminute > level.bombeventslpm)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 

@@ -37,7 +37,7 @@ function init()
 {
 	if(level.teambased)
 	{
-		foreach(var_6c4546d, team in level.teams)
+		foreach(team in level.teams)
 		{
 			level.activeuavs[team] = 0;
 		}
@@ -117,12 +117,12 @@ function activateuav()
 	#/
 	if(self killstreakrules::iskillstreakallowed("uav", self.team) == 0)
 	{
-		return 0;
+		return false;
 	}
 	killstreak_id = self killstreakrules::killstreakstart("uav", self.team);
 	if(killstreak_id == -1)
 	{
-		return 0;
+		return false;
 	}
 	rotator = level.airsupport_rotator;
 	attach_angle = -90;
@@ -169,7 +169,7 @@ function activateuav()
 	self killstreaks::play_killstreak_start_dialog("uav", self.team, killstreak_id);
 	uav killstreaks::play_pilot_dialog_on_owner("arrive", "uav", killstreak_id);
 	uav thread killstreaks::player_killstreak_threat_tracking("uav");
-	return 1;
+	return true;
 }
 
 /*
@@ -510,7 +510,7 @@ function uavtracker()
 		level waittill(#"uav_update");
 		if(level.teambased)
 		{
-			foreach(var_77eeeab8, team in level.teams)
+			foreach(team in level.teams)
 			{
 				activeuavs = level.activeuavs[team];
 				activeuavsandsatellites = activeuavs + (isdefined(level.activesatellites) ? level.activesatellites[team] : 0);
@@ -550,7 +550,7 @@ function uavtracker()
 */
 function hidealluavstosameteam()
 {
-	foreach(var_cf1a46b2, uav in level.spawneduavs)
+	foreach(uav in level.spawneduavs)
 	{
 		if(isdefined(uav))
 		{

@@ -82,16 +82,16 @@ function perk_hack_qualifier(player)
 {
 	if(isdefined(player._retain_perks))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.perk) && isdefined(self.perk.script_noteworthy))
 	{
 		if(player hasperk(self.perk.script_noteworthy))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*

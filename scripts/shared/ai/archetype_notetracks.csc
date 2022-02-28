@@ -13,7 +13,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function main()
+function autoexec main()
 {
 	if(sessionmodeiszombiesgame() && getdvarint("splitscreen_playerCount") > 2)
 	{
@@ -35,7 +35,7 @@ autoexec function main()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function initializenotetrackhandlers(localclientnum)
+function private initializenotetrackhandlers(localclientnum)
 {
 	addsurfacenotetrackfxhandler(localclientnum, "jumping", "surfacefxtable_jumping");
 	addsurfacenotetrackfxhandler(localclientnum, "landing", "surfacefxtable_landing");
@@ -51,7 +51,7 @@ private function initializenotetrackhandlers(localclientnum)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function addsurfacenotetrackfxhandler(localclientnum, notetrack, surfacetable)
+function private addsurfacenotetrackfxhandler(localclientnum, notetrack, surfacetable)
 {
 	entity = self;
 	entity thread handlesurfacenotetrackfx(localclientnum, notetrack, surfacetable);
@@ -66,7 +66,7 @@ private function addsurfacenotetrackfxhandler(localclientnum, notetrack, surface
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function handlesurfacenotetrackfx(localclientnum, notetrack, surfacetable)
+function private handlesurfacenotetrackfx(localclientnum, notetrack, surfacetable)
 {
 	entity = self;
 	entity endon(#"entityshutdown");

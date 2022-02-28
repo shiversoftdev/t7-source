@@ -34,7 +34,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_island_side_ee_spore_hallucinations", &__init__, undefined, undefined);
 }
@@ -314,30 +314,30 @@ function function_4c6daca1(cmd)
 			case "":
 			{
 				level.activeplayers[0] thread function_f0e36b57();
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				level.activeplayers[0] thread function_5d3a5f36();
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				level thread function_ef6cd11(5);
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				level thread function_ef6cd11(10);
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				level thread function_ef6cd11(20);
-				return 1;
+				return true;
 			}
 		}
-		return 0;
+		return false;
 	#/
 }
 
@@ -353,7 +353,7 @@ function function_4c6daca1(cmd)
 function function_ef6cd11(var_7156fcfa)
 {
 	/#
-		foreach(var_86ffd44, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			player.var_5f5af9f0 = var_7156fcfa;
 			if(var_7156fcfa > 5)

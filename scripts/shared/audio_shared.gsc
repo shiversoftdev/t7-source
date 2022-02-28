@@ -18,7 +18,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("audio", &__init__, undefined, undefined);
 }
@@ -282,7 +282,7 @@ function unlockfrontendmusic(unlockname, allplayers = 1)
 	{
 		if(isdefined(level.players) && level.players.size > 0)
 		{
-			foreach(var_4adf7bba, player in level.players)
+			foreach(player in level.players)
 			{
 				player unlocksongbyalias(unlockname);
 			}

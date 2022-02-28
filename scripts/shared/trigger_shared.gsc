@@ -18,7 +18,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("trigger", &__init__, undefined, undefined);
 }
@@ -58,14 +58,14 @@ function __init__()
 	trigger_funcs["trigger_spawner"] = &trigger_spawner;
 	trigger_funcs["trigger_hint"] = &trigger_hint;
 	trigger_funcs["exploder"] = &trigger_exploder;
-	foreach(var_4639524f, trig in get_all("trigger_radius", "trigger_multiple", "trigger_once", "trigger_box"))
+	foreach(trig in get_all("trigger_radius", "trigger_multiple", "trigger_once", "trigger_box"))
 	{
 		if(isdefined(trig.spawnflags) && (trig.spawnflags & 256) == 256)
 		{
 			level thread trigger_look(trig);
 		}
 	}
-	foreach(var_2cc6ced6, trig in get_all())
+	foreach(trig in get_all())
 	{
 		/#
 			trig check_spawnflags();
@@ -240,7 +240,7 @@ function get_trigger_look_target()
 	{
 		a_potential_targets = getentarray(self.target, "targetname");
 		a_targets = [];
-		foreach(var_8cc4e06f, target in a_potential_targets)
+		foreach(target in a_potential_targets)
 		{
 			if(target.classname === "script_origin")
 			{
@@ -321,7 +321,12 @@ function trigger_look(trigger)
 				level flag::clear(trigger.script_flag);
 			}
 		}
-		assertmsg("");
+		else
+		{
+			/#
+				assertmsg("");
+			#/
+		}
 	}
 }
 
@@ -342,7 +347,7 @@ function trigger_spawner(trigger)
 	#/
 	trigger endon(#"death");
 	trigger wait_till();
-	foreach(var_e35821c2, sp in a_spawners)
+	foreach(sp in a_spawners)
 	{
 		if(isdefined(sp))
 		{
@@ -384,7 +389,7 @@ function trigger_notify(trigger, msg)
 	if(isdefined(trigger.target))
 	{
 		a_target_ents = getentarray(trigger.target, "targetname");
-		foreach(var_5d14d4b6, notify_ent in a_target_ents)
+		foreach(notify_ent in a_target_ents)
 		{
 			notify_ent notify(msg, other);
 		}
@@ -632,13 +637,16 @@ function script_flag_set_touching(trigger)
 				level flag::clear(trigger.script_flag_set_on_cleared);
 			}
 		}
-		else if(isdefined(trigger.script_flag_set_on_touching))
+		else
 		{
-			level flag::clear(trigger.script_flag_set_on_touching);
-		}
-		if(isdefined(trigger.script_flag_set_on_cleared))
-		{
-			level flag::set(trigger.script_flag_set_on_cleared);
+			if(isdefined(trigger.script_flag_set_on_touching))
+			{
+				level flag::clear(trigger.script_flag_set_on_touching);
+			}
+			if(isdefined(trigger.script_flag_set_on_cleared))
+			{
+				level flag::set(trigger.script_flag_set_on_cleared);
+			}
 		}
 	}
 }
@@ -1039,12 +1047,12 @@ function _is_valid_trigger_type(type)
 		case "trigger_use":
 		case "trigger_use_touch":
 		{
-			return 1;
+			return true;
 			break;
 		}
 		default:
 		{
-			return 0;
+			return false;
 		}
 	}
 }
@@ -1070,7 +1078,12 @@ function wait_till(str_name, str_key = "targetname", e_entity, b_assert = 1)
 				return;
 			}
 		}
-		assert(!b_assert || triggers.size > 0, (("" + str_name) + "") + str_key);
+		else
+		{
+			/#
+				assert(!b_assert || triggers.size > 0, (("" + str_name) + "") + str_key);
+			#/
+		}
 		if(triggers.size > 0)
 		{
 			if(triggers.size == 1)
@@ -1088,14 +1101,17 @@ function wait_till(str_name, str_key = "targetname", e_entity, b_assert = 1)
 			return trigger_hit;
 		}
 	}
-	else if(sessionmodeiscampaignzombiesgame())
+	else
 	{
-		if(!isdefined(self))
+		if(sessionmodeiscampaignzombiesgame())
 		{
-			return;
+			if(!isdefined(self))
+			{
+				return;
+			}
 		}
+		return _trigger_wait(e_entity);
 	}
-	return _trigger_wait(e_entity);
 }
 
 /*
@@ -1141,32 +1157,35 @@ function _trigger_wait(e_entity)
 				}
 			}
 		}
-		else if(self.classname === "trigger_damage")
-		{
-			self waittill(#"trigger", e_other);
-			if(isdefined(e_entity))
-			{
-				if(e_other !== e_entity)
-				{
-					continue;
-				}
-			}
-		}
 		else
 		{
-			self waittill(#"trigger", e_other);
-			if(isdefined(e_entity))
+			if(self.classname === "trigger_damage")
 			{
-				if(isarray(e_entity))
+				self waittill(#"trigger", e_other);
+				if(isdefined(e_entity))
 				{
-					if(!array::is_touching(e_entity, self))
+					if(e_other !== e_entity)
 					{
 						continue;
 					}
 				}
-				else if(!e_entity istouching(self) && e_entity !== e_other)
+			}
+			else
+			{
+				self waittill(#"trigger", e_other);
+				if(isdefined(e_entity))
 				{
-					continue;
+					if(isarray(e_entity))
+					{
+						if(!array::is_touching(e_entity, self))
+						{
+							continue;
+						}
+					}
+					else if(!e_entity istouching(self) && e_entity !== e_other)
+					{
+						continue;
+					}
 				}
 			}
 		}
@@ -1325,7 +1344,7 @@ function init_flags()
 */
 function is_look_trigger(trig)
 {
-	return (isdefined(trig) ? !trig.classname === "trigger_damage" : 0);
+	return true;
 }
 
 /*
@@ -1339,7 +1358,7 @@ function is_look_trigger(trig)
 */
 function is_trigger_once(trig)
 {
-	return (isdefined(trig) ? self.classname === "trigger_once" : 0);
+	return true;
 }
 
 /*
@@ -1443,7 +1462,7 @@ function trigger_on_timeout(n_time, b_cancel_on_triggered = 1, str_name, str_key
 */
 function multiple_waits(str_trigger_name, str_trigger_notify)
 {
-	foreach(var_747ef0dc, trigger in getentarray(str_trigger_name, "targetname"))
+	foreach(trigger in getentarray(str_trigger_name, "targetname"))
 	{
 		trigger thread multiple_wait(str_trigger_notify);
 	}
@@ -1523,12 +1542,12 @@ function kill_spawner_trigger(trigger)
 {
 	trigger wait_till();
 	a_spawners = getspawnerarray(trigger.script_killspawner, "script_killspawner");
-	foreach(var_64090632, sp in a_spawners)
+	foreach(sp in a_spawners)
 	{
 		sp delete();
 	}
 	a_ents = getentarray(trigger.script_killspawner, "script_killspawner");
-	foreach(var_7aaa5601, ent in a_ents)
+	foreach(ent in a_ents)
 	{
 		if(ent.classname === "spawn_manager" && ent != trigger)
 		{
@@ -1737,17 +1756,17 @@ function ent_already_in(trig)
 {
 	if(!isdefined(self._triggers))
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(self._triggers[trig getentitynumber()]))
 	{
-		return 0;
+		return false;
 	}
 	if(!self._triggers[trig getentitynumber()])
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*

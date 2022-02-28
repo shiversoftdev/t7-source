@@ -388,9 +388,9 @@ function tesla_zombie_death_response()
 {
 	if(self enemy_killed_by_tesla())
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -407,8 +407,8 @@ function tesla_zombie_damage_response(willbekilled, inflictor, attacker, damage,
 	if(self is_tesla_damage(meansofdeath, weapon))
 	{
 		self thread tesla_damage_init(shitloc, vpoint, attacker);
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 

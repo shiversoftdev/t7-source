@@ -17,7 +17,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_castle_tram", &__init__, undefined, undefined);
 }
@@ -156,11 +156,11 @@ function snd_tram(localclientnum, oldval, newval, bnewent, binitialsnap, fieldna
 		if(newval == 1)
 		{
 			playsound(0, "evt_tram_motor_start", (342, 979, 135));
-			foreach(var_a931e47c, location in level.var_4ea0a9e6)
+			foreach(location in level.var_4ea0a9e6)
 			{
 				audio::playloopat("evt_tram_pulley_large_loop", location);
 			}
-			foreach(var_716a1f9, location in level.var_a49222f2)
+			foreach(location in level.var_a49222f2)
 			{
 				audio::playloopat("evt_tram_pulley_small_loop", location);
 			}
@@ -168,11 +168,11 @@ function snd_tram(localclientnum, oldval, newval, bnewent, binitialsnap, fieldna
 		if(newval == 2)
 		{
 			playsound(0, "evt_tram_motor_stop", (342, 979, 135));
-			foreach(var_d7ed6d98, location in level.var_4ea0a9e6)
+			foreach(location in level.var_4ea0a9e6)
 			{
 				audio::stoploopat("evt_tram_pulley_large_loop", location);
 			}
-			foreach(var_778a120a, location in level.var_a49222f2)
+			foreach(location in level.var_a49222f2)
 			{
 				audio::stoploopat("evt_tram_pulley_small_loop", location);
 			}

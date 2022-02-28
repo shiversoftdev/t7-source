@@ -17,7 +17,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function main()
+function autoexec main()
 {
 	if(!isdefined(level.item_drops))
 	{
@@ -297,12 +297,12 @@ function pickup(drop)
 		}
 		if(!self [[drop.drop.callback]](multiplier))
 		{
-			return 0;
+			return false;
 		}
 	}
 	playsoundatposition("fly_supply_bag_pick_up", self.origin);
 	drop.model delete();
 	arrayremovevalue(level.item_drops_current, drop);
-	return 1;
+	return true;
 }
 

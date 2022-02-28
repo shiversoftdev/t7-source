@@ -18,7 +18,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("robot", &__init__, undefined, undefined);
 }
@@ -32,7 +32,7 @@ autoexec function __init__sytem__()
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function precache()
+function autoexec precache()
 {
 	level._effect["fx_ability_elec_surge_short_robot"] = "electric/fx_ability_elec_surge_short_robot";
 	level._effect["fx_exp_robot_stage3_evb"] = "explosions/fx_exp_robot_stage3_evb";
@@ -70,7 +70,7 @@ function __init__()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotsoldierspawnsetup(localclientnum)
+function private robotsoldierspawnsetup(localclientnum)
 {
 	entity = self;
 }
@@ -84,7 +84,7 @@ private function robotsoldierspawnsetup(localclientnum)
 	Parameters: 4
 	Flags: Linked, Private
 */
-private function robotlighting(localclientnum, entity, flicker, mindcontrolstate)
+function private robotlighting(localclientnum, entity, flicker, mindcontrolstate)
 {
 	switch(mindcontrolstate)
 	{
@@ -164,7 +164,7 @@ private function robotlighting(localclientnum, entity, flicker, mindcontrolstate
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function robotlightshandler(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private robotlightshandler(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	entity = self;
 	if(!isdefined(entity) || !entity isai() || (isdefined(entity.archetype) && entity.archetype != "robot"))
@@ -192,7 +192,7 @@ private function robotlightshandler(localclientnum, oldvalue, newvalue, bnewent,
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function robotemphandler(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private robotemphandler(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	entity = self;
 	if(!isdefined(entity) || !entity isai() || (isdefined(entity.archetype) && entity.archetype != "robot"))
@@ -226,7 +226,7 @@ private function robotemphandler(localclientnum, oldvalue, newvalue, bnewent, bi
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function robotmindcontrolhandler(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private robotmindcontrolhandler(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	entity = self;
 	if(!isdefined(entity) || !entity isai() || (isdefined(entity.archetype) && entity.archetype != "robot"))

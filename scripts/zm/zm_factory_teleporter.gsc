@@ -28,7 +28,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_factory_teleporter", &__init__, &__main__, undefined);
 }
@@ -452,9 +452,9 @@ function player_is_near_pad(player)
 	dist_touching = radius * scale_factor;
 	if(dist < dist_touching)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -524,13 +524,16 @@ function teleport_players()
 					{
 						desired_origin = image_room[i].origin + prone_offset;
 					}
-					else if(players[i] getstance() == "crouch")
-					{
-						desired_origin = image_room[i].origin + crouch_offset;
-					}
 					else
 					{
-						desired_origin = image_room[i].origin + stand_offset;
+						if(players[i] getstance() == "crouch")
+						{
+							desired_origin = image_room[i].origin + crouch_offset;
+						}
+						else
+						{
+							desired_origin = image_room[i].origin + stand_offset;
+						}
 					}
 					players[i].teleport_origin = spawn("script_origin", players[i].origin);
 					players[i].teleport_origin.angles = players[i].angles;
@@ -632,17 +635,23 @@ function teleport_core_hint_update()
 		{
 			self sethintstring(&"ZOMBIE_NEED_POWER");
 		}
-		else if(teleport_pads_are_active())
-		{
-			self sethintstring(&"ZOMBIE_LINK_TPAD");
-		}
-		else if(level.active_links == 0)
-		{
-			self sethintstring(&"ZOMBIE_INACTIVE_TPAD");
-		}
 		else
 		{
-			self sethintstring("");
+			if(teleport_pads_are_active())
+			{
+				self sethintstring(&"ZOMBIE_LINK_TPAD");
+			}
+			else
+			{
+				if(level.active_links == 0)
+				{
+					self sethintstring(&"ZOMBIE_INACTIVE_TPAD");
+				}
+				else
+				{
+					self sethintstring("");
+				}
+			}
 		}
 		wait(0.05);
 	}
@@ -763,12 +772,12 @@ function teleport_pads_are_active()
 			{
 				if(level.teleport[i] == "timer_on")
 				{
-					return 1;
+					return true;
 				}
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*

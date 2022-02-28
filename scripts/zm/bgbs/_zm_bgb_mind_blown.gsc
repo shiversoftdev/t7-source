@@ -23,7 +23,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_bgb_mind_blown", &__init__, undefined, "bgb");
 }
@@ -62,9 +62,9 @@ function validation()
 {
 	if(isdefined(level.var_398d0113) && level.var_398d0113)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -115,7 +115,7 @@ function function_2a8862aa()
 	var_bd6badee = 1200 * 1200;
 	var_3c48f56 = [];
 	allai = getaiarray();
-	foreach(var_69bce69a, ai in allai)
+	foreach(ai in allai)
 	{
 		if(isdefined(ai.var_5691b7d8) && ai [[ai.var_5691b7d8]]())
 		{
@@ -132,7 +132,7 @@ function function_2a8862aa()
 	}
 	var_e4760c66 = [];
 	var_e37fbbbd = [];
-	foreach(var_f93fbae, ai in var_3c48f56)
+	foreach(ai in var_3c48f56)
 	{
 		if(distance2dsquared(ai.origin, self.origin) >= var_bd6badee)
 		{
@@ -154,13 +154,13 @@ function function_2a8862aa()
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function function_2ca71d8b(allai, trace, degree = 45)
+function private function_2ca71d8b(allai, trace, degree = 45)
 {
 	var_f1649153 = allai;
 	players = getplayers();
 	var_445b9352 = cos(degree);
 	var_f1649153 = self cantseeentities(var_f1649153, var_445b9352, trace);
-	foreach(var_157bd6b7, ai in allai)
+	foreach(ai in allai)
 	{
 		if(isinarray(var_f1649153, ai))
 		{

@@ -20,7 +20,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_powerup_zombie_blood", &__init__, undefined, undefined);
 }
@@ -51,7 +51,7 @@ function __init__()
 	level.a_zombie_blood_entities = getentarray("zombie_blood_visible", "targetname");
 	if(isdefined(level.a_zombie_blood_entities))
 	{
-		foreach(var_2cc6ced6, var_e81648f0 in level.a_zombie_blood_entities)
+		foreach(var_e81648f0 in level.a_zombie_blood_entities)
 		{
 			var_e81648f0 thread make_zombie_blood_entity();
 		}
@@ -133,7 +133,7 @@ function zombie_blood_powerup(var_bae0d10b, e_player)
 	visionset_mgr::activate("overlay", "zm_tomb_in_plain_sight", e_player);
 	e_player clientfield::set("player_zombie_blood_fx", 1);
 	level.a_zombie_blood_entities = array::remove_undefined(level.a_zombie_blood_entities);
-	foreach(var_e1142790, e_zombie_blood in level.a_zombie_blood_entities)
+	foreach(e_zombie_blood in level.a_zombie_blood_entities)
 	{
 		if(isdefined(e_zombie_blood.e_unique_player))
 		{
@@ -179,7 +179,7 @@ function zombie_blood_powerup(var_bae0d10b, e_player)
 	e_player clientfield::set("player_zombie_blood_fx", 0);
 	e_player zm_utility::decrement_ignoreme();
 	level.a_zombie_blood_entities = array::remove_undefined(level.a_zombie_blood_entities);
-	foreach(var_32d69962, e_zombie_blood in level.a_zombie_blood_entities)
+	foreach(e_zombie_blood in level.a_zombie_blood_entities)
 	{
 		e_zombie_blood setinvisibletoplayer(e_player);
 	}
@@ -245,7 +245,7 @@ function make_zombie_blood_entity()
 	}
 	level.a_zombie_blood_entities[level.a_zombie_blood_entities.size] = self;
 	self setinvisibletoall();
-	foreach(var_f18192b, e_player in getplayers())
+	foreach(e_player in getplayers())
 	{
 		if(e_player.zombie_vars["zombie_powerup_zombie_blood_on"])
 		{

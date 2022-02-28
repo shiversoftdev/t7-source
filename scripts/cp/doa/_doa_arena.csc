@@ -24,7 +24,7 @@
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_a55a134f()
+function private function_a55a134f()
 {
 	arenas = struct::get_array("arena_center");
 	for(i = 0; i < arenas.size; i++)
@@ -382,11 +382,11 @@ function function_a5b9b9b9(var_92804e37, var_b092b293, struct)
 			field = getstructfield(struct, key);
 			if(isdefined(field) && issubstr(field, var_cd3c820[j]))
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -437,12 +437,12 @@ function function_a83dfb2c()
 	{
 		wait(0.016);
 	}
-	foreach(var_56a87db, arena in level.doa.arenas)
+	foreach(arena in level.doa.arenas)
 	{
 		arena.exits = getentarray(0, arena.name + "_doa_exit", "targetname");
 	}
 	a_all_entities = getentarray(0);
-	foreach(var_f8da90eb, entity in a_all_entities)
+	foreach(entity in a_all_entities)
 	{
 		wait(0.01);
 	}

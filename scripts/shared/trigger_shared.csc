@@ -49,17 +49,17 @@ function ent_already_in(trig)
 {
 	if(!isdefined(self._triggers))
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(self._triggers[trig getentitynumber()]))
 	{
-		return 0;
+		return false;
 	}
 	if(!self._triggers[trig getentitynumber()])
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*

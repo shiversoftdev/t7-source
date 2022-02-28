@@ -19,7 +19,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	/#
 		system::register("", &__init__, undefined, undefined);
@@ -63,7 +63,7 @@ function function_f69ab75e()
 		while(true)
 		{
 			level flagsys::wait_till("");
-			foreach(var_f30f4df4, var_4d881e03 in function_c4a37ed9())
+			foreach(var_4d881e03 in function_c4a37ed9())
 			{
 				var_4d881e03 thread debug_display();
 			}
@@ -85,7 +85,7 @@ function function_c4a37ed9()
 {
 	/#
 		a_scenes = arraycombine(struct::get_array("", ""), struct::get_array("", ""), 0, 0);
-		foreach(var_6eba6ac9, a_active_scenes in level.active_scenes)
+		foreach(a_active_scenes in level.active_scenes)
 		{
 			a_scenes = arraycombine(a_scenes, a_active_scenes, 0, 0);
 		}
@@ -119,7 +119,7 @@ function run_scene_tests()
 				clear_old_ents(str_scene);
 				b_found = 0;
 				a_scenes = struct::get_array(str_scene, "");
-				foreach(var_53b3e826, s_instance in a_scenes)
+				foreach(s_instance in a_scenes)
 				{
 					if(isdefined(s_instance))
 					{
@@ -129,7 +129,7 @@ function run_scene_tests()
 				}
 				if(isdefined(level.active_scenes[str_scene]))
 				{
-					foreach(var_4c212d58, s_instance in level.active_scenes[str_scene])
+					foreach(s_instance in level.active_scenes[str_scene])
 					{
 						if(!isinarray(a_scenes, s_instance))
 						{
@@ -150,7 +150,7 @@ function run_scene_tests()
 				clear_old_ents(str_scene);
 				b_found = 0;
 				a_scenes = struct::get_array(str_scene, "");
-				foreach(var_3fe383f4, s_instance in a_scenes)
+				foreach(s_instance in a_scenes)
 				{
 					if(isdefined(s_instance))
 					{
@@ -186,7 +186,7 @@ function run_scene_tests()
 function clear_old_ents(str_scene)
 {
 	/#
-		foreach(var_be7aea1f, ent in getentarray(0))
+		foreach(ent in getentarray(0))
 		{
 			if(ent.scene_spawned === str_scene && ent.finished_scene === str_scene)
 			{
@@ -308,7 +308,7 @@ function display_scene_menu(str_type)
 			a_scenedefs = arraycombine(a_scenedefs, get_scenedefs(""), 0, 1);
 		}
 		names = [];
-		foreach(var_e26d82db, s_scenedef in a_scenedefs)
+		foreach(s_scenedef in a_scenedefs)
 		{
 			array::add_sorted(names, s_scenedef.name, 0);
 		}
@@ -337,15 +337,18 @@ function display_scene_menu(str_type)
 					selected--;
 				}
 			}
-			else if(level.localplayers[0] util::up_button_held())
+			else
 			{
-				held = 1;
-				selected = selected - 10;
-			}
-			else if(!level.localplayers[0] util::up_button_pressed())
-			{
-				held = 0;
-				up_pressed = 0;
+				if(level.localplayers[0] util::up_button_held())
+				{
+					held = 1;
+					selected = selected - 10;
+				}
+				else if(!level.localplayers[0] util::up_button_pressed())
+				{
+					held = 0;
+					up_pressed = 0;
+				}
 			}
 			if(!down_pressed)
 			{
@@ -355,15 +358,18 @@ function display_scene_menu(str_type)
 					selected++;
 				}
 			}
-			else if(level.localplayers[0] util::down_button_held())
+			else
 			{
-				held = 1;
-				selected = selected + 10;
-			}
-			else if(!level.localplayers[0] util::down_button_pressed())
-			{
-				held = 0;
-				down_pressed = 0;
+				if(level.localplayers[0] util::down_button_held())
+				{
+					held = 1;
+					selected = selected + 10;
+				}
+				else if(!level.localplayers[0] util::down_button_pressed())
+				{
+					held = 0;
+					down_pressed = 0;
+				}
 			}
 			if(held)
 			{
@@ -376,13 +382,16 @@ function display_scene_menu(str_type)
 					selected = names.size - 1;
 				}
 			}
-			else if(selected < 0)
+			else
 			{
-				selected = names.size - 1;
-			}
-			else if(selected >= names.size)
-			{
-				selected = 0;
+				if(selected < 0)
+				{
+					selected = names.size - 1;
+				}
+				else if(selected >= names.size)
+				{
+					selected = 0;
+				}
 			}
 			if(level.localplayers[0] buttonpressed(""))
 			{
@@ -394,21 +403,30 @@ function display_scene_menu(str_type)
 				{
 					setdvar("", 0);
 				}
-				else if(is_scene_playing(names[selected]))
-				{
-					setdvar("", names[selected]);
-				}
-				else if(is_scene_initialized(names[selected]))
-				{
-					setdvar("", names[selected]);
-				}
-				else if(has_init_state(names[selected]))
-				{
-					setdvar("", names[selected]);
-				}
 				else
 				{
-					setdvar("", names[selected]);
+					if(is_scene_playing(names[selected]))
+					{
+						setdvar("", names[selected]);
+					}
+					else
+					{
+						if(is_scene_initialized(names[selected]))
+						{
+							setdvar("", names[selected]);
+						}
+						else
+						{
+							if(has_init_state(names[selected]))
+							{
+								setdvar("", names[selected]);
+							}
+							else
+							{
+								setdvar("", names[selected]);
+							}
+						}
+					}
 				}
 				while(level.localplayers[0] buttonpressed("") || level.localplayers[0] buttonpressed("") || level.localplayers[0] buttonpressed(""))
 				{
@@ -519,14 +537,17 @@ function scene_list_settext(hud_array, strings, num)
 				setluimenudata(0, hud_array[i], "", 1);
 				text = text + "";
 			}
-			else if(is_scene_initialized(text))
-			{
-				setluimenudata(0, hud_array[i], "", 1);
-				text = text + "";
-			}
 			else
 			{
-				setluimenudata(0, hud_array[i], "", 0.5);
+				if(is_scene_initialized(text))
+				{
+					setluimenudata(0, hud_array[i], "", 1);
+					text = text + "";
+				}
+				else
+				{
+					setluimenudata(0, hud_array[i], "", 0.5);
+				}
 			}
 			if(i == 5)
 			{
@@ -554,10 +575,10 @@ function is_scene_playing(str_scene)
 		{
 			if(level flagsys::get(str_scene + ""))
 			{
-				return 1;
+				return true;
 			}
 		}
-		return 0;
+		return false;
 	#/
 }
 
@@ -577,10 +598,10 @@ function is_scene_initialized(str_scene)
 		{
 			if(level flagsys::get(str_scene + ""))
 			{
-				return 1;
+				return true;
 			}
 		}
-		return 0;
+		return false;
 	#/
 }
 
@@ -667,13 +688,16 @@ function debug_display()
 					print3d(self.origin - (0, 0, n_offset + 5), ("" + (isdefined([[ o_scene ]]->get_state()) ? "" + ([[ o_scene ]]->get_state()) : "")) + "", (0.8, 0.2, 0.8), 1, 0.15, debug_frames);
 				}
 			}
-			else if(isdefined(self.scriptbundlename))
-			{
-				print3d(self.origin - vectorscale((0, 0, 1), 15), self.scriptbundlename, (0.8, 0.2, 0.8), 1, 0.3, debug_frames);
-			}
 			else
 			{
-				break;
+				if(isdefined(self.scriptbundlename))
+				{
+					print3d(self.origin - vectorscale((0, 0, 1), 15), self.scriptbundlename, (0.8, 0.2, 0.8), 1, 0.3, debug_frames);
+				}
+				else
+				{
+					break;
+				}
 			}
 			wait(debug_time);
 		}

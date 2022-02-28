@@ -27,7 +27,7 @@
 */
 function init()
 {
-	level.var_25ef5fab = getweapon("beacon");
+	level.w_beacon = getweapon("beacon");
 	clientfield::register("world", "play_launch_artillery_fx_robot_0", 21000, 1, "int");
 	clientfield::register("world", "play_launch_artillery_fx_robot_1", 21000, 1, "int");
 	clientfield::register("world", "play_launch_artillery_fx_robot_2", 21000, 1, "int");
@@ -35,7 +35,7 @@ function init()
 	clientfield::register("scriptmover", "play_artillery_barrage", 21000, 2, "int");
 	level._effect["grenade_samantha_steal"] = "dlc5/zmhd/fx_zombie_couch_effect";
 	level.beacons = [];
-	level.zombie_weapons_callbacks[level.var_25ef5fab] = &player_give_beacon;
+	level.zombie_weapons_callbacks[level.w_beacon] = &player_give_beacon;
 	/#
 		level thread function_45216da2();
 	#/
@@ -52,8 +52,8 @@ function init()
 */
 function player_give_beacon()
 {
-	self giveweapon(level.var_25ef5fab);
-	self zm_utility::set_player_tactical_grenade(level.var_25ef5fab);
+	self giveweapon(level.w_beacon);
+	self zm_utility::set_player_tactical_grenade(level.w_beacon);
 	self thread player_handle_beacon();
 }
 
@@ -329,7 +329,7 @@ function proximity_detonate(owner)
 		}
 		self playsound("wpn_claymore_alert");
 		dist = distance(self.origin, ent.origin);
-		radiusdamage(self.origin + vectorscale((0, 0, 1), 12), explosionradius, 1, 1, owner, "MOD_GRENADE_SPLASH", level.var_25ef5fab);
+		radiusdamage(self.origin + vectorscale((0, 0, 1), 12), explosionradius, 1, 1, owner, "MOD_GRENADE_SPLASH", level.w_beacon);
 		if(isdefined(owner))
 		{
 			self detonate(owner);
@@ -600,7 +600,7 @@ function do_beacon_sound(model, info)
 	self.monk_scream_vox = 0;
 	if(isdefined(level.grenade_safe_to_bounce))
 	{
-		if(![[level.grenade_safe_to_bounce]](self.owner, level.var_25ef5fab))
+		if(![[level.grenade_safe_to_bounce]](self.owner, level.w_beacon))
 		{
 			self.monk_scream_vox = 1;
 		}
@@ -675,7 +675,7 @@ function get_thrown_beacon()
 	while(true)
 	{
 		self waittill(#"grenade_fire", grenade, weapon);
-		if(weapon == level.var_25ef5fab)
+		if(weapon == level.w_beacon)
 		{
 			grenade.use_grenade_special_long_bookmark = 1;
 			grenade.grenade_multiattack_bookmark_count = 1;
@@ -777,17 +777,20 @@ function start_artillery_launch_ee(grenade)
 				n_index++;
 			}
 		}
-		else if(n_index == 0)
+		else
 		{
-			if(!level flag::get("three_robot_round"))
+			if(n_index == 0)
 			{
-				self thread start_artillery_launch_normal(grenade);
+				if(!level flag::get("three_robot_round"))
+				{
+					self thread start_artillery_launch_normal(grenade);
+					break;
+				}
+			}
+			else if(n_index > 0)
+			{
 				break;
 			}
-		}
-		else if(n_index > 0)
-		{
-			break;
 		}
 		wait(0.1);
 	}
@@ -1052,7 +1055,7 @@ function wait_and_do_weapon_beacon_damage(index)
 	level.n_weap_beacon_zombie_thrown_count = 0;
 	a_zombies_to_kill = [];
 	a_zombies = getaispeciesarray("axis", "all");
-	foreach(var_48a1a6c8, zombie in a_zombies)
+	foreach(zombie in a_zombies)
 	{
 		n_distance = distance(zombie.origin, v_damage_origin);
 		if(n_distance <= 200)
@@ -1064,12 +1067,12 @@ function wait_and_do_weapon_beacon_damage(index)
 				continue;
 			}
 			zombie thread set_beacon_damage();
-			zombie dodamage(n_damage, zombie.origin, self.owner, self.owner, "none", "MOD_GRENADE_SPLASH", 0, level.var_25ef5fab);
+			zombie dodamage(n_damage, zombie.origin, self.owner, self.owner, "none", "MOD_GRENADE_SPLASH", 0, level.w_beacon);
 		}
 	}
 	if(index == 0)
 	{
-		radiusdamage(self.origin + vectorscale((0, 0, 1), 12), 10, 1, 1, self.owner, "MOD_GRENADE_SPLASH", level.var_25ef5fab);
+		radiusdamage(self.origin + vectorscale((0, 0, 1), 12), 10, 1, 1, self.owner, "MOD_GRENADE_SPLASH", level.w_beacon);
 		self ghost();
 		self stopanimscripted(0);
 	}
@@ -1097,7 +1100,7 @@ function weap_beacon_zombie_death(model, a_zombies_to_kill)
 			continue;
 		}
 		zombie thread set_beacon_damage();
-		zombie dodamage(zombie.health, zombie.origin, model.owner, model.owner, "none", "MOD_GRENADE_SPLASH", 0, level.var_25ef5fab);
+		zombie dodamage(zombie.health, zombie.origin, model.owner, model.owner, "none", "MOD_GRENADE_SPLASH", 0, level.w_beacon);
 		n_interval++;
 		zombie thread weapon_beacon_launch_ragdoll();
 		if(n_interval >= 4)
@@ -1180,7 +1183,7 @@ function weap_beacon_gib(ai_zombie)
 function weap_beacon_rumble()
 {
 	a_players = getplayers();
-	foreach(var_d4c822de, player in a_players)
+	foreach(player in a_players)
 	{
 		if(isalive(player) && isdefined(player))
 		{
@@ -1250,7 +1253,7 @@ function function_45216da2()
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function setup_devgui_func(str_devgui_path, str_dvar, n_value, func, n_base_value = -1)
+function private setup_devgui_func(str_devgui_path, str_dvar, n_value, func, n_base_value = -1)
 {
 	setdvar(str_dvar, n_base_value);
 	adddebugcommand(((((("devgui_cmd \"" + str_devgui_path) + "\" \"") + str_dvar) + " ") + n_value) + "\"\n");
@@ -1278,10 +1281,10 @@ private function setup_devgui_func(str_devgui_path, str_dvar, n_value, func, n_b
 function function_eeb65596(n_player_index)
 {
 	players = getplayers();
-	foreach(var_4782e97, player in players)
+	foreach(player in players)
 	{
-		player takeweapon(level.var_25ef5fab);
-		player zm_weapons::weapon_give(level.var_25ef5fab);
+		player takeweapon(level.w_beacon);
+		player zm_weapons::weapon_give(level.w_beacon);
 	}
 }
 

@@ -18,7 +18,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_genesis_skull_turret", &__init__, &__main__, undefined);
 }
@@ -204,16 +204,19 @@ function function_1b1753c0(localclientnum, origin, var_263c10ef)
 		level beam::launch(self.var_f929ecf4, "tag_origin", self.var_805863e3, "tag_origin", var_263c10ef);
 		self.var_4a0d7655 = var_263c10ef;
 	}
-	else if(self.var_4a0d7655 !== var_263c10ef)
-	{
-		level beam::kill(self.var_f929ecf4, "tag_origin", self.var_805863e3, "tag_origin", self.var_4a0d7655);
-		self.var_805863e3.origin = origin;
-		level beam::launch(self.var_f929ecf4, "tag_origin", self.var_805863e3, "tag_origin", var_263c10ef);
-		self.var_4a0d7655 = var_263c10ef;
-	}
 	else
 	{
-		self.var_805863e3.origin = origin;
+		if(self.var_4a0d7655 !== var_263c10ef)
+		{
+			level beam::kill(self.var_f929ecf4, "tag_origin", self.var_805863e3, "tag_origin", self.var_4a0d7655);
+			self.var_805863e3.origin = origin;
+			level beam::launch(self.var_f929ecf4, "tag_origin", self.var_805863e3, "tag_origin", var_263c10ef);
+			self.var_4a0d7655 = var_263c10ef;
+		}
+		else
+		{
+			self.var_805863e3.origin = origin;
+		}
 	}
 }
 

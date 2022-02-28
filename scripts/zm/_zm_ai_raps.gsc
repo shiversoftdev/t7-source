@@ -419,7 +419,7 @@ function get_current_raps_count()
 {
 	raps = getentarray("zombie_raps", "targetname");
 	num_alive_raps = raps.size;
-	foreach(var_8b4015fc, rapsai in raps)
+	foreach(rapsai in raps)
 	{
 		if(!isalive(rapsai))
 		{
@@ -440,7 +440,7 @@ function get_current_raps_count()
 */
 function elemental_round_fx()
 {
-	foreach(var_ae56470f, player in level.players)
+	foreach(player in level.players)
 	{
 		player clientfield::increment_to_player("elemental_round_fx");
 		player clientfield::increment_to_player("elemental_round_ring_fx");
@@ -501,9 +501,9 @@ function can_we_spawn_raps()
 	b_raps_count_per_player_at_max = n_raps_alive >= (level.players.size * 4);
 	if(b_raps_count_at_max || b_raps_count_per_player_at_max || !level flag::get("spawn_zombies"))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -712,7 +712,7 @@ function create_global_raps_spawn_locations_list()
 		for(i = 0; i < keys.size; i++)
 		{
 			zone = level.zones[keys[i]];
-			foreach(var_e1c0a102, loc in zone.a_locs["raps_location"])
+			foreach(loc in zone.a_locs["raps_location"])
 			{
 				if(!isdefined(level.enemy_raps_global_locations))
 				{
@@ -777,20 +777,26 @@ function calculate_spawn_position(favorite_enemy)
 		n_raps_spawn_dist_min = 450;
 		n_raps_spawn_dist_max = 900;
 	}
-	else if(level.players.size == 2)
-	{
-		n_raps_spawn_dist_min = 450;
-		n_raps_spawn_dist_max = 850;
-	}
-	else if(level.players.size == 3)
-	{
-		n_raps_spawn_dist_min = 700;
-		n_raps_spawn_dist_max = 1000;
-	}
 	else
 	{
-		n_raps_spawn_dist_min = 800;
-		n_raps_spawn_dist_max = 1200;
+		if(level.players.size == 2)
+		{
+			n_raps_spawn_dist_min = 450;
+			n_raps_spawn_dist_max = 850;
+		}
+		else
+		{
+			if(level.players.size == 3)
+			{
+				n_raps_spawn_dist_min = 700;
+				n_raps_spawn_dist_max = 1000;
+			}
+			else
+			{
+				n_raps_spawn_dist_min = 800;
+				n_raps_spawn_dist_max = 1200;
+			}
+		}
 	}
 	query_result = positionquery_source_navigation(position, n_raps_spawn_dist_min, n_raps_spawn_dist_max, 200, 32, 16);
 	if(query_result.data.size)
@@ -798,7 +804,7 @@ function calculate_spawn_position(favorite_enemy)
 		a_s_locs = array::randomize(query_result.data);
 		if(isdefined(a_s_locs))
 		{
-			foreach(var_733b872c, s_loc in a_s_locs)
+			foreach(s_loc in a_s_locs)
 			{
 				if(zm_utility::check_point_in_enabled_zone(s_loc.origin, 1, level.active_zones))
 				{
@@ -1132,7 +1138,7 @@ function special_raps_spawn(n_to_spawn = 1, s_spawn_loc, fn_on_spawned)
 	raps = getentarray("zombie_raps", "targetname");
 	if(isdefined(raps) && raps.size >= 9)
 	{
-		return 0;
+		return false;
 	}
 	count = 0;
 	while(count < n_to_spawn)
@@ -1171,7 +1177,7 @@ function special_raps_spawn(n_to_spawn = 1, s_spawn_loc, fn_on_spawned)
 		}
 		waiting_for_next_raps_spawn();
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1225,13 +1231,13 @@ function should_raps_giveup_inaccessible_player(player)
 {
 	if(isdefined(level.raps_can_reach_inaccessible_location) && self [[level.raps_can_reach_inaccessible_location]]())
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(level.is_player_accessible_to_raps) && ![[level.is_player_accessible_to_raps]](player))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

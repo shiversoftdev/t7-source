@@ -113,7 +113,7 @@ function add_callback(event, func, obj)
 	{
 		level._callbacks[event] = [];
 	}
-	foreach(var_43ba6c31, callback in level._callbacks[event])
+	foreach(callback in level._callbacks[event])
 	{
 		if(callback[0] == func)
 		{
@@ -148,7 +148,7 @@ function add_entity_callback(event, func, obj)
 	{
 		self._callbacks[event] = [];
 	}
-	foreach(var_f93fbae, callback in self._callbacks[event])
+	foreach(callback in self._callbacks[event])
 	{
 		if(callback[0] == func)
 		{
@@ -385,7 +385,12 @@ function codecallback_statechange(clientnum, system, newstate)
 	{
 		[[level._systemstates[system].callback]](clientnum, newstate);
 	}
-	println(("" + system) + "");
+	else
+	{
+		/#
+			println(("" + system) + "");
+		#/
+	}
 }
 
 /*

@@ -102,23 +102,29 @@ function player_hacking(localclientnum, oldval, newval, bnewent, binitialsnap, f
 		player thread watchhackspeed(localclientnum, 0);
 		setuimodelvalue(createuimodel(getuimodelforcontroller(localclientnum), "hudItems.blackhat.status"), 2);
 	}
-	else if(newval == 3)
-	{
-		player thread watchhackspeed(localclientnum, 1);
-		setuimodelvalue(createuimodel(getuimodelforcontroller(localclientnum), "hudItems.blackhat.status"), 1);
-	}
-	else if(newval == 1)
-	{
-		setuimodelvalue(createuimodel(getuimodelforcontroller(localclientnum), "hudItems.blackhat.status"), 0);
-		setuimodelvalue(createuimodel(getuimodelforcontroller(localclientnum), "hudItems.blackhat.perc"), 0);
-		setuimodelvalue(createuimodel(getuimodelforcontroller(localclientnum), "hudItems.blackhat.offsetShaderValue"), ((0 + " ") + 0) + " 0 0");
-		self thread watchforemp(localclientnum);
-	}
 	else
 	{
-		setuimodelvalue(createuimodel(getuimodelforcontroller(localclientnum), "hudItems.blackhat.status"), 0);
-		setuimodelvalue(createuimodel(getuimodelforcontroller(localclientnum), "hudItems.blackhat.perc"), 0);
-		setuimodelvalue(createuimodel(getuimodelforcontroller(localclientnum), "hudItems.blackhat.offsetShaderValue"), ((0 + " ") + 0) + " 0 0");
+		if(newval == 3)
+		{
+			player thread watchhackspeed(localclientnum, 1);
+			setuimodelvalue(createuimodel(getuimodelforcontroller(localclientnum), "hudItems.blackhat.status"), 1);
+		}
+		else
+		{
+			if(newval == 1)
+			{
+				setuimodelvalue(createuimodel(getuimodelforcontroller(localclientnum), "hudItems.blackhat.status"), 0);
+				setuimodelvalue(createuimodel(getuimodelforcontroller(localclientnum), "hudItems.blackhat.perc"), 0);
+				setuimodelvalue(createuimodel(getuimodelforcontroller(localclientnum), "hudItems.blackhat.offsetShaderValue"), ((0 + " ") + 0) + " 0 0");
+				self thread watchforemp(localclientnum);
+			}
+			else
+			{
+				setuimodelvalue(createuimodel(getuimodelforcontroller(localclientnum), "hudItems.blackhat.status"), 0);
+				setuimodelvalue(createuimodel(getuimodelforcontroller(localclientnum), "hudItems.blackhat.perc"), 0);
+				setuimodelvalue(createuimodel(getuimodelforcontroller(localclientnum), "hudItems.blackhat.offsetShaderValue"), ((0 + " ") + 0) + " 0 0");
+			}
+		}
 	}
 }
 
@@ -196,18 +202,21 @@ function watchtargethack(localclientnum, player, isbreachingfirewall)
 				level.hackingsweetspotid[localclientnum] = player playloopsound("evt_hacker_hacking_sweet");
 			}
 		}
-		else if(isdefined(level.hackingsweetspotid[localclientnum]))
+		else
 		{
-			player stoploopsound(level.hackingsweetspotid[localclientnum]);
-			level.hackingsweetspotid[localclientnum] = undefined;
-		}
-		if(!isdefined(level.hackingsoundid[localclientnum]))
-		{
-			level.hackingsoundid[localclientnum] = player playloopsound("evt_hacker_hacking_loop");
-		}
-		if(isdefined(level.hackingsoundid[localclientnum]))
-		{
-			setsoundpitch(level.hackingsoundid[localclientnum], ratio);
+			if(isdefined(level.hackingsweetspotid[localclientnum]))
+			{
+				player stoploopsound(level.hackingsweetspotid[localclientnum]);
+				level.hackingsweetspotid[localclientnum] = undefined;
+			}
+			if(!isdefined(level.hackingsoundid[localclientnum]))
+			{
+				level.hackingsoundid[localclientnum] = player playloopsound("evt_hacker_hacking_loop");
+			}
+			if(isdefined(level.hackingsoundid[localclientnum]))
+			{
+				setsoundpitch(level.hackingsoundid[localclientnum], ratio);
+			}
 		}
 		if(!isbreachingfirewall)
 		{

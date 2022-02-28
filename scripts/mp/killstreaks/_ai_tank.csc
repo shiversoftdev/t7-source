@@ -22,7 +22,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("ai_tank", &__init__, undefined, undefined);
 }
@@ -91,17 +91,23 @@ function missile_fire(localclientnum, oldval, newval, bnewent, binitialsnap, fie
 	{
 		self setanimrestart(%mp_vehicles::o_drone_tank_missile1_fire, 1, 0, 0.5);
 	}
-	else if(newval == 1)
+	else
 	{
-		self setanimrestart(%mp_vehicles::o_drone_tank_missile2_fire, 1, 0, 0.5);
-	}
-	else if(newval == 0)
-	{
-		self setanimrestart(%mp_vehicles::o_drone_tank_missile3_fire, 1, 0, 0.5);
-	}
-	else if(newval == 3)
-	{
-		self setanimrestart(%mp_vehicles::o_drone_tank_missile_full_reload, 1, 0, 1);
+		if(newval == 1)
+		{
+			self setanimrestart(%mp_vehicles::o_drone_tank_missile2_fire, 1, 0, 0.5);
+		}
+		else
+		{
+			if(newval == 0)
+			{
+				self setanimrestart(%mp_vehicles::o_drone_tank_missile3_fire, 1, 0, 0.5);
+			}
+			else if(newval == 3)
+			{
+				self setanimrestart(%mp_vehicles::o_drone_tank_missile_full_reload, 1, 0, 1);
+			}
+		}
 	}
 	if(missiles_loaded <= 3)
 	{

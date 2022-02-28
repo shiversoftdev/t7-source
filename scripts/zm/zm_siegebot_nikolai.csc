@@ -18,7 +18,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_siegebot_nikolai", &__init__, undefined, undefined);
 }
@@ -84,7 +84,7 @@ function function_48c3fc7d(localclientnum)
 		if(!isdefined(nikolai))
 		{
 			allents = getentarray(localclientnum);
-			foreach(var_7012b4f5, ent in allents)
+			foreach(ent in allents)
 			{
 				if(ent.model === "c_zom_dlc_waw_nikolai_fb" && self isentitylinkedtotag(ent))
 				{
@@ -175,15 +175,18 @@ function nikolai_gatling_tell(localclientnum, oldval, newval, bnewent, binitials
 		self playsound(localclientnum, "zmb_nikolaibot_rapidfire_start", self gettagorigin("tag_eye"));
 		self.var_464db63 = self playloopsound("zmb_nikolaibot_rapidfire_barrel_lp");
 	}
-	else if(isdefined(self.var_16903828))
+	else
 	{
-		stopfx(localclientnum, self.var_16903828);
-	}
-	self playsound(localclientnum, "zmb_nikolaibot_rapidfire_end", self gettagorigin("tag_eye"));
-	if(isdefined(self.var_464db63))
-	{
-		self stoploopsound(self.var_464db63);
-		self.var_464db63 = undefined;
+		if(isdefined(self.var_16903828))
+		{
+			stopfx(localclientnum, self.var_16903828);
+		}
+		self playsound(localclientnum, "zmb_nikolaibot_rapidfire_end", self gettagorigin("tag_eye"));
+		if(isdefined(self.var_464db63))
+		{
+			self stoploopsound(self.var_464db63);
+			self.var_464db63 = undefined;
+		}
 	}
 }
 

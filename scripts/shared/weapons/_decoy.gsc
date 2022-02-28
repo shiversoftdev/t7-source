@@ -523,9 +523,9 @@ function should_play_reload_sound()
 {
 	if(randomintrange(0, 5) == 1)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

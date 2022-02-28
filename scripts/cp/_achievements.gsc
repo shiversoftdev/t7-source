@@ -20,7 +20,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("achievements", &__init__, undefined, undefined);
 }
@@ -156,7 +156,7 @@ function function_c3e7ff05(eplayer)
 	}
 	mission_list = skipto::function_23eda99c();
 	var_f0ecfb92 = 0;
-	foreach(var_40ce22db, mission in mission_list)
+	foreach(mission in mission_list)
 	{
 		if(!eplayer getdstat("PlayerStatsByMap", mission, "hasBeenCompleted"))
 		{
@@ -295,7 +295,7 @@ function on_player_death(s_params)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_1121f26a(var_c856ad1d, evictim)
+function private function_1121f26a(var_c856ad1d, evictim)
 {
 	if(isdefined(var_c856ad1d.hijacked_vehicle_entity))
 	{
@@ -332,7 +332,7 @@ private function function_1121f26a(var_c856ad1d, evictim)
 	Parameters: 4
 	Flags: Linked, Private
 */
-private function function_914b8688(player, evictim, weapon, einflictor)
+function private function_914b8688(player, evictim, weapon, einflictor)
 {
 	if(!isdefined(weapon))
 	{
@@ -350,57 +350,63 @@ private function function_914b8688(player, evictim, weapon, einflictor)
 		function_9dab90e7(player);
 		var_9663b3f1 = 1;
 	}
-	else if(isdefined(player.var_75cf9e2e.var_6ce188b0) && weapon.name == "gadget_unstoppable_force" || weapon.name == "gadget_unstoppable_force_upgraded")
+	else
 	{
-		player.var_75cf9e2e.var_6ce188b0++;
-		if(player.var_75cf9e2e.var_6ce188b0 >= 5)
+		if(isdefined(player.var_75cf9e2e.var_6ce188b0) && weapon.name == "gadget_unstoppable_force" || weapon.name == "gadget_unstoppable_force_upgraded")
 		{
-			player give_achievement("CP_UNSTOPPABLE_KILL");
-		}
-	}
-	else if(isdefined(player.hijacked_vehicle_entity))
-	{
-		if(isdefined(player.hijacked_vehicle_entity.killcount))
-		{
-			player.hijacked_vehicle_entity.killcount++;
+			player.var_75cf9e2e.var_6ce188b0++;
+			if(player.var_75cf9e2e.var_6ce188b0 >= 5)
+			{
+				player give_achievement("CP_UNSTOPPABLE_KILL");
+			}
 		}
 		else
 		{
-			player.hijacked_vehicle_entity.killcount = 1;
-		}
-		if(player.hijacked_vehicle_entity.scriptvehicletype == "wasp" && player.hijacked_vehicle_entity.killcount >= 20)
-		{
-			if(!player.var_58477d59["CP_FLYING_WASP_KILL"])
+			if(isdefined(player.hijacked_vehicle_entity))
 			{
-				player give_achievement("CP_FLYING_WASP_KILL");
-				player.var_58477d59["CP_FLYING_WASP_KILL"] = 1;
+				if(isdefined(player.hijacked_vehicle_entity.killcount))
+				{
+					player.hijacked_vehicle_entity.killcount++;
+				}
+				else
+				{
+					player.hijacked_vehicle_entity.killcount = 1;
+				}
+				if(player.hijacked_vehicle_entity.scriptvehicletype == "wasp" && player.hijacked_vehicle_entity.killcount >= 20)
+				{
+					if(!player.var_58477d59["CP_FLYING_WASP_KILL"])
+					{
+						player give_achievement("CP_FLYING_WASP_KILL");
+						player.var_58477d59["CP_FLYING_WASP_KILL"] = 1;
+					}
+				}
+				if(player.hijacked_vehicle_entity.killcount >= 10)
+				{
+					if(!player.var_58477d59["CP_COMBAT_ROBOT_KILL"])
+					{
+						player give_achievement("CP_COMBAT_ROBOT_KILL");
+						player.var_58477d59["CP_COMBAT_ROBOT_KILL"] = 1;
+					}
+				}
 			}
-		}
-		if(player.hijacked_vehicle_entity.killcount >= 10)
-		{
-			if(!player.var_58477d59["CP_COMBAT_ROBOT_KILL"])
+			else if(isai(einflictor) && isdefined(einflictor.remote_owner) && einflictor.remote_owner == player)
 			{
-				player give_achievement("CP_COMBAT_ROBOT_KILL");
-				player.var_58477d59["CP_COMBAT_ROBOT_KILL"] = 1;
-			}
-		}
-	}
-	else if(isai(einflictor) && isdefined(einflictor.remote_owner) && einflictor.remote_owner == player)
-	{
-		if(isdefined(einflictor.killcount))
-		{
-			einflictor.killcount++;
-		}
-		else
-		{
-			einflictor.killcount = 1;
-		}
-		if(einflictor.killcount >= 10)
-		{
-			if(!player.var_58477d59["CP_COMBAT_ROBOT_KILL"])
-			{
-				player give_achievement("CP_COMBAT_ROBOT_KILL");
-				player.var_58477d59["CP_COMBAT_ROBOT_KILL"] = 1;
+				if(isdefined(einflictor.killcount))
+				{
+					einflictor.killcount++;
+				}
+				else
+				{
+					einflictor.killcount = 1;
+				}
+				if(einflictor.killcount >= 10)
+				{
+					if(!player.var_58477d59["CP_COMBAT_ROBOT_KILL"])
+					{
+						player give_achievement("CP_COMBAT_ROBOT_KILL");
+						player.var_58477d59["CP_COMBAT_ROBOT_KILL"] = 1;
+					}
+				}
 			}
 		}
 	}
@@ -423,7 +429,7 @@ private function function_914b8688(player, evictim, weapon, einflictor)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function function_2b2fb40b(player, var_aae1ed0d, weapon)
+function private function_2b2fb40b(player, var_aae1ed0d, weapon)
 {
 	player.var_75cf9e2e.var_940a9f6e++;
 	currentindex = player.var_75cf9e2e.killindex;
@@ -451,7 +457,7 @@ private function function_2b2fb40b(player, var_aae1ed0d, weapon)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_b1d71bd3(player, weapon)
+function private function_b1d71bd3(player, weapon)
 {
 	var_4c26012 = getbaseweaponitemindex(weapon);
 	if(!isdefined(var_4c26012) || (var_4c26012 < 1 || var_4c26012 > 60))
@@ -465,7 +471,7 @@ private function function_b1d71bd3(player, weapon)
 	{
 		var_376861f6 = 0;
 	}
-	foreach(weaponname, lastkilltime in player.var_75cf9e2e.var_43311285)
+	foreach(lastkilltime in player.var_75cf9e2e.var_43311285)
 	{
 		if(lastkilltime > var_376861f6)
 		{
@@ -487,7 +493,7 @@ private function function_b1d71bd3(player, weapon)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function function_307b3ac3(eplayer, evictim, var_433291aa)
+function private function_307b3ac3(eplayer, evictim, var_433291aa)
 {
 	if(!evictim util::isentstunned() || evictim.team !== "axis")
 	{
@@ -530,7 +536,7 @@ private function function_307b3ac3(eplayer, evictim, var_433291aa)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function function_c4f2de38(player, victim, inflictor)
+function private function_c4f2de38(player, victim, inflictor)
 {
 	if(!isdefined(inflictor.weapon) || !isdefined(self.scriptvehicletype) || self.scriptvehicletype != "wasp" || inflictor.weapon.type != "grenade")
 	{
@@ -664,7 +670,7 @@ function function_632712d7(n_count)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_9dab90e7(player)
+function private function_9dab90e7(player)
 {
 	if(!isdefined(player.var_75cf9e2e.var_a4fb0163))
 	{
@@ -685,7 +691,7 @@ private function function_9dab90e7(player)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_e587e1f2()
+function private function_e587e1f2()
 {
 	self endon(#"disconnect");
 	while(true)
@@ -729,7 +735,7 @@ function function_b2d1aafa()
 {
 	if(level.cybercom.var_12f85dec == 0)
 	{
-		foreach(var_c29a843f, player in level.players)
+		foreach(player in level.players)
 		{
 			if(!isdefined(player.var_75cf9e2e.var_a4fb0163))
 			{

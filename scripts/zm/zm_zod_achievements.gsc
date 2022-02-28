@@ -18,25 +18,25 @@
 #using scripts\zm\_zm_weapons;
 #using scripts\zm\zm_zod_util;
 
-#namespace namespace_e2600f27;
+#namespace zod_achievements;
 
 /*
 	Name: __init__sytem__
-	Namespace: namespace_e2600f27
+	Namespace: zod_achievements
 	Checksum: 0xED352723
 	Offset: 0x3E8
 	Size: 0x34
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_zod_achievements", &__init__, undefined, undefined);
 }
 
 /*
 	Name: __init__
-	Namespace: namespace_e2600f27
+	Namespace: zod_achievements
 	Checksum: 0x1F1FE2E7
 	Offset: 0x428
 	Size: 0x3C
@@ -45,13 +45,13 @@ autoexec function __init__sytem__()
 */
 function __init__()
 {
-	level thread function_36ffe1d1();
+	level thread achievement_complete_all_rituals();
 	callback::on_connect(&on_player_connect);
 }
 
 /*
 	Name: on_player_connect
-	Namespace: namespace_e2600f27
+	Namespace: zod_achievements
 	Checksum: 0xA33C22A7
 	Offset: 0x470
 	Size: 0xC4
@@ -60,26 +60,26 @@ function __init__()
 */
 function on_player_connect()
 {
-	self thread function_ea06cc8c();
+	self thread achievement_spot_the_shadowman();
 	self thread function_f50b1960();
-	self thread function_46ea87bb();
+	self thread achievement_zombie_store_kills();
 	self thread function_b9e36150();
-	self thread function_f10a087d();
-	self thread function_47cc3ddf();
-	self thread function_1f3cbfd1();
-	self thread function_d7f7b38b();
+	self thread achievement_civil_protector();
+	self thread achievement_widows_wine_kill();
+	self thread achievement_margwa_kill();
+	self thread achievement_parasite_train_kills();
 }
 
 /*
-	Name: function_fc2e6576
-	Namespace: namespace_e2600f27
+	Name: achievement_help_the_others
+	Namespace: zod_achievements
 	Checksum: 0x11FFE48B
 	Offset: 0x540
 	Size: 0x96
 	Parameters: 0
 	Flags: None
 */
-function function_fc2e6576()
+function achievement_help_the_others()
 {
 	level endon(#"end_game");
 	level flag::wait_till("ritual_pap_complete");
@@ -91,15 +91,15 @@ function function_fc2e6576()
 }
 
 /*
-	Name: function_36ffe1d1
-	Namespace: namespace_e2600f27
+	Name: achievement_complete_all_rituals
+	Namespace: zod_achievements
 	Checksum: 0xC537034A
 	Offset: 0x5E0
 	Size: 0xCE
 	Parameters: 0
 	Flags: Linked
 */
-function function_36ffe1d1()
+function achievement_complete_all_rituals()
 {
 	level endon(#"end_game");
 	a_str_ritual_flags = array("ritual_boxer_complete", "ritual_detective_complete", "ritual_femme_complete", "ritual_magician_complete");
@@ -112,28 +112,28 @@ function function_36ffe1d1()
 }
 
 /*
-	Name: function_ea06cc8c
-	Namespace: namespace_e2600f27
+	Name: achievement_spot_the_shadowman
+	Namespace: zod_achievements
 	Checksum: 0xF0876C1B
 	Offset: 0x6B8
 	Size: 0x6C
 	Parameters: 0
 	Flags: Linked
 */
-function function_ea06cc8c()
+function achievement_spot_the_shadowman()
 {
 	level endon(#"end_game");
 	self endon(#"disconnect");
 	for(var_66f8342 = 0; var_66f8342 < 5; var_66f8342++)
 	{
-		self waittill(#"hash_86ef5199");
+		self waittill(#"shadowman_spotted");
 	}
 	self giveachievement("ZM_SPOT_SHADOWMAN");
 }
 
 /*
 	Name: function_f50b1960
-	Namespace: namespace_e2600f27
+	Namespace: zod_achievements
 	Checksum: 0xE1A8AEBC
 	Offset: 0x730
 	Size: 0xFC
@@ -167,15 +167,15 @@ function function_f50b1960()
 }
 
 /*
-	Name: function_46ea87bb
-	Namespace: namespace_e2600f27
+	Name: achievement_zombie_store_kills
+	Namespace: zod_achievements
 	Checksum: 0xF78CB1F9
 	Offset: 0x838
 	Size: 0xBC
 	Parameters: 0
 	Flags: Linked
 */
-function function_46ea87bb()
+function achievement_zombie_store_kills()
 {
 	level endon(#"end_game");
 	self endon(#"disconnect");
@@ -196,7 +196,7 @@ function function_46ea87bb()
 
 /*
 	Name: function_b9e36150
-	Namespace: namespace_e2600f27
+	Namespace: zod_achievements
 	Checksum: 0xB62628CB
 	Offset: 0x900
 	Size: 0x6C
@@ -219,15 +219,15 @@ function function_b9e36150()
 }
 
 /*
-	Name: function_f10a087d
-	Namespace: namespace_e2600f27
+	Name: achievement_civil_protector
+	Namespace: zod_achievements
 	Checksum: 0x7568DCD
 	Offset: 0x978
 	Size: 0x18C
 	Parameters: 0
 	Flags: Linked
 */
-function function_f10a087d()
+function achievement_civil_protector()
 {
 	level endon(#"end_game");
 	self endon(#"disconnect");
@@ -245,35 +245,41 @@ function function_f10a087d()
 			var_5c366274 = 1;
 			var_edf7e9c1++;
 		}
-		else if(!var_6ca52f65 && var_9b0b20f3 == "canal")
+		else
 		{
-			var_6ca52f65 = 1;
-			var_edf7e9c1++;
-		}
-		else if(!var_aa482c3 && var_9b0b20f3 == "theater")
-		{
-			var_aa482c3 = 1;
-			var_edf7e9c1++;
-		}
-		else if(!var_2c8c3602 && var_9b0b20f3 == "slums")
-		{
-			var_2c8c3602 = 1;
-			var_edf7e9c1++;
+			if(!var_6ca52f65 && var_9b0b20f3 == "canal")
+			{
+				var_6ca52f65 = 1;
+				var_edf7e9c1++;
+			}
+			else
+			{
+				if(!var_aa482c3 && var_9b0b20f3 == "theater")
+				{
+					var_aa482c3 = 1;
+					var_edf7e9c1++;
+				}
+				else if(!var_2c8c3602 && var_9b0b20f3 == "slums")
+				{
+					var_2c8c3602 = 1;
+					var_edf7e9c1++;
+				}
+			}
 		}
 	}
 	self giveachievement("ZM_CIVIL_PROTECTOR");
 }
 
 /*
-	Name: function_47cc3ddf
-	Namespace: namespace_e2600f27
+	Name: achievement_widows_wine_kill
+	Namespace: zod_achievements
 	Checksum: 0x607ACDC4
 	Offset: 0xB10
 	Size: 0x8C
 	Parameters: 0
 	Flags: Linked
 */
-function function_47cc3ddf()
+function achievement_widows_wine_kill()
 {
 	level endon(#"end_game");
 	self endon(#"disconnect");
@@ -290,15 +296,15 @@ function function_47cc3ddf()
 }
 
 /*
-	Name: function_1f3cbfd1
-	Namespace: namespace_e2600f27
+	Name: achievement_margwa_kill
+	Namespace: zod_achievements
 	Checksum: 0x8B9FF6C1
 	Offset: 0xBA8
 	Size: 0xC4
 	Parameters: 0
 	Flags: Linked
 */
-function function_1f3cbfd1()
+function achievement_margwa_kill()
 {
 	level endon(#"end_game");
 	self endon(#"disconnect");
@@ -325,15 +331,15 @@ function function_1f3cbfd1()
 }
 
 /*
-	Name: function_d7f7b38b
-	Namespace: namespace_e2600f27
+	Name: achievement_parasite_train_kills
+	Namespace: zod_achievements
 	Checksum: 0xE08CE765
 	Offset: 0xC78
 	Size: 0x6C
 	Parameters: 0
 	Flags: Linked
 */
-function function_d7f7b38b()
+function achievement_parasite_train_kills()
 {
 	level endon(#"end_game");
 	self endon(#"disconnect");

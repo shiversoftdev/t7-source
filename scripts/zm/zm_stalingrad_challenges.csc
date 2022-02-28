@@ -17,7 +17,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_stalingrad_challenges", &__init__, undefined, undefined);
 }
@@ -34,7 +34,7 @@ autoexec function __init__sytem__()
 function __init__()
 {
 	var_a42274ee = struct::get_array("challenge_fire_struct", "targetname");
-	foreach(var_c81d16d, var_d2c81bd9 in var_a42274ee)
+	foreach(var_d2c81bd9 in var_a42274ee)
 	{
 		var_d2c81bd9.var_90369c89 = [];
 	}
@@ -66,12 +66,12 @@ function __init__()
 function function_5d17d17c()
 {
 	var_77797571 = struct::get_array("pr_b_spawn", "targetname");
-	foreach(var_94bce532, var_4af818ae in var_77797571)
+	foreach(var_4af818ae in var_77797571)
 	{
 		var_4af818ae.var_46f4840b = [];
 	}
 	var_977659a7 = struct::get_array("pr_c_spawn", "targetname");
-	foreach(var_b20650e8, var_238c2594 in var_977659a7)
+	foreach(var_238c2594 in var_977659a7)
 	{
 		var_238c2594.var_453e8445 = [];
 		var_238c2594.var_90369c89 = [];
@@ -90,7 +90,7 @@ function function_5d17d17c()
 function function_6f749a23(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
 	var_a42274ee = struct::get_array("challenge_fire_struct", "targetname");
-	foreach(var_be9647d8, var_d2c81bd9 in var_a42274ee)
+	foreach(var_d2c81bd9 in var_a42274ee)
 	{
 		if(var_d2c81bd9.script_int == self getentitynumber())
 		{
@@ -141,7 +141,7 @@ function function_93efc4ef(localclientnum, oldval, newval, bnewent, binitialsnap
 	var_77797571 = struct::get_array("pr_b_spawn", "targetname");
 	if(newval == 4)
 	{
-		foreach(var_a931e47c, var_4af818ae in var_77797571)
+		foreach(var_4af818ae in var_77797571)
 		{
 			if(isdefined(var_4af818ae.var_46f4840b[localclientnum]))
 			{
@@ -151,7 +151,7 @@ function function_93efc4ef(localclientnum, oldval, newval, bnewent, binitialsnap
 	}
 	else
 	{
-		foreach(var_65e5fe5d, var_4af818ae in var_77797571)
+		foreach(var_4af818ae in var_77797571)
 		{
 			if(var_4af818ae.script_int == self getentitynumber())
 			{
@@ -183,7 +183,7 @@ function function_553225f(localclientnum, oldval, newval, bnewent, binitialsnap,
 	var_977659a7 = struct::get_array("pr_c_spawn", "targetname");
 	if(newval == 4)
 	{
-		foreach(var_4c737ae4, var_238c2594 in var_977659a7)
+		foreach(var_238c2594 in var_977659a7)
 		{
 			if(isdefined(var_238c2594.var_453e8445[localclientnum]))
 			{
@@ -197,7 +197,7 @@ function function_553225f(localclientnum, oldval, newval, bnewent, binitialsnap,
 	}
 	else
 	{
-		foreach(var_b6a7dd8, var_238c2594 in var_977659a7)
+		foreach(var_238c2594 in var_977659a7)
 		{
 			if(var_238c2594.script_int == self getentitynumber())
 			{
@@ -242,7 +242,7 @@ function function_20880e24(localclientnum, oldval, newval, bnewent, binitialsnap
 	if(newval)
 	{
 		var_977659a7 = struct::get_array("pr_c_spawn", "targetname");
-		foreach(var_8cc4e06f, var_238c2594 in var_977659a7)
+		foreach(var_238c2594 in var_977659a7)
 		{
 			if(var_238c2594.script_int == self getentitynumber())
 			{

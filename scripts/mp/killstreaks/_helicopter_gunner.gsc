@@ -114,7 +114,7 @@ function updateplayerstate()
 */
 function updateallkillstreakinventory()
 {
-	foreach(var_832f6a13, player in level.players)
+	foreach(player in level.players)
 	{
 		if(isdefined(player.sessionstate) && player.sessionstate == "playing")
 		{
@@ -294,7 +294,7 @@ function hackedprefunction(hacker)
 	heligunner.owner killstreaks::unhide_compass();
 	heligunner.owner vehicle::stop_monitor_missiles_locked_on_to_me();
 	heligunner.owner vehicle::stop_monitor_damage_as_occupant();
-	foreach(var_7e4e54bc, assistant in heligunner.assistants)
+	foreach(assistant in heligunner.assistants)
 	{
 		if(isdefined(assistant.occupant))
 		{
@@ -644,7 +644,7 @@ function enterhelicopter(isowner)
 		seatindex = getfirstavailableseat(player);
 		if(seatindex == -1)
 		{
-			return 0;
+			return false;
 		}
 		level.vtol.assistants[seatindex].occupant = player;
 	}
@@ -668,21 +668,24 @@ function enterhelicopter(isowner)
 			level.vtol.failed2enter = 1;
 			level.vtol notify(#"vtol_shutdown");
 		}
-		return 0;
+		return false;
 	}
 	if(isowner)
 	{
 		level.vtol usevehicle(player, 0);
 		level.vtol clientfield::set("vehicletransition", 1);
 	}
-	else if(level.vtol.shuttingdown)
+	else
 	{
-		player killstreaks::clear_using_remote();
-		return 0;
+		if(level.vtol.shuttingdown)
+		{
+			player killstreaks::clear_using_remote();
+			return false;
+		}
+		level.vtol usevehicle(player, seatindex + 1);
+		level.vtol clientfield::set("vehicletransition", 1);
+		level.vtol killstreaks::play_pilot_dialog_on_owner("remoteOperatorAdd", "helicopter_gunner", level.vtol.killstreak_id);
 	}
-	level.vtol usevehicle(player, seatindex + 1);
-	level.vtol clientfield::set("vehicletransition", 1);
-	level.vtol killstreaks::play_pilot_dialog_on_owner("remoteOperatorAdd", "helicopter_gunner", level.vtol.killstreak_id);
 	killcament = spawn("script_model", (0, 0, 0));
 	killcament setmodel("tag_origin");
 	killcament.angles = (0, 0, 0);
@@ -714,7 +717,7 @@ function enterhelicopter(isowner)
 	{
 		player thread hidecompassafterwait(0.1);
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -848,7 +851,7 @@ function update_client_for_driver_and_occupants()
 {
 	vtol = self;
 	update_client_for_player(vtol.owner);
-	foreach(var_c84e1d89, assistant in vtol.assistants)
+	foreach(assistant in vtol.assistants)
 	{
 		update_client_for_player(assistant.occupant);
 	}
@@ -972,7 +975,7 @@ function leavehelicopter(player, ownerleft)
 	if(ownerleft)
 	{
 		level.vtol.shuttingdown = 1;
-		foreach(var_993e0195, assistant in level.vtol.assistants)
+		foreach(assistant in level.vtol.assistants)
 		{
 			if(isdefined(assistant.occupant))
 			{
@@ -988,7 +991,7 @@ function leavehelicopter(player, ownerleft)
 	else if(isdefined(player))
 	{
 		player globallogic_audio::flush_killstreak_dialog_on_player(level.vtol.killstreak_id);
-		foreach(var_fc36dbcf, assistant in level.vtol.assistants)
+		foreach(assistant in level.vtol.assistants)
 		{
 			if(isdefined(assistant.occupant) && assistant.occupant == player)
 			{
@@ -1237,7 +1240,7 @@ function watchmissilesthread()
 		missiles = getentarray("rocket", "classname");
 		/#
 		#/
-		foreach(var_dfffcfa2, missile in missiles)
+		foreach(missile in missiles)
 		{
 			if(missile.item == helimissile)
 			{
@@ -1415,15 +1418,18 @@ function helicopterthinkthread(startnode, destnodes)
 		self waittill(#"near_goal");
 		waittime = 0;
 	}
-	else if(!isdefined(targetnode.script_delay))
-	{
-		self waittill(#"near_goal");
-		waittime = 10 + randomint(5);
-	}
 	else
 	{
-		self waittill_match(#"goal");
-		waittime = targetnode.script_delay;
+		if(!isdefined(targetnode.script_delay))
+		{
+			self waittill(#"near_goal");
+			waittime = 10 + randomint(5);
+		}
+		else
+		{
+			self waittillmatch(#"goal");
+			waittime = targetnode.script_delay;
+		}
 	}
 	if(firstpass)
 	{
@@ -1554,12 +1560,12 @@ function setplayermovedrecentlythread()
 function updateareanodes(areanodes, forcemove)
 {
 	validenemies = [];
-	foreach(var_3d1bece2, node in areanodes)
+	foreach(node in areanodes)
 	{
 		node.validplayers = [];
 		node.nodescore = 0;
 	}
-	foreach(var_212acb58, player in level.players)
+	foreach(player in level.players)
 	{
 		if(!isalive(player))
 		{
@@ -1569,7 +1575,7 @@ function updateareanodes(areanodes, forcemove)
 		{
 			continue;
 		}
-		foreach(var_b2fa445a, node in areanodes)
+		foreach(node in areanodes)
 		{
 			if(distancesquared(player.origin, node.origin) > 1048576)
 			{
@@ -1579,14 +1585,14 @@ function updateareanodes(areanodes, forcemove)
 		}
 	}
 	bestnode = undefined;
-	foreach(var_373411d9, node in areanodes)
+	foreach(node in areanodes)
 	{
 		if(isdefined(level.vtol.currentnode) && node == level.vtol.currentnode)
 		{
 			continue;
 		}
 		helinode = getent(node.target, "targetname");
-		foreach(var_b5cb7804, player in node.validplayers)
+		foreach(player in node.validplayers)
 		{
 			node.nodescore = node.nodescore + 1;
 			if(bullettracepassed(player.origin + vectorscale((0, 0, 1), 32), helinode.origin, 0, player))
@@ -1680,14 +1686,17 @@ function getoriginoffsets(goalnode)
 		{
 			startorigin = startorigin + vectorscale((0, 0, 1), 128);
 		}
-		else if(startorigin[2] > endorigin[2])
-		{
-			endorigin = endorigin + vectorscale((0, 0, 1), 128);
-		}
 		else
 		{
-			startorigin = startorigin + vectorscale((0, 0, 1), 128);
-			endorigin = endorigin + vectorscale((0, 0, 1), 128);
+			if(startorigin[2] > endorigin[2])
+			{
+				endorigin = endorigin + vectorscale((0, 0, 1), 128);
+			}
+			else
+			{
+				startorigin = startorigin + vectorscale((0, 0, 1), 128);
+				endorigin = endorigin + vectorscale((0, 0, 1), 128);
+			}
 		}
 		numtraces++;
 		traceorigin = bullettrace(startorigin + traceoffset, endorigin + traceoffset, 0, self);

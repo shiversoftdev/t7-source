@@ -22,7 +22,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("cic_turret", &__init__, undefined, undefined);
 }
@@ -573,13 +573,16 @@ function cic_turret_fire_for_time(totalfiretime)
 		{
 			self fireweapon();
 		}
-		else if(firechance > 1)
-		{
-			self fireweapon();
-		}
 		else
 		{
-			self fireweapon();
+			if(firechance > 1)
+			{
+				self fireweapon();
+			}
+			else
+			{
+				self fireweapon();
+			}
 		}
 		firecount++;
 		wait(firetime);

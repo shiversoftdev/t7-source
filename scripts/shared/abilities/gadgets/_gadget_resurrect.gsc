@@ -24,7 +24,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("gadget_resurrect", &__init__, undefined, undefined);
 }
@@ -396,18 +396,18 @@ function overridespawn(ispredictedspawn)
 {
 	if(!self flagsys::get("gadget_resurrect_ready"))
 	{
-		return 0;
+		return false;
 	}
 	if(!self flagsys::get("gadget_resurrect_activated"))
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(self.resurrect_origin))
 	{
 		self.resurrect_origin = self.origin;
 		self.resurrect_angles = self.angles;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -438,9 +438,9 @@ function player_position_valid()
 {
 	if(self clientfield::get_to_player("out_of_bounds"))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -669,9 +669,9 @@ function gadget_resurrect_delay_updateteamstatus()
 {
 	if(self flagsys::get("gadget_resurrect_ready"))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

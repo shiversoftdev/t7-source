@@ -55,7 +55,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	if(!sessionmodeiscampaignzombiesgame())
 	{
@@ -116,7 +116,7 @@ function bzm_sceneseqended(scenename)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function say(alias)
+function private say(alias)
 {
 	self notify(#"hash_2d8828d0");
 	self endon(#"hash_2d8828d0");
@@ -465,10 +465,10 @@ function sndisnetworksafe()
 	}
 	if(level.var_384c508a >= 2)
 	{
-		return 0;
+		return false;
 	}
 	level.var_384c508a++;
-	return 1;
+	return true;
 }
 
 /*

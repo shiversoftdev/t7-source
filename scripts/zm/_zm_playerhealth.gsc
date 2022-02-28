@@ -20,7 +20,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_playerhealth", &__init__, undefined, undefined);
 }
@@ -317,13 +317,16 @@ function playerhealthregen()
 			invultime = level.invultime_onshield;
 			playerjustgotredflashing = 0;
 		}
-		else if(veryhurt)
-		{
-			invultime = level.invultime_postshield;
-		}
 		else
 		{
-			invultime = level.invultime_preshield;
+			if(veryhurt)
+			{
+				invultime = level.invultime_postshield;
+			}
+			else
+			{
+				invultime = level.invultime_preshield;
+			}
 		}
 		invultime = invultime * playerinvultimescale;
 		/#
@@ -695,13 +698,16 @@ function printhealthdebug()
 				{
 					width = (player.health / player.maxhealth) * 300;
 				}
-				else if(i == 1)
+				else
 				{
-					width = ((level.playerinvultimeend - gettime()) / 1000) * 40;
-				}
-				else if(i == 2)
-				{
-					width = ((level.player_deathinvulnerabletimeout - gettime()) / 1000) * 40;
+					if(i == 1)
+					{
+						width = ((level.playerinvultimeend - gettime()) / 1000) * 40;
+					}
+					else if(i == 2)
+					{
+						width = ((level.player_deathinvulnerabletimeout - gettime()) / 1000) * 40;
+					}
 				}
 				width = int(max(width, 1));
 				width = int(min(width, 300));

@@ -164,14 +164,14 @@ function spawnsmokegrenadetrigger(duration)
 */
 function isinsmokegrenade()
 {
-	foreach(var_3fe383f4, trigger in level.smoke_grenade_triggers)
+	foreach(trigger in level.smoke_grenade_triggers)
 	{
 		if(self istouching(trigger))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*

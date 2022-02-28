@@ -85,7 +85,7 @@ function function_16f0344e()
 	level flag::init("pap_whistle");
 	level flag::init("pap_wheel");
 	level.var_12542033 = 0;
-	foreach(var_9fb8dcf8, s_valve in struct::get_array("pap_water_control"))
+	foreach(s_valve in struct::get_array("pap_water_control"))
 	{
 		s_valve thread function_dd9ccb8(s_valve.script_int);
 	}
@@ -279,13 +279,16 @@ function function_dd9ccb8(n_id)
 	{
 		self.trigger = zm_island_util::spawn_trigger_radius(self.origin, 50, 1, &function_72a105ff);
 	}
-	else if(n_id == 2)
-	{
-		self.trigger = zm_island_util::spawn_trigger_radius(self.origin, 50, 1, &function_e35907c);
-	}
 	else
 	{
-		self.trigger = zm_island_util::spawn_trigger_radius(self.origin, 50, 1, &function_578e801d);
+		if(n_id == 2)
+		{
+			self.trigger = zm_island_util::spawn_trigger_radius(self.origin, 50, 1, &function_e35907c);
+		}
+		else
+		{
+			self.trigger = zm_island_util::spawn_trigger_radius(self.origin, 50, 1, &function_578e801d);
+		}
 	}
 	while(true)
 	{
@@ -301,13 +304,16 @@ function function_dd9ccb8(n_id)
 			{
 				level flag::set("pap_gauge");
 			}
-			else if(n_id == 2)
-			{
-				level flag::set("pap_wheel");
-			}
 			else
 			{
-				level flag::set("pap_whistle");
+				if(n_id == 2)
+				{
+					level flag::set("pap_wheel");
+				}
+				else
+				{
+					level flag::set("pap_whistle");
+				}
 			}
 			break;
 		}
@@ -323,7 +329,7 @@ function function_dd9ccb8(n_id)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_72a105ff(e_player)
+function private function_72a105ff(e_player)
 {
 	if(level flag::get("valve1_found"))
 	{
@@ -341,7 +347,7 @@ private function function_72a105ff(e_player)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_e35907c(e_player)
+function private function_e35907c(e_player)
 {
 	if(level flag::get("valve2_found"))
 	{
@@ -359,7 +365,7 @@ private function function_e35907c(e_player)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_578e801d(e_player)
+function private function_578e801d(e_player)
 {
 	if(level flag::get("valve3_found"))
 	{
@@ -412,19 +418,22 @@ function function_90913542(str_flag)
 	{
 		a_players = level.players;
 	}
-	else if(isplayer(self))
-	{
-		a_players = array(self);
-	}
 	else
 	{
-		return;
+		if(isplayer(self))
+		{
+			a_players = array(self);
+		}
+		else
+		{
+			return;
+		}
 	}
 	switch(str_flag)
 	{
 		case "valve1_found":
 		{
-			foreach(var_e6a832a7, player in a_players)
+			foreach(player in a_players)
 			{
 				player clientfield::set_to_player("valvethree_part_lever", 1);
 				player thread zm_craftables::player_show_craftable_parts_ui("zmInventory.valveone_part_lever", "zmInventory.widget_machinetools_parts", 0);
@@ -433,7 +442,7 @@ function function_90913542(str_flag)
 		}
 		case "valve2_found":
 		{
-			foreach(var_6ddd91d9, player in a_players)
+			foreach(player in a_players)
 			{
 				player clientfield::set_to_player("valveone_part_lever", 1);
 				player thread zm_craftables::player_show_craftable_parts_ui("zmInventory.valvetwo_part_lever", "zmInventory.widget_machinetools_parts", 0);
@@ -442,7 +451,7 @@ function function_90913542(str_flag)
 		}
 		case "valve3_found":
 		{
-			foreach(var_2be9f5e6, player in a_players)
+			foreach(player in a_players)
 			{
 				player clientfield::set_to_player("valvetwo_part_lever", 1);
 				player thread zm_craftables::player_show_craftable_parts_ui("zmInventory.valvethree_part_lever", "zmInventory.widget_machinetools_parts", 0);
@@ -466,7 +475,7 @@ function function_d0901c34()
 	level.var_e1bb72d5 = 0;
 	level.var_69ca3c45 = 0;
 	var_1daee2f1 = getentarray("cocoon_bunker", "targetname");
-	foreach(var_c237ba29, mdl_cocoon in var_1daee2f1)
+	foreach(mdl_cocoon in var_1daee2f1)
 	{
 		mdl_cocoon.is_open = 0;
 		mdl_cocoon.clip = getent(mdl_cocoon.target, "targetname");
@@ -523,7 +532,7 @@ function function_bd8082d1()
 {
 	var_1daee2f1 = getentarray("cocoon_bunker", "targetname");
 	var_d43245b8 = [];
-	foreach(var_6b780c35, mdl_cocoon in var_1daee2f1)
+	foreach(mdl_cocoon in var_1daee2f1)
 	{
 		if(!mdl_cocoon.is_open)
 		{
@@ -581,9 +590,9 @@ function function_b09adc86(str_mod)
 {
 	if(str_mod == "MOD_MELEE" || zm_utility::is_explosive_damage(str_mod))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -613,7 +622,7 @@ function function_14c57bc9()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_9bd3096f(player)
+function private function_9bd3096f(player)
 {
 	return &"ZOMBIE_BUILD_PIECE_GRAB";
 }
@@ -798,7 +807,7 @@ function function_a3ebebe()
 	var_ca238230 = 0;
 	var_34dc7362 = getent("penstock_defend", "script_noteworthy");
 	a_ai_zombies = getaiteamarray(level.zombie_team);
-	foreach(var_8cb9eb9a, ai_zombie in a_ai_zombies)
+	foreach(ai_zombie in a_ai_zombies)
 	{
 		if(ai_zombie istouching(var_34dc7362) && isalive(ai_zombie) && ai_zombie.var_6eb9188d === 1)
 		{
@@ -821,7 +830,7 @@ function function_2870b97d()
 {
 	var_4399a34 = [];
 	var_34dc7362 = getent("penstock_defend", "script_noteworthy");
-	foreach(var_eb7f6448, player in level.players)
+	foreach(player in level.players)
 	{
 		if(player istouching(var_34dc7362) && zm_utility::is_player_valid(player) && !player laststand::player_is_in_laststand())
 		{
@@ -850,7 +859,7 @@ function function_2870b97d()
 */
 function function_55dac330()
 {
-	foreach(var_fae08ee2, ai_zombie in getaiteamarray(level.zombie_team))
+	foreach(ai_zombie in getaiteamarray(level.zombie_team))
 	{
 		ai_zombie ai::set_ignoreall(0);
 	}
@@ -1043,22 +1052,22 @@ function function_9e3140d6(cmd)
 			{
 				level flag::set("");
 				level thread function_90913542("");
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				level flag::set("");
 				level thread function_90913542("");
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				level flag::set("");
 				level thread function_90913542("");
-				return 1;
+				return true;
 			}
 		}
-		return 0;
+		return false;
 	#/
 }
 

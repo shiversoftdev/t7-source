@@ -171,9 +171,9 @@ function bhb_teleport_loc_check(grenade, model, info)
 	{
 		level._be clientfield::set("toggle_black_hole_deployed", 1);
 		level thread teleport_target(grenade, level._be);
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -223,7 +223,7 @@ function be2_validation(position)
 	{
 		level notify(#"be2_validation");
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -585,14 +585,14 @@ function moon_be_move(motivation_array)
 {
 	if(!isdefined(motivation_array))
 	{
-		return 0;
+		return false;
 	}
 	if(!isstring(motivation_array))
 	{
 		/#
 			println("");
 		#/
-		return 0;
+		return false;
 	}
 	motivational_array = strtok(motivation_array, ",");
 	match = 0;
@@ -603,7 +603,7 @@ function moon_be_move(motivation_array)
 			if(motivational_array[i] == level.motivational_array[j])
 			{
 				match = 1;
-				return 1;
+				return true;
 			}
 		}
 	}
@@ -618,8 +618,13 @@ function moon_be_move(motivation_array)
 				println(("" + motivational_array[0]) + "");
 			#/
 		}
-		println("");
-		return 0;
+		else
+		{
+			/#
+				println("");
+			#/
+		}
+		return false;
 	}
 }
 

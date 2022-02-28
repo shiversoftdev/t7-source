@@ -17,7 +17,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	level.gameskill = 0;
 }
@@ -173,7 +173,7 @@ function get_locked_difficulty_val(msg, ignored)
 */
 function always_pain()
 {
-	return 0;
+	return false;
 }
 
 /*
@@ -207,11 +207,11 @@ function pain_protection_check()
 {
 	if(!isalive(self.enemy))
 	{
-		return 0;
+		return false;
 	}
 	if(!isplayer(self.enemy))
 	{
-		return 0;
+		return false;
 	}
 	if(!isalive(level.painai) || level.painai.a.script != "pain")
 	{
@@ -219,13 +219,13 @@ function pain_protection_check()
 	}
 	if(self == level.painai)
 	{
-		return 0;
+		return false;
 	}
 	if(self.damageweapon != level.weaponnone && self.damageweapon.isboltaction)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -345,13 +345,16 @@ function printhealthdebug()
 				width = (player.health / player.maxhealth) * 300;
 				level.healthbarhudelems[key] settext((level.healthbarkeys[0] + " ") + player.health);
 			}
-			else if(i == 1)
+			else
 			{
-				width = ((level.playerinvultimeend - gettime()) / 1000) * 40;
-			}
-			else if(i == 2)
-			{
-				width = ((level.player_deathinvulnerabletimeout - gettime()) / 1000) * 40;
+				if(i == 1)
+				{
+					width = ((level.playerinvultimeend - gettime()) / 1000) * 40;
+				}
+				else if(i == 2)
+				{
+					width = ((level.player_deathinvulnerabletimeout - gettime()) / 1000) * 40;
+				}
 			}
 			width = int(max(width, 1));
 			width = int(min(width, 300));
@@ -722,13 +725,16 @@ function grenadeawareness()
 				self.grenadeawareness = 0.5;
 			}
 		}
-		else if(randomint(100) < 33)
-		{
-			self.grenadeawareness = 0;
-		}
 		else
 		{
-			self.grenadeawareness = 0.2;
+			if(randomint(100) < 33)
+			{
+				self.grenadeawareness = 0;
+			}
+			else
+			{
+				self.grenadeawareness = 0.2;
+			}
 		}
 	}
 }
@@ -995,13 +1001,13 @@ function maychangecoverwarningalpha(coverwarning)
 {
 	if(!isdefined(coverwarning))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(coverwarning.beingdestroyed))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1078,7 +1084,7 @@ function cover_warning_check()
 */
 function shouldshowcoverwarning()
 {
-	return 0;
+	return false;
 }
 
 /*
@@ -1310,7 +1316,7 @@ function update_skill_level(skill_override)
 				level.gameskillhighest = level.gameskill;
 				matchrecordsetleveldifficultyforindex(3, level.gameskill);
 			}
-			foreach(var_40af4b03, player in getplayers())
+			foreach(player in getplayers())
 			{
 				player clientfield::set_player_uimodel("serverDifficulty", level.gameskill);
 			}

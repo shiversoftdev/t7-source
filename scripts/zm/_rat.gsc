@@ -16,7 +16,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	/#
 		system::register("", &__init__, undefined, undefined);
@@ -70,9 +70,9 @@ function derriesezombiespawnnavmeshtest(params, inrat)
 		size = 0;
 		failed_attack_spot_size = 0;
 		wait(0.2);
-		foreach(var_d71e2c6a, zone in level.zones)
+		foreach(zone in level.zones)
 		{
-			foreach(var_ae2f68ab, loc in zone.a_loc_types[""])
+			foreach(loc in zone.a_loc_types[""])
 			{
 				angles = (0, 0, 0);
 				enemy forceteleport(loc.origin, angles);

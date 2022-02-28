@@ -20,7 +20,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("challenges", &__init__, undefined, undefined);
 }
@@ -713,7 +713,7 @@ function function_f2d8f1d0()
 		array::add(var_2884746a, "");
 		array::add(var_2884746a, "");
 		array::add(var_2884746a, "");
-		foreach(var_44031e14, challenge in var_2884746a)
+		foreach(challenge in var_2884746a)
 		{
 			self addplayerstat(challenge, 1000);
 			iprintln("" + challenge);

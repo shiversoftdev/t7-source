@@ -20,7 +20,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("destructible", &__init__, undefined, undefined);
 }
@@ -99,7 +99,7 @@ function init_explosions()
 */
 function get_unused_explosion()
 {
-	foreach(var_a2a5264e, explosion in level.explosion_manager.a_explosions)
+	foreach(explosion in level.explosion_manager.a_explosions)
 	{
 		if(!(isdefined(explosion.in_use) && explosion.in_use))
 		{
@@ -155,13 +155,16 @@ function event_callback(destructible_event, attacker, weapon)
 		{
 			explosion_radius = 150;
 		}
-		else if(explosion_radius == "lg")
-		{
-			explosion_radius = 450;
-		}
 		else
 		{
-			explosion_radius = int(explosion_radius);
+			if(explosion_radius == "lg")
+			{
+				explosion_radius = 450;
+			}
+			else
+			{
+				explosion_radius = int(explosion_radius);
+			}
 		}
 		destructible_event = "explode_complex";
 	}
@@ -173,13 +176,16 @@ function event_callback(destructible_event, attacker, weapon)
 		{
 			explosion_radius = 150;
 		}
-		else if(explosion_radius_type == "large")
-		{
-			explosion_radius = 450;
-		}
 		else
 		{
-			explosion_radius = 300;
+			if(explosion_radius_type == "large")
+			{
+				explosion_radius = 450;
+			}
+			else
+			{
+				explosion_radius = 300;
+			}
 		}
 	}
 	if(issubstr(destructible_event, "simple_timed_explosion"))

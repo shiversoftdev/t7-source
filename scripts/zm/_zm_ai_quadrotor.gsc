@@ -23,7 +23,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_ai_quadrotor", &__init__, undefined, undefined);
 }
@@ -229,9 +229,9 @@ function quadrotor_check_move(position)
 	results = physicstrace(self.origin, position, (-15, -15, -5), (15, 15, 5));
 	if(results["fraction"] == 1)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -344,17 +344,20 @@ function quadrotor_movementupdate()
 		{
 			self util::script_delay();
 		}
-		else if(distancesquared(self.origin, self.current_pathto_pos) < 10000 && (self.current_pathto_pos[2] > (old_goalpos[2] + 10) || (self.origin[2] + 10) < self.current_pathto_pos[2]))
-		{
-			self setvehgoalpos(self.current_pathto_pos, 1, 1);
-			self pathvariableoffset(vectorscale((0, 0, 1), 20), 2);
-			self util::waittill_any_timeout(4, "near_goal", "force_goal", "death", "change_state");
-		}
 		else
 		{
-			goalpos = self quadrotor_get_closest_node();
-			self setvehgoalpos(goalpos, 1, 1);
-			self util::waittill_any_timeout(2, "near_goal", "force_goal", "death", "change_state");
+			if(distancesquared(self.origin, self.current_pathto_pos) < 10000 && (self.current_pathto_pos[2] > (old_goalpos[2] + 10) || (self.origin[2] + 10) < self.current_pathto_pos[2]))
+			{
+				self setvehgoalpos(self.current_pathto_pos, 1, 1);
+				self pathvariableoffset(vectorscale((0, 0, 1), 20), 2);
+				self util::waittill_any_timeout(4, "near_goal", "force_goal", "death", "change_state");
+			}
+			else
+			{
+				goalpos = self quadrotor_get_closest_node();
+				self setvehgoalpos(goalpos, 1, 1);
+				self util::waittill_any_timeout(2, "near_goal", "force_goal", "death", "change_state");
+			}
 		}
 	}
 	/#
@@ -434,7 +437,7 @@ function quadrotor_movementupdate()
 		if(a_powerups.size > 0)
 		{
 			b_got_powerup = 0;
-			foreach(var_164e5aaa, powerup in a_powerups)
+			foreach(powerup in a_powerups)
 			{
 				var_2b346da7 = self getclosestpointonnavvolume(powerup.origin, 100);
 				if(!isdefined(var_2b346da7))
@@ -514,14 +517,17 @@ function quadrotor_movementupdate()
 				self.goal_node.quadrotor_claimed = undefined;
 			}
 		}
-		else if(isdefined(self.goal_node))
+		else
 		{
-			self.goal_node.quadrotor_fails = 1;
+			if(isdefined(self.goal_node))
+			{
+				self.goal_node.quadrotor_fails = 1;
+			}
+			self.current_pathto_pos = self.origin;
+			self setvehgoalpos(self.origin, 1, 1);
+			wait(0.5);
+			continue;
 		}
-		self.current_pathto_pos = self.origin;
-		self setvehgoalpos(self.origin, 1, 1);
-		wait(0.5);
-		continue;
 	}
 }
 
@@ -578,7 +584,7 @@ function quadrotor_get_closest_node()
 	{
 		nodes = getnodesinradiussorted(self.current_pathto_pos, 3000, 0, 2000, "Path");
 	}
-	foreach(var_85f7b780, node in nodes)
+	foreach(node in nodes)
 	{
 		if(node.type == "BAD NODE")
 		{
@@ -616,7 +622,7 @@ function quadrotor_find_new_position()
 	}
 	best_node = undefined;
 	best_score = 0;
-	foreach(var_6b6e287f, node in nodes)
+	foreach(node in nodes)
 	{
 		if(node.type == "BAD NODE")
 		{
@@ -1053,55 +1059,61 @@ function quadrotor_collision()
 			}
 			time_of_last_bounce = gettime();
 		}
-		else if(isdefined(self.emped))
+		else
 		{
-			if(isdefined(self.bounced))
+			if(isdefined(self.emped))
 			{
+				if(isdefined(self.bounced))
+				{
+					self playsound("veh_qrdrone_wall");
+					self setvehvelocity((0, 0, 0));
+					self setangularvelocity((0, 0, 0));
+					if(self.angles[0] < 0)
+					{
+						if(self.angles[0] < -15)
+						{
+							self.angles = (-15, self.angles[1], self.angles[2]);
+						}
+						else if(self.angles[0] > -10)
+						{
+							self.angles = (-10, self.angles[1], self.angles[2]);
+						}
+					}
+					else
+					{
+						if(self.angles[0] > 15)
+						{
+							self.angles = (15, self.angles[1], self.angles[2]);
+						}
+						else if(self.angles[0] < 10)
+						{
+							self.angles = (10, self.angles[1], self.angles[2]);
+						}
+					}
+					self.bounced = undefined;
+					self notify(#"landed");
+					return;
+				}
+				self.bounced = 1;
+				self setvehvelocity(self.velocity + (normal * 120));
 				self playsound("veh_qrdrone_wall");
-				self setvehvelocity((0, 0, 0));
-				self setangularvelocity((0, 0, 0));
-				if(self.angles[0] < 0)
+				if(normal[2] < 0.6)
 				{
-					if(self.angles[0] < -15)
-					{
-						self.angles = (-15, self.angles[1], self.angles[2]);
-					}
-					else if(self.angles[0] > -10)
-					{
-						self.angles = (-10, self.angles[1], self.angles[2]);
-					}
+					fx_origin = self.origin - (normal * 28);
 				}
-				else if(self.angles[0] > 15)
+				else
 				{
-					self.angles = (15, self.angles[1], self.angles[2]);
+					fx_origin = self.origin - (normal * 10);
 				}
-				else if(self.angles[0] < 10)
-				{
-					self.angles = (10, self.angles[1], self.angles[2]);
-				}
-				self.bounced = undefined;
-				self notify(#"landed");
-				return;
-			}
-			self.bounced = 1;
-			self setvehvelocity(self.velocity + (normal * 120));
-			self playsound("veh_qrdrone_wall");
-			if(normal[2] < 0.6)
-			{
-				fx_origin = self.origin - (normal * 28);
+				playfx(level._effect["quadrotor_nudge"], fx_origin, normal);
 			}
 			else
 			{
-				fx_origin = self.origin - (normal * 10);
+				createdynentandlaunch(self.deathmodel, self.origin, self.angles, self.origin, self.velocity * 0.01);
+				self playsound("veh_qrdrone_explo");
+				self thread death_fire_loop_audio();
+				self notify(#"crash_done");
 			}
-			playfx(level._effect["quadrotor_nudge"], fx_origin, normal);
-		}
-		else
-		{
-			createdynentandlaunch(self.deathmodel, self.origin, self.angles, self.origin, self.velocity * 0.01);
-			self playsound("veh_qrdrone_explo");
-			self thread death_fire_loop_audio();
-			self notify(#"crash_done");
 		}
 	}
 }
@@ -1330,7 +1342,7 @@ function player_in_last_stand_within_range(range)
 	{
 		return;
 	}
-	foreach(var_5cf30226, player in players)
+	foreach(player in players)
 	{
 		if(player laststand::player_is_in_laststand() && distancesquared(self.origin, player.origin) < (range * range) && !isdefined(player.quadrotor_revive))
 		{
@@ -1418,7 +1430,7 @@ function kill_fx_if_target_revive(quadrotor, revive_target)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_a05da9fb()
+function private function_a05da9fb()
 {
 	/#
 		level flagsys::wait_till("");
@@ -1435,7 +1447,7 @@ private function function_a05da9fb()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_d3a31a35(cmd)
+function private function_d3a31a35(cmd)
 {
 	/#
 		if(cmd == "")

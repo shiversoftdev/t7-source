@@ -566,17 +566,23 @@ function setuptabunfx(owner, locations, count)
 	{
 		fxtoplay = 0;
 	}
-	else if(locations["distSqrd"][count] > effect1dist && locations["distSqrd"][previous] > effect2dist && locations["distSqrd"][next] > effect2dist)
+	else
 	{
-		fxtoplay = 1;
-	}
-	else if(locations["distSqrd"][count] > effect2dist && locations["distSqrd"][previous] > effect3dist && locations["distSqrd"][next] > effect3dist)
-	{
-		fxtoplay = 2;
-	}
-	else if(locations["distSqrd"][count] > effect3dist && locations["distSqrd"][previous] > effect4dist && locations["distSqrd"][next] > effect4dist)
-	{
-		fxtoplay = 3;
+		if(locations["distSqrd"][count] > effect1dist && locations["distSqrd"][previous] > effect2dist && locations["distSqrd"][next] > effect2dist)
+		{
+			fxtoplay = 1;
+		}
+		else
+		{
+			if(locations["distSqrd"][count] > effect2dist && locations["distSqrd"][previous] > effect3dist && locations["distSqrd"][next] > effect3dist)
+			{
+				fxtoplay = 2;
+			}
+			else if(locations["distSqrd"][count] > effect3dist && locations["distSqrd"][previous] > effect4dist && locations["distSqrd"][next] > effect4dist)
+			{
+				fxtoplay = 3;
+			}
+		}
 	}
 	return fxtoplay;
 }

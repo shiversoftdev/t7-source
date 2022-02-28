@@ -288,9 +288,9 @@ function place_qualifier()
 	}
 	if(ent_num == 2)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

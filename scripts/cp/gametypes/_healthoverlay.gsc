@@ -17,7 +17,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("healthoverlay", &__init__, undefined, undefined);
 }
@@ -216,13 +216,16 @@ function player_health_regen()
 					player setcontrolleruimodelvalue("hudItems.regenDelayProgress", regendelayprogress);
 				}
 			}
-			else if(usetrueregen)
-			{
-				newhealth = ratio + regenrate;
-			}
 			else
 			{
-				newhealth = 1;
+				if(usetrueregen)
+				{
+					newhealth = ratio + regenrate;
+				}
+				else
+				{
+					newhealth = 1;
+				}
 			}
 			if(newhealth != oldhealth)
 			{

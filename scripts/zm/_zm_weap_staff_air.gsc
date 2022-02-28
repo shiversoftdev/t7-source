@@ -26,7 +26,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_weap_staff_air", &__init__, undefined, undefined);
 }
@@ -50,8 +50,8 @@ function __init__()
 	level flag::init("whirlwind_active");
 	zm_spawner::register_zombie_damage_callback(&staff_air_zombie_damage_response);
 	zm_spawner::register_zombie_death_event_callback(&staff_air_death_event);
-	level.var_3481edfa = getweapon("staff_air");
-	level.var_7830b075 = getweapon("staff_air_upgraded");
+	level.w_staff_air = getweapon("staff_air");
+	level.w_staff_air_upgraded = getweapon("staff_air_upgraded");
 }
 
 /*
@@ -589,11 +589,11 @@ function staff_air_fling_zombie(player)
 	}
 	if(isdefined(self.is_source) || math::cointoss())
 	{
-		self thread zombie_launch(player, level.var_7830b075);
+		self thread zombie_launch(player, level.w_staff_air_upgraded);
 	}
 	else
 	{
-		self zm_tomb_utility::do_damage_network_safe(player, self.health, level.var_7830b075, "MOD_IMPACT");
+		self zm_tomb_utility::do_damage_network_safe(player, self.health, level.w_staff_air_upgraded, "MOD_IMPACT");
 		level thread staff_air_gib(self);
 	}
 }
@@ -614,12 +614,15 @@ function zombie_launch(e_attacker, w_weapon)
 	{
 		level thread staff_air_gib(self);
 	}
-	else if(isdefined(self.is_mechz) && self.is_mechz)
+	else
 	{
-		return;
+		if(isdefined(self.is_mechz) && self.is_mechz)
+		{
+			return;
+		}
+		self startragdoll();
+		self clientfield::set("air_staff_launch", 1);
 	}
-	self startragdoll();
-	self clientfield::set("air_staff_launch", 1);
 }
 
 /*
@@ -669,9 +672,9 @@ function staff_air_zombie_damage_response(mod, hit_location, hit_origin, player,
 	if(self is_staff_air_damage(self.damageweapon) && mod != "MOD_MELEE")
 	{
 		self thread stun_zombie();
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -743,7 +746,7 @@ function wind_damage_cone(w_weapon)
 		n_damage = 2050;
 		n_fov = 45;
 	}
-	foreach(var_93defb23, target in a_targets)
+	foreach(target in a_targets)
 	{
 		if(isai(target))
 		{

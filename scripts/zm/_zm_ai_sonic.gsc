@@ -32,7 +32,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_ai_sonic", &__init__, &__main__, undefined);
 }
@@ -282,10 +282,10 @@ function _entity_in_zone(zone)
 	{
 		if(self istouching(zone.volumes[i]))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -445,9 +445,9 @@ function _canscreamnow()
 {
 	if(gettime() > self.sonicscreamattacknext)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -459,15 +459,15 @@ function _canscreamnow()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function soniccanattack(entity)
+function private soniccanattack(entity)
 {
 	if(entity.animname !== "sonic_zombie")
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(entity.favoriteenemy) || !isplayer(entity.favoriteenemy))
 	{
-		return 0;
+		return false;
 	}
 	hashead = !(isdefined(entity.head_gibbed) && entity.head_gibbed);
 	notmini = !(isdefined(entity.shrinked) && entity.shrinked);
@@ -477,10 +477,10 @@ private function soniccanattack(entity)
 		blurplayers = entity _zombie_any_players_in_blur_area();
 		if(blurplayers)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -492,7 +492,7 @@ private function soniccanattack(entity)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function sonicattackinitialize(entity, asmstatename)
+function private sonicattackinitialize(entity, asmstatename)
 {
 	level _updatenextscreamtime();
 	entity _updatenextscreamtime();
@@ -507,7 +507,7 @@ private function sonicattackinitialize(entity, asmstatename)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_cd107cf(entity)
+function private function_cd107cf(entity)
 {
 	if(entity.animname !== "sonic_zombie")
 	{
@@ -525,7 +525,7 @@ private function function_cd107cf(entity)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function sonicattackterminate(entity, asmstatename)
+function private sonicattackterminate(entity, asmstatename)
 {
 	entity _zombie_scream_attack_done();
 }
@@ -632,12 +632,12 @@ function _player_in_blur_area(sonic_zombie)
 {
 	if((abs(self.origin[2] - sonic_zombie.origin[2])) > 70)
 	{
-		return 0;
+		return false;
 	}
 	radiussqr = level.sonicscreamdamageradius * level.sonicscreamdamageradius;
 	if(distance2dsquared(self.origin, sonic_zombie.origin) > radiussqr)
 	{
-		return 0;
+		return false;
 	}
 	dirtoplayer = self.origin - sonic_zombie.origin;
 	dirtoplayer = vectornormalize(dirtoplayer);
@@ -645,9 +645,9 @@ function _player_in_blur_area(sonic_zombie)
 	dot = vectordot(dirtoplayer, sonicdir);
 	if(dot < 0.4)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -663,7 +663,7 @@ function _zombie_any_players_in_blur_area()
 {
 	if(isdefined(level.intermission) && level.intermission)
 	{
-		return 0;
+		return false;
 	}
 	players = level.players;
 	for(i = 0; i < players.size; i++)
@@ -671,10 +671,10 @@ function _zombie_any_players_in_blur_area()
 		player = players[i];
 		if(zombie_utility::is_player_valid(player) && player _player_in_blur_area(self))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1115,13 +1115,16 @@ function _soniczombie_knockdown_zombie(player, gib)
 		self.lander_knockdown = 1;
 		self [[self.thundergun_knockdown_func]](player, gib);
 	}
-	else if(gib)
+	else
 	{
-		self.a.gib_ref = array::random(level.thundergun_gib_refs);
-		self thread zombie_death::do_gib();
+		if(gib)
+		{
+			self.a.gib_ref = array::random(level.thundergun_gib_refs);
+			self thread zombie_death::do_gib();
+		}
+		self.thundergun_handle_pain_notetracks = &zm_weap_thundergun::handle_thundergun_pain_notetracks;
+		self dodamage(20, player.origin, player);
 	}
-	self.thundergun_handle_pain_notetracks = &zm_weap_thundergun::handle_thundergun_pain_notetracks;
-	self dodamage(20, player.origin, player);
 }
 
 /*
@@ -1199,7 +1202,7 @@ function _sonic_damage_callback(str_mod, str_hit_location, v_hit_origin, e_playe
 {
 	if(isdefined(self.lander_knockdown) && self.lander_knockdown)
 	{
-		return 0;
+		return false;
 	}
 	if(self.classname == "actor_spawner_zm_temple_sonic")
 	{
@@ -1213,9 +1216,9 @@ function _sonic_damage_callback(str_mod, str_hit_location, v_hit_origin, e_playe
 		}
 		self.damagecount++;
 		self thread zm_powerups::check_for_instakill(e_player, str_mod, str_hit_location);
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

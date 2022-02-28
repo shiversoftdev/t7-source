@@ -55,9 +55,9 @@ function function_82c2a8f1()
 {
 	if(isdefined(self) && isdefined(self.animname) && self.animname == "astro_zombie")
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*

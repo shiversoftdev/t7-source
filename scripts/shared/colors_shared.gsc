@@ -19,7 +19,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("colors", &__init__, &__main__, undefined);
 }
@@ -148,7 +148,7 @@ function __init__()
 */
 function __main__()
 {
-	foreach(var_576f72aa, trig in trigger::get_all())
+	foreach(trig in trigger::get_all())
 	{
 		if(isdefined(trig.script_color_allies))
 		{
@@ -335,7 +335,7 @@ function debug_colornodes()
 		array[""] = [];
 		array[""] = [];
 		array[""] = [];
-		foreach(var_86d321b0, ai in getaiarray())
+		foreach(ai in getaiarray())
 		{
 			if(!isdefined(ai.currentcolorcode))
 			{
@@ -708,7 +708,7 @@ function trigger_issues_orders(color_team, team)
 	if(isdefined(self.target))
 	{
 		a_s_targets = struct::get_array(self.target, "targetname");
-		foreach(var_69b302e4, s_target in a_s_targets)
+		foreach(s_target in a_s_targets)
 		{
 			if(s_target.script_string === "hero_catch_up")
 			{
@@ -824,7 +824,7 @@ function get_colorcodes_and_activate_trigger(color_team, team)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function is_target_visible(target)
+function private is_target_visible(target)
 {
 	n_player_fov = getdvarfloat("cg_fov");
 	n_dot_check = cos(n_player_fov);
@@ -833,7 +833,7 @@ private function is_target_visible(target)
 	{
 		v_pos = target.origin;
 	}
-	foreach(var_d4de1479, player in level.players)
+	foreach(player in level.players)
 	{
 		v_eye = player geteye();
 		v_facing = anglestoforward(player getplayerangles());
@@ -841,23 +841,23 @@ private function is_target_visible(target)
 		n_dot = vectordot(v_facing, v_to_ent);
 		if(n_dot > n_dot_check)
 		{
-			return 1;
+			return true;
 		}
 		if(isvec(target))
 		{
 			a_trace = bullettrace(v_eye, target, 0, player);
 			if(a_trace["fraction"] == 1)
 			{
-				return 1;
+				return true;
 			}
 			continue;
 		}
 		if(target sightconetrace(v_eye, player) != 0)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -889,7 +889,7 @@ function hero_catch_up_teleport(s_teleport, n_min_dist_from_player = 400, b_disa
 	while(true)
 	{
 		b_player_nearby = 0;
-		foreach(var_cef63970, player in level.players)
+		foreach(player in level.players)
 		{
 			if(distancesquared(player.origin, self.origin) < n_min_player_dist_sq)
 			{
@@ -904,7 +904,7 @@ function hero_catch_up_teleport(s_teleport, n_min_dist_from_player = 400, b_disa
 			{
 				n_ai_dist = self calcpathlength(self.node);
 			}
-			foreach(var_beaa6fef, s in a_teleport)
+			foreach(s in a_teleport)
 			{
 				if(positionwouldtelefrag(s.origin))
 				{
@@ -1864,9 +1864,9 @@ function reached_node_but_could_not_claim_it(node)
 		ai[i] notify(#"eject_from_my_node");
 		wait(1);
 		self notify(#"eject_from_my_node");
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1905,10 +1905,10 @@ function colorislegit(color)
 	{
 		if(color == level.colorlist[i])
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2616,7 +2616,7 @@ function update_debug_friendlycolor_on_death()
 	self waittill(#"death");
 	/#
 		a_keys = getarraykeys(level.debug_color_friendlies);
-		foreach(var_d08593a9, n_key in a_keys)
+		foreach(n_key in a_keys)
 		{
 			ai = getentbynum(n_key);
 			if(!isalive(ai))

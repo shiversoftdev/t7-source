@@ -14,7 +14,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("direwolf", &__init__, undefined, undefined);
 }
@@ -28,7 +28,7 @@ autoexec function __init__sytem__()
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function precache()
+function autoexec precache()
 {
 	level._effect["fx_bio_direwolf_eyes"] = "animals/fx_bio_direwolf_eyes";
 }
@@ -59,7 +59,7 @@ function __init__()
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function direwolfeyeglowfxhandler(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private direwolfeyeglowfxhandler(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	entity = self;
 	if(isdefined(entity.archetype) && entity.archetype != "direwolf")

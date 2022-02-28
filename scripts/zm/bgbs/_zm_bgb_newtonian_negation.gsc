@@ -19,7 +19,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_bgb_newtonian_negation", &__init__, undefined, "bgb");
 }
@@ -88,7 +88,7 @@ function disable()
 	{
 		self notify(#"hash_7e8cbf8f");
 	}
-	foreach(var_94bce532, player in level.players)
+	foreach(player in level.players)
 	{
 		if(player !== self && player bgb::is_enabled("zm_bgb_newtonian_negation"))
 		{

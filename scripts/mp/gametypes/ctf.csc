@@ -121,7 +121,7 @@ function setup_fx(localclientnum)
 		effects["allies"] = "ui/fx_ctf_flag_base_team";
 		effects["axis"] = "ui/fx_ctf_flag_base_team";
 	}
-	foreach(var_b41743b4, flag in level.ctfflags)
+	foreach(flag in level.ctfflags)
 	{
 		thread setup_flag_fx(localclientnum, flag, effects);
 	}

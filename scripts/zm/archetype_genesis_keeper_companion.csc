@@ -7,18 +7,18 @@
 #using scripts\shared\system_shared;
 #using scripts\shared\util_shared;
 
-#namespace namespace_6d577909;
+#namespace keepercompanionbehavior;
 
 /*
 	Name: main
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0xD76E2ED8
 	Offset: 0x4E0
 	Size: 0x3AE
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function main()
+function autoexec main()
 {
 	ai::add_archetype_spawn_function("keeper_companion", &function_bfd27b96);
 	clientfield::register("allplayers", "being_keeper_revived", 15000, 1, "int", &function_802744a7, 0, 0);
@@ -43,7 +43,7 @@ autoexec function main()
 
 /*
 	Name: function_b945954d
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x6C98C685
 	Offset: 0x898
 	Size: 0x1A6
@@ -87,7 +87,7 @@ function function_b945954d(localclientnum, oldval, newval, bnewent, binitialsnap
 
 /*
 	Name: function_bfd27b96
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x1C8E9184
 	Offset: 0xA48
 	Size: 0x24
@@ -101,7 +101,7 @@ function function_bfd27b96(localclientnum)
 
 /*
 	Name: function_8aaa4093
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x57F357C
 	Offset: 0xA78
 	Size: 0x130
@@ -133,7 +133,7 @@ function function_8aaa4093(localclientnum)
 
 /*
 	Name: function_55296393
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x6CA10925
 	Offset: 0xBB0
 	Size: 0x130
@@ -165,7 +165,7 @@ function function_55296393(localclientnum)
 
 /*
 	Name: keeper_fx
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x9301D8A
 	Offset: 0xCE8
 	Size: 0x184
@@ -180,30 +180,33 @@ function keeper_fx(localclientnum, oldval, newval, bnewent, binitialsnap, fieldn
 		self.var_2a264f57 = playfxontag(localclientnum, level._effect["dlc4/genesis/fx_keeperprot_energy_ball"], self, "tag_weapon_right");
 		self.sndlooper = self playloopsound("zmb_keeper_looper");
 	}
-	else if(isdefined(self.var_2afcd501))
+	else
 	{
-		deletefx(localclientnum, self.var_2afcd501, 1);
-		self.var_2afcd501 = undefined;
+		if(isdefined(self.var_2afcd501))
+		{
+			deletefx(localclientnum, self.var_2afcd501, 1);
+			self.var_2afcd501 = undefined;
+		}
+		if(isdefined(self.var_2a264f57))
+		{
+			deletefx(localclientnum, self.var_2a264f57, 1);
+			self.var_2a264f57 = undefined;
+		}
+		self stopallloopsounds(1);
+		self thread function_55296393(localclientnum);
 	}
-	if(isdefined(self.var_2a264f57))
-	{
-		deletefx(localclientnum, self.var_2a264f57, 1);
-		self.var_2a264f57 = undefined;
-	}
-	self stopallloopsounds(1);
-	self thread function_55296393(localclientnum);
 }
 
 /*
 	Name: function_a9b854ea
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0xA2BF5CE5
 	Offset: 0xE78
 	Size: 0xE4
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function function_a9b854ea(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
+function private function_a9b854ea(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
 	if(isdefined(self.var_a9b854ea) && oldval == 1 && newval == 0)
 	{
@@ -218,14 +221,14 @@ private function function_a9b854ea(localclientnum, oldval, newval, bnewent, bini
 
 /*
 	Name: function_802744a7
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x2D7E6419
 	Offset: 0xF68
 	Size: 0xDC
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function function_802744a7(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
+function private function_802744a7(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
 	if(isdefined(self.var_b4d5098) && oldval == 1 && newval == 0)
 	{
@@ -240,7 +243,7 @@ private function function_802744a7(localclientnum, oldval, newval, bnewent, bini
 
 /*
 	Name: keeper_thunderwall
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x1F6F1FEC
 	Offset: 0x1050
 	Size: 0xA8
@@ -263,7 +266,7 @@ function keeper_thunderwall(localclientnum, oldval, newval, bnewent, binitialsna
 
 /*
 	Name: keeper_thunderwall_360
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0xD6ACDE6E
 	Offset: 0x1100
 	Size: 0x98
@@ -285,7 +288,7 @@ function keeper_thunderwall_360(localclientnum, oldval, newval, bnewent, binitia
 
 /*
 	Name: function_2935ac4d
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x4F612082
 	Offset: 0x11A0
 	Size: 0x1E8
@@ -322,7 +325,7 @@ function function_2935ac4d(localclientnum, oldval, newval, bnewent, binitialsnap
 
 /*
 	Name: function_fa8bf98f
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0xC4747BBF
 	Offset: 0x1390
 	Size: 0xEC
@@ -349,7 +352,7 @@ function function_fa8bf98f(localclientnum, oldval, newval, bnewent, binitialsnap
 
 /*
 	Name: new_timer
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x71DEF7AB
 	Offset: 0x1488
 	Size: 0x58
@@ -366,7 +369,7 @@ function new_timer(localclientnum)
 
 /*
 	Name: timer_increment_loop
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0xC0822774
 	Offset: 0x14E8
 	Size: 0x68
@@ -386,7 +389,7 @@ function timer_increment_loop(localclientnum, entity)
 
 /*
 	Name: get_time
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x9FFCD470
 	Offset: 0x1558
 	Size: 0x10
@@ -400,7 +403,7 @@ function get_time()
 
 /*
 	Name: get_time_in_seconds
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0xA2707C0E
 	Offset: 0x1570
 	Size: 0xA
@@ -414,7 +417,7 @@ function get_time_in_seconds()
 
 /*
 	Name: reset_timer
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x76DD02BB
 	Offset: 0x1588
 	Size: 0x10

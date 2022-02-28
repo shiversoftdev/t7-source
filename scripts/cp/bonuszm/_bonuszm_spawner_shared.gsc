@@ -130,17 +130,17 @@ function function_b6c845e8()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_cf0834db(spawner)
+function private function_cf0834db(spawner)
 {
 	if(spawner.archetype == "direwolf" || spawner.archetype == "civilian" || issubstr(spawner.classname, "hero") || issubstr(spawner.classname, "boss") || (isdefined(spawner.targetname) && issubstr(spawner.targetname, "hakim")) || (isdefined(spawner.targetname) && issubstr(spawner.targetname, "chase_bomber")) || spawner.targetname === "comm_relay_igc_robot" || spawner.targetname === "robot_wrestles_maretti" || spawner.targetname === "cin_lot_09_02_pursuit_vign_wallsmash_robot" || spawner.targetname === "cin_gen_hendricksmoment_riphead_robot" || spawner.targetname === "standdown_robot01" || spawner.targetname === "standdown_robot02" || spawner.targetname === "standdown_robot03" || spawner.targetname === "rainman" || spawner.targetname === "balcony_bash_robot")
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(spawner.script_vehicleride))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -152,17 +152,17 @@ private function function_cf0834db(spawner)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_aa71a1e8(spawner)
+function private function_aa71a1e8(spawner)
 {
 	if(!isdefined(spawner.targetname))
 	{
-		return 1;
+		return true;
 	}
 	if(spawner.targetname == "foundry_hackable_vehicle" || spawner.targetname == "hijack_diaz_wasp_spawnpoint")
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -181,7 +181,7 @@ function function_559632b9()
 	if(!(isdefined(level.var_64b9a8b0) && level.var_64b9a8b0))
 	{
 		zombies = getactorteamarray("axis");
-		foreach(var_8ebdfc7, zombie in zombies)
+		foreach(zombie in zombies)
 		{
 			if(zombie.archetype == "zombie")
 			{

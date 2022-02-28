@@ -25,7 +25,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_audio", &__init__, undefined, undefined);
 }
@@ -666,16 +666,16 @@ function checkstringtrue(str)
 {
 	if(!isdefined(str))
 	{
-		return 0;
+		return false;
 	}
 	if(str != "")
 	{
 		if(tolower(str) == "true")
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -787,7 +787,15 @@ function create_and_play_dialog(category, subcategory, force_variant)
 	{
 		self thread do_player_or_npc_playvox(sound_to_play, category, subcategory);
 	}
-	iprintln("");
+	else
+	{
+		/#
+			iprintln("");
+		#/
+		if(getdvarint("") > 0)
+		{
+		}
+	}
 }
 
 /*
@@ -931,7 +939,7 @@ function setup_hero_rival(player, hero, rival, category, type)
 	players = getplayers();
 	hero_player = undefined;
 	rival_player = undefined;
-	foreach(var_91b6597, ent in players)
+	foreach(ent in players)
 	{
 		if(ent.characterindex == hero)
 		{
@@ -1069,7 +1077,7 @@ function isvoxoncooldown(player, category, subcategory)
 {
 	if(level.sndplayervox[category][subcategory].delaybeforeplayagain <= 0)
 	{
-		return 0;
+		return false;
 	}
 	fullname = category + subcategory;
 	if(!isdefined(player.voxtimer))
@@ -1079,15 +1087,15 @@ function isvoxoncooldown(player, category, subcategory)
 	if(!isdefined(player.voxtimer[fullname]))
 	{
 		player.voxtimer[fullname] = gettime();
-		return 0;
+		return false;
 	}
 	time = gettime();
 	if((time - player.voxtimer[fullname]) <= (level.sndplayervox[category][subcategory].delaybeforeplayagain * 1000))
 	{
-		return 1;
+		return true;
 	}
 	player.voxtimer[fullname] = time;
-	return 0;
+	return false;
 }
 
 /*
@@ -1154,7 +1162,7 @@ function arenearbyspeakersactive(radius = 1000)
 {
 	nearbyspeakeractive = 0;
 	speakers = getplayers();
-	foreach(var_a1747cd, person in speakers)
+	foreach(person in speakers)
 	{
 		if(self == person)
 		{
@@ -1288,18 +1296,21 @@ function sndmusicsystem_playstate(state)
 		{
 			return;
 		}
-		else if(playtype == 2)
+		else
 		{
-			level thread sndmusicsystem_queuestate(state);
-		}
-		else if(playtype > m.currentplaytype || (playtype == 3 && m.currentplaytype == 3))
-		{
-			if(isdefined(level.musicsystemoverride) && level.musicsystemoverride && playtype != 5)
+			if(playtype == 2)
 			{
-				return;
+				level thread sndmusicsystem_queuestate(state);
 			}
-			level sndmusicsystem_stopandflush();
-			level thread playstate(state);
+			else if(playtype > m.currentplaytype || (playtype == 3 && m.currentplaytype == 3))
+			{
+				if(isdefined(level.musicsystemoverride) && level.musicsystemoverride && playtype != 5)
+				{
+					return;
+				}
+				level sndmusicsystem_stopandflush();
+				level thread playstate(state);
+			}
 		}
 	}
 	else if(!(isdefined(level.musicsystemoverride) && level.musicsystemoverride) || playtype == 5)
@@ -1421,17 +1432,17 @@ function sndmusicsystem_isabletoplay()
 {
 	if(!isdefined(level.musicsystem))
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(level.musicsystem.currentplaytype))
 	{
-		return 0;
+		return false;
 	}
 	if(level.musicsystem.currentplaytype >= 4)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1507,7 +1518,7 @@ function sndlocationshouldplay(array, activezone)
 		level thread sndlocationqueue(activezone);
 		return shouldplay;
 	}
-	foreach(var_9a816b45, place in array)
+	foreach(place in array)
 	{
 		if(place == activezone)
 		{
@@ -1544,7 +1555,7 @@ function sndcurrentlocationarray(current_array, activezone, numcut, num)
 	{
 		current_array = level.musicsystem.locationarray;
 	}
-	foreach(var_65597b40, place in current_array)
+	foreach(place in current_array)
 	{
 		if(place == activezone)
 		{
@@ -1650,7 +1661,7 @@ function sndmusicsystem_eesetup(state, origin1, origin2, origin3, origin4, origi
 	{
 		level.sndeemax = sndeearray.size;
 		level.sndeecount = 0;
-		foreach(var_2c26c31e, origin in sndeearray)
+		foreach(origin in sndeearray)
 		{
 			level thread sndmusicsystem_eewait(origin, state);
 		}
@@ -1696,9 +1707,9 @@ function sndmusicsystem_eeoverride(arg1, arg2)
 {
 	if(isdefined(level.musicsystem.currentplaytype) && level.musicsystem.currentplaytype >= 4)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1723,7 +1734,7 @@ function secretuse(notify_string, color, qualifier_func, arg1, arg2)
 			print3d(self.origin, "", color, 1);
 		#/
 		players = level.players;
-		foreach(var_fb2850ef, player in players)
+		foreach(player in players)
 		{
 			qualifier_passed = 1;
 			if(isdefined(qualifier_func))
@@ -2107,10 +2118,10 @@ function sndisnetworksafe()
 	}
 	if(level._numzmbaivox >= 2)
 	{
-		return 0;
+		return false;
 	}
 	level._numzmbaivox++;
-	return 1;
+	return true;
 }
 
 /*
@@ -2126,9 +2137,9 @@ function is_last_zombie()
 {
 	if(zombie_utility::get_current_zombie_count() <= 1)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2280,9 +2291,9 @@ function sndradio_override(arg1, arg2)
 {
 	if(isdefined(arg1) && arg1.isplaying == 1)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -2580,17 +2591,17 @@ function iscurrentspeakerabletotalk(player)
 {
 	if(!isdefined(player))
 	{
-		return 0;
+		return false;
 	}
 	if(player.sessionstate != "playing")
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(player.laststand) && player.laststand)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -2606,7 +2617,7 @@ function getrandomcharacter(ignore)
 {
 	array = level.players;
 	array::randomize(array);
-	foreach(var_34f6a79b, guy in array)
+	foreach(guy in array)
 	{
 		if(guy.characterindex == ignore)
 		{
@@ -2628,7 +2639,7 @@ function getrandomcharacter(ignore)
 */
 function getspecificcharacter(charindex)
 {
-	foreach(var_d990882f, guy in level.players)
+	foreach(guy in level.players)
 	{
 		if(guy.characterindex == charindex)
 		{
@@ -2649,14 +2660,14 @@ function getspecificcharacter(charindex)
 */
 function isanyonetalking()
 {
-	foreach(var_322573f1, player in level.players)
+	foreach(player in level.players)
 	{
 		if(isdefined(player.isspeaking) && player.isspeaking)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2680,7 +2691,7 @@ function sndconvointerrupt()
 		max_dist_squared = 0;
 		check_pos = self.origin;
 		count = 0;
-		foreach(var_c8315da4, player in level.players)
+		foreach(player in level.players)
 		{
 			if(self == player)
 			{
@@ -2735,20 +2746,23 @@ function water_vox()
 				}
 			}
 		}
-		else if(self.voxdrowning)
-		{
-			self playerexert("underwater_gasp");
-			self.voxdrowning = 0;
-			self.voxemergebreath = 0;
-		}
-		if(self.voxemergebreath)
-		{
-			self playerexert("underwater_emerge");
-			self.voxemergebreath = 0;
-		}
 		else
 		{
-			self.voxunderwatertime = 0;
+			if(self.voxdrowning)
+			{
+				self playerexert("underwater_gasp");
+				self.voxdrowning = 0;
+				self.voxemergebreath = 0;
+			}
+			if(self.voxemergebreath)
+			{
+				self playerexert("underwater_emerge");
+				self.voxemergebreath = 0;
+			}
+			else
+			{
+				self.voxunderwatertime = 0;
+			}
 		}
 		wait(0.05);
 	}
@@ -2786,7 +2800,7 @@ function vo_clear_underwater()
 	self.isspeaking = 0;
 	level.sndvoxoverride = 0;
 	b_in_a_e_speakers = 0;
-	foreach(var_ef823e83, e_checkme in level.a_e_speakers)
+	foreach(e_checkme in level.a_e_speakers)
 	{
 		if(e_checkme == self)
 		{
@@ -2869,7 +2883,7 @@ function checkforvalidmod(str_meansofdeath)
 {
 	if(!isdefined(str_meansofdeath))
 	{
-		return 0;
+		return false;
 	}
 	switch(str_meansofdeath)
 	{
@@ -2880,10 +2894,10 @@ function checkforvalidmod(str_meansofdeath)
 		case "MOD_MELEE_ASSASSINATE":
 		case "MOD_MELEE_WEAPON_BUTT":
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -2897,7 +2911,7 @@ function checkforvalidmod(str_meansofdeath)
 */
 function checkforvalidweapon(weapon)
 {
-	return 1;
+	return true;
 }
 
 /*
@@ -2911,6 +2925,6 @@ function checkforvalidweapon(weapon)
 */
 function checkforvalidaitype(e_victim)
 {
-	return 1;
+	return true;
 }
 

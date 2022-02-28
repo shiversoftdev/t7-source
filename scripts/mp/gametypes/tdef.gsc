@@ -178,20 +178,23 @@ function onplayerkilled(einflictor, attacker, idamage, smeansofdeath, weapon, vd
 		}
 		score = score * 2;
 	}
-	else if(!isdefined(level.gameflag) && cancreateflagatvictimorigin(victim))
+	else
 	{
-		level.gameflag = createflag(victim);
-		score = score + rank::getscoreinfovalue("MEDAL_FIRST_BLOOD");
-	}
-	else if(isdefined(victim.carryflag))
-	{
-		killcarrierbonus = rank::getscoreinfovalue("kill_carrier");
-		level thread popups::displayteammessagetoall(&"MP_KILLED_FLAG_CARRIER", attacker);
-		scoreevents::processscoreevent("kill_flag_carrier", attacker);
-		attacker recordgameevent("kill_carrier");
-		attacker addplayerstat("FLAGCARRIERKILLS", 1);
-		attacker notify(#"objective", "kill_carrier");
-		score = score + killcarrierbonus;
+		if(!isdefined(level.gameflag) && cancreateflagatvictimorigin(victim))
+		{
+			level.gameflag = createflag(victim);
+			score = score + rank::getscoreinfovalue("MEDAL_FIRST_BLOOD");
+		}
+		else if(isdefined(victim.carryflag))
+		{
+			killcarrierbonus = rank::getscoreinfovalue("kill_carrier");
+			level thread popups::displayteammessagetoall(&"MP_KILLED_FLAG_CARRIER", attacker);
+			scoreevents::processscoreevent("kill_flag_carrier", attacker);
+			attacker recordgameevent("kill_carrier");
+			attacker addplayerstat("FLAGCARRIERKILLS", 1);
+			attacker notify(#"objective", "kill_carrier");
+			score = score + killcarrierbonus;
+		}
 	}
 	if(!isdefined(killstreaks::get_killstreak_for_weapon(weapon)) || (isdefined(level.killstreaksgivegamescore) && level.killstreaksgivegamescore))
 	{
@@ -415,24 +418,24 @@ function cancreateflagatvictimorigin(victim)
 	{
 		if(victim istouching(radtriggers[index]))
 		{
-			return 0;
+			return false;
 		}
 	}
 	for(index = 0; index < minetriggers.size; index++)
 	{
 		if(victim istouching(minetriggers[index]))
 		{
-			return 0;
+			return false;
 		}
 	}
 	for(index = 0; index < hurttriggers.size; index++)
 	{
 		if(victim istouching(hurttriggers[index]))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -556,7 +559,7 @@ function getflagradarowner(team)
 	self endon(#"dropped");
 	while(true)
 	{
-		foreach(var_d921bbdb, player in level.players)
+		foreach(player in level.players)
 		{
 			if(isalive(player) && player.team == team)
 			{

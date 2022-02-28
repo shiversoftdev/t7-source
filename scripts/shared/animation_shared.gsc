@@ -20,7 +20,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("animation", &__init__, undefined, undefined);
 }
@@ -174,52 +174,55 @@ function _play(animation, v_origin_or_ent, v_angles_or_tag, n_rate, n_blend_in, 
 	{
 		self animscripted(animation, v_origin_or_ent, v_angles_or_tag, animation, "normal", undefined, n_rate, n_blend_in, n_lerp, n_start_time, 1, b_show_player_firstperson_weapon);
 	}
-	else if(isstring(v_angles_or_tag))
+	else
 	{
-		/#
-			assert(isdefined(v_origin_or_ent.model), ((("" + animation) + "") + v_angles_or_tag) + "");
-		#/
-		v_pos = v_origin_or_ent gettagorigin(v_angles_or_tag);
-		v_ang = v_origin_or_ent gettagangles(v_angles_or_tag);
-		if(n_lerp > 0)
+		if(isstring(v_angles_or_tag))
 		{
-			prevorigin = self.origin;
-			prevangles = self.angles;
-		}
-		if(!isdefined(v_pos))
-		{
-			v_pos = v_origin_or_ent.origin;
-			v_ang = v_origin_or_ent.angles;
-		}
-		if(isactor(self))
-		{
-			self forceteleport(v_pos, v_ang);
-		}
-		else
-		{
-			self.origin = v_pos;
-			self.angles = v_ang;
-		}
-		b_link = 1;
-		self linkto(v_origin_or_ent, v_angles_or_tag, (0, 0, 0), (0, 0, 0));
-		if(n_lerp > 0)
-		{
+			/#
+				assert(isdefined(v_origin_or_ent.model), ((("" + animation) + "") + v_angles_or_tag) + "");
+			#/
+			v_pos = v_origin_or_ent gettagorigin(v_angles_or_tag);
+			v_ang = v_origin_or_ent gettagangles(v_angles_or_tag);
+			if(n_lerp > 0)
+			{
+				prevorigin = self.origin;
+				prevangles = self.angles;
+			}
+			if(!isdefined(v_pos))
+			{
+				v_pos = v_origin_or_ent.origin;
+				v_ang = v_origin_or_ent.angles;
+			}
 			if(isactor(self))
 			{
-				self forceteleport(prevorigin, prevangles);
+				self forceteleport(v_pos, v_ang);
 			}
 			else
 			{
-				self.origin = prevorigin;
-				self.angles = prevangles;
+				self.origin = v_pos;
+				self.angles = v_ang;
 			}
+			b_link = 1;
+			self linkto(v_origin_or_ent, v_angles_or_tag, (0, 0, 0), (0, 0, 0));
+			if(n_lerp > 0)
+			{
+				if(isactor(self))
+				{
+					self forceteleport(prevorigin, prevangles);
+				}
+				else
+				{
+					self.origin = prevorigin;
+					self.angles = prevangles;
+				}
+			}
+			self animscripted(animation, v_pos, v_ang, animation, "normal", undefined, n_rate, n_blend_in, n_lerp, n_start_time, 1, b_show_player_firstperson_weapon);
 		}
-		self animscripted(animation, v_pos, v_ang, animation, "normal", undefined, n_rate, n_blend_in, n_lerp, n_start_time, 1, b_show_player_firstperson_weapon);
-	}
-	else
-	{
-		v_angles = (isdefined(v_origin_or_ent.angles) ? v_origin_or_ent.angles : (0, 0, 0));
-		self animscripted(animation, v_origin_or_ent.origin, v_angles, animation, "normal", undefined, n_rate, n_blend_in, n_lerp, n_start_time, 1, b_show_player_firstperson_weapon);
+		else
+		{
+			v_angles = (isdefined(v_origin_or_ent.angles) ? v_origin_or_ent.angles : (0, 0, 0));
+			self animscripted(animation, v_origin_or_ent.origin, v_angles, animation, "normal", undefined, n_rate, n_blend_in, n_lerp, n_start_time, 1, b_show_player_firstperson_weapon);
+		}
 	}
 	if(isplayer(self))
 	{
@@ -238,7 +241,7 @@ function _play(animation, v_origin_or_ent, v_angles_or_tag, n_rate, n_blend_in, 
 	self thread handle_notetracks(animation);
 	if(getanimframecount(animation) > 1 || isanimlooping(animation))
 	{
-		self waittill_match(animation);
+		self waittillmatch(animation);
 	}
 	else
 	{
@@ -603,7 +606,7 @@ function call_notetrack_handler(str_note, param1, param2)
 {
 	if(isdefined(level._animnotetrackhandlers[str_note]))
 	{
-		foreach(var_9f6a3af9, handler in level._animnotetrackhandlers[str_note])
+		foreach(handler in level._animnotetrackhandlers[str_note])
 		{
 			func = handler[0];
 			passnotifyparams = handler[1];
@@ -880,23 +883,26 @@ function attach_weapon(weaponobject, tag = "tag_weapon_right")
 			ai::gun_recall();
 		}
 	}
-	else if(!is_valid_weapon(weaponobject))
+	else
 	{
-		weaponobject = self.last_item;
-	}
-	if(is_valid_weapon(weaponobject))
-	{
-		if(self.item != level.weaponnone)
+		if(!is_valid_weapon(weaponobject))
 		{
-			detach_weapon();
+			weaponobject = self.last_item;
 		}
-		/#
-			assert(isdefined(weaponobject.worldmodel));
-		#/
-		self attach(weaponobject.worldmodel, tag);
-		self setentityweapon(weaponobject);
-		self.gun_removed = undefined;
-		self.last_item = weaponobject;
+		if(is_valid_weapon(weaponobject))
+		{
+			if(self.item != level.weaponnone)
+			{
+				detach_weapon();
+			}
+			/#
+				assert(isdefined(weaponobject.worldmodel));
+			#/
+			self attach(weaponobject.worldmodel, tag);
+			self setentityweapon(weaponobject);
+			self.gun_removed = undefined;
+			self.last_item = weaponobject;
+		}
 	}
 }
 
@@ -915,16 +921,19 @@ function detach_weapon(weaponobject, tag = "tag_weapon_right")
 	{
 		ai::gun_remove();
 	}
-	else if(!is_valid_weapon(weaponobject))
+	else
 	{
-		weaponobject = self.item;
+		if(!is_valid_weapon(weaponobject))
+		{
+			weaponobject = self.item;
+		}
+		if(is_valid_weapon(weaponobject))
+		{
+			self detach(weaponobject.worldmodel, tag);
+			self setentityweapon(level.weaponnone);
+		}
+		self.gun_removed = 1;
 	}
-	if(is_valid_weapon(weaponobject))
-	{
-		self detach(weaponobject.worldmodel, tag);
-		self setentityweapon(level.weaponnone);
-	}
-	self.gun_removed = 1;
 }
 
 /*

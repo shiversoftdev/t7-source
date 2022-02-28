@@ -29,7 +29,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_traps", &__init__, &__main__, undefined);
 }
@@ -390,7 +390,7 @@ function trap_use_think(trap)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function update_trigger_visibility()
+function private update_trigger_visibility()
 {
 	self endon(#"death");
 	while(true)

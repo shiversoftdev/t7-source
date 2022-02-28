@@ -20,7 +20,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	/#
 		system::register("", &__init__, undefined, undefined);
@@ -68,7 +68,7 @@ function function_f69ab75e()
 		while(true)
 		{
 			level flagsys::wait_till("");
-			foreach(var_622a73d9, var_4d881e03 in function_c4a37ed9())
+			foreach(var_4d881e03 in function_c4a37ed9())
 			{
 				var_4d881e03 thread debug_display();
 			}
@@ -90,7 +90,7 @@ function function_c4a37ed9()
 {
 	/#
 		a_scenes = arraycombine(struct::get_array("", ""), struct::get_array("", ""), 0, 0);
-		foreach(var_4a103a8c, a_active_scenes in level.active_scenes)
+		foreach(a_active_scenes in level.active_scenes)
 		{
 			a_scenes = arraycombine(a_scenes, a_active_scenes, 0, 0);
 		}
@@ -135,36 +135,39 @@ function run_scene_tests()
 					setdvar("", "");
 				}
 			}
-			else if(str_client_scene != "")
+			else
 			{
-				level util::clientnotify(str_client_scene + "");
-				util::wait_network_frame();
-			}
-			if(str_scene != "")
-			{
-				setdvar("", "");
-				clear_old_ents(str_scene);
-				b_found = 0;
-				a_scenes = struct::get_array(str_scene, "");
-				foreach(var_a7d99a50, s_instance in a_scenes)
+				if(str_client_scene != "")
 				{
-					if(isdefined(s_instance))
-					{
-						b_found = 1;
-						s_instance thread test_play(undefined, str_mode);
-					}
+					level util::clientnotify(str_client_scene + "");
+					util::wait_network_frame();
 				}
-				if(!b_found && isdefined(level.active_scenes[str_scene]))
+				if(str_scene != "")
 				{
-					foreach(var_c38f06dc, s_instance in level.active_scenes[str_scene])
+					setdvar("", "");
+					clear_old_ents(str_scene);
+					b_found = 0;
+					a_scenes = struct::get_array(str_scene, "");
+					foreach(s_instance in a_scenes)
 					{
-						b_found = 1;
-						s_instance thread test_play(str_scene, str_mode);
+						if(isdefined(s_instance))
+						{
+							b_found = 1;
+							s_instance thread test_play(undefined, str_mode);
+						}
 					}
-				}
-				if(!b_found)
-				{
-					level.scene_test_struct thread test_play(str_scene, str_mode);
+					if(!b_found && isdefined(level.active_scenes[str_scene]))
+					{
+						foreach(s_instance in level.active_scenes[str_scene])
+						{
+							b_found = 1;
+							s_instance thread test_play(str_scene, str_mode);
+						}
+					}
+					if(!b_found)
+					{
+						level.scene_test_struct thread test_play(str_scene, str_mode);
+					}
 				}
 			}
 			str_scene = getdvarstring("");
@@ -180,7 +183,7 @@ function run_scene_tests()
 				clear_old_ents(str_scene);
 				b_found = 0;
 				a_scenes = struct::get_array(str_scene, "");
-				foreach(var_316cf841, s_instance in a_scenes)
+				foreach(s_instance in a_scenes)
 				{
 					if(isdefined(s_instance))
 					{
@@ -243,7 +246,7 @@ function capture_scene(str_scene, str_mode)
 function clear_old_ents(str_scene)
 {
 	/#
-		foreach(var_db487352, ent in getentarray(str_scene, ""))
+		foreach(ent in getentarray(str_scene, ""))
 		{
 			if(ent.scene_spawned === str_scene)
 			{
@@ -372,7 +375,7 @@ function display_scene_menu(str_type)
 			a_scenedefs = arraycombine(a_scenedefs, get_scenedefs(""), 0, 1);
 		}
 		names = [];
-		foreach(var_28ee6433, s_scenedef in a_scenedefs)
+		foreach(s_scenedef in a_scenedefs)
 		{
 			array::add_sorted(names, s_scenedef.name, 0);
 		}
@@ -401,15 +404,18 @@ function display_scene_menu(str_type)
 					selected--;
 				}
 			}
-			else if(level.host util::up_button_held())
+			else
 			{
-				held = 1;
-				selected = selected - 10;
-			}
-			else if(!level.host util::up_button_pressed())
-			{
-				held = 0;
-				up_pressed = 0;
+				if(level.host util::up_button_held())
+				{
+					held = 1;
+					selected = selected - 10;
+				}
+				else if(!level.host util::up_button_pressed())
+				{
+					held = 0;
+					up_pressed = 0;
+				}
 			}
 			if(!down_pressed)
 			{
@@ -419,15 +425,18 @@ function display_scene_menu(str_type)
 					selected++;
 				}
 			}
-			else if(level.host util::down_button_held())
+			else
 			{
-				held = 1;
-				selected = selected + 10;
-			}
-			else if(!level.host util::down_button_pressed())
-			{
-				held = 0;
-				down_pressed = 0;
+				if(level.host util::down_button_held())
+				{
+					held = 1;
+					selected = selected + 10;
+				}
+				else if(!level.host util::down_button_pressed())
+				{
+					held = 0;
+					down_pressed = 0;
+				}
 			}
 			if(held)
 			{
@@ -440,13 +449,16 @@ function display_scene_menu(str_type)
 					selected = names.size - 1;
 				}
 			}
-			else if(selected < 0)
+			else
 			{
-				selected = names.size - 1;
-			}
-			else if(selected >= names.size)
-			{
-				selected = 0;
+				if(selected < 0)
+				{
+					selected = names.size - 1;
+				}
+				else if(selected >= names.size)
+				{
+					selected = 0;
+				}
 			}
 			if(level.host buttonpressed(""))
 			{
@@ -477,21 +489,30 @@ function display_scene_menu(str_type)
 				{
 					setdvar("", 0);
 				}
-				else if(is_scene_playing(names[selected]))
-				{
-					setdvar("", names[selected]);
-				}
-				else if(is_scene_initialized(names[selected]))
-				{
-					setdvar("", names[selected]);
-				}
-				else if(has_init_state(names[selected]))
-				{
-					setdvar("", names[selected]);
-				}
 				else
 				{
-					setdvar("", names[selected]);
+					if(is_scene_playing(names[selected]))
+					{
+						setdvar("", names[selected]);
+					}
+					else
+					{
+						if(is_scene_initialized(names[selected]))
+						{
+							setdvar("", names[selected]);
+						}
+						else
+						{
+							if(has_init_state(names[selected]))
+							{
+								setdvar("", names[selected]);
+							}
+							else
+							{
+								setdvar("", names[selected]);
+							}
+						}
+					}
 				}
 				while(level.host buttonpressed("") || level.host buttonpressed("") || level.host buttonpressed(""))
 				{
@@ -601,14 +622,17 @@ function scene_list_settext(hud_array, strings, num)
 				level.host setluimenudata(hud_array[i], "", 1);
 				text = text + "";
 			}
-			else if(is_scene_initialized(text))
-			{
-				level.host setluimenudata(hud_array[i], "", 1);
-				text = text + "";
-			}
 			else
 			{
-				level.host setluimenudata(hud_array[i], "", 0.5);
+				if(is_scene_initialized(text))
+				{
+					level.host setluimenudata(hud_array[i], "", 1);
+					text = text + "";
+				}
+				else
+				{
+					level.host setluimenudata(hud_array[i], "", 0.5);
+				}
 			}
 			if(i == 5)
 			{
@@ -636,10 +660,10 @@ function is_scene_playing(str_scene)
 		{
 			if(level flagsys::get(str_scene + ""))
 			{
-				return 1;
+				return true;
 			}
 		}
-		return 0;
+		return false;
 	#/
 }
 
@@ -659,10 +683,10 @@ function is_scene_initialized(str_scene)
 		{
 			if(level flagsys::get(str_scene + ""))
 			{
-				return 1;
+				return true;
 			}
 		}
-		return 0;
+		return false;
 	#/
 }
 
@@ -751,13 +775,16 @@ function debug_display()
 					print3d(v_origin - (0, 0, n_offset + 5), ("" + (isdefined([[ o_scene ]]->get_state()) ? "" + ([[ o_scene ]]->get_state()) : "")) + "", (0.8, 0.2, 0.8), 1, 0.15, debug_frames);
 				}
 			}
-			else if(isdefined(self.scriptbundlename))
-			{
-				print3d(v_origin - vectorscale((0, 0, 1), 15), self.scriptbundlename, (0.8, 0.2, 0.8), 1, 0.3, debug_frames);
-			}
 			else
 			{
-				break;
+				if(isdefined(self.scriptbundlename))
+				{
+					print3d(v_origin - vectorscale((0, 0, 1), 15), self.scriptbundlename, (0.8, 0.2, 0.8), 1, 0.3, debug_frames);
+				}
+				else
+				{
+					break;
+				}
 			}
 			wait(debug_time);
 		}
@@ -786,20 +813,23 @@ function move_to_scene(str_scene, b_reverse_dir)
 			level.debug_current_scene_index = 0;
 			level.debug_current_scene_name = str_scene;
 		}
-		else if(b_reverse_dir)
-		{
-			level.debug_current_scene_index--;
-			if(level.debug_current_scene_index == -1)
-			{
-				level.debug_current_scene_index = level.debug_current_scene_instances.size - 1;
-			}
-		}
 		else
 		{
-			level.debug_current_scene_index++;
-			if(level.debug_current_scene_index == level.debug_current_scene_instances.size)
+			if(b_reverse_dir)
 			{
-				level.debug_current_scene_index = 0;
+				level.debug_current_scene_index--;
+				if(level.debug_current_scene_index == -1)
+				{
+					level.debug_current_scene_index = level.debug_current_scene_instances.size - 1;
+				}
+			}
+			else
+			{
+				level.debug_current_scene_index++;
+				if(level.debug_current_scene_index == level.debug_current_scene_instances.size)
+				{
+					level.debug_current_scene_index = 0;
+				}
 			}
 		}
 		if(level.debug_current_scene_instances.size == 0)

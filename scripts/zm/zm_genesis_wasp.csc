@@ -23,7 +23,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_ai_wasp", &__init__, undefined, undefined);
 }
@@ -128,7 +128,7 @@ function parasite_round_ring_fx(localclientnum, oldval, newval, bnewent, binitia
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function genesis_parasite_damage(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private genesis_parasite_damage(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	if(newvalue)
 	{

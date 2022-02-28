@@ -19,7 +19,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_weap_raygun_mark3", &__init__, undefined, undefined);
 }
@@ -65,9 +65,9 @@ function is_beam_raygun(weapon)
 {
 	if(weapon === level.w_raygun_mark3 || weapon === level.w_raygun_mark3_upgraded)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

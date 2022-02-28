@@ -16,7 +16,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function main()
+function autoexec main()
 {
 	clientfield::register("scriptmover", "raz_detonate_ground_torpedo", 12000, 1, "int", &razclientutils::razdetonategroundtorpedo, 0, 0);
 	clientfield::register("scriptmover", "raz_torpedo_play_fx_on_self", 12000, 1, "int", &razclientutils::razplayselffx, 0, 0);
@@ -40,7 +40,7 @@ autoexec function main()
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function precache()
+function autoexec precache()
 {
 	level._effect["fx_mech_foot_step"] = "dlc1/castle/fx_mech_foot_step";
 	level._effect["fx_raz_mc_shockwave_projectile_impact"] = "dlc3/stalingrad/fx_raz_mc_shockwave_projectile_impact";
@@ -190,7 +190,7 @@ autoexec function precache()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function razspawn(localclientnum)
+function private razspawn(localclientnum)
 {
 	level._footstepcbfuncs[self.archetype] = &razprocessfootstep;
 	self thread razplayfireemissiveshader(localclientnum);
@@ -207,7 +207,7 @@ private function razspawn(localclientnum)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function razplayfireemissiveshader(localclientnum)
+function private razplayfireemissiveshader(localclientnum)
 {
 	self endon(#"death");
 	while(isdefined(self))
@@ -228,7 +228,7 @@ private function razplayfireemissiveshader(localclientnum)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function razplayroarsound(localclientnum)
+function private razplayroarsound(localclientnum)
 {
 	self endon(#"death");
 	while(isdefined(self))
@@ -247,7 +247,7 @@ private function razplayroarsound(localclientnum)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function razplaytaunts(localclientnum)
+function private razplaytaunts(localclientnum)
 {
 	self endon(#"death_start");
 	self thread razstoptauntsondeath(localclientnum);
@@ -276,7 +276,7 @@ private function razplaytaunts(localclientnum)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function razstoptauntsondeath(localclientnum)
+function private razstoptauntsondeath(localclientnum)
 {
 	self waittill(#"death_start");
 	if(isdefined(self.taunt_id))
@@ -324,13 +324,16 @@ function razprocessfootstep(localclientnum, pos, surface, notetrack, bone)
 	{
 		e_player playrumbleonentity(localclientnum, "damage_heavy");
 	}
-	else if(n_scale <= 0.8 && n_scale > 0.4)
-	{
-		e_player playrumbleonentity(localclientnum, "damage_light");
-	}
 	else
 	{
-		e_player playrumbleonentity(localclientnum, "reload_small");
+		if(n_scale <= 0.8 && n_scale > 0.4)
+		{
+			e_player playrumbleonentity(localclientnum, "damage_light");
+		}
+		else
+		{
+			e_player playrumbleonentity(localclientnum, "reload_small");
+		}
 	}
 	fx = playfxontag(localclientnum, level._effect["fx_mech_foot_step"], self, bone);
 }
@@ -344,7 +347,7 @@ function razprocessfootstep(localclientnum, pos, surface, notetrack, bone)
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function razdetonategroundtorpedo(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private razdetonategroundtorpedo(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	fx = playfx(localclientnum, level._effect["fx_raz_mc_shockwave_projectile_impact"], self.origin);
 }
@@ -358,7 +361,7 @@ private function razdetonategroundtorpedo(localclientnum, oldvalue, newvalue, bn
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function raztorpedoplaytrailfx(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private raztorpedoplaytrailfx(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	fx = playfx(localclientnum, level._effect["fx_bul_impact_concrete_xtreme"], self.origin);
 }
@@ -372,7 +375,7 @@ private function raztorpedoplaytrailfx(localclientnum, oldvalue, newvalue, bnewe
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function razplayselffx(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private razplayselffx(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	if(newvalue == 0 && isdefined(self.raz_torpedo_self_fx))
 	{
@@ -394,7 +397,7 @@ private function razplayselffx(localclientnum, oldvalue, newvalue, bnewent, bini
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function razcreatedynentandlaunch(localclientnum, model, pos, angles, hitpos, vel_factor = 1, direction)
+function private razcreatedynentandlaunch(localclientnum, model, pos, angles, hitpos, vel_factor = 1, direction)
 {
 	if(!isdefined(pos) || !isdefined(angles))
 	{
@@ -430,7 +433,7 @@ private function razcreatedynentandlaunch(localclientnum, model, pos, angles, hi
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function razdetachgunfx(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private razdetachgunfx(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	fx = playfxontag(localclientnum, level._effect["fx_raz_dest_weak_point_exp"], self, "TAG_FX_Shoulder_RI_GIB");
 	gun_pos = self gettagorigin("j_elbow_ri");
@@ -451,7 +454,7 @@ private function razdetachgunfx(localclientnum, oldvalue, newvalue, bnewent, bin
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function razgunweakpointhitfx(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private razgunweakpointhitfx(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	fx = playfxontag(localclientnum, level._effect["fx_raz_dmg_weak_point"], self, "j_shoulder_ri");
 }
@@ -556,7 +559,7 @@ function razrightthigharmordetach(localclientnum, oldvalue, newvalue, bnewent, b
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function applynewfaceanim(localclientnum, animation)
+function private applynewfaceanim(localclientnum, animation)
 {
 	self endon(#"disconnect");
 	clearcurrentfacialanim(localclientnum);
@@ -581,7 +584,7 @@ private function applynewfaceanim(localclientnum, animation)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function clearcurrentfacialanim(localclientnum)
+function private clearcurrentfacialanim(localclientnum)
 {
 	if(isdefined(self._currentfaceanim) && self hasdobj(localclientnum) && self hasanimtree())
 	{

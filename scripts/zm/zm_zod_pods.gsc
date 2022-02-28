@@ -42,7 +42,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_zod_pods", &__init__, &__main__, undefined);
 }
@@ -66,17 +66,17 @@ function __init__()
 	clientfield::register("scriptmover", "pod_self_destruct", 1, 1, "counter");
 	clientfield::register("toplayer", "pod_sprayer_held", 1, 1, "int");
 	clientfield::register("toplayer", "pod_sprayer_hint_range", 1, 1, "int");
-	level.var_6fa2f6ca = spawnstruct();
-	level.var_6fa2f6ca.upgrade_odds = array(0, 0, 0, 0.25, 0.25, 0.5, 0.5, 1);
+	level.fungus_pods = spawnstruct();
+	level.fungus_pods.upgrade_odds = array(0, 0, 0, 0.25, 0.25, 0.5, 0.5, 1);
 	a_table = table::load("gamedata/tables/zm/zm_zod_pods.csv", "ScriptID");
-	level.var_6fa2f6ca.rewards = [];
-	level.var_6fa2f6ca.rewards[1] = [];
-	level.var_6fa2f6ca.rewards[2] = [];
-	level.var_6fa2f6ca.rewards[3] = [];
-	level.var_6fa2f6ca.bonus_points_amount = 100;
-	level.bonus_points_powerup_override = &function_20affc0e;
+	level.fungus_pods.rewards = [];
+	level.fungus_pods.rewards[1] = [];
+	level.fungus_pods.rewards[2] = [];
+	level.fungus_pods.rewards[3] = [];
+	level.fungus_pods.bonus_points_amount = 100;
+	level.bonus_points_powerup_override = &fungus_pod_bonus_points_override;
 	/#
-		level.var_6fa2f6ca.debug_reward_list = [];
+		level.fungus_pods.debug_reward_list = [];
 	#/
 	wpn_none = getweapon("none");
 	a_keys = getarraykeys(a_table);
@@ -105,17 +105,17 @@ function __init__()
 		}
 		s_reward.count = a_table[str_key]["Count"];
 		s_reward.chance = a_table[str_key]["Weight"];
-		if(!isdefined(level.var_6fa2f6ca.rewards[s_reward.reward_level]))
+		if(!isdefined(level.fungus_pods.rewards[s_reward.reward_level]))
 		{
-			level.var_6fa2f6ca.rewards[s_reward.reward_level] = [];
+			level.fungus_pods.rewards[s_reward.reward_level] = [];
 		}
-		else if(!isarray(level.var_6fa2f6ca.rewards[s_reward.reward_level]))
+		else if(!isarray(level.fungus_pods.rewards[s_reward.reward_level]))
 		{
-			level.var_6fa2f6ca.rewards[s_reward.reward_level] = array(level.var_6fa2f6ca.rewards[s_reward.reward_level]);
+			level.fungus_pods.rewards[s_reward.reward_level] = array(level.fungus_pods.rewards[s_reward.reward_level]);
 		}
-		level.var_6fa2f6ca.rewards[s_reward.reward_level][level.var_6fa2f6ca.rewards[s_reward.reward_level].size] = s_reward;
+		level.fungus_pods.rewards[s_reward.reward_level][level.fungus_pods.rewards[s_reward.reward_level].size] = s_reward;
 		/#
-			level.var_6fa2f6ca.debug_reward_list[str_key] = s_reward;
+			level.fungus_pods.debug_reward_list[str_key] = s_reward;
 		#/
 	}
 	function_bcc1a076();
@@ -124,7 +124,7 @@ function __init__()
 	level flag::init("any_player_has_pod_sprayer");
 	level flag::init("hide_pods_for_trailer");
 	/#
-		level thread function_5c18476f();
+		level thread fungus_pods_devgui();
 	#/
 }
 
@@ -144,26 +144,26 @@ function __main__()
 	{
 		return;
 	}
-	level.var_6fa2f6ca.var_4042b27e = struct::get_array("fungus_pod", "targetname");
-	level.var_6fa2f6ca.var_5d8c3695 = [];
-	foreach(var_343e2beb, var_194575a7 in level.var_6fa2f6ca.var_4042b27e)
+	level.fungus_pods.a_e_unspawned = struct::get_array("fungus_pod", "targetname");
+	level.fungus_pods.a_e_spawned = [];
+	foreach(e_fungus_pod in level.fungus_pods.a_e_unspawned)
 	{
-		var_194575a7.model = util::spawn_model("tag_origin", var_194575a7.origin, var_194575a7.angles);
-		if(isdefined(var_194575a7.script_noteworthy) && var_194575a7.script_noteworthy == "active")
+		e_fungus_pod.model = util::spawn_model("tag_origin", e_fungus_pod.origin, e_fungus_pod.angles);
+		if(isdefined(e_fungus_pod.script_noteworthy) && e_fungus_pod.script_noteworthy == "active")
 		{
-			var_194575a7.var_8486ae6a = 1;
+			e_fungus_pod.n_pod_level = 1;
 		}
 		else
 		{
-			var_194575a7.var_8486ae6a = 0;
+			e_fungus_pod.n_pod_level = 0;
 		}
-		var_194575a7.model clientfield::set("update_fungus_pod_level", 4);
+		e_fungus_pod.model clientfield::set("update_fungus_pod_level", 4);
 	}
-	level.var_6fa2f6ca.sprayers = [];
+	level.fungus_pods.sprayers = [];
 	a_sprayers = struct::get_array("pod_sprayer_location", "targetname");
 	a_sprayers = array::randomize(a_sprayers);
 	a_chosen = [];
-	foreach(var_73609434, s_sprayer in a_sprayers)
+	foreach(s_sprayer in a_sprayers)
 	{
 		if(isdefined(a_chosen[s_sprayer.script_int]))
 		{
@@ -171,16 +171,16 @@ function __main__()
 		}
 		a_chosen[s_sprayer.script_int] = s_sprayer;
 	}
-	foreach(var_40ce22db, s_sprayer in a_chosen)
+	foreach(s_sprayer in a_chosen)
 	{
 		s_sprayer thread pod_sprayer_think();
 	}
-	thread function_ab887f9d();
-	level thread function_bf70a1ff();
+	thread fungus_pod_clip_init();
+	level thread respawn_fungus_pods();
 }
 
 /*
-	Name: function_5c18476f
+	Name: fungus_pods_devgui
 	Namespace: zm_zod_pods
 	Checksum: 0x70F9F283
 	Offset: 0x1310
@@ -188,14 +188,14 @@ function __main__()
 	Parameters: 0
 	Flags: Linked
 */
-function function_5c18476f()
+function fungus_pods_devgui()
 {
 	/#
 		setdvar("", "");
 		setdvar("", "");
 		adddebugcommand("");
 		adddebugcommand("");
-		a_keys = getarraykeys(level.var_6fa2f6ca.debug_reward_list);
+		a_keys = getarraykeys(level.fungus_pods.debug_reward_list);
 		for(i = 0; i < a_keys.size; i++)
 		{
 			str_id = a_keys[i];
@@ -245,9 +245,9 @@ function function_5c18476f()
 */
 function function_bcc1a076()
 {
-	foreach(var_cfa31b49, var_3c1def9d in level.var_6fa2f6ca.rewards)
+	foreach(var_3c1def9d in level.fungus_pods.rewards)
 	{
-		foreach(var_7e4e54bc, s_reward in var_3c1def9d)
+		foreach(s_reward in var_3c1def9d)
 		{
 			if(s_reward.type == "shield_recharge")
 			{
@@ -269,9 +269,9 @@ function function_bcc1a076()
 function function_77d7e068()
 {
 	level waittill(#"shield_built");
-	foreach(var_3ed956da, var_3c1def9d in level.var_6fa2f6ca.rewards)
+	foreach(var_3c1def9d in level.fungus_pods.rewards)
 	{
-		foreach(var_f2d46208, s_reward in var_3c1def9d)
+		foreach(s_reward in var_3c1def9d)
 		{
 			if(s_reward.type == "shield_recharge")
 			{
@@ -290,7 +290,7 @@ function function_77d7e068()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function pod_sprayer_pickup_msg(e_player)
+function private pod_sprayer_pickup_msg(e_player)
 {
 	if(e_player clientfield::get_to_player("pod_sprayer_held"))
 	{
@@ -308,7 +308,7 @@ private function pod_sprayer_pickup_msg(e_player)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function pod_sprayer_think()
+function private pod_sprayer_think()
 {
 	while(true)
 	{
@@ -339,7 +339,7 @@ private function pod_sprayer_think()
 }
 
 /*
-	Name: function_5f89f77a
+	Name: fungus_pod_think
 	Namespace: zm_zod_pods
 	Checksum: 0x641C8BFA
 	Offset: 0x1A18
@@ -347,17 +347,17 @@ private function pod_sprayer_think()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_5f89f77a()
+function private fungus_pod_think()
 {
 	self waittill(#"hash_e446a51c");
-	self thread function_a7a6257b();
+	self thread fungus_pod_upgrade_think();
 	self thread function_42bd572d();
 	if(1)
 	{
 		for(;;)
 		{
 			self.trigger waittill(#"trigger", e_who);
-			assert(self.var_8486ae6a > 0);
+			assert(self.n_pod_level > 0);
 		}
 		for(;;)
 		{
@@ -373,7 +373,7 @@ private function function_5f89f77a()
 		}
 		playsoundatposition("zmb_zod_sprayer_use", self.origin);
 		e_who thread function_8d53a342(1);
-		self function_7e428fa9(e_who);
+		self harvest_fungus_pod(e_who);
 		return;
 	}
 }
@@ -387,7 +387,7 @@ private function function_5f89f77a()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_8d53a342(b_success)
+function private function_8d53a342(b_success)
 {
 	self notify(#"hash_8d53a342");
 	self endon(#"hash_8d53a342");
@@ -399,7 +399,7 @@ private function function_8d53a342(b_success)
 }
 
 /*
-	Name: function_ab887f9d
+	Name: fungus_pod_clip_init
 	Namespace: zm_zod_pods
 	Checksum: 0x40180597
 	Offset: 0x1C18
@@ -407,18 +407,18 @@ private function function_8d53a342(b_success)
 	Parameters: 0
 	Flags: Linked
 */
-function function_ab887f9d()
+function fungus_pod_clip_init()
 {
 	var_15c80043 = getentarray("fungus_pod_clip", "targetname");
-	level.var_6fa2f6ca.var_755232db = array::sort_by_script_int(var_15c80043, 1);
-	foreach(var_74a0c36c, e_clip in level.var_6fa2f6ca.var_755232db)
+	level.fungus_pods.a_e_fungus_pod_clips = array::sort_by_script_int(var_15c80043, 1);
+	foreach(e_clip in level.fungus_pods.a_e_fungus_pod_clips)
 	{
-		e_clip thread function_254faf4d();
+		e_clip thread fungus_pod_clip_think();
 	}
 }
 
 /*
-	Name: function_254faf4d
+	Name: fungus_pod_clip_think
 	Namespace: zm_zod_pods
 	Checksum: 0x3F503035
 	Offset: 0x1D10
@@ -426,7 +426,7 @@ function function_ab887f9d()
 	Parameters: 0
 	Flags: Linked
 */
-function function_254faf4d()
+function fungus_pod_clip_think()
 {
 	level endon(#"_zombie_game_over");
 	while(true)
@@ -439,7 +439,7 @@ function function_254faf4d()
 }
 
 /*
-	Name: function_cb4c560e
+	Name: fungus_pod_upgrade
 	Namespace: zm_zod_pods
 	Checksum: 0x7FBA9D4
 	Offset: 0x1DB8
@@ -447,19 +447,19 @@ function function_254faf4d()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_cb4c560e(var_8486ae6a = undefined)
+function private fungus_pod_upgrade(n_pod_level = undefined)
 {
-	if(self.var_8486ae6a < 3)
+	if(self.n_pod_level < 3)
 	{
-		if(isdefined(var_8486ae6a))
+		if(isdefined(n_pod_level))
 		{
-			self.var_8486ae6a = var_8486ae6a;
+			self.n_pod_level = n_pod_level;
 		}
 		else
 		{
-			self.var_8486ae6a++;
+			self.n_pod_level++;
 		}
-		self.model clientfield::set("update_fungus_pod_level", self.var_8486ae6a);
+		self.model clientfield::set("update_fungus_pod_level", self.n_pod_level);
 	}
 }
 
@@ -474,14 +474,14 @@ private function function_cb4c560e(var_8486ae6a = undefined)
 */
 function function_be2abe()
 {
-	foreach(var_18b8e1, s_pod in level.var_6fa2f6ca.var_5d8c3695)
+	foreach(s_pod in level.fungus_pods.a_e_spawned)
 	{
-		s_pod function_cb4c560e(3);
+		s_pod fungus_pod_upgrade(3);
 	}
 }
 
 /*
-	Name: function_a7a6257b
+	Name: fungus_pod_upgrade_think
 	Namespace: zm_zod_pods
 	Checksum: 0x9DDE99F0
 	Offset: 0x1EE8
@@ -489,7 +489,7 @@ function function_be2abe()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_a7a6257b()
+function private fungus_pod_upgrade_think()
 {
 	self endon(#"harvested");
 	rounds_since_upgrade = 0;
@@ -499,30 +499,33 @@ private function function_a7a6257b()
 	}
 	if(level clientfield::get("bm_superbeast"))
 	{
-		self function_cb4c560e(3);
+		self fungus_pod_upgrade(3);
 	}
 	while(true)
 	{
 		level util::waittill_any("between_round_over", "debug_pod_spawn");
 		rounds_since_upgrade++;
-		n_upgrade_odds = level.var_6fa2f6ca.upgrade_odds[rounds_since_upgrade];
+		n_upgrade_odds = level.fungus_pods.upgrade_odds[rounds_since_upgrade];
 		if(!isdefined(n_upgrade_odds))
 		{
 			n_upgrade_odds = 1;
 		}
-		else if(isdefined(level.debug_pod_spawn_all) && level.debug_pod_spawn_all)
+		else
 		{
-			n_upgrade_odds = 1;
-		}
-		else if(n_upgrade_odds == 0)
-		{
-			continue;
+			if(isdefined(level.debug_pod_spawn_all) && level.debug_pod_spawn_all)
+			{
+				n_upgrade_odds = 1;
+			}
+			else if(n_upgrade_odds == 0)
+			{
+				continue;
+			}
 		}
 		if(randomfloat(1) <= n_upgrade_odds)
 		{
-			self function_cb4c560e();
+			self fungus_pod_upgrade();
 			rounds_since_upgrade = 0;
-			if(self.var_8486ae6a >= 3)
+			if(self.n_pod_level >= 3)
 			{
 				return;
 			}
@@ -539,28 +542,28 @@ private function function_a7a6257b()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_42bd572d()
+function private function_42bd572d()
 {
 	self endon(#"harvested");
 	level flag::wait_till("all_players_spawned");
 	while(true)
 	{
 		level waittill(#"kill_round");
-		if(self.var_8486ae6a == 3)
+		if(self.n_pod_level == 3)
 		{
 			self.model clientfield::increment("pod_harvest");
 			wait(0.05);
 			zm_unitrigger::unregister_unitrigger(self.trigger);
-			arrayremovevalue(level.var_6fa2f6ca.var_5d8c3695, self);
-			if(!isdefined(level.var_6fa2f6ca.var_4042b27e))
+			arrayremovevalue(level.fungus_pods.a_e_spawned, self);
+			if(!isdefined(level.fungus_pods.a_e_unspawned))
 			{
-				level.var_6fa2f6ca.var_4042b27e = [];
+				level.fungus_pods.a_e_unspawned = [];
 			}
-			else if(!isarray(level.var_6fa2f6ca.var_4042b27e))
+			else if(!isarray(level.fungus_pods.a_e_unspawned))
 			{
-				level.var_6fa2f6ca.var_4042b27e = array(level.var_6fa2f6ca.var_4042b27e);
+				level.fungus_pods.a_e_unspawned = array(level.fungus_pods.a_e_unspawned);
 			}
-			level.var_6fa2f6ca.var_4042b27e[level.var_6fa2f6ca.var_4042b27e.size] = self;
+			level.fungus_pods.a_e_unspawned[level.fungus_pods.a_e_unspawned.size] = self;
 			self notify(#"harvested");
 			level notify(("pod_" + self.script_int) + "_harvested");
 		}
@@ -568,7 +571,7 @@ private function function_42bd572d()
 }
 
 /*
-	Name: function_bf70a1ff
+	Name: respawn_fungus_pods
 	Namespace: zm_zod_pods
 	Checksum: 0x1FA4A4A5
 	Offset: 0x2208
@@ -576,23 +579,23 @@ private function function_42bd572d()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_bf70a1ff()
+function private respawn_fungus_pods()
 {
 	level flag::wait_till("start_zombie_round_logic");
-	for(i = 0; i < level.var_6fa2f6ca.var_4042b27e.size; i++)
+	for(i = 0; i < level.fungus_pods.a_e_unspawned.size; i++)
 	{
-		e_pod = level.var_6fa2f6ca.var_4042b27e[i];
+		e_pod = level.fungus_pods.a_e_unspawned[i];
 		e_pod.zone = zm_zonemgr::get_zone_from_position(e_pod.origin + vectorscale((0, 0, 1), 20), 1);
 		if(!isdefined(e_pod.zone))
 		{
 			/#
 				println(("" + zm_zod_util::vec_to_string(e_pod.origin)) + "");
 			#/
-			arrayremovevalue(level.var_6fa2f6ca.var_4042b27e, e_pod);
+			arrayremovevalue(level.fungus_pods.a_e_unspawned, e_pod);
 		}
 	}
-	n_pods = int(0.4 * level.var_6fa2f6ca.var_4042b27e.size);
-	function_d6abde0a(n_pods);
+	n_pods = int(0.4 * level.fungus_pods.a_e_unspawned.size);
+	spawn_fungus_pods(n_pods);
 	while(true)
 	{
 		level util::waittill_any("between_round_over", "debug_pod_spawn");
@@ -605,12 +608,12 @@ private function function_bf70a1ff()
 		{
 			n_pods = 1000;
 		}
-		function_d6abde0a(n_pods);
+		spawn_fungus_pods(n_pods);
 	}
 }
 
 /*
-	Name: function_7e428fa9
+	Name: harvest_fungus_pod
 	Namespace: zm_zod_pods
 	Checksum: 0x30955C65
 	Offset: 0x2470
@@ -618,7 +621,7 @@ private function function_bf70a1ff()
 	Parameters: 1
 	Flags: Linked
 */
-function function_7e428fa9(e_harvester)
+function harvest_fungus_pod(e_harvester)
 {
 	self.model clientfield::increment("pod_harvest");
 	e_harvester thread zm_audio::create_and_play_dialog("sprayer", "use");
@@ -627,23 +630,23 @@ function function_7e428fa9(e_harvester)
 	zm_unitrigger::unregister_unitrigger(self.trigger);
 	self.trigger = undefined;
 	self notify(#"harvested", e_harvester);
-	var_785a5f87 = self.var_8486ae6a;
-	self.var_8486ae6a = 0;
-	self.model clientfield::set("update_fungus_pod_level", self.var_8486ae6a);
+	var_785a5f87 = self.n_pod_level;
+	self.n_pod_level = 0;
+	self.model clientfield::set("update_fungus_pod_level", self.n_pod_level);
 	wait((getanimlength(("p7_fxanim_zm_zod_fungus_pod_stage" + var_785a5f87) + "_death_bundle")) - 0.5);
 	e_harvester recordmapevent(24, gettime(), self.origin, level.round_number, var_785a5f87);
 	level notify(("pod_" + self.script_int) + "_harvested");
 	n_roll = randomint(100);
 	n_cumulation = 0;
 	var_68a89987 = 0;
-	foreach(var_a054d9e0, s_reward in level.var_6fa2f6ca.rewards[var_785a5f87])
+	foreach(s_reward in level.fungus_pods.rewards[var_785a5f87])
 	{
 		/#
 			str_forced = getdvarstring("");
 			if(isdefined(str_forced) && str_forced != "")
 			{
 				s_reward_forced = 1;
-				s_reward = level.var_6fa2f6ca.debug_reward_list[str_forced];
+				s_reward = level.fungus_pods.debug_reward_list[str_forced];
 				setdvar("", "");
 			}
 		#/
@@ -727,7 +730,7 @@ function function_7e428fa9(e_harvester)
 					}
 					if(isdefined(s_reward.count) && str_item == "bonus_points_team")
 					{
-						level.var_6fa2f6ca.bonus_points_amount = s_reward.count;
+						level.fungus_pods.bonus_points_amount = s_reward.count;
 					}
 					zm_powerups::specific_powerup_drop(str_item, self.origin, undefined, undefined, 1);
 					break;
@@ -771,16 +774,16 @@ function function_7e428fa9(e_harvester)
 		str_item = zm_powerups::get_valid_powerup();
 		zm_powerups::specific_powerup_drop(str_item, self.origin, undefined, undefined, 1);
 	}
-	arrayremovevalue(level.var_6fa2f6ca.var_5d8c3695, self);
-	if(!isdefined(level.var_6fa2f6ca.var_4042b27e))
+	arrayremovevalue(level.fungus_pods.a_e_spawned, self);
+	if(!isdefined(level.fungus_pods.a_e_unspawned))
 	{
-		level.var_6fa2f6ca.var_4042b27e = [];
+		level.fungus_pods.a_e_unspawned = [];
 	}
-	else if(!isarray(level.var_6fa2f6ca.var_4042b27e))
+	else if(!isarray(level.fungus_pods.a_e_unspawned))
 	{
-		level.var_6fa2f6ca.var_4042b27e = array(level.var_6fa2f6ca.var_4042b27e);
+		level.fungus_pods.a_e_unspawned = array(level.fungus_pods.a_e_unspawned);
 	}
-	level.var_6fa2f6ca.var_4042b27e[level.var_6fa2f6ca.var_4042b27e.size] = self;
+	level.fungus_pods.a_e_unspawned[level.fungus_pods.a_e_unspawned.size] = self;
 }
 
 /*
@@ -886,7 +889,7 @@ function function_3f5779c4()
 }
 
 /*
-	Name: function_d6abde0a
+	Name: spawn_fungus_pods
 	Namespace: zm_zod_pods
 	Checksum: 0xEFBAE72F
 	Offset: 0x31E0
@@ -894,14 +897,14 @@ function function_3f5779c4()
 	Parameters: 1
 	Flags: Linked
 */
-function function_d6abde0a(n_pods)
+function spawn_fungus_pods(n_pods)
 {
 	if(level flag::get("hide_pods_for_trailer"))
 	{
 		return;
 	}
 	a_available = [];
-	foreach(var_76f759bd, e_pod in level.var_6fa2f6ca.var_4042b27e)
+	foreach(e_pod in level.fungus_pods.a_e_unspawned)
 	{
 		if(isdefined(e_pod.harvested_in_round))
 		{
@@ -911,17 +914,17 @@ function function_d6abde0a(n_pods)
 				continue;
 			}
 		}
-		var_11fb7a41 = 0;
+		b_skip_pod = 0;
 		a_players = getplayers();
-		foreach(var_483bd0a1, player in a_players)
+		foreach(player in a_players)
 		{
 			if(distance(player.origin, e_pod.origin) < 200)
 			{
-				var_11fb7a41 = 1;
+				b_skip_pod = 1;
 				break;
 			}
 		}
-		if(var_11fb7a41)
+		if(b_skip_pod)
 		{
 			continue;
 		}
@@ -945,22 +948,22 @@ function function_d6abde0a(n_pods)
 		{
 			continue;
 		}
-		arrayremovevalue(level.var_6fa2f6ca.var_4042b27e, s_pod);
+		arrayremovevalue(level.fungus_pods.a_e_unspawned, s_pod);
 		arrayremoveindex(a_available, n_index);
-		if(!isdefined(level.var_6fa2f6ca.var_5d8c3695))
+		if(!isdefined(level.fungus_pods.a_e_spawned))
 		{
-			level.var_6fa2f6ca.var_5d8c3695 = [];
+			level.fungus_pods.a_e_spawned = [];
 		}
-		else if(!isarray(level.var_6fa2f6ca.var_5d8c3695))
+		else if(!isarray(level.fungus_pods.a_e_spawned))
 		{
-			level.var_6fa2f6ca.var_5d8c3695 = array(level.var_6fa2f6ca.var_5d8c3695);
+			level.fungus_pods.a_e_spawned = array(level.fungus_pods.a_e_spawned);
 		}
-		level.var_6fa2f6ca.var_5d8c3695[level.var_6fa2f6ca.var_5d8c3695.size] = s_pod;
-		s_pod.var_8486ae6a = 1;
+		level.fungus_pods.a_e_spawned[level.fungus_pods.a_e_spawned.size] = s_pod;
+		s_pod.n_pod_level = 1;
 		level notify(("pod_" + s_pod.script_int) + "_hatched");
-		s_pod.model clientfield::set("update_fungus_pod_level", s_pod.var_8486ae6a);
+		s_pod.model clientfield::set("update_fungus_pod_level", s_pod.n_pod_level);
 		s_pod thread function_e1065706();
-		s_pod thread function_5f89f77a();
+		s_pod thread fungus_pod_think();
 		if(isdefined(s_pod.zone))
 		{
 			if(!isdefined(a_spawned_zones[s_pod.zone]))
@@ -1002,11 +1005,11 @@ function weapon_trigger_update_prompt(player)
 	if(!zm_utility::is_player_valid(player) || player.is_drinking > 0 || !player zm_magicbox::can_buy_weapon() || player bgb::is_enabled("zm_bgb_disorderly_combat"))
 	{
 		self sethintstring(&"");
-		return 0;
+		return false;
 	}
 	self setcursorhint("HINT_WEAPON", self.stub.wpn);
 	self sethintstring(&"ZOMBIE_TRADE_WEAPON_FILL");
-	return 1;
+	return true;
 }
 
 /*
@@ -1022,7 +1025,7 @@ function function_b0138b1(w_weapon)
 {
 	var_272e7943 = zm_weapons::get_base_weapon(w_weapon);
 	players = getplayers();
-	foreach(var_3cfc4ebf, player in players)
+	foreach(player in players)
 	{
 		if(!isdefined(player) || !isalive(player))
 		{
@@ -1030,10 +1033,10 @@ function function_b0138b1(w_weapon)
 		}
 		if(player zm_weapons::has_weapon_or_upgrade(var_272e7943))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1159,7 +1162,7 @@ function timer_til_despawn(v_float, n_dist)
 }
 
 /*
-	Name: function_20affc0e
+	Name: fungus_pod_bonus_points_override
 	Namespace: zm_zod_pods
 	Checksum: 0x7821053A
 	Offset: 0x3EB0
@@ -1167,9 +1170,9 @@ function timer_til_despawn(v_float, n_dist)
 	Parameters: 0
 	Flags: Linked
 */
-function function_20affc0e()
+function fungus_pod_bonus_points_override()
 {
-	return level.var_6fa2f6ca.bonus_points_amount;
+	return level.fungus_pods.bonus_points_amount;
 }
 
 /*
@@ -1186,7 +1189,7 @@ function normalize_reward_chances()
 	for(i = 1; i <= 3; i++)
 	{
 		n_total = 0;
-		foreach(var_7809b946, reward in level.var_6fa2f6ca.rewards[i])
+		foreach(reward in level.fungus_pods.rewards[i])
 		{
 			if(!(isdefined(reward.do_not_consider) && reward.do_not_consider))
 			{
@@ -1196,7 +1199,7 @@ function normalize_reward_chances()
 		/#
 			assert(reward.chance > 0);
 		#/
-		foreach(var_f96af48, reward in level.var_6fa2f6ca.rewards[i])
+		foreach(reward in level.fungus_pods.rewards[i])
 		{
 			if(!(isdefined(reward.do_not_consider) && reward.do_not_consider))
 			{
@@ -1218,7 +1221,7 @@ function normalize_reward_chances()
 function function_2947f395()
 {
 	level flag::set("hide_pods_for_trailer");
-	foreach(var_44fa544b, pod in level.var_6fa2f6ca.spawned)
+	foreach(pod in level.fungus_pods.spawned)
 	{
 		pod.buff = 0;
 		pod.var_70ac16f8 = 0;
@@ -1227,7 +1230,7 @@ function function_2947f395()
 		{
 			pod.e_fx_origin delete();
 		}
-		arrayremovevalue(level.var_6fa2f6ca.spawned, self);
+		arrayremovevalue(level.fungus_pods.spawned, self);
 	}
 }
 
@@ -1242,7 +1245,7 @@ function function_2947f395()
 */
 function function_3f95af32()
 {
-	foreach(var_52fbc17a, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player clientfield::set_to_player("pod_sprayer_held", 1);
 		player thread zm_zod_util::function_55f114f9("zmInventory.widget_sprayer", 3.5);

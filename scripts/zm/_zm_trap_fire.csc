@@ -16,7 +16,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_trap_fire", &__init__, undefined, undefined);
 }
@@ -33,7 +33,7 @@ autoexec function __init__sytem__()
 function __init__()
 {
 	a_traps = struct::get_array("trap_fire", "targetname");
-	foreach(var_4e756d60, trap in a_traps)
+	foreach(trap in a_traps)
 	{
 		clientfield::register("world", trap.script_noteworthy, 21000, 1, "int", &trap_fx_monitor, 0, 0);
 	}
@@ -60,7 +60,7 @@ function trap_fx_monitor(localclientnum, oldval, newval, bnewent, binitialsnap, 
 		exploder::stop_exploder(exploder_name);
 	}
 	fire_points = struct::get_array(fieldname, "targetname");
-	foreach(var_882cee42, point in fire_points)
+	foreach(point in fire_points)
 	{
 		if(!isdefined(point.script_noteworthy))
 		{

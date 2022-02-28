@@ -61,7 +61,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function opt_in()
+function autoexec opt_in()
 {
 	level.aat_in_use = 1;
 	level.bgb_in_use = 1;
@@ -130,7 +130,7 @@ function function_73cc64f1(localclientnum)
 	level.var_98cd8f08[3] = "c_t7_zm_dlchd_moon_pressuresuit_richtofen_mpc";
 	level.var_98cd8f08[4] = "c_t7_zm_dlchd_moon_pressuresuit_takeo_mpc";
 	lock_model("c_t7_zm_dlchd_moon_pressuresuit_body_mpc");
-	foreach(var_c976e1e5, player in getplayers(localclientnum))
+	foreach(player in getplayers(localclientnum))
 	{
 		player thread function_c06d0a4e(localclientnum);
 	}
@@ -501,7 +501,7 @@ function function_c00b8efb(clientnum)
 		return;
 	}
 	var_e3a2cc12 = getentarray(clientnum, "jump_pads", "targetname");
-	foreach(var_261b334a, var_f5f4e9cc in var_e3a2cc12)
+	foreach(var_f5f4e9cc in var_e3a2cc12)
 	{
 		if(isdefined(var_f5f4e9cc.script_noteworthy))
 		{
@@ -524,7 +524,7 @@ function function_c00b8efb(clientnum)
 function function_1cd5e7c6(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwasdemojump)
 {
 	var_e3a2cc12 = getentarray(localclientnum, "jump_pads", "targetname");
-	foreach(var_8d26aabf, var_f5f4e9cc in var_e3a2cc12)
+	foreach(var_f5f4e9cc in var_e3a2cc12)
 	{
 		if(var_f5f4e9cc.script_int == newval)
 		{

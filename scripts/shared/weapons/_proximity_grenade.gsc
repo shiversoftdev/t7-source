@@ -294,7 +294,7 @@ function getproximitychain()
 	{
 		level.proximitychains = [];
 	}
-	foreach(var_f18192b, chain in level.proximitychains)
+	foreach(chain in level.proximitychains)
 	{
 		if(!chainisactive(chain))
 		{
@@ -319,9 +319,9 @@ function chainisactive(chain)
 {
 	if(isdefined(chain.activeendtime) && chain.activeendtime > gettime())
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -345,7 +345,7 @@ function cleanupproximitychainent()
 			return;
 		}
 		any_active = 0;
-		foreach(var_2e7277ad, proximitychain in self.chains)
+		foreach(proximitychain in self.chains)
 		{
 			if(proximitychain.activeendtime > gettime())
 			{
@@ -442,7 +442,7 @@ function proximitygrenadechain(eattacker, einflictor, killcament, weapon, meanso
 			return;
 		}
 		closestplayers = arraysort(level.players, self.origin, 1);
-		foreach(var_f4755e17, player in closestplayers)
+		foreach(player in closestplayers)
 		{
 			wait(0.05);
 			if(proximitychain.chaineventnum >= weapon.chaineventmax)

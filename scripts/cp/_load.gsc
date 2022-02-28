@@ -174,7 +174,7 @@ function function_c32ba481(var_87423d00 = 0.5, v_color = (0, 0, 0))
 	{
 		wait(1);
 	}
-	foreach(var_8cc4e06f, player in level.players)
+	foreach(player in level.players)
 	{
 		player thread function_84454eb5();
 	}
@@ -581,7 +581,7 @@ function end_game()
 	survived = [];
 	players = getplayers();
 	setmatchflag("disableIngameMenu", 1);
-	foreach(var_ff243644, player in players)
+	foreach(player in players)
 	{
 		player closeingamemenu();
 	}
@@ -622,11 +622,11 @@ function end_game()
 	uploadstats();
 	wait(1);
 	wait(3.95);
-	foreach(var_9b81fbc7, icon in survived)
+	foreach(icon in survived)
 	{
 		icon destroy();
 	}
-	foreach(var_5ede318f, icon in game_over)
+	foreach(icon in game_over)
 	{
 		icon destroy();
 	}

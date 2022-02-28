@@ -20,7 +20,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_train", &__init__, undefined, undefined);
 }
@@ -294,7 +294,7 @@ function sndtrainvox(localclientnum, oldval, newval, bnewent, binitialsnap, fiel
 	if(newval)
 	{
 		alias = level.var_98f27ad[newval - 1];
-		foreach(var_811f8866, location in level.var_71738ea0)
+		foreach(location in level.var_71738ea0)
 		{
 			num = 1;
 			if(location.script_string == "small")

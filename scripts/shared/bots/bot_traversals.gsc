@@ -34,28 +34,40 @@ function callback_botentereduseredge(startnode, endnode)
 	{
 		self thread wallrun_traversal(startnode, endnode);
 	}
-	else if(startinwater && !endinwater)
-	{
-		self thread leave_water_traversal(startnode, endnode);
-	}
-	else if(startinwater && endinwater)
-	{
-		self thread swim_traversal(startnode, endnode);
-	}
-	else if(zdelta >= 0)
-	{
-		self thread jump_up_traversal(startnode, endnode);
-	}
-	else if(zdelta < 0)
-	{
-		self thread jump_down_traversal(startnode, endnode);
-	}
 	else
 	{
-		self botreleasemanualcontrol();
-		/#
-			println("", self.name, "");
-		#/
+		if(startinwater && !endinwater)
+		{
+			self thread leave_water_traversal(startnode, endnode);
+		}
+		else
+		{
+			if(startinwater && endinwater)
+			{
+				self thread swim_traversal(startnode, endnode);
+			}
+			else
+			{
+				if(zdelta >= 0)
+				{
+					self thread jump_up_traversal(startnode, endnode);
+				}
+				else
+				{
+					if(zdelta < 0)
+					{
+						self thread jump_down_traversal(startnode, endnode);
+					}
+					else
+					{
+						self botreleasemanualcontrol();
+						/#
+							println("", self.name, "");
+						#/
+					}
+				}
+			}
+		}
 	}
 }
 

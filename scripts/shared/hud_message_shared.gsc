@@ -18,7 +18,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("hud_message", &__init__, undefined, undefined);
 }
@@ -209,27 +209,30 @@ function initnotifymessage()
 			xoffset = 0;
 		}
 	}
-	else if(self issplitscreen())
-	{
-		titlesize = 2;
-		textsize = 1.4;
-		iconsize = 24;
-		font = "big";
-		point = "TOP";
-		relativepoint = "BOTTOM";
-		yoffset = 30;
-		xoffset = 30;
-	}
 	else
 	{
-		titlesize = 2.5;
-		textsize = 1.75;
-		iconsize = 30;
-		font = "big";
-		point = "BOTTOM LEFT";
-		relativepoint = "TOP";
-		yoffset = 0;
-		xoffset = 0;
+		if(self issplitscreen())
+		{
+			titlesize = 2;
+			textsize = 1.4;
+			iconsize = 24;
+			font = "big";
+			point = "TOP";
+			relativepoint = "BOTTOM";
+			yoffset = 30;
+			xoffset = 30;
+		}
+		else
+		{
+			titlesize = 2.5;
+			textsize = 1.75;
+			iconsize = 30;
+			font = "big";
+			point = "BOTTOM LEFT";
+			relativepoint = "TOP";
+			yoffset = 0;
+			xoffset = 0;
+		}
 	}
 	self.notifytitle = hud::createfontstring(font, titlesize);
 	self.notifytitle hud::setpoint(point, undefined, xoffset, yoffset);
@@ -524,9 +527,9 @@ function canreadtext()
 {
 	if(self util::is_flashbanged())
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -675,10 +678,10 @@ function isintop(players, topn)
 	{
 		if(isdefined(players[i]) && self == players[i])
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*

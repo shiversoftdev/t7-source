@@ -20,7 +20,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	if(!sessionmodeiscampaignzombiesgame())
 	{
@@ -65,7 +65,7 @@ autoexec function init()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_91402721()
+function private function_91402721()
 {
 	callback::on_spawned(&function_b89e0be4);
 }

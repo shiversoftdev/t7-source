@@ -326,23 +326,23 @@ function activatesentinel(killstreaktype)
 			iprintlnbold("");
 		#/
 		self iprintlnbold(&"KILLSTREAK_SENTINEL_NOT_AVAILABLE");
-		return 0;
+		return false;
 	}
 	if(player isplayerswimming())
 	{
 		self iprintlnbold(&"KILLSTREAK_SENTINEL_NOT_PLACEABLE");
-		return 0;
+		return false;
 	}
 	spawnpos = calcspawnorigin(player.origin, player.angles);
 	if(!isdefined(spawnpos))
 	{
 		self iprintlnbold(&"KILLSTREAK_SENTINEL_NOT_PLACEABLE");
-		return 0;
+		return false;
 	}
 	killstreak_id = player killstreakrules::killstreakstart("sentinel", player.team, 0, 1);
 	if(killstreak_id == -1)
 	{
-		return 0;
+		return false;
 	}
 	player addweaponstat(getweapon("sentinel"), "used", 1);
 	sentinel = spawnvehicle("veh_sentinel_mp", spawnpos.origin, spawnpos.angles, "dynamic_spawn_ai");
@@ -378,7 +378,7 @@ function activatesentinel(killstreaktype)
 	sentinel vehicle::add_to_target_group(sentinel);
 	self killstreaks::play_killstreak_start_dialog("sentinel", self.team, killstreak_id);
 	sentinel thread watchgameended();
-	return 1;
+	return true;
 }
 
 /*

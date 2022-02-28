@@ -26,7 +26,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_bgb_near_death_experience", &__init__, undefined, "bgb");
 }
@@ -117,7 +117,7 @@ function function_1a31df5b()
 */
 function function_d1a43fc9()
 {
-	foreach(var_9fb8dcf8, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		e_player function_8b5fe69();
 	}
@@ -132,7 +132,7 @@ function function_d1a43fc9()
 	{
 		callback::remove_on_connect(&on_connect);
 	}
-	foreach(var_b5c1db6c, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		e_player zm_laststand::deregister_revive_override(e_player.var_e82a0595[0]);
 		arrayremoveindex(e_player.var_e82a0595, 0);
@@ -193,49 +193,49 @@ function function_73277c01(e_revivee)
 {
 	if(!isdefined(e_revivee.revivetrigger))
 	{
-		return 0;
+		return false;
 	}
 	if(!isalive(self))
 	{
-		return 0;
+		return false;
 	}
 	if(self laststand::player_is_in_laststand())
 	{
-		return 0;
+		return false;
 	}
 	if(self.team != e_revivee.team)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.is_zombie) && self.is_zombie)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(level.can_revive_use_depthinwater_test) && level.can_revive_use_depthinwater_test && e_revivee depthinwater() > 10)
 	{
-		return 1;
+		return true;
 	}
 	if(isdefined(level.can_revive) && ![[level.can_revive]](e_revivee))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(level.can_revive_game_module) && ![[level.can_revive_game_module]](e_revivee))
 	{
-		return 0;
+		return false;
 	}
 	if(e_revivee zm::in_kill_brush() || !e_revivee zm::in_enabled_playable_area())
 	{
-		return 0;
+		return false;
 	}
 	if(self bgb::is_enabled("zm_bgb_near_death_experience") && isdefined(self.var_6638f10b) && array::contains(self.var_6638f10b, e_revivee))
 	{
-		return 1;
+		return true;
 	}
 	if(e_revivee bgb::is_enabled("zm_bgb_near_death_experience") && isdefined(e_revivee.var_6638f10b) && array::contains(e_revivee.var_6638f10b, self))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -250,7 +250,7 @@ function function_73277c01(e_revivee)
 function lost_perk_override(perk, var_2488e46a = undefined, var_24df4040 = undefined)
 {
 	self thread bgb::revive_and_return_perk_on_bgb_activation(perk);
-	return 0;
+	return false;
 }
 
 /*
@@ -330,7 +330,7 @@ function function_52d6b4dc(e_player, str_notify)
 	{
 		wait(0.1);
 	}
-	return 1;
+	return true;
 }
 
 /*

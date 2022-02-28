@@ -578,55 +578,76 @@ function tomb_audio_custom_weapon_check(weapon, magic_box)
 		{
 			self thread zm_audio::create_and_play_dialog("general", "take_weapon_intro");
 		}
-		else if(isdefined(self.magic_box_uses) && self.magic_box_uses == 2)
-		{
-			self thread zm_audio::create_and_play_dialog("general", "take_weapon_2nd_time");
-		}
 		else
 		{
-			type = self zm_weapons::weapon_type_check(weapon);
-			return type;
+			if(isdefined(self.magic_box_uses) && self.magic_box_uses == 2)
+			{
+				self thread zm_audio::create_and_play_dialog("general", "take_weapon_2nd_time");
+			}
+			else
+			{
+				type = self zm_weapons::weapon_type_check(weapon);
+				return type;
+			}
 		}
-	}
-	else if(issubstr(str_weapon, "staff"))
-	{
-		if(str_weapon == "staff_fire")
-		{
-			self zm_audio::create_and_play_dialog("general", "pickup_fire");
-			level notify(#"staff_crafted_vo", self, 1);
-		}
-		else if(str_weapon == "staff_water")
-		{
-			self zm_audio::create_and_play_dialog("general", "pickup_ice");
-			level notify(#"staff_crafted_vo", self, 4);
-		}
-		else if(str_weapon == "staff_air")
-		{
-			self zm_audio::create_and_play_dialog("general", "pickup_wind");
-			level notify(#"staff_crafted_vo", self, 2);
-		}
-		else if(str_weapon == "staff_lightning")
-		{
-			self zm_audio::create_and_play_dialog("general", "pickup_light");
-			level notify(#"staff_crafted_vo", self, 3);
-		}
-	}
-	else if(zm_weapons::is_weapon_upgraded(weapon))
-	{
-		self thread zm_audio::create_and_play_dialog("general", "pap_arm");
-	}
-	else if(!isdefined(self.wallbuys_purchased))
-	{
-		self thread zm_audio::create_and_play_dialog("general", "discover_wall_buy");
-		self.wallbuys_purchased = 1;
-	}
-	else if(str_weapon == "sticky_grenade" || str_weapon == "claymore")
-	{
-		self zm_audio::create_and_play_dialog("weapon_pickup", "explo");
 	}
 	else
 	{
-		self thread zm_audio::create_and_play_dialog("general", "generic_wall_buy");
+		if(issubstr(str_weapon, "staff"))
+		{
+			if(str_weapon == "staff_fire")
+			{
+				self zm_audio::create_and_play_dialog("general", "pickup_fire");
+				level notify(#"staff_crafted_vo", self, 1);
+			}
+			else
+			{
+				if(str_weapon == "staff_water")
+				{
+					self zm_audio::create_and_play_dialog("general", "pickup_ice");
+					level notify(#"staff_crafted_vo", self, 4);
+				}
+				else
+				{
+					if(str_weapon == "staff_air")
+					{
+						self zm_audio::create_and_play_dialog("general", "pickup_wind");
+						level notify(#"staff_crafted_vo", self, 2);
+					}
+					else if(str_weapon == "staff_lightning")
+					{
+						self zm_audio::create_and_play_dialog("general", "pickup_light");
+						level notify(#"staff_crafted_vo", self, 3);
+					}
+				}
+			}
+		}
+		else
+		{
+			if(zm_weapons::is_weapon_upgraded(weapon))
+			{
+				self thread zm_audio::create_and_play_dialog("general", "pap_arm");
+			}
+			else
+			{
+				if(!isdefined(self.wallbuys_purchased))
+				{
+					self thread zm_audio::create_and_play_dialog("general", "discover_wall_buy");
+					self.wallbuys_purchased = 1;
+				}
+				else
+				{
+					if(str_weapon == "sticky_grenade" || str_weapon == "claymore")
+					{
+						self zm_audio::create_and_play_dialog("weapon_pickup", "explo");
+					}
+					else
+					{
+						self thread zm_audio::create_and_play_dialog("general", "generic_wall_buy");
+					}
+				}
+			}
+		}
 	}
 	return "crappy";
 }
@@ -681,7 +702,7 @@ function easter_egg_song_vo(player)
 		while(true)
 		{
 			a_players = getplayers();
-			foreach(var_c84e1d89, player in a_players)
+			foreach(player in a_players)
 			{
 				if(isalive(player))
 				{
@@ -802,14 +823,17 @@ function tomb_audio_custom_response_line(player, category, type)
 	{
 		player thread play_pos_neg_response_on_closest_player("general", "heal_revived", "kills");
 	}
-	else if(type == "headshot")
+	else
 	{
-		player thread play_pos_neg_response_on_closest_player("kill", "headshot_respond_to_plr_" + player.characterindex, "kills");
-	}
-	else if(type == "oh_shit")
-	{
-		player thread play_pos_neg_response_on_closest_player("general", "srnd_rspnd_to_plr_" + player.characterindex, "kills");
-		player thread global_oh_shit_cooldown_timer(15);
+		if(type == "headshot")
+		{
+			player thread play_pos_neg_response_on_closest_player("kill", "headshot_respond_to_plr_" + player.characterindex, "kills");
+		}
+		else if(type == "oh_shit")
+		{
+			player thread play_pos_neg_response_on_closest_player("general", "srnd_rspnd_to_plr_" + player.characterindex, "kills");
+			player thread global_oh_shit_cooldown_timer(15);
+		}
 	}
 }
 
@@ -858,7 +882,7 @@ function play_pos_neg_response_on_closest_player(category, type, str_stat)
 	}
 	arrayremovevalue(a_players, self);
 	a_closest = arraysort(a_players, self.origin, 1);
-	foreach(var_af474816, player in a_closest)
+	foreach(player in a_closest)
 	{
 		if(distancesquared(self.origin, player.origin) <= 250000)
 		{
@@ -999,7 +1023,7 @@ function discover_dig_site_trigger_touch()
 function maxis_audio_logs()
 {
 	a_s_radios = struct::get_array("maxis_audio_log", "targetname");
-	foreach(var_457747ed, s_origin in a_s_radios)
+	foreach(s_origin in a_s_radios)
 	{
 		s_origin.unitrigger_stub = spawnstruct();
 		s_origin.unitrigger_stub.origin = s_origin.origin;
@@ -1044,7 +1068,7 @@ function discover_pack_a_punch()
 			{
 				e_player.discover_pap_vo_played = 1;
 				e_player zm_audio::create_and_play_dialog("general", "pap_discovered");
-				foreach(var_3700bc3a, player in getplayers())
+				foreach(player in getplayers())
 				{
 					if(distance(player.origin, e_player.origin) < 800)
 					{
@@ -1106,18 +1130,21 @@ function play_maxis_audio_log(v_trigger_origin, n_audiolog_id)
 	{
 		level flag::set("maxis_audiolog_gr0_playing");
 	}
-	else if(n_audiolog_id == 5)
+	else
 	{
-		level flag::set("maxis_audiolog_gr1_playing");
-	}
-	else if(n_audiolog_id == 6)
-	{
-		level flag::set("maxis_audiolog_gr2_playing");
+		if(n_audiolog_id == 5)
+		{
+			level flag::set("maxis_audiolog_gr1_playing");
+		}
+		else if(n_audiolog_id == 6)
+		{
+			level flag::set("maxis_audiolog_gr2_playing");
+		}
 	}
 	e_vo_origin = spawn("script_origin", v_trigger_origin);
 	level flag::set("maxis_audio_log_" + n_audiolog_id);
 	a_s_triggers = struct::get_array("maxis_audio_log", "targetname");
-	foreach(var_20695021, s_trigger in a_s_triggers)
+	foreach(s_trigger in a_s_triggers)
 	{
 		if(s_trigger.script_int == n_audiolog_id)
 		{
@@ -1135,13 +1162,16 @@ function play_maxis_audio_log(v_trigger_origin, n_audiolog_id)
 	{
 		level flag::clear("maxis_audiolog_gr0_playing");
 	}
-	else if(n_audiolog_id == 5)
+	else
 	{
-		level flag::clear("maxis_audiolog_gr1_playing");
-	}
-	else if(n_audiolog_id == 6)
-	{
-		level flag::clear("maxis_audiolog_gr2_playing");
+		if(n_audiolog_id == 5)
+		{
+			level flag::clear("maxis_audiolog_gr1_playing");
+		}
+		else if(n_audiolog_id == 6)
+		{
+			level flag::clear("maxis_audiolog_gr2_playing");
+		}
 	}
 	level thread zm_unitrigger::register_static_unitrigger(s_trigger.unitrigger_stub, &maxis_audio_log_think);
 }
@@ -1161,20 +1191,23 @@ function reset_maxis_audiolog_unitrigger(n_robot_id)
 	{
 		n_script_int = 4;
 	}
-	else if(n_robot_id == 1)
+	else
 	{
-		n_script_int = 5;
-	}
-	else if(n_robot_id == 2)
-	{
-		n_script_int = 6;
+		if(n_robot_id == 1)
+		{
+			n_script_int = 5;
+		}
+		else if(n_robot_id == 2)
+		{
+			n_script_int = 6;
+		}
 	}
 	if(level flag::get("maxis_audio_log_" + n_script_int))
 	{
 		return;
 	}
 	a_s_radios = struct::get_array("maxis_audio_log", "targetname");
-	foreach(var_aa386310, s_origin in a_s_radios)
+	foreach(s_origin in a_s_radios)
 	{
 		if(s_origin.script_int == n_script_int)
 		{
@@ -1201,16 +1234,19 @@ function restart_maxis_audiolog_unitrigger(n_robot_id)
 	{
 		n_script_int = 4;
 	}
-	else if(n_robot_id == 1)
+	else
 	{
-		n_script_int = 5;
-	}
-	else if(n_robot_id == 2)
-	{
-		n_script_int = 6;
+		if(n_robot_id == 1)
+		{
+			n_script_int = 5;
+		}
+		else if(n_robot_id == 2)
+		{
+			n_script_int = 6;
+		}
 	}
 	a_s_radios = struct::get_array("maxis_audio_log", "targetname");
-	foreach(var_a6523276, s_origin in a_s_radios)
+	foreach(s_origin in a_s_radios)
 	{
 		if(s_origin.script_int == n_script_int)
 		{
@@ -1312,15 +1348,18 @@ function start_samantha_intro_vo()
 		{
 			samantha_intro_1();
 		}
-		else if(level.round_number == 6)
+		else
 		{
-			samantha_intro_2();
-		}
-		else if(level.round_number == 7)
-		{
-			samantha_intro_3();
-			level flag::set("samantha_intro_done");
-			break;
+			if(level.round_number == 6)
+			{
+				samantha_intro_2();
+			}
+			else if(level.round_number == 7)
+			{
+				samantha_intro_3();
+				level flag::set("samantha_intro_done");
+				break;
+			}
 		}
 	}
 }
@@ -1349,7 +1388,7 @@ function samantha_intro_1()
 	set_players_dontspeak(1);
 	samanthasay("vox_sam_sam_help_5_0", players[0], 1, 1);
 	players = getplayers();
-	foreach(var_38b6ba0e, player in players)
+	foreach(player in players)
 	{
 		if(player.character_name != "Richtofen")
 		{
@@ -1485,7 +1524,7 @@ function get_nearest_friend_within_speaking_distance(other_player)
 	distance_nearest = 800;
 	nearest_friend = undefined;
 	players = getplayers();
-	foreach(var_361e03ca, player in players)
+	foreach(player in players)
 	{
 		distance_between_players = distance(player.origin, other_player.origin);
 		if(player != other_player && distance_between_players < distance_nearest)
@@ -1520,9 +1559,9 @@ function play_line_on_player_character_if_present(vox_line, character_name)
 		#/
 		player_character playsoundwithnotify(vox_line, "sound_done" + vox_line);
 		player_character waittill("sound_done" + vox_line);
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1537,7 +1576,7 @@ function play_line_on_player_character_if_present(vox_line, character_name)
 function get_player_character_if_present(character_name)
 {
 	players = getplayers();
-	foreach(var_f9954f3e, player in players)
+	foreach(player in players)
 	{
 		if(player.character_name == character_name)
 		{
@@ -1661,7 +1700,7 @@ function game_start_vo()
 	e_nikolai = undefined;
 	e_richtofen = undefined;
 	e_takeo = undefined;
-	foreach(var_b5ebb577, player in players)
+	foreach(player in players)
 	{
 		if(isdefined(player))
 		{
@@ -1893,13 +1932,16 @@ function get_left_behind_plea()
 	{
 		pl_num = 1;
 	}
-	else if(self.character_name == "Richtofen")
+	else
 	{
-		pl_num = 2;
-	}
-	else if(self.character_name == "Takeo")
-	{
-		pl_num = 3;
+		if(self.character_name == "Richtofen")
+		{
+			pl_num = 2;
+		}
+		else if(self.character_name == "Takeo")
+		{
+			pl_num = 3;
+		}
 	}
 	return (("vox_plr_" + pl_num) + "_miss_tank_") + randomint(3);
 }
@@ -1934,61 +1976,67 @@ function get_left_behind_response(e_victim)
 			return "vox_plr_0_tank_rspnd_to_plr_3_0";
 		}
 	}
-	else if(self.character_name == "Nikolai")
+	else
 	{
-		if(math::cointoss())
+		if(self.character_name == "Nikolai")
 		{
-			return "vox_plr_1_tank_rspnd_generic_0";
+			if(math::cointoss())
+			{
+				return "vox_plr_1_tank_rspnd_generic_0";
+			}
+			if(e_victim.character_name == "Dempsey")
+			{
+				return "vox_plr_1_tank_rspnd_to_plr_0_0";
+			}
+			if(e_victim.character_name == "Richtofen")
+			{
+				return "vox_plr_1_tank_rspnd_to_plr_2_0";
+			}
+			if(e_victim.character_name == "Takeo")
+			{
+				return "vox_plr_1_tank_rspnd_to_plr_3_0";
+			}
 		}
-		if(e_victim.character_name == "Dempsey")
+		else
 		{
-			return "vox_plr_1_tank_rspnd_to_plr_0_0";
-		}
-		if(e_victim.character_name == "Richtofen")
-		{
-			return "vox_plr_1_tank_rspnd_to_plr_2_0";
-		}
-		if(e_victim.character_name == "Takeo")
-		{
-			return "vox_plr_1_tank_rspnd_to_plr_3_0";
-		}
-	}
-	else if(self.character_name == "Richtofen")
-	{
-		if(math::cointoss())
-		{
-			return "vox_plr_2_tank_rspnd_generic_0";
-		}
-		if(e_victim.character_name == "Dempsey")
-		{
-			return "vox_plr_2_tank_rspnd_to_plr_0_0";
-		}
-		if(e_victim.character_name == "Nikolai")
-		{
-			return "vox_plr_2_tank_rspnd_to_plr_1_0";
-		}
-		if(e_victim.character_name == "Takeo")
-		{
-			return "vox_plr_2_tank_rspnd_to_plr_3_0";
-		}
-	}
-	else if(self.character_name == "Takeo")
-	{
-		if(math::cointoss())
-		{
-			return "vox_plr_3_tank_rspnd_generic_0";
-		}
-		if(e_victim.character_name == "Dempsey")
-		{
-			return "vox_plr_3_tank_rspnd_to_plr_0_0";
-		}
-		if(e_victim.character_name == "Nikolai")
-		{
-			return "vox_plr_3_tank_rspnd_to_plr_1_0";
-		}
-		if(e_victim.character_name == "Richtofen")
-		{
-			return "vox_plr_3_tank_rspnd_to_plr_2_0";
+			if(self.character_name == "Richtofen")
+			{
+				if(math::cointoss())
+				{
+					return "vox_plr_2_tank_rspnd_generic_0";
+				}
+				if(e_victim.character_name == "Dempsey")
+				{
+					return "vox_plr_2_tank_rspnd_to_plr_0_0";
+				}
+				if(e_victim.character_name == "Nikolai")
+				{
+					return "vox_plr_2_tank_rspnd_to_plr_1_0";
+				}
+				if(e_victim.character_name == "Takeo")
+				{
+					return "vox_plr_2_tank_rspnd_to_plr_3_0";
+				}
+			}
+			else if(self.character_name == "Takeo")
+			{
+				if(math::cointoss())
+				{
+					return "vox_plr_3_tank_rspnd_generic_0";
+				}
+				if(e_victim.character_name == "Dempsey")
+				{
+					return "vox_plr_3_tank_rspnd_to_plr_0_0";
+				}
+				if(e_victim.character_name == "Nikolai")
+				{
+					return "vox_plr_3_tank_rspnd_to_plr_1_0";
+				}
+				if(e_victim.character_name == "Richtofen")
+				{
+					return "vox_plr_3_tank_rspnd_to_plr_2_0";
+				}
+			}
 		}
 	}
 	return undefined;
@@ -2119,7 +2167,7 @@ function round_one_end_vo()
 	e_nikolai = undefined;
 	e_richtofen = undefined;
 	e_takeo = undefined;
-	foreach(var_f031d7fe, player in players)
+	foreach(player in players)
 	{
 		if(isdefined(player))
 		{
@@ -2290,7 +2338,7 @@ function first_magic_box_seen_vo()
 	level flag::wait_till("start_zombie_round_logic");
 	magicbox = level.chests[level.chest_index];
 	a_players = getplayers();
-	foreach(var_7dcd64e1, player in a_players)
+	foreach(player in a_players)
 	{
 		player thread wait_and_play_first_magic_box_seen_vo(magicbox.unitrigger_stub);
 	}
@@ -2324,7 +2372,7 @@ function wait_and_play_first_magic_box_seen_vo(struct)
 					}
 					players = getplayers();
 					a_speakers = [];
-					foreach(var_71d5773f, player in players)
+					foreach(player in players)
 					{
 						if(isdefined(player) && distance2dsquared(player.origin, self.origin) <= 1000000)
 						{
@@ -2531,7 +2579,7 @@ function b_player_has_dieseldrone_weapon()
 {
 	a_players = getplayers();
 	var_703e6a13 = getweapon("equip_dieseldrone");
-	foreach(var_76eace55, player in a_players)
+	foreach(player in a_players)
 	{
 		if(player hasweapon(var_703e6a13))
 		{
@@ -2555,7 +2603,7 @@ function set_players_dontspeak(bool)
 	players = getplayers();
 	if(bool)
 	{
-		foreach(var_e04a85d2, player in players)
+		foreach(player in players)
 		{
 			if(isdefined(player))
 			{
@@ -2563,7 +2611,7 @@ function set_players_dontspeak(bool)
 				player clientfield::set_to_player("isspeaking", 1);
 			}
 		}
-		foreach(var_87b59a10, player in players)
+		foreach(player in players)
 		{
 			var_91a28485 = getnextarraykey(var_7095611e);
 			while(isdefined(player) && (isdefined(player.isspeaking) && player.isspeaking))
@@ -2574,7 +2622,7 @@ function set_players_dontspeak(bool)
 	}
 	else
 	{
-		foreach(var_f1770a84, player in players)
+		foreach(player in players)
 		{
 			if(isdefined(player))
 			{
@@ -2626,9 +2674,9 @@ function is_game_solo()
 	players = getplayers();
 	if(players.size == 1)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2799,7 +2847,7 @@ function watch_one_shot_samantha_clue(str_line, str_notify, str_endon)
 		if(!isplayer(e_player))
 		{
 			a_players = getplayers();
-			foreach(var_7c6a25e0, player in a_players)
+			foreach(player in a_players)
 			{
 				if(player.zombie_vars["zombie_powerup_zombie_blood_on"])
 				{
@@ -2990,11 +3038,11 @@ function samanthasay(vox_line, e_source, b_wait_for_nearby_speakers = 0, intro_l
 	level endon(#"end_game");
 	if(!intro_line && !level flag::get("samantha_intro_done"))
 	{
-		return 0;
+		return false;
 	}
 	if(intro_line && level flag::get("samantha_intro_done"))
 	{
-		return 0;
+		return false;
 	}
 	while(isdefined(level.sam_talking) && level.sam_talking)
 	{
@@ -3006,7 +3054,7 @@ function samanthasay(vox_line, e_source, b_wait_for_nearby_speakers = 0, intro_l
 		nearbyplayers = util::get_array_of_closest(e_source.origin, getplayers(), undefined, undefined, 256);
 		if(isdefined(nearbyplayers) && nearbyplayers.size > 0)
 		{
-			foreach(var_4b404489, player in nearbyplayers)
+			foreach(player in nearbyplayers)
 			{
 				var_96cd4938 = getnextarraykey(var_8665d32b);
 				while(isdefined(player) && (isdefined(player.isspeaking) && player.isspeaking))
@@ -3018,7 +3066,7 @@ function samanthasay(vox_line, e_source, b_wait_for_nearby_speakers = 0, intro_l
 	}
 	level thread samanthasayvoplay(e_source, vox_line);
 	level waittill(#"samanthasay_vo_finished");
-	return 1;
+	return true;
 }
 
 /*
@@ -3076,7 +3124,7 @@ function maxissay(vox_line, m_spot_override, b_wait_for_nearby_speakers)
 		nearbyplayers = util::get_array_of_closest(m_vo_spot.origin, getplayers(), undefined, undefined, 256);
 		if(isdefined(nearbyplayers) && nearbyplayers.size > 0)
 		{
-			foreach(var_dc77b43d, player in nearbyplayers)
+			foreach(player in nearbyplayers)
 			{
 				var_86ef2afc = getnextarraykey(var_16600e5f);
 				while(isdefined(player) && (isdefined(player.isspeaking) && player.isspeaking))
@@ -3132,7 +3180,7 @@ function richtofenrespondvoplay(vox_category, b_richtofen_first = 0, str_flag)
 			self playsoundwithnotify(str_vox_line, "rich_done");
 			self waittill(#"rich_done");
 			wait(0.5);
-			foreach(var_8ee9de50, player in getplayers())
+			foreach(player in getplayers())
 			{
 				if(player.character_name != "Richtofen" && distance2d(player.origin, self.origin) < 800)
 				{
@@ -3144,7 +3192,7 @@ function richtofenrespondvoplay(vox_category, b_richtofen_first = 0, str_flag)
 		}
 		else
 		{
-			foreach(var_1eb7ace3, player in getplayers())
+			foreach(player in getplayers())
 			{
 				if(player.character_name == "Richtofen" && distance2d(player.origin, self.origin) < 800)
 				{
@@ -3162,38 +3210,41 @@ function richtofenrespondvoplay(vox_category, b_richtofen_first = 0, str_flag)
 			}
 		}
 	}
-	else if(self.characterindex == 2)
-	{
-		foreach(var_2a5d04ec, player in getplayers())
-		{
-			if(player.character_name != "Richtofen" && distance2d(player.origin, self.origin) < 800)
-			{
-				str_vox_line = ((("vox_plr_" + player.characterindex) + "_") + vox_category) + "_0";
-				player playsoundwithnotify(str_vox_line, "rich_done");
-				player waittill(#"rich_done");
-				wait(0.5);
-			}
-		}
-		if(isdefined(self))
-		{
-			str_vox_line = ((("vox_plr_" + self.characterindex) + "_") + vox_category) + "_0";
-			self playsoundwithnotify(str_vox_line, "rich_done");
-			self waittill(#"rich_done");
-		}
-	}
 	else
 	{
-		str_vox_line = ((("vox_plr_" + self.characterindex) + "_") + vox_category) + "_0";
-		self playsoundwithnotify(str_vox_line, "rich_response");
-		self waittill(#"rich_response");
-		wait(0.5);
-		foreach(var_c1d1a09b, player in getplayers())
+		if(self.characterindex == 2)
 		{
-			if(player.character_name == "Richtofen" && distance2d(player.origin, self.origin) < 800)
+			foreach(player in getplayers())
 			{
-				str_vox_line = ((("vox_plr_" + player.characterindex) + "_") + vox_category) + "_0";
-				player playsoundwithnotify(str_vox_line, "rich_done");
-				player waittill(#"rich_done");
+				if(player.character_name != "Richtofen" && distance2d(player.origin, self.origin) < 800)
+				{
+					str_vox_line = ((("vox_plr_" + player.characterindex) + "_") + vox_category) + "_0";
+					player playsoundwithnotify(str_vox_line, "rich_done");
+					player waittill(#"rich_done");
+					wait(0.5);
+				}
+			}
+			if(isdefined(self))
+			{
+				str_vox_line = ((("vox_plr_" + self.characterindex) + "_") + vox_category) + "_0";
+				self playsoundwithnotify(str_vox_line, "rich_done");
+				self waittill(#"rich_done");
+			}
+		}
+		else
+		{
+			str_vox_line = ((("vox_plr_" + self.characterindex) + "_") + vox_category) + "_0";
+			self playsoundwithnotify(str_vox_line, "rich_response");
+			self waittill(#"rich_response");
+			wait(0.5);
+			foreach(player in getplayers())
+			{
+				if(player.character_name == "Richtofen" && distance2d(player.origin, self.origin) < 800)
+				{
+					str_vox_line = ((("vox_plr_" + player.characterindex) + "_") + vox_category) + "_0";
+					player playsoundwithnotify(str_vox_line, "rich_done");
+					player waittill(#"rich_done");
+				}
 			}
 		}
 	}

@@ -47,7 +47,7 @@ function function_ea61aedc()
 			if(var_fae93870 >= var_c1df3693)
 			{
 				var_fae93870 = 0;
-				foreach(var_96152f5e, player in level.activeplayers)
+				foreach(player in level.activeplayers)
 				{
 					player thread util::show_hint_text(&"OBJECTIVES_QUAD_TANK_HINT_TROPHY", 0, "quad_tank_trophy_hint_disable");
 					player thread function_82f5563d(self);

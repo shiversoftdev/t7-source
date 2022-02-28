@@ -17,7 +17,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("exploder", &__init__, &__main__, undefined);
 }
@@ -224,7 +224,7 @@ function __main__()
 	}
 	level.radiantexploders = [];
 	reportexploderids();
-	foreach(var_bdc3529e, trig in trigger::get_all())
+	foreach(trig in trigger::get_all())
 	{
 		if(isdefined(trig.script_prefab_exploder))
 		{
@@ -826,13 +826,16 @@ function activate_individual_exploder(num)
 	{
 		self thread brush_show();
 	}
-	else if(self.v["exploder_type"] == "exploderchunk" || self.v["exploder_type"] == "exploderchunk visible")
-	{
-		self thread brush_throw();
-	}
 	else
 	{
-		self thread brush_delete();
+		if(self.v["exploder_type"] == "exploderchunk" || self.v["exploder_type"] == "exploderchunk visible")
+		{
+			self thread brush_throw();
+		}
+		else
+		{
+			self thread brush_delete();
+		}
 	}
 }
 

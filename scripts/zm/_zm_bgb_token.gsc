@@ -22,7 +22,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("bgb_token", &__init__, &__main__, undefined);
 }
@@ -36,9 +36,9 @@ autoexec function __init__sytem__()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function __init__()
+function private __init__()
 {
-	if(!function_4922937f())
+	if(!is_bgb_token_in_use())
 	{
 		return;
 	}
@@ -54,15 +54,15 @@ private function __init__()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function __main__()
+function private __main__()
 {
-	if(!function_4922937f())
+	if(!is_bgb_token_in_use())
 	{
 		return;
 	}
-	if(!isdefined(level.var_a73c4888))
+	if(!isdefined(level.bgb_token_max_per_game))
 	{
-		level.var_a73c4888 = -1;
+		level.bgb_token_max_per_game = -1;
 	}
 	if(!isdefined(level.var_baa8fd09))
 	{
@@ -106,7 +106,7 @@ private function __main__()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function on_player_spawned()
+function private on_player_spawned()
 {
 	if(!isdefined(self.bgb_token_last_given_time))
 	{
@@ -117,7 +117,7 @@ private function on_player_spawned()
 }
 
 /*
-	Name: function_4922937f
+	Name: is_bgb_token_in_use
 	Namespace: bgb_token
 	Checksum: 0xDED9743F
 	Offset: 0x400
@@ -125,17 +125,17 @@ private function on_player_spawned()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_4922937f()
+function private is_bgb_token_in_use()
 {
 	if(!(isdefined(level.bgb_in_use) && level.bgb_in_use) || !level.onlinegame || !getdvarint("loot_enabled"))
 	{
-		return 0;
+		return false;
 	}
 	if(isusingmods())
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -149,11 +149,11 @@ private function function_4922937f()
 */
 function function_c2f81136(increment)
 {
-	if(!function_4922937f())
+	if(!is_bgb_token_in_use())
 	{
 		return;
 	}
-	foreach(var_79b6628f, player in level.players)
+	foreach(player in level.players)
 	{
 		if(isdefined(player.var_bc978de9))
 		{
@@ -171,19 +171,19 @@ function function_c2f81136(increment)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function setup_devgui()
+function private setup_devgui()
 {
 	/#
 		waittillframeend();
 		setdvar("", "");
 		bgb_devgui_base = "";
 		adddebugcommand(((bgb_devgui_base + "") + "") + "");
-		level thread function_a29384f8();
+		level thread bgb_token_devgui_think();
 	#/
 }
 
 /*
-	Name: function_a29384f8
+	Name: bgb_token_devgui_think
 	Namespace: bgb_token
 	Checksum: 0xD305B917
 	Offset: 0x5D8
@@ -191,15 +191,15 @@ private function setup_devgui()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_a29384f8()
+function private bgb_token_devgui_think()
 {
 	/#
 		for(;;)
 		{
-			var_2e29895e = getdvarstring("");
-			if(var_2e29895e != "")
+			bgb_award_token_dvar = getdvarstring("");
+			if(bgb_award_token_dvar != "")
 			{
-				level.players[0] function_32692a60();
+				level.players[0] bgb_token_give_to_player();
 			}
 			setdvar("", "");
 			wait(0.5);
@@ -208,7 +208,7 @@ private function function_a29384f8()
 }
 
 /*
-	Name: function_32692a60
+	Name: bgb_token_give_to_player
 	Namespace: bgb_token
 	Checksum: 0xA9E07ABA
 	Offset: 0x668
@@ -216,7 +216,7 @@ private function function_a29384f8()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_32692a60()
+function private bgb_token_give_to_player()
 {
 	var_90491adb = int(self getvialsscale());
 	for(count = 0; count < var_90491adb; count++)
@@ -232,7 +232,7 @@ private function function_32692a60()
 }
 
 /*
-	Name: function_2d75b98d
+	Name: bgb_token_percent_chance
 	Namespace: bgb_token
 	Checksum: 0xFB292A0
 	Offset: 0x7A0
@@ -240,13 +240,13 @@ private function function_32692a60()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_2d75b98d(var_ce9d31c4)
+function private bgb_token_percent_chance(target_percent)
 {
-	if(randomfloat(1) < var_ce9d31c4)
+	if(randomfloat(1) < target_percent)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -260,20 +260,20 @@ private function function_2d75b98d(var_ce9d31c4)
 */
 function function_51cf4361(var_5561679e)
 {
-	if(!function_4922937f())
+	if(!is_bgb_token_in_use())
 	{
 		return;
 	}
-	if(0 <= level.var_a73c4888 && self.bgb_tokens_gained_this_game >= level.var_a73c4888)
+	if(0 <= level.bgb_token_max_per_game && self.bgb_tokens_gained_this_game >= level.bgb_token_max_per_game)
 	{
 		return;
 	}
 	time_played_total = self zm_stats::get_global_stat("TIME_PLAYED_TOTAL");
 	if((time_played_total - level.var_baa8fd09) > self.bgb_token_last_given_time)
 	{
-		if(function_2d75b98d(level.var_342aa5b2))
+		if(bgb_token_percent_chance(level.var_342aa5b2))
 		{
-			self function_32692a60();
+			self bgb_token_give_to_player();
 		}
 		return;
 	}
@@ -283,7 +283,7 @@ function function_51cf4361(var_5561679e)
 	}
 	var_95d14cf5 = math::clamp(var_5561679e, 0, level.var_5f0752c5);
 	var_741485e6 = float(var_95d14cf5) / level.var_5f0752c5;
-	if(!function_2d75b98d(var_741485e6 * level.var_af87760a))
+	if(!bgb_token_percent_chance(var_741485e6 * level.var_af87760a))
 	{
 		return;
 	}
@@ -293,10 +293,10 @@ function function_51cf4361(var_5561679e)
 		var_edfe0eb4 = 1;
 	}
 	var_b8a1486b = float(var_edfe0eb4 * var_edfe0eb4);
-	if(!function_2d75b98d(1 / var_b8a1486b))
+	if(!bgb_token_percent_chance(1 / var_b8a1486b))
 	{
 		return;
 	}
-	self function_32692a60();
+	self bgb_token_give_to_player();
 }
 

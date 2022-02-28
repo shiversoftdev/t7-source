@@ -338,7 +338,7 @@ function setentityheadiconshiddenwhilecontrolling()
 {
 	if(isdefined(self.entityheadicons))
 	{
-		foreach(var_59ec99a, icon in self.entityheadicons)
+		foreach(icon in self.entityheadicons)
 		{
 			icon.hidewhileremotecontrolling = 1;
 		}

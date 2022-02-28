@@ -17,7 +17,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_ai_napalm", &__init__, undefined, undefined);
 }
@@ -405,10 +405,10 @@ function player_can_see_napalm(ent_napalm)
 		trace = bullettrace(self geteye(), level.napalm_zombie.origin, 0, self);
 		if(isdefined(trace) && trace["fraction"] < 0.85)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*

@@ -21,7 +21,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("dialog", &__init__, undefined, undefined);
 }
@@ -107,13 +107,16 @@ function notetrack_say(str_vo_line)
 			say(str_vo_line);
 		}
 	}
-	else if(is_player_dialog(str_vo_line))
-	{
-		level player_say(str_vo_line);
-	}
 	else
 	{
-		say(str_vo_line);
+		if(is_player_dialog(str_vo_line))
+		{
+			level player_say(str_vo_line);
+		}
+		else
+		{
+			say(str_vo_line);
+		}
 	}
 }
 
@@ -169,7 +172,7 @@ function say(str_vo_line, n_delay, b_fake_ent = 0, e_to_player, var_43937b21)
 	}
 	ent endon(#"death");
 	ent thread _say(str_vo_line, n_delay, b_fake_ent, e_to_player);
-	ent waittill_match(#"hash_90f83311");
+	ent waittillmatch(#"hash_90f83311");
 	if(self == level)
 	{
 		ent delete();
@@ -189,7 +192,7 @@ function say(str_vo_line, n_delay, b_fake_ent = 0, e_to_player, var_43937b21)
 	Parameters: 4
 	Flags: Linked, Private
 */
-private function _say(str_vo_line, n_delay, b_fake_ent = 0, e_to_player)
+function private _say(str_vo_line, n_delay, b_fake_ent = 0, e_to_player)
 {
 	self endon(#"death");
 	self.is_about_to_talk = 1;
@@ -225,7 +228,7 @@ private function _say(str_vo_line, n_delay, b_fake_ent = 0, e_to_player)
 		self clientfield::set("facial_dial", 1);
 	}
 	self face::sayspecificdialogue(0, str_vo_line, 1, undefined, undefined, undefined, e_to_player);
-	self waittill_match(#"hash_90f83311");
+	self waittillmatch(#"hash_90f83311");
 	if(isdefined(self.archetype) && (self.archetype == "human" || self.archetype == "human_riotshield" || self.archetype == "human_rpg" || self.archetype == "civilian"))
 	{
 		self clientfield::set("facial_dial", 0);
@@ -265,7 +268,7 @@ function player_say(str_vo_line, n_delay)
 {
 	if(self == level)
 	{
-		foreach(var_d45abeb7, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			player thread player_say(str_vo_line, n_delay);
 		}
@@ -353,7 +356,7 @@ function remote(str_vo_line, n_delay, str_type = "dni", e_to_player, var_43937b2
 		}
 		if(isdefined(str_who) && !sessionmodeiscampaignzombiesgame())
 		{
-			foreach(var_f0b78e47, player in level.players)
+			foreach(player in level.players)
 			{
 				if(!isdefined(e_to_player) || e_to_player == player)
 				{
@@ -367,7 +370,7 @@ function remote(str_vo_line, n_delay, str_type = "dni", e_to_player, var_43937b2
 	{
 		if(str_type === "dni")
 		{
-			foreach(var_a7313786, player in level.players)
+			foreach(player in level.players)
 			{
 				if(!isdefined(e_to_player) || e_to_player == player)
 				{

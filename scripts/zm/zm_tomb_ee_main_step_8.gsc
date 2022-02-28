@@ -58,7 +58,7 @@ function stage_logic()
 		iprintln(level._cur_stage_name + "");
 	#/
 	level notify(#"tomb_sidequest_complete");
-	foreach(var_882cee42, player in getplayers())
+	foreach(player in getplayers())
 	{
 		if(player zm_tomb_chamber::is_player_in_chamber())
 		{
@@ -70,7 +70,7 @@ function stage_logic()
 	exploder::exploder("fxexp_500");
 	level notify(#"stop_random_chamber_walls");
 	a_walls = getentarray("chamber_wall", "script_noteworthy");
-	foreach(var_36d827b5, e_wall in a_walls)
+	foreach(e_wall in a_walls)
 	{
 		e_wall thread zm_tomb_chamber::move_wall_up();
 		e_wall hide();

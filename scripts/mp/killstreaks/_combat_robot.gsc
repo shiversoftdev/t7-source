@@ -56,7 +56,7 @@ function init()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _calculateprojectedguardposition(player)
+function private _calculateprojectedguardposition(player)
 {
 	return getclosestpointonnavmesh(player.origin, 48);
 }
@@ -70,7 +70,7 @@ private function _calculateprojectedguardposition(player)
 	Parameters: 1
 	Flags: Private
 */
-private function _calculaterobotspawnposition(player)
+function private _calculaterobotspawnposition(player)
 {
 	desiredspawnposition = (anglestoforward(player.angles) * 72) + player.origin;
 	return getclosestpointonnavmesh(desiredspawnposition, 48);
@@ -85,13 +85,13 @@ private function _calculaterobotspawnposition(player)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function _cleanuprobotcorpses()
+function private _cleanuprobotcorpses()
 {
 	corpsedeletetime = 15000;
 	while(true)
 	{
 		deletecorpses = [];
-		foreach(var_f3de8f22, corpse in getcorpsearray())
+		foreach(corpse in getcorpsearray())
 		{
 			if(isdefined(corpse.birthtime) && isdefined(corpse.archetype) && corpse.archetype == "robot" && (corpse.birthtime + corpsedeletetime) < gettime())
 			{
@@ -149,7 +149,7 @@ function configureteampost(player, ishacked)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function _configurerobotteam(robot, player, ishacked)
+function private _configurerobotteam(robot, player, ishacked)
 {
 	if(ishacked)
 	{
@@ -178,7 +178,7 @@ private function _configurerobotteam(robot, player, ishacked)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _createguardmarker(robot, position)
+function private _createguardmarker(robot, position)
 {
 	owner = robot.owner;
 	guardmarker = spawn("script_model", (0, 0, 0));
@@ -196,7 +196,7 @@ private function _createguardmarker(robot, position)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _destroyguardmarker(robot)
+function private _destroyguardmarker(robot)
 {
 	if(isdefined(robot.guardmarker))
 	{
@@ -213,7 +213,7 @@ private function _destroyguardmarker(robot)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _underwater(robot)
+function private _underwater(robot)
 {
 	robot endon(#"death");
 	while(true)
@@ -239,7 +239,7 @@ private function _underwater(robot)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _escort(robot)
+function private _escort(robot)
 {
 	robot endon(#"death");
 	robot.escorting = 1;
@@ -280,7 +280,7 @@ private function _escort(robot)
 	Parameters: 2
 	Flags: Private
 */
-private function _ignoreunattackableenemy(robot, enemy)
+function private _ignoreunattackableenemy(robot, enemy)
 {
 	robot endon(#"death");
 	robot setignoreent(enemy, 1);
@@ -297,7 +297,7 @@ private function _ignoreunattackableenemy(robot, enemy)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _guardposition(robot, position)
+function private _guardposition(robot, position)
 {
 	robot endon(#"death");
 	robot.goalradius = 1000;
@@ -561,7 +561,7 @@ function prolog(context)
 	combatrobot thread sndwatchexit();
 	combatrobot thread sndwatchlanding();
 	combatrobot thread sndwatchactivate();
-	foreach(var_3774249d, player in level.players)
+	foreach(player in level.players)
 	{
 		combatrobot respectnottargetedbyrobotperk(player);
 	}
@@ -839,7 +839,7 @@ function watchcombatrobotownerdisconnect(player)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function _corpsewatcher()
+function private _corpsewatcher()
 {
 	archetype = self.archetype;
 	self waittill(#"actor_corpse", corpse);
@@ -855,7 +855,7 @@ private function _corpsewatcher()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _exploderobot(combatrobot)
+function private _exploderobot(combatrobot)
 {
 	combatrobot clientfield::set("arch_actor_fire_fx", 1);
 	clientfield::set("robot_mind_control_explosion", 1);

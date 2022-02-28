@@ -21,6 +21,11 @@
 
 #using_animtree("generic");
 
+class var_b454dc63 : namespace_b454dc63
+{
+
+}
+
 #namespace zm_zod_ee;
 
 /*
@@ -32,7 +37,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_zod_ee", &__init__, undefined, undefined);
 }
@@ -188,7 +193,7 @@ function function_f2a0dbdc(localclientnum, oldval, newval, bnewent, binitialsnap
 	mdl_ritual clearanim("p7_fxanim_zm_zod_redemption_key_ritual_loop_fast_anim", 0);
 	if(isdefined(mdl_ritual.vfx_trails))
 	{
-		foreach(var_25b968fa, var_2d3cc156 in mdl_ritual.vfx_trails)
+		foreach(var_2d3cc156 in mdl_ritual.vfx_trails)
 		{
 			stopfx(localclientnum, var_2d3cc156);
 		}
@@ -585,13 +590,16 @@ function function_4d0c8ca8(var_4fafa709, var_fe2fb4b9, n_character_index)
 	{
 		var_64c74a6d = 0;
 	}
-	else if(var_fe2fb4b9 < 8)
-	{
-		var_64c74a6d = 1;
-	}
 	else
 	{
-		var_64c74a6d = 2;
+		if(var_fe2fb4b9 < 8)
+		{
+			var_64c74a6d = 1;
+		}
+		else
+		{
+			var_64c74a6d = 2;
+		}
 	}
 	if(var_4fafa709.var_64c74a6d === var_64c74a6d)
 	{
@@ -807,10 +815,10 @@ function function_bdd91321(localclientnum, b_hide, var_b4c5825f = 0)
 		if(var_b4c5825f)
 		{
 			v_origin_1 = self gettagorigin("j_spine_1_anim");
-			var_5e078701 = self gettagorigin("j_spine_4_anim");
+			v_origin_2 = self gettagorigin("j_spine_4_anim");
 			var_38050c98 = self gettagorigin("j_upper_jaw_1_anim");
 			playfx(localclientnum, level._effect["ee_superworm_death"], v_origin_1);
-			playfx(localclientnum, level._effect["ee_superworm_death"], var_5e078701);
+			playfx(localclientnum, level._effect["ee_superworm_death"], v_origin_2);
 			playfx(localclientnum, level._effect["ee_superworm_death"], var_38050c98);
 			self playsound(0, "zmb_zod_superworm_smash");
 		}
@@ -890,7 +898,7 @@ function ee_keeper_beam_state(localclientnum, oldval, newval, bnewent, binitials
 function ee_final_boss_shields(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
 	var_dcd4f61a = struct::get_array("final_boss_safepoint", "targetname");
-	foreach(var_798a9bc, var_495730fe in var_dcd4f61a)
+	foreach(var_495730fe in var_dcd4f61a)
 	{
 		var_495730fe function_267f859f(localclientnum, level._effect["player_cleanse"], newval, 0);
 		if(newval)
@@ -1025,13 +1033,16 @@ function function_267f859f(localclientnum, fx_id = undefined, b_on = 1, var_afcc
 		{
 			self.vfx_ref = playfxontag(localclientnum, fx_id, self, str_tag);
 		}
-		else if(self.angles === (0, 0, 0))
-		{
-			self.vfx_ref = playfx(localclientnum, fx_id, self.origin);
-		}
 		else
 		{
-			self.vfx_ref = playfx(localclientnum, fx_id, self.origin, self.angles);
+			if(self.angles === (0, 0, 0))
+			{
+				self.vfx_ref = playfx(localclientnum, fx_id, self.origin);
+			}
+			else
+			{
+				self.vfx_ref = playfx(localclientnum, fx_id, self.origin, self.angles);
+			}
 		}
 	}
 	else if(isdefined(self.vfx_ref))
@@ -1054,9 +1065,7 @@ function near_apothigod_active(localclientnum, oldval, newval, bnewent, binitial
 {
 	if(!isdefined(level.var_76ed0403))
 	{
-		object = new var_b454dc63();
-		[[ object ]]->__constructor();
-		level.var_76ed0403 = object;
+		level.var_76ed0403 = new var_b454dc63();
 		[[ level.var_76ed0403 ]]->init(localclientnum, self, 1);
 	}
 	thread [[ level.var_76ed0403 ]]->function_66844d0d(localclientnum, newval);
@@ -1075,9 +1084,7 @@ function far_apothigod_active(localclientnum, oldval, newval, bnewent, binitials
 {
 	if(!isdefined(level.var_d566da8c))
 	{
-		object = new var_b454dc63();
-		[[ object ]]->__constructor();
-		level.var_d566da8c = object;
+		level.var_d566da8c = new var_b454dc63();
 		[[ level.var_d566da8c ]]->init(localclientnum, self, 0);
 	}
 	thread [[ level.var_d566da8c ]]->function_66844d0d(localclientnum, newval);
@@ -1242,18 +1249,21 @@ function function_66844d0d(localclientnum, b_active)
 	{
 		self.var_dbea7369 stoploopsound(3);
 	}
-	else if(!self.var_8d207f9b)
-	{
-		self.var_a9547cdf = "p7_fxanim_zm_zod_apothicons_god_loop_anim";
-		self.var_dbea7369 setanim("p7_fxanim_zm_zod_apothicons_god_loop_anim", 1, 0, 1);
-		self.var_dbea7369 playsound(localclientnum, "zmb_zod_apothigod_vox_spawn");
-	}
 	else
 	{
-		level notify(#"hash_465ed3ec");
-		self.var_a9547cdf = "p7_fxanim_zm_zod_apothicons_god_body_idle_anim";
-		self.var_dbea7369 setanim(self.var_a9547cdf, 1, 0, 1);
-		self.var_dbea7369 playloopsound("zmb_zod_apothigod_vox_lookat_lp", 12);
+		if(!self.var_8d207f9b)
+		{
+			self.var_a9547cdf = "p7_fxanim_zm_zod_apothicons_god_loop_anim";
+			self.var_dbea7369 setanim("p7_fxanim_zm_zod_apothicons_god_loop_anim", 1, 0, 1);
+			self.var_dbea7369 playsound(localclientnum, "zmb_zod_apothigod_vox_spawn");
+		}
+		else
+		{
+			level notify(#"hash_465ed3ec");
+			self.var_a9547cdf = "p7_fxanim_zm_zod_apothicons_god_body_idle_anim";
+			self.var_dbea7369 setanim(self.var_a9547cdf, 1, 0, 1);
+			self.var_dbea7369 playloopsound("zmb_zod_apothigod_vox_lookat_lp", 12);
+		}
 	}
 }
 
@@ -1281,29 +1291,5 @@ function __constructor()
 */
 function __destructor()
 {
-}
-
-#namespace zm_zod_ee;
-
-/*
-	Name: function_b454dc63
-	Namespace: zm_zod_ee
-	Checksum: 0xB26A5476
-	Offset: 0x5A78
-	Size: 0x1A6
-	Parameters: 0
-	Flags: AutoExec, Private
-*/
-private autoexec function function_b454dc63()
-{
-	classes.var_b454dc63[0] = spawnstruct();
-	classes.var_b454dc63[0].__vtable[1606033458] = &namespace_b454dc63::__destructor;
-	classes.var_b454dc63[0].__vtable[-1690805083] = &namespace_b454dc63::__constructor;
-	classes.var_b454dc63[0].__vtable[1719946509] = &namespace_b454dc63::function_66844d0d;
-	classes.var_b454dc63[0].__vtable[-2086669473] = &namespace_b454dc63::function_839ff35f;
-	classes.var_b454dc63[0].__vtable[770052863] = &namespace_b454dc63::function_2de612ff;
-	classes.var_b454dc63[0].__vtable[1180619756] = &namespace_b454dc63::function_465ed3ec;
-	classes.var_b454dc63[0].__vtable[-1643222730] = &namespace_b454dc63::function_9e0e6936;
-	classes.var_b454dc63[0].__vtable[-1017222485] = &namespace_b454dc63::init;
 }
 

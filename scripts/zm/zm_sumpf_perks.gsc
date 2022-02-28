@@ -170,13 +170,16 @@ function function_25413096()
 				{
 					wait(10);
 				}
-				else if(isdefined(self.longjinglewait))
-				{
-					wait(60);
-				}
 				else
 				{
-					wait(30);
+					if(isdefined(self.longjinglewait))
+					{
+						wait(60);
+					}
+					else
+					{
+						wait(30);
+					}
 				}
 				self.jingle_is_playing = 0;
 			}

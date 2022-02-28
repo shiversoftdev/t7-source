@@ -69,7 +69,7 @@ function init_spawns()
 	}
 	valid = spawnlogic::get_spawnpoint_array("mp_tdm_spawn");
 	dog = dog_spawner spawnfromspawner();
-	foreach(var_8e14c94b, spawn in spawns)
+	foreach(spawn in spawns)
 	{
 		valid = arraysort(valid, spawn.origin, 0);
 		for(i = 0; i < 5; i++)
@@ -116,21 +116,21 @@ function usekillstreakdogs(hardpointtype)
 {
 	if(!dog_killstreak_init())
 	{
-		return 0;
+		return false;
 	}
 	if(!self killstreakrules::iskillstreakallowed(hardpointtype, self.team))
 	{
-		return 0;
+		return false;
 	}
 	killstreak_id = self killstreakrules::killstreakstart("dogs", self.team);
 	self thread ownerhadactivedogs();
 	if(killstreak_id == -1)
 	{
-		return 0;
+		return false;
 	}
 	if(level.teambased)
 	{
-		foreach(var_c236bcb0, team in level.teams)
+		foreach(team in level.teams)
 		{
 			if(team == self.team)
 			{
@@ -143,7 +143,7 @@ function usekillstreakdogs(hardpointtype)
 	ownerdeathcount = self.deathcount;
 	level thread dog_manager_spawn_dogs(self, ownerdeathcount, killstreak_id);
 	level notify(#"called_in_the_dogs");
-	return 1;
+	return true;
 }
 
 /*
@@ -182,7 +182,7 @@ function dog_killstreak_init()
 		/#
 			println("");
 		#/
-		return 0;
+		return false;
 	}
 	spawns = getnodearray("spawn", "script_noteworthy");
 	if(level.dog_spawns.size <= 0)
@@ -190,7 +190,7 @@ function dog_killstreak_init()
 		/#
 			println("");
 		#/
-		return 0;
+		return false;
 	}
 	exits = getnodearray("exit", "script_noteworthy");
 	if(exits.size <= 0)
@@ -198,9 +198,9 @@ function dog_killstreak_init()
 		/#
 			println("");
 		#/
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -282,7 +282,7 @@ function get_score_for_spawn(origin, team)
 {
 	players = getplayers();
 	score = 0;
-	foreach(var_4e3a8174, player in players)
+	foreach(player in players)
 	{
 		if(!isdefined(player))
 		{
@@ -453,7 +453,7 @@ function dog_abort()
 {
 	level.dog_abort = 1;
 	dogs = dog_manager_get_dogs();
-	foreach(var_8855c9e5, dog in dogs)
+	foreach(dog in dogs)
 	{
 		dog notify(#"abort");
 	}
@@ -586,7 +586,7 @@ function dog_patrol()
 		if(nodes.size)
 		{
 			nodes = array::randomize(nodes);
-			foreach(var_a6c38c41, node in nodes)
+			foreach(node in nodes)
 			{
 				if(isdefined(node.script_noteworthy))
 				{
@@ -635,10 +635,10 @@ function dog_patrol_near_objective()
 	if(gettime() >= level.dog_objective_next_update)
 	{
 		level.dog_objectives = [];
-		foreach(var_1e01a124, target in level.dog_targets)
+		foreach(target in level.dog_targets)
 		{
 			ents = getentarray(target, "classname");
-			foreach(var_9f6a3af9, ent in ents)
+			foreach(ent in ents)
 			{
 				if(level.gametype == "koth")
 				{
@@ -686,7 +686,7 @@ function dog_patrol_near_enemy()
 	players = getplayers();
 	closest = undefined;
 	distsq = 99999999;
-	foreach(var_44031e14, player in players)
+	foreach(player in players)
 	{
 		if(!isdefined(player))
 		{
@@ -893,7 +893,7 @@ function selfdefensechallenge()
 		}
 		if(isdefined(self.attackers))
 		{
-			foreach(var_cc2505c6, player in self.attackers)
+			foreach(player in self.attackers)
 			{
 				if(player != attacker)
 				{
@@ -933,7 +933,7 @@ function flash_dogs(area)
 {
 	self endon(#"disconnect");
 	dogs = dog_manager_get_dogs();
-	foreach(var_a537ec76, dog in dogs)
+	foreach(dog in dogs)
 	{
 		if(!isalive(dog))
 		{
@@ -994,7 +994,7 @@ function devgui_dog_think()
 				case "":
 				{
 					player = util::gethostplayer();
-					foreach(var_f31021d7, team in level.teams)
+					foreach(team in level.teams)
 					{
 						if(team == player.team)
 						{

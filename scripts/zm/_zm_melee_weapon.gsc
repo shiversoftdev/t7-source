@@ -23,7 +23,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("melee_weapon", &__init__, &__main__, undefined);
 }
@@ -37,7 +37,7 @@ autoexec function __init__sytem__()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function __init__()
+function private __init__()
 {
 	if(!isdefined(level._melee_weapons))
 	{
@@ -54,7 +54,7 @@ private function __init__()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function __main__()
+function private __main__()
 {
 }
 
@@ -318,13 +318,13 @@ function player_can_see_weapon_prompt()
 {
 	if(isdefined(level._allow_melee_weapon_switching) && level._allow_melee_weapon_switching)
 	{
-		return 1;
+		return true;
 	}
 	if(isdefined(self zm_utility::get_player_melee_weapon()) && self hasweapon(self zm_utility::get_player_melee_weapon()))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -424,10 +424,10 @@ function has_any_ballistic_knife()
 	{
 		if(primaryweapons[i].isballisticknife)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -446,10 +446,10 @@ function has_upgraded_ballistic_knife()
 	{
 		if(primaryweapons[i].isballisticknife && zm_weapons::is_weapon_upgraded(primaryweapons[i]))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*

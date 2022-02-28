@@ -15,7 +15,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("out_of_bounds", &__init__, undefined, undefined);
 }
@@ -144,16 +144,19 @@ function onoutofboundschange(localclientnum, oldval, newval, bnewent, binitialsn
 		newvalf = newval / 31;
 		localplayer randomfade(newvalf);
 	}
-	else if(isdefined(level.oob_timekeep_ms) && isdefined(self.oob_start_time))
+	else
 	{
-		self.oob_end_time = getservertime(0, 1);
-		if(!isdefined(self.oob_active_duration))
+		if(isdefined(level.oob_timekeep_ms) && isdefined(self.oob_start_time))
 		{
-			self.oob_active_duration = 0;
+			self.oob_end_time = getservertime(0, 1);
+			if(!isdefined(self.oob_active_duration))
+			{
+				self.oob_active_duration = 0;
+			}
+			self.oob_active_duration = self.oob_active_duration + (self.oob_end_time - self.oob_start_time);
 		}
-		self.oob_active_duration = self.oob_active_duration + (self.oob_end_time - self.oob_start_time);
+		stopoutofboundseffects(localclientnum, localplayer);
 	}
-	stopoutofboundseffects(localclientnum, localplayer);
 }
 
 /*

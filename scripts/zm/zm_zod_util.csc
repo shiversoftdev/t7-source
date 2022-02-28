@@ -24,38 +24,56 @@ function player_rumble_and_shake(localclientnum, oldval, newval, bnewent, biniti
 	{
 		self thread player_continuous_rumble(localclientnum, 1);
 	}
-	else if(newval == 6)
-	{
-		self notify(#"stop_rumble_and_shake");
-		self earthquake(0.6, 1.5, self.origin, 100);
-		self playrumbleonentity(localclientnum, "artillery_rumble");
-	}
-	else if(newval == 4)
-	{
-		self earthquake(0.6, 1.5, self.origin, 100);
-		self playrumbleonentity(localclientnum, "artillery_rumble");
-	}
-	else if(newval == 3)
-	{
-		self earthquake(0.3, 1.5, self.origin, 100);
-		self playrumbleonentity(localclientnum, "shotgun_fire");
-	}
-	else if(newval == 2)
-	{
-		self earthquake(0.1, 1, self.origin, 100);
-		self playrumbleonentity(localclientnum, "damage_heavy");
-	}
-	else if(newval == 1)
-	{
-		self playrumbleonentity(localclientnum, "damage_light");
-	}
-	else if(newval == 7)
-	{
-		self thread player_continuous_rumble(localclientnum, 1, 0);
-	}
 	else
 	{
-		self notify(#"stop_rumble_and_shake");
+		if(newval == 6)
+		{
+			self notify(#"stop_rumble_and_shake");
+			self earthquake(0.6, 1.5, self.origin, 100);
+			self playrumbleonentity(localclientnum, "artillery_rumble");
+		}
+		else
+		{
+			if(newval == 4)
+			{
+				self earthquake(0.6, 1.5, self.origin, 100);
+				self playrumbleonentity(localclientnum, "artillery_rumble");
+			}
+			else
+			{
+				if(newval == 3)
+				{
+					self earthquake(0.3, 1.5, self.origin, 100);
+					self playrumbleonentity(localclientnum, "shotgun_fire");
+				}
+				else
+				{
+					if(newval == 2)
+					{
+						self earthquake(0.1, 1, self.origin, 100);
+						self playrumbleonentity(localclientnum, "damage_heavy");
+					}
+					else
+					{
+						if(newval == 1)
+						{
+							self playrumbleonentity(localclientnum, "damage_light");
+						}
+						else
+						{
+							if(newval == 7)
+							{
+								self thread player_continuous_rumble(localclientnum, 1, 0);
+							}
+							else
+							{
+								self notify(#"stop_rumble_and_shake");
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -87,11 +105,14 @@ function player_continuous_rumble(localclientnum, rumble_level, shake_camera = 1
 				self playrumbleonentity(localclientnum, "reload_small");
 				wait(0.05);
 			}
-			else if(shake_camera)
+			else
 			{
-				self earthquake(0.3, 1, self.origin, 100);
+				if(shake_camera)
+				{
+					self earthquake(0.3, 1, self.origin, 100);
+				}
+				self playrumbleonentity(localclientnum, "damage_light");
 			}
-			self playrumbleonentity(localclientnum, "damage_light");
 		}
 		wait(0.1);
 	}

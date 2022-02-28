@@ -19,7 +19,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_castle_teleporter", &__init__, undefined, undefined);
 }
@@ -135,7 +135,7 @@ function function_a932c4c(localclientnum, oldval, newval, bnewent, binitialsnap,
 function function_ddac47c8(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
 	var_55ff1a9f = struct::get_array("teleport_pad_center_effect", "targetname");
-	foreach(var_43ba6c31, var_f92e157f in var_55ff1a9f)
+	foreach(var_f92e157f in var_55ff1a9f)
 	{
 		var_f92e157f thread function_74eb9e6a(localclientnum, newval);
 	}
@@ -157,12 +157,15 @@ function function_74eb9e6a(localclientnum, newval)
 		self.var_83ef00ec = playfx(localclientnum, level._effect["ee_quest_time_travel_ready"], self.origin);
 		audio::playloopat("zmb_ee_timetravel_tele_lp", self.origin);
 	}
-	else if(isdefined(self.var_83ef00ec))
+	else
 	{
-		stopfx(localclientnum, self.var_83ef00ec);
-		self.var_83ef00ec = undefined;
+		if(isdefined(self.var_83ef00ec))
+		{
+			stopfx(localclientnum, self.var_83ef00ec);
+			self.var_83ef00ec = undefined;
+		}
+		audio::stoploopat("zmb_ee_timetravel_tele_lp", self.origin);
 	}
-	audio::stoploopat("zmb_ee_timetravel_tele_lp", self.origin);
 }
 
 /*

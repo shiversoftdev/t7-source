@@ -35,7 +35,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	initrazbehaviorsandasm();
 	spawner::add_archetype_spawn_function("raz", &archetyperazblackboardinit);
@@ -61,7 +61,7 @@ autoexec function init()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function initrazbehaviorsandasm()
+function private initrazbehaviorsandasm()
 {
 	behaviortreenetworkutility::registerbehaviortreescriptapi("razTargetService", &raztargetservice);
 	behaviortreenetworkutility::registerbehaviortreescriptapi("razSprintService", &razsprintservice);
@@ -92,7 +92,7 @@ private function initrazbehaviorsandasm()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function archetyperazblackboardinit()
+function private archetyperazblackboardinit()
 {
 	blackboard::createblackboardforentity(self);
 	self aiutility::registerutilityblackboardattributes();
@@ -146,7 +146,7 @@ private function archetyperazblackboardinit()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function archetyperazonanimscriptedcallback(entity)
+function private archetyperazonanimscriptedcallback(entity)
 {
 	entity.__blackboard = undefined;
 	entity archetyperazblackboardinit();
@@ -170,7 +170,7 @@ private function archetyperazonanimscriptedcallback(entity)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function bb_getshouldturn()
+function private bb_getshouldturn()
 {
 	if(isdefined(self.should_turn) && self.should_turn)
 	{
@@ -196,7 +196,7 @@ function findnodesservice(behaviortreeentity)
 	{
 		if(behaviortreeentity.find_flesh_struct_string == "find_flesh")
 		{
-			return 0;
+			return false;
 		}
 		for(i = 0; i < level.exterior_goals.size; i++)
 		{
@@ -219,7 +219,7 @@ function findnodesservice(behaviortreeentity)
 		{
 			behaviortreeentity.got_to_entrance = 1;
 		}
-		return 1;
+		return true;
 	}
 }
 
@@ -236,13 +236,13 @@ function shouldskipteardown(entity)
 {
 	if(isdefined(entity.destroying_window) && entity.destroying_window)
 	{
-		return 1;
+		return true;
 	}
 	if(!isdefined(entity.script_string) || entity.script_string == "find_flesh")
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -254,7 +254,7 @@ function shouldskipteardown(entity)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function razgetnondestroyedchuncks()
+function private razgetnondestroyedchuncks()
 {
 	chunks = undefined;
 	if(isdefined(self.first_node))
@@ -273,7 +273,7 @@ private function razgetnondestroyedchuncks()
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function razdestroywindow(entity, b_destroy_actual_pieces)
+function private razdestroywindow(entity, b_destroy_actual_pieces)
 {
 	if(!(isdefined(b_destroy_actual_pieces) && b_destroy_actual_pieces))
 	{
@@ -286,13 +286,16 @@ private function razdestroywindow(entity, b_destroy_actual_pieces)
 			entity.jump_through_window = 1;
 			entity.jump_through_window_angle = entity.angles;
 		}
-		else if(isdefined(entity.razhasgunattached) && entity.razhasgunattached)
-		{
-			entity.destroy_window_by_torpedo = 1;
-		}
 		else
 		{
-			entity.destroy_window_by_melee = 1;
+			if(isdefined(entity.razhasgunattached) && entity.razhasgunattached)
+			{
+				entity.destroy_window_by_torpedo = 1;
+			}
+			else
+			{
+				entity.destroy_window_by_melee = 1;
+			}
 		}
 	}
 	else
@@ -322,15 +325,15 @@ private function razdestroywindow(entity, b_destroy_actual_pieces)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function raztargetservice(entity)
+function private raztargetservice(entity)
 {
 	if(isdefined(entity.ignoreall) && entity.ignoreall)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(entity.jump_through_window) && entity.jump_through_window)
 	{
-		return 0;
+		return false;
 	}
 	if(!zm_behavior::inplayablearea(entity) && !shouldskipteardown(entity))
 	{
@@ -338,12 +341,15 @@ private function raztargetservice(entity)
 		{
 			razdestroywindow(entity);
 		}
-		else if(zm_behavior::zombieenteredplayable(entity))
+		else
 		{
-			return 0;
+			if(zm_behavior::zombieenteredplayable(entity))
+			{
+				return false;
+			}
+			findnodesservice(entity);
 		}
-		findnodesservice(entity);
-		return 0;
+		return false;
 	}
 	if(level.zombie_poi_array.size > 0)
 	{
@@ -384,16 +390,16 @@ private function raztargetservice(entity)
 			self.ignore_player = [];
 		}
 		self setgoal(self.origin);
-		return 0;
+		return false;
 	}
 	targetpos = getclosestpointonnavmesh(player.origin, 64, 30);
 	if(isdefined(targetpos))
 	{
 		entity setgoal(targetpos);
-		return 1;
+		return true;
 	}
 	entity setgoal(entity.origin);
-	return 0;
+	return false;
 }
 
 /*
@@ -405,15 +411,15 @@ private function raztargetservice(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function razsprintservice(entity)
+function private razsprintservice(entity)
 {
 	if(isdefined(entity.started_running) && entity.started_running)
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(entity.invoke_sprint_time))
 	{
-		return 0;
+		return false;
 	}
 	if(gettime() > entity.invoke_sprint_time)
 	{
@@ -438,22 +444,22 @@ function razshouldmelee(entity)
 {
 	if(isdefined(entity.destroy_window_by_melee) && entity.destroy_window_by_melee)
 	{
-		return 1;
+		return true;
 	}
 	if(!isdefined(entity.enemy))
 	{
-		return 0;
+		return false;
 	}
 	if(distancesquared(entity.origin, entity.enemy.origin) > 5625)
 	{
-		return 0;
+		return false;
 	}
 	yaw = abs(zombie_utility::getyawtoenemy());
 	if(yaw > 45)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -465,13 +471,13 @@ function razshouldmelee(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function razshouldshowpain(entity)
+function private razshouldshowpain(entity)
 {
 	if(isdefined(entity.berserk) && entity.berserk && (!(isdefined(entity.razhasgoneberserk) && entity.razhasgoneberserk)))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -483,22 +489,22 @@ private function razshouldshowpain(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function razshouldshowspecialpain(entity)
+function private razshouldshowspecialpain(entity)
 {
 	gib_location = blackboard::getblackboardattribute(entity, "_gib_location");
 	if(gib_location == "right_arm")
 	{
-		return 1;
+		return true;
 	}
 	if(!razshouldshowpain(entity))
 	{
-		return 0;
+		return false;
 	}
 	if(gib_location == "head" || gib_location == "arms" || gib_location == "right_leg" || gib_location == "left_leg" || gib_location == "left_arm")
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -510,7 +516,7 @@ private function razshouldshowspecialpain(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function razshouldshowshieldpain(entity)
+function private razshouldshowshieldpain(entity)
 {
 	if(isdefined(entity.damageweapon) && isdefined(entity.damageweapon.name))
 	{
@@ -528,13 +534,13 @@ private function razshouldshowshieldpain(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function razshouldgoberserk(entity)
+function private razshouldgoberserk(entity)
 {
 	if(isdefined(entity.berserk) && entity.berserk && (!(isdefined(entity.razhasgoneberserk) && entity.razhasgoneberserk)))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -546,7 +552,7 @@ private function razshouldgoberserk(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function razshouldtraversewindow(entity)
+function private razshouldtraversewindow(entity)
 {
 	return isdefined(entity.jump_through_window) && entity.jump_through_window;
 }
@@ -560,7 +566,7 @@ private function razshouldtraversewindow(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function razgoneberserk(entity)
+function private razgoneberserk(entity)
 {
 	entity.razhasgoneberserk = 1;
 }
@@ -574,7 +580,7 @@ private function razgoneberserk(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function razstarttraversewindow(entity)
+function private razstarttraversewindow(entity)
 {
 	raz_dir = anglestoforward(entity.first_node.angles);
 	raz_dir = vectorscale(raz_dir, 100);
@@ -590,7 +596,7 @@ private function razstarttraversewindow(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function razfinishtraversewindow(entity)
+function private razfinishtraversewindow(entity)
 {
 	entity setgoal(entity.origin);
 	entity.jump_through_window = undefined;
@@ -610,7 +616,7 @@ private function razfinishtraversewindow(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function raztookpain(entity)
+function private raztookpain(entity)
 {
 	blackboard::setblackboardattribute(entity, "_gib_location", "legs");
 }
@@ -624,7 +630,7 @@ private function raztookpain(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function razstartdeath(entity)
+function private razstartdeath(entity)
 {
 	entity playsoundontag("zmb_raz_death", "tag_eye");
 	if(isdefined(entity.razhasgunattached) && entity.razhasgunattached)
@@ -693,39 +699,39 @@ private function razstartdeath(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function razshouldshootgroundtorpedo(entity)
+function private razshouldshootgroundtorpedo(entity)
 {
 	if(isdefined(entity.destroy_window_by_torpedo) && entity.destroy_window_by_torpedo)
 	{
-		return 1;
+		return true;
 	}
 	if(!isdefined(entity.enemy))
 	{
-		return 0;
+		return false;
 	}
 	if(!(isdefined(entity.razhasgunattached) && entity.razhasgunattached))
 	{
-		return 0;
+		return false;
 	}
 	time = gettime();
 	if(time < entity.next_torpedo_time)
 	{
-		return 0;
+		return false;
 	}
 	enemy_dist_sq = distancesquared(entity.origin, entity.enemy.origin);
 	if(!(enemy_dist_sq >= 22500 && enemy_dist_sq <= 1440000 && entity razcanseetorpedotarget(entity.enemy)))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(entity.check_point_in_enabled_zone))
 	{
 		in_enabled_zone = [[entity.check_point_in_enabled_zone]](entity.origin);
 		if(!in_enabled_zone)
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -737,7 +743,7 @@ private function razshouldshootgroundtorpedo(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function razcanseetorpedotarget(enemy)
+function private razcanseetorpedotarget(enemy)
 {
 	entity = self;
 	origin_point = entity gettagorigin("tag_weapon_right");
@@ -746,20 +752,20 @@ private function razcanseetorpedotarget(enemy)
 	vect_to_enemy = target_point - origin_point;
 	if(vectordot(forward_vect, vect_to_enemy) <= 0)
 	{
-		return 0;
+		return false;
 	}
 	right_vect = anglestoright(self.angles);
 	projected_distance = vectordot(vect_to_enemy, right_vect);
 	if(abs(projected_distance) > 50)
 	{
-		return 0;
+		return false;
 	}
 	trace = bullettrace(origin_point, target_point, 0, self);
 	if(trace["position"] === target_point)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -771,7 +777,7 @@ private function razcanseetorpedotarget(enemy)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function razstartmelee(entity)
+function private razstartmelee(entity)
 {
 	if(isdefined(entity.destroy_window_by_melee) && entity.destroy_window_by_melee)
 	{
@@ -789,7 +795,7 @@ private function razstartmelee(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function razfinishmelee(entity)
+function private razfinishmelee(entity)
 {
 	entity.destroy_window_by_melee = undefined;
 }
@@ -803,7 +809,7 @@ private function razfinishmelee(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function razfinishgroundtorpedo(entity)
+function private razfinishgroundtorpedo(entity)
 {
 	entity.destroy_window_by_torpedo = undefined;
 	entity.next_torpedo_time = gettime() + 3000;
@@ -818,7 +824,7 @@ private function razfinishgroundtorpedo(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function raznotetrackshootgroundtorpedo(entity)
+function private raznotetrackshootgroundtorpedo(entity)
 {
 	if(!isdefined(entity.enemy) && (!(isdefined(entity.destroy_window_by_torpedo) && entity.destroy_window_by_torpedo)))
 	{
@@ -849,7 +855,7 @@ private function raznotetrackshootgroundtorpedo(entity)
 	Parameters: 4
 	Flags: Linked, Private
 */
-private function raztorpedolaunchdirection(forward_dir, torpedo_pos, torpedo_target_pos, max_angle)
+function private raztorpedolaunchdirection(forward_dir, torpedo_pos, torpedo_target_pos, max_angle)
 {
 	vec_to_enemy = torpedo_target_pos - torpedo_pos;
 	vec_to_enemy_normal = vectornormalize(vec_to_enemy);
@@ -873,7 +879,7 @@ private function raztorpedolaunchdirection(forward_dir, torpedo_pos, torpedo_tar
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function razshootgroundtorpedo(torpedo_target, torpedo_target_offset)
+function private razshootgroundtorpedo(torpedo_target, torpedo_target_offset)
 {
 	torpedo_pos = self gettagorigin("tag_weapon_right");
 	torpedo_target_pos = torpedo_target.origin + torpedo_target_offset;
@@ -916,7 +922,7 @@ private function razshootgroundtorpedo(torpedo_target, torpedo_target_offset)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function raztorpedodetonateifclosetotarget(torpedo_target, torpedo_target_offset)
+function private raztorpedodetonateifclosetotarget(torpedo_target, torpedo_target_offset)
 {
 	self endon(#"death");
 	self endon(#"detonated");
@@ -941,7 +947,7 @@ private function raztorpedodetonateifclosetotarget(torpedo_target, torpedo_targe
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function raztorpedomovetotarget(torpedo_target)
+function private raztorpedomovetotarget(torpedo_target)
 {
 	self endon(#"death");
 	self endon(#"detonated");
@@ -1023,7 +1029,7 @@ private function raztorpedomovetotarget(torpedo_target)
 	Parameters: 0
 	Flags: Private
 */
-private function raztorpedoplaytraileffect()
+function private raztorpedoplaytraileffect()
 {
 	self endon(#"death");
 	self endon(#"detonated");
@@ -1047,7 +1053,7 @@ private function raztorpedoplaytraileffect()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function razknockdownzombies(target)
+function private razknockdownzombies(target)
 {
 	self endon(#"death");
 	while(isdefined(self))
@@ -1109,7 +1115,7 @@ private function razknockdownzombies(target)
 		}
 		if(a_filtered_zombies.size > 0)
 		{
-			foreach(var_aec5a875, zombie in a_filtered_zombies)
+			foreach(zombie in a_filtered_zombies)
 			{
 				zombie.knockdown = 1;
 				zombie.knockdown_type = "knockdown_shoved";
@@ -1165,7 +1171,7 @@ private function razknockdownzombies(target)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function raztorpedoknockdownzombies(torpedo_target)
+function private raztorpedoknockdownzombies(torpedo_target)
 {
 	self endon(#"death");
 	self endon(#"detonated");
@@ -1181,7 +1187,7 @@ private function raztorpedoknockdownzombies(torpedo_target)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function razsprintknockdownzombies()
+function private razsprintknockdownzombies()
 {
 	self endon(#"death");
 	self notify(#"razsprintknockdownzombies");
@@ -1198,7 +1204,7 @@ private function razsprintknockdownzombies()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function raztorpedodetonate(delay)
+function private raztorpedodetonate(delay)
 {
 	self notify(#"detonated");
 	torpedo = self;
@@ -1237,7 +1243,7 @@ private function raztorpedodetonate(delay)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function razapplytorpedodetonationpushtoplayers(torpedo_origin)
+function private razapplytorpedodetonationpushtoplayers(torpedo_origin)
 {
 	players = getplayers();
 	v_length = 100 * 100;
@@ -1295,7 +1301,7 @@ private function razapplytorpedodetonationpushtoplayers(torpedo_origin)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function razapplyplayerdetonationeffects()
+function private razapplyplayerdetonationeffects()
 {
 	earthquake(0.4, 0.8, self.origin, 300);
 	for(i = 0; i < level.activeplayers.size; i++)
@@ -1318,15 +1324,15 @@ private function razapplyplayerdetonationeffects()
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function razzombieeligibleforknockdown(zombie, target, predicted_pos)
+function private razzombieeligibleforknockdown(zombie, target, predicted_pos)
 {
 	if(zombie.knockdown === 1)
 	{
-		return 0;
+		return false;
 	}
 	if(gibserverutils::isgibbed(zombie, 384))
 	{
-		return 0;
+		return false;
 	}
 	knockdown_dist = 48;
 	check_pos = zombie.origin;
@@ -1339,7 +1345,7 @@ private function razzombieeligibleforknockdown(zombie, target, predicted_pos)
 	dist_sq = distancesquared(predicted_pos, check_pos);
 	if(dist_sq > knockdown_dist_sq)
 	{
-		return 0;
+		return false;
 	}
 	origin = target.origin;
 	facing_vec = anglestoforward(target.angles);
@@ -1351,9 +1357,9 @@ private function razzombieeligibleforknockdown(zombie, target, predicted_pos)
 	enemy_dot = vectordot(facing_yaw_vec, enemy_yaw_vec);
 	if(enemy_dot < 0)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 #namespace razserverutils;
@@ -1367,7 +1373,7 @@ private function razzombieeligibleforknockdown(zombie, target, predicted_pos)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function razspawnsetup()
+function private razspawnsetup()
 {
 	self.invoke_sprint_time = gettime() + 90000;
 	self.next_torpedo_time = gettime();
@@ -1425,7 +1431,7 @@ private function razspawnsetup()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function razgibzombiesonmelee()
+function private razgibzombiesonmelee()
 {
 	self endon(#"death");
 	self endon(#"disconnect");
@@ -1433,7 +1439,7 @@ private function razgibzombiesonmelee()
 	{
 		self waittill(#"melee_fire");
 		a_zombies = getaiarchetypearray("zombie");
-		foreach(var_c0c76fca, zombie in a_zombies)
+		foreach(zombie in a_zombies)
 		{
 			if(isdefined(zombie.no_gib) && zombie.no_gib)
 			{
@@ -1513,7 +1519,7 @@ private function razgibzombiesonmelee()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function razinvalidategibbedarmor()
+function private razinvalidategibbedarmor()
 {
 	if(!(isdefined(self.razhasgunattached) && self.razhasgunattached))
 	{
@@ -1560,7 +1566,7 @@ private function razinvalidategibbedarmor()
 	Parameters: 12
 	Flags: Linked, Private
 */
-private function razdamagecallback(inflictor, attacker, damage, dflags, mod, weapon, point, dir, hitloc, offsettime, boneindex, modelindex)
+function private razdamagecallback(inflictor, attacker, damage, dflags, mod, weapon, point, dir, hitloc, offsettime, boneindex, modelindex)
 {
 	entity = self;
 	entity.last_damage_hit_armor = 0;
@@ -1659,7 +1665,7 @@ private function razdamagecallback(inflictor, attacker, damage, dflags, mod, wea
 	Parameters: 6
 	Flags: Linked, Private
 */
-private function raz_check_for_location_hit(entity, hitloc, point, location, hit_radius_sq, tag)
+function private raz_check_for_location_hit(entity, hitloc, point, location, hit_radius_sq, tag)
 {
 	b_hit_location = 0;
 	if(isdefined(hitloc) && hitloc != "none")
@@ -1689,7 +1695,7 @@ private function raz_check_for_location_hit(entity, hitloc, point, location, hit
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function raztrackgundamage(damage, attacker)
+function private raztrackgundamage(damage, attacker)
 {
 	entity = self;
 	entity.razgunhealth = entity.razgunhealth - damage;
@@ -1732,7 +1738,7 @@ private function raztrackgundamage(damage, attacker)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function raztrackhelmetdamage(damage, attacker)
+function private raztrackhelmetdamage(damage, attacker)
 {
 	entity = self;
 	entity.razhelmethealth = entity.razhelmethealth - damage;
@@ -1755,7 +1761,7 @@ private function raztrackhelmetdamage(damage, attacker)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function raztrackchestarmordamage(damage)
+function private raztrackchestarmordamage(damage)
 {
 	entity = self;
 	entity.razchestarmorhealth = entity.razchestarmorhealth - damage;
@@ -1782,7 +1788,7 @@ private function raztrackchestarmordamage(damage)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function raztrackleftshoulderarmordamage(damage)
+function private raztrackleftshoulderarmordamage(damage)
 {
 	entity = self;
 	entity.razleftshoulderarmorhealth = entity.razleftshoulderarmorhealth - damage;
@@ -1806,7 +1812,7 @@ private function raztrackleftshoulderarmordamage(damage)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function raztrackleftthigharmordamage(damage)
+function private raztrackleftthigharmordamage(damage)
 {
 	entity = self;
 	entity.razleftthighhealth = entity.razleftthighhealth - damage;
@@ -1829,7 +1835,7 @@ private function raztrackleftthigharmordamage(damage)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function raztrackrightthigharmordamage(damage)
+function private raztrackrightthigharmordamage(damage)
 {
 	entity = self;
 	entity.razrightthighhealth = entity.razrightthighhealth - damage;

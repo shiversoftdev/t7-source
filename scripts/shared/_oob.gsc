@@ -16,7 +16,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("out_of_bounds", &__init__, undefined, undefined);
 }
@@ -52,7 +52,7 @@ function __init__()
 	}
 	level.oob_damage_interval_sec = level.oob_damage_interval_ms / 1000;
 	hurt_triggers = getentarray("trigger_out_of_bounds", "classname");
-	foreach(var_36d827b5, trigger in hurt_triggers)
+	foreach(trigger in hurt_triggers)
 	{
 		trigger thread run_oob_trigger();
 	}
@@ -115,7 +115,7 @@ function istouchinganyoobtrigger()
 {
 	triggers_to_remove = [];
 	result = 0;
-	foreach(var_79b6628f, trigger in level.oob_triggers)
+	foreach(trigger in level.oob_triggers)
 	{
 		if(!isdefined(trigger))
 		{
@@ -140,7 +140,7 @@ function istouchinganyoobtrigger()
 			break;
 		}
 	}
-	foreach(var_39a91352, trigger in triggers_to_remove)
+	foreach(trigger in triggers_to_remove)
 	{
 		arrayremovevalue(level.oob_triggers, trigger);
 	}

@@ -195,7 +195,7 @@ function getrandomweaponnamefromprogression()
 	#/
 	allowproneblock = 1;
 	players = getplayers();
-	foreach(var_4e3a8174, player in players)
+	foreach(player in players)
 	{
 		if(player getstance() == "prone")
 		{
@@ -470,25 +470,28 @@ function chooserandomguns()
 				level.players[i] thread wager::queue_popup(&"MP_SHRP_PENULTIMATE_RND", 0, &"MP_SHRP_PENULTIMATE_MULTIPLIER", "wm_bonus_rnd");
 			}
 		}
-		else if(issharpshooterround)
-		{
-			lastmultiplier = level.sharpshootermultiplier;
-			if(!isdefined(lastmultiplier))
-			{
-				lastmultiplier = 1;
-			}
-			level.sharpshootermultiplier = 2;
-			setdvar("ui_guncycle", 0);
-			level.guncycletimer.alpha = 0;
-			for(i = 0; i < level.players.size; i++)
-			{
-				level.players[i] thread wager::queue_popup(&"MP_SHRP_RND", 0, &"MP_SHRP_FINAL_MULTIPLIER", "wm_shrp_rnd");
-			}
-			break;
-		}
 		else
 		{
-			level.sharpshootermultiplier = 1;
+			if(issharpshooterround)
+			{
+				lastmultiplier = level.sharpshootermultiplier;
+				if(!isdefined(lastmultiplier))
+				{
+					lastmultiplier = 1;
+				}
+				level.sharpshootermultiplier = 2;
+				setdvar("ui_guncycle", 0);
+				level.guncycletimer.alpha = 0;
+				for(i = 0; i < level.players.size; i++)
+				{
+					level.players[i] thread wager::queue_popup(&"MP_SHRP_RND", 0, &"MP_SHRP_FINAL_MULTIPLIER", "wm_shrp_rnd");
+				}
+				break;
+			}
+			else
+			{
+				level.sharpshootermultiplier = 1;
+			}
 		}
 		guncycle++;
 	}

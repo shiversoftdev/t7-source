@@ -125,7 +125,7 @@ function cybercom_devguithink()
 			setdvar("devgui_cybercore", "");
 			setdvar("devgui_cybercore_upgrade", "");
 			iprintlnbold("Giving Constant Juice to all players");
-			foreach(var_b41743b4, player in players)
+			foreach(player in players)
 			{
 				player thread constantjuice();
 			}
@@ -134,7 +134,7 @@ function cybercom_devguithink()
 		if(cmd == "clearAll")
 		{
 			iprintlnbold("Clearing all abilities on all players");
-			foreach(var_1c6d03e, player in players)
+			foreach(player in players)
 			{
 				player cybercom_tacrig::takeallrigabilities();
 				player cybercom_gadget::takeallabilities();
@@ -146,7 +146,7 @@ function cybercom_devguithink()
 		if(cmd == "giveAll")
 		{
 			iprintlnbold("Giving all abilities on all players");
-			foreach(var_1b3953b7, player in players)
+			foreach(player in players)
 			{
 				player cybercom_gadget::function_edff667f();
 			}
@@ -166,23 +166,29 @@ function cybercom_devguithink()
 			setdvar("devgui_cybercore_upgrade", "");
 			continue;
 		}
-		else if(cmd == "control")
+		else
 		{
-			setdvar("devgui_cybercore", "");
-			setdvar("devgui_cybercore_upgrade", "");
-			continue;
-		}
-		else if(cmd == "martial")
-		{
-			setdvar("devgui_cybercore", "");
-			setdvar("devgui_cybercore_upgrade", "");
-			continue;
-		}
-		else if(cmd == "chaos")
-		{
-			setdvar("devgui_cybercore", "");
-			setdvar("devgui_cybercore_upgrade", "");
-			continue;
+			if(cmd == "control")
+			{
+				setdvar("devgui_cybercore", "");
+				setdvar("devgui_cybercore_upgrade", "");
+				continue;
+			}
+			else
+			{
+				if(cmd == "martial")
+				{
+					setdvar("devgui_cybercore", "");
+					setdvar("devgui_cybercore_upgrade", "");
+					continue;
+				}
+				else if(cmd == "chaos")
+				{
+					setdvar("devgui_cybercore", "");
+					setdvar("devgui_cybercore_upgrade", "");
+					continue;
+				}
+			}
 		}
 		if(isdefined(level._cybercom_rig_ability[cmd]))
 		{

@@ -80,7 +80,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function opt_in()
+function autoexec opt_in()
 {
 	level.aat_in_use = 1;
 	level.bgb_in_use = 1;
@@ -213,7 +213,12 @@ function toggle_rain_overlay(localclientnum, oldval, newval, bnewent, binitialsn
 			println("");
 		#/
 	}
-	println("");
+	else
+	{
+		/#
+			println("");
+		#/
+	}
 }
 
 /*

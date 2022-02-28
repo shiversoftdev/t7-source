@@ -103,9 +103,9 @@ function function_f8d04082(behaviortreeentity)
 {
 	if(isdefined(behaviortreeentity.tesla_death) && behaviortreeentity.tesla_death)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -117,7 +117,7 @@ function function_f8d04082(behaviortreeentity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_599c952d(entity)
+function private function_599c952d(entity)
 {
 	if(entity.missinglegs === 1)
 	{
@@ -129,9 +129,9 @@ private function function_599c952d(entity)
 	}
 	if(isdefined(animationresults["animation"]))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -143,7 +143,7 @@ private function function_599c952d(entity)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_34a5b8e4(entity, asmstatename)
+function private function_34a5b8e4(entity, asmstatename)
 {
 	animationstatenetworkutility::requeststate(entity, asmstatename);
 	entity ghost();
@@ -160,7 +160,7 @@ private function function_34a5b8e4(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_f821465d(entity, asmstatename)
+function private function_f821465d(entity, asmstatename)
 {
 	entity show();
 	entity solid();
@@ -176,7 +176,7 @@ private function function_f821465d(entity, asmstatename)
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function function_e57c0c7b(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function private function_e57c0c7b(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	entity orientmode("face angle", entity.angles[1]);
 	entity setrepairpaths(0);
@@ -185,13 +185,16 @@ private function function_e57c0c7b(entity, mocompanim, mocompanimblendouttime, m
 	{
 		rate = 1;
 	}
-	else if(locomotionspeed == "locomotion_speed_run")
-	{
-		rate = 2;
-	}
 	else
 	{
-		rate = 3;
+		if(locomotionspeed == "locomotion_speed_run")
+		{
+			rate = 2;
+		}
+		else
+		{
+			rate = 3;
+		}
 	}
 	entity asmsetanimationrate(rate);
 	if(entity haspath())
@@ -215,7 +218,7 @@ private function function_e57c0c7b(entity, mocompanim, mocompanimblendouttime, m
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function function_c97089da(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function private function_c97089da(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	entity.blockingpain = 0;
 	entity setrepairpaths(1);
@@ -349,14 +352,17 @@ function function_b0edb6ef(var_12ebe63d)
 		{
 			shouldrepath = 1;
 		}
-		else if(distancesquared(self.origin, self.enemy.origin) <= (200 * 200))
+		else
 		{
-			shouldrepath = 1;
-		}
-		else if(isdefined(self.pathgoalpos))
-		{
-			distancetogoalsqr = distancesquared(self.origin, self.pathgoalpos);
-			shouldrepath = distancetogoalsqr < (72 * 72);
+			if(distancesquared(self.origin, self.enemy.origin) <= (200 * 200))
+			{
+				shouldrepath = 1;
+			}
+			else if(isdefined(self.pathgoalpos))
+			{
+				distancetogoalsqr = distancesquared(self.origin, self.pathgoalpos);
+				shouldrepath = distancetogoalsqr < (72 * 72);
+			}
 		}
 	}
 	if(isdefined(self.keep_moving) && self.keep_moving)
@@ -449,7 +455,7 @@ function function_a1761846(behaviortreeentity)
 	if(level flag::get("doa_game_is_over"))
 	{
 		behaviortreeentity function_d30fe558(behaviortreeentity.origin);
-		return 1;
+		return true;
 	}
 	if(isdefined(behaviortreeentity.doa) && behaviortreeentity.doa.stunned != 0)
 	{
@@ -462,12 +468,12 @@ function function_a1761846(behaviortreeentity)
 		{
 			behaviortreeentity function_d30fe558(behaviortreeentity.origin);
 		}
-		return 1;
+		return true;
 	}
 	if(isdefined(behaviortreeentity.var_8f12ed02))
 	{
 		behaviortreeentity function_d30fe558(behaviortreeentity.var_8f12ed02);
-		return 1;
+		return true;
 	}
 	if(!(isdefined(behaviortreeentity.var_2d8174e3) && behaviortreeentity.var_2d8174e3))
 	{
@@ -483,7 +489,7 @@ function function_a1761846(behaviortreeentity)
 			{
 				behaviortreeentity function_d30fe558(poi.origin);
 			}
-			return 1;
+			return true;
 		}
 	}
 	if(isdefined(behaviortreeentity.enemy))
@@ -550,14 +556,14 @@ function function_a1761846(behaviortreeentity)
 			}
 		}
 		behaviortreeentity function_d30fe558(origin);
-		return 1;
+		return true;
 	}
 	if(behaviortreeentity.team == "team3")
 	{
-		return 0;
+		return false;
 	}
 	players = getplayers();
-	foreach(var_4b292b16, player in players)
+	foreach(player in players)
 	{
 		if(!isdefined(player.doa))
 		{
@@ -569,14 +575,14 @@ function function_a1761846(behaviortreeentity)
 		}
 		behaviortreeentity.favoriteenemy = player;
 		behaviortreeentity function_d30fe558(behaviortreeentity.favoriteenemy.origin, 1);
-		return 1;
+		return true;
 	}
 	if(isdefined(behaviortreeentity.lastknownenemypos))
 	{
 		behaviortreeentity function_d30fe558(behaviortreeentity.lastknownenemypos);
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -592,7 +598,7 @@ function function_3209ead3(behaviortreeentity)
 {
 	if(isdefined(behaviortreeentity.var_88168473) && behaviortreeentity.var_88168473)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(behaviortreeentity.enemy))
 	{
@@ -617,7 +623,7 @@ function function_3209ead3(behaviortreeentity)
 			}
 		}
 		behaviortreeentity function_d30fe558(origin);
-		return 1;
+		return true;
 	}
 	if(isdefined(behaviortreeentity.var_f4a5c4fe))
 	{
@@ -631,9 +637,9 @@ function function_3209ead3(behaviortreeentity)
 			behaviortreeentity setgoal(behaviortreeentity.origin, 1);
 		}
 		behaviortreeentity.var_f4a5c4fe = undefined;
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -645,7 +651,7 @@ function function_3209ead3(behaviortreeentity)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_f5ef629b()
+function private function_f5ef629b()
 {
 	self endon(#"death");
 	self endon(#"hash_d96c599c");
@@ -666,13 +672,16 @@ private function function_f5ef629b()
 			{
 				self.zombie_move_speed = "run";
 			}
-			else if(self.zombie_move_speed == "run")
-			{
-				self.zombie_move_speed = "sprint";
-			}
 			else
 			{
-				return;
+				if(self.zombie_move_speed == "run")
+				{
+					self.zombie_move_speed = "sprint";
+				}
+				else
+				{
+					return;
+				}
 			}
 		}
 		wait(randomfloatrange(1, 4));
@@ -716,13 +725,16 @@ function updatespeed()
 	{
 		self.zombie_move_speed = "walk";
 	}
-	else if(rand <= 70)
-	{
-		self.zombie_move_speed = "run";
-	}
 	else
 	{
-		self.zombie_move_speed = "sprint";
+		if(rand <= 70)
+		{
+			self.zombie_move_speed = "run";
+		}
+		else
+		{
+			self.zombie_move_speed = "sprint";
+		}
 	}
 }
 
@@ -798,23 +810,23 @@ function function_f31da0d1(behaviortreeentity)
 {
 	if(!isdefined(behaviortreeentity.enemy))
 	{
-		return 0;
+		return false;
 	}
 	yaw = abs(doa_utility::getyawtoenemy());
 	if(yaw > 45)
 	{
-		return 0;
+		return false;
 	}
 	targetorigin = behaviortreeentity function_69b8254();
 	if(distancesquared(behaviortreeentity.origin, targetorigin) > (92 * 92))
 	{
-		return 0;
+		return false;
 	}
 	if(distance2dsquared(behaviortreeentity.origin, targetorigin) < 2304)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -894,7 +906,7 @@ function function_2241fc21(einflictor, eattacker, idamage, idflags, smeansofdeat
 	{
 		if(isarray(self.aioverridedamage))
 		{
-			foreach(var_9cf9d426, cb in self.aioverridedamage)
+			foreach(cb in self.aioverridedamage)
 			{
 				idamage = self [[cb]](einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, timeoffset, boneindex, modelindex);
 			}
@@ -1383,7 +1395,7 @@ function zombie_eye_glow_stop()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_8abf3753(time = 1)
+function private function_8abf3753(time = 1)
 {
 	self endon(#"death");
 	wait(time);
@@ -1601,7 +1613,7 @@ function function_ab6f6263()
 		{
 			idleanim = var_2c143867[randomint(var_2c143867.size)];
 			self animscripted("zombieanim", self.origin, self.angles, idleanim, "normal", %generic::body, 1, 0.3, 0.3);
-			self waittill_match(#"hash_24281fe0");
+			self waittillmatch(#"hash_24281fe0");
 		}
 		else
 		{

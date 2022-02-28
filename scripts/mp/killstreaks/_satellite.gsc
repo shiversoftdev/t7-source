@@ -38,7 +38,7 @@ function init()
 {
 	if(level.teambased)
 	{
-		foreach(var_b840c18a, team in level.teams)
+		foreach(team in level.teams)
 		{
 			level.activesatellites[team] = 0;
 		}
@@ -108,12 +108,12 @@ function activatesatellite()
 {
 	if(self killstreakrules::iskillstreakallowed("satellite", self.team) == 0)
 	{
-		return 0;
+		return false;
 	}
 	killstreak_id = self killstreakrules::killstreakstart("satellite", self.team);
 	if(killstreak_id == -1)
 	{
-		return 0;
+		return false;
 	}
 	minflyheight = int(airsupport::getminimumflyheight());
 	zoffset = minflyheight + 5500;
@@ -153,7 +153,7 @@ function activatesatellite()
 	self killstreaks::play_killstreak_start_dialog("satellite", self.team, killstreak_id);
 	satellite thread killstreaks::player_killstreak_threat_tracking("satellite");
 	self addweaponstat(getweapon("satellite"), "used", 1);
-	return 1;
+	return true;
 }
 
 /*
@@ -432,7 +432,7 @@ function satellitetracker()
 		level waittill(#"satellite_update");
 		if(level.teambased)
 		{
-			foreach(var_7905f640, team in level.teams)
+			foreach(team in level.teams)
 			{
 				activesatellites = level.activesatellites[team];
 				activesatellitesanduavs = activesatellites + (isdefined(level.activeuavs) ? level.activeuavs[team] : 0);

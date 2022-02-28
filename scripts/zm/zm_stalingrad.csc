@@ -70,7 +70,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function opt_in()
+function autoexec opt_in()
 {
 	level.aat_in_use = 1;
 	level.bgb_in_use = 1;
@@ -375,12 +375,12 @@ function function_38b57afd()
 	var_beffc54 = struct::get_array("ambient_fxanim", "targetname");
 	if(getdvarint("splitscreen_playerCount") >= 2)
 	{
-		foreach(var_b057f17e, s_fxanim in var_beffc54)
+		foreach(s_fxanim in var_beffc54)
 		{
 			struct::delete();
 		}
 		var_1bbd14fd = findstaticmodelindexarray("ambient_siege_anim");
-		foreach(var_7220281c, n_model_index in var_1bbd14fd)
+		foreach(n_model_index in var_1bbd14fd)
 		{
 			hidestaticmodel(n_model_index);
 		}
@@ -408,7 +408,7 @@ function water_sheeting_toggle(localclientnum, oldval, newval, bnewent, binitial
 		playsound(localclientnum, "zmb_stalingrad_sewer_water_travel_start");
 		self.var_5962d89c = self playloopsound("zmb_stalingrad_sewer_water_travel_lp", 0.3);
 		var_11eaf469 = getentarray(0, "sewer_ride_end", "targetname");
-		foreach(var_31c08b53, var_b81de649 in var_11eaf469)
+		foreach(var_b81de649 in var_11eaf469)
 		{
 			self thread function_da4ab728(localclientnum, var_b81de649);
 		}

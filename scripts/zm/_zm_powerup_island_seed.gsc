@@ -34,7 +34,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_powerup_island_seed", &__init__, undefined, undefined);
 }
@@ -127,9 +127,9 @@ function function_58b6724f(player)
 		/#
 			println("");
 		#/
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -223,18 +223,18 @@ function function_f766ae15()
 {
 	if(isdefined(level.var_b426c9) && level.var_b426c9)
 	{
-		return 0;
+		return false;
 	}
 	n_count = 0;
-	foreach(var_feda86e8, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		n_count = n_count + player clientfield::get_to_player("has_island_seed");
 	}
 	if(n_count == (level.activeplayers.size * 3))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -288,11 +288,11 @@ function function_7a25b639(drop_point)
 {
 	if(!level function_f766ae15())
 	{
-		return 0;
+		return false;
 	}
 	if(level flag::get("round_1_seed_spawned"))
 	{
-		return 0;
+		return false;
 	}
 	if(math::cointoss() || getaicount() < 1)
 	{
@@ -300,7 +300,7 @@ function function_7a25b639(drop_point)
 		level flag::set("round_1_seed_spawned");
 		level thread function_ca5485fa(var_93eb638b);
 		level.var_9895ed0d++;
-		return 1;
+		return true;
 	}
 }
 
@@ -317,11 +317,11 @@ function function_1f5d3f75(drop_point)
 {
 	if(!level function_f766ae15())
 	{
-		return 0;
+		return false;
 	}
 	if(level.var_9895ed0d >= level.var_325c412f)
 	{
-		return 0;
+		return false;
 	}
 	rand_drop = randomint(100);
 	if(rand_drop > 2)
@@ -334,12 +334,17 @@ function function_1f5d3f75(drop_point)
 			println("");
 		#/
 	}
-	println("");
+	else
+	{
+		/#
+			println("");
+		#/
+	}
 	var_93eb638b = zm_powerups::specific_powerup_drop("island_seed", drop_point);
 	level thread function_ca5485fa(var_93eb638b);
 	level.var_9895ed0d++;
 	level.var_e964b72 = 0;
-	return 1;
+	return true;
 }
 
 /*

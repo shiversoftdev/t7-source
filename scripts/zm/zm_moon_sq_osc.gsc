@@ -88,15 +88,18 @@ function init()
 	{
 		level._osc_trial_time = getdvarint("jolie_greet_time");
 	}
-	else if(!isdefined(level._osc_struct.script_int))
+	else
 	{
-		/#
-			println("");
-		#/
-		wait(1);
-		return;
+		if(!isdefined(level._osc_struct.script_int))
+		{
+			/#
+				println("");
+			#/
+			wait(1);
+			return;
+		}
+		level._osc_trial_time = level._osc_struct.script_int;
 	}
-	level._osc_trial_time = level._osc_struct.script_int;
 	level._osc_cap_spot = struct::get("struct_cover", "targetname");
 	level._osc_cap = util::spawn_model("p7_zm_moo_glyph_dial_cap", level._osc_cap_spot.origin, level._osc_cap_spot.angles);
 	level._osc_terms = 0;
@@ -116,7 +119,7 @@ function init()
 function function_f65c74fe()
 {
 	level flag::wait_till("start_zombie_round_logic");
-	foreach(var_99630e9d, var_c597f9d8 in level._osc_st)
+	foreach(var_c597f9d8 in level._osc_st)
 	{
 		var_c597f9d8 function_27fd2e20(0);
 	}
@@ -508,7 +511,7 @@ function moon_bad_jolie()
 	wait(level._osc_trial_time);
 	level flag::set(level._osc_flags[2]);
 	level thread comp_fail_vox();
-	foreach(var_9358f23, var_c597f9d8 in level._osc_st)
+	foreach(var_c597f9d8 in level._osc_st)
 	{
 		var_c597f9d8 function_27fd2e20(0);
 	}

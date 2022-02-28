@@ -207,11 +207,11 @@ function ai_activatefireflyswarm(target, var_9bc2efcb = 1, upgraded = 1)
 		self orientmode("face default");
 		self animscripted("ai_cybercom_anim", self.origin, self.angles, ("ai_base_rifle_" + type) + "_exposed_cybercom_activate");
 		self playsound("gdt_firefly_activate_npc");
-		self waittill_match(#"ai_cybercom_anim");
+		self waittillmatch(#"ai_cybercom_anim");
 	}
 	if(isarray(target))
 	{
-		foreach(var_99630e9d, guy in target)
+		foreach(guy in target)
 		{
 			if(!isdefined(guy))
 			{
@@ -277,7 +277,7 @@ function on_scene_firefly_launch(a_ents)
 function initthreatbias()
 {
 	aiarray = getaiarray();
-	foreach(var_b545f8e9, ai in aiarray)
+	foreach(ai in aiarray)
 	{
 		if(ai === self)
 		{
@@ -342,13 +342,16 @@ function spawn_firefly_swarm(upgraded, targetent, swarms = getdvarint("scr_firef
 					self waittill(#"firefly_intro_done", origin, angles);
 				}
 			}
-			else if(sessionmodeiscampaignzombiesgame() && isworldpaused())
-			{
-			}
 			else
 			{
-				s_anim_pos thread scene::play("p7_fxanim_gp_ability_firefly_launch_bundle");
-				self waittill(#"firefly_intro_done", origin, angles);
+				if(sessionmodeiscampaignzombiesgame() && isworldpaused())
+				{
+				}
+				else
+				{
+					s_anim_pos thread scene::play("p7_fxanim_gp_ability_firefly_launch_bundle");
+					self waittill(#"firefly_intro_done", origin, angles);
+				}
 			}
 		}
 		else
@@ -520,7 +523,7 @@ function getnextmoveposition_tactical()
 	self.isonnav = queryresult.centeronnav;
 	best_point = undefined;
 	best_score = -999999;
-	foreach(var_6166b356, point in queryresult.data)
+	foreach(point in queryresult.data)
 	{
 		randomscore = randomfloatrange(0, 100);
 		disttooriginscore = point.disttoorigin2d * 0.2;
@@ -767,18 +770,21 @@ function swarm_attackhumantarget(target)
 		target notify(#"bhtn_action_notify", "fireflyAttack");
 		target clientfield::set("firefly_state", 9);
 	}
-	else if(target.archetype === "human")
-	{
-		reactionanims["intro"] = (((("ai_" + base) + "_") + type) + "_exposed_swarm_react_intro") + variant;
-		reactionanims["outro"] = (((("ai_" + base) + "_") + type) + "_exposed_swarm_react_outro") + variant;
-	}
 	else
 	{
-		reactionanims = [];
+		if(target.archetype === "human")
+		{
+			reactionanims["intro"] = (((("ai_" + base) + "_") + type) + "_exposed_swarm_react_intro") + variant;
+			reactionanims["outro"] = (((("ai_" + base) + "_") + type) + "_exposed_swarm_react_outro") + variant;
+		}
+		else
+		{
+			reactionanims = [];
+		}
+		target clientfield::set("firefly_state", 4);
+		target thread _reacttoswarm(self, reactionanims, getweapon("gadget_firefly_swarm"));
+		target notify(#"bhtn_action_notify", "fireflyAttack");
 	}
-	target clientfield::set("firefly_state", 4);
-	target thread _reacttoswarm(self, reactionanims, getweapon("gadget_firefly_swarm"));
-	target notify(#"bhtn_action_notify", "fireflyAttack");
 	self waittill(#"attack_stopped");
 }
 
@@ -926,13 +932,16 @@ function swarm_attack_think(params)
 			self.badplace = 1;
 			self swarm_attackhumantarget(target);
 		}
-		else if(target.archetype == "zombie")
+		else
 		{
-			self swarm_attackzombietarget(target);
-		}
-		else if(target.archetype == "warlord")
-		{
-			self function_cb5f9a2(target);
+			if(target.archetype == "zombie")
+			{
+				self swarm_attackzombietarget(target);
+			}
+			else if(target.archetype == "warlord")
+			{
+				self function_cb5f9a2(target);
+			}
 		}
 	}
 	else if(isplayer(target))
@@ -973,7 +982,7 @@ function swarm_monitortargetdeath(target)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function _firebombtargetpain(swarm, reactionanims, weapon)
+function private _firebombtargetpain(swarm, reactionanims, weapon)
 {
 	self endon(#"death");
 	if(isdefined(swarm))
@@ -982,7 +991,7 @@ private function _firebombtargetpain(swarm, reactionanims, weapon)
 	}
 	if(!self cybercom::function_421746e0())
 	{
-		self waittill_match(#"bhtn_action_terminate");
+		self waittillmatch(#"bhtn_action_terminate");
 	}
 	self notify(#"firebug_time_to_die", "specialpain");
 }
@@ -996,7 +1005,7 @@ private function _firebombtargetpain(swarm, reactionanims, weapon)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function _firebombtargetcorpselistener()
+function private _firebombtargetcorpselistener()
 {
 	self waittill(#"actor_corpse", corpse);
 	corpse clientfield::set("arch_actor_fire_fx", 2);
@@ -1011,7 +1020,7 @@ private function _firebombtargetcorpselistener()
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function _firebombtarget(swarm, reactionanims, weapon)
+function private _firebombtarget(swarm, reactionanims, weapon)
 {
 	self endon(#"death");
 	self.ignoreall = 1;
@@ -1027,7 +1036,7 @@ private function _firebombtarget(swarm, reactionanims, weapon)
 	if(!(isdefined(var_c318824b) && var_c318824b) && isdefined(reactionanims["intro"]))
 	{
 		self animscripted("swarm_intro_anim", self.origin, self.angles, reactionanims["intro"]);
-		self waittill_match(#"swarm_intro_anim");
+		self waittillmatch(#"swarm_intro_anim");
 	}
 	self clientfield::set("arch_actor_fire_fx", 1);
 	self thread _firebombtargetcorpselistener();
@@ -1047,11 +1056,14 @@ private function _firebombtarget(swarm, reactionanims, weapon)
 		swarm.owner notify(#"hash_304642e3");
 		self dodamage(self.health, self.origin, swarm.owner, swarm, "none", "MOD_BURNED", 0, weapon, -1, 1);
 	}
-	else if(isdefined(self.voiceprefix) && isdefined(self.bcvoicenumber))
+	else
 	{
-		self thread battlechatter::do_sound((self.voiceprefix + self.bcvoicenumber) + "_exert_firefly_burning", 1);
+		if(isdefined(self.voiceprefix) && isdefined(self.bcvoicenumber))
+		{
+			self thread battlechatter::do_sound((self.voiceprefix + self.bcvoicenumber) + "_exert_firefly_burning", 1);
+		}
+		self dodamage(self.health, self.origin, undefined, undefined, "none", "MOD_BURNED", 0, weapon, -1, 1);
 	}
-	self dodamage(self.health, self.origin, undefined, undefined, "none", "MOD_BURNED", 0, weapon, -1, 1);
 }
 
 /*
@@ -1063,7 +1075,7 @@ private function _firebombtarget(swarm, reactionanims, weapon)
 	Parameters: 1
 	Flags: Private
 */
-private function _deathlistener(swarm)
+function private _deathlistener(swarm)
 {
 	while(isdefined(swarm))
 	{
@@ -1085,7 +1097,7 @@ private function _deathlistener(swarm)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _corpsewatcher(swarm)
+function private _corpsewatcher(swarm)
 {
 	swarm endon(#"death");
 	self waittill(#"actor_corpse", corpse);
@@ -1111,7 +1123,7 @@ function function_963f8ef6(match, note, var_1ccbc268, end)
 		{
 			if(isdefined(match))
 			{
-				self waittill_match(match);
+				self waittillmatch(match);
 			}
 			else
 			{
@@ -1120,15 +1132,18 @@ function function_963f8ef6(match, note, var_1ccbc268, end)
 			self notify(var_1ccbc268, note);
 		}
 	}
-	else if(isdefined(match))
-	{
-		self waittill_match(match);
-	}
 	else
 	{
-		self waittill(note);
+		if(isdefined(match))
+		{
+			self waittillmatch(match);
+		}
+		else
+		{
+			self waittill(note);
+		}
+		self notify(var_1ccbc268, note);
 	}
-	self notify(var_1ccbc268, note);
 }
 
 /*
@@ -1140,7 +1155,7 @@ function function_963f8ef6(match, note, var_1ccbc268, end)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function _reacttoswarm(swarm, reactionanims, weapon)
+function private _reacttoswarm(swarm, reactionanims, weapon)
 {
 	self endon(#"death");
 	self thread _corpsewatcher(swarm);
@@ -1167,14 +1182,14 @@ private function _reacttoswarm(swarm, reactionanims, weapon)
 	{
 		self animscripted("swarm_intro_anim", self.origin, self.angles, reactionanims["intro"]);
 		self thread cybercom::stopanimscriptedonnotify("damage", "swarm_intro_anim");
-		self waittill_match(#"swarm_intro_anim");
+		self waittillmatch(#"swarm_intro_anim");
 	}
 	attack = 1;
 	while(attack && isdefined(swarm))
 	{
 		self dodamage(5, self.origin, swarm.owner, swarm, "none", "MOD_UNKNOWN", 0, weapon, -1, 1);
 		wait(0.05);
-		self waittill_match(#"bhtn_action_terminate");
+		self waittillmatch(#"bhtn_action_terminate");
 		attack = isdefined(swarm) && (!(isdefined(swarm.dying_out) && swarm.dying_out)) && (distancesquared(self.origin + vectorscale((0, 0, 1), 48), swarm.origin)) < (getdvarint("scr_firefly_swarm_attack_radius", 110) * getdvarint("scr_firefly_swarm_attack_radius", 110)) && isalive(self);
 	}
 	self notify(#"attack_stopped", "specialpain", "end");
@@ -1188,7 +1203,7 @@ private function _reacttoswarm(swarm, reactionanims, weapon)
 		{
 			self animscripted("swarm_outro_anim", self.origin, self.angles, reactionanims["outro"]);
 			self thread cybercom::stopanimscriptedonnotify("damage", "swarm_outro_anim");
-			self waittill_match(#"swarm_outro_anim");
+			self waittillmatch(#"swarm_outro_anim");
 		}
 		self.is_disabled = undefined;
 	}
@@ -1306,13 +1321,16 @@ function swarm_main_think(params)
 	{
 		self.state_machine statemachine::set_state("hunt");
 	}
-	else if((distancesquared(self.targetent.origin + vectorscale((0, 0, 1), 48), self.origin)) > (getdvarint("scr_firefly_swarm_attack_radius", 110) * getdvarint("scr_firefly_swarm_attack_radius", 110)))
-	{
-		self.state_machine statemachine::set_state("move");
-	}
 	else
 	{
-		self.state_machine statemachine::set_state("attack");
+		if((distancesquared(self.targetent.origin + vectorscale((0, 0, 1), 48), self.origin)) > (getdvarint("scr_firefly_swarm_attack_radius", 110) * getdvarint("scr_firefly_swarm_attack_radius", 110)))
+		{
+			self.state_machine statemachine::set_state("move");
+		}
+		else
+		{
+			self.state_machine statemachine::set_state("attack");
+		}
 	}
 	self.debug.main--;
 }
@@ -1326,7 +1344,7 @@ function swarm_main_think(params)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function _get_valid_targets()
+function private _get_valid_targets()
 {
 	humans = arraycombine(getaispeciesarray(self getenemyteam(), "human"), getaispeciesarray("team3", "human"), 0, 0);
 	zombies = arraycombine(getaispeciesarray(self getenemyteam(), "zombie"), getaispeciesarray("team3", "zombie"), 0, 0);
@@ -1342,41 +1360,41 @@ private function _get_valid_targets()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _lock_requirement(target)
+function private _lock_requirement(target)
 {
 	if(isdefined(self.owner) && !self.owner cybercom::targetisvalid(target, getweapon("gadget_firefly_swarm")))
 	{
-		return 0;
+		return false;
 	}
 	if(target.archetype != "human" && target.archetype != "human_riotshield" && target.archetype != "zombie" && target.archetype != "warlord")
 	{
-		return 0;
+		return false;
 	}
 	if(target cybercom::cybercom_aicheckoptout("cybercom_fireflyswarm"))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(target.swarm))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(target.var_86386274))
 	{
 		if(target.var_86386274 > gettime())
 		{
-			return 0;
+			return false;
 		}
 		target.var_86386274 = undefined;
 	}
 	if(isdefined(target.swarm_coolofftime) && gettime() < target.swarm_coolofftime)
 	{
-		return 0;
+		return false;
 	}
 	if(isactor(target) && target cybercom::function_78525729() != "stand" && target cybercom::function_78525729() != "crouch")
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1393,7 +1411,7 @@ function get_swarm_targetswithinfov(origin, angles, var_10a84c6e = getdvarint("s
 	enemies = self _get_valid_targets();
 	closetargets = arraysortclosest(enemies, origin, enemies.size, 0, var_10a84c6e);
 	fovtargets = [];
-	foreach(var_28cfc93b, guy in closetargets)
+	foreach(guy in closetargets)
 	{
 		if(!_lock_requirement(guy))
 		{

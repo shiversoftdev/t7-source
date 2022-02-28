@@ -28,7 +28,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_craft_shield", &__init__, &__main__, undefined);
 }
@@ -149,7 +149,7 @@ function on_pickup_common(player)
 	{
 		player thread [[level.craft_shield_piece_pickup_vo_override]]();
 	}
-	foreach(var_cc48158f, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		e_player thread zm_craftables::player_show_craftable_parts_ui("zmInventory.player_crafted_shield", "zmInventory.widget_shield_parts", 0);
 		e_player thread show_infotext_for_duration("ZMUI_SHIELD_PART_PICKUP", 3.5);
@@ -205,7 +205,7 @@ function pickup_from_mover()
 function on_fully_crafted()
 {
 	players = level.players;
-	foreach(var_24dd0151, e_player in players)
+	foreach(e_player in players)
 	{
 		if(zm_utility::is_player_valid(e_player))
 		{
@@ -213,7 +213,7 @@ function on_fully_crafted()
 			e_player thread show_infotext_for_duration("ZMUI_SHIELD_CRAFTED", 3.5);
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -363,11 +363,11 @@ function detect_reentry()
 		{
 			if(self.devgui_preserve_time == gettime())
 			{
-				return 1;
+				return true;
 			}
 		}
 		self.devgui_preserve_time = gettime();
-		return 0;
+		return false;
 	#/
 }
 

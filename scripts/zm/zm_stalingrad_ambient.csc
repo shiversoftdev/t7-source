@@ -15,7 +15,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_stalingrad_ambient", &__init__, undefined, undefined);
 }
@@ -187,12 +187,12 @@ function function_866a2751()
 function function_916d6917(str_targetname)
 {
 	var_1bbd14fd = findstaticmodelindexarray(str_targetname);
-	foreach(var_fdefe801, n_model_index in var_1bbd14fd)
+	foreach(n_model_index in var_1bbd14fd)
 	{
 		hidestaticmodel(n_model_index);
 	}
 	level waittill(#"power_on_level");
-	foreach(var_9d8c8c73, n_model_index in var_1bbd14fd)
+	foreach(n_model_index in var_1bbd14fd)
 	{
 		unhidestaticmodel(n_model_index);
 	}
@@ -210,12 +210,12 @@ function function_916d6917(str_targetname)
 function function_4820908f(str_targetname)
 {
 	var_1bbd14fd = findstaticmodelindexarray(str_targetname);
-	foreach(var_c236bcb0, n_model_index in var_1bbd14fd)
+	foreach(n_model_index in var_1bbd14fd)
 	{
 		unhidestaticmodel(n_model_index);
 	}
 	level waittill(#"power_on_level");
-	foreach(var_b4699140, n_model_index in var_1bbd14fd)
+	foreach(n_model_index in var_1bbd14fd)
 	{
 		hidestaticmodel(n_model_index);
 	}

@@ -117,7 +117,7 @@ function increment_uimodel(str_field_name, n_increment_count = 1)
 {
 	if(self == level)
 	{
-		foreach(var_e9918145, player in level.players)
+		foreach(player in level.players)
 		{
 			for(i = 0; i < n_increment_count; i++)
 			{

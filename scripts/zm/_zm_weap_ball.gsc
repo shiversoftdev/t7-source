@@ -43,7 +43,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("ball", &__init__, &__main__, undefined);
 }
@@ -355,7 +355,7 @@ function waitforallballstocometorest()
 	if(isdefined(ball))
 	{
 		level notify(#"game_ended");
-		foreach(var_86d321b0, player in level.players)
+		foreach(player in level.players)
 		{
 			player thread freezeplayersforroundend();
 		}
@@ -392,7 +392,7 @@ function ballovertimeround2_ontimelimit()
 	winner = undefined;
 	if(level.teambased)
 	{
-		foreach(var_3b66362c, team in level.teams)
+		foreach(team in level.teams)
 		{
 			if(game["teamSuddenDeath"][team])
 			{
@@ -401,8 +401,19 @@ function ballovertimeround2_ontimelimit()
 			}
 		}
 	}
-	print("" + winner.name);
-	print("");
+	else
+	{
+		/#
+			print("" + winner.name);
+			print("");
+		#/
+		if(isdefined(winner))
+		{
+		}
+		else
+		{
+		}
+	}
 	setdvar("ui_text_endreason", game["strings"]["time_limit_reached"]);
 }
 
@@ -833,11 +844,14 @@ function function_756cbdda(player)
 			{
 				player.carryobject thread gameobjects::set_dropped();
 			}
-			else if(isdefined(self.onpickupfailed))
+			else
 			{
-				self [[self.onpickupfailed]](player);
+				if(isdefined(self.onpickupfailed))
+				{
+					self [[self.onpickupfailed]](player);
+				}
+				return;
 			}
-			return;
 		}
 		player gameobjects::give_object(self);
 	}
@@ -879,30 +893,30 @@ function can_use_ball(player)
 {
 	if(!isdefined(player))
 	{
-		return 0;
+		return false;
 	}
 	if(!self gameobjects::can_interact_with(player))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.droptime) && self.droptime >= gettime())
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(player.resurrect_weapon) && player getcurrentweapon() == player.resurrect_weapon)
 	{
-		return 0;
+		return false;
 	}
 	if(player iscarryingturret())
 	{
-		return 0;
+		return false;
 	}
 	currentweapon = player getcurrentweapon();
 	if(isdefined(currentweapon))
 	{
 		if(!valid_ball_pickup_weapon(currentweapon))
 		{
-			return 0;
+			return false;
 		}
 	}
 	nextweapon = player.changingweapon;
@@ -910,19 +924,19 @@ function can_use_ball(player)
 	{
 		if(!valid_ball_pickup_weapon(nextweapon))
 		{
-			return 0;
+			return false;
 		}
 	}
 	if(player player_no_pickup_time())
 	{
-		return 0;
+		return false;
 	}
 	ball = self.visuals[0];
 	thresh = 15;
 	dist2 = distance2dsquared(ball.origin, player.origin);
 	if(dist2 < (thresh * thresh))
 	{
-		return 1;
+		return true;
 	}
 	ball = self.visuals[0];
 	start = player geteye();
@@ -933,9 +947,9 @@ function can_use_ball(player)
 	}
 	if(!sighttracepassed(end, start, 0, ball) && !sighttracepassed(end, player.origin, 0, ball))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -956,7 +970,7 @@ function chief_mammal_reset()
 	{
 		origin = self.projectile.origin;
 	}
-	foreach(var_c823abda, visual in self.visuals)
+	foreach(visual in self.visuals)
 	{
 		visual.origin = origin;
 		visual.angles = visual.baseangles;
@@ -1047,13 +1061,13 @@ function on_pickup_ball(player)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_a472302d(team)
+function private function_a472302d(team)
 {
 	self.ownerteam = team;
 	if(team != "any")
 	{
 		self.team = team;
-		foreach(var_5855669, visual in self.visuals)
+		foreach(visual in self.visuals)
 		{
 			visual.team = team;
 		}
@@ -1117,7 +1131,7 @@ function ball_carrier_cleanup()
 function function_8f5b30b3(origin, angles)
 {
 	self.isresetting = 1;
-	foreach(var_e9ad60f2, visual in self.visuals)
+	foreach(visual in self.visuals)
 	{
 		visual.origin = origin;
 		visual.angles = angles;
@@ -1178,7 +1192,7 @@ function ball_set_dropped(skip_physics = 0)
 		velocity = (forward * 250) + vectorscale((0, 0, 1), 140);
 		ball_physics_launch(velocity);
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1257,7 +1271,7 @@ function reset_ball(var_fd894ecd = 1, var_a987c5a2, var_6f3d4b2e)
 	if(isdefined(var_a987c5a2))
 	{
 		self.trigger.baseorigin = var_a987c5a2;
-		foreach(var_8749586e, visual in self.visuals)
+		foreach(visual in self.visuals)
 		{
 			visual.baseorigin = var_a987c5a2;
 		}
@@ -1277,7 +1291,7 @@ function reset_ball(var_fd894ecd = 1, var_a987c5a2, var_6f3d4b2e)
 			var_195da49c = self.lastcarrier.origin;
 		}
 		self.trigger.baseorigin = var_195da49c;
-		foreach(var_bbb3530d, visual in self.visuals)
+		foreach(visual in self.visuals)
 		{
 			visual.baseorigin = var_195da49c;
 		}
@@ -1558,13 +1572,13 @@ function valid_ball_pickup_weapon(weapon)
 {
 	if(weapon == level.weaponnone)
 	{
-		return 0;
+		return false;
 	}
 	if(weapon == getweapon("ball"))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1945,7 +1959,7 @@ function ball_assign_random_start()
 */
 function ball_assign_start(start)
 {
-	foreach(var_bd188f4d, vis in self.visuals)
+	foreach(vis in self.visuals)
 	{
 		vis.baseorigin = start.origin;
 	}
@@ -2371,7 +2385,7 @@ function player_update_pass_target(ballobj)
 			playerdir = anglestoforward(self getplayerangles());
 			playereye = self geteye();
 			possible_pass_targets = [];
-			foreach(var_53b98796, target in level.players)
+			foreach(target in level.players)
 			{
 				if(target.team != self.team)
 				{
@@ -2401,7 +2415,7 @@ function player_update_pass_target(ballobj)
 				}
 			}
 			possible_pass_targets = array::quicksort(possible_pass_targets, &compare_player_pass_dot);
-			foreach(var_f853682a, target in possible_pass_targets)
+			foreach(target in possible_pass_targets)
 			{
 				if(sighttracepassed(playereye, target.pass_origin, 0, target))
 				{
@@ -2468,7 +2482,7 @@ function player_set_pass_target(new_target)
 		new_target clientfield::set("passoption", 1);
 		self.pass_target = new_target;
 		team_players = [];
-		foreach(var_a2a0e208, player in level.players)
+		foreach(player in level.players)
 		{
 			if(player.team == self.team && player != self && player != new_target)
 			{
@@ -2495,7 +2509,7 @@ function player_clear_pass_target()
 		self.pass_icon destroy();
 	}
 	team_players = [];
-	foreach(var_b62b8a78, player in level.players)
+	foreach(player in level.players)
 	{
 		if(player.team == self.team && player != self)
 		{
@@ -2560,7 +2574,7 @@ function is_touching_any_ball_return_trigger()
 	}
 	triggers_to_remove = [];
 	result = 0;
-	foreach(var_9fa55055, trigger in level.ball_return_trigger)
+	foreach(trigger in level.ball_return_trigger)
 	{
 		if(!isdefined(trigger))
 		{
@@ -2585,7 +2599,7 @@ function is_touching_any_ball_return_trigger()
 			break;
 		}
 	}
-	foreach(var_3eca65cc, trigger in triggers_to_remove)
+	foreach(trigger in triggers_to_remove)
 	{
 		arrayremovevalue(level.ball_return_trigger, trigger);
 	}

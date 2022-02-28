@@ -24,7 +24,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("wager", &__init__, undefined, undefined);
 }
@@ -331,31 +331,34 @@ function calculate_free_for_all_payouts()
 			}
 		}
 	}
-	else if(level.players.size == 1)
+	else
 	{
-		game["escrows"] = undefined;
-		return;
-	}
-	currentpayoutpercentage = 0;
-	cumulativepayoutpercentage = payoutpercentages[0];
-	playergroup = [];
-	playergroup[playergroup.size] = playerrankings[0];
-	for(i = 1; i < playerrankings.size; i++)
-	{
-		if(playerrankings[i].pers["score"] < playergroup[0].pers["score"])
+		if(level.players.size == 1)
 		{
-			set_winnings_on_players(playergroup, int((game["wager_pot"] * cumulativepayoutpercentage) / playergroup.size));
-			playergroup = [];
-			cumulativepayoutpercentage = 0;
+			game["escrows"] = undefined;
+			return;
 		}
-		playergroup[playergroup.size] = playerrankings[i];
-		currentpayoutpercentage++;
-		if(isdefined(payoutpercentages[currentpayoutpercentage]))
+		currentpayoutpercentage = 0;
+		cumulativepayoutpercentage = payoutpercentages[0];
+		playergroup = [];
+		playergroup[playergroup.size] = playerrankings[0];
+		for(i = 1; i < playerrankings.size; i++)
 		{
-			cumulativepayoutpercentage = cumulativepayoutpercentage + payoutpercentages[currentpayoutpercentage];
+			if(playerrankings[i].pers["score"] < playergroup[0].pers["score"])
+			{
+				set_winnings_on_players(playergroup, int((game["wager_pot"] * cumulativepayoutpercentage) / playergroup.size));
+				playergroup = [];
+				cumulativepayoutpercentage = 0;
+			}
+			playergroup[playergroup.size] = playerrankings[i];
+			currentpayoutpercentage++;
+			if(isdefined(payoutpercentages[currentpayoutpercentage]))
+			{
+				cumulativepayoutpercentage = cumulativepayoutpercentage + payoutpercentages[currentpayoutpercentage];
+			}
 		}
+		set_winnings_on_players(playergroup, int((game["wager_pot"] * cumulativepayoutpercentage) / playergroup.size));
 	}
-	set_winnings_on_players(playergroup, int((game["wager_pot"] * cumulativepayoutpercentage) / playergroup.size));
 }
 
 /*

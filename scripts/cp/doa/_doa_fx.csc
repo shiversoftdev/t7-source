@@ -436,42 +436,54 @@ function function_e68e3c0d(localclientnum, name, off, tag, kill = 0)
 			self.var_ca61d2d6[name] = undefined;
 		}
 	}
-	else if(tag == "special")
+	else
 	{
-		self function_b71a778a(localclientnum, name, off);
-	}
-	else if(tag == "fakelink")
-	{
-		org = spawn(localclientnum, self.origin, "script_model");
-		org setmodel("tag_origin");
-		org.fx = playfxontag(localclientnum, level._effect[name], org, "tag_origin");
-		if(isdefined(self.var_ec1cda64[name]))
+		if(tag == "special")
 		{
-			stopfx(localclientnum, self.var_ec1cda64[name]);
+			self function_b71a778a(localclientnum, name, off);
 		}
-		if(isdefined(self.var_ca61d2d6[name]))
+		else
 		{
-			self.var_ca61d2d6[name] delete();
+			if(tag == "fakelink")
+			{
+				org = spawn(localclientnum, self.origin, "script_model");
+				org setmodel("tag_origin");
+				org.fx = playfxontag(localclientnum, level._effect[name], org, "tag_origin");
+				if(isdefined(self.var_ec1cda64[name]))
+				{
+					stopfx(localclientnum, self.var_ec1cda64[name]);
+				}
+				if(isdefined(self.var_ca61d2d6[name]))
+				{
+					self.var_ca61d2d6[name] delete();
+				}
+				self.var_ec1cda64[name] = org.fx;
+				self.var_ca61d2d6[name] = org;
+				org thread function_1c0d0290(self);
+			}
+			else
+			{
+				if(tag == "none")
+				{
+					self.var_ec1cda64[name] = playfx(localclientnum, level._effect[name], self.origin);
+				}
+				else
+				{
+					if(isdefined(tag) && tag != "tag_origin")
+					{
+						tagorigin = self gettagorigin(tag);
+						if(!isdefined(tagorigin))
+						{
+							tag = "tag_origin";
+						}
+					}
+					modelent = (isdefined(self.fakemodel) ? self.fakemodel : self);
+					self.var_ec1cda64[name] = playfxontag(localclientnum, level._effect[name], modelent, tag);
+				}
+			}
 		}
-		self.var_ec1cda64[name] = org.fx;
-		self.var_ca61d2d6[name] = org;
-		org thread function_1c0d0290(self);
+		return self.var_ec1cda64[name];
 	}
-	else if(tag == "none")
-	{
-		self.var_ec1cda64[name] = playfx(localclientnum, level._effect[name], self.origin);
-	}
-	else if(isdefined(tag) && tag != "tag_origin")
-	{
-		tagorigin = self gettagorigin(tag);
-		if(!isdefined(tagorigin))
-		{
-			tag = "tag_origin";
-		}
-	}
-	modelent = (isdefined(self.fakemodel) ? self.fakemodel : self);
-	self.var_ec1cda64[name] = playfxontag(localclientnum, level._effect[name], modelent, tag);
-	return self.var_ec1cda64[name];
 }
 
 /*
@@ -494,7 +506,7 @@ function function_b71a778a(localclientnum, name, off, tag)
 	{
 		if(isdefined(self.var_6f5948cb[name]))
 		{
-			foreach(var_cf8e42be, fx in self.var_6f5948cb[name])
+			foreach(fx in self.var_6f5948cb[name])
 			{
 				stopfx(localclientnum, self.var_ec1cda64[name]);
 			}

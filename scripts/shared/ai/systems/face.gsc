@@ -276,17 +276,25 @@ function playfacethread(facialanim, str_script_alias, importance, notifystring, 
 			{
 				self thread _play_sound_to_player_with_notify(str_vox_file, toplayer, uniquenotify);
 			}
-			else if(isdefined(self gettagorigin("J_Head")))
-			{
-				self playsoundwithnotify(str_vox_file, uniquenotify, "J_Head");
-			}
 			else
 			{
-				self playsoundwithnotify(str_vox_file, uniquenotify);
+				if(isdefined(self gettagorigin("J_Head")))
+				{
+					self playsoundwithnotify(str_vox_file, uniquenotify, "J_Head");
+				}
+				else
+				{
+					self playsoundwithnotify(str_vox_file, uniquenotify);
+				}
 			}
 		}
-		println(("" + str_script_alias) + "");
-		self thread _missing_dialog(str_script_alias, str_vox_file, uniquenotify);
+		else
+		{
+			/#
+				println(("" + str_script_alias) + "");
+				self thread _missing_dialog(str_script_alias, str_vox_file, uniquenotify);
+			#/
+		}
 	}
 	else
 	{
@@ -346,14 +354,14 @@ function _play_sound_to_player_with_notify(soundalias, toplayer, uniquenotify)
 	Parameters: 3
 	Flags: Private
 */
-private function _temp_dialog(str_line, uniquenotify, b_missing_vo = 0)
+function private _temp_dialog(str_line, uniquenotify, b_missing_vo = 0)
 {
 	setdvar("bgcache_disablewarninghints", 1);
 	if(!b_missing_vo && isdefined(self.propername))
 	{
 		str_line = (self.propername + ": ") + str_line;
 	}
-	foreach(var_a8706945, player in level.players)
+	foreach(player in level.players)
 	{
 		if(!isdefined(player getluimenu("TempDialog")))
 		{
@@ -370,7 +378,7 @@ private function _temp_dialog(str_line, uniquenotify, b_missing_vo = 0)
 	n_wait_time = (strtok(str_line, " ").size - 1) / 2;
 	n_wait_time = math::clamp(n_wait_time, 2, 5);
 	util::waittill_any_timeout(n_wait_time, "death", "cancel speaking");
-	foreach(var_51ec704f, player in level.players)
+	foreach(player in level.players)
 	{
 		if(isdefined(player getluimenu("TempDialog")))
 		{
@@ -390,7 +398,7 @@ private function _temp_dialog(str_line, uniquenotify, b_missing_vo = 0)
 	Parameters: 3
 	Flags: Private
 */
-private function _missing_dialog(str_script_alias, str_vox_file, uniquenotify)
+function private _missing_dialog(str_script_alias, str_vox_file, uniquenotify)
 {
 	_temp_dialog((("script id: " + str_script_alias) + " sound alias: ") + str_vox_file, uniquenotify, 1);
 }

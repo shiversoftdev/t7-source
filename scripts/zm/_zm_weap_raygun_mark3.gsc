@@ -24,7 +24,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_weap_raygun_mark3", &__init__, &__main__, undefined);
 }
@@ -83,9 +83,9 @@ function is_slow_raygun(weapon)
 {
 	if(weapon === level.w_raygun_mark3lh || weapon === level.w_raygun_mark3lh_upgraded)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -101,9 +101,9 @@ function is_beam_raygun(weapon)
 {
 	if(weapon === level.w_raygun_mark3 || weapon === level.w_raygun_mark3_upgraded)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -229,7 +229,7 @@ function pulse_damage(e_owner, w_weapon)
 		}
 		n_radius_squared = n_radius * n_radius;
 		a_ai = getaiteamarray("axis");
-		foreach(var_a9a0a0e0, ai in a_ai)
+		foreach(ai in a_ai)
 		{
 			if(isdefined(ai.b_ignore_mark3_pulse_damage) && ai.b_ignore_mark3_pulse_damage)
 			{
@@ -249,7 +249,7 @@ function pulse_damage(e_owner, w_weapon)
 				}
 			}
 		}
-		foreach(var_706613a0, e_player in level.activeplayers)
+		foreach(e_player in level.activeplayers)
 		{
 			if(isdefined(e_player) && (!(isdefined(e_player.raygun_mark3_vision_on) && e_player.raygun_mark3_vision_on)))
 			{

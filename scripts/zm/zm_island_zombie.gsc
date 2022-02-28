@@ -27,11 +27,11 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
-	function_f4226854();
+	initzmislandbehaviorsandasm();
 	setdvar("scr_zm_use_code_enemy_selection", 0);
-	level.closest_player_override = &function_c3d4cc46;
+	level.closest_player_override = &island_closest_player;
 	level thread update_closest_player();
 	level.pathdist_type = 2;
 	zm_utility::register_custom_spawner_entry("quick_riser_location", &function_50565360);
@@ -39,7 +39,7 @@ autoexec function init()
 }
 
 /*
-	Name: function_f4226854
+	Name: initzmislandbehaviorsandasm
 	Namespace: zm_island_zombie
 	Checksum: 0xF58059DD
 	Offset: 0x550
@@ -47,7 +47,7 @@ autoexec function init()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_f4226854()
+function private initzmislandbehaviorsandasm()
 {
 	behaviortreenetworkutility::registerbehaviortreescriptapi("ZmIslandAttackableObjectService", &zmislandattackableobjectservice);
 }
@@ -61,14 +61,14 @@ private function function_f4226854()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_1d7e9058()
+function private function_1d7e9058()
 {
 	self ai::set_behavior_attribute("use_attackable", 1);
-	self.cant_move_cb = &function_69768b33;
+	self.cant_move_cb = &island_cant_move_cb;
 }
 
 /*
-	Name: function_69768b33
+	Name: island_cant_move_cb
 	Namespace: zm_island_zombie
 	Checksum: 0xF4408998
 	Offset: 0x5D0
@@ -76,7 +76,7 @@ private function function_1d7e9058()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_69768b33()
+function private island_cant_move_cb()
 {
 	if(isdefined(self.attackable))
 	{
@@ -89,7 +89,7 @@ private function function_69768b33()
 	}
 	a_ai = getaiteamarray(level.zombie_team);
 	var_125a7575 = self array::filter(a_ai, 0, &function_b3de8aa4, 32);
-	foreach(var_8e14c94b, ai in var_125a7575)
+	foreach(ai in var_125a7575)
 	{
 		if(isdefined(ai.attackable) && (isdefined(ai.attackable.is_active) && ai.attackable.is_active) && (isdefined(ai.is_at_attackable) && ai.is_at_attackable))
 		{
@@ -109,7 +109,7 @@ private function function_69768b33()
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_b3de8aa4(ent, radius)
+function private function_b3de8aa4(ent, radius)
 {
 	radius_sq = radius * radius;
 	return ent != self && distancesquared(self.origin, ent.origin) <= radius_sq;
@@ -124,12 +124,12 @@ private function function_b3de8aa4(ent, radius)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function zmislandattackableobjectservice(entity)
+function private zmislandattackableobjectservice(entity)
 {
 	if(isdefined(entity.var_7d79a6) && entity.var_7d79a6)
 	{
 		entity.attackable = undefined;
-		return 0;
+		return false;
 	}
 	zm_behavior::zombieattackableobjectservice(entity);
 }
@@ -156,11 +156,11 @@ function function_2d4f3007(player)
 	var_334f2464 = "";
 	if(isdefined(player.var_90f735f8) && player.var_90f735f8)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.var_6eb9188d) && self.var_6eb9188d)
 	{
-		return 1;
+		return true;
 	}
 	if(isdefined(self.zone_name))
 	{
@@ -273,9 +273,9 @@ function function_2d4f3007(player)
 	}
 	if(str_player_zone != var_334f2464)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -287,14 +287,14 @@ function function_2d4f3007(player)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_f8e95ea2(players)
+function private function_f8e95ea2(players)
 {
 	if(isdefined(self.last_closest_player) && (isdefined(self.last_closest_player.am_i_valid) && self.last_closest_player.am_i_valid))
 	{
 		return;
 	}
 	self.need_closest_player = 1;
-	foreach(var_64dbd143, player in players)
+	foreach(player in players)
 	{
 		if(self function_2d4f3007(player))
 		{
@@ -306,7 +306,7 @@ private function function_f8e95ea2(players)
 }
 
 /*
-	Name: function_c3d4cc46
+	Name: island_closest_player
 	Namespace: zm_island_zombie
 	Checksum: 0xB7C70C19
 	Offset: 0xD70
@@ -314,7 +314,7 @@ private function function_f8e95ea2(players)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_c3d4cc46(origin, players)
+function private island_closest_player(origin, players)
 {
 	if(self.ignoreall === 1)
 	{
@@ -409,14 +409,14 @@ private function function_c3d4cc46(origin, players)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function update_closest_player()
+function private update_closest_player()
 {
 	level waittill(#"start_of_round");
 	while(true)
 	{
 		reset_closest_player = 1;
 		zombies = zombie_utility::get_round_enemy_array();
-		foreach(var_47db1770, zombie in zombies)
+		foreach(zombie in zombies)
 		{
 			if(isdefined(zombie.need_closest_player) && zombie.need_closest_player)
 			{
@@ -426,7 +426,7 @@ private function update_closest_player()
 		}
 		if(reset_closest_player)
 		{
-			foreach(var_62534f7c, zombie in zombies)
+			foreach(zombie in zombies)
 			{
 				if(isdefined(zombie.need_closest_player))
 				{

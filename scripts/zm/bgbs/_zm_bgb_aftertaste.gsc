@@ -21,7 +21,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_bgb_aftertaste", &__init__, undefined, "bgb");
 }
@@ -58,13 +58,13 @@ function lost_perk_override(perk, var_2488e46a = undefined, var_24df4040 = undef
 {
 	if(zm_perks::use_solo_revive() && perk == "specialty_quickrevive")
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(var_2488e46a) && isdefined(var_24df4040) && var_2488e46a == var_24df4040)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

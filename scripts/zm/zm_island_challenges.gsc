@@ -42,7 +42,7 @@
 function main()
 {
 	level flag::init("flag_init_challenge_pillars");
-	level thread function_ebb99c53();
+	level thread init_challenge_pillars();
 	if(getdvarint("splitscreen_playerCount") > 2)
 	{
 		array::run_all(getentarray("t_lookat_challenge_1", "targetname"), &delete);
@@ -54,25 +54,25 @@ function main()
 	else
 	{
 		level._challenges = spawnstruct();
-		level._challenges.var_4687355c = [];
-		level._challenges.var_b88ea497 = [];
-		level._challenges.var_928c2a2e = [];
-		array::add(level._challenges.var_4687355c, function_970609e0(1, &"ZM_ISLAND_CHALLENGE_1_1", 1, "update_challenge_1_1", undefined));
-		array::add(level._challenges.var_4687355c, function_970609e0(1, &"ZM_ISLAND_CHALLENGE_1_2", 1, "update_challenge_1_2", undefined));
-		array::add(level._challenges.var_4687355c, function_970609e0(1, &"ZM_ISLAND_CHALLENGE_1_3", 5, "update_challenge_1_3", undefined));
-		array::add(level._challenges.var_4687355c, function_970609e0(1, &"ZM_ISLAND_CHALLENGE_1_4", 5, "update_challenge_1_4", undefined));
-		array::add(level._challenges.var_4687355c, function_970609e0(1, &"ZM_ISLAND_CHALLENGE_1_5", 5, "update_challenge_1_5", &function_2dbc7cd3));
-		array::add(level._challenges.var_b88ea497, function_970609e0(2, &"ZM_ISLAND_CHALLENGE_2_1", 1, "update_challenge_2_1", undefined));
-		array::add(level._challenges.var_b88ea497, function_970609e0(2, &"ZM_ISLAND_CHALLENGE_2_2", 1, "update_challenge_2_2", &function_25c1bab7));
-		array::add(level._challenges.var_b88ea497, function_970609e0(2, &"ZM_ISLAND_CHALLENGE_2_3", 15, "update_challenge_2_3", undefined));
-		array::add(level._challenges.var_b88ea497, function_970609e0(2, &"ZM_ISLAND_CHALLENGE_2_4", 10, "update_challenge_2_4", undefined));
-		array::add(level._challenges.var_b88ea497, function_970609e0(2, &"ZM_ISLAND_CHALLENGE_2_5", 20, "update_challenge_2_5", undefined));
-		array::add(level._challenges.var_b88ea497, function_970609e0(2, &"ZM_ISLAND_CHALLENGE_2_6", 20, "update_challenge_2_6", undefined));
-		array::add(level._challenges.var_928c2a2e, function_970609e0(3, &"ZM_ISLAND_CHALLENGE_3_1", 8, "update_challenge_3_1", undefined));
-		array::add(level._challenges.var_928c2a2e, function_970609e0(3, &"ZM_ISLAND_CHALLENGE_3_2", 3, "update_challenge_3_2", undefined));
-		array::add(level._challenges.var_928c2a2e, function_970609e0(3, &"ZM_ISLAND_CHALLENGE_3_3", 1, "update_challenge_3_3", &function_5a96677a));
-		array::add(level._challenges.var_928c2a2e, function_970609e0(3, &"ZM_ISLAND_CHALLENGE_3_4", 30, "update_challenge_3_4", undefined));
-		array::add(level._challenges.var_928c2a2e, function_970609e0(3, &"ZM_ISLAND_CHALLENGE_3_5", 5, "update_challenge_3_5", &function_26c58398));
+		level._challenges.challenge_1 = [];
+		level._challenges.challenge_2 = [];
+		level._challenges.challenge_3 = [];
+		array::add(level._challenges.challenge_1, init_challenges(1, &"ZM_ISLAND_CHALLENGE_1_1", 1, "update_challenge_1_1", undefined));
+		array::add(level._challenges.challenge_1, init_challenges(1, &"ZM_ISLAND_CHALLENGE_1_2", 1, "update_challenge_1_2", undefined));
+		array::add(level._challenges.challenge_1, init_challenges(1, &"ZM_ISLAND_CHALLENGE_1_3", 5, "update_challenge_1_3", undefined));
+		array::add(level._challenges.challenge_1, init_challenges(1, &"ZM_ISLAND_CHALLENGE_1_4", 5, "update_challenge_1_4", undefined));
+		array::add(level._challenges.challenge_1, init_challenges(1, &"ZM_ISLAND_CHALLENGE_1_5", 5, "update_challenge_1_5", &function_2dbc7cd3));
+		array::add(level._challenges.challenge_2, init_challenges(2, &"ZM_ISLAND_CHALLENGE_2_1", 1, "update_challenge_2_1", undefined));
+		array::add(level._challenges.challenge_2, init_challenges(2, &"ZM_ISLAND_CHALLENGE_2_2", 1, "update_challenge_2_2", &function_25c1bab7));
+		array::add(level._challenges.challenge_2, init_challenges(2, &"ZM_ISLAND_CHALLENGE_2_3", 15, "update_challenge_2_3", undefined));
+		array::add(level._challenges.challenge_2, init_challenges(2, &"ZM_ISLAND_CHALLENGE_2_4", 10, "update_challenge_2_4", undefined));
+		array::add(level._challenges.challenge_2, init_challenges(2, &"ZM_ISLAND_CHALLENGE_2_5", 20, "update_challenge_2_5", undefined));
+		array::add(level._challenges.challenge_2, init_challenges(2, &"ZM_ISLAND_CHALLENGE_2_6", 20, "update_challenge_2_6", undefined));
+		array::add(level._challenges.challenge_3, init_challenges(3, &"ZM_ISLAND_CHALLENGE_3_1", 8, "update_challenge_3_1", undefined));
+		array::add(level._challenges.challenge_3, init_challenges(3, &"ZM_ISLAND_CHALLENGE_3_2", 3, "update_challenge_3_2", undefined));
+		array::add(level._challenges.challenge_3, init_challenges(3, &"ZM_ISLAND_CHALLENGE_3_3", 1, "update_challenge_3_3", &function_5a96677a));
+		array::add(level._challenges.challenge_3, init_challenges(3, &"ZM_ISLAND_CHALLENGE_3_4", 30, "update_challenge_3_4", undefined));
+		array::add(level._challenges.challenge_3, init_challenges(3, &"ZM_ISLAND_CHALLENGE_3_5", 5, "update_challenge_3_5", &function_26c58398));
 		zm_spawner::register_zombie_death_event_callback(&function_905d9544);
 		zm_spawner::register_zombie_death_event_callback(&function_682e6fc4);
 		zm_spawner::register_zombie_death_event_callback(&function_5a2a9ef9);
@@ -86,7 +86,7 @@ function main()
 }
 
 /*
-	Name: function_970609e0
+	Name: init_challenges
 	Namespace: zm_island_challenges
 	Checksum: 0x7143945B
 	Offset: 0x1430
@@ -94,11 +94,11 @@ function main()
 	Parameters: 5
 	Flags: Linked
 */
-function function_970609e0(n_challenge_index, var_3e1001b, var_80792f67, str_challenge_notify, var_d675d6d8)
+function init_challenges(n_challenge_index, str_challenge_info, var_80792f67, str_challenge_notify, var_d675d6d8)
 {
 	s_challenge = spawnstruct();
 	s_challenge.n_index = n_challenge_index;
-	s_challenge.str_info = var_3e1001b;
+	s_challenge.str_info = str_challenge_info;
 	s_challenge.n_count = var_80792f67;
 	s_challenge.str_notify = str_challenge_notify;
 	s_challenge.func_think = var_d675d6d8;
@@ -122,20 +122,20 @@ function on_player_connect()
 	self.var_26f3bd30 = 0;
 	self.var_301c71e9 = 0;
 	self._challenges = spawnstruct();
-	self._challenges.var_4687355c = [];
-	self._challenges.var_b88ea497 = [];
-	self._challenges.var_928c2a2e = [];
-	self._challenges.var_4687355c = array::random(level._challenges.var_4687355c);
-	self._challenges.var_b88ea497 = array::random(level._challenges.var_b88ea497);
-	self._challenges.var_928c2a2e = array::random(level._challenges.var_928c2a2e);
-	arrayremovevalue(level._challenges.var_4687355c, self._challenges.var_4687355c);
-	arrayremovevalue(level._challenges.var_b88ea497, self._challenges.var_b88ea497);
-	arrayremovevalue(level._challenges.var_928c2a2e, self._challenges.var_928c2a2e);
+	self._challenges.challenge_1 = [];
+	self._challenges.challenge_2 = [];
+	self._challenges.challenge_3 = [];
+	self._challenges.challenge_1 = array::random(level._challenges.challenge_1);
+	self._challenges.challenge_2 = array::random(level._challenges.challenge_2);
+	self._challenges.challenge_3 = array::random(level._challenges.challenge_3);
+	arrayremovevalue(level._challenges.challenge_1, self._challenges.challenge_1);
+	arrayremovevalue(level._challenges.challenge_2, self._challenges.challenge_2);
+	arrayremovevalue(level._challenges.challenge_3, self._challenges.challenge_3);
 	self thread function_b7156b15(var_a879fa43);
 }
 
 /*
-	Name: function_ebb99c53
+	Name: init_challenge_pillars
 	Namespace: zm_island_challenges
 	Checksum: 0x9392B838
 	Offset: 0x16F0
@@ -143,7 +143,7 @@ function on_player_connect()
 	Parameters: 0
 	Flags: Linked
 */
-function function_ebb99c53()
+function init_challenge_pillars()
 {
 	level flag::wait_till("start_zombie_round_logic");
 	for(i = 1; i < 4; i++)
@@ -174,9 +174,9 @@ function on_player_disconnect()
 	{
 		level clientfield::set((("pillar_challenge_" + var_a879fa43) + "_") + i, 1);
 	}
-	array::add(level._challenges.var_4687355c, self._challenges.var_4687355c);
-	array::add(level._challenges.var_b88ea497, self._challenges.var_b88ea497);
-	array::add(level._challenges.var_928c2a2e, self._challenges.var_928c2a2e);
+	array::add(level._challenges.challenge_1, self._challenges.challenge_1);
+	array::add(level._challenges.challenge_2, self._challenges.challenge_2);
+	array::add(level._challenges.challenge_3, self._challenges.challenge_3);
 }
 
 /*
@@ -197,18 +197,18 @@ function function_b7156b15(var_a879fa43)
 	self flag::init("flag_player_completed_challenge_1");
 	self flag::init("flag_player_completed_challenge_2");
 	self flag::init("flag_player_completed_challenge_3");
-	self thread function_2ce855f3(self._challenges.var_4687355c.n_index, self._challenges.var_4687355c.func_think, self._challenges.var_4687355c.n_count, self._challenges.var_4687355c.str_notify);
-	self thread function_2ce855f3(self._challenges.var_b88ea497.n_index, self._challenges.var_b88ea497.func_think, self._challenges.var_b88ea497.n_count, self._challenges.var_b88ea497.str_notify);
-	self thread function_2ce855f3(self._challenges.var_928c2a2e.n_index, self._challenges.var_928c2a2e.func_think, self._challenges.var_928c2a2e.n_count, self._challenges.var_928c2a2e.str_notify);
-	self thread function_fbbc8608(self._challenges.var_4687355c.n_index, "flag_player_completed_challenge_1");
-	self thread function_fbbc8608(self._challenges.var_b88ea497.n_index, "flag_player_completed_challenge_2");
-	self thread function_fbbc8608(self._challenges.var_928c2a2e.n_index, "flag_player_completed_challenge_3");
+	self thread function_2ce855f3(self._challenges.challenge_1.n_index, self._challenges.challenge_1.func_think, self._challenges.challenge_1.n_count, self._challenges.challenge_1.str_notify);
+	self thread function_2ce855f3(self._challenges.challenge_2.n_index, self._challenges.challenge_2.func_think, self._challenges.challenge_2.n_count, self._challenges.challenge_2.str_notify);
+	self thread function_2ce855f3(self._challenges.challenge_3.n_index, self._challenges.challenge_3.func_think, self._challenges.challenge_3.n_count, self._challenges.challenge_3.str_notify);
+	self thread function_fbbc8608(self._challenges.challenge_1.n_index, "flag_player_completed_challenge_1");
+	self thread function_fbbc8608(self._challenges.challenge_2.n_index, "flag_player_completed_challenge_2");
+	self thread function_fbbc8608(self._challenges.challenge_3.n_index, "flag_player_completed_challenge_3");
 	self thread function_974d5f1d();
 	var_8e2d9e6f = [];
 	var_e01fcddc = [];
 	for(i = 1; i < 4; i++)
 	{
-		foreach(var_1edd0b54, t_lookat in getentarray("t_lookat_challenge_" + i, "targetname"))
+		foreach(t_lookat in getentarray("t_lookat_challenge_" + i, "targetname"))
 		{
 			if(t_lookat.script_special == var_a879fa43)
 			{
@@ -219,7 +219,7 @@ function function_b7156b15(var_a879fa43)
 		self thread function_7fc84e9c(var_a879fa43, var_8e2d9e6f[i]);
 		self thread function_e43d4636(var_a879fa43, var_8e2d9e6f[i]);
 	}
-	foreach(var_575757b6, s_challenge in struct::get_array("s_challenge_trigger"))
+	foreach(s_challenge in struct::get_array("s_challenge_trigger"))
 	{
 		if(s_challenge.script_special == var_a879fa43)
 		{
@@ -271,15 +271,18 @@ function function_fbbc8608(n_challenge_index, var_d4adfa57)
 	var_d6b47fd3 = "";
 	if(n_challenge_index == 1)
 	{
-		var_d6b47fd3 = self._challenges.var_4687355c.str_info;
-	}
-	else if(n_challenge_index == 2)
-	{
-		var_d6b47fd3 = self._challenges.var_b88ea497.str_info;
+		var_d6b47fd3 = self._challenges.challenge_1.str_info;
 	}
 	else
 	{
-		var_d6b47fd3 = self._challenges.var_928c2a2e.str_info;
+		if(n_challenge_index == 2)
+		{
+			var_d6b47fd3 = self._challenges.challenge_2.str_info;
+		}
+		else
+		{
+			var_d6b47fd3 = self._challenges.challenge_3.str_info;
+		}
 	}
 	self luinotifyevent(&"trial_complete", 2, &"ZM_ISLAND_TRIAL_COMPLETE", var_d6b47fd3);
 }
@@ -315,15 +318,18 @@ function function_27f6c3cd(player, n_challenge_index)
 {
 	if(self.stub.var_8e2d9e6f[n_challenge_index] == 1)
 	{
-		player function_e8547a5b(player._challenges.var_4687355c.str_info);
-	}
-	else if(self.stub.var_8e2d9e6f[n_challenge_index] == 2)
-	{
-		player function_e8547a5b(player._challenges.var_b88ea497.str_info);
+		player function_e8547a5b(player._challenges.challenge_1.str_info);
 	}
 	else
 	{
-		player function_e8547a5b(player._challenges.var_928c2a2e.str_info);
+		if(self.stub.var_8e2d9e6f[n_challenge_index] == 2)
+		{
+			player function_e8547a5b(player._challenges.challenge_2.str_info);
+		}
+		else
+		{
+			player function_e8547a5b(player._challenges.challenge_3.str_info);
+		}
 	}
 }
 
@@ -381,40 +387,40 @@ function function_3ae0d6d5(player)
 					self sethintstringforplayer(player, "");
 					var_a51a0ba6 = 1;
 					self thread function_23c9ffd3(player);
-					return 1;
+					return true;
 				}
 				if(!player flag::get("flag_player_collected_reward_" + self.stub.var_8e2d9e6f[i]) && !level flag::get("flag_player_initialized_reward"))
 				{
 					self sethintstringforplayer(player, &"ZM_ISLAND_CHALLENGE_REWARD");
 					var_a51a0ba6 = 1;
 					self thread function_23c9ffd3(player);
-					return 1;
+					return true;
 				}
 				if(!player flag::get("flag_player_collected_reward_" + self.stub.var_8e2d9e6f[i]) && level flag::get("flag_player_initialized_reward"))
 				{
 					self sethintstringforplayer(player, &"ZM_ISLAND_CHALLENGE_ALTAR_IN_USE");
 					var_a51a0ba6 = 1;
 					self thread function_23c9ffd3(player);
-					return 1;
+					return true;
 				}
 				self sethintstringforplayer(player, "");
 				var_a51a0ba6 = 1;
 				self thread function_23c9ffd3(player);
-				return 1;
+				return true;
 			}
 		}
 		if(!var_a51a0ba6)
 		{
 			self sethintstringforplayer(player, "");
 			player clientfield::set_player_uimodel("trialWidget.visible", 0);
-			return 0;
+			return false;
 		}
 	}
 	else
 	{
 		self sethintstringforplayer(player, "");
 		player clientfield::set_player_uimodel("trialWidget.visible", 0);
-		return 0;
+		return false;
 	}
 }
 
@@ -433,9 +439,9 @@ function function_3f67a723(origin, arc_angle_degrees = 90, do_trace, e_ignore)
 	dot = cos(arc_angle_degrees * 0.5);
 	if(self util::is_player_looking_at(origin, dot, do_trace, e_ignore))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -550,16 +556,19 @@ function function_8675d6ed(n_challenge)
 	{
 		var_c9d33fc4 = "p7_zm_power_up_max_ammo";
 	}
-	else if(n_challenge == 2)
-	{
-		array::add(var_81d71db, "wpn_t7_lmg_dingo_world");
-		array::add(var_81d71db, "wpn_t7_shotty_gator_world");
-		array::add(var_81d71db, "wpn_t7_sniper_svg100_world");
-		var_c9d33fc4 = array::random(var_81d71db);
-	}
 	else
 	{
-		var_c9d33fc4 = "zombie_pickup_perk_bottle";
+		if(n_challenge == 2)
+		{
+			array::add(var_81d71db, "wpn_t7_lmg_dingo_world");
+			array::add(var_81d71db, "wpn_t7_shotty_gator_world");
+			array::add(var_81d71db, "wpn_t7_sniper_svg100_world");
+			var_c9d33fc4 = array::random(var_81d71db);
+		}
+		else
+		{
+			var_c9d33fc4 = "zombie_pickup_perk_bottle";
+		}
 	}
 	level flag::set("flag_player_initialized_reward");
 	var_a6a1ecf9 = getent("altar_lid", "targetname");
@@ -681,25 +690,31 @@ function player_give_reward(n_challenge, s_altar, var_c9d33fc4)
 	{
 		level thread zm_powerups::specific_powerup_drop("full_ammo", self.origin);
 	}
-	else if(n_challenge == 2)
+	else
 	{
-		if(var_c9d33fc4 == "wpn_t7_lmg_dingo_world")
+		if(n_challenge == 2)
 		{
-			e_weapon = getweapon("lmg_cqb");
-		}
-		else if(var_c9d33fc4 == "wpn_t7_shotty_gator_world")
-		{
-			e_weapon = getweapon("shotgun_semiauto");
+			if(var_c9d33fc4 == "wpn_t7_lmg_dingo_world")
+			{
+				e_weapon = getweapon("lmg_cqb");
+			}
+			else
+			{
+				if(var_c9d33fc4 == "wpn_t7_shotty_gator_world")
+				{
+					e_weapon = getweapon("shotgun_semiauto");
+				}
+				else
+				{
+					e_weapon = getweapon("sniper_powerbolt");
+				}
+			}
+			self thread zm_island_util::swap_weapon(e_weapon);
 		}
 		else
 		{
-			e_weapon = getweapon("sniper_powerbolt");
+			level thread zm_powerups::specific_powerup_drop("empty_perk", self.origin);
 		}
-		self thread zm_island_util::swap_weapon(e_weapon);
-	}
-	else
-	{
-		level thread zm_powerups::specific_powerup_drop("empty_perk", self.origin);
 	}
 	self flag::set("flag_player_collected_reward_" + n_challenge);
 	level flag::clear("flag_player_initialized_reward");
@@ -747,15 +762,15 @@ function function_6d42affc(player)
 	if(zm_utility::is_placeable_mine(w_current) || zm_equipment::is_equipment(w_current) || w_current == level.weaponnone || w_current.isheroweapon == 1 && self.stub.n_challenge == 2)
 	{
 		self sethintstringforplayer(player, "");
-		return 0;
+		return false;
 	}
 	if(player getentitynumber() == self.stub.var_a879fa43)
 	{
 		self sethintstringforplayer(player, &"ZM_ISLAND_CHALLENGE_REWARD");
-		return 1;
+		return true;
 	}
 	self sethintstringforplayer(player, "");
-	return 0;
+	return false;
 }
 
 /*
@@ -1149,7 +1164,7 @@ function function_397b26ee()
 function function_b9b4ce34()
 {
 	/#
-		zm_devgui::add_custom_devgui_callback(&function_16ba3a1e);
+		zm_devgui::add_custom_devgui_callback(&challenges_devgui_callback);
 		adddebugcommand("");
 		adddebugcommand("");
 		adddebugcommand("");
@@ -1159,7 +1174,7 @@ function function_b9b4ce34()
 }
 
 /*
-	Name: function_16ba3a1e
+	Name: challenges_devgui_callback
 	Namespace: zm_island_challenges
 	Checksum: 0x49E60582
 	Offset: 0x40F8
@@ -1167,7 +1182,7 @@ function function_b9b4ce34()
 	Parameters: 1
 	Flags: Linked
 */
-function function_16ba3a1e(cmd)
+function challenges_devgui_callback(cmd)
 {
 	/#
 		switch(cmd)
@@ -1175,61 +1190,61 @@ function function_16ba3a1e(cmd)
 			case "":
 			{
 				level flag::set("");
-				return 1;
+				return true;
 			}
 			case "":
 			{
-				foreach(var_5bb4d02d, player in level.players)
+				foreach(player in level.players)
 				{
 					player flag::set("");
 					player.var_873a3e27[1] = 1;
 				}
-				return 1;
+				return true;
 			}
 			case "":
 			{
-				foreach(var_8bc8a375, player in level.players)
+				foreach(player in level.players)
 				{
 					player flag::set("");
 					player.var_873a3e27[2] = 1;
 				}
-				return 1;
+				return true;
 			}
 			case "":
 			{
-				foreach(var_aa386310, player in level.players)
+				foreach(player in level.players)
 				{
 					player flag::set("");
 					player.var_873a3e27[3] = 1;
 				}
-				return 1;
+				return true;
 			}
 			case "":
 			{
-				foreach(var_f0ed8627, player in level.players)
+				foreach(player in level.players)
 				{
-					array::add(level._challenges.var_4687355c, player._challenges.var_4687355c);
-					array::add(level._challenges.var_b88ea497, player._challenges.var_b88ea497);
-					array::add(level._challenges.var_928c2a2e, player._challenges.var_928c2a2e);
+					array::add(level._challenges.challenge_1, player._challenges.challenge_1);
+					array::add(level._challenges.challenge_2, player._challenges.challenge_2);
+					array::add(level._challenges.challenge_3, player._challenges.challenge_3);
 				}
-				foreach(var_febab197, player in level.players)
+				foreach(player in level.players)
 				{
 					player notify(#"hash_1e547c60");
 					player.var_873a3e27 = undefined;
-					player._challenges.var_4687355c = array::random(level._challenges.var_4687355c);
-					player._challenges.var_b88ea497 = array::random(level._challenges.var_b88ea497);
-					player._challenges.var_928c2a2e = array::random(level._challenges.var_928c2a2e);
-					arrayremovevalue(level._challenges.var_4687355c, player._challenges.var_4687355c);
-					arrayremovevalue(level._challenges.var_b88ea497, player._challenges.var_b88ea497);
-					arrayremovevalue(level._challenges.var_928c2a2e, player._challenges.var_928c2a2e);
-					player thread function_2ce855f3(player._challenges.var_4687355c.n_index, player._challenges.var_4687355c.func_think, player._challenges.var_4687355c.n_count, player._challenges.var_4687355c.str_notify);
-					player thread function_2ce855f3(player._challenges.var_b88ea497.n_index, player._challenges.var_b88ea497.func_think, player._challenges.var_b88ea497.n_count, player._challenges.var_b88ea497.str_notify);
-					player thread function_2ce855f3(player._challenges.var_928c2a2e.n_index, player._challenges.var_928c2a2e.func_think, player._challenges.var_928c2a2e.n_count, player._challenges.var_928c2a2e.str_notify);
+					player._challenges.challenge_1 = array::random(level._challenges.challenge_1);
+					player._challenges.challenge_2 = array::random(level._challenges.challenge_2);
+					player._challenges.challenge_3 = array::random(level._challenges.challenge_3);
+					arrayremovevalue(level._challenges.challenge_1, player._challenges.challenge_1);
+					arrayremovevalue(level._challenges.challenge_2, player._challenges.challenge_2);
+					arrayremovevalue(level._challenges.challenge_3, player._challenges.challenge_3);
+					player thread function_2ce855f3(player._challenges.challenge_1.n_index, player._challenges.challenge_1.func_think, player._challenges.challenge_1.n_count, player._challenges.challenge_1.str_notify);
+					player thread function_2ce855f3(player._challenges.challenge_2.n_index, player._challenges.challenge_2.func_think, player._challenges.challenge_2.n_count, player._challenges.challenge_2.str_notify);
+					player thread function_2ce855f3(player._challenges.challenge_3.n_index, player._challenges.challenge_3.func_think, player._challenges.challenge_3.n_count, player._challenges.challenge_3.str_notify);
 				}
-				return 1;
+				return true;
 			}
 		}
-		return 0;
+		return false;
 	#/
 }
 

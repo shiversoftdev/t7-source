@@ -101,13 +101,16 @@ function spawn_manager_debug_hud_update(active_ai, spawn_ai, max_ai, active_mana
 						level.spawn_manager_debug_hud[i].color = (0, 1, 0);
 					}
 				}
-				else if(level.debugactivemanagers[i].enable)
-				{
-					level.spawn_manager_debug_hud[i].color = (1, 1, 1);
-				}
 				else
 				{
-					level.spawn_manager_debug_hud[i].color = vectorscale((1, 1, 1), 0.4);
+					if(level.debugactivemanagers[i].enable)
+					{
+						level.spawn_manager_debug_hud[i].color = (1, 1, 1);
+					}
+					else
+					{
+						level.spawn_manager_debug_hud[i].color = vectorscale((1, 1, 1), 0.4);
+					}
 				}
 				text = ("" + level.debugactivemanagers[i].sm_id) + "";
 				text = text + ("" + level.debugactivemanagers[i].spawncount);

@@ -20,7 +20,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_perk_random", &__init__, undefined, undefined);
 }
@@ -232,7 +232,7 @@ function rock_emissive_fade(localclientnum, n_max_val, n_min_val)
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function perk_random_machine_init(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
+function private perk_random_machine_init(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
 	if(isdefined(self.perk_random_machine_fx))
 	{
@@ -260,7 +260,7 @@ private function perk_random_machine_init(localclientnum, oldval, newval, bnewen
 function set_light_state(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
 	a_n_piece_indices = array(1, 2, 3);
-	foreach(var_66c26606, n_piece_index in a_n_piece_indices)
+	foreach(n_piece_index in a_n_piece_indices)
 	{
 		if(newval == 0)
 		{
@@ -289,7 +289,7 @@ function set_light_state(localclientnum, oldval, newval, bnewent, binitialsnap, 
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function perk_random_machine_play_fx(localclientnum, piece_index, tag, fx, deleteimmediate = 1)
+function private perk_random_machine_play_fx(localclientnum, piece_index, tag, fx, deleteimmediate = 1)
 {
 	piece = self zbarriergetpiece(piece_index);
 	if(isdefined(self.perk_random_machine_fx[tag + piece_index][localclientnum]))

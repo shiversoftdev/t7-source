@@ -23,7 +23,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_power", &__init__, &__main__, undefined);
 }
@@ -79,7 +79,7 @@ function debug_powered_items()
 			{
 				if(isdefined(level.local_power))
 				{
-					foreach(var_52c9493f, localpower in level.local_power)
+					foreach(localpower in level.local_power)
 					{
 						circle(localpower.origin, localpower.radius, (1, 0, 0), 0, 1, 1);
 					}
@@ -131,7 +131,7 @@ function electric_switch(switch_array)
 	{
 		ent_parts = getentarray(self.target, "targetname");
 		struct_parts = struct::get_array(self.target, "targetname");
-		foreach(var_1c0d5a10, ent in ent_parts)
+		foreach(ent in ent_parts)
 		{
 			if(isdefined(ent.script_noteworthy) && ent.script_noteworthy == "elec_switch")
 			{
@@ -139,7 +139,7 @@ function electric_switch(switch_array)
 				master_switch notsolid();
 			}
 		}
-		foreach(var_8fbf6103, struct in struct_parts)
+		foreach(struct in struct_parts)
 		{
 			if(isdefined(struct.script_noteworthy) && struct.script_noteworthy == "elec_switch_fx")
 			{
@@ -236,7 +236,7 @@ function standard_powered_items()
 {
 	level flag::wait_till("start_zombie_round_logic");
 	vending_triggers = getentarray("zombie_vending", "targetname");
-	foreach(var_40bfeb9d, trigger in vending_triggers)
+	foreach(trigger in vending_triggers)
 	{
 		powered_on = zm_perks::get_perk_machine_start_state(trigger.script_noteworthy);
 		powered_perk = add_powered_item(&perk_power_on, &perk_power_off, &perk_range, &cost_low_if_local, 0, powered_on, trigger);
@@ -246,7 +246,7 @@ function standard_powered_items()
 		}
 	}
 	zombie_doors = getentarray("zombie_door", "targetname");
-	foreach(var_315ec103, door in zombie_doors)
+	foreach(door in zombie_doors)
 	{
 		if(isdefined(door.script_noteworthy) && (door.script_noteworthy == "electric_door" || door.script_noteworthy == "electric_buyable_door"))
 		{
@@ -341,7 +341,7 @@ function add_temp_powered_item(power_on_func, power_off_func, range_func, cost_f
 	powered = add_powered_item(power_on_func, power_off_func, range_func, cost_func, power_sources, self_powered, target);
 	if(isdefined(level.local_power))
 	{
-		foreach(var_9da8b33e, localpower in level.local_power)
+		foreach(localpower in level.local_power)
 		{
 			if(powered [[powered.range_func]](1, localpower.origin, localpower.radius))
 			{
@@ -373,7 +373,7 @@ function watch_temp_powered_item(powered)
 	remove_powered_item(powered);
 	if(isdefined(level.local_power))
 	{
-		foreach(var_b415c14e, localpower in level.local_power)
+		foreach(localpower in level.local_power)
 		{
 			if(isdefined(localpower.added_list))
 			{
@@ -599,15 +599,15 @@ function has_local_power(origin)
 {
 	if(isdefined(level.local_power))
 	{
-		foreach(var_6166b356, localpower in level.local_power)
+		foreach(localpower in level.local_power)
 		{
 			if(distancesquared(localpower.origin, origin) < (localpower.radius * localpower.radius))
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -652,14 +652,14 @@ function get_local_power_cost(localpower)
 	cost = 0;
 	if(isdefined(localpower) && isdefined(localpower.enabled_list))
 	{
-		foreach(var_205db64a, powered in localpower.enabled_list)
+		foreach(powered in localpower.enabled_list)
 		{
 			cost = cost + powered get_powered_item_cost();
 		}
 	}
 	if(isdefined(localpower) && isdefined(localpower.added_list))
 	{
-		foreach(var_ae56470f, powered in localpower.added_list)
+		foreach(powered in localpower.added_list)
 		{
 			cost = cost + powered get_powered_item_cost();
 		}
@@ -838,13 +838,13 @@ function door_range(delta, origin, radius)
 {
 	if(delta < 0)
 	{
-		return 0;
+		return false;
 	}
 	if(distancesquared(self.target.origin, origin) < (radius * radius))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -961,15 +961,15 @@ function zombie_range(delta, origin, radius)
 {
 	if(delta > 0)
 	{
-		return 0;
+		return false;
 	}
 	self.zombies = array::get_all_closest(origin, zombie_utility::get_round_enemy_array(), undefined, undefined, radius);
 	if(!isdefined(self.zombies))
 	{
-		return 0;
+		return false;
 	}
 	self.power = 1;
-	return 1;
+	return true;
 }
 
 /*
@@ -1049,10 +1049,10 @@ function perk_range(delta, origin, radius)
 		}
 		if(distancesquared(perkorigin, origin) < (radius * radius))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1129,7 +1129,7 @@ function turn_power_on_and_open_doors(power_zone)
 		level clientfield::set("zombie_power_on", power_zone);
 	}
 	zombie_doors = getentarray("zombie_door", "targetname");
-	foreach(var_a3a3ed4c, door in zombie_doors)
+	foreach(door in zombie_doors)
 	{
 		if(!isdefined(door.script_noteworthy))
 		{
@@ -1180,7 +1180,7 @@ function turn_power_off_and_close_doors(power_zone)
 		level clientfield::set("zombie_power_off", power_zone);
 	}
 	zombie_doors = getentarray("zombie_door", "targetname");
-	foreach(var_9a28a07c, door in zombie_doors)
+	foreach(door in zombie_doors)
 	{
 		if(!isdefined(door.script_noteworthy))
 		{

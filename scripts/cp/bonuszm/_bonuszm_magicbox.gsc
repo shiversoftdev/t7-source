@@ -21,6 +21,11 @@
 #using scripts\shared\util_shared;
 #using scripts\shared\weapons_shared;
 
+class var_dafbfd8e : namespace_dafbfd8e
+{
+
+}
+
 #namespace bonuszm;
 
 /*
@@ -32,7 +37,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("cp_mobile_magicbox", &__init__, &__main__, undefined);
 }
@@ -76,14 +81,14 @@ function __main__()
 		return;
 	}
 	wait(0.05);
-	var_7422b1d5 = getentarray("mobile_armory_clip", "script_noteworthy");
-	foreach(var_72915306, clip in var_7422b1d5)
+	a_mdl_mobile_armory_clip = getentarray("mobile_armory_clip", "script_noteworthy");
+	foreach(clip in a_mdl_mobile_armory_clip)
 	{
 		clip delete();
 	}
 	mapname = getdvarstring("mapname");
 	a_mdl_mobile_armory = getentarray("mobile_armory", "script_noteworthy");
-	foreach(var_c5bb5761, mdl_mobile_armory in a_mdl_mobile_armory)
+	foreach(mdl_mobile_armory in a_mdl_mobile_armory)
 	{
 		if(mapname == "cp_mi_cairo_lotus")
 		{
@@ -118,9 +123,7 @@ function __main__()
 */
 function function_2816573(mdl_mobile_armory)
 {
-	object = new var_dafbfd8e();
-	[[ object ]]->__constructor();
-	var_6982c48a = object;
+	var_6982c48a = new var_dafbfd8e();
 	[[ var_6982c48a ]]->function_309dd42b(mdl_mobile_armory);
 	mdl_mobile_armory.var_b10011b8 = var_6982c48a;
 }
@@ -137,7 +140,7 @@ function function_2816573(mdl_mobile_armory)
 function function_999eb742()
 {
 	var_40d9775d = getentarray("bonuszm_magicbox", "script_noteworthy");
-	foreach(var_35967617, magicbox in var_40d9775d)
+	foreach(magicbox in var_40d9775d)
 	{
 		magicbox delete();
 	}
@@ -464,32 +467,6 @@ function function_b449e467()
 #namespace bonuszm;
 
 /*
-	Name: function_dafbfd8e
-	Namespace: bonuszm
-	Checksum: 0x677BED00
-	Offset: 0x1968
-	Size: 0x266
-	Parameters: 0
-	Flags: AutoExec, Private
-*/
-private autoexec function function_dafbfd8e()
-{
-	classes.var_dafbfd8e[0] = spawnstruct();
-	classes.var_dafbfd8e[0].__vtable[-1270225817] = &namespace_dafbfd8e::function_b449e467;
-	classes.var_dafbfd8e[0].__vtable[-816823611] = &namespace_dafbfd8e::function_cf5042c5;
-	classes.var_dafbfd8e[0].__vtable[-178929573] = &namespace_dafbfd8e::function_f555c05b;
-	classes.var_dafbfd8e[0].__vtable[-1008082517] = &namespace_dafbfd8e::function_c3e9e1ab;
-	classes.var_dafbfd8e[0].__vtable[1948888017] = &namespace_dafbfd8e::function_7429abd1;
-	classes.var_dafbfd8e[0].__vtable[-2084856983] = &namespace_dafbfd8e::function_83bb9b69;
-	classes.var_dafbfd8e[0].__vtable[-808543358] = &namespace_dafbfd8e::onbeginuse;
-	classes.var_dafbfd8e[0].__vtable[1015980183] = &namespace_dafbfd8e::onuse;
-	classes.var_dafbfd8e[0].__vtable[-1267600005] = &namespace_dafbfd8e::function_b471f57b;
-	classes.var_dafbfd8e[0].__vtable[815649835] = &namespace_dafbfd8e::function_309dd42b;
-	classes.var_dafbfd8e[0].__vtable[1606033458] = &namespace_dafbfd8e::__destructor;
-	classes.var_dafbfd8e[0].__vtable[-1690805083] = &namespace_dafbfd8e::__constructor;
-}
-
-/*
 	Name: function_89a0f2a6
 	Namespace: bonuszm
 	Checksum: 0xAB63D8B8
@@ -505,7 +482,7 @@ function function_89a0f2a6()
 		return;
 	}
 	var_7e526b74 = getentarray("bonuszm_magicbox", "script_noteworthy");
-	foreach(var_18b8e1, magicbox in var_7e526b74)
+	foreach(magicbox in var_7e526b74)
 	{
 		magicbox.gameobject gameobjects::destroy_object(1, 1);
 		magicbox clientfield::set("magicbox_closed_glow", 0);

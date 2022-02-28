@@ -117,7 +117,7 @@ function function_116bb43()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_65192900()
+function private function_65192900()
 {
 	if(isdefined(self.trigger))
 	{
@@ -188,7 +188,7 @@ function function_7b02a267()
 					locs = function_a4d53f1f(var_1ab7e3a5.type);
 					if(isdefined(locs))
 					{
-						foreach(var_ef795c4e, loc in locs)
+						foreach(loc in locs)
 						{
 							radius = (isdefined(var_1ab7e3a5.radius) ? var_1ab7e3a5.radius : 85);
 							if(isdefined(loc.radius))
@@ -308,7 +308,7 @@ function function_7a8a936b()
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _rotatevec(vector, angle)
+function private _rotatevec(vector, angle)
 {
 	return ((vector[0] * cos(angle)) - (vector[1] * sin(angle)), (vector[0] * sin(angle)) + (vector[1] * cos(angle)), vector[2]);
 }
@@ -385,7 +385,7 @@ function function_1cb931df(def, var_3d19d2b1 = getdvarint("scr_doa_eggcount", 6)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_fb78d226(var_6e476c41)
+function private function_fb78d226(var_6e476c41)
 {
 	self endon(#"death");
 	self asmsetanimationrate(0.8);
@@ -406,7 +406,7 @@ private function function_fb78d226(var_6e476c41)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_323a3e31()
+function private function_323a3e31()
 {
 	self notify(#"hash_323a3e31");
 	self endon(#"hash_323a3e31");
@@ -438,7 +438,7 @@ private function function_323a3e31()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_6ec8176a()
+function private function_6ec8176a()
 {
 	self notify(#"hash_6ec8176a");
 	self endon(#"hash_6ec8176a");
@@ -486,7 +486,7 @@ private function function_6ec8176a()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_70dbf276()
+function private function_70dbf276()
 {
 	self notify(#"hash_70dbf276");
 	self endon(#"hash_70dbf276");
@@ -546,7 +546,7 @@ private function function_70dbf276()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_a4d53f1f(type)
+function private function_a4d53f1f(type)
 {
 	spawn_locations = [];
 	hazardtarget = namespace_3ca3c537::function_d2d75f5d() + "_doa_hazard";
@@ -575,7 +575,7 @@ private function function_a4d53f1f(type)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_40c555dc(type)
+function private function_40c555dc(type)
 {
 	spawn_locations = [];
 	hazardtarget = namespace_3ca3c537::function_d2d75f5d() + "_doa_hazard";
@@ -677,7 +677,7 @@ function function_3341776e(origin, var_891d7d80 = origin, var_ba2a535c = 85)
 	Parameters: 1
 	Flags: Private
 */
-private function function_993013cd(trigger)
+function private function_993013cd(trigger)
 {
 	self endon(#"death");
 	while(true)
@@ -699,7 +699,7 @@ private function function_993013cd(trigger)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_8a97d2c0(trigger)
+function private function_8a97d2c0(trigger)
 {
 	self endon(#"death");
 	trigger endon(#"death");
@@ -843,7 +843,7 @@ function function_193a95a6()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_2a738695()
+function private function_2a738695()
 {
 	self waittill(#"death");
 	arrayremovevalue(level.doa.hazards, self);
@@ -924,7 +924,7 @@ function function_d8d20160()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_d8c94716()
+function private function_d8c94716()
 {
 	self thread doa_utility::function_783519c1("exit_taken", 1);
 	self thread doa_utility::function_783519c1("doa_game_is_over", 1);
@@ -939,7 +939,7 @@ private function function_d8c94716()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_441547f1()
+function private function_441547f1()
 {
 	self endon(#"death");
 	while(true)
@@ -976,7 +976,7 @@ private function function_441547f1()
 function function_ffe39afe()
 {
 	count = 0;
-	foreach(var_cb3a66df, hazard in level.doa.hazards)
+	foreach(hazard in level.doa.hazards)
 	{
 		if(isdefined(hazard) && (isdefined(hazard.trashcan) && hazard.trashcan))
 		{
@@ -999,24 +999,24 @@ function function_cda60edb()
 {
 	if(level.doa.round_number < level.doa.rules.var_8c016b75)
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(level.doa.var_932f9d4d))
 	{
-		return 1;
+		return true;
 	}
 	if(function_ffe39afe() >= level.doa.rules.var_3210f224)
 	{
-		return 0;
+		return false;
 	}
 	if((gettime() - level.doa.var_932f9d4d) > (level.doa.rules.var_6e5d36ba * 1000))
 	{
-		return 1;
+		return true;
 	}
 	if(randomint(level.doa.rules.var_d82df3d5) > level.doa.rules.var_4a5eec4)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 

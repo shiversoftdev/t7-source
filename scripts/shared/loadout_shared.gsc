@@ -12,7 +12,7 @@
 */
 function is_warlord_perk(itemindex)
 {
-	return 0;
+	return false;
 }
 
 /*
@@ -28,17 +28,17 @@ function is_item_excluded(itemindex)
 {
 	if(!level.onlinegame)
 	{
-		return 0;
+		return false;
 	}
 	numexclusions = level.itemexclusions.size;
 	for(exclusionindex = 0; exclusionindex < numexclusions; exclusionindex++)
 	{
 		if(itemindex == level.itemexclusions[exclusionindex])
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*

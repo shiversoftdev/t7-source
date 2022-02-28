@@ -129,7 +129,7 @@ function repulsorarmorshieldtake(type)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _threatmonitor(weapon)
+function private _threatmonitor(weapon)
 {
 	self notify(#"repulsearmorthreatmonitor");
 	self endon(#"repulsearmorthreatmonitor");
@@ -169,7 +169,7 @@ private function _threatmonitor(weapon)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_170e07a2()
+function private function_170e07a2()
 {
 	self endon(#"repulsorarmorshieldtake");
 	self endon(#"death");
@@ -232,17 +232,23 @@ function function_1542f1f0(threat)
 	{
 		zone = 0;
 	}
-	else if(yaw > 45 && yaw <= 135)
-	{
-		zone = 3;
-	}
-	else if(yaw > 135 && yaw <= 180 || (yaw >= -180 && yaw < -135))
-	{
-		zone = 2;
-	}
 	else
 	{
-		zone = 1;
+		if(yaw > 45 && yaw <= 135)
+		{
+			zone = 3;
+		}
+		else
+		{
+			if(yaw > 135 && yaw <= 180 || (yaw >= -180 && yaw < -135))
+			{
+				zone = 2;
+			}
+			else
+			{
+				zone = 1;
+			}
+		}
 	}
 	self.cybercom.var_c281e3c[zone].time = gettime() + getdvarint("scr_repulsorarmor_indicator_durationMSEC", 1500);
 	self.cybercom.var_c281e3c[zone].threat = threat;
@@ -258,7 +264,7 @@ function function_1542f1f0(threat)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _repulsethreat(grenade, trophyorigin)
+function private _repulsethreat(grenade, trophyorigin)
 {
 	if(isdefined(grenade))
 	{

@@ -210,7 +210,7 @@ function do_game_mode_shellshock()
 */
 function canplayersuicide()
 {
-	return 0;
+	return false;
 }
 
 /*
@@ -329,7 +329,7 @@ function onstartgametype()
 	level.spawnmins = (0, 0, 0);
 	level.spawnmaxs = (0, 0, 0);
 	structs = struct::get_array("player_respawn_point", "targetname");
-	foreach(var_cf1c43f1, struct in structs)
+	foreach(struct in structs)
 	{
 		level.spawnmins = math::expand_mins(level.spawnmins, struct.origin);
 		level.spawnmaxs = math::expand_maxs(level.spawnmaxs, struct.origin);
@@ -399,12 +399,12 @@ function onfindvalidspawnpoint()
 		structs = struct::get_array("initial_spawn", "script_noteworthy");
 		if(isdefined(structs))
 		{
-			foreach(var_e6a63568, struct in structs)
+			foreach(struct in structs)
 			{
 				if(isdefined(struct.script_string))
 				{
 					tokens = strtok(struct.script_string, " ");
-					foreach(var_fd478537, token in tokens)
+					foreach(token in tokens)
 					{
 						if(token == match_string)
 						{
@@ -525,12 +525,12 @@ function get_player_spawns_for_gametype()
 	match_string = (level.scr_zm_ui_gametype + "_") + location;
 	player_spawns = [];
 	structs = struct::get_array("player_respawn_point", "targetname");
-	foreach(var_b8892b60, struct in structs)
+	foreach(struct in structs)
 	{
 		if(isdefined(struct.script_string))
 		{
 			tokens = strtok(struct.script_string, " ");
-			foreach(var_f52cf598, token in tokens)
+			foreach(token in tokens)
 			{
 				if(token == match_string)
 				{
@@ -572,13 +572,16 @@ function onroundendgame(roundwinner)
 	{
 		winner = "tie";
 	}
-	else if(game["roundswon"]["axis"] > game["roundswon"]["allies"])
-	{
-		winner = "axis";
-	}
 	else
 	{
-		winner = "allies";
+		if(game["roundswon"]["axis"] > game["roundswon"]["allies"])
+		{
+			winner = "axis";
+		}
+		else
+		{
+			winner = "allies";
+		}
 	}
 	return winner;
 }

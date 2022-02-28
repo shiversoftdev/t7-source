@@ -28,7 +28,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	/#
 		system::register("", &__init__, undefined, undefined);
@@ -83,7 +83,7 @@ function devgui_player_commands()
 		rootclear = "";
 		adddebugcommand(rootclear);
 		players = getplayers();
-		foreach(var_72915306, player in getplayers())
+		foreach(player in getplayers())
 		{
 			rootclear = ("" + player.playername) + "";
 			adddebugcommand(rootclear);
@@ -446,7 +446,7 @@ function devgui_think()
 					{
 						if(isarray(level.custom_devgui))
 						{
-							foreach(var_9d74717f, devgui in level.custom_devgui)
+							foreach(devgui in level.custom_devgui)
 							{
 								if(isdefined([[devgui]](cmd)) && [[devgui]](cmd))
 								{
@@ -497,7 +497,7 @@ function function_e2643869()
 {
 	/#
 		var_c02de660 = skipto::function_23eda99c();
-		foreach(var_7d59d21f, mission in var_c02de660)
+		foreach(mission in var_c02de660)
 		{
 			self addplayerstat("" + getsubstr(getmissionname(mission), 0, 3), 1);
 		}
@@ -558,7 +558,7 @@ function function_408729cd()
 		{
 			return;
 		}
-		foreach(var_74a0c36c, mission in skipto::function_23eda99c())
+		foreach(mission in skipto::function_23eda99c())
 		{
 			self setdstat("", mission, "", 4, 1);
 		}
@@ -622,7 +622,7 @@ function function_f61fdbaf()
 {
 	/#
 		var_c02de660 = skipto::function_23eda99c();
-		foreach(var_5a41a3cd, mission_name in var_c02de660)
+		foreach(mission_name in var_c02de660)
 		{
 			self setdstat("", mission_name, "", 1);
 		}
@@ -642,7 +642,7 @@ function function_d7b26538()
 {
 	/#
 		var_c02de660 = skipto::function_23eda99c();
-		foreach(var_4c1dadb3, mission in var_c02de660)
+		foreach(mission in var_c02de660)
 		{
 			for(i = 0; i < 10; i++)
 			{
@@ -665,7 +665,7 @@ function function_fcd3cf3f()
 {
 	/#
 		var_c02de660 = skipto::function_23eda99c();
-		foreach(var_4121b5ed, mission_name in var_c02de660)
+		foreach(mission_name in var_c02de660)
 		{
 			self setdstat("", mission_name, "", 1);
 		}
@@ -1032,15 +1032,15 @@ function devgui_add_player_gun_attachments(root, pname, index, a_weapons, weapon
 	/#
 		player_devgui_root = ((((root + pname) + "") + "") + weapon_type) + "";
 		attachments = [];
-		foreach(var_eb8947fe, weapon in a_weapons)
+		foreach(weapon in a_weapons)
 		{
-			foreach(var_d7669640, supportedattachment in weapon.supportedattachments)
+			foreach(supportedattachment in weapon.supportedattachments)
 			{
 				array::add(attachments, supportedattachment, 0);
 			}
 		}
 		pid = "" + index;
-		foreach(var_d353f905, att in attachments)
+		foreach(att in attachments)
 		{
 			devgui_add_player_attachment_command(player_devgui_root, pid, att, 1);
 		}
@@ -1077,7 +1077,7 @@ function devgui_add_player_weapons(root, pname, index, a_weapons, weapon_type)
 				if(attachments.size)
 				{
 					devgui_add_player_weap_command((player_devgui_root + name) + "", pid, name, i + 1);
-					foreach(var_8029f4aa, att in attachments)
+					foreach(att in attachments)
 					{
 						if(att != "")
 						{
@@ -1386,7 +1386,7 @@ function devgui_give_attachment(attachment_name)
 		currentweapon = self getcurrentweapon();
 		attachmentsupported = 0;
 		split = strtok(currentweapon.name, "");
-		foreach(var_32eaf5e0, attachment in currentweapon.supportedattachments)
+		foreach(attachment in currentweapon.supportedattachments)
 		{
 			if(attachment == attachment_name)
 			{
@@ -1401,14 +1401,14 @@ function devgui_give_attachment(attachment_name)
 			{
 				attachmentsstring = attachmentsstring + "";
 			}
-			foreach(var_3a2b1b15, attachment in currentweapon.supportedattachments)
+			foreach(attachment in currentweapon.supportedattachments)
 			{
 				attachmentsstring = attachmentsstring + ("" + attachment);
 			}
 			iprintlnbold(attachmentsstring);
 			return;
 		}
-		foreach(var_a1747cd, currentattachment in split)
+		foreach(currentattachment in split)
 		{
 			if(currentattachment == attachment_name)
 			{

@@ -38,7 +38,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("bonuszm", &__init__, undefined, undefined);
 }
@@ -92,7 +92,7 @@ function function_938d1a68(localclientnum)
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function function_4d5aa4f3()
+function autoexec function_4d5aa4f3()
 {
 }
 
@@ -105,7 +105,7 @@ autoexec function function_4d5aa4f3()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function on_player_spawned(localclientnum)
+function private on_player_spawned(localclientnum)
 {
 	self tmodeenable(0);
 	setdvar("r_bloomUseLutALT", 1);
@@ -126,7 +126,7 @@ function setupstaticmodelsforthemode()
 	a_misc_models = findstaticmodelindexarray("zombie_misc_model");
 	if(!sessionmodeiscampaignzombiesgame() || !util::is_mature())
 	{
-		foreach(var_d7ed6d98, a_misc_model in a_misc_models)
+		foreach(a_misc_model in a_misc_models)
 		{
 			hidestaticmodel(a_misc_model);
 		}
@@ -147,7 +147,7 @@ function function_e6a554ef()
 	var_9302fbfc = findvolumedecalindexarray("zombie_volume_decal");
 	if(!sessionmodeiscampaignzombiesgame() || !util::is_mature())
 	{
-		foreach(var_e8393719, var_da4e043d in var_9302fbfc)
+		foreach(var_da4e043d in var_9302fbfc)
 		{
 			hidevolumedecal(var_da4e043d);
 		}
@@ -184,7 +184,7 @@ function function_9f75e681()
 function register_clientfields()
 {
 	clientfield::register("actor", "zombie_riser_fx", 1, 1, "int", &handle_zombie_risers, 0, 1);
-	clientfield::register("actor", "bonus_zombie_eye_color", 1, 3, "int", &function_2bfd38ec, 0, 1);
+	clientfield::register("actor", "bonus_zombie_eye_color", 1, 3, "int", &zombie_eyes_clientfield_cb2, 0, 1);
 	clientfield::register("actor", "zombie_has_eyes", 1, 1, "int", &zombie_eyes_clientfield_cb, 0, 1);
 	clientfield::register("actor", "zombie_gut_explosion", 1, 1, "int", &zombie_gut_explosion_cb, 0, 1);
 	clientfield::register("actor", "bonuszm_zombie_on_fire_fx", 1, getminbitcountfornum(3), "int", &function_f83377d6, 0, 1);
@@ -330,7 +330,7 @@ function rise_dust_fx(localclientnum, type, billow_fx, burst_fx)
 }
 
 /*
-	Name: function_2bfd38ec
+	Name: zombie_eyes_clientfield_cb2
 	Namespace: bonuszm
 	Checksum: 0xD7DB59F0
 	Offset: 0x2260
@@ -338,7 +338,7 @@ function rise_dust_fx(localclientnum, type, billow_fx, burst_fx)
 	Parameters: 7
 	Flags: Linked
 */
-function function_2bfd38ec(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
+function zombie_eyes_clientfield_cb2(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
 	if(!isdefined(newval))
 	{
@@ -412,21 +412,30 @@ function createzombieeyesinternal(localclientnum)
 		{
 			effect = level._effect["eye_glow_o"];
 		}
-		else if(self.eyecol == 1)
-		{
-			effect = level._effect["eye_glow_b"];
-		}
-		else if(self.eyecol == 2)
-		{
-			effect = level._effect["eye_glow_g"];
-		}
-		else if(self.eyecol == 3)
-		{
-			effect = level._effect["eye_glow_r"];
-		}
 		else
 		{
-			return;
+			if(self.eyecol == 1)
+			{
+				effect = level._effect["eye_glow_b"];
+			}
+			else
+			{
+				if(self.eyecol == 2)
+				{
+					effect = level._effect["eye_glow_g"];
+				}
+				else
+				{
+					if(self.eyecol == 3)
+					{
+						effect = level._effect["eye_glow_r"];
+					}
+					else
+					{
+						return;
+					}
+				}
+			}
 		}
 		if(isdefined(level._override_eye_fx))
 		{
@@ -551,13 +560,16 @@ function callback_powerup_on_fx(localclientnum, oldval, newval, bnewent, binitia
 		{
 			self.pwr_fx = playfxontag(localclientnum, level._effect["powerup_on_upgraded_all"], self, "tag_origin");
 		}
-		else if(newval == 2)
-		{
-			self.pwr_fx = playfxontag(localclientnum, level._effect["powerup_on_upgraded"], self, "tag_origin");
-		}
 		else
 		{
-			self.pwr_fx = playfxontag(localclientnum, level._effect["powerup_on"], self, "tag_origin");
+			if(newval == 2)
+			{
+				self.pwr_fx = playfxontag(localclientnum, level._effect["powerup_on_upgraded"], self, "tag_origin");
+			}
+			else
+			{
+				self.pwr_fx = playfxontag(localclientnum, level._effect["powerup_on"], self, "tag_origin");
+			}
 		}
 		setfxignorepause(localclientnum, self.pwr_fx, 1);
 		if(self.model === "p7_zm_teddybear_sitting")
@@ -985,7 +997,7 @@ function function_e4d833e(localclientnum, oldval, newval, bnewent, binitialsnap,
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_10dcbf51(localclientnum, fxobj)
+function private function_10dcbf51(localclientnum, fxobj)
 {
 	fxobj playsound(localclientnum, "evt_ai_insta_explode");
 	wait(1);
@@ -1349,15 +1361,18 @@ function function_7fc0e06(localclientnum, oldval, newval, bnewent, binitialsnap,
 		playsound(localclientnum, "zmb_flashback_disappear_npc", self.origin);
 		playfx(localclientnum, level._effect["zombie_spawn"], self.origin + vectorscale((0, 0, 1), 35));
 	}
-	else if(newval == 2)
+	else
 	{
-		playsound(localclientnum, "zmb_flashback_reappear_npc", self.origin);
-		playfx(localclientnum, level._effect["zombie_spawn"], self.origin + vectorscale((0, 0, 1), 35));
-	}
-	else if(newval == 3)
-	{
-		playsound(localclientnum, "zmb_flashback_reappear_npc", self.origin);
-		playfx(localclientnum, level._effect["zombie_spawn"], self.origin + vectorscale((0, 0, 1), 35));
+		if(newval == 2)
+		{
+			playsound(localclientnum, "zmb_flashback_reappear_npc", self.origin);
+			playfx(localclientnum, level._effect["zombie_spawn"], self.origin + vectorscale((0, 0, 1), 35));
+		}
+		else if(newval == 3)
+		{
+			playsound(localclientnum, "zmb_flashback_reappear_npc", self.origin);
+			playfx(localclientnum, level._effect["zombie_spawn"], self.origin + vectorscale((0, 0, 1), 35));
+		}
 	}
 }
 

@@ -143,7 +143,7 @@ function function_a5062ebd()
 	}
 	var_8fcfe322 = getentarray("zombie_trap", "targetname");
 	array::thread_all(var_8fcfe322, &function_5054a970);
-	foreach(var_8be878c6, var_60532813 in var_8fcfe322)
+	foreach(var_60532813 in var_8fcfe322)
 	{
 		if(var_60532813.target === "trap_b")
 		{
@@ -297,30 +297,30 @@ function function_d7e7dcf9(player)
 	if(player.is_drinking > 0)
 	{
 		self sethintstring("");
-		return 0;
+		return false;
 	}
 	if(!level flag::get("power_on"))
 	{
 		self sethintstring(&"ZM_CASTLE_MASHER_POWER");
-		return 0;
+		return false;
 	}
 	if(!level flag::get("masher_unlocked"))
 	{
 		self sethintstring(&"ZM_CASTLE_MASHER_UNAVAILABLE");
-		return 0;
+		return false;
 	}
 	if(level flag::get("masher_on"))
 	{
 		self sethintstring("");
-		return 0;
+		return false;
 	}
 	if(level flag::get("masher_cooldown"))
 	{
 		self sethintstring(&"ZM_CASTLE_MASHER_COOLDOWN");
-		return 0;
+		return false;
 	}
 	self sethintstring(&"ZM_CASTLE_MASHER_TRAP", self.stub.hint_parm1);
-	return 1;
+	return true;
 }
 
 /*
@@ -536,13 +536,16 @@ function trigger_damage(var_6ac4e9cb)
 			{
 				e_who thread function_e80df8bf(var_6ac4e9cb.activated_by_player, self);
 			}
-			else if(e_who.archetype === "mechz")
+			else
 			{
-				level flag::clear("masher_on");
-			}
-			else if(isdefined(e_who))
-			{
-				e_who dodamage(e_who.health, e_who.origin, self, undefined, "none", "MOD_IMPACT");
+				if(e_who.archetype === "mechz")
+				{
+					level flag::clear("masher_on");
+				}
+				else if(isdefined(e_who))
+				{
+					e_who dodamage(e_who.health, e_who.origin, self, undefined, "none", "MOD_IMPACT");
+				}
 			}
 		}
 		else
@@ -575,17 +578,20 @@ function function_e80df8bf(var_ecf98bb6, var_60532813)
 			self.var_bd3a4420 = undefined;
 		}
 	}
-	else if(n_chance > 50)
-	{
-		self thread zombie_utility::zombie_gut_explosion();
-		level notify(#"hash_de71acc2", self, var_ecf98bb6);
-		self dodamage(self.health + 100, self.origin, var_60532813, undefined, "none", "MOD_IMPACT");
-	}
 	else
 	{
-		self thread zombie_utility::gib_random_parts();
-		level notify(#"hash_de71acc2", self, var_ecf98bb6);
-		self dodamage(self.health + 100, self.origin, var_60532813, undefined, "none", "MOD_IMPACT");
+		if(n_chance > 50)
+		{
+			self thread zombie_utility::zombie_gut_explosion();
+			level notify(#"hash_de71acc2", self, var_ecf98bb6);
+			self dodamage(self.health + 100, self.origin, var_60532813, undefined, "none", "MOD_IMPACT");
+		}
+		else
+		{
+			self thread zombie_utility::gib_random_parts();
+			level notify(#"hash_de71acc2", self, var_ecf98bb6);
+			self dodamage(self.health + 100, self.origin, var_60532813, undefined, "none", "MOD_IMPACT");
+		}
 	}
 	level.zombie_total++;
 }

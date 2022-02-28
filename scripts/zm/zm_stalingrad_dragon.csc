@@ -20,7 +20,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("stalingrad_dragon", &__init__, undefined, undefined);
 }
@@ -224,7 +224,7 @@ function function_2ce58010(n_local_client)
 		self waittill(#"damage", e_attacker, v_impact_pos, var_778fe70f, var_77cbbb1b);
 		if(level.var_ef6a691 > 0)
 		{
-			foreach(var_9d10a9f0, var_61c194b7 in level.var_61699bd7[level.var_ef6a691])
+			foreach(var_61c194b7 in level.var_61699bd7[level.var_ef6a691])
 			{
 				if(var_61c194b7 == var_77cbbb1b)
 				{
@@ -489,11 +489,14 @@ function function_2d57594b(localclientnum, oldval, newval, bnewent, binitialsnap
 		level.var_9d63af9a[localclientnum] = playfxontag(localclientnum, level._effect["dragon_fire_burn_tell"], self, "tag_origin");
 		self thread postfx::playpostfxbundle("pstfx_arrow_rune");
 	}
-	else if(isdefined(level.var_9d63af9a[localclientnum]))
+	else
 	{
-		stopfx(localclientnum, level.var_9d63af9a[localclientnum]);
+		if(isdefined(level.var_9d63af9a[localclientnum]))
+		{
+			stopfx(localclientnum, level.var_9d63af9a[localclientnum]);
+		}
+		self thread postfx::exitpostfxbundle();
 	}
-	self thread postfx::exitpostfxbundle();
 }
 
 /*
@@ -591,7 +594,7 @@ function function_6865d0d5(localclientnum, oldval, newval, bnewent, binitialsnap
 			level scene::add_scene_func("p7_fxanim_zm_stal_dragon_hazard_library_banner_01_bundle", &function_ae0e995e, "play");
 		}
 		var_f8efe776 = getentarray(localclientnum, "library_banner_01", "targetname");
-		foreach(var_e5b1b2cb, var_f558224f in var_f8efe776)
+		foreach(var_f558224f in var_f8efe776)
 		{
 			var_f558224f thread scene::play("p7_fxanim_zm_stal_dragon_hazard_library_banner_01_bundle", var_f558224f);
 		}

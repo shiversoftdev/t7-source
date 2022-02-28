@@ -27,7 +27,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_equipment", &__init__, &__main__, undefined);
 }
@@ -573,15 +573,18 @@ function slot_watcher(equipment)
 			{
 				self [[level.a_func_equipment_slot_watcher_override[equipment.name]]](equipment, curr_weapon, prev_weapon, notify_strings);
 			}
-			else if(curr_weapon == equipment && !self.current_equipment_active[equipment])
+			else
 			{
-				self notify(notify_strings.activate);
-				self.current_equipment_active[equipment] = 1;
-			}
-			else if(curr_weapon != equipment && self.current_equipment_active[equipment])
-			{
-				self notify(notify_strings.deactivate);
-				self.current_equipment_active[equipment] = 0;
+				if(curr_weapon == equipment && !self.current_equipment_active[equipment])
+				{
+					self notify(notify_strings.activate);
+					self.current_equipment_active[equipment] = 1;
+				}
+				else if(curr_weapon != equipment && self.current_equipment_active[equipment])
+				{
+					self notify(notify_strings.deactivate);
+					self.current_equipment_active[equipment] = 0;
+				}
 			}
 		}
 	}
@@ -604,11 +607,11 @@ function is_limited(equipment)
 		{
 			if(level._limited_equipment[i] == equipment)
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -628,14 +631,14 @@ function limited_in_use(equipment)
 		current_equipment = players[i] get_player_equipment();
 		if(isdefined(current_equipment) && current_equipment == equipment)
 		{
-			return 1;
+			return true;
 		}
 	}
 	if(isdefined(level.dropped_equipment) && isdefined(level.dropped_equipment[equipment]))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -996,16 +999,16 @@ function has_deployed_equipment(weapon)
 {
 	if(!isdefined(weapon) || !isdefined(self.deployed_equipment) || self.deployed_equipment.size < 1)
 	{
-		return 0;
+		return false;
 	}
 	for(i = 0; i < self.deployed_equipment.size; i++)
 	{
 		if(self.deployed_equipment[i] == weapon)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1123,7 +1126,7 @@ function function_f30ee99e()
 			equipment_id = getdvarstring("");
 			if(equipment_id != "")
 			{
-				foreach(var_4327b3e4, player in getplayers())
+				foreach(player in getplayers())
 				{
 					if(equipment_id == "")
 					{

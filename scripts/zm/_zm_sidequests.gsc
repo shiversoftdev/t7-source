@@ -130,7 +130,7 @@ function damage_trigger_thread()
 }
 
 /*
-	Name: function_e4084aab
+	Name: entity_damage_thread
 	Namespace: zm_sidequests
 	Checksum: 0xF6762281
 	Offset: 0x4F0
@@ -138,7 +138,7 @@ function damage_trigger_thread()
 	Parameters: 0
 	Flags: None
 */
-function function_e4084aab()
+function entity_damage_thread()
 {
 	self endon(#"death");
 	while(true)
@@ -1291,9 +1291,9 @@ function sidequest_stage_active(sidequest_name, stage_name)
 	stage = sidequest.stages[stage_name];
 	if(sidequest.active_stage == stage.stage_number)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

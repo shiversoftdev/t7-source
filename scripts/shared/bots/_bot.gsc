@@ -21,7 +21,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("bot", &__init__, undefined, undefined);
 }
@@ -140,7 +140,7 @@ function init()
 */
 function is_bot_ranked_match()
 {
-	return 0;
+	return false;
 }
 
 /*
@@ -167,7 +167,7 @@ function bot_void()
 */
 function bot_unhandled()
 {
-	return 0;
+	return false;
 }
 
 /*
@@ -228,7 +228,7 @@ function add_bot(team)
 function remove_bots(count, team)
 {
 	players = getplayers();
-	foreach(var_518797a1, player in players)
+	foreach(player in players)
 	{
 		if(!player istestclient())
 		{
@@ -281,7 +281,7 @@ function remove_bot(bot)
 function filter_bots(players)
 {
 	bots = [];
-	foreach(var_32d69962, player in players)
+	foreach(player in players)
 	{
 		if(player util::is_bot())
 		{
@@ -709,7 +709,7 @@ function path_to_point_in_trigger(trigger)
 	#/
 	queryresult = positionquery_source_navigation(queryorigin, 0, radius, queryheight, 17, self);
 	best_point = undefined;
-	foreach(var_abfa31e9, point in queryresult.data)
+	foreach(point in queryresult.data)
 	{
 		point.score = randomfloatrange(0, 100);
 		if(!isdefined(best_point) || point.score > best_point.score)
@@ -1003,7 +1003,7 @@ function stow_gun_gadget()
 function get_ready_gadget()
 {
 	weapons = self getweaponslist();
-	foreach(var_af494555, weapon in weapons)
+	foreach(weapon in weapons)
 	{
 		slot = self gadgetgetslot(weapon);
 		if(slot < 0 || !self gadgetisready(slot) || self gadgetisactive(slot))
@@ -1027,7 +1027,7 @@ function get_ready_gadget()
 function get_ready_gun_gadget()
 {
 	weapons = self getweaponslist();
-	foreach(var_37825bdb, weapon in weapons)
+	foreach(weapon in weapons)
 	{
 		if(!is_gun_gadget(weapon))
 		{
@@ -1080,13 +1080,16 @@ function activate_hero_gadget(weapon)
 	{
 		self switchtoweapon(weapon);
 	}
-	else if(weapon.isheroweapon)
-	{
-		self tap_offhand_special_button();
-	}
 	else
 	{
-		self botpressbuttonforgadget(weapon);
+		if(weapon.isheroweapon)
+		{
+			self tap_offhand_special_button();
+		}
+		else
+		{
+			self botpressbuttonforgadget(weapon);
+		}
 	}
 }
 
@@ -1158,7 +1161,7 @@ function follow_coop_players()
 	if(!isalive(host))
 	{
 		players = arraysort(level.players, self.origin);
-		foreach(var_470da79e, player in players)
+		foreach(player in players)
 		{
 			if(!player util::is_bot() && player.team == self.team && isalive(player))
 			{
@@ -1255,7 +1258,7 @@ function navmesh_wander(fwd, radiusmin = (isdefined(level.botsettings.wandermin)
 	queryresult = positionquery_source_navigation(self.origin, radiusmin, radiusmax, 150, spacing, self);
 	best_point = undefined;
 	origin = (self.origin[0], self.origin[1], 0);
-	foreach(var_234bb5c1, point in queryresult.data)
+	foreach(point in queryresult.data)
 	{
 		movepoint = (point.origin[0], point.origin[1], 0);
 		movedir = vectornormalize(movepoint - origin);
@@ -1265,13 +1268,16 @@ function navmesh_wander(fwd, radiusmin = (isdefined(level.botsettings.wandermin)
 		{
 			point.score = point.score + randomfloatrange(30, 50);
 		}
-		else if(dot > 0)
-		{
-			point.score = point.score + randomfloatrange(10, 35);
-		}
 		else
 		{
-			point.score = point.score + randomfloatrange(0, 15);
+			if(dot > 0)
+			{
+				point.score = point.score + randomfloatrange(10, 35);
+			}
+			else
+			{
+				point.score = point.score + randomfloatrange(0, 15);
+			}
 		}
 		/#
 		#/
@@ -1289,14 +1295,14 @@ function navmesh_wander(fwd, radiusmin = (isdefined(level.botsettings.wandermin)
 	else
 	{
 		/#
-			if(getdvarint("", 0))
-			{
-				circle(self.origin, radiusmin, (1, 0, 0), 0, 1, 1200);
-				circle(self.origin, radiusmax, (1, 0, 0), 0, 1, 1200);
-				sphere(self.origin, 16, (0, 1, 0), 0.25, 0, 16, 1200);
-				iprintln((("" + self.name) + "") + self.origin);
-			}
+			circle(self.origin, radiusmin, (1, 0, 0), 0, 1, 1200);
+			circle(self.origin, radiusmax, (1, 0, 0), 0, 1, 1200);
+			sphere(self.origin, 16, (0, 1, 0), 0.25, 0, 16, 1200);
+			iprintln((("" + self.name) + "") + self.origin);
 		#/
+		if(getdvarint("", 0))
+		{
+		}
 		self thread stuck_resolution();
 	}
 }
@@ -1344,7 +1350,7 @@ function approach_point(point, radiusmin = 0, radiusmax = 1500, spacing = 128)
 	fwd = (fwd[0], fwd[1], 0);
 	origin = (self.origin[0], self.origin[1], 0);
 	best_point = undefined;
-	foreach(var_1d981c77, point in queryresult.data)
+	foreach(point in queryresult.data)
 	{
 		movepoint = (point.origin[0], point.origin[1], 0);
 		movedir = vectornormalize(movepoint - origin);
@@ -1384,9 +1390,9 @@ function revive_players()
 	if(players.size > 0)
 	{
 		revive_player(players[0]);
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1401,7 +1407,7 @@ function revive_players()
 function get_team_players_in_laststand()
 {
 	players = [];
-	foreach(var_8cb3425c, player in level.players)
+	foreach(player in level.players)
 	{
 		if(player != self && player laststand::player_is_in_laststand() && player.team == self.team)
 		{
@@ -1533,7 +1539,7 @@ function finish_corner()
 function get_host_player()
 {
 	players = getplayers();
-	foreach(var_fbcf65ba, player in players)
+	foreach(player in players)
 	{
 		if(player ishost())
 		{
@@ -1574,14 +1580,14 @@ function fwd_dot(point)
 function has_launcher()
 {
 	weapons = self getweaponslist();
-	foreach(var_12b43fa5, weapon in weapons)
+	foreach(weapon in weapons)
 	{
 		if(weapon.isrocketlauncher)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1610,7 +1616,7 @@ function kill_bot()
 function kill_bots()
 {
 	/#
-		foreach(var_a37e0414, player in level.players)
+		foreach(player in level.players)
 		{
 			if(player util::is_bot())
 			{
@@ -1690,7 +1696,7 @@ function devgui_debug_route()
 		}
 		iprintln("");
 		players = getplayers();
-		foreach(var_43c408c9, player in players)
+		foreach(player in players)
 		{
 			if(!player util::is_bot())
 			{
@@ -1736,13 +1742,16 @@ function get_nav_points()
 					points[points.size] = point;
 				}
 			}
-			else if(self buttonpressed(""))
+			else
 			{
-				return points;
-			}
-			if(self buttonpressed(""))
-			{
-				return undefined;
+				if(self buttonpressed(""))
+				{
+					return points;
+				}
+				if(self buttonpressed(""))
+				{
+					return undefined;
+				}
 			}
 			for(i = 0; i < points.size; i++)
 			{
@@ -1843,26 +1852,26 @@ function coop_bot_devgui_cmd(cmd)
 			case "":
 			{
 				add_bot(host.team);
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				add_bots(3, host.team);
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				add_bot_at_eye_trace();
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				remove_bots(1);
-				return 1;
+				return true;
 				break;
 			}
 		}
-		return 0;
+		return false;
 	#/
 }
 

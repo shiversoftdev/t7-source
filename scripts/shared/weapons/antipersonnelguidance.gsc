@@ -20,7 +20,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("singlelockap_guidance", &__init__, undefined, undefined);
 }
@@ -131,7 +131,7 @@ function apfirednotify()
 		self waittill(#"missile_fire", missile, weapon);
 		if(weapon.lockontype == "AP Single")
 		{
-			foreach(var_7223a7c1, target in self.multilocklist)
+			foreach(target in self.multilocklist)
 			{
 				if(isdefined(target.aptarget) && target.aplockfinalized)
 				{
@@ -209,7 +209,7 @@ function aplockloop(weapon)
 		do
 		{
 			done = 1;
-			foreach(var_1acba872, target in self.multilocklist)
+			foreach(target in self.multilocklist)
 			{
 				if(target.aplockfinalized)
 				{
@@ -409,10 +409,10 @@ function getbesttarget(weapon)
 		array::insertion_sort(dots, &targetinsertionsortcompare, newitem);
 	}
 	index = 0;
-	foreach(var_74a0c36c, dot in dots)
+	foreach(dot in dots)
 	{
 		found = 0;
-		foreach(var_e6a832a7, lock in self.multilocklist)
+		foreach(lock in self.multilocklist)
 		{
 			if(lock.aptarget == targetsvalid[dot.index])
 			{
@@ -501,21 +501,21 @@ function isstillvalidtarget(weapon, ent)
 {
 	if(!isdefined(ent))
 	{
-		return 0;
+		return false;
 	}
 	if(!insideapreticlelocked(ent))
 	{
-		return 0;
+		return false;
 	}
 	if(!isalive(ent))
 	{
-		return 0;
+		return false;
 	}
 	if(!locksighttest(ent))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -561,11 +561,11 @@ function locksighttest(target)
 	eyepos = self geteye();
 	if(!isdefined(target))
 	{
-		return 0;
+		return false;
 	}
 	if(!isalive(target))
 	{
-		return 0;
+		return false;
 	}
 	pos = target getshootatpos();
 	if(isdefined(pos))
@@ -573,7 +573,7 @@ function locksighttest(target)
 		passed = bullettracepassed(eyepos, pos, 0, target, undefined, 1, 1);
 		if(passed)
 		{
-			return 1;
+			return true;
 		}
 	}
 	pos = target getcentroid();
@@ -582,15 +582,15 @@ function locksighttest(target)
 		passed = bullettracepassed(eyepos, pos, 0, target, undefined, 1, 1);
 		if(passed)
 		{
-			return 1;
+			return true;
 		}
 	}
 	pos = target.origin;
 	passed = bullettracepassed(eyepos, pos, 0, target, undefined, 1, 1);
 	if(passed)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 

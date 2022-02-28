@@ -17,7 +17,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function main()
+function autoexec main()
 {
 	clientfield::register("actor", "margwa_head_left", 1, 2, "int", &margwaclientutils::margwaheadleftcallback, 0, 0);
 	clientfield::register("actor", "margwa_head_mid", 1, 2, "int", &margwaclientutils::margwaheadmidcallback, 0, 0);
@@ -69,7 +69,7 @@ autoexec function main()
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function precache()
+function autoexec precache()
 {
 	level._effect["fx_margwa_teleport_zod_zmb"] = "zombie/fx_margwa_teleport_zod_zmb";
 	level._effect["fx_margwa_teleport_travel_zod_zmb"] = "zombie/fx_margwa_teleport_travel_zod_zmb";
@@ -91,7 +91,7 @@ autoexec function precache()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function margwaspawn(localclientnum)
+function private margwaspawn(localclientnum)
 {
 	self util::waittill_dobj(localclientnum);
 	if(!isdefined(self))
@@ -133,7 +133,7 @@ private function margwaspawn(localclientnum)
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function margwaheadleftcallback(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private margwaheadleftcallback(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	if(isdefined(self.leftglowfx))
 	{
@@ -208,7 +208,7 @@ private function margwaheadleftcallback(localclientnum, oldvalue, newvalue, bnew
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function margwaheadmidcallback(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private margwaheadmidcallback(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	if(isdefined(self.midglowfx))
 	{
@@ -280,7 +280,7 @@ private function margwaheadmidcallback(localclientnum, oldvalue, newvalue, bnewe
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function margwaheadrightcallback(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private margwaheadrightcallback(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	if(isdefined(self.rightglowfx))
 	{
@@ -352,7 +352,7 @@ private function margwaheadrightcallback(localclientnum, oldvalue, newvalue, bne
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function margwastopsmashfx(localclientnum)
+function private margwastopsmashfx(localclientnum)
 {
 	self endon(#"entityshutdown");
 	wait(0.6);
@@ -379,7 +379,7 @@ private function margwastopsmashfx(localclientnum)
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function margwafxincallback(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private margwafxincallback(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	if(newvalue)
 	{
@@ -396,7 +396,7 @@ private function margwafxincallback(localclientnum, oldvalue, newvalue, bnewent,
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function margwafxoutcallback(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private margwafxoutcallback(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	if(newvalue)
 	{
@@ -414,7 +414,7 @@ private function margwafxoutcallback(localclientnum, oldvalue, newvalue, bnewent
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function margwafxtravelcallback(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private margwafxtravelcallback(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	switch(newvalue)
 	{
@@ -440,7 +440,7 @@ private function margwafxtravelcallback(localclientnum, oldvalue, newvalue, bnew
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function margwafxtraveltellcallback(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private margwafxtraveltellcallback(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	switch(newvalue)
 	{
@@ -468,7 +468,7 @@ private function margwafxtraveltellcallback(localclientnum, oldvalue, newvalue, 
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function margwatraveltellupdate(localclientnum)
+function private margwatraveltellupdate(localclientnum)
 {
 	self notify(#"stop_margwatraveltell");
 	self endon(#"stop_margwatraveltell");
@@ -497,7 +497,7 @@ private function margwatraveltellupdate(localclientnum)
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function margwafxspawncallback(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private margwafxspawncallback(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	if(newvalue)
 	{
@@ -527,7 +527,7 @@ private function margwafxspawncallback(localclientnum, oldvalue, newvalue, bnewe
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function margwaheadexplosion(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private margwaheadexplosion(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	if(newvalue)
 	{
@@ -571,13 +571,16 @@ function margwaprocessfootstep(localclientnum, pos, surface, notetrack, bone)
 	{
 		e_player playrumbleonentity(localclientnum, "shotgun_fire");
 	}
-	else if(n_scale <= 0.2 && n_scale > 0.1)
-	{
-		e_player playrumbleonentity(localclientnum, "damage_heavy");
-	}
 	else
 	{
-		e_player playrumbleonentity(localclientnum, "reload_small");
+		if(n_scale <= 0.2 && n_scale > 0.1)
+		{
+			e_player playrumbleonentity(localclientnum, "damage_heavy");
+		}
+		else
+		{
+			e_player playrumbleonentity(localclientnum, "reload_small");
+		}
 	}
 }
 
@@ -590,7 +593,7 @@ function margwaprocessfootstep(localclientnum, pos, surface, notetrack, bone)
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function margwasmashcallback(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private margwasmashcallback(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	if(newvalue)
 	{
@@ -619,7 +622,7 @@ private function margwasmashcallback(localclientnum, oldvalue, newvalue, bnewent
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function margwalefthitcallback(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private margwalefthitcallback(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	if(newvalue)
 	{
@@ -641,7 +644,7 @@ private function margwalefthitcallback(localclientnum, oldvalue, newvalue, bnewe
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function margwamidhitcallback(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private margwamidhitcallback(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	if(newvalue)
 	{
@@ -663,7 +666,7 @@ private function margwamidhitcallback(localclientnum, oldvalue, newvalue, bnewen
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function margwarighthitcallback(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private margwarighthitcallback(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	if(newvalue)
 	{
@@ -685,7 +688,7 @@ private function margwarighthitcallback(localclientnum, oldvalue, newvalue, bnew
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function margwaheadkilledcallback(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private margwaheadkilledcallback(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	if(newvalue)
 	{
@@ -702,11 +705,11 @@ private function margwaheadkilledcallback(localclientnum, oldvalue, newvalue, bn
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function margwajawcallback(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private margwajawcallback(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	if(newvalue)
 	{
-		foreach(var_bfaf3862, head in self.heads)
+		foreach(head in self.heads)
 		{
 			if(isdefined(head.killed) && head.killed)
 			{

@@ -90,7 +90,7 @@ function main()
 */
 function updateobjectivehintmessages(defenderteam, defendmessage, attackmessage)
 {
-	foreach(var_39a91352, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(defenderteam == team)
 		{
@@ -112,7 +112,7 @@ function updateobjectivehintmessages(defenderteam, defendmessage, attackmessage)
 */
 function updateobjectivehintmessage(message)
 {
-	foreach(var_65e5fe5d, team in level.teams)
+	foreach(team in level.teams)
 	{
 		game["strings"]["objective_hint_" + team] = message;
 	}
@@ -184,7 +184,7 @@ function onstartgametype()
 		game["defenders"] = oldattackers;
 	}
 	globallogic_score::resetteamscores();
-	foreach(var_1acba872, team in level.teams)
+	foreach(team in level.teams)
 	{
 		util::setobjectivetext(team, &"OBJECTIVES_KOTH");
 		if(level.splitscreen)
@@ -214,14 +214,14 @@ function onstartgametype()
 	spawning::create_map_placed_influencers();
 	level.spawnmins = (0, 0, 0);
 	level.spawnmaxs = (0, 0, 0);
-	foreach(var_8f437e80, team in level.teams)
+	foreach(team in level.teams)
 	{
 		spawnlogic::add_spawn_points(team, "mp_tdm_spawn");
 		spawnlogic::place_spawn_points(spawning::gettdmstartspawnname(team));
 	}
 	spawning::updateallspawnpoints();
 	level.spawn_start = [];
-	foreach(var_e9159ec2, team in level.teams)
+	foreach(team in level.teams)
 	{
 		level.spawn_start[team] = spawnlogic::get_spawnpoint_array(spawning::gettdmstartspawnname(team));
 	}
@@ -324,7 +324,7 @@ function hqmainloop()
 	}
 	wait(5);
 	timerdisplay = [];
-	foreach(var_b9659309, team in level.teams)
+	foreach(team in level.teams)
 	{
 		timerdisplay[team] = hud::createservertimer("objective", 1.4, team);
 		timerdisplay[team] hud::setgamemodeinfopoint();
@@ -358,7 +358,7 @@ function hqmainloop()
 			level.radio.gameobject gameobjects::set_visible_team("any");
 			level.radio.gameobject gameobjects::set_flags(1);
 			updateobjectivehintmessage(level.objectivehintpreparehq);
-			foreach(var_74a0c36c, team in level.teams)
+			foreach(team in level.teams)
 			{
 				timerdisplay[team].label = hqspawninginstr;
 				timerdisplay[team] settimer(level.hqspawntime);
@@ -368,7 +368,7 @@ function hqmainloop()
 			level.radio.gameobject gameobjects::set_flags(0);
 			globallogic_audio::leader_dialog("hq_online");
 		}
-		foreach(var_dfe50114, team in level.teams)
+		foreach(team in level.teams)
 		{
 			timerdisplay[team].alpha = 0;
 		}
@@ -391,7 +391,7 @@ function hqmainloop()
 		if(level.hqautodestroytime)
 		{
 			thread destroyhqaftertime(level.hqautodestroytime, ownerteam);
-			foreach(var_831551e0, team in level.teams)
+			foreach(team in level.teams)
 			{
 				timerdisplay[team] settimer(level.hqautodestroytime);
 			}
@@ -403,7 +403,7 @@ function hqmainloop()
 		while(true)
 		{
 			ownerteam = level.radio.gameobject gameobjects::get_owner_team();
-			foreach(var_99b6a1af, team in level.teams)
+			foreach(team in level.teams)
 			{
 				updateobjectivehintmessages(ownerteam, level.objectivehintdefendhq, level.objectivehintdestroyhq);
 			}
@@ -415,7 +415,7 @@ function hqmainloop()
 			level.radio.gameobject.onuse = &onradiodestroy;
 			if(level.hqautodestroytime)
 			{
-				foreach(var_87692dbf, team in level.teams)
+				foreach(team in level.teams)
 				{
 					if(team == ownerteam)
 					{
@@ -446,7 +446,7 @@ function hqmainloop()
 		level.radio.gameobject gameobjects::set_owner_team("neutral");
 		level.radio.gameobject gameobjects::set_model_visibility(0);
 		level notify(#"hq_reset");
-		foreach(var_fa5b3be1, team in level.teams)
+		foreach(team in level.teams)
 		{
 			timerdisplay[team].alpha = 0;
 		}
@@ -559,7 +559,7 @@ function onradiocapture(player)
 	{
 		self gameobjects::set_use_time(level.destroytime);
 	}
-	foreach(var_5cc522b, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(team == capture_team)
 		{
@@ -657,7 +657,7 @@ function onradiodestroy(firstplayer)
 	destroyed_team = firstplayer.pers["team"];
 	touchlist = self.touchlist[destroyed_team];
 	touchlistkeys = getarraykeys(touchlist);
-	foreach(var_fd6910a9, index in touchlistkeys)
+	foreach(index in touchlistkeys)
 	{
 		player = touchlist[index].player;
 		/#
@@ -680,7 +680,7 @@ function onradiodestroy(firstplayer)
 		otherteammessage = &"MP_HQ_CAPTURED_BY_ENEMY";
 	}
 	level thread popups::displayteammessagetoall(destroyteammessage, player);
-	foreach(var_a83d61df, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(team == destroyed_team)
 		{
@@ -811,27 +811,27 @@ function compareradioindexes(radio_a, radio_b)
 	script_index_b = radio_b.script_index;
 	if(!isdefined(script_index_a) && !isdefined(script_index_b))
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(script_index_a) && isdefined(script_index_b))
 	{
 		/#
 			println("" + radio_a.origin);
 		#/
-		return 1;
+		return true;
 	}
 	if(isdefined(script_index_a) && !isdefined(script_index_b))
 	{
 		/#
 			println("" + radio_b.origin);
 		#/
-		return 0;
+		return false;
 	}
 	if(script_index_a > script_index_b)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -952,7 +952,7 @@ function setupradios()
 	level.radios = radios;
 	level.prevradio = undefined;
 	level.prevradio2 = undefined;
-	return 1;
+	return true;
 }
 
 /*
@@ -1024,7 +1024,7 @@ function setupnodes()
 	maxs = self.trig getpointinbounds(1, 1, 1);
 	self.node_radius = distance(self.trig.origin, maxs);
 	points = util::positionquery_pointarray(self.trig.origin, 0, self.node_radius, 70, 128);
-	foreach(var_f54b35cc, point in points)
+	foreach(point in points)
 	{
 		temp.origin = point;
 		if(temp istouching(self.trig))
@@ -1168,7 +1168,7 @@ function getnextradiofromqueue()
 function getcountofteamswithplayers(num)
 {
 	has_players = 0;
-	foreach(var_dd043def, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(num[team] > 0)
 		{
@@ -1217,7 +1217,7 @@ function getpointcost(avgpos, origin)
 */
 function pickradiotospawn()
 {
-	foreach(var_ed84492f, team in level.teams)
+	foreach(team in level.teams)
 	{
 		avgpos[team] = (0, 0, 0);
 		num[team] = 0;
@@ -1242,7 +1242,7 @@ function pickradiotospawn()
 		level.prevradio = radio;
 		return radio;
 	}
-	foreach(var_aa386310, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(num[team] == 0)
 		{
@@ -1348,15 +1348,18 @@ function onplayerkilled(einflictor, attacker, idamage, smeansofdeath, weapon, vd
 			self recordkillmodifier("assaulting");
 			scoreeventprocessed = 1;
 		}
-		else if(!medalgiven)
+		else
 		{
-			attacker medals::offenseglobalcount();
-			medalgiven = 1;
-			attacker thread challenges::killedbaseoffender(attacker.touchtriggers[triggerids[0]], weapon);
+			if(!medalgiven)
+			{
+				attacker medals::offenseglobalcount();
+				medalgiven = 1;
+				attacker thread challenges::killedbaseoffender(attacker.touchtriggers[triggerids[0]], weapon);
+			}
+			scoreevents::processscoreevent("kill_enemy_while_capping_hq", attacker, undefined, weapon);
+			self recordkillmodifier("defending");
+			scoreeventprocessed = 1;
 		}
-		scoreevents::processscoreevent("kill_enemy_while_capping_hq", attacker, undefined, weapon);
-		self recordkillmodifier("defending");
-		scoreeventprocessed = 1;
 	}
 	if(self.touchtriggers.size)
 	{
@@ -1378,24 +1381,27 @@ function onplayerkilled(einflictor, attacker, idamage, smeansofdeath, weapon, vd
 				scoreeventprocessed = 1;
 			}
 		}
-		else if(!medalgiven)
+		else
 		{
-			if(isdefined(attacker.pers["defends"]))
+			if(!medalgiven)
 			{
-				attacker.pers["defends"]++;
-				attacker.defends = attacker.pers["defends"];
+				if(isdefined(attacker.pers["defends"]))
+				{
+					attacker.pers["defends"]++;
+					attacker.defends = attacker.pers["defends"];
+				}
+				attacker medals::defenseglobalcount();
+				medalgiven = 1;
+				attacker thread challenges::killedbasedefender(self.touchtriggers[triggerids[0]]);
+				attacker recordgameevent("return");
 			}
-			attacker medals::defenseglobalcount();
-			medalgiven = 1;
-			attacker thread challenges::killedbasedefender(self.touchtriggers[triggerids[0]]);
-			attacker recordgameevent("return");
-		}
-		if(!scoreeventprocessed)
-		{
-			attacker challenges::killedzoneattacker(weapon);
-			scoreevents::processscoreevent("killed_attacker", attacker, undefined, weapon);
-			self recordkillmodifier("assaulting");
-			scoreeventprocessed = 1;
+			if(!scoreeventprocessed)
+			{
+				attacker challenges::killedzoneattacker(weapon);
+				scoreevents::processscoreevent("killed_attacker", attacker, undefined, weapon);
+				self recordkillmodifier("assaulting");
+				scoreeventprocessed = 1;
+			}
 		}
 		if(scoreeventprocessed == 1)
 		{
@@ -1498,25 +1504,31 @@ function onupdateuserate()
 	{
 		self.currentcontendercount = 0;
 	}
-	else if(self.ownerteam == "neutral")
+	else
 	{
-		numotherclaim = gameobjects::get_num_touching_except_team(self.claimteam);
-		if(numotherclaim > 0)
+		if(self.ownerteam == "neutral")
 		{
-			self.currentcontendercount = 2;
+			numotherclaim = gameobjects::get_num_touching_except_team(self.claimteam);
+			if(numotherclaim > 0)
+			{
+				self.currentcontendercount = 2;
+			}
+			else
+			{
+				self.currentcontendercount = 1;
+			}
 		}
 		else
 		{
-			self.currentcontendercount = 1;
+			if(numothers > 0)
+			{
+				self.currentcontendercount = 1;
+			}
+			else
+			{
+				self.currentcontendercount = 0;
+			}
 		}
-	}
-	else if(numothers > 0)
-	{
-		self.currentcontendercount = 1;
-	}
-	else
-	{
-		self.currentcontendercount = 0;
 	}
 	if(self.currentcontendercount != previousstate)
 	{

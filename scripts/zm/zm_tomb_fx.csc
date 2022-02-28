@@ -256,7 +256,7 @@ function function_1c1d65fb()
 */
 function function_b9b12551(a_ents)
 {
-	foreach(var_b9e286ab, e_ent in a_ents)
+	foreach(e_ent in a_ents)
 	{
 		e_ent delete();
 	}

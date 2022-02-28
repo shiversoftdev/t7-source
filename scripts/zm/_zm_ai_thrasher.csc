@@ -17,7 +17,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function main()
+function autoexec main()
 {
 	clientfield::register("actor", "thrasher_mouth_cf", 9000, 8, "int", &thrasherclientutils::function_dc24e0f3, 0, 0);
 }
@@ -49,7 +49,7 @@ function function_43bf0af5(entity, player, state)
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function function_dc24e0f3(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private function_dc24e0f3(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	entity = self;
 	localplayer = getlocalplayer(localclientnum);
@@ -108,7 +108,7 @@ private function function_dc24e0f3(localclientnum, oldvalue, newvalue, bnewent, 
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function function_51fb721f(localclientnum, thrasher, player)
+function private function_51fb721f(localclientnum, thrasher, player)
 {
 	if(isdefined(thrasher) && isdefined(thrasher.var_18fd72ff))
 	{
@@ -127,7 +127,7 @@ private function function_51fb721f(localclientnum, thrasher, player)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function function_48032157(localclientnum, thrasher, player)
+function private function_48032157(localclientnum, thrasher, player)
 {
 	if(isdefined(thrasher) && isdefined(thrasher.var_18fd72ff))
 	{
@@ -148,7 +148,7 @@ private function function_48032157(localclientnum, thrasher, player)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function function_98817801(localclientnum, thrasher, player)
+function private function_98817801(localclientnum, thrasher, player)
 {
 	if(isdefined(thrasher) && isdefined(thrasher.var_18fd72ff))
 	{
@@ -172,7 +172,7 @@ private function function_98817801(localclientnum, thrasher, player)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function function_4cf5760d(localclientnum, thrasher, player)
+function private function_4cf5760d(localclientnum, thrasher, player)
 {
 	thrasher endon(#"entityshutdown");
 	player endon(#"entityshutdown");
@@ -224,7 +224,7 @@ private function function_4cf5760d(localclientnum, thrasher, player)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function function_785afcbe(localclientnum, thrasher, player)
+function private function_785afcbe(localclientnum, thrasher, player)
 {
 	thrasher endon(#"entityshutdown");
 	player endon(#"entityshutdown");
@@ -263,7 +263,7 @@ private function function_785afcbe(localclientnum, thrasher, player)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function function_93c1c40c(localclientnum, thrasher, player)
+function private function_93c1c40c(localclientnum, thrasher, player)
 {
 	if(isdefined(thrasher))
 	{

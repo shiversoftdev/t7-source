@@ -167,43 +167,49 @@ function callback_vehicledamage(einflictor, eattacker, idamage, idflags, smeanso
 			self.lastdamagewasfromenemy = 0;
 			self finishvehicledamage(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, psoffsettime, damagefromunderneath, modelindex, partname, 0);
 		}
-		else if(!level.hardcoremode && isdefined(self.owner) && isdefined(eattacker) && isdefined(eattacker.owner) && self.owner == eattacker.owner && self != eattacker)
-		{
-			return;
-		}
-		if(!level.teambased && isdefined(self.archetype) && self.archetype == "raps")
-		{
-		}
-		else if(!level.teambased && isdefined(self.targetname) && self.targetname == "rcbomb")
-		{
-		}
-		else if(isdefined(self.owner) && isdefined(eattacker) && self.owner == eattacker)
-		{
-			return;
-		}
-		if(idamage < 1)
-		{
-			idamage = 1;
-		}
-		if(issubstr(smeansofdeath, "MOD_GRENADE") && isdefined(einflictor) && isdefined(einflictor.iscooked))
-		{
-			self.wascooked = gettime();
-		}
 		else
 		{
-			self.wascooked = undefined;
-		}
-		attacker_seat = undefined;
-		if(isdefined(eattacker))
-		{
-			attacker_seat = self getoccupantseat(eattacker);
-		}
-		self.lastdamagewasfromenemy = isdefined(eattacker) && !isdefined(attacker_seat);
-		self globallogic_player::giveattackerandinflictorownerassist(eattacker, einflictor, idamage, smeansofdeath, weapon);
-		self finishvehicledamage(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, psoffsettime, damagefromunderneath, modelindex, partname, 0);
-		if(level.gametype == "hack" && !weapon.isemp)
-		{
-			idamage = 0;
+			if(!level.hardcoremode && isdefined(self.owner) && isdefined(eattacker) && isdefined(eattacker.owner) && self.owner == eattacker.owner && self != eattacker)
+			{
+				return;
+			}
+			if(!level.teambased && isdefined(self.archetype) && self.archetype == "raps")
+			{
+			}
+			else
+			{
+				if(!level.teambased && isdefined(self.targetname) && self.targetname == "rcbomb")
+				{
+				}
+				else if(isdefined(self.owner) && isdefined(eattacker) && self.owner == eattacker)
+				{
+					return;
+				}
+			}
+			if(idamage < 1)
+			{
+				idamage = 1;
+			}
+			if(issubstr(smeansofdeath, "MOD_GRENADE") && isdefined(einflictor) && isdefined(einflictor.iscooked))
+			{
+				self.wascooked = gettime();
+			}
+			else
+			{
+				self.wascooked = undefined;
+			}
+			attacker_seat = undefined;
+			if(isdefined(eattacker))
+			{
+				attacker_seat = self getoccupantseat(eattacker);
+			}
+			self.lastdamagewasfromenemy = isdefined(eattacker) && !isdefined(attacker_seat);
+			self globallogic_player::giveattackerandinflictorownerassist(eattacker, einflictor, idamage, smeansofdeath, weapon);
+			self finishvehicledamage(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, psoffsettime, damagefromunderneath, modelindex, partname, 0);
+			if(level.gametype == "hack" && !weapon.isemp)
+			{
+				idamage = 0;
+			}
 		}
 		if(eattackernotself && (eattackerisnotowner || (isdefined(self.selfdestruct) && !self.selfdestruct) || self.forcedamagefeedback === 1))
 		{
@@ -323,15 +329,18 @@ function callback_vehicleradiusdamage(einflictor, eattacker, idamage, finnerdama
 			self.lastdamagewasfromenemy = 0;
 			self finishvehicleradiusdamage(einflictor, eattacker, idamage, finnerdamage, fouterdamage, idflags, smeansofdeath, weapon, vpoint, fradius, fconeanglecos, vconedir, psoffsettime);
 		}
-		else if(!level.hardcoremode && isdefined(self.owner) && isdefined(eattacker.owner) && self.owner == eattacker.owner)
+		else
 		{
-			return;
+			if(!level.hardcoremode && isdefined(self.owner) && isdefined(eattacker.owner) && self.owner == eattacker.owner)
+			{
+				return;
+			}
+			if(idamage < 1)
+			{
+				idamage = 1;
+			}
+			self finishvehicleradiusdamage(einflictor, eattacker, idamage, finnerdamage, fouterdamage, idflags, smeansofdeath, weapon, vpoint, fradius, fconeanglecos, vconedir, psoffsettime);
 		}
-		if(idamage < 1)
-		{
-			idamage = 1;
-		}
-		self finishvehicleradiusdamage(einflictor, eattacker, idamage, finnerdamage, fouterdamage, idflags, smeansofdeath, weapon, vpoint, fradius, fconeanglecos, vconedir, psoffsettime);
 	}
 }
 

@@ -611,7 +611,7 @@ function function_52553b46(ambientroom, e_trigger)
 	level.var_8aa493c0["space"] = spawnstruct();
 	level.var_8aa493c0["space"].var_b33e0a6 = "zmb_moon_bg_airless";
 	e_triggers = getentarray(0, "ambient_package", "targetname");
-	foreach(var_73b42746, e_trigger in e_triggers)
+	foreach(e_trigger in e_triggers)
 	{
 		level.var_8aa493c0[e_trigger.script_ambientroom] = spawnstruct();
 		if(isdefined(e_trigger.script_string))
@@ -674,7 +674,15 @@ function function_d19cb2f8()
 			}
 		}
 	}
-	println("");
+	else
+	{
+		/#
+			println("");
+		#/
+		if(getdvarint("") > 0)
+		{
+		}
+	}
 }
 
 /*

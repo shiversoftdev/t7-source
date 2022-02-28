@@ -82,20 +82,23 @@ function geyser_player_setup_prone(localclientnum, oldval, newval, bnewent, bini
 		self.fake_player[localclientnum] = fake_player;
 		self thread wait_for_geyser_player_to_disconnect(localclientnum);
 	}
-	else if(!isdefined(self.fake_player) && !isdefined(self.fake_player[localclientnum]))
+	else
 	{
-		return;
+		if(!isdefined(self.fake_player) && !isdefined(self.fake_player[localclientnum]))
+		{
+			return;
+		}
+		str_notify = "player_geyser" + localclientnum;
+		self notify(str_notify);
+		self notify(#"end_geyser");
+		if(isdefined(self.fake_player[localclientnum].fake_weapon))
+		{
+			self.fake_player[localclientnum].fake_weapon delete();
+			self.fake_player[localclientnum].fake_weapon = undefined;
+		}
+		self.fake_player[localclientnum] delete();
+		self.fake_player[localclientnum] = undefined;
 	}
-	str_notify = "player_geyser" + localclientnum;
-	self notify(str_notify);
-	self notify(#"end_geyser");
-	if(isdefined(self.fake_player[localclientnum].fake_weapon))
-	{
-		self.fake_player[localclientnum].fake_weapon delete();
-		self.fake_player[localclientnum].fake_weapon = undefined;
-	}
-	self.fake_player[localclientnum] delete();
-	self.fake_player[localclientnum] = undefined;
 }
 
 /*
@@ -160,20 +163,23 @@ function geyser_player_setup_stand(localclientnum, oldval, newval, bnewent, bini
 		self.fake_player[localclientnum] = fake_player;
 		self thread wait_for_geyser_player_to_disconnect(localclientnum);
 	}
-	else if(!isdefined(self.fake_player) || !isdefined(self.fake_player[localclientnum]))
+	else
 	{
-		return;
+		if(!isdefined(self.fake_player) || !isdefined(self.fake_player[localclientnum]))
+		{
+			return;
+		}
+		str_notify = "player_geyser" + localclientnum;
+		self notify(str_notify);
+		self notify(#"end_geyser");
+		if(isdefined(self.fake_player[localclientnum].fake_weapon))
+		{
+			self.fake_player[localclientnum].fake_weapon delete();
+			self.fake_player[localclientnum].fake_weapon = undefined;
+		}
+		self.fake_player[localclientnum] delete();
+		self.fake_player[localclientnum] = undefined;
 	}
-	str_notify = "player_geyser" + localclientnum;
-	self notify(str_notify);
-	self notify(#"end_geyser");
-	if(isdefined(self.fake_player[localclientnum].fake_weapon))
-	{
-		self.fake_player[localclientnum].fake_weapon delete();
-		self.fake_player[localclientnum].fake_weapon = undefined;
-	}
-	self.fake_player[localclientnum] delete();
-	self.fake_player[localclientnum] = undefined;
 }
 
 /*

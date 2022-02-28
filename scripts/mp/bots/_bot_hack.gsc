@@ -13,7 +13,7 @@
 function hack_tank_get_goal_origin(tank)
 {
 	nodes = getnodesinradiussorted(tank.origin, 256, 0, 64, "Path");
-	foreach(var_a57659f8, node in nodes)
+	foreach(node in nodes)
 	{
 		dir = vectornormalize(node.origin - tank.origin);
 		dir = vectorscale(dir, 32);
@@ -42,10 +42,10 @@ function hack_has_goal(tank)
 	{
 		if(distancesquared(goal, tank.origin) < 16384)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -61,25 +61,25 @@ function hack_at_goal()
 {
 	if(self atgoal("hack"))
 	{
-		return 1;
+		return true;
 	}
 	goal = self getgoal("hack");
 	if(isdefined(goal))
 	{
 		tanks = getentarray("talon", "targetname");
 		tanks = arraysort(tanks, self.origin);
-		foreach(var_babf5f9b, tank in tanks)
+		foreach(tank in tanks)
 		{
 			if(distancesquared(goal, tank.origin) < 16384)
 			{
 				if(isdefined(tank.trigger) && self istouching(tank.trigger))
 				{
-					return 1;
+					return true;
 				}
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -93,7 +93,7 @@ function hack_at_goal()
 */
 function hack_goal_pregame(tanks)
 {
-	foreach(var_56a0317c, tank in tanks)
+	foreach(tank in tanks)
 	{
 		if(isdefined(tank.owner))
 		{
@@ -144,7 +144,7 @@ function hack_think()
 	}
 	else
 	{
-		foreach(var_19e1098b, tank in tanks)
+		foreach(tank in tanks)
 		{
 			if(isdefined(tank.owner) && tank.owner == self)
 			{
@@ -173,7 +173,7 @@ function hack_think()
 				}
 			}
 		}
-		foreach(var_96e4708c, tank in tanks)
+		foreach(tank in tanks)
 		{
 			if(isdefined(tank.owner) && tank.owner == self)
 			{

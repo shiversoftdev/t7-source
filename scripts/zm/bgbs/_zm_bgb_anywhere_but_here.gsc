@@ -21,7 +21,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_bgb_anywhere_but_here", &__init__, undefined, "bgb");
 }
@@ -63,15 +63,15 @@ function activation()
 	playsoundatposition("zmb_bgb_abh_teleport_out", self.origin);
 	if(isdefined(level.var_2c12d9a6))
 	{
-		var_68140f76 = self [[level.var_2c12d9a6]]();
+		s_respawn_point = self [[level.var_2c12d9a6]]();
 	}
 	else
 	{
-		var_68140f76 = self function_728dfe3();
+		s_respawn_point = self function_728dfe3();
 	}
 	self cleargroundent();
 	self setvelocity((0, 0, 0));
-	self setorigin(var_68140f76.origin);
+	self setorigin(s_respawn_point.origin);
 	self freezecontrols(1);
 	v_return_pos = self.origin + vectorscale((0, 0, 1), 60);
 	a_ai = getaiteamarray(level.zombie_team);
@@ -80,7 +80,7 @@ function activation()
 	if(a_ai.size)
 	{
 		a_closest = arraysortclosest(a_ai, self.origin);
-		foreach(var_a9ca35d7, ai in a_closest)
+		foreach(ai in a_closest)
 		{
 			n_trace_val = ai sightconetrace(v_return_pos, self);
 			if(n_trace_val > 0.2)
@@ -105,7 +105,7 @@ function activation()
 	playfx(level._effect["teleport_aoe"], self.origin);
 	a_ai = getaiarray();
 	a_aoe_ai = arraysortclosest(a_ai, self.origin, a_ai.size, 0, 200);
-	foreach(var_e1142790, ai in a_aoe_ai)
+	foreach(ai in a_aoe_ai)
 	{
 		if(isactor(ai))
 		{
@@ -169,9 +169,9 @@ function function_728dfe3()
 	}
 	var_97786609 = struct::get_array("player_respawn_point", "targetname");
 	var_bbf77908 = [];
-	foreach(var_cd41ef9, var_68140f76 in var_97786609)
+	foreach(s_respawn_point in var_97786609)
 	{
-		if(zm_utility::is_point_inside_enabled_zone(var_68140f76.origin, var_c30975d2))
+		if(zm_utility::is_point_inside_enabled_zone(s_respawn_point.origin, var_c30975d2))
 		{
 			if(!isdefined(var_bbf77908))
 			{
@@ -181,7 +181,7 @@ function function_728dfe3()
 			{
 				var_bbf77908 = array(var_bbf77908);
 			}
-			var_bbf77908[var_bbf77908.size] = var_68140f76;
+			var_bbf77908[var_bbf77908.size] = s_respawn_point;
 		}
 	}
 	if(isdefined(level.var_2d4e3645))
@@ -193,7 +193,7 @@ function function_728dfe3()
 	{
 		var_90551969 = array::random(var_bbf77908);
 		var_46b9bbf8 = struct::get_array(var_90551969.target, "targetname");
-		foreach(var_82b38790, var_dbd59eb2 in var_46b9bbf8)
+		foreach(var_dbd59eb2 in var_46b9bbf8)
 		{
 			n_script_int = self getentitynumber() + 1;
 			if(var_dbd59eb2.script_int === n_script_int)

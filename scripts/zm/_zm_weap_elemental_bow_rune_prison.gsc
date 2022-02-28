@@ -32,7 +32,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("_zm_weap_elemental_bow_rune_prison", &__init__, &__main__, undefined);
 }
@@ -222,7 +222,7 @@ function function_94ba3a15(e_player, v_hit_origin, str_weapon_name, var_3fee16b8
 	var_852420bf = array::get_all_closest(var_c8bd3127.origin, getaiteamarray(level.zombie_team), undefined, undefined, 96);
 	var_852420bf = array::filter(var_852420bf, 0, &zm_weap_elemental_bow::function_5aec3adc);
 	var_852420bf = array::filter(var_852420bf, 0, &function_e381ab3a);
-	foreach(var_64dbd143, var_b4aadf6b in var_852420bf)
+	foreach(var_b4aadf6b in var_852420bf)
 	{
 		var_b4aadf6b dodamage(var_b4aadf6b.health, var_c8bd3127.origin, e_player, e_player, undefined, "MOD_BURNED", 0, level.var_791ba87b);
 	}
@@ -247,7 +247,7 @@ function function_378db90d(v_pos)
 	var_852420bf = array::filter(var_852420bf, 0, &zm_weap_elemental_bow::function_5aec3adc);
 	var_852420bf = array::filter(var_852420bf, 0, &function_cece5ffb);
 	var_852420bf = array::clamp_size(var_852420bf, 2);
-	foreach(var_7cf60a90, var_b4aadf6b in var_852420bf)
+	foreach(var_b4aadf6b in var_852420bf)
 	{
 		var_b4aadf6b thread zm_weap_elemental_bow::function_d1e69389(v_pos);
 	}

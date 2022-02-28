@@ -104,25 +104,25 @@ function function_512d92f4(e_player)
 	if(e_player.is_drinking > 0)
 	{
 		self sethintstring("");
-		return 0;
+		return false;
 	}
 	if(!level flag::get("power_on"))
 	{
 		self sethintstring(&"ZOMBIE_NEED_POWER");
-		return 0;
+		return false;
 	}
 	if(level flag::get("finger_trap_on"))
 	{
 		self sethintstring(&"ZOMBIE_TRAP_ACTIVE");
-		return 0;
+		return false;
 	}
 	if(level flag::get("finger_trap_cooldown"))
 	{
 		self sethintstring(&"ZM_STALINGRAD_TRAP_COOLDOWN");
-		return 0;
+		return false;
 	}
 	self sethintstring(&"ZM_STALINGRAD_FINGER_TRAP", self.stub.hint_parm1);
-	return 1;
+	return true;
 }
 
 /*

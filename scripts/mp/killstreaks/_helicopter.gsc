@@ -63,21 +63,21 @@ function usekillstreakhelicopter(hardpointtype)
 {
 	if(self killstreakrules::iskillstreakallowed(hardpointtype, self.team) == 0)
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(level.heli_paths) || !level.heli_paths.size)
 	{
 		/#
 			iprintlnbold("");
 		#/
-		return 0;
+		return false;
 	}
 	if(hardpointtype == "helicopter_comlink" || hardpointtype == "inventory_helicopter_comlink")
 	{
 		result = self selecthelicopterlocation(hardpointtype);
 		if(!isdefined(result) || result == 0)
 		{
-			return 0;
+			return false;
 		}
 	}
 	destination = 0;
@@ -102,7 +102,7 @@ function usekillstreakhelicopter(hardpointtype)
 	killstreak_id = self killstreakrules::killstreakstart(hardpointtype, self.team);
 	if(killstreak_id == -1)
 	{
-		return 0;
+		return false;
 	}
 	if(hardpointtype == "helicopter_comlink" || hardpointtype == "inventory_helicopter_comlink")
 	{
@@ -111,7 +111,7 @@ function usekillstreakhelicopter(hardpointtype)
 	self killstreaks::play_killstreak_start_dialog(hardpointtype, self.team, killstreak_id);
 	self thread announcehelicopterinbound(hardpointtype);
 	thread heli_think(self, startnode, self.team, missilesenabled, protectlocation, hardpointtype, armored, killstreak_id);
-	return 1;
+	return true;
 }
 
 /*
@@ -529,7 +529,7 @@ function getvalidrandomleavenode(start)
 {
 	if(self === level.vtol)
 	{
-		foreach(var_5abe976f, node in level.heli_leavenodes)
+		foreach(node in level.heli_leavenodes)
 		{
 			if(isdefined(node.script_noteworthy) && node.script_noteworthy == "primary")
 			{
@@ -708,13 +708,16 @@ function heli_think(owner, startnode, heli_team, missilesenabled, protectlocatio
 	{
 		chopper.numflares = 0;
 	}
-	else if(hardpointtype == "helicopter_guard")
-	{
-		chopper.numflares = 1;
-	}
 	else
 	{
-		chopper.numflares = 2;
+		if(hardpointtype == "helicopter_guard")
+		{
+			chopper.numflares = 1;
+		}
+		else
+		{
+			chopper.numflares = 2;
+		}
 	}
 	chopper.flareoffset = vectorscale((0, 0, -1), 256);
 	chopper.waittime = level.heli_dest_wait;
@@ -819,17 +822,23 @@ function heli_missile_regen()
 		{
 			self waittill(#"hash_b0c5ea03");
 		}
-		else if(self.currentstate == "heavy smoke")
-		{
-			wait(level.heli_missile_regen_time / 4);
-		}
-		else if(self.currentstate == "light smoke")
-		{
-			wait(level.heli_missile_regen_time / 2);
-		}
 		else
 		{
-			wait(level.heli_missile_regen_time);
+			if(self.currentstate == "heavy smoke")
+			{
+				wait(level.heli_missile_regen_time / 4);
+			}
+			else
+			{
+				if(self.currentstate == "light smoke")
+				{
+					wait(level.heli_missile_regen_time / 2);
+				}
+				else
+				{
+					wait(level.heli_missile_regen_time);
+				}
+			}
 		}
 		if(self.missile_ammo < level.heli_missile_max)
 		{
@@ -878,7 +887,7 @@ function heli_targeting(missilesenabled, hardpointtype)
 			continue;
 		}
 		dogs = dogs::dog_manager_get_dogs();
-		foreach(var_7f35720d, dog in dogs)
+		foreach(dog in dogs)
 		{
 			if(self cantargetdog_turret(dog))
 			{
@@ -891,7 +900,7 @@ function heli_targeting(missilesenabled, hardpointtype)
 		}
 		tanks = getentarray("talon", "targetname");
 		tanks = arraycombine(tanks, getentarray("siegebot", "targetname"), 0, 0);
-		foreach(var_beaa6fef, tank in tanks)
+		foreach(tank in tanks)
 		{
 			if(self cantargettank_turret(tank))
 			{
@@ -899,7 +908,7 @@ function heli_targeting(missilesenabled, hardpointtype)
 			}
 		}
 		actors = getactorarray();
-		foreach(var_d99d9e5e, actor in actors)
+		foreach(actor in actors)
 		{
 			if(isdefined(actor) && isdefined(actor.isaiclone) && isalive(actor))
 			{
@@ -924,17 +933,23 @@ function heli_targeting(missilesenabled, hardpointtype)
 			{
 				killstreaks::update_actor_threat(targets[0]);
 			}
-			else if(isdefined(targets[0].type) && (targets[0].type == "dog" || targets[0].type == "tank_drone"))
-			{
-				killstreaks::update_dog_threat(targets[0]);
-			}
-			else if(isdefined(targets[0].killstreaktype))
-			{
-				killstreaks::update_non_player_threat(targets[0]);
-			}
 			else
 			{
-				killstreaks::update_player_threat(targets[0]);
+				if(isdefined(targets[0].type) && (targets[0].type == "dog" || targets[0].type == "tank_drone"))
+				{
+					killstreaks::update_dog_threat(targets[0]);
+				}
+				else
+				{
+					if(isdefined(targets[0].killstreaktype))
+					{
+						killstreaks::update_non_player_threat(targets[0]);
+					}
+					else
+					{
+						killstreaks::update_player_threat(targets[0]);
+					}
+				}
 			}
 			self.primarytarget = targets[0];
 			self notify(#"hash_907788c7");
@@ -1530,17 +1545,23 @@ function play_bda_dialog()
 	{
 		bdadialog = "kill1";
 	}
-	else if(self.bda == 2)
+	else
 	{
-		bdadialog = "kill2";
-	}
-	else if(self.bda == 3)
-	{
-		bdadialog = "kill3";
-	}
-	else if(self.bda > 3)
-	{
-		bdadialog = "killMultiple";
+		if(self.bda == 2)
+		{
+			bdadialog = "kill2";
+		}
+		else
+		{
+			if(self.bda == 3)
+			{
+				bdadialog = "kill3";
+			}
+			else if(self.bda > 3)
+			{
+				bdadialog = "killMultiple";
+			}
+		}
 	}
 	self killstreaks::play_pilot_dialog_on_owner(bdadialog, self.killstreaktype, self.killstreak_id);
 	self notify(#"bda_dialog", bdadialog);
@@ -1919,35 +1940,38 @@ function heli_set_active_camo_state(state)
 		heli.camo_state = 0;
 		heli.camo_state_switch_time = gettime();
 	}
-	else if(state == 1)
+	else
 	{
-		if(heli.active_camo_disabled)
+		if(state == 1)
 		{
-			return;
-		}
-		heli clientfield::set("toggle_lights", 0);
-		if(heli.camo_state == 0)
-		{
-			heli playsound("veh_hind_cloak_on");
-		}
-		heli.camo_state = 1;
-		heli.camo_state_switch_time = gettime();
-		if(isdefined(heli.owner))
-		{
-			if(isdefined(heli.play_camo_dialog) && heli.play_camo_dialog)
+			if(heli.active_camo_disabled)
 			{
-				heli killstreaks::play_pilot_dialog_on_owner("activateCounter", "helicopter_comlink", self.killstreak_id);
-				heli.play_camo_dialog = 0;
+				return;
 			}
-			else if(!isdefined(heli.play_camo_dialog))
+			heli clientfield::set("toggle_lights", 0);
+			if(heli.camo_state == 0)
 			{
-				heli.play_camo_dialog = 1;
+				heli playsound("veh_hind_cloak_on");
+			}
+			heli.camo_state = 1;
+			heli.camo_state_switch_time = gettime();
+			if(isdefined(heli.owner))
+			{
+				if(isdefined(heli.play_camo_dialog) && heli.play_camo_dialog)
+				{
+					heli killstreaks::play_pilot_dialog_on_owner("activateCounter", "helicopter_comlink", self.killstreak_id);
+					heli.play_camo_dialog = 0;
+				}
+				else if(!isdefined(heli.play_camo_dialog))
+				{
+					heli.play_camo_dialog = 1;
+				}
 			}
 		}
-	}
-	else if(state == 2)
-	{
-		heli clientfield::set("toggle_lights", 1);
+		else if(state == 2)
+		{
+			heli clientfield::set("toggle_lights", 1);
+		}
 	}
 	if(isdefined(heli.flak_drone))
 	{
@@ -2040,35 +2064,38 @@ function heli_health(hardpointtype, playernotify)
 			self heli_set_active_camo_state(0);
 			self thread heli_crash(hardpointtype, self.owner, playernotify);
 		}
-		else if(self.damagetaken >= (self.maxhealth * 0.66) && damagestate >= 2)
+		else
 		{
-			self killstreaks::play_pilot_dialog_on_owner("damaged", "helicopter_comlink", self.killstreak_id);
-			if(isdefined(self.vehicletype) && self.vehicletype == "heli_player_gunner_mp")
+			if(self.damagetaken >= (self.maxhealth * 0.66) && damagestate >= 2)
 			{
-				playfxontag(level.chopper_fx["damage"]["heavy_smoke"], self, "tag_origin");
+				self killstreaks::play_pilot_dialog_on_owner("damaged", "helicopter_comlink", self.killstreak_id);
+				if(isdefined(self.vehicletype) && self.vehicletype == "heli_player_gunner_mp")
+				{
+					playfxontag(level.chopper_fx["damage"]["heavy_smoke"], self, "tag_origin");
+				}
+				else
+				{
+					playfxontag(level.chopper_fx["damage"]["heavy_smoke"], self, "tag_main_rotor");
+				}
+				damagestate = 1;
+				self.currentstate = "heavy smoke";
+				self.evasive = 1;
+				self notify(#"hash_2b25e23d");
 			}
-			else
+			else if(self.damagetaken >= (self.maxhealth * 0.33) && damagestate == 3)
 			{
-				playfxontag(level.chopper_fx["damage"]["heavy_smoke"], self, "tag_main_rotor");
+				if(isdefined(self.vehicletype) && self.vehicletype == "heli_player_gunner_mp")
+				{
+					playfxontag(level.chopper_fx["damage"]["light_smoke"], self, "tag_origin");
+				}
+				else
+				{
+					playfxontag(level.chopper_fx["damage"]["light_smoke"], self, "tag_main_rotor");
+				}
+				damagestate = 2;
+				self.currentstate = "light smoke";
+				self notify(#"hash_2b25e23d");
 			}
-			damagestate = 1;
-			self.currentstate = "heavy smoke";
-			self.evasive = 1;
-			self notify(#"hash_2b25e23d");
-		}
-		else if(self.damagetaken >= (self.maxhealth * 0.33) && damagestate == 3)
-		{
-			if(isdefined(self.vehicletype) && self.vehicletype == "heli_player_gunner_mp")
-			{
-				playfxontag(level.chopper_fx["damage"]["light_smoke"], self, "tag_origin");
-			}
-			else
-			{
-				playfxontag(level.chopper_fx["damage"]["light_smoke"], self, "tag_main_rotor");
-			}
-			damagestate = 2;
-			self.currentstate = "light smoke";
-			self notify(#"hash_2b25e23d");
 		}
 		if(self.damagetaken <= level.heli_armor)
 		{
@@ -2517,13 +2544,16 @@ function heli_explode()
 	{
 		playfx(level.chopper_fx["explode"]["guard"], self.origin, forward);
 	}
-	else if(isdefined(self.vehicletype) && self.vehicletype == "heli_player_gunner_mp")
-	{
-		playfx(level.chopper_fx["explode"]["gunner"], self.origin, forward);
-	}
 	else
 	{
-		playfx(level.chopper_fx["explode"]["death"], self.origin, forward);
+		if(isdefined(self.vehicletype) && self.vehicletype == "heli_player_gunner_mp")
+		{
+			playfx(level.chopper_fx["explode"]["gunner"], self.origin, forward);
+		}
+		else
+		{
+			playfx(level.chopper_fx["explode"]["death"], self.origin, forward);
+		}
 	}
 	self playsound(level.heli_sound["crash"]);
 	wait(0.1);
@@ -2588,7 +2618,7 @@ function heli_leave()
 	if(isdefined(self))
 	{
 		self set_goal_pos(leavenode.origin, 1);
-		self waittill_match(#"goal");
+		self waittillmatch(#"goal");
 		if(isdefined(self))
 		{
 			self stoploopsound(1);
@@ -2665,22 +2695,25 @@ function heli_fly(currentnode, startwait, hardpointtype)
 			self waittill(#"near_goal");
 			self notify(#"hash_df5908ac");
 		}
-		else if(isdefined(nextnode.script_delay) && !isdefined(self.donotstop))
-		{
-			stop = 1;
-		}
-		self setspeed(heli_speed, heli_accel);
-		self set_goal_pos(pos, stop);
-		if(!isdefined(nextnode.script_delay) || isdefined(self.donotstop))
-		{
-			self waittill(#"near_goal");
-			self notify(#"hash_df5908ac");
-		}
 		else
 		{
-			self setgoalyaw(nextnode.angles[1]);
-			self waittill_match(#"goal");
-			heli_wait(nextnode.script_delay);
+			if(isdefined(nextnode.script_delay) && !isdefined(self.donotstop))
+			{
+				stop = 1;
+			}
+			self setspeed(heli_speed, heli_accel);
+			self set_goal_pos(pos, stop);
+			if(!isdefined(nextnode.script_delay) || isdefined(self.donotstop))
+			{
+				self waittill(#"near_goal");
+				self notify(#"hash_df5908ac");
+			}
+			else
+			{
+				self setgoalyaw(nextnode.angles[1]);
+				self waittillmatch(#"goal");
+				heli_wait(nextnode.script_delay);
+			}
 		}
 		for(index = 0; index < level.heli_loop_paths.size; index++)
 		{
@@ -2769,7 +2802,7 @@ function wait_or_waittill(time, msg1, msg2, msg3)
 	self endon(msg2);
 	self endon(msg3);
 	wait(time);
-	return 1;
+	return true;
 }
 
 /*
@@ -2837,17 +2870,17 @@ function is_targeted()
 {
 	if(isdefined(self.locking_on) && self.locking_on)
 	{
-		return 1;
+		return true;
 	}
 	if(isdefined(self.locked_on) && self.locked_on)
 	{
-		return 1;
+		return true;
 	}
 	if(isdefined(self.locking_on_hacking) && self.locking_on_hacking)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -3229,9 +3262,9 @@ function target_cone_check(target, conecosine)
 	if(heli_dot_target >= conecosine)
 	{
 		airsupport::debug_print3d_simple("Cone sight: " + heli_dot_target, self, vectorscale((0, 0, -1), 40), 40);
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -3359,13 +3392,16 @@ function attack_primary(hardpointtype)
 							self setturrettargetent(self.primarytarget, vectorscale((0, 0, 1), 40));
 						}
 					}
-					else if(isdefined(self.targetlost) && self.targetlost && isdefined(self.turret_last_pos))
-					{
-						self setturrettargetvec(self.turret_last_pos);
-					}
 					else
 					{
-						self clearturrettarget();
+						if(isdefined(self.targetlost) && self.targetlost && isdefined(self.turret_last_pos))
+						{
+							self setturrettargetvec(self.turret_last_pos);
+						}
+						else
+						{
+							self clearturrettarget();
+						}
 					}
 					if(gettime() != self.lastrocketfiretime)
 					{

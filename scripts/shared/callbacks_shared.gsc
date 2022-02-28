@@ -69,7 +69,7 @@ function add_callback(event, func, obj)
 	{
 		level._callbacks[event] = [];
 	}
-	foreach(var_d808cb51, callback in level._callbacks[event])
+	foreach(callback in level._callbacks[event])
 	{
 		if(callback[0] == func)
 		{
@@ -699,15 +699,15 @@ function callback_weapon_damage(eattacker, einflictor, weapon, meansofdeath, dam
 		if(isdefined(level.weapon_damage_callback_array[weapon]))
 		{
 			self thread [[level.weapon_damage_callback_array[weapon]]](eattacker, einflictor, weapon, meansofdeath, damage);
-			return 1;
+			return true;
 		}
 		if(isdefined(level.weapon_damage_callback_array[weapon.rootweapon]))
 		{
 			self thread [[level.weapon_damage_callback_array[weapon.rootweapon]]](eattacker, einflictor, weapon, meansofdeath, damage);
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1072,7 +1072,7 @@ function codecallback_vehicleradiusdamage(einflictor, eattacker, idamage, finner
 function finishcustomtraversallistener()
 {
 	self endon(#"death");
-	self waittill_match(#"custom_traversal_anim_finished");
+	self waittillmatch(#"custom_traversal_anim_finished");
 	self finishtraversal();
 	self unlink();
 	self.usegoalanimweight = 0;

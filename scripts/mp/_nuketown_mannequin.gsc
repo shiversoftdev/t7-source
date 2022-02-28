@@ -35,13 +35,16 @@ function spawnmannequin(origin, angles, gender = "male", speed = undefined, weep
 	{
 		mannequin.zombie_move_speed = "walk";
 	}
-	else if(rand <= 70)
-	{
-		mannequin.zombie_move_speed = "run";
-	}
 	else
 	{
-		mannequin.zombie_move_speed = "sprint";
+		if(rand <= 70)
+		{
+			mannequin.zombie_move_speed = "run";
+		}
+		else
+		{
+			mannequin.zombie_move_speed = "sprint";
+		}
 	}
 	if(isdefined(speed))
 	{
@@ -60,7 +63,7 @@ function spawnmannequin(origin, angles, gender = "male", speed = undefined, weep
 	mannequin.team = "free";
 	mannequin.overrideactordamage = &mannequindamage;
 	mannequins = getaiarchetypearray("mannequin");
-	foreach(var_a9b3caa, othermannequin in mannequins)
+	foreach(othermannequin in mannequins)
 	{
 		if(othermannequin.archetype == "mannequin")
 		{
@@ -106,7 +109,7 @@ function mannequindamage(inflictor, attacker, damage, dflags, mod, weapon, point
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function watch_game_ended()
+function private watch_game_ended()
 {
 	self endon(#"death");
 	level waittill(#"game_ended");
@@ -124,7 +127,7 @@ private function watch_game_ended()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function _mannequin_unfreeze_ragdoll()
+function private _mannequin_unfreeze_ragdoll()
 {
 	self waittill(#"death");
 	if(isdefined(self))
@@ -146,7 +149,7 @@ private function _mannequin_unfreeze_ragdoll()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _mannequin_update_freeze(frozen)
+function private _mannequin_update_freeze(frozen)
 {
 	self.is_looking_at_me = frozen;
 	if(self.is_looking_at_me && !self.was_looking_at_me)
@@ -176,21 +179,21 @@ function watch_player_looking()
 	while(true)
 	{
 		mannequins = getaiarchetypearray("mannequin");
-		foreach(var_a289c895, mannequin in mannequins)
+		foreach(mannequin in mannequins)
 		{
 			mannequin.can_player_see_me = 1;
 		}
 		players = getplayers();
 		unseenmannequins = mannequins;
-		foreach(var_576f72aa, player in players)
+		foreach(player in players)
 		{
 			unseenmannequins = player cantseeentities(unseenmannequins, 0.67, 0);
 		}
-		foreach(var_feda86e8, mannequin in unseenmannequins)
+		foreach(mannequin in unseenmannequins)
 		{
 			mannequin.can_player_see_me = 0;
 		}
-		foreach(var_bce6eaf5, mannequin in mannequins)
+		foreach(mannequin in mannequins)
 		{
 			mannequin _mannequin_update_freeze(mannequin.can_player_see_me);
 		}

@@ -17,7 +17,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_bgb_immolation_liquidation", &__init__, undefined, "bgb");
 }
@@ -67,8 +67,8 @@ function function_3d1f600e()
 {
 	if(level.zombie_vars["zombie_powerup_fire_sale_on"] === 1 || (isdefined(level.disable_firesale_drop) && level.disable_firesale_drop))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 

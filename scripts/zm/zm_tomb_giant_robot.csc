@@ -65,13 +65,16 @@ function register_giant_robot(localclientnum, oldval, newval, bnewent, binitials
 	{
 		level.a_giant_robots[localclientnum][0] = self;
 	}
-	else if(self.model == "veh_t7_zhd_robot_1")
+	else
 	{
-		level.a_giant_robots[localclientnum][1] = self;
-	}
-	else if(self.model == "veh_t7_zhd_robot_2")
-	{
-		level.a_giant_robots[localclientnum][2] = self;
+		if(self.model == "veh_t7_zhd_robot_1")
+		{
+			level.a_giant_robots[localclientnum][1] = self;
+		}
+		else if(self.model == "veh_t7_zhd_robot_2")
+		{
+			level.a_giant_robots[localclientnum][2] = self;
+		}
 	}
 }
 
@@ -123,14 +126,17 @@ function function_98a05ad2(localclientnum, oldval, newval, bnewent, binitialsnap
 		self.var_e655463b = playfxontag(localclientnum, level._effect["giant_robot_foot_light"], self, "tag_foot_bottom_left");
 		setfxignorepause(localclientnum, self.var_e655463b, 1);
 	}
-	else if(newval == 2)
+	else
 	{
-		self.var_e655463b = playfxontag(localclientnum, level._effect["giant_robot_foot_light"], self, "tag_foot_bottom_right");
-		setfxignorepause(localclientnum, self.var_e655463b, 1);
-	}
-	else if(isdefined(self.var_e655463b))
-	{
-		killfx(localclientnum, self.var_e655463b);
+		if(newval == 2)
+		{
+			self.var_e655463b = playfxontag(localclientnum, level._effect["giant_robot_foot_light"], self, "tag_foot_bottom_right");
+			setfxignorepause(localclientnum, self.var_e655463b, 1);
+		}
+		else if(isdefined(self.var_e655463b))
+		{
+			killfx(localclientnum, self.var_e655463b);
+		}
 	}
 }
 
@@ -162,20 +168,23 @@ function function_6e99bd62(localclientnum, oldval, newval, bnewent, binitialsnap
 		ai_robot.var_140b6e83.n_death_fx = playfxontag(localclientnum, level._effect["mechz_death"], ai_robot.var_140b6e83, "tag_origin");
 		setfxignorepause(localclientnum, ai_robot.var_140b6e83.n_death_fx, 1);
 	}
-	else if(newval == 2)
+	else
 	{
-		v_fx_pos = ai_robot gettagorigin("tag_hatch_fx_le");
-		v_fx_pos = v_fx_pos - v_fx_offset;
-		ai_robot.var_140b6e83 = spawn(localclientnum, v_fx_pos, "script_model");
-		ai_robot.var_140b6e83 setmodel("tag_origin");
-		ai_robot.var_140b6e83 linkto(ai_robot, "tag_hatch_fx_le");
-		ai_robot.var_140b6e83 playsound(0, "zmb_zombieblood_3rd_plane_explode");
-		ai_robot.var_140b6e83.n_death_fx = playfxontag(localclientnum, level._effect["mechz_death"], ai_robot.var_140b6e83, "tag_origin");
-		setfxignorepause(localclientnum, ai_robot.var_140b6e83.n_death_fx, 1);
-	}
-	else if(isdefined(ai_robot.var_140b6e83))
-	{
-		ai_robot.var_140b6e83 delete();
+		if(newval == 2)
+		{
+			v_fx_pos = ai_robot gettagorigin("tag_hatch_fx_le");
+			v_fx_pos = v_fx_pos - v_fx_offset;
+			ai_robot.var_140b6e83 = spawn(localclientnum, v_fx_pos, "script_model");
+			ai_robot.var_140b6e83 setmodel("tag_origin");
+			ai_robot.var_140b6e83 linkto(ai_robot, "tag_hatch_fx_le");
+			ai_robot.var_140b6e83 playsound(0, "zmb_zombieblood_3rd_plane_explode");
+			ai_robot.var_140b6e83.n_death_fx = playfxontag(localclientnum, level._effect["mechz_death"], ai_robot.var_140b6e83, "tag_origin");
+			setfxignorepause(localclientnum, ai_robot.var_140b6e83.n_death_fx, 1);
+		}
+		else if(isdefined(ai_robot.var_140b6e83))
+		{
+			ai_robot.var_140b6e83 delete();
+		}
 	}
 }
 
@@ -273,7 +282,7 @@ function all_tubes_play_eject_steam_fx(localclientnum, oldval, newval, bnewent, 
 		level.var_bd5df270 = [];
 		level.var_bd5df270[localclientnum] = [];
 		n_index = 0;
-		foreach(var_18d6dc71, struct in var_66a1e889)
+		foreach(struct in var_66a1e889)
 		{
 			if(struct.script_int == n_robot_id)
 			{
@@ -285,7 +294,7 @@ function all_tubes_play_eject_steam_fx(localclientnum, oldval, newval, bnewent, 
 	}
 	else if(isdefined(level.var_bd5df270[localclientnum]))
 	{
-		foreach(var_3b026e9d, struct in level.var_bd5df270[localclientnum])
+		foreach(struct in level.var_bd5df270[localclientnum])
 		{
 			struct notify(#"stop_all_tubes_eject_steam");
 		}
@@ -375,20 +384,23 @@ function function_9f95c19e(localclientnum, fieldname)
 			ai_robot.var_90d8d560 = 0;
 		}
 	}
-	else if(issubstr(fieldname, 1))
-	{
-		ai_robot = level.a_giant_robots[localclientnum][1];
-		if(isdefined(ai_robot))
-		{
-			ai_robot.var_90d8d560 = 1;
-		}
-	}
 	else
 	{
-		ai_robot = level.a_giant_robots[localclientnum][2];
-		if(isdefined(ai_robot))
+		if(issubstr(fieldname, 1))
 		{
-			ai_robot.var_90d8d560 = 2;
+			ai_robot = level.a_giant_robots[localclientnum][1];
+			if(isdefined(ai_robot))
+			{
+				ai_robot.var_90d8d560 = 1;
+			}
+		}
+		else
+		{
+			ai_robot = level.a_giant_robots[localclientnum][2];
+			if(isdefined(ai_robot))
+			{
+				ai_robot.var_90d8d560 = 2;
+			}
 		}
 	}
 	return ai_robot;
@@ -461,7 +473,7 @@ function function_7e19465b(localclientnum, oldval, newval, bnewent, binitialsnap
 function function_bbae1203(localclientnum, var_75158c9e)
 {
 	a_lights = function_d31a2386(var_75158c9e);
-	foreach(var_4c1dadb3, light in a_lights)
+	foreach(light in a_lights)
 	{
 		if(!isdefined(light.var_1398bc94))
 		{
@@ -487,7 +499,7 @@ function function_bbae1203(localclientnum, var_75158c9e)
 function function_d91e5529(localclientnum, var_75158c9e)
 {
 	a_lights = function_d31a2386(var_75158c9e);
-	foreach(var_99b6a1af, light in a_lights)
+	foreach(light in a_lights)
 	{
 		if(isdefined(light.var_1398bc94))
 		{
@@ -508,7 +520,7 @@ function function_d91e5529(localclientnum, var_75158c9e)
 */
 function function_aacf48b5(localclientnum)
 {
-	foreach(var_2ed441fd, light in level.var_58b72d2f[self.var_90d8d560].var_11927f3d)
+	foreach(light in level.var_58b72d2f[self.var_90d8d560].var_11927f3d)
 	{
 		if(isdefined(light.var_1398bc94))
 		{
@@ -530,7 +542,7 @@ function function_aacf48b5(localclientnum)
 function function_d31a2386(var_75158c9e)
 {
 	var_fa1ca319 = [];
-	foreach(var_cab513de, light in level.var_58b72d2f[self.var_90d8d560].var_11927f3d)
+	foreach(light in level.var_58b72d2f[self.var_90d8d560].var_11927f3d)
 	{
 		if(distancesquared(var_75158c9e.origin, light.origin) < 640000)
 		{
@@ -622,21 +634,27 @@ function giant_robot_rumble_and_shake(localclientnum, oldval, newval, bnewent, b
 		self playrumbleonentity(localclientnum, "artillery_rumble");
 		soundrattle(self.origin, 250, 750);
 	}
-	else if(newval == 2)
-	{
-		self earthquake(0.3, 1.5, self.origin, 100);
-		self playrumbleonentity(localclientnum, "shotgun_fire");
-		soundrattle(self.origin, 100, 500);
-	}
-	else if(newval == 1)
-	{
-		self earthquake(0.1, 1, self.origin, 100);
-		self playrumbleonentity(localclientnum, "damage_heavy");
-		soundrattle(self.origin, 10, 350);
-	}
 	else
 	{
-		self notify(#"hash_ee5c27b3");
+		if(newval == 2)
+		{
+			self earthquake(0.3, 1.5, self.origin, 100);
+			self playrumbleonentity(localclientnum, "shotgun_fire");
+			soundrattle(self.origin, 100, 500);
+		}
+		else
+		{
+			if(newval == 1)
+			{
+				self earthquake(0.1, 1, self.origin, 100);
+				self playrumbleonentity(localclientnum, "damage_heavy");
+				soundrattle(self.origin, 10, 350);
+			}
+			else
+			{
+				self notify(#"hash_ee5c27b3");
+			}
+		}
 	}
 }
 

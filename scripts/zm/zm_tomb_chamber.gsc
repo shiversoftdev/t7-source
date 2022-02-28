@@ -20,7 +20,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_tomb_chamber", &__init__, undefined, undefined);
 }
@@ -52,7 +52,7 @@ function main()
 {
 	level thread chamber_wall_change_randomly();
 	a_walls = getentarray("chamber_wall", "script_noteworthy");
-	foreach(var_1911c85d, e_wall in a_walls)
+	foreach(e_wall in a_walls)
 	{
 		e_wall.down_origin = e_wall.origin;
 		e_wall.up_origin = (e_wall.origin[0], e_wall.origin[1], e_wall.origin[2] + 1000);
@@ -60,7 +60,7 @@ function main()
 	level.n_chamber_wall_active = 0;
 	level flag::wait_till("start_zombie_round_logic");
 	wait(3);
-	foreach(var_52c9493f, e_wall in a_walls)
+	foreach(e_wall in a_walls)
 	{
 		e_wall moveto(e_wall.up_origin, 0.05);
 		e_wall connectpaths();
@@ -157,7 +157,7 @@ function chamber_change_walls(n_element)
 	e_new_wall = undefined;
 	playsoundatposition("zmb_chamber_wallchange", (10342, -7921, -272));
 	a_walls = getentarray("chamber_wall", "script_noteworthy");
-	foreach(var_b1eaf32f, e_wall in a_walls)
+	foreach(e_wall in a_walls)
 	{
 		if(e_wall.script_int == n_element)
 		{
@@ -184,14 +184,14 @@ function chamber_change_walls(n_element)
 function is_chamber_occupied()
 {
 	a_players = getplayers();
-	foreach(var_e3bb182, e_player in a_players)
+	foreach(e_player in a_players)
 	{
 		if(is_point_in_chamber(e_player.origin))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -390,7 +390,7 @@ function chamber_zombies_find_poi()
 function tomb_is_valid_target_in_chamber()
 {
 	a_players = getplayers();
-	foreach(var_acd59c19, e_player in a_players)
+	foreach(e_player in a_players)
 	{
 		if(e_player laststand::player_is_in_laststand())
 		{
@@ -404,9 +404,9 @@ function tomb_is_valid_target_in_chamber()
 		{
 			continue;
 		}
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -422,9 +422,9 @@ function is_player_in_chamber()
 {
 	if(is_point_in_chamber(self.origin))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

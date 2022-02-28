@@ -20,7 +20,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function main()
+function autoexec main()
 {
 	clientfield::register("actor", "arch_actor_fire_fx", 1, 2, "int");
 	clientfield::register("actor", "arch_actor_char", 1, 2, "int");

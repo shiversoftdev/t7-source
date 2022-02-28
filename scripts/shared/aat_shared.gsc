@@ -19,7 +19,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("aat", &__init__, &__main__, undefined);
 }
@@ -33,7 +33,7 @@ autoexec function __init__sytem__()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function __init__()
+function private __init__()
 {
 	if(!(isdefined(level.aat_in_use) && level.aat_in_use))
 	{
@@ -46,7 +46,7 @@ private function __init__()
 	level.aat_reroll = [];
 	callback::on_connect(&on_player_connect);
 	spawners = getspawnerarray();
-	foreach(var_882cee42, spawner in spawners)
+	foreach(spawner in spawners)
 	{
 		spawner spawner::add_spawn_function(&aat_cooldown_init);
 	}
@@ -85,12 +85,12 @@ function __main__()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function on_player_connect()
+function private on_player_connect()
 {
 	self.aat = [];
 	self.aat_cooldown_start = [];
 	keys = getarraykeys(level.aat);
-	foreach(var_7ca2abe5, key in keys)
+	foreach(key in keys)
 	{
 		self.aat_cooldown_start[key] = 0;
 	}
@@ -108,14 +108,14 @@ private function on_player_connect()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function setup_devgui()
+function private setup_devgui()
 {
 	/#
 		waittillframeend();
 		setdvar("", "");
 		aat_devgui_base = "";
 		keys = getarraykeys(level.aat);
-		foreach(var_8e14c94b, key in keys)
+		foreach(key in keys)
 		{
 			if(key != "")
 			{
@@ -136,7 +136,7 @@ private function setup_devgui()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function aat_devgui_think()
+function private aat_devgui_think()
 {
 	/#
 		for(;;)
@@ -172,7 +172,7 @@ private function aat_devgui_think()
 	Parameters: 0
 	Flags: Private
 */
-private function aat_debug_text_display_init()
+function private aat_debug_text_display_init()
 {
 	/#
 		self.aat_debug_text = newclienthudelem(self);
@@ -202,7 +202,7 @@ private function aat_debug_text_display_init()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function aat_debug_text_display_monitor()
+function private aat_debug_text_display_monitor()
 {
 	/#
 		self endon(#"disconnect");
@@ -228,7 +228,7 @@ private function aat_debug_text_display_monitor()
 	Parameters: 4
 	Flags: Linked, Private
 */
-private function aat_set_debug_text(name, success, success_reroll, fail)
+function private aat_set_debug_text(name, success, success_reroll, fail)
 {
 	/#
 		self notify(#"aat_set_debug_text_thread");
@@ -250,17 +250,23 @@ private function aat_set_debug_text(name, success, success_reroll, fail)
 		{
 			self.aat_debug_text.color = (0, 1, 0);
 		}
-		else if(success_reroll)
-		{
-			self.aat_debug_text.color = vectorscale((1, 0, 1), 0.8);
-		}
-		else if(fail)
-		{
-			self.aat_debug_text.color = (1, 0, 0);
-		}
 		else
 		{
-			self.aat_debug_text.color = (1, 1, 1);
+			if(success_reroll)
+			{
+				self.aat_debug_text.color = vectorscale((1, 0, 1), 0.8);
+			}
+			else
+			{
+				if(fail)
+				{
+					self.aat_debug_text.color = (1, 0, 0);
+				}
+				else
+				{
+					self.aat_debug_text.color = (1, 1, 1);
+				}
+			}
 		}
 		wait(1);
 		self.aat_debug_text fadeovertime(1);
@@ -285,7 +291,7 @@ function aat_cooldown_init()
 {
 	self.aat_cooldown_start = [];
 	keys = getarraykeys(level.aat);
-	foreach(var_ca53498e, key in keys)
+	foreach(key in keys)
 	{
 		self.aat_cooldown_start[key] = 0;
 	}
@@ -300,7 +306,7 @@ function aat_cooldown_init()
 	Parameters: 15
 	Flags: Linked, Private
 */
-private function aat_vehicle_damage_monitor(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, vdamageorigin, psoffsettime, damagefromunderneath, modelindex, partname, vsurfacenormal)
+function private aat_vehicle_damage_monitor(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, vdamageorigin, psoffsettime, damagefromunderneath, modelindex, partname, vsurfacenormal)
 {
 	willbekilled = (self.health - idamage) <= 0;
 	if(isdefined(level.aat_in_use) && level.aat_in_use)
@@ -404,7 +410,7 @@ function aat_response(death, inflictor, attacker, damage, flags, mod, weapon, vp
 	{
 		keys = getarraykeys(level.aat_reroll);
 		keys = array::randomize(keys);
-		foreach(var_8d3c4d3, key in keys)
+		foreach(key in keys)
 		{
 			if(attacker [[level.aat_reroll[key].active_func]]())
 			{
@@ -584,7 +590,7 @@ function finalize_clientfields()
 	{
 		array::alphabetize(level.aat);
 		i = 0;
-		foreach(var_31b6a79d, aat in level.aat)
+		foreach(aat in level.aat)
 		{
 			aat.clientfield_index = i;
 			i++;

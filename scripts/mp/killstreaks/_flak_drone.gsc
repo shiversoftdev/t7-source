@@ -120,7 +120,7 @@ function state_off_update(params)
 			vehicle_ai::positionquery_filter_outofgoalanchor(queryresult);
 			best_point = undefined;
 			best_score = -999999;
-			foreach(var_cddc14b9, point in queryresult.data)
+			foreach(point in queryresult.data)
 			{
 				randomscore = randomfloatrange(0, 100);
 				disttooriginscore = point.disttoorigin2d * 0.2;
@@ -159,16 +159,19 @@ function state_off_update(params)
 				self setvehgoalpos(self.current_pathto_pos, 1, 0);
 			}
 		}
-		else if(isdefined(self.parent.heligoalpos))
-		{
-			self.current_pathto_pos = self.parent.heligoalpos;
-		}
 		else
 		{
-			self.current_pathto_pos = queryorigin;
+			if(isdefined(self.parent.heligoalpos))
+			{
+				self.current_pathto_pos = self.parent.heligoalpos;
+			}
+			else
+			{
+				self.current_pathto_pos = queryorigin;
+			}
+			self updateflakdronespeed();
+			self setvehgoalpos(self.current_pathto_pos, 1, 0);
 		}
-		self updateflakdronespeed();
-		self setvehgoalpos(self.current_pathto_pos, 1, 0);
 		wait(randomfloatrange(0.1, 0.2));
 	}
 }

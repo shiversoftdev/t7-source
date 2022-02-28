@@ -281,13 +281,16 @@ function change_door_models()
 		{
 			doors[i] setmodel("p7_zm_moo_door_airlock_heavy_lt");
 		}
-		else if(isdefined(doors[i].model) && doors[i].model == "p7_zm_moo_door_airlock_heavy_rt_locked")
+		else
 		{
-			doors[i] setmodel("p7_zm_moo_door_airlock_heavy_rt");
-		}
-		else if(isdefined(doors[i].model) && doors[i].model == "p7_zm_moo_door_airlock_heavy_single_locked")
-		{
-			doors[i] setmodel("p7_zm_moo_door_airlock_heavy_single");
+			if(isdefined(doors[i].model) && doors[i].model == "p7_zm_moo_door_airlock_heavy_rt_locked")
+			{
+				doors[i] setmodel("p7_zm_moo_door_airlock_heavy_rt");
+			}
+			else if(isdefined(doors[i].model) && doors[i].model == "p7_zm_moo_door_airlock_heavy_single_locked")
+			{
+				doors[i] setmodel("p7_zm_moo_door_airlock_heavy_single");
+			}
 		}
 		doors[i] thread airlock_connect_paths();
 	}
@@ -329,19 +332,19 @@ function airlock_buy()
 	self waittill(#"trigger", who, force);
 	if(getdvarint("zombie_unlock_all") > 0 || (isdefined(force) && force))
 	{
-		return 1;
+		return true;
 	}
 	if(!who usebuttonpressed())
 	{
-		return 0;
+		return false;
 	}
 	if(who zm_utility::in_revive_trigger())
 	{
-		return 0;
+		return false;
 	}
 	if(who.is_drinking > 0)
 	{
-		return 0;
+		return false;
 	}
 	cost = 0;
 	upgraded = 0;
@@ -363,17 +366,17 @@ function airlock_buy()
 			who zm_stats::increment_challenge_stat("SURVIVALIST_BUY_DOOR");
 			self.purchaser = who;
 			who recordmapevent(5, gettime(), who.origin, level.round_number, cost);
-			bb::function_91f32a58(who, self, cost, self.target, upgraded, "_door", "_purchase");
+			bb::logpurchaseevent(who, self, cost, self.target, upgraded, "_door", "_purchase");
 			who zm_stats::increment_challenge_stat("ZM_DAILY_PURCHASE_DOORS");
 		}
 		else
 		{
 			zm_utility::play_sound_at_pos("no_purchase", self.origin);
 			who zm_audio::create_and_play_dialog("general", "outofmoney");
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -494,15 +497,18 @@ function airlock_activate(time = 1, open = 1)
 					}
 					self._door_open = 1;
 				}
-				else if(isdefined(self.startpos))
-				{
-					self moveto(self.startpos, time);
-				}
 				else
 				{
-					self moveto(self.origin - vector, time);
+					if(isdefined(self.startpos))
+					{
+						self moveto(self.startpos, time);
+					}
+					else
+					{
+						self moveto(self.origin - vector, time);
+					}
+					self._door_open = 0;
 				}
-				self._door_open = 0;
 				self thread zm_blockers::door_solid_thread();
 			}
 			break;
@@ -548,9 +554,9 @@ function moon_airlock_occupied()
 			}
 			self._door_open = 1;
 		}
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -607,7 +613,7 @@ function door_remove_corpses()
 function zapper_light_green(light_name, key_name)
 {
 	var_e9947991 = getentarray(light_name, key_name);
-	foreach(var_77d3c166, light in var_e9947991)
+	foreach(light in var_e9947991)
 	{
 		var_8d53d8ef = "zap_teleport_light_0" + light.script_int;
 		exploder::exploder(var_8d53d8ef);
@@ -626,7 +632,7 @@ function zapper_light_green(light_name, key_name)
 function zapper_light_red(light_name, key_name)
 {
 	var_e9947991 = getentarray(light_name, key_name);
-	foreach(var_ad61c472, light in var_e9947991)
+	foreach(light in var_e9947991)
 	{
 		var_8d53d8ef = "zap_teleport_light_0" + light.script_int;
 		exploder::stop_exploder(var_8d53d8ef);
@@ -1156,13 +1162,13 @@ function zombie_moon_hatch()
 function function_8ceda02()
 {
 	a_nd_traversal = getnodearray("hatch_node", "targetname");
-	foreach(var_8499b036, node in a_nd_traversal)
+	foreach(node in a_nd_traversal)
 	{
 		unlinktraversal(node);
 	}
 	level flag::wait_till("power_on");
 	wait(1);
-	foreach(var_b4ad837e, node in a_nd_traversal)
+	foreach(node in a_nd_traversal)
 	{
 		linktraversal(node);
 	}

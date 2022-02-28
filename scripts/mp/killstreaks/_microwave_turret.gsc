@@ -144,7 +144,7 @@ function activatemicrowaveturret()
 	killstreakid = self killstreakrules::killstreakstart("microwave_turret", player.team, 0, 0);
 	if(killstreakid == -1)
 	{
-		return 0;
+		return false;
 	}
 	bundle = level.killstreakbundle["microwave_turret"];
 	turret = player placeables::spawnplaceable("microwave_turret", killstreakid, &onplaceturret, &oncancelplacement, &onpickupturret, &onshutdown, undefined, &onemp, "veh_t7_turret_guardian", "veh_t7_turret_guardian_yellow", "veh_t7_turret_guardian_red", 1, &"KILLSTREAK_MICROWAVE_TURRET_PICKUP", 90000, undefined, 1800 + 1, bundle.ksplaceablehint, bundle.ksplaceableinvalidlocationhint);
@@ -159,9 +159,9 @@ function activatemicrowaveturret()
 	event = turret util::waittill_any_return("placed", "cancelled", "death", "disconnect");
 	if(event != "placed")
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -683,15 +683,18 @@ function microwaveentity(entity)
 						entity shellshock("mp_radiation_low", 1.5 * shellshockscalar);
 						entity viewkick(int(25 * viewkickscalar), turret.origin);
 					}
-					else if(distancesquared(entity.origin, turret.origin) > ((750 * 1) / 3) * ((750 * 1) / 3))
-					{
-						entity shellshock("mp_radiation_med", 1.5 * shellshockscalar);
-						entity viewkick(int(50 * viewkickscalar), turret.origin);
-					}
 					else
 					{
-						entity shellshock("mp_radiation_high", 1.5 * shellshockscalar);
-						entity viewkick(int(75 * viewkickscalar), turret.origin);
+						if(distancesquared(entity.origin, turret.origin) > ((750 * 1) / 3) * ((750 * 1) / 3))
+						{
+							entity shellshock("mp_radiation_med", 1.5 * shellshockscalar);
+							entity viewkick(int(50 * viewkickscalar), turret.origin);
+						}
+						else
+						{
+							entity shellshock("mp_radiation_high", 1.5 * shellshockscalar);
+							entity viewkick(int(75 * viewkickscalar), turret.origin);
+						}
 					}
 					entity.microwaveshellshockandviewkicktime = time;
 				}
@@ -719,35 +722,35 @@ function microwaveturretaffectsentity(entity)
 	turret = self;
 	if(!isalive(entity))
 	{
-		return 0;
+		return false;
 	}
 	if(!isplayer(entity) && !isai(entity))
 	{
-		return 0;
+		return false;
 	}
 	if(entity.ignoreme === 1)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(turret.carried) && turret.carried)
 	{
-		return 0;
+		return false;
 	}
 	if(turret weaponobjects::isstunned())
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(turret.owner) && entity == turret.owner)
 	{
-		return 0;
+		return false;
 	}
 	if(!weaponobjects::friendlyfirecheck(turret.owner, entity, 0))
 	{
-		return 0;
+		return false;
 	}
 	if(distancesquared(entity.origin, turret.origin) > (750 * 750))
 	{
-		return 0;
+		return false;
 	}
 	angles = turret.vehicle gettagangles("tag_flash");
 	origin = turret.vehicle gettagorigin("tag_flash");
@@ -757,12 +760,12 @@ function microwaveturretaffectsentity(entity)
 	dot = vectordot(entdirection, forward);
 	if(dot < cos(15))
 	{
-		return 0;
+		return false;
 	}
 	if(entity damageconetrace(origin, turret, forward) <= 0)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 

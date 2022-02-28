@@ -18,7 +18,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("battlechatter", &__init__, undefined, undefined);
 }
@@ -78,17 +78,23 @@ function sndvehiclehijackwatcher()
 			{
 				alias = "hijack_wasps";
 			}
-			else if(vehiclename == "raps")
-			{
-				alias = "hijack_raps";
-			}
-			else if(vehiclename == "quadtank")
-			{
-				alias = "hijack_quad";
-			}
 			else
 			{
-				alias = undefined;
+				if(vehiclename == "raps")
+				{
+					alias = "hijack_raps";
+				}
+				else
+				{
+					if(vehiclename == "quadtank")
+					{
+						alias = "hijack_quad";
+					}
+					else
+					{
+						alias = undefined;
+					}
+				}
 			}
 			nearbyenemy = get_closest_ai_to_object("axis", clone);
 			if(isdefined(nearbyenemy) && isdefined(alias))
@@ -135,13 +141,16 @@ function on_joined_ai()
 	{
 		self.bcvoicenumber = "";
 	}
-	else if(self.voiceprefix == "vox_term")
-	{
-		self.bcvoicenumber = randomintrange(0, 3);
-	}
 	else
 	{
-		self.bcvoicenumber = randomintrange(0, 4);
+		if(self.voiceprefix == "vox_term")
+		{
+			self.bcvoicenumber = randomintrange(0, 3);
+		}
+		else
+		{
+			self.bcvoicenumber = randomintrange(0, 4);
+		}
 	}
 	if(isdefined(self.archetype) && self.archetype == "warlord")
 	{
@@ -715,13 +724,16 @@ function bc_death()
 			{
 				soundalias = ((self.voiceprefix + self.bcvoicenumber) + "_") + "exert_electrocution";
 			}
-			else if(meansofdeath == "MOD_BURNED")
-			{
-				soundalias = ((self.voiceprefix + self.bcvoicenumber) + "_") + "exert_firefly_burning";
-			}
 			else
 			{
-				soundalias = ((self.voiceprefix + self.bcvoicenumber) + "_") + "exert_death";
+				if(meansofdeath == "MOD_BURNED")
+				{
+					soundalias = ((self.voiceprefix + self.bcvoicenumber) + "_") + "exert_firefly_burning";
+				}
+				else
+				{
+					soundalias = ((self.voiceprefix + self.bcvoicenumber) + "_") + "exert_death";
+				}
 			}
 			self thread do_sound(soundalias, 1);
 		}
@@ -806,7 +818,7 @@ function bc_robotbehindvox()
 		level._bc_robotbehindvoxtime = 0;
 		enemies = getaiteamarray("axis", "team3");
 		level._bc_robotbehindarray = array();
-		foreach(var_ce3fdc48, enemy in enemies)
+		foreach(enemy in enemies)
 		{
 			if(isdefined(enemy.archetype) && enemy.archetype == "robot")
 			{
@@ -824,7 +836,7 @@ function bc_robotbehindvox()
 			enemies = getaiteamarray("axis", "team3");
 			array::remove_dead(level._bc_robotbehindarray);
 			array::remove_undefined(level._bc_robotbehindarray);
-			foreach(var_b758f3c5, enemy in enemies)
+			foreach(enemy in enemies)
 			{
 				if(isdefined(enemy.archetype) && enemy.archetype == "robot")
 				{
@@ -837,7 +849,7 @@ function bc_robotbehindvox()
 			continue;
 		}
 		played_sound = 0;
-		foreach(var_83894dec, robot in level._bc_robotbehindarray)
+		foreach(robot in level._bc_robotbehindarray)
 		{
 			if(!isdefined(robot))
 			{
@@ -1062,13 +1074,13 @@ function bc_allowed(str_category = "bc")
 {
 	if(isdefined(level.allowbattlechatter) && (!(isdefined(level.allowbattlechatter[str_category]) && level.allowbattlechatter[str_category])))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.allowbattlechatter) && (!(isdefined(self.allowbattlechatter[str_category]) && self.allowbattlechatter[str_category])))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1305,7 +1317,7 @@ function get_closest_ai_on_sameteam(some_ai, maxdist)
 		{
 			maxdist = 1000;
 		}
-		foreach(var_5855669, dude in aiarray)
+		foreach(dude in aiarray)
 		{
 			if(!isdefined(some_ai))
 			{
@@ -1372,7 +1384,7 @@ function get_closest_ai_to_object(team, object, maxdist)
 	{
 		maxdist = 1000;
 	}
-	foreach(var_b449bbef, dude in aiarray)
+	foreach(dude in aiarray)
 	{
 		if(!isdefined(dude) || !isalive(dude))
 		{

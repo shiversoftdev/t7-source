@@ -146,30 +146,36 @@ function command_parser()
 					println("");
 					success = 0;
 				}
-				else if(!isdefined(tokens[1]))
+				else
 				{
-					if(isdefined(tokens[1]))
+					if(!isdefined(tokens[1]))
 					{
-						println((("" + tokens[0]) + "") + tokens[1]);
+						if(isdefined(tokens[1]))
+						{
+							println((("" + tokens[0]) + "") + tokens[1]);
+						}
+						else
+						{
+							println("" + tokens[0]);
+						}
+						println("");
+						success = 0;
 					}
 					else
 					{
-						println("" + tokens[0]);
+						if(!isdefined(tokens[2]))
+						{
+							println((("" + tokens[0]) + "") + tokens[1]);
+							println("");
+							success = 0;
+						}
+						else if(!isdefined(tokens[3]))
+						{
+							println((("" + tokens[0]) + "") + tokens[1]);
+							println("");
+							success = 0;
+						}
 					}
-					println("");
-					success = 0;
-				}
-				else if(!isdefined(tokens[2]))
-				{
-					println((("" + tokens[0]) + "") + tokens[1]);
-					println("");
-					success = 0;
-				}
-				else if(!isdefined(tokens[3]))
-				{
-					println((("" + tokens[0]) + "") + tokens[1]);
-					println("");
-					success = 0;
 				}
 				if(success)
 				{
@@ -524,7 +530,12 @@ function start_helicopter_sounds(localclientnum)
 			}
 		#/
 	}
-	println("");
+	else
+	{
+		/#
+			println("");
+		#/
+	}
 }
 
 /*

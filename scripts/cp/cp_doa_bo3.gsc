@@ -126,7 +126,7 @@ function init()
 	spawners = getspawnerarray();
 	setdvar("scr_spawn_name", "");
 	type = undefined;
-	foreach(var_da6c0ba9, spawner in spawners)
+	foreach(spawner in spawners)
 	{
 		if(isdefined(spawner.team) && spawner.team != "axis")
 		{
@@ -494,7 +494,7 @@ function function_cef7f9fd()
 	while(gettime() < var_989e36b3)
 	{
 		self dodamage(5, self.origin, undefined, undefined, "none", "MOD_RIFLE_BULLET", 0, getweapon("gadget_immolation"), -1, 1);
-		self waittill_match(#"bhtn_action_terminate");
+		self waittillmatch(#"bhtn_action_terminate");
 	}
 	self namespace_1a381543::function_90118d8c("wpn_incendiary_explode");
 	playfxontag("explosions/fx_ability_exp_immolation", self, "j_spinelower");
@@ -532,7 +532,7 @@ function function_165c9bd0()
 		}
 		level.doa.var_602737ab = undefined;
 		level thread function_1de9db1b("silverback");
-		return 1;
+		return true;
 	}
 	if(var_e6171788 == "cave" && level.doa.arena_round_number == 0 || (isdefined(level.doa.var_bae65231) && level.doa.var_bae65231))
 	{
@@ -545,9 +545,9 @@ function function_165c9bd0()
 		}
 		level.doa.var_bae65231 = undefined;
 		level thread function_1de9db1b("margwa");
-		return 0;
+		return false;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -567,7 +567,7 @@ function function_1de9db1b(name)
 		{
 			namespace_51bd792::function_4ce6d0ea();
 			level notify(#"hash_593b80cb");
-			foreach(var_1938a6c1, player in getplayers())
+			foreach(player in getplayers())
 			{
 				player notify(#"hash_593b80cb");
 			}
@@ -577,7 +577,7 @@ function function_1de9db1b(name)
 		{
 			namespace_a3646565::function_fc48f9f3();
 			level notify(#"hash_593b80cb");
-			foreach(var_205db64a, player in getplayers())
+			foreach(player in getplayers())
 			{
 				player notify(#"hash_593b80cb");
 			}

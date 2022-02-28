@@ -18,7 +18,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("direwolf", &__init__, undefined, undefined);
 }
@@ -58,7 +58,7 @@ function __init__()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function direwolfspawnsetup()
+function private direwolfspawnsetup()
 {
 	self setteam("team3");
 	self allowpitchangle(1);

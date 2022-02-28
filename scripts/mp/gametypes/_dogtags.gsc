@@ -62,7 +62,7 @@ function spawn_dog_tag(victim, attacker, on_use_function, objectives_for_attacke
 		level.dogtags[victim.entnum].victimteam = victim.team;
 		level thread clear_on_victim_disconnect(victim);
 		victim thread team_updater(level.dogtags[victim.entnum]);
-		foreach(var_10d5ad4c, team in level.teams)
+		foreach(team in level.teams)
 		{
 			objective_add(level.dogtags[victim.entnum].objid[team], "invisible", (0, 0, 0));
 			objective_icon(level.dogtags[victim.entnum].objid[team], "waypoint_dogtags");
@@ -89,7 +89,7 @@ function spawn_dog_tag(victim, attacker, on_use_function, objectives_for_attacke
 	level.dogtags[victim.entnum].attackerteam = attacker.team;
 	level.dogtags[victim.entnum].unreachable = undefined;
 	level.dogtags[victim.entnum].tacinsert = 0;
-	foreach(var_b41743b4, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(isdefined(level.dogtags[victim.entnum].objid[team]))
 		{
@@ -126,7 +126,7 @@ function spawn_dog_tag(victim, attacker, on_use_function, objectives_for_attacke
 function show_to_team(gameobject, show_team)
 {
 	self show();
-	foreach(var_fdefe801, team in level.teams)
+	foreach(team in level.teams)
 	{
 		self hidefromteam(team);
 	}
@@ -145,7 +145,7 @@ function show_to_team(gameobject, show_team)
 function show_to_enemy_teams(gameobject, friend_team)
 {
 	self show();
-	foreach(var_582a2cf, team in level.teams)
+	foreach(team in level.teams)
 	{
 		self showtoteam(team);
 	}
@@ -230,7 +230,7 @@ function reset_tags()
 	self.visuals[1].origin = vectorscale((0, 0, 1), 1000);
 	self.tacinsert = 0;
 	self gameobjects::allow_use("none");
-	foreach(var_315ec103, team in level.teams)
+	foreach(team in level.teams)
 	{
 		objective_state(self.objid[team], "invisible");
 	}
@@ -272,7 +272,7 @@ function clear_on_victim_disconnect(victim)
 		wait(0.05);
 		if(isdefined(level.dogtags[guid]))
 		{
-			foreach(var_b0e0c615, team in level.teams)
+			foreach(team in level.teams)
 			{
 				objective_delete(level.dogtags[guid].objid[team]);
 			}
@@ -419,25 +419,25 @@ function should_spawn_tags(einflictor, attacker, idamage, smeansofdeath, sweapon
 {
 	if(isalive(self))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.switching_teams))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(attacker) && attacker == self)
 	{
-		return 0;
+		return false;
 	}
 	if(level.teambased && isdefined(attacker) && isdefined(attacker.team) && attacker.team == self.team)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(attacker) && (!isdefined(attacker.team) || attacker.team == "free") && (attacker.classname == "trigger_hurt" || attacker.classname == "worldspawn"))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*

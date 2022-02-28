@@ -20,7 +20,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("bgb_machine", &__init__, undefined, undefined);
 }
@@ -41,9 +41,9 @@ function __init__()
 		return;
 	}
 	level.var_962d1590 = 0.016;
-	clientfield::register("zbarrier", "zm_bgb_machine", 1, 1, "int", &function_62051f89, 0, 0);
-	clientfield::register("zbarrier", "zm_bgb_machine_selection", 1, 8, "int", &function_3bb1978f, 1, 0);
-	clientfield::register("zbarrier", "zm_bgb_machine_fx_state", 1, 3, "int", &function_f312291b, 0, 0);
+	clientfield::register("zbarrier", "zm_bgb_machine", 1, 1, "int", &bgb_machine_init, 0, 0);
+	clientfield::register("zbarrier", "zm_bgb_machine_selection", 1, 8, "int", &bgb_machine_selection, 1, 0);
+	clientfield::register("zbarrier", "zm_bgb_machine_fx_state", 1, 3, "int", &bgb_machine_fx_state, 0, 0);
 	clientfield::register("zbarrier", "zm_bgb_machine_ghost_ball", 1, 1, "int", undefined, 0, 0);
 	clientfield::register("toplayer", "zm_bgb_machine_round_buys", 10000, 3, "int", &function_27a93844, 0, 0);
 	level._effect["zm_bgb_machine_eye_away"] = "zombie/fx_bgb_machine_eye_away_zmb";
@@ -98,7 +98,7 @@ function __init__()
 }
 
 /*
-	Name: function_62051f89
+	Name: bgb_machine_init
 	Namespace: bgb_machine
 	Checksum: 0xF86E5C92
 	Offset: 0xE88
@@ -106,17 +106,17 @@ function __init__()
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function function_62051f89(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
+function private bgb_machine_init(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
-	if(isdefined(self.var_16139ac9))
+	if(isdefined(self.bgb_machine_fx))
 	{
 		return;
 	}
-	if(!isdefined(level.var_5081bd63))
+	if(!isdefined(level.bgb_machines))
 	{
-		level.var_5081bd63 = [];
+		level.bgb_machines = [];
 	}
-	array::add(level.var_5081bd63, self);
+	array::add(level.bgb_machines, self);
 	var_962d1590 = level.var_962d1590;
 	level.var_962d1590 = level.var_962d1590 + 0.016;
 	wait(var_962d1590);
@@ -124,7 +124,7 @@ private function function_62051f89(localclientnum, oldval, newval, bnewent, bini
 	{
 		return;
 	}
-	if(!isdefined(level.var_10a6bc02))
+	if(!isdefined(level.bgb_machine_streamer_forced))
 	{
 		piececount = self getnumzbarrierpieces();
 		for(i = 0; i < piececount; i++)
@@ -132,38 +132,38 @@ private function function_62051f89(localclientnum, oldval, newval, bnewent, bini
 			piece = self zbarriergetpiece(i);
 			forcestreamxmodel(piece.model);
 		}
-		level.var_10a6bc02 = 1;
+		level.bgb_machine_streamer_forced = 1;
 	}
-	self.var_16139ac9 = [];
-	self.var_16139ac9["tag_origin"] = [];
-	self.var_16139ac9["tag_fx_light_lion_lft_eye_jnt"] = [];
-	self.var_16139ac9["tag_fx_light_lion_rt_eye_jnt"] = [];
-	self.var_16139ac9["tag_fx_light_top_jnt"] = [];
-	self.var_16139ac9["tag_fx_light_side_lft_top_jnt"] = [];
-	self.var_16139ac9["tag_fx_light_side_lft_mid_jnt"] = [];
-	self.var_16139ac9["tag_fx_light_side_lft_btm_jnt"] = [];
-	self.var_16139ac9["tag_fx_light_side_rt_top_jnt"] = [];
-	self.var_16139ac9["tag_fx_light_side_rt_mid_jnt"] = [];
-	self.var_16139ac9["tag_fx_light_side_rt_btm_jnt"] = [];
-	self.var_16139ac9["tag_fx_glass_cntr_jnt"] = [];
-	self.var_16139ac9["tag_gumball_ghost"] = [];
-	self.var_6860c69f = [];
-	self.var_6860c69f[self.var_6860c69f.size] = "tag_fx_light_top_jnt";
-	self.var_6860c69f[self.var_6860c69f.size] = "tag_fx_light_side_lft_top_jnt";
-	self.var_6860c69f[self.var_6860c69f.size] = "tag_fx_light_side_lft_mid_jnt";
-	self.var_6860c69f[self.var_6860c69f.size] = "tag_fx_light_side_lft_btm_jnt";
-	self.var_6860c69f[self.var_6860c69f.size] = "tag_fx_light_side_rt_top_jnt";
-	self.var_6860c69f[self.var_6860c69f.size] = "tag_fx_light_side_rt_mid_jnt";
-	self.var_6860c69f[self.var_6860c69f.size] = "tag_fx_light_side_rt_btm_jnt";
-	self thread function_7cf480af(localclientnum, "closing", level._effect["zm_bgb_machine_flying_embers_down"]);
-	self thread function_7cf480af(localclientnum, "opening", level._effect["zm_bgb_machine_flying_embers_up"]);
-	self thread function_25c29799(localclientnum);
-	self thread function_f27e16f6(localclientnum);
-	self thread function_3939ad2f(localclientnum);
+	self.bgb_machine_fx = [];
+	self.bgb_machine_fx["tag_origin"] = [];
+	self.bgb_machine_fx["tag_fx_light_lion_lft_eye_jnt"] = [];
+	self.bgb_machine_fx["tag_fx_light_lion_rt_eye_jnt"] = [];
+	self.bgb_machine_fx["tag_fx_light_top_jnt"] = [];
+	self.bgb_machine_fx["tag_fx_light_side_lft_top_jnt"] = [];
+	self.bgb_machine_fx["tag_fx_light_side_lft_mid_jnt"] = [];
+	self.bgb_machine_fx["tag_fx_light_side_lft_btm_jnt"] = [];
+	self.bgb_machine_fx["tag_fx_light_side_rt_top_jnt"] = [];
+	self.bgb_machine_fx["tag_fx_light_side_rt_mid_jnt"] = [];
+	self.bgb_machine_fx["tag_fx_light_side_rt_btm_jnt"] = [];
+	self.bgb_machine_fx["tag_fx_glass_cntr_jnt"] = [];
+	self.bgb_machine_fx["tag_gumball_ghost"] = [];
+	self.bgb_machine_fx_bulb_tags = [];
+	self.bgb_machine_fx_bulb_tags[self.bgb_machine_fx_bulb_tags.size] = "tag_fx_light_top_jnt";
+	self.bgb_machine_fx_bulb_tags[self.bgb_machine_fx_bulb_tags.size] = "tag_fx_light_side_lft_top_jnt";
+	self.bgb_machine_fx_bulb_tags[self.bgb_machine_fx_bulb_tags.size] = "tag_fx_light_side_lft_mid_jnt";
+	self.bgb_machine_fx_bulb_tags[self.bgb_machine_fx_bulb_tags.size] = "tag_fx_light_side_lft_btm_jnt";
+	self.bgb_machine_fx_bulb_tags[self.bgb_machine_fx_bulb_tags.size] = "tag_fx_light_side_rt_top_jnt";
+	self.bgb_machine_fx_bulb_tags[self.bgb_machine_fx_bulb_tags.size] = "tag_fx_light_side_rt_mid_jnt";
+	self.bgb_machine_fx_bulb_tags[self.bgb_machine_fx_bulb_tags.size] = "tag_fx_light_side_rt_btm_jnt";
+	self thread bgb_machine_flying_ember_think(localclientnum, "closing", level._effect["zm_bgb_machine_flying_embers_down"]);
+	self thread bgb_machine_flying_ember_think(localclientnum, "opening", level._effect["zm_bgb_machine_flying_embers_up"]);
+	self thread bgb_machine_flying_gumballs_think(localclientnum);
+	self thread bgb_machine_give_gumball_think(localclientnum);
+	self thread bgb_machine_interior_light_shake_piece_think(localclientnum);
 }
 
 /*
-	Name: function_3bb1978f
+	Name: bgb_machine_selection
 	Namespace: bgb_machine
 	Checksum: 0x221F43A3
 	Offset: 0x1260
@@ -171,17 +171,17 @@ private function function_62051f89(localclientnum, oldval, newval, bnewent, bini
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function function_3bb1978f(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
+function private bgb_machine_selection(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
 	if(!newval)
 	{
 		return;
 	}
-	bgb = level.var_318929eb[newval];
+	bgb = level.bgb_item_index_to_name[newval];
 }
 
 /*
-	Name: function_8711c7b2
+	Name: bgb_machine_play_random_sparks
 	Namespace: bgb_machine
 	Checksum: 0x5162026D
 	Offset: 0x12D0
@@ -189,16 +189,16 @@ private function function_3bb1978f(localclientnum, oldval, newval, bnewent, bini
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function function_8711c7b2(localclientnum, fx, piece)
+function private bgb_machine_play_random_sparks(localclientnum, fx, piece)
 {
 	piece endon(#"opened");
 	piece endon(#"closed");
-	self.var_6860c69f = array::randomize(self.var_6860c69f);
-	for(i = 0; i < self.var_6860c69f.size; i++)
+	self.bgb_machine_fx_bulb_tags = array::randomize(self.bgb_machine_fx_bulb_tags);
+	for(i = 0; i < self.bgb_machine_fx_bulb_tags.size; i++)
 	{
 		if(randomintrange(0, 4))
 		{
-			playfxontag(localclientnum, fx, piece, self.var_6860c69f[i]);
+			playfxontag(localclientnum, fx, piece, self.bgb_machine_fx_bulb_tags[i]);
 		}
 		wait_time = randomfloatrange(0, 0.2);
 		if(wait_time)
@@ -209,7 +209,7 @@ private function function_8711c7b2(localclientnum, fx, piece)
 }
 
 /*
-	Name: function_7cf480af
+	Name: bgb_machine_flying_ember_think
 	Namespace: bgb_machine
 	Checksum: 0x568D4594
 	Offset: 0x13D8
@@ -217,23 +217,23 @@ private function function_8711c7b2(localclientnum, fx, piece)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function function_7cf480af(localclientnum, notifyname, fx)
+function private bgb_machine_flying_ember_think(localclientnum, notifyname, fx)
 {
-	var_3af6034f = self zbarriergetpiece(3);
+	listen_piece = self zbarriergetpiece(3);
 	fx_piece = self zbarriergetpiece(5);
 	for(;;)
 	{
-		var_3af6034f waittill(notifyname);
+		listen_piece waittill(notifyname);
 		tag_angles = fx_piece gettagangles("tag_fx_glass_cntr_jnt");
 		playfx(localclientnum, fx, fx_piece gettagorigin("tag_fx_glass_cntr_jnt"), anglestoforward(tag_angles), anglestoup(tag_angles));
 		playfx(localclientnum, level._effect["zm_bgb_machine_smoke"], self.origin);
-		self thread function_8711c7b2(localclientnum, level._effect["zm_bgb_machine_bulb_spark"], fx_piece);
+		self thread bgb_machine_play_random_sparks(localclientnum, level._effect["zm_bgb_machine_bulb_spark"], fx_piece);
 		wait(0.01);
 	}
 }
 
 /*
-	Name: function_25c29799
+	Name: bgb_machine_flying_gumballs_think
 	Namespace: bgb_machine
 	Checksum: 0x4A3F6CB9
 	Offset: 0x1550
@@ -241,49 +241,49 @@ private function function_7cf480af(localclientnum, notifyname, fx)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_25c29799(localclientnum)
+function private bgb_machine_flying_gumballs_think(localclientnum)
 {
-	var_f3eb485b = self zbarriergetpiece(4);
+	gumballs_piece = self zbarriergetpiece(4);
 	fx_piece = self zbarriergetpiece(5);
 	for(;;)
 	{
-		function_5885778a(var_f3eb485b);
+		function_5885778a(gumballs_piece);
 		if(!isdefined(self))
 		{
 			return;
 		}
-		if(!isdefined(var_f3eb485b))
+		if(!isdefined(gumballs_piece))
 		{
-			var_f3eb485b = self zbarriergetpiece(4);
+			gumballs_piece = self zbarriergetpiece(4);
 			fx_piece = self zbarriergetpiece(5);
 		}
-		var_286fd1ed = self clientfield::get("zm_bgb_machine_selection");
-		bgb = level.var_318929eb[var_286fd1ed];
+		bgb_item_index = self clientfield::get("zm_bgb_machine_selection");
+		bgb = level.bgb_item_index_to_name[bgb_item_index];
 		if(!isdefined(bgb))
 		{
 			continue;
 		}
 		self thread function_5f830538(localclientnum);
 		playfxontag(localclientnum, level._effect["zm_bgb_machine_flying_elec"], fx_piece, "tag_fx_glass_cntr_jnt");
-		var_f3eb485b hidepart(localclientnum, "tag_gumballs", "", 1);
-		var_98ba48a2 = [];
-		for(i = 0; i < level.var_98ba48a2[localclientnum].size; i++)
+		gumballs_piece hidepart(localclientnum, "tag_gumballs", "", 1);
+		bgb_pack = [];
+		for(i = 0; i < level.bgb_pack[localclientnum].size; i++)
 		{
-			if(bgb == level.var_98ba48a2[localclientnum][i])
+			if(bgb == level.bgb_pack[localclientnum][i])
 			{
 				continue;
 			}
-			var_98ba48a2[var_98ba48a2.size] = level.var_98ba48a2[localclientnum][i];
+			bgb_pack[bgb_pack.size] = level.bgb_pack[localclientnum][i];
 		}
-		for(i = 0; i < level.var_98ba48a2[localclientnum].size; i++)
+		for(i = 0; i < level.bgb_pack[localclientnum].size; i++)
 		{
-			var_98ba48a2[var_98ba48a2.size] = level.var_98ba48a2[localclientnum][i];
+			bgb_pack[bgb_pack.size] = level.bgb_pack[localclientnum][i];
 		}
-		var_98ba48a2 = array::randomize(var_98ba48a2);
-		array::push_front(var_98ba48a2, bgb);
+		bgb_pack = array::randomize(bgb_pack);
+		array::push_front(bgb_pack, bgb);
 		for(i = 0; i < 10; i++)
 		{
-			var_f3eb485b showpart(localclientnum, (level.bgb[var_98ba48a2[i]].var_d3c80142 + "_") + i);
+			gumballs_piece showpart(localclientnum, (level.bgb[bgb_pack[i]].flying_gumball_tag + "_") + i);
 		}
 		wait(0.01);
 	}
@@ -305,7 +305,7 @@ function function_5885778a(piece)
 }
 
 /*
-	Name: function_f27e16f6
+	Name: bgb_machine_give_gumball_think
 	Namespace: bgb_machine
 	Checksum: 0x9EB4133D
 	Offset: 0x18B8
@@ -313,7 +313,7 @@ function function_5885778a(piece)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_f27e16f6(localclientnum)
+function private bgb_machine_give_gumball_think(localclientnum)
 {
 	piece = self zbarriergetpiece(2);
 	while(isdefined(self))
@@ -327,8 +327,8 @@ private function function_f27e16f6(localclientnum)
 		{
 			piece = self zbarriergetpiece(2);
 		}
-		var_286fd1ed = self clientfield::get("zm_bgb_machine_selection");
-		bgb = level.var_318929eb[var_286fd1ed];
+		bgb_item_index = self clientfield::get("zm_bgb_machine_selection");
+		bgb = level.bgb_item_index_to_name[bgb_item_index];
 		if(!isdefined(bgb))
 		{
 			continue;
@@ -362,7 +362,7 @@ function function_36a807de(piece)
 }
 
 /*
-	Name: function_3939ad2f
+	Name: bgb_machine_interior_light_shake_piece_think
 	Namespace: bgb_machine
 	Checksum: 0x329CC8E6
 	Offset: 0x1A70
@@ -370,19 +370,19 @@ function function_36a807de(piece)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_3939ad2f(localclientnum)
+function private bgb_machine_interior_light_shake_piece_think(localclientnum)
 {
 	piece = self zbarriergetpiece(1);
 	for(;;)
 	{
 		piece waittill(#"opening");
-		function_42630d5e(localclientnum, piece, "tag_fx_glass_cntr_jnt", level._effect["zm_bgb_machine_light_interior"]);
+		bgb_machine_play_fx(localclientnum, piece, "tag_fx_glass_cntr_jnt", level._effect["zm_bgb_machine_light_interior"]);
 		wait(0.01);
 	}
 }
 
 /*
-	Name: function_9b51ab0
+	Name: bgb_machine_get_eye_fx_for_selected_bgb
 	Namespace: bgb_machine
 	Checksum: 0x830DBC28
 	Offset: 0x1AF0
@@ -390,10 +390,10 @@ private function function_3939ad2f(localclientnum)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_9b51ab0()
+function private bgb_machine_get_eye_fx_for_selected_bgb()
 {
-	var_286fd1ed = self clientfield::get("zm_bgb_machine_selection");
-	bgb = level.var_318929eb[var_286fd1ed];
+	bgb_item_index = self clientfield::get("zm_bgb_machine_selection");
+	bgb = level.bgb_item_index_to_name[bgb_item_index];
 	switch(level.bgb[bgb].limit_type)
 	{
 		case "activated":
@@ -417,7 +417,7 @@ private function function_9b51ab0()
 }
 
 /*
-	Name: function_43d950d2
+	Name: bgb_machine_get_bulb_fx_for_selected_bgb
 	Namespace: bgb_machine
 	Checksum: 0x93521BB0
 	Offset: 0x1BE0
@@ -425,10 +425,10 @@ private function function_9b51ab0()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_43d950d2()
+function private bgb_machine_get_bulb_fx_for_selected_bgb()
 {
-	var_286fd1ed = self clientfield::get("zm_bgb_machine_selection");
-	bgb = level.var_318929eb[var_286fd1ed];
+	bgb_item_index = self clientfield::get("zm_bgb_machine_selection");
+	bgb = level.bgb_item_index_to_name[bgb_item_index];
 	switch(level.bgb[bgb].limit_type)
 	{
 		case "activated":
@@ -452,7 +452,7 @@ private function function_43d950d2()
 }
 
 /*
-	Name: function_42630d5e
+	Name: bgb_machine_play_fx
 	Namespace: bgb_machine
 	Checksum: 0xB1E36F70
 	Offset: 0x1CD0
@@ -460,21 +460,21 @@ private function function_43d950d2()
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function function_42630d5e(localclientnum, piece, tag, fx, deleteimmediate = 1)
+function private bgb_machine_play_fx(localclientnum, piece, tag, fx, deleteimmediate = 1)
 {
-	if(isdefined(self.var_16139ac9[tag][localclientnum]))
+	if(isdefined(self.bgb_machine_fx[tag][localclientnum]))
 	{
-		deletefx(localclientnum, self.var_16139ac9[tag][localclientnum], deleteimmediate);
-		self.var_16139ac9[tag][localclientnum] = undefined;
+		deletefx(localclientnum, self.bgb_machine_fx[tag][localclientnum], deleteimmediate);
+		self.bgb_machine_fx[tag][localclientnum] = undefined;
 	}
 	if(isdefined(fx))
 	{
-		self.var_16139ac9[tag][localclientnum] = playfxontag(localclientnum, fx, piece, tag);
+		self.bgb_machine_fx[tag][localclientnum] = playfxontag(localclientnum, fx, piece, tag);
 	}
 }
 
 /*
-	Name: function_e5bc89d2
+	Name: bgb_machine_play_top_fx
 	Namespace: bgb_machine
 	Checksum: 0x57F88F67
 	Offset: 0x1DB0
@@ -482,13 +482,13 @@ private function function_42630d5e(localclientnum, piece, tag, fx, deleteimmedia
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function function_e5bc89d2(localclientnum, piece, fx)
+function private bgb_machine_play_top_fx(localclientnum, piece, fx)
 {
-	function_42630d5e(localclientnum, piece, "tag_fx_light_top_jnt", fx);
+	bgb_machine_play_fx(localclientnum, piece, "tag_fx_light_top_jnt", fx);
 }
 
 /*
-	Name: function_cb90ea4e
+	Name: bgb_machine_play_top_side_fx
 	Namespace: bgb_machine
 	Checksum: 0xE976FE0C
 	Offset: 0x1E00
@@ -496,14 +496,14 @@ private function function_e5bc89d2(localclientnum, piece, fx)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function function_cb90ea4e(localclientnum, piece, fx)
+function private bgb_machine_play_top_side_fx(localclientnum, piece, fx)
 {
-	function_42630d5e(localclientnum, piece, "tag_fx_light_side_lft_top_jnt", fx);
-	function_42630d5e(localclientnum, piece, "tag_fx_light_side_rt_top_jnt", fx);
+	bgb_machine_play_fx(localclientnum, piece, "tag_fx_light_side_lft_top_jnt", fx);
+	bgb_machine_play_fx(localclientnum, piece, "tag_fx_light_side_rt_top_jnt", fx);
 }
 
 /*
-	Name: function_47c2c4a1
+	Name: bgb_machine_play_mid_side_fx
 	Namespace: bgb_machine
 	Checksum: 0x46228CA6
 	Offset: 0x1E78
@@ -511,14 +511,14 @@ private function function_cb90ea4e(localclientnum, piece, fx)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function function_47c2c4a1(localclientnum, piece, fx)
+function private bgb_machine_play_mid_side_fx(localclientnum, piece, fx)
 {
-	function_42630d5e(localclientnum, piece, "tag_fx_light_side_lft_mid_jnt", fx);
-	function_42630d5e(localclientnum, piece, "tag_fx_light_side_rt_mid_jnt", fx);
+	bgb_machine_play_fx(localclientnum, piece, "tag_fx_light_side_lft_mid_jnt", fx);
+	bgb_machine_play_fx(localclientnum, piece, "tag_fx_light_side_rt_mid_jnt", fx);
 }
 
 /*
-	Name: function_3c131c80
+	Name: bgb_machine_play_btm_side_fx
 	Namespace: bgb_machine
 	Checksum: 0x15AC5003
 	Offset: 0x1EF0
@@ -526,14 +526,14 @@ private function function_47c2c4a1(localclientnum, piece, fx)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function function_3c131c80(localclientnum, piece, fx)
+function private bgb_machine_play_btm_side_fx(localclientnum, piece, fx)
 {
-	function_42630d5e(localclientnum, piece, "tag_fx_light_side_lft_btm_jnt", fx);
-	function_42630d5e(localclientnum, piece, "tag_fx_light_side_rt_btm_jnt", fx);
+	bgb_machine_play_fx(localclientnum, piece, "tag_fx_light_side_lft_btm_jnt", fx);
+	bgb_machine_play_fx(localclientnum, piece, "tag_fx_light_side_rt_btm_jnt", fx);
 }
 
 /*
-	Name: function_38aeb872
+	Name: bgb_machine_play_all_bulb_fx
 	Namespace: bgb_machine
 	Checksum: 0x4404DCD8
 	Offset: 0x1F68
@@ -541,16 +541,16 @@ private function function_3c131c80(localclientnum, piece, fx)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function function_38aeb872(localclientnum, piece, fx)
+function private bgb_machine_play_all_bulb_fx(localclientnum, piece, fx)
 {
-	function_e5bc89d2(localclientnum, piece, fx);
-	function_cb90ea4e(localclientnum, piece, fx);
-	function_47c2c4a1(localclientnum, piece, fx);
-	function_3c131c80(localclientnum, piece, fx);
+	bgb_machine_play_top_fx(localclientnum, piece, fx);
+	bgb_machine_play_top_side_fx(localclientnum, piece, fx);
+	bgb_machine_play_mid_side_fx(localclientnum, piece, fx);
+	bgb_machine_play_btm_side_fx(localclientnum, piece, fx);
 }
 
 /*
-	Name: function_8bca2811
+	Name: bgb_machine_play_sound
 	Namespace: bgb_machine
 	Checksum: 0xB691EEF7
 	Offset: 0x2010
@@ -558,7 +558,7 @@ private function function_38aeb872(localclientnum, piece, fx)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function function_8bca2811(localclientnum, entity, alias)
+function private bgb_machine_play_sound(localclientnum, entity, alias)
 {
 	origin = entity gettagorigin("tag_fx_light_top_jnt");
 	playsound(localclientnum, alias, origin);
@@ -573,9 +573,9 @@ private function function_8bca2811(localclientnum, entity, alias)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_d5f882d0(localclientnum)
+function private function_d5f882d0(localclientnum)
 {
-	self function_42630d5e(localclientnum, self zbarriergetpiece(5), "tag_origin", undefined);
+	self bgb_machine_play_fx(localclientnum, self zbarriergetpiece(5), "tag_origin", undefined);
 }
 
 /*
@@ -587,16 +587,16 @@ private function function_d5f882d0(localclientnum)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_eb5b80c5(localclientnum)
+function private function_eb5b80c5(localclientnum)
 {
-	self notify(#"hash_fff2ccd6");
-	self endon(#"hash_fff2ccd6");
-	self function_38aeb872(localclientnum, self zbarriergetpiece(5), undefined);
-	self function_42630d5e(localclientnum, self zbarriergetpiece(5), "tag_origin", level._effect["zm_bgb_machine_available"]);
+	self notify(#"bgb_machine_bulb_fx_start");
+	self endon(#"bgb_machine_bulb_fx_start");
+	self bgb_machine_play_all_bulb_fx(localclientnum, self zbarriergetpiece(5), undefined);
+	self bgb_machine_play_fx(localclientnum, self zbarriergetpiece(5), "tag_origin", level._effect["zm_bgb_machine_available"]);
 }
 
 /*
-	Name: function_63a14f25
+	Name: bgb_machine_bulb_flash
 	Namespace: bgb_machine
 	Checksum: 0xA9376D4B
 	Offset: 0x2180
@@ -604,26 +604,26 @@ private function function_eb5b80c5(localclientnum)
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function function_63a14f25(localclientnum, piece, fx, flash_time, alias)
+function private bgb_machine_bulb_flash(localclientnum, piece, fx, flash_time, alias)
 {
-	self notify(#"hash_fff2ccd6");
-	self endon(#"hash_fff2ccd6");
+	self notify(#"bgb_machine_bulb_fx_start");
+	self endon(#"bgb_machine_bulb_fx_start");
 	function_d5f882d0(localclientnum);
 	for(;;)
 	{
-		function_38aeb872(localclientnum, piece, fx);
+		bgb_machine_play_all_bulb_fx(localclientnum, piece, fx);
 		if(isdefined(alias))
 		{
-			function_8bca2811(localclientnum, piece, alias);
+			bgb_machine_play_sound(localclientnum, piece, alias);
 		}
 		wait(flash_time);
-		function_38aeb872(localclientnum, piece, undefined);
+		bgb_machine_play_all_bulb_fx(localclientnum, piece, undefined);
 		wait(flash_time);
 	}
 }
 
 /*
-	Name: function_d0281a17
+	Name: bgb_machine_bulb_flash_selected_bgb
 	Namespace: bgb_machine
 	Checksum: 0xD4F806F1
 	Offset: 0x2258
@@ -631,9 +631,9 @@ private function function_63a14f25(localclientnum, piece, fx, flash_time, alias)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_d0281a17(localclientnum)
+function private bgb_machine_bulb_flash_selected_bgb(localclientnum)
 {
-	self thread function_63a14f25(localclientnum, self zbarriergetpiece(5), self function_43d950d2(), 0.4, "zmb_bgb_machine_light_ready");
+	self thread bgb_machine_bulb_flash(localclientnum, self zbarriergetpiece(5), self bgb_machine_get_bulb_fx_for_selected_bgb(), 0.4, "zmb_bgb_machine_light_ready");
 }
 
 /*
@@ -645,13 +645,13 @@ private function function_d0281a17(localclientnum)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_5f830538(localclientnum)
+function private function_5f830538(localclientnum)
 {
-	self thread function_63a14f25(localclientnum, self zbarriergetpiece(5), level._effect["zm_bgb_machine_bulb_available"], 0.2, "zmb_bgb_machine_light_click");
+	self thread bgb_machine_bulb_flash(localclientnum, self zbarriergetpiece(5), level._effect["zm_bgb_machine_bulb_available"], 0.2, "zmb_bgb_machine_light_click");
 }
 
 /*
-	Name: function_9e064c6
+	Name: bgb_machine_bulb_flash_away
 	Namespace: bgb_machine
 	Checksum: 0xB3A8ED9E
 	Offset: 0x2338
@@ -659,13 +659,13 @@ private function function_5f830538(localclientnum)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_9e064c6(localclientnum)
+function private bgb_machine_bulb_flash_away(localclientnum)
 {
-	self thread function_63a14f25(localclientnum, self zbarriergetpiece(1), level._effect["zm_bgb_machine_bulb_away"], 0.4, "zmb_bgb_machine_light_leaving");
+	self thread bgb_machine_bulb_flash(localclientnum, self zbarriergetpiece(1), level._effect["zm_bgb_machine_bulb_away"], 0.4, "zmb_bgb_machine_light_leaving");
 }
 
 /*
-	Name: function_dec3df0b
+	Name: bgb_machine_bulb_solid_away
 	Namespace: bgb_machine
 	Checksum: 0x7AC62F10
 	Offset: 0x23A8
@@ -673,15 +673,15 @@ private function function_9e064c6(localclientnum)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_dec3df0b(localclientnum)
+function private bgb_machine_bulb_solid_away(localclientnum)
 {
-	self notify(#"hash_fff2ccd6");
+	self notify(#"bgb_machine_bulb_fx_start");
 	function_d5f882d0(localclientnum);
-	function_38aeb872(localclientnum, self zbarriergetpiece(5), level._effect["zm_bgb_machine_bulb_away"]);
+	bgb_machine_play_all_bulb_fx(localclientnum, self zbarriergetpiece(5), level._effect["zm_bgb_machine_bulb_away"]);
 }
 
 /*
-	Name: function_f312291b
+	Name: bgb_machine_fx_state
 	Namespace: bgb_machine
 	Checksum: 0x43AA040D
 	Offset: 0x2428
@@ -689,58 +689,58 @@ private function function_dec3df0b(localclientnum)
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function function_f312291b(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
+function private bgb_machine_fx_state(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
-	function_62051f89(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump);
+	bgb_machine_init(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump);
 	if(!isdefined(self))
 	{
 		return;
 	}
 	eye_fx = undefined;
-	var_56e169c3 = undefined;
+	light_interior_fx = undefined;
 	switch(newval)
 	{
 		case 1:
 		{
-			function_42630d5e(localclientnum, self zbarriergetpiece(5), "tag_fx_glass_cntr_jnt", level._effect["zm_bgb_machine_light_interior_away"]);
-			self thread function_dec3df0b(localclientnum);
+			bgb_machine_play_fx(localclientnum, self zbarriergetpiece(5), "tag_fx_glass_cntr_jnt", level._effect["zm_bgb_machine_light_interior_away"]);
+			self thread bgb_machine_bulb_solid_away(localclientnum);
 			break;
 		}
 		case 2:
 		{
 			eye_fx = level._effect["zm_bgb_machine_eye_away"];
-			var_5324e4f7 = self zbarriergetpiece(1);
-			self thread function_9e064c6(localclientnum);
+			eye_piece = self zbarriergetpiece(1);
+			self thread bgb_machine_bulb_flash_away(localclientnum);
 			break;
 		}
 		case 3:
 		{
-			var_56e169c3 = level._effect["zm_bgb_machine_light_interior"];
-			var_5c057e0d = self zbarriergetpiece(5);
-			eye_fx = function_9b51ab0();
-			var_5324e4f7 = self zbarriergetpiece(2);
-			self thread function_d0281a17(localclientnum);
+			light_interior_fx = level._effect["zm_bgb_machine_light_interior"];
+			light_interior_piece = self zbarriergetpiece(5);
+			eye_fx = bgb_machine_get_eye_fx_for_selected_bgb();
+			eye_piece = self zbarriergetpiece(2);
+			self thread bgb_machine_bulb_flash_selected_bgb(localclientnum);
 			if(self clientfield::get("zm_bgb_machine_ghost_ball"))
 			{
-				function_42630d5e(localclientnum, var_5324e4f7, "tag_gumball_ghost", level._effect["zm_bgb_machine_gumball_ghost"]);
+				bgb_machine_play_fx(localclientnum, eye_piece, "tag_gumball_ghost", level._effect["zm_bgb_machine_gumball_ghost"]);
 			}
 			else
 			{
-				function_42630d5e(localclientnum, var_5324e4f7, "tag_gumball_ghost", level._effect["zm_bgb_machine_gumball_halo"]);
+				bgb_machine_play_fx(localclientnum, eye_piece, "tag_gumball_ghost", level._effect["zm_bgb_machine_gumball_halo"]);
 			}
 			break;
 		}
 		case 4:
 		{
-			function_42630d5e(localclientnum, self zbarriergetpiece(5), "tag_fx_glass_cntr_jnt", level._effect["zm_bgb_machine_light_interior"]);
+			bgb_machine_play_fx(localclientnum, self zbarriergetpiece(5), "tag_fx_glass_cntr_jnt", level._effect["zm_bgb_machine_light_interior"]);
 			self thread function_eb5b80c5(localclientnum);
-			var_58d675a8 = self zbarriergetpiece(2);
-			function_42630d5e(localclientnum, var_58d675a8, "tag_gumball_ghost", undefined, 0);
+			halo_piece = self zbarriergetpiece(2);
+			bgb_machine_play_fx(localclientnum, halo_piece, "tag_gumball_ghost", undefined, 0);
 			break;
 		}
 	}
-	function_42630d5e(localclientnum, var_5324e4f7, "tag_fx_light_lion_lft_eye_jnt", eye_fx);
-	function_42630d5e(localclientnum, var_5324e4f7, "tag_fx_light_lion_rt_eye_jnt", eye_fx);
+	bgb_machine_play_fx(localclientnum, eye_piece, "tag_fx_light_lion_lft_eye_jnt", eye_fx);
+	bgb_machine_play_fx(localclientnum, eye_piece, "tag_fx_light_lion_rt_eye_jnt", eye_fx);
 }
 
 /*
@@ -754,9 +754,9 @@ private function function_f312291b(localclientnum, oldval, newval, bnewent, bini
 */
 function function_b90b22b6()
 {
-	if(!isdefined(level.var_6cb6a683))
+	if(!isdefined(level.bgb_machine_max_uses_per_round))
 	{
-		level.var_6cb6a683 = 3;
+		level.bgb_machine_max_uses_per_round = 3;
 	}
 	if(!isdefined(level.var_f02c5598))
 	{
@@ -806,7 +806,7 @@ function function_b90b22b6()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function on_player_spawned(localclientnum)
+function private on_player_spawned(localclientnum)
 {
 	if(!isdefined(level.var_bb2b3f61[localclientnum]))
 	{
@@ -835,7 +835,7 @@ private function on_player_spawned(localclientnum)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_763ef0fd(localclientnum)
+function private function_763ef0fd(localclientnum)
 {
 	self notify(#"hash_763ef0fd");
 	self endon(#"hash_763ef0fd");
@@ -861,7 +861,7 @@ private function function_763ef0fd(localclientnum)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_5d9d13da(localclientnum)
+function private function_5d9d13da(localclientnum)
 {
 	self notify(#"hash_5d9d13da");
 	self endon(#"hash_5d9d13da");
@@ -886,15 +886,15 @@ private function function_5d9d13da(localclientnum)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_fda54943(localclientnum)
+function private function_fda54943(localclientnum)
 {
 	self endon(#"entityshutdown");
 	var_89caac36 = 160000;
 	while(true)
 	{
-		if(isdefined(level.var_5081bd63))
+		if(isdefined(level.bgb_machines))
 		{
-			foreach(var_9f84532c, machine in level.var_5081bd63)
+			foreach(machine in level.bgb_machines)
 			{
 				if(distancesquared(self.origin, machine.origin) <= var_89caac36 && 96 > (abs(self.origin[2] - machine.origin[2])))
 				{
@@ -918,7 +918,7 @@ private function function_fda54943(localclientnum)
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function function_27a93844(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
+function private function_27a93844(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
 	level.var_32948a58[localclientnum] = newval;
 	function_725214c(localclientnum, level.var_bb2b3f61[localclientnum], level.var_32948a58[localclientnum], level.var_f26edb66[localclientnum]);
@@ -933,7 +933,7 @@ private function function_27a93844(localclientnum, oldval, newval, bnewent, bini
 	Parameters: 4
 	Flags: Linked, Private
 */
-private function function_725214c(localclientnum, rounds, buys, firesale)
+function private function_725214c(localclientnum, rounds, buys, firesale)
 {
 	base_cost = 500;
 	if(firesale)

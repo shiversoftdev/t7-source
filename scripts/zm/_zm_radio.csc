@@ -13,7 +13,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_radio", &__init__, &__main__, undefined);
 }
@@ -62,7 +62,7 @@ function next_song(localclientnum, oldval, newval, bnewent, binitialsnap, fieldn
 		assert(isdefined(level.var_c017e2d5));
 	#/
 	/#
-		assert(isdefined(level.var_ce7032d4));
+		assert(isdefined(level.n_radio_index));
 	#/
 	/#
 		assert(level.var_c017e2d5.size > 0);
@@ -84,12 +84,12 @@ function next_song(localclientnum, oldval, newval, bnewent, binitialsnap, fieldn
 			{
 				wait(0.5);
 			}
-			if(level.var_ce7032d4 < level.var_c017e2d5.size)
+			if(level.n_radio_index < level.var_c017e2d5.size)
 			{
 				/#
-					println("" + level.var_c017e2d5[level.var_ce7032d4]);
+					println("" + level.var_c017e2d5[level.n_radio_index]);
 				#/
-				level.var_f3006fa7 = playsound(0, level.var_c017e2d5[level.var_ce7032d4], self.origin);
+				level.var_f3006fa7 = playsound(0, level.var_c017e2d5[level.n_radio_index], self.origin);
 			}
 			else
 			{
@@ -133,9 +133,9 @@ function add_song(song)
 function function_2b7f281d(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwasdemojump)
 {
 	/#
-		assert(isdefined(level.var_ce7032d4));
+		assert(isdefined(level.n_radio_index));
 	#/
-	level.var_ce7032d4 = newval;
+	level.n_radio_index = newval;
 }
 
 /*

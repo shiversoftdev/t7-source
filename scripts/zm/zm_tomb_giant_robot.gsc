@@ -54,7 +54,7 @@ function init_giant_robot_glows()
 	level.gr_foot_hatch_closed[1] = 1;
 	level.gr_foot_hatch_closed[2] = 1;
 	a_gr_head_triggers = struct::get_array("giant_robot_head_exit_trigger", "script_noteworthy");
-	foreach(var_a2a5264e, struct in a_gr_head_triggers)
+	foreach(struct in a_gr_head_triggers)
 	{
 		gr_head_exit_trigger_start(struct);
 	}
@@ -149,9 +149,9 @@ function tomb_can_revive_override(player_down)
 {
 	if(isdefined(player_down.is_stomped) && player_down.is_stomped)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -308,21 +308,24 @@ function robot_cycling()
 			last_robot = -1;
 			level flag::clear("three_robot_round");
 		}
-		else if(!level flag::get("activate_zone_nml"))
+		else
 		{
-			random_number = randomint(2);
-		}
-		random_number = randomint(3);
-		/#
-			if(isdefined(level.devgui_force_giant_robot))
+			if(!level flag::get("activate_zone_nml"))
 			{
-				random_number = level.devgui_force_giant_robot;
+				random_number = randomint(2);
 			}
-		#/
-		last_robot = random_number;
-		level thread giant_robot_start_walk(random_number);
-		level waittill(#"giant_robot_walk_cycle_complete");
-		wait(5);
+			random_number = randomint(3);
+			/#
+				if(isdefined(level.devgui_force_giant_robot))
+				{
+					random_number = level.devgui_force_giant_robot;
+				}
+			#/
+			last_robot = random_number;
+			level thread giant_robot_start_walk(random_number);
+			level waittill(#"giant_robot_walk_cycle_complete");
+			wait(5);
+		}
 	}
 }
 
@@ -345,7 +348,7 @@ function giant_robot_intro_walk(n_robot_id)
 	wait(0.5);
 	exploder::exploder("fxexp_420");
 	a_players = getplayers();
-	foreach(var_2995431, player in a_players)
+	foreach(player in a_players)
 	{
 		player clientfield::set_to_player("giant_robot_rumble_and_shake", 3);
 		player thread turn_clientside_rumble_off();
@@ -487,21 +490,21 @@ function giant_robot_think(trig_stomp_kill_right, trig_stomp_kill_left, clip_foo
 	a_players = getplayers();
 	if(n_robot_id != 3 && (!(isdefined(level.giant_robot_discovered) && level.giant_robot_discovered)))
 	{
-		foreach(var_4b292b16, player in a_players)
+		foreach(player in a_players)
 		{
 			player thread giant_robot_discovered_vo(self);
 		}
 	}
 	else if(level flag::get("three_robot_round") && (!(isdefined(level.three_robot_round_vo) && level.three_robot_round_vo)))
 	{
-		foreach(var_d1fcac52, player in a_players)
+		foreach(player in a_players)
 		{
 			player thread three_robot_round_vo(self);
 		}
 	}
 	if(n_robot_id != 3 && (!(isdefined(level.shoot_robot_vo) && level.shoot_robot_vo)))
 	{
-		foreach(var_2107f9a, player in a_players)
+		foreach(player in a_players)
 		{
 			player thread shoot_at_giant_robot_vo(self);
 		}
@@ -617,24 +620,30 @@ function robot_walk_animation(n_robot_id)
 		level scene::play("cin_tomb_giant_robot_walk_nml_outtro", self);
 		self notify(#"giant_robot_stop");
 	}
-	else if(n_robot_id == 1)
+	else
 	{
-		level scene::play("cin_tomb_giant_robot_walk_trenches_intro", self);
-		level scene::play("cin_tomb_giant_robot_walk_trenches", self);
-		level scene::play("cin_tomb_giant_robot_walk_trenches_outtro", self);
-		self notify(#"giant_robot_stop");
-	}
-	else if(n_robot_id == 2)
-	{
-		level scene::play("cin_tomb_giant_robot_walk_village_intro", self);
-		level scene::play("cin_tomb_giant_robot_walk_village", self);
-		level scene::play("cin_tomb_giant_robot_walk_village_outtro", self);
-		self notify(#"giant_robot_stop");
-	}
-	else if(n_robot_id == 3)
-	{
-		level scene::play("cin_tomb_giant_robot_bunker_intro", self);
-		self notify(#"giant_robot_stop");
+		if(n_robot_id == 1)
+		{
+			level scene::play("cin_tomb_giant_robot_walk_trenches_intro", self);
+			level scene::play("cin_tomb_giant_robot_walk_trenches", self);
+			level scene::play("cin_tomb_giant_robot_walk_trenches_outtro", self);
+			self notify(#"giant_robot_stop");
+		}
+		else
+		{
+			if(n_robot_id == 2)
+			{
+				level scene::play("cin_tomb_giant_robot_walk_village_intro", self);
+				level scene::play("cin_tomb_giant_robot_walk_village", self);
+				level scene::play("cin_tomb_giant_robot_walk_village_outtro", self);
+				self notify(#"giant_robot_stop");
+			}
+			else if(n_robot_id == 3)
+			{
+				level scene::play("cin_tomb_giant_robot_bunker_intro", self);
+				self notify(#"giant_robot_stop");
+			}
+		}
 	}
 	if(n_robot_id != 3)
 	{
@@ -740,9 +749,9 @@ function monitor_footsteps(trig_stomp_kill, foot_side)
 	str_end_stomp = ("footstep_" + foot_side) + "_large";
 	while(true)
 	{
-		self waittill_match(str_start_stomp);
+		self waittillmatch(str_start_stomp);
 		self thread toggle_kill_trigger_flag(trig_stomp_kill, 1, foot_side);
-		self waittill_match(str_end_stomp);
+		self waittillmatch(str_end_stomp);
 		if(self.giant_robot_id == 0 && foot_side == "left")
 		{
 			self thread toggle_wind_bunker_collision();
@@ -773,7 +782,7 @@ function monitor_footsteps_fx(trig_stomp_kill, foot_side)
 	while(true)
 	{
 		level clientfield::set("play_foot_stomp_fx_robot_" + self.giant_robot_id, 0);
-		self waittill_match(str_end_stomp);
+		self waittillmatch(str_end_stomp);
 		if(foot_side == "right")
 		{
 			level clientfield::set("play_foot_stomp_fx_robot_" + self.giant_robot_id, 1);
@@ -810,7 +819,7 @@ function monitor_shadow_notetracks(foot_side)
 	self endon(#"giant_robot_stop");
 	while(true)
 	{
-		self waittill_match("shadow_" + foot_side);
+		self waittillmatch("shadow_" + foot_side);
 		start_robot_stomp_warning_vo(foot_side);
 	}
 }
@@ -828,7 +837,7 @@ function rumble_and_shake(robot)
 {
 	a_players = getplayers();
 	wait(0.2);
-	foreach(var_ea92c822, player in a_players)
+	foreach(player in a_players)
 	{
 		if(zombie_utility::is_player_valid(player))
 		{
@@ -855,17 +864,23 @@ function rumble_and_shake(robot)
 					player clientfield::set_to_player("giant_robot_rumble_and_shake", 3);
 					level notify(#"sam_clue_giant", player);
 				}
-				else if(dist < 3000)
-				{
-					player clientfield::set_to_player("giant_robot_rumble_and_shake", 2);
-				}
-				else if(dist < 6000)
-				{
-					player clientfield::set_to_player("giant_robot_rumble_and_shake", 1);
-				}
 				else
 				{
-					continue;
+					if(dist < 3000)
+					{
+						player clientfield::set_to_player("giant_robot_rumble_and_shake", 2);
+					}
+					else
+					{
+						if(dist < 6000)
+						{
+							player clientfield::set_to_player("giant_robot_rumble_and_shake", 1);
+						}
+						else
+						{
+							continue;
+						}
+					}
 				}
 			}
 			player thread turn_clientside_rumble_off();
@@ -926,7 +941,7 @@ function activate_kill_trigger(robot, foot_side)
 	{
 		a_zombies = getaispeciesarray(level.zombie_team, "all");
 		a_zombies_to_kill = [];
-		foreach(var_d5f0d74a, zombie in a_zombies)
+		foreach(zombie in a_zombies)
 		{
 			if(distancesquared(zombie.origin, self.origin) < 360000)
 			{
@@ -981,7 +996,7 @@ function activate_kill_trigger(robot, foot_side)
 			}
 		}
 		a_boxes = getentarray("foot_box", "script_noteworthy");
-		foreach(var_a1e31bec, m_box in a_boxes)
+		foreach(m_box in a_boxes)
 		{
 			if(m_box istouching(self))
 			{
@@ -1019,19 +1034,22 @@ function activate_kill_trigger(robot, foot_side)
 						level thread zm_tomb_teleporter::stargate_teleport_player("head_0_teleport_player", players[i], 2, 0);
 						players[i].in_giant_robot_head = 0;
 					}
-					else if(robot.giant_robot_id == 1)
-					{
-						level thread zm_tomb_teleporter::stargate_teleport_player("head_1_teleport_player", players[i], 2, 0);
-						players[i].in_giant_robot_head = 1;
-						if(players[i] zm_zonemgr::entity_in_zone("zone_bunker_4d") || players[i] zm_zonemgr::entity_in_zone("zone_bunker_4c"))
-						{
-							players[i].entered_foot_from_tank_bunker = 1;
-						}
-					}
 					else
 					{
-						level thread zm_tomb_teleporter::stargate_teleport_player("head_2_teleport_player", players[i], 2, 0);
-						players[i].in_giant_robot_head = 2;
+						if(robot.giant_robot_id == 1)
+						{
+							level thread zm_tomb_teleporter::stargate_teleport_player("head_1_teleport_player", players[i], 2, 0);
+							players[i].in_giant_robot_head = 1;
+							if(players[i] zm_zonemgr::entity_in_zone("zone_bunker_4d") || players[i] zm_zonemgr::entity_in_zone("zone_bunker_4c"))
+							{
+								players[i].entered_foot_from_tank_bunker = 1;
+							}
+						}
+						else
+						{
+							level thread zm_tomb_teleporter::stargate_teleport_player("head_2_teleport_player", players[i], 2, 0);
+							players[i].in_giant_robot_head = 2;
+						}
 					}
 					robot flag::set("robot_head_entered");
 					players[i] playsoundtoplayer("zmb_bot_elevator_ride_up", players[i]);
@@ -1081,7 +1099,7 @@ function is_in_giant_robot_footstep_safe_spot()
 	b_is_in_safe_spot = 0;
 	if(isdefined(level.giant_robot_footstep_safe_spots))
 	{
-		foreach(var_39893e01, e_volume in level.giant_robot_footstep_safe_spots)
+		foreach(e_volume in level.giant_robot_footstep_safe_spots)
 		{
 			if(self istouching(e_volume))
 			{
@@ -1778,7 +1796,7 @@ function gr_eject_landing_rumble_on_position()
 	self endon(#"death");
 	self endon(#"disconnect");
 	a_players = getplayers();
-	foreach(var_5c169a7d, player in a_players)
+	foreach(player in a_players)
 	{
 		if(player == self)
 		{
@@ -1811,7 +1829,7 @@ function teleport_player_to_gr_footprint_safe_spot()
 	if(isdefined(self.entered_foot_from_tank_bunker) && self.entered_foot_from_tank_bunker)
 	{
 		a_s_orgs = struct::get_array("tank_platform_safe_spots", "targetname");
-		foreach(var_17276cd7, struct in a_s_orgs)
+		foreach(struct in a_s_orgs)
 		{
 			if(!positionwouldtelefrag(struct.origin))
 			{
@@ -1883,7 +1901,7 @@ function giant_robot_head_teleport_timeout(n_robot_id)
 	level waittill("timeout_warning_vo_complete_" + n_robot_id);
 	a_gr_head_triggers = struct::get_array("giant_robot_head_exit_trigger", "script_noteworthy");
 	a_shutdown_triggers = [];
-	foreach(var_a1276dc3, trigger in a_gr_head_triggers)
+	foreach(trigger in a_gr_head_triggers)
 	{
 		if(trigger.script_int == n_robot_id)
 		{
@@ -1896,7 +1914,7 @@ function giant_robot_head_teleport_timeout(n_robot_id)
 	}
 	a_players = getplayers();
 	a_m_linkspots = [];
-	foreach(var_b4dc743c, player in a_players)
+	foreach(player in a_players)
 	{
 		if(isdefined(player.in_giant_robot_head) && player.in_giant_robot_head == n_robot_id)
 		{
@@ -1911,20 +1929,23 @@ function giant_robot_head_teleport_timeout(n_robot_id)
 						util::wait_network_frame();
 						level flag::clear("instant_revive");
 					}
-					else if(player bgb::is_enabled("zm_bgb_self_medication"))
-					{
-						player bgb::take();
-						player.var_df0decf1 = undefined;
-						player.var_25b88da = 0;
-						player thread zm_laststand::bleed_out();
-						player notify(#"gr_head_forced_bleed_out");
-						continue;
-					}
 					else
 					{
-						player thread zm_laststand::bleed_out();
-						player notify(#"gr_head_forced_bleed_out");
-						continue;
+						if(player bgb::is_enabled("zm_bgb_self_medication"))
+						{
+							player bgb::take();
+							player.var_df0decf1 = undefined;
+							player.var_25b88da = 0;
+							player thread zm_laststand::bleed_out();
+							player notify(#"gr_head_forced_bleed_out");
+							continue;
+						}
+						else
+						{
+							player thread zm_laststand::bleed_out();
+							player notify(#"gr_head_forced_bleed_out");
+							continue;
+						}
 					}
 				}
 				if(isalive(player))
@@ -1942,7 +1963,7 @@ function giant_robot_head_teleport_timeout(n_robot_id)
 	level clientfield::set("eject_warning_fx_robot_" + n_robot_id, 0);
 	a_players = getplayers();
 	a_players[0] clientfield::set("all_tubes_play_eject_steam_fx", 0);
-	foreach(var_4f6edfa7, trigger in a_shutdown_triggers)
+	foreach(trigger in a_shutdown_triggers)
 	{
 		if(trigger.script_int == n_robot_id)
 		{
@@ -1976,7 +1997,7 @@ function start_drag_player_to_eject_tube(n_robot_id, m_linkspot)
 	self endon(#"disconnect");
 	a_gr_head_triggers = struct::get_array("giant_robot_head_exit_trigger", "script_noteworthy");
 	a_gr_head_triggers = util::get_array_of_closest(self.origin, a_gr_head_triggers);
-	foreach(var_979cec3c, trigger in a_gr_head_triggers)
+	foreach(trigger in a_gr_head_triggers)
 	{
 		if(trigger.unitrigger_stub.script_int == n_robot_id)
 		{
@@ -2149,7 +2170,7 @@ function count_players_in_gr_head(n_robot_id)
 {
 	n_players_in_robot = 0;
 	a_players = getplayers();
-	foreach(var_73697669, player in a_players)
+	foreach(player in a_players)
 	{
 		if(isdefined(player.in_giant_robot_head) && player.in_giant_robot_head == n_robot_id)
 		{
@@ -2312,7 +2333,7 @@ function start_robot_stomp_warning_vo(foot_side)
 	v_origin = self gettagorigin(str_tag);
 	a_s_footprint_all = struct::get_array("giant_robot_footprint_center", "targetname");
 	a_s_footprint = [];
-	foreach(var_e86417f8, footprint in a_s_footprint_all)
+	foreach(footprint in a_s_footprint_all)
 	{
 		if(footprint.script_int == self.giant_robot_id)
 		{
@@ -2334,7 +2355,7 @@ function start_robot_stomp_warning_vo(foot_side)
 	a_s_footprint = util::get_array_of_closest(v_origin, a_s_footprint);
 	s_footprint = a_s_footprint[0];
 	a_players = getplayers();
-	foreach(var_e9f81722, player in a_players)
+	foreach(player in a_players)
 	{
 		if(distance2dsquared(player.origin, s_footprint.origin) < 160000)
 		{
@@ -2355,7 +2376,7 @@ function start_robot_stomp_warning_vo(foot_side)
 function play_robot_stomp_warning_vo()
 {
 	a_players = getplayers();
-	foreach(var_9a0ae31e, player in a_players)
+	foreach(player in a_players)
 	{
 		if(player == self)
 		{
@@ -2397,7 +2418,7 @@ function zombie_stomped_by_gr_vo(foot_side)
 	}
 	v_origin = self gettagorigin(str_tag);
 	a_players = getplayers();
-	foreach(var_554d86c0, player in a_players)
+	foreach(player in a_players)
 	{
 		if(distancesquared(v_origin, player.origin) < 640000)
 		{
@@ -2456,7 +2477,7 @@ function play_timeout_warning_vo(n_robot_id)
 	e_vo_origin playsoundwithnotify("vox_maxi_purge_robot_0", "vox_maxi_purge_robot_0_done");
 	e_vo_origin waittill(#"vox_maxi_purge_robot_0_done");
 	a_players = getplayers();
-	foreach(var_2ae5d983, player in a_players)
+	foreach(player in a_players)
 	{
 		if(isdefined(player.in_giant_robot_head) && player.in_giant_robot_head == n_robot_id)
 		{
@@ -2498,7 +2519,7 @@ function start_footprint_warning_vo(n_robot_id)
 {
 	wait(20);
 	a_structs = struct::get_array("giant_robot_footprint_center", "targetname");
-	foreach(var_cb74901b, struct in a_structs)
+	foreach(struct in a_structs)
 	{
 		if(struct.script_int == n_robot_id)
 		{
@@ -2523,7 +2544,7 @@ function footprint_check_for_nearby_players(ai_giant_robot)
 	while(true)
 	{
 		a_players = getplayers();
-		foreach(var_acb23ae7, player in a_players)
+		foreach(player in a_players)
 		{
 			if(distance2dsquared(player.origin, self.origin) < 90000)
 			{

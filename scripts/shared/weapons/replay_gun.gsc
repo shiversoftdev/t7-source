@@ -20,7 +20,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("replay_gun", &__init__, undefined, undefined);
 }
@@ -265,14 +265,14 @@ function can_see_projected_crosshair(target, target_origin, player_origin, playe
 	collided = target trace(target_origin, crosshair);
 	if(distance2dsquared(crosshair, collided) > 9)
 	{
-		return 0;
+		return false;
 	}
 	collided = self trace(player_origin, crosshair);
 	if(distance2dsquared(crosshair, collided) > 9)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*

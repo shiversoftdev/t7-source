@@ -56,7 +56,7 @@ function main_end()
 function function_30409839()
 {
 	var_5d655ddb = struct::get_array("intermission", "targetname");
-	foreach(var_4639524f, var_13e6937b in var_5d655ddb)
+	foreach(var_13e6937b in var_5d655ddb)
 	{
 		if(var_13e6937b.origin == (-3106, 2242, 653))
 		{

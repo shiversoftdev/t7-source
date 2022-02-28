@@ -53,7 +53,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function opt_in()
+function autoexec opt_in()
 {
 	level.aat_in_use = 1;
 	level.bgb_in_use = 1;
@@ -340,24 +340,33 @@ function theater_box_monitor(clientnum, state, oldstate)
 	{
 		turn_off_all_box_lights(clientnum);
 	}
-	else if(s == level._box_indicator_flash_lights_moving)
+	else
 	{
-		level thread flash_lights(clientnum, 0.25);
-	}
-	else if(s == level._box_indicator_flash_lights_fire_sale)
-	{
-		level thread flash_lights(clientnum, 0.3);
-	}
-	else if(s < 0 || s > level._box_locations.size)
-	{
-		return;
-	}
-	level notify("kill_box_light_threads_" + clientnum);
-	turn_off_all_box_lights(clientnum);
-	level._box_indicator = s;
-	if(level clientfield::get("zombie_power_on"))
-	{
-		turn_light_green(clientnum, level._box_indicator, 1);
+		if(s == level._box_indicator_flash_lights_moving)
+		{
+			level thread flash_lights(clientnum, 0.25);
+		}
+		else
+		{
+			if(s == level._box_indicator_flash_lights_fire_sale)
+			{
+				level thread flash_lights(clientnum, 0.3);
+			}
+			else
+			{
+				if(s < 0 || s > level._box_locations.size)
+				{
+					return;
+				}
+				level notify("kill_box_light_threads_" + clientnum);
+				turn_off_all_box_lights(clientnum);
+				level._box_indicator = s;
+				if(level clientfield::get("zombie_power_on"))
+				{
+					turn_light_green(clientnum, level._box_indicator, 1);
+				}
+			}
+		}
 	}
 }
 
@@ -516,7 +525,15 @@ function function_d19cb2f8()
 			}
 		}
 	}
-	println("");
+	else
+	{
+		/#
+			println("");
+		#/
+		if(getdvarint("") > 0)
+		{
+		}
+	}
 }
 
 /*

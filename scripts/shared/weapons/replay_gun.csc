@@ -19,7 +19,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("replay_gun", &__init__, undefined, undefined);
 }
@@ -52,7 +52,7 @@ function player_init()
 {
 	util::waitforclient(0);
 	players = getlocalplayers();
-	foreach(var_d71e2c6a, player in players)
+	foreach(player in players)
 	{
 		player thread watch_lockon(0);
 	}

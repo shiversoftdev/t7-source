@@ -90,7 +90,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function opt_in()
+function autoexec opt_in()
 {
 	level.aat_in_use = 1;
 	level.bgb_in_use = 1;
@@ -164,7 +164,7 @@ function main()
 	{
 		level.custom_ai_type = array(level.custom_ai_type);
 	}
-	level.custom_ai_type[level.custom_ai_type.size] = &namespace_8fb880d9::function_4c8046f8;
+	level.custom_ai_type[level.custom_ai_type.size] = &zm_ai_monkey::function_4c8046f8;
 	level.monkey_prespawn = &zm_cosmodrome_ai_monkey::monkey_cosmodrome_prespawn;
 	level.max_perks = 5;
 	level.max_solo_lives = 3;
@@ -212,7 +212,7 @@ function main()
 function cin_zmhd_sizzle_cosmodrome_cam(a_ents)
 {
 	level thread scene::play("cin_zmhd_sizzle_cosmodrome_cam2");
-	foreach(var_bc6b0872, var_6cae1ad0 in a_ents)
+	foreach(var_6cae1ad0 in a_ents)
 	{
 		if(issubstr(var_6cae1ad0.model, "zombie") || issubstr(var_6cae1ad0.model, "cosmon"))
 		{
@@ -232,7 +232,7 @@ function cin_zmhd_sizzle_cosmodrome_cam(a_ents)
 */
 function cin_zmhd_sizzle_cosmodrome_cam2(a_ents)
 {
-	foreach(var_8707636f, var_6cae1ad0 in a_ents)
+	foreach(var_6cae1ad0 in a_ents)
 	{
 		if(issubstr(var_6cae1ad0.model, "zombie") || issubstr(var_6cae1ad0.model, "cosmon"))
 		{
@@ -310,13 +310,13 @@ function function_869d6f66()
 {
 	if(!isdefined(self zm_bgb_anywhere_but_here::function_728dfe3()))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.lander) && self.lander)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -332,9 +332,9 @@ function function_f97e7fed()
 {
 	if(level flag::get("monkey_round"))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -367,9 +367,9 @@ function zombie_cosmodrome_player_out_of_playable_area_monitor_callback()
 {
 	if(isdefined(self.lander) && self.lander || (isdefined(self.on_lander_last_stand) && self.on_lander_last_stand))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -588,7 +588,7 @@ function function_54da140a()
 			var_343b1937 = a_s_spots[i].script_int;
 		}
 		var_c15b2128 = [];
-		foreach(var_bce4567, sp_zombie in level.zombie_spawners)
+		foreach(sp_zombie in level.zombie_spawners)
 		{
 			if(sp_zombie.script_int == var_343b1937)
 			{
@@ -693,7 +693,7 @@ function custom_pandora_show_func(anchor, anchortarget, pieces)
 }
 
 /*
-	Name: function_49998a6e
+	Name: custom_pandora_fx_func
 	Namespace: zm_cosmodrome
 	Checksum: 0x52082EEA
 	Offset: 0x3770
@@ -701,7 +701,7 @@ function custom_pandora_show_func(anchor, anchortarget, pieces)
 	Parameters: 0
 	Flags: None
 */
-function function_49998a6e()
+function custom_pandora_fx_func()
 {
 	start_chest = getent("start_chest", "script_noteworthy");
 	anchor = getent(start_chest.target, "targetname");
@@ -895,7 +895,7 @@ function assign_lowest_unused_character_index()
 		return charindexarray[0];
 	}
 	n_characters_defined = 0;
-	foreach(var_c8b9cb8f, player in players)
+	foreach(player in players)
 	{
 		if(isdefined(player.characterindex))
 		{
@@ -965,15 +965,15 @@ function offhand_weapon_give_override(w_current_weapon)
 	{
 		self zm_weap_black_hole_bomb::player_give_black_hole_bomb();
 		self zm_weapons::play_weapon_vo(w_current_weapon);
-		return 1;
+		return true;
 	}
 	if(w_current_weapon.name == "nesting_dolls")
 	{
 		self _zm_weap_nesting_dolls::player_give_nesting_dolls();
 		self zm_weapons::play_weapon_vo(w_current_weapon);
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1034,7 +1034,7 @@ function function_9503fe88()
 {
 	perk_machines = getentarray("zombie_vending", "targetname");
 	new_revive_clip = getent("new_revive_clip", "targetname");
-	foreach(var_917c3cbf, perk_machine in perk_machines)
+	foreach(perk_machine in perk_machines)
 	{
 		if(isdefined(perk_machine.clip))
 		{
@@ -1417,11 +1417,11 @@ function function_797b2641()
 function function_9d5d7bb3(choose)
 {
 	/#
-		vending_triggers = namespace_8fb880d9::function_5b9c3e11();
+		vending_triggers = zm_ai_monkey::function_5b9c3e11();
 		target_trigger = vending_triggers[0];
 		player = getplayers()[0];
 		closest_dist_sq = distancesquared(player.origin, target_trigger.origin);
-		foreach(var_dbcdf26d, var_807754d1 in vending_triggers)
+		foreach(var_807754d1 in vending_triggers)
 		{
 			if(var_807754d1 == target_trigger)
 			{
@@ -1448,32 +1448,41 @@ function function_9d5d7bb3(choose)
 					perk_attack_anim = level.monkey_perk_attack_anims[target_trigger.script_noteworthy][""];
 				}
 			}
-			else if(choose == 1)
+			else
 			{
-				if(isdefined(level.monkey_perk_attack_anims[target_trigger.script_noteworthy]))
+				if(choose == 1)
 				{
-					perk_attack_anim = level.monkey_perk_attack_anims[target_trigger.script_noteworthy][""];
+					if(isdefined(level.monkey_perk_attack_anims[target_trigger.script_noteworthy]))
+					{
+						perk_attack_anim = level.monkey_perk_attack_anims[target_trigger.script_noteworthy][""];
+					}
 				}
-			}
-			else if(choose == 2)
-			{
-				if(isdefined(level.monkey_perk_attack_anims[target_trigger.script_noteworthy]))
+				else
 				{
-					perk_attack_anim = level.monkey_perk_attack_anims[target_trigger.script_noteworthy][""];
-				}
-			}
-			else if(choose == 3)
-			{
-				if(isdefined(level.monkey_perk_attack_anims[target_trigger.script_noteworthy]))
-				{
-					perk_attack_anim = level.monkey_perk_attack_anims[target_trigger.script_noteworthy][""];
-				}
-			}
-			else if(choose == 4)
-			{
-				if(isdefined(level.monkey_perk_attack_anims[target_trigger.script_noteworthy]))
-				{
-					perk_attack_anim = level.monkey_perk_attack_anims[target_trigger.script_noteworthy][""];
+					if(choose == 2)
+					{
+						if(isdefined(level.monkey_perk_attack_anims[target_trigger.script_noteworthy]))
+						{
+							perk_attack_anim = level.monkey_perk_attack_anims[target_trigger.script_noteworthy][""];
+						}
+					}
+					else
+					{
+						if(choose == 3)
+						{
+							if(isdefined(level.monkey_perk_attack_anims[target_trigger.script_noteworthy]))
+							{
+								perk_attack_anim = level.monkey_perk_attack_anims[target_trigger.script_noteworthy][""];
+							}
+						}
+						else if(choose == 4)
+						{
+							if(isdefined(level.monkey_perk_attack_anims[target_trigger.script_noteworthy]))
+							{
+								perk_attack_anim = level.monkey_perk_attack_anims[target_trigger.script_noteworthy][""];
+							}
+						}
+					}
 				}
 			}
 			if(!isdefined(perk_attack_anim))
@@ -1482,7 +1491,7 @@ function function_9d5d7bb3(choose)
 			}
 			attack_spots = struct::get_array(target_trigger.machine.target, "");
 			spot = undefined;
-			foreach(var_1f97c9a7, attack_spot in attack_spots)
+			foreach(attack_spot in attack_spots)
 			{
 				if(attack_spot.script_int == 1)
 				{
@@ -1559,7 +1568,7 @@ function function_5b312f()
 		level endon(#"hash_c7d06422");
 		while(true)
 		{
-			foreach(var_9b20e7d2, spawn in level.monkey_zombie_spawners)
+			foreach(spawn in level.monkey_zombie_spawners)
 			{
 				/#
 					debugstar(spawn.origin, 6, (1, 1, 1));
@@ -1933,7 +1942,7 @@ function function_e509f24d()
 function function_2c076a5e()
 {
 	level clientfield::set("COSMO_VISIONSET_MONKEY", 1);
-	foreach(var_c050de48, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		visionset_mgr::activate("visionset", "zm_cosmodrome_monkey_on", e_player, 3);
 	}
@@ -1951,12 +1960,12 @@ function function_2c076a5e()
 */
 function function_980a894b()
 {
-	foreach(var_ef7a12a9, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		visionset_mgr::activate("visionset", "zm_cosmodrome_monkey_off", e_player, 0.1, 0.9, 3);
 	}
 	wait(0.5);
-	foreach(var_c564fb05, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		visionset_mgr::deactivate("visionset", "zm_cosmodrome_monkey_on", e_player);
 	}

@@ -97,7 +97,7 @@ function fire_puzzle_1_run()
 	{
 		level waittill(#"fire_sacrifice_completed");
 		b_any_volumes_unfinished = 0;
-		foreach(var_43ba6c31, e_volume in level.sacrifice_volumes)
+		foreach(e_volume in level.sacrifice_volumes)
 		{
 			if(!e_volume.b_gods_pleased)
 			{
@@ -288,7 +288,7 @@ function light_plinth()
 */
 function is_church_occupied()
 {
-	return 1;
+	return true;
 }
 
 /*
@@ -318,7 +318,7 @@ function sacrifice_puzzle_zombie_killed(einflictor, attacker, idamage, smeansofd
 	{
 		return;
 	}
-	foreach(var_420e5213, e_volume in level.sacrifice_volumes)
+	foreach(e_volume in level.sacrifice_volumes)
 	{
 		if(e_volume.b_gods_pleased)
 		{
@@ -381,11 +381,11 @@ function fire_sacrifice_death_clone(e_sacrifice_volume)
 		clone scene::play("cin_zmhd_zombie_death", clone);
 	}
 	e_sacrifice_volume flag::wait_till("flame_on");
-	var_32bc7eba = level.a_elemental_staffs["staff_fire"].w_weapon;
+	w_staff_fire = level.a_elemental_staffs["staff_fire"].w_weapon;
 	a_players = getplayers();
-	foreach(var_f4755e17, e_player in a_players)
+	foreach(e_player in a_players)
 	{
-		if(e_player hasweapon(var_32bc7eba))
+		if(e_player hasweapon(w_staff_fire))
 		{
 			level notify(#"vo_puzzle_good", e_player);
 		}
@@ -466,7 +466,7 @@ function fire_puzzle_2_run()
 	/#
 		assert(a_ternary.size == 4);
 	#/
-	foreach(var_8fa548d0, e_number in a_ternary)
+	foreach(e_number in a_ternary)
 	{
 		e_number show();
 		e_target_torch = struct::get(e_number.target, "targetname");
@@ -487,7 +487,7 @@ function fire_puzzle_2_run()
 function fire_puzzle_2_cleanup()
 {
 	a_torches = struct::get_array("church_torch_target", "script_noteworthy");
-	foreach(var_7ad936cf, s_torch in a_torches)
+	foreach(s_torch in a_torches)
 	{
 		if(!isdefined(s_torch.e_fx))
 		{
@@ -496,7 +496,7 @@ function fire_puzzle_2_cleanup()
 		}
 	}
 	wait(30);
-	foreach(var_6b780c35, s_torch in a_torches)
+	foreach(s_torch in a_torches)
 	{
 		if(isdefined(s_torch.e_fx))
 		{
@@ -520,7 +520,7 @@ function fire_puzzle_2_is_complete()
 	a_torches = struct::get_array("church_torch_target", "script_noteworthy");
 	wrong_torch = 0;
 	unlit_torch = 0;
-	foreach(var_3f3b212a, e_torch in a_torches)
+	foreach(e_torch in a_torches)
 	{
 		if(isdefined(e_torch.e_fx) && !e_torch.b_correct_torch)
 		{
@@ -541,7 +541,7 @@ function fire_puzzle_2_is_complete()
 	}
 	level.n_torches_lit++;
 	a_players = getplayers();
-	foreach(var_819284ac, e_player in a_players)
+	foreach(e_player in a_players)
 	{
 		if(e_player hasweapon(level.a_elemental_staffs["staff_fire"].w_weapon))
 		{
@@ -642,7 +642,7 @@ function fire_puzzle_torch_run()
 	level endon(#"fire_puzzle_2_complete");
 	self.b_correct_torch = 0;
 	max_hit_distance_sq = 4096;
-	var_32bc7eba = level.a_elemental_staffs["staff_fire"].w_weapon;
+	w_staff_fire = level.a_elemental_staffs["staff_fire"].w_weapon;
 	while(true)
 	{
 		level waittill(#"fire_staff_explosion", v_point);
@@ -656,9 +656,9 @@ function fire_puzzle_torch_run()
 			continue;
 		}
 		a_players = getplayers();
-		foreach(var_2a909a9b, e_player in a_players)
+		foreach(e_player in a_players)
 		{
-			if(e_player hasweapon(var_32bc7eba))
+			if(e_player hasweapon(w_staff_fire))
 			{
 				level notify(#"vo_try_puzzle_fire2", e_player);
 			}

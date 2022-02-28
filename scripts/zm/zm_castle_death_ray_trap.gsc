@@ -203,15 +203,15 @@ function function_1b068db6(player)
 	if(level flag::get("tesla_coil_on") || player.is_drinking > 0)
 	{
 		self sethintstring("");
-		return 0;
+		return false;
 	}
 	if(level flag::get("tesla_coil_cooldown"))
 	{
 		self sethintstring(&"ZM_CASTLE_DEATH_RAY_COOLDOWN");
-		return 0;
+		return false;
 	}
 	self sethintstring(&"ZM_CASTLE_DEATH_RAY_TRAP", self.stub.hint_parm1);
-	return 1;
+	return true;
 }
 
 /*
@@ -273,7 +273,7 @@ function function_f796bd32(player)
 	level flag::set("death_ray_trap_used");
 	zombie_utility::set_zombie_var("tesla_head_gib_chance", 75);
 	var_cb1f7664 = getentarray(self.target, "targetname");
-	foreach(var_8ade4bac, var_6ba90bc4 in var_cb1f7664)
+	foreach(var_6ba90bc4 in var_cb1f7664)
 	{
 		var_6ba90bc4 thread function_65680b09(player);
 	}
@@ -308,7 +308,7 @@ function function_65680b09(player)
 		{
 			var_c998e88a = 0;
 			var_1c7748 = self function_98484afb();
-			foreach(var_396e6f73, ai_enemy in var_1c7748)
+			foreach(ai_enemy in var_1c7748)
 			{
 				if(!(isdefined(ai_enemy.var_1ea49cd7) && ai_enemy.var_1ea49cd7))
 				{
@@ -321,7 +321,7 @@ function function_65680b09(player)
 				var_c998e88a = randomfloatrange(0.6, 1.8);
 			}
 		}
-		foreach(var_c5f589f9, e_player in level.activeplayers)
+		foreach(e_player in level.activeplayers)
 		{
 			if(zm_utility::is_player_valid(e_player) && e_player function_55b881b7(self) && (!(isdefined(e_player.var_1ea49cd7) && e_player.var_1ea49cd7)))
 			{
@@ -332,7 +332,7 @@ function function_65680b09(player)
 		n_total_time = (gettime() - n_start_time) / 1000;
 	}
 	level flag::clear("tesla_coil_on");
-	foreach(var_90e47a8f, player in level.players)
+	foreach(player in level.players)
 	{
 		player.var_1ea49cd7 = undefined;
 		player.var_bf3163c8 = undefined;
@@ -355,7 +355,7 @@ function function_98484afb()
 {
 	a_ai_enemies = getaiteamarray(level.zombie_team);
 	var_1c7748 = [];
-	foreach(var_6168b095, ai_zombie in a_ai_enemies)
+	foreach(ai_zombie in a_ai_enemies)
 	{
 		if(ai_zombie function_55b881b7(self))
 		{
@@ -471,13 +471,13 @@ function function_55b881b7(var_2c11866b)
 	var_4ca7bb70 = getent("telsa_safety_zone", "targetname");
 	if(isdefined(var_4ca7bb70) && self istouching(var_4ca7bb70))
 	{
-		return 0;
+		return false;
 	}
 	if(self istouching(var_94ef9ffe))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -496,57 +496,60 @@ function function_120a8b07(var_ecf98bb6, e_panel)
 	{
 		self kill(self.origin, e_panel);
 	}
-	else if(self.archetype == "mechz")
-	{
-		if(!(isdefined(self.var_bce6e774) && self.var_bce6e774))
-		{
-			self clientfield::set("death_ray_shock_fx", 1);
-			self clientfield::set("tesla_beam_mechz", 1);
-			self thread function_41ecbdf9();
-			wait(randomfloatrange(0.2, 0.5));
-			self.var_ab0efcf6 = self.origin;
-			self thread scene::play("cin_zm_dlc1_mechz_dth_deathray_01", self);
-			level flag::wait_till_clear("tesla_coil_on");
-			self scene::stop("cin_zm_dlc1_mechz_dth_deathray_01");
-			self thread zm_ai_mechz::function_bb84a54(self);
-			self clientfield::set("death_ray_shock_fx", 0);
-			self clientfield::set("tesla_beam_mechz", 0);
-			self.var_bce6e774 = undefined;
-			wait(randomfloatrange(0.5, 1.5));
-			self.zombie_tesla_hit = 0;
-		}
-		self.var_1ea49cd7 = undefined;
-	}
 	else
 	{
-		self clientfield::set("death_ray_shock_fx", 1);
-		self thread function_41ecbdf9();
-		self.no_damage_points = 1;
-		self.deathpoints_already_given = 1;
-		if(isdefined(self.var_1ea49cd7) && self.var_1ea49cd7)
+		if(self.archetype == "mechz")
 		{
-			if(math::cointoss())
+			if(!(isdefined(self.var_bce6e774) && self.var_bce6e774))
 			{
-				if(isdefined(self.tesla_head_gib_func) && !self.head_gibbed)
+				self clientfield::set("death_ray_shock_fx", 1);
+				self clientfield::set("tesla_beam_mechz", 1);
+				self thread function_41ecbdf9();
+				wait(randomfloatrange(0.2, 0.5));
+				self.var_ab0efcf6 = self.origin;
+				self thread scene::play("cin_zm_dlc1_mechz_dth_deathray_01", self);
+				level flag::wait_till_clear("tesla_coil_on");
+				self scene::stop("cin_zm_dlc1_mechz_dth_deathray_01");
+				self thread zm_ai_mechz::function_bb84a54(self);
+				self clientfield::set("death_ray_shock_fx", 0);
+				self clientfield::set("tesla_beam_mechz", 0);
+				self.var_bce6e774 = undefined;
+				wait(randomfloatrange(0.5, 1.5));
+				self.zombie_tesla_hit = 0;
+			}
+			self.var_1ea49cd7 = undefined;
+		}
+		else
+		{
+			self clientfield::set("death_ray_shock_fx", 1);
+			self thread function_41ecbdf9();
+			self.no_damage_points = 1;
+			self.deathpoints_already_given = 1;
+			if(isdefined(self.var_1ea49cd7) && self.var_1ea49cd7)
+			{
+				if(math::cointoss())
 				{
-					self [[self.tesla_head_gib_func]]();
+					if(isdefined(self.tesla_head_gib_func) && !self.head_gibbed)
+					{
+						self [[self.tesla_head_gib_func]]();
+					}
+				}
+				else
+				{
+					self clientfield::set("death_ray_shock_eye_fx", 1);
 				}
 			}
-			else
+			self scene::play("cin_zm_dlc1_zombie_dth_deathray_0" + randomintrange(1, 5), self);
+			self clientfield::set("death_ray_shock_eye_fx", 0);
+			self clientfield::set("death_ray_shock_fx", 0);
+			self.var_bce6e774 = undefined;
+			if(isdefined(var_ecf98bb6) && isdefined(var_ecf98bb6.zapped_zombies))
 			{
-				self clientfield::set("death_ray_shock_eye_fx", 1);
+				var_ecf98bb6.zapped_zombies++;
+				var_ecf98bb6 notify(#"zombie_zapped");
 			}
+			self thread function_67cc41d(var_ecf98bb6, e_panel);
 		}
-		self scene::play("cin_zm_dlc1_zombie_dth_deathray_0" + randomintrange(1, 5), self);
-		self clientfield::set("death_ray_shock_eye_fx", 0);
-		self clientfield::set("death_ray_shock_fx", 0);
-		self.var_bce6e774 = undefined;
-		if(isdefined(var_ecf98bb6) && isdefined(var_ecf98bb6.zapped_zombies))
-		{
-			var_ecf98bb6.zapped_zombies++;
-			var_ecf98bb6 notify(#"zombie_zapped");
-		}
-		self thread function_67cc41d(var_ecf98bb6, e_panel);
 	}
 }
 

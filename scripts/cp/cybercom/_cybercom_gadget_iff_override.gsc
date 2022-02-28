@@ -221,7 +221,7 @@ function _is_primed(slot, weapon)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_f1ec3062(team, attacker)
+function private function_f1ec3062(team, attacker)
 {
 	self endon(#"death");
 	self waittill(#"iff_override_reverted");
@@ -249,14 +249,14 @@ private function function_f1ec3062(team, attacker)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_2458babe(entity)
+function private function_2458babe(entity)
 {
 	if(!isplayer(self))
 	{
 		return;
 	}
 	valid = [];
-	foreach(var_bce6eaf5, guy in self.cybercom.var_46a37937)
+	foreach(guy in self.cybercom.var_46a37937)
 	{
 		if(isdefined(guy) && isalive(guy))
 		{
@@ -290,7 +290,7 @@ private function function_2458babe(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _lock_requirement(target)
+function private _lock_requirement(target)
 {
 	if(target cybercom::cybercom_aicheckoptout("cybercom_iffoverride"))
 	{
@@ -302,46 +302,46 @@ private function _lock_requirement(target)
 		{
 			self cybercom::function_29bf9dee(target, 2);
 		}
-		return 0;
+		return false;
 	}
 	if(isdefined(target.is_disabled) && target.is_disabled)
 	{
 		self cybercom::function_29bf9dee(target, 6);
-		return 0;
+		return false;
 	}
 	if(isactor(target) && target cybercom::function_78525729() != "stand" && target cybercom::function_78525729() != "crouch")
 	{
-		return 0;
+		return false;
 	}
 	if(isactor(target) && target.archetype != "robot")
 	{
 		self cybercom::function_29bf9dee(target, 2);
-		return 0;
+		return false;
 	}
 	if(isactor(target) && target.archetype == "robot" && (robotsoldierbehavior::robotiscrawler(target) || robotsoldierbehavior::robotshouldbecomecrawler(target)))
 	{
 		self cybercom::function_29bf9dee(target, 2);
-		return 0;
+		return false;
 	}
 	if(!isactor(target) && !isvehicle(target))
 	{
-		return 0;
+		return false;
 	}
 	if(isvehicle(target) && isdefined(target.iffowner))
 	{
 		self cybercom::function_29bf9dee(target, 4);
-		return 0;
+		return false;
 	}
 	if(isdefined(target.var_f40d252c) && target.var_f40d252c)
 	{
-		return 0;
+		return false;
 	}
 	if(isactor(target) && target.archetype == "robot" && target ai::get_behavior_attribute("rogue_control") == "level_3")
 	{
 		self cybercom::function_29bf9dee(target, 4);
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -353,11 +353,11 @@ private function _lock_requirement(target)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _get_valid_targets(weapon)
+function private _get_valid_targets(weapon)
 {
 	prospects = getaiteamarray("axis");
 	valid = [];
-	foreach(var_7a776c7f, enemy in prospects)
+	foreach(enemy in prospects)
 	{
 		if(isvehicle(enemy) || (isactor(enemy) && isdefined(enemy.archetype)))
 		{
@@ -376,11 +376,11 @@ private function _get_valid_targets(weapon)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _activate_iff_override(slot, weapon)
+function private _activate_iff_override(slot, weapon)
 {
 	aborted = 0;
 	fired = 0;
-	foreach(var_6b1641e5, item in self.cybercom.lock_targets)
+	foreach(item in self.cybercom.lock_targets)
 	{
 		if(isdefined(item.target) && (isdefined(item.inrange) && item.inrange))
 		{
@@ -427,7 +427,7 @@ private function _activate_iff_override(slot, weapon)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _iff_leash_to_owner(owner)
+function private _iff_leash_to_owner(owner)
 {
 	self endon(#"death");
 	self endon(#"iff_override_reverted");
@@ -484,7 +484,7 @@ function iff_vehiclecb(isactive)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_384a3bfb()
+function private function_384a3bfb()
 {
 	self endon(#"death");
 	self waittill(#"iff_override_reverted");
@@ -500,7 +500,7 @@ private function function_384a3bfb()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _iff_overridevehicle(assignedowner)
+function private _iff_overridevehicle(assignedowner)
 {
 	self endon(#"death");
 	wait(randomfloatrange(0, 0.75));
@@ -522,7 +522,7 @@ private function _iff_overridevehicle(assignedowner)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_2b203db0()
+function private function_2b203db0()
 {
 	self endon(#"death");
 	self waittill(#"iff_override_revert_warn");
@@ -563,13 +563,16 @@ function iff_override(attacker, disabletimemsec, weapon = getweapon("gadget_iff_
 	{
 		disabletime = int(disabletimemsec / 1000);
 	}
-	else if(isdefined(attacker.cybercom) && isdefined(attacker.cybercom.iff_override_lifetime))
-	{
-		disabletime = attacker.cybercom.iff_override_lifetime;
-	}
 	else
 	{
-		disabletime = getdvarint("scr_iff_override_lifetime", 60);
+		if(isdefined(attacker.cybercom) && isdefined(attacker.cybercom.iff_override_lifetime))
+		{
+			disabletime = attacker.cybercom.iff_override_lifetime;
+		}
+		else
+		{
+			disabletime = getdvarint("scr_iff_override_lifetime", 60);
+		}
 	}
 	self.ignoreall = 1;
 	self ai::set_behavior_attribute("robot_lights", 2);
@@ -646,7 +649,7 @@ function iff_notifymeinnsec(time, note)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _iff_override_revert_after(timesec, attacker)
+function private _iff_override_revert_after(timesec, attacker)
 {
 	self endon(#"death");
 	wait(timesec - 6);
@@ -680,7 +683,7 @@ function ai_activateiffoverride(target, var_9bc2efcb = 1)
 	validtargets = [];
 	if(isarray(target))
 	{
-		foreach(var_28fd98ea, guy in target)
+		foreach(guy in target)
 		{
 			if(!_lock_requirement(guy))
 			{
@@ -689,20 +692,23 @@ function ai_activateiffoverride(target, var_9bc2efcb = 1)
 			validtargets[validtargets.size] = guy;
 		}
 	}
-	else if(!_lock_requirement(target))
+	else
 	{
-		return;
+		if(!_lock_requirement(target))
+		{
+			return;
+		}
+		validtargets[validtargets.size] = target;
 	}
-	validtargets[validtargets.size] = target;
 	if(isdefined(var_9bc2efcb) && var_9bc2efcb)
 	{
 		type = self cybercom::function_5e3d3aa();
 		self orientmode("face default");
 		self animscripted("ai_cybercom_anim", self.origin, self.angles, ("ai_base_rifle_" + type) + "_exposed_cybercom_activate");
-		self waittill_match(#"ai_cybercom_anim");
+		self waittillmatch(#"ai_cybercom_anim");
 	}
 	weapon = getweapon("gadget_iff_override");
-	foreach(var_e33314ba, guy in validtargets)
+	foreach(guy in validtargets)
 	{
 		if(!cybercom::targetisvalid(guy, weapon))
 		{

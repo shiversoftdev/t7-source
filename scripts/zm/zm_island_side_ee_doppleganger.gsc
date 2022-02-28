@@ -37,7 +37,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_island_side_ee_doppleganger", &__init__, undefined, undefined);
 }
@@ -221,7 +221,7 @@ function function_8c3f76f3()
 	var_7378d690 = [];
 	var_2bb7b39d = undefined;
 	var_506c0a63 = [];
-	foreach(var_4c491cdb, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		if(zm_utility::is_player_valid(player) && player flag::get("doppleganger_enabled"))
 		{
@@ -230,7 +230,7 @@ function function_8c3f76f3()
 	}
 	if(var_506c0a63.size)
 	{
-		foreach(var_f4baf6cb, player in var_506c0a63)
+		foreach(player in var_506c0a63)
 		{
 			n_index = player zm_zonemgr::get_player_zone();
 			if(!isdefined(var_9876cb30[n_index]))
@@ -241,7 +241,7 @@ function function_8c3f76f3()
 			var_7378d690[n_index] = player;
 		}
 		var_2ca3526b = getarraykeys(var_9876cb30);
-		foreach(var_4d4fe28d, key in var_2ca3526b)
+		foreach(key in var_2ca3526b)
 		{
 			if(var_9876cb30[key] == 1)
 			{
@@ -348,13 +348,16 @@ function function_c948de86()
 		{
 			var_87c6d702 = "scare";
 		}
-		else if(n_dist_sq > var_66d72d36 && !self zm_island_util::is_facing(self.ai_doppleganger, 0.5))
-		{
-			var_87c6d702 = "delete";
-		}
 		else
 		{
-			wait(0.1);
+			if(n_dist_sq > var_66d72d36 && !self zm_island_util::is_facing(self.ai_doppleganger, 0.5))
+			{
+				var_87c6d702 = "delete";
+			}
+			else
+			{
+				wait(0.1);
+			}
 		}
 	}
 	while(zm_utility::is_player_valid(self) && isdefined(self.ai_doppleganger) && var_87c6d702 == "");
@@ -491,28 +494,28 @@ function function_8924dbff(cmd)
 			case "":
 			{
 				level.activeplayers[0] function_5ee3951f();
-				return 1;
+				return true;
 			}
 			case "":
 			{
-				foreach(var_4e9c4bc4, player in level.players)
+				foreach(player in level.players)
 				{
 					player flag::set("");
 				}
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				level.activeplayers[0] function_38165cb6();
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				function_8c3f76f3();
-				return 1;
+				return true;
 			}
 		}
-		return 0;
+		return false;
 	#/
 }
 

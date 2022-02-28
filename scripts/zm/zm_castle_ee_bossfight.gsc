@@ -94,7 +94,7 @@ function init()
 	zm_zonemgr::enable_zone("zone_boss_arena");
 	var_1af36687 = spawnstruct();
 	var_1af36687 function_71130ea();
-	foreach(var_804320bd, player in level.players)
+	foreach(player in level.players)
 	{
 		player thread function_4bea595();
 	}
@@ -178,7 +178,7 @@ function function_b18f59bf()
 	var_82a4f07b = struct::get("keeper_end_loc");
 	var_82a4f07b fx::play("mpd_fx", var_82a4f07b.origin, var_82a4f07b.angles, "delete_fx", 0, undefined, 1);
 	level.var_8ef26cd9 = 1;
-	foreach(var_a9a0a0e0, player in level.players)
+	foreach(player in level.players)
 	{
 		player thread zm_castle_util::function_fa7da172();
 	}
@@ -205,7 +205,7 @@ function function_b18f59bf()
 	var_82a4f07b fx::play("mpd_fx", var_82a4f07b.origin + vectorscale((0, 0, 1), 32), var_82a4f07b.angles, "delete_fx", 0, undefined, 1);
 	var_293d02aa playsound("zmb_ee_mpd_open");
 	level.var_8ef26cd9 = 1;
-	foreach(var_4513c77c, player in level.players)
+	foreach(player in level.players)
 	{
 		player thread zm_castle_util::function_fa7da172();
 	}
@@ -226,15 +226,15 @@ function function_b18f59bf()
 function function_1fd76e61(var_293d02aa)
 {
 	var_5893159e = struct::get_array("boss_complete_tele_point");
-	foreach(var_85736445, player in level.players)
+	foreach(player in level.players)
 	{
 		if(player istouching(var_293d02aa))
 		{
-			foreach(var_f6095d41, s_panel in var_5893159e)
+			foreach(s_panel in var_5893159e)
 			{
 				if(!(isdefined(s_panel.b_occupied) && s_panel.b_occupied))
 				{
-					foreach(var_8e1346e5, var_5e72aed6 in level.players)
+					foreach(var_5e72aed6 in level.players)
 					{
 						str_player_zone = var_5e72aed6 zm_zonemgr::get_player_zone();
 						if(str_player_zone === "zone_undercroft")
@@ -255,7 +255,7 @@ function function_1fd76e61(var_293d02aa)
 			}
 		}
 	}
-	foreach(var_1edd0b54, s_panel in var_5893159e)
+	foreach(s_panel in var_5893159e)
 	{
 		s_panel.b_occupied = undefined;
 	}
@@ -383,13 +383,13 @@ function function_434db4ff()
 	}
 	if(!level flag::get("boss_fight_completed"))
 	{
-		return 1;
+		return true;
 	}
 	if(level flag::get("boss_fight_completed") && var_4b421e18)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -461,13 +461,16 @@ function function_77025eb5(spot)
 	{
 		substate = randomint(2);
 	}
-	else if(self.zombie_move_speed == "run")
+	else
 	{
-		substate = 2;
-	}
-	else if(self.zombie_move_speed == "sprint")
-	{
-		substate = 3;
+		if(self.zombie_move_speed == "run")
+		{
+			substate = 2;
+		}
+		else if(self.zombie_move_speed == "sprint")
+		{
+			substate = 3;
+		}
 	}
 	self orientmode("face default");
 	if(isdefined(level.custom_riseanim))
@@ -548,21 +551,27 @@ function get_unused_spawn_point(var_4a032429 = 0, var_f759b439 = 0, var_610499ec
 	{
 		a_all_spawn_points = self.var_f7afb996;
 	}
-	else if(var_f759b439)
-	{
-		a_all_spawn_points = self.var_9680b225;
-	}
-	else if(var_610499ec)
-	{
-		a_all_spawn_points = self.var_772c4512;
-	}
 	else
 	{
-		a_all_spawn_points = self.var_828cb4c9;
+		if(var_f759b439)
+		{
+			a_all_spawn_points = self.var_9680b225;
+		}
+		else
+		{
+			if(var_610499ec)
+			{
+				a_all_spawn_points = self.var_772c4512;
+			}
+			else
+			{
+				a_all_spawn_points = self.var_828cb4c9;
+			}
+		}
 	}
 	while(!a_valid_spawn_points.size)
 	{
-		foreach(var_99c6d62c, s_spawn_point in a_all_spawn_points)
+		foreach(s_spawn_point in a_all_spawn_points)
 		{
 			if(!isdefined(s_spawn_point.spawned_zombie) || b_all_points_used)
 			{
@@ -598,7 +607,7 @@ function boss_fight_ready()
 	level endon(#"boss_fight_begin");
 	level.var_b366f2dc = 0;
 	var_23a96e18 = getentarray("boss_gravity_spike_start_area", "targetname");
-	foreach(var_ea30fdd2, var_ad2fc56d in var_23a96e18)
+	foreach(var_ad2fc56d in var_23a96e18)
 	{
 		var_ad2fc56d.b_claimed = 0;
 		var_ad2fc56d thread function_1c249965();
@@ -608,7 +617,7 @@ function boss_fight_ready()
 		wait(0.05);
 	}
 	wait(0.75);
-	foreach(var_8029f4aa, player in level.players)
+	foreach(player in level.players)
 	{
 		player.var_d725b0f2 = undefined;
 	}
@@ -629,7 +638,7 @@ function function_1c249965()
 	level endon(#"boss_fight_begin");
 	while(true)
 	{
-		foreach(var_dd5b6e2e, player in level.players)
+		foreach(player in level.players)
 		{
 			if(player istouching(self) && !isdefined(player.var_d725b0f2) && !self.b_claimed)
 			{
@@ -757,7 +766,7 @@ function function_71130ea()
 	self.var_c7117234 = s_temp.origin;
 	self.var_ee000bfc = 0;
 	self.a_e_zombie_spawners = getentarray("boss_skeleton_spawner", "targetname");
-	foreach(var_e045ba45, var_42513f6e in self.a_e_zombie_spawners)
+	foreach(var_42513f6e in self.a_e_zombie_spawners)
 	{
 		if(!isdefined(level.zombie_spawners))
 		{
@@ -772,7 +781,7 @@ function function_71130ea()
 	self.var_828cb4c9 = struct::get_array("boss_zombie_spawn_point", "targetname");
 	self.var_f7afb996 = struct::get_array("boss_zombie_spawn_point_central", "targetname");
 	var_911ceae0 = struct::get_array("boss_zombie_spawn_point_crawl", "targetname");
-	foreach(var_1095428b, s_struct in var_911ceae0)
+	foreach(s_struct in var_911ceae0)
 	{
 		if(!isdefined(self.var_828cb4c9))
 		{
@@ -1026,7 +1035,7 @@ function function_4f5e3970()
 	level thread function_5db6ba34();
 	var_7533f11 = struct::get_array("boss_start_tele_point", "targetname");
 	var_7fcbf214 = array::sort_by_script_int(var_7533f11, 1);
-	foreach(var_205f6c6b, player in level.players)
+	foreach(player in level.players)
 	{
 		player thread function_735d5e85();
 		v_pos = var_7fcbf214[player.characterindex].origin;
@@ -1038,7 +1047,7 @@ function function_4f5e3970()
 	level thread lui::screen_flash(0.5, 2, 1, 1, "white");
 	level clientfield::set("sndBossBattle", 1);
 	wait(1.5);
-	foreach(var_dfffcfa2, player in level.players)
+	foreach(player in level.players)
 	{
 		v_pos = var_7fcbf214[player.characterindex].origin;
 		v_angles = var_7fcbf214[player.characterindex].angles;
@@ -1063,7 +1072,7 @@ function boss_fight_complete()
 {
 	var_7533f11 = struct::get_array("boss_complete_tele_point", "targetname");
 	var_7fcbf214 = array::sort_by_script_int(var_7533f11, 1);
-	foreach(var_de75b42e, player in level.players)
+	foreach(player in level.players)
 	{
 		v_pos = var_7fcbf214[player.characterindex].origin;
 		v_angles = var_7fcbf214[player.characterindex].angles;
@@ -1076,13 +1085,13 @@ function boss_fight_complete()
 	level flag::clear("low_grav_on");
 	exploder::stop_exploder("lgt_low_gravity_on");
 	level clientfield::set("snd_low_gravity_state", 0);
-	foreach(var_5f8bb86a, player in level.players)
+	foreach(player in level.players)
 	{
 		player playrumbleonentity("zm_castle_pulsing_rumble");
 	}
 	level thread lui::screen_flash(1, 6, 3, 1, "white");
 	wait(3);
-	foreach(var_4f24d93d, player in level.players)
+	foreach(player in level.players)
 	{
 		v_pos = var_7fcbf214[player.characterindex].origin;
 		v_angles = var_7fcbf214[player.characterindex].angles;
@@ -1133,14 +1142,14 @@ function function_1690ddb0()
 {
 	self.var_40b46e43 delete();
 	self.var_e3d9917e delete();
-	foreach(var_1859a1b1, var_b30aea81 in self.var_92904d31)
+	foreach(var_b30aea81 in self.var_92904d31)
 	{
 		if(isdefined(var_b30aea81))
 		{
 			var_b30aea81 delete();
 		}
 	}
-	foreach(var_681a6914, var_4a243bdd in self.var_29204bf)
+	foreach(var_4a243bdd in self.var_29204bf)
 	{
 		if(isdefined(var_4a243bdd))
 		{
@@ -1193,7 +1202,7 @@ function function_5db6ba34(var_dcc4bd3d)
 		a_ai_zombies = getaiteamarray(level.zombie_team);
 	}
 	var_6b1085eb = [];
-	foreach(var_27781a1, ai_zombie in a_ai_zombies)
+	foreach(ai_zombie in a_ai_zombies)
 	{
 		if(!isdefined(ai_zombie))
 		{
@@ -1281,8 +1290,7 @@ function function_1261fd50()
 	self.var_40b46e43 playsound("vox_keeper_round_1");
 	self function_ca8445e1();
 	wait(3);
-	self.var_7e383b58 = 1;
-	while(self.var_7e383b58 < 6)
+	for(self.var_7e383b58 = 1; self.var_7e383b58 < 6; self.var_7e383b58++)
 	{
 		/#
 			if(level flag::get(""))
@@ -1331,14 +1339,13 @@ function function_1261fd50()
 		if(level flag::get("boss_completed_early"))
 		{
 			self notify(#"hash_ed87af95");
-			return 1;
+			return true;
 		}
 		self notify(#"hash_ed87af95");
 		self.var_40b46e43 playsound("vox_keeper_round_" + (self.var_7e383b58 + 1));
 		wait(3);
-		self.var_7e383b58++;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1537,7 +1544,7 @@ function function_28bb5727(var_4a14cd40)
 						continue;
 					}
 				}
-				foreach(var_b50f4dce, player in level.players)
+				foreach(player in level.players)
 				{
 					if(distancesquared(self.var_551d8fa5, player.origin) < 40000)
 					{
@@ -1598,7 +1605,7 @@ function function_28bb5727(var_4a14cd40)
 			level notify(#"hash_cd6f3cf8");
 			if(isdefined(var_cfe6cb9))
 			{
-				foreach(var_b4925a2c, var_24c17812 in var_cfe6cb9)
+				foreach(var_24c17812 in var_cfe6cb9)
 				{
 					if(isdefined(var_24c17812) && isalive(var_24c17812))
 					{
@@ -1893,7 +1900,7 @@ function function_abdb4498()
 	level flag::set("boss_elemental_storm_cast_in_progress");
 	self.var_cc5c4782 = 0;
 	var_a7ddd99 = getent("boss_gravity_spike_stun_area", "targetname");
-	foreach(var_f031d7fe, player in level.players)
+	foreach(player in level.players)
 	{
 		player.var_7b3316ec = 0;
 		self thread function_e20da5e0(player, var_a7ddd99);
@@ -1909,7 +1916,7 @@ function function_abdb4498()
 	if(self.var_cc5c4782 > 0)
 	{
 		var_12b659e0 = [];
-		foreach(var_d5fe8914, player in level.players)
+		foreach(player in level.players)
 		{
 			if(!isdefined(var_12b659e0))
 			{
@@ -2012,7 +2019,7 @@ function boss_stunned()
 			self.var_40b46e43 clientfield::set("boss_elemental_storm_stunned_keeper_fx", 0);
 			self.var_40b46e43 clientfield::set("boss_weak_point_shader", 1);
 			self.var_40b46e43 playsound("zmb_keeper_damaged");
-			return 1;
+			return true;
 		}
 		wait(0.05);
 	}
@@ -2022,7 +2029,7 @@ function boss_stunned()
 	wait(0.1);
 	self.var_40b46e43 clientfield::set("boss_elemental_storm_stunned_keeper_fx", 0);
 	self.var_40b46e43 clientfield::set("boss_weak_point_shader", 1);
-	return 0;
+	return false;
 }
 
 /*
@@ -2070,10 +2077,10 @@ function function_39a8c4bd()
 	{
 		n_time_current = gettime() / 1000;
 		n_time_elapsed = n_time_current - n_time_started;
-		foreach(var_35c9b655, player in level.players)
+		foreach(player in level.players)
 		{
 			var_e9696e99 = 0;
-			foreach(var_9dbfccb1, var_9b5a3c3a in var_9a7102d5)
+			foreach(var_9b5a3c3a in var_9a7102d5)
 			{
 				if(player istouching(var_9b5a3c3a))
 				{
@@ -2725,7 +2732,7 @@ function function_ad721cc0()
 	{
 		n_time_current = gettime() / 1000;
 		n_time_elapsed = n_time_current - n_time_started;
-		foreach(var_b50b98b3, player in level.players)
+		foreach(player in level.players)
 		{
 			var_6e2679f8 = (player.origin[0], player.origin[1], 0);
 			var_75f2c6b7 = (self.origin[0], self.origin[1], 0);
@@ -2928,7 +2935,7 @@ function move_away_from_edges()
 	queryresult = positionquery_source_navigation(self.origin, 0, 200, 100, 2, 26);
 	if(queryresult.data.size)
 	{
-		foreach(var_7041b7d, point in queryresult.data)
+		foreach(point in queryresult.data)
 		{
 			if(bullettracepassed(point.origin + vectorscale((0, 0, 1), 20), v_orig + vectorscale((0, 0, 1), 20), 0, self, undefined, 0, 0))
 			{

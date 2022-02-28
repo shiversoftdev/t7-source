@@ -27,7 +27,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	/#
 		system::register("", &__init__, undefined, undefined);
@@ -129,7 +129,7 @@ function devgui_player_spawn()
 		player_devgui_base_mp = "";
 		wait(0.05);
 		players = getplayers();
-		foreach(var_e9918145, player in players)
+		foreach(player in players)
 		{
 			if(player != self)
 			{
@@ -162,7 +162,7 @@ function devgui_player_spawn_think()
 				continue;
 			}
 			players = getplayers();
-			foreach(var_6e8612, player in players)
+			foreach(player in players)
 			{
 				if(player.playername != playername)
 				{
@@ -203,17 +203,23 @@ function devgui_vehicle_spawn_think()
 				{
 					add_vehicle_at_eye_trace("");
 				}
-				else if(val == 2)
+				else
 				{
-					add_vehicle_at_eye_trace("");
-				}
-				else if(val == 3)
-				{
-					add_vehicle_at_eye_trace("");
-				}
-				else if(val == 4)
-				{
-					add_vehicle_at_eye_trace("");
+					if(val == 2)
+					{
+						add_vehicle_at_eye_trace("");
+					}
+					else
+					{
+						if(val == 3)
+						{
+							add_vehicle_at_eye_trace("");
+						}
+						else if(val == 4)
+						{
+							add_vehicle_at_eye_trace("");
+						}
+					}
 				}
 				setdvar("", "");
 			}
@@ -360,7 +366,7 @@ function devgui_add_player_weapons(root, pname, index, a_weapons, weapon_type, m
 				if(attachments.size)
 				{
 					devgui_add_player_weap_command((devgui_root + name) + "", index, name, i + 1);
-					foreach(var_d8bff18b, att in attachments)
+					foreach(att in attachments)
 					{
 						if(att != "")
 						{
@@ -821,7 +827,7 @@ function devgui_give_weapon(weapon_name)
 			{
 				grenades = 0;
 				pweapons = self getweaponslist();
-				foreach(var_3a558cc4, pweapon in pweapons)
+				foreach(pweapon in pweapons)
 				{
 					if(pweapon != weapon && pweapon.isgrenadeweapon)
 					{
@@ -830,7 +836,7 @@ function devgui_give_weapon(weapon_name)
 				}
 				if(grenades > 1)
 				{
-					foreach(var_906bda75, pweapon in pweapons)
+					foreach(pweapon in pweapons)
 					{
 						if(pweapon != weapon && pweapon.isgrenadeweapon)
 						{
@@ -919,13 +925,16 @@ function devgui_handle_player_command(playercallback, pcb_param_1, pcb_param_2)
 				{
 					player thread [[playercallback]](pcb_param_1, pcb_param_2);
 				}
-				else if(isdefined(pcb_param_1))
-				{
-					player thread [[playercallback]](pcb_param_1);
-				}
 				else
 				{
-					player thread [[playercallback]]();
+					if(isdefined(pcb_param_1))
+					{
+						player thread [[playercallback]](pcb_param_1);
+					}
+					else
+					{
+						player thread [[playercallback]]();
+					}
 				}
 			}
 		}

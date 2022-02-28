@@ -67,13 +67,16 @@ function lower_pap_water(localclientnum, oldval, newval, bnewent, binitialsnap, 
 	{
 		level thread function_cc69986f(-432, 22, 3);
 	}
-	else if(newval == 2)
+	else
 	{
-		level thread function_cc69986f(-454, 22, 3);
-	}
-	else if(newval == 3)
-	{
-		level thread function_cc69986f(-476, 22, 3);
+		if(newval == 2)
+		{
+			level thread function_cc69986f(-454, 22, 3);
+		}
+		else if(newval == 3)
+		{
+			level thread function_cc69986f(-476, 22, 3);
+		}
 	}
 }
 

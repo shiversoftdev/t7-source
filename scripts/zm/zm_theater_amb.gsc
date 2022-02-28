@@ -21,7 +21,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_theater_amb", &__init__, undefined, undefined);
 }
@@ -62,7 +62,7 @@ function main()
 	level thread function_8d1c7be1();
 	level thread amb_0_zombie();
 	var_3a067a8d = struct::get_array("trap_electric", "targetname");
-	foreach(var_882cee42, s_trap in var_3a067a8d)
+	foreach(s_trap in var_3a067a8d)
 	{
 		e_trap = getent(s_trap.script_noteworthy, "target");
 		e_trap thread function_57a1070b();
@@ -538,9 +538,9 @@ function function_7f30e34a(var_6140b6dd, var_8e7ce497)
 	if(str_notify == "zhd_knocker_timeout")
 	{
 		var_8e7ce497 thread function_702e84d0();
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*

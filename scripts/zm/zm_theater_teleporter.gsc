@@ -28,7 +28,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_theater_teleporter", &__init__, undefined, undefined);
 }
@@ -303,7 +303,7 @@ function player_teleporting(index)
 		return;
 	}
 	var_1bea176e = array::filter(var_1bea176e, 0, &function_1488cf91);
-	foreach(var_df680d72, e_player in var_1bea176e)
+	foreach(e_player in var_1bea176e)
 	{
 		e_player.var_35c3d096 = 1;
 	}
@@ -381,9 +381,9 @@ function player_is_near_pad(player)
 {
 	if(player istouching(self))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -507,15 +507,18 @@ function teleport_players(var_1bea176e, loc)
 				desired_origin = dest_room[i].origin + prone_offset;
 				desired_offset = prone_offset;
 			}
-			else if(players[i] getstance() == "crouch")
-			{
-				desired_origin = dest_room[i].origin + crouch_offset;
-				desired_offset = crouch_offset;
-			}
 			else
 			{
-				desired_origin = dest_room[i].origin + stand_offset;
-				desired_offset = stand_offset;
+				if(players[i] getstance() == "crouch")
+				{
+					desired_origin = dest_room[i].origin + crouch_offset;
+					desired_offset = crouch_offset;
+				}
+				else
+				{
+					desired_origin = dest_room[i].origin + stand_offset;
+					desired_offset = stand_offset;
+				}
 			}
 			util::setclientsysstate("levelNotify", "black_box_start", players[i]);
 			players[i] setorigin(dest_room[i].origin);
@@ -538,19 +541,22 @@ function teleport_players(var_1bea176e, loc)
 	{
 		dest_room = get_array_spots("projroom_teleport_player", dest_room);
 	}
-	else if(loc == "eerooms")
+	else
 	{
-		level.eeroomsinuse = 1;
-		dest_room = get_array_spots("ee_teleport_player", dest_room);
-	}
-	else if(loc == "theater")
-	{
-		if(isdefined(self.target))
+		if(loc == "eerooms")
 		{
-			ent = getent(self.target, "targetname");
-			self thread teleport_nuke(undefined, 20);
+			level.eeroomsinuse = 1;
+			dest_room = get_array_spots("ee_teleport_player", dest_room);
 		}
-		dest_room = get_array_spots("theater_teleport_player", dest_room);
+		else if(loc == "theater")
+		{
+			if(isdefined(self.target))
+			{
+				ent = getent(self.target, "targetname");
+				self thread teleport_nuke(undefined, 20);
+			}
+			dest_room = get_array_spots("theater_teleport_player", dest_room);
+		}
 	}
 	initialize_occupied_flag(dest_room);
 	check_for_occupied_spots(dest_room, all_players, player_radius);
@@ -600,15 +606,18 @@ function teleport_players(var_1bea176e, loc)
 				thread extra_cam_startup();
 				var_1bea176e[i] clientfield::set_to_player("player_dust_mote", 1);
 			}
-			else if(loc == "theater")
-			{
-				var_1bea176e[i].inteleportation = 0;
-				var_1bea176e[i].var_35c3d096 = undefined;
-				var_1bea176e[i] clientfield::set_to_player("player_dust_mote", 1);
-			}
 			else
 			{
-				players[i] notify(#"player_teleported", slot);
+				if(loc == "theater")
+				{
+					var_1bea176e[i].inteleportation = 0;
+					var_1bea176e[i].var_35c3d096 = undefined;
+					var_1bea176e[i] clientfield::set_to_player("player_dust_mote", 1);
+				}
+				else
+				{
+					players[i] notify(#"player_teleported", slot);
+				}
 			}
 			players[i].is_teleporting = 0;
 		}

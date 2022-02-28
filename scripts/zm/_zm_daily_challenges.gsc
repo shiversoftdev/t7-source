@@ -29,7 +29,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_daily_challenges", &__init__, &__main__, undefined);
 }
@@ -512,7 +512,7 @@ function increment_windows_repaired(s_barrier)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function rebuild_timer()
+function private rebuild_timer()
 {
 	self endon(#"disconnect");
 	self.b_dc_rebuild_timer_active = 1;
@@ -564,7 +564,7 @@ function increment_magic_box()
 */
 function increment_nuked_zombie()
 {
-	foreach(var_261b334a, player in level.players)
+	foreach(player in level.players)
 	{
 		if(player.sessionstate != "spectator")
 		{
@@ -679,8 +679,8 @@ function is_daily_challenge(n_challenge_index)
 	n_row = tablelookuprownum("gamedata/stats/zm/statsmilestones4.csv", 0, n_challenge_index);
 	if(n_row > -1)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 

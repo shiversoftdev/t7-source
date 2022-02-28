@@ -359,7 +359,7 @@ function canspawnturret(var_a6f28f3b = 0)
 {
 	if(isdefined(level.doa.magical_exit_taken) && level.doa.magical_exit_taken)
 	{
-		return 0;
+		return false;
 	}
 	turretarray = level.doa.mini_turrets;
 	if(var_a6f28f3b == 1)
@@ -370,10 +370,10 @@ function canspawnturret(var_a6f28f3b = 0)
 	{
 		if(!turretarray[i].deployed)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -544,7 +544,7 @@ function function_3ce8bf1c(player, origin)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_dfe832b7(timeleft, note)
+function private function_dfe832b7(timeleft, note)
 {
 	while(gettime() < timeleft)
 	{
@@ -678,7 +678,7 @@ function function_f3ee1c57(einflictor, eattacker, idamage, idflags, smeansofdeat
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_43d18fa4(player, note)
+function private function_43d18fa4(player, note)
 {
 	self endon(#"death");
 	level endon(note);

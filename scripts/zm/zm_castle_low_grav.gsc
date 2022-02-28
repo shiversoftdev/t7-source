@@ -34,7 +34,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_castle_low_grav", &__init__, &__main__, undefined);
 }
@@ -106,7 +106,7 @@ function function_3fa7f11a()
 	var_15ed352b = getentarray("grav_pad_trigger", "targetname");
 	level.var_d19d5236 = 0;
 	level.var_cddeb078 = [];
-	foreach(var_39a91352, var_3b9a12e0 in var_15ed352b)
+	foreach(var_3b9a12e0 in var_15ed352b)
 	{
 		var_3b9a12e0 thread function_e49e9c09();
 		var_8ecbce0a = getent(var_3b9a12e0.target, "targetname");
@@ -117,7 +117,7 @@ function function_3fa7f11a()
 	{
 		wait(0.05);
 	}
-	foreach(var_3fe383f4, var_3b9a12e0 in var_15ed352b)
+	foreach(var_3b9a12e0 in var_15ed352b)
 	{
 		var_544a882 = getent(var_3b9a12e0.target, "targetname");
 	}
@@ -460,7 +460,7 @@ function function_767bba0()
 	{
 		level flag::wait_till("low_grav_on");
 		var_89ba571 = [];
-		foreach(var_27af3274, var_7b3fce7b in var_470f053a)
+		foreach(var_7b3fce7b in var_470f053a)
 		{
 			if(!(isdefined(var_7b3fce7b.activated) && var_7b3fce7b.activated))
 			{
@@ -478,7 +478,7 @@ function function_767bba0()
 		level flag::wait_till("low_grav_countdown");
 		wait(10);
 		var_89ba571 = [];
-		foreach(var_f0b78e47, var_7b3fce7b in var_470f053a)
+		foreach(var_7b3fce7b in var_470f053a)
 		{
 			if(!(isdefined(var_7b3fce7b.activated) && var_7b3fce7b.activated))
 			{
@@ -678,7 +678,7 @@ function function_7f2caa5(n_num, var_42133686)
 		level notify(#"hash_6580ea04");
 		return;
 	}
-	foreach(var_27bf66f1, barrier in level.exterior_goals)
+	foreach(barrier in level.exterior_goals)
 	{
 		if(issubstr(barrier.script_string, "start_set"))
 		{
@@ -944,9 +944,9 @@ function function_94073af5(player)
 {
 	if(level.round_number >= level.var_57c06a96)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1142,15 +1142,15 @@ function function_efa3deb8(e_player)
 		var_15ed352b = struct::get_array("wall_buy_trigger", "targetname");
 		if(level.var_aed784b3 >= var_15ed352b.size)
 		{
-			return 1;
+			return true;
 		}
 		self.stub.hint_string = "";
 		self sethintstring("");
 		self.stub.cursor_hint = "HINT_NOICON";
 		self setcursorhint("HINT_NOICON");
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1169,11 +1169,11 @@ function detect_reentry()
 		{
 			if(self.var_8665ab89 == gettime())
 			{
-				return 1;
+				return true;
 			}
 		}
 		self.var_8665ab89 = gettime();
-		return 0;
+		return false;
 	#/
 }
 
@@ -1214,14 +1214,14 @@ function function_e41a2453(cmd)
 			{
 				if(level detect_reentry())
 				{
-					return 1;
+					return true;
 				}
 				level notify(#"hash_9c3be857");
 				level thread function_fceff7eb(9999);
-				return 1;
+				return true;
 			}
 		}
-		return 0;
+		return false;
 	#/
 }
 

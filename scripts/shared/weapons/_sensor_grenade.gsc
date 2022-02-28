@@ -128,7 +128,7 @@ function checkfortracking(origin)
 		return;
 	}
 	players = level.players;
-	foreach(var_43ba6c31, player in level.players)
+	foreach(player in level.players)
 	{
 		if(player util::isenemyplayer(self.owner))
 		{
@@ -302,7 +302,7 @@ function watch_for_decoys(owner)
 {
 	self waittill(#"stationary");
 	players = level.players;
-	foreach(var_86ffd44, player in level.players)
+	foreach(player in level.players)
 	{
 		if(player util::isenemyplayer(self.owner))
 		{

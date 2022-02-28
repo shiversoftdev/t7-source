@@ -39,7 +39,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_zod_idgun_quest", &__init__, &__main__, undefined);
 }
@@ -420,7 +420,7 @@ function function_dd2f6fe3()
 */
 function function_32d36516(e_heart)
 {
-	foreach(var_e2d14a6a, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player reviveplayer();
 	}
@@ -639,9 +639,9 @@ function filter_areaname(e_entity, str_areaname)
 {
 	if(!isdefined(e_entity.script_string) || e_entity.script_string != str_areaname)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -695,9 +695,9 @@ function idgun_proximity_sensor(var_3fbc06aa)
 	self endon(#"death");
 	self endon(#"disconnect");
 	var_e610614b = level.var_a26610f1[var_3fbc06aa].origin;
-	var_76cf6eef = 262144;
-	var_9d192e2d = 4096;
-	var_2509d2fc = var_76cf6eef - var_9d192e2d;
+	n_proximity_max_2 = 262144;
+	n_proximity_min_2 = 4096;
+	n_proximity_diff_2 = n_proximity_max_2 - n_proximity_min_2;
 	n_pulse_delay_range = 0.7;
 	n_scaled_pulse_delay = undefined;
 	n_time_before_next_pulse = undefined;
@@ -713,8 +713,8 @@ function idgun_proximity_sensor(var_3fbc06aa)
 			break;
 		}
 		var_888da1cf = (var_e610614b[0], var_e610614b[1], self.origin[2]);
-		var_30c97f9b = distancesquared(self.origin, var_888da1cf);
-		if(var_30c97f9b <= var_76cf6eef)
+		n_dist_2 = distancesquared(self.origin, var_888da1cf);
+		if(n_dist_2 <= n_proximity_max_2)
 		{
 			n_time_before_next_pulse = 1;
 			v_eye_origin = self getplayercamerapos();
@@ -727,20 +727,23 @@ function idgun_proximity_sensor(var_3fbc06aa)
 				n_scale = 1;
 				var_887c2fcb = 2;
 			}
-			else if(n_dot <= 0.5)
-			{
-				n_dot = 0.5;
-				n_scale = n_dot / 0.9;
-				n_scaled_pulse_delay = n_scale * n_pulse_delay_range;
-				n_time_before_next_pulse = 0.3 + n_scaled_pulse_delay;
-				var_887c2fcb = 1;
-			}
 			else
 			{
-				n_scale = n_dot / 0.9;
-				n_scaled_pulse_delay = n_scale * n_pulse_delay_range;
-				n_time_before_next_pulse = 0.3 + n_scaled_pulse_delay;
-				var_887c2fcb = 1;
+				if(n_dot <= 0.5)
+				{
+					n_dot = 0.5;
+					n_scale = n_dot / 0.9;
+					n_scaled_pulse_delay = n_scale * n_pulse_delay_range;
+					n_time_before_next_pulse = 0.3 + n_scaled_pulse_delay;
+					var_887c2fcb = 1;
+				}
+				else
+				{
+					n_scale = n_dot / 0.9;
+					n_scaled_pulse_delay = n_scale * n_pulse_delay_range;
+					n_time_before_next_pulse = 0.3 + n_scaled_pulse_delay;
+					var_887c2fcb = 1;
+				}
 			}
 		}
 		else
@@ -794,13 +797,16 @@ function give_idgun(n_idgun_level)
 	{
 		var_6aa62cd2 = 0;
 	}
-	else if(!isdefined(level.idgun[1].owner))
-	{
-		var_6aa62cd2 = 1;
-	}
 	else
 	{
-		return;
+		if(!isdefined(level.idgun[1].owner))
+		{
+			var_6aa62cd2 = 1;
+		}
+		else
+		{
+			return;
+		}
 	}
 	level.idgun[var_6aa62cd2].owner = self;
 	self zm_zod_vo::function_aca1bc0c(0);
@@ -852,7 +858,7 @@ function idgun_quest_devgui()
 function devgui_idgun_give(n_value)
 {
 	/#
-		foreach(var_af494555, e_player in level.players)
+		foreach(e_player in level.players)
 		{
 			e_player give_idgun(n_value);
 			util::wait_network_frame();

@@ -25,7 +25,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("end_game_taunts", &__init__, undefined, undefined);
 }
@@ -526,83 +526,101 @@ function getidleanimname(localclientnum, charactermodel, topplayerindex)
 				weapon_group = "weapon_smg_ppsh";
 			}
 		}
-		else if(weapon_group == "weapon_pistol" && charactermodel.weapon.isdualwield)
+		else
 		{
-			weapon_group = "weapon_pistol_dw";
-		}
-		else if(weapon_group == "weapon_smg")
-		{
-			if(charactermodel.weapon.rootweapon.name == "smg_ppsh")
-			{
-				weapon_group = "weapon_smg_ppsh";
-			}
-		}
-		else if(weapon_group == "weapon_cqb")
-		{
-			if(charactermodel.weapon.rootweapon.name == "shotgun_olympia")
-			{
-				weapon_group = "weapon_smg_ppsh";
-			}
-		}
-		else if(weapon_group == "weapon_special")
-		{
-			if(charactermodel.weapon.rootweapon.name == "special_crossbow" || charactermodel.weapon.rootweapon.name == "special_discgun")
-			{
-				weapon_group = "weapon_smg";
-			}
-			else if(charactermodel.weapon.rootweapon.name == "special_crossbow_dw")
+			if(weapon_group == "weapon_pistol" && charactermodel.weapon.isdualwield)
 			{
 				weapon_group = "weapon_pistol_dw";
 			}
-			else if(charactermodel.weapon.rootweapon.name == "knife_ballistic")
+			else
 			{
-				weapon_group = "weapon_knife_ballistic";
-			}
-		}
-		else if(weapon_group == "weapon_knife")
-		{
-			if(charactermodel.weapon.rootweapon.name == "melee_wrench" || charactermodel.weapon.rootweapon.name == "melee_crowbar" || charactermodel.weapon.rootweapon.name == "melee_improvise" || charactermodel.weapon.rootweapon.name == "melee_shockbaton" || charactermodel.weapon.rootweapon.name == "melee_shovel")
-			{
-				return array("pb_wrench_endgame_1stplace_idle", "pb_wrench_endgame_2ndplace_idle", "pb_wrench_endgame_3rdplace_idle")[topplayerindex];
-			}
-			if(charactermodel.weapon.rootweapon.name == "melee_knuckles")
-			{
-				return array("pb_brass_knuckles_endgame_1stplace_idle", "pb_brass_knuckles_endgame_2ndplace_idle", "pb_brass_knuckles_endgame_3rdplace_idle")[topplayerindex];
-			}
-			if(charactermodel.weapon.rootweapon.name == "melee_chainsaw" || charactermodel.weapon.rootweapon.name == "melee_boneglass" || charactermodel.weapon.rootweapon.name == "melee_crescent")
-			{
-				return array("pb_chainsaw_endgame_1stplace_idle", "pb_chainsaw_endgame_1stplace_idle", "pb_chainsaw_endgame_1stplace_idle")[topplayerindex];
-			}
-			if(charactermodel.weapon.rootweapon.name == "melee_boxing")
-			{
-				return array("pb_boxing_gloves_endgame_1stplace_idle", "pb_boxing_gloves_endgame_2ndplace_idle", "pb_boxing_gloves_endgame_3rdplace_idle")[topplayerindex];
-			}
-			if(charactermodel.weapon.rootweapon.name == "melee_sword" || charactermodel.weapon.rootweapon.name == "melee_katana")
-			{
-				return array("pb_sword_endgame_1stplace_idle", "pb_sword_endgame_2ndplace_idle", "pb_sword_endgame_3rdplace_idle")[topplayerindex];
-			}
-			if(charactermodel.weapon.rootweapon.name == "melee_nunchuks")
-			{
-				return array("pb_nunchucks_endgame_1stplace_idle", "pb_nunchucks_endgame_2ndplace_idle", "pb_nunchucks_endgame_3rdplace_idle")[topplayerindex];
-			}
-			if(charactermodel.weapon.rootweapon.name == "melee_bat" || charactermodel.weapon.rootweapon.name == "melee_fireaxe" || charactermodel.weapon.rootweapon.name == "melee_mace")
-			{
-				return array("pb_mace_endgame_1stplace_idle", "pb_mace_endgame_2ndplace_idle", "pb_mace_endgame_3rdplace_idle")[topplayerindex];
-			}
-			if(charactermodel.weapon.rootweapon.name == "melee_prosthetic")
-			{
-				return array("pb_prosthetic_arm_endgame_1stplace_idle", "pb_prosthetic_arm_endgame_2ndplace_idle", "pb_prosthetic_arm_endgame_3rdplace_idle")[topplayerindex];
-			}
-		}
-		else if(weapon_group == "miscweapon")
-		{
-			if(charactermodel.weapon.rootweapon.name == "blackjack_coin")
-			{
-				return array("pb_brawler_endgame_1stplace_idle", "pb_brawler_endgame_2ndplace_idle", "pb_brawler_endgame_3rdplace_idle")[topplayerindex];
-			}
-			if(charactermodel.weapon.rootweapon.name == "blackjack_cards")
-			{
-				return array("pb_brawler_endgame_1stplace_idle", "pb_brawler_endgame_2ndplace_idle", "pb_brawler_endgame_3rdplace_idle")[topplayerindex];
+				if(weapon_group == "weapon_smg")
+				{
+					if(charactermodel.weapon.rootweapon.name == "smg_ppsh")
+					{
+						weapon_group = "weapon_smg_ppsh";
+					}
+				}
+				else
+				{
+					if(weapon_group == "weapon_cqb")
+					{
+						if(charactermodel.weapon.rootweapon.name == "shotgun_olympia")
+						{
+							weapon_group = "weapon_smg_ppsh";
+						}
+					}
+					else
+					{
+						if(weapon_group == "weapon_special")
+						{
+							if(charactermodel.weapon.rootweapon.name == "special_crossbow" || charactermodel.weapon.rootweapon.name == "special_discgun")
+							{
+								weapon_group = "weapon_smg";
+							}
+							else
+							{
+								if(charactermodel.weapon.rootweapon.name == "special_crossbow_dw")
+								{
+									weapon_group = "weapon_pistol_dw";
+								}
+								else if(charactermodel.weapon.rootweapon.name == "knife_ballistic")
+								{
+									weapon_group = "weapon_knife_ballistic";
+								}
+							}
+						}
+						else
+						{
+							if(weapon_group == "weapon_knife")
+							{
+								if(charactermodel.weapon.rootweapon.name == "melee_wrench" || charactermodel.weapon.rootweapon.name == "melee_crowbar" || charactermodel.weapon.rootweapon.name == "melee_improvise" || charactermodel.weapon.rootweapon.name == "melee_shockbaton" || charactermodel.weapon.rootweapon.name == "melee_shovel")
+								{
+									return array("pb_wrench_endgame_1stplace_idle", "pb_wrench_endgame_2ndplace_idle", "pb_wrench_endgame_3rdplace_idle")[topplayerindex];
+								}
+								if(charactermodel.weapon.rootweapon.name == "melee_knuckles")
+								{
+									return array("pb_brass_knuckles_endgame_1stplace_idle", "pb_brass_knuckles_endgame_2ndplace_idle", "pb_brass_knuckles_endgame_3rdplace_idle")[topplayerindex];
+								}
+								if(charactermodel.weapon.rootweapon.name == "melee_chainsaw" || charactermodel.weapon.rootweapon.name == "melee_boneglass" || charactermodel.weapon.rootweapon.name == "melee_crescent")
+								{
+									return array("pb_chainsaw_endgame_1stplace_idle", "pb_chainsaw_endgame_1stplace_idle", "pb_chainsaw_endgame_1stplace_idle")[topplayerindex];
+								}
+								if(charactermodel.weapon.rootweapon.name == "melee_boxing")
+								{
+									return array("pb_boxing_gloves_endgame_1stplace_idle", "pb_boxing_gloves_endgame_2ndplace_idle", "pb_boxing_gloves_endgame_3rdplace_idle")[topplayerindex];
+								}
+								if(charactermodel.weapon.rootweapon.name == "melee_sword" || charactermodel.weapon.rootweapon.name == "melee_katana")
+								{
+									return array("pb_sword_endgame_1stplace_idle", "pb_sword_endgame_2ndplace_idle", "pb_sword_endgame_3rdplace_idle")[topplayerindex];
+								}
+								if(charactermodel.weapon.rootweapon.name == "melee_nunchuks")
+								{
+									return array("pb_nunchucks_endgame_1stplace_idle", "pb_nunchucks_endgame_2ndplace_idle", "pb_nunchucks_endgame_3rdplace_idle")[topplayerindex];
+								}
+								if(charactermodel.weapon.rootweapon.name == "melee_bat" || charactermodel.weapon.rootweapon.name == "melee_fireaxe" || charactermodel.weapon.rootweapon.name == "melee_mace")
+								{
+									return array("pb_mace_endgame_1stplace_idle", "pb_mace_endgame_2ndplace_idle", "pb_mace_endgame_3rdplace_idle")[topplayerindex];
+								}
+								if(charactermodel.weapon.rootweapon.name == "melee_prosthetic")
+								{
+									return array("pb_prosthetic_arm_endgame_1stplace_idle", "pb_prosthetic_arm_endgame_2ndplace_idle", "pb_prosthetic_arm_endgame_3rdplace_idle")[topplayerindex];
+								}
+							}
+							else if(weapon_group == "miscweapon")
+							{
+								if(charactermodel.weapon.rootweapon.name == "blackjack_coin")
+								{
+									return array("pb_brawler_endgame_1stplace_idle", "pb_brawler_endgame_2ndplace_idle", "pb_brawler_endgame_3rdplace_idle")[topplayerindex];
+								}
+								if(charactermodel.weapon.rootweapon.name == "blackjack_cards")
+								{
+									return array("pb_brawler_endgame_1stplace_idle", "pb_brawler_endgame_2ndplace_idle", "pb_brawler_endgame_3rdplace_idle")[topplayerindex];
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 		if(isdefined(associativearray("weapon_smg", array("pb_smg_endgame_1stplace_idle", "pb_smg_endgame_2ndplace_idle", "pb_smg_endgame_3rdplace_idle"), "weapon_assault", array("pb_rifle_endgame_1stplace_idle", "pb_rifle_endgame_2ndplace_idle", "pb_rifle_endgame_3rdplace_idle"), "weapon_cqb", array("pb_shotgun_endgame_1stplace_idle", "pb_shotgun_endgame_2ndplace_idle", "pb_shotgun_endgame_3rdplace_idle"), "weapon_lmg", array("pb_lmg_endgame_1stplace_idle", "pb_lmg_endgame_2ndplace_idle", "pb_lmg_endgame_3rdplace_idle"), "weapon_sniper", array("pb_sniper_endgame_1stplace_idle", "pb_sniper_endgame_2ndplace_idle", "pb_sniper_endgame_3rdplace_idle"), "weapon_pistol", array("pb_pistol_endgame_1stplace_idle", "pb_pistol_endgame_2ndplace_idle", "pb_pistol_endgame_3rdplace_idle"), "weapon_pistol_dw", array("pb_pistol_dw_endgame_1stplace_idle", "pb_pistol_dw_endgame_2ndplace_idle", "pb_pistol_dw_endgame_3rdplace_idle"), "weapon_launcher", array("pb_launcher_endgame_1stplace_idle", "pb_launcher_endgame_2ndplace_idle", "pb_launcher_endgame_3rdplace_idle"), "weapon_launcher_alt", array("pb_launcher_alt_endgame_1stplace_idle", "pb_launcher_alt_endgame_2ndplace_idle", "pb_launcher_alt_endgame_3rdplace_idle"), "weapon_knife", array("pb_knife_endgame_1stplace_idle", "pb_knife_endgame_2ndplace_idle", "pb_knife_endgame_3rdplace_idle"), "weapon_knuckles", array("pb_brass_knuckles_endgame_1stplace_idle", "pb_brass_knuckles_endgame_2ndplace_idle", "pb_brass_knuckles_endgame_3rdplace_idle"), "weapon_boxing", array("pb_boxing_gloves_endgame_1stplace_idle", "pb_boxing_gloves_endgame_2ndplace_idle", "pb_boxing_gloves_endgame_3rdplace_idle"), "weapon_wrench", array("pb_wrench_endgame_1stplace_idle", "pb_wrench_endgame_2ndplace_idle", "pb_wrench_endgame_3rdplace_idle"), "weapon_sword", array("pb_sword_endgame_1stplace_idle", "pb_sword_endgame_2ndplace_idle", "pb_sword_endgame_3rdplace_idle"), "weapon_nunchucks", array("pb_nunchucks_endgame_1stplace_idle", "pb_nunchucks_endgame_2ndplace_idle", "pb_nunchucks_endgame_3rdplace_idle"), "weapon_mace", array("pb_mace_endgame_1stplace_idle", "pb_mace_endgame_2ndplace_idle", "pb_mace_endgame_3rdplace_idle"), "brawler", array("pb_brawler_endgame_1stplace_idle", "pb_brawler_endgame_2ndplace_idle", "pb_brawler_endgame_3rdplace_idle"), "weapon_prosthetic", array("pb_prosthetic_arm_endgame_1stplace_idle", "pb_prosthetic_arm_endgame_2ndplace_idle", "pb_prosthetic_arm_endgame_3rdplace_idle"), "weapon_chainsaw", array("pb_chainsaw_endgame_1stplace_idle", "pb_chainsaw_endgame_1stplace_idle", "pb_chainsaw_endgame_1stplace_idle"), "weapon_smg_ppsh", array("pb_smg_ppsh_endgame_1stplace_idle", "pb_smg_ppsh_endgame_1stplace_idle", "pb_smg_ppsh_endgame_1stplace_idle"), "weapon_knife_ballistic", array("pb_b_knife_endgame_1stplace_idle", "pb_b_knife_endgame_2ndplace_idle", "pb_b_knife_endgame_3rdplace_idle"))[weapon_group]))
@@ -845,72 +863,105 @@ function getweapongroup(charactermodel)
 			weapon_group = "weapon_smg_ppsh";
 		}
 	}
-	else if(weapon_group == "weapon_pistol" && weapon.isdualwield)
+	else
 	{
-		weapon_group = "weapon_pistol_dw";
-	}
-	else if(weapon_group == "weapon_smg")
-	{
-		if(charactermodel.weapon.rootweapon.name == "smg_ppsh")
-		{
-			weapon_group = "weapon_smg_ppsh";
-		}
-	}
-	else if(weapon_group == "weapon_cqb")
-	{
-		if(charactermodel.weapon.rootweapon.name == "shotgun_olympia")
-		{
-			weapon_group = "weapon_smg_ppsh";
-		}
-	}
-	else if(weapon_group == "weapon_special")
-	{
-		if(charactermodel.weapon.rootweapon.name == "special_crossbow" || charactermodel.weapon.rootweapon.name == "special_discgun")
-		{
-			weapon_group = "weapon_smg";
-		}
-		else if(charactermodel.weapon.rootweapon.name == "special_crossbow_dw")
+		if(weapon_group == "weapon_pistol" && weapon.isdualwield)
 		{
 			weapon_group = "weapon_pistol_dw";
 		}
-		else if(charactermodel.weapon.rootweapon.name == "knife_ballistic")
+		else
 		{
-			weapon_group = "weapon_knife_ballistic";
-		}
-	}
-	else if(weapon_group == "weapon_knife")
-	{
-		if(charactermodel.weapon.rootweapon.name == "melee_wrench" || charactermodel.weapon.rootweapon.name == "melee_crowbar" || charactermodel.weapon.rootweapon.name == "melee_improvise" || charactermodel.weapon.rootweapon.name == "melee_shockbaton" || charactermodel.weapon.rootweapon.name == "melee_shovel")
-		{
-			weapon_group = "weapon_wrench";
-		}
-		else if(charactermodel.weapon.rootweapon.name == "melee_knuckles")
-		{
-			weapon_group = "weapon_knuckles";
-		}
-		else if(charactermodel.weapon.rootweapon.name == "melee_chainsaw" || charactermodel.weapon.rootweapon.name == "melee_boneglass" || charactermodel.weapon.rootweapon.name == "melee_crescent")
-		{
-			weapon_group = "weapon_chainsaw";
-		}
-		else if(charactermodel.weapon.rootweapon.name == "melee_boxing")
-		{
-			weapon_group = "weapon_boxing";
-		}
-		else if(charactermodel.weapon.rootweapon.name == "melee_sword" || charactermodel.weapon.rootweapon.name == "melee_katana")
-		{
-			weapon_group = "weapon_sword";
-		}
-		else if(charactermodel.weapon.rootweapon.name == "melee_nunchuks")
-		{
-			weapon_group = "weapon_nunchucks";
-		}
-		else if(charactermodel.weapon.rootweapon.name == "melee_bat" || charactermodel.weapon.rootweapon.name == "melee_fireaxe" || charactermodel.weapon.rootweapon.name == "melee_mace")
-		{
-			weapon_group = "weapon_mace";
-		}
-		else if(charactermodel.weapon.rootweapon.name == "melee_prosthetic")
-		{
-			weapon_group = "weapon_prosthetic";
+			if(weapon_group == "weapon_smg")
+			{
+				if(charactermodel.weapon.rootweapon.name == "smg_ppsh")
+				{
+					weapon_group = "weapon_smg_ppsh";
+				}
+			}
+			else
+			{
+				if(weapon_group == "weapon_cqb")
+				{
+					if(charactermodel.weapon.rootweapon.name == "shotgun_olympia")
+					{
+						weapon_group = "weapon_smg_ppsh";
+					}
+				}
+				else
+				{
+					if(weapon_group == "weapon_special")
+					{
+						if(charactermodel.weapon.rootweapon.name == "special_crossbow" || charactermodel.weapon.rootweapon.name == "special_discgun")
+						{
+							weapon_group = "weapon_smg";
+						}
+						else
+						{
+							if(charactermodel.weapon.rootweapon.name == "special_crossbow_dw")
+							{
+								weapon_group = "weapon_pistol_dw";
+							}
+							else if(charactermodel.weapon.rootweapon.name == "knife_ballistic")
+							{
+								weapon_group = "weapon_knife_ballistic";
+							}
+						}
+					}
+					else if(weapon_group == "weapon_knife")
+					{
+						if(charactermodel.weapon.rootweapon.name == "melee_wrench" || charactermodel.weapon.rootweapon.name == "melee_crowbar" || charactermodel.weapon.rootweapon.name == "melee_improvise" || charactermodel.weapon.rootweapon.name == "melee_shockbaton" || charactermodel.weapon.rootweapon.name == "melee_shovel")
+						{
+							weapon_group = "weapon_wrench";
+						}
+						else
+						{
+							if(charactermodel.weapon.rootweapon.name == "melee_knuckles")
+							{
+								weapon_group = "weapon_knuckles";
+							}
+							else
+							{
+								if(charactermodel.weapon.rootweapon.name == "melee_chainsaw" || charactermodel.weapon.rootweapon.name == "melee_boneglass" || charactermodel.weapon.rootweapon.name == "melee_crescent")
+								{
+									weapon_group = "weapon_chainsaw";
+								}
+								else
+								{
+									if(charactermodel.weapon.rootweapon.name == "melee_boxing")
+									{
+										weapon_group = "weapon_boxing";
+									}
+									else
+									{
+										if(charactermodel.weapon.rootweapon.name == "melee_sword" || charactermodel.weapon.rootweapon.name == "melee_katana")
+										{
+											weapon_group = "weapon_sword";
+										}
+										else
+										{
+											if(charactermodel.weapon.rootweapon.name == "melee_nunchuks")
+											{
+												weapon_group = "weapon_nunchucks";
+											}
+											else
+											{
+												if(charactermodel.weapon.rootweapon.name == "melee_bat" || charactermodel.weapon.rootweapon.name == "melee_fireaxe" || charactermodel.weapon.rootweapon.name == "melee_mace")
+												{
+													weapon_group = "weapon_mace";
+												}
+												else if(charactermodel.weapon.rootweapon.name == "melee_prosthetic")
+												{
+													weapon_group = "weapon_prosthetic";
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 	return weapon_group;
@@ -927,7 +978,7 @@ function getweapongroup(charactermodel)
 */
 function stream_epic_models()
 {
-	foreach(var_21eb6d8, model in level.epictauntxmodels)
+	foreach(model in level.epictauntxmodels)
 	{
 		forcestreamxmodel(model);
 	}
@@ -944,7 +995,7 @@ function stream_epic_models()
 */
 function stop_stream_epic_models()
 {
-	foreach(var_b52f231f, model in level.epictauntxmodels)
+	foreach(model in level.epictauntxmodels)
 	{
 		stopforcestreamingxmodel(model);
 	}
@@ -964,7 +1015,7 @@ function playepictauntscene(localclientnum, tauntanimname)
 	scenebundle = struct::get_script_bundle("scene", tauntanimname);
 	if(!isdefined(scenebundle))
 	{
-		return 0;
+		return false;
 	}
 	switch(tauntanimname)
 	{
@@ -1012,7 +1063,7 @@ function playepictauntscene(localclientnum, tauntanimname)
 		}
 	}
 	self thread scene::play(tauntanimname);
-	return 1;
+	return true;
 }
 
 /*
@@ -1077,7 +1128,7 @@ function shutdownepictauntmodels()
 {
 	if(isdefined(self.epictauntmodels))
 	{
-		foreach(var_3e904de9, model in self.epictauntmodels)
+		foreach(model in self.epictauntmodels)
 		{
 			if(isdefined(model))
 			{

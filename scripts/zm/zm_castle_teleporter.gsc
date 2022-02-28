@@ -30,7 +30,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_castle_teleporter", &__init__, &__main__, undefined);
 }
@@ -112,7 +112,7 @@ function __main__()
 */
 function pad_manager()
 {
-	foreach(var_5fab8dbb, t_trig in level.var_27b3c884)
+	foreach(t_trig in level.var_27b3c884)
 	{
 		t_trig sethintstring(&"ZOMBIE_TELEPORT_COOLDOWN");
 		t_trig teleport_trigger_invisible(0);
@@ -121,7 +121,7 @@ function pad_manager()
 	array::thread_all(level.var_27b3c884, &function_68ebacd3);
 	wait(level.n_teleport_cooldown);
 	level.is_cooldown = 0;
-	foreach(var_19e1098b, t_trig in level.var_27b3c884)
+	foreach(t_trig in level.var_27b3c884)
 	{
 		if(level flag::get("rocket_firing"))
 		{
@@ -154,7 +154,7 @@ function function_68ebacd3()
 	{
 		if(!isdefined(self.var_eb37ce09))
 		{
-			foreach(var_d6596e6e, e_player in level.activeplayers)
+			foreach(e_player in level.activeplayers)
 			{
 				if(e_player istouching(self))
 				{
@@ -187,7 +187,7 @@ function function_798f36c()
 	{
 		if((gettime() - self.var_eb37ce09) > 16000)
 		{
-			foreach(var_96e4708c, e_player in level.activeplayers)
+			foreach(e_player in level.activeplayers)
 			{
 				if(e_player istouching(self))
 				{
@@ -215,7 +215,7 @@ function function_798f36c()
 */
 function function_ee24bc2e()
 {
-	foreach(var_f4baf6cb, t_trig in level.var_27b3c884)
+	foreach(t_trig in level.var_27b3c884)
 	{
 		if(level flag::get("rocket_firing"))
 		{
@@ -240,7 +240,7 @@ function function_ee24bc2e()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function update_trigger_visibility()
+function private update_trigger_visibility()
 {
 	self endon(#"death");
 	while(true)
@@ -335,23 +335,23 @@ function function_ad16f13c(e_who)
 {
 	if(e_who.is_drinking > 0)
 	{
-		return 0;
+		return false;
 	}
 	if(e_who zm_utility::in_revive_trigger())
 	{
-		return 0;
+		return false;
 	}
 	if(zm_utility::is_player_valid(e_who))
 	{
 		if(!e_who zm_score::can_player_purchase(500))
 		{
 			e_who zm_audio::create_and_play_dialog("general", "transport_deny");
-			return 0;
+			return false;
 		}
 		e_who zm_score::minus_to_player_score(500);
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -368,10 +368,10 @@ function function_6b3344b4()
 	var_a0cf8f2b = getentarray("trigger_teleport_pad", "targetname");
 	var_d30fe07b = 1;
 	players = level.activeplayers;
-	foreach(var_8cbafcb9, player in players)
+	foreach(player in players)
 	{
 		var_1a19680c = 0;
-		foreach(var_24c4e65d, e_trig in var_a0cf8f2b)
+		foreach(e_trig in var_a0cf8f2b)
 		{
 			if(player istouching(e_trig))
 			{
@@ -415,7 +415,7 @@ function function_264f93ff(var_edc2ee2a = 0, var_66f7e6b9 = 0)
 	{
 		level thread zm_castle_ee::function_2c1aa78f();
 	}
-	foreach(var_e4279757, player in level.players)
+	foreach(player in level.players)
 	{
 		if(player.zone_name === "zone_v10_pad")
 		{
@@ -525,7 +525,7 @@ function function_e421dd3f()
 function teleport_trigger_invisible(enable)
 {
 	players = getplayers();
-	foreach(var_6a0695f6, player in players)
+	foreach(player in players)
 	{
 		self setinvisibletoplayer(player, enable);
 	}
@@ -545,9 +545,9 @@ function player_is_near_pad(player)
 	n_dist_sq = distancesquared(player.origin, self.origin);
 	if(n_dist_sq < 30625)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -671,13 +671,16 @@ function teleport_players(var_edc2ee2a = 0, var_66f7e6b9 = 0)
 				{
 					desired_origin = var_492a5e1e[i].origin + var_daad3c3c;
 				}
-				else if(player getstance() == "crouch")
-				{
-					desired_origin = var_492a5e1e[i].origin + var_6b55b1c4;
-				}
 				else
 				{
-					desired_origin = var_492a5e1e[i].origin + var_3abe10e2;
+					if(player getstance() == "crouch")
+					{
+						desired_origin = var_492a5e1e[i].origin + var_6b55b1c4;
+					}
+					else
+					{
+						desired_origin = var_492a5e1e[i].origin + var_3abe10e2;
+					}
 				}
 				array::add(var_19ff0dfb, player, 0);
 				player.var_601ebf01 = util::spawn_model("tag_origin", player.origin, player.angles);

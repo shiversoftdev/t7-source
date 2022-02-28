@@ -346,17 +346,17 @@ function all_tanks_full()
 {
 	if(level._active_tanks.size == 0)
 	{
-		return 0;
+		return false;
 	}
 	for(i = 0; i < level._active_tanks.size; i++)
 	{
 		tank = level._active_tanks[i];
 		if(tank.fill < tank.max_fill)
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*

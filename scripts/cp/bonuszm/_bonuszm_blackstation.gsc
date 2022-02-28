@@ -21,7 +21,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	function_f5c30bc9();
 	if(!sessionmodeiscampaignzombiesgame())
@@ -64,7 +64,7 @@ function function_f5c30bc9()
 	locationarray = [];
 	array::add(locationarray, (1689, -8229, 242));
 	array::add(locationarray, (1389, -8470, 170));
-	foreach(var_36d827b5, location in locationarray)
+	foreach(location in locationarray)
 	{
 		radiusdamage(location, 100, 400, 200);
 	}

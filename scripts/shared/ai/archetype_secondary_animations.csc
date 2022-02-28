@@ -17,7 +17,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function main()
+function autoexec main()
 {
 	if(sessionmodeiszombiesgame() && getdvarint("splitscreen_playerCount") > 2)
 	{
@@ -37,7 +37,7 @@ autoexec function main()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function secondaryanimationsinit(localclientnum)
+function private secondaryanimationsinit(localclientnum)
 {
 	if(!isdefined(level.__facialanimationslist))
 	{
@@ -56,7 +56,7 @@ private function secondaryanimationsinit(localclientnum)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function on_entity_spawn(localclientnum)
+function private on_entity_spawn(localclientnum)
 {
 	if(self hasdobj(localclientnum))
 	{
@@ -74,7 +74,7 @@ private function on_entity_spawn(localclientnum)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function on_entity_shutdown(localclientnum)
+function private on_entity_shutdown(localclientnum)
 {
 	if(isdefined(self))
 	{
@@ -120,15 +120,15 @@ function buildandvalidatefacialanimationlist(localclientnum)
 	level.__facialanimationslist["zombie"]["pain"] = array("ai_face_zombie_generic_pain_1");
 	level.__facialanimationslist["zombie"]["animscripted"] = array("ai_face_zombie_generic_idle_1");
 	deathanims = [];
-	foreach(var_b5c1db6c, animation in level.__facialanimationslist["human"]["death"])
+	foreach(animation in level.__facialanimationslist["human"]["death"])
 	{
 		array::add(deathanims, animation);
 	}
-	foreach(var_5d2cefaa, animation in level.__facialanimationslist["zombie"]["death"])
+	foreach(animation in level.__facialanimationslist["zombie"]["death"])
 	{
 		array::add(deathanims, animation);
 	}
-	foreach(var_1b3953b7, deathanim in deathanims)
+	foreach(deathanim in deathanims)
 	{
 		/#
 			assert(!isanimlooping(localclientnum, deathanim), ("" + deathanim) + "");
@@ -145,7 +145,7 @@ function buildandvalidatefacialanimationlist(localclientnum)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function getfacialanimoverride(localclientnum)
+function private getfacialanimoverride(localclientnum)
 {
 	if(sessionmodeiscampaigngame())
 	{
@@ -154,7 +154,7 @@ private function getfacialanimoverride(localclientnum)
 		{
 			primarydeltaanimlength = getanimlength(primarydeltaanim);
 			notetracks = getnotetracksindelta(primarydeltaanim, 0, 1);
-			foreach(var_e9918145, notetrack in notetracks)
+			foreach(notetrack in notetracks)
 			{
 				if(notetrack[1] == "facial_anim")
 				{
@@ -179,7 +179,7 @@ private function getfacialanimoverride(localclientnum)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function secondaryfacialanimationthink(localclientnum)
+function private secondaryfacialanimationthink(localclientnum)
 {
 	/#
 		assert(isdefined(self.archetype) && (self.archetype == "" || self.archetype == ""));
@@ -220,13 +220,16 @@ private function secondaryfacialanimationthink(localclientnum)
 						forcenewanim = 1;
 					}
 				}
-				else if(self._currentfacestate !== "death")
+				else
 				{
-					self._currentfacestate = "inactive";
-					self clearcurrentfacialanim(localclientnum);
+					if(self._currentfacestate !== "death")
+					{
+						self._currentfacestate = "inactive";
+						self clearcurrentfacialanim(localclientnum);
+					}
+					wait(0.5);
+					continue;
 				}
-				wait(0.5);
-				continue;
 			}
 		}
 		closestplayer = arraygetclosest(self.origin, level.localplayers, getdvarint("ai_clientFacialCullDist", 2000));
@@ -250,29 +253,44 @@ private function secondaryfacialanimationthink(localclientnum)
 		{
 			nextfacestate = "death";
 		}
-		else if(asmstatus == "asm_status_inactive")
-		{
-			nextfacestate = "animscripted";
-		}
-		else if(isdefined(currentasmstate) && issubstr(currentasmstate, "pain"))
-		{
-			nextfacestate = "pain";
-		}
-		else if(isdefined(currentasmstate) && issubstr(currentasmstate, "melee"))
-		{
-			nextfacestate = "melee";
-		}
-		else if(self asmisshootlayeractive(localclientnum))
-		{
-			nextfacestate = "combat_shoot";
-		}
-		else if(self asmisaimlayeractive(localclientnum))
-		{
-			nextfacestate = "combat_aim";
-		}
 		else
 		{
-			nextfacestate = "combat";
+			if(asmstatus == "asm_status_inactive")
+			{
+				nextfacestate = "animscripted";
+			}
+			else
+			{
+				if(isdefined(currentasmstate) && issubstr(currentasmstate, "pain"))
+				{
+					nextfacestate = "pain";
+				}
+				else
+				{
+					if(isdefined(currentasmstate) && issubstr(currentasmstate, "melee"))
+					{
+						nextfacestate = "melee";
+					}
+					else
+					{
+						if(self asmisshootlayeractive(localclientnum))
+						{
+							nextfacestate = "combat_shoot";
+						}
+						else
+						{
+							if(self asmisaimlayeractive(localclientnum))
+							{
+								nextfacestate = "combat_aim";
+							}
+							else
+							{
+								nextfacestate = "combat";
+							}
+						}
+					}
+				}
+			}
 		}
 		if(currfacestate == "inactive" || currfacestate != nextfacestate || forcenewanim)
 		{
@@ -308,7 +326,7 @@ private function secondaryfacialanimationthink(localclientnum)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function applynewfaceanim(localclientnum, animation, clearoncompletion = 0)
+function private applynewfaceanim(localclientnum, animation, clearoncompletion = 0)
 {
 	clearcurrentfacialanim(localclientnum);
 	if(isdefined(animation))
@@ -335,7 +353,7 @@ private function applynewfaceanim(localclientnum, animation, clearoncompletion =
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function applydeathanim(localclientnum)
+function private applydeathanim(localclientnum)
 {
 	if(isdefined(self._currentfacestate) && self._currentfacestate == "death")
 	{
@@ -367,7 +385,7 @@ private function applydeathanim(localclientnum)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function clearcurrentfacialanim(localclientnum)
+function private clearcurrentfacialanim(localclientnum)
 {
 	if(isdefined(self._currentfaceanim) && self hasdobj(localclientnum) && self hasanimtree())
 	{

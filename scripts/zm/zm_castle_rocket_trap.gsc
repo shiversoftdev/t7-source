@@ -241,7 +241,7 @@ function function_3a4d6d70()
 function function_447a5d62()
 {
 	var_f96c9da7 = [];
-	foreach(var_706613a0, e_player in level.activeplayers)
+	foreach(e_player in level.activeplayers)
 	{
 		str_player_zone = e_player zm_zonemgr::get_player_zone();
 		if(str_player_zone === "zone_v10_pad_exterior" || str_player_zone === "zone_v10_pad_door")
@@ -355,11 +355,11 @@ function function_76de618f(vol_area, var_ec7cc126 = 0)
 			{
 				var_97786609 = struct::get_array("player_respawn_point", "targetname");
 				a_s_points = [];
-				foreach(var_e2d14a6a, var_68140f76 in var_97786609)
+				foreach(s_respawn_point in var_97786609)
 				{
-					if(var_68140f76.script_noteworthy === "zone_v10_pad")
+					if(s_respawn_point.script_noteworthy === "zone_v10_pad")
 					{
-						array::add(a_s_points, var_68140f76, 0);
+						array::add(a_s_points, s_respawn_point, 0);
 					}
 				}
 				if(isdefined(a_s_points))
@@ -376,41 +376,44 @@ function function_76de618f(vol_area, var_ec7cc126 = 0)
 				}
 				self dodamage(var_499440d9, self.origin, undefined, undefined, undefined, "MOD_BURNED");
 			}
-			else if(self laststand::player_is_in_laststand())
+			else
 			{
-				if(level flag::get("solo_game"))
+				if(self laststand::player_is_in_laststand())
 				{
-					self enableinvulnerability();
-					var_97786609 = struct::get_array("player_respawn_point", "targetname");
-					a_s_points = [];
-					foreach(var_a446eb6f, var_68140f76 in var_97786609)
+					if(level flag::get("solo_game"))
 					{
-						if(var_68140f76.script_noteworthy === "zone_v10_pad")
+						self enableinvulnerability();
+						var_97786609 = struct::get_array("player_respawn_point", "targetname");
+						a_s_points = [];
+						foreach(s_respawn_point in var_97786609)
 						{
-							array::add(a_s_points, var_68140f76, 0);
+							if(s_respawn_point.script_noteworthy === "zone_v10_pad")
+							{
+								array::add(a_s_points, s_respawn_point, 0);
+							}
 						}
+						if(isdefined(a_s_points))
+						{
+							s_point = array::random(a_s_points);
+							self setorigin(s_point.origin);
+							self setplayerangles(s_point.angles);
+						}
+						util::wait_network_frame();
+						playfx(level._effect["lightning_dog_spawn"], self.origin);
+						self disableinvulnerability();
+						return;
 					}
-					if(isdefined(a_s_points))
+					if(self.bleedout_time > 0)
 					{
-						s_point = array::random(a_s_points);
-						self setorigin(s_point.origin);
-						self setplayerangles(s_point.angles);
+						self.bleedout_time = 0;
 					}
-					util::wait_network_frame();
-					playfx(level._effect["lightning_dog_spawn"], self.origin);
-					self disableinvulnerability();
-					return;
 				}
-				if(self.bleedout_time > 0)
+				else if(var_499440d9 >= self.health)
 				{
-					self.bleedout_time = 0;
+					self.bleedout_time = 0.5;
 				}
+				self dodamage(var_499440d9, self.origin, undefined, undefined, undefined, "MOD_BURNED");
 			}
-			else if(var_499440d9 >= self.health)
-			{
-				self.bleedout_time = 0.5;
-			}
-			self dodamage(var_499440d9, self.origin, undefined, undefined, undefined, "MOD_BURNED");
 		}
 		else
 		{
@@ -586,7 +589,7 @@ function function_343a73a4()
 	self playsound("evt_rocket_door_start");
 	self playloopsound("evt_rocket_door_lp");
 	level.var_f363d488 = 1;
-	foreach(var_b4778b9e, e_player in level.activeplayers)
+	foreach(e_player in level.activeplayers)
 	{
 		self thread function_80af95ac(e_player);
 	}

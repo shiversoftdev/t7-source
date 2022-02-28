@@ -25,7 +25,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("vehicle_ai", &__init__, undefined, undefined);
 }
@@ -69,7 +69,7 @@ function registersharedinterfaceattributes(archetype)
 function initthreatbias()
 {
 	aiarray = getaiarray();
-	foreach(var_b20650e8, ai in aiarray)
+	foreach(ai in aiarray)
 	{
 		if(ai === self)
 		{
@@ -99,17 +99,17 @@ function entityisarchetype(entity, archetype)
 {
 	if(!isdefined(entity))
 	{
-		return 0;
+		return false;
 	}
 	if(isplayer(entity) && entity.usingvehicle && isdefined(entity.viewlockedentity) && entity.viewlockedentity.archetype === archetype)
 	{
-		return 1;
+		return true;
 	}
 	if(isvehicle(entity) && entity.archetype === archetype)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -152,17 +152,23 @@ function gettargetpos(target, geteye)
 		{
 			pos = target;
 		}
-		else if(isdefined(geteye) && geteye && issentient(target))
+		else
 		{
-			pos = target geteye();
-		}
-		else if(isentity(target))
-		{
-			pos = target.origin;
-		}
-		else if(isdefined(target.origin) && isvec(target.origin))
-		{
-			pos = target.origin;
+			if(isdefined(geteye) && geteye && issentient(target))
+			{
+				pos = target geteye();
+			}
+			else
+			{
+				if(isentity(target))
+				{
+					pos = target.origin;
+				}
+				else if(isdefined(target.origin) && isvec(target.origin))
+				{
+					pos = target.origin;
+				}
+			}
 		}
 	}
 	return pos;
@@ -274,13 +280,16 @@ function __fire_for_rounds_internal(firecount, fireinterval, turretidx, target)
 		{
 			self fireturret(turretidx, 1);
 		}
-		else if(aifirechance > 1)
-		{
-			self fireturret(turretidx, counter % aifirechance);
-		}
 		else
 		{
-			self fireturret(turretidx);
+			if(aifirechance > 1)
+			{
+				self fireturret(turretidx, counter % aifirechance);
+			}
+			else
+			{
+				self fireturret(turretidx);
+			}
 		}
 		counter++;
 		wait(fireinterval);
@@ -332,19 +341,27 @@ function setturrettarget(target, turretidx = 0, offset = (0, 0, 0))
 			self setgunnertargetent(target, offset, turretidx - 1);
 		}
 	}
-	else if(isvec(target))
+	else
 	{
-		origin = target + offset;
-		if(turretidx == 0)
+		if(isvec(target))
 		{
-			self setturrettargetvec(target);
+			origin = target + offset;
+			if(turretidx == 0)
+			{
+				self setturrettargetvec(target);
+			}
+			else
+			{
+				self setgunnertargetvec(target, turretidx - 1);
+			}
 		}
 		else
 		{
-			self setgunnertargetvec(target, turretidx - 1);
+			/#
+				assertmsg("");
+			#/
 		}
 	}
-	assertmsg("");
 }
 
 /*
@@ -580,37 +597,40 @@ function nudge_collision()
 			self setvehvelocity(self.velocity + (normal * 90));
 			self collision_fx(normal);
 		}
-		else if(empedoroff)
-		{
-			if(isdefined(self.bounced))
-			{
-				self playsound("veh_wasp_wall_imp");
-				self setvehvelocity((0, 0, 0));
-				self setangularvelocity((0, 0, 0));
-				pitch = self.angles[0];
-				pitch = math::sign(pitch) * math::clamp(abs(pitch), 10, 15);
-				self.angles = (pitch, self.angles[1], self.angles[2]);
-				self.bounced = undefined;
-				self notify(#"landed");
-				return;
-			}
-			self.bounced = 1;
-			self setvehvelocity(self.velocity + (normal * 30));
-			self collision_fx(normal);
-		}
 		else
 		{
-			impact_vel = abs(vectordot(velocity, normal));
-			if(normal[2] < 0.6 && impact_vel < 100)
+			if(empedoroff)
 			{
-				self setvehvelocity(self.velocity + (normal * 90));
+				if(isdefined(self.bounced))
+				{
+					self playsound("veh_wasp_wall_imp");
+					self setvehvelocity((0, 0, 0));
+					self setangularvelocity((0, 0, 0));
+					pitch = self.angles[0];
+					pitch = math::sign(pitch) * math::clamp(abs(pitch), 10, 15);
+					self.angles = (pitch, self.angles[1], self.angles[2]);
+					self.bounced = undefined;
+					self notify(#"landed");
+					return;
+				}
+				self.bounced = 1;
+				self setvehvelocity(self.velocity + (normal * 30));
 				self collision_fx(normal);
 			}
 			else
 			{
-				self playsound("veh_wasp_ground_death");
-				self thread vehicle_death::death_fire_loop_audio();
-				self notify(#"crash_done");
+				impact_vel = abs(vectordot(velocity, normal));
+				if(normal[2] < 0.6 && impact_vel < 100)
+				{
+					self setvehvelocity(self.velocity + (normal * 90));
+					self collision_fx(normal);
+				}
+				else
+				{
+					self playsound("veh_wasp_ground_death");
+					self thread vehicle_death::death_fire_loop_audio();
+					self notify(#"crash_done");
+				}
 			}
 		}
 	}
@@ -1457,7 +1477,7 @@ function on_death_cleanup()
 {
 	state_machines = self.state_machines;
 	self waittill(#"free_vehicle");
-	foreach(var_f612f9d9, statemachine in state_machines)
+	foreach(statemachine in state_machines)
 	{
 		statemachine statemachine::clear();
 	}
@@ -1913,7 +1933,7 @@ function defaultstate_emped_exit(params)
 */
 function defaultstate_emped_reenter(params)
 {
-	return 1;
+	return true;
 }
 
 /*
@@ -1981,7 +2001,7 @@ function defaultstate_surge_update(params)
 			if(isdefined(targetpos))
 			{
 				queryresult = positionquery_source_navigation(targetpos, 0, 64, 35, 5, self);
-				foreach(var_39d2ed5d, point in queryresult.data)
+				foreach(point in queryresult.data)
 				{
 					self.current_pathto_pos = point.origin;
 					foundpath = self setvehgoalpos(self.current_pathto_pos, 0, 1);
@@ -2076,10 +2096,10 @@ function try_detonate(closest, attacker)
 		if(distancesquared(closest.origin, self.origin) < (80 * 80))
 		{
 			self detonate(attacker);
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2352,7 +2372,7 @@ function findnewposition(sight_check_height)
 				positionquery_filter_sight(queryresult, side_turret_enemy.origin, (0, 0, sight_check_height), self, 20, self, "sight3");
 			}
 		}
-		foreach(var_3ced29f8, point in queryresult.data)
+		foreach(point in queryresult.data)
 		{
 			/#
 				if(!isdefined(point._scoredebug))
@@ -2415,7 +2435,7 @@ function findnewposition(sight_check_height)
 	}
 	else
 	{
-		foreach(var_d0cd95c6, point in queryresult.data)
+		foreach(point in queryresult.data)
 		{
 			if(distance2dsquared(self.origin, point.origin) < 28900)
 			{
@@ -2610,7 +2630,7 @@ function positionquery_debugscores(queryresult)
 	{
 		return;
 	}
-	foreach(var_ba0d678a, point in queryresult.data)
+	foreach(point in queryresult.data)
 	{
 		point debugscore(self);
 	}
@@ -2718,7 +2738,7 @@ function _sort_by_score(left, right, descending)
 */
 function positionquery_filter_random(queryresult, min, max)
 {
-	foreach(var_9add6711, point in queryresult.data)
+	foreach(point in queryresult.data)
 	{
 		score = randomfloatrange(min, max);
 		/#
@@ -2758,7 +2778,7 @@ function positionquery_postprocess_sortscore(queryresult, descending = 1)
 */
 function positionquery_filter_outofgoalanchor(queryresult, tolerance = 1)
 {
-	foreach(var_73697669, point in queryresult.data)
+	foreach(point in queryresult.data)
 	{
 		if(point.disttogoal > tolerance)
 		{
@@ -2794,7 +2814,7 @@ function positionquery_filter_engagementdist(queryresult, enemy, engagementdista
 	half_engagement_width = abs(engagementdistancemax - engagementdistance);
 	enemy_origin = (enemy.origin[0], enemy.origin[1], 0);
 	vec_enemy_to_self = vectornormalize((self.origin[0], self.origin[1], 0) - enemy_origin);
-	foreach(var_27b71730, point in queryresult.data)
+	foreach(point in queryresult.data)
 	{
 		point.distawayfromengagementarea = 0;
 		vec_enemy_to_point = (point.origin[0], point.origin[1], 0) - enemy_origin;
@@ -2839,23 +2859,26 @@ function positionquery_filter_distawayfromtarget(queryresult, targetarray, dista
 	{
 		return;
 	}
-	foreach(var_fd4f69f3, point in queryresult.data)
+	foreach(point in queryresult.data)
 	{
 		tooclose = 0;
-		foreach(var_1b517e49, target in targetarray)
+		foreach(target in targetarray)
 		{
 			origin = undefined;
 			if(isvec(target))
 			{
 				origin = target;
 			}
-			else if(issentient(target) && isalive(target))
+			else
 			{
-				origin = target.origin;
-			}
-			else if(isentity(target))
-			{
-				origin = target.origin;
+				if(issentient(target) && isalive(target))
+				{
+					origin = target.origin;
+				}
+				else if(isentity(target))
+				{
+					origin = target.origin;
+				}
 			}
 			if(isdefined(origin) && distance2dsquared(point.origin, origin) < (distance * distance))
 			{
@@ -2921,7 +2944,7 @@ function positionquery_filter_engagementheight(queryresult, enemy, engagementhei
 	}
 	engagementheight = 0.5 * (engagementheightmin + engagementheightmax);
 	half_height = abs(engagementheightmax - engagementheight);
-	foreach(var_b57f1106, point in queryresult.data)
+	foreach(point in queryresult.data)
 	{
 		point.distengagementheight = 0;
 		targetheight = enemy.origin[2] + engagementheight;
@@ -3029,7 +3052,7 @@ function function_c8b0c8c2(client_flags, var_9f84050f, var_1e08b2fd, var_9c5ca2c
 function updatepersonalthreatbias_bots(var_9f84050f, var_1e08b2fd)
 {
 	/#
-		foreach(var_cc6912b8, player in level.players)
+		foreach(player in level.players)
 		{
 			if(player util::is_bot())
 			{

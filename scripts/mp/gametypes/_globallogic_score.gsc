@@ -71,7 +71,7 @@ function updatematchbonusscores(winner)
 	if(level.teambased)
 	{
 		winningteam = "tie";
-		foreach(var_72915306, team in level.teams)
+		foreach(team in level.teams)
 		{
 			if(winner == team)
 			{
@@ -118,13 +118,67 @@ function updatematchbonusscores(winner)
 				player thread givematchbonus("tie", playerscore);
 				player.matchbonus = playerscore;
 			}
-			else if(isdefined(player.pers["team"]) && player.pers["team"] == winningteam)
+			else
+			{
+				if(isdefined(player.pers["team"]) && player.pers["team"] == winningteam)
+				{
+					playerscore = int((winnerscale * ((gamelength / 60) * spm)) * (totaltimeplayed / gamelength));
+					player thread givematchbonus("win", playerscore);
+					player.matchbonus = playerscore;
+				}
+				else if(isdefined(player.pers["team"]) && player.pers["team"] != "spectator")
+				{
+					playerscore = int((loserscale * ((gamelength / 60) * spm)) * (totaltimeplayed / gamelength));
+					player thread givematchbonus("loss", playerscore);
+					player.matchbonus = playerscore;
+				}
+			}
+			player.pers["totalMatchBonus"] = player.pers["totalMatchBonus"] + player.matchbonus;
+		}
+	}
+	else
+	{
+		if(isdefined(winner))
+		{
+			winnerscale = 1;
+			loserscale = 0.5;
+		}
+		else
+		{
+			winnerscale = 0.75;
+			loserscale = 0.75;
+		}
+		players = level.players;
+		for(i = 0; i < players.size; i++)
+		{
+			player = players[i];
+			if(player.timeplayed["total"] < 1 || player.pers["participation"] < 1)
+			{
+				player thread rank::endgameupdate();
+				continue;
+			}
+			totaltimeplayed = player.timeplayed["total"];
+			if(totaltimeplayed > gamelength)
+			{
+				totaltimeplayed = gamelength;
+			}
+			spm = player rank::getspm();
+			iswinner = 0;
+			for(pidx = 0; pidx < min(level.placement["all"][0].size, 3); pidx++)
+			{
+				if(level.placement["all"][pidx] != player)
+				{
+					continue;
+				}
+				iswinner = 1;
+			}
+			if(iswinner)
 			{
 				playerscore = int((winnerscale * ((gamelength / 60) * spm)) * (totaltimeplayed / gamelength));
 				player thread givematchbonus("win", playerscore);
 				player.matchbonus = playerscore;
 			}
-			else if(isdefined(player.pers["team"]) && player.pers["team"] != "spectator")
+			else
 			{
 				playerscore = int((loserscale * ((gamelength / 60) * spm)) * (totaltimeplayed / gamelength));
 				player thread givematchbonus("loss", playerscore);
@@ -132,54 +186,6 @@ function updatematchbonusscores(winner)
 			}
 			player.pers["totalMatchBonus"] = player.pers["totalMatchBonus"] + player.matchbonus;
 		}
-	}
-	else if(isdefined(winner))
-	{
-		winnerscale = 1;
-		loserscale = 0.5;
-	}
-	else
-	{
-		winnerscale = 0.75;
-		loserscale = 0.75;
-	}
-	players = level.players;
-	for(i = 0; i < players.size; i++)
-	{
-		player = players[i];
-		if(player.timeplayed["total"] < 1 || player.pers["participation"] < 1)
-		{
-			player thread rank::endgameupdate();
-			continue;
-		}
-		totaltimeplayed = player.timeplayed["total"];
-		if(totaltimeplayed > gamelength)
-		{
-			totaltimeplayed = gamelength;
-		}
-		spm = player rank::getspm();
-		iswinner = 0;
-		for(pidx = 0; pidx < min(level.placement["all"][0].size, 3); pidx++)
-		{
-			if(level.placement["all"][pidx] != player)
-			{
-				continue;
-			}
-			iswinner = 1;
-		}
-		if(iswinner)
-		{
-			playerscore = int((winnerscale * ((gamelength / 60) * spm)) * (totaltimeplayed / gamelength));
-			player thread givematchbonus("win", playerscore);
-			player.matchbonus = playerscore;
-		}
-		else
-		{
-			playerscore = int((loserscale * ((gamelength / 60) * spm)) * (totaltimeplayed / gamelength));
-			player thread givematchbonus("loss", playerscore);
-			player.matchbonus = playerscore;
-		}
-		player.pers["totalMatchBonus"] = player.pers["totalMatchBonus"] + player.matchbonus;
 	}
 }
 
@@ -205,39 +211,45 @@ function updatecustomgamewinner(winner)
 		{
 			player.pers["victory"] = 0;
 		}
-		else if(level.teambased)
-		{
-			if(player.team == winner)
-			{
-				player.pers["victory"] = 2;
-			}
-			else if(winner == "tie")
-			{
-				player.pers["victory"] = 1;
-			}
-			else
-			{
-				player.pers["victory"] = 0;
-			}
-		}
 		else
 		{
-			iswinner = 0;
-			for(pidx = 0; pidx < min(level.placement["all"].size, 3); pidx++)
+			if(level.teambased)
 			{
-				if(level.placement["all"][pidx] != player)
+				if(player.team == winner)
 				{
-					continue;
+					player.pers["victory"] = 2;
 				}
-				iswinner = 1;
-			}
-			if(iswinner)
-			{
-				player.pers["victory"] = 2;
+				else
+				{
+					if(winner == "tie")
+					{
+						player.pers["victory"] = 1;
+					}
+					else
+					{
+						player.pers["victory"] = 0;
+					}
+				}
 			}
 			else
 			{
-				player.pers["victory"] = 0;
+				iswinner = 0;
+				for(pidx = 0; pidx < min(level.placement["all"].size, 3); pidx++)
+				{
+					if(level.placement["all"][pidx] != player)
+					{
+						continue;
+					}
+					iswinner = 1;
+				}
+				if(iswinner)
+				{
+					player.pers["victory"] = 2;
+				}
+				else
+				{
+					player.pers["victory"] = 0;
+				}
 			}
 		}
 		player.victory = player.pers["victory"];
@@ -939,7 +951,7 @@ function giveteamscoreforobjective_delaypostprocessing(team, score)
 */
 function postprocessteamscores(teams)
 {
-	foreach(var_e62d954e, team in teams)
+	foreach(team in teams)
 	{
 		onteamscore_postprocess(team);
 	}
@@ -1010,7 +1022,7 @@ function resetteamscores()
 {
 	if(level.scoreroundwinbased || util::isfirstround())
 	{
-		foreach(var_53e128aa, team in level.teams)
+		foreach(team in level.teams)
 		{
 			game["teamScores"][team] = 0;
 		}
@@ -1083,7 +1095,7 @@ function updateteamscores(team)
 */
 function updateallteamscores()
 {
-	foreach(var_725ff3c2, team in level.teams)
+	foreach(team in level.teams)
 	{
 		updateteamscores(team);
 	}
@@ -1116,7 +1128,7 @@ function gethighestteamscoreteam()
 {
 	score = 0;
 	winning_teams = [];
-	foreach(var_229f2c5f, team in level.teams)
+	foreach(team in level.teams)
 	{
 		team_score = game["teamScores"][team];
 		if(team_score > score)
@@ -1145,16 +1157,16 @@ function areteamarraysequal(teamsa, teamsb)
 {
 	if(teamsa.size != teamsb.size)
 	{
-		return 0;
+		return false;
 	}
-	foreach(var_93fd3b57, team in teamsa)
+	foreach(team in teamsa)
 	{
 		if(!isdefined(teamsb[team]))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1236,7 +1248,7 @@ function onteamscore_postprocess(team)
 	if(iswinning.size == 1)
 	{
 		level.laststatustime = gettime();
-		foreach(var_209d81f0, team in iswinning)
+		foreach(team in iswinning)
 		{
 			if(isdefined(level.waswinning[team]))
 			{
@@ -1254,7 +1266,7 @@ function onteamscore_postprocess(team)
 	}
 	if(level.waswinning.size == 1)
 	{
-		foreach(var_494e302a, team in level.waswinning)
+		foreach(team in level.waswinning)
 		{
 			if(isdefined(iswinning[team]))
 			{
@@ -1429,17 +1441,17 @@ function canupdateweaponcontractstats(player)
 {
 	if(getdvarint("enable_weapon_contract", 0) == 0)
 	{
-		return 0;
+		return false;
 	}
 	if(!level.rankedmatch && !level.arenamatch)
 	{
-		return 0;
+		return false;
 	}
 	if(player getdstat("contracts", 3, "index") != 0)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1501,7 +1513,7 @@ function updateweaponcontractwin(winner)
 */
 function updateweaponcontractplayed()
 {
-	foreach(var_c4e91882, player in level.players)
+	foreach(player in level.players)
 	{
 		if(!isdefined(player))
 		{
@@ -1535,7 +1547,7 @@ function updatecontractwin(winner)
 	{
 		return;
 	}
-	foreach(var_e1cd9aa, contractwinevent in level.updatecontractwinevents)
+	foreach(contractwinevent in level.updatecontractwinevents)
 	{
 		if(!isdefined(contractwinevent))
 		{
@@ -1656,75 +1668,78 @@ function updatewinlossstats(winner)
 			updatetiestats(players[i]);
 		}
 	}
-	else if(isplayer(winner))
+	else
 	{
-		if(level.hostforcedend && winner ishost())
+		if(isplayer(winner))
 		{
-			return;
-		}
-		updatewinstats(winner);
-		if(!level.teambased)
-		{
-			placement = level.placement["all"];
-			topthreeplayers = min(3, placement.size);
-			for(index = 1; index < topthreeplayers; index++)
+			if(level.hostforcedend && winner ishost())
 			{
-				nexttopplayer = placement[index];
-				updatewinstats(nexttopplayer);
+				return;
 			}
+			updatewinstats(winner);
+			if(!level.teambased)
+			{
+				placement = level.placement["all"];
+				topthreeplayers = min(3, placement.size);
+				for(index = 1; index < topthreeplayers; index++)
+				{
+					nexttopplayer = placement[index];
+					updatewinstats(nexttopplayer);
+				}
+				for(i = 0; i < players.size; i++)
+				{
+					if(winner == players[i])
+					{
+						continue;
+					}
+					for(index = 1; index < topthreeplayers; index++)
+					{
+						if(players[i] == placement[index])
+						{
+							break;
+						}
+					}
+					if(index < topthreeplayers)
+					{
+						continue;
+					}
+					if(level.rankedmatch && !level.leaguematch && players[i].pers["lateJoin"] === 1)
+					{
+						updatelosslatejoinstats(players[i]);
+					}
+				}
+			}
+		}
+		else
+		{
 			for(i = 0; i < players.size; i++)
 			{
-				if(winner == players[i])
+				if(!isdefined(players[i].pers["team"]))
 				{
 					continue;
 				}
-				for(index = 1; index < topthreeplayers; index++)
+				if(level.hostforcedend && players[i] ishost())
 				{
-					if(players[i] == placement[index])
-					{
-						break;
-					}
+					continue;
 				}
-				if(index < topthreeplayers)
+				if(winner == "tie")
 				{
+					updatetiestats(players[i]);
+					continue;
+				}
+				if(players[i].pers["team"] == winner)
+				{
+					updatewinstats(players[i]);
 					continue;
 				}
 				if(level.rankedmatch && !level.leaguematch && players[i].pers["lateJoin"] === 1)
 				{
 					updatelosslatejoinstats(players[i]);
 				}
-			}
-		}
-	}
-	else
-	{
-		for(i = 0; i < players.size; i++)
-		{
-			if(!isdefined(players[i].pers["team"]))
-			{
-				continue;
-			}
-			if(level.hostforcedend && players[i] ishost())
-			{
-				continue;
-			}
-			if(winner == "tie")
-			{
-				updatetiestats(players[i]);
-				continue;
-			}
-			if(players[i].pers["team"] == winner)
-			{
-				updatewinstats(players[i]);
-				continue;
-			}
-			if(level.rankedmatch && !level.leaguematch && players[i].pers["lateJoin"] === 1)
-			{
-				updatelosslatejoinstats(players[i]);
-			}
-			if(!level.disablestattracking)
-			{
-				players[i] setdstat("playerstatslist", "cur_win_streak", "StatValue", 0);
+				if(!level.disablestattracking)
+				{
+					players[i] setdstat("playerstatslist", "cur_win_streak", "StatValue", 0);
+				}
 			}
 		}
 	}
@@ -1937,7 +1952,7 @@ function trackattackeedeath(attackername, rank, xp, prestige, xuid)
 */
 function default_iskillboosting()
 {
-	return 0;
+	return false;
 }
 
 /*
@@ -2176,7 +2191,7 @@ function processkillstreakassists(attacker, inflictor, weapon)
 	enemycuavactive = 0;
 	if(attacker hasperk("specialty_immunecounteruav") == 0)
 	{
-		foreach(var_c9779840, team in level.teams)
+		foreach(team in level.teams)
 		{
 			if(team == attacker.team)
 			{
@@ -2188,7 +2203,7 @@ function processkillstreakassists(attacker, inflictor, weapon)
 			}
 		}
 	}
-	foreach(var_e73df798, player in level.players)
+	foreach(player in level.players)
 	{
 		if(player.team != attacker.team)
 		{

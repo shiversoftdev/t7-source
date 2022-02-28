@@ -19,7 +19,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("lui_shared", &__init__, undefined, undefined);
 }
@@ -47,7 +47,7 @@ function __init__()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function refresh_menu_values()
+function private refresh_menu_values()
 {
 	if(!isdefined(level.lui_script_globals))
 	{
@@ -147,7 +147,7 @@ function set_global(str_menu_id, str_variable_id, value)
 	level.lui_script_globals[str_menu_id][str_variable_id] = value;
 	if(isdefined(level.players))
 	{
-		foreach(var_5a40a654, player in level.players)
+		foreach(player in level.players)
 		{
 			player set_value_for_player(str_menu_id, str_variable_id, value);
 		}
@@ -194,7 +194,7 @@ function prime_movie(str_movie, b_looping = 0, str_key = "")
 {
 	if(self == level)
 	{
-		foreach(var_be508c16, player in level.players)
+		foreach(player in level.players)
 		{
 			player primemovie(str_movie, b_looping, str_key);
 		}
@@ -222,7 +222,7 @@ function play_movie(str_movie, str_type, show_black_screen = 0, b_looping = 0, s
 	}
 	if(self == level)
 	{
-		foreach(var_f18192b, player in level.players)
+		foreach(player in level.players)
 		{
 			if(isdefined(b_hide_hud))
 			{
@@ -234,23 +234,26 @@ function play_movie(str_movie, str_type, show_black_screen = 0, b_looping = 0, s
 		array::wait_till(level.players, "movie_done");
 		if(isdefined(b_hide_hud))
 		{
-			foreach(var_7e4e54bc, player in level.players)
+			foreach(player in level.players)
 			{
 				player flagsys::clear("playing_movie_hide_hud");
 				player util::show_hud(1);
 			}
 		}
 	}
-	else if(isdefined(b_hide_hud))
+	else
 	{
-		self flagsys::set("playing_movie_hide_hud");
-		self util::show_hud(0);
-	}
-	_play_movie_for_player(str_movie, str_type, 0, b_looping, str_key);
-	if(isdefined(b_hide_hud))
-	{
-		self flagsys::clear("playing_movie_hide_hud");
-		self util::show_hud(1);
+		if(isdefined(b_hide_hud))
+		{
+			self flagsys::set("playing_movie_hide_hud");
+			self util::show_hud(0);
+		}
+		_play_movie_for_player(str_movie, str_type, 0, b_looping, str_key);
+		if(isdefined(b_hide_hud))
+		{
+			self flagsys::clear("playing_movie_hide_hud");
+			self util::show_hud(1);
+		}
 	}
 	level notify(#"movie_done", str_type);
 }
@@ -264,7 +267,7 @@ function play_movie(str_movie, str_type, show_black_screen = 0, b_looping = 0, s
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function _play_movie_for_player(str_movie, str_type, show_black_screen, b_looping, str_key)
+function private _play_movie_for_player(str_movie, str_type, show_black_screen, b_looping, str_key)
 {
 	self endon(#"disconnect");
 	str_menu = undefined;
@@ -338,7 +341,7 @@ function play_movie_with_timeout(str_movie, str_type, timeout, show_black_screen
 	/#
 		assert(self == level);
 	#/
-	foreach(var_73487940, player in level.players)
+	foreach(player in level.players)
 	{
 		if(isdefined(b_hide_hud))
 		{
@@ -350,7 +353,7 @@ function play_movie_with_timeout(str_movie, str_type, timeout, show_black_screen
 	array::wait_till(level.players, "movie_done");
 	if(isdefined(b_hide_hud))
 	{
-		foreach(var_f4755e17, player in level.players)
+		foreach(player in level.players)
 		{
 			player flagsys::clear("playing_movie_hide_hud");
 			player util::show_hud(1);
@@ -368,7 +371,7 @@ function play_movie_with_timeout(str_movie, str_type, timeout, show_black_screen
 	Parameters: 6
 	Flags: Linked, Private
 */
-private function _play_movie_for_player_with_timeout(str_movie, str_type, timeout, show_black_screen, b_looping, str_key)
+function private _play_movie_for_player_with_timeout(str_movie, str_type, timeout, show_black_screen, b_looping, str_key)
 {
 	self endon(#"disconnect");
 	str_menu = undefined;
@@ -431,7 +434,7 @@ function screen_flash(n_fadein_time, n_hold_time, n_fadeout_time, n_target_alpha
 {
 	if(self == level)
 	{
-		foreach(var_4db1acdd, player in level.players)
+		foreach(player in level.players)
 		{
 			player thread screen_flash(n_fadein_time, n_hold_time, n_fadeout_time, n_target_alpha, v_color, b_force_close_menu);
 		}
@@ -458,7 +461,7 @@ function screen_fade(n_time, n_target_alpha = 1, n_start_alpha = 0, v_color, b_f
 {
 	if(self == level)
 	{
-		foreach(var_32ab2a3a, player in level.players)
+		foreach(player in level.players)
 		{
 			player thread _screen_fade(n_time, n_target_alpha, n_start_alpha, v_color, b_force_close_menu, str_menu_id);
 		}
@@ -512,7 +515,7 @@ function screen_close_menu()
 {
 	if(self == level)
 	{
-		foreach(var_28fd98ea, player in level.players)
+		foreach(player in level.players)
 		{
 			player thread _screen_close_menu();
 		}
@@ -532,7 +535,7 @@ function screen_close_menu()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function _screen_close_menu()
+function private _screen_close_menu()
 {
 	self notify(#"_screen_fade");
 	self endon(#"_screen_fade");
@@ -556,7 +559,7 @@ private function _screen_close_menu()
 	Parameters: 6
 	Flags: Linked, Private
 */
-private function _screen_fade(n_time, n_target_alpha, n_start_alpha, v_color, b_force_close_menu, str_menu_id = "default")
+function private _screen_fade(n_time, n_target_alpha, n_start_alpha, v_color, b_force_close_menu, str_menu_id = "default")
 {
 	self notify("_screen_fade_" + str_menu_id);
 	self endon("_screen_fade_" + str_menu_id);
@@ -654,7 +657,7 @@ private function _screen_fade(n_time, n_target_alpha, n_start_alpha, v_color, b_
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _one_screen_fade_per_network_frame(s_menu)
+function private _one_screen_fade_per_network_frame(s_menu)
 {
 	while(s_menu.screen_fade_network_frame === level.network_frame)
 	{

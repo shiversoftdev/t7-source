@@ -30,7 +30,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	initzmbehaviorsandasm();
 	level.zigzag_activation_distance = 240;
@@ -49,7 +49,7 @@ autoexec function init()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function initzmbehaviorsandasm()
+function private initzmbehaviorsandasm()
 {
 	behaviortreenetworkutility::registerbehaviortreescriptapi("zombieFindFleshService", &zombiefindflesh);
 	behaviortreenetworkutility::registerbehaviortreescriptapi("zombieEnteredPlayableService", &zombieenteredplayable);
@@ -232,67 +232,79 @@ function zombiefindflesh(behaviortreeentity)
 		}
 		behaviortreeentity setgoal(goalpos);
 	}
-	else if(isdefined(behaviortreeentity.enemyoverride) && isdefined(behaviortreeentity.enemyoverride[1]))
+	else
 	{
-		behaviortreeentity.has_exit_point = undefined;
-		goalpos = behaviortreeentity.enemyoverride[0];
-		if(!isdefined(zombie_poi))
+		if(isdefined(behaviortreeentity.enemyoverride) && isdefined(behaviortreeentity.enemyoverride[1]))
 		{
-			aiprofile_beginentry("zombiefindflesh-enemyoverride");
-			queryresult = positionquery_source_navigation(goalpos, 0, 48, 36, 4);
-			aiprofile_endentry();
-			foreach(var_d006e2d8, point in queryresult.data)
+			behaviortreeentity.has_exit_point = undefined;
+			goalpos = behaviortreeentity.enemyoverride[0];
+			if(!isdefined(zombie_poi))
 			{
-				goalpos = point.origin;
-				break;
+				aiprofile_beginentry("zombiefindflesh-enemyoverride");
+				queryresult = positionquery_source_navigation(goalpos, 0, 48, 36, 4);
+				aiprofile_endentry();
+				foreach(point in queryresult.data)
+				{
+					goalpos = point.origin;
+					break;
+				}
 			}
+			behaviortreeentity setgoal(goalpos);
 		}
-		behaviortreeentity setgoal(goalpos);
-	}
-	else if(isdefined(behaviortreeentity.attackable) && !designated_target)
-	{
-		if(isdefined(behaviortreeentity.attackable_slot))
+		else
 		{
-			if(isdefined(behaviortreeentity.attackable_goal_radius))
+			if(isdefined(behaviortreeentity.attackable) && !designated_target)
 			{
-				behaviortreeentity.goalradius = behaviortreeentity.attackable_goal_radius;
+				if(isdefined(behaviortreeentity.attackable_slot))
+				{
+					if(isdefined(behaviortreeentity.attackable_goal_radius))
+					{
+						behaviortreeentity.goalradius = behaviortreeentity.attackable_goal_radius;
+					}
+					nav_mesh = getclosestpointonnavmesh(behaviortreeentity.attackable_slot.origin, 64);
+					if(isdefined(nav_mesh))
+					{
+						behaviortreeentity setgoal(nav_mesh);
+					}
+					else
+					{
+						behaviortreeentity setgoal(behaviortreeentity.attackable_slot.origin);
+					}
+				}
 			}
-			nav_mesh = getclosestpointonnavmesh(behaviortreeentity.attackable_slot.origin, 64);
-			if(isdefined(nav_mesh))
+			else if(isdefined(behaviortreeentity.favoriteenemy))
 			{
-				behaviortreeentity setgoal(nav_mesh);
+				behaviortreeentity.has_exit_point = undefined;
+				behaviortreeentity.ignoreall = 0;
+				if(isdefined(level.enemy_location_override_func))
+				{
+					goalpos = [[level.enemy_location_override_func]](behaviortreeentity, behaviortreeentity.favoriteenemy);
+					if(isdefined(goalpos))
+					{
+						behaviortreeentity setgoal(goalpos);
+					}
+					else
+					{
+						behaviortreeentity zombieupdategoal();
+					}
+				}
+				else
+				{
+					if(isdefined(behaviortreeentity.is_rat_test) && behaviortreeentity.is_rat_test)
+					{
+					}
+					else
+					{
+						if(zombieshouldmoveawaycondition(behaviortreeentity))
+						{
+						}
+						else if(isdefined(behaviortreeentity.favoriteenemy.last_valid_position))
+						{
+							behaviortreeentity zombieupdategoal();
+						}
+					}
+				}
 			}
-			else
-			{
-				behaviortreeentity setgoal(behaviortreeentity.attackable_slot.origin);
-			}
-		}
-	}
-	else if(isdefined(behaviortreeentity.favoriteenemy))
-	{
-		behaviortreeentity.has_exit_point = undefined;
-		behaviortreeentity.ignoreall = 0;
-		if(isdefined(level.enemy_location_override_func))
-		{
-			goalpos = [[level.enemy_location_override_func]](behaviortreeentity, behaviortreeentity.favoriteenemy);
-			if(isdefined(goalpos))
-			{
-				behaviortreeentity setgoal(goalpos);
-			}
-			else
-			{
-				behaviortreeentity zombieupdategoal();
-			}
-		}
-		else if(isdefined(behaviortreeentity.is_rat_test) && behaviortreeentity.is_rat_test)
-		{
-		}
-		else if(zombieshouldmoveawaycondition(behaviortreeentity))
-		{
-		}
-		else if(isdefined(behaviortreeentity.favoriteenemy.last_valid_position))
-		{
-			behaviortreeentity zombieupdategoal();
 		}
 	}
 	if(players.size > 1)
@@ -377,7 +389,7 @@ function zombiefindfleshcode(behaviortreeentity)
 		behaviortreeentity.has_exit_point = undefined;
 		goalpos = behaviortreeentity.enemyoverride[0];
 		queryresult = positionquery_source_navigation(goalpos, 0, 48, 36, 4);
-		foreach(var_6166b356, point in queryresult.data)
+		foreach(point in queryresult.data)
 		{
 			goalpos = point.origin;
 			break;
@@ -433,14 +445,17 @@ function zombieupdategoal()
 		{
 			shouldrepath = 1;
 		}
-		else if(distancesquared(self.origin, self.favoriteenemy.origin) <= (level.zigzag_activation_distance * level.zigzag_activation_distance))
+		else
 		{
-			shouldrepath = 1;
-		}
-		else if(isdefined(self.pathgoalpos))
-		{
-			distancetogoalsqr = distancesquared(self.origin, self.pathgoalpos);
-			shouldrepath = distancetogoalsqr < (72 * 72);
+			if(distancesquared(self.origin, self.favoriteenemy.origin) <= (level.zigzag_activation_distance * level.zigzag_activation_distance))
+			{
+				shouldrepath = 1;
+			}
+			else if(isdefined(self.pathgoalpos))
+			{
+				distancetogoalsqr = distancesquared(self.origin, self.pathgoalpos);
+				shouldrepath = distancetogoalsqr < (72 * 72);
+			}
 		}
 	}
 	if(isdefined(level.validate_on_navmesh) && level.validate_on_navmesh)
@@ -541,14 +556,17 @@ function zombieupdategoalcode()
 		{
 			shouldrepath = 1;
 		}
-		else if(distancesquared(self.origin, self.enemy.origin) <= (200 * 200))
+		else
 		{
-			shouldrepath = 1;
-		}
-		else if(isdefined(self.pathgoalpos))
-		{
-			distancetogoalsqr = distancesquared(self.origin, self.pathgoalpos);
-			shouldrepath = distancetogoalsqr < (72 * 72);
+			if(distancesquared(self.origin, self.enemy.origin) <= (200 * 200))
+			{
+				shouldrepath = 1;
+			}
+			else if(isdefined(self.pathgoalpos))
+			{
+				distancetogoalsqr = distancesquared(self.origin, self.pathgoalpos);
+				shouldrepath = distancetogoalsqr < (72 * 72);
+			}
 		}
 	}
 	if(isdefined(self.keep_moving) && self.keep_moving)
@@ -632,15 +650,15 @@ function zombieenteredplayable(behaviortreeentity)
 	{
 		level.playable_areas = getentarray("player_volume", "script_noteworthy");
 	}
-	foreach(var_579ef87a, area in level.playable_areas)
+	foreach(area in level.playable_areas)
 	{
 		if(behaviortreeentity istouching(area))
 		{
 			behaviortreeentity zm_spawner::zombie_complete_emerging_into_playable_area();
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -656,13 +674,13 @@ function shouldmovecondition(behaviortreeentity)
 {
 	if(behaviortreeentity haspath())
 	{
-		return 1;
+		return true;
 	}
 	if(isdefined(behaviortreeentity.keep_moving) && behaviortreeentity.keep_moving)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -692,9 +710,9 @@ function waskilledbyteslacondition(behaviortreeentity)
 {
 	if(isdefined(behaviortreeentity.tesla_death) && behaviortreeentity.tesla_death)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -790,9 +808,9 @@ function zombieisbeinggrappled(behaviortreeentity)
 {
 	if(isdefined(behaviortreeentity.grapple_is_fatal) && behaviortreeentity.grapple_is_fatal)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -808,9 +826,9 @@ function zombieshouldknockdown(behaviortreeentity)
 {
 	if(isdefined(behaviortreeentity.knockdown) && behaviortreeentity.knockdown)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -826,9 +844,9 @@ function zombieispushed(behaviortreeentity)
 {
 	if(isdefined(behaviortreeentity.pushed) && behaviortreeentity.pushed)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -854,7 +872,7 @@ function zombiegrappleactionstart(behaviortreeentity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function zombieknockdownactionstart(behaviortreeentity)
+function private zombieknockdownactionstart(behaviortreeentity)
 {
 	blackboard::setblackboardattribute(behaviortreeentity, "_knockdown_direction", behaviortreeentity.knockdown_direction);
 	blackboard::setblackboardattribute(behaviortreeentity, "_knockdown_type", behaviortreeentity.knockdown_type);
@@ -870,7 +888,7 @@ private function zombieknockdownactionstart(behaviortreeentity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function zombiegetupactionterminate(behaviortreeentity)
+function private zombiegetupactionterminate(behaviortreeentity)
 {
 	behaviortreeentity.knockdown = 0;
 }
@@ -884,7 +902,7 @@ private function zombiegetupactionterminate(behaviortreeentity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function zombiepushedactionstart(behaviortreeentity)
+function private zombiepushedactionstart(behaviortreeentity)
 {
 	blackboard::setblackboardattribute(behaviortreeentity, "_push_direction", behaviortreeentity.push_direction);
 }
@@ -898,7 +916,7 @@ private function zombiepushedactionstart(behaviortreeentity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function zombiepushedactionterminate(behaviortreeentity)
+function private zombiepushedactionterminate(behaviortreeentity)
 {
 	behaviortreeentity.pushed = 0;
 }
@@ -916,9 +934,9 @@ function zombieshouldstun(behaviortreeentity)
 {
 	if(isdefined(behaviortreeentity.zombie_tesla_hit) && behaviortreeentity.zombie_tesla_hit && (!(isdefined(behaviortreeentity.tesla_death) && behaviortreeentity.tesla_death)))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1001,9 +1019,9 @@ function zombiegottoentrancecondition(behaviortreeentity)
 {
 	if(isdefined(behaviortreeentity.got_to_entrance) && behaviortreeentity.got_to_entrance)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1019,9 +1037,9 @@ function zombiegottoattackspotcondition(behaviortreeentity)
 {
 	if(isdefined(behaviortreeentity.at_entrance_tear_spot) && behaviortreeentity.at_entrance_tear_spot)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1037,9 +1055,9 @@ function zombiehasattackspotalreadycondition(behaviortreeentity)
 {
 	if(isdefined(behaviortreeentity.attacking_spot_index) && behaviortreeentity.attacking_spot_index >= 0)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1057,10 +1075,10 @@ function zombieshouldtearcondition(behaviortreeentity)
 	{
 		if(!zm_utility::all_chunks_destroyed(behaviortreeentity.first_node, behaviortreeentity.first_node.barrier_chunks))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1076,7 +1094,7 @@ function zombieshouldattackthroughboardscondition(behaviortreeentity)
 {
 	if(isdefined(behaviortreeentity.missinglegs) && behaviortreeentity.missinglegs)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(behaviortreeentity.first_node.zbarrier))
 	{
@@ -1089,7 +1107,7 @@ function zombieshouldattackthroughboardscondition(behaviortreeentity)
 			}
 			if(isdefined(chunks) && chunks.size > 0)
 			{
-				return 0;
+				return false;
 			}
 		}
 	}
@@ -1111,9 +1129,9 @@ function zombieshouldattackthroughboardscondition(behaviortreeentity)
 	}
 	if(!attack || freq < randomint(100))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1129,15 +1147,15 @@ function zombieshouldtauntcondition(behaviortreeentity)
 {
 	if(isdefined(behaviortreeentity.missinglegs) && behaviortreeentity.missinglegs)
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(behaviortreeentity.first_node.zbarrier))
 	{
-		return 0;
+		return false;
 	}
 	if(!behaviortreeentity.first_node.zbarrier zbarriersupportszombietaunts())
 	{
-		return 0;
+		return false;
 	}
 	if(getdvarstring("zombie_taunt_freq") == "")
 	{
@@ -1146,9 +1164,9 @@ function zombieshouldtauntcondition(behaviortreeentity)
 	freq = getdvarint("zombie_taunt_freq");
 	if(freq >= randomint(100))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1168,11 +1186,11 @@ function zombieshouldenterplayablecondition(behaviortreeentity)
 		{
 			if(isdefined(behaviortreeentity.at_entrance_tear_spot) && behaviortreeentity.at_entrance_tear_spot && (!(isdefined(behaviortreeentity.completed_emerging_into_playable_area) && behaviortreeentity.completed_emerging_into_playable_area)))
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1188,9 +1206,9 @@ function ischunkvalidcondition(behaviortreeentity)
 {
 	if(isdefined(behaviortreeentity.chunk))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1206,9 +1224,9 @@ function inplayablearea(behaviortreeentity)
 {
 	if(isdefined(behaviortreeentity.completed_emerging_into_playable_area) && behaviortreeentity.completed_emerging_into_playable_area)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1224,9 +1242,9 @@ function shouldskipteardown(behaviortreeentity)
 {
 	if(behaviortreeentity zm_spawner::should_skip_teardown(behaviortreeentity.find_flesh_struct_string))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1243,14 +1261,14 @@ function zombieisthinkdone(behaviortreeentity)
 	/#
 		if(isdefined(behaviortreeentity.is_rat_test) && behaviortreeentity.is_rat_test)
 		{
-			return 0;
+			return false;
 		}
 	#/
 	if(isdefined(behaviortreeentity.zombie_think_done) && behaviortreeentity.zombie_think_done)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1334,13 +1352,13 @@ function updateattackspotservice(behaviortreeentity)
 {
 	if(isdefined(behaviortreeentity.marked_for_death) && behaviortreeentity.marked_for_death || behaviortreeentity.health < 0)
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(behaviortreeentity.attacking_spot))
 	{
 		if(!behaviortreeentity zm_spawner::get_attack_spot(behaviortreeentity.first_node))
 		{
-			return 0;
+			return false;
 		}
 	}
 	if(isdefined(behaviortreeentity.attacking_spot))
@@ -1351,9 +1369,9 @@ function updateattackspotservice(behaviortreeentity)
 		{
 			behaviortreeentity.at_entrance_tear_spot = 1;
 		}
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1373,7 +1391,7 @@ function findnodesservice(behaviortreeentity)
 	{
 		if(behaviortreeentity.find_flesh_struct_string == "find_flesh")
 		{
-			return 0;
+			return false;
 		}
 		for(i = 0; i < level.exterior_goals.size; i++)
 		{
@@ -1394,7 +1412,7 @@ function findnodesservice(behaviortreeentity)
 		{
 			behaviortreeentity.got_to_entrance = 1;
 		}
-		return 1;
+		return true;
 	}
 }
 
@@ -1412,17 +1430,17 @@ function zombieattackableobjectservice(behaviortreeentity)
 	if(!behaviortreeentity ai::has_behavior_attribute("use_attackable") || !behaviortreeentity ai::get_behavior_attribute("use_attackable"))
 	{
 		behaviortreeentity.attackable = undefined;
-		return 0;
+		return false;
 	}
 	if(isdefined(behaviortreeentity.missinglegs) && behaviortreeentity.missinglegs)
 	{
 		behaviortreeentity.attackable = undefined;
-		return 0;
+		return false;
 	}
 	if(isdefined(behaviortreeentity.aat_turned) && behaviortreeentity.aat_turned)
 	{
 		behaviortreeentity.attackable = undefined;
-		return 0;
+		return false;
 	}
 	if(!isdefined(behaviortreeentity.attackable))
 	{
@@ -1941,7 +1959,7 @@ function findzombieenemy()
 	zombies = getaispeciesarray(level.zombie_team, "all");
 	zombie_enemy = undefined;
 	closest_dist = undefined;
-	foreach(var_49affa7a, zombie in zombies)
+	foreach(zombie in zombies)
 	{
 		if(isalive(zombie) && (isdefined(zombie.completed_emerging_into_playable_area) && zombie.completed_emerging_into_playable_area) && !zm_utility::is_magic_bullet_shield_enabled(zombie) && (zombie.archetype == "zombie" || (isdefined(zombie.canbetargetedbyturnedzombies) && zombie.canbetargetedbyturnedzombies)))
 		{
@@ -2003,13 +2021,16 @@ function zombieupdateblackholebombpullstate(entity)
 	{
 		entity._black_hole_bomb_collapse_death = 1;
 	}
-	else if(dist_to_bomb < 1048576)
+	else
 	{
-		blackboard::setblackboardattribute(entity, "_zombie_blackholebomb_pull_state", "bhb_pull_fast");
-	}
-	else if(dist_to_bomb < 4227136)
-	{
-		blackboard::setblackboardattribute(entity, "_zombie_blackholebomb_pull_state", "bhb_pull_slow");
+		if(dist_to_bomb < 1048576)
+		{
+			blackboard::setblackboardattribute(entity, "_zombie_blackholebomb_pull_state", "bhb_pull_fast");
+		}
+		else if(dist_to_bomb < 4227136)
+		{
+			blackboard::setblackboardattribute(entity, "_zombie_blackholebomb_pull_state", "bhb_pull_slow");
+		}
 	}
 }
 
@@ -2093,9 +2114,9 @@ function zombiekilledwhilegettingpulled(entity)
 {
 	if(!(isdefined(self.missinglegs) && self.missinglegs) && (isdefined(entity.interdimensional_gun_kill) && entity.interdimensional_gun_kill) && (!(isdefined(entity._black_hole_bomb_collapse_death) && entity._black_hole_bomb_collapse_death)))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2111,9 +2132,9 @@ function zombiekilledbyblackholebombcondition(entity)
 {
 	if(isdefined(entity._black_hole_bomb_collapse_death) && entity._black_hole_bomb_collapse_death)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

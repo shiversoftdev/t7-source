@@ -23,7 +23,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("_zm_weap_elemental_bow_demongate", &__init__, undefined, undefined);
 }
@@ -240,15 +240,18 @@ function demongate_chomper_fx(localclientnum, oldval, newval, bnewent, binitials
 		}
 		self.var_a581816a = playfxontag(localclientnum, level._effect["demongate_chomper_trail"], self, "tag_fx");
 	}
-	else if(isdefined(self.var_a581816a))
+	else
 	{
-		deletefx(localclientnum, self.var_a581816a, 0);
-		self.var_a581816a = undefined;
+		if(isdefined(self.var_a581816a))
+		{
+			deletefx(localclientnum, self.var_a581816a, 0);
+			self.var_a581816a = undefined;
+		}
+		self playsound(0, "zmb_demongate_chomper_disappear");
+		playfxontag(localclientnum, level._effect["demongate_chomper_end"], self, "tag_fx");
+		wait(0.4);
+		self hide();
 	}
-	self playsound(0, "zmb_demongate_chomper_disappear");
-	playfxontag(localclientnum, level._effect["demongate_chomper_end"], self, "tag_fx");
-	wait(0.4);
-	self hide();
 }
 
 /*

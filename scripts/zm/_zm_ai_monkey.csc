@@ -14,7 +14,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("monkey", &__init__, undefined, undefined);
 }
@@ -44,7 +44,7 @@ function __init__()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_70fb871f(localclientnum)
+function private function_70fb871f(localclientnum)
 {
 	self suppressragdollselfcollision(1);
 }

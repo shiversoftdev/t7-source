@@ -32,7 +32,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_altbody", &__init__, undefined, undefined);
 }
@@ -63,7 +63,7 @@ function __init__()
 	Parameters: 12
 	Flags: Linked
 */
-function init(name, var_4cc12170, trigger_hint, visionset_name, visionset_priority, loadout, character_index, enter_callback, exit_callback, allow_callback, notrigger_hint, var_1982079a)
+function init(name, kiosk_name, trigger_hint, visionset_name, visionset_priority, loadout, character_index, enter_callback, exit_callback, allow_callback, notrigger_hint, var_1982079a)
 {
 	if(!isdefined(level.altbody_enter_callbacks))
 	{
@@ -85,21 +85,21 @@ function init(name, var_4cc12170, trigger_hint, visionset_name, visionset_priori
 	{
 		level.altbody_visionsets = [];
 	}
-	if(!isdefined(level.var_3f7a17f))
+	if(!isdefined(level.altbody_charindexes))
 	{
-		level.var_3f7a17f = [];
+		level.altbody_charindexes = [];
 	}
 	if(isdefined(visionset_name))
 	{
 		level.altbody_visionsets[name] = visionset_name;
 		visionset_mgr::register_info("visionset", visionset_name, 1, visionset_priority, 1, 1);
 	}
-	function_b32967de(name, var_4cc12170, trigger_hint, notrigger_hint);
+	function_b32967de(name, kiosk_name, trigger_hint, notrigger_hint);
 	level.altbody_enter_callbacks[name] = enter_callback;
 	level.altbody_exit_callbacks[name] = exit_callback;
 	level.altbody_allow_callbacks[name] = allow_callback;
 	level.altbody_loadouts[name] = loadout;
-	level.var_3f7a17f[name] = character_index;
+	level.altbody_charindexes[name] = character_index;
 	level.var_ba1ef2b1[name] = var_1982079a;
 	level thread function_a2c7acf5();
 }
@@ -148,37 +148,37 @@ function devgui_start_altbody(name)
 	Parameters: 2
 	Flags: Private
 */
-private function function_3c17a460(trigger, name)
+function private function_3c17a460(trigger, name)
 {
-	if(self.is_drinking > 0 && (!(isdefined(self.var_ce25e278) && self.var_ce25e278)))
+	if(self.is_drinking > 0 && (!(isdefined(self.trigger_kiosks_in_altbody) && self.trigger_kiosks_in_altbody)))
 	{
-		return 0;
+		return false;
 	}
 	if(self zm_utility::in_revive_trigger())
 	{
-		return 0;
+		return false;
 	}
 	if(self laststand::player_is_in_laststand())
 	{
-		return 0;
+		return false;
 	}
 	if(self isthrowinggrenade())
 	{
-		return 0;
+		return false;
 	}
 	if(self function_a27a52af(name))
 	{
-		return 0;
+		return false;
 	}
 	callback = level.altbody_allow_callbacks[name];
 	if(isdefined(callback))
 	{
 		if(!self [[callback]](name, trigger.kiosk))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -190,41 +190,41 @@ private function function_3c17a460(trigger, name)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function player_can_altbody(kiosk, name)
+function private player_can_altbody(kiosk, name)
 {
 	if(isdefined(self.altbody) && self.altbody)
 	{
-		return 0;
+		return false;
 	}
-	if(self.is_drinking > 0 && (!(isdefined(self.var_ce25e278) && self.var_ce25e278)))
+	if(self.is_drinking > 0 && (!(isdefined(self.trigger_kiosks_in_altbody) && self.trigger_kiosks_in_altbody)))
 	{
-		return 0;
+		return false;
 	}
 	if(self zm_utility::in_revive_trigger())
 	{
-		return 0;
+		return false;
 	}
 	if(self laststand::player_is_in_laststand())
 	{
-		return 0;
+		return false;
 	}
 	if(self isthrowinggrenade())
 	{
-		return 0;
+		return false;
 	}
 	if(self function_a27a52af(name))
 	{
-		return 0;
+		return false;
 	}
 	callback = level.altbody_allow_callbacks[name];
 	if(isdefined(callback))
 	{
 		if(!self [[callback]](name, kiosk))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -238,14 +238,14 @@ private function player_can_altbody(kiosk, name)
 */
 function function_a27a52af(name)
 {
-	foreach(var_7edb8e34, var_23359ff6 in level.var_ba1ef2b1[name])
+	foreach(str_bgb in level.var_ba1ef2b1[name])
 	{
-		if(self bgb::is_enabled(var_23359ff6))
+		if(self bgb::is_enabled(str_bgb))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -257,7 +257,7 @@ function function_a27a52af(name)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function player_try_altbody(trigger, name)
+function private player_try_altbody(trigger, name)
 {
 	self endon(#"disconnect");
 	if(self player_can_altbody(trigger, name))
@@ -276,7 +276,7 @@ private function player_try_altbody(trigger, name)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function player_altbody(name, trigger)
+function private player_altbody(name, trigger)
 {
 	self.altbody = 1;
 	self thread function_1f9554ce();
@@ -295,7 +295,7 @@ private function player_altbody(name, trigger)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_1f9554ce()
+function private function_1f9554ce()
 {
 	self endon(#"disconnect");
 	was_inv = self enableinvulnerability();
@@ -307,7 +307,7 @@ private function function_1f9554ce()
 }
 
 /*
-	Name: function_9244ee8e
+	Name: get_altbody_weapon_limit
 	Namespace: zm_altbody
 	Checksum: 0xCBFBAE55
 	Offset: 0xC48
@@ -315,7 +315,7 @@ private function function_1f9554ce()
 	Parameters: 1
 	Flags: Linked
 */
-function function_9244ee8e(player)
+function get_altbody_weapon_limit(player)
 {
 	return 16;
 }
@@ -329,9 +329,9 @@ function function_9244ee8e(player)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function player_enter_altbody(name, trigger)
+function private player_enter_altbody(name, trigger)
 {
-	charindex = level.var_3f7a17f[name];
+	charindex = level.altbody_charindexes[name];
 	self.var_b2356a6c = self.origin;
 	self.var_227fe352 = self.angles;
 	self setperk("specialty_playeriszombie");
@@ -340,8 +340,8 @@ private function player_enter_altbody(name, trigger)
 	self setcharacterbodystyle(0);
 	self setcharacterhelmetstyle(0);
 	clientfield::set_to_player("player_in_afterlife", 1);
-	self function_96a57786(name);
-	self thread function_43af326a(name);
+	self player_apply_loadout(name);
+	self thread player_apply_visionset(name);
 	callback = level.altbody_enter_callbacks[name];
 	if(isdefined(callback))
 	{
@@ -351,7 +351,7 @@ private function player_enter_altbody(name, trigger)
 }
 
 /*
-	Name: function_43af326a
+	Name: player_apply_visionset
 	Namespace: zm_altbody
 	Checksum: 0xBA45A28A
 	Offset: 0xDE0
@@ -359,7 +359,7 @@ private function player_enter_altbody(name, trigger)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_43af326a(name)
+function private player_apply_visionset(name)
 {
 	if(!isdefined(self.altbody_visionset))
 	{
@@ -384,7 +384,7 @@ private function function_43af326a(name)
 }
 
 /*
-	Name: function_96a57786
+	Name: player_apply_loadout
 	Namespace: zm_altbody
 	Checksum: 0xC42F34A1
 	Offset: 0xED0
@@ -392,7 +392,7 @@ private function function_43af326a(name)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_96a57786(name)
+function private player_apply_loadout(name)
 {
 	self bgb::suspend_weapon_cycling();
 	loadout = level.altbody_loadouts[name];
@@ -402,18 +402,18 @@ private function function_96a57786(name)
 		/#
 			assert(!isdefined(self.get_player_weapon_limit));
 		#/
-		self.get_player_weapon_limit = &function_9244ee8e;
+		self.get_player_weapon_limit = &get_altbody_weapon_limit;
 		self.altbody_loadout[name] = zm_weapons::player_get_loadout();
 		self zm_weapons::player_give_loadout(loadout, 0, 1);
-		if(!isdefined(self.var_8b5ec154))
+		if(!isdefined(self.altbody_loadout_ever_had))
 		{
-			self.var_8b5ec154 = [];
+			self.altbody_loadout_ever_had = [];
 		}
-		if(isdefined(self.var_8b5ec154[name]) && self.var_8b5ec154[name])
+		if(isdefined(self.altbody_loadout_ever_had[name]) && self.altbody_loadout_ever_had[name])
 		{
 			self seteverhadweaponall(1);
 		}
-		self.var_8b5ec154[name] = 1;
+		self.altbody_loadout_ever_had[name] = 1;
 		self util::waittill_any_timeout(1, "weapon_change_complete");
 		self resetanimations();
 	}
@@ -428,7 +428,7 @@ private function function_96a57786(name)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function player_exit_altbody(name, trigger)
+function private player_exit_altbody(name, trigger)
 {
 	clientfield::set("player_altbody", 0);
 	clientfield::set_to_player("player_in_afterlife", 0);
@@ -447,7 +447,7 @@ private function player_exit_altbody(name, trigger)
 		visionset_mgr::deactivate("visionset", visionset, self);
 		self.altbody_visionset[name] = 0;
 	}
-	self thread function_d97ca744(name);
+	self thread player_restore_loadout(name);
 	self unsetperk("specialty_playeriszombie");
 	self detachall();
 	self thread function_72c3fae0(0);
@@ -455,7 +455,7 @@ private function player_exit_altbody(name, trigger)
 }
 
 /*
-	Name: function_d97ca744
+	Name: player_restore_loadout
 	Namespace: zm_altbody
 	Checksum: 0x827131B9
 	Offset: 0x11C0
@@ -463,7 +463,7 @@ private function player_exit_altbody(name, trigger)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_d97ca744(name, trigger)
+function private player_restore_loadout(name, trigger)
 {
 	loadout = level.altbody_loadouts[name];
 	if(isdefined(loadout))
@@ -476,7 +476,7 @@ private function function_d97ca744(name, trigger)
 		}
 		self zm_weapons::player_take_loadout(loadout);
 		/#
-			assert(self.get_player_weapon_limit == (&function_9244ee8e));
+			assert(self.get_player_weapon_limit == (&get_altbody_weapon_limit));
 		#/
 		self.get_player_weapon_limit = undefined;
 		self resetanimations();
@@ -517,14 +517,14 @@ function function_72c3fae0(washuman)
 	Parameters: 4
 	Flags: Linked
 */
-function function_b32967de(name, var_4cc12170, trigger_hint, notrigger_hint)
+function function_b32967de(name, kiosk_name, trigger_hint, notrigger_hint)
 {
-	if(!isdefined(level.var_1a198949))
+	if(!isdefined(level.altbody_kiosks))
 	{
-		level.var_1a198949 = [];
+		level.altbody_kiosks = [];
 	}
-	level.var_1a198949[name] = struct::get_array(var_4cc12170, "targetname");
-	foreach(var_51ec704f, kiosk in level.var_1a198949[name])
+	level.altbody_kiosks[name] = struct::get_array(kiosk_name, "targetname");
+	foreach(kiosk in level.altbody_kiosks[name])
 	{
 		function_9621c06b(kiosk, name, trigger_hint, notrigger_hint);
 	}
@@ -556,12 +556,12 @@ function function_9621c06b(kiosk, name, trigger_hint, notrigger_hint)
 	unitrigger_stub.altbody_name = name;
 	unitrigger_stub.trigger_hint = trigger_hint;
 	unitrigger_stub.notrigger_hint = notrigger_hint;
-	unitrigger_stub.prompt_and_visibility_func = &function_d06c7b0a;
-	zm_unitrigger::register_static_unitrigger(unitrigger_stub, &function_f270a7f6);
+	unitrigger_stub.prompt_and_visibility_func = &kiosk_trigger_visibility;
+	zm_unitrigger::register_static_unitrigger(unitrigger_stub, &kiosk_trigger_think);
 }
 
 /*
-	Name: function_d06c7b0a
+	Name: kiosk_trigger_visibility
 	Namespace: zm_altbody
 	Checksum: 0xF83ED536
 	Offset: 0x1698
@@ -569,9 +569,9 @@ function function_9621c06b(kiosk, name, trigger_hint, notrigger_hint)
 	Parameters: 1
 	Flags: Linked
 */
-function function_d06c7b0a(player)
+function kiosk_trigger_visibility(player)
 {
-	visible = !(isdefined(player.altbody) && player.altbody) || (isdefined(player.var_ff6ba411) && player.var_ff6ba411);
+	visible = !(isdefined(player.altbody) && player.altbody) || (isdefined(player.see_kiosks_in_altbody) && player.see_kiosks_in_altbody);
 	self.stub.usable = player player_can_altbody(self.stub.kiosk, self.stub.altbody_name);
 	if(self.stub.usable)
 	{
@@ -587,7 +587,7 @@ function function_d06c7b0a(player)
 }
 
 /*
-	Name: function_f270a7f6
+	Name: kiosk_trigger_think
 	Namespace: zm_altbody
 	Checksum: 0xACB65556
 	Offset: 0x17F0
@@ -595,7 +595,7 @@ function function_d06c7b0a(player)
 	Parameters: 0
 	Flags: Linked
 */
-function function_f270a7f6()
+function kiosk_trigger_think()
 {
 	while(true)
 	{
@@ -604,9 +604,9 @@ function function_f270a7f6()
 		{
 			self.stub.usable = 0;
 			name = self.stub.altbody_name;
-			if(isdefined(player.var_1333176))
+			if(isdefined(player.custom_altbody_callback))
 			{
-				player thread [[player.var_1333176]](self, name);
+				player thread [[player.custom_altbody_callback]](self, name);
 			}
 			else
 			{
@@ -625,7 +625,7 @@ function function_f270a7f6()
 	Parameters: 4
 	Flags: Private
 */
-private function watch_kiosk_triggers(name, trigger_name, trigger_hint, whenvisible)
+function private watch_kiosk_triggers(name, trigger_name, trigger_hint, whenvisible)
 {
 	triggers = getentarray(trigger_name, "targetname");
 	if(!triggers.size)
@@ -644,7 +644,7 @@ private function watch_kiosk_triggers(name, trigger_name, trigger_hint, whenvisi
 	Parameters: 4
 	Flags: Linked, Private
 */
-private function trigger_watch_kiosk(name, trigger_name, trigger_hint, whenvisible)
+function private trigger_watch_kiosk(name, trigger_name, trigger_hint, whenvisible)
 {
 	self endon(#"death");
 	self sethintstring(trigger_hint);
@@ -661,9 +661,9 @@ private function trigger_watch_kiosk(name, trigger_name, trigger_hint, whenvisib
 		while(isdefined(self))
 		{
 			self waittill(#"trigger", player);
-			if(isdefined(player.var_1333176))
+			if(isdefined(player.custom_altbody_callback))
 			{
-				player thread [[player.var_1333176]](self, name);
+				player thread [[player.custom_altbody_callback]](self, name);
 			}
 			else
 			{
@@ -703,7 +703,7 @@ function trigger_monitor_visibility(name, whenvisible)
 		{
 			visible = 1;
 			visible = player player_can_altbody(self, name);
-			if(visible == whenvisible && (!(isdefined(player.altbody) && player.altbody) || (isdefined(player.var_ff6ba411) && player.var_ff6ba411)) && (isdefined(self.is_unlocked) && self.is_unlocked))
+			if(visible == whenvisible && (!(isdefined(player.altbody) && player.altbody) || (isdefined(player.see_kiosks_in_altbody) && player.see_kiosks_in_altbody)) && (isdefined(self.is_unlocked) && self.is_unlocked))
 			{
 				self setvisibletoplayer(player);
 			}

@@ -32,11 +32,11 @@
 function main()
 {
 	var_565a8d95 = struct::get_array("flinger_trigger", "targetname");
-	foreach(var_babf5f9b, var_a3ed6ea in var_565a8d95)
+	foreach(var_a3ed6ea in var_565a8d95)
 	{
 		var_66e182a0 = getentarray(var_a3ed6ea.target, "targetname");
 		var_a3ed6ea.var_66e182a0 = var_66e182a0;
-		foreach(var_96152f5e, var_a70a7d09 in var_66e182a0)
+		foreach(var_a70a7d09 in var_66e182a0)
 		{
 			var_a3ed6ea.var_a70a7d09 = var_a70a7d09;
 		}
@@ -79,30 +79,30 @@ function function_fbea6a64(e_player)
 	if(e_player.is_drinking > 0)
 	{
 		self sethintstring("");
-		return 0;
+		return false;
 	}
 	if(level flag::get("lockdown_active") && self.stub.script_noteworthy !== "street_flinger")
 	{
 		self sethintstring(&"ZM_STALINGRAD_FLINGER_DISABLED");
-		return 0;
+		return false;
 	}
 	if(isdefined(self.stub.var_66a9cd70) && self.stub.var_66a9cd70)
 	{
 		self sethintstring(&"ZOMBIE_TRAP_ACTIVE");
-		return 0;
+		return false;
 	}
 	if(!level flag::get("power_on"))
 	{
 		self sethintstring(&"ZOMBIE_NEED_POWER");
-		return 0;
+		return false;
 	}
 	if(self.stub.var_dd690f31 === 0)
 	{
 		self sethintstring(&"ZM_STALINGRAD_TRAP_COOLDOWN");
-		return 0;
+		return false;
 	}
 	self sethintstring(&"ZM_STALINGRAD_FLINGER_TRAP_USE", 1000);
-	return 1;
+	return true;
 }
 
 /*
@@ -121,7 +121,7 @@ function function_335dff5e()
 	{
 		e_player clientfield::increment_to_player("interact_rumble");
 		e_player zm_score::minus_to_player_score(1000);
-		foreach(var_c38f06dc, var_a70a7d09 in self.stub.var_66e182a0)
+		foreach(var_a70a7d09 in self.stub.var_66e182a0)
 		{
 			self.stub thread function_d9a07413(e_player, var_a70a7d09);
 		}
@@ -156,7 +156,7 @@ function function_d9a07413(e_player, var_a70a7d09)
 	if(self.target === "flinger_pavlov_street")
 	{
 		var_76b899c0 = struct::get_array("flinger_pavlov_street", "target");
-		foreach(var_157bd6b7, s_struct in var_76b899c0)
+		foreach(s_struct in var_76b899c0)
 		{
 			s_struct.var_66a9cd70 = 1;
 		}
@@ -187,7 +187,7 @@ function function_d9a07413(e_player, var_a70a7d09)
 	var_76b899c0 = struct::get_array("flinger_pavlov_street", "target");
 	if(self.target === "flinger_pavlov_street")
 	{
-		foreach(var_b2c75ad8, s_struct in var_76b899c0)
+		foreach(s_struct in var_76b899c0)
 		{
 			s_struct.var_dd690f31 = 0;
 			s_struct.var_66a9cd70 = 0;
@@ -198,7 +198,7 @@ function function_d9a07413(e_player, var_a70a7d09)
 	self.var_dd690f31 = 1;
 	if(self.target === "flinger_pavlov_street")
 	{
-		foreach(var_5b1d0dfd, s_struct in var_76b899c0)
+		foreach(s_struct in var_76b899c0)
 		{
 			s_struct.var_dd690f31 = 1;
 		}
@@ -219,7 +219,7 @@ function function_54227761(var_a70a7d09, v_fling, e_player)
 	a_zombies = getaiteamarray(level.zombie_team);
 	n_count = 0;
 	n_kill_count = 0;
-	foreach(var_7e4e54bc, ai_zombie in a_zombies)
+	foreach(ai_zombie in a_zombies)
 	{
 		if(ai_zombie istouching(var_a70a7d09))
 		{
@@ -254,7 +254,7 @@ function function_54227761(var_a70a7d09, v_fling, e_player)
 */
 function function_e0c7ad1e(var_a70a7d09)
 {
-	foreach(var_8707636f, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		if(e_player istouching(var_a70a7d09))
 		{

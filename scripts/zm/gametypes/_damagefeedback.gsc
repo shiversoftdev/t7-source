@@ -68,7 +68,7 @@ function should_play_sound(mod)
 {
 	if(!isdefined(mod))
 	{
-		return 0;
+		return false;
 	}
 	switch(mod)
 	{
@@ -79,10 +79,10 @@ function should_play_sound(mod)
 		case "MOD_MELEE_ASSASSINATE":
 		case "MOD_MELEE_WEAPON_BUTT":
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*

@@ -23,7 +23,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_aat_fire_works", &__init__, undefined, "aat");
 }
@@ -76,21 +76,21 @@ function fire_works_zombie_validation()
 {
 	if(isdefined(self.barricade_enter) && self.barricade_enter)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.is_traversing) && self.is_traversing)
 	{
-		return 0;
+		return false;
 	}
 	if(!(isdefined(self.completed_emerging_into_playable_area) && self.completed_emerging_into_playable_area) && !isdefined(self.first_node))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.is_leaping) && self.is_leaping)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -196,14 +196,14 @@ function zm_aat_fire_works_zombie_damage_response(str_mod, str_hit_location, v_h
 {
 	if(isdefined(level.aat["zm_aat_fire_works"].immune_result_indirect[self.archetype]) && level.aat["zm_aat_fire_works"].immune_result_indirect[self.archetype])
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(e_attacker.b_aat_fire_works_weapon) && e_attacker.b_aat_fire_works_weapon)
 	{
 		self thread zombie_death_gib(e_attacker, w_weapon, e_attacker.owner);
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

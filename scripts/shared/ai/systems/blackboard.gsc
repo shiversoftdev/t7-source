@@ -25,11 +25,14 @@ function registerblackboardattribute(entity, attributename, defaultattributevalu
 		#/
 		entity.__blackboard[attributename] = getterfunction;
 	}
-	else if(!isdefined(defaultattributevalue))
+	else
 	{
-		defaultattributevalue = undefined;
+		if(!isdefined(defaultattributevalue))
+		{
+			defaultattributevalue = undefined;
+		}
+		entity.__blackboard[attributename] = defaultattributevalue;
 	}
-	entity.__blackboard[attributename] = defaultattributevalue;
 }
 
 /*

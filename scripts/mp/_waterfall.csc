@@ -23,7 +23,7 @@
 function waterfalloverlay(localclientnum)
 {
 	triggers = getentarray(localclientnum, "waterfall", "targetname");
-	foreach(var_4e756d60, trigger in triggers)
+	foreach(trigger in triggers)
 	{
 		trigger thread setupwaterfall(localclientnum);
 	}
@@ -41,7 +41,7 @@ function waterfalloverlay(localclientnum)
 function waterfallmistoverlay(localclientnum)
 {
 	triggers = getentarray(localclientnum, "waterfall_mist", "targetname");
-	foreach(var_a48bbb11, trigger in triggers)
+	foreach(trigger in triggers)
 	{
 		trigger thread setupwaterfallmist(localclientnum);
 	}

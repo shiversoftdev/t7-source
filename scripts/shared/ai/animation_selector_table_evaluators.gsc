@@ -13,7 +13,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function registerastscriptfunctions()
+function autoexec registerastscriptfunctions()
 {
 	animationselectortable::registeranimationselectortableevaluator("testFunction", &testfunction);
 	animationselectortable::registeranimationselectortableevaluator("evaluateBlockedAnimations", &evaluateblockedanimations);
@@ -47,7 +47,7 @@ function testfunction(entity, animations)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function evaluator_checkanimationagainstgeo(entity, animation)
+function private evaluator_checkanimationagainstgeo(entity, animation)
 {
 	pixbeginevent("Evaluator_CheckAnimationAgainstGeo");
 	/#
@@ -70,11 +70,11 @@ private function evaluator_checkanimationagainstgeo(entity, animation)
 		if(entity maymovefrompointtopoint(midpoint, endpoint, 1, 1))
 		{
 			pixendevent();
-			return 1;
+			return true;
 		}
 	}
 	pixendevent();
-	return 0;
+	return false;
 }
 
 /*
@@ -86,7 +86,7 @@ private function evaluator_checkanimationagainstgeo(entity, animation)
 	Parameters: 2
 	Flags: Private
 */
-private function evaluator_checkanimationendpointagainstgeo(entity, animation)
+function private evaluator_checkanimationendpointagainstgeo(entity, animation)
 {
 	pixbeginevent("Evaluator_CheckAnimationEndPointAgainstGeo");
 	/#
@@ -98,10 +98,10 @@ private function evaluator_checkanimationendpointagainstgeo(entity, animation)
 	if(entity maymovetopoint(endpoint, 0, 0))
 	{
 		pixendevent();
-		return 1;
+		return true;
 	}
 	pixendevent();
-	return 0;
+	return false;
 }
 
 /*
@@ -113,7 +113,7 @@ private function evaluator_checkanimationendpointagainstgeo(entity, animation)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function evaluator_checkanimationforovershootinggoal(entity, animation)
+function private evaluator_checkanimationforovershootinggoal(entity, animation)
 {
 	pixbeginevent("Evaluator_CheckAnimationForOverShootingGoal");
 	/#
@@ -133,11 +133,11 @@ private function evaluator_checkanimationforovershootinggoal(entity, animation)
 		if(animdistsq < disttogoalsq)
 		{
 			pixendevent();
-			return 1;
+			return true;
 		}
 	}
 	pixendevent();
-	return 0;
+	return false;
 }
 
 /*
@@ -149,7 +149,7 @@ private function evaluator_checkanimationforovershootinggoal(entity, animation)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function evaluator_checkanimationagainstnavmesh(entity, animation)
+function private evaluator_checkanimationagainstnavmesh(entity, animation)
 {
 	/#
 		assert(isactor(entity));
@@ -158,9 +158,9 @@ private function evaluator_checkanimationagainstnavmesh(entity, animation)
 	endpoint = entity localtoworldcoords(localdeltavector);
 	if(ispointonnavmesh(endpoint, entity))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -172,7 +172,7 @@ private function evaluator_checkanimationagainstnavmesh(entity, animation)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function evaluator_checkanimationarrivalposition(entity, animation)
+function private evaluator_checkanimationarrivalposition(entity, animation)
 {
 	localdeltavector = getmovedelta(animation, 0, 1, entity);
 	endpoint = entity localtoworldcoords(localdeltavector);
@@ -192,7 +192,7 @@ private function evaluator_checkanimationarrivalposition(entity, animation)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function evaluator_findfirstvalidanimation(entity, animations, tests)
+function private evaluator_findfirstvalidanimation(entity, animations, tests)
 {
 	/#
 		assert(isarray(animations), "");
@@ -200,13 +200,13 @@ private function evaluator_findfirstvalidanimation(entity, animations, tests)
 	/#
 		assert(isarray(tests), "");
 	#/
-	foreach(var_be7aea1f, aliasanimations in animations)
+	foreach(aliasanimations in animations)
 	{
 		if(aliasanimations.size > 0)
 		{
 			valid = 1;
 			animation = aliasanimations[0];
-			foreach(var_c976e1e5, test in tests)
+			foreach(test in tests)
 			{
 				if(![[test]](entity, animation))
 				{
@@ -231,7 +231,7 @@ private function evaluator_findfirstvalidanimation(entity, animations, tests)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function evaluateblockedanimations(entity, animations)
+function private evaluateblockedanimations(entity, animations)
 {
 	if(animations.size > 0)
 	{
@@ -249,7 +249,7 @@ private function evaluateblockedanimations(entity, animations)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function evaluatehumanturnanimations(entity, animations)
+function private evaluatehumanturnanimations(entity, animations)
 {
 	/#
 		if(isdefined(level.ai_dontturn) && level.ai_dontturn)
@@ -276,7 +276,7 @@ private function evaluatehumanturnanimations(entity, animations)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function evaluatehumanexposedarrivalanimations(entity, animations)
+function private evaluatehumanexposedarrivalanimations(entity, animations)
 {
 	if(!isdefined(entity.pathgoalpos))
 	{

@@ -23,7 +23,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_auto_turret", &__init__, &__main__, undefined);
 }
@@ -242,7 +242,12 @@ function auto_turret_activate()
 		{
 			worst_turret auto_turret_deactivate();
 		}
-		assert(0, "");
+		else
+		{
+			/#
+				assert(0, "");
+			#/
+		}
 	}
 	self.turret vehicle_ai::turnon();
 	self.turret_active = 1;

@@ -46,7 +46,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_genesis_power", &__init__, &__main__, undefined);
 }
@@ -298,7 +298,7 @@ function function_28753fd1()
 				var_329d83b2 showpart("j_green_03");
 				var_329d83b2 hidepart("j_red_04");
 				var_329d83b2 showpart("j_green_04");
-				foreach(var_6b1641e5, var_37176f28 in var_33accfa3)
+				foreach(var_37176f28 in var_33accfa3)
 				{
 					var_37176f28 clientfield::set("power_cables_shader", 1);
 				}
@@ -395,10 +395,10 @@ function function_19235352(facee)
 		var_64886733 = vectordot(var_2ecbb83c, unittofaceevec2d);
 		if(var_64886733 > dot_limit)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -420,10 +420,10 @@ function function_8961cbdb(e_player)
 	{
 		if(e_player function_19235352(s_struct))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -477,9 +477,9 @@ function function_d46b0523(e_player, var_f5f4e9cc)
 {
 	if(e_player istouching(var_f5f4e9cc) && (!(isdefined(e_player.laststand) && e_player.laststand)))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -608,7 +608,7 @@ function function_5da9abb7()
 	for(i = 0; i < a_zombies.size; i++)
 	{
 		ai_zombie = a_zombies[i];
-		foreach(var_e5cbcafe, e_player in level.players)
+		foreach(e_player in level.players)
 		{
 			if(e_player.sessionstate == "spectator")
 			{
@@ -730,17 +730,23 @@ function function_59bcf901(n_cost, var_f5f4e9cc)
 		{
 			zm_powerups::specific_powerup_drop("double_points", v_pos);
 		}
-		else if(level.var_eada0345 == 2)
-		{
-			zm_powerups::specific_powerup_drop("full_ammo", v_pos);
-		}
-		else if(level.var_eada0345 == 3)
-		{
-			zm_powerups::specific_powerup_drop("double_points", v_pos);
-		}
 		else
 		{
-			zm_powerups::specific_powerup_drop("full_ammo", v_pos);
+			if(level.var_eada0345 == 2)
+			{
+				zm_powerups::specific_powerup_drop("full_ammo", v_pos);
+			}
+			else
+			{
+				if(level.var_eada0345 == 3)
+				{
+					zm_powerups::specific_powerup_drop("double_points", v_pos);
+				}
+				else
+				{
+					zm_powerups::specific_powerup_drop("full_ammo", v_pos);
+				}
+			}
 		}
 	}
 }
@@ -785,7 +791,7 @@ function function_b016efbe()
 	{
 		level thread function_5f122d0d(self.script_int);
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -800,7 +806,7 @@ function function_b016efbe()
 function kill_wasps()
 {
 	a_zombies = getaiteamarray(level.zombie_team);
-	foreach(var_8944cdad, e_zombie in a_zombies)
+	foreach(e_zombie in a_zombies)
 	{
 		if(isdefined(e_zombie.is_parasite) && e_zombie.is_parasite)
 		{
@@ -986,7 +992,7 @@ function function_5168ed24()
 	b_rumble = 1;
 	while(true)
 	{
-		foreach(var_6c6e44f3, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			if(zombie_utility::is_player_valid(player) && function_d46b0523(player, self))
 			{
@@ -1032,7 +1038,7 @@ function function_de2cddfc()
 {
 	for(i = 0; i < 6; i++)
 	{
-		foreach(var_b449bbef, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			if(zombie_utility::is_player_valid(player))
 			{
@@ -1055,7 +1061,7 @@ function function_de2cddfc()
 function function_c5b06d9d()
 {
 	self util::waittill_any(self.var_3c42ad63, self.str_kill_notify);
-	foreach(var_b2b5bcc5, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player zm_genesis_util::set_rumble_to_player(0);
 	}
@@ -1141,7 +1147,7 @@ function function_fbb9459a(power_volume)
 {
 	zombies = getaiteamarray(level.zombie_team);
 	var_71f91895 = power_volume array::get_touching(zombies);
-	foreach(var_2365df4d, zombie in var_71f91895)
+	foreach(zombie in var_71f91895)
 	{
 		if(!isdefined(zombie))
 		{
@@ -1305,13 +1311,16 @@ function function_e467fa8d(s_spawn_pos)
 			{
 				function_779c1a49(s_spawn_pos, s_struct.origin);
 			}
-			else if(n_random < 666)
-			{
-				spawn_wasp(s_spawn_pos, s_struct.origin);
-			}
 			else
 			{
-				function_f55d851b(s_spawn_pos, s_struct.origin);
+				if(n_random < 666)
+				{
+					spawn_wasp(s_spawn_pos, s_struct.origin);
+				}
+				else
+				{
+					function_f55d851b(s_spawn_pos, s_struct.origin);
+				}
 			}
 			break;
 		}

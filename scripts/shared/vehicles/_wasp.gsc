@@ -23,7 +23,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("wasp", &__init__, undefined, undefined);
 }
@@ -134,7 +134,7 @@ function state_death_update(params)
 	self endon(#"death");
 	if(isarray(self.followers))
 	{
-		foreach(var_e3bb182, follower in self.followers)
+		foreach(follower in self.followers)
 		{
 			if(isdefined(follower))
 			{
@@ -337,13 +337,16 @@ function fall_and_bounce(killonimpact_speed, killonimpact_time)
 		{
 			self kill();
 		}
-		else if(!isdefined(self.position_before_fall))
-		{
-			self kill();
-		}
 		else
 		{
-			fallstart = gettime();
+			if(!isdefined(self.position_before_fall))
+			{
+				self kill();
+			}
+			else
+			{
+				fallstart = gettime();
+			}
 		}
 		oldvelocity = self.velocity;
 		vel_hitdir = vectorprojection(impact_vel, normal) * -1;
@@ -464,7 +467,7 @@ function guard_points_debug()
 		self.isdebugdrawing = 1;
 		while(true)
 		{
-			foreach(var_3b6438ed, point in self.debugpointsarray)
+			foreach(point in self.debugpointsarray)
 			{
 				color = (1, 0, 0);
 				if(ispointinnavvolume(point, ""))
@@ -493,7 +496,7 @@ function get_guard_points(owner)
 		assert(self._guard_points.size > 0, "");
 	#/
 	points_array = [];
-	foreach(var_653d9b93, point in self._guard_points)
+	foreach(point in self._guard_points)
 	{
 		offset = rotatepoint(point, owner.angles);
 		worldpoint = (offset + owner.origin) + (owner getvelocity() * 0.5);
@@ -514,7 +517,7 @@ function get_guard_points(owner)
 	{
 		queryresult = positionquery_source_navigation(owner.origin + vectorscale((0, 0, 1), 50), 25, 200, 100, 1.2 * self.radius, self);
 		positionquery_filter_sight(queryresult, owner.origin + vectorscale((0, 0, 1), 10), (0, 0, 0), self, 3);
-		foreach(var_50ad3e90, point in queryresult.data)
+		foreach(point in queryresult.data)
 		{
 			if(point.visibility === 1 && bullettracepassed(owner.origin + vectorscale((0, 0, 1), 10), point.origin, 0, self, self, 0, 1))
 			{
@@ -546,21 +549,21 @@ function state_guard_can_enter(from_state, to_state, connection)
 {
 	if(self.enable_guard !== 1 || !isdefined(self.owner))
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(self.enemy) || !self vehseenrecently(self.enemy, 3))
 	{
-		return 1;
+		return true;
 	}
 	if(distancesquared(self.owner.origin, self.enemy.origin) > (1200 * 1200) && distancesquared(self.origin, self.enemy.origin) > (300 * 300))
 	{
-		return 1;
+		return true;
 	}
 	if(!ispointinnavvolume(self.origin, "navvolume_small"))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -649,7 +652,7 @@ function test_get_back_point(point)
 function test_get_back_queryresult(queryresult)
 {
 	getbackpoint = undefined;
-	foreach(var_dfc9d7c2, point in queryresult.data)
+	foreach(point in queryresult.data)
 	{
 		testresult = test_get_back_point(point.origin);
 		if(testresult == 1)
@@ -800,23 +803,29 @@ function state_guard_update(params)
 					{
 						self setspeed(self.settings.defaultmovespeed * 2);
 					}
-					else if(distancetogoalsq < (100 * 100))
-					{
-						self setspeed(self.settings.defaultmovespeed * 0.3);
-					}
 					else
 					{
-						self setspeed(self.settings.defaultmovespeed);
+						if(distancetogoalsq < (100 * 100))
+						{
+							self setspeed(self.settings.defaultmovespeed * 0.3);
+						}
+						else
+						{
+							self setspeed(self.settings.defaultmovespeed);
+						}
 					}
 					timenotatgoal = gettime();
 				}
-				else if(vehicle_ai::timesince(timenotatgoal) > 4)
+				else
 				{
-					pointindex = randomint(self._guard_points.size);
-					timenotatgoal = gettime();
+					if(vehicle_ai::timesince(timenotatgoal) > 4)
+					{
+						pointindex = randomint(self._guard_points.size);
+						timenotatgoal = gettime();
+					}
+					wait(0.2);
+					continue;
 				}
-				wait(0.2);
-				continue;
 				if(self setvehgoalpos(self.current_pathto_pos, 1, usepathfinding))
 				{
 					self playsound("veh_wasp_direction");
@@ -942,13 +951,16 @@ function turretfireupdate()
 					wait(randomfloatrange(3, 5));
 				}
 			}
-			else if(isdefined(self.enemy) && isai(self.enemy))
-			{
-				wait(randomfloatrange(2, 2.5));
-			}
 			else
 			{
-				wait(randomfloatrange(0.5, 1.5));
+				if(isdefined(self.enemy) && isai(self.enemy))
+				{
+					wait(randomfloatrange(2, 2.5));
+				}
+				else
+				{
+					wait(randomfloatrange(0.5, 1.5));
+				}
 			}
 		}
 		else
@@ -1126,7 +1138,7 @@ function update_leader()
 		}
 	}
 	team_mates = getaiteamarray(self.team);
-	foreach(var_c27aaeee, guy in team_mates)
+	foreach(guy in team_mates)
 	{
 		if(isdefined(guy.archetype) && guy.archetype == "wasp")
 		{
@@ -1231,12 +1243,12 @@ function state_combat_update(params)
 		{
 			self clearlookatent();
 			aiarray = getaiteamarray("all");
-			foreach(var_caeb0bbe, ai in aiarray)
+			foreach(ai in aiarray)
 			{
 				self getperfectinfo(ai);
 			}
 			players = getplayers("all");
-			foreach(var_b2b5bcc5, player in players)
+			foreach(player in players)
 			{
 				self getperfectinfo(player);
 			}
@@ -1264,7 +1276,7 @@ function state_combat_update(params)
 				queryresult = positionquery_source_navigation(self.origin, 0, 200, 100, 2 * self.radius, self);
 				positionquery_filter_sight(queryresult, self.origin, (0, 0, 0), self, 1);
 				getbackpoint = undefined;
-				foreach(var_82f57c8f, point in queryresult.data)
+				foreach(point in queryresult.data)
 				{
 					if(point.visibility === 1)
 					{
@@ -1320,15 +1332,18 @@ function state_combat_update(params)
 					usepathfinding = 0;
 				}
 			}
-			else if(isdefined(self.enemy))
-			{
-				self.current_pathto_pos = getnextmoveposition_tactical();
-				usepathfinding = 1;
-			}
 			else
 			{
-				self.current_pathto_pos = getnextmoveposition_wander();
-				usepathfinding = 1;
+				if(isdefined(self.enemy))
+				{
+					self.current_pathto_pos = getnextmoveposition_tactical();
+					usepathfinding = 1;
+				}
+				else
+				{
+					self.current_pathto_pos = getnextmoveposition_wander();
+					usepathfinding = 1;
+				}
 			}
 		}
 		if(isdefined(self.current_pathto_pos))
@@ -1383,7 +1398,7 @@ function getnextmoveposition_wander()
 	self.isonnav = queryresult.centeronnav;
 	best_point = undefined;
 	best_score = -999999;
-	foreach(var_fda6ef00, point in queryresult.data)
+	foreach(point in queryresult.data)
 	{
 		randomscore = randomfloatrange(0, 100);
 		disttooriginscore = point.disttoorigin2d * 0.2;
@@ -1439,58 +1454,61 @@ function getnextmoveposition_tactical()
 		query_position = self.leader.current_pathto_pos;
 		queryresult = positionquery_source_navigation(query_position, 0, 140, 100, 35, self, 25);
 	}
-	else if(isalive(self.owner) && self.enable_guard === 1)
+	else
 	{
-		ownerorigin = self getclosestpointonnavvolume(self.owner.origin + vectorscale((0, 0, 1), 40), 50);
-		if(isdefined(ownerorigin))
+		if(isalive(self.owner) && self.enable_guard === 1)
 		{
-			queryresult = positionquery_source_navigation(ownerorigin, 0, 500 * min(querymultiplier, 1.5), 130, 3 * self.radius, self);
-			if(isdefined(queryresult) && isdefined(queryresult.data))
+			ownerorigin = self getclosestpointonnavvolume(self.owner.origin + vectorscale((0, 0, 1), 40), 50);
+			if(isdefined(ownerorigin))
 			{
-				positionquery_filter_sight(queryresult, self.owner geteye(), (0, 0, 0), self, 5, self, "visowner");
-				positionquery_filter_sight(queryresult, self.enemy geteye(), (0, 0, 0), self, 5, self, "visenemy");
-				foreach(var_84a196ad, point in queryresult.data)
+				queryresult = positionquery_source_navigation(ownerorigin, 0, 500 * min(querymultiplier, 1.5), 130, 3 * self.radius, self);
+				if(isdefined(queryresult) && isdefined(queryresult.data))
 				{
-					if(point.visowner === 1)
+					positionquery_filter_sight(queryresult, self.owner geteye(), (0, 0, 0), self, 5, self, "visowner");
+					positionquery_filter_sight(queryresult, self.enemy geteye(), (0, 0, 0), self, 5, self, "visenemy");
+					foreach(point in queryresult.data)
 					{
-						/#
-							if(!isdefined(point._scoredebug))
-							{
-								point._scoredebug = [];
-							}
-							point._scoredebug[""] = 300;
-						#/
-						point.score = point.score + 300;
-					}
-					if(point.visenemy === 1)
-					{
-						/#
-							if(!isdefined(point._scoredebug))
-							{
-								point._scoredebug = [];
-							}
-							point._scoredebug[""] = 300;
-						#/
-						point.score = point.score + 300;
+						if(point.visowner === 1)
+						{
+							/#
+								if(!isdefined(point._scoredebug))
+								{
+									point._scoredebug = [];
+								}
+								point._scoredebug[""] = 300;
+							#/
+							point.score = point.score + 300;
+						}
+						if(point.visenemy === 1)
+						{
+							/#
+								if(!isdefined(point._scoredebug))
+								{
+									point._scoredebug = [];
+								}
+								point._scoredebug[""] = 300;
+							#/
+							point.score = point.score + 300;
+						}
 					}
 				}
 			}
 		}
-	}
-	else
-	{
-		queryresult = positionquery_source_navigation(self.origin, 0, 500 * min(querymultiplier, 2), 130, (3 * self.radius) * querymultiplier, self, (2.2 * self.radius) * querymultiplier);
-		team_mates = getaiteamarray(self.team);
-		avoid_radius = 140;
-		foreach(var_d47d73bc, guy in team_mates)
+		else
 		{
-			if(isdefined(guy.archetype) && guy.archetype == "wasp")
+			queryresult = positionquery_source_navigation(self.origin, 0, 500 * min(querymultiplier, 2), 130, (3 * self.radius) * querymultiplier, self, (2.2 * self.radius) * querymultiplier);
+			team_mates = getaiteamarray(self.team);
+			avoid_radius = 140;
+			foreach(guy in team_mates)
 			{
-				if(isdefined(guy.followers) && guy.followers.size > 0 && guy != self)
+				if(isdefined(guy.archetype) && guy.archetype == "wasp")
 				{
-					if(isdefined(guy.current_pathto_pos))
+					if(isdefined(guy.followers) && guy.followers.size > 0 && guy != self)
 					{
-						avoid_locations[avoid_locations.size] = guy.current_pathto_pos;
+						if(isdefined(guy.current_pathto_pos))
+						{
+							avoid_locations[avoid_locations.size] = guy.current_pathto_pos;
+						}
 					}
 				}
 			}
@@ -1507,7 +1525,7 @@ function getnextmoveposition_tactical()
 	self vehicle_ai::positionquery_filter_engagementheight(queryresult, self.enemy, self.settings.engagementheightmin, self.settings.engagementheightmax);
 	best_point = undefined;
 	best_score = -999999;
-	foreach(var_e5729d80, point in queryresult.data)
+	foreach(point in queryresult.data)
 	{
 		/#
 			if(!isdefined(point._scoredebug))
@@ -1544,7 +1562,7 @@ function getnextmoveposition_tactical()
 			#/
 			point.score = point.score + ((120 - point.disttoorigin2d) * -1.5);
 		}
-		foreach(var_7afde913, location in avoid_locations)
+		foreach(location in avoid_locations)
 		{
 			if(distancesquared(point.origin, location) < (avoid_radius * avoid_radius))
 			{
@@ -1618,9 +1636,9 @@ function drone_allowfriendlyfiredamage(einflictor, eattacker, smeansofdeath, wea
 {
 	if(isdefined(eattacker) && isdefined(eattacker.archetype) && isdefined(smeansofdeath) && eattacker.archetype == "wasp" && smeansofdeath == "MOD_EXPLOSIVE")
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

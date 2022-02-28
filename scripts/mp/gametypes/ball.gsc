@@ -43,7 +43,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("ball", &__init__, undefined, undefined);
 }
@@ -215,18 +215,21 @@ function onstartgametype()
 			util::setobjectivehinttext("allies", &"MP_BALL_OVERTIME_ROUND_1");
 			util::setobjectivehinttext("axis", &"MP_BALL_OVERTIME_ROUND_1");
 		}
-		else if(isdefined(game["ball_overtime_first_winner"]))
-		{
-			level.ontimelimit = &ballovertimeround2_ontimelimit;
-			game["teamSuddenDeath"][game["ball_overtime_first_winner"]] = 1;
-			util::setobjectivehinttext(game["ball_overtime_first_winner"], &"MP_BALL_OVERTIME_ROUND_2_WINNER");
-			util::setobjectivehinttext(util::getotherteam(game["ball_overtime_first_winner"]), &"MP_BALL_OVERTIME_ROUND_2_LOSER");
-		}
 		else
 		{
-			level.ontimelimit = &ballovertimeround2_ontimelimit;
-			util::setobjectivehinttext("allies", &"MP_BALL_OVERTIME_ROUND_2_TIE");
-			util::setobjectivehinttext("axis", &"MP_BALL_OVERTIME_ROUND_2_TIE");
+			if(isdefined(game["ball_overtime_first_winner"]))
+			{
+				level.ontimelimit = &ballovertimeround2_ontimelimit;
+				game["teamSuddenDeath"][game["ball_overtime_first_winner"]] = 1;
+				util::setobjectivehinttext(game["ball_overtime_first_winner"], &"MP_BALL_OVERTIME_ROUND_2_WINNER");
+				util::setobjectivehinttext(util::getotherteam(game["ball_overtime_first_winner"]), &"MP_BALL_OVERTIME_ROUND_2_LOSER");
+			}
+			else
+			{
+				level.ontimelimit = &ballovertimeround2_ontimelimit;
+				util::setobjectivehinttext("allies", &"MP_BALL_OVERTIME_ROUND_2_TIE");
+				util::setobjectivehinttext("axis", &"MP_BALL_OVERTIME_ROUND_2_TIE");
+			}
 		}
 	}
 	else if(isdefined(game["round_time_to_beat"]))
@@ -251,7 +254,7 @@ function onstartgametype()
 	level.spawn_axis = spawnlogic::get_spawnpoint_array("mp_ctf_spawn_axis");
 	level.spawn_allies = spawnlogic::get_spawnpoint_array("mp_ctf_spawn_allies");
 	level.spawn_start = [];
-	foreach(var_9ff30f90, team in level.teams)
+	foreach(team in level.teams)
 	{
 		level.spawn_start[team] = spawnlogic::get_spawnpoint_array(("mp_ctf_spawn_" + team) + "_start");
 	}
@@ -269,7 +272,7 @@ function onstartgametype()
 */
 function anyballsintheair()
 {
-	foreach(var_cd8844c7, ball in level.balls)
+	foreach(ball in level.balls)
 	{
 		if(isdefined(ball.carrier))
 		{
@@ -398,7 +401,7 @@ function ballovertimeround2_ontimelimit()
 	winner = undefined;
 	if(level.teambased)
 	{
-		foreach(var_5a41a3cd, team in level.teams)
+		foreach(team in level.teams)
 		{
 			if(game["teamSuddenDeath"][team])
 			{
@@ -526,7 +529,7 @@ function onplayerkilled(einflictor, attacker, idamage, smeansofdeath, weapon, vd
 	{
 		scoreevents::processscoreevent("kill_enemy_while_carrying_ball", attacker, undefined, weapon);
 	}
-	foreach(var_44eeba74, ball in level.balls)
+	foreach(ball in level.balls)
 	{
 		ballcarrier = ball.carrier;
 		if(isdefined(ballcarrier))
@@ -553,7 +556,7 @@ function onplayerkilled(einflictor, attacker, idamage, smeansofdeath, weapon, vd
 		}
 	}
 	victim = self;
-	foreach(var_2812fa03, ball_goal in level.ball_goals)
+	foreach(ball_goal in level.ball_goals)
 	{
 		if(isdefined(attacker) && isdefined(attacker.team) && attacker != victim && isdefined(victim.team) && isplayer(attacker))
 		{
@@ -659,7 +662,7 @@ function updateteamscorebyroundswon()
 {
 	if(level.scoreroundwinbased)
 	{
-		foreach(var_673464d3, team in level.teams)
+		foreach(team in level.teams)
 		{
 			[[level._setteamscore]](team, game["roundswon"][team]);
 		}
@@ -704,7 +707,7 @@ function onroundendgame(winningteam)
 		}
 		if(level.scoreroundwinbased)
 		{
-			foreach(var_5e66a5e, team in level.teams)
+			foreach(team in level.teams)
 			{
 				score = game["roundswon"][team];
 				if(team === winningteam)
@@ -714,22 +717,25 @@ function onroundendgame(winningteam)
 				[[level._setteamscore]](team, score);
 			}
 		}
-		else if(isdefined(game["ball_overtime_score_to_beat"]) && game["ball_overtime_score_to_beat"] > game["ball_overtime_best_score"])
-		{
-			added_score = game["ball_overtime_score_to_beat"];
-		}
 		else
 		{
-			added_score = game["ball_overtime_best_score"];
-		}
-		foreach(var_f23163e5, team in level.teams)
-		{
-			score = game["ball_game_score"][team];
-			if(team === winningteam)
+			if(isdefined(game["ball_overtime_score_to_beat"]) && game["ball_overtime_score_to_beat"] > game["ball_overtime_best_score"])
 			{
-				score = score + added_score;
+				added_score = game["ball_overtime_score_to_beat"];
 			}
-			[[level._setteamscore]](team, score);
+			else
+			{
+				added_score = game["ball_overtime_best_score"];
+			}
+			foreach(team in level.teams)
+			{
+				score = game["ball_game_score"][team];
+				if(team === winningteam)
+				{
+					score = score + added_score;
+				}
+				[[level._setteamscore]](team, score);
+			}
 		}
 		return winningteam;
 	}
@@ -774,15 +780,15 @@ function shouldplayovertimeround()
 	{
 		if(game["overtime_round"] == 1 || !level.gameended)
 		{
-			return 1;
+			return true;
 		}
-		return 0;
+		return false;
 	}
 	if(!level.scoreroundwinbased)
 	{
 		if(game["teamScores"]["allies"] == game["teamScores"]["axis"] && (util::hitroundlimit() || game["teamScores"]["allies"] == (level.scorelimit - 1)))
 		{
-			return 1;
+			return true;
 		}
 	}
 	else
@@ -791,14 +797,14 @@ function shouldplayovertimeround()
 		axisroundswon = util::getroundswon("axis");
 		if(level.roundwinlimit > 0 && axisroundswon == (level.roundwinlimit - 1) && alliesroundswon == (level.roundwinlimit - 1))
 		{
-			return 1;
+			return true;
 		}
 		if(util::hitroundlimit() && alliesroundswon == axisroundswon)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -874,7 +880,7 @@ function setup_objectives()
 	level.ball_starts = [];
 	level.balls = [];
 	level.ball_starts = getentarray("ball_start", "targetname");
-	foreach(var_56b45993, ball_start in level.ball_starts)
+	foreach(ball_start in level.ball_starts)
 	{
 		level.balls[level.balls.size] = spawn_ball(ball_start);
 	}
@@ -891,7 +897,7 @@ function setup_objectives()
 			level.balls[level.balls.size] = spawn_ball(trigger);
 		}
 	}
-	foreach(var_6a14cd34, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(!game["switchedsides"])
 		{
@@ -921,7 +927,7 @@ function setup_goal(trigger, team)
 	useobj gameobjects::set_model_visibility(1);
 	useobj gameobjects::allow_use("enemy");
 	useobj gameobjects::set_use_time(0);
-	foreach(var_22395638, ball in level.balls)
+	foreach(ball in level.balls)
 	{
 		useobj gameobjects::set_key_object(ball);
 	}
@@ -1069,30 +1075,30 @@ function can_use_ball(player)
 {
 	if(!isdefined(player))
 	{
-		return 0;
+		return false;
 	}
 	if(!self gameobjects::can_interact_with(player))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.droptime) && self.droptime >= gettime())
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(player.resurrect_weapon) && player getcurrentweapon() == player.resurrect_weapon)
 	{
-		return 0;
+		return false;
 	}
 	if(player iscarryingturret())
 	{
-		return 0;
+		return false;
 	}
 	currentweapon = player getcurrentweapon();
 	if(isdefined(currentweapon))
 	{
 		if(!valid_ball_pickup_weapon(currentweapon))
 		{
-			return 0;
+			return false;
 		}
 	}
 	nextweapon = player.changingweapon;
@@ -1100,19 +1106,19 @@ function can_use_ball(player)
 	{
 		if(!valid_ball_pickup_weapon(nextweapon))
 		{
-			return 0;
+			return false;
 		}
 	}
 	if(player player_no_pickup_time())
 	{
-		return 0;
+		return false;
 	}
 	ball = self.visuals[0];
 	thresh = 15;
 	dist2 = distance2dsquared(ball.origin, player.origin);
 	if(dist2 < (thresh * thresh))
 	{
-		return 1;
+		return true;
 	}
 	start = player geteye();
 	end = (self.curorigin[0], self.curorigin[1], self.curorigin[2] + 5);
@@ -1139,10 +1145,10 @@ function can_use_ball(player)
 		player_origin = (player.origin[0], player.origin[1], player.origin[2] + 10);
 		if(!bullettracepassed(end, player_origin, 0, first_skip_ent, second_skip_ent, 0, 0))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1163,7 +1169,7 @@ function chief_mammal_reset()
 	{
 		origin = self.projectile.origin;
 	}
-	foreach(var_fa66d5b8, visual in self.visuals)
+	foreach(visual in self.visuals)
 	{
 		visual.origin = origin;
 		visual.angles = visual.baseangles;
@@ -1343,7 +1349,7 @@ function ball_set_dropped(skip_physics = 0)
 		velocity = (forward * 200) + vectorscale((0, 0, 1), 80);
 		ball_physics_launch(velocity);
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1633,17 +1639,17 @@ function valid_ball_pickup_weapon(weapon)
 {
 	if(weapon == level.weaponnone)
 	{
-		return 0;
+		return false;
 	}
 	if(weapon == getweapon("ball"))
 	{
-		return 0;
+		return false;
 	}
 	if(killstreaks::is_killstreak_weapon(weapon))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1677,7 +1683,7 @@ function watchunderwater(trigger)
 	{
 		if(self isplayerunderwater())
 		{
-			foreach(var_4ec3bfc, ball in level.balls)
+			foreach(ball in level.balls)
 			{
 				if(isdefined(ball.carrier) && ball.carrier == self)
 				{
@@ -2018,7 +2024,7 @@ function ball_assign_random_start()
 {
 	new_start = undefined;
 	rand_starts = array::randomize(level.ball_starts);
-	foreach(var_37d90d3b, start in rand_starts)
+	foreach(start in rand_starts)
 	{
 		if(start.in_use)
 		{
@@ -2045,7 +2051,7 @@ function ball_assign_random_start()
 */
 function ball_assign_start(start)
 {
-	foreach(var_d4f7139c, vis in self.visuals)
+	foreach(vis in self.visuals)
 	{
 		vis.baseorigin = start.origin;
 	}
@@ -2313,12 +2319,15 @@ function ball_give_score(team, score)
 		if(game["overtime_round"] == 1)
 		{
 		}
-		else if(game["ball_overtime_first_winner"] === team)
+		else
 		{
-			thread globallogic::endgame(team, game["strings"]["score_limit_reached"]);
+			if(game["ball_overtime_first_winner"] === team)
+			{
+				thread globallogic::endgame(team, game["strings"]["score_limit_reached"]);
+			}
+			team_score = [[level._getteamscore]](team);
+			other_team_score = [[level._getteamscore]](util::getotherteam(team));
 		}
-		team_score = [[level._getteamscore]](team);
-		other_team_score = [[level._getteamscore]](util::getotherteam(team));
 	}
 }
 
@@ -2463,7 +2472,7 @@ function player_update_pass_target(ballobj)
 			playerdir = anglestoforward(self getplayerangles());
 			playereye = self geteye();
 			possible_pass_targets = [];
-			foreach(var_f27570d7, target in level.players)
+			foreach(target in level.players)
 			{
 				if(self == target)
 				{
@@ -2497,7 +2506,7 @@ function player_update_pass_target(ballobj)
 				}
 			}
 			possible_pass_targets = array::quicksort(possible_pass_targets, &compare_player_pass_dot);
-			foreach(var_d1ed2632, target in possible_pass_targets)
+			foreach(target in possible_pass_targets)
 			{
 				if(sighttracepassed(playereye, target.pass_origin, 0, target))
 				{
@@ -2522,7 +2531,7 @@ function player_update_pass_target(ballobj)
 */
 function play_return_vo()
 {
-	foreach(var_8a7576c5, team in level.teams)
+	foreach(team in level.teams)
 	{
 		globallogic_audio::play_2d_on_team("mpl_ballreturn_sting", team);
 		globallogic_audio::leader_dialog("uplReset", team, undefined, "uplink_ball");
@@ -2569,7 +2578,7 @@ function player_set_pass_target(new_target)
 		new_target clientfield::set("passoption", 1);
 		self.pass_target = new_target;
 		team_players = [];
-		foreach(var_79bc01ff, player in level.players)
+		foreach(player in level.players)
 		{
 			if(player.team == self.team && player != self && player != new_target)
 			{
@@ -2596,7 +2605,7 @@ function player_clear_pass_target()
 		self.pass_icon destroy();
 	}
 	team_players = [];
-	foreach(var_2b386f1c, player in level.players)
+	foreach(player in level.players)
 	{
 		if(player.team == self.team && player != self)
 		{
@@ -2624,7 +2633,7 @@ function ball_create_start(minstartingballs)
 {
 	ball_starts = getentarray("ball_start", "targetname");
 	ball_starts = array::randomize(ball_starts);
-	foreach(var_64d003b, new_start in ball_starts)
+	foreach(new_start in ball_starts)
 	{
 		balladdstart(new_start.origin);
 	}
@@ -2722,7 +2731,7 @@ function is_touching_any_ball_return_trigger()
 	}
 	triggers_to_remove = [];
 	result = 0;
-	foreach(var_ccccda47, trigger in level.ball_return_trigger)
+	foreach(trigger in level.ball_return_trigger)
 	{
 		if(!isdefined(trigger))
 		{
@@ -2747,7 +2756,7 @@ function is_touching_any_ball_return_trigger()
 			break;
 		}
 	}
-	foreach(var_ae98dfd, trigger in triggers_to_remove)
+	foreach(trigger in triggers_to_remove)
 	{
 		arrayremovevalue(level.ball_return_trigger, trigger);
 	}

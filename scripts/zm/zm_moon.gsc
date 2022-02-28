@@ -104,7 +104,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function opt_in()
+function autoexec opt_in()
 {
 	level.aat_in_use = 1;
 	level.bgb_in_use = 1;
@@ -286,7 +286,7 @@ function function_ff7d3b7()
 	while(level.var_2c6ea600 === var_1acd84fb);
 	level.var_2c6ea600 = var_1acd84fb;
 	self clientfield::set("astro_name_index", var_1acd84fb);
-	foreach(var_1acb80b, player in level.players)
+	foreach(player in level.players)
 	{
 		if(zombie_utility::is_player_valid(player))
 		{
@@ -315,15 +315,15 @@ function cin_zmhd_sizzle_moon_cam(a_ents)
 {
 	level.disable_print3d_ent = 1;
 	var_3aa9d35a = getentarray("airlock_bridge_zone", "script_parameters");
-	foreach(var_1561be84, var_1cec30db in var_3aa9d35a)
+	foreach(var_1cec30db in var_3aa9d35a)
 	{
 		var_7be3ca60 = getentarray(var_1cec30db.target, "targetname");
-		foreach(var_a35a4f49, mdl_door in var_7be3ca60)
+		foreach(mdl_door in var_7be3ca60)
 		{
 			mdl_door hide();
 		}
 	}
-	foreach(var_a4b29975, var_6cae1ad0 in a_ents)
+	foreach(var_6cae1ad0 in a_ents)
 	{
 		if(issubstr(var_6cae1ad0.model, "body"))
 		{
@@ -374,13 +374,13 @@ function function_869d6f66()
 {
 	if(!isdefined(self zm_bgb_anywhere_but_here::function_728dfe3()))
 	{
-		return 0;
+		return false;
 	}
 	if(self.zone_name === "nml_zone")
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -396,9 +396,9 @@ function function_f97e7fed()
 {
 	if(self.zone_name === "nml_zone")
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -414,9 +414,9 @@ function function_e36dbcf4()
 {
 	if(isdefined(level.var_d8417111) && level.var_d8417111)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -432,9 +432,9 @@ function function_69e4bd99()
 {
 	if(level flag::get("enter_nml"))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -592,9 +592,9 @@ function function_d70e1ddb(player)
 		{
 			zm_unitrigger::unregister_unitrigger(self.unitrigger_stub);
 		}
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -614,11 +614,11 @@ function function_89f86341(player)
 		{
 			if(self.trigger_target.targetname == "exterior_goal")
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -634,13 +634,13 @@ function zombie_moon_player_out_of_playable_area_monitor_callback()
 {
 	if(isdefined(self._padded) && self._padded)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.insta_killed) && self.insta_killed)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -912,9 +912,9 @@ function players_in_zombieland()
 	}
 	if(num_players_inside != players.size)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -930,9 +930,9 @@ function check_for_avoid_poi()
 {
 	if(isdefined(self.in_pack_enclosure) && self.in_pack_enclosure)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1051,7 +1051,7 @@ function moon_nml_bhb_present()
 		self thread switch_between_zland_poi();
 		wait(0.1);
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1068,18 +1068,18 @@ function moon_zmb_and_bhb_touching_trig(ent_bhb)
 	self endon(#"death");
 	if(!isdefined(ent_bhb))
 	{
-		return 0;
+		return false;
 	}
 	pack_trig = getent("pack_enclosure", "targetname");
 	if(self istouching(pack_trig) && isdefined(ent_bhb) && ent_bhb istouching(pack_trig))
 	{
-		return 1;
+		return true;
 	}
 	if(!self istouching(pack_trig) && isdefined(ent_bhb) && !ent_bhb istouching(pack_trig))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1231,7 +1231,7 @@ function moon_round_think_func(restart = 0)
 		if(!(isdefined(level.host_ended_game) && level.host_ended_game))
 		{
 			players = getplayers();
-			foreach(var_f4fcebca, player in players)
+			foreach(player in players)
 			{
 				if(!(isdefined(player.hostmigrationcontrolsfrozen) && player.hostmigrationcontrolsfrozen))
 				{
@@ -1261,19 +1261,22 @@ function moon_round_think_func(restart = 0)
 			level thread zm::play_level_start_vox_delayed();
 			wait(3);
 		}
-		else if(!(isdefined(level.var_d2b6176f) && level.var_d2b6176f))
+		else
 		{
-			level.var_d2b6176f = 1;
-		}
-		else if(isdefined(level.on_the_moon) && level.on_the_moon)
-		{
-			if(level.round_number <= 5)
+			if(!(isdefined(level.var_d2b6176f) && level.var_d2b6176f))
 			{
-				level thread zm_audio::sndmusicsystem_playstate("round_start");
+				level.var_d2b6176f = 1;
 			}
-			else
+			else if(isdefined(level.on_the_moon) && level.on_the_moon)
 			{
-				level thread zm_audio::sndmusicsystem_playstate("round_start_short");
+				if(level.round_number <= 5)
+				{
+					level thread zm_audio::sndmusicsystem_playstate("round_start");
+				}
+				else
+				{
+					level thread zm_audio::sndmusicsystem_playstate("round_start_short");
+				}
 			}
 		}
 		zm::round_one_up();
@@ -1305,7 +1308,7 @@ function moon_round_think_func(restart = 0)
 		level thread [[level.round_spawn_func]]();
 		level notify(#"start_of_round");
 		recordzombieroundstart();
-		bb::function_2c248b75("start_of_round");
+		bb::logroundevent("start_of_round");
 		players = getplayers();
 		for(index = 0; index < players.size; index++)
 		{
@@ -1331,7 +1334,7 @@ function moon_round_think_func(restart = 0)
 		level.first_round = 0;
 		level notify(#"end_of_round");
 		level flag::set("between_rounds");
-		bb::function_2c248b75("end_of_round");
+		bb::logroundevent("end_of_round");
 		uploadstats();
 		players = getplayers();
 		if(!level flag::get("teleporter_used"))
@@ -1393,7 +1396,7 @@ function moon_round_think_func(restart = 0)
 		}
 		matchutctime = getutc();
 		players = getplayers();
-		foreach(var_129a2772, player in players)
+		foreach(player in players)
 		{
 			if(level.curr_gametype_affects_rank && zm::get_round_number() > (3 + level.start_round))
 			{
@@ -1618,7 +1621,7 @@ function assign_lowest_unused_character_index()
 		return charindexarray[2];
 	}
 	n_characters_defined = 0;
-	foreach(var_1fd697d4, player in players)
+	foreach(player in players)
 	{
 		if(isdefined(player.characterindex))
 		{
@@ -1644,14 +1647,14 @@ function assign_lowest_unused_character_index()
 */
 function function_5c35365f(players)
 {
-	foreach(var_50581661, player in players)
+	foreach(player in players)
 	{
 		if(isdefined(player.characterindex) && player.characterindex == 2)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1827,19 +1830,19 @@ function offhand_weapon_give_override(str_weapon)
 		self setweaponammoclip(self zm_utility::get_player_tactical_grenade(), 0);
 		self takeweapon(self zm_utility::get_player_tactical_grenade());
 	}
-	if(str_weapon == level.var_453e74a0)
+	if(str_weapon == level.w_black_hole_bomb)
 	{
 		self zm_weap_black_hole_bomb::player_give_black_hole_bomb();
 		self zm_weapons::play_weapon_vo(str_weapon);
-		return 1;
+		return true;
 	}
-	if(str_weapon == level.var_17bac01d)
+	if(str_weapon == level.w_quantum_bomb)
 	{
 		self zm_weap_quantum_bomb::player_give_quantum_bomb();
 		self zm_weapons::play_weapon_vo(str_weapon);
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1952,11 +1955,11 @@ function moon_devgui(cmd)
 			case "":
 			{
 				players = getplayers();
-				foreach(var_5827ee5a, player in players)
+				foreach(player in players)
 				{
-					if(player hasweapon(level.var_17bac01d))
+					if(player hasweapon(level.w_quantum_bomb))
 					{
-						player takeweapon(level.var_17bac01d);
+						player takeweapon(level.w_quantum_bomb);
 						player zm_utility::set_player_tactical_grenade("");
 						player notify(#"starting_quantum_bomb");
 					}
@@ -1967,11 +1970,11 @@ function moon_devgui(cmd)
 			case "":
 			{
 				players = getplayers();
-				foreach(var_d7fc8905, player in players)
+				foreach(player in players)
 				{
-					if(player hasweapon(level.var_453e74a0))
+					if(player hasweapon(level.w_black_hole_bomb))
 					{
-						player takeweapon(level.var_453e74a0);
+						player takeweapon(level.w_black_hole_bomb);
 						player zm_utility::set_player_tactical_grenade("");
 						player notify(#"starting_black_hole_bomb");
 					}
@@ -2103,23 +2106,26 @@ function moon_zombie_death_response()
 		force_max = 50;
 		rag_z = 15;
 	}
-	else if(self.damageweapon == "m1911_zm")
+	else
 	{
-		force_min = 60;
-		force_max = 75;
-		rag_z = 20;
-	}
-	else if(self.damageweapon == "870mcs_zm" || self.damageweapon == "870mcs_upgraded_zm" || self.damageweapon == "ithaca_zm" || self.damageweapon == "ithaca_upgraded_zm" || self.damageweapon == "rottweil72_zm" || self.damageweapon == "rottweil72_upgraded_zm" || self.damageweapon == "srm1216_zm" || self.damageweapon == "srm1216_upgraded_zm" || self.damageweapon == "spas_zm" || self.damageweapon == "spas_upgraded_zm" || self.damageweapon == "hs10_zm" || self.damageweapon == "hs10_upgraded_zm" || self.damageweapon == "saiga12_zm" || self.damageweapon == "saiga12_upgraded_zm")
-	{
-		force_min = 100;
-		force_max = 150;
+		if(self.damageweapon == "m1911_zm")
+		{
+			force_min = 60;
+			force_max = 75;
+			rag_z = 20;
+		}
+		else if(self.damageweapon == "870mcs_zm" || self.damageweapon == "870mcs_upgraded_zm" || self.damageweapon == "ithaca_zm" || self.damageweapon == "ithaca_upgraded_zm" || self.damageweapon == "rottweil72_zm" || self.damageweapon == "rottweil72_upgraded_zm" || self.damageweapon == "srm1216_zm" || self.damageweapon == "srm1216_upgraded_zm" || self.damageweapon == "spas_zm" || self.damageweapon == "spas_upgraded_zm" || self.damageweapon == "hs10_zm" || self.damageweapon == "hs10_upgraded_zm" || self.damageweapon == "saiga12_zm" || self.damageweapon == "saiga12_upgraded_zm")
+		{
+			force_min = 100;
+			force_max = 150;
+		}
 	}
 	scale = randomintrange(force_min, force_max);
 	rag_x = self.damagedir[0] * scale;
 	rag_y = self.damagedir[1] * scale;
 	dir = (rag_x, rag_y, rag_z);
 	self launchragdoll(dir);
-	return 0;
+	return false;
 }
 
 /*
@@ -2283,33 +2289,33 @@ function is_player_killable(player, checkignoremeflag)
 {
 	if(!isdefined(player))
 	{
-		return 0;
+		return false;
 	}
 	if(!isalive(player))
 	{
-		return 0;
+		return false;
 	}
 	if(!isplayer(player))
 	{
-		return 0;
+		return false;
 	}
 	if(player.sessionstate == "spectator")
 	{
-		return 0;
+		return false;
 	}
 	if(player.sessionstate == "intermission")
 	{
-		return 0;
+		return false;
 	}
 	if(player isnotarget())
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(checkignoremeflag) && player.ignoreme)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -2395,79 +2401,82 @@ function blackhole_bomb_area_check()
 	{
 		black_hole_teleport_structs = struct::get_array("struct_black_hole_teleport_nml", "targetname");
 	}
-	else if(level flag::get("both_tunnels_blocked"))
+	else
 	{
-		black_hole_teleport_structs = struct::get_array("struct_black_hole_teleport", "targetname");
-		all_players_trapped = 0;
-		final_structs = black_hole_teleport_structs;
-		discarded_zones = [];
-		all_players = getplayers();
-		all_zones = getentarray("player_volume", "script_noteworthy");
-		players_touching = 0;
-		for(x = 0; x < all_zones.size; x++)
+		if(level flag::get("both_tunnels_blocked"))
 		{
-			switch(all_zones[x].targetname)
+			black_hole_teleport_structs = struct::get_array("struct_black_hole_teleport", "targetname");
+			all_players_trapped = 0;
+			final_structs = black_hole_teleport_structs;
+			discarded_zones = [];
+			all_players = getplayers();
+			all_zones = getentarray("player_volume", "script_noteworthy");
+			players_touching = 0;
+			for(x = 0; x < all_zones.size; x++)
 			{
-				case "airlock_bridge_zone":
-				case "airlock_east_zone":
-				case "airlock_west_zone":
-				case "bridge_zone":
-				case "cata_left_middle_zone":
-				case "cata_left_start_zone":
-				case "cata_right_start_zone":
-				case "water_zone":
+				switch(all_zones[x].targetname)
 				{
-					discarded_zones[discarded_zones.size] = all_zones[x];
-					for(i = 0; i < all_players.size; i++)
+					case "airlock_bridge_zone":
+					case "airlock_east_zone":
+					case "airlock_west_zone":
+					case "bridge_zone":
+					case "cata_left_middle_zone":
+					case "cata_left_start_zone":
+					case "cata_right_start_zone":
+					case "water_zone":
 					{
-						player = all_players[i];
-						equipment = player zm_equipment::get_player_equipment();
-						if(isdefined(equipment) && equipment == "equip_hacker_zm")
+						discarded_zones[discarded_zones.size] = all_zones[x];
+						for(i = 0; i < all_players.size; i++)
 						{
-							org delete();
-							return black_hole_teleport_structs;
-							continue;
+							player = all_players[i];
+							equipment = player zm_equipment::get_player_equipment();
+							if(isdefined(equipment) && equipment == "equip_hacker_zm")
+							{
+								org delete();
+								return black_hole_teleport_structs;
+								continue;
+							}
+							if(player istouching(all_zones[x]))
+							{
+								players_touching++;
+							}
 						}
-						if(player istouching(all_zones[x]))
-						{
-							players_touching++;
-						}
+						break;
 					}
-					break;
-				}
-				default:
-				{
-					break;
-				}
-			}
-		}
-		if(players_touching == all_players.size)
-		{
-			all_players_trapped = 1;
-		}
-		if(all_players_trapped)
-		{
-			for(i = 0; i < black_hole_teleport_structs.size; i++)
-			{
-				for(x = 0; x < discarded_zones.size; x++)
-				{
-					org.origin = black_hole_teleport_structs[i].origin;
-					if(org istouching(discarded_zones[x]))
+					default:
 					{
-						arrayremovevalue(final_structs, black_hole_teleport_structs[i]);
+						break;
 					}
 				}
 			}
-			black_hole_teleport_structs = final_structs;
+			if(players_touching == all_players.size)
+			{
+				all_players_trapped = 1;
+			}
+			if(all_players_trapped)
+			{
+				for(i = 0; i < black_hole_teleport_structs.size; i++)
+				{
+					for(x = 0; x < discarded_zones.size; x++)
+					{
+						org.origin = black_hole_teleport_structs[i].origin;
+						if(org istouching(discarded_zones[x]))
+						{
+							arrayremovevalue(final_structs, black_hole_teleport_structs[i]);
+						}
+					}
+				}
+				black_hole_teleport_structs = final_structs;
+			}
+			else
+			{
+				black_hole_teleport_structs = struct::get_array("struct_black_hole_teleport", "targetname");
+			}
 		}
 		else
 		{
 			black_hole_teleport_structs = struct::get_array("struct_black_hole_teleport", "targetname");
 		}
-	}
-	else
-	{
-		black_hole_teleport_structs = struct::get_array("struct_black_hole_teleport", "targetname");
 	}
 	org delete();
 	return black_hole_teleport_structs;
@@ -2536,9 +2545,9 @@ function blackhole_bomb_in_invalid_area(grenade, model, player)
 	if(model istouching(invalid_area))
 	{
 		level thread zm_weap_black_hole_bomb::black_hole_bomb_stolen_by_sam(player, model);
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2554,9 +2563,9 @@ function quantum_bomb_prevent_player_getting_teleported_override(position)
 {
 	if(isdefined(self._padded) && self._padded)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2757,9 +2766,9 @@ function func_magicbox_update_prompt_use_override()
 {
 	if(level flag::get("override_magicbox_trigger_use"))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2803,7 +2812,7 @@ function function_35a61719()
 	var_93997cd = getentarray("airlock_biodome_zone", "script_parameters");
 	var_66cca975 = getentarray("airlock_labs_2_biodome", "script_parameters");
 	var_93997cd = arraycombine(var_93997cd, var_66cca975, 0, 0);
-	foreach(var_22767a2c, var_1cec30db in var_93997cd)
+	foreach(var_1cec30db in var_93997cd)
 	{
 		switch(var_1cec30db.script_int)
 		{
@@ -2912,7 +2921,7 @@ function function_54da140a()
 			var_343b1937 = a_s_spots[i].script_int;
 		}
 		var_c15b2128 = [];
-		foreach(var_135e0175, sp_zombie in level.zombie_spawners)
+		foreach(sp_zombie in level.zombie_spawners)
 		{
 			if(sp_zombie.script_int == var_343b1937)
 			{
@@ -2950,7 +2959,7 @@ function function_54da140a()
 function spare_change()
 {
 	a_t_audio = getentarray("audio_bump_trigger", "targetname");
-	foreach(var_226c9676, t_audio_bump in a_t_audio)
+	foreach(t_audio_bump in a_t_audio)
 	{
 		if(t_audio_bump.script_sound === "zmb_perks_bump_bottle" && t_audio_bump.script_string != "speedcola_perk")
 		{

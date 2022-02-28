@@ -583,7 +583,7 @@ function getteammask(team)
 function getotherteamsmask(skip_team)
 {
 	mask = 0;
-	foreach(var_d004e599, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(team == skip_team)
 		{
@@ -746,17 +746,17 @@ function ent_already_in_trigger(trig)
 {
 	if(!isdefined(self._triggers))
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(self._triggers[trig getentitynumber()]))
 	{
-		return 0;
+		return false;
 	}
 	if(!self._triggers[trig getentitynumber()])
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1105,9 +1105,9 @@ function ispressbuild()
 	buildtype = getdvarstring("buildType");
 	if(isdefined(buildtype) && buildtype == "press")
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1138,25 +1138,25 @@ function isentstunned()
 	time = gettime();
 	if(isdefined(self.stunned) && self.stunned)
 	{
-		return 1;
+		return true;
 	}
 	if(self isflashbanged())
 	{
-		return 1;
+		return true;
 	}
 	if(isdefined(self.stun_fx))
 	{
-		return 1;
+		return true;
 	}
 	if(isdefined(self.laststunnedtime) && (self.laststunnedtime + 5000) > time)
 	{
-		return 1;
+		return true;
 	}
 	if(isdefined(self.concussionendtime) && self.concussionendtime > time)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1755,7 +1755,7 @@ function init_hero(name, func_init, arg1, arg2, arg3, arg4, arg5, b_show_in_ev =
 function init_heroes(a_hero_names, func, arg1, arg2, arg3, arg4, arg5)
 {
 	a_heroes = [];
-	foreach(var_19424359, str_hero in a_hero_names)
+	foreach(str_hero in a_hero_names)
 	{
 		if(!isdefined(a_heroes))
 		{
@@ -1937,7 +1937,7 @@ function _set_streamer_hint(n_zone, b_clear_previous = 1)
 			level.b_wait_for_streamer_default = 0;
 		#/
 	}
-	foreach(var_84fb7a86, player in level.players)
+	foreach(player in level.players)
 	{
 		player thread _streamer_hint_wait(n_zone);
 	}
@@ -1972,7 +1972,7 @@ function _streamer_hint_wait(n_zone)
 {
 	self endon(#"disconnect");
 	level endon(#"set_streamer_hint");
-	self waittill_match(#"streamer");
+	self waittillmatch(#"streamer");
 	self notify("streamer" + n_zone, n_zone);
 }
 
@@ -2044,7 +2044,7 @@ function set_low_ready(b_lowready)
 */
 function cleanupactorcorpses()
 {
-	foreach(var_dc41ffd2, corpse in getcorpsearray())
+	foreach(corpse in getcorpsearray())
 	{
 		if(isactorcorpse(corpse))
 		{
@@ -2283,17 +2283,20 @@ function init_interactive_gameobject(trigger, str_objective, str_hint_text, func
 	{
 		a_keyline_objects = [];
 	}
-	else if(!isdefined(a_keyline_objects))
+	else
 	{
-		a_keyline_objects = [];
-	}
-	else if(!isarray(a_keyline_objects))
-	{
-		a_keyline_objects = array(a_keyline_objects);
-	}
-	foreach(var_42dee8b7, mdl in a_keyline_objects)
-	{
-		mdl oed::enable_keyline(1);
+		if(!isdefined(a_keyline_objects))
+		{
+			a_keyline_objects = [];
+		}
+		else if(!isarray(a_keyline_objects))
+		{
+			a_keyline_objects = array(a_keyline_objects);
+		}
+		foreach(mdl in a_keyline_objects)
+		{
+			mdl oed::enable_keyline(1);
+		}
 	}
 	game_object = gameobjects::create_use_object("any", trigger, a_keyline_objects, (0, 0, 0), str_objective);
 	game_object gameobjects::allow_use("any");

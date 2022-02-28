@@ -16,25 +16,25 @@
 #using scripts\zm\_zm_utility;
 #using scripts\zm\_zm_weapons;
 
-#namespace namespace_c20cb06c;
+#namespace genesis_achievements;
 
 /*
 	Name: __init__sytem__
-	Namespace: namespace_c20cb06c
+	Namespace: genesis_achievements
 	Checksum: 0xCDC602C
 	Offset: 0x408
 	Size: 0x34
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_genesis_achievements", &__init__, undefined, undefined);
 }
 
 /*
 	Name: __init__
-	Namespace: namespace_c20cb06c
+	Namespace: genesis_achievements
 	Checksum: 0x2B170A28
 	Offset: 0x448
 	Size: 0x74
@@ -51,7 +51,7 @@ function __init__()
 
 /*
 	Name: on_player_connect
-	Namespace: namespace_c20cb06c
+	Namespace: genesis_achievements
 	Checksum: 0xAA3B6528
 	Offset: 0x4C8
 	Size: 0x94
@@ -63,14 +63,14 @@ function on_player_connect()
 	self thread function_4d2d1f7a();
 	self thread function_553e6274();
 	self thread function_7d947aff();
-	self thread function_def0e284();
+	self thread achievement_wardrobe_change();
 	self thread function_e3cc5d03();
 	self thread function_c77b5630();
 }
 
 /*
 	Name: function_c190d113
-	Namespace: namespace_c20cb06c
+	Namespace: genesis_achievements
 	Checksum: 0xE4C8D894
 	Offset: 0x568
 	Size: 0x44
@@ -85,7 +85,7 @@ function function_c190d113()
 
 /*
 	Name: function_902aff55
-	Namespace: namespace_c20cb06c
+	Namespace: genesis_achievements
 	Checksum: 0xF5A7834A
 	Offset: 0x5B8
 	Size: 0x44
@@ -100,7 +100,7 @@ function function_902aff55()
 
 /*
 	Name: function_4d2d1f7a
-	Namespace: namespace_c20cb06c
+	Namespace: genesis_achievements
 	Checksum: 0xE99642F0
 	Offset: 0x608
 	Size: 0x2C
@@ -115,7 +115,7 @@ function function_4d2d1f7a()
 
 /*
 	Name: function_553e6274
-	Namespace: namespace_c20cb06c
+	Namespace: genesis_achievements
 	Checksum: 0x24026630
 	Offset: 0x640
 	Size: 0xDC
@@ -139,7 +139,7 @@ function function_553e6274()
 
 /*
 	Name: function_3c82f182
-	Namespace: namespace_c20cb06c
+	Namespace: genesis_achievements
 	Checksum: 0xE19CA272
 	Offset: 0x728
 	Size: 0x44
@@ -157,7 +157,7 @@ function function_3c82f182()
 
 /*
 	Name: function_817b1327
-	Namespace: namespace_c20cb06c
+	Namespace: genesis_achievements
 	Checksum: 0xAB1D6EE6
 	Offset: 0x778
 	Size: 0x9A
@@ -172,7 +172,7 @@ function function_817b1327()
 	var_ef6b3d38 = 0;
 	while(true)
 	{
-		level waittill(#"hash_98ea05", e_attacker);
+		level waittill(#"beam_killed_zombie", e_attacker);
 		if(e_attacker === self)
 		{
 			var_ef6b3d38++;
@@ -187,7 +187,7 @@ function function_817b1327()
 
 /*
 	Name: function_7d947aff
-	Namespace: namespace_c20cb06c
+	Namespace: genesis_achievements
 	Checksum: 0x8BC85C99
 	Offset: 0x820
 	Size: 0x11A
@@ -216,7 +216,7 @@ function function_7d947aff()
 
 /*
 	Name: function_935679b0
-	Namespace: namespace_c20cb06c
+	Namespace: genesis_achievements
 	Checksum: 0x90A1A7DA
 	Offset: 0x948
 	Size: 0xE8
@@ -248,7 +248,7 @@ function function_935679b0()
 
 /*
 	Name: function_f17c9ba1
-	Namespace: namespace_c20cb06c
+	Namespace: genesis_achievements
 	Checksum: 0xFA92A53B
 	Offset: 0xA38
 	Size: 0xCC
@@ -278,15 +278,15 @@ function function_f17c9ba1()
 }
 
 /*
-	Name: function_def0e284
-	Namespace: namespace_c20cb06c
+	Name: achievement_wardrobe_change
+	Namespace: genesis_achievements
 	Checksum: 0xD9D6A0D0
 	Offset: 0xB10
 	Size: 0xA2
 	Parameters: 0
 	Flags: Linked
 */
-function function_def0e284()
+function achievement_wardrobe_change()
 {
 	level endon(#"end_game");
 	self endon(#"disconnect");
@@ -305,7 +305,7 @@ function function_def0e284()
 
 /*
 	Name: function_e3cc5d03
-	Namespace: namespace_c20cb06c
+	Namespace: genesis_achievements
 	Checksum: 0xFE340414
 	Offset: 0xBC0
 	Size: 0x2C
@@ -320,7 +320,7 @@ function function_e3cc5d03()
 
 /*
 	Name: function_c77b5630
-	Namespace: namespace_c20cb06c
+	Namespace: genesis_achievements
 	Checksum: 0xAAB4016D
 	Offset: 0xBF8
 	Size: 0x9C
@@ -339,7 +339,7 @@ function function_c77b5630()
 
 /*
 	Name: function_71e89ea4
-	Namespace: namespace_c20cb06c
+	Namespace: genesis_achievements
 	Checksum: 0xA5F33961
 	Offset: 0xCA0
 	Size: 0x158

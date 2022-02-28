@@ -20,7 +20,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("idgun", &init, undefined, undefined);
 }
@@ -116,9 +116,9 @@ function function_9b7ac6a9(weapon)
 {
 	if(weapon === getweapon("idgun_upgraded_0") || weapon === getweapon("idgun_upgraded_1") || weapon === getweapon("idgun_upgraded_2") || weapon === getweapon("idgun_upgraded_3"))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -136,9 +136,9 @@ function is_idgun_damage(weapon)
 	{
 		if(isinarray(level.idgun_weapons, weapon))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 

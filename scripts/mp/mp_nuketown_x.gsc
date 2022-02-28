@@ -26,7 +26,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	level._enablelastvalidposition = 1;
 }
@@ -100,14 +100,14 @@ function function_8d1f7bc9()
 		players = getplayers();
 		actors = getactorarray();
 		count = 0;
-		foreach(var_cf345ee5, player in players)
+		foreach(player in players)
 		{
 			if(isalive(player))
 			{
 				count++;
 			}
 		}
-		foreach(var_f3de8f22, actor in actors)
+		foreach(actor in actors)
 		{
 			if(isalive(actor))
 			{
@@ -226,13 +226,13 @@ function function_9071119b()
 		camera setmodel("tag_origin");
 		level waittill(#"hash_ba6eb569");
 		var_2ef11df4 = getentarray("hide_end_game_sequence", "script_noteworthy");
-		foreach(var_8cc4e06f, var_4c401d78 in var_2ef11df4)
+		foreach(var_4c401d78 in var_2ef11df4)
 		{
 			var_4c401d78 hide();
 		}
 		clientfield::set("nuketown_endgame", 1);
 		players = getplayers();
-		foreach(var_4d4fe28d, player in players)
+		foreach(player in players)
 		{
 			player camerasetposition(camera);
 			player camerasetlookat();
@@ -261,7 +261,7 @@ function function_38b51a9e()
 	{
 		level waittill(#"hash_71410924");
 		var_2ef11df4 = getentarray("hide_end_game_sequence", "script_noteworthy");
-		foreach(var_a450cf25, var_4c401d78 in var_2ef11df4)
+		foreach(var_4c401d78 in var_2ef11df4)
 		{
 			var_4c401d78 show();
 		}
@@ -286,7 +286,7 @@ function run_scene(str_scene)
 	b_found = 0;
 	str_mode = tolower(getdvarstring("scene_menu_mode", "default"));
 	a_scenes = struct::get_array(str_scene, "scriptbundlename");
-	foreach(var_bc6b0872, s_instance in a_scenes)
+	foreach(s_instance in a_scenes)
 	{
 		if(isdefined(s_instance))
 		{
@@ -299,7 +299,7 @@ function run_scene(str_scene)
 	}
 	if(isdefined(level.active_scenes[str_scene]))
 	{
-		foreach(var_7cf60a90, s_instance in level.active_scenes[str_scene])
+		foreach(s_instance in level.active_scenes[str_scene])
 		{
 			b_found = 1;
 			s_instance thread scene::play(str_scene, undefined, undefined, 1, undefined, str_mode);
@@ -321,7 +321,7 @@ function init_scene(str_scene)
 	str_mode = tolower(getdvarstring("scene_menu_mode", "default"));
 	b_found = 0;
 	a_scenes = struct::get_array(str_scene, "scriptbundlename");
-	foreach(var_89860180, s_instance in a_scenes)
+	foreach(s_instance in a_scenes)
 	{
 		if(isdefined(s_instance))
 		{
@@ -443,7 +443,7 @@ function function_5fdaba50()
 	level.var_b8fc7cc7 = [];
 	destructibles = getentarray("destructible", "targetname");
 	mannequins = nuked_mannequin_filter(destructibles);
-	foreach(var_343f2964, mannequin in mannequins)
+	foreach(mannequin in mannequins)
 	{
 		level.var_fd975a01[level.var_fd975a01.size] = mannequin.origin;
 		level.var_b8fc7cc7[level.var_b8fc7cc7.size] = mannequin.angles;
@@ -468,11 +468,11 @@ function function_5fdaba50()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_66d1dfaa()
+function private function_66d1dfaa()
 {
 	destructibles = getentarray("destructible", "targetname");
 	mannequins = nuked_mannequin_filter(destructibles);
-	foreach(var_67243056, mannequin in mannequins)
+	foreach(mannequin in mannequins)
 	{
 		mannequin connectpaths();
 		collision = getent(mannequin.target, "targetname");
@@ -490,11 +490,11 @@ private function function_66d1dfaa()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_6ac7b21()
+function private function_6ac7b21()
 {
 	level notify(#"hash_d4fbdcde");
 	mannequins = getaiarchetypearray("mannequin");
-	foreach(var_96ca5859, mannequin in mannequins)
+	foreach(mannequin in mannequins)
 	{
 		mannequin kill();
 	}
@@ -509,7 +509,7 @@ private function function_6ac7b21()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_ad600192()
+function private function_ad600192()
 {
 	level notify(#"hash_ad600192");
 	level endon(#"hash_ad600192");
@@ -533,7 +533,7 @@ private function function_ad600192()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_e20b8430(weepingangel)
+function private function_e20b8430(weepingangel)
 {
 	level endon(#"hash_d4fbdcde");
 	level thread function_ad600192();
@@ -564,7 +564,7 @@ private function function_e20b8430(weepingangel)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_3c0e90cb(weepingangel)
+function private function_3c0e90cb(weepingangel)
 {
 	level endon(#"hash_d4fbdcde");
 	function_e20b8430(weepingangel);
@@ -592,7 +592,7 @@ private function function_3c0e90cb(weepingangel)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_339cd93d()
+function private function_339cd93d()
 {
 	/#
 		while(true)
@@ -613,7 +613,7 @@ private function function_339cd93d()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_599f53a6()
+function private function_599f53a6()
 {
 	/#
 		while(true)
@@ -634,7 +634,7 @@ private function function_599f53a6()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_d77bb766()
+function private function_d77bb766()
 {
 	/#
 		while(true)
@@ -703,17 +703,17 @@ function function_2f2fa868()
 {
 	if(!getdvarint("nuketown_mannequin", 1))
 	{
-		return 0;
+		return false;
 	}
 	if(sessionmodeisonlinegame() && !sessionmodeisprivateonlinegame())
 	{
-		return 0;
+		return false;
 	}
 	if(util::isprophuntgametype())
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -730,9 +730,9 @@ function function_4b855423()
 	players = getplayers();
 	if(players.size > 12)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*

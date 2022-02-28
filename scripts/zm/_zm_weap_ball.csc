@@ -18,7 +18,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("ball", &__init__, undefined, undefined);
 }
@@ -89,7 +89,7 @@ function on_localclient_connect(localclientnum)
 function on_player_spawned(localclientnum)
 {
 	players = getplayers(localclientnum);
-	foreach(var_83c7bb6e, player in players)
+	foreach(player in players)
 	{
 		if(player util::isenemyplayer(self))
 		{
@@ -151,7 +151,7 @@ function setup_fx(localclientnum)
 	effects = [];
 	effects["allies"] = "ui/fx_uplink_goal_marker";
 	effects["axis"] = "ui/fx_uplink_goal_marker";
-	foreach(var_cddc14b9, goal in level.goals)
+	foreach(goal in level.goals)
 	{
 	}
 	thread watch_for_team_change(localclientnum);
@@ -452,20 +452,23 @@ function ball_on_ground_fx(localclientnum, oldval, newval, bnewent, binitialsnap
 			self.var_2e7f5bfb = playfx(localclientnum, level._effect["lght_marker"], self.origin + vectorscale((0, 0, 1), 72), (0, 0, 1), (1, 0, 0));
 		}
 	}
-	else if(isdefined(self.var_ff242ed4))
+	else
 	{
-		stopfx(localclientnum, self.var_ff242ed4);
-		self.var_ff242ed4 = undefined;
-	}
-	if(isdefined(self.var_cd030ed9))
-	{
-		stopfx(localclientnum, self.var_cd030ed9);
-		self.var_cd030ed9 = undefined;
-	}
-	if(isdefined(self.var_2e7f5bfb))
-	{
-		stopfx(localclientnum, self.var_2e7f5bfb);
-		self.var_2e7f5bfb = undefined;
+		if(isdefined(self.var_ff242ed4))
+		{
+			stopfx(localclientnum, self.var_ff242ed4);
+			self.var_ff242ed4 = undefined;
+		}
+		if(isdefined(self.var_cd030ed9))
+		{
+			stopfx(localclientnum, self.var_cd030ed9);
+			self.var_cd030ed9 = undefined;
+		}
+		if(isdefined(self.var_2e7f5bfb))
+		{
+			stopfx(localclientnum, self.var_2e7f5bfb);
+			self.var_2e7f5bfb = undefined;
+		}
 	}
 }
 

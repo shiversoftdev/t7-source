@@ -21,7 +21,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("scoreevents", &__init__, undefined, undefined);
 }
@@ -96,7 +96,7 @@ function scoreeventtablelookup(index, scoreeventcolumn)
 */
 function processteamscoreevent(event)
 {
-	foreach(var_94bce532, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		processscoreevent(event, e_player);
 	}
@@ -283,23 +283,26 @@ function scoreeventplayerkill(data, time)
 		victim recordkillmodifier("firstblood");
 		processscoreevent("first_kill", attacker, victim, weapon);
 	}
-	else if(isdefined(attacker.lastkilledby))
+	else
 	{
-		if(attacker.lastkilledby == victim)
+		if(isdefined(attacker.lastkilledby))
 		{
-			level.globalpaybacks++;
-			processscoreevent("revenge_kill", attacker, victim, weapon);
-			attacker addweaponstat(weapon, "revenge_kill", 1);
-			victim recordkillmodifier("revenge");
-			attacker.lastkilledby = undefined;
+			if(attacker.lastkilledby == victim)
+			{
+				level.globalpaybacks++;
+				processscoreevent("revenge_kill", attacker, victim, weapon);
+				attacker addweaponstat(weapon, "revenge_kill", 1);
+				victim recordkillmodifier("revenge");
+				attacker.lastkilledby = undefined;
+			}
 		}
-	}
-	if(isdefined(victim.lastmansd) && victim.lastmansd == 1)
-	{
-		processscoreevent("final_kill_elimination", attacker, victim, weapon);
-		if(isdefined(attacker.lastmansd) && attacker.lastmansd == 1)
+		if(isdefined(victim.lastmansd) && victim.lastmansd == 1)
 		{
-			processscoreevent("elimination_and_last_player_alive", attacker, victim, weapon);
+			processscoreevent("final_kill_elimination", attacker, victim, weapon);
+			if(isdefined(attacker.lastmansd) && attacker.lastmansd == 1)
+			{
+				processscoreevent("elimination_and_last_player_alive", attacker, victim, weapon);
+			}
 		}
 	}
 	if(is_weapon_valid(meansofdeath, weapon, weaponclass))
@@ -369,26 +372,29 @@ function scoreeventplayerkill(data, time)
 			attacker.backstabs = attacker.pers["backstabs"];
 		}
 	}
-	else if(isdefined(victim.firsttimedamaged) && victim.firsttimedamaged == time)
+	else
 	{
-		if(weaponclass == "weapon_sniper")
+		if(isdefined(victim.firsttimedamaged) && victim.firsttimedamaged == time)
 		{
-			attacker thread updateoneshotmultikills(victim, weapon, victim.firsttimedamaged);
-			attacker addweaponstat(weapon, "kill_enemy_one_bullet", 1);
-		}
-	}
-	if(isdefined(attacker.tookweaponfrom[weapon]) && isdefined(attacker.tookweaponfrom[weapon].previousowner))
-	{
-		pickedupweapon = attacker.tookweaponfrom[weapon];
-		if(pickedupweapon.previousowner == victim)
-		{
-			processscoreevent("kill_enemy_with_their_weapon", attacker, victim, weapon);
-			attacker addweaponstat(weapon, "kill_enemy_with_their_weapon", 1);
-			if(isdefined(pickedupweapon.weapon) && isdefined(pickedupweapon.smeansofdeath))
+			if(weaponclass == "weapon_sniper")
 			{
-				if(pickedupweapon.weapon == level.weaponbasemeleeheld && (pickedupweapon.smeansofdeath == "MOD_MELEE" || pickedupweapon.smeansofdeath == "MOD_MELEE_ASSASSINATE"))
+				attacker thread updateoneshotmultikills(victim, weapon, victim.firsttimedamaged);
+				attacker addweaponstat(weapon, "kill_enemy_one_bullet", 1);
+			}
+		}
+		if(isdefined(attacker.tookweaponfrom[weapon]) && isdefined(attacker.tookweaponfrom[weapon].previousowner))
+		{
+			pickedupweapon = attacker.tookweaponfrom[weapon];
+			if(pickedupweapon.previousowner == victim)
+			{
+				processscoreevent("kill_enemy_with_their_weapon", attacker, victim, weapon);
+				attacker addweaponstat(weapon, "kill_enemy_with_their_weapon", 1);
+				if(isdefined(pickedupweapon.weapon) && isdefined(pickedupweapon.smeansofdeath))
 				{
-					attacker addweaponstat(level.weaponbasemeleeheld, "kill_enemy_with_their_weapon", 1);
+					if(pickedupweapon.weapon == level.weaponbasemeleeheld && (pickedupweapon.smeansofdeath == "MOD_MELEE" || pickedupweapon.smeansofdeath == "MOD_MELEE_ASSASSINATE"))
+					{
+						attacker addweaponstat(level.weaponbasemeleeheld, "kill_enemy_with_their_weapon", 1);
+					}
 				}
 			}
 		}
@@ -461,17 +467,23 @@ function is_weapon_valid(meansofdeath, weapon, weaponclass)
 	{
 		valid_weapon = 0;
 	}
-	else if(meansofdeath == "MOD_PISTOL_BULLET" || meansofdeath == "MOD_RIFLE_BULLET")
+	else
 	{
-		valid_weapon = 1;
-	}
-	else if(meansofdeath == "MOD_HEAD_SHOT")
-	{
-		valid_weapon = 1;
-	}
-	else if(weapon.name == "hatchet" && meansofdeath == "MOD_IMPACT")
-	{
-		valid_weapon = 1;
+		if(meansofdeath == "MOD_PISTOL_BULLET" || meansofdeath == "MOD_RIFLE_BULLET")
+		{
+			valid_weapon = 1;
+		}
+		else
+		{
+			if(meansofdeath == "MOD_HEAD_SHOT")
+			{
+				valid_weapon = 1;
+			}
+			else if(weapon.name == "hatchet" && meansofdeath == "MOD_IMPACT")
+			{
+				valid_weapon = 1;
+			}
+		}
 	}
 	return valid_weapon;
 }

@@ -33,7 +33,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_ai_raz", &__init__, &__main__, undefined);
 }
@@ -178,7 +178,7 @@ function function_e099c556()
 		#/
 		return;
 	}
-	foreach(var_2646a272, var_ad58b9ca in level.var_6bca5baa)
+	foreach(var_ad58b9ca in level.var_6bca5baa)
 	{
 		var_ad58b9ca.is_enabled = 1;
 		var_ad58b9ca.script_forcespawn = 1;
@@ -437,11 +437,11 @@ function function_45bace88()
 	else
 	{
 		/#
-			if(level.zm_loc_types[""].size == 0)
-			{
-				iprintlnbold("");
-			}
+			iprintlnbold("");
 		#/
+		if(level.zm_loc_types[""].size == 0)
+		{
+		}
 		s_spawn_loc = array::random(level.zm_loc_types["raz_location"]);
 	}
 	if(!isdefined(s_spawn_loc))
@@ -538,7 +538,7 @@ function function_a1d75eeb()
 {
 	var_89de5b91 = getentarray("zombie_raz", "targetname");
 	var_c55cf881 = var_89de5b91.size;
-	foreach(var_d1fcac52, var_1c963231 in var_89de5b91)
+	foreach(var_1c963231 in var_89de5b91)
 	{
 		if(!isalive(var_1c963231))
 		{
@@ -599,9 +599,9 @@ function function_ea911683()
 	var_f0ab435a = function_bcbbda54();
 	if(var_c55cf881 >= var_f0ab435a || !level flag::get("spawn_zombies"))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -687,7 +687,7 @@ function get_favorite_enemy()
 {
 	var_bc3f44bf = getplayers();
 	e_least_hunted = undefined;
-	foreach(var_9e2c0900, e_target in var_bc3f44bf)
+	foreach(e_target in var_bc3f44bf)
 	{
 		if(!isdefined(e_target.hunted_by))
 		{
@@ -938,13 +938,16 @@ function function_7ed6c714(n_to_spawn = 1, var_e41e673a, b_force_spawn = 0, var_
 		{
 			s_spawn_loc = var_b7959229;
 		}
-		else if(isdefined(level.var_a3559c05))
+		else
 		{
-			s_spawn_loc = [[level.var_a3559c05]](level.var_6bca5baa, var_19764360);
-		}
-		else if(level.zm_loc_types["raz_location"].size > 0)
-		{
-			s_spawn_loc = array::random(level.zm_loc_types["raz_location"]);
+			if(isdefined(level.var_a3559c05))
+			{
+				s_spawn_loc = [[level.var_a3559c05]](level.var_6bca5baa, var_19764360);
+			}
+			else if(level.zm_loc_types["raz_location"].size > 0)
+			{
+				s_spawn_loc = array::random(level.zm_loc_types["raz_location"]);
+			}
 		}
 		if(!isdefined(s_spawn_loc))
 		{
@@ -1047,19 +1050,19 @@ function function_a59f11f9(e_player, var_3ca8546d, var_9908b5f4)
 {
 	if(var_9908b5f4 == "right_arm_lower" || var_9908b5f4 == "right_hand")
 	{
-		return 1;
+		return true;
 	}
 	if(var_9908b5f4 == "right_arm_upper" && self.razhasgunattached == 1)
 	{
 		self.razgunhealth = 1;
 		self dodamage(1, e_player.origin, e_player, e_player, "right_arm_upper");
-		return 1;
+		return true;
 	}
 	if(isdefined(self.last_damage_hit_armor) && self.last_damage_hit_armor)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1146,7 +1149,7 @@ function function_39a724b1()
 		}
 		s_spot.angles = (0, player.angles[1] - 180, 0);
 		function_7ed6c714(1, undefined, 1, s_spot);
-		return 1;
+		return true;
 	#/
 }
 

@@ -110,7 +110,7 @@ function rscteleport(params)
 function rscteleportenemies(params)
 {
 	/#
-		foreach(var_b20650e8, player in level.players)
+		foreach(player in level.players)
 		{
 			if(!isdefined(player.bot))
 			{

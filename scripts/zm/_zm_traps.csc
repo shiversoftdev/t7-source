@@ -14,7 +14,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_traps", &__init__, undefined, undefined);
 }
@@ -32,7 +32,7 @@ function __init__()
 {
 	s_traps_array = struct::get_array("zm_traps", "targetname");
 	a_registered_traps = [];
-	foreach(var_32844bd6, trap in s_traps_array)
+	foreach(trap in s_traps_array)
 	{
 		if(isdefined(trap.script_noteworthy))
 		{

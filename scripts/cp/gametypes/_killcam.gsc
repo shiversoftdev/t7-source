@@ -24,7 +24,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("killcam", &__init__, undefined, undefined);
 }
@@ -78,7 +78,7 @@ function init_final_killcam()
 {
 	level.finalkillcamsettings = [];
 	init_final_killcam_team("none");
-	foreach(var_52c9493f, team in level.teams)
+	foreach(team in level.teams)
 	{
 		init_final_killcam_team(team);
 	}
@@ -175,7 +175,7 @@ function record_settings(spectatorclient, targetentityindex, weapon, deathtime, 
 function erase_final_killcam()
 {
 	clear_final_killcam_team("none");
-	foreach(var_e1142790, team in level.teams)
+	foreach(team in level.teams)
 	{
 		clear_final_killcam_team(team);
 	}
@@ -195,10 +195,10 @@ function final_killcam_waiter()
 {
 	if(!isdefined(level.finalkillcam_winner))
 	{
-		return 0;
+		return false;
 	}
 	level waittill(#"final_killcam_done");
-	return 1;
+	return true;
 }
 
 /*
@@ -296,10 +296,10 @@ function are_any_players_watching()
 		player = players[index];
 		if(isdefined(player.killcam))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -363,7 +363,7 @@ function killcam(attackernum, targetnum, killcamentity, killcamentityindex, kill
 	self.psoffsettime = offsettime;
 	self.var_7b6b6cbb = camtime;
 	self.var_1c362abb = self.killcamlength - camtime;
-	foreach(var_c5f589f9, team in level.teams)
+	foreach(team in level.teams)
 	{
 		self allowspectateteam(team, 1);
 	}
@@ -840,7 +840,7 @@ function final_killcam(winner)
 	self.archivetime = killcamoffset;
 	self.killcamlength = killcamlength;
 	self.psoffsettime = killcamsettings.offsettime;
-	foreach(var_dfe3eff5, team in level.teams)
+	foreach(team in level.teams)
 	{
 		self allowspectateteam(team, 1);
 	}
@@ -901,9 +901,9 @@ function is_entity_weapon(weapon)
 {
 	if(weapon.name == "planemortar")
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -924,17 +924,23 @@ function calc_time(weapon, entitystarttime, predelay, respawn, maxtime)
 		{
 			camtime = (((gettime() - entitystarttime) / 1000) - predelay) - 0.1;
 		}
-		else if(!respawn)
-		{
-			camtime = 5;
-		}
-		else if(weapon.isgrenadeweapon)
-		{
-			camtime = 4.25;
-		}
 		else
 		{
-			camtime = 2.5;
+			if(!respawn)
+			{
+				camtime = 5;
+			}
+			else
+			{
+				if(weapon.isgrenadeweapon)
+				{
+					camtime = 4.25;
+				}
+				else
+				{
+					camtime = 2.5;
+				}
+			}
 		}
 	}
 	else

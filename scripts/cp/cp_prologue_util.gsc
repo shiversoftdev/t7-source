@@ -35,7 +35,7 @@
 function give_max_ammo()
 {
 	a_w_weapons = self getweaponslist();
-	foreach(var_f30f4df4, w_weapon in a_w_weapons)
+	foreach(w_weapon in a_w_weapons)
 	{
 		self givemaxammo(w_weapon);
 		self setweaponammoclip(w_weapon, w_weapon.clipsize);
@@ -54,7 +54,7 @@ function give_max_ammo()
 function function_b50f5d52(var_76cb0c72 = 0)
 {
 	a_ai_enemies = getaiteamarray("axis");
-	foreach(var_b840c18a, ai_enemy in a_ai_enemies)
+	foreach(ai_enemy in a_ai_enemies)
 	{
 		if(isalive(ai_enemy))
 		{
@@ -196,7 +196,7 @@ function give_player_weapons()
 	self giveweapon(self.grenadetypeprimary);
 	self giveweapon(self.grenadetypesecondary);
 	a_w_weapons = self getweaponslist();
-	foreach(var_7edb8e34, w_weapon in a_w_weapons)
+	foreach(w_weapon in a_w_weapons)
 	{
 		self givemaxammo(w_weapon);
 		self setweaponammoclip(w_weapon, w_weapon.clipsize);
@@ -464,7 +464,7 @@ function function_1db6047f(str_cleanup)
 */
 function function_3a642801()
 {
-	foreach(var_5e77b7d, ai_rider in self.riders)
+	foreach(ai_rider in self.riders)
 	{
 		if(isdefined(ai_rider))
 		{
@@ -550,7 +550,7 @@ function function_40e4b0cf(str_spawn_manager, str_spawners, var_c5690501)
 {
 	a_spawners = getentarray(str_spawners, "targetname");
 	e_volume = getent(var_c5690501, "targetname");
-	foreach(var_96ca5859, sp_spawner in a_spawners)
+	foreach(sp_spawner in a_spawners)
 	{
 		sp_spawner spawner::add_spawn_function(&set_goal_volume, e_volume);
 	}
@@ -857,7 +857,7 @@ function function_2a0bc326(v_pos, var_48f82942, var_51fbdea, var_644bf6a7, var_8
 		earthquake(var_48f82942, var_51fbdea, v_pos, var_644bf6a7);
 	}
 	var_5ca58060 = var_644bf6a7 * var_644bf6a7;
-	foreach(var_5d86d383, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		if(isdefined(var_183c13ad))
 		{
@@ -933,7 +933,7 @@ function function_47a62798(var_de243c2)
 {
 	level.ai_hendricks ai::set_behavior_attribute("cqb", var_de243c2);
 	a_allies = get_ai_allies();
-	foreach(var_250c8721, e_ally in a_allies)
+	foreach(e_ally in a_allies)
 	{
 		e_ally ai::set_behavior_attribute("cqb", var_de243c2);
 	}
@@ -954,7 +954,7 @@ function function_a5398264(str_mode)
 	level.ai_khalil ai::set_behavior_attribute("move_mode", str_mode);
 	level.ai_minister ai::set_behavior_attribute("move_mode", str_mode);
 	a_allies = get_ai_allies();
-	foreach(var_c1290e00, e_ally in a_allies)
+	foreach(e_ally in a_allies)
 	{
 		e_ally ai::set_behavior_attribute("move_mode", str_mode);
 	}
@@ -975,7 +975,7 @@ function function_db027040(var_eb6e3c93)
 	level.ai_khalil.perfectaim = var_eb6e3c93;
 	level.ai_minister.perfectaim = var_eb6e3c93;
 	a_allies = get_ai_allies();
-	foreach(var_56b45993, e_ally in a_allies)
+	foreach(e_ally in a_allies)
 	{
 		e_ally.perfectaim = var_eb6e3c93;
 	}
@@ -1294,7 +1294,7 @@ function function_c56034b7()
 function function_950d1c3b(b_enable = 1)
 {
 	var_9dff5377 = (b_enable ? 1 : 0);
-	foreach(var_fa66d5b8, player in level.players)
+	foreach(player in level.players)
 	{
 		player clientfield::set_to_player("player_tunnel_dust_fx", var_9dff5377);
 	}
@@ -1391,7 +1391,7 @@ function function_21f52196(str_door_name, t_enter, var_13aabd08)
 		#/
 		var_dee3d10a endon(#"death");
 		var_dee3d10a waittill(#"hash_c0b9931e");
-		foreach(var_cdea7b1, player in level.players)
+		foreach(player in level.players)
 		{
 			if(!isdefined(player.a_doors))
 			{
@@ -1426,7 +1426,7 @@ function function_2e61b3e8(str_door_name, t_enter, a_ai)
 		level.var_40c4c9da = [];
 	}
 	level.var_40c4c9da[str_door_name] = a_ai;
-	foreach(var_d0107f70, e_guy in a_ai)
+	foreach(e_guy in a_ai)
 	{
 		t_exit thread function_e010251d(str_door_name, 1, e_guy);
 	}
@@ -1503,7 +1503,7 @@ function function_e010251d(str_door_name, b_state, e_guy)
 function function_cdd726fb(str_door_name)
 {
 	var_83b77796 = 1;
-	foreach(var_f4aa5631, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		if(!isdefined(player.a_doors) || !isdefined(player.a_doors[str_door_name]) || !player.a_doors[str_door_name])
 		{
@@ -1512,7 +1512,7 @@ function function_cdd726fb(str_door_name)
 	}
 	if(isdefined(level.var_40c4c9da) && isdefined(level.var_40c4c9da[str_door_name]))
 	{
-		foreach(var_d760ea7b, e_guy in level.var_40c4c9da[str_door_name])
+		foreach(e_guy in level.var_40c4c9da[str_door_name])
 		{
 			if(isalive(e_guy) && (!isdefined(e_guy.a_doors) || !isdefined(e_guy.a_doors[str_door_name]) || !e_guy.a_doors[str_door_name]))
 			{

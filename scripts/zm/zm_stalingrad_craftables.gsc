@@ -122,7 +122,7 @@ function function_6545e739(player)
 		level.var_583e4a97.s_radio.b_used = 1;
 	}
 	str_piece = self.piecename;
-	foreach(var_2b851d38, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		e_player thread show_infotext_for_duration("ZMUI_DRAGONRIDE_PART_PICKUP", 3.5);
 		switch(str_piece)
@@ -182,7 +182,7 @@ function function_39c3c699()
 	var_a21e2a98 hidepart("tag_dragon_network_console_screen_red");
 	var_a21e2a98 showpart("tag_dragon_network_console_screen_green");
 	level thread zm_stalingrad_vo::function_6576bb4b();
-	return 1;
+	return true;
 }
 
 /*

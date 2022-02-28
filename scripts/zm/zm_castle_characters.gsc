@@ -82,7 +82,7 @@ function assign_lowest_unused_character_index()
 		return charindexarray[0];
 	}
 	n_characters_defined = 0;
-	foreach(var_4a103a8c, player in players)
+	foreach(player in players)
 	{
 		if(isdefined(player.characterindex))
 		{

@@ -26,7 +26,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("claymore", &__init__, undefined, undefined);
 }
@@ -142,7 +142,7 @@ function claymore_detonation(e_planter)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function should_trigger_claymore(e_mine)
+function private should_trigger_claymore(e_mine)
 {
 	n_detonation_dot = cos(70);
 	pos = self.origin + vectorscale((0, 0, 1), 32);
@@ -167,7 +167,7 @@ private function should_trigger_claymore(e_mine)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function delete_mines_on_death(player, ent)
+function private delete_mines_on_death(player, ent)
 {
 	self waittill(#"death");
 	if(isdefined(player))

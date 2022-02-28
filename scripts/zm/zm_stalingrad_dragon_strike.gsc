@@ -32,7 +32,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_stalingrad_dragon_strike", &__init__, &__main__, undefined);
 }
@@ -184,7 +184,7 @@ function function_41457bd1()
 	{
 		var_f2c16bcc = 4 - level.players.size;
 		var_29ec90ed = 0;
-		foreach(var_bce6eaf5, player in level.players)
+		foreach(player in level.players)
 		{
 			if(player flag::get("dragon_strike_lockbox_trigger_used"))
 			{
@@ -235,7 +235,7 @@ function function_8f02cb7e()
 	{
 		var_f2c16bcc = 4 - level.players.size;
 		var_29ec90ed = 0;
-		foreach(var_71be5dcc, player in level.players)
+		foreach(player in level.players)
 		{
 			if(player flag::get("dragon_strike_lockbox_upgraded_trigger_used"))
 			{
@@ -316,32 +316,32 @@ function function_10d61b3(player)
 	if(level flag::get("draconite_available") && player zm_utility::get_player_placeable_mine() != getweapon("launcher_dragon_strike_upgraded"))
 	{
 		self sethintstringforplayer(player, &"ZM_STALINGRAD_DRAGON_STRIKE_UPGRADED_PICKUP");
-		return 1;
+		return true;
 	}
 	if(level flag::get("dragon_strike_quest_complete") && !level flag::get("draconite_available") && player zm_utility::get_player_placeable_mine() != getweapon("launcher_dragon_strike"))
 	{
 		self sethintstringforplayer(player, &"ZM_STALINGRAD_DRAGON_STRIKE_PICKUP");
-		return 1;
+		return true;
 	}
 	if(level flag::get("dragon_strike_unlocked") && player zm_utility::get_player_placeable_mine() == getweapon("launcher_dragon_strike") && !level flag::get("dragon_stage3_started") || (level flag::get("dragon_strike_unlocked") && !level flag::get("dragon_strike_quest_complete")) || (level flag::get("draconite_available") && player zm_utility::get_player_placeable_mine() == getweapon("launcher_dragon_strike_upgraded")) || (!level flag::get("draconite_available") && level flag::get("dragon_stage4_started")) || level flag::get("special_round") || level.round_number == level.var_a78effc7 || level flag::get("scenario_active"))
 	{
 		self sethintstringforplayer(player, "");
-		return 0;
+		return false;
 	}
 	if(level flag::get("dragon_stage3_started") && !player flag::get("dragon_strike_lockbox_upgraded_trigger_used"))
 	{
 		self sethintstringforplayer(player, &"ZM_STALINGRAD_DRAGON_STRIKE_UPGRADED_UNLOCK");
-		return 1;
+		return true;
 	}
 	if(player flag::get("dragon_strike_lockbox_trigger_used") && !level flag::get("dragon_strike_unlocked") || (player flag::get("dragon_strike_lockbox_upgraded_trigger_used") && !level flag::get("dragon_stage4_started")))
 	{
 		self sethintstringforplayer(player, &"ZM_STALINGRAD_DRAGON_STRIKE_UNLOCK_INCOMPLETE");
-		return 0;
+		return false;
 	}
 	if(!player flag::get("dragon_strike_lockbox_trigger_used") && !level flag::get("dragon_strike_unlocked"))
 	{
 		self sethintstringforplayer(player, &"ZM_STALINGRAD_DRAGON_STRIKE_UNLOCK");
-		return 1;
+		return true;
 	}
 }
 
@@ -368,25 +368,31 @@ function function_68299355()
 			e_player function_8258d71c();
 			zm_unitrigger::assess_and_apply_visibility(self.stub.trigger, self.stub, e_player, 0);
 		}
-		else if(level flag::get("dragon_strike_quest_complete") && !level flag::get("draconite_available") && e_player zm_utility::get_player_placeable_mine() != getweapon("launcher_dragon_strike"))
+		else
 		{
-			e_player playsound("zmb_ds_machine_replace");
-			e_player function_8258d71c();
-			level flag::set("dragon_strike_acquired");
-			zm_unitrigger::assess_and_apply_visibility(self.stub.trigger, self.stub, e_player, 0);
-		}
-		else if(level flag::get("dragon_stage3_started") && !level flag::get("dragon_stage4_started") && !e_player flag::get("dragon_strike_lockbox_upgraded_trigger_used"))
-		{
-			e_player flag::set("dragon_strike_lockbox_upgraded_trigger_used");
-			e_player thread function_ea7e3000(self.stub, "dragon_stage4_started", "dragon_strike_lockbox_upgraded_trigger_used");
-			e_player playsound("zmb_ds_machine_replace");
-			self.stub.var_f30d1f8f.var_f2c16bcc++;
-		}
-		else if(!level flag::get("dragon_strike_unlocked") && !e_player flag::get("dragon_strike_lockbox_trigger_used"))
-		{
-			e_player flag::set("dragon_strike_lockbox_trigger_used");
-			e_player thread function_ea7e3000(self.stub, "dragon_strike_unlocked", "dragon_strike_lockbox_trigger_used");
-			self.stub.var_f30d1f8f.var_f2c16bcc++;
+			if(level flag::get("dragon_strike_quest_complete") && !level flag::get("draconite_available") && e_player zm_utility::get_player_placeable_mine() != getweapon("launcher_dragon_strike"))
+			{
+				e_player playsound("zmb_ds_machine_replace");
+				e_player function_8258d71c();
+				level flag::set("dragon_strike_acquired");
+				zm_unitrigger::assess_and_apply_visibility(self.stub.trigger, self.stub, e_player, 0);
+			}
+			else
+			{
+				if(level flag::get("dragon_stage3_started") && !level flag::get("dragon_stage4_started") && !e_player flag::get("dragon_strike_lockbox_upgraded_trigger_used"))
+				{
+					e_player flag::set("dragon_strike_lockbox_upgraded_trigger_used");
+					e_player thread function_ea7e3000(self.stub, "dragon_stage4_started", "dragon_strike_lockbox_upgraded_trigger_used");
+					e_player playsound("zmb_ds_machine_replace");
+					self.stub.var_f30d1f8f.var_f2c16bcc++;
+				}
+				else if(!level flag::get("dragon_strike_unlocked") && !e_player flag::get("dragon_strike_lockbox_trigger_used"))
+				{
+					e_player flag::set("dragon_strike_lockbox_trigger_used");
+					e_player thread function_ea7e3000(self.stub, "dragon_strike_unlocked", "dragon_strike_lockbox_trigger_used");
+					self.stub.var_f30d1f8f.var_f2c16bcc++;
+				}
+			}
 		}
 	}
 }
@@ -514,7 +520,7 @@ function function_93510b8b()
 		else
 		{
 			level flag::clear("dragon_stage4_started");
-			foreach(var_358d8fda, player in level.players)
+			foreach(player in level.players)
 			{
 				player flag::clear("dragon_strike_lockbox_upgraded_trigger_used");
 			}
@@ -555,7 +561,7 @@ function function_e6794c49()
 function function_af4562b1()
 {
 	var_5a0c399b = getweapon("launcher_dragon_strike");
-	foreach(var_671a4ca0, player in level.players)
+	foreach(player in level.players)
 	{
 		if(player zm_utility::get_player_placeable_mine() === var_5a0c399b)
 		{

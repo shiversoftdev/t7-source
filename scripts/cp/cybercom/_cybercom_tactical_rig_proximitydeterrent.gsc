@@ -134,7 +134,7 @@ function proximitydeterrentthink(type)
 	self endon("take_ability_" + type);
 	while(true)
 	{
-		self waittill(#"damage", n_damage, e_attacker, v_vector, v_point, str_means_of_death, var_c4fe462, var_e64d69f9, var_c04aef90, w_weapon);
+		self waittill(#"damage", n_damage, e_attacker, v_vector, v_point, str_means_of_death, str_string_1, str_string_2, str_string_3, w_weapon);
 		if(issubstr(str_means_of_death, "MOD_MELEE") && isdefined(e_attacker))
 		{
 			self.cybercom.proximity_deterrent_target = e_attacker;
@@ -213,17 +213,23 @@ function function_ae8e24a7(attacker)
 	{
 		zone = 0;
 	}
-	else if(yaw > 45 && yaw <= 135)
-	{
-		zone = 3;
-	}
-	else if(yaw > 135 && yaw <= 180 || (yaw >= -180 && yaw < -135))
-	{
-		zone = 2;
-	}
 	else
 	{
-		zone = 1;
+		if(yaw > 45 && yaw <= 135)
+		{
+			zone = 3;
+		}
+		else
+		{
+			if(yaw > 135 && yaw <= 180 || (yaw >= -180 && yaw < -135))
+			{
+				zone = 2;
+			}
+			else
+			{
+				zone = 1;
+			}
+		}
 	}
 	self.cybercom.var_d7d9f704[zone].time = gettime() + getdvarint("scr_proximity_indicator_durationMSEC", 1500);
 	self.cybercom.var_d7d9f704[zone].attacker = attacker;
@@ -297,7 +303,7 @@ function proximitydeterrentonattacker(type, player)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function _stunassailant(player, attacker, upgraded)
+function private _stunassailant(player, attacker, upgraded)
 {
 	attacker endon(#"death");
 	if(!isdefined(attacker.archetype))
@@ -390,7 +396,7 @@ function function_c0ba5acc(player, attacker, radius)
 		var_119472f5 = radius * radius;
 	}
 	var_4c0d9ab5 = [];
-	foreach(var_420e5213, guy in enemies)
+	foreach(guy in enemies)
 	{
 		if(isdefined(attacker) && guy == attacker)
 		{
@@ -423,7 +429,7 @@ function function_c0ba5acc(player, attacker, radius)
 			break;
 		}
 	}
-	foreach(var_28ee6433, guy in var_4c0d9ab5)
+	foreach(guy in var_4c0d9ab5)
 	{
 		level thread function_a38f70a1(player, guy);
 	}
@@ -438,7 +444,7 @@ function function_c0ba5acc(player, attacker, radius)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_c8e11a8b(ent, note)
+function private function_c8e11a8b(ent, note)
 {
 	ent endon(#"death");
 	self waittill(note);
@@ -454,7 +460,7 @@ private function function_c8e11a8b(ent, note)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_a38f70a1(player, target)
+function private function_a38f70a1(player, target)
 {
 	target endon(#"death");
 	player endon(#"disconnect");

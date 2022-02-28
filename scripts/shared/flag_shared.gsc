@@ -222,14 +222,14 @@ function get(str_flag)
 */
 function get_any(&array)
 {
-	foreach(var_811f8866, str_flag in array)
+	foreach(str_flag in array)
 	{
 		if(get(str_flag))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -325,7 +325,7 @@ function wait_till_all_timeout(n_timeout, a_flags)
 function wait_till_any(a_flags)
 {
 	self endon(#"death");
-	foreach(var_59ec99a, flag in a_flags)
+	foreach(flag in a_flags)
 	{
 		if(get(flag))
 		{
@@ -450,7 +450,7 @@ function wait_till_clear_any(a_flags)
 	self endon(#"death");
 	while(true)
 	{
-		foreach(var_575757b6, flag in a_flags)
+		foreach(flag in a_flags)
 		{
 			if(!get(flag))
 			{
@@ -496,7 +496,12 @@ function delete(str_flag)
 	{
 		self.flag[str_flag] = undefined;
 	}
-	println("" + str_flag);
+	else
+	{
+		/#
+			println("" + str_flag);
+		#/
+	}
 }
 
 /*
@@ -513,8 +518,8 @@ function script_flag_wait()
 	if(isdefined(self.script_flag_wait))
 	{
 		self wait_till(self.script_flag_wait);
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 

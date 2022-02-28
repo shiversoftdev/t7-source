@@ -48,7 +48,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_genesis_round_bosses", &__init__, undefined, undefined);
 }
@@ -167,19 +167,22 @@ function function_c68599fd()
 			{
 				spawn_boss("mechz");
 			}
-			else if(a_players.size == 3)
+			else
 			{
-				spawn_boss("mechz");
-				wait(1);
-				spawn_boss("margwa");
-			}
-			else if(a_players.size == 4)
-			{
-				spawn_boss("mechz");
-				wait(1);
-				spawn_boss("margwa");
-				wait(1);
-				spawn_boss("margwa");
+				if(a_players.size == 3)
+				{
+					spawn_boss("mechz");
+					wait(1);
+					spawn_boss("margwa");
+				}
+				else if(a_players.size == 4)
+				{
+					spawn_boss("mechz");
+					wait(1);
+					spawn_boss("margwa");
+					wait(1);
+					spawn_boss("margwa");
+				}
 			}
 			break;
 		}
@@ -189,17 +192,23 @@ function function_c68599fd()
 			{
 				var_b3c4bbcc = 1;
 			}
-			else if(a_players.size == 2)
-			{
-				var_b3c4bbcc = 1;
-			}
-			else if(a_players.size == 3)
-			{
-				var_b3c4bbcc = 2;
-			}
 			else
 			{
-				var_b3c4bbcc = 3;
+				if(a_players.size == 2)
+				{
+					var_b3c4bbcc = 1;
+				}
+				else
+				{
+					if(a_players.size == 3)
+					{
+						var_b3c4bbcc = 2;
+					}
+					else
+					{
+						var_b3c4bbcc = 3;
+					}
+				}
 			}
 			for(i = 0; i < var_b3c4bbcc; i++)
 			{
@@ -239,11 +248,11 @@ function spawn_boss(str_enemy, v_pos)
 	{
 		if(math::cointoss())
 		{
-			var_33504256 = namespace_3de4ab6f::function_75b161ab(undefined, s_loc);
+			var_33504256 = zm_ai_margwa_elemental::function_75b161ab(undefined, s_loc);
 		}
 		else
 		{
-			var_33504256 = namespace_3de4ab6f::function_26efbc37(undefined, s_loc);
+			var_33504256 = zm_ai_margwa_elemental::function_26efbc37(undefined, s_loc);
 		}
 		var_33504256.var_26f9f957 = &function_26f9f957;
 		level.var_95981590 = var_33504256;

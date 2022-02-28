@@ -17,7 +17,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("spawnlogic", &__init__, undefined, undefined);
 }
@@ -180,7 +180,7 @@ function add_spawn_points_internal(team, spawnpoints, list = 0)
 */
 function clear_spawn_points()
 {
-	foreach(var_ef795c4e, team in level.teams)
+	foreach(team in level.teams)
 	{
 		level.teamspawnpoints[team] = [];
 	}
@@ -444,47 +444,50 @@ function get_spawnpoint_final(spawnpoints, useweights, predictedspawn, isintermm
 		bestspawnpoint = get_best_weighted_spawnpoint(spawnpoints);
 		thread spawn_weight_debug(spawnpoints);
 	}
-	else if(isdefined(self.lastspawnpoint) && self.lastspawnpoint.lastspawnpredicted && !predictedspawn && !isintermmissionspawn)
+	else
 	{
-		if(!positionwouldtelefrag(self.lastspawnpoint.origin))
+		if(isdefined(self.lastspawnpoint) && self.lastspawnpoint.lastspawnpredicted && !predictedspawn && !isintermmissionspawn)
 		{
-			bestspawnpoint = self.lastspawnpoint;
+			if(!positionwouldtelefrag(self.lastspawnpoint.origin))
+			{
+				bestspawnpoint = self.lastspawnpoint;
+			}
 		}
-	}
-	if(!isdefined(bestspawnpoint))
-	{
-		for(i = 0; i < spawnpoints.size; i++)
-		{
-			if(isdefined(self.lastspawnpoint) && self.lastspawnpoint == spawnpoints[i] && !self.lastspawnpoint.lastspawnpredicted)
-			{
-				continue;
-			}
-			if(positionwouldtelefrag(spawnpoints[i].origin))
-			{
-				continue;
-			}
-			if(isdefined(level.var_6f13f156) && ![[level.var_6f13f156]](spawnpoints[i], predictedspawn))
-			{
-				continue;
-			}
-			bestspawnpoint = spawnpoints[i];
-			break;
-		}
-	}
-	if(!isdefined(bestspawnpoint))
-	{
-		if(isdefined(self.lastspawnpoint) && !positionwouldtelefrag(self.lastspawnpoint.origin))
+		if(!isdefined(bestspawnpoint))
 		{
 			for(i = 0; i < spawnpoints.size; i++)
 			{
+				if(isdefined(self.lastspawnpoint) && self.lastspawnpoint == spawnpoints[i] && !self.lastspawnpoint.lastspawnpredicted)
+				{
+					continue;
+				}
+				if(positionwouldtelefrag(spawnpoints[i].origin))
+				{
+					continue;
+				}
 				if(isdefined(level.var_6f13f156) && ![[level.var_6f13f156]](spawnpoints[i], predictedspawn))
 				{
 					continue;
 				}
-				if(spawnpoints[i] == self.lastspawnpoint)
+				bestspawnpoint = spawnpoints[i];
+				break;
+			}
+		}
+		if(!isdefined(bestspawnpoint))
+		{
+			if(isdefined(self.lastspawnpoint) && !positionwouldtelefrag(self.lastspawnpoint.origin))
+			{
+				for(i = 0; i < spawnpoints.size; i++)
 				{
-					bestspawnpoint = spawnpoints[i];
-					break;
+					if(isdefined(level.var_6f13f156) && ![[level.var_6f13f156]](spawnpoints[i], predictedspawn))
+					{
+						continue;
+					}
+					if(spawnpoints[i] == self.lastspawnpoint)
+					{
+						bestspawnpoint = spawnpoints[i];
+						break;
+					}
 				}
 			}
 		}
@@ -841,13 +844,16 @@ function read_spawn_data(desiredid, relativepos)
 					data.minweight = spawnpoint.weight;
 					data.maxweight = spawnpoint.weight;
 				}
-				else if(spawnpoint.weight < data.minweight)
+				else
 				{
-					data.minweight = spawnpoint.weight;
-				}
-				if(spawnpoint.weight > data.maxweight)
-				{
-					data.maxweight = spawnpoint.weight;
+					if(spawnpoint.weight < data.minweight)
+					{
+						data.minweight = spawnpoint.weight;
+					}
+					if(spawnpoint.weight > data.maxweight)
+					{
+						data.maxweight = spawnpoint.weight;
+					}
 				}
 				argnum = 4;
 				numdata = int(fgetarg(file, 3));
@@ -932,36 +938,42 @@ function read_spawn_data(desiredid, relativepos)
 						break;
 					}
 				}
-				else if(relativepos == "")
+				else
 				{
-					if(data.id == oldspawndata.id)
+					if(relativepos == "")
 					{
-						level.curspawndata = prev;
-						break;
+						if(data.id == oldspawndata.id)
+						{
+							level.curspawndata = prev;
+							break;
+						}
 					}
-				}
-				else if(relativepos == "")
-				{
-					if(lookingfornextthisplayer)
+					else
 					{
-						level.curspawndata = data;
-						break;
-					}
-					else if(data.id == oldspawndata.id)
-					{
-						lookingfornextthisplayer = 1;
-					}
-				}
-				else if(relativepos == "")
-				{
-					if(lookingfornext)
-					{
-						level.curspawndata = data;
-						break;
-					}
-					else if(data.id == oldspawndata.id)
-					{
-						lookingfornext = 1;
+						if(relativepos == "")
+						{
+							if(lookingfornextthisplayer)
+							{
+								level.curspawndata = data;
+								break;
+							}
+							else if(data.id == oldspawndata.id)
+							{
+								lookingfornextthisplayer = 1;
+							}
+						}
+						else if(relativepos == "")
+						{
+							if(lookingfornext)
+							{
+								level.curspawndata = data;
+								break;
+							}
+							else if(data.id == oldspawndata.id)
+							{
+								lookingfornext = 1;
+							}
+						}
 					}
 				}
 			}
@@ -1150,7 +1162,7 @@ function get_all_allied_and_enemy_players(obj)
 		#/
 		obj.allies = level.aliveplayers[self.team];
 		obj.enemies = undefined;
-		foreach(var_46e4ae1, team in level.teams)
+		foreach(team in level.teams)
 		{
 			if(team == self.team)
 			{
@@ -1161,7 +1173,7 @@ function get_all_allied_and_enemy_players(obj)
 				obj.enemies = level.aliveplayers[team];
 				continue;
 			}
-			foreach(var_c68d4c29, player in level.aliveplayers[team])
+			foreach(player in level.aliveplayers[team])
 			{
 				obj.enemies[obj.enemies.size] = player;
 			}
@@ -2071,10 +2083,10 @@ function is_point_vulnerable(playerorigin)
 		angle = acos(vectordot(playerdir, forward));
 		if(angle < level.bettydetectionconeangle)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2157,7 +2169,7 @@ function spawn_per_frame_update()
 function get_non_team_sum(skip_team, sums)
 {
 	value = 0;
-	foreach(var_1855ec96, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(team == skip_team)
 		{
@@ -2180,7 +2192,7 @@ function get_non_team_sum(skip_team, sums)
 function get_non_team_min_dist(skip_team, mindists)
 {
 	dist = 9999999;
-	foreach(var_ba0383d4, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(team == skip_team)
 		{
@@ -2208,7 +2220,7 @@ function spawnpoint_update(spawnpoint)
 	if(level.teambased)
 	{
 		sights = [];
-		foreach(var_2fe1db4c, team in level.teams)
+		foreach(team in level.teams)
 		{
 			spawnpoint.enemysights[team] = 0;
 			sights[team] = 0;
@@ -2231,7 +2243,7 @@ function spawnpoint_update(spawnpoint)
 	{
 		mindist["all"] = 9999999;
 	}
-	foreach(var_81ceab27, team in level.teams)
+	foreach(team in level.teams)
 	{
 		spawnpoint.distsum[team] = 0;
 		spawnpoint.enemydistsum[team] = 0;
@@ -2291,7 +2303,7 @@ function spawnpoint_update(spawnpoint)
 	}
 	if(level.teambased)
 	{
-		foreach(var_4e05ee4c, team in level.teams)
+		foreach(team in level.teams)
 		{
 			spawnpoint.enemysights[team] = get_non_team_sum(team, sights);
 			spawnpoint.minenemydist[team] = get_non_team_min_dist(team, mindist);
@@ -2338,13 +2350,13 @@ function last_minute_sight_traces(spawnpoint)
 {
 	if(!isdefined(spawnpoint.nearbyplayers))
 	{
-		return 0;
+		return false;
 	}
 	closest = undefined;
 	closestdistsq = undefined;
 	secondclosest = undefined;
 	secondclosestdistsq = undefined;
-	foreach(var_1359eacd, team in spawnpoint.nearbyplayers)
+	foreach(team in spawnpoint.nearbyplayers)
 	{
 		if(team == self.team)
 		{
@@ -2385,17 +2397,17 @@ function last_minute_sight_traces(spawnpoint)
 	{
 		if(bullettracepassed(closest.origin + vectorscale((0, 0, 1), 50), spawnpoint.sighttracepoint, 0, undefined))
 		{
-			return 1;
+			return true;
 		}
 	}
 	if(isdefined(secondclosest))
 	{
 		if(bullettracepassed(secondclosest.origin + vectorscale((0, 0, 1), 50), spawnpoint.sighttracepoint, 0, undefined))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*

@@ -49,14 +49,14 @@ function activatedronestrike()
 {
 	if(self killstreakrules::iskillstreakallowed("drone_strike", self.team) == 0)
 	{
-		return 0;
+		return false;
 	}
 	result = self selectdronestrikepath();
 	if(!isdefined(result) || !result)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -134,14 +134,14 @@ function dronestrikelocationselected(location)
 	killstreak_id = self killstreakrules::killstreakstart("drone_strike", team, 0, 1);
 	if(killstreak_id == -1)
 	{
-		return 0;
+		return false;
 	}
 	self killstreaks::play_killstreak_start_dialog("drone_strike", team, killstreak_id);
 	self addweaponstat(getweapon("drone_strike"), "used", 1);
 	spawn_influencer = level spawning::create_enemy_influencer("artillery", location.origin, team);
 	self thread watchforkillstreakend(team, spawn_influencer, killstreak_id);
 	self thread startdronestrike(location.origin, location.yaw, team, killstreak_id);
-	return 1;
+	return true;
 }
 
 /*

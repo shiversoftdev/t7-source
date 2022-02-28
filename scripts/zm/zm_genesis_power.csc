@@ -30,7 +30,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_genesis_power", &__init__, undefined, undefined);
 }
@@ -120,58 +120,64 @@ function corruption_tower(n_local_client, n_old, n_new, b_new_ent, b_initial_sna
 	{
 		var_6bf7783a tower_fx(n_local_client, 2, "tag_fx_main", "corruption_tower_active_top_ember", "tag_fx_main_ember");
 	}
-	else if(n_new >= 1)
-	{
-		var_6bf7783a clearanim("p7_fxanim_zm_gen_apoth_corpt_engine_pillar_rise_anim", 0.2);
-		var_6bf7783a setanim("p7_fxanim_zm_gen_apoth_corpt_engine_pillar_rise_idle_anim", 1, 0.2);
-		var_6bf7783a tower_fx(n_local_client, 3, "tag_fx_btm_01", "corruption_tower_complete");
-		var_6bf7783a tower_fx(n_local_client, 3, "tag_fx_btm_02", "corruption_tower_complete");
-		var_6bf7783a tower_fx(n_local_client, 3, "tag_fx_top_01", "corruption_tower_complete");
-		var_6bf7783a tower_fx(n_local_client, 3, "tag_fx_top_02", "corruption_tower_complete");
-		var_6bf7783a tower_fx(n_local_client, 3, "tag_fx_cnt", "corruption_tower_complete");
-		var_6bf7783a tower_fx(n_local_client, 3, "tag_fx_main", "corruption_tower_complete_top");
-		var_6bf7783a tower_fx(n_local_client, 3, "tag_fx_main", "corruption_tower_active_top_ember", "tag_fx_main_ember");
-	}
 	else
 	{
-		var_6bf7783a setanim("p7_fxanim_zm_gen_apoth_corpt_engine_pillar_rise_anim", n_new, 0.2);
-		var_6bf7783a setanim("p7_fxanim_zm_gen_apoth_corpt_engine_pillar_reverse_anim", 1 - n_new, 0.2);
-		if(n_new > n_old)
+		if(n_new >= 1)
 		{
-			if(n_new > 0)
-			{
-				var_6bf7783a tower_fx(n_local_client, 1, "tag_fx_main", "corruption_tower_active", "tag_fx_main_ember");
-			}
-			if(n_new > 0.03)
-			{
-				var_6bf7783a tower_fx(n_local_client, 1, "tag_fx_btm_01", "corruption_tower_active");
-				var_6bf7783a tower_fx(n_local_client, 1, "tag_fx_btm_02", "corruption_tower_active");
-			}
-			if(n_new > 0.44)
-			{
-				var_6bf7783a tower_fx(n_local_client, 1, "tag_fx_top_01", "corruption_tower_active");
-				var_6bf7783a tower_fx(n_local_client, 1, "tag_fx_top_02", "corruption_tower_active");
-			}
-			if(n_new > 0.76)
-			{
-				var_6bf7783a tower_fx(n_local_client, 1, "tag_fx_cnt", "corruption_tower_active");
-				var_6bf7783a tower_fx(n_local_client, 1, "tag_fx_main", "corruption_tower_active_top");
-			}
+			var_6bf7783a clearanim("p7_fxanim_zm_gen_apoth_corpt_engine_pillar_rise_anim", 0.2);
+			var_6bf7783a setanim("p7_fxanim_zm_gen_apoth_corpt_engine_pillar_rise_idle_anim", 1, 0.2);
+			var_6bf7783a tower_fx(n_local_client, 3, "tag_fx_btm_01", "corruption_tower_complete");
+			var_6bf7783a tower_fx(n_local_client, 3, "tag_fx_btm_02", "corruption_tower_complete");
+			var_6bf7783a tower_fx(n_local_client, 3, "tag_fx_top_01", "corruption_tower_complete");
+			var_6bf7783a tower_fx(n_local_client, 3, "tag_fx_top_02", "corruption_tower_complete");
+			var_6bf7783a tower_fx(n_local_client, 3, "tag_fx_cnt", "corruption_tower_complete");
+			var_6bf7783a tower_fx(n_local_client, 3, "tag_fx_main", "corruption_tower_complete_top");
+			var_6bf7783a tower_fx(n_local_client, 3, "tag_fx_main", "corruption_tower_active_top_ember", "tag_fx_main_ember");
 		}
-		else if(n_new < 0.03)
+		else
 		{
-			var_6bf7783a tower_fx(n_local_client, 2, "tag_fx_btm_01");
-			var_6bf7783a tower_fx(n_local_client, 2, "tag_fx_btm_02");
-		}
-		if(n_new < 0.44)
-		{
-			var_6bf7783a tower_fx(n_local_client, 2, "tag_fx_top_01");
-			var_6bf7783a tower_fx(n_local_client, 2, "tag_fx_top_02");
-		}
-		if(n_new > 0.76)
-		{
-			var_6bf7783a tower_fx(n_local_client, 2, "tag_fx_cnt");
-			var_6bf7783a tower_fx(n_local_client, 2, "tag_fx_main");
+			var_6bf7783a setanim("p7_fxanim_zm_gen_apoth_corpt_engine_pillar_rise_anim", n_new, 0.2);
+			var_6bf7783a setanim("p7_fxanim_zm_gen_apoth_corpt_engine_pillar_reverse_anim", 1 - n_new, 0.2);
+			if(n_new > n_old)
+			{
+				if(n_new > 0)
+				{
+					var_6bf7783a tower_fx(n_local_client, 1, "tag_fx_main", "corruption_tower_active", "tag_fx_main_ember");
+				}
+				if(n_new > 0.03)
+				{
+					var_6bf7783a tower_fx(n_local_client, 1, "tag_fx_btm_01", "corruption_tower_active");
+					var_6bf7783a tower_fx(n_local_client, 1, "tag_fx_btm_02", "corruption_tower_active");
+				}
+				if(n_new > 0.44)
+				{
+					var_6bf7783a tower_fx(n_local_client, 1, "tag_fx_top_01", "corruption_tower_active");
+					var_6bf7783a tower_fx(n_local_client, 1, "tag_fx_top_02", "corruption_tower_active");
+				}
+				if(n_new > 0.76)
+				{
+					var_6bf7783a tower_fx(n_local_client, 1, "tag_fx_cnt", "corruption_tower_active");
+					var_6bf7783a tower_fx(n_local_client, 1, "tag_fx_main", "corruption_tower_active_top");
+				}
+			}
+			else
+			{
+				if(n_new < 0.03)
+				{
+					var_6bf7783a tower_fx(n_local_client, 2, "tag_fx_btm_01");
+					var_6bf7783a tower_fx(n_local_client, 2, "tag_fx_btm_02");
+				}
+				if(n_new < 0.44)
+				{
+					var_6bf7783a tower_fx(n_local_client, 2, "tag_fx_top_01");
+					var_6bf7783a tower_fx(n_local_client, 2, "tag_fx_top_02");
+				}
+				if(n_new > 0.76)
+				{
+					var_6bf7783a tower_fx(n_local_client, 2, "tag_fx_cnt");
+					var_6bf7783a tower_fx(n_local_client, 2, "tag_fx_main");
+				}
+			}
 		}
 	}
 }

@@ -45,7 +45,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_stalingrad_pap", &__init__, undefined, undefined);
 }
@@ -186,7 +186,7 @@ function function_d32eac7f()
 function function_23b93c79(var_db0ac3dc)
 {
 	var_8aa74c19 = [];
-	foreach(var_bce6eaf5, s_location in level.var_583e4a97.var_5d8406ed)
+	foreach(s_location in level.var_583e4a97.var_5d8406ed)
 	{
 		str_location = (s_location.script_string + "") + s_location.script_int;
 		if(s_location.b_available)
@@ -212,7 +212,7 @@ function function_23b93c79(var_db0ac3dc)
 function function_a0a37968(var_db0ac3dc)
 {
 	var_8aa74c19 = [];
-	foreach(var_e453067f, s_location in level.var_583e4a97.var_5d8406ed)
+	foreach(s_location in level.var_583e4a97.var_5d8406ed)
 	{
 		if(s_location.script_string != var_db0ac3dc && s_location.b_available == 1)
 		{
@@ -263,7 +263,7 @@ function function_f3cc536()
 	self thread zm_stalingrad_util::function_ab2df0ca();
 	zm_stalingrad_util::function_5eeabbe0(var_47ee7db6, nd_path_start, var_f08b56c6, "player_exited_sewer");
 	var_b8fe8638 = struct::get_array("drop_pod_radio", "targetname");
-	foreach(var_ca53498e, s_radio in var_b8fe8638)
+	foreach(s_radio in var_b8fe8638)
 	{
 		s_radio.b_used = 0;
 	}
@@ -641,7 +641,7 @@ function function_6236d848(var_e57afa84, var_7741a4b8, var_ed686791, var_2a448c9
 	level.var_1dfcc9b2.var_61126827 = undefined;
 	level.var_a3559c05 = undefined;
 	level flag::clear("lockdown_active");
-	foreach(var_9c9809d6, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player zm_score::add_to_player_score(500, 1);
 		player notify(#"hash_1d89afbc");
@@ -811,54 +811,54 @@ function function_d6ced80(b_locked)
 	var_63b437d6 = 0;
 	if(b_locked)
 	{
-		foreach(var_9fcd050f, e_collision in a_e_collision)
+		foreach(e_collision in a_e_collision)
 		{
 			e_collision solid();
 			e_collision disconnectpaths();
 			var_63b437d6 = function_77f195ef(var_63b437d6);
 		}
-		foreach(var_d6365ea5, e_gate in var_50e0150f)
+		foreach(e_gate in var_50e0150f)
 		{
 			e_gate movez(600, 0.25);
 			var_63b437d6 = function_77f195ef(var_63b437d6);
 		}
-		foreach(var_f227802f, e_hatch in var_b9e116c5)
+		foreach(e_hatch in var_b9e116c5)
 		{
 			e_hatch rotateroll(-90, 1);
 			var_63b437d6 = function_77f195ef(var_63b437d6);
 		}
-		foreach(var_efa8e21e, var_b0a376a4 in var_595e6429)
+		foreach(var_b0a376a4 in var_595e6429)
 		{
 			unlinktraversal(var_b0a376a4);
 		}
-		foreach(var_ff0a0cb8, var_b0a376a4 in var_6f3f4356)
+		foreach(var_b0a376a4 in var_6f3f4356)
 		{
 			unlinktraversal(var_b0a376a4);
 		}
 	}
 	else
 	{
-		foreach(var_91b6597, e_collision in a_e_collision)
+		foreach(e_collision in a_e_collision)
 		{
 			e_collision connectpaths();
 			e_collision notsolid();
 			var_63b437d6 = function_77f195ef(var_63b437d6);
 		}
-		foreach(var_e72b8869, e_gate in var_50e0150f)
+		foreach(e_gate in var_50e0150f)
 		{
 			e_gate movez(-600, 0.25);
 			var_63b437d6 = function_77f195ef(var_63b437d6);
 		}
-		foreach(var_9e0be2, e_hatch in var_b9e116c5)
+		foreach(e_hatch in var_b9e116c5)
 		{
 			e_hatch rotateroll(90, 1);
 			var_63b437d6 = function_77f195ef(var_63b437d6);
 		}
-		foreach(var_4ca300b4, var_b0a376a4 in var_595e6429)
+		foreach(var_b0a376a4 in var_595e6429)
 		{
 			linktraversal(var_b0a376a4);
 		}
-		foreach(var_67962f23, var_b0a376a4 in var_6f3f4356)
+		foreach(var_b0a376a4 in var_6f3f4356)
 		{
 			linktraversal(var_b0a376a4);
 		}
@@ -903,7 +903,7 @@ function function_451531f2()
 	var_32f65c5d = getent("lockdown_eastern_front", "targetname");
 	var_b9ebade5 = getent("lockdown_northern_front", "targetname");
 	var_93a53b37 = struct::get_array("pavlovs_B_spawn", "targetname");
-	foreach(var_b8eaf5b0, s_spawner in var_93a53b37)
+	foreach(s_spawner in var_93a53b37)
 	{
 		if(!isdefined(s_spawner.script_string) || s_spawner.script_noteworthy == "raz_location")
 		{
@@ -1173,7 +1173,7 @@ function function_2c6fd7(var_2b71b5b4, var_15eb9a52, var_f92c3865, var_13d1e831)
 	level.var_1dfcc9b2.var_61126827 = undefined;
 	level.var_a3559c05 = undefined;
 	level flag::clear("lockdown_active");
-	foreach(var_858e32d3, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player zm_score::add_to_player_score(500, 1);
 		player notify(#"hash_1d89afbc");

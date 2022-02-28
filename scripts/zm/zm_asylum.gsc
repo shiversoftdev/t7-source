@@ -71,7 +71,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function function_d9af860b()
+function autoexec function_d9af860b()
 {
 	level.aat_in_use = 1;
 	level.bgb_in_use = 1;
@@ -192,9 +192,9 @@ function function_869d6f66()
 {
 	if(!isdefined(self zm_bgb_anywhere_but_here::function_728dfe3()))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -355,7 +355,7 @@ function assign_lowest_unused_character_index()
 		charindexarray = array::randomize(charindexarray);
 		return charindexarray[0];
 	}
-	foreach(var_c0a5b83e, player in level.players)
+	foreach(player in level.players)
 	{
 		if(isdefined(player.characterindex))
 		{
@@ -451,7 +451,7 @@ function function_54da140a()
 			var_343b1937 = a_s_spots[i].script_int;
 		}
 		var_c15b2128 = [];
-		foreach(var_cab513de, sp_zombie in level.zombie_spawners)
+		foreach(sp_zombie in level.zombie_spawners)
 		{
 			if(sp_zombie.script_int == var_343b1937)
 			{
@@ -663,13 +663,13 @@ function function_f8772aa4(player)
 {
 	if(!isdefined(level.var_a3dcfd4f))
 	{
-		return 1;
+		return true;
 	}
 	if(level.var_a3dcfd4f >= 2)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1214,16 +1214,19 @@ function function_4c24944a(t_water)
 	{
 		self thread function_4c24944a(t_water);
 	}
-	else if(isdefined(t_water.script_int) && t_water.script_int)
-	{
-		visionset_mgr::deactivate("visionset", "zm_showerhead", self);
-		visionset_mgr::deactivate("overlay", "zm_showerhead_postfx", self);
-	}
 	else
 	{
-		visionset_mgr::deactivate("overlay", "zm_waterfall_postfx", self);
+		if(isdefined(t_water.script_int) && t_water.script_int)
+		{
+			visionset_mgr::deactivate("visionset", "zm_showerhead", self);
+			visionset_mgr::deactivate("overlay", "zm_showerhead_postfx", self);
+		}
+		else
+		{
+			visionset_mgr::deactivate("overlay", "zm_waterfall_postfx", self);
+		}
+		self.var_1e4200d5 = 0;
 	}
-	self.var_1e4200d5 = 0;
 }
 
 /*
@@ -1252,7 +1255,7 @@ function setup_custom_vox()
 function exit_level_func()
 {
 	zombies = getaiarray();
-	foreach(var_aa386310, zombie in zombies)
+	foreach(zombie in zombies)
 	{
 		if(isdefined(zombie.ignore_solo_last_stand) && zombie.ignore_solo_last_stand)
 		{
@@ -1337,7 +1340,7 @@ function init_level_specific_audio()
 function function_a552cd4a()
 {
 	perk_machines = getentarray("zombie_vending", "targetname");
-	foreach(var_43807ead, perk_machine in perk_machines)
+	foreach(perk_machine in perk_machines)
 	{
 		if(isdefined(perk_machine.clip) && perk_machine.script_noteworthy == "specialty_additionalprimaryweapon")
 		{
@@ -1427,7 +1430,12 @@ function function_ee422b5c(chunk)
 			animstatebase = self.first_node.zbarrier.dynents[chunk].script_noteworthy;
 			self.first_node.zbarrier.var_48c7593a = 1;
 		}
-		assertmsg(("" + chunk) + "");
+		else
+		{
+			/#
+				assertmsg(("" + chunk) + "");
+			#/
+		}
 	}
 	else
 	{
@@ -1460,13 +1468,16 @@ function function_659c2324(a_keys)
 		{
 			n_chance = 5;
 		}
-		else if(level.var_12d3a848 > 12 && level.var_12d3a848 <= 17)
+		else
 		{
-			n_chance = 8;
-		}
-		else if(level.var_12d3a848 > 17)
-		{
-			n_chance = 12;
+			if(level.var_12d3a848 > 12 && level.var_12d3a848 <= 17)
+			{
+				n_chance = 8;
+			}
+			else if(level.var_12d3a848 > 17)
+			{
+				n_chance = 12;
+			}
 		}
 	}
 	else
@@ -1499,7 +1510,7 @@ function function_bb75f24a()
 	level waittill(#"hash_137fb152");
 	level.var_a3dcfd4f = undefined;
 	level flag::set("snd_zhdegg_activate");
-	foreach(var_82e67112, struct in var_f0a0f84f)
+	foreach(struct in var_f0a0f84f)
 	{
 		zm_unitrigger::unregister_unitrigger(struct.s_unitrigger);
 	}
@@ -1572,13 +1583,13 @@ function function_dffe609d(player)
 {
 	if(!isdefined(level.var_a3dcfd4f))
 	{
-		return 1;
+		return true;
 	}
 	if(level.var_a3dcfd4f < 2)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1597,7 +1608,7 @@ function function_fa408417()
 	while(true)
 	{
 		level waittill(#"hash_b280e2e");
-		foreach(var_ef83f65f, struct in var_f0a0f84f)
+		foreach(struct in var_f0a0f84f)
 		{
 			if(isdefined(struct.script_noteworthy) && struct.script_noteworthy == "toilet3")
 			{

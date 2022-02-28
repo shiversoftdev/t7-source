@@ -21,7 +21,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("skipto", &__init__, &__main__, undefined);
 }
@@ -365,13 +365,13 @@ function add_construct(msg, func, loc_string, cleanup_func, launch_after, end_be
 */
 function build_objective_tree()
 {
-	foreach(var_e35821c2, struct in level.skipto_settings)
+	foreach(struct in level.skipto_settings)
 	{
 		if(isdefined(struct.public) && struct.public)
 		{
 			if(struct.launch_after.size)
 			{
-				foreach(var_6810cc7c, launch_after in struct.launch_after)
+				foreach(launch_after in struct.launch_after)
 				{
 					if(isdefined(level.skipto_settings[launch_after]))
 					{
@@ -400,16 +400,19 @@ function build_objective_tree()
 					level.skipto_settings["_default"].next[level.skipto_settings["_default"].next.size] = struct.name;
 				}
 			}
-			else if(!isdefined(level.skipto_settings["_default"].next))
+			else
 			{
-				level.skipto_settings["_default"].next = [];
+				if(!isdefined(level.skipto_settings["_default"].next))
+				{
+					level.skipto_settings["_default"].next = [];
+				}
+				else if(!isarray(level.skipto_settings["_default"].next))
+				{
+					level.skipto_settings["_default"].next = array(level.skipto_settings["_default"].next);
+				}
+				level.skipto_settings["_default"].next[level.skipto_settings["_default"].next.size] = struct.name;
 			}
-			else if(!isarray(level.skipto_settings["_default"].next))
-			{
-				level.skipto_settings["_default"].next = array(level.skipto_settings["_default"].next);
-			}
-			level.skipto_settings["_default"].next[level.skipto_settings["_default"].next.size] = struct.name;
-			foreach(var_6ae20026, end_before in struct.end_before)
+			foreach(end_before in struct.end_before)
 			{
 				if(isdefined(level.skipto_settings[end_before]))
 				{
@@ -426,7 +429,7 @@ function build_objective_tree()
 			}
 		}
 	}
-	foreach(var_110fdfe4, struct in level.skipto_settings)
+	foreach(struct in level.skipto_settings)
 	{
 		if(isdefined(struct.public) && struct.public)
 		{
@@ -460,9 +463,9 @@ function is_dev(skipto)
 	substr = tolower(getsubstr(skipto, 0, 4));
 	if(substr == "dev_")
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -561,7 +564,7 @@ function convert_token(str, fromtok, totok)
 	sarray = strtok(str, fromtok);
 	ostr = "";
 	first = 1;
-	foreach(var_4121b5ed, s in sarray)
+	foreach(s in sarray)
 	{
 		if(!first)
 		{
@@ -675,7 +678,7 @@ function set_level_objective(objectives, starting)
 	clear_recursion();
 	if(starting)
 	{
-		foreach(var_8853cca6, objective in objectives)
+		foreach(objective in objectives)
 		{
 			if(isdefined(level.skipto_settings[objective]))
 			{
@@ -685,7 +688,7 @@ function set_level_objective(objectives, starting)
 	}
 	else
 	{
-		foreach(var_a6c38c41, skipto in level.skipto_settings)
+		foreach(skipto in level.skipto_settings)
 		{
 			if(isdefined(skipto.objective_running) && skipto.objective_running && !isinarray(objectives, skipto.name))
 			{
@@ -695,7 +698,7 @@ function set_level_objective(objectives, starting)
 	}
 	if(isdefined(level.func_skipto_cleanup))
 	{
-		foreach(var_9d83a636, name in objectives)
+		foreach(name in objectives)
 		{
 			thread [[level.func_skipto_cleanup]](name);
 		}
@@ -717,7 +720,7 @@ function set_level_objective(objectives, starting)
 */
 function run_initial_logic(objectives)
 {
-	foreach(var_73aa4390, skipto in level.skipto_settings)
+	foreach(skipto in level.skipto_settings)
 	{
 		if(!(isdefined(skipto.logic_running) && skipto.logic_running))
 		{
@@ -743,7 +746,7 @@ function start_objective_logic(name, starting)
 {
 	if(isarray(name))
 	{
-		foreach(var_f7ff26bb, element in name)
+		foreach(element in name)
 		{
 			start_objective_logic(element, starting);
 		}
@@ -786,7 +789,7 @@ function start_objective_logic(name, starting)
 */
 function clear_recursion()
 {
-	foreach(var_c6575449, skipto in level.skipto_settings)
+	foreach(skipto in level.skipto_settings)
 	{
 		skipto.cleanup_recursion = 0;
 	}
@@ -805,7 +808,7 @@ function stop_objective_logic(name, starting)
 {
 	if(isarray(name))
 	{
-		foreach(var_a7e794ae, element in name)
+		foreach(element in name)
 		{
 			stop_objective_logic(element, starting);
 		}
@@ -868,7 +871,7 @@ function set_last_map_dvar(localclientnum, oldval, newval, bnewent, binitialsnap
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function standard_objective_init(objective, starting)
+function private standard_objective_init(objective, starting)
 {
 }
 
@@ -881,7 +884,7 @@ private function standard_objective_init(objective, starting)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function standard_objective_done(objective, starting)
+function private standard_objective_done(objective, starting)
 {
 }
 

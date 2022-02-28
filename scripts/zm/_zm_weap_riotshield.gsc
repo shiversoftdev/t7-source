@@ -31,7 +31,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_equip_riotshield", &__init__, &__main__, undefined);
 }
@@ -136,7 +136,7 @@ function player_init_shield_health()
 {
 	self updateriotshieldmodel();
 	self clientfield::set_player_uimodel("zmInventory.shield_health", 1);
-	return 1;
+	return true;
 }
 
 /*
@@ -211,14 +211,22 @@ function should_shield_absorb_damage(einflictor, eattacker, idamage, idflags, sm
 					return 1;
 				}
 			}
-			else if(!isdefined(self.riotshieldentity))
+			else
 			{
-				if(!self player_shield_facing_attacker(vdir, -0.2))
+				if(!isdefined(self.riotshieldentity))
 				{
-					return level.zombie_vars["riotshield_stowed_block_fraction"];
+					if(!self player_shield_facing_attacker(vdir, -0.2))
+					{
+						return level.zombie_vars["riotshield_stowed_block_fraction"];
+					}
+				}
+				else
+				{
+					/#
+						assert(!isdefined(self.riotshieldentity), "");
+					#/
 				}
 			}
-			assert(!isdefined(self.riotshieldentity), "");
 		}
 	}
 	return 0;
@@ -290,12 +298,15 @@ function player_damage_shield(idamage, bheld, fromcode = 0, smod = "MOD_UNKNOWN"
 		}
 		self thread player_take_riotshield();
 	}
-	else if(!rumbled)
+	else
 	{
-		self playrumbleonentity("damage_light");
-		earthquake(0.5, 0.5, self.origin, 100);
+		if(!rumbled)
+		{
+			self playrumbleonentity("damage_light");
+			earthquake(0.5, 0.5, self.origin, 100);
+		}
+		self playsound("fly_riotshield_zm_impact_zombies");
 	}
-	self playsound("fly_riotshield_zm_impact_zombies");
 	self updateriotshieldmodel();
 	self clientfield::set_player_uimodel("zmInventory.shield_health", shieldhealth / damagemax);
 }
@@ -410,12 +421,15 @@ function zombie_knockdown(player, gib)
 	{
 		self [[level.override_riotshield_damage_func]](player, gib);
 	}
-	else if(gib)
+	else
 	{
-		self.a.gib_ref = array::random(level.riotshield_gib_refs);
-		self thread zombie_death::do_gib();
+		if(gib)
+		{
+			self.a.gib_ref = array::random(level.riotshield_gib_refs);
+			self thread zombie_death::do_gib();
+		}
+		self dodamage(damage, player.origin, player);
 	}
-	self dodamage(damage, player.origin, player);
 }
 
 /*
@@ -612,7 +626,7 @@ function updateriotshieldmodel()
 	wait(0.05);
 	self.hasriotshield = 0;
 	self.weaponriotshield = level.weaponnone;
-	foreach(var_c56cb562, weapon in self getweaponslist(1))
+	foreach(weapon in self getweaponslist(1))
 	{
 		if(weapon.isriotshield)
 		{

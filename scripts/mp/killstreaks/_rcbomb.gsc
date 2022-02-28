@@ -203,22 +203,22 @@ function activatercbomb(hardpointtype)
 	player = self;
 	if(!player killstreakrules::iskillstreakallowed(hardpointtype, player.team))
 	{
-		return 0;
+		return false;
 	}
 	if(player usebuttonpressed())
 	{
-		return 0;
+		return false;
 	}
 	placement = calculatespawnorigin(self.origin, self.angles);
 	if(!isdefined(placement) || !self isonground() || self util::isusingremote() || killstreaks::is_interacting_with_object() || self oob::istouchinganyoobtrigger() || self killstreaks::is_killstreak_start_blocked())
 	{
 		self iprintlnbold(&"KILLSTREAK_RCBOMB_NOT_PLACEABLE");
-		return 0;
+		return false;
 	}
 	killstreak_id = player killstreakrules::killstreakstart("rcbomb", player.team, 0, 1);
 	if(killstreak_id == -1)
 	{
-		return 0;
+		return false;
 	}
 	rcbomb = spawnvehicle("rc_car_mp", placement.origin, placement.angles, "rcbomb");
 	rcbomb killstreaks::configure_team("rcbomb", killstreak_id, player, "small_vehicle", undefined, &configureteampost);
@@ -244,13 +244,13 @@ function activatercbomb(hardpointtype)
 			rcbomb notify(#"remote_weapon_shutdown");
 			rcbomb notify(#"rcbomb_shutdown");
 		}
-		return 0;
+		return false;
 	}
 	rcbomb setvisibletoall();
 	rcbomb.activatingkillstreak = 0;
 	target_set(rcbomb);
 	rcbomb thread watchgameended();
-	return 1;
+	return true;
 }
 
 /*
@@ -621,13 +621,13 @@ function rccarallowfriendlyfiredamage(einflictor, eattacker, smeansofdeath, weap
 {
 	if(isdefined(eattacker) && eattacker == self.owner)
 	{
-		return 1;
+		return true;
 	}
 	if(isdefined(einflictor) && einflictor islinkedto(self))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -797,14 +797,14 @@ function testspawnorigin(origin, angles)
 	absmaxs = liftedorigin + maxs;
 	if(boundswouldtelefrag(absmins, absmaxs))
 	{
-		return 0;
+		return false;
 	}
 	startheight = getplacementstartheight();
 	mask = (1 | 2) | 4;
 	trace = physicstrace(liftedorigin, origin + (0, 0, 1), mins, maxs, self, mask);
 	if(trace["fraction"] < 1)
 	{
-		return 0;
+		return false;
 	}
 	size = 2.5;
 	height = size * 2;
@@ -813,8 +813,8 @@ function testspawnorigin(origin, angles)
 	sweeptrace = physicstrace(self.origin + (0, 0, startheight), liftedorigin, mins, maxs, self, mask);
 	if(sweeptrace["fraction"] < 1)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 

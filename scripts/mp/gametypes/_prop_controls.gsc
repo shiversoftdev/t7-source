@@ -313,13 +313,16 @@ function addupperrighthudelem(label, value, text, labelpc)
 			hudelem.label = labelpc;
 		}
 	}
-	else if(isdefined(label))
+	else
 	{
-		hudelem.label = label;
-	}
-	else if(isdefined(text))
-	{
-		hudelem settext(text);
+		if(isdefined(label))
+		{
+			hudelem.label = label;
+		}
+		else if(isdefined(text))
+		{
+			hudelem settext(text);
+		}
 	}
 	if(isdefined(value))
 	{
@@ -459,15 +462,18 @@ function updatetextongamepadchange()
 				}
 				self.spinpropkey.label = &"MP_PH_SPIN";
 			}
-			else if(!(isdefined(self.slopelocked) && self.slopelocked))
-			{
-				self.matchslopekey.label = &"MP_PH_SLOPE_PC";
-			}
 			else
 			{
-				self.matchslopekey.label = &"MP_PH_SLOPED_PC";
+				if(!(isdefined(self.slopelocked) && self.slopelocked))
+				{
+					self.matchslopekey.label = &"MP_PH_SLOPE_PC";
+				}
+				else
+				{
+					self.matchslopekey.label = &"MP_PH_SLOPED_PC";
+				}
+				self.spinpropkey.label = &"MP_PH_SPIN_PC";
 			}
-			self.spinpropkey.label = &"MP_PH_SPIN_PC";
 		}
 		wait(0.05);
 	}
@@ -509,29 +515,44 @@ function propinputwatch()
 		{
 			self proplockunlock();
 		}
-		else if(msg == "spin")
+		else
 		{
-			self function_90ce903e();
-		}
-		else if(msg == "changeProp")
-		{
-			self propchange();
-		}
-		else if(msg == "setToSlope")
-		{
-			self propmatchslope();
-		}
-		else if(msg == "propAbility")
-		{
-			self propability();
-		}
-		else if(msg == "cloneProp")
-		{
-			self propclonepower();
-		}
-		else if(msg == "hide")
-		{
-			self function_8b7be7e3();
+			if(msg == "spin")
+			{
+				self function_90ce903e();
+			}
+			else
+			{
+				if(msg == "changeProp")
+				{
+					self propchange();
+				}
+				else
+				{
+					if(msg == "setToSlope")
+					{
+						self propmatchslope();
+					}
+					else
+					{
+						if(msg == "propAbility")
+						{
+							self propability();
+						}
+						else
+						{
+							if(msg == "cloneProp")
+							{
+								self propclonepower();
+							}
+							else if(msg == "hide")
+							{
+								self function_8b7be7e3();
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 }
@@ -1054,7 +1075,7 @@ function set_pitch_roll_for_ground_normal(var_a84e1ffa)
 */
 function function_b811663a(var_32d4bb6a)
 {
-	foreach(var_6a69600c, player in level.players)
+	foreach(player in level.players)
 	{
 		if(isdefined(player.prop))
 		{
@@ -1079,11 +1100,11 @@ function function_b811663a(var_32d4bb6a)
 */
 function function_af3207f6(var_32d4bb6a)
 {
-	foreach(var_b033e43c, player in level.players)
+	foreach(player in level.players)
 	{
 		if(isdefined(player.propclones))
 		{
-			foreach(var_1829fa98, clone in player.propclones)
+			foreach(clone in player.propclones)
 			{
 				if(isdefined(clone))
 				{
@@ -1138,7 +1159,7 @@ function get_ground_normal(var_a84e1ffa, debug)
 	function_b811663a(1);
 	var_d54ec402 = (0, 0, 0);
 	var_6146aef8 = 0;
-	foreach(var_72a57b1d, point in var_4f9e9c19)
+	foreach(point in var_4f9e9c19)
 	{
 		trace = bullettrace(point + vectorscale((0, 0, 1), 4), point + (vectorscale((0, 0, -1), 16)), 0, ignore);
 		tracehit = trace["fraction"] > 0 && trace["fraction"] < 1;
@@ -1211,13 +1232,16 @@ function propmoveunlock()
 		{
 			var_449744f5 = 0;
 		}
-		else if(self.lock && !var_f98cbcda && ismoving)
+		else
 		{
-			var_449744f5 = 1;
-		}
-		else if(self.lock && ismoving && !var_449744f5)
-		{
-			self unlockprop();
+			if(self.lock && !var_f98cbcda && ismoving)
+			{
+				var_449744f5 = 1;
+			}
+			else if(self.lock && ismoving && !var_449744f5)
+			{
+				self unlockprop();
+			}
 		}
 		var_f98cbcda = self.lock;
 		var_bc31618a = ismoving;
@@ -1403,14 +1427,14 @@ function canlock()
 	{
 		triggers = arraycombine(triggers, var_40aa9cbd, 0, 0);
 	}
-	foreach(var_f972531b, trigger in triggers)
+	foreach(trigger in triggers)
 	{
 		if(trigger istouchingvolume(self.origin, self getmins(), self getmaxs()))
 		{
 			/#
 				function_2dff88ca(0, "", self, trigger.origin, trigger.classname);
 			#/
-			return 0;
+			return false;
 		}
 	}
 	if(self isplayerswimming())
@@ -1418,7 +1442,7 @@ function canlock()
 		/#
 			function_2dff88ca(1, "", self);
 		#/
-		return 1;
+		return true;
 	}
 	if(!self isonground() || self iswallrunning())
 	{
@@ -1430,16 +1454,16 @@ function canlock()
 			/#
 				function_2dff88ca(0, "", self, org1, "");
 			#/
-			return 0;
+			return false;
 		}
-		foreach(var_193a5ce2, trigger in triggers)
+		foreach(trigger in triggers)
 		{
 			if(trigger istouchingvolume(org1, self getmins(), self getmaxs()))
 			{
 				/#
 					function_2dff88ca(0, "", self, trigger.origin, trigger.classname);
 				#/
-				return 0;
+				return false;
 			}
 		}
 		point = getnearestpathpoint(org1, 256);
@@ -1448,7 +1472,7 @@ function canlock()
 			/#
 				function_2dff88ca(0, "", self, org1);
 			#/
-			return 0;
+			return false;
 		}
 		distz = point[2] - org1[2];
 		if(distz > 50)
@@ -1459,7 +1483,7 @@ function canlock()
 				/#
 					function_2dff88ca(0, "", self, org1, "", point, "");
 				#/
-				return 0;
+				return false;
 			}
 		}
 		dist2d = distance2d(point, org1);
@@ -1468,28 +1492,28 @@ function canlock()
 			/#
 				function_2dff88ca(0, "", self, org1, "", point, "");
 			#/
-			return 0;
+			return false;
 		}
 		org2 = self function_fd824ee5();
-		foreach(var_3894bb64, trigger in triggers)
+		foreach(trigger in triggers)
 		{
 			if(trigger istouchingvolume(org2, self getmins(), self getmaxs()))
 			{
 				/#
 					function_2dff88ca(0, "", self, trigger.origin, trigger.classname);
 				#/
-				return 0;
+				return false;
 			}
 		}
 		/#
 			function_2dff88ca(1, "", self, org1, "", org2, "", point, "" + distance(org1, point));
 		#/
-		return 1;
+		return true;
 	}
 	/#
 		function_2dff88ca(1, "", self);
 	#/
-	return 1;
+	return true;
 }
 
 /*
@@ -1658,7 +1682,7 @@ function flashenemies(var_e967d644 = self, position = self.origin)
 {
 	playfx(fx::get("propFlash"), position + vectorscale((0, 0, 1), 4));
 	playsoundatposition("mpl_emp_equip_stun", position);
-	foreach(var_cc54acdf, otherplayer in level.players)
+	foreach(otherplayer in level.players)
 	{
 		if(otherplayer == var_e967d644)
 		{
@@ -1716,7 +1740,7 @@ function deletepropsifatmax()
 		return;
 	}
 	var_b76d0af5 = 0;
-	foreach(var_b8068bf9, clone in self.propclones)
+	foreach(clone in self.propclones)
 	{
 		if(isdefined(clone))
 		{
@@ -2154,7 +2178,7 @@ function function_af4e8351(index)
 	damageorigin = level.var_56d3e86e[index].damageorigin;
 	var_cb673c8c = weapon.explosionradius;
 	var_6a573904 = var_cb673c8c * var_cb673c8c;
-	foreach(var_1151d4e3, player in level.players)
+	foreach(player in level.players)
 	{
 		if(!player util::isprop() || !isalive(player) || player function_fde936b5(index))
 		{
@@ -2191,7 +2215,7 @@ function function_af4e8351(index)
 */
 function function_73052bdb(var_d18ea86a)
 {
-	foreach(var_2d6d5476, player in level.players)
+	foreach(player in level.players)
 	{
 		if(isdefined(player.prop))
 		{
@@ -2228,11 +2252,11 @@ function function_73052bdb(var_d18ea86a)
 */
 function function_564fbbef(var_d18ea86a)
 {
-	foreach(var_664145b, player in level.players)
+	foreach(player in level.players)
 	{
 		if(isdefined(player.propclones))
 		{
-			foreach(var_83677b5c, clone in player.propclones)
+			foreach(clone in player.propclones)
 			{
 				if(isdefined(clone))
 				{
@@ -2271,7 +2295,7 @@ function function_564fbbef(var_d18ea86a)
 */
 function function_b7d2b256(var_d18ea86a)
 {
-	foreach(var_199c2732, player in level.players)
+	foreach(player in level.players)
 	{
 		if(!player util::isprop() || !isalive(player))
 		{
@@ -2299,7 +2323,7 @@ function function_b7d2b256(var_d18ea86a)
 */
 function function_56938929(var_d18ea86a)
 {
-	foreach(var_b7e08178, player in level.players)
+	foreach(player in level.players)
 	{
 		if(!player prop::function_e4b2f23() || !isalive(player))
 		{
@@ -2346,14 +2370,14 @@ function function_94e1618c(damageorigin)
 */
 function function_fde936b5(index)
 {
-	foreach(var_1df9e6c7, var_f07e80d9 in level.var_56d3e86e[index].players)
+	foreach(var_f07e80d9 in level.var_56d3e86e[index].players)
 	{
 		if(isdefined(var_f07e80d9) && var_f07e80d9 == self)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2688,7 +2712,7 @@ function function_aac4667c()
 	objective_onentity(var_6f71e4e9, self);
 	self thread function_41584b4b(var_6f71e4e9);
 	self clientfield::set("pingHighlight", 1);
-	foreach(var_9fd9074d, player in level.players)
+	foreach(player in level.players)
 	{
 		if(isalive(player) && player.team == self.team)
 		{

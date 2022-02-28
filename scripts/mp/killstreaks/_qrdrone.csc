@@ -18,7 +18,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("qrdrone", &__init__, undefined, undefined);
 }
@@ -157,13 +157,16 @@ function spawn_solid_fx(localclientnum)
 	{
 		fx_handle = playfxontag(localclientnum, level._effect["qrdrone_viewmodel_light"], self, "tag_body");
 	}
-	else if(self util::friend_not_foe(localclientnum))
-	{
-		fx_handle = playfxontag(localclientnum, level._effect["qrdrone_friendly_light"], self, "tag_body");
-	}
 	else
 	{
-		fx_handle = playfxontag(localclientnum, level._effect["qrdrone_enemy_light"], self, "tag_body");
+		if(self util::friend_not_foe(localclientnum))
+		{
+			fx_handle = playfxontag(localclientnum, level._effect["qrdrone_friendly_light"], self, "tag_body");
+		}
+		else
+		{
+			fx_handle = playfxontag(localclientnum, level._effect["qrdrone_enemy_light"], self, "tag_body");
+		}
 	}
 	self thread cleanupfx(localclientnum, fx_handle);
 }
@@ -370,13 +373,16 @@ function blink_light(localclientnum)
 	{
 		self thread loop_local_sound(localclientnum, "wpn_qr_alert", 1, level._effect["qrdrone_viewmodel_light"]);
 	}
-	else if(self util::friend_not_foe(localclientnum))
-	{
-		self thread loop_local_sound(localclientnum, "wpn_qr_alert", 1, level._effect["qrdrone_friendly_light"]);
-	}
 	else
 	{
-		self thread loop_local_sound(localclientnum, "wpn_qr_alert", 1, level._effect["qrdrone_enemy_light"]);
+		if(self util::friend_not_foe(localclientnum))
+		{
+			self thread loop_local_sound(localclientnum, "wpn_qr_alert", 1, level._effect["qrdrone_friendly_light"]);
+		}
+		else
+		{
+			self thread loop_local_sound(localclientnum, "wpn_qr_alert", 1, level._effect["qrdrone_enemy_light"]);
+		}
 	}
 }
 
@@ -550,10 +556,10 @@ function qrdrone_in_range()
 	{
 		if(self isinsideheightlock())
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*

@@ -33,7 +33,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_genesis_pap_quest", &__init__, &__main__, undefined);
 }
@@ -336,7 +336,7 @@ function function_10171438()
 function function_fc804fdd(var_16caea3d)
 {
 	var_62a30970 = getvehiclenodearray(self.target, "targetname");
-	foreach(var_2b6d0244, nd_spline in var_62a30970)
+	foreach(nd_spline in var_62a30970)
 	{
 		if(nd_spline.script_noteworthy === var_16caea3d)
 		{

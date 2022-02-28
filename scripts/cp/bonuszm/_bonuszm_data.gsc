@@ -14,7 +14,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function function_dc036a7c()
+function autoexec function_dc036a7c()
 {
 	if(!sessionmodeiscampaignzombiesgame())
 	{
@@ -588,7 +588,7 @@ function function_15c7079(index)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_4542e087()
+function private function_4542e087()
 {
 	if(!level.var_a9e78bf7["zombifyenabled"])
 	{
@@ -619,7 +619,7 @@ private function function_4542e087()
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function bzm_overridelocomotion(var_68d35041, var_dbe80e3b, var_5a7ff9f0)
+function private bzm_overridelocomotion(var_68d35041, var_dbe80e3b, var_5a7ff9f0)
 {
 	if(!level.var_a9e78bf7["zombifyenabled"])
 	{
@@ -643,7 +643,7 @@ private function bzm_overridelocomotion(var_68d35041, var_dbe80e3b, var_5a7ff9f0
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function bzm_overridehealth(var_52292ab5, var_d3cfcdb3, var_dd13b525)
+function private bzm_overridehealth(var_52292ab5, var_d3cfcdb3, var_dd13b525)
 {
 	if(!level.var_a9e78bf7["zombifyenabled"])
 	{
@@ -663,7 +663,7 @@ private function bzm_overridehealth(var_52292ab5, var_d3cfcdb3, var_dd13b525)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function bzm_overridesuicidalchance(chance)
+function private bzm_overridesuicidalchance(chance)
 {
 	if(!level.var_a9e78bf7["zombifyenabled"])
 	{
@@ -685,7 +685,7 @@ private function bzm_overridesuicidalchance(chance)
 	Parameters: 1
 	Flags: Private
 */
-private function function_481f94(chance)
+function private function_481f94(chance)
 {
 	if(!level.var_a9e78bf7["zombifyenabled"])
 	{

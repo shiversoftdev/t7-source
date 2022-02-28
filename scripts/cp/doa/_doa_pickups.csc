@@ -314,14 +314,17 @@ function function_6b4a5f81(player)
 		{
 			y = 0 - y;
 		}
-		else if(entnum == 2)
+		else
 		{
-			x = 0 - x;
-		}
-		else if(entnum == 3)
-		{
-			y = 0 - y;
-			x = 0 - x;
+			if(entnum == 2)
+			{
+				x = 0 - x;
+			}
+			else if(entnum == 3)
+			{
+				y = 0 - y;
+				x = 0 - x;
+			}
 		}
 		end_pt = end_pt + (x, y, z);
 	}
@@ -360,7 +363,7 @@ function function_474724d7(localclientnum, oldval, newval, bnewent, binitialsnap
 	{
 		entnum = (newval >> 1) - 1;
 		players = getplayers(localclientnum);
-		foreach(var_c7670038, guy in players)
+		foreach(guy in players)
 		{
 			if(guy getentitynumber() == entnum)
 			{
@@ -421,7 +424,7 @@ function function_892b2a87(localclientnum, oldval, newval, bnewent, binitialsnap
 */
 function function_bac08508(type, variant)
 {
-	foreach(var_83174f1f, pickup in level.doa.pickups)
+	foreach(pickup in level.doa.pickups)
 	{
 		if(pickup.type == type)
 		{

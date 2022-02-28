@@ -153,7 +153,7 @@ function spawn_punch_upgrade_tablet(v_origin, e_player)
 	{
 		e_player thread hud::fade_to_black_for_x_sec(0, 0.3, 0.5, 0.5, "white");
 		a_zombies = getaispeciesarray(level.zombie_team, "all");
-		foreach(var_d6596e6e, zombie in a_zombies)
+		foreach(zombie in a_zombies)
 		{
 			if(distance2dsquared(e_player.origin, zombie.origin) < 65536 && (!(isdefined(zombie.is_mechz) && zombie.is_mechz)) && (!(isdefined(zombie.missinglegs) && zombie.missinglegs)) && (isdefined(zombie.completed_emerging_into_playable_area) && zombie.completed_emerging_into_playable_area))
 			{
@@ -163,7 +163,7 @@ function spawn_punch_upgrade_tablet(v_origin, e_player)
 		}
 		wait(1);
 		e_player.b_punch_upgraded = 1;
-		foreach(var_b6a7dd8, var_acc90d1d in level.a_elemental_staffs_upgraded)
+		foreach(var_acc90d1d in level.a_elemental_staffs_upgraded)
 		{
 			if(e_player hasweapon(var_acc90d1d.w_weapon))
 			{
@@ -177,7 +177,7 @@ function spawn_punch_upgrade_tablet(v_origin, e_player)
 		e_player thread _zm_weap_one_inch_punch::one_inch_punch_melee_attack();
 		e_player thread _zm_weap_one_inch_punch::one_inch_punch_melee_attack();
 		a_players = getplayers();
-		foreach(var_cd41ef9, player in a_players)
+		foreach(player in a_players)
 		{
 			if(!isdefined(player.b_punch_upgraded) || !player.b_punch_upgraded)
 			{

@@ -133,7 +133,7 @@ function get_current_wasp_count()
 {
 	wasps = getentarray("zombie_wasp", "targetname");
 	num_alive_wasps = wasps.size;
-	foreach(var_98786fb6, wasp in wasps)
+	foreach(wasp in wasps)
 	{
 		if(!isalive(wasp))
 		{
@@ -271,7 +271,7 @@ function spawn_wasp()
 		a_points = array::randomize(queryresult.data);
 		a_spawn_origins = [];
 		n_points_found = 0;
-		foreach(var_516f7cad, point in a_points)
+		foreach(point in a_points)
 		{
 			if(bullettracepassed(point.origin, spawn_point.origin, 0, spawn_enemy))
 			{
@@ -335,7 +335,7 @@ function spawn_wasp()
 */
 function parasite_round_fx()
 {
-	foreach(var_9aa33dd5, player in level.players)
+	foreach(player in level.players)
 	{
 		player clientfield::increment_to_player("parasite_round_fx");
 		player clientfield::increment_to_player("parasite_round_ring_fx");
@@ -396,9 +396,9 @@ function ready_to_spawn_wasp()
 	b_wasp_count_per_player_at_max = n_wasps_alive >= (level.players.size * 5);
 	if(b_wasp_count_at_max || b_wasp_count_per_player_at_max || !level flag::get("spawn_zombies"))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -571,7 +571,7 @@ function create_global_wasp_spawn_locations_list()
 		for(i = 0; i < keys.size; i++)
 		{
 			zone = level.zones[keys[i]];
-			foreach(var_7acf5319, loc in zone.a_locs["wasp_location"])
+			foreach(loc in zone.a_locs["wasp_location"])
 			{
 				if(!isdefined(level.enemy_wasp_global_locations))
 				{
@@ -642,7 +642,7 @@ function wasp_spawn_logic(favorite_enemy)
 				return level.old_wasp_spawn;
 			}
 		}
-		foreach(var_fd6910a9, loc in wasp_locs)
+		foreach(loc in wasp_locs)
 		{
 			dist_squared = distancesquared(loc.origin, favorite_enemy.origin);
 			if(dist_squared > 160000 && dist_squared < 360000)
@@ -678,7 +678,7 @@ function wasp_spawn_logic(favorite_enemy)
 	}
 	queryresult = positionquery_source_navigation(favorite_enemy.origin + (0, 0, randomintrange(40, 100)), 300, spawn_dist_max, 10, 10, "navvolume_small");
 	a_points = array::randomize(queryresult.data);
-	foreach(var_66b77131, point in a_points)
+	foreach(point in a_points)
 	{
 		if(bullettracepassed(point.origin, favorite_enemy.origin, 0, favorite_enemy))
 		{

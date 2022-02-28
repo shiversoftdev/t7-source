@@ -30,7 +30,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	function_dd3133f7();
 	level flag::init("can_spawn_mechz", 1);
@@ -53,7 +53,7 @@ autoexec function init()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_dd3133f7()
+function private function_dd3133f7()
 {
 	behaviortreenetworkutility::registerbehaviortreescriptapi("castleMechzTrapService", &function_78c0d00b);
 	behaviortreenetworkutility::registerbehaviortreescriptapi("castleMechzShouldMoveToTrap", &function_697928b7);
@@ -73,11 +73,11 @@ private function function_dd3133f7()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_76e7495b()
+function private function_76e7495b()
 {
 	wait(0.5);
 	traps = getentarray("zombie_trap", "targetname");
-	foreach(var_8fbf6103, trap in traps)
+	foreach(trap in traps)
 	{
 		if(trap.script_noteworthy == "electric")
 		{
@@ -95,17 +95,17 @@ private function function_76e7495b()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_78c0d00b(entity)
+function private function_78c0d00b(entity)
 {
 	if(isdefined(entity.var_7c963fc4) && entity.var_7c963fc4 || (isdefined(entity.var_8993e21) && entity.var_8993e21))
 	{
-		return 1;
+		return true;
 	}
 	if(level flag::get("masher_on"))
 	{
 		if(entity function_ced5d8b0("masher_trap_switch"))
 		{
-			return 1;
+			return true;
 		}
 	}
 	if(isdefined(level.electric_trap))
@@ -114,11 +114,11 @@ private function function_78c0d00b(entity)
 		{
 			if(entity function_ced5d8b0("elec_trap_switch"))
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -130,12 +130,12 @@ private function function_78c0d00b(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_ced5d8b0(var_2dba2212)
+function private function_ced5d8b0(var_2dba2212)
 {
 	traps = struct::get_array(var_2dba2212, "script_noteworthy");
 	self.trap_struct = undefined;
 	closest_dist_sq = 57600;
-	foreach(var_d6596e6e, trap in traps)
+	foreach(trap in traps)
 	{
 		dist_sq = distancesquared(trap.origin, self.origin);
 		if(dist_sq < closest_dist_sq)
@@ -150,9 +150,9 @@ private function function_ced5d8b0(var_2dba2212)
 		self.ignoreall = 1;
 		self setgoal(self.trap_struct.origin);
 		self thread function_216e21ed();
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -190,9 +190,9 @@ function function_697928b7(entity)
 {
 	if(isdefined(entity.var_7c963fc4) && entity.var_7c963fc4)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -208,9 +208,9 @@ function function_829fa81c(entity)
 {
 	if(entity isatgoal())
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -226,9 +226,9 @@ function function_e4f26ac8(entity)
 {
 	if(isdefined(entity.var_8993e21) && entity.var_8993e21)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -486,9 +486,9 @@ function function_b1a145c4()
 	var_f52ee0b1 = zombie_utility::get_current_zombie_count() >= level.zombie_ai_limit;
 	if(var_f52ee0b1 || !level flag::get("spawn_zombies") || !level flag::get("can_spawn_mechz"))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -610,7 +610,7 @@ function function_314d744b(var_2533389a, s_loc, var_4211ee1f = 1)
 		if(level.zm_loc_types["mechz_location"].size == 0)
 		{
 			var_79ed5347 = struct::get_array("mechz_location", "script_noteworthy");
-			foreach(var_5ede318f, var_6000fab5 in var_79ed5347)
+			foreach(var_6000fab5 in var_79ed5347)
 			{
 				if(var_6000fab5.targetname == "zone_start_spawners")
 				{
@@ -759,7 +759,7 @@ function function_eac1444a()
 {
 	/#
 		var_10b176f0 = getaiarchetypearray("");
-		foreach(var_83894dec, ai_mechz in var_10b176f0)
+		foreach(ai_mechz in var_10b176f0)
 		{
 			var_efe3c52f = level.activeplayers[0] gettagorigin("") + vectorscale((0, 0, 1), 20);
 			var_7ddc55f4 = level.activeplayers[0] gettagorigin("") + (5, 0, 20);

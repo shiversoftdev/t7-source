@@ -105,11 +105,11 @@ function function_c5c7c3ef(player)
 	{
 		if(parent == player)
 		{
-			return 1;
+			return true;
 		}
 		parent = parent getlinkedent();
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -128,7 +128,7 @@ function function_8ef128e8(localclientnum, player)
 		return player.prop;
 	}
 	ents = getentarray(localclientnum);
-	foreach(var_11c04c33, ent in ents)
+	foreach(ent in ents)
 	{
 		if(!ent isplayer() && isdefined(ent.owner) && ent.owner == player && ent function_c5c7c3ef(player))
 		{
@@ -155,7 +155,7 @@ function function_2bb59404(localclientnum)
 		localplayer = getlocalplayer(localclientnum);
 		spectating = isspectating(localclientnum, 0);
 		players = getplayers(localclientnum);
-		foreach(var_dbc455d5, player in players)
+		foreach(player in players)
 		{
 			if(player != localplayer || spectating && player ishidden() && isdefined(player.team) && player.team == localplayer.team)
 			{

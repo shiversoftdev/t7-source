@@ -47,7 +47,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_zod_quest", &__init__, undefined, undefined);
 }
@@ -112,25 +112,25 @@ function __init__()
 	clientfield::register("toplayer", "used_quest_key_location", 1, n_bits, "int");
 	visionset_mgr::register_info("visionset", "zod_ritual_dim", 1, 1, 15, 1, &visionset_mgr::ramp_in_out_thread_per_player, 0);
 	a_str_names = array("boxer", "detective", "femme", "magician");
-	foreach(var_c976e1e5, str_name in a_str_names)
+	foreach(str_name in a_str_names)
 	{
 		relic_placed = getent(("quest_ritual_relic_" + str_name) + "_placed", "targetname");
 		relic_placed ghost();
 		a_e_clip = getentarray("ritual_clip_" + str_name, "targetname");
-		foreach(var_99630e9d, e_clip in a_e_clip)
+		foreach(e_clip in a_e_clip)
 		{
 			e_clip setinvisibletoall();
 			e_clip.origin = e_clip.origin - vectorscale((0, 0, 1), 128);
 		}
 	}
 	a_e_clip = getentarray("ritual_clip_pap", "targetname");
-	foreach(var_96e4708c, e_clip in a_e_clip)
+	foreach(e_clip in a_e_clip)
 	{
 		e_clip setinvisibletoall();
 		e_clip.origin = e_clip.origin - vectorscale((0, 0, 1), 128);
 	}
 	level._effect["ritual_key_glow"] = "zombie/fx_ritual_glow_key_zod_zmb";
-	level.var_3aa0c58 = 0;
+	level.n_zod_rituals_completed = 0;
 	level.zod_ritual_durations = [];
 	level.zod_ritual_durations[0] = 20;
 	level.zod_ritual_durations[1] = 25;
@@ -297,7 +297,7 @@ function prevent_theater_mode_spoilers()
 function function_ffcfbd77()
 {
 	var_8b8460d5 = array("fuse_01", "fuse_02", "fuse_03");
-	foreach(var_575757b6, var_64f2aa7a in var_8b8460d5)
+	foreach(var_64f2aa7a in var_8b8460d5)
 	{
 		var_f2ae2c72 = level zm_craftables::get_craftable_piece_model("police_box", var_64f2aa7a);
 		var_f2ae2c72 clientfield::set("item_glow_fx", 4);
@@ -415,7 +415,7 @@ function quest_key_trigger_pickup(trig_stub)
 	trig_stub.mdl_key ghost();
 	level.quest_key_can_be_picked_up = 0;
 	players = level.players;
-	foreach(var_bbe10ea, player in players)
+	foreach(player in players)
 	{
 		if(zm_utility::is_player_valid(player))
 		{
@@ -472,9 +472,9 @@ function personal_item_junction()
 */
 function personal_item_canal()
 {
-	var_b595f469 = getentarray("quest_personal_item_canal_door", "targetname");
+	a_e_door = getentarray("quest_personal_item_canal_door", "targetname");
 	level flag::wait_till("power_on" + 23);
-	foreach(var_fa5b3be1, e_door in var_b595f469)
+	foreach(e_door in a_e_door)
 	{
 		e_door moveto(e_door.origin - vectorscale((0, 0, 1), 64), 1);
 	}
@@ -599,7 +599,7 @@ function function_984725d6(str_name)
 	a_spawn_points = struct::get_array("memento_spawn_point_" + str_name);
 	level thread zm_zod_vo::function_bcf7d3ea(a_spawn_points);
 	var_4480cf29 = [];
-	foreach(var_d1fbaed9, s_spawn_point in a_spawn_points)
+	foreach(s_spawn_point in a_spawn_points)
 	{
 		ai = zombie_utility::spawn_zombie(var_d16bd3a3, "memento_keeper_zombie", s_spawn_point);
 		if(isdefined(ai))
@@ -650,7 +650,7 @@ function function_58fe842c()
 			a_spawn_points = struct::get_array("keeper_spawn_point_subway");
 			level thread zm_zod_vo::function_bcf7d3ea(a_spawn_points);
 			var_4480cf29 = [];
-			foreach(var_3b4a0f61, s_spawn_point in a_spawn_points)
+			foreach(s_spawn_point in a_spawn_points)
 			{
 				ai = zombie_utility::spawn_zombie(e_spawner, "memento_keeper_zombie", s_spawn_point);
 				if(isdefined(ai))
@@ -861,15 +861,13 @@ function setup_defend_areas()
 	#/
 	level.a_o_defend_areas = [];
 	a_str_names = array("boxer", "detective", "femme", "magician");
-	foreach(var_4327b3e4, str_name in a_str_names)
+	foreach(str_name in a_str_names)
 	{
 		setup_defend_area(str_name);
 	}
 	a_e_zombie_spawners = getentarray("ritual_zombie_spawner", "targetname");
 	array::thread_all(a_e_zombie_spawners, &spawner::add_spawn_function, &zm_spawner::zombie_spawn_init);
-	object = new careadefend();
-	[[ object ]]->__constructor();
-	level.a_o_defend_areas["pap"] = object;
+	level.a_o_defend_areas["pap"] = new careadefend();
 	[[ level.a_o_defend_areas["pap"] ]]->init("defend_area_" + "pap", "defend_area_spawn_point_" + "pap");
 	[[ level.a_o_defend_areas["pap"] ]]->set_luimenus("ZodRitualProgress", "ZodRitualReturn", "ZodRitualSucceeded", "ZodRitualFailed");
 	[[ level.a_o_defend_areas["pap"] ]]->set_trigger_visibility_function(&altar_trigger_visibility);
@@ -892,9 +890,7 @@ function setup_defend_area(str_name)
 	/#
 		assert(!isdefined(level.a_o_defend_areas[str_name]), "");
 	#/
-	object = new careadefend();
-	[[ object ]]->__constructor();
-	level.a_o_defend_areas[str_name] = object;
+	level.a_o_defend_areas[str_name] = new careadefend();
 	[[ level.a_o_defend_areas[str_name] ]]->init("defend_area_" + str_name, "defend_area_spawn_point_" + str_name);
 	[[ level.a_o_defend_areas[str_name] ]]->set_luimenus("ZodRitualProgress", "ZodRitualReturn", "ZodRitualSucceeded", "ZodRitualFailed");
 	[[ level.a_o_defend_areas[str_name] ]]->set_external_functions(&ritual_prereq, &ritual_start, &ritual_succeed, &ritual_fail, str_name);
@@ -926,7 +922,7 @@ function function_b35b6cb3(state)
 function set_key_availability(b_is_available)
 {
 	level clientfield::set("quest_key", b_is_available);
-	foreach(var_53e128aa, o_defend_area in level.a_o_defend_areas)
+	foreach(o_defend_area in level.a_o_defend_areas)
 	{
 		thread [[ o_defend_area ]]->set_availability(b_is_available);
 	}
@@ -954,14 +950,14 @@ function ritual_prereq(str_name)
 	if(str_name === "pap")
 	{
 		a_basins = array("pap_basin_1", "pap_basin_2", "pap_basin_3", "pap_basin_4");
-		foreach(var_a2b75126, str_basin in a_basins)
+		foreach(str_basin in a_basins)
 		{
 			if(!level flag::get(str_basin))
 			{
-				return 0;
+				return false;
 			}
 		}
-		return 1;
+		return true;
 	}
 	b_is_quest_key_available = level clientfield::get("quest_key");
 	if((level clientfield::get("ritual_state_" + str_name)) == 2)
@@ -974,9 +970,9 @@ function ritual_prereq(str_name)
 	}
 	if(b_is_quest_key_available && !b_has_ritual_previously_been_started || b_has_ritual_previously_been_started)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1067,7 +1063,7 @@ function ritual_start(str_name, e_triggerer)
 			break;
 		}
 	}
-	foreach(var_41502a9e, player in level.players)
+	foreach(player in level.players)
 	{
 		player clientfield::set_to_player("used_quest_key", var_e85b4e8);
 		player recordmapevent(21, gettime(), player.origin, level.round_number, var_f34eee69);
@@ -1075,7 +1071,7 @@ function ritual_start(str_name, e_triggerer)
 	level clientfield::set("ritual_state_" + str_name, 2);
 	level clientfield::set("ritual_current", get_enum_from_name(str_name));
 	set_ritual_barrier(str_name, 1);
-	n_duration = level.zod_ritual_durations[level.var_3aa0c58];
+	n_duration = level.zod_ritual_durations[level.n_zod_rituals_completed];
 	ritual_current_progress = [[ level.a_o_defend_areas[str_name] ]]->set_duration(n_duration);
 	level thread ritual_think(str_name);
 }
@@ -1092,7 +1088,7 @@ function ritual_start(str_name, e_triggerer)
 function ritual_end()
 {
 	var_59e0351b = level clientfield::get("ritual_current");
-	foreach(var_dd813191, player in level.players)
+	foreach(player in level.players)
 	{
 		player recordmapevent(22, gettime(), player.origin, level.round_number, var_59e0351b);
 	}
@@ -1134,17 +1130,23 @@ function ritual_think(str_name)
 		{
 			var_9e663a06 = zm_zod_vo::function_335f3a81(0, var_8df092ed);
 		}
-		else if(ritual_current_progress >= 0.45 && ritual_current_progress < 0.7 && !var_c468b46f)
+		else
 		{
-			var_c468b46f = zm_zod_vo::function_335f3a81(1, var_8df092ed);
-		}
-		else if(ritual_current_progress >= 0.7 && ritual_current_progress < 0.9 && !var_52614534)
-		{
-			var_52614534 = zm_zod_vo::function_335f3a81(2, var_8df092ed);
-		}
-		else if(ritual_current_progress >= 0.9 && !var_7863bf9d)
-		{
-			var_7863bf9d = zm_zod_vo::function_335f3a81(3, var_8df092ed);
+			if(ritual_current_progress >= 0.45 && ritual_current_progress < 0.7 && !var_c468b46f)
+			{
+				var_c468b46f = zm_zod_vo::function_335f3a81(1, var_8df092ed);
+			}
+			else
+			{
+				if(ritual_current_progress >= 0.7 && ritual_current_progress < 0.9 && !var_52614534)
+				{
+					var_52614534 = zm_zod_vo::function_335f3a81(2, var_8df092ed);
+				}
+				else if(ritual_current_progress >= 0.9 && !var_7863bf9d)
+				{
+					var_7863bf9d = zm_zod_vo::function_335f3a81(3, var_8df092ed);
+				}
+			}
 		}
 		wait(0.05);
 	}
@@ -1201,18 +1203,18 @@ function function_5e98a0b6(str_name)
 		}
 		case "pap":
 		{
-			return 0;
+			return false;
 		}
 	}
-	foreach(var_fa66d5b8, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		var_8df092ed = [[ level.a_o_defend_areas[str_name] ]]->is_player_in_defend_area(e_player);
 		if(var_8df092ed && e_player.characterindex == var_8f06ff9)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1226,7 +1228,7 @@ function function_5e98a0b6(str_name)
 */
 function ritual_succeed(str_name, var_6ec814a1)
 {
-	level.var_3aa0c58++;
+	level.n_zod_rituals_completed++;
 	level flag::set("zombie_drop_powerups");
 	level flag::clear("ritual_in_progress");
 	set_ritual_barrier(str_name, 0);
@@ -1240,11 +1242,11 @@ function ritual_succeed(str_name, var_6ec814a1)
 	else
 	{
 		/#
-			if(!isdefined(var_6ec814a1))
-			{
-				var_6ec814a1 = level.activeplayers;
-			}
+			var_6ec814a1 = level.activeplayers;
 		#/
+		if(!isdefined(var_6ec814a1))
+		{
+		}
 		ritual_end();
 		level thread function_b600b7f6(str_name);
 		level notify(("ritual_" + str_name) + "_succeed");
@@ -1283,7 +1285,7 @@ function ritual_succeed(str_name, var_6ec814a1)
 function function_b600b7f6(str_name)
 {
 	wait(10);
-	if(level.var_3aa0c58 == 2 || level.var_3aa0c58 == 4 || level.var_3aa0c58 == 5)
+	if(level.n_zod_rituals_completed == 2 || level.n_zod_rituals_completed == 4 || level.n_zod_rituals_completed == 5)
 	{
 		var_7ee78287 = struct::get("defend_area_" + str_name, "targetname");
 		var_5fb1e746 = arraygetclosest(var_7ee78287.origin, level.margwa_locations);
@@ -1341,7 +1343,7 @@ function ritual_fail(str_name)
 function set_ritual_barrier(str_name, b_on)
 {
 	a_e_clip = getentarray("ritual_clip_" + str_name, "targetname");
-	foreach(var_4e7c7673, e_clip in a_e_clip)
+	foreach(e_clip in a_e_clip)
 	{
 		if(b_on)
 		{
@@ -1414,7 +1416,7 @@ function ritual_pap_succeed()
 		e_basin playloopsound("zmb_zod_ritual_pap_worm_firelvl2", 1);
 	}
 	a_str_gateworm_held = array("relic_boxer", "relic_detective", "relic_femme", "relic_magician");
-	foreach(var_64090632, str_gateworm_held in a_str_gateworm_held)
+	foreach(str_gateworm_held in a_str_gateworm_held)
 	{
 		mdl_gateworm = getent(("quest_ritual_" + str_gateworm_held) + "_placed", "targetname");
 		mdl_gateworm movez(64, 3);
@@ -1438,7 +1440,7 @@ function ritual_pap_succeed()
 	level thread function_b600b7f6("pap");
 	/#
 		a_str_ritual_flags = array("", "", "", "");
-		foreach(var_8067d301, var_83f1459 in a_str_ritual_flags)
+		foreach(var_83f1459 in a_str_ritual_flags)
 		{
 			level flag::set(var_83f1459);
 		}
@@ -1518,7 +1520,7 @@ function setup_pap_door()
 	e_pap_door showpart("tag_ritual_key_off");
 	exploder::exploder("fx_exploder_ritual_pap_wall_smk");
 	a_str_names = array("boxer", "detective", "femme", "magician");
-	foreach(var_4684e2f7, str_name in a_str_names)
+	foreach(str_name in a_str_names)
 	{
 		e_pap_door thread pap_door_watch_for_ritual(str_name);
 	}
@@ -1580,7 +1582,7 @@ function pap_door_watch_for_explosion()
 	t_pap_door = getent("pap_door_trigger", "targetname");
 	while(true)
 	{
-		foreach(var_6f82ef13, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			if(zombie_utility::is_player_valid(player) && player istouching(t_pap_door))
 			{
@@ -1737,10 +1739,10 @@ function are_all_basins_filled()
 	{
 		if(!level flag::get("pap_basin_" + i))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1941,10 +1943,10 @@ function basin_trigger_thread()
 	Parameters: 3
 	Flags: Linked
 */
-function function_5eb042a7(str_flag, str_gateworm_held, var_71740755)
+function function_5eb042a7(str_flag, str_gateworm_held, b_is_active)
 {
 	mdl_gateworm = getent(("quest_ritual_" + str_gateworm_held) + "_placed", "targetname");
-	if(var_71740755)
+	if(b_is_active)
 	{
 		e_basin = get_worm_basin(str_flag);
 		var_16e322eb = str_flag + "_pos";
@@ -1983,7 +1985,7 @@ function function_5eb042a7(str_flag, str_gateworm_held, var_71740755)
 function get_worm_basin(str_flag)
 {
 	a_e_basins = getentarray("worm_basin", "targetname");
-	foreach(var_57f3ac9b, e_basin in a_e_basins)
+	foreach(e_basin in a_e_basins)
 	{
 		if(e_basin.script_noteworthy === str_flag)
 		{
@@ -2096,7 +2098,7 @@ function function_7107ea51(var_b12a7acb, var_4539ae4a)
 	{
 		var_b12a7acb util::waittill_any("impact_rumble", "rumble_stop");
 		earthquake(0.5, 0.2, var_4539ae4a.origin, 512);
-		foreach(var_3bc806e, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			if(zombie_utility::is_player_valid(player) && distance2dsquared(player.origin, var_4539ae4a.origin) < 262144)
 			{
@@ -2529,7 +2531,7 @@ function function_6c6a5914(n_val)
 	hidemiscmodels("robot_model");
 	level flag::set("police_box_hide");
 	var_dfda7cba = getentarray("robot_readout_model", "targetname");
-	foreach(var_34690cca, mdl_readout in var_dfda7cba)
+	foreach(mdl_readout in var_dfda7cba)
 	{
 		mdl_readout hide();
 	}
@@ -2580,7 +2582,7 @@ function function_832e2eaa(n_val)
 function function_c0a29676()
 {
 	var_cbe37472 = array("ritual_boxer", "ritual_detective", "ritual_femme", "ritual_magician", "ritual_pap");
-	foreach(var_200f97a, var_5afbab23 in var_cbe37472)
+	foreach(var_5afbab23 in var_cbe37472)
 	{
 		zm_craftables::complete_craftable(var_5afbab23);
 	}
@@ -2704,7 +2706,7 @@ function function_83c8b6e8()
 	var_de243c38 = getent("vending_packapunch", "targetname");
 	var_de243c38 ghost();
 	var_4197ca83 = zm_pap_util::get_triggers();
-	foreach(var_76eace55, trigger in var_4197ca83)
+	foreach(trigger in var_4197ca83)
 	{
 		trigger sethintstring("");
 	}

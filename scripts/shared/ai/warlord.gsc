@@ -32,7 +32,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("warlord", &__init__, undefined, undefined);
 }
@@ -71,7 +71,7 @@ function __init__()
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function registerbehaviorscriptfunctions()
+function autoexec registerbehaviorscriptfunctions()
 {
 	behaviortreenetworkutility::registerbehaviortreescriptapi("warlordCanJukeCondition", &canjukecondition);
 	behaviortreenetworkutility::registerbehaviortreescriptapi("warlordCanTacticalJukeCondition", &cantacticaljukecondition);
@@ -94,7 +94,7 @@ autoexec function registerbehaviorscriptfunctions()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function archetypewarlordblackboardinit()
+function private archetypewarlordblackboardinit()
 {
 	blackboard::createblackboardforentity(self);
 	ai::createinterfaceforentity(self);
@@ -114,7 +114,7 @@ private function archetypewarlordblackboardinit()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function archetypewarlordonanimscriptedcallback(entity)
+function private archetypewarlordonanimscriptedcallback(entity)
 {
 	entity.__blackboard = undefined;
 	entity archetypewarlordblackboardinit();
@@ -129,13 +129,13 @@ private function archetypewarlordonanimscriptedcallback(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function shouldhuntenemyplayer(entity)
+function private shouldhuntenemyplayer(entity)
 {
 	if(isdefined(entity.enemy) && isdefined(entity.huntenemytime) && gettime() < entity.huntenemytime)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -147,25 +147,25 @@ private function shouldhuntenemyplayer(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _warlordhuntenemy(entity)
+function private _warlordhuntenemy(entity)
 {
 	/#
 		warlorddebughelpers::trystate(entity, 3, 1);
 	#/
 	if(distance2dsquared(entity.origin, self lastknownpos(self.enemy)) <= (250 * 250))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(entity.huntupdatenexttime) && gettime() < entity.huntupdatenexttime)
 	{
-		return 0;
+		return false;
 	}
 	if(entity.isangryattack)
 	{
 		/#
 			warlorddebughelpers::printstate(3, (1, 0, 1), "");
 		#/
-		return 0;
+		return false;
 	}
 	positiononnavmesh = getclosestpointonnavmesh(self lastknownpos(self.enemy), 200);
 	if(!isdefined(positiononnavmesh))
@@ -179,7 +179,7 @@ private function _warlordhuntenemy(entity)
 	{
 		closestpoint = undefined;
 		closestdistance = undefined;
-		foreach(var_88ece713, point in queryresult.data)
+		foreach(point in queryresult.data)
 		{
 			if(!point.inclaimedlocation && point.disttogoal == 0)
 			{
@@ -198,14 +198,14 @@ private function _warlordhuntenemy(entity)
 			#/
 			entity useposition(closestpoint);
 			entity.huntupdatenexttime = gettime() + randomintrange(500, 1500);
-			return 1;
+			return true;
 		}
 	}
 	/#
 		warlorddebughelpers::setstatefailed(entity, 3);
 	#/
 	entity.huntenemytime = undefined;
-	return 0;
+	return false;
 }
 
 /*
@@ -317,7 +317,7 @@ function choosebetterpositionservice(entity)
 		bpointsingoal = 0;
 		bpointsvisible = 0;
 		closepointdistance = 36;
-		foreach(var_8d3c4d3, point in queryresult.data)
+		foreach(point in queryresult.data)
 		{
 			if(point.inclaimedlocation)
 			{
@@ -359,7 +359,7 @@ function choosebetterpositionservice(entity)
 				bpointsavailable = 0;
 				bpointsingoal = 0;
 				bpointsvisible = 0;
-				foreach(var_d004e599, point in queryresult.data)
+				foreach(point in queryresult.data)
 				{
 					if(point.inclaimedlocation)
 					{
@@ -384,7 +384,7 @@ function choosebetterpositionservice(entity)
 				}
 				if(randompoints.size == 0)
 				{
-					foreach(var_54d6bc66, point in queryresult.data)
+					foreach(point in queryresult.data)
 					{
 						if(point.inclaimedlocation)
 						{
@@ -404,7 +404,7 @@ function choosebetterpositionservice(entity)
 			}
 			else
 			{
-				foreach(var_a4b29975, point in queryresult.data)
+				foreach(point in queryresult.data)
 				{
 					if(point.inclaimedlocation)
 					{
@@ -466,17 +466,23 @@ function choosebetterpositionservice(entity)
 			{
 				pointweight = -1 * bweightsign;
 			}
-			else if(distancesqrdtoenemy < engagemindistsqrd)
+			else
 			{
-				pointweight = -0.5 * bweightsign;
-			}
-			else if(distancesqrdtoenemy > engagemaxfalloffdistsqrd)
-			{
-				pointweight = 1 * bweightsign;
-			}
-			else if(distancesqrdtoenemy > engagemaxdistsqrd)
-			{
-				pointweight = 1 * bweightsign;
+				if(distancesqrdtoenemy < engagemindistsqrd)
+				{
+					pointweight = -0.5 * bweightsign;
+				}
+				else
+				{
+					if(distancesqrdtoenemy > engagemaxfalloffdistsqrd)
+					{
+						pointweight = 1 * bweightsign;
+					}
+					else if(distancesqrdtoenemy > engagemaxdistsqrd)
+					{
+						pointweight = 1 * bweightsign;
+					}
+				}
 			}
 			if(isdefined(enemyforward))
 			{
@@ -500,7 +506,7 @@ function choosebetterpositionservice(entity)
 			#/
 		}
 		normalpointsmaxgoalweight = goalweight;
-		foreach(var_93c4e2f0, point in preferedpoints)
+		foreach(point in preferedpoints)
 		{
 			if(point === entity.var_541cb3cf)
 			{
@@ -595,46 +601,46 @@ function warlordshouldnormalmelee(behaviortreeentity)
 {
 	if(isdefined(behaviortreeentity.enemy) && (!(isdefined(behaviortreeentity.enemy.allowdeath) && behaviortreeentity.enemy.allowdeath)))
 	{
-		return 0;
+		return false;
 	}
 	if(aiutility::hasenemy(behaviortreeentity) && !isalive(behaviortreeentity.enemy))
 	{
-		return 0;
+		return false;
 	}
 	if(!issentient(behaviortreeentity.enemy))
 	{
-		return 0;
+		return false;
 	}
 	if(isvehicle(behaviortreeentity.enemy) && (!(isdefined(behaviortreeentity.enemy.good_melee_target) && behaviortreeentity.enemy.good_melee_target)))
 	{
-		return 0;
+		return false;
 	}
 	if(!aiutility::shouldmutexmelee(behaviortreeentity))
 	{
-		return 0;
+		return false;
 	}
 	if(behaviortreeentity ai::has_behavior_attribute("can_melee") && !behaviortreeentity ai::get_behavior_attribute("can_melee"))
 	{
-		return 0;
+		return false;
 	}
 	if(behaviortreeentity.enemy ai::has_behavior_attribute("can_be_meleed") && !behaviortreeentity.enemy ai::get_behavior_attribute("can_be_meleed"))
 	{
-		return 0;
+		return false;
 	}
 	if(!isplayer(behaviortreeentity.enemy) && (!(isdefined(behaviortreeentity.enemy.magic_bullet_shield) && behaviortreeentity.enemy.magic_bullet_shield)))
 	{
-		return 0;
+		return false;
 	}
 	if(aiutility::hascloseenemytomeleewithrange(behaviortreeentity, 100 * 100))
 	{
 		if(warlordserverutils::isenemytoolowtoattack(behaviortreeentity.enemy))
 		{
 			warlordserverutils::setenemytoolowtoattack(behaviortreeentity);
-			return 0;
+			return false;
 		}
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -810,7 +816,7 @@ function warlordangryattack(entity)
 			}
 		}
 	}
-	foreach(var_deed7019, data in entity.knownattackers)
+	foreach(data in entity.knownattackers)
 	{
 		if(!isdefined(attackersarray))
 		{
@@ -823,7 +829,7 @@ function warlordangryattack(entity)
 		attackersarray[attackersarray.size] = data.attacker;
 	}
 	thread warlordangryattack_shootthemall(entity, attackersarray);
-	return 1;
+	return true;
 }
 
 /*
@@ -841,7 +847,7 @@ function warlordangryattack_shootthemall(entity, attackersarray)
 	entity endon(#"death");
 	entity notify(#"hash_b160390f");
 	shoottime = getdvarfloat("warlordangryattack", 3);
-	foreach(var_3697bcf4, attacker in attackersarray)
+	foreach(attacker in attackersarray)
 	{
 		if(isdefined(attacker))
 		{
@@ -889,14 +895,14 @@ function setwarlordaggressivemode(entity, b_aggressive_mode)
 	entity.var_568222a9 = b_aggressive_mode;
 	if(isdefined(b_aggressive_mode) && b_aggressive_mode)
 	{
-		foreach(var_f13ae409, player in level.players)
+		foreach(player in level.players)
 		{
 			entity setpersonalthreatbias(player, 1000);
 		}
 	}
 	else
 	{
-		foreach(var_4c5d7959, player in level.players)
+		foreach(player in level.players)
 		{
 			entity setpersonalthreatbias(player, 0, 1);
 		}
@@ -959,7 +965,7 @@ function deletepreferedpoint(entity, name)
 	if(isdefined(entity.prefered_points))
 	{
 		points_to_remove = [];
-		foreach(var_21f5cc1c, point in entity.prefered_points)
+		foreach(point in entity.prefered_points)
 		{
 			if(point.name === name)
 			{
@@ -976,14 +982,14 @@ function deletepreferedpoint(entity, name)
 		}
 		if(points_to_remove.size > 0)
 		{
-			foreach(var_86300fe7, point in points_to_remove)
+			foreach(point in points_to_remove)
 			{
 				arrayremovevalue(entity.prefered_points, point);
 			}
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1013,7 +1019,7 @@ function clearallpreferedpoints(entity)
 function clearpreferedpointsoutsidegoal(entity)
 {
 	points_to_remove = [];
-	foreach(var_9e4a4934, point in entity.prefered_points)
+	foreach(point in entity.prefered_points)
 	{
 		if(!entity isposatgoal(point.origin))
 		{
@@ -1028,7 +1034,7 @@ function clearpreferedpointsoutsidegoal(entity)
 			points_to_remove[points_to_remove.size] = point;
 		}
 	}
-	foreach(var_6752a507, point in points_to_remove)
+	foreach(point in points_to_remove)
 	{
 		arrayremovevalue(entity.prefered_points, point);
 	}
@@ -1043,7 +1049,7 @@ function clearpreferedpointsoutsidegoal(entity)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function setpreferedpoint(entity, point)
+function private setpreferedpoint(entity, point)
 {
 	entity.var_541cb3cf = entity.current_prefered_point;
 	entity.current_prefered_point = point;
@@ -1058,7 +1064,7 @@ private function setpreferedpoint(entity, point)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function clearpreferedpoint(entity)
+function private clearpreferedpoint(entity)
 {
 	/#
 		warlorddebughelpers::setcurrentstate(entity, undefined);
@@ -1077,13 +1083,13 @@ private function clearpreferedpoint(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function atpreferedpoint(entity)
+function private atpreferedpoint(entity)
 {
 	if(isdefined(entity.current_prefered_point) && (distancesquared(entity.current_prefered_point.origin, entity.origin) < (36 * 36) && (abs(self.current_prefered_point.origin[2] - entity.origin[2])) < 45))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1095,21 +1101,21 @@ private function atpreferedpoint(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function reachingpreferedpoint(entity)
+function private reachingpreferedpoint(entity)
 {
 	if(!isdefined(entity.current_prefered_point))
 	{
-		return 0;
+		return false;
 	}
 	if(atpreferedpoint(entity))
 	{
-		return 1;
+		return true;
 	}
 	if(isdefined(entity.pathgoalpos) && entity.pathgoalpos == entity.current_prefered_point.origin)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1121,7 +1127,7 @@ private function reachingpreferedpoint(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function updatepreferedpoint(entity)
+function private updatepreferedpoint(entity)
 {
 	if(isdefined(entity.current_prefered_point))
 	{
@@ -1132,9 +1138,9 @@ private function updatepreferedpoint(entity)
 				if(gettime() > entity.current_prefered_point_expiration)
 				{
 					clearpreferedpoint(entity);
-					return 0;
+					return false;
 				}
-				return 1;
+				return true;
 			}
 			if(isdefined(entity.current_prefered_point.min_duration))
 			{
@@ -1148,18 +1154,18 @@ private function updatepreferedpoint(entity)
 					duration = randomintrange(entity.current_prefered_point.min_duration, entity.current_prefered_point.max_duration);
 					entity.current_prefered_point_expiration = gettime() + duration;
 				}
-				return 1;
+				return true;
 			}
 			clearpreferedpoint(entity);
-			return 0;
+			return false;
 		}
 		if(!reachingpreferedpoint(entity))
 		{
 			entity useposition(entity.current_prefered_point.origin);
 		}
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1171,12 +1177,12 @@ private function updatepreferedpoint(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function getpreferedvalidpoints(entity)
+function private getpreferedvalidpoints(entity)
 {
 	validpoints = [];
 	if(isdefined(entity.prefered_points))
 	{
-		foreach(var_d2f2e510, point in entity.prefered_points)
+		foreach(point in entity.prefered_points)
 		{
 			if(!entity isposatgoal(point.origin))
 			{
@@ -1252,7 +1258,7 @@ function warlordcanjuke(entity)
 {
 	if(!isdefined(entity.enemy))
 	{
-		return 0;
+		return false;
 	}
 	distancesqr = distancesquared(entity.enemy.origin, entity.origin);
 	if(distancesqr < (300 * 300))
@@ -1275,9 +1281,9 @@ function warlordcanjuke(entity)
 		{
 			blackboard::setblackboardattribute(entity, "_juke_distance", "short");
 		}
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1301,11 +1307,11 @@ function warlordcantacticaljuke(entity)
 			{
 				blackboard::setblackboardattribute(entity, "_juke_direction", jukedirection);
 				blackboard::setblackboardattribute(entity, "_juke_distance", "long");
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1323,15 +1329,15 @@ function isenemytoolowtoattack(enemy)
 	{
 		if(isdefined(enemy.laststand) && enemy.laststand)
 		{
-			return 1;
+			return true;
 		}
 		playerstance = enemy getstance();
 		if(isdefined(playerstance) && (playerstance == "prone" || playerstance == "crouch"))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1347,14 +1353,14 @@ function havetoolowtoattackenemy(entity)
 {
 	if(!isdefined(entity.lasttimetohavecrouchingenemy))
 	{
-		return 0;
+		return false;
 	}
 	if((gettime() - entity.lasttimetohavecrouchingenemy) <= 4000)
 	{
-		return 1;
+		return true;
 	}
 	entity.lasttimetohavecrouchingenemy = undefined;
-	return 0;
+	return false;
 }
 
 /*
@@ -1437,25 +1443,25 @@ function shouldswitchtonewthreat(entity, attacker, threat)
 {
 	if(entity.enemy === attacker)
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(entity.currentdangerousattacker))
 	{
-		return 1;
+		return true;
 	}
 	if(entity.currentdangerousattacker.health <= 0)
 	{
-		return 1;
+		return true;
 	}
 	if(entity.currentdangerousattacker == attacker)
 	{
-		return 0;
+		return false;
 	}
 	if((gettime() - entity.lastdangerousattackertime) < 1)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1580,7 +1586,7 @@ function checkifweshouldmove(entity)
 		else
 		{
 			var_a94cf21a = 0;
-			foreach(var_7be887fa, attackerinfo in entity.knownattackers)
+			foreach(attackerinfo in entity.knownattackers)
 			{
 				if(attackerinfo.damage > 200)
 				{
@@ -1652,13 +1658,16 @@ function warlorddamageoverride(einflictor, eattacker, idamage, idflags, smeansof
 	{
 		clientfield::set("warlord_damage_state", 2);
 	}
-	else if(entity.health <= entity.damagestatehealth)
-	{
-		clientfield::set("warlord_damage_state", 1);
-	}
 	else
 	{
-		clientfield::set("warlord_damage_state", 0);
+		if(entity.health <= entity.damagestatehealth)
+		{
+			clientfield::set("warlord_damage_state", 1);
+		}
+		else
+		{
+			clientfield::set("warlord_damage_state", 0);
+		}
 	}
 	if(!isdefined(entity.lastdamagetime))
 	{
@@ -1841,29 +1850,44 @@ function printstate(state, color, string)
 			{
 				printtoprightln(("" + string) + gettime(), color, -1);
 			}
-			else if(state == 1)
+			else
 			{
-				printtoprightln(("" + string) + gettime(), color, -1);
-			}
-			else if(state == 2)
-			{
-				printtoprightln(("" + string) + gettime(), color, -1);
-			}
-			else if(state == 3)
-			{
-				printtoprightln(("" + string) + gettime(), color, -1);
-			}
-			else if(state == 4)
-			{
-				printtoprightln(("" + string) + gettime(), color, -1);
-			}
-			else if(state == 5)
-			{
-				printtoprightln(("" + string) + gettime(), color, -1);
-			}
-			else if(state == 6)
-			{
-				printtoprightln(("" + string) + gettime(), color, -1);
+				if(state == 1)
+				{
+					printtoprightln(("" + string) + gettime(), color, -1);
+				}
+				else
+				{
+					if(state == 2)
+					{
+						printtoprightln(("" + string) + gettime(), color, -1);
+					}
+					else
+					{
+						if(state == 3)
+						{
+							printtoprightln(("" + string) + gettime(), color, -1);
+						}
+						else
+						{
+							if(state == 4)
+							{
+								printtoprightln(("" + string) + gettime(), color, -1);
+							}
+							else
+							{
+								if(state == 5)
+								{
+									printtoprightln(("" + string) + gettime(), color, -1);
+								}
+								else if(state == 6)
+								{
+									printtoprightln(("" + string) + gettime(), color, -1);
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	#/
@@ -1961,13 +1985,16 @@ function isnewstate(entity, state)
 	{
 		bnewstate = 1;
 	}
-	else if(!isdefined(state))
+	else
 	{
-		return 0;
-	}
-	if(entity.currentstate != state)
-	{
-		bnewstate = 1;
+		if(!isdefined(state))
+		{
+			return 0;
+		}
+		if(entity.currentstate != state)
+		{
+			bnewstate = 1;
+		}
 	}
 	return bnewstate;
 }

@@ -49,7 +49,7 @@ function init()
 	game["teamops"].data = [];
 	game["teamops"].teamprogress = [];
 	game["teamops"].teamopsname = undefined;
-	foreach(var_fd20a6d3, team in level.teams)
+	foreach(team in level.teams)
 	{
 		game["teamops"].teamprogress[team] = 0;
 	}
@@ -119,16 +119,16 @@ function teamopsallowed(name)
 	teamops = game["teamops"].data[name];
 	if(teamops.modes.size == 0)
 	{
-		return 1;
+		return true;
 	}
 	for(mi = 0; mi < teamops.modes.size; mi++)
 	{
 		if(teamops.modes[mi] == level.gametype)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -150,7 +150,7 @@ function startteamops(name)
 	}
 	teamopsshowhud(0);
 	preanouncetime = getdvarint("teamOpsPreanounceTime", 5);
-	foreach(var_5d2cefaa, team in level.teams)
+	foreach(team in level.teams)
 	{
 		globallogic_audio::leader_dialog("teamops_preannounce", team);
 	}
@@ -169,7 +169,7 @@ function startteamops(name)
 	game["teamops"].teamopsrewardindex = randomintrange(0, teamops.rewards.size);
 	game["teamops"].teamopsreward = teamops.rewards[game["teamops"].teamopsrewardindex];
 	game["teamops"].teamopsstarttime = gettime();
-	foreach(var_778a120a, team in level.teams)
+	foreach(team in level.teams)
 	{
 		game["teamops"].teamprogress[team] = 0;
 	}
@@ -202,7 +202,7 @@ function teamopswatcher()
 			if(elapsed > (time * 1000))
 			{
 				stopteamops();
-				foreach(var_ef795c4e, team in level.teams)
+				foreach(team in level.teams)
 				{
 					globallogic_audio::leader_dialog("teamops_timeout", team);
 				}
@@ -227,7 +227,7 @@ function stopteamops()
 	game["teamops"].teamopsname = undefined;
 	game["teamops"].teamopsreward = undefined;
 	game["teamops"].teamopsstarttime = undefined;
-	foreach(var_58d913cb, team in level.teams)
+	foreach(team in level.teams)
 	{
 		game["teamops"].teamprogress[team] = 0;
 	}

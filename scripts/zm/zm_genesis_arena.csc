@@ -29,7 +29,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_genesis_arena", &__init__, undefined, undefined);
 }
@@ -69,7 +69,7 @@ function __init__()
 	clientfield::register("scriptmover", "runeprison_rock_fx", 5000, 1, "int", &runeprison_rock_fx, 0, 0);
 	clientfield::register("scriptmover", "runeprison_explode_fx", 5000, 1, "int", &runeprison_explode_fx, 0, 0);
 	var_29441edd = struct::get_array("powerup_visual", "targetname");
-	foreach(var_261eb2ef, s_powerup_loc in var_29441edd)
+	foreach(s_powerup_loc in var_29441edd)
 	{
 		s_powerup_loc.var_90369c89 = [];
 	}
@@ -108,7 +108,7 @@ function summoning_key_charge_state(localclientnum, oldval, newval, bnewent, bin
 function arena_timeout_warning(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
 	a_players = getplayers(localclientnum);
-	foreach(var_3fe383f4, player in a_players)
+	foreach(player in a_players)
 	{
 		if(newval > 0)
 		{
@@ -1046,7 +1046,7 @@ function function_2bcc6bd2(state, e_model)
 function function_b9c422c3(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
 	var_a42274ee = struct::get_array("challenge_fire_struct", "targetname");
-	foreach(var_229f2c5f, var_d2c81bd9 in var_a42274ee)
+	foreach(var_d2c81bd9 in var_a42274ee)
 	{
 		if(var_d2c81bd9.script_int == self getentitynumber())
 		{

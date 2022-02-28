@@ -24,7 +24,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("battlechatter", &__init__, undefined, undefined);
 }
@@ -77,7 +77,7 @@ function __init__()
 	if(level.teambased && !isdefined(game["boostPlayersPicked"]))
 	{
 		game["boostPlayersPicked"] = [];
-		foreach(var_da19be1d, team in level.teams)
+		foreach(team in level.teams)
 		{
 			game["boostPlayersPicked"][team] = 0;
 		}
@@ -87,7 +87,7 @@ function __init__()
 	clientfield::register("allplayers", "play_boost", 1, 2, "int");
 	level thread pick_boost_number();
 	playerdialogbundles = struct::get_script_bundles("mpdialog_player");
-	foreach(var_5fab8dbb, bundle in playerdialogbundles)
+	foreach(bundle in playerdialogbundles)
 	{
 		count_keys(bundle, "killGeneric");
 		count_keys(bundle, "killSniper");
@@ -144,13 +144,16 @@ function on_joined_team()
 			self set_cdp_dialog();
 		}
 	}
-	else if(randomintrange(0, 2))
-	{
-		self set_blops_dialog();
-	}
 	else
 	{
-		self set_cdp_dialog();
+		if(randomintrange(0, 2))
+		{
+			self set_blops_dialog();
+		}
+		else
+		{
+			self set_cdp_dialog();
+		}
 	}
 	self globallogic_audio::flush_dialog();
 	if(level.disableprematchmessages === 1)
@@ -360,16 +363,19 @@ function water_vox()
 				}
 			}
 		}
-		else if(self.voxdrowning)
+		else
 		{
-			self thread play_dialog("exertEmergeGasp", 20, mpdialog_value("playerExertBuffer", 0));
-			self.voxdrowning = 0;
-			self.voxemergebreath = 0;
-		}
-		else if(self.voxemergebreath)
-		{
-			self thread play_dialog("exertEmergeBreath", 20, mpdialog_value("playerExertBuffer", 0));
-			self.voxemergebreath = 0;
+			if(self.voxdrowning)
+			{
+				self thread play_dialog("exertEmergeGasp", 20, mpdialog_value("playerExertBuffer", 0));
+				self.voxdrowning = 0;
+				self.voxemergebreath = 0;
+			}
+			else if(self.voxemergebreath)
+			{
+				self thread play_dialog("exertEmergeBreath", 20, mpdialog_value("playerExertBuffer", 0));
+				self.voxemergebreath = 0;
+			}
 		}
 	}
 }
@@ -392,17 +398,23 @@ function pain_vox(meansofdeath)
 			dialogkey = "exertPainDrowning";
 			self.voxdrowning = 1;
 		}
-		else if(meansofdeath == "MOD_FALLING")
-		{
-			dialogkey = "exertPainFalling";
-		}
-		else if(self isplayerunderwater())
-		{
-			dialogkey = "exertPainUnderwater";
-		}
 		else
 		{
-			dialogkey = "exertPain";
+			if(meansofdeath == "MOD_FALLING")
+			{
+				dialogkey = "exertPainFalling";
+			}
+			else
+			{
+				if(self isplayerunderwater())
+				{
+					dialogkey = "exertPainUnderwater";
+				}
+				else
+				{
+					dialogkey = "exertPain";
+				}
+			}
 		}
 		exertbuffer = mpdialog_value("playerExertBuffer", 0);
 		self thread play_dialog(dialogkey, 30, exertbuffer);
@@ -514,11 +526,11 @@ function killed_by_sniper(sniper)
 	level endon(#"game_ended");
 	if(!level.teambased)
 	{
-		return 0;
+		return false;
 	}
 	if(util::isprophuntgametype())
 	{
-		return 0;
+		return false;
 	}
 	waittillframeend();
 	if(dialog_chance("sniperKillChance"))
@@ -534,7 +546,7 @@ function killed_by_sniper(sniper)
 			players = arraysort(players, self.origin);
 			voiceradius = mpdialog_value("playerVoiceRadius", 0);
 			voiceradiussq = voiceradius * voiceradius;
-			foreach(var_f399f3e7, player in players)
+			foreach(player in players)
 			{
 				if(distancesquared(closest_ally.origin, player.origin) <= voiceradiussq)
 				{
@@ -612,38 +624,47 @@ function say_kill_battle_chatter(attacker, weapon, victim, inflictor)
 			attacker thread hero_weapon_success_reaction();
 		}
 	}
-	else if(isdefined(attacker.speedburston) && attacker.speedburston)
+	else
 	{
-		if(!(isdefined(attacker.speedburstkill) && attacker.speedburstkill))
+		if(isdefined(attacker.speedburston) && attacker.speedburston)
 		{
-			speedburstkilldist = mpdialog_value("speedBurstKillDistance", 0);
-			if(distancesquared(attacker.origin, victim.origin) < (speedburstkilldist * speedburstkilldist))
+			if(!(isdefined(attacker.speedburstkill) && attacker.speedburstkill))
 			{
-				attacker.speedburstkill = 1;
+				speedburstkilldist = mpdialog_value("speedBurstKillDistance", 0);
+				if(distancesquared(attacker.origin, victim.origin) < (speedburstkilldist * speedburstkilldist))
+				{
+					attacker.speedburstkill = 1;
+				}
 			}
-		}
-	}
-	else if(attacker _gadget_camo::camo_is_inuse() || (isdefined(attacker.gadget_camo_off_time) && (attacker.gadget_camo_off_time + (mpdialog_value("camoKillTime", 0) * 1000)) >= gettime()))
-	{
-		if(!(isdefined(attacker.playedgadgetsuccess) && attacker.playedgadgetsuccess))
-		{
-			attacker thread play_gadget_success(getweapon("gadget_camo"), "enemyKillDelay", victim);
-		}
-	}
-	else if(dialog_chance("enemyKillChance"))
-	{
-		if(isdefined(victim.spottedtime) && (victim.spottedtime + mpdialog_value("enemySniperKillTime", 0)) >= gettime() && array::contains(victim.spottedby, attacker) && dialog_chance("enemySniperKillChance"))
-		{
-			killdialog = attacker get_random_key("killSniper");
-		}
-		else if(dialog_chance("enemyHeroKillChance"))
-		{
-			victimdialogname = victim getmpdialogname();
-			killdialog = attacker get_random_key(level.bcsounds["kill_dialog"][victimdialogname]);
 		}
 		else
 		{
-			killdialog = attacker get_random_key("killGeneric");
+			if(attacker _gadget_camo::camo_is_inuse() || (isdefined(attacker.gadget_camo_off_time) && (attacker.gadget_camo_off_time + (mpdialog_value("camoKillTime", 0) * 1000)) >= gettime()))
+			{
+				if(!(isdefined(attacker.playedgadgetsuccess) && attacker.playedgadgetsuccess))
+				{
+					attacker thread play_gadget_success(getweapon("gadget_camo"), "enemyKillDelay", victim);
+				}
+			}
+			else if(dialog_chance("enemyKillChance"))
+			{
+				if(isdefined(victim.spottedtime) && (victim.spottedtime + mpdialog_value("enemySniperKillTime", 0)) >= gettime() && array::contains(victim.spottedby, attacker) && dialog_chance("enemySniperKillChance"))
+				{
+					killdialog = attacker get_random_key("killSniper");
+				}
+				else
+				{
+					if(dialog_chance("enemyHeroKillChance"))
+					{
+						victimdialogname = victim getmpdialogname();
+						killdialog = attacker get_random_key(level.bcsounds["kill_dialog"][victimdialogname]);
+					}
+					else
+					{
+						killdialog = attacker get_random_key("killGeneric");
+					}
+				}
+			}
 		}
 	}
 	victim.spottedtime = undefined;
@@ -814,7 +835,7 @@ function hero_weapon_success_reaction()
 	allies = [];
 	allyradiussq = mpdialog_value("playerVoiceRadius", 0);
 	allyradiussq = allyradiussq * allyradiussq;
-	foreach(var_9713f65c, player in level.players)
+	foreach(player in level.players)
 	{
 		if(!isdefined(player) || !isalive(player) || player.sessionstate != "playing" || player == self || player.team != self.team)
 		{
@@ -833,7 +854,7 @@ function hero_weapon_success_reaction()
 		wait(0.5);
 	}
 	allies = arraysort(allies, self.origin);
-	foreach(var_8d98a98c, player in allies)
+	foreach(player in allies)
 	{
 		if(!isalive(player) || player.sessionstate != "playing" || player.playingdialog || player isplayerunderwater() || player isremotecontrolling() || player isinvehicle() || player isweaponviewonlylinked())
 		{
@@ -876,7 +897,7 @@ function play_promotion_reaction()
 	selfdialog = self getmpdialogname();
 	voiceradius = mpdialog_value("playerVoiceRadius", 0);
 	voiceradiussq = voiceradius * voiceradius;
-	foreach(var_5c9a375d, player in players)
+	foreach(player in players)
 	{
 		if(player == self || player getmpdialogname() == selfdialog || !player can_play_dialog(1) || distancesquared(self.origin, player.origin) >= voiceradiussq)
 		{
@@ -1090,20 +1111,23 @@ function play_dialog(dialogkey, dialogflags, dialogbuffer, enemy)
 	{
 		self playsoundontag(dialogalias, "J_Head");
 	}
-	else if(dialogflags & 1)
+	else
 	{
-		if(isdefined(enemy))
+		if(dialogflags & 1)
 		{
-			self playsoundontag(dialogalias, "J_Head", self.team, enemy);
+			if(isdefined(enemy))
+			{
+				self playsoundontag(dialogalias, "J_Head", self.team, enemy);
+			}
+			else
+			{
+				self playsoundontag(dialogalias, "J_Head", self.team);
+			}
 		}
 		else
 		{
-			self playsoundontag(dialogalias, "J_Head", self.team);
+			self playlocalsound(dialogalias);
 		}
-	}
-	else
-	{
-		self playlocalsound(dialogalias);
 	}
 	self notify(#"played_dialog");
 	self thread wait_dialog_buffer(dialogbuffer);
@@ -1387,36 +1411,39 @@ function play_gadget_ready(weapon, userflip = 0)
 		waittime = mpdialog_value(delaykey, minwaittime);
 		dialogflags = dialogflags + 64;
 	}
-	else if(isdefined(self.isthief) && self.isthief)
-	{
-		generickey = "thiefWeaponReady";
-		repeatkey = "thiefWeaponRepeat";
-		repeatthresholdkey = "thiefRepeatThreshold";
-		chancekey = "thiefReadyChance";
-		delaykey = "thiefRevealDelay";
-	}
 	else
 	{
-		generickey = "rouletteAbilityReady";
-		repeatkey = "rouletteAbilityRepeat";
-		repeatthresholdkey = "rouletteRepeatThreshold";
-		chancekey = "rouletteReadyChance";
-		delaykey = "rouletteRevealDelay";
-	}
-	if(randomint(100) < mpdialog_value(chancekey, 0))
-	{
-		dialogkey = generickey;
-	}
-	else
-	{
-		waittime = mpdialog_value(delaykey, 0);
-		if(self.laststolengadget === weapon && (self.laststolengadgettime + (mpdialog_value(repeatthresholdkey, 0) * 1000)) > gettime())
+		if(isdefined(self.isthief) && self.isthief)
 		{
-			dialogkey = repeatkey;
+			generickey = "thiefWeaponReady";
+			repeatkey = "thiefWeaponRepeat";
+			repeatthresholdkey = "thiefRepeatThreshold";
+			chancekey = "thiefReadyChance";
+			delaykey = "thiefRevealDelay";
 		}
 		else
 		{
-			dialogflags = dialogflags + 64;
+			generickey = "rouletteAbilityReady";
+			repeatkey = "rouletteAbilityRepeat";
+			repeatthresholdkey = "rouletteRepeatThreshold";
+			chancekey = "rouletteReadyChance";
+			delaykey = "rouletteRevealDelay";
+		}
+		if(randomint(100) < mpdialog_value(chancekey, 0))
+		{
+			dialogkey = generickey;
+		}
+		else
+		{
+			waittime = mpdialog_value(delaykey, 0);
+			if(self.laststolengadget === weapon && (self.laststolengadgettime + (mpdialog_value(repeatthresholdkey, 0) * 1000)) > gettime())
+			{
+				dialogkey = repeatkey;
+			}
+			else
+			{
+				dialogflags = dialogflags + 64;
+			}
 		}
 	}
 	self.laststolengadget = weapon;
@@ -1706,13 +1733,13 @@ function get_enemy_players()
 	players = [];
 	if(level.teambased)
 	{
-		foreach(var_d4fa675e, team in level.teams)
+		foreach(team in level.teams)
 		{
 			if(team == self.team)
 			{
 				continue;
 			}
-			foreach(var_8443e305, player in level.aliveplayers[team])
+			foreach(player in level.aliveplayers[team])
 			{
 				players[players.size] = player;
 			}
@@ -1720,7 +1747,7 @@ function get_enemy_players()
 	}
 	else
 	{
-		foreach(var_54300fbd, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			if(player != self)
 			{
@@ -1745,7 +1772,7 @@ function get_friendly_players()
 	players = [];
 	if(level.teambased)
 	{
-		foreach(var_d28570d, player in level.aliveplayers[self.team])
+		foreach(player in level.aliveplayers[self.team])
 		{
 			players[players.size] = player;
 		}
@@ -1770,13 +1797,13 @@ function can_play_dialog(teamonly)
 {
 	if(!isplayer(self) || !isalive(self) || self.playingdialog === 1 || self isplayerunderwater() || self isremotecontrolling() || self isinvehicle() || self isweaponviewonlylinked())
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(teamonly) && !teamonly && self hasperk("specialty_quieter"))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1792,7 +1819,7 @@ function get_closest_player_enemy(origin = self.origin, teamonly)
 {
 	players = self get_enemy_players();
 	players = arraysort(players, origin);
-	foreach(var_b5ebb577, player in players)
+	foreach(player in players)
 	{
 		if(!player can_play_dialog(teamonly))
 		{
@@ -1820,7 +1847,7 @@ function get_closest_player_ally(teamonly)
 	}
 	players = self get_friendly_players();
 	players = arraysort(players, self.origin);
-	foreach(var_76ada0d, player in players)
+	foreach(player in players)
 	{
 		if(player == self || !player can_play_dialog(teamonly))
 		{
@@ -1854,7 +1881,7 @@ function check_boost_start_conversation()
 	array::add(players, self, 0);
 	players = array::randomize(players);
 	playerindex = 1;
-	foreach(var_29955b1a, player in players)
+	foreach(player in players)
 	{
 		playerdialog = player getmpdialogname();
 		for(i = playerindex; i < players.size; i++)
@@ -1902,7 +1929,7 @@ function game_end_vox(winner)
 		return;
 	}
 	gameisdraw = !isdefined(winner) || (level.teambased && winner == "tie");
-	foreach(var_dde2fbe1, player in level.players)
+	foreach(player in level.players)
 	{
 		if(player issplitscreen())
 		{
@@ -1912,13 +1939,16 @@ function game_end_vox(winner)
 		{
 			dialogkey = "boostDraw";
 		}
-		else if(level.teambased && isdefined(level.teams[winner]) && player.pers["team"] == winner || (!level.teambased && player == winner))
-		{
-			dialogkey = "boostWin";
-		}
 		else
 		{
-			dialogkey = "boostLoss";
+			if(level.teambased && isdefined(level.teams[winner]) && player.pers["team"] == winner || (!level.teambased && player == winner))
+			{
+				dialogkey = "boostWin";
+			}
+			else
+			{
+				dialogkey = "boostLoss";
+			}
 		}
 		dialogalias = player get_player_dialog_alias(dialogkey);
 		if(isdefined(dialogalias))
@@ -2032,7 +2062,7 @@ function test_other_dialog(delay)
 {
 	/#
 		players = arraysort(level.players, self.origin);
-		foreach(var_8c2a6dc5, player in players)
+		foreach(player in players)
 		{
 			if(player != self && isalive(player))
 			{
@@ -2194,7 +2224,7 @@ function play_conv_self_other()
 		self play_test_dialog("" + num);
 		wait(4);
 		players = arraysort(level.players, self.origin);
-		foreach(var_5469be2, player in players)
+		foreach(player in players)
 		{
 			if(player != self && isalive(player))
 			{
@@ -2219,7 +2249,7 @@ function play_conv_other_self()
 	/#
 		num = randomintrange(0, 4);
 		players = arraysort(level.players, self.origin);
-		foreach(var_62efa461, player in players)
+		foreach(player in players)
 		{
 			if(player != self && isalive(player))
 			{
@@ -2246,7 +2276,7 @@ function play_conv_other_other()
 	/#
 		num = randomintrange(0, 4);
 		players = arraysort(level.players, self.origin);
-		foreach(var_a475950f, player in players)
+		foreach(player in players)
 		{
 			if(player != self && isalive(player))
 			{
@@ -2256,7 +2286,7 @@ function play_conv_other_other()
 			}
 		}
 		wait(4);
-		foreach(var_d0cd95c6, player in players)
+		foreach(player in players)
 		{
 			if(player != self && player !== firstplayer && isalive(player))
 			{

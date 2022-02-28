@@ -105,12 +105,12 @@ function tryusepredatormissile(lifeid)
 function getbestspawnpoint(remotemissilespawnpoints)
 {
 	validenemies = [];
-	foreach(var_a931e47c, spawnpoint in remotemissilespawnpoints)
+	foreach(spawnpoint in remotemissilespawnpoints)
 	{
 		spawnpoint.validplayers = [];
 		spawnpoint.spawnscore = 0;
 	}
-	foreach(var_cddc14b9, player in level.players)
+	foreach(player in level.players)
 	{
 		if(!isalive(player))
 		{
@@ -126,7 +126,7 @@ function getbestspawnpoint(remotemissilespawnpoints)
 		}
 		bestdistance = 999999999;
 		bestspawnpoint = undefined;
-		foreach(var_778a120a, spawnpoint in remotemissilespawnpoints)
+		foreach(spawnpoint in remotemissilespawnpoints)
 		{
 			spawnpoint.validplayers[spawnpoint.validplayers.size] = player;
 			potentialbestdistance = distance2dsquared(spawnpoint.targetent.origin, player.origin);
@@ -139,9 +139,9 @@ function getbestspawnpoint(remotemissilespawnpoints)
 		bestspawnpoint.spawnscore = bestspawnpoint.spawnscore + 2;
 	}
 	bestspawn = remotemissilespawnpoints[0];
-	foreach(var_98786fb6, spawnpoint in remotemissilespawnpoints)
+	foreach(spawnpoint in remotemissilespawnpoints)
 	{
-		foreach(var_b4699140, player in spawnpoint.validplayers)
+		foreach(player in spawnpoint.validplayers)
 		{
 			spawnpoint.spawnscore = spawnpoint.spawnscore + 1;
 			if(bullettracepassed(player.origin + vectorscale((0, 0, 1), 32), spawnpoint.origin, 0, player))
@@ -198,7 +198,7 @@ function drawline(start, end, timeslice, color)
 function _fire(lifeid, player, team, killstreak_id)
 {
 	remotemissilespawnarray = getentarray("remoteMissileSpawn", "targetname");
-	foreach(var_2646a272, spawn in remotemissilespawnarray)
+	foreach(spawn in remotemissilespawnarray)
 	{
 		if(isdefined(spawn.target))
 		{
@@ -242,7 +242,7 @@ function _fire(lifeid, player, team, killstreak_id)
 			player enableweaponcycling();
 			killstreakrules::killstreakstop("remote_missile", team, killstreak_id);
 		}
-		return 0;
+		return false;
 	}
 	rocket = magicbullet(getweapon("remote_missile_missile"), startpos, targetpos, player);
 	rocket.forceonemissile = 1;
@@ -278,7 +278,7 @@ function _fire(lifeid, player, team, killstreak_id)
 	rocket spawning::create_entity_enemy_influencer("small_vehicle", rocket.team);
 	player util::freeze_player_controls(0);
 	player waittill(#"remotemissle_killstreak_done");
-	return 1;
+	return true;
 }
 
 /*
@@ -703,7 +703,7 @@ function getvalidtargets(rocket, trace, max_targets)
 	pixendevent();
 	pixbeginevent("remotemissile_getVTs_enemies");
 	enemies = self getenemies();
-	foreach(var_f7fe2942, player in enemies)
+	foreach(player in enemies)
 	{
 		if(!isplayer(player))
 		{
@@ -733,7 +733,7 @@ function getvalidtargets(rocket, trace, max_targets)
 		}
 	}
 	dogs = getentarray("attack_dog", "targetname");
-	foreach(var_8fb57d4d, dog in dogs)
+	foreach(dog in dogs)
 	{
 		if(dog.team != self.team && distance2dsquared(dog.origin, aimtarget) < 360000)
 		{
@@ -755,7 +755,7 @@ function getvalidtargets(rocket, trace, max_targets)
 		}
 	}
 	tanks = getentarray("talon", "targetname");
-	foreach(var_5e66a5e, tank in tanks)
+	foreach(tank in tanks)
 	{
 		if(tank.team != self.team && distance2dsquared(tank.origin, aimtarget) < 360000)
 		{
@@ -777,7 +777,7 @@ function getvalidtargets(rocket, trace, max_targets)
 		}
 	}
 	turrets = getentarray("auto_turret", "classname");
-	foreach(var_f23163e5, turret in turrets)
+	foreach(turret in turrets)
 	{
 		if(turret.team != self.team && distance2dsquared(turret.origin, aimtarget) < 360000)
 		{
@@ -814,7 +814,7 @@ function getvalidtargets(rocket, trace, max_targets)
 function create_missile_hud(rocket)
 {
 	self.missile_target_icons = [];
-	foreach(var_3784591a, player in level.players)
+	foreach(player in level.players)
 	{
 		if(player == self)
 		{
@@ -866,7 +866,7 @@ function destroy_missile_hud()
 {
 	if(isdefined(self.missile_target_icons))
 	{
-		foreach(var_d6365ea5, player in level.players)
+		foreach(player in level.players)
 		{
 			if(player == self)
 			{
@@ -910,7 +910,7 @@ function targeting_hud_think(rocket)
 	framessincetargetscan = 0;
 	while(true)
 	{
-		foreach(var_8946caec, icon in self.missile_target_icons)
+		foreach(icon in self.missile_target_icons)
 		{
 			icon.alpha = 0;
 		}
@@ -922,7 +922,7 @@ function targeting_hud_think(rocket)
 		}
 		if(targets.size > 0)
 		{
-			foreach(var_d99d9e5e, target in targets)
+			foreach(target in targets)
 			{
 				if(isdefined(target) == 0)
 				{
@@ -1007,7 +1007,7 @@ function missile_deploy(rocket, hacked)
 	targets = self getvalidtargets(rocket, 0, 6);
 	if(targets.size > 0)
 	{
-		foreach(var_f87b093e, target in targets)
+		foreach(target in targets)
 		{
 			self thread fire_bomblet(rocket, explosionradius, target, waitframes);
 			waitframes++;
@@ -1208,17 +1208,23 @@ function remotemissile_bda_dialog()
 		{
 			bdadialog = "kill1";
 		}
-		else if(self.remotemissilebda === 2)
+		else
 		{
-			bdadialog = "kill2";
-		}
-		else if(self.remotemissilebda === 3)
-		{
-			bdadialog = "kill3";
-		}
-		else if(isdefined(self.remotemissilebda) && self.remotemissilebda > 3)
-		{
-			bdadialog = "killMultiple";
+			if(self.remotemissilebda === 2)
+			{
+				bdadialog = "kill2";
+			}
+			else
+			{
+				if(self.remotemissilebda === 3)
+				{
+					bdadialog = "kill3";
+				}
+				else if(isdefined(self.remotemissilebda) && self.remotemissilebda > 3)
+				{
+					bdadialog = "killMultiple";
+				}
+			}
 		}
 		self killstreaks::play_pilot_dialog(bdadialog, "remote_missile", undefined, self.remotemissilepilotindex);
 		self globallogic_audio::play_taacom_dialog("confirmHit");

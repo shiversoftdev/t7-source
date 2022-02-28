@@ -22,7 +22,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("genesis_cleanup", &__init__, &__main__, undefined);
 }
@@ -79,7 +79,7 @@ function force_check_now()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function cleanup_main()
+function private cleanup_main()
 {
 	n_next_eval = 0;
 	while(true)
@@ -111,7 +111,7 @@ private function cleanup_main()
 		}
 		n_next_eval = n_next_eval + 3000;
 		a_ai_enemies = getaiteamarray("axis");
-		foreach(var_1db7f1c8, ai_enemy in a_ai_enemies)
+		foreach(ai_enemy in a_ai_enemies)
 		{
 			if(level.n_cleanups_processed_this_frame >= 1)
 			{
@@ -132,7 +132,7 @@ private function cleanup_main()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_37a5b776()
+function private function_37a5b776()
 {
 	var_a8951c29 = [];
 	var_9e84b959 = array("start_island", "apothicon_island", "temple_island", "prototype_island", "asylum_island", "prison_island", "arena_island");
@@ -147,7 +147,7 @@ private function function_37a5b776()
 			}
 			if(isdefined(level.activeplayers[j].is_flung) && level.activeplayers[j].is_flung)
 			{
-				return 1;
+				return true;
 			}
 			if(level.activeplayers[j] istouching(e_island))
 			{
@@ -157,16 +157,16 @@ private function function_37a5b776()
 	}
 	if(!var_a8951c29.size)
 	{
-		return 1;
+		return true;
 	}
 	for(k = 0; k < var_a8951c29.size; k++)
 	{
 		if(self istouching(var_a8951c29[k]))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -227,7 +227,7 @@ function do_cleanup_check()
 	{
 		n_dist_sq_min = 10000000;
 		e_closest_player = level.activeplayers[0];
-		foreach(var_ca53498e, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			n_dist_sq = distancesquared(self.origin, player.origin);
 			if(n_dist_sq < n_dist_sq_min)
@@ -240,13 +240,16 @@ function do_cleanup_check()
 		{
 			n_cleanup_dist_sq = level.n_override_cleanup_dist_sq;
 		}
-		else if(isdefined(e_closest_player) && player_ahead_of_me(e_closest_player))
-		{
-			n_cleanup_dist_sq = 176400;
-		}
 		else
 		{
-			n_cleanup_dist_sq = 230400;
+			if(isdefined(e_closest_player) && player_ahead_of_me(e_closest_player))
+			{
+				n_cleanup_dist_sq = 176400;
+			}
+			else
+			{
+				n_cleanup_dist_sq = 230400;
+			}
 		}
 		if(n_dist_sq_min >= n_cleanup_dist_sq)
 		{
@@ -270,7 +273,7 @@ function delete_zombie_noone_looking()
 	{
 		return;
 	}
-	foreach(var_af887be9, player in level.players)
+	foreach(player in level.players)
 	{
 		if(player.sessionstate == "spectator")
 		{
@@ -293,7 +296,7 @@ function delete_zombie_noone_looking()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_b4d588f5()
+function private function_b4d588f5()
 {
 	if(!(isdefined(self.exclude_cleanup_adding_to_total) && self.exclude_cleanup_adding_to_total))
 	{
@@ -324,11 +327,14 @@ private function function_b4d588f5()
 			}
 			level.a_zombie_respawn_type[self.var_9a02a614]++;
 		}
-		else if(!isdefined(level.a_zombie_respawn_type[self.archetype]))
+		else
 		{
-			level.a_zombie_respawn_type[self.archetype] = 0;
+			if(!isdefined(level.a_zombie_respawn_type[self.archetype]))
+			{
+				level.a_zombie_respawn_type[self.archetype] = 0;
+			}
+			level.a_zombie_respawn_type[self.archetype]++;
 		}
-		level.a_zombie_respawn_type[self.archetype]++;
 	}
 	self zombie_utility::reset_attack_spot();
 	self kill();
@@ -360,9 +366,9 @@ function player_can_see_me(player)
 	n_dot = vectordot(v_player_forward, v_player_to_self);
 	if(n_dot < 0.766)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -374,7 +380,7 @@ function player_can_see_me(player)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function player_ahead_of_me(player)
+function private player_ahead_of_me(player)
 {
 	v_player_angles = player getplayerangles();
 	v_player_forward = anglestoforward(v_player_angles);
@@ -382,9 +388,9 @@ private function player_ahead_of_me(player)
 	n_dot = vectordot(v_player_forward, v_dir);
 	if(n_dot < 0)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -428,7 +434,7 @@ function get_adjacencies_to_zone(str_zone)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function get_farthest_wait_location(var_aabb7ed9)
+function private get_farthest_wait_location(var_aabb7ed9)
 {
 	if(!isdefined(var_aabb7ed9) || var_aabb7ed9.size == 0)
 	{
@@ -457,7 +463,7 @@ private function get_farthest_wait_location(var_aabb7ed9)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function get_wait_locations_in_zone(zone)
+function private get_wait_locations_in_zone(zone)
 {
 	if(isdefined(level.zones[zone].a_loc_types["wait_location"]))
 	{
@@ -524,7 +530,7 @@ function no_target_override(ai_zombie)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function get_escape_position()
+function private get_escape_position()
 {
 	str_zone = zm_zonemgr::get_zone_from_position(self.origin + vectorscale((0, 0, 1), 32), 1);
 	if(!isdefined(str_zone))
@@ -557,10 +563,10 @@ private function get_escape_position()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function get_wait_locations_in_zones(a_str_zones)
+function private get_wait_locations_in_zones(a_str_zones)
 {
 	var_aabb7ed9 = [];
-	foreach(var_85f7b780, str_zone in a_str_zones)
+	foreach(str_zone in a_str_zones)
 	{
 		var_aabb7ed9 = arraycombine(var_aabb7ed9, level.zones[str_zone].a_loc_types["wait_location"], 0, 0);
 	}
@@ -576,17 +582,17 @@ private function get_wait_locations_in_zones(a_str_zones)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_eadbcbdb()
+function private function_eadbcbdb()
 {
 	if(!isdefined(self))
 	{
-		return 0;
+		return false;
 	}
 	if(!ispointonnavmesh(self.origin) || !zm_utility::check_point_in_playable_area(self.origin))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -598,7 +604,7 @@ private function function_eadbcbdb()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_dc683d01(var_b52b26b9)
+function private function_dc683d01(var_b52b26b9)
 {
 	self endon(#"death");
 	self notify(#"stop_find_flesh");
@@ -622,7 +628,7 @@ private function function_dc683d01(var_b52b26b9)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function check_player_available()
+function private check_player_available()
 {
 	self endon(#"death");
 	while(isdefined(self.b_zombie_path_bad) && self.b_zombie_path_bad)
@@ -646,7 +652,7 @@ private function check_player_available()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function can_zombie_see_any_player()
+function private can_zombie_see_any_player()
 {
 	for(i = 0; i < level.activeplayers.size; i++)
 	{
@@ -654,12 +660,12 @@ private function can_zombie_see_any_player()
 		{
 			if(self function_ca420408(level.activeplayers[i]))
 			{
-				return 1;
+				return true;
 			}
 		}
 		wait(0.1);
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -683,10 +689,10 @@ function function_ca420408(player)
 		{
 			if(var_334f2464 === a_str_zones[i])
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 

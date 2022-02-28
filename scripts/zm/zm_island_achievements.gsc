@@ -18,25 +18,25 @@
 #using scripts\zm\_zm_utility;
 #using scripts\zm\_zm_weapons;
 
-#namespace namespace_e5adcfd5;
+#namespace island_achievements;
 
 /*
 	Name: __init__sytem__
-	Namespace: namespace_e5adcfd5
+	Namespace: island_achievements
 	Checksum: 0xC885A439
 	Offset: 0x358
 	Size: 0x34
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_island_achievements", &__init__, undefined, undefined);
 }
 
 /*
 	Name: __init__
-	Namespace: namespace_e5adcfd5
+	Namespace: island_achievements
 	Checksum: 0xA8BB2575
 	Offset: 0x398
 	Size: 0x24
@@ -50,7 +50,7 @@ function __init__()
 
 /*
 	Name: on_player_connect
-	Namespace: namespace_e5adcfd5
+	Namespace: island_achievements
 	Checksum: 0xBA0ADD96
 	Offset: 0x3C8
 	Size: 0xAC
@@ -70,7 +70,7 @@ function on_player_connect()
 
 /*
 	Name: function_5efc5a29
-	Namespace: namespace_e5adcfd5
+	Namespace: island_achievements
 	Checksum: 0x6E4C08CE
 	Offset: 0x480
 	Size: 0x44
@@ -87,7 +87,7 @@ function function_5efc5a29()
 
 /*
 	Name: function_47538b42
-	Namespace: namespace_e5adcfd5
+	Namespace: island_achievements
 	Checksum: 0x1A6422B7
 	Offset: 0x4D0
 	Size: 0x44
@@ -104,7 +104,7 @@ function function_47538b42()
 
 /*
 	Name: function_cdd905fd
-	Namespace: namespace_e5adcfd5
+	Namespace: island_achievements
 	Checksum: 0xAF1E6E6A
 	Offset: 0x520
 	Size: 0x44
@@ -121,7 +121,7 @@ function function_cdd905fd()
 
 /*
 	Name: function_ed8c7d0f
-	Namespace: namespace_e5adcfd5
+	Namespace: island_achievements
 	Checksum: 0x942E9146
 	Offset: 0x570
 	Size: 0x44
@@ -138,7 +138,7 @@ function function_ed8c7d0f()
 
 /*
 	Name: function_53f54d29
-	Namespace: namespace_e5adcfd5
+	Namespace: island_achievements
 	Checksum: 0xE2D75702
 	Offset: 0x5C0
 	Size: 0xE0
@@ -169,7 +169,7 @@ function function_53f54d29()
 
 /*
 	Name: function_4a12afed
-	Namespace: namespace_e5adcfd5
+	Namespace: island_achievements
 	Checksum: 0xF5FCD452
 	Offset: 0x6A8
 	Size: 0x44
@@ -186,7 +186,7 @@ function function_4a12afed()
 
 /*
 	Name: function_d6e0957d
-	Namespace: namespace_e5adcfd5
+	Namespace: island_achievements
 	Checksum: 0xB7460FAB
 	Offset: 0x6F8
 	Size: 0x44

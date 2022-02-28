@@ -14,7 +14,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function main()
+function autoexec main()
 {
 	clientfield::register("actor", "destructible_character_state", 1, 21, "int", &destructclientutils::_destructhandler, 0, 0);
 	destructibles = struct::get_script_bundles("destructiblecharacterdef");
@@ -55,7 +55,7 @@ autoexec function main()
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function _destructhandler(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private _destructhandler(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	entity = self;
 	destructflags = oldvalue ^ newvalue;
@@ -91,7 +91,7 @@ private function _destructhandler(localclientnum, oldvalue, newvalue, bnewent, b
 	Parameters: 4
 	Flags: Linked, Private
 */
-private function _destructpiece(localclientnum, entity, piecenumber, shouldspawngibs)
+function private _destructpiece(localclientnum, entity, piecenumber, shouldspawngibs)
 {
 	if(!isdefined(entity.destructibledef))
 	{
@@ -120,7 +120,7 @@ private function _destructpiece(localclientnum, entity, piecenumber, shouldspawn
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _getdestructstate(localclientnum, entity)
+function private _getdestructstate(localclientnum, entity)
 {
 	if(isdefined(entity._destruct_state))
 	{
@@ -138,11 +138,11 @@ private function _getdestructstate(localclientnum, entity)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function _handledestructcallbacks(localclientnum, entity, piecenumber)
+function private _handledestructcallbacks(localclientnum, entity, piecenumber)
 {
 	if(isdefined(entity._destructcallbacks) && isdefined(entity._destructcallbacks[piecenumber]))
 	{
-		foreach(var_e9918145, callback in entity._destructcallbacks[piecenumber])
+		foreach(callback in entity._destructcallbacks[piecenumber])
 		{
 			if(isfunctionptr(callback))
 			{

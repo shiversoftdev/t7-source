@@ -299,7 +299,7 @@ function deletezombiesinradius(origin)
 {
 	zombies = zombie_utility::get_round_enemy_array();
 	maxradius = 128;
-	foreach(var_eb0d657b, zombie in zombies)
+	foreach(zombie in zombies)
 	{
 		if(isdefined(zombie) && isalive(zombie) && (!(isdefined(zombie.is_being_used_as_spawner) && zombie.is_being_used_as_spawner)))
 		{
@@ -515,7 +515,7 @@ function get_farthest_available_zombie(player)
 function get_available_human()
 {
 	players = getplayers();
-	foreach(var_6a0695f6, player in players)
+	foreach(player in players)
 	{
 		if(!(isdefined(player.is_zombie) && player.is_zombie))
 		{

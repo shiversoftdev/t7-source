@@ -369,16 +369,19 @@ function bouncingbettydetonate(attacker, weapon, target)
 		}
 		self bouncingbettydestroyed();
 	}
-	else if(isdefined(self.minemover))
-	{
-		self.minemover.ignore_team_kills = 1;
-		self.minemover setmodel(self.model);
-		self.minemover thread bouncingbettyjumpandexplode();
-		self delete();
-	}
 	else
 	{
-		self bouncingbettydestroyed();
+		if(isdefined(self.minemover))
+		{
+			self.minemover.ignore_team_kills = 1;
+			self.minemover setmodel(self.model);
+			self.minemover thread bouncingbettyjumpandexplode();
+			self delete();
+		}
+		else
+		{
+			self bouncingbettydestroyed();
+		}
 	}
 }
 

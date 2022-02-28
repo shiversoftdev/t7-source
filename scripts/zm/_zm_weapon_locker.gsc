@@ -178,13 +178,13 @@ function triggerweaponslockerisvalidweapon(weapon)
 	weapon = zm_weapons::get_base_weapon(weapon);
 	if(!zm_weapons::is_weapon_included(weapon))
 	{
-		return 0;
+		return false;
 	}
 	if(zm_utility::is_offhand_weapon(weapon) || zm_utility::is_limited_weapon(weapon))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -272,7 +272,7 @@ function triggerweaponslockerisvalidweaponpromptupdate(player, weapon)
 function triggerweaponslockerthinkupdateprompt(player)
 {
 	self triggerweaponslockerisvalidweaponpromptupdate(player, player getcurrentweapon());
-	return 1;
+	return true;
 }
 
 /*

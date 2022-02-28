@@ -15,7 +15,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_weap_staff_water", &__init__, undefined, undefined);
 }
@@ -63,12 +63,15 @@ function attach_model(localclientnum, oldval, newval, bnewent, binitialsnap, fie
 		self thread function_9a8e9819(localclientnum);
 		self playsound(0, "wpn_waterstaff_freeze_zombie");
 	}
-	else if(isdefined(self.var_69090dac))
+	else
 	{
-		deletefx(localclientnum, self.var_69090dac);
-		self.var_69090dac = undefined;
+		if(isdefined(self.var_69090dac))
+		{
+			deletefx(localclientnum, self.var_69090dac);
+			self.var_69090dac = undefined;
+		}
+		self thread function_56ddd8d9(localclientnum);
 	}
-	self thread function_56ddd8d9(localclientnum);
 }
 
 /*
@@ -139,15 +142,18 @@ function staff_blizzard_fx(localclientnum, oldval, newval, bnewent, binitialsnap
 			self.sndent.n_id = self.sndent playloopsound("wpn_waterstaff_storm");
 		}
 	}
-	else if(isdefined(self.var_80b4df3))
+	else
 	{
-		stopfx(localclientnum, self.var_80b4df3);
-	}
-	if(isdefined(self.sndent))
-	{
-		self.sndent stoploopsound(self.sndent.n_id, 1.5);
-		self.sndent delete();
-		self.sndent = undefined;
+		if(isdefined(self.var_80b4df3))
+		{
+			stopfx(localclientnum, self.var_80b4df3);
+		}
+		if(isdefined(self.sndent))
+		{
+			self.sndent stoploopsound(self.sndent.n_id, 1.5);
+			self.sndent delete();
+			self.sndent = undefined;
+		}
 	}
 }
 

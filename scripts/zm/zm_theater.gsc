@@ -78,7 +78,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function opt_in()
+function autoexec opt_in()
 {
 	level.aat_in_use = 1;
 	level.bgb_in_use = 1;
@@ -182,7 +182,7 @@ function cin_zmhd_sizzle_theater_cam(a_ents)
 	exploder::kill_exploder("teleporter_light_red");
 	exploder::exploder("fxexp_200");
 	exploder::exploder("teleporter_light_green");
-	foreach(var_b5c469a, var_6cae1ad0 in a_ents)
+	foreach(var_6cae1ad0 in a_ents)
 	{
 		if(issubstr(var_6cae1ad0.model, "body"))
 		{
@@ -241,9 +241,9 @@ function function_869d6f66()
 {
 	if(!isdefined(self zm_bgb_anywhere_but_here::function_728dfe3()))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -259,18 +259,18 @@ function function_823705c7()
 {
 	if(isdefined(self.is_teleporting) && self.is_teleporting)
 	{
-		return 0;
+		return false;
 	}
 	var_7d7ca0ea = getent("trigger_teleport_pad_0", "targetname");
 	if(self istouching(var_7d7ca0ea))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.var_35c3d096) && self.var_35c3d096)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -449,7 +449,7 @@ function assign_lowest_unused_character_index()
 		charindexarray = array::randomize(charindexarray);
 		return charindexarray[0];
 	}
-	foreach(var_4db1acdd, player in players)
+	foreach(player in players)
 	{
 		if(isdefined(player.characterindex))
 		{
@@ -680,7 +680,7 @@ function init_sounds()
 	zm_utility::add_sound("zmb_fence_door", "zmb_door_fence_open");
 	zm_utility::add_sound("zmb_heavy_door_open", "zmb_heavy_door_open");
 	level thread custom_add_vox();
-	level.audio_get_mod_type = &function_642e6aef;
+	level.audio_get_mod_type = &custom_get_mod_type;
 	level.vox_response_override = 1;
 }
 
@@ -749,31 +749,31 @@ function theater_ignore_spawner(spawner)
 	{
 		if(spawner.script_noteworthy == "quad_zombie_spawner")
 		{
-			return 1;
+			return true;
 		}
 	}
 	if(level flag::get("special_quad_round"))
 	{
 		if(spawner.script_noteworthy != "quad_zombie_spawner")
 		{
-			return 1;
+			return true;
 		}
 	}
 	if(!level flag::get("lobby_occupied"))
 	{
 		if(spawner.script_noteworthy == "quad_zombie_spawner" && spawner.targetname == "foyer_zone_spawners")
 		{
-			return 1;
+			return true;
 		}
 	}
 	if(!level flag::get("dining_occupied"))
 	{
 		if(spawner.script_noteworthy == "quad_zombie_spawner" && spawner.targetname == "zombie_spawner_dining")
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -953,7 +953,7 @@ function init_level_specific_audio()
 }
 
 /*
-	Name: function_642e6aef
+	Name: custom_get_mod_type
 	Namespace: zm_theater
 	Checksum: 0xC1C76D52
 	Offset: 0x3860
@@ -961,7 +961,7 @@ function init_level_specific_audio()
 	Parameters: 7
 	Flags: Linked
 */
-function function_642e6aef(impact, mod, weapon, zombie, instakill, dist, player)
+function custom_get_mod_type(impact, mod, weapon, zombie, instakill, dist, player)
 {
 	var_adac242b = 4096;
 	var_2c1bd1bd = 15376;

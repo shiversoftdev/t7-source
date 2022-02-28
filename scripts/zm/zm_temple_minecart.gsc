@@ -192,10 +192,10 @@ function function_1306489b()
 	{
 		if(players[i] istouching(self))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -520,7 +520,7 @@ function get_ai_touching_volume(team, volume)
 {
 	ai_list = getaiarray();
 	var_fadec02a = [];
-	foreach(var_c107828e, ai in ai_list)
+	foreach(ai in ai_list)
 	{
 		if(ai istouching(volume))
 		{
@@ -1289,13 +1289,16 @@ function function_7fec5b68()
 				{
 					rise = 10;
 				}
-				else if(height == 0)
-				{
-					rise = 11;
-				}
 				else
 				{
-					rise = 8;
+					if(height == 0)
+					{
+						rise = 11;
+					}
+					else
+					{
+						rise = 8;
+					}
 				}
 				height++;
 				if(height == count)
@@ -1322,13 +1325,16 @@ function function_7fec5b68()
 				{
 					drop = drop + -10;
 				}
-				else if(height == 1)
-				{
-					drop = drop + -11;
-				}
 				else
 				{
-					drop = drop + -8;
+					if(height == 1)
+					{
+						drop = drop + -11;
+					}
+					else
+					{
+						drop = drop + -8;
+					}
 				}
 				time = time + 0.2;
 				height--;

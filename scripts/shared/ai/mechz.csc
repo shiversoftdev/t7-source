@@ -15,7 +15,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function main()
+function autoexec main()
 {
 	clientfield::register("actor", "mechz_ft", 5000, 1, "int", &mechzclientutils::mechzflamethrowercallback, 0, 0);
 	clientfield::register("actor", "mechz_faceplate_detached", 5000, 1, "int", &mechzclientutils::mechz_detach_faceplate, 0, 0);
@@ -45,7 +45,7 @@ autoexec function main()
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function precache()
+function autoexec precache()
 {
 	level._effect["fx_mech_wpn_flamethrower"] = "dlc1/castle/fx_mech_wpn_flamethrower";
 	level._effect["fx_mech_dmg_armor_face"] = "dlc1/castle/fx_mech_dmg_armor_face";
@@ -77,7 +77,7 @@ autoexec function precache()
 	Parameters: 1
 	Flags: Private
 */
-private function mechzspawn(localclientnum)
+function private mechzspawn(localclientnum)
 {
 	level._footstepcbfuncs[self.archetype] = &mechzprocessfootstep;
 	level thread mechzsndcontext(self);
@@ -142,13 +142,16 @@ function mechzprocessfootstep(localclientnum, pos, surface, notetrack, bone)
 	{
 		e_player playrumbleonentity(localclientnum, "shotgun_fire");
 	}
-	else if(n_scale <= 0.8 && n_scale > 0.4)
-	{
-		e_player playrumbleonentity(localclientnum, "damage_heavy");
-	}
 	else
 	{
-		e_player playrumbleonentity(localclientnum, "reload_small");
+		if(n_scale <= 0.8 && n_scale > 0.4)
+		{
+			e_player playrumbleonentity(localclientnum, "damage_heavy");
+		}
+		else
+		{
+			e_player playrumbleonentity(localclientnum, "reload_small");
+		}
 	}
 	fx = playfxontag(localclientnum, level._effect["fx_mech_foot_step"], self, bone);
 	if(bone == "j_ball_le")
@@ -171,7 +174,7 @@ function mechzprocessfootstep(localclientnum, pos, surface, notetrack, bone)
 	Parameters: 7
 	Flags: Private
 */
-private function mechzflamethrowercallback(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private mechzflamethrowercallback(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	switch(newvalue)
 	{
@@ -386,7 +389,7 @@ function mechz_headlamp_off(localclientnum, oldvalue, newvalue, bnewent, binitia
 	Parameters: 7
 	Flags: Private
 */
-private function mechzfacecallback(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private mechzfacecallback(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	if(newvalue)
 	{

@@ -179,7 +179,7 @@ function function_241013f7()
 	self.var_75bf845a = [];
 	while(true)
 	{
-		foreach(var_b4699140, t_water in level.var_4a0060c0)
+		foreach(t_water in level.var_4a0060c0)
 		{
 			if(!isinarray(self.var_75bf845a, t_water.script_int) && self istouching(t_water))
 			{
@@ -524,13 +524,13 @@ function function_2176e192()
 */
 function function_bf0f2293(player)
 {
-	if(player hasweapon(level.var_99f2368e))
+	if(player hasweapon(level.w_controllable_spider))
 	{
 		self sethintstring("");
-		return 0;
+		return false;
 	}
 	self sethintstring("ZM_ISLAND_SPIDER_EQUIPMENT_PICKUP");
-	return 1;
+	return true;
 }
 
 /*
@@ -559,7 +559,7 @@ function function_2818665b()
 		{
 			continue;
 		}
-		if(e_who hasweapon(level.var_99f2368e))
+		if(e_who hasweapon(level.w_controllable_spider))
 		{
 			continue;
 		}
@@ -605,9 +605,9 @@ function function_acbe4aed(cmd)
 			{
 				var_c79d3f71 = undefined;
 				a_ai = getaiteamarray("");
-				foreach(var_57b92206, ai in a_ai)
+				foreach(ai in a_ai)
 				{
-					if(isdefined(ai.var_3940f450) && ai.var_3940f450 && (isdefined(ai.var_b4e06d32) && ai.var_b4e06d32))
+					if(isdefined(ai.b_is_spider) && ai.b_is_spider && (isdefined(ai.var_b4e06d32) && ai.var_b4e06d32))
 					{
 						var_c79d3f71 = ai;
 						break;
@@ -625,12 +625,12 @@ function function_acbe4aed(cmd)
 				}
 				var_c79d3f71 clientfield::set("", 1);
 				var_c79d3f71.var_f7522faa = 1;
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				level thread spiders_from_mars_round();
-				return 1;
+				return true;
 			}
 			case "":
 			{
@@ -653,10 +653,10 @@ function function_acbe4aed(cmd)
 				level thread function_f163b5b5();
 				var_c79d3f71 thread function_ed878303();
 				var_c79d3f71 thread function_241013f7();
-				return 1;
+				return true;
 			}
 		}
-		return 0;
+		return false;
 	#/
 }
 

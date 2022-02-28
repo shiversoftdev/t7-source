@@ -177,7 +177,7 @@ function monkey_cosmodrome_lander_death()
 	self thread zombie_utility::zombie_eye_glow_stop();
 	level.monkey_death++;
 	level.monkey_death_total++;
-	self namespace_8fb880d9::monkey_remove_from_pack();
+	self zm_ai_monkey::monkey_remove_from_pack();
 	util::wait_network_frame();
 }
 

@@ -88,9 +88,9 @@ function laststand_allowed(sweapon, smeansofdeath, shitloc)
 {
 	if(level.laststandpistol == "none")
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*

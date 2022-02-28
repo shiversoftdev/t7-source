@@ -36,7 +36,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_genesis_portals", &__init__, undefined, undefined);
 }
@@ -315,7 +315,7 @@ function portal_open(str_areaname)
 	var_ebfa395[0].e_dest = var_50fc4fb[0];
 	var_50fc4fb[0].e_dest = var_ebfa395[0];
 	var_1693bd2 = getnodearray(str_areaname + "_portal_node", "script_noteworthy");
-	foreach(var_9ff30f90, var_9110bac3 in var_1693bd2)
+	foreach(var_9110bac3 in var_1693bd2)
 	{
 		var_e8b9ac31 = distancesquared(var_9110bac3.origin, var_ebfa395[0].origin);
 		var_6d6d9e09 = distancesquared(var_9110bac3.origin, var_50fc4fb[0].origin);
@@ -328,12 +328,12 @@ function portal_open(str_areaname)
 	}
 	wait(2);
 	var_ebfa395[0] thread portal_think();
-	foreach(var_2ebe9ca, e_clip in var_a70f04bd)
+	foreach(e_clip in var_a70f04bd)
 	{
 		e_clip delete();
 	}
 	var_50fc4fb[0] thread portal_think();
-	foreach(var_37125a4d, e_clip in var_852a023)
+	foreach(e_clip in var_852a023)
 	{
 		e_clip delete();
 	}
@@ -351,7 +351,7 @@ function portal_open(str_areaname)
 function function_4a4784d4(str_areaname, b_enabled)
 {
 	var_1693bd2 = getnodearray(str_areaname + "_portal_node", "script_noteworthy");
-	foreach(var_3b66362c, var_9110bac3 in var_1693bd2)
+	foreach(var_9110bac3 in var_1693bd2)
 	{
 		setenablenode(var_9110bac3, b_enabled);
 	}
@@ -457,13 +457,16 @@ function portal_teleport_player(show_fx = 1, a_s_port_locs, str_zone, var_6d359b
 	{
 		desired_origin = image_room.origin + prone_offset;
 	}
-	else if(self getstance() == "crouch")
-	{
-		desired_origin = image_room.origin + crouch_offset;
-	}
 	else
 	{
-		desired_origin = image_room.origin + stand_offset;
+		if(self getstance() == "crouch")
+		{
+			desired_origin = image_room.origin + crouch_offset;
+		}
+		else
+		{
+			desired_origin = image_room.origin + stand_offset;
+		}
 	}
 	self.teleport_origin = util::spawn_model("tag_origin", self.origin, self.angles);
 	self playerlinktoabsolute(self.teleport_origin, "tag_origin");
@@ -524,7 +527,7 @@ function portal_teleport_player(show_fx = 1, a_s_port_locs, str_zone, var_6d359b
 		{
 			var_cefa4b63 = 1;
 			s_pos = array::random(a_s_port_locs);
-			foreach(var_eb6f2fcb, var_3bc10d31 in a_players)
+			foreach(var_3bc10d31 in a_players)
 			{
 				var_f2c93934 = distance(var_3bc10d31.origin, s_pos.origin);
 				if(var_f2c93934 < 32)
@@ -602,7 +605,7 @@ function function_483df985(s_pos)
 {
 	a_ai = getaiarray();
 	a_aoe_ai = arraysortclosest(a_ai, s_pos.origin, a_ai.size, 0, 260);
-	foreach(var_111e1722, ai in a_aoe_ai)
+	foreach(ai in a_aoe_ai)
 	{
 		if(isactor(ai) && (!isdefined(level.ai_companion) || ai != level.ai_companion))
 		{

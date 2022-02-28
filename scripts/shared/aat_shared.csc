@@ -16,7 +16,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("aat", &__init__, undefined, undefined);
 }
@@ -30,7 +30,7 @@ autoexec function __init__sytem__()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function __init__()
+function private __init__()
 {
 	level.aat_initializing = 1;
 	level.aat_default_info_name = "none";
@@ -107,7 +107,7 @@ function finalize_clientfields()
 	{
 		array::alphabetize(level.aat);
 		i = 0;
-		foreach(var_309db713, aat in level.aat)
+		foreach(aat in level.aat)
 		{
 			aat.n_index = i;
 			i++;
@@ -132,7 +132,7 @@ function finalize_clientfields()
 */
 function get_string(n_aat_index)
 {
-	foreach(var_420fd479, aat in level.aat)
+	foreach(aat in level.aat)
 	{
 		if(aat.n_index == n_aat_index)
 		{
@@ -153,7 +153,7 @@ function get_string(n_aat_index)
 */
 function get_icon(n_aat_index)
 {
-	foreach(var_43ba6c31, aat in level.aat)
+	foreach(aat in level.aat)
 	{
 		if(aat.n_index == n_aat_index)
 		{

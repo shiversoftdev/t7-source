@@ -54,7 +54,7 @@ function function_7c5410c4()
 {
 	self endon(#"hash_acd89108");
 	self waittill(#"hash_7c5410c4");
-	foreach(var_882cee42, player in namespace_831a4a7c::function_5eb6e4d1())
+	foreach(player in namespace_831a4a7c::function_5eb6e4d1())
 	{
 		if(isdefined(player.doa.timerhud))
 		{
@@ -194,13 +194,16 @@ function function_80eb303(points, var_c979daec = 0)
 		{
 			self thread doa_pickups::directeditemawardto(self, "zombietron_extra_life");
 		}
-		else if(randomint(100) > 50)
-		{
-			self thread doa_pickups::directeditemawardto(self, level.doa.var_326cdb5e);
-		}
 		else
 		{
-			self thread doa_pickups::directeditemawardto(self, level.doa.var_24fe9829);
+			if(randomint(100) > 50)
+			{
+				self thread doa_pickups::directeditemawardto(self, level.doa.var_326cdb5e);
+			}
+			else
+			{
+				self thread doa_pickups::directeditemawardto(self, level.doa.var_24fe9829);
+			}
 		}
 	}
 }

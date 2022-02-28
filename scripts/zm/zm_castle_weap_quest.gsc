@@ -34,7 +34,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_castle_weap_quest", &__init__, &__main__, undefined);
 }
@@ -218,7 +218,7 @@ function function_1fba78c8()
 {
 	if(self.archetype != "zombie")
 	{
-		return 0;
+		return false;
 	}
 	for(i = 0; i < level.soul_catchers.size; i++)
 	{
@@ -226,11 +226,11 @@ function function_1fba78c8()
 		{
 			if(!level.soul_catchers[i].is_charged && !level.soul_catchers[i].is_eating)
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -249,11 +249,11 @@ function zombie_soul_catcher_death(einflictor, attacker, idamage, smeansofdeath,
 	level.var_63e17dd5 = self.attacker;
 	if(var_56269cbf.is_eating)
 	{
-		return 0;
+		return false;
 	}
 	if(var_56269cbf.var_98730ffa >= 8)
 	{
-		return 0;
+		return false;
 	}
 	if(var_56269cbf.var_98730ffa == 0)
 	{
@@ -261,7 +261,7 @@ function zombie_soul_catcher_death(einflictor, attacker, idamage, smeansofdeath,
 		var_56269cbf notify(#"first_zombie_killed_in_zone", self.attacker);
 		var_56269cbf.is_eating = 1;
 		var_56269cbf thread function_edf4b761();
-		return 0;
+		return false;
 	}
 	self thread zm_spawner::zombie_death_animscript();
 	var_56269cbf.is_eating = 1;
@@ -281,13 +281,16 @@ function zombie_soul_catcher_death(einflictor, attacker, idamage, smeansofdeath,
 	{
 		var_a8b20b82 = (getanimlength(%zm_castle::rtrg_o_zm_dlc1_dragonhead_consume_pre_eat_f)) + (getanimlength(%zm_castle::rtrg_ai_zm_dlc1_dragonhead_consume_zombie_align_f));
 	}
-	else if(n_eating_anim == 4)
-	{
-		var_a8b20b82 = (getanimlength(%zm_castle::rtrg_o_zm_dlc1_dragonhead_consume_pre_eat_r)) + (getanimlength(%zm_castle::rtrg_ai_zm_dlc1_dragonhead_consume_zombie_align_r));
-	}
 	else
 	{
-		var_a8b20b82 = (getanimlength(%zm_castle::rtrg_o_zm_dlc1_dragonhead_consume_pre_eat_l)) + (getanimlength(%zm_castle::rtrg_ai_zm_dlc1_dragonhead_consume_zombie_align_l));
+		if(n_eating_anim == 4)
+		{
+			var_a8b20b82 = (getanimlength(%zm_castle::rtrg_o_zm_dlc1_dragonhead_consume_pre_eat_r)) + (getanimlength(%zm_castle::rtrg_ai_zm_dlc1_dragonhead_consume_zombie_align_r));
+		}
+		else
+		{
+			var_a8b20b82 = (getanimlength(%zm_castle::rtrg_o_zm_dlc1_dragonhead_consume_pre_eat_l)) + (getanimlength(%zm_castle::rtrg_ai_zm_dlc1_dragonhead_consume_zombie_align_l));
+		}
 	}
 	wait(var_a8b20b82 - 0.5);
 	var_56269cbf.var_98730ffa++;
@@ -298,7 +301,7 @@ function zombie_soul_catcher_death(einflictor, attacker, idamage, smeansofdeath,
 	{
 		self delete();
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -505,7 +508,7 @@ function function_a01a53de()
 	var_65a03676 = array("rune_prison_spawned", "demon_gate_spawned", "elemental_storm_spawned", "wolf_howl_spawned", "ee_start_done");
 	flag::wait_till_all(var_65a03676);
 	level notify(#"hash_1deaef05");
-	foreach(var_28fd98ea, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		e_player clientfield::set_to_player("bow_pickup_fx", 0);
 	}
@@ -542,11 +545,14 @@ function function_9376cff9()
 			}
 			self clientfield::set_to_player("bow_pickup_fx", 1);
 		}
-		else if(isdefined(level.var_15acc392))
+		else
 		{
-			level.var_15acc392 setinvisibletoplayer(self);
+			if(isdefined(level.var_15acc392))
+			{
+				level.var_15acc392 setinvisibletoplayer(self);
+			}
+			self clientfield::set_to_player("bow_pickup_fx", 0);
 		}
-		self clientfield::set_to_player("bow_pickup_fx", 0);
 		var_14ea0734.var_67b5dd94 thread zm_unitrigger::run_visibility_function_for_all_triggers();
 	}
 }
@@ -564,9 +570,9 @@ function function_e464049a()
 {
 	if(self hasweapon(getweapon("elemental_bow")) || self hasweapon(getweapon("elemental_bow_wolf_howl")) || self hasweapon(getweapon("elemental_bow_storm")) || self hasweapon(getweapon("elemental_bow_rune_prison")) || self hasweapon(getweapon("elemental_bow_demongate")))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -673,10 +679,10 @@ function function_65fb1c47(e_player)
 	if(e_player function_e464049a() || e_player function_9dfa159b())
 	{
 		self sethintstring(&"");
-		return 0;
+		return false;
 	}
 	self sethintstring(&"ZM_CASTLE_PICK_UP_BASE_BOW");
-	return 1;
+	return true;
 }
 
 /*
@@ -744,13 +750,13 @@ function function_9dfa159b()
 {
 	if(!self weaponcyclingenabled() || !self offhandweaponsenabled())
 	{
-		return 1;
+		return true;
 	}
 	w_current = self getcurrentweapon();
 	if(zm_utility::is_placeable_mine(w_current) || zm_equipment::is_equipment_that_blocks_purchase(w_current) || self hasweapon(getweapon("minigun")))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 

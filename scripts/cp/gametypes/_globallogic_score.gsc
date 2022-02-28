@@ -62,7 +62,7 @@ function updatematchbonusscores(winner)
 	if(level.teambased)
 	{
 		winningteam = "tie";
-		foreach(var_96152f5e, team in level.teams)
+		foreach(team in level.teams)
 		{
 			if(winner == team)
 			{
@@ -125,50 +125,53 @@ function updatematchbonusscores(winner)
 			}
 		}
 	}
-	else if(isdefined(winner))
-	{
-		winnerscale = 1;
-		loserscale = 0.5;
-	}
 	else
 	{
-		winnerscale = 0.75;
-		loserscale = 0.75;
-	}
-	players = level.players;
-	for(i = 0; i < players.size; i++)
-	{
-		player = players[i];
-		if(player.timeplayed["total"] < 1 || player.pers["participation"] < 1)
+		if(isdefined(winner))
 		{
-			player thread rank::endgameupdate();
-			continue;
+			winnerscale = 1;
+			loserscale = 0.5;
 		}
-		totaltimeplayed = player.timeplayed["total"];
-		if(totaltimeplayed > gamelength)
+		else
 		{
-			totaltimeplayed = gamelength;
+			winnerscale = 0.75;
+			loserscale = 0.75;
 		}
-		spm = player rank::getspm();
-		iswinner = 0;
-		for(pidx = 0; pidx < min(level.placement["all"][0].size, 3); pidx++)
+		players = level.players;
+		for(i = 0; i < players.size; i++)
 		{
-			if(level.placement["all"][pidx] != player)
+			player = players[i];
+			if(player.timeplayed["total"] < 1 || player.pers["participation"] < 1)
 			{
+				player thread rank::endgameupdate();
 				continue;
 			}
-			iswinner = 1;
-		}
-		if(iswinner)
-		{
-			playerscore = int((winnerscale * ((gamelength / 60) * spm)) * (totaltimeplayed / gamelength));
-			player thread givematchbonus("win", playerscore);
+			totaltimeplayed = player.timeplayed["total"];
+			if(totaltimeplayed > gamelength)
+			{
+				totaltimeplayed = gamelength;
+			}
+			spm = player rank::getspm();
+			iswinner = 0;
+			for(pidx = 0; pidx < min(level.placement["all"][0].size, 3); pidx++)
+			{
+				if(level.placement["all"][pidx] != player)
+				{
+					continue;
+				}
+				iswinner = 1;
+			}
+			if(iswinner)
+			{
+				playerscore = int((winnerscale * ((gamelength / 60) * spm)) * (totaltimeplayed / gamelength));
+				player thread givematchbonus("win", playerscore);
+				player.matchbonus = playerscore;
+				continue;
+			}
+			playerscore = int((loserscale * ((gamelength / 60) * spm)) * (totaltimeplayed / gamelength));
+			player thread givematchbonus("loss", playerscore);
 			player.matchbonus = playerscore;
-			continue;
 		}
-		playerscore = int((loserscale * ((gamelength / 60) * spm)) * (totaltimeplayed / gamelength));
-		player thread givematchbonus("loss", playerscore);
-		player.matchbonus = playerscore;
 	}
 }
 
@@ -541,7 +544,7 @@ function giveteamscoreforobjective_delaypostprocessing(team, score)
 */
 function postprocessteamscores(teams)
 {
-	foreach(var_6b780c35, team in teams)
+	foreach(team in teams)
 	{
 		onteamscore_postprocess(team);
 	}
@@ -607,7 +610,7 @@ function resetteamscores()
 {
 	if(level.scoreroundwinbased || util::isfirstround())
 	{
-		foreach(var_819284ac, team in level.teams)
+		foreach(team in level.teams)
 		{
 			game["teamScores"][team] = 0;
 		}
@@ -679,7 +682,7 @@ function updateteamscores(team)
 */
 function updateallteamscores()
 {
-	foreach(var_d1fcac52, team in level.teams)
+	foreach(team in level.teams)
 	{
 		updateteamscores(team);
 	}
@@ -712,7 +715,7 @@ function gethighestteamscoreteam()
 {
 	score = 0;
 	winning_teams = [];
-	foreach(var_8379196f, team in level.teams)
+	foreach(team in level.teams)
 	{
 		team_score = game["teamScores"][team];
 		if(team_score > score)
@@ -741,16 +744,16 @@ function areteamarraysequal(teamsa, teamsb)
 {
 	if(teamsa.size != teamsb.size)
 	{
-		return 0;
+		return false;
 	}
-	foreach(var_6b6e287f, team in teamsa)
+	foreach(team in teamsa)
 	{
 		if(!isdefined(teamsb[team]))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -825,7 +828,7 @@ function onteamscore_postprocess(team)
 	if(iswinning.size == 1)
 	{
 		level.laststatustime = gettime();
-		foreach(var_e5cbcafe, team in iswinning)
+		foreach(team in iswinning)
 		{
 			if(isdefined(level.waswinning[team]))
 			{
@@ -842,7 +845,7 @@ function onteamscore_postprocess(team)
 	}
 	if(level.waswinning.size == 1)
 	{
-		foreach(var_154794f8, team in level.waswinning)
+		foreach(team in level.waswinning)
 		{
 			if(isdefined(iswinning[team]))
 			{
@@ -1063,49 +1066,52 @@ function updatewinlossstats(winner)
 			updatetiestats(players[i]);
 		}
 	}
-	else if(isplayer(winner))
-	{
-		if(level.hostforcedend && winner ishost())
-		{
-			return;
-		}
-		updatewinstats(winner);
-		if(!level.teambased)
-		{
-			placement = level.placement["all"];
-			topthreeplayers = min(3, placement.size);
-			for(index = 1; index < topthreeplayers; index++)
-			{
-				nexttopplayer = placement[index];
-				updatewinstats(nexttopplayer);
-			}
-		}
-	}
 	else
 	{
-		for(i = 0; i < players.size; i++)
+		if(isplayer(winner))
 		{
-			if(!isdefined(players[i].pers["team"]))
+			if(level.hostforcedend && winner ishost())
 			{
-				continue;
+				return;
 			}
-			if(level.hostforcedend && players[i] ishost())
+			updatewinstats(winner);
+			if(!level.teambased)
 			{
-				continue;
+				placement = level.placement["all"];
+				topthreeplayers = min(3, placement.size);
+				for(index = 1; index < topthreeplayers; index++)
+				{
+					nexttopplayer = placement[index];
+					updatewinstats(nexttopplayer);
+				}
 			}
-			if(winner == "tie")
+		}
+		else
+		{
+			for(i = 0; i < players.size; i++)
 			{
-				updatetiestats(players[i]);
-				continue;
-			}
-			if(players[i].pers["team"] == winner)
-			{
-				updatewinstats(players[i]);
-				continue;
-			}
-			if(!level.disablestattracking)
-			{
-				players[i] setdstat("playerstatslist", "cur_win_streak", "StatValue", 0);
+				if(!isdefined(players[i].pers["team"]))
+				{
+					continue;
+				}
+				if(level.hostforcedend && players[i] ishost())
+				{
+					continue;
+				}
+				if(winner == "tie")
+				{
+					updatetiestats(players[i]);
+					continue;
+				}
+				if(players[i].pers["team"] == winner)
+				{
+					updatewinstats(players[i]);
+					continue;
+				}
+				if(!level.disablestattracking)
+				{
+					players[i] setdstat("playerstatslist", "cur_win_streak", "StatValue", 0);
+				}
 			}
 		}
 	}
@@ -1292,7 +1298,7 @@ function trackattackeedeath(attackername, rank, xp, prestige, xuid)
 */
 function default_iskillboosting()
 {
-	return 0;
+	return false;
 }
 
 /*
@@ -1393,21 +1399,30 @@ function givekillstats(smeansofdeath, weapon, evictim)
 		{
 			itemindex = getitemindexfromref("cybercom_fireflyswarm");
 		}
-		else if(weapon.name == "hero_gravityspikes_cybercom" || weapon.name == "hero_gravityspikes_cybercom_upgraded")
+		else
 		{
-			itemindex = getitemindexfromref("cybercom_concussive");
-		}
-		else if(weapon.name == "gadget_unstoppable_force" || weapon.name == "gadget_unstoppable_force_upgraded")
-		{
-			itemindex = getitemindexfromref("cybercom_unstoppableforce");
-		}
-		else if(weapon.name == "gadget_es_strike")
-		{
-			itemindex = getitemindexfromref("cybercom_es_strike");
-		}
-		else if(weapon.name == "amws_gun_turret_player" || weapon.name == "hunter_main_turret_player" || weapon.name == "hunter_side_turret_player" || weapon.name == "pamws_gun_turret_player" || weapon.name == "quadtank_side_turret_player" || weapon.name == "siegebot_gun_turret_player" || weapon.name == "wasp_main_turret_player" || weapon.name == "amws_launcher_turret_player" || weapon.name == "hunter_rocket_turret_player" || weapon.name == "pamws_launcher_turret_player" || weapon.name == "quadtank_main_turret_player" || weapon.name == "rocket_wasp_launcher_turret_player" || weapon.name == "siegebot_launcher_turret_player")
-		{
-			itemindex = getitemindexfromref("cybercom_hijack");
+			if(weapon.name == "hero_gravityspikes_cybercom" || weapon.name == "hero_gravityspikes_cybercom_upgraded")
+			{
+				itemindex = getitemindexfromref("cybercom_concussive");
+			}
+			else
+			{
+				if(weapon.name == "gadget_unstoppable_force" || weapon.name == "gadget_unstoppable_force_upgraded")
+				{
+					itemindex = getitemindexfromref("cybercom_unstoppableforce");
+				}
+				else
+				{
+					if(weapon.name == "gadget_es_strike")
+					{
+						itemindex = getitemindexfromref("cybercom_es_strike");
+					}
+					else if(weapon.name == "amws_gun_turret_player" || weapon.name == "hunter_main_turret_player" || weapon.name == "hunter_side_turret_player" || weapon.name == "pamws_gun_turret_player" || weapon.name == "quadtank_side_turret_player" || weapon.name == "siegebot_gun_turret_player" || weapon.name == "wasp_main_turret_player" || weapon.name == "amws_launcher_turret_player" || weapon.name == "hunter_rocket_turret_player" || weapon.name == "pamws_launcher_turret_player" || weapon.name == "quadtank_main_turret_player" || weapon.name == "rocket_wasp_launcher_turret_player" || weapon.name == "siegebot_launcher_turret_player")
+					{
+						itemindex = getitemindexfromref("cybercom_hijack");
+					}
+				}
+			}
 		}
 		function_28c6cf9e(itemindex);
 		if(isdefined(attacker.active_camo) && attacker.active_camo)

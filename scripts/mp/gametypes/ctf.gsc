@@ -35,7 +35,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("ctf", &__init__, undefined, undefined);
 }
@@ -178,15 +178,18 @@ function onstartgametype()
 			util::setobjectivehinttext("allies", &"MP_CTF_OVERTIME_ROUND_1");
 			util::setobjectivehinttext("axis", &"MP_CTF_OVERTIME_ROUND_1");
 		}
-		else if(isdefined(game["ctf_overtime_first_winner"]))
-		{
-			util::setobjectivehinttext(game["ctf_overtime_first_winner"], &"MP_CTF_OVERTIME_ROUND_2_WINNER");
-			util::setobjectivehinttext(util::getotherteam(game["ctf_overtime_first_winner"]), &"MP_CTF_OVERTIME_ROUND_2_LOSER");
-		}
 		else
 		{
-			util::setobjectivehinttext("allies", &"MP_CTF_OVERTIME_ROUND_2_TIE");
-			util::setobjectivehinttext("axis", &"MP_CTF_OVERTIME_ROUND_2_TIE");
+			if(isdefined(game["ctf_overtime_first_winner"]))
+			{
+				util::setobjectivehinttext(game["ctf_overtime_first_winner"], &"MP_CTF_OVERTIME_ROUND_2_WINNER");
+				util::setobjectivehinttext(util::getotherteam(game["ctf_overtime_first_winner"]), &"MP_CTF_OVERTIME_ROUND_2_LOSER");
+			}
+			else
+			{
+				util::setobjectivehinttext("allies", &"MP_CTF_OVERTIME_ROUND_2_TIE");
+				util::setobjectivehinttext("axis", &"MP_CTF_OVERTIME_ROUND_2_TIE");
+			}
 		}
 	}
 	spawning::create_map_placed_influencers();
@@ -207,7 +210,7 @@ function onstartgametype()
 	level.spawn_axis = spawnlogic::get_spawnpoint_array("mp_ctf_spawn_axis");
 	level.spawn_allies = spawnlogic::get_spawnpoint_array("mp_ctf_spawn_allies");
 	level.spawn_start = [];
-	foreach(var_51a3be6c, team in level.teams)
+	foreach(team in level.teams)
 	{
 		level.spawn_start[team] = spawnlogic::get_spawnpoint_array(("mp_ctf_spawn_" + team) + "_start");
 	}
@@ -230,15 +233,15 @@ function shouldplayovertimeround()
 	{
 		if(game["overtime_round"] == 1 || !level.gameended)
 		{
-			return 1;
+			return true;
 		}
-		return 0;
+		return false;
 	}
 	if(!level.scoreroundwinbased)
 	{
 		if(game["teamScores"]["allies"] == game["teamScores"]["axis"] && (util::hitroundlimit() || game["teamScores"]["allies"] == (level.scorelimit - 1)))
 		{
-			return 1;
+			return true;
 		}
 	}
 	else
@@ -247,14 +250,14 @@ function shouldplayovertimeround()
 		axisroundswon = util::getroundswon("axis");
 		if(level.roundwinlimit > 0 && axisroundswon == (level.roundwinlimit - 1) && alliesroundswon == (level.roundwinlimit - 1))
 		{
-			return 1;
+			return true;
 		}
 		if(util::hitroundlimit() && alliesroundswon == axisroundswon)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -293,17 +296,23 @@ function setmatchscorehudelemforteam(team)
 	{
 		self hud_message::setmatchscorehudelemforteam(team);
 	}
-	else if(isdefined(game["ctf_overtime_second_winner"]) && game["ctf_overtime_second_winner"] == team)
-	{
-		self settext(minutesandsecondsstring(game["ctf_overtime_best_time"]));
-	}
-	else if(isdefined(game["ctf_overtime_first_winner"]) && game["ctf_overtime_first_winner"] == team)
-	{
-		self settext(minutesandsecondsstring(game["ctf_overtime_time_to_beat"]));
-	}
 	else
 	{
-		self settext(&"");
+		if(isdefined(game["ctf_overtime_second_winner"]) && game["ctf_overtime_second_winner"] == team)
+		{
+			self settext(minutesandsecondsstring(game["ctf_overtime_best_time"]));
+		}
+		else
+		{
+			if(isdefined(game["ctf_overtime_first_winner"]) && game["ctf_overtime_first_winner"] == team)
+			{
+				self settext(minutesandsecondsstring(game["ctf_overtime_time_to_beat"]));
+			}
+			else
+			{
+				self settext(&"");
+			}
+		}
 	}
 }
 
@@ -368,7 +377,7 @@ function updateteamscorebyroundswon()
 {
 	if(level.scoreroundwinbased)
 	{
-		foreach(var_343f2964, team in level.teams)
+		foreach(team in level.teams)
 		{
 			[[level._setteamscore]](team, game["roundswon"][team]);
 		}
@@ -390,7 +399,7 @@ function updateteamscorebyflagscaptured()
 	{
 		return;
 	}
-	foreach(var_9822a285, team in level.teams)
+	foreach(team in level.teams)
 	{
 		[[level._setteamscore]](team, [[level._getteamscore]](team) + game["ctf_teamscore_cache"][team]);
 	}
@@ -440,7 +449,7 @@ function onroundendgame(winningteam)
 		}
 		if(level.scoreroundwinbased)
 		{
-			foreach(var_6b780c35, team in level.teams)
+			foreach(team in level.teams)
 			{
 				score = game["roundswon"][team];
 				if(team === winningteam)
@@ -945,13 +954,13 @@ function ishome()
 {
 	if(isdefined(self.carrier))
 	{
-		return 0;
+		return false;
 	}
 	if(self.curorigin != self.trigger.baseorigin)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1216,7 +1225,7 @@ function onplayerkilled(einflictor, attacker, idamage, smeansofdeath, weapon, vd
 			}
 		}
 		victim = self;
-		foreach(var_1859a1b1, flag_zone in level.flagzones)
+		foreach(flag_zone in level.flagzones)
 		{
 			if(isdefined(attacker.team) && attacker != victim && isdefined(victim.team))
 			{
@@ -1350,10 +1359,10 @@ function returnflaghudelems(time)
 	level.returnmessageelems["allies"][ownerteam] settimer(time);
 	if(time <= 0)
 	{
-		return 0;
+		return false;
 	}
 	wait(time);
-	return 1;
+	return true;
 }
 
 /*

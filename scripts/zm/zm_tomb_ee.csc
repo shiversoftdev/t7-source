@@ -150,13 +150,16 @@ function function_64b44f6b(localclientnum, oldval, newval, bnewent, binitialsnap
 			self thread snddeletesndent(self.var_3a8912f4);
 		}
 	}
-	else if(isdefined(self.has_soul))
+	else
 	{
-		self.has_soul = undefined;
-		stopfx(localclientnum, self.var_8020f50b);
-		stopfx(localclientnum, self.var_9c121695);
+		if(isdefined(self.has_soul))
+		{
+			self.has_soul = undefined;
+			stopfx(localclientnum, self.var_8020f50b);
+			stopfx(localclientnum, self.var_9c121695);
+		}
+		self notify(#"snddeleteent");
 	}
-	self notify(#"snddeleteent");
 }
 
 /*
@@ -304,7 +307,7 @@ function function_b628a101(localclientnum, oldval, newval, bnewent, binitialsnap
 		{
 			self.var_e6c8ca8e = 1;
 			self thread function_4e9276ed(localclientnum);
-			self.m_reward = util::spawn_model(localclientnum, level.var_25ef5fab.worldmodel, (-141, 4464, -322) + (8, 35, 20), self.angles);
+			self.m_reward = util::spawn_model(localclientnum, level.w_beacon.worldmodel, (-141, 4464, -322) + (8, 35, 20), self.angles);
 			self.m_reward thread function_17bc361f(localclientnum);
 		}
 	}

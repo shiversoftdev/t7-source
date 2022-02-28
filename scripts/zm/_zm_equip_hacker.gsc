@@ -22,7 +22,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_equip_hacker", &__init__, &__main__, undefined);
 }
@@ -155,7 +155,12 @@ function hacker_debug()
 						print3d(hackable.origin, "", col, 1, 1);
 					#/
 				}
-				print3d(hackable.origin, "", vectorscale((0, 0, 1), 255), 1, 1);
+				else
+				{
+					/#
+						print3d(hackable.origin, "", vectorscale((0, 0, 1), 255), 1, 1);
+					#/
+				}
 				continue;
 			}
 			/#
@@ -275,18 +280,18 @@ function should_pooled_object_exist()
 				{
 					if(distance2dsquared(players[i].origin, self.entity.origin) <= (self.radius * self.radius))
 					{
-						return 1;
+						return true;
 					}
 				}
 				continue;
 			}
 			if(distance2dsquared(players[i].origin, self.origin) <= (self.radius * self.radius))
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -385,10 +390,10 @@ function any_hackers_active()
 	{
 		if(players[i] zm_equipment::hacker_active())
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -643,45 +648,45 @@ function can_hack(hackable)
 {
 	if(!isalive(self))
 	{
-		return 0;
+		return false;
 	}
 	if(self laststand::player_is_in_laststand())
 	{
-		return 0;
+		return false;
 	}
 	if(!self zm_equipment::hacker_active())
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(hackable._trigger))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(hackable.player))
 	{
 		if(hackable.player != self)
 		{
-			return 0;
+			return false;
 		}
 	}
 	if(self throwbuttonpressed())
 	{
-		return 0;
+		return false;
 	}
 	if(self fragbuttonpressed())
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(hackable._hack_qualifier_func))
 	{
 		if(!hackable [[hackable._hack_qualifier_func]](self))
 		{
-			return 0;
+			return false;
 		}
 	}
 	if(!isinarray(level._hackable_objects, hackable))
 	{
-		return 0;
+		return false;
 	}
 	radsquared = 1024;
 	if(isdefined(hackable.radius))
@@ -695,25 +700,25 @@ function can_hack(hackable)
 	}
 	if(distance2dsquared(self.origin, origin) > radsquared)
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(hackable.no_touch_check) && !self istouching(hackable._trigger))
 	{
-		return 0;
+		return false;
 	}
 	if(!self is_facing(hackable))
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(hackable.no_sight_check) && !sighttracepassed(self.origin + vectorscale((0, 0, 1), 50), origin, 0, undefined))
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(hackable.no_bullet_trace) && !bullettracepassed(self.origin + vectorscale((0, 0, 1), 50), origin, 0, undefined))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -747,13 +752,16 @@ function set_hack_hint_string()
 		{
 			self._trigger sethintstring(self.custom_string);
 		}
-		else if(!isdefined(self.script_int) || self.script_int <= 0)
-		{
-			self._trigger sethintstring(&"ZOMBIE_HACK_NO_COST");
-		}
 		else
 		{
-			self._trigger sethintstring(&"ZOMBIE_HACK", self.script_int);
+			if(!isdefined(self.script_int) || self.script_int <= 0)
+			{
+				self._trigger sethintstring(&"ZOMBIE_HACK_NO_COST");
+			}
+			else
+			{
+				self._trigger sethintstring(&"ZOMBIE_HACK", self.script_int);
+			}
 		}
 	}
 }
@@ -1115,21 +1123,21 @@ function player_qualifier(player)
 {
 	if(player == self.entity)
 	{
-		return 0;
+		return false;
 	}
 	if(self.entity laststand::player_is_in_laststand())
 	{
-		return 0;
+		return false;
 	}
 	if(player laststand::player_is_in_laststand())
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.entity.sessionstate == "spectator") && self.entity.sessionstate == "spectator")
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*

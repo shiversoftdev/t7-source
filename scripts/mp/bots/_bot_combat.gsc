@@ -28,9 +28,9 @@ function bot_ignore_threat(entity)
 {
 	if(threat_requires_launcher(entity) && !self bot::has_launcher())
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -118,7 +118,7 @@ function threat_requires_launcher(enemy)
 {
 	if(!isdefined(enemy) || isplayer(enemy))
 	{
-		return 0;
+		return false;
 	}
 	killstreaktype = undefined;
 	if(isdefined(enemy.killstreaktype))
@@ -131,7 +131,7 @@ function threat_requires_launcher(enemy)
 	}
 	if(!isdefined(killstreaktype))
 	{
-		return 0;
+		return false;
 	}
 	switch(killstreaktype)
 	{
@@ -140,10 +140,10 @@ function threat_requires_launcher(enemy)
 		case "satellite":
 		case "uav":
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -235,7 +235,7 @@ function combat_toss_flash(origin)
 */
 function combat_tactical_insertion(origin)
 {
-	return 0;
+	return false;
 }
 
 /*
@@ -279,7 +279,7 @@ function get_closest_tag()
 {
 	closesttag = undefined;
 	closesttagdistsq = undefined;
-	foreach(var_db487352, tag in level.dogtags)
+	foreach(tag in level.dogtags)
 	{
 		if(!tag gameobjects::can_interact_with(self))
 		{

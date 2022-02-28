@@ -23,7 +23,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("load", &__init__, undefined, undefined);
 }
@@ -42,7 +42,7 @@ function __init__()
 	/#
 		level thread first_frame();
 	#/
-	function_b018f2a7();
+	init_push_out_threshold();
 }
 
 /*
@@ -64,7 +64,7 @@ function first_frame()
 }
 
 /*
-	Name: function_b018f2a7
+	Name: init_push_out_threshold
 	Namespace: load
 	Checksum: 0xCB85F097
 	Offset: 0x2D0
@@ -72,10 +72,10 @@ function first_frame()
 	Parameters: 0
 	Flags: Linked
 */
-function function_b018f2a7()
+function init_push_out_threshold()
 {
-	var_ae867510 = getdvarfloat("tu16_physicsPushOutThreshold", -1);
-	if(var_ae867510 != -1)
+	push_out_threshold = getdvarfloat("tu16_physicsPushOutThreshold", -1);
+	if(push_out_threshold != -1)
 	{
 		setdvar("tu16_physicsPushOutThreshold", 20);
 	}

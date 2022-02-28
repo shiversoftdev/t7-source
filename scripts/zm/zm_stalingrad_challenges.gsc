@@ -32,7 +32,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_stalingrad_challenges", &__init__, &__main__, undefined);
 }
@@ -74,28 +74,28 @@ function __init__()
 function __main__()
 {
 	level._challenges = spawnstruct();
-	level._challenges.var_4687355c = [];
-	level._challenges.var_b88ea497 = [];
-	level._challenges.var_928c2a2e = [];
+	level._challenges.challenge_1 = [];
+	level._challenges.challenge_2 = [];
+	level._challenges.challenge_3 = [];
 	level thread function_b2413e04();
-	array::add(level._challenges.var_4687355c, function_970609e0(1, &"ZM_STALINGRAD_CHALLENGE_1_1", 10, "update_challenge_1_1", &function_960bfb56));
-	array::add(level._challenges.var_4687355c, function_970609e0(1, &"ZM_STALINGRAD_CHALLENGE_1_2", 3, "update_challenge_1_2", &function_f1c59ae));
-	array::add(level._challenges.var_4687355c, function_970609e0(1, &"ZM_STALINGRAD_CHALLENGE_1_3", 5, "update_challenge_1_3", &function_76bcffc2));
-	array::add(level._challenges.var_4687355c, function_970609e0(1, &"ZM_STALINGRAD_CHALLENGE_1_4", 3, "update_challenge_1_4", &function_dec401c2));
-	array::add(level._challenges.var_4687355c, function_970609e0(1, &"ZM_STALINGRAD_CHALLENGE_1_5", 5, "update_challenge_1_5", &function_c169b7dd));
-	array::add(level._challenges.var_4687355c, function_970609e0(1, &"ZM_STALINGRAD_CHALLENGE_1_6", 1, "update_challenge_1_6", &function_5efd7abf));
-	array::add(level._challenges.var_b88ea497, function_970609e0(2, &"ZM_STALINGRAD_CHALLENGE_2_1", 10, "update_challenge_2_1", &function_4322fb5f));
-	array::add(level._challenges.var_b88ea497, function_970609e0(2, &"ZM_STALINGRAD_CHALLENGE_2_2", 30, "update_challenge_2_2", &function_f427e9ad));
-	array::add(level._challenges.var_b88ea497, function_970609e0(2, &"ZM_STALINGRAD_CHALLENGE_2_3", 40, "update_challenge_2_3", &function_4e107409));
-	array::add(level._challenges.var_b88ea497, function_970609e0(2, &"ZM_STALINGRAD_CHALLENGE_2_4", 45, "update_challenge_2_4", &function_81adc498));
-	array::add(level._challenges.var_b88ea497, function_970609e0(2, &"ZM_STALINGRAD_CHALLENGE_2_5", 10, "update_challenge_2_5", &function_64e8cc03));
-	array::add(level._challenges.var_b88ea497, function_970609e0(2, &"ZM_STALINGRAD_CHALLENGE_2_6", 1, "update_challenge_2_6", &function_31d5f655));
-	array::add(level._challenges.var_928c2a2e, function_970609e0(3, &"ZM_STALINGRAD_CHALLENGE_3_1", 1, "update_challenge_3_1", &function_75fdfc25));
-	array::add(level._challenges.var_928c2a2e, function_970609e0(3, &"ZM_STALINGRAD_CHALLENGE_3_2", 3, "update_challenge_3_2", &function_2bf9f9d4));
-	array::add(level._challenges.var_928c2a2e, function_970609e0(3, &"ZM_STALINGRAD_CHALLENGE_3_3", 100, "update_challenge_3_3", &function_dcbd7aec));
-	array::add(level._challenges.var_928c2a2e, function_970609e0(3, &"ZM_STALINGRAD_CHALLENGE_3_4", 60, "update_challenge_3_4", &function_3d0619b6));
-	array::add(level._challenges.var_928c2a2e, function_970609e0(3, &"ZM_STALINGRAD_CHALLENGE_3_5", 6, "update_challenge_3_5", &function_cdeaa5f));
-	array::add(level._challenges.var_928c2a2e, function_970609e0(3, &"ZM_STALINGRAD_CHALLENGE_3_6", 6, "update_challenge_3_6", &function_e480fc42));
+	array::add(level._challenges.challenge_1, init_challenges(1, &"ZM_STALINGRAD_CHALLENGE_1_1", 10, "update_challenge_1_1", &function_960bfb56));
+	array::add(level._challenges.challenge_1, init_challenges(1, &"ZM_STALINGRAD_CHALLENGE_1_2", 3, "update_challenge_1_2", &function_f1c59ae));
+	array::add(level._challenges.challenge_1, init_challenges(1, &"ZM_STALINGRAD_CHALLENGE_1_3", 5, "update_challenge_1_3", &function_76bcffc2));
+	array::add(level._challenges.challenge_1, init_challenges(1, &"ZM_STALINGRAD_CHALLENGE_1_4", 3, "update_challenge_1_4", &function_dec401c2));
+	array::add(level._challenges.challenge_1, init_challenges(1, &"ZM_STALINGRAD_CHALLENGE_1_5", 5, "update_challenge_1_5", &function_c169b7dd));
+	array::add(level._challenges.challenge_1, init_challenges(1, &"ZM_STALINGRAD_CHALLENGE_1_6", 1, "update_challenge_1_6", &function_5efd7abf));
+	array::add(level._challenges.challenge_2, init_challenges(2, &"ZM_STALINGRAD_CHALLENGE_2_1", 10, "update_challenge_2_1", &function_4322fb5f));
+	array::add(level._challenges.challenge_2, init_challenges(2, &"ZM_STALINGRAD_CHALLENGE_2_2", 30, "update_challenge_2_2", &function_f427e9ad));
+	array::add(level._challenges.challenge_2, init_challenges(2, &"ZM_STALINGRAD_CHALLENGE_2_3", 40, "update_challenge_2_3", &function_4e107409));
+	array::add(level._challenges.challenge_2, init_challenges(2, &"ZM_STALINGRAD_CHALLENGE_2_4", 45, "update_challenge_2_4", &function_81adc498));
+	array::add(level._challenges.challenge_2, init_challenges(2, &"ZM_STALINGRAD_CHALLENGE_2_5", 10, "update_challenge_2_5", &function_64e8cc03));
+	array::add(level._challenges.challenge_2, init_challenges(2, &"ZM_STALINGRAD_CHALLENGE_2_6", 1, "update_challenge_2_6", &function_31d5f655));
+	array::add(level._challenges.challenge_3, init_challenges(3, &"ZM_STALINGRAD_CHALLENGE_3_1", 1, "update_challenge_3_1", &function_75fdfc25));
+	array::add(level._challenges.challenge_3, init_challenges(3, &"ZM_STALINGRAD_CHALLENGE_3_2", 3, "update_challenge_3_2", &function_2bf9f9d4));
+	array::add(level._challenges.challenge_3, init_challenges(3, &"ZM_STALINGRAD_CHALLENGE_3_3", 100, "update_challenge_3_3", &function_dcbd7aec));
+	array::add(level._challenges.challenge_3, init_challenges(3, &"ZM_STALINGRAD_CHALLENGE_3_4", 60, "update_challenge_3_4", &function_3d0619b6));
+	array::add(level._challenges.challenge_3, init_challenges(3, &"ZM_STALINGRAD_CHALLENGE_3_5", 6, "update_challenge_3_5", &function_cdeaa5f));
+	array::add(level._challenges.challenge_3, init_challenges(3, &"ZM_STALINGRAD_CHALLENGE_3_6", 6, "update_challenge_3_6", &function_e480fc42));
 	callback::on_connect(&on_player_connect);
 	callback::on_disconnect(&on_player_disconnect);
 	callback::on_spawned(&on_player_spawned);
@@ -106,7 +106,7 @@ function __main__()
 }
 
 /*
-	Name: function_970609e0
+	Name: init_challenges
 	Namespace: zm_stalingrad_challenges
 	Checksum: 0x78E6C79F
 	Offset: 0x18A8
@@ -114,11 +114,11 @@ function __main__()
 	Parameters: 5
 	Flags: Linked
 */
-function function_970609e0(n_challenge_index, var_3e1001b, var_80792f67, str_challenge_notify, var_d675d6d8 = undefined)
+function init_challenges(n_challenge_index, str_challenge_info, var_80792f67, str_challenge_notify, var_d675d6d8 = undefined)
 {
 	s_challenge = spawnstruct();
 	s_challenge.n_index = n_challenge_index;
-	s_challenge.str_info = var_3e1001b;
+	s_challenge.str_info = str_challenge_info;
 	s_challenge.n_count = var_80792f67;
 	s_challenge.str_notify = str_challenge_notify;
 	s_challenge.func_think = var_d675d6d8;
@@ -167,33 +167,33 @@ function on_player_spawned()
 */
 function on_player_disconnect()
 {
-	if(!isdefined(level._challenges.var_4687355c))
+	if(!isdefined(level._challenges.challenge_1))
 	{
-		level._challenges.var_4687355c = [];
+		level._challenges.challenge_1 = [];
 	}
-	else if(!isarray(level._challenges.var_4687355c))
+	else if(!isarray(level._challenges.challenge_1))
 	{
-		level._challenges.var_4687355c = array(level._challenges.var_4687355c);
+		level._challenges.challenge_1 = array(level._challenges.challenge_1);
 	}
-	level._challenges.var_4687355c[level._challenges.var_4687355c.size] = self._challenges.var_4687355c;
-	if(!isdefined(level._challenges.var_b88ea497))
+	level._challenges.challenge_1[level._challenges.challenge_1.size] = self._challenges.challenge_1;
+	if(!isdefined(level._challenges.challenge_2))
 	{
-		level._challenges.var_b88ea497 = [];
+		level._challenges.challenge_2 = [];
 	}
-	else if(!isarray(level._challenges.var_b88ea497))
+	else if(!isarray(level._challenges.challenge_2))
 	{
-		level._challenges.var_b88ea497 = array(level._challenges.var_b88ea497);
+		level._challenges.challenge_2 = array(level._challenges.challenge_2);
 	}
-	level._challenges.var_b88ea497[level._challenges.var_b88ea497.size] = self._challenges.var_b88ea497;
-	if(!isdefined(level._challenges.var_928c2a2e))
+	level._challenges.challenge_2[level._challenges.challenge_2.size] = self._challenges.challenge_2;
+	if(!isdefined(level._challenges.challenge_3))
 	{
-		level._challenges.var_928c2a2e = [];
+		level._challenges.challenge_3 = [];
 	}
-	else if(!isarray(level._challenges.var_928c2a2e))
+	else if(!isarray(level._challenges.challenge_3))
 	{
-		level._challenges.var_928c2a2e = array(level._challenges.var_928c2a2e);
+		level._challenges.challenge_3 = array(level._challenges.challenge_3);
 	}
-	level._challenges.var_928c2a2e[level._challenges.var_928c2a2e.size] = self._challenges.var_928c2a2e;
+	level._challenges.challenge_3[level._challenges.challenge_3.size] = self._challenges.challenge_3;
 	n_player_number = self getentitynumber();
 	level notify("player_disconnected_" + n_player_number);
 }
@@ -226,29 +226,29 @@ function function_b7156b15()
 	self flag::init("flag_player_initialized_reward");
 	level flag::wait_till("initial_players_connected");
 	self._challenges = spawnstruct();
-	self._challenges.var_4687355c = array::random(level._challenges.var_4687355c);
-	self._challenges.var_b88ea497 = array::random(level._challenges.var_b88ea497);
+	self._challenges.challenge_1 = array::random(level._challenges.challenge_1);
+	self._challenges.challenge_2 = array::random(level._challenges.challenge_2);
 	do
 	{
-		self._challenges.var_928c2a2e = array::random(level._challenges.var_928c2a2e);
+		self._challenges.challenge_3 = array::random(level._challenges.challenge_3);
 	}
-	while(level flag::get("solo_game") && level.players.size == 1 && self._challenges.var_928c2a2e.str_notify == "update_challenge_3_4");
-	arrayremovevalue(level._challenges.var_4687355c, self._challenges.var_4687355c);
-	arrayremovevalue(level._challenges.var_b88ea497, self._challenges.var_b88ea497);
-	arrayremovevalue(level._challenges.var_928c2a2e, self._challenges.var_928c2a2e);
-	self thread function_2ce855f3(self._challenges.var_4687355c);
-	self thread function_2ce855f3(self._challenges.var_b88ea497);
-	self thread function_2ce855f3(self._challenges.var_928c2a2e);
-	self thread function_fbbc8608(self._challenges.var_4687355c.n_index, "flag_player_completed_challenge_1");
-	self thread function_fbbc8608(self._challenges.var_b88ea497.n_index, "flag_player_completed_challenge_2");
-	self thread function_fbbc8608(self._challenges.var_928c2a2e.n_index, "flag_player_completed_challenge_3");
+	while(level flag::get("solo_game") && level.players.size == 1 && self._challenges.challenge_3.str_notify == "update_challenge_3_4");
+	arrayremovevalue(level._challenges.challenge_1, self._challenges.challenge_1);
+	arrayremovevalue(level._challenges.challenge_2, self._challenges.challenge_2);
+	arrayremovevalue(level._challenges.challenge_3, self._challenges.challenge_3);
+	self thread function_2ce855f3(self._challenges.challenge_1);
+	self thread function_2ce855f3(self._challenges.challenge_2);
+	self thread function_2ce855f3(self._challenges.challenge_3);
+	self thread function_fbbc8608(self._challenges.challenge_1.n_index, "flag_player_completed_challenge_1");
+	self thread function_fbbc8608(self._challenges.challenge_2.n_index, "flag_player_completed_challenge_2");
+	self thread function_fbbc8608(self._challenges.challenge_3.n_index, "flag_player_completed_challenge_3");
 	self thread function_974d5f1d();
 	n_player_number = self getentitynumber();
 	for(i = 1; i <= 4; i++)
 	{
 		self thread function_a2d25f82(i);
 	}
-	foreach(var_8cbafcb9, s_challenge in struct::get_array("s_challenge_trigger"))
+	foreach(s_challenge in struct::get_array("s_challenge_trigger"))
 	{
 		if(s_challenge.script_int == n_player_number)
 		{
@@ -369,15 +369,18 @@ function function_fbbc8608(n_challenge_index, var_d4adfa57)
 	var_d6b47fd3 = "";
 	if(n_challenge_index == 1)
 	{
-		var_d6b47fd3 = self._challenges.var_4687355c.str_info;
-	}
-	else if(n_challenge_index == 2)
-	{
-		var_d6b47fd3 = self._challenges.var_b88ea497.str_info;
+		var_d6b47fd3 = self._challenges.challenge_1.str_info;
 	}
 	else
 	{
-		var_d6b47fd3 = self._challenges.var_928c2a2e.str_info;
+		if(n_challenge_index == 2)
+		{
+			var_d6b47fd3 = self._challenges.challenge_2.str_info;
+		}
+		else
+		{
+			var_d6b47fd3 = self._challenges.challenge_3.str_info;
+		}
 	}
 	self luinotifyevent(&"trial_complete", 3, &"ZM_STALINGRAD_CHALLENGE_COMPLETE", var_d6b47fd3, n_challenge_index - 1);
 	level scoreevents::processscoreevent("solo_challenge_stalingrad", self);
@@ -416,17 +419,17 @@ function function_27f6c3cd(player, n_challenge_index)
 	{
 		case 1:
 		{
-			player function_e8547a5b(player._challenges.var_4687355c.str_info);
+			player function_e8547a5b(player._challenges.challenge_1.str_info);
 			break;
 		}
 		case 2:
 		{
-			player function_e8547a5b(player._challenges.var_b88ea497.str_info);
+			player function_e8547a5b(player._challenges.challenge_2.str_info);
 			break;
 		}
 		case 3:
 		{
-			player function_e8547a5b(player._challenges.var_928c2a2e.str_info);
+			player function_e8547a5b(player._challenges.challenge_3.str_info);
 			break;
 		}
 		case 4:
@@ -500,7 +503,7 @@ function function_3ae0d6d5(e_player)
 				if(zm_utility::is_placeable_mine(w_current) || zm_equipment::is_equipment(w_current) || w_current == level.weaponnone || (isdefined(w_current.isheroweapon) && w_current.isheroweapon) || (isdefined(w_current.isgadget) && w_current.isgadget))
 				{
 					self sethintstringforplayer(e_player, "");
-					return 0;
+					return false;
 				}
 			}
 			else if(self.stub.related_parent.var_30ff0d6c.n_challenge == 3)
@@ -509,10 +512,10 @@ function function_3ae0d6d5(e_player)
 				if(a_perks.size == level._custom_perks.size)
 				{
 					self sethintstringforplayer(e_player, "");
-					return 0;
+					return false;
 				}
 			}
-			return 1;
+			return true;
 		}
 		for(i = 1; i <= 4; i++)
 		{
@@ -535,33 +538,33 @@ function function_3ae0d6d5(e_player)
 					self sethintstringforplayer(e_player, "");
 					e_player thread function_23c9ffd3(self);
 					var_a51a0ba6 = 1;
-					return 1;
+					return true;
 				}
 				if(!e_player flag::get("flag_player_collected_reward_" + i) && (!(isdefined(e_player.var_c981566c) && e_player.var_c981566c)))
 				{
 					self sethintstringforplayer(e_player, &"ZM_STALINGRAD_CHALLENGE_REWARD");
 					e_player thread function_23c9ffd3(self);
 					var_a51a0ba6 = 1;
-					return 1;
+					return true;
 				}
 				self sethintstringforplayer(e_player, "");
 				e_player thread function_23c9ffd3(self);
 				var_a51a0ba6 = 1;
-				return 1;
+				return true;
 			}
 		}
 		if(e_player function_9ffe5c12())
 		{
 			self sethintstringforplayer(e_player, &"ZM_STALINGRAD_GRAVE_FIRE");
 			e_player clientfield::set_player_uimodel("trialWidget.visible", 0);
-			return 1;
+			return true;
 		}
 		self sethintstringforplayer(e_player, "");
 		e_player clientfield::set_player_uimodel("trialWidget.visible", 0);
-		return 0;
+		return false;
 	}
 	self sethintstringforplayer(e_player, "");
-	return 0;
+	return false;
 }
 
 /*
@@ -579,9 +582,9 @@ function function_3f67a723(origin, arc_angle_degrees = 90, do_trace, e_ignore)
 	dot = cos(arc_angle_degrees * 0.5);
 	if(self util::is_player_looking_at(origin, dot, do_trace, e_ignore))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -694,7 +697,7 @@ function function_1d22626(e_player, n_challenge)
 	e_player endon(#"disconnect");
 	var_7bb343ef = (0, 90, 0);
 	var_93571595 = struct::get_array("s_challenge_reward", "targetname");
-	foreach(var_40b4f6c8, s_reward in var_93571595)
+	foreach(s_reward in var_93571595)
 	{
 		if(s_reward.script_int == e_player getentitynumber())
 		{
@@ -985,7 +988,7 @@ function take_old_weapon_and_give_new(w_current, var_f4612f93)
 function function_3420bc2f(var_f4612f93)
 {
 	var_6f845c3d = self getweaponslist(1);
-	foreach(var_825927aa, var_cdee635d in var_6f845c3d)
+	foreach(var_cdee635d in var_6f845c3d)
 	{
 		if(var_cdee635d.type === "melee")
 		{
@@ -1011,7 +1014,7 @@ function function_6131520e()
 	self endon(#"disconnect");
 	a_str_perks = getarraykeys(level._custom_perks);
 	a_str_perks = array::randomize(a_str_perks);
-	foreach(var_f972531b, str_perk in a_str_perks)
+	foreach(str_perk in a_str_perks)
 	{
 		if(!self hasperk(str_perk))
 		{
@@ -1771,7 +1774,7 @@ function function_2ce855f3(s_challenge)
 function function_c79e93d1()
 {
 	a_flags = array("flag_player_completed_challenge_1", "flag_player_completed_challenge_2", "flag_player_completed_challenge_3");
-	foreach(var_3762868a, flag in a_flags)
+	foreach(flag in a_flags)
 	{
 		if(!self flag::get(flag))
 		{
@@ -1878,7 +1881,7 @@ function function_d632a808(var_51a2f105)
 function function_4ca86c86()
 {
 	var_77797571 = struct::get_array("pr_b_spawn", "targetname");
-	foreach(var_9195552c, var_4af818ae in var_77797571)
+	foreach(var_4af818ae in var_77797571)
 	{
 		if(var_4af818ae.script_int == self getentitynumber())
 		{
@@ -1886,7 +1889,7 @@ function function_4ca86c86()
 		}
 	}
 	var_977659a7 = struct::get_array("pr_c_spawn", "targetname");
-	foreach(var_1169efd7, var_238c2594 in var_977659a7)
+	foreach(var_238c2594 in var_977659a7)
 	{
 		if(var_238c2594.script_int == self getentitynumber())
 		{
@@ -2032,7 +2035,7 @@ function function_1fa81bf0()
 	self endon(#"death");
 	self endon(#"hash_8b3a62f7");
 	var_93571595 = struct::get_array("s_challenge_reward", "targetname");
-	foreach(var_16eaaf8f, s_reward in var_93571595)
+	foreach(s_reward in var_93571595)
 	{
 		if(s_reward.script_int == self getentitynumber())
 		{
@@ -2091,18 +2094,18 @@ function function_9ffe5c12()
 	if(level flag::get("pr_m") && (isdefined(self.var_62708302) && self.var_62708302) && (isdefined(self.var_4aaffb90) && self.var_4aaffb90) && (isdefined(self.var_621ab6ef) && self.var_621ab6ef) && !self flag::get("flag_player_collected_reward_5"))
 	{
 		var_36d214f8 = struct::get_array("challenge_fire_struct", "targetname");
-		foreach(var_61a13deb, var_47398c71 in var_36d214f8)
+		foreach(var_47398c71 in var_36d214f8)
 		{
 			if(var_47398c71.script_int == self getentitynumber())
 			{
 				if(self function_3f67a723(var_47398c71.origin, 15, 0) && distance(self.origin, var_47398c71.origin) < 500)
 				{
-					return 1;
+					return true;
 				}
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2161,7 +2164,7 @@ function function_c46e4bfe()
 function function_b9b4ce34()
 {
 	/#
-		zm_devgui::add_custom_devgui_callback(&function_16ba3a1e);
+		zm_devgui::add_custom_devgui_callback(&challenges_devgui_callback);
 		adddebugcommand("");
 		adddebugcommand("");
 		adddebugcommand("");
@@ -2177,7 +2180,7 @@ function function_b9b4ce34()
 }
 
 /*
-	Name: function_16ba3a1e
+	Name: challenges_devgui_callback
 	Namespace: zm_stalingrad_challenges
 	Checksum: 0x39C89873
 	Offset: 0x6A38
@@ -2185,79 +2188,79 @@ function function_b9b4ce34()
 	Parameters: 1
 	Flags: Linked
 */
-function function_16ba3a1e(cmd)
+function challenges_devgui_callback(cmd)
 {
 	/#
 		switch(cmd)
 		{
 			case "":
 			{
-				foreach(var_4805f84f, e_player in level.players)
+				foreach(e_player in level.players)
 				{
 					e_player flag::set("");
 					e_player notify(#"hash_fb393ffe");
 					e_player.var_873a3e27[1] = 1;
 					e_player function_33e91747(1, 1);
 				}
-				return 1;
+				return true;
 			}
 			case "":
 			{
-				foreach(var_96898b32, e_player in level.players)
+				foreach(e_player in level.players)
 				{
 					e_player flag::set("");
 					e_player notify(#"hash_d536c595");
 					e_player.var_873a3e27[2] = 1;
 					e_player function_33e91747(2, 1);
 				}
-				return 1;
+				return true;
 			}
 			case "":
 			{
-				foreach(var_4534c4a5, e_player in level.players)
+				foreach(e_player in level.players)
 				{
 					e_player flag::set("");
 					e_player notify(#"hash_af344b2c");
 					e_player.var_873a3e27[3] = 1;
 					e_player function_33e91747(3, 1);
 				}
-				return 1;
+				return true;
 			}
 			case "":
 			{
-				foreach(var_93b85788, e_player in level.players)
+				foreach(e_player in level.players)
 				{
 					e_player flag::set("");
 				}
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				level function_dcfe1b91();
-				foreach(var_5f91e705, e_player in level.players)
+				foreach(e_player in level.players)
 				{
 					e_player function_224232f4();
 				}
-				return 1;
+				return true;
 			}
 			case "":
 			{
-				foreach(var_55808e26, e_player in level.players)
+				foreach(e_player in level.players)
 				{
 					e_player function_224232f4();
 				}
-				return 1;
+				return true;
 			}
 			case "":
 			{
-				foreach(var_b5e3e9b4, e_player in level.players)
+				foreach(e_player in level.players)
 				{
 					e_player function_f506b074();
 				}
-				return 1;
+				return true;
 			}
 		}
-		return 0;
+		return false;
 	#/
 }
 
@@ -2280,9 +2283,9 @@ function function_224232f4()
 		self flag::clear("");
 		self flag::clear("");
 		self flag::clear("");
-		self thread function_2ce855f3(self._challenges.var_4687355c);
-		self thread function_2ce855f3(self._challenges.var_b88ea497);
-		self thread function_2ce855f3(self._challenges.var_928c2a2e);
+		self thread function_2ce855f3(self._challenges.challenge_1);
+		self thread function_2ce855f3(self._challenges.challenge_2);
+		self thread function_2ce855f3(self._challenges.challenge_3);
 		for(i = 1; i <= 3; i++)
 		{
 			self thread function_a2d25f82(i);
@@ -2302,44 +2305,44 @@ function function_224232f4()
 function function_dcfe1b91()
 {
 	/#
-		foreach(var_a37d49b1, e_player in level.players)
+		foreach(e_player in level.players)
 		{
-			if(!isdefined(level._challenges.var_4687355c))
+			if(!isdefined(level._challenges.challenge_1))
 			{
-				level._challenges.var_4687355c = [];
+				level._challenges.challenge_1 = [];
 			}
-			else if(!isarray(level._challenges.var_4687355c))
+			else if(!isarray(level._challenges.challenge_1))
 			{
-				level._challenges.var_4687355c = array(level._challenges.var_4687355c);
+				level._challenges.challenge_1 = array(level._challenges.challenge_1);
 			}
-			level._challenges.var_4687355c[level._challenges.var_4687355c.size] = e_player._challenges.var_4687355c;
-			if(!isdefined(level._challenges.var_b88ea497))
+			level._challenges.challenge_1[level._challenges.challenge_1.size] = e_player._challenges.challenge_1;
+			if(!isdefined(level._challenges.challenge_2))
 			{
-				level._challenges.var_b88ea497 = [];
+				level._challenges.challenge_2 = [];
 			}
-			else if(!isarray(level._challenges.var_b88ea497))
+			else if(!isarray(level._challenges.challenge_2))
 			{
-				level._challenges.var_b88ea497 = array(level._challenges.var_b88ea497);
+				level._challenges.challenge_2 = array(level._challenges.challenge_2);
 			}
-			level._challenges.var_b88ea497[level._challenges.var_b88ea497.size] = e_player._challenges.var_b88ea497;
-			if(!isdefined(level._challenges.var_928c2a2e))
+			level._challenges.challenge_2[level._challenges.challenge_2.size] = e_player._challenges.challenge_2;
+			if(!isdefined(level._challenges.challenge_3))
 			{
-				level._challenges.var_928c2a2e = [];
+				level._challenges.challenge_3 = [];
 			}
-			else if(!isarray(level._challenges.var_928c2a2e))
+			else if(!isarray(level._challenges.challenge_3))
 			{
-				level._challenges.var_928c2a2e = array(level._challenges.var_928c2a2e);
+				level._challenges.challenge_3 = array(level._challenges.challenge_3);
 			}
-			level._challenges.var_928c2a2e[level._challenges.var_928c2a2e.size] = e_player._challenges.var_928c2a2e;
+			level._challenges.challenge_3[level._challenges.challenge_3.size] = e_player._challenges.challenge_3;
 		}
-		foreach(var_73697669, e_player in level.players)
+		foreach(e_player in level.players)
 		{
-			e_player._challenges.var_4687355c = array::random(level._challenges.var_4687355c);
-			e_player._challenges.var_b88ea497 = array::random(level._challenges.var_b88ea497);
-			e_player._challenges.var_928c2a2e = array::random(level._challenges.var_928c2a2e);
-			arrayremovevalue(level._challenges.var_4687355c, e_player._challenges.var_4687355c);
-			arrayremovevalue(level._challenges.var_b88ea497, e_player._challenges.var_b88ea497);
-			arrayremovevalue(level._challenges.var_928c2a2e, e_player._challenges.var_928c2a2e);
+			e_player._challenges.challenge_1 = array::random(level._challenges.challenge_1);
+			e_player._challenges.challenge_2 = array::random(level._challenges.challenge_2);
+			e_player._challenges.challenge_3 = array::random(level._challenges.challenge_3);
+			arrayremovevalue(level._challenges.challenge_1, e_player._challenges.challenge_1);
+			arrayremovevalue(level._challenges.challenge_2, e_player._challenges.challenge_2);
+			arrayremovevalue(level._challenges.challenge_3, e_player._challenges.challenge_3);
 		}
 	#/
 }

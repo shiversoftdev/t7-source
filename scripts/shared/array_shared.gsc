@@ -183,7 +183,7 @@ function remove_index(array, index, b_keep_keys)
 */
 function delete_all(&array, is_struct)
 {
-	foreach(var_4c737ae4, ent in array)
+	foreach(ent in array)
 	{
 		if(isdefined(ent))
 		{
@@ -214,7 +214,7 @@ function delete_all(&array, is_struct)
 */
 function notify_all(&array, str_notify)
 {
-	foreach(var_32d69962, elem in array)
+	foreach(elem in array)
 	{
 		elem notify(str_notify);
 	}
@@ -241,51 +241,66 @@ function thread_all(&entities, func, arg1, arg2, arg3, arg4, arg5, arg6)
 	{
 		if(isdefined(arg6))
 		{
-			foreach(var_b545f8e9, ent in entities)
+			foreach(ent in entities)
 			{
 				ent thread [[func]](arg1, arg2, arg3, arg4, arg5, arg6);
 			}
 		}
-		else if(isdefined(arg5))
-		{
-			foreach(var_b5c469a, ent in entities)
-			{
-				ent thread [[func]](arg1, arg2, arg3, arg4, arg5);
-			}
-		}
-		else if(isdefined(arg4))
-		{
-			foreach(var_9d10a9f0, ent in entities)
-			{
-				ent thread [[func]](arg1, arg2, arg3, arg4);
-			}
-		}
-		else if(isdefined(arg3))
-		{
-			foreach(var_25b968fa, ent in entities)
-			{
-				ent thread [[func]](arg1, arg2, arg3);
-			}
-		}
-		else if(isdefined(arg2))
-		{
-			foreach(var_7e4e54bc, ent in entities)
-			{
-				ent thread [[func]](arg1, arg2);
-			}
-		}
-		else if(isdefined(arg1))
-		{
-			foreach(var_584bda53, ent in entities)
-			{
-				ent thread [[func]](arg1);
-			}
-		}
 		else
 		{
-			foreach(var_64dbd143, ent in entities)
+			if(isdefined(arg5))
 			{
-				ent thread [[func]]();
+				foreach(ent in entities)
+				{
+					ent thread [[func]](arg1, arg2, arg3, arg4, arg5);
+				}
+			}
+			else
+			{
+				if(isdefined(arg4))
+				{
+					foreach(ent in entities)
+					{
+						ent thread [[func]](arg1, arg2, arg3, arg4);
+					}
+				}
+				else
+				{
+					if(isdefined(arg3))
+					{
+						foreach(ent in entities)
+						{
+							ent thread [[func]](arg1, arg2, arg3);
+						}
+					}
+					else
+					{
+						if(isdefined(arg2))
+						{
+							foreach(ent in entities)
+							{
+								ent thread [[func]](arg1, arg2);
+							}
+						}
+						else
+						{
+							if(isdefined(arg1))
+							{
+								foreach(ent in entities)
+								{
+									ent thread [[func]](arg1);
+								}
+							}
+							else
+							{
+								foreach(ent in entities)
+								{
+									ent thread [[func]]();
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	}
@@ -350,51 +365,66 @@ function run_all(&entities, func, arg1, arg2, arg3, arg4, arg5, arg6)
 	{
 		if(isdefined(arg6))
 		{
-			foreach(var_28ee6433, ent in entities)
+			foreach(ent in entities)
 			{
 				ent [[func]](arg1, arg2, arg3, arg4, arg5, arg6);
 			}
 		}
-		else if(isdefined(arg5))
-		{
-			foreach(var_37125a4d, ent in entities)
-			{
-				ent [[func]](arg1, arg2, arg3, arg4, arg5);
-			}
-		}
-		else if(isdefined(arg4))
-		{
-			foreach(var_7d59d21f, ent in entities)
-			{
-				ent [[func]](arg1, arg2, arg3, arg4);
-			}
-		}
-		else if(isdefined(arg3))
-		{
-			foreach(var_3b66362c, ent in entities)
-			{
-				ent [[func]](arg1, arg2, arg3);
-			}
-		}
-		else if(isdefined(arg2))
-		{
-			foreach(var_fec26bf4, ent in entities)
-			{
-				ent [[func]](arg1, arg2);
-			}
-		}
-		else if(isdefined(arg1))
-		{
-			foreach(var_826deedc, ent in entities)
-			{
-				ent [[func]](arg1);
-			}
-		}
 		else
 		{
-			foreach(var_74a0c36c, ent in entities)
+			if(isdefined(arg5))
 			{
-				ent [[func]]();
+				foreach(ent in entities)
+				{
+					ent [[func]](arg1, arg2, arg3, arg4, arg5);
+				}
+			}
+			else
+			{
+				if(isdefined(arg4))
+				{
+					foreach(ent in entities)
+					{
+						ent [[func]](arg1, arg2, arg3, arg4);
+					}
+				}
+				else
+				{
+					if(isdefined(arg3))
+					{
+						foreach(ent in entities)
+						{
+							ent [[func]](arg1, arg2, arg3);
+						}
+					}
+					else
+					{
+						if(isdefined(arg2))
+						{
+							foreach(ent in entities)
+							{
+								ent [[func]](arg1, arg2);
+							}
+						}
+						else
+						{
+							if(isdefined(arg1))
+							{
+								foreach(ent in entities)
+								{
+									ent [[func]](arg1);
+								}
+							}
+							else
+							{
+								foreach(ent in entities)
+								{
+									ent [[func]]();
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	}
@@ -418,7 +448,7 @@ function exclude(array, array_exclude)
 	newarray = array;
 	if(isarray(array_exclude))
 	{
-		foreach(var_7e447106, exclude_item in array_exclude)
+		foreach(exclude_item in array_exclude)
 		{
 			arrayremovevalue(newarray, exclude_item);
 		}
@@ -496,7 +526,7 @@ function wait_till(&array, notifies, n_timeout)
 	}
 	s_tracker = spawnstruct();
 	s_tracker._wait_count = 0;
-	foreach(var_a7313786, ent in array)
+	foreach(ent in array)
 	{
 		if(isdefined(ent))
 		{
@@ -528,7 +558,7 @@ function wait_till_match(&array, str_notify, str_match, n_timeout)
 	}
 	s_tracker = spawnstruct();
 	s_tracker._array_wait_count = 0;
-	foreach(var_9b050825, ent in array)
+	foreach(ent in array)
 	{
 		if(isdefined(ent))
 		{
@@ -555,7 +585,7 @@ function wait_till_match(&array, str_notify, str_match, n_timeout)
 function _waitlogic_match(s_tracker, str_notify, str_match)
 {
 	self endon(#"death");
-	self waittill_match(str_notify);
+	self waittillmatch(str_notify);
 	update_waitlogic_tracker(s_tracker);
 }
 
@@ -668,7 +698,7 @@ function flagsys_wait_any_flag(&array, ...)
 			if(isdefined(ent))
 			{
 				b_flag_set = 0;
-				foreach(var_9c9809d6, str_flag in vararg)
+				foreach(str_flag in vararg)
 				{
 					if(ent flagsys::get(str_flag))
 					{
@@ -698,7 +728,7 @@ function flagsys_wait_any_flag(&array, ...)
 */
 function flagsys_wait_any(&array, str_flag)
 {
-	foreach(var_27bf66f1, ent in array)
+	foreach(ent in array)
 	{
 		if(ent flagsys::get(str_flag))
 		{
@@ -786,7 +816,7 @@ function wait_any(array, msg, n_timeout)
 		__s util::delay_notify(n_timeout, "timeout");
 	}
 	s_tracker = spawnstruct();
-	foreach(var_dd5b6e2e, ent in array)
+	foreach(ent in array)
 	{
 		if(isdefined(ent))
 		{
@@ -829,7 +859,7 @@ function _waitlogic2(s_tracker, ent, msg)
 function flag_wait_any(array, str_flag)
 {
 	self endon(#"death");
-	foreach(var_ac5cfbff, ent in array)
+	foreach(ent in array)
 	{
 		if(ent flag::get(str_flag))
 		{
@@ -928,7 +958,7 @@ function reverse(array)
 function remove_keys(array)
 {
 	a_new = [];
-	foreach(_, val in array)
+	foreach(val in array)
 	{
 		if(isdefined(val))
 		{
@@ -1011,7 +1041,7 @@ function push(&array, val, index)
 	if(!isdefined(index))
 	{
 		index = 0;
-		foreach(var_aad6782, key in getarraykeys(array))
+		foreach(key in getarraykeys(array))
 		{
 			if(isint(key) && key >= index)
 			{
@@ -1365,7 +1395,7 @@ function spread_all(&entities, func, arg1, arg2, arg3, arg4, arg5)
 	#/
 	if(isarray(entities))
 	{
-		foreach(var_a6523276, ent in entities)
+		foreach(ent in entities)
 		{
 			if(isdefined(ent))
 			{
@@ -1409,14 +1439,14 @@ function wait_till_touching(&a_ents, e_volume)
 */
 function is_touching(&a_ents, e_volume)
 {
-	foreach(var_6982f916, e_ent in a_ents)
+	foreach(e_ent in a_ents)
 	{
 		if(!e_ent istouching(e_volume))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1432,7 +1462,7 @@ function contains(array_or_val, value)
 {
 	if(isarray(array_or_val))
 	{
-		foreach(var_d8b934a7, element in array_or_val)
+		foreach(element in array_or_val)
 		{
 			if(element === value)
 			{

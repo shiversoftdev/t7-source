@@ -31,7 +31,7 @@
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_a55a134f()
+function private function_a55a134f()
 {
 	arenas = struct::get_array("arena_center");
 	for(i = 0; i < arenas.size; i++)
@@ -86,7 +86,7 @@ function init()
 	function_abd3b624("hangar", 21, 5, &"DOA_HANGAR", undefined, "hangar");
 	function_abd3b624("mine", 28, 4, &"DOA_MINE", undefined, "cave");
 	function_abd3b624("righteous", 36, 10, &"DOA_RIGHTEOUS_ROOM", 36, "temple", undefined, 2);
-	foreach(var_1c6d03e, arena in level.doa.var_3c04d3df)
+	foreach(arena in level.doa.var_3c04d3df)
 	{
 		function_abd3b624(arena.script_noteworthy, 999, 13, istring(("DOA_" + toupper(arena.script_noteworthy)) + "_ROOM"), 999, arena.script_noteworthy, 120);
 	}
@@ -104,7 +104,7 @@ function init()
 	Parameters: 8
 	Flags: Linked, Private
 */
-private function function_abd3b624(name, var_5281efe5, type, text, var_cbad0e8f, var_c9a1f25a, var_c92c30d9, var_6f369ab4)
+function private function_abd3b624(name, var_5281efe5, type, text, var_cbad0e8f, var_c9a1f25a, var_c92c30d9, var_6f369ab4)
 {
 	room = spawnstruct();
 	room.name = name;
@@ -133,7 +133,12 @@ private function function_abd3b624(name, var_5281efe5, type, text, var_cbad0e8f,
 		{
 			doa_utility::debugmsg("MISSING _player_spawnpoint: for arena: " + name);
 		}
-		assert(room.player_spawn_points.size);
+		else
+		{
+			/#
+				assert(room.player_spawn_points.size);
+			#/
+		}
 	}
 }
 
@@ -148,7 +153,7 @@ private function function_abd3b624(name, var_5281efe5, type, text, var_cbad0e8f,
 */
 function function_8b90b6a7()
 {
-	foreach(var_6e8612, room in level.doa.var_ec2bff7b)
+	foreach(room in level.doa.var_ec2bff7b)
 	{
 		if(room.type == 10)
 		{
@@ -186,7 +191,7 @@ function function_8b90b6a7()
 function function_63bc3226(type, var_436ba068)
 {
 	temp = doa_utility::function_4e9a23a9(level.doa.var_ec2bff7b);
-	foreach(var_bce6eaf5, room in level.doa.var_ec2bff7b)
+	foreach(room in level.doa.var_ec2bff7b)
 	{
 		if(isdefined(var_436ba068))
 		{
@@ -213,7 +218,7 @@ function function_63bc3226(type, var_436ba068)
 */
 function function_46b3be09()
 {
-	foreach(var_724b9744, room in level.doa.var_ec2bff7b)
+	foreach(room in level.doa.var_ec2bff7b)
 	{
 		if(room.type == 13)
 		{
@@ -246,7 +251,7 @@ function function_46b3be09()
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_6b351e04(type = 0, var_436ba068)
+function private function_6b351e04(type = 0, var_436ba068)
 {
 	temp = doa_utility::function_4e9a23a9(level.doa.var_ec2bff7b);
 	if(type != 0)
@@ -255,7 +260,7 @@ private function function_6b351e04(type = 0, var_436ba068)
 	}
 	if(!isdefined(var_c50a98cb))
 	{
-		foreach(var_b1335bae, room in temp)
+		foreach(room in temp)
 		{
 			if(room.type == 13)
 			{
@@ -290,7 +295,7 @@ private function function_6b351e04(type = 0, var_436ba068)
 	}
 	if(!isdefined(var_c50a98cb))
 	{
-		foreach(var_a6cf6d36, room in temp)
+		foreach(room in temp)
 		{
 			if(room.type == 13)
 			{
@@ -382,7 +387,7 @@ function function_e88371e5()
 {
 	loots = function_d2d75f5d() + "_loot";
 	points = struct::get_array(loots);
-	foreach(var_2b6d0244, loot in points)
+	foreach(loot in points)
 	{
 		if(isdefined(loot.script_noteworthy))
 		{
@@ -405,7 +410,7 @@ function function_e88371e5()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_1c54aa82(room)
+function private function_1c54aa82(room)
 {
 	level.doa.var_677d1262 = 0;
 	players = namespace_831a4a7c::function_5eb6e4d1();
@@ -498,7 +503,7 @@ private function function_1c54aa82(room)
 		case 6:
 		{
 			flag::set("doa_bonusroom_active");
-			foreach(var_e4279757, player in getplayers())
+			foreach(player in getplayers())
 			{
 				player notify(#"hash_d28ba89d");
 			}
@@ -576,7 +581,7 @@ private function function_1c54aa82(room)
 	}
 	flag::clear("doa_bonusroom_active");
 	function_5af67667(level.doa.lastarena, 1);
-	return 1;
+	return true;
 }
 
 /*
@@ -657,7 +662,7 @@ function function_b0e9983(name)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_9b67513c(name)
+function private function_9b67513c(name)
 {
 	switch(name)
 	{
@@ -741,7 +746,7 @@ private function function_9b67513c(name)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function function_b7dafa0c(name, center, valid)
+function private function_b7dafa0c(name, center, valid)
 {
 	struct = spawnstruct();
 	struct.name = name;
@@ -774,27 +779,52 @@ private function function_b7dafa0c(name, center, valid)
 			{
 				doa_utility::debugmsg("" + name);
 			}
-			assert(struct.var_f616a3b7[""].size);
+			else
+			{
+				/#
+					assert(struct.var_f616a3b7[""].size);
+				#/
+			}
 			if(!struct.var_f616a3b7[""].size && getdvarint("", 0))
 			{
 				doa_utility::debugmsg("" + name);
 			}
-			assert(struct.var_f616a3b7[""].size);
+			else
+			{
+				/#
+					assert(struct.var_f616a3b7[""].size);
+				#/
+			}
 			if(!struct.var_f616a3b7[""].size && getdvarint("", 0))
 			{
 				doa_utility::debugmsg("" + name);
 			}
-			assert(struct.var_f616a3b7[""].size);
+			else
+			{
+				/#
+					assert(struct.var_f616a3b7[""].size);
+				#/
+			}
 			if(!struct.var_f616a3b7[""].size && getdvarint("", 0))
 			{
 				doa_utility::debugmsg("" + name);
 			}
-			assert(struct.var_f616a3b7[""].size);
+			else
+			{
+				/#
+					assert(struct.var_f616a3b7[""].size);
+				#/
+			}
 			if(!struct.player_spawn_points.size && getdvarint("", 0))
 			{
 				doa_utility::debugmsg("" + name);
 			}
-			assert(struct.player_spawn_points.size);
+			else
+			{
+				/#
+					assert(struct.player_spawn_points.size);
+				#/
+			}
 		}
 	#/
 	var_5fabae4f = struct::get(name + "_camera_fixed_point");
@@ -875,7 +905,7 @@ function function_61d60e0b()
 	}
 	var_520dc677 = function_d2d75f5d();
 	arenas = struct::get_array("arena_center");
-	foreach(var_5a277a41, arena in arenas)
+	foreach(arena in arenas)
 	{
 		if(arena.script_noteworthy == var_520dc677)
 		{
@@ -1029,7 +1059,7 @@ function function_78c7b56e(cheat = 0)
 		level.doa.arena_round_number = math::clamp(level.doa.arena_round_number + 1, 0, level.doa.rules.var_88c0b67b - 1);
 		level doa_utility::set_lighting_state(level.doa.arena_round_number);
 		level clientfield::set("arenaRound", level.doa.arena_round_number);
-		return 0;
+		return false;
 	}
 	function_4586479a();
 	if(level.doa.flipped)
@@ -1058,7 +1088,7 @@ function function_78c7b56e(cheat = 0)
 		util::wait_network_frame();
 	}
 	function_a6c926fc(5);
-	return 1;
+	return true;
 }
 
 /*
@@ -1159,7 +1189,7 @@ function function_a50a72db()
 	wait(1);
 	while(!level flag::get("doa_game_is_over"))
 	{
-		foreach(var_d2788ed5, player in getplayers())
+		foreach(player in getplayers())
 		{
 			if(!isdefined(player.doa))
 			{
@@ -1221,7 +1251,7 @@ function function_573ad24e()
 	var_febfbf3a = self.origin;
 	self setmovingplatformenabled(1);
 	var_dce3037c = getentarray(function_d2d75f5d() + "_moving_platform_linktrigger", "targetname");
-	foreach(var_6f8ec018, trigger in var_dce3037c)
+	foreach(trigger in var_dce3037c)
 	{
 		self thread function_852998f1(trigger);
 	}
@@ -1267,7 +1297,7 @@ function function_852998f1(trigger)
 	trigger linkto(self);
 	self.var_10d9457b = [];
 	nodes = getnodearray(function_d2d75f5d() + "_platform_traversal_node", "targetname");
-	foreach(var_ee262643, node in nodes)
+	foreach(node in nodes)
 	{
 		org = spawn("script_model", node.origin);
 		org.targetname = "movingPlatformOnOffTriggerWatch";
@@ -1278,7 +1308,7 @@ function function_852998f1(trigger)
 	}
 	while(isdefined(self.var_10d9457b))
 	{
-		foreach(var_daee136c, ent in self.var_10d9457b)
+		foreach(ent in self.var_10d9457b)
 		{
 			if(ent istouching(trigger))
 			{
@@ -1313,13 +1343,13 @@ function function_7d65367c()
 	level waittill(#"hash_ec7ca67b");
 	self setmovingplatformenabled(0);
 	nodes = getnodearray(function_d2d75f5d() + "_platform_traversal_node", "targetname");
-	foreach(var_5ac2ae17, node in nodes)
+	foreach(node in nodes)
 	{
 		unlinktraversal(node);
 	}
 	if(isdefined(self.var_10d9457b))
 	{
-		foreach(var_d36fd8b2, ent in self.var_10d9457b)
+		foreach(ent in self.var_10d9457b)
 		{
 			ent delete();
 		}
@@ -1336,7 +1366,7 @@ function function_7d65367c()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_47f8f274()
+function private function_47f8f274()
 {
 	wait(0.1);
 	level util::waittill_any("exit_taken", "doa_game_is_over");
@@ -1353,7 +1383,7 @@ private function function_47f8f274()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_17665174(trigger)
+function private function_17665174(trigger)
 {
 	level endon(#"exit_taken");
 	level endon(#"doa_game_is_over");
@@ -1487,7 +1517,7 @@ function function_a8b0c139(trigger, objective_id)
 	trigger triggerenable(1);
 	trigger.open = 1;
 	blockers = getentarray(trigger.target, "targetname");
-	foreach(var_32e1221a, blocker in blockers)
+	foreach(blocker in blockers)
 	{
 		blocker.origin = blocker.origin - vectorscale((0, 0, 1), 5000);
 	}
@@ -1502,14 +1532,14 @@ function function_a8b0c139(trigger, objective_id)
 	}
 	trigger.open = 0;
 	trigger triggerenable(0);
-	foreach(var_66b0c7f3, blocker in blockers)
+	foreach(blocker in blockers)
 	{
 		blocker.origin = blocker.origin + vectorscale((0, 0, 1), 5000);
 	}
 	objective_delete(objective_id);
 	wait(0.1);
 	level notify(#"exit_taken", trigger);
-	foreach(var_804fb80d, player in getplayers())
+	foreach(player in getplayers())
 	{
 		player notify(#"exit_taken");
 	}
@@ -1615,7 +1645,7 @@ function function_4586479a(var_57e102cb = 1)
 	level.doa.teleporter.trigger waittill(#"trigger", player);
 	level notify(#"hash_6df89d17");
 	level notify(#"hash_3b432f18");
-	foreach(var_d4e24c6a, player in getplayers())
+	foreach(player in getplayers())
 	{
 		player notify(#"hash_d28ba89d");
 	}

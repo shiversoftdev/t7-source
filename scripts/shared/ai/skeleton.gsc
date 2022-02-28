@@ -31,7 +31,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("skeleton", &__init__, undefined, undefined);
 }
@@ -91,7 +91,7 @@ function skeletonspawnsetup()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function initskeletonbehaviorsandasm()
+function private initskeletonbehaviorsandasm()
 {
 	behaviortreenetworkutility::registerbehaviortreescriptapi("skeletonTargetService", &skeletontargetservice);
 	behaviortreenetworkutility::registerbehaviortreescriptapi("skeletonShouldMelee", &skeletonshouldmeleecondition);
@@ -110,7 +110,7 @@ private function initskeletonbehaviorsandasm()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function archetypeskeletonblackboardinit()
+function private archetypeskeletonblackboardinit()
 {
 	blackboard::createblackboardforentity(self);
 	self aiutility::registerutilityblackboardattributes();
@@ -164,7 +164,7 @@ private function archetypeskeletonblackboardinit()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function archetypeskeletononanimscriptedcallback(entity)
+function private archetypeskeletononanimscriptedcallback(entity)
 {
 	entity.__blackboard = undefined;
 	entity archetypeskeletonblackboardinit();
@@ -333,7 +333,7 @@ function skeletoncanseeplayer(player)
 	}
 	if(self.players_viscache[entnum] > gettime())
 	{
-		return 1;
+		return true;
 	}
 	zombie_eye = self.origin + vectorscale((0, 0, 1), 40);
 	player_pos = player.origin + vectorscale((0, 0, 1), 40);
@@ -341,23 +341,23 @@ function skeletoncanseeplayer(player)
 	if(distancesq < 4096)
 	{
 		self.players_viscache[entnum] = gettime() + 3000;
-		return 1;
+		return true;
 	}
 	if(distancesq > 1048576)
 	{
-		return 0;
+		return false;
 	}
 	if(is_within_fov(zombie_eye, self.angles, player_pos, cos(60)))
 	{
 		trace = groundtrace(zombie_eye, player_pos, 0, undefined);
 		if(trace["fraction"] < 1)
 		{
-			return 0;
+			return false;
 		}
 		self.players_viscache[entnum] = gettime() + 3000;
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -470,11 +470,14 @@ function get_closest_valid_player(origin, ignore_player)
 		if(isdefined(self.closest_player_override))
 		{
 		}
-		else if(isdefined(level.closest_player_override))
-		{
-		}
 		else
 		{
+			if(isdefined(level.closest_player_override))
+			{
+			}
+			else
+			{
+			}
 		}
 		if(!isdefined(player) || players.size == 0)
 		{
@@ -521,7 +524,7 @@ function skeletontargetservice(behaviortreeentity)
 	self endon(#"death");
 	if(isdefined(behaviortreeentity.ignoreall) && behaviortreeentity.ignoreall)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(behaviortreeentity.enemy) && behaviortreeentity.enemy.team == behaviortreeentity.team)
 	{
@@ -532,21 +535,21 @@ function skeletontargetservice(behaviortreeentity)
 		if(isdefined(behaviortreeentity.favoriteenemy))
 		{
 			behaviortreeentity skeletonsetgoal(behaviortreeentity.favoriteenemy.origin);
-			return 1;
+			return true;
 		}
 		if(isdefined(behaviortreeentity.enemy))
 		{
 			behaviortreeentity skeletonsetgoal(behaviortreeentity.enemy.origin);
-			return 1;
+			return true;
 		}
 		target = getclosesttome(getaiteamarray("axis"));
 		if(isdefined(target))
 		{
 			behaviortreeentity skeletonsetgoal(target.origin);
-			return 1;
+			return true;
 		}
 		behaviortreeentity skeletonsetgoal(behaviortreeentity.origin);
-		return 0;
+		return false;
 	}
 	player = get_closest_valid_player(behaviortreeentity.origin, behaviortreeentity.ignore_player);
 	if(!isdefined(player))
@@ -560,7 +563,7 @@ function skeletontargetservice(behaviortreeentity)
 			behaviortreeentity.ignore_player = [];
 		}
 		behaviortreeentity skeletonsetgoal(behaviortreeentity.origin);
-		return 0;
+		return false;
 	}
 	if(isdefined(player.last_valid_position))
 	{
@@ -568,7 +571,7 @@ function skeletontargetservice(behaviortreeentity)
 		if(cansee)
 		{
 			behaviortreeentity skeletonsetgoal(player.last_valid_position);
-			return 1;
+			return true;
 		}
 		influencepos = undefined;
 		if(isdefined(influencepos))
@@ -576,16 +579,16 @@ function skeletontargetservice(behaviortreeentity)
 			if(distancesquared(influencepos, behaviortreeentity.origin) > 1024)
 			{
 				behaviortreeentity skeletonsetgoal(influencepos);
-				return 1;
+				return true;
 			}
 			behaviortreeentity clearpath();
-			return 0;
+			return false;
 		}
 		behaviortreeentity clearpath();
-		return 0;
+		return false;
 	}
 	behaviortreeentity skeletonsetgoal(behaviortreeentity.origin);
-	return 0;
+	return false;
 }
 
 /*
@@ -601,9 +604,9 @@ function isvalidenemy(enemy)
 {
 	if(!isdefined(enemy))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -661,26 +664,26 @@ function skeletonshouldmeleecondition(behaviortreeentity)
 {
 	if(!isdefined(behaviortreeentity.enemy))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(behaviortreeentity.marked_for_death))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(behaviortreeentity.stunned) && behaviortreeentity.stunned)
 	{
-		return 0;
+		return false;
 	}
 	yaw = abs(getyawtoenemy());
 	if(yaw > 45)
 	{
-		return 0;
+		return false;
 	}
 	if(distancesquared(behaviortreeentity.origin, behaviortreeentity.enemy.origin) < 4096)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

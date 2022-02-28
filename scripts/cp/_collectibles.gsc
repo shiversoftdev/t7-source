@@ -20,7 +20,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("collectibles", &__init__, &__main__, undefined);
 }
@@ -53,16 +53,16 @@ function __init__()
 function __main__()
 {
 	level.collectibles = [];
-	var_a87c5e50 = getentarray("collectible", "script_noteworthy");
-	if(var_a87c5e50.size == 0)
+	mdl_collectibles = getentarray("collectible", "script_noteworthy");
+	if(mdl_collectibles.size == 0)
 	{
 		return;
 	}
 	if(!function_148c7e54())
 	{
-		foreach(var_3c27f970, var_e81a1399 in var_a87c5e50)
+		foreach(mdl_collectible in mdl_collectibles)
 		{
-			collectible = function_8765a33c(var_e81a1399);
+			collectible = function_8765a33c(mdl_collectible);
 			array::add(level.collectibles, collectible, 0);
 		}
 		callback::on_spawned(&on_player_spawned);
@@ -70,9 +70,9 @@ function __main__()
 	}
 	else
 	{
-		foreach(var_2cc6ced6, var_e81a1399 in var_a87c5e50)
+		foreach(mdl_collectible in mdl_collectibles)
 		{
-			var_e81a1399 hide();
+			mdl_collectible hide();
 		}
 	}
 }
@@ -92,9 +92,9 @@ function function_37aecd21()
 	{
 		return;
 	}
-	foreach(var_fe0b45ba, collectible in level.collectibles)
+	foreach(collectible in level.collectibles)
 	{
-		var_3efe1e22 = level.var_3efe1e22[collectible.var_e81a1399.model];
+		var_3efe1e22 = level.var_3efe1e22[collectible.mdl_collectible.model];
 		if(isdefined(var_3efe1e22))
 		{
 			collectible.trigger.origin = collectible.trigger.origin + var_3efe1e22.offset;
@@ -130,7 +130,7 @@ function function_93523442(var_977e0f67, radius = 60, offset = (0, 0, 0))
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_148c7e54()
+function private function_148c7e54()
 {
 	return isdefined(level.var_bca96223) && level.var_bca96223 || sessionmodeiscampaignzombiesgame();
 }
@@ -150,17 +150,17 @@ function on_player_spawned()
 	{
 		self.var_b3dc8451 = [];
 	}
-	foreach(var_b5c1db6c, collectible in level.collectibles)
+	foreach(collectible in level.collectibles)
 	{
 		if(self getdstat("PlayerStatsByMap", level.map_name, "collectibles", collectible.index))
 		{
-			self.var_b3dc8451[collectible.var_e81a1399.model] = 1;
-			collectible.var_e81a1399 setinvisibletoplayer(self);
+			self.var_b3dc8451[collectible.mdl_collectible.model] = 1;
+			collectible.mdl_collectible setinvisibletoplayer(self);
 			objective_setinvisibletoplayer(collectible.objectiveid, self);
 			collectible.trigger setinvisibletoplayer(self);
 			continue;
 		}
-		self.var_b3dc8451[collectible.var_e81a1399.model] = 0;
+		self.var_b3dc8451[collectible.mdl_collectible.model] = 0;
 	}
 	self function_3955ccef();
 }
@@ -225,14 +225,14 @@ function function_332e2cfd()
 		{
 			self.var_b3dc8451 = [];
 		}
-		foreach(var_96e4708c, collectible in level.collectibles)
+		foreach(collectible in level.collectibles)
 		{
 			var_6b074374 = self function_70b41d41(collectible.index);
 			has_collectible = self getdstat("PlayerStatsByMap", level.map_name, "collectibles", collectible.index);
 			if(isdefined(var_6b074374) && var_6b074374 && (!(isdefined(has_collectible) && has_collectible)))
 			{
-				self.var_b3dc8451[collectible.var_e81a1399.model] = 1;
-				collectible.var_e81a1399 setinvisibletoplayer(self);
+				self.var_b3dc8451[collectible.mdl_collectible.model] = 1;
+				collectible.mdl_collectible setinvisibletoplayer(self);
 				objective_setinvisibletoplayer(collectible.objectiveid, self);
 				collectible.trigger setinvisibletoplayer(self);
 				self setdstat("PlayerStatsByMap", level.map_name, "collectibles", collectible.index, 1);
@@ -244,7 +244,7 @@ function function_332e2cfd()
 			}
 			if(!(isdefined(self getdstat("PlayerStatsByMap", level.map_name, "collectibles", collectible.index)) && self getdstat("PlayerStatsByMap", level.map_name, "collectibles", collectible.index)))
 			{
-				self.var_b3dc8451[collectible.var_e81a1399.model] = 0;
+				self.var_b3dc8451[collectible.mdl_collectible.model] = 0;
 			}
 		}
 		self function_a8d8b9c7();
@@ -260,17 +260,17 @@ function function_332e2cfd()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_b963f25(var_e81a1399)
+function private function_b963f25(mdl_collectible)
 {
-	var_e81a1399.radius = 60;
-	var_e81a1399.offset = vectorscale((0, 0, 1), 5);
-	var_3efe1e22 = level.var_3efe1e22[var_e81a1399.model];
+	mdl_collectible.radius = 60;
+	mdl_collectible.offset = vectorscale((0, 0, 1), 5);
+	var_3efe1e22 = level.var_3efe1e22[mdl_collectible.model];
 	if(isdefined(var_3efe1e22))
 	{
-		var_e81a1399.radius = var_3efe1e22.radius;
-		var_e81a1399.offset = var_e81a1399.offset + var_3efe1e22.offset;
+		mdl_collectible.radius = var_3efe1e22.radius;
+		mdl_collectible.offset = mdl_collectible.offset + var_3efe1e22.offset;
 	}
-	return var_e81a1399;
+	return mdl_collectible;
 }
 
 /*
@@ -282,35 +282,35 @@ private function function_b963f25(var_e81a1399)
 	Parameters: 1
 	Flags: Linked
 */
-function function_8765a33c(var_e81a1399)
+function function_8765a33c(mdl_collectible)
 {
-	var_e81a1399 = function_b963f25(var_e81a1399);
-	trigger_use = spawn("trigger_radius_use", var_e81a1399.origin + var_e81a1399.offset, 0, var_e81a1399.radius, var_e81a1399.radius);
+	mdl_collectible = function_b963f25(mdl_collectible);
+	trigger_use = spawn("trigger_radius_use", mdl_collectible.origin + mdl_collectible.offset, 0, mdl_collectible.radius, mdl_collectible.radius);
 	trigger_use triggerignoreteam();
 	trigger_use setvisibletoall();
 	trigger_use usetriggerrequirelookat();
 	trigger_use setteamfortrigger("none");
 	trigger_use setcursorhint("HINT_INTERACTIVE_PROMPT");
 	trigger_use sethintstring(&"COLLECTIBLE_PICK_UP");
-	istring = istring(var_e81a1399.model);
-	var_837a6185 = gameobjects::create_use_object("any", trigger_use, array(var_e81a1399), (0, 0, 0), istring);
+	istring = istring(mdl_collectible.model);
+	var_837a6185 = gameobjects::create_use_object("any", trigger_use, array(mdl_collectible), (0, 0, 0), istring);
 	var_837a6185 gameobjects::allow_use("any");
 	var_837a6185 gameobjects::set_use_time(0.35);
 	var_837a6185 gameobjects::set_owner_team("allies");
 	var_837a6185 gameobjects::set_visible_team("any");
-	var_837a6185.var_e81a1399 = var_e81a1399;
+	var_837a6185.mdl_collectible = mdl_collectible;
 	var_837a6185.onuse = &onuse;
 	var_837a6185.onbeginuse = &onbeginuse;
 	var_837a6185.single_use = 1;
-	var_837a6185.origin = var_e81a1399.origin;
+	var_837a6185.origin = mdl_collectible.origin;
 	var_837a6185.angles = var_837a6185.angles;
-	if(isdefined(var_e81a1399.script_int))
+	if(isdefined(mdl_collectible.script_int))
 	{
-		var_837a6185.index = var_e81a1399.script_int - 1;
+		var_837a6185.index = mdl_collectible.script_int - 1;
 	}
 	else
 	{
-		var_837a6185.index = (int(getsubstr(var_e81a1399.model, var_e81a1399.model.size - 2))) - 1;
+		var_837a6185.index = (int(getsubstr(mdl_collectible.model, mdl_collectible.model.size - 2))) - 1;
 	}
 	return var_837a6185;
 }
@@ -326,8 +326,8 @@ function function_8765a33c(var_e81a1399)
 */
 function onuse(e_player)
 {
-	e_player.var_b3dc8451[self.var_e81a1399.model] = 1;
-	self.var_e81a1399 setinvisibletoplayer(e_player);
+	e_player.var_b3dc8451[self.mdl_collectible.model] = 1;
+	self.mdl_collectible setinvisibletoplayer(e_player);
 	self gameobjects::hide_waypoint(e_player);
 	self.trigger setinvisibletoplayer(e_player);
 	if(missionhascollectibles(getrootmapname()))
@@ -398,9 +398,9 @@ function function_3955ccef()
 	var_b95ead22 = getnumberofcollectiblesforlevel(getrootmapname());
 	if(var_8a9d11b == var_b95ead22)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -412,7 +412,7 @@ function function_3955ccef()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_e1aad2b1()
+function private function_e1aad2b1()
 {
 	self endon(#"disconnect");
 	self notify(#"hash_e1aad2b1");
@@ -487,7 +487,7 @@ function function_70b41d41(var_5c0b5b64)
 */
 function function_d100c544()
 {
-	foreach(var_4e9e4903, collectible in level.collectibles)
+	foreach(collectible in level.collectibles)
 	{
 		self clearnoncheckpointdata(("collectibles" + collectible.index) + "value");
 	}

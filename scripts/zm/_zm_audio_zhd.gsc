@@ -33,7 +33,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_audio_zhd", &__init__, undefined, undefined);
 }
@@ -166,10 +166,10 @@ function function_cf1b154()
 		success = var_d1f154fd[i] function_3cf3ba48();
 		if(!(isdefined(success) && success))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -408,9 +408,9 @@ function function_8090042c()
 {
 	if(isdefined(level.musicsystem.currentplaytype) && level.musicsystem.currentplaytype >= 4 || (isdefined(level.musicsystemoverride) && level.musicsystemoverride))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*

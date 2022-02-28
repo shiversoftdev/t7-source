@@ -241,7 +241,7 @@ function spawn_smokescreen(owner, upgraded = 0)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function _cloudcreate(origin, weapon, createionfield)
+function private _cloudcreate(origin, weapon, createionfield)
 {
 	timestep = 2;
 	cloud = _createnosightcloud(origin, getdvarint("scr_smokescreen_duration", 7), weapon);
@@ -284,7 +284,7 @@ private function _cloudcreate(origin, weapon, createionfield)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _ionizedhazard(player, timestep)
+function private _ionizedhazard(player, timestep)
 {
 	self endon(#"death");
 	while(true)
@@ -308,7 +308,7 @@ private function _ionizedhazard(player, timestep)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _ionizedhazardthink(player, cloud)
+function private _ionizedhazardthink(player, cloud)
 {
 	self endon(#"death");
 	while(true)
@@ -328,15 +328,15 @@ private function _ionizedhazardthink(player, cloud)
 		}
 		if(isdefined(guy.is_disabled) && guy.is_disabled)
 		{
-			return 0;
+			return false;
 		}
 		if(!(isdefined(guy.takedamage) && guy.takedamage))
 		{
-			return 0;
+			return false;
 		}
 		if(isdefined(guy._ai_melee_opponent))
 		{
-			return 0;
+			return false;
 		}
 		if(isdefined(guy.is_disabled) && guy.is_disabled)
 		{
@@ -398,7 +398,7 @@ private function _ionizedhazardthink(player, cloud)
 	Parameters: 3
 	Flags: Private
 */
-private function _moveindirection(dir, unitstomove, seconds)
+function private _moveindirection(dir, unitstomove, seconds)
 {
 	self endon(#"death");
 	ticks = seconds * 20;
@@ -419,7 +419,7 @@ private function _moveindirection(dir, unitstomove, seconds)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function _createnosightcloud(origin, duration, weapon)
+function private _createnosightcloud(origin, duration, weapon)
 {
 	smokescreen = spawntimedfx(weapon, origin, (0, 0, 1), duration);
 	smokescreen.currentradius = getdvarint("scr_smokescreen_radius", 60);
@@ -436,7 +436,7 @@ private function _createnosightcloud(origin, duration, weapon)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _deleteaftertime(time)
+function private _deleteaftertime(time)
 {
 	self endon(#"death");
 	wait(time);
@@ -456,7 +456,7 @@ private function _deleteaftertime(time)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function _scaleovertime(time, startscale, maxscale)
+function private _scaleovertime(time, startscale, maxscale)
 {
 	self endon(#"death");
 	if(maxscale < 1)
@@ -502,7 +502,7 @@ private function _scaleovertime(time, startscale, maxscale)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _debug_cloud(time)
+function private _debug_cloud(time)
 {
 	self endon(#"death");
 	serverticks = time * 20;
@@ -530,7 +530,7 @@ function ai_activatesmokescreen(var_9bc2efcb = 1, upgraded = 0)
 		type = self cybercom::function_5e3d3aa();
 		self orientmode("face default");
 		self animscripted("ai_cybercom_anim", self.origin, self.angles, ("ai_base_rifle_" + type) + "_exposed_cybercom_activate");
-		self waittill_match(#"ai_cybercom_anim");
+		self waittillmatch(#"ai_cybercom_anim");
 	}
 	level thread spawn_smokescreen(self, upgraded);
 }
@@ -544,7 +544,7 @@ function ai_activatesmokescreen(var_9bc2efcb = 1, upgraded = 0)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_e52895b(origin)
+function private function_e52895b(origin)
 {
 	self endon(#"death");
 	var_9f9fc36f = 1;

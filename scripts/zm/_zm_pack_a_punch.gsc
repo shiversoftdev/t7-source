@@ -35,7 +35,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_pack_a_punch", &__init__, &__main__, undefined);
 }
@@ -93,7 +93,7 @@ function __main__()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function spawn_init()
+function private spawn_init()
 {
 	zbarriers = getentarray("zm_pack_a_punch", "targetname");
 	for(i = 0; i < zbarriers.size; i++)
@@ -162,14 +162,14 @@ private function spawn_init()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function pap_trigger_hintstring_monitor()
+function private pap_trigger_hintstring_monitor()
 {
 	level endon(#"pack_a_punch_off");
 	level waittill(#"pack_a_punch_on");
 	self thread pap_trigger_hintstring_monitor_reset();
 	while(true)
 	{
-		foreach(var_c976e1e5, e_player in level.players)
+		foreach(e_player in level.players)
 		{
 			if(e_player istouching(self))
 			{
@@ -189,7 +189,7 @@ private function pap_trigger_hintstring_monitor()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function pap_trigger_hintstring_monitor_reset()
+function private pap_trigger_hintstring_monitor_reset()
 {
 	level waittill(#"pack_a_punch_off");
 	self thread pap_trigger_hintstring_monitor();
@@ -204,7 +204,7 @@ private function pap_trigger_hintstring_monitor_reset()
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function third_person_weapon_upgrade(current_weapon, upgrade_weapon, packa_rollers, pap_machine, trigger)
+function private third_person_weapon_upgrade(current_weapon, upgrade_weapon, packa_rollers, pap_machine, trigger)
 {
 	level endon(#"pack_a_punch_off");
 	trigger endon(#"pap_player_disconnected");
@@ -268,33 +268,33 @@ private function third_person_weapon_upgrade(current_weapon, upgrade_weapon, pac
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function can_pack_weapon(weapon)
+function private can_pack_weapon(weapon)
 {
 	if(weapon.isriotshield)
 	{
-		return 0;
+		return false;
 	}
 	if(level flag::get("pack_machine_in_use"))
 	{
-		return 1;
+		return true;
 	}
 	if(!(isdefined(level.b_allow_idgun_pap) && level.b_allow_idgun_pap) && isdefined(level.idgun_weapons))
 	{
 		if(isinarray(level.idgun_weapons, weapon))
 		{
-			return 0;
+			return false;
 		}
 	}
 	weapon = self zm_weapons::get_nonalternate_weapon(weapon);
 	if(!zm_weapons::is_weapon_or_base_included(weapon))
 	{
-		return 0;
+		return false;
 	}
 	if(!self zm_weapons::can_upgrade_weapon(weapon))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -306,26 +306,26 @@ private function can_pack_weapon(weapon)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function player_use_can_pack_now()
+function private player_use_can_pack_now()
 {
 	if(self laststand::player_is_in_laststand() || (isdefined(self.intermission) && self.intermission) || self isthrowinggrenade())
 	{
-		return 0;
+		return false;
 	}
 	if(!self zm_magicbox::can_buy_weapon() || self bgb::is_enabled("zm_bgb_disorderly_combat"))
 	{
-		return 0;
+		return false;
 	}
 	if(self zm_equipment::hacker_active())
 	{
-		return 0;
+		return false;
 	}
 	current_weapon = self getcurrentweapon();
 	if(!self can_pack_weapon(current_weapon) && !zm_weapons::weapon_supports_aat(current_weapon))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -337,7 +337,7 @@ private function player_use_can_pack_now()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function pack_a_punch_machine_trigger_think()
+function private pack_a_punch_machine_trigger_think()
 {
 	self endon(#"death");
 	self endon(#"pack_a_punch_off");
@@ -368,7 +368,7 @@ private function pack_a_punch_machine_trigger_think()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function vending_weapon_upgrade()
+function private vending_weapon_upgrade()
 {
 	level endon(#"pack_a_punch_off");
 	pap_machine = getent(self.target, "targetname");
@@ -541,7 +541,7 @@ private function vending_weapon_upgrade()
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function shutoffpapsounds(ent1, ent2, ent3)
+function private shutoffpapsounds(ent1, ent2, ent3)
 {
 	while(true)
 	{
@@ -562,7 +562,7 @@ private function shutoffpapsounds(ent1, ent2, ent3)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function turnonpapsounds(ent)
+function private turnonpapsounds(ent)
 {
 	level waittill(#"pack_a_punch_on");
 	ent playloopsound("zmb_perks_packa_loop");
@@ -577,7 +577,7 @@ private function turnonpapsounds(ent)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function vending_weapon_upgrade_cost()
+function private vending_weapon_upgrade_cost()
 {
 	level endon(#"pack_a_punch_off");
 	while(true)
@@ -600,7 +600,7 @@ private function vending_weapon_upgrade_cost()
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function wait_for_player_to_take(player, weapon, packa_timer, b_weapon_supports_aat, isrepack)
+function private wait_for_player_to_take(player, weapon, packa_timer, b_weapon_supports_aat, isrepack)
 {
 	current_weapon = self.current_weapon;
 	upgrade_weapon = self.upgrade_weapon;
@@ -711,7 +711,7 @@ private function wait_for_player_to_take(player, weapon, packa_timer, b_weapon_s
 	Parameters: 4
 	Flags: Linked, Private
 */
-private function wait_for_timeout(weapon, packa_timer, player, isrepack)
+function private wait_for_timeout(weapon, packa_timer, player, isrepack)
 {
 	self endon(#"pap_taken");
 	self endon(#"pap_player_disconnected");
@@ -758,7 +758,7 @@ private function wait_for_timeout(weapon, packa_timer, player, isrepack)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function wait_for_disconnect(player)
+function private wait_for_disconnect(player)
 {
 	self endon(#"pap_taken");
 	self endon(#"pap_timeout");
@@ -781,7 +781,7 @@ private function wait_for_disconnect(player)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function destroy_weapon_in_blackout(player)
+function private destroy_weapon_in_blackout(player)
 {
 	self endon(#"pap_timeout");
 	self endon(#"pap_taken");
@@ -802,7 +802,7 @@ private function destroy_weapon_in_blackout(player)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function do_knuckle_crack()
+function private do_knuckle_crack()
 {
 	self endon(#"disconnect");
 	self upgrade_knuckle_crack_begin();
@@ -819,7 +819,7 @@ private function do_knuckle_crack()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function upgrade_knuckle_crack_begin()
+function private upgrade_knuckle_crack_begin()
 {
 	self zm_utility::increment_is_drinking();
 	self zm_utility::disable_player_move_states(1);
@@ -848,7 +848,7 @@ private function upgrade_knuckle_crack_begin()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function upgrade_knuckle_crack_end()
+function private upgrade_knuckle_crack_end()
 {
 	self zm_utility::enable_player_move_states();
 	weapon = getweapon("zombie_knuckle_crack");
@@ -876,7 +876,7 @@ private function upgrade_knuckle_crack_end()
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function get_range(delta, origin, radius)
+function private get_range(delta, origin, radius)
 {
 	if(isdefined(self.target))
 	{
@@ -891,10 +891,10 @@ private function get_range(delta, origin, radius)
 		}
 		if(distancesquared(paporigin, origin) < (radius * radius))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -906,7 +906,7 @@ private function get_range(delta, origin, radius)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function turn_on(origin, radius)
+function private turn_on(origin, radius)
 {
 	/#
 		println("");
@@ -923,7 +923,7 @@ private function turn_on(origin, radius)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function turn_off(origin, radius)
+function private turn_off(origin, radius)
 {
 	/#
 		println("");
@@ -942,7 +942,7 @@ private function turn_off(origin, radius)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function is_on()
+function private is_on()
 {
 	if(isdefined(self.powered))
 	{
@@ -960,13 +960,13 @@ private function is_on()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function get_start_state()
+function private get_start_state()
 {
 	if(isdefined(level.vending_machines_powered_on_at_start) && level.vending_machines_powered_on_at_start)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -978,7 +978,7 @@ private function get_start_state()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function cost_func()
+function private cost_func()
 {
 	if(isdefined(self.one_time_cost))
 	{
@@ -1006,7 +1006,7 @@ private function cost_func()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function toggle_think(powered_on)
+function private toggle_think(powered_on)
 {
 	if(!powered_on)
 	{
@@ -1031,7 +1031,7 @@ private function toggle_think(powered_on)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function pap_initial()
+function private pap_initial()
 {
 	self zbarrierpieceuseattachweapon(3);
 	self setzbarrierpiecestate(0, "closed");
@@ -1046,7 +1046,7 @@ private function pap_initial()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function pap_power_off()
+function private pap_power_off()
 {
 	self setzbarrierpiecestate(0, "closing");
 }
@@ -1060,7 +1060,7 @@ private function pap_power_off()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function pap_power_on()
+function private pap_power_on()
 {
 	self endon(#"zbarrier_state_change");
 	self setzbarrierpiecestate(0, "opening");
@@ -1081,7 +1081,7 @@ private function pap_power_on()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function pap_powered()
+function private pap_powered()
 {
 	self endon(#"zbarrier_state_change");
 	self setzbarrierpiecestate(4, "closed");
@@ -1107,7 +1107,7 @@ private function pap_powered()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function pap_take_gun()
+function private pap_take_gun()
 {
 	self setzbarrierpiecestate(1, "opening");
 	self setzbarrierpiecestate(2, "opening");
@@ -1128,7 +1128,7 @@ private function pap_take_gun()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function pap_eject_gun()
+function private pap_eject_gun()
 {
 	self setzbarrierpiecestate(1, "closing");
 	self setzbarrierpiecestate(2, "closing");
@@ -1144,7 +1144,7 @@ private function pap_eject_gun()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function pap_leaving()
+function private pap_leaving()
 {
 	self setzbarrierpiecestate(5, "closing");
 	do
@@ -1165,7 +1165,7 @@ private function pap_leaving()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function pap_arriving()
+function private pap_arriving()
 {
 	self endon(#"zbarrier_state_change");
 	self setzbarrierpiecestate(0, "opening");
@@ -1186,7 +1186,7 @@ private function pap_arriving()
 	Parameters: 0
 	Flags: Private
 */
-private function get_pap_zbarrier_state()
+function private get_pap_zbarrier_state()
 {
 	return self.state;
 }
@@ -1200,7 +1200,7 @@ private function get_pap_zbarrier_state()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function set_pap_zbarrier_state(state)
+function private set_pap_zbarrier_state(state)
 {
 	for(i = 0; i < self getnumzbarrierpieces(); i++)
 	{
@@ -1219,7 +1219,7 @@ private function set_pap_zbarrier_state(state)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function process_pap_zbarrier_state(state)
+function private process_pap_zbarrier_state(state)
 {
 	switch(state)
 	{

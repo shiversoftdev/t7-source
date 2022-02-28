@@ -14,7 +14,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_ai_raz", &__init__, &__main__, undefined);
 }
@@ -28,7 +28,7 @@ autoexec function __init__sytem__()
 	Parameters: 0
 	Flags: Linked, AutoExec
 */
-autoexec function __init__()
+function autoexec __init__()
 {
 	level._effect["fx_raz_eye_glow"] = "dlc3/stalingrad/fx_raz_eye_glow";
 	ai::add_archetype_spawn_function("raz", &function_f87a1709);

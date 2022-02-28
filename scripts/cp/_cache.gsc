@@ -18,7 +18,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("cache", &__init__, undefined, undefined);
 }
@@ -102,7 +102,7 @@ function _ammo_refill_think()
 		e_player playsound("fly_ammo_crate_refill");
 		wait(2);
 		a_weapons = e_player getweaponslist();
-		foreach(var_5fab8dbb, weapon in a_weapons)
+		foreach(weapon in a_weapons)
 		{
 			if(isdefined(t_ammo_cache.no_grenade) && t_ammo_cache.no_grenade && weapons::is_grenade(weapon))
 			{
@@ -259,7 +259,7 @@ function _debug_tags()
 		tag_array[tag_array.size] = "";
 		tag_array[tag_array.size] = "";
 		tag_array[tag_array.size] = "";
-		foreach(var_7a776c7f, tag in tag_array)
+		foreach(tag in tag_array)
 		{
 			self thread _loop_text(tag);
 		}
@@ -374,7 +374,7 @@ function cleanup_cache()
 	{
 		a_weapons_list = [];
 		a_item_list = getitemarray();
-		foreach(var_10667fa1, item in a_item_list)
+		foreach(item in a_item_list)
 		{
 			if(issubstr(item.classname, "weapon_"))
 			{

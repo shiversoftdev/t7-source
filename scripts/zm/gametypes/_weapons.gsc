@@ -273,12 +273,15 @@ function trackweapon()
 				currenttime = newtime;
 			}
 		}
-		else if(event != "disconnect")
+		else
 		{
-			self bb::commit_weapon_data(spawnid, currentweapon, currenttime);
-			updateweapontimings(newtime);
+			if(event != "disconnect")
+			{
+				self bb::commit_weapon_data(spawnid, currentweapon, currenttime);
+				updateweapontimings(newtime);
+			}
+			return;
 		}
-		return;
 	}
 }
 
@@ -295,17 +298,17 @@ function maydropweapon(weapon)
 {
 	if(level.disableweapondrop == 1)
 	{
-		return 0;
+		return false;
 	}
 	if(weapon == level.weaponnone)
 	{
-		return 0;
+		return false;
 	}
 	if(!weapon.isprimary)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -783,10 +786,10 @@ function is_using_offhand_equipment()
 		weapon = self getcurrentoffhand();
 		if(weapon.isequipment)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1226,19 +1229,25 @@ function damageent(einflictor, eattacker, idamage, smeansofdeath, weapon, damage
 		self.damageorigin = damagepos;
 		self.entity thread [[level.callbackplayerdamage]](einflictor, eattacker, idamage, 0, smeansofdeath, weapon, damagepos, damagedir, "none", damagepos, 0, 0, (1, 0, 0));
 	}
-	else if(self.isactor)
-	{
-		self.damageorigin = damagepos;
-		self.entity thread [[level.callbackactordamage]](einflictor, eattacker, idamage, 0, smeansofdeath, weapon, damagepos, damagedir, "none", damagepos, 0, 0, 0, (1, 0, 0));
-	}
-	else if(self.isadestructible)
-	{
-		self.damageorigin = damagepos;
-		self.entity dodamage(idamage, damagepos, eattacker, einflictor, 0, smeansofdeath, 0, weapon);
-	}
 	else
 	{
-		self.entity util::damage_notify_wrapper(idamage, eattacker, (0, 0, 0), (0, 0, 0), "mod_explosive", "", "");
+		if(self.isactor)
+		{
+			self.damageorigin = damagepos;
+			self.entity thread [[level.callbackactordamage]](einflictor, eattacker, idamage, 0, smeansofdeath, weapon, damagepos, damagedir, "none", damagepos, 0, 0, 0, (1, 0, 0));
+		}
+		else
+		{
+			if(self.isadestructible)
+			{
+				self.damageorigin = damagepos;
+				self.entity dodamage(idamage, damagepos, eattacker, einflictor, 0, smeansofdeath, 0, weapon);
+			}
+			else
+			{
+				self.entity util::damage_notify_wrapper(idamage, eattacker, (0, 0, 0), (0, 0, 0), "mod_explosive", "", "");
+			}
+		}
 	}
 }
 
@@ -1602,13 +1611,16 @@ function scavenger_think()
 				{
 					maxammo = self [[level.customloadoutscavenge]](weapon);
 				}
-				else if(weapon == loadout_primary)
+				else
 				{
-					maxammo = loadout_primary_count;
-				}
-				else if(weapon == loadout_secondary)
-				{
-					maxammo = loadout_secondary_count;
+					if(weapon == loadout_primary)
+					{
+						maxammo = loadout_primary_count;
+					}
+					else if(weapon == loadout_secondary)
+					{
+						maxammo = loadout_secondary_count;
+					}
 				}
 				if(stock < maxammo)
 				{
@@ -1770,17 +1782,17 @@ function shoulddroplimitedweapon(weapon, owner)
 	limited_info = owner.limited_info;
 	if(!isdefined(limited_info))
 	{
-		return 1;
+		return true;
 	}
 	if(limited_info.weapon != weapon)
 	{
-		return 1;
+		return true;
 	}
 	if(limited_info.drops <= 0)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*

@@ -19,7 +19,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	if(!sessionmodeiscampaignzombiesgame())
 	{
@@ -62,7 +62,7 @@ function function_f0d84c78()
 	array::add(var_80b8c18d, "cloudmountain");
 	array::add(var_80b8c18d, "markets1");
 	array::add(var_80b8c18d, "markets2");
-	foreach(var_48b7f060, str_area in var_80b8c18d)
+	foreach(str_area in var_80b8c18d)
 	{
 		var_9108873 = getent("trig_out_of_bound_" + str_area, "targetname");
 		e_clip = getent("player_clip_" + str_area, "targetname");

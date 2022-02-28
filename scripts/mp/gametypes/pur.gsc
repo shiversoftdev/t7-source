@@ -79,7 +79,7 @@ function onstartgametype()
 	spawning::create_map_placed_influencers();
 	level.spawnmins = (0, 0, 0);
 	level.spawnmaxs = (0, 0, 0);
-	foreach(var_c38f06dc, team in level.teams)
+	foreach(team in level.teams)
 	{
 		util::setobjectivetext(team, &"OBJECTIVES_TDM");
 		util::setobjectivehinttext(team, &"OBJECTIVES_TDM_HINT");
@@ -96,7 +96,7 @@ function onstartgametype()
 	}
 	spawning::updateallspawnpoints();
 	level.spawn_start = [];
-	foreach(var_b4699140, team in level.teams)
+	foreach(team in level.teams)
 	{
 		level.spawn_start[team] = spawnlogic::get_spawnpoint_array(spawning::gettdmstartspawnname(team));
 	}
@@ -195,13 +195,16 @@ function onlastteamaliveevent(team)
 	{
 		pur_endgamewithkillcam(team, &"MP_ALL_TEAMS_ELIMINATED");
 	}
-	else if(team == game["attackers"])
+	else
 	{
-		pur_endgamewithkillcam(game["attackers"], game["strings"][game["defenders"] + "_eliminated"]);
-	}
-	else if(team == game["defenders"])
-	{
-		pur_endgamewithkillcam(game["defenders"], game["strings"][game["attackers"] + "_eliminated"]);
+		if(team == game["attackers"])
+		{
+			pur_endgamewithkillcam(game["attackers"], game["strings"][game["defenders"] + "_eliminated"]);
+		}
+		else if(team == game["defenders"])
+		{
+			pur_endgamewithkillcam(game["defenders"], game["strings"][game["attackers"] + "_eliminated"]);
+		}
 	}
 }
 
@@ -253,7 +256,7 @@ function onroundswitch()
 	game["switchedsides"] = !game["switchedsides"];
 	if(level.scoreroundwinbased)
 	{
-		foreach(var_3ed956da, team in level.teams)
+		foreach(team in level.teams)
 		{
 			[[level._setteamscore]](team, game["roundswon"][team]);
 		}
@@ -273,7 +276,7 @@ function onroundendgame(roundwinner)
 {
 	if(level.scoreroundwinbased)
 	{
-		foreach(var_86ffd44, team in level.teams)
+		foreach(team in level.teams)
 		{
 			[[level._setteamscore]](team, game["roundswon"][team]);
 		}
@@ -306,7 +309,7 @@ function onscoreclosemusic()
 		scorelimitcheck = scorelimit - 10;
 		topscore = 0;
 		runnerupscore = 0;
-		foreach(var_d1785917, team in level.teams)
+		foreach(team in level.teams)
 		{
 			score = [[level._getteamscore]](team);
 			if(score > topscore)
@@ -374,7 +377,7 @@ function initplayerhud()
 		{
 			return;
 		}
-		foreach(var_bf4d6e12, elem in self.purpurgatorycountelem)
+		foreach(elem in self.purpurgatorycountelem)
 		{
 			elem destroy();
 		}
@@ -398,7 +401,7 @@ function initplayerhud()
 	self.purpurgatorycountelem[team].archived = 0;
 	self.purpurgatorycountelem[team].alpha = 1;
 	self.purpurgatorycountelem[team].label = &"MP_PURGATORY_TEAMMATE_COUNT";
-	foreach(var_4e9e4903, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(team == self.team)
 		{
@@ -429,7 +432,7 @@ function updateplayerhud()
 		if(self.team != "spectator")
 		{
 			self.purpurgatorycountelem[self.team] setvalue(level.deadplayers[self.team].size);
-			foreach(var_343f2964, team in level.teams)
+			foreach(team in level.teams)
 			{
 				if(self.team == team)
 				{
@@ -454,7 +457,7 @@ function updateplayerhud()
 function hideplayerhudongameend()
 {
 	level waittill(#"game_ended");
-	foreach(var_d004e599, elem in self.purpurgatorycountelem)
+	foreach(elem in self.purpurgatorycountelem)
 	{
 		elem.alpha = 0;
 	}

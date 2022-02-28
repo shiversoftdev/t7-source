@@ -124,7 +124,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function opt_in()
+function autoexec opt_in()
 {
 	level.aat_in_use = 1;
 	level.bgb_in_use = 1;
@@ -229,7 +229,7 @@ function main()
 	level.speed_change_round = 9;
 	zombie_utility::set_zombie_var("zombie_powerup_drop_max_per_round", 4);
 	level.do_randomized_zigzag_path = 1;
-	level.zm_custom_spawn_location_selection = &function_f95a87ae;
+	level.zm_custom_spawn_location_selection = &genesis_custom_spawn_location_selection;
 	level.enemy_location_override_func = &function_b51f6175;
 	level.player_intersection_tracker_override = &function_1b647c97;
 	level.var_9aaae7ae = &function_869d6f66;
@@ -254,7 +254,7 @@ function main()
 	zm_genesis_apothicon_god::main();
 	level._no_vending_machine_auto_collision = 1;
 	include_perks_in_random_rotation();
-	level thread zm_genesis_challenges::function_343b3db7();
+	level thread zm_genesis_challenges::init_challenge_boards();
 	load::main();
 	level thread zm_genesis_fx::function_2c301fae();
 	level._round_start_func = &zm::round_start;
@@ -355,9 +355,9 @@ function function_b45f77c1(var_9dcd6900)
 	if(isdefined(self.carryobject) && isdefined(self.carryobject.carryweapon) && self.carryobject.carryweapon == level.ballweapon)
 	{
 		self zm_weapons::switch_back_primary_weapon(self.carryobject.carryweapon);
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -481,13 +481,16 @@ function function_1350a73f(w_weapon)
 	{
 		level.var_f06c86b9 = 0;
 	}
-	else if(level.chest_moves && zm_weapons::limited_weapon_below_quota(level.idgun_weapons[0]))
-	{
-		level.var_f06c86b9++;
-	}
 	else
 	{
-		level.var_f06c86b9 = 0;
+		if(level.chest_moves && zm_weapons::limited_weapon_below_quota(level.idgun_weapons[0]))
+		{
+			level.var_f06c86b9++;
+		}
+		else
+		{
+			level.var_f06c86b9 = 0;
+		}
 	}
 }
 
@@ -504,9 +507,9 @@ function function_52c6fb28(var_be1d6484)
 {
 	if(isdefined(level.var_3bb6997f) && zm_weapons::get_base_weapon(level.var_3bb6997f) == var_be1d6484)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -522,9 +525,9 @@ function check_end_solo_game_override()
 {
 	if(isdefined(level.ai_companion))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -540,9 +543,9 @@ function function_63f29efd()
 {
 	if(isdefined(level.var_46040f3e) && level.var_46040f3e == 1)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -673,7 +676,7 @@ function offhand_weapon_give_override(str_weapon)
 		self setweaponammoclip(self zm_utility::get_player_tactical_grenade(), 0);
 		self takeweapon(self zm_utility::get_player_tactical_grenade());
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -749,7 +752,7 @@ function function_898d7758()
 {
 	level flag::set("is_coop_door_price");
 	var_667e2b8a = getentarray("zombie_door", "targetname");
-	foreach(var_3784591a, var_12248b8b in var_667e2b8a)
+	foreach(var_12248b8b in var_667e2b8a)
 	{
 		if(isdefined(var_12248b8b.zombie_cost))
 		{
@@ -855,14 +858,14 @@ function function_9160f4d3()
 	var_6b2d3150 = var_bbe5e3fe + var_e632342f;
 	if(var_bbe5e3fe > 0)
 	{
-		foreach(var_8d98a98c, var_4b4c3616 in level.var_727bd376)
+		foreach(var_4b4c3616 in level.var_727bd376)
 		{
 			array::add(var_6af221a2, var_4b4c3616, 0);
 		}
 	}
 	if(var_e632342f > 0)
 	{
-		foreach(var_28213141, sp_zombie in level.zombie_spawners)
+		foreach(sp_zombie in level.zombie_spawners)
 		{
 			array::add(var_6af221a2, sp_zombie, 0);
 		}
@@ -872,11 +875,19 @@ function function_9160f4d3()
 	{
 		sp_zombie = array::random(level.var_727bd376);
 	}
-	else if(var_e632342f > 0)
+	else
 	{
-		sp_zombie = array::random(level.zombie_spawners);
+		if(var_e632342f > 0)
+		{
+			sp_zombie = array::random(level.zombie_spawners);
+		}
+		else
+		{
+			/#
+				assert(var_e632342f > 0, "");
+			#/
+		}
 	}
-	assert(var_e632342f > 0, "");
 	return sp_zombie;
 }
 
@@ -929,7 +940,7 @@ function assign_lowest_unused_character_index()
 	{
 		return charindexarray[2];
 	}
-	foreach(var_3ac13aca, player in players)
+	foreach(player in players)
 	{
 		if(isdefined(player.characterindex))
 		{
@@ -954,14 +965,14 @@ function assign_lowest_unused_character_index()
 */
 function function_5c35365f(a_players)
 {
-	foreach(var_c8764173, player in a_players)
+	foreach(player in a_players)
 	{
 		if(isdefined(player.characterindex) && player.characterindex == 2)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1367,9 +1378,9 @@ function function_1b647c97(var_3c6a24bf)
 {
 	if(isdefined(self.is_flung) && self.is_flung || (isdefined(var_3c6a24bf.is_flung) && var_3c6a24bf.is_flung) || (isdefined(self.var_4870991a) && self.var_4870991a))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1386,9 +1397,9 @@ function function_6190ec3f()
 	if(isdefined(self.is_flung) && self.is_flung || !ispointonnavmesh(self.origin, self))
 	{
 		self thread zm_equipment::show_hint_text(&"ZM_GENESIS_GRAVITYSPIKE_BAD_LOCATION", 3);
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1404,22 +1415,22 @@ function function_869d6f66()
 {
 	if(!isdefined(self zm_bgb_anywhere_but_here::function_728dfe3()))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(level.var_b7572a82) && level.var_b7572a82)
 	{
-		return 0;
+		return false;
 	}
 	var_bfe88385 = getent("samanthas_room_zone", "targetname");
 	if(self istouching(var_bfe88385))
 	{
-		return 0;
+		return false;
 	}
 	if(level flag::get("boss_fight") || level flag::get("arena_occupied_by_player"))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1435,13 +1446,13 @@ function function_cc2772da()
 {
 	if(isdefined(self.is_flung) && self.is_flung || (isdefined(self.var_9a017681) && self.var_9a017681))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.b_teleporting) && self.b_teleporting)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1496,7 +1507,7 @@ function function_57e1c276()
 }
 
 /*
-	Name: function_f95a87ae
+	Name: genesis_custom_spawn_location_selection
 	Namespace: zm_genesis
 	Checksum: 0x2D521D28
 	Offset: 0x6660
@@ -1504,7 +1515,7 @@ function function_57e1c276()
 	Parameters: 1
 	Flags: Linked
 */
-function function_f95a87ae(a_spots)
+function genesis_custom_spawn_location_selection(a_spots)
 {
 	if(math::cointoss())
 	{
@@ -1666,7 +1677,7 @@ function function_9c3ef4d4()
 	level.b_show_single_intermission = 1;
 	level waittill(#"intermission");
 	level notify(#"hash_c9cb5160");
-	foreach(var_2d6d5476, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		if(isdefined(e_player))
 		{
@@ -1759,21 +1770,21 @@ function function_e1630fb4(weapon, player, pap_triggers)
 			}
 			default:
 			{
-				return 1;
+				return true;
 			}
 		}
 		if(player zm_weapons::has_weapon_or_upgrade(var_17998646))
 		{
-			return 0;
+			return false;
 		}
-		foreach(var_ee49db0e, var_aa37ce2d in pap_triggers)
+		foreach(var_aa37ce2d in pap_triggers)
 		{
 			if(isdefined(var_aa37ce2d.current_weapon) && (var_aa37ce2d.current_weapon == var_17998646 || var_aa37ce2d.current_weapon == zm_weapons::get_upgrade_weapon(var_17998646)))
 			{
-				return 0;
+				return false;
 			}
 		}
 	}
-	return 1;
+	return true;
 }
 

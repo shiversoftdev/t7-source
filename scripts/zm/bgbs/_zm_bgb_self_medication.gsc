@@ -22,7 +22,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_bgb_self_medication", &__init__, undefined, "bgb");
 }
@@ -43,7 +43,7 @@ function __init__()
 		return;
 	}
 	bgb::register("zm_bgb_self_medication", "event", &event, undefined, undefined, &validation);
-	bgb::function_2b341a2e("zm_bgb_self_medication", &actor_death_override);
+	bgb::register_actor_death_override("zm_bgb_self_medication", &actor_death_override);
 	bgb::register_lost_perk_override("zm_bgb_self_medication", &lost_perk_override, 0);
 }
 
@@ -86,9 +86,9 @@ function validation()
 {
 	if(isdefined(self.var_df0decf1) && self.var_df0decf1)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -204,6 +204,6 @@ function lost_perk_override(perk, var_2488e46a = undefined, var_24df4040 = undef
 	{
 		self thread bgb::revive_and_return_perk_on_bgb_activation(perk);
 	}
-	return 0;
+	return false;
 }
 

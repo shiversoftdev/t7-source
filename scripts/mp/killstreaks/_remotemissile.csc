@@ -16,7 +16,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("remotemissile", &__init__, undefined, undefined);
 }
@@ -64,18 +64,21 @@ function missile_fired(localclientnum, oldval, newval, bnewent, binitialsnap, fi
 		}
 		self thread hud_update(localclientnum);
 	}
-	else if(newval == 2)
-	{
-		if(isdefined(self.hellfireobjid))
-		{
-			self notify(#"hellfire_detonated");
-			objective_delete(localclientnum, self.hellfireobjid);
-			util::releaseobjid(localclientnum, self.hellfireobjid);
-		}
-	}
 	else
 	{
-		self notify(#"cleanup_objectives");
+		if(newval == 2)
+		{
+			if(isdefined(self.hellfireobjid))
+			{
+				self notify(#"hellfire_detonated");
+				objective_delete(localclientnum, self.hellfireobjid);
+				util::releaseobjid(localclientnum, self.hellfireobjid);
+			}
+		}
+		else
+		{
+			self notify(#"cleanup_objectives");
+		}
 	}
 	ammo_ui_data_model = getuimodel(getuimodelforcontroller(localclientnum), "vehicle.ammo");
 	if(isdefined(ammo_ui_data_model))

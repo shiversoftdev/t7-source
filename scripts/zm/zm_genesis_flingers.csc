@@ -58,17 +58,20 @@ function flinger_flying_postfx(localclientnum, oldval, newval, bnewent, binitial
 		self.var_bb0de733 = self playloopsound("zmb_fling_windwhoosh_2d");
 		self thread postfx::playpostfxbundle("pstfx_zm_screen_warp");
 	}
-	else if(isdefined(self.var_6f6f69f0))
+	else
 	{
-		deletefx(localclientnum, self.var_6f6f69f0, 1);
-		self.var_6f6f69f0 = undefined;
+		if(isdefined(self.var_6f6f69f0))
+		{
+			deletefx(localclientnum, self.var_6f6f69f0, 1);
+			self.var_6f6f69f0 = undefined;
+		}
+		if(isdefined(self.var_bb0de733))
+		{
+			self stoploopsound(self.var_bb0de733, 0.75);
+			self.var_bb0de733 = undefined;
+		}
+		self thread postfx::exitpostfxbundle();
 	}
-	if(isdefined(self.var_bb0de733))
-	{
-		self stoploopsound(self.var_bb0de733, 0.75);
-		self.var_bb0de733 = undefined;
-	}
-	self thread postfx::exitpostfxbundle();
 }
 
 /*

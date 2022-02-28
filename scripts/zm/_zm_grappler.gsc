@@ -20,7 +20,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_grappler", &__init__, &__main__, undefined);
 }
@@ -114,7 +114,7 @@ function start_grapple(var_683c052c, var_a2613153, n_type, n_speed = 1800)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_b7c692b0()
+function private function_b7c692b0()
 {
 	while(isdefined(level.var_5b94112c) && level.var_5b94112c)
 	{
@@ -131,7 +131,7 @@ private function function_b7c692b0()
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_28ac2916(e_source, e_target)
+function private function_28ac2916(e_source, e_target)
 {
 	function_b7c692b0();
 	level.var_5b94112c = 1;
@@ -157,7 +157,7 @@ private function function_28ac2916(e_source, e_target)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function function_3e1b1cea(var_cef3781d, var_a9fb66fa, n_speed)
+function private function_3e1b1cea(var_cef3781d, var_a9fb66fa, n_speed)
 {
 	n_distance = distance(var_cef3781d function_1e702195(), var_a9fb66fa function_1e702195());
 	return n_distance / n_speed;
@@ -172,7 +172,7 @@ private function function_3e1b1cea(var_cef3781d, var_a9fb66fa, n_speed)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_63b4b8a5(var_365c612)
+function private function_63b4b8a5(var_365c612)
 {
 	if(!isdefined(self))
 	{
@@ -211,7 +211,7 @@ private function function_63b4b8a5(var_365c612)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_1e702195()
+function private function_1e702195()
 {
 	if(isdefined(self.var_c932472f))
 	{
@@ -230,7 +230,7 @@ private function function_1e702195()
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_7027852f(v_origin, v_angles)
+function private function_7027852f(v_origin, v_angles)
 {
 	model = "tag_origin";
 	e_ent = util::spawn_model(model, v_origin, v_angles);
@@ -246,7 +246,7 @@ private function function_7027852f(v_origin, v_angles)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_58192f77(var_b7c15e33)
+function private function_58192f77(var_b7c15e33)
 {
 	if(isdefined(var_b7c15e33))
 	{

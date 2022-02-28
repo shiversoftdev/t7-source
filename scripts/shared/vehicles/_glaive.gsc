@@ -29,7 +29,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("glaive", &__init__, undefined, undefined);
 }
@@ -121,52 +121,52 @@ function defaultrole()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function is_enemy_valid(target)
+function private is_enemy_valid(target)
 {
 	if(!isdefined(target))
 	{
-		return 0;
+		return false;
 	}
 	if(!isalive(target))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.intermission) && self.intermission)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(target.ignoreme) && target.ignoreme)
 	{
-		return 0;
+		return false;
 	}
 	if(target isnotarget())
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(target._glaive_ignoreme) && target._glaive_ignoreme)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(target.archetype) && target.archetype == "margwa")
 	{
 		if(!target margwaserverutils::margwacandamageanyhead())
 		{
-			return 0;
+			return false;
 		}
 	}
 	if(isdefined(target.archetype) && target.archetype == "zombie" && (!(isdefined(target.completed_emerging_into_playable_area) && target.completed_emerging_into_playable_area)))
 	{
-		return 0;
+		return false;
 	}
 	if(distancesquared(self.owner.origin, target.origin) > (self.settings.guardradius * self.settings.guardradius))
 	{
-		return 0;
+		return false;
 	}
 	if(!sighttracepassed(self.origin, target.origin + vectorscale((0, 0, 1), 16), 0, target))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -178,11 +178,11 @@ private function is_enemy_valid(target)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function get_glaive_enemy()
+function private get_glaive_enemy()
 {
 	glaive_enemies = getaiteamarray("axis");
 	arraysortclosest(glaive_enemies, self.owner.origin);
-	foreach(var_1acba872, glaive_enemy in glaive_enemies)
+	foreach(glaive_enemy in glaive_enemies)
 	{
 		if(is_enemy_valid(glaive_enemy))
 		{
@@ -200,7 +200,7 @@ private function get_glaive_enemy()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function glaive_target_selection()
+function private glaive_target_selection()
 {
 	self endon(#"death");
 	for(;;)
@@ -261,13 +261,13 @@ function should_go_to_owner()
 	b_is_lifetime_over = (gettime() - self.starttime) > (self._glaive_settings_lifetime * 1000);
 	if(isdefined(b_is_lifetime_over) && b_is_lifetime_over)
 	{
-		return 1;
+		return true;
 	}
 	if(self.owner.sword_power <= 0)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -283,20 +283,20 @@ function should_go_to_near_owner()
 {
 	if(isdefined(self.owner) && distancesquared(self.origin, self.owner.origin) > (self.settings.guardradius * self.settings.guardradius))
 	{
-		return 1;
+		return true;
 	}
 	if(isdefined(self.owner) && !self is_enemy_valid(self.glaiveenemy))
 	{
 		if(distance2dsquared(self.origin, self.owner.origin) > (160 * 160))
 		{
-			return 1;
+			return true;
 		}
 		if(!util::within_fov(self.owner.origin, self.owner.angles, self.origin, cos(60)))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -374,7 +374,7 @@ function state_combat_update(params)
 					}
 					if(isdefined(queryresult.centeronnav) && queryresult.centeronnav)
 					{
-						foreach(var_10667fa1, point in queryresult.data)
+						foreach(point in queryresult.data)
 						{
 							if(isdefined(point.visibility) && point.visibility)
 							{
@@ -392,7 +392,7 @@ function state_combat_update(params)
 					}
 					else
 					{
-						foreach(var_9df16521, point in queryresult.data)
+						foreach(point in queryresult.data)
 						{
 							if(isdefined(point.visibility) && point.visibility)
 							{
@@ -445,13 +445,13 @@ function check_glaive_playable_area_conditions()
 {
 	if(isdefined(self.glaiveenemy.archetype) && self.glaiveenemy.archetype != "zombie")
 	{
-		return 1;
+		return true;
 	}
 	if(isdefined(self.glaiveenemy.archetype) && self.glaiveenemy.archetype == "zombie" && (isdefined(self.glaiveenemy.completed_emerging_into_playable_area) && self.glaiveenemy.completed_emerging_into_playable_area))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -476,7 +476,7 @@ function go_back_on_navvolume()
 	{
 		best_point = undefined;
 		best_score = 999999;
-		foreach(var_32ab2a3a, point in queryresult.data)
+		foreach(point in queryresult.data)
 		{
 			point.score = abs(point.origin[2] - queryresult.origin[2]);
 			if(point.score < best_score)
@@ -572,7 +572,7 @@ function state_slash_update(params)
 	else
 	{
 		target_enemies = getaiteamarray("axis");
-		foreach(var_c56cb562, target in target_enemies)
+		foreach(target in target_enemies)
 		{
 			if(distance2dsquared(self.origin, target.origin) < (128 * 128))
 			{
@@ -647,7 +647,7 @@ function go_to_near_owner()
 		{
 			queryresult = positionquery_source_navigation(searchcenter, 0, 144, 32, 12, self);
 			foundpath = 0;
-			foreach(var_111e1722, point in queryresult.data)
+			foreach(point in queryresult.data)
 			{
 				/#
 					if(!isdefined(point._scoredebug))
@@ -660,7 +660,7 @@ function go_to_near_owner()
 			}
 			vehicle_ai::positionquery_postprocess_sortscore(queryresult);
 			self vehicle_ai::positionquery_debugscores(queryresult);
-			foreach(var_73c45bc3, point in queryresult.data)
+			foreach(point in queryresult.data)
 			{
 				self.current_pathto_pos = point.origin;
 				foundpath = self setvehgoalpos(self.current_pathto_pos, 1, 1);
@@ -701,7 +701,7 @@ function go_to_owner()
 		queryresult = positionquery_source_navigation(targetpos, 0, 64, 64, 8, self);
 		foundpath = 0;
 		trace_count = 0;
-		foreach(var_823ae776, point in queryresult.data)
+		foreach(point in queryresult.data)
 		{
 			if(sighttracepassed(self.origin, point.origin, 0, undefined))
 			{
@@ -729,7 +729,7 @@ function go_to_owner()
 		}
 		if(!foundpath)
 		{
-			foreach(var_4551848a, point in queryresult.data)
+			foreach(point in queryresult.data)
 			{
 				self.current_pathto_pos = point.origin;
 				foundpath = self setvehgoalpos(self.current_pathto_pos, 1, 0);
@@ -799,7 +799,7 @@ function back_to_near_owner_check()
 */
 function glaive_allowfriendlyfiredamage(einflictor, eattacker, smeansofdeath, weapon)
 {
-	return 0;
+	return false;
 }
 
 /*
@@ -813,6 +813,6 @@ function glaive_allowfriendlyfiredamage(einflictor, eattacker, smeansofdeath, we
 */
 function glaive_callback_damage(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, vdamageorigin, psoffsettime, damagefromunderneath, modelindex, partname, vsurfacenormal)
 {
-	return 1;
+	return true;
 }
 

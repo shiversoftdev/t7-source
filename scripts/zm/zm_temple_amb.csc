@@ -297,7 +297,15 @@ function function_d19cb2f8()
 			}
 		}
 	}
-	println("");
+	else
+	{
+		/#
+			println("");
+		#/
+		if(getdvarint("") > 0)
+		{
+		}
+	}
 }
 
 /*

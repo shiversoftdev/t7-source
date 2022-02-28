@@ -26,7 +26,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("spider", &__init__, undefined, undefined);
 }
@@ -192,7 +192,7 @@ function getnextmoveposition_ranged(enemy)
 	}
 	best_point = undefined;
 	best_score = -999999;
-	foreach(var_40ce22db, point in queryresult.data)
+	foreach(point in queryresult.data)
 	{
 		/#
 			if(!isdefined(point._scoredebug))
@@ -345,7 +345,7 @@ function state_range_combat_attack()
 		state_params.playtransition = 1;
 		self vehicle_ai::evaluate_connections(undefined, state_params);
 		can_attack = 1;
-		foreach(var_c5f589f9, player in level.players)
+		foreach(player in level.players)
 		{
 			self getperfectinfo(player, 0);
 			if(player.b_is_designated_target === 1 && self.enemy.b_is_designated_target !== 1)
@@ -443,22 +443,22 @@ function should_switch_to_melee(from_state, to_state, connection)
 	/#
 		if(no_switch_on())
 		{
-			return 0;
+			return false;
 		}
 	#/
 	if(!vehicle_ai::iscooldownready("state_change"))
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(self.enemy))
 	{
-		return 0;
+		return false;
 	}
 	if(self.switch_to_melee === 1 || (distance2dsquared(self.origin, self.enemy.origin) < (self.settings.meleedist * self.settings.meleedist) && (abs(self.origin[2] - self.enemy.origin[2])) < self.settings.meleedist))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -492,7 +492,7 @@ function state_melee_combat_update(params)
 	wait(0.5);
 	for(;;)
 	{
-		foreach(var_2ed441fd, player in level.players)
+		foreach(player in level.players)
 		{
 			self getperfectinfo(player, 1);
 			if(player.b_is_designated_target === 1)
@@ -529,7 +529,7 @@ function state_melee_combat_update(params)
 				positionquery_filter_inclaimedlocation(queryresult, self.enemy);
 				best_point = undefined;
 				best_score = -999999;
-				foreach(var_c2b4adcb, point in queryresult.data)
+				foreach(point in queryresult.data)
 				{
 					/#
 						if(!isdefined(point._scoredebug))
@@ -689,26 +689,26 @@ function should_switch_to_range(from_state, to_state, connection)
 	/#
 		if(no_switch_on())
 		{
-			return 0;
+			return false;
 		}
 	#/
 	if(self.pathfailcount > 4)
 	{
-		return 1;
+		return true;
 	}
 	if(!vehicle_ai::iscooldownready("state_change"))
 	{
-		return 0;
+		return false;
 	}
 	if(isalive(self.enemy) && distance2dsquared(self.origin, self.enemy.origin) > (self.settings.meleedist * 4) * (self.settings.meleedist * 4))
 	{
-		return 1;
+		return true;
 	}
 	if(!isdefined(self.enemy))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -938,7 +938,7 @@ function nudge_collision()
 */
 function force_get_enemies()
 {
-	foreach(var_d2788ed5, player in level.players)
+	foreach(player in level.players)
 	{
 		if(self util::isenemyplayer(player) && !player.ignoreme)
 		{

@@ -15,7 +15,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("spawnlogic", &__init__, undefined, undefined);
 }
@@ -240,7 +240,7 @@ function addspawnpointsinternal(team, spawnpointname)
 */
 function clearspawnpoints()
 {
-	foreach(var_b4699140, team in level.teams)
+	foreach(team in level.teams)
 	{
 		level.teamspawnpoints[team] = [];
 	}
@@ -850,13 +850,16 @@ function readspawndata(desiredid, relativepos)
 					data.minweight = spawnpoint.weight;
 					data.maxweight = spawnpoint.weight;
 				}
-				else if(spawnpoint.weight < data.minweight)
+				else
 				{
-					data.minweight = spawnpoint.weight;
-				}
-				if(spawnpoint.weight > data.maxweight)
-				{
-					data.maxweight = spawnpoint.weight;
+					if(spawnpoint.weight < data.minweight)
+					{
+						data.minweight = spawnpoint.weight;
+					}
+					if(spawnpoint.weight > data.maxweight)
+					{
+						data.maxweight = spawnpoint.weight;
+					}
 				}
 				argnum = 4;
 				numdata = int(fgetarg(file, 3));
@@ -941,36 +944,42 @@ function readspawndata(desiredid, relativepos)
 						break;
 					}
 				}
-				else if(relativepos == "")
+				else
 				{
-					if(data.id == oldspawndata.id)
+					if(relativepos == "")
 					{
-						level.curspawndata = prev;
-						break;
+						if(data.id == oldspawndata.id)
+						{
+							level.curspawndata = prev;
+							break;
+						}
 					}
-				}
-				else if(relativepos == "")
-				{
-					if(lookingfornextthisplayer)
+					else
 					{
-						level.curspawndata = data;
-						break;
-					}
-					else if(data.id == oldspawndata.id)
-					{
-						lookingfornextthisplayer = 1;
-					}
-				}
-				else if(relativepos == "")
-				{
-					if(lookingfornext)
-					{
-						level.curspawndata = data;
-						break;
-					}
-					else if(data.id == oldspawndata.id)
-					{
-						lookingfornext = 1;
+						if(relativepos == "")
+						{
+							if(lookingfornextthisplayer)
+							{
+								level.curspawndata = data;
+								break;
+							}
+							else if(data.id == oldspawndata.id)
+							{
+								lookingfornextthisplayer = 1;
+							}
+						}
+						else if(relativepos == "")
+						{
+							if(lookingfornext)
+							{
+								level.curspawndata = data;
+								break;
+							}
+							else if(data.id == oldspawndata.id)
+							{
+								lookingfornext = 1;
+							}
+						}
 					}
 				}
 			}
@@ -1237,14 +1246,14 @@ function initweights(spawnpoints)
 */
 function spawnpointupdate_zm(spawnpoint)
 {
-	foreach(var_2c42d9f9, team in level.teams)
+	foreach(team in level.teams)
 	{
 		spawnpoint.distsum[team] = 0;
 		spawnpoint.enemydistsum[team] = 0;
 	}
 	players = getplayers();
 	spawnpoint.numplayersatlastupdate = players.size;
-	foreach(var_cf48bb63, player in players)
+	foreach(player in players)
 	{
 		if(!isdefined(player))
 		{
@@ -1263,7 +1272,7 @@ function spawnpointupdate_zm(spawnpoint)
 		}
 		dist = distance(spawnpoint.origin, player.origin);
 		spawnpoint.distsum[player.team] = spawnpoint.distsum[player.team] + dist;
-		foreach(var_76b3cfa1, team in level.teams)
+		foreach(team in level.teams)
 		{
 			if(team != player.team)
 			{
@@ -1479,11 +1488,14 @@ function getspawnpoint_turned(spawnpoints, idealdist, baddist, idealdistteam, ba
 					}
 					distfromideal = abs(dist - idealdistteam);
 				}
-				else if(dist < baddist)
+				else
 				{
-					nearbybadamount = nearbybadamount + ((baddist - dist) / baddist);
+					if(dist < baddist)
+					{
+						nearbybadamount = nearbybadamount + ((baddist - dist) / baddist);
+					}
+					distfromideal = abs(dist - idealdist);
 				}
-				distfromideal = abs(dist - idealdist);
 				totaldistfromideal = totaldistfromideal + distfromideal;
 			}
 			avgdistfromideal = totaldistfromideal / aliveplayers.size;
@@ -2225,10 +2237,10 @@ function ispointvulnerable(playerorigin)
 		angle = acos(vectordot(playerdir, forward));
 		if(angle < level.bettydetectionconeangle)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2311,7 +2323,7 @@ function spawnperframeupdate()
 function getnonteamsum(skip_team, sums)
 {
 	value = 0;
-	foreach(var_19f024f8, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(team == skip_team)
 		{
@@ -2334,7 +2346,7 @@ function getnonteamsum(skip_team, sums)
 function getnonteammindist(skip_team, mindists)
 {
 	dist = 9999999;
-	foreach(var_3a38ccdf, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(team == skip_team)
 		{
@@ -2362,7 +2374,7 @@ function spawnpointupdate(spawnpoint)
 	if(level.teambased)
 	{
 		sights = [];
-		foreach(var_bc8c059b, team in level.teams)
+		foreach(team in level.teams)
 		{
 			spawnpoint.enemysights[team] = 0;
 			sights[team] = 0;
@@ -2385,7 +2397,7 @@ function spawnpointupdate(spawnpoint)
 	{
 		mindist["all"] = 9999999;
 	}
-	foreach(var_138cf233, team in level.teams)
+	foreach(team in level.teams)
 	{
 		spawnpoint.distsum[team] = 0;
 		spawnpoint.enemydistsum[team] = 0;
@@ -2445,7 +2457,7 @@ function spawnpointupdate(spawnpoint)
 	}
 	if(level.teambased)
 	{
-		foreach(var_e5c37b3d, team in level.teams)
+		foreach(team in level.teams)
 		{
 			spawnpoint.enemysights[team] = getnonteamsum(team, sights);
 			spawnpoint.minenemydist[team] = getnonteammindist(team, mindist);
@@ -2492,13 +2504,13 @@ function lastminutesighttraces(spawnpoint)
 {
 	if(!isdefined(spawnpoint.nearbyplayers))
 	{
-		return 0;
+		return false;
 	}
 	closest = undefined;
 	closestdistsq = undefined;
 	secondclosest = undefined;
 	secondclosestdistsq = undefined;
-	foreach(var_4bd2fcd6, team in spawnpoint.nearbyplayers)
+	foreach(team in spawnpoint.nearbyplayers)
 	{
 		if(team == self.team)
 		{
@@ -2539,17 +2551,17 @@ function lastminutesighttraces(spawnpoint)
 	{
 		if(bullettracepassed(closest.origin + vectorscale((0, 0, 1), 50), spawnpoint.sighttracepoint, 0, undefined))
 		{
-			return 1;
+			return true;
 		}
 	}
 	if(isdefined(secondclosest))
 	{
 		if(bullettracepassed(secondclosest.origin + vectorscale((0, 0, 1), 50), spawnpoint.sighttracepoint, 0, undefined))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*

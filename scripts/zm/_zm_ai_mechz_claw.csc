@@ -13,7 +13,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_ai_mechz_claw", &__init__, undefined, undefined);
 }
@@ -27,7 +27,7 @@ autoexec function __init__sytem__()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function __init__()
+function private __init__()
 {
 	clientfield::register("actor", "mechz_fx", 21000, 12, "int", &function_22b149ce, 0, 0);
 	clientfield::register("scriptmover", "mechz_claw", 21000, 1, "int", &function_2ad55883, 0, 0);
@@ -45,7 +45,7 @@ private function __init__()
 	Parameters: 0
 	Flags: Private
 */
-private function __main__()
+function private __main__()
 {
 }
 
@@ -58,7 +58,7 @@ private function __main__()
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function mechz_detach_claw_override(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private mechz_detach_claw_override(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	pos = self gettagorigin("tag_claw");
 	ang = self gettagangles("tag_claw");
@@ -78,7 +78,7 @@ private function mechz_detach_claw_override(localclientnum, oldvalue, newvalue, 
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function function_22b149ce(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private function_22b149ce(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 }
 
@@ -91,7 +91,7 @@ private function function_22b149ce(localclientnum, oldvalue, newvalue, bnewent, 
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function function_2ad55883(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private function_2ad55883(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	if(newvalue)
 	{
@@ -108,7 +108,7 @@ private function function_2ad55883(localclientnum, oldvalue, newvalue, bnewent, 
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function function_54ae128d(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private function_54ae128d(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	if(newvalue)
 	{
@@ -130,7 +130,7 @@ private function function_54ae128d(localclientnum, oldvalue, newvalue, bnewent, 
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function function_8dfa08c1(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private function_8dfa08c1(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	if(newvalue)
 	{

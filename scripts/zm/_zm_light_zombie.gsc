@@ -33,7 +33,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_light_zombie", &__init__, undefined, undefined);
 }
@@ -64,7 +64,7 @@ function __init__()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function register_clientfields()
+function private register_clientfields()
 {
 	clientfield::register("actor", "light_zombie_clientfield_aura_fx", 15000, 1, "int");
 	clientfield::register("actor", "light_zombie_clientfield_death_fx", 15000, 1, "int");
@@ -163,7 +163,7 @@ function light_zombie_death()
 	var_e0d84aa = "MOD_EXPLOSIVE";
 	radiusdamage(ai_zombie.origin + vectorscale((0, 0, 1), 35), 128, 30, 10, self, var_e0d84aa);
 	a_players = getplayers();
-	foreach(var_c236bcb0, player in a_players)
+	foreach(player in a_players)
 	{
 		player thread function_4745b0a9(ai_zombie.origin);
 	}
@@ -256,7 +256,7 @@ function function_ff8b7145()
 				a_zombies = zm_elemental_zombie::function_d41418b8();
 				if(a_zombies.size > 0)
 				{
-					foreach(var_b1335bae, zombie in a_zombies)
+					foreach(zombie in a_zombies)
 					{
 						zombie function_a35db70f();
 					}

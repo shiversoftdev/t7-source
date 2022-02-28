@@ -55,7 +55,7 @@ function main()
 	e_rock = getent("mdl_underwater_secretroom_rockwall", "targetname");
 	e_rock clientfield::set("do_fade_material", 1);
 	callback::on_spawned(&function_598781a4);
-	foreach(var_79b6628f, player in level.players)
+	foreach(player in level.players)
 	{
 		player thread function_598781a4();
 	}
@@ -209,7 +209,7 @@ function function_11571878()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_5f3935a(e_player)
+function private function_5f3935a(e_player)
 {
 	if(level flag::get("ww1_found") && level flag::get("ww2_found") && level flag::get("ww3_found"))
 	{
@@ -273,7 +273,7 @@ function function_255b7efb()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_d23a4109(e_player)
+function private function_d23a4109(e_player)
 {
 	if(e_player bgb::is_enabled("zm_bgb_disorderly_combat"))
 	{
@@ -463,7 +463,7 @@ function function_97d5f905()
 	self endon(#"disconnect");
 	self endon(#"bled_out");
 	var_1f4c3936 = undefined;
-	foreach(var_457591cc, var_c3763c58 in level.chests)
+	foreach(var_c3763c58 in level.chests)
 	{
 		if(var_c3763c58.chest_user === self)
 		{
@@ -496,7 +496,7 @@ function function_97d5f905()
 function function_52193f1e()
 {
 	n_count = 0;
-	foreach(var_fa5b3be1, player in level.players)
+	foreach(player in level.players)
 	{
 		if(player hasweapon(level.var_5e75629a) || player hasweapon(level.var_a4052592))
 		{
@@ -520,13 +520,13 @@ function should_take_weapon()
 	a_weapons = self getweaponslistprimaries();
 	if(!self hasperk("specialty_additionalprimaryweapon") && a_weapons.size > 1)
 	{
-		return 1;
+		return true;
 	}
 	if(self hasperk("specialty_additionalprimaryweapon") && a_weapons.size > 2)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -581,14 +581,14 @@ function function_1c683357()
 {
 	a_ai_zombies = getaiteamarray(level.zombie_team);
 	var_2513c269 = [];
-	foreach(var_687296cc, ai_zombie in a_ai_zombies)
+	foreach(ai_zombie in a_ai_zombies)
 	{
 		str_zone = ai_zombie zm_utility::get_current_zone();
 		if(zm_zonemgr::any_player_in_zone("zone_meteor_site") || zm_zonemgr::any_player_in_zone("zone_meteor_site_2") || zm_zonemgr::any_player_in_zone("zone_swamp_lab_underneath") || zm_zonemgr::any_player_in_zone("zone_swamp_lab_underneath_2") || zm_zonemgr::any_player_in_zone("zone_swamp_lab"))
 		{
 			if(str_zone === "zone_meteor_site" || str_zone === "zone_meteor_site_2" || str_zone === "zone_swamp_lab_underneath" || str_zone === "zone_swamp_lab_underneath_2")
 			{
-				if(!isdefined(ai_zombie.completed_emerging_into_playable_area) && (!(isdefined(ai_zombie.var_3940f450) && ai_zombie.var_3940f450)) && (!(isdefined(ai_zombie.var_61f7b3a0) && ai_zombie.var_61f7b3a0)) && ai_zombie.archetype === "zombie")
+				if(!isdefined(ai_zombie.completed_emerging_into_playable_area) && (!(isdefined(ai_zombie.b_is_spider) && ai_zombie.b_is_spider)) && (!(isdefined(ai_zombie.var_61f7b3a0) && ai_zombie.var_61f7b3a0)) && ai_zombie.archetype === "zombie")
 				{
 					array::add(var_2513c269, ai_zombie);
 				}
@@ -617,7 +617,7 @@ function function_f5d430d7()
 	str_notify = self util::waittill_any_return("enemy_cleaned_up", "death");
 	if(str_notify == "enemy_cleaned_up")
 	{
-		return 0;
+		return false;
 	}
 	mdl_part = util::spawn_model("p7_cai_plant_sample_vial_01", self.origin + vectorscale((0, 0, 1), 16));
 	mdl_part notsolid();
@@ -629,9 +629,9 @@ function function_f5d430d7()
 	var_83e3a776 = level util::waittill_any_return("ww1_found", "ww1_timed_out");
 	if(var_83e3a776 == "ww1_found")
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -698,7 +698,7 @@ function function_2fe542aa()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_9bd3096f(player)
+function private function_9bd3096f(player)
 {
 	if(level flag::get("ww_obtained"))
 	{
@@ -837,21 +837,24 @@ function function_9faff60c()
 			level thread zm_island_vo::function_3bf2d62a("lower_cage", 1, 0, 0);
 			level thread function_baa845f4();
 		}
-		else if(isdefined(level.var_1deeff56) && level.var_1deeff56)
-		{
-			level thread function_429e7f8a(0);
-			str_scene = "p7_fxanim_zm_island_cage_trap_spid_low_up_bundle";
-			n_height = 344;
-			level.var_3ef945d6 = undefined;
-		}
 		else
 		{
-			str_scene = "p7_fxanim_zm_island_cage_trap_spid_up_bundle";
-			n_height = 246;
+			if(isdefined(level.var_1deeff56) && level.var_1deeff56)
+			{
+				level thread function_429e7f8a(0);
+				str_scene = "p7_fxanim_zm_island_cage_trap_spid_low_up_bundle";
+				n_height = 344;
+				level.var_3ef945d6 = undefined;
+			}
+			else
+			{
+				str_scene = "p7_fxanim_zm_island_cage_trap_spid_up_bundle";
+				n_height = 246;
+			}
+			b_state = 0;
+			var_1cdfa0f4 = &"ZM_ISLAND_CAGE_LOWER";
+			level thread zm_island_vo::function_3bf2d62a("raise_cage", 1, 0, 0);
 		}
-		b_state = 0;
-		var_1cdfa0f4 = &"ZM_ISLAND_CAGE_LOWER";
-		level thread zm_island_vo::function_3bf2d62a("raise_cage", 1, 0, 0);
 		level.var_48762d0c = 1;
 		if(!b_state)
 		{
@@ -924,7 +927,7 @@ function function_429e7f8a(b_state)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_a50aa078(player)
+function private function_a50aa078(player)
 {
 	if(level.var_1a139831.var_272ec8a1)
 	{
@@ -966,7 +969,7 @@ function function_ebbb27ae()
 	while(true)
 	{
 		var_60532813 waittill(#"trigger", ai_zombie);
-		if(!ai_zombie.var_3940f450)
+		if(!ai_zombie.b_is_spider)
 		{
 			continue;
 		}
@@ -1143,14 +1146,14 @@ function function_4a13e10b()
 */
 function any_player_is_touching(ent)
 {
-	foreach(var_6afcceb4, player in level.players)
+	foreach(player in level.players)
 	{
 		if(isalive(player) && player istouching(ent))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1191,7 +1194,7 @@ function function_1228bd27()
 	e_linkto = getent("cage_linkto", "targetname");
 	while(true)
 	{
-		foreach(var_b71aef99, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			if(player istouching(self))
 			{
@@ -1309,7 +1312,7 @@ function function_cc882a46()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_5521d6b5(player)
+function private function_5521d6b5(player)
 {
 	if(level flag::get("wwup_ready") && !player zm_hero_weapon::is_hero_weapon_in_use())
 	{
@@ -1843,7 +1846,7 @@ function function_3cd05ecf(str_direction)
 	if(!level.var_f353ae68.is_down)
 	{
 		level thread function_46d3d1b0(0);
-		foreach(var_e73df798, player in level.players)
+		foreach(player in level.players)
 		{
 			if(isdefined(player.var_90f735f8) && player.var_90f735f8)
 			{
@@ -1867,7 +1870,7 @@ function function_46d3d1b0(var_9330a364)
 {
 	if(var_9330a364)
 	{
-		foreach(var_3fd2e35a, player in level.players)
+		foreach(player in level.players)
 		{
 			if(player istouching(level.var_9fce15de))
 			{
@@ -1877,7 +1880,7 @@ function function_46d3d1b0(var_9330a364)
 	}
 	else
 	{
-		foreach(var_1011a5ab, player in level.players)
+		foreach(player in level.players)
 		{
 			if(isdefined(player.var_b0329be9) && player.var_b0329be9)
 			{
@@ -1932,7 +1935,7 @@ function function_6a47d3d7()
 	e_linkto = getent("cage_linkto", "targetname");
 	while(true)
 	{
-		foreach(var_effd963f, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			if(player istouching(self) && !player islinkedto(e_linkto))
 			{
@@ -2005,7 +2008,7 @@ function function_72c5554a(str_flag)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_2f27cb1(player)
+function private function_2f27cb1(player)
 {
 	return "";
 }
@@ -2062,19 +2065,22 @@ function function_ce9a171c(str_flag)
 	{
 		a_players = level.players;
 	}
-	else if(isplayer(self))
-	{
-		a_players = array(self);
-	}
 	else
 	{
-		return;
+		if(isplayer(self))
+		{
+			a_players = array(self);
+		}
+		else
+		{
+			return;
+		}
 	}
 	switch(str_flag)
 	{
 		case "ww1_found":
 		{
-			foreach(var_79d68ce4, player in a_players)
+			foreach(player in a_players)
 			{
 				player clientfield::set_to_player("wonderweapon_part_wwi", 1);
 				player thread zm_craftables::player_show_craftable_parts_ui("zmInventory.wonderweapon_part_wwi", "zmInventory.widget_wonderweapon_parts", 0);
@@ -2083,7 +2089,7 @@ function function_ce9a171c(str_flag)
 		}
 		case "ww2_found":
 		{
-			foreach(var_3b9ec382, player in a_players)
+			foreach(player in a_players)
 			{
 				player clientfield::set_to_player("wonderweapon_part_wwii", 1);
 				player thread zm_craftables::player_show_craftable_parts_ui("zmInventory.wonderweapon_part_wwii", "zmInventory.widget_wonderweapon_parts", 0);
@@ -2092,7 +2098,7 @@ function function_ce9a171c(str_flag)
 		}
 		case "ww3_found":
 		{
-			foreach(var_2c3d98e8, player in a_players)
+			foreach(player in a_players)
 			{
 				player clientfield::set_to_player("wonderweapon_part_wwiii", 1);
 				player thread zm_craftables::player_show_craftable_parts_ui("zmInventory.wonderweapon_part_wwiii", "zmInventory.widget_wonderweapon_parts", 0);
@@ -2146,21 +2152,21 @@ function function_efbc0e1(cmd)
 				level flag::set("");
 				level.var_622692a9++;
 				level thread function_ce9a171c("");
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				level flag::set("");
 				level.var_622692a9++;
 				level thread function_ce9a171c("");
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				level flag::set("");
 				level.var_622692a9++;
 				level thread function_ce9a171c("");
-				return 1;
+				return true;
 			}
 			case "":
 			{
@@ -2171,25 +2177,25 @@ function function_efbc0e1(cmd)
 				level thread function_ce9a171c("");
 				level thread function_ce9a171c("");
 				level thread function_ce9a171c("");
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				level flag::set("");
 				level flag::set("");
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				level flag::set("");
 				level flag::set("");
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				level flag::set("");
 				level flag::set("");
-				return 1;
+				return true;
 			}
 			case "":
 			{
@@ -2197,7 +2203,7 @@ function function_efbc0e1(cmd)
 				level flag::set("");
 				level flag::set("");
 				level flag::set("");
-				return 1;
+				return true;
 			}
 			case "":
 			{
@@ -2208,10 +2214,10 @@ function function_efbc0e1(cmd)
 				level thread function_ce9a171c("");
 				level thread function_ce9a171c("");
 				level thread function_9279976b(level.players[0]);
-				return 1;
+				return true;
 			}
 		}
-		return 0;
+		return false;
 	#/
 }
 

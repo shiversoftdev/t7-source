@@ -335,7 +335,7 @@ function complete_sidequest()
 	level lui::prime_movie("zm_outro_tomb", 0, "");
 	level.sndgameovermusicoverride = "game_over_ee";
 	a_players = getplayers();
-	foreach(var_56a87db, player in a_players)
+	foreach(player in a_players)
 	{
 		player freezecontrols(1);
 		player enableinvulnerability();
@@ -352,7 +352,7 @@ function complete_sidequest()
 	level notify(#"end_game");
 	level thread lui::screen_fade_in(2, "black", "starting_ee_screen");
 	wait(1.5);
-	foreach(var_a919c988, player in a_players)
+	foreach(player in a_players)
 	{
 		player freezecontrols(0);
 		player disableinvulnerability();
@@ -441,7 +441,7 @@ function generic_stage_end()
 function all_staffs_inserted_in_puzzle_room()
 {
 	n_staffs_inserted = 0;
-	foreach(var_3c50d513, staff in level.a_elemental_staffs)
+	foreach(staff in level.a_elemental_staffs)
 	{
 		if(staff.upgrade.charger.is_inserted)
 		{
@@ -450,9 +450,9 @@ function all_staffs_inserted_in_puzzle_room()
 	}
 	if(n_staffs_inserted == 4)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -589,7 +589,7 @@ function setup_ee_main_devgui()
 		b_activated = 0;
 		while(!b_activated)
 		{
-			foreach(var_9f6a3af9, player in getplayers())
+			foreach(player in getplayers())
 			{
 				if((distance2d(player.origin, (2904, 5040, -336))) < 100 && player usebuttonpressed())
 				{
@@ -730,7 +730,7 @@ function watch_devgui_ee_main()
 function function_ab51bfd()
 {
 	a_ai_enemies = getaiteamarray("axis");
-	foreach(var_21d78be8, ai in a_ai_enemies)
+	foreach(ai in a_ai_enemies)
 	{
 		if(isalive(ai))
 		{
@@ -739,7 +739,7 @@ function function_ab51bfd()
 		}
 		util::wait_network_frame();
 	}
-	foreach(var_a83d61df, ai in a_ai_enemies)
+	foreach(ai in a_ai_enemies)
 	{
 		if(isalive(ai))
 		{

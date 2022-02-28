@@ -30,9 +30,9 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
-	function_83f83141();
+	initzmcastlebehaviorsandasm();
 	level.var_4fb25bb9 = [];
 	level.var_4fb25bb9["walk"] = 4;
 	level.var_4fb25bb9["run"] = 4;
@@ -43,14 +43,14 @@ autoexec function init()
 	level.closest_player_override = &castle_closest_player;
 	level thread update_closest_player();
 	/#
-		thread function_e250a9f();
+		thread castle_zombie_devgui();
 	#/
 	level.move_valid_poi_to_navmesh = 1;
 	level.pathdist_type = 2;
 }
 
 /*
-	Name: function_83f83141
+	Name: initzmcastlebehaviorsandasm
 	Namespace: zm_castle_zombie
 	Checksum: 0xE1C68A03
 	Offset: 0x590
@@ -58,15 +58,15 @@ autoexec function init()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_83f83141()
+function private initzmcastlebehaviorsandasm()
 {
-	animationstatenetwork::registeranimationmocomp("mocomp_teleport_traversal@zombie", &function_5683b5d5, undefined, undefined);
+	animationstatenetwork::registeranimationmocomp("mocomp_teleport_traversal@zombie", &teleporttraversalmocompstart, undefined, undefined);
 	behaviortreenetworkutility::registerbehaviortreescriptapi("shouldMoveLowg", &shouldmovelowg);
 	behaviortreenetworkutility::registerbehaviortreescriptapi("zodShouldMove", &zodshouldmove);
 }
 
 /*
-	Name: function_5683b5d5
+	Name: teleporttraversalmocompstart
 	Namespace: zm_castle_zombie
 	Checksum: 0xD127E1E7
 	Offset: 0x620
@@ -74,7 +74,7 @@ private function function_83f83141()
 	Parameters: 5
 	Flags: Linked
 */
-function function_5683b5d5(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function teleporttraversalmocompstart(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	entity orientmode("face angle", entity.angles[1]);
 	entity animmode("normal");
@@ -102,44 +102,44 @@ function zodshouldmove(entity)
 {
 	if(isdefined(entity.zombie_tesla_hit) && entity.zombie_tesla_hit && (!(isdefined(entity.tesla_death) && entity.tesla_death)))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(entity.pushed) && entity.pushed)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(entity.knockdown) && entity.knockdown)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(entity.grapple_is_fatal) && entity.grapple_is_fatal)
 	{
-		return 0;
+		return false;
 	}
 	if(level.wait_and_revive)
 	{
 		if(!(isdefined(entity.var_1e3fb1c) && entity.var_1e3fb1c))
 		{
-			return 0;
+			return false;
 		}
 	}
 	if(isdefined(entity.stumble))
 	{
-		return 0;
+		return false;
 	}
 	if(zombiebehavior::zombieshouldmeleecondition(entity))
 	{
-		return 0;
+		return false;
 	}
 	if(entity haspath())
 	{
-		return 1;
+		return true;
 	}
 	if(isdefined(entity.keep_moving) && entity.keep_moving)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -205,7 +205,7 @@ function function_7b63bf24(player)
 			a_players = getplayers();
 			var_2ace9ca5 = 0;
 			var_949334ad = 0;
-			foreach(var_1abd7134, target in a_players)
+			foreach(target in a_players)
 			{
 				if(zombie_utility::is_player_valid(target, 1) && target zm_zonemgr::entity_in_zone("zone_undercroft"))
 				{
@@ -218,10 +218,10 @@ function function_7b63bf24(player)
 			}
 			if(var_2ace9ca5 < var_949334ad && (player iswallrunning() || !player isonground()))
 			{
-				return 0;
+				return false;
 			}
 		}
-		return 1;
+		return true;
 	}
 	if(isdefined(self.zone_name))
 	{
@@ -233,7 +233,7 @@ function function_7b63bf24(player)
 				var_2d8a543 = getent("zone_v10_pad", "targetname");
 				if(!self istouching(var_2d8a543))
 				{
-					return 0;
+					return false;
 				}
 			}
 		}
@@ -247,13 +247,13 @@ function function_7b63bf24(player)
 	}
 	if(var_b9ec9b33 == var_ef36a2fe)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
-	Name: function_3cc0a9c3
+	Name: castle_validate_last_closest_player
 	Namespace: zm_castle_zombie
 	Checksum: 0x2520D9A7
 	Offset: 0xDB8
@@ -261,14 +261,14 @@ function function_7b63bf24(player)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_3cc0a9c3(players)
+function private castle_validate_last_closest_player(players)
 {
 	if(isdefined(self.last_closest_player) && (isdefined(self.last_closest_player.am_i_valid) && self.last_closest_player.am_i_valid))
 	{
 		return;
 	}
 	self.need_closest_player = 1;
-	foreach(var_3b026e9d, player in players)
+	foreach(player in players)
 	{
 		if(self function_7b63bf24(player))
 		{
@@ -288,7 +288,7 @@ private function function_3cc0a9c3(players)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_ca4f6cd2(player)
+function private function_ca4f6cd2(player)
 {
 	if(isdefined(player.zone_name))
 	{
@@ -311,7 +311,7 @@ private function function_ca4f6cd2(player)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function castle_closest_player(origin, var_6c55ba74)
+function private castle_closest_player(origin, var_6c55ba74)
 {
 	aiprofile_beginentry("castle_closest_player");
 	players = array::filter(var_6c55ba74, 0, &function_4fee0339);
@@ -346,7 +346,7 @@ private function castle_closest_player(origin, var_6c55ba74)
 	}
 	if(isdefined(level.last_closest_time) && level.last_closest_time >= level.time)
 	{
-		self function_3cc0a9c3(players);
+		self castle_validate_last_closest_player(players);
 		aiprofile_endentry();
 		return self.last_closest_player;
 	}
@@ -392,7 +392,7 @@ private function castle_closest_player(origin, var_6c55ba74)
 	{
 		self zm_utility::approximate_path_dist(closest);
 	}
-	self function_3cc0a9c3(players);
+	self castle_validate_last_closest_player(players);
 	aiprofile_endentry();
 	return self.last_closest_player;
 }
@@ -406,13 +406,13 @@ private function castle_closest_player(origin, var_6c55ba74)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_4fee0339(player)
+function private function_4fee0339(player)
 {
 	if(!isdefined(player) || !isalive(player) || !isplayer(player) || player.sessionstate == "spectator" || player.sessionstate == "intermission" || player laststand::player_is_in_laststand() || player.ignoreme)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -424,7 +424,7 @@ private function function_4fee0339(player)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function update_closest_player()
+function private update_closest_player()
 {
 	level waittill(#"start_of_round");
 	while(true)
@@ -436,7 +436,7 @@ private function update_closest_player()
 		{
 			zombies = arraycombine(zombies, var_6aad1b23, 0, 0);
 		}
-		foreach(var_bcccd2c2, zombie in zombies)
+		foreach(zombie in zombies)
 		{
 			if(isdefined(zombie.need_closest_player) && zombie.need_closest_player)
 			{
@@ -446,7 +446,7 @@ private function update_closest_player()
 		}
 		if(reset_closest_player)
 		{
-			foreach(var_1561be84, zombie in zombies)
+			foreach(zombie in zombies)
 			{
 				if(isdefined(zombie.need_closest_player))
 				{
@@ -459,7 +459,7 @@ private function update_closest_player()
 }
 
 /*
-	Name: function_e250a9f
+	Name: castle_zombie_devgui
 	Namespace: zm_castle_zombie
 	Checksum: 0xF9CF446A
 	Offset: 0x1598
@@ -467,17 +467,17 @@ private function update_closest_player()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_e250a9f()
+function private castle_zombie_devgui()
 {
 	/#
 		level flagsys::wait_till("");
-		zm_devgui::add_custom_devgui_callback(&function_e48879e3);
+		zm_devgui::add_custom_devgui_callback(&castle_zombie_devgui_callback);
 		adddebugcommand("");
 	#/
 }
 
 /*
-	Name: function_e48879e3
+	Name: castle_zombie_devgui_callback
 	Namespace: zm_castle_zombie
 	Checksum: 0xB791EA9D
 	Offset: 0x1600
@@ -485,7 +485,7 @@ private function function_e250a9f()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_e48879e3(cmd)
+function private castle_zombie_devgui_callback(cmd)
 {
 	/#
 		switch(cmd)
@@ -501,7 +501,7 @@ private function function_e48879e3(cmd)
 					level.var_c43a1504 = !level.var_c43a1504;
 				}
 				zombies = getaispeciesarray(level.zombie_team, "");
-				foreach(var_c2b4adcb, zombie in zombies)
+				foreach(zombie in zombies)
 				{
 					if(isdefined(level.var_c43a1504) && level.var_c43a1504)
 					{

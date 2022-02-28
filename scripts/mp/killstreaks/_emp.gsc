@@ -41,7 +41,7 @@ function init()
 	level.empkillstreakbundle = bundle;
 	level.activeplayeremps = [];
 	level.activeemps = [];
-	foreach(var_4a103a8c, team in level.teams)
+	foreach(team in level.teams)
 	{
 		level.activeemps[team] = 0;
 	}
@@ -126,7 +126,7 @@ function activateemp()
 	killstreakid = player killstreakrules::killstreakstart("emp", player.team, 0, 0);
 	if(killstreakid == -1)
 	{
-		return 0;
+		return false;
 	}
 	bundle = level.empkillstreakbundle;
 	empbase = player placeables::spawnplaceable("emp", killstreakid, &onplaceemp, &oncancelplacement, undefined, &onshutdown, undefined, undefined, "wpn_t7_turret_emp_core", "wpn_t7_turret_emp_core_yellow", "wpn_t7_turret_emp_core_red", 1, "", undefined, undefined, 0, bundle.ksplaceablehint, bundle.ksplaceableinvalidlocationhint);
@@ -137,9 +137,9 @@ function activateemp()
 	event = empbase util::waittill_any_return("placed", "cancelled", "death", "disconnect");
 	if(event != "placed")
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -527,26 +527,26 @@ function enemyempactive()
 {
 	if(level.teambased)
 	{
-		foreach(var_74a0c36c, team in level.teams)
+		foreach(team in level.teams)
 		{
 			if(team != self.team && teamhasactiveemp(team))
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
 	else
 	{
 		enemies = self teams::getenemyplayers();
-		foreach(var_47db1770, player in enemies)
+		foreach(player in enemies)
 		{
 			if(player hasactiveemp())
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -561,7 +561,7 @@ function enemyempactive()
 function enemyempowner()
 {
 	enemies = self teams::getenemyplayers();
-	foreach(var_ca4965d8, player in enemies)
+	foreach(player in enemies)
 	{
 		if(player hasactiveemp())
 		{
@@ -625,7 +625,7 @@ function emptracker()
 	while(true)
 	{
 		level waittill(#"emp_updated");
-		foreach(var_12e32073, player in level.players)
+		foreach(player in level.players)
 		{
 			player updateemp();
 		}

@@ -25,7 +25,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_zod_traps", &__init__, undefined, undefined);
 }
@@ -97,9 +97,9 @@ function filter_areaname(e_entity, str_areaname)
 {
 	if(e_entity.script_noteworthy !== str_areaname)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*

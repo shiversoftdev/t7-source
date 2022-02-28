@@ -43,7 +43,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_island_side_ee_good_thrasher", &__init__, undefined, undefined);
 }
@@ -195,7 +195,7 @@ function function_f3ed4502()
 	level.var_564761a3.var_480b39a3 clientfield::set("spore_grows", 3);
 	while(!(isdefined(var_f7ecb00a) && var_f7ecb00a))
 	{
-		self waittill(#"damage", n_damage, e_attacker, v_vector, v_point, str_means_of_death, var_c4fe462, var_e64d69f9, var_c04aef90, w_weapon);
+		self waittill(#"damage", n_damage, e_attacker, v_vector, v_point, str_means_of_death, str_string_1, str_string_2, str_string_3, w_weapon);
 		self.health = 10000;
 		if(w_weapon.name === "hero_mirg2000_upgraded")
 		{
@@ -219,7 +219,7 @@ function function_302fe6aa()
 	self hide();
 	self setcandamage(0);
 	self notsolid();
-	foreach(var_1abd7134, var_4165e349 in level.var_564761a3.var_978adea0)
+	foreach(var_4165e349 in level.var_564761a3.var_978adea0)
 	{
 		if(isdefined(var_4165e349))
 		{
@@ -307,7 +307,7 @@ function function_c8310977()
 	while(true)
 	{
 		mdl_mushroom_clip.health = 10000;
-		mdl_mushroom_clip waittill(#"damage", n_damage, e_attacker, v_vector, v_point, str_means_of_death, var_c4fe462, var_e64d69f9, var_c04aef90, w_weapon);
+		mdl_mushroom_clip waittill(#"damage", n_damage, e_attacker, v_vector, v_point, str_means_of_death, str_string_1, str_string_2, str_string_3, w_weapon);
 		if(zm_utility::is_player_valid(e_attacker))
 		{
 			mdl_mushroom_clip setcandamage(0);
@@ -334,7 +334,7 @@ function function_ecaf0cc6()
 	b_exploded = 0;
 	while(!(isdefined(b_exploded) && b_exploded))
 	{
-		foreach(var_1c0bd7aa, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			n_dist = distancesquared(self.origin, player.origin);
 			if(n_dist <= 6000)
@@ -420,20 +420,26 @@ function function_4c6beece(var_f9f788a6, b_hero_weapon, e_attacker)
 		self.var_d7bb540a = 5;
 		self.var_66bbb0c0 = 44;
 	}
-	else if(var_f9f788a6 == 2)
-	{
-		self.var_d7bb540a = 10;
-		self.var_66bbb0c0 = 60;
-	}
-	else if(var_f9f788a6 == 3)
-	{
-		self.var_d7bb540a = 15;
-		self.var_66bbb0c0 = 76;
-	}
 	else
 	{
-		self.var_d7bb540a = 45;
-		self.var_66bbb0c0 = 76;
+		if(var_f9f788a6 == 2)
+		{
+			self.var_d7bb540a = 10;
+			self.var_66bbb0c0 = 60;
+		}
+		else
+		{
+			if(var_f9f788a6 == 3)
+			{
+				self.var_d7bb540a = 15;
+				self.var_66bbb0c0 = 76;
+			}
+			else
+			{
+				self.var_d7bb540a = 45;
+				self.var_66bbb0c0 = 76;
+			}
+		}
 	}
 	s_org = level.var_564761a3.var_11c98268;
 	self thread spore_cloud_fx(b_hero_weapon, s_org, var_f9f788a6);
@@ -470,26 +476,35 @@ function spore_cloud_fx(b_hero_weapon, s_org, var_f9f788a6)
 		{
 			self clientfield::set("side_ee_gt_spore_cloud_fx", 1);
 		}
-		else if(var_f9f788a6 == 2)
-		{
-			self clientfield::set("side_ee_gt_spore_cloud_fx", 2);
-		}
 		else
 		{
-			self clientfield::set("side_ee_gt_spore_cloud_fx", 3);
+			if(var_f9f788a6 == 2)
+			{
+				self clientfield::set("side_ee_gt_spore_cloud_fx", 2);
+			}
+			else
+			{
+				self clientfield::set("side_ee_gt_spore_cloud_fx", 3);
+			}
 		}
-	}
-	else if(var_f9f788a6 == 1)
-	{
-		self clientfield::set("side_ee_gt_spore_cloud_fx", 4);
-	}
-	else if(var_f9f788a6 == 2)
-	{
-		self clientfield::set("side_ee_gt_spore_cloud_fx", 5);
 	}
 	else
 	{
-		self clientfield::set("side_ee_gt_spore_cloud_fx", 6);
+		if(var_f9f788a6 == 1)
+		{
+			self clientfield::set("side_ee_gt_spore_cloud_fx", 4);
+		}
+		else
+		{
+			if(var_f9f788a6 == 2)
+			{
+				self clientfield::set("side_ee_gt_spore_cloud_fx", 5);
+			}
+			else
+			{
+				self clientfield::set("side_ee_gt_spore_cloud_fx", 6);
+			}
+		}
 	}
 }
 
@@ -562,35 +577,38 @@ function function_c6cec92d(is_enemy, b_hero_weapon, e_attacker)
 				}
 			}
 		}
-		else if(isdefined(self.var_3940f450) && self.var_3940f450)
+		else
 		{
-			if(!self.var_d07c64b6)
+			if(isdefined(self.b_is_spider) && self.b_is_spider)
 			{
-				self.var_d07c64b6 = 1;
-				if(isdefined(e_attacker))
-				{
-					e_attacker notify(#"update_challenge_3_1");
-				}
-				if(b_hero_weapon)
-				{
-					radiusdamage(self.origin, 128, 1000, 1000);
-				}
-				else
-				{
-					self kill();
-				}
-			}
-		}
-		else if(isdefined(self.var_61f7b3a0) && self.var_61f7b3a0 && (!(isdefined(self.var_60cb45e5) && self.var_60cb45e5)))
-		{
-			if(!self.var_d07c64b6)
-			{
-				if(b_hero_weapon)
+				if(!self.var_d07c64b6)
 				{
 					self.var_d07c64b6 = 1;
-					self dodamage(self.health / 2, self.origin);
-					wait(10);
-					self.var_d07c64b6 = 0;
+					if(isdefined(e_attacker))
+					{
+						e_attacker notify(#"update_challenge_3_1");
+					}
+					if(b_hero_weapon)
+					{
+						radiusdamage(self.origin, 128, 1000, 1000);
+					}
+					else
+					{
+						self kill();
+					}
+				}
+			}
+			else if(isdefined(self.var_61f7b3a0) && self.var_61f7b3a0 && (!(isdefined(self.var_60cb45e5) && self.var_60cb45e5)))
+			{
+				if(!self.var_d07c64b6)
+				{
+					if(b_hero_weapon)
+					{
+						self.var_d07c64b6 = 1;
+						self dodamage(self.health / 2, self.origin);
+						wait(10);
+						self.var_d07c64b6 = 0;
+					}
 				}
 			}
 		}
@@ -609,23 +627,26 @@ function function_c6cec92d(is_enemy, b_hero_weapon, e_attacker)
 			self thread function_365b46bb();
 			wait(30);
 		}
-		else if(self.var_df4182b1)
-		{
-			self notify(#"hash_b56a74a8");
-			wait(5);
-		}
 		else
 		{
-			self clientfield::set("side_ee_gt_spore_trail_player_fx", 2);
-			if(!self isplayerunderwater())
+			if(self.var_df4182b1)
 			{
-				self thread function_36f14fa1();
-				self thread function_7fa4a0dd();
-				self waittill(#"coughing_complete");
+				self notify(#"hash_b56a74a8");
+				wait(5);
 			}
 			else
 			{
-				wait(3);
+				self clientfield::set("side_ee_gt_spore_trail_player_fx", 2);
+				if(!self isplayerunderwater())
+				{
+					self thread function_36f14fa1();
+					self thread function_7fa4a0dd();
+					self waittill(#"coughing_complete");
+				}
+				else
+				{
+					wait(3);
+				}
 			}
 		}
 		self.var_d07c64b6 = 0;
@@ -950,17 +971,23 @@ function function_909c515f()
 	{
 		self switchtoweapon(self.original_weapon);
 	}
-	else if(isdefined(var_d82ff565) && var_d82ff565.size > 0)
-	{
-		self switchtoweapon(var_d82ff565[0]);
-	}
-	else if(self hasweapon(level.laststandpistol))
-	{
-		self switchtoweapon(level.laststandpistol);
-	}
 	else
 	{
-		self zm_weapons::give_fallback_weapon();
+		if(isdefined(var_d82ff565) && var_d82ff565.size > 0)
+		{
+			self switchtoweapon(var_d82ff565[0]);
+		}
+		else
+		{
+			if(self hasweapon(level.laststandpistol))
+			{
+				self switchtoweapon(level.laststandpistol);
+			}
+			else
+			{
+				self zm_weapons::give_fallback_weapon();
+			}
+		}
 	}
 }
 
@@ -999,15 +1026,15 @@ function function_9eaf14a2(cmd)
 			case "":
 			{
 				level thread function_ad9a2050();
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				level.var_564761a3.var_69299ec6 thread function_302fe6aa();
-				return 1;
+				return true;
 			}
 		}
-		return 0;
+		return false;
 	#/
 }
 

@@ -99,7 +99,7 @@ function robot_burn(localclientnum, oldval, newval, bnewent, binitialsnap, field
 function watch_fx_shutdown(localclientnum, fxhandles)
 {
 	wait(3);
-	foreach(var_3ffee1ad, fx in fxhandles)
+	foreach(fx in fxhandles)
 	{
 		stopfx(localclientnum, fx);
 	}
@@ -161,7 +161,7 @@ function wait_team_changed(localclientnum)
 		{
 			continue;
 		}
-		foreach(var_cf345ee5, robot in level.escortrobots)
+		foreach(robot in level.escortrobots)
 		{
 			robot thread update_robot_team(localclientnum);
 		}

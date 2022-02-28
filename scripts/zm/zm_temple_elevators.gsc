@@ -326,15 +326,18 @@ function player_geyser_move(geyser)
 	{
 		self.geyser_anim = "geyserfakeprone";
 	}
-	else if(self getstance() == "prone")
-	{
-		self clientfield::set("geyserfakeprone", 1);
-		self.geyser_anim = "geyserfakeprone";
-	}
 	else
 	{
-		self clientfield::set("geyserfakestand", 1);
-		self.geyser_anim = "geyserfakestand";
+		if(self getstance() == "prone")
+		{
+			self clientfield::set("geyserfakeprone", 1);
+			self.geyser_anim = "geyserfakeprone";
+		}
+		else
+		{
+			self clientfield::set("geyserfakestand", 1);
+			self.geyser_anim = "geyserfakestand";
+		}
 	}
 	if(!self laststand::player_is_in_laststand())
 	{

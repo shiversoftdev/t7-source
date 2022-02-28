@@ -21,7 +21,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	/#
 		system::register("", &__init__, &__main__, undefined);
@@ -206,11 +206,14 @@ function function_4282fd75(var_859cfb21, startat, var_37cd5424)
 			{
 				startat = [[level.zdraw.commands[var_859cfb21[startat]]]](var_859cfb21, startat + 1);
 			}
-			else if(isdefined(var_37cd5424) && var_37cd5424)
+			else
 			{
-				function_c69caf7e("" + var_859cfb21[startat]);
+				if(isdefined(var_37cd5424) && var_37cd5424)
+				{
+					function_c69caf7e("" + var_859cfb21[startat]);
+				}
+				return startat;
 			}
-			return startat;
 		}
 		return startat;
 	#/
@@ -428,16 +431,19 @@ function function_5ef6cf9b(var_859cfb21, startat)
 					level.zdraw.color = (1, 1, 1);
 				}
 			}
-			else if(isdefined(level.zdraw.colors[var_859cfb21[startat]]))
-			{
-				level.zdraw.color = level.zdraw.colors[var_859cfb21[startat]];
-			}
 			else
 			{
-				level.zdraw.color = (1, 1, 1);
-				function_c69caf7e("" + var_859cfb21[startat]);
+				if(isdefined(level.zdraw.colors[var_859cfb21[startat]]))
+				{
+					level.zdraw.color = level.zdraw.colors[var_859cfb21[startat]];
+				}
+				else
+				{
+					level.zdraw.color = (1, 1, 1);
+					function_c69caf7e("" + var_859cfb21[startat]);
+				}
+				startat = startat + 1;
 			}
-			startat = startat + 1;
 		}
 		return startat;
 	#/
@@ -637,9 +643,9 @@ function function_c0fb9425(param)
 	/#
 		if(isdefined(param) && (isint(param) || isfloat(param) || (isstring(param) && strisnumber(param))))
 		{
-			return 1;
+			return true;
 		}
-		return 0;
+		return false;
 	#/
 }
 

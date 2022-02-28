@@ -233,7 +233,12 @@ function zombie_release_soul(localclientnum, oldval, newval, bnewent, binitialsn
 			e thread ctt_trail_runner(i, "fx_weak_sauce_trail", closest.origin - vectorscale((0, 0, 1), 12));
 		}
 	}
-	println("");
+	else
+	{
+		/#
+			println("");
+		#/
+	}
 }
 
 /*

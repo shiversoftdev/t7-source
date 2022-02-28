@@ -156,69 +156,78 @@ function callback_vehicledamage(einflictor, eattacker, idamage, idflags, smeanso
 				self.lastdamagewasfromenemy = 0;
 				self finishvehicledamage(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, psoffsettime, damagefromunderneath, modelindex, partname, 1);
 			}
-			else if(level.friendlyfire == 1)
+			else
 			{
-				if(idamage < 1)
+				if(level.friendlyfire == 1)
 				{
-					idamage = 1;
+					if(idamage < 1)
+					{
+						idamage = 1;
+					}
+					self.lastdamagewasfromenemy = 0;
+					self finishvehicledamage(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, psoffsettime, damagefromunderneath, modelindex, partname, 0);
 				}
-				self.lastdamagewasfromenemy = 0;
-				self finishvehicledamage(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, psoffsettime, damagefromunderneath, modelindex, partname, 0);
-			}
-			else if(level.friendlyfire == 2)
-			{
-				if(!allowfriendlyfiredamage(einflictor, eattacker, smeansofdeath, weapon))
+				else
 				{
-					return;
+					if(level.friendlyfire == 2)
+					{
+						if(!allowfriendlyfiredamage(einflictor, eattacker, smeansofdeath, weapon))
+						{
+							return;
+						}
+						if(idamage < 1)
+						{
+							idamage = 1;
+						}
+						self.lastdamagewasfromenemy = 0;
+						self finishvehicledamage(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, psoffsettime, damagefromunderneath, modelindex, partname, 1);
+					}
+					else if(level.friendlyfire == 3)
+					{
+						idamage = int(idamage * 0.5);
+						if(idamage < 1)
+						{
+							idamage = 1;
+						}
+						self.lastdamagewasfromenemy = 0;
+						self finishvehicledamage(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, psoffsettime, damagefromunderneath, modelindex, partname, 0);
+					}
 				}
-				if(idamage < 1)
-				{
-					idamage = 1;
-				}
-				self.lastdamagewasfromenemy = 0;
-				self finishvehicledamage(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, psoffsettime, damagefromunderneath, modelindex, partname, 1);
-			}
-			else if(level.friendlyfire == 3)
-			{
-				idamage = int(idamage * 0.5);
-				if(idamage < 1)
-				{
-					idamage = 1;
-				}
-				self.lastdamagewasfromenemy = 0;
-				self finishvehicledamage(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, psoffsettime, damagefromunderneath, modelindex, partname, 0);
 			}
 			friendly = 1;
 		}
-		else if(!level.teambased && isdefined(self.targetname) && self.targetname == "rcbomb")
-		{
-		}
-		else if(isdefined(self.owner) && isdefined(eattacker) && self.owner == eattacker)
-		{
-			return;
-		}
-		if(idamage < 1 && (!(isdefined(level.bzm_worldpaused) && level.bzm_worldpaused)))
-		{
-			idamage = 1;
-		}
-		if(issubstr(smeansofdeath, "MOD_GRENADE") && isdefined(einflictor) && isdefined(einflictor.iscooked))
-		{
-			self.wascooked = gettime();
-		}
 		else
 		{
-			self.wascooked = undefined;
-		}
-		attacker_seat = undefined;
-		if(isdefined(eattacker))
-		{
-			attacker_seat = self getoccupantseat(eattacker);
-		}
-		self.lastdamagewasfromenemy = isdefined(eattacker) && !isdefined(attacker_seat);
-		self finishvehicledamage(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, psoffsettime, damagefromunderneath, modelindex, partname, 0);
-		if(level.gametype == "hack" && !weapon.isemp)
-		{
-			idamage = 0;
+			if(!level.teambased && isdefined(self.targetname) && self.targetname == "rcbomb")
+			{
+			}
+			else if(isdefined(self.owner) && isdefined(eattacker) && self.owner == eattacker)
+			{
+				return;
+			}
+			if(idamage < 1 && (!(isdefined(level.bzm_worldpaused) && level.bzm_worldpaused)))
+			{
+				idamage = 1;
+			}
+			if(issubstr(smeansofdeath, "MOD_GRENADE") && isdefined(einflictor) && isdefined(einflictor.iscooked))
+			{
+				self.wascooked = gettime();
+			}
+			else
+			{
+				self.wascooked = undefined;
+			}
+			attacker_seat = undefined;
+			if(isdefined(eattacker))
+			{
+				attacker_seat = self getoccupantseat(eattacker);
+			}
+			self.lastdamagewasfromenemy = isdefined(eattacker) && !isdefined(attacker_seat);
+			self finishvehicledamage(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, psoffsettime, damagefromunderneath, modelindex, partname, 0);
+			if(level.gametype == "hack" && !weapon.isemp)
+			{
+				idamage = 0;
+			}
 		}
 		if(isdefined(eattacker) && eattacker != self)
 		{
@@ -327,45 +336,54 @@ function callback_vehicleradiusdamage(einflictor, eattacker, idamage, finnerdama
 				self.lastdamagewasfromenemy = 0;
 				self finishvehicleradiusdamage(einflictor, eattacker, idamage, finnerdamage, fouterdamage, idflags, smeansofdeath, weapon, vpoint, fradius, fconeanglecos, vconedir, psoffsettime);
 			}
-			else if(level.friendlyfire == 1)
+			else
 			{
-				if(idamage < 1)
+				if(level.friendlyfire == 1)
 				{
-					idamage = 1;
+					if(idamage < 1)
+					{
+						idamage = 1;
+					}
+					self.lastdamagewasfromenemy = 0;
+					self finishvehicleradiusdamage(einflictor, eattacker, idamage, finnerdamage, fouterdamage, idflags, smeansofdeath, weapon, vpoint, fradius, fconeanglecos, vconedir, psoffsettime);
 				}
-				self.lastdamagewasfromenemy = 0;
-				self finishvehicleradiusdamage(einflictor, eattacker, idamage, finnerdamage, fouterdamage, idflags, smeansofdeath, weapon, vpoint, fradius, fconeanglecos, vconedir, psoffsettime);
-			}
-			else if(level.friendlyfire == 2)
-			{
-				if(!allowfriendlyfiredamage(einflictor, eattacker, smeansofdeath, weapon))
+				else
 				{
-					return;
+					if(level.friendlyfire == 2)
+					{
+						if(!allowfriendlyfiredamage(einflictor, eattacker, smeansofdeath, weapon))
+						{
+							return;
+						}
+						if(idamage < 1)
+						{
+							idamage = 1;
+						}
+						self.lastdamagewasfromenemy = 0;
+						self finishvehicleradiusdamage(einflictor, eattacker, idamage, finnerdamage, fouterdamage, idflags, smeansofdeath, weapon, vpoint, fradius, fconeanglecos, vconedir, psoffsettime);
+					}
+					else if(level.friendlyfire == 3)
+					{
+						idamage = int(idamage * 0.5);
+						if(idamage < 1)
+						{
+							idamage = 1;
+						}
+						self.lastdamagewasfromenemy = 0;
+						self finishvehicleradiusdamage(einflictor, eattacker, idamage, finnerdamage, fouterdamage, idflags, smeansofdeath, weapon, vpoint, fradius, fconeanglecos, vconedir, psoffsettime);
+					}
 				}
-				if(idamage < 1)
-				{
-					idamage = 1;
-				}
-				self.lastdamagewasfromenemy = 0;
-				self finishvehicleradiusdamage(einflictor, eattacker, idamage, finnerdamage, fouterdamage, idflags, smeansofdeath, weapon, vpoint, fradius, fconeanglecos, vconedir, psoffsettime);
-			}
-			else if(level.friendlyfire == 3)
-			{
-				idamage = int(idamage * 0.5);
-				if(idamage < 1)
-				{
-					idamage = 1;
-				}
-				self.lastdamagewasfromenemy = 0;
-				self finishvehicleradiusdamage(einflictor, eattacker, idamage, finnerdamage, fouterdamage, idflags, smeansofdeath, weapon, vpoint, fradius, fconeanglecos, vconedir, psoffsettime);
 			}
 			friendly = 1;
 		}
-		else if(idamage < 1)
+		else
 		{
-			idamage = 1;
+			if(idamage < 1)
+			{
+				idamage = 1;
+			}
+			self finishvehicleradiusdamage(einflictor, eattacker, idamage, finnerdamage, fouterdamage, idflags, smeansofdeath, weapon, vpoint, fradius, fconeanglecos, vconedir, psoffsettime);
 		}
-		self finishvehicleradiusdamage(einflictor, eattacker, idamage, finnerdamage, fouterdamage, idflags, smeansofdeath, weapon, vpoint, fradius, fconeanglecos, vconedir, psoffsettime);
 	}
 }
 

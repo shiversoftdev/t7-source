@@ -46,7 +46,7 @@ function init()
 function function_471d1403()
 {
 	possible = [];
-	foreach(var_b840c18a, room in level.doa.var_ec2bff7b)
+	foreach(room in level.doa.var_ec2bff7b)
 	{
 		if(room.type != 13)
 		{
@@ -117,7 +117,7 @@ function function_471d1403()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_4952be41(room)
+function private function_4952be41(room)
 {
 	level endon(#"hash_16154574");
 	level endon(#"hash_d1f5acf7");
@@ -196,7 +196,7 @@ function function_15a0c9b5(room)
 		arrayremovevalue(level.doa.var_ec2bff7b, room, 0);
 	}
 	level notify(#"hash_3b432f18");
-	foreach(var_8ebdfc7, player in getplayers())
+	foreach(player in getplayers())
 	{
 		player notify(#"hash_d28ba89d");
 	}
@@ -263,22 +263,25 @@ function function_15a0c9b5(room)
 			level [[room.var_1cd9eda]](room);
 		}
 	}
-	else if(msg == "player_challenge_success")
+	else
 	{
-		level thread doa_utility::function_c5f3ece8(&"DOA_PLAYER_CHALLENGE_ROOM_SUCCESS");
-		wait(1);
-		level thread doa_utility::function_37fb5c23((isdefined(room.title2) ? room.title2 : &"DOA_PLAYER_CHALLENGE_ROOM_SUCCESS2"));
-		if(isdefined(room.var_2530dc89))
+		if(msg == "player_challenge_success")
 		{
-			level [[room.var_2530dc89]](room);
+			level thread doa_utility::function_c5f3ece8(&"DOA_PLAYER_CHALLENGE_ROOM_SUCCESS");
+			wait(1);
+			level thread doa_utility::function_37fb5c23((isdefined(room.title2) ? room.title2 : &"DOA_PLAYER_CHALLENGE_ROOM_SUCCESS2"));
+			if(isdefined(room.var_2530dc89))
+			{
+				level [[room.var_2530dc89]](room);
+			}
 		}
-	}
-	else if(msg == "timeout")
-	{
-		level notify(room.name + "_challenge_timeout");
-		level thread doa_utility::function_c5f3ece8(&"DOA_PLAYER_CHALLENGE_ROOM_TIMEUP");
-		wait(1);
-		level thread doa_utility::function_37fb5c23((isdefined(room.title2) ? room.title2 : &"DOA_PLAYER_CHALLENGE_ROOM_TIMEUP2"));
+		else if(msg == "timeout")
+		{
+			level notify(room.name + "_challenge_timeout");
+			level thread doa_utility::function_c5f3ece8(&"DOA_PLAYER_CHALLENGE_ROOM_TIMEUP");
+			wait(1);
+			level thread doa_utility::function_37fb5c23((isdefined(room.title2) ? room.title2 : &"DOA_PLAYER_CHALLENGE_ROOM_TIMEUP2"));
+		}
 	}
 	if(!level flag::get("doa_game_is_over"))
 	{

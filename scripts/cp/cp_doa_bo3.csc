@@ -390,7 +390,7 @@ function function_c8020bd9(localclientnum)
 	setuimodelvalue(createuimodel(level.var_7e2a814c, "gpr1"), 0);
 	setuimodelvalue(createuimodel(level.var_7e2a814c, "gpr2"), 0);
 	setuimodelvalue(createuimodel(level.var_7e2a814c, "gpr3"), 0);
-	foreach(var_c3ab2da7, player in getplayers(localclientnum))
+	foreach(player in getplayers(localclientnum))
 	{
 		setuimodelvalue(getuimodel(level.var_b9d30140[player getentitynumber()], "generic_txt"), "");
 	}
@@ -598,7 +598,7 @@ function function_787f2b69(localclientnum)
 			setuimodelvalue(getuimodel(level.var_b9d30140[i], "name"), "");
 			setuimodelvalue(getuimodel(level.var_b9d30140[i], "generic_txt"), "");
 		}
-		foreach(var_8d26aabf, player in getplayers(localclientnum))
+		foreach(player in getplayers(localclientnum))
 		{
 			setuimodelvalue(getuimodel(level.var_b9d30140[player getentitynumber()], "name"), "");
 			setuimodelvalue(getuimodel(level.var_b9d30140[player getentitynumber()], "generic_txt"), (isdefined(player.name) ? player.name : ""));

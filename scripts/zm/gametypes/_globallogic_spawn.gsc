@@ -30,7 +30,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	if(!isdefined(level.givestartloadout))
 	{
@@ -89,14 +89,14 @@ function timeuntilspawn(includeteamkilldelay)
 */
 function allteamshaveexisted()
 {
-	foreach(var_bc17a9c7, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(!level.everexisted[team])
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -112,15 +112,15 @@ function mayspawn()
 {
 	if(isdefined(level.playermayspawn) && !self [[level.playermayspawn]]())
 	{
-		return 0;
+		return false;
 	}
 	if(level.inovertime)
 	{
-		return 0;
+		return false;
 	}
 	if(level.playerqueuedrespawn && !isdefined(self.allowqueuespawn) && !level.ingraceperiod && !level.usestartspawns)
 	{
-		return 0;
+		return false;
 	}
 	if(level.numlives)
 	{
@@ -134,17 +134,17 @@ function mayspawn()
 		}
 		if(!self.pers["lives"] && gamehasstarted)
 		{
-			return 0;
+			return false;
 		}
 		if(gamehasstarted)
 		{
 			if(!level.ingraceperiod && !self.hasspawned && !level.wagermatch)
 			{
-				return 0;
+				return false;
 			}
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -791,13 +791,16 @@ function spawnintermission(usedefaultcallback)
 			{
 				self playlocalsound("mus_level_up");
 			}
-			else if(self.postgamecontracts)
+			else
 			{
-				self playlocalsound("mus_challenge_complete");
-			}
-			else if(self.postgamemilestones)
-			{
-				self playlocalsound("mus_contract_complete");
+				if(self.postgamecontracts)
+				{
+					self playlocalsound("mus_challenge_complete");
+				}
+				else if(self.postgamemilestones)
+				{
+					self playlocalsound("mus_contract_complete");
+				}
 			}
 			self closeingamemenu();
 			waittime = 4;
@@ -881,7 +884,7 @@ function spawnqueuedclient(dead_player_team, killer)
 		spawnqueuedclientonteam(spawn_team);
 		return;
 	}
-	foreach(var_e318eb2e, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(team == dead_player_team)
 		{
@@ -904,20 +907,20 @@ function allteamsnearscorelimit()
 {
 	if(!level.teambased)
 	{
-		return 0;
+		return false;
 	}
 	if(level.scorelimit <= 1)
 	{
-		return 0;
+		return false;
 	}
-	foreach(var_da9b9179, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(!game["teamScores"][team] >= (level.scorelimit - 1))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -933,21 +936,21 @@ function shouldshowrespawnmessage()
 {
 	if(util::waslastround())
 	{
-		return 0;
+		return false;
 	}
 	if(util::isoneround())
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(level.livesdonotreset) && level.livesdonotreset)
 	{
-		return 0;
+		return false;
 	}
 	if(allteamsnearscorelimit())
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1087,13 +1090,16 @@ function waitandspawnclient(timealreadypassed)
 		{
 			util::setlowermessage(game["strings"]["you_will_spawn"], timeuntilspawn);
 		}
-		else if(self issplitscreen())
-		{
-			util::setlowermessage(game["strings"]["waiting_to_spawn_ss"], timeuntilspawn, 1);
-		}
 		else
 		{
-			util::setlowermessage(game["strings"]["waiting_to_spawn"], timeuntilspawn);
+			if(self issplitscreen())
+			{
+				util::setlowermessage(game["strings"]["waiting_to_spawn_ss"], timeuntilspawn, 1);
+			}
+			else
+			{
+				util::setlowermessage(game["strings"]["waiting_to_spawn"], timeuntilspawn);
+			}
 		}
 		if(!spawnedasspectator)
 		{

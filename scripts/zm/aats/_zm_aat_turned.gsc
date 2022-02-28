@@ -25,7 +25,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_aat_turned", &__init__, undefined, "aat");
 }
@@ -80,13 +80,16 @@ function result(death, attacker, mod, weapon)
 			self.variant_type = 7;
 		}
 	}
-	else if(self.zombie_arms_position == "up")
-	{
-		self.variant_type = 7;
-	}
 	else
 	{
-		self.variant_type = 8;
+		if(self.zombie_arms_position == "up")
+		{
+			self.variant_type = 7;
+		}
+		else
+		{
+			self.variant_type = 8;
+		}
 	}
 	if(isdefined(attacker) && isplayer(attacker))
 	{
@@ -160,29 +163,29 @@ function turned_zombie_validation()
 {
 	if(isdefined(level.aat["zm_aat_turned"].immune_result_direct[self.archetype]) && level.aat["zm_aat_turned"].immune_result_direct[self.archetype])
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.barricade_enter) && self.barricade_enter)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.is_traversing) && self.is_traversing)
 	{
-		return 0;
+		return false;
 	}
 	if(!(isdefined(self.completed_emerging_into_playable_area) && self.completed_emerging_into_playable_area))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.is_leaping) && self.is_leaping)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(level.zm_aat_turned_validation_override) && !self [[level.zm_aat_turned_validation_override]]())
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*

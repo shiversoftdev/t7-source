@@ -118,9 +118,9 @@ function vo_play_four_part_conversation(convo)
 		n_max_reply_dist = 1500;
 		e_player1 = undefined;
 		e_player2 = undefined;
-		var_d1c0f9 = undefined;
-		var_bede2506 = undefined;
-		foreach(var_832f6a13, player in players)
+		e_player3 = undefined;
+		e_player4 = undefined;
+		foreach(player in players)
 		{
 			if(isdefined(player))
 			{
@@ -138,22 +138,22 @@ function vo_play_four_part_conversation(convo)
 					}
 					case "Billy":
 					{
-						var_d1c0f9 = player;
+						e_player3 = player;
 						break;
 					}
 					case "Finn":
 					{
-						var_bede2506 = player;
+						e_player4 = player;
 						break;
 					}
 				}
 			}
 		}
-		if(!isdefined(e_player1) || !isdefined(e_player2) || !isdefined(var_d1c0f9) || !isdefined(var_bede2506))
+		if(!isdefined(e_player1) || !isdefined(e_player2) || !isdefined(e_player3) || !isdefined(e_player4))
 		{
 			return;
 		}
-		foreach(var_804320bd, player in players)
+		foreach(player in players)
 		{
 			if(isdefined(player))
 			{
@@ -166,7 +166,7 @@ function vo_play_four_part_conversation(convo)
 			players = getplayers();
 			if(players.size != 4)
 			{
-				foreach(var_2671007b, player in players)
+				foreach(player in players)
 				{
 					if(isdefined(player))
 					{
@@ -179,19 +179,25 @@ function vo_play_four_part_conversation(convo)
 			}
 			if(issubstr(convo[i], "plr_0"))
 			{
-				speaking_player = var_bede2506;
+				speaking_player = e_player4;
 			}
-			else if(issubstr(convo[i], "plr_1"))
+			else
 			{
-				speaking_player = e_player2;
-			}
-			else if(issubstr(convo[i], "plr_2"))
-			{
-				speaking_player = var_d1c0f9;
-			}
-			else if(issubstr(convo[i], "plr_3"))
-			{
-				speaking_player = e_player1;
+				if(issubstr(convo[i], "plr_1"))
+				{
+					speaking_player = e_player2;
+				}
+				else
+				{
+					if(issubstr(convo[i], "plr_2"))
+					{
+						speaking_player = e_player3;
+					}
+					else if(issubstr(convo[i], "plr_3"))
+					{
+						speaking_player = e_player1;
+					}
+				}
 			}
 			if(isdefined(old_speaking_player))
 			{
@@ -199,7 +205,7 @@ function vo_play_four_part_conversation(convo)
 			}
 			if(speaking_player.afterlife || n_dist > n_max_reply_dist)
 			{
-				foreach(var_4c491cdb, player in players)
+				foreach(player in players)
 				{
 					if(isdefined(player))
 					{
@@ -215,7 +221,7 @@ function vo_play_four_part_conversation(convo)
 			old_speaking_player = speaking_player;
 			wait(1);
 		}
-		foreach(var_8f437e80, player in players)
+		foreach(player in players)
 		{
 			if(isdefined(player))
 			{

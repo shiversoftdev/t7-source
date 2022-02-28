@@ -16,7 +16,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("explode", &__init__, undefined, undefined);
 }
@@ -246,13 +246,16 @@ function watchforexplosion(localclientnum)
 							udot = -1;
 						}
 					}
-					else if(rdot > 0)
-					{
-						rdot = 1;
-					}
 					else
 					{
-						rdot = -1;
+						if(rdot > 0)
+						{
+							rdot = 1;
+						}
+						else
+						{
+							rdot = -1;
+						}
 					}
 					self thread dothedirty(localclientnum, rdot, udot, 1 - (explosiondistance / 600), 2000, 500);
 				}

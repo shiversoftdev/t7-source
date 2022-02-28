@@ -16,7 +16,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("clientfaceanim_shared", undefined, &main, undefined);
 }
@@ -45,7 +45,7 @@ function main()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function on_player_spawned(localclientnum)
+function private on_player_spawned(localclientnum)
 {
 	facialanimationsinit(localclientnum);
 	self callback::on_shutdown(&on_player_shutdown);
@@ -61,7 +61,7 @@ private function on_player_spawned(localclientnum)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function on_player_shutdown(localclientnum)
+function private on_player_shutdown(localclientnum)
 {
 	if(self isplayer())
 	{
@@ -93,7 +93,7 @@ private function on_player_shutdown(localclientnum)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function on_player_death(localclientnum)
+function private on_player_death(localclientnum)
 {
 	self endon(#"entityshutdown");
 	self waittill(#"death");
@@ -123,7 +123,7 @@ private function on_player_death(localclientnum)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function facialanimationsinit(localclientnum)
+function private facialanimationsinit(localclientnum)
 {
 	buildandvalidatefacialanimationlist(localclientnum);
 	if(self isplayer())
@@ -157,7 +157,7 @@ function buildandvalidatefacialanimationlist(localclientnum)
 		level.__clientfacialanimationslist["sprinting"] = array("mp_face_male_sprint_1");
 		level.__clientfacialanimationslist["wallrunning"] = array("mp_face_male_wall_run_1");
 		deathanims = level.__clientfacialanimationslist["death"];
-		foreach(var_a7d99a50, deathanim in deathanims)
+		foreach(deathanim in deathanims)
 		{
 			/#
 				assert(!isanimlooping(localclientnum, deathanim), ("" + deathanim) + "");
@@ -175,7 +175,7 @@ function buildandvalidatefacialanimationlist(localclientnum)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function facialanimationthink_getwaittime(localclientnum)
+function private facialanimationthink_getwaittime(localclientnum)
 {
 	if(!isdefined(localclientnum))
 	{
@@ -199,13 +199,16 @@ private function facialanimationthink_getwaittime(localclientnum)
 	{
 		distance_factor = 1;
 	}
-	else if(distancesq < min_wait_distance_sq)
-	{
-		distance_factor = 0;
-	}
 	else
 	{
-		distance_factor = (distancesq - min_wait_distance_sq) / (max_wait_distance_sq - min_wait_distance_sq);
+		if(distancesq < min_wait_distance_sq)
+		{
+			distance_factor = 0;
+		}
+		else
+		{
+			distance_factor = (distancesq - min_wait_distance_sq) / (max_wait_distance_sq - min_wait_distance_sq);
+		}
 	}
 	return ((max_wait - min_wait) * distance_factor) + min_wait;
 }
@@ -219,7 +222,7 @@ private function facialanimationthink_getwaittime(localclientnum)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function facialanimationthink(localclientnum)
+function private facialanimationthink(localclientnum)
 {
 	self endon(#"entityshutdown");
 	self notify(#"stopfacialthread");
@@ -254,7 +257,7 @@ private function facialanimationthink(localclientnum)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function updatefacialanimforplayer(localclientnum, player)
+function private updatefacialanimforplayer(localclientnum, player)
 {
 	if(!isdefined(player))
 	{
@@ -280,33 +283,51 @@ private function updatefacialanimforplayer(localclientnum, player)
 	{
 		nextfacestate = "death";
 	}
-	else if(player isplayerfiring())
-	{
-		nextfacestate = "combat_shoot";
-	}
-	else if(player isplayersliding())
-	{
-		nextfacestate = "sliding";
-	}
-	else if(player isplayerwallrunning())
-	{
-		nextfacestate = "wallrunning";
-	}
-	else if(player isplayersprinting())
-	{
-		nextfacestate = "sprinting";
-	}
-	else if(player isplayerjumping() || player isplayerdoublejumping())
-	{
-		nextfacestate = "jumping";
-	}
-	else if(player isplayerswimming())
-	{
-		nextfacestate = "swimming";
-	}
 	else
 	{
-		nextfacestate = "combat";
+		if(player isplayerfiring())
+		{
+			nextfacestate = "combat_shoot";
+		}
+		else
+		{
+			if(player isplayersliding())
+			{
+				nextfacestate = "sliding";
+			}
+			else
+			{
+				if(player isplayerwallrunning())
+				{
+					nextfacestate = "wallrunning";
+				}
+				else
+				{
+					if(player isplayersprinting())
+					{
+						nextfacestate = "sprinting";
+					}
+					else
+					{
+						if(player isplayerjumping() || player isplayerdoublejumping())
+						{
+							nextfacestate = "jumping";
+						}
+						else
+						{
+							if(player isplayerswimming())
+							{
+								nextfacestate = "swimming";
+							}
+							else
+							{
+								nextfacestate = "combat";
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 	if(player._currentfacestate == "inactive" || currfacestate != nextfacestate)
 	{
@@ -327,7 +348,7 @@ private function updatefacialanimforplayer(localclientnum, player)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function applynewfaceanim(localclientnum, animation)
+function private applynewfaceanim(localclientnum, animation)
 {
 	clearallfacialanims(localclientnum);
 	if(isdefined(animation))
@@ -346,7 +367,7 @@ private function applynewfaceanim(localclientnum, animation)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function applydeathanim(localclientnum)
+function private applydeathanim(localclientnum)
 {
 	if(isdefined(self._currentfacestate) && self._currentfacestate == "death")
 	{
@@ -368,7 +389,7 @@ private function applydeathanim(localclientnum)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function clearallfacialanims(localclientnum)
+function private clearallfacialanims(localclientnum)
 {
 	if(isdefined(self._currentfaceanim) && self hasdobj(localclientnum))
 	{

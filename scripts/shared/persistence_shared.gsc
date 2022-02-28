@@ -17,7 +17,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("persistence", &__init__, undefined, undefined);
 }
@@ -112,7 +112,7 @@ function initialize_stat_tracking()
 	level.globalcarsdestroyed = 0;
 	level.globalbarrelsdestroyed = 0;
 	level.globalbombsdestroyedbyteam = [];
-	foreach(var_309db713, team in level.teams)
+	foreach(team in level.teams)
 	{
 		level.globalbombsdestroyedbyteam[team] = 0;
 	}
@@ -148,7 +148,7 @@ function upload_global_stat_counters()
 	totalsdplants = 0;
 	totalhumiliations = 0;
 	totalsabdestroyedbyteam = [];
-	foreach(var_43ba6c31, team in level.teams)
+	foreach(team in level.teams)
 	{
 		totalsabdestroyedbyteam[team] = 0;
 	}
@@ -170,7 +170,7 @@ function upload_global_stat_counters()
 		}
 		case "sab":
 		{
-			foreach(var_65e5fe5d, team in level.teams)
+			foreach(team in level.teams)
 			{
 				totalsabdestroyedbyteam[team] = level.globalbombsdestroyedbyteam[team];
 			}
@@ -303,11 +303,11 @@ function is_party_gamemode()
 		case "sas":
 		case "shrp":
 		{
-			return 1;
+			return true;
 			break;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -337,7 +337,7 @@ function stat_set_with_gametype(dataname, value, incvalue)
 {
 	if(isdefined(level.nopersistence) && level.nopersistence)
 	{
-		return 0;
+		return false;
 	}
 	if(!is_stat_modifiable(dataname))
 	{
@@ -428,14 +428,17 @@ function set_recent_stat(isglobal, index, statname, value)
 	{
 		self setdstat("RecentEarnings", index, statname, value);
 	}
-	else if(isglobal)
-	{
-		modename = util::getcurrentgamemode();
-		self setdstat("gameHistory", modename, "matchHistory", "" + index, statname, value);
-	}
 	else
 	{
-		self setdstat("PlayerStatsByGameType", get_gametype_name(), "prevScores", index, statname, value);
+		if(isglobal)
+		{
+			modename = util::getcurrentgamemode();
+			self setdstat("gameHistory", modename, "matchHistory", "" + index, statname, value);
+		}
+		else
+		{
+			self setdstat("PlayerStatsByGameType", get_gametype_name(), "prevScores", index, statname, value);
+		}
 	}
 }
 
@@ -668,13 +671,16 @@ function codecallback_challengecomplete(rewardxp, maxval, row, tablenumber, chal
 			{
 				iprintlnbold((((makelocalizedstring(challengestring) + "") + maxval) + "") + makelocalizedstring(herostring));
 			}
-			else if(getdvarint("") == 2)
+			else
 			{
-				self iprintlnbold((((makelocalizedstring(challengestring) + "") + maxval) + "") + makelocalizedstring(herostring));
-			}
-			else if(getdvarint("") == 3)
-			{
-				iprintln((((makelocalizedstring(challengestring) + "") + maxval) + "") + makelocalizedstring(herostring));
+				if(getdvarint("") == 2)
+				{
+					self iprintlnbold((((makelocalizedstring(challengestring) + "") + maxval) + "") + makelocalizedstring(herostring));
+				}
+				else if(getdvarint("") == 3)
+				{
+					iprintln((((makelocalizedstring(challengestring) + "") + maxval) + "") + makelocalizedstring(herostring));
+				}
 			}
 		}
 	#/

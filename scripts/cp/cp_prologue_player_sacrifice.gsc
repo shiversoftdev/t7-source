@@ -80,7 +80,7 @@ function robot_defend_main(b_starting)
 */
 function function_21c12b92()
 {
-	foreach(var_3fe383f4, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player.var_c34702c6 = 0;
 		player thread function_ae9ce6f0();
@@ -143,7 +143,7 @@ function function_bfce7c2a()
 */
 function function_fe88fdb1()
 {
-	foreach(var_576f72aa, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		if(!(isdefined(player.var_c34702c6) && player.var_c34702c6))
 		{
@@ -167,14 +167,14 @@ function function_2e776cf4()
 	var_fccc406f = struct::get_array("rpg_begin");
 	s_pod = struct::get("pod_pos");
 	var_90911853 = getweapon("launcher_standard_magic_bullet");
-	foreach(var_cae08306, s_rpg in var_fccc406f)
+	foreach(s_rpg in var_fccc406f)
 	{
 		wait(1);
 		magicbullet(var_90911853, s_rpg.origin, s_pod.origin);
 	}
 	wait(0.3);
 	level thread function_9716eddb();
-	foreach(var_be508c16, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player enableinvulnerability();
 	}
@@ -199,7 +199,7 @@ function function_9716eddb()
 	var_90911853 = getweapon("launcher_standard_magic_bullet");
 	while(true)
 	{
-		foreach(var_ffb6ee91, s_rpg in var_fccc406f)
+		foreach(s_rpg in var_fccc406f)
 		{
 			v_offset = (randomintrange(-100, 100), randomintrange(-100, 100), randomintrange(-100, 100));
 			magicbullet(var_90911853, s_rpg.origin, struct::get(s_rpg.target).origin + v_offset);
@@ -243,7 +243,7 @@ function function_d8ccdb23()
 function function_637fae36()
 {
 	var_27606155 = getentarray("trigger_ob_defend", "targetname");
-	foreach(var_96688e09, var_a57773f5 in var_27606155)
+	foreach(var_a57773f5 in var_27606155)
 	{
 		var_a57773f5 triggerenable(1);
 	}
@@ -267,11 +267,11 @@ function function_637fae36()
 function function_a4e4e77d()
 {
 	level waittill(#"hash_da66fd91");
-	foreach(var_2ba14403, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player playrumbleonentity("cp_prologue_rumble_apc_offroad");
 	}
-	foreach(var_89860180, player in level.players)
+	foreach(player in level.players)
 	{
 		player shellshock("default", 5);
 		player.overrideplayerdamage = &function_947bfdac;
@@ -291,7 +291,7 @@ function function_8e9f8d38()
 {
 	level.ai_hendricks forceteleport(struct::get("skipto_robot_defend_hendricks").origin);
 	level cp_prologue_util::function_12ce22ee();
-	foreach(var_d006e2d8, ai_ally in level.a_ai_allies)
+	foreach(ai_ally in level.a_ai_allies)
 	{
 		ai_ally.goalradius = 16;
 		ai_ally forceteleport(struct::get("skipto_robot_defend_" + ai_ally.targetname).origin);
@@ -332,14 +332,14 @@ function spawn_handler_main()
 	level flag::set("start_defend_countdown");
 	if(level.players.size > 1)
 	{
-		foreach(var_8cbafcb9, player in level.players)
+		foreach(player in level.players)
 		{
 			player.attackeraccuracy = 0.5;
 		}
 	}
 	else
 	{
-		foreach(var_f4755e17, player in level.players)
+		foreach(player in level.players)
 		{
 			player.attackeraccuracy = 0.4;
 		}
@@ -698,7 +698,7 @@ function function_45c35350()
 	wait(1);
 	self waittill(#"reached_end_node");
 	self util::stop_magic_bullet_shield();
-	foreach(var_93defb23, ai_rider in self.riders)
+	foreach(ai_rider in self.riders)
 	{
 		if(isalive(ai_rider) && ai_rider.script_startingposition != "gunner1")
 		{
@@ -727,7 +727,7 @@ function function_b2d7edae()
 	self turret::enable(1, 1);
 	self thread vehicle::get_on_and_go_path(getvehiclenode(self.target, "targetname"));
 	wait(1);
-	foreach(var_66b77131, ai_rider in self.riders)
+	foreach(ai_rider in self.riders)
 	{
 		if(isalive(ai_rider) && ai_rider.script_startingposition == "gunner1")
 		{
@@ -736,7 +736,7 @@ function function_b2d7edae()
 	}
 	self waittill(#"reached_end_node");
 	self util::stop_magic_bullet_shield();
-	foreach(var_4551848a, ai_rider in self.riders)
+	foreach(ai_rider in self.riders)
 	{
 		if(isalive(ai_rider) && ai_rider.script_startingposition != "gunner1")
 		{
@@ -1033,7 +1033,7 @@ function function_a3ac9ae0()
 function function_a950a3ec()
 {
 	level endon(#"hash_2ef4a1f0");
-	foreach(var_2d9b2425, player in level.players)
+	foreach(player in level.players)
 	{
 		self thread function_cd56c2cf(player);
 	}
@@ -1088,7 +1088,7 @@ function pod_handler()
 	level thread function_2063548d();
 	level waittill(#"hash_39aa5979");
 	level flag::set("pod_on_ground");
-	foreach(var_2c42d9f9, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player playrumbleonentity("cp_prologue_rumble_pod_land");
 	}
@@ -1132,13 +1132,13 @@ function function_7a733ec7()
 {
 	level waittill(#"hash_b9036ca8");
 	exploder::exploder("fx_exploder_vtol_pod_rotorwash");
-	foreach(var_b77eb728, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player clientfield::set_to_player("dropship_rumble_loop", 1);
 	}
 	level waittill(#"hash_958c9db6");
 	exploder::stop_exploder("fx_exploder_vtol_pod_rotorwash");
-	foreach(var_bdd43d76, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player clientfield::set_to_player("dropship_rumble_loop", 0);
 	}
@@ -1171,7 +1171,7 @@ function function_2063548d()
 	level util::clientnotify("sndOS1");
 	level waittill(#"hash_7176ec93");
 	level util::clientnotify("sndOS2");
-	foreach(var_e87d2957, player in level.players)
+	foreach(player in level.players)
 	{
 		player playrumbleonentity("damage_heavy");
 	}
@@ -1206,7 +1206,7 @@ function function_e7a97be1()
 */
 function function_657fb683()
 {
-	foreach(var_93fadad0, player in level.players)
+	foreach(player in level.players)
 	{
 		if(isalive(player))
 		{
@@ -1229,7 +1229,7 @@ function function_657fb683()
 */
 function function_a43cf0f6()
 {
-	foreach(var_5855669, player in level.players)
+	foreach(player in level.players)
 	{
 		if(isalive(player))
 		{
@@ -1359,7 +1359,7 @@ function function_aba4324()
 	wait(3.5);
 	vh_vtol = getent("fxanim_vtol_pod", "animname");
 	var_dc6cf86c = struct::get_array("rpg_vtol");
-	foreach(var_8e1ce37d, s_rpg in var_dc6cf86c)
+	foreach(s_rpg in var_dc6cf86c)
 	{
 		vh_vtol thread function_3df1f906(s_rpg);
 	}

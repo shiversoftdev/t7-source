@@ -18,7 +18,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function main()
+function autoexec main()
 {
 	clientfield::register("toplayer", "player_cam_blur", 1, 1, "int");
 	clientfield::register("toplayer", "player_cam_bubbles", 1, 1, "int");
@@ -44,51 +44,75 @@ function function_8e835895(einflictor, attacker, idamage, smeansofdeath, weapon,
 		{
 			smeansofdeath = "MOD_BULLET";
 		}
-		else if(value == 2)
+		else
 		{
-			smeansofdeath = "MOD_EXPLOSIVE";
-		}
-		else if(value == 3)
-		{
-			smeansofdeath = "MOD_BURNED";
-		}
-		else if(value == 4)
-		{
-			smeansofdeath = "MOD_DROWN";
-		}
-		else if(value == 5)
-		{
-			self thread function_fd6ad16(einflictor, attacker, idamage, weapon, vdir, shitloc);
-			return;
+			if(value == 2)
+			{
+				smeansofdeath = "MOD_EXPLOSIVE";
+			}
+			else
+			{
+				if(value == 3)
+				{
+					smeansofdeath = "MOD_BURNED";
+				}
+				else
+				{
+					if(value == 4)
+					{
+						smeansofdeath = "MOD_DROWN";
+					}
+					else if(value == 5)
+					{
+						self thread function_fd6ad16(einflictor, attacker, idamage, weapon, vdir, shitloc);
+						return;
+					}
+				}
+			}
 		}
 	}
 	if(smeansofdeath === "MOD_EXPLOSIVE" || smeansofdeath === "MOD_PROJECTILE" || smeansofdeath === "MOD_PROJECTILE_SPLASH" || smeansofdeath === "MOD_GRENADE" || smeansofdeath === "MOD_GRENADE_SPLASH")
 	{
 		self thread function_7a3707a6(einflictor, attacker, idamage, weapon, vdir, shitloc);
 	}
-	else if(smeansofdeath === "MOD_BULLET" || smeansofdeath === "MOD_RIFLE_BULLET" || smeansofdeath === "MOD_PISTOL_BULLET")
-	{
-		self thread function_f05a5931(einflictor, attacker, idamage, weapon, vdir, shitloc);
-	}
-	else if(smeansofdeath === "MOD_BURNED")
-	{
-		self thread function_1c006469(einflictor, attacker, idamage, weapon, vdir, shitloc);
-	}
-	else if(smeansofdeath === "MOD_DROWN")
-	{
-		self thread function_514913aa(einflictor, attacker, idamage, weapon, vdir, shitloc);
-	}
-	else if(isdefined(attacker) && attacker.classname == "trigger_hurt" && isdefined(attacker.script_noteworthy) && attacker.script_noteworthy == "fall_death")
-	{
-		self thread function_fd6ad16(einflictor, attacker, idamage, weapon, vdir, shitloc);
-	}
-	else if(smeansofdeath === "MOD_MELEE" || smeansofdeath === "MOD_MELEE_WEAPON_BUTT")
-	{
-		self thread function_6e880b57(einflictor, attacker, idamage, weapon, vdir, shitloc);
-	}
 	else
 	{
-		self thread function_1e43c03b(einflictor, attacker, idamage, weapon, undefined, shitloc);
+		if(smeansofdeath === "MOD_BULLET" || smeansofdeath === "MOD_RIFLE_BULLET" || smeansofdeath === "MOD_PISTOL_BULLET")
+		{
+			self thread function_f05a5931(einflictor, attacker, idamage, weapon, vdir, shitloc);
+		}
+		else
+		{
+			if(smeansofdeath === "MOD_BURNED")
+			{
+				self thread function_1c006469(einflictor, attacker, idamage, weapon, vdir, shitloc);
+			}
+			else
+			{
+				if(smeansofdeath === "MOD_DROWN")
+				{
+					self thread function_514913aa(einflictor, attacker, idamage, weapon, vdir, shitloc);
+				}
+				else
+				{
+					if(isdefined(attacker) && attacker.classname == "trigger_hurt" && isdefined(attacker.script_noteworthy) && attacker.script_noteworthy == "fall_death")
+					{
+						self thread function_fd6ad16(einflictor, attacker, idamage, weapon, vdir, shitloc);
+					}
+					else
+					{
+						if(smeansofdeath === "MOD_MELEE" || smeansofdeath === "MOD_MELEE_WEAPON_BUTT")
+						{
+							self thread function_6e880b57(einflictor, attacker, idamage, weapon, vdir, shitloc);
+						}
+						else
+						{
+							self thread function_1e43c03b(einflictor, attacker, idamage, weapon, undefined, shitloc);
+						}
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -157,9 +181,9 @@ function function_e2d94882(old_position, new_position)
 	trace = function_6eb06d8d(old_position, new_position);
 	if(trace["fraction"] < 1)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*

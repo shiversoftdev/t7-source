@@ -24,7 +24,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("destructible", &__init__, &__main__, undefined);
 }
@@ -80,7 +80,7 @@ function __main__()
 	{
 		return;
 	}
-	foreach(var_9fb8dcf8, e_destructible in a_destructibles)
+	foreach(e_destructible in a_destructibles)
 	{
 		if(issubstr(e_destructible.destructibledef, "explosive_concussive") || issubstr(e_destructible.destructibledef, "explosive_electrical") || issubstr(e_destructible.destructibledef, "explosive_incendiary"))
 		{
@@ -129,7 +129,7 @@ function init_explosions()
 */
 function get_unused_explosion()
 {
-	foreach(var_a931e47c, explosion in level.explosion_manager.a_explosions)
+	foreach(explosion in level.explosion_manager.a_explosions)
 	{
 		if(!(isdefined(explosion.in_use) && explosion.in_use))
 		{
@@ -190,13 +190,16 @@ function event_callback(destructible_event, attacker, weapon)
 		{
 			explosion_radius = 150;
 		}
-		else if(explosion_radius == "lg")
-		{
-			explosion_radius = 450;
-		}
 		else
 		{
-			explosion_radius = int(explosion_radius);
+			if(explosion_radius == "lg")
+			{
+				explosion_radius = 450;
+			}
+			else
+			{
+				explosion_radius = int(explosion_radius);
+			}
 		}
 		destructible_event = "explode_complex";
 	}
@@ -271,7 +274,7 @@ function event_callback(destructible_event, attacker, weapon)
 	{
 		attacker matchrecordincrementcheckpointstat(skipto::function_52c50cb8(), "destructibles_destroyed");
 	}
-	bb::function_1a69bad6(self, attacker, destructible_event, explosion_radius);
+	bb::logexplosionevent(self, attacker, destructible_event, explosion_radius);
 	if(isdefined(level.destructible_callbacks[destructible_event]))
 	{
 		self thread [[level.destructible_callbacks[destructible_event]]](destructible_event, attacker);

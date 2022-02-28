@@ -28,7 +28,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("vehicleriders", &__init__, undefined, undefined);
 }
@@ -51,9 +51,9 @@ function __init__()
 	level.vehiclerider_groups["crew"] = "crew";
 	level.vehiclerider_groups["gunners"] = "gunner";
 	a_registered_fields = [];
-	foreach(var_4639524f, bundle in struct::get_script_bundles("vehicleriders"))
+	foreach(bundle in struct::get_script_bundles("vehicleriders"))
 	{
-		foreach(var_fa345d7d, object in bundle.objects)
+		foreach(object in bundle.objects)
 		{
 			if(isstring(object.vehicleenteranim))
 			{
@@ -69,7 +69,7 @@ function __init__()
 			}
 		}
 	}
-	foreach(var_fe0b45ba, str_clientfield in a_registered_fields)
+	foreach(str_clientfield in a_registered_fields)
 	{
 		clientfield::register("vehicle", str_clientfield, 1, 1, "counter");
 	}
@@ -85,7 +85,7 @@ function __init__()
 		level.vehiclerider_use_index["passenger" + passengerindex] = i;
 		passengerindex++;
 	}
-	foreach(var_8e14c94b, s in struct::get_script_bundles("vehicleriders"))
+	foreach(s in struct::get_script_bundles("vehicleriders"))
 	{
 		if(!isdefined(s.lowexitheight))
 		{
@@ -188,7 +188,7 @@ function unclaim_position(vh, str_pos)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _unclaim_position_on_death(vh, str_pos)
+function private _unclaim_position_on_death(vh, str_pos)
 {
 	vh endon(#"death");
 	vh endon(str_pos + "occupied");
@@ -207,7 +207,7 @@ private function _unclaim_position_on_death(vh, str_pos)
 */
 function find_next_open_position(ai)
 {
-	foreach(var_d6596e6e, s_rider in get_bundle_for_ai(ai).objects)
+	foreach(s_rider in get_bundle_for_ai(ai).objects)
 	{
 		seat_index = seat_position_to_index(s_rider.position);
 		if(seat_index <= 4)
@@ -240,7 +240,7 @@ function spawn_riders()
 	if(isdefined(self.script_vehicleride))
 	{
 		a_spawners = getspawnerarray(self.script_vehicleride, "script_vehicleride");
-		foreach(var_e2e9655e, sp in a_spawners)
+		foreach(sp in a_spawners)
 		{
 			ai_rider = sp spawner::spawn(1);
 			if(isdefined(ai_rider))
@@ -288,7 +288,7 @@ function get_rider_info(vh, str_pos = "driver")
 	ai = self;
 	bundle = undefined;
 	bundle = vh get_bundle_for_ai(ai);
-	foreach(var_8cc4e06f, s_rider in bundle.objects)
+	foreach(s_rider in bundle.objects)
 	{
 		if(s_rider.position == str_pos)
 		{
@@ -357,22 +357,33 @@ function get_in(vh, str_pos = vh find_next_open_position(self), b_teleport = 0)
 	{
 		self thread animation::play(self.rider_info.rideanim, self.vehicle, self.rider_info.aligntag, 1, 0.2, 0.2, 0, 0, 0, 0);
 	}
-	else if(!isdefined(level.vehiclerider_use_index[str_pos]))
+	else
 	{
-		/#
-			assert("" + str_pos);
-		#/
-	}
-	else if(isdefined(self.rider_info))
-	{
-		v_tag_pos = vh gettagorigin(self.rider_info.aligntag);
-		v_tag_ang = vh gettagangles(self.rider_info.aligntag);
-		if(isdefined(v_tag_pos))
+		if(!isdefined(level.vehiclerider_use_index[str_pos]))
 		{
-			self forceteleport(v_tag_pos, v_tag_ang);
+			/#
+				assert("" + str_pos);
+			#/
+		}
+		else
+		{
+			if(isdefined(self.rider_info))
+			{
+				v_tag_pos = vh gettagorigin(self.rider_info.aligntag);
+				v_tag_ang = vh gettagangles(self.rider_info.aligntag);
+				if(isdefined(v_tag_pos))
+				{
+					self forceteleport(v_tag_pos, v_tag_ang);
+				}
+			}
+			else
+			{
+				/#
+					errormsg("");
+				#/
+			}
 		}
 	}
-	errormsg("");
 	if(isactor(self))
 	{
 		self pathmode("dont move");
@@ -494,7 +505,7 @@ function on_vehicle_killed(params)
 {
 	if(isdefined(self.riders))
 	{
-		foreach(var_d004e599, rider in self.riders)
+		foreach(rider in self.riders)
 		{
 			kill_rider(rider);
 		}
@@ -514,21 +525,21 @@ function is_seat_available(vh, str_pos)
 {
 	if(vh flagsys::get(str_pos + "occupied"))
 	{
-		return 0;
+		return false;
 	}
 	if(anglestoup(vh.angles)[2] < 0.3)
 	{
-		return 0;
+		return false;
 	}
 	seat_index = seat_position_to_index(str_pos);
 	if(seat_index <= 4)
 	{
 		if(vh isvehicleseatoccupied(seat_index))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -544,7 +555,7 @@ function can_get_in(vh, str_pos)
 {
 	if(!is_seat_available(vh, str_pos))
 	{
-		return 0;
+		return false;
 	}
 	rider_info = self get_rider_info(vh, str_pos);
 	v_tag_org = vh gettagorigin(rider_info.aligntag);
@@ -552,9 +563,9 @@ function can_get_in(vh, str_pos)
 	v_enter_pos = getstartorigin(v_tag_org, v_tag_ang, rider_info.enteranim);
 	if(!self findpath(self.origin, v_enter_pos))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -679,7 +690,7 @@ function unload(str_group = "all", str_mode, remove_rider_before_unloading, remo
 	#/
 	str_group = level.vehiclerider_groups[str_group];
 	a_ai_unloaded = [];
-	foreach(var_ecd6c254, ai_rider in self.riders)
+	foreach(ai_rider in self.riders)
 	{
 		if(str_group == "all" || issubstr(ai_rider.rider_info.position, str_group))
 		{
@@ -720,7 +731,7 @@ function remove_riders_after_wait(wait_time, a_riders_to_remove)
 	wait(wait_time);
 	if(isdefined(a_riders_to_remove))
 	{
-		foreach(var_b8892b60, ai in a_riders_to_remove)
+		foreach(ai in a_riders_to_remove)
 		{
 			arrayremovevalue(self.riders, ai);
 		}
@@ -799,7 +810,7 @@ function exit_low()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function handle_falling_death()
+function private handle_falling_death()
 {
 	self endon(#"landed");
 	self waittill(#"death");
@@ -819,7 +830,7 @@ private function handle_falling_death()
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function forward_euler_integration(e_move, v_target_landing, n_initial_speed)
+function private forward_euler_integration(e_move, v_target_landing, n_initial_speed)
 {
 	landed = 0;
 	integrationstep = 0.1;
@@ -994,7 +1005,7 @@ function get_rider(str_pos)
 {
 	if(isdefined(self.riders))
 	{
-		foreach(var_76f759bd, ai in self.riders)
+		foreach(ai in self.riders)
 		{
 			if(isdefined(ai) && ai.rider_info.position == str_pos)
 			{
@@ -1013,7 +1024,7 @@ function get_rider(str_pos)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _init_rider(vh, str_pos)
+function private _init_rider(vh, str_pos)
 {
 	/#
 		assert(isdefined(self.vehicle) || isdefined(vh), "");

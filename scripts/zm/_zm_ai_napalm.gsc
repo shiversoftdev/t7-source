@@ -30,7 +30,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_ai_napalm", &__init__, &__main__, undefined);
 }
@@ -106,7 +106,7 @@ function registerbehaviorscriptfunctions()
 }
 
 /*
-	Name: function_6c57f6af
+	Name: get_napalm_spawners
 	Namespace: zm_ai_napalm
 	Checksum: 0x81A19D12
 	Offset: 0xC30
@@ -114,13 +114,13 @@ function registerbehaviorscriptfunctions()
 	Parameters: 0
 	Flags: Linked
 */
-function function_6c57f6af()
+function get_napalm_spawners()
 {
 	return level.napalm_zombie_spawners;
 }
 
 /*
-	Name: function_3cde9794
+	Name: get_napalm_locations
 	Namespace: zm_ai_napalm
 	Checksum: 0x36DBDD3E
 	Offset: 0xC48
@@ -128,13 +128,13 @@ function function_6c57f6af()
 	Parameters: 0
 	Flags: Linked
 */
-function function_3cde9794()
+function get_napalm_locations()
 {
 	return level.zm_loc_types["napalm_location"];
 }
 
 /*
-	Name: function_b765d5ff
+	Name: napalm_spawn_check
 	Namespace: zm_ai_napalm
 	Checksum: 0xF1A597E3
 	Offset: 0xC68
@@ -142,7 +142,7 @@ function function_3cde9794()
 	Parameters: 0
 	Flags: Linked
 */
-function function_b765d5ff()
+function napalm_spawn_check()
 {
 	forcespawn = level flag::get("zombie_napalm_force_spawn");
 	if(!isdefined(level.napalmzombiesenabled) || level.napalmzombiesenabled == 0 || level.napalm_zombie_spawners.size == 0 || level.zm_loc_types["napalm_location"].size == 0)
@@ -192,10 +192,10 @@ function function_7cce5d95()
 	level waittill(#"start_of_round");
 	while(true)
 	{
-		if(function_b765d5ff())
+		if(napalm_spawn_check())
 		{
-			spawner_list = function_6c57f6af();
-			location_list = function_3cde9794();
+			spawner_list = get_napalm_spawners();
+			location_list = get_napalm_locations();
 			spawner = array::random(spawner_list);
 			location = array::random(location_list);
 			ai = zombie_utility::spawn_zombie(spawner, spawner.targetname, location);
@@ -291,10 +291,10 @@ function _entity_in_zone(zone)
 	{
 		if(self istouching(zone.volumes[i]))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -497,15 +497,15 @@ function _zombie_watchstopeffects()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function napalmcanexplode(entity)
+function private napalmcanexplode(entity)
 {
 	if(entity.animname !== "napalm_zombie")
 	{
-		return 0;
+		return false;
 	}
 	if(level.napalmexploderadius <= 0)
 	{
-		return 0;
+		return false;
 	}
 	napalmexploderadiussqr = level.napalmexploderadius * level.napalmexploderadius;
 	napalmplayerwarningradius = level.napalmexplodedamageradius;
@@ -527,11 +527,14 @@ private function napalmcanexplode(entity)
 				player.napalmradiuswarningtime = gettime() + 10000;
 			}
 		}
-		else if(isdefined(player.napalmradiuswarningtime) && player.napalmradiuswarningtime > gettime())
+		else
 		{
-			player exit_napalm_radius();
+			if(isdefined(player.napalmradiuswarningtime) && player.napalmradiuswarningtime > gettime())
+			{
+				player exit_napalm_radius();
+			}
+			continue;
 		}
-		continue;
 		if(!isdefined(entity.favoriteenemy) || !isplayer(entity.favoriteenemy))
 		{
 			continue;
@@ -552,9 +555,9 @@ private function napalmcanexplode(entity)
 		{
 			continue;
 		}
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -566,7 +569,7 @@ private function napalmcanexplode(entity)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function napalmexplodeinitialize(entity, asmstatename)
+function private napalmexplodeinitialize(entity, asmstatename)
 {
 	if(level flag::get("world_is_paused"))
 	{
@@ -585,7 +588,7 @@ private function napalmexplodeinitialize(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function napalmexplodeterminate(entity, asmstatename)
+function private napalmexplodeterminate(entity, asmstatename)
 {
 	napalm_clear_radius_fx_all_players();
 	entity.killed_self = 1;
@@ -775,15 +778,18 @@ function _napalm_damage_players()
 		{
 			damage = killjusgsplayerdamage;
 		}
-		else if(dist < level.napalmexplodekillradius)
-		{
-			damage = killplayerdamage;
-		}
 		else
 		{
-			scale = (level.napalmexplodedamageradius - dist) / (level.napalmexplodedamageradius - level.napalmexplodekillradius);
-			shellshocktime = (scale * (shellshockmaxtime - shellshockmintime)) + shellshockmintime;
-			damage = (scale * (killplayerdamage - level.napalmexplodedamagemin)) + level.napalmexplodedamagemin;
+			if(dist < level.napalmexplodekillradius)
+			{
+				damage = killplayerdamage;
+			}
+			else
+			{
+				scale = (level.napalmexplodedamageradius - dist) / (level.napalmexplodedamageradius - level.napalmexplodekillradius);
+				shellshocktime = (scale * (shellshockmaxtime - shellshockmintime)) + shellshockmintime;
+				damage = (scale * (killplayerdamage - level.napalmexplodedamagemin)) + level.napalmexplodedamagemin;
+			}
 		}
 		if(isdefined(self.shrinked) && self.shrinked)
 		{
@@ -926,17 +932,20 @@ function kill_with_fire(damagetype)
 	if(self.animname == "monkey_zombie")
 	{
 	}
-	else if(!isdefined(level.burning_zombies))
+	else
 	{
-		level.burning_zombies = [];
-	}
-	if(level.burning_zombies.size < 6)
-	{
-		level.burning_zombies[level.burning_zombies.size] = self;
-		self thread zombie_flame_watch();
-		self playsound("evt_zombie_ignite");
-		self thread zombie_death::flame_death_fx();
-		wait(randomfloat(1.25));
+		if(!isdefined(level.burning_zombies))
+		{
+			level.burning_zombies = [];
+		}
+		if(level.burning_zombies.size < 6)
+		{
+			level.burning_zombies[level.burning_zombies.size] = self;
+			self thread zombie_flame_watch();
+			self playsound("evt_zombie_ignite");
+			self thread zombie_death::flame_death_fx();
+			wait(randomfloat(1.25));
+		}
 	}
 	self dodamage(self.health + 666, self.origin, undefined, undefined, damagetype);
 }
@@ -984,7 +993,7 @@ function array_remove(array, object)
 		return;
 	}
 	new_array = [];
-	foreach(var_2c42d9f9, item in array)
+	foreach(item in array)
 	{
 		if(item != object)
 		{
@@ -1065,9 +1074,9 @@ function _napalm_damage_callback(str_mod, str_hit_location, v_hit_origin, e_play
 {
 	if(self.classname == "actor_spawner_zm_temple_napalm")
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1320,6 +1329,6 @@ function napalm_standing_in_water(forcecheck)
 */
 function napalm_monkey_bolt_taunts(monkey_bolt)
 {
-	return 1;
+	return true;
 }
 

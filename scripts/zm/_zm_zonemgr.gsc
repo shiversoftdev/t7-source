@@ -21,7 +21,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_zonemgr", &__init__, undefined, undefined);
 }
@@ -61,9 +61,9 @@ function zone_is_enabled(zone_name)
 {
 	if(!isdefined(level.zones) || !isdefined(level.zones[zone_name]) || !level.zones[zone_name].is_enabled)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -218,7 +218,7 @@ function any_player_in_zone(zone_name)
 {
 	if(!zone_is_enabled(zone_name))
 	{
-		return 0;
+		return false;
 	}
 	zone = level.zones[zone_name];
 	for(i = 0; i < zone.volumes.size; i++)
@@ -228,11 +228,11 @@ function any_player_in_zone(zone_name)
 		{
 			if(players[j] istouching(zone.volumes[i]) && !players[j].sessionstate == "spectator")
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -248,21 +248,21 @@ function entity_in_zone(zone_name, ignore_enabled_check = 0)
 {
 	if(isplayer(self) && self.sessionstate == "spectator")
 	{
-		return 0;
+		return false;
 	}
 	if(!zone_is_enabled(zone_name) && !ignore_enabled_check)
 	{
-		return 0;
+		return false;
 	}
 	zone = level.zones[zone_name];
-	foreach(var_ffb6ee91, e_volume in zone.volumes)
+	foreach(e_volume in zone.volumes)
 	{
 		if(self istouching(e_volume))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -278,17 +278,17 @@ function entity_in_active_zone(ignore_enabled_check = 0)
 {
 	if(isplayer(self) && self.sessionstate == "spectator")
 	{
-		return 0;
+		return false;
 	}
-	foreach(var_fce5bae7, str_adj_zone in level.active_zone_names)
+	foreach(str_adj_zone in level.active_zone_names)
 	{
 		b_in_zone = entity_in_zone(str_adj_zone, ignore_enabled_check);
 		if(b_in_zone)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -372,7 +372,7 @@ function zone_init(zone_name, zone_tag)
 		spots = struct::get_array(zone.volumes[0].target, "targetname");
 		barricades = struct::get_array("exterior_goal", "targetname");
 		box_locs = struct::get_array("treasure_chest_use", "targetname");
-		foreach(var_66b88250, spot in spots)
+		foreach(spot in spots)
 		{
 			spot.zone_name = zone_name;
 			if(!(isdefined(spot.is_blocked) && spot.is_blocked))
@@ -384,7 +384,7 @@ function zone_init(zone_name, zone_tag)
 				spot.is_enabled = 0;
 			}
 			tokens = strtok(spot.script_noteworthy, " ");
-			foreach(var_10667fa1, token in tokens)
+			foreach(token in tokens)
 			{
 				switch(token)
 				{
@@ -511,7 +511,7 @@ function reinit_zone_spawners()
 					spot.is_enabled = 0;
 				}
 				tokens = strtok(spot.script_noteworthy, " ");
-				foreach(var_457591cc, token in tokens)
+				foreach(token in tokens)
 				{
 					switch(token)
 					{
@@ -590,7 +590,7 @@ function enable_zone(zone_name)
 		entry_points[i].is_active = 1;
 		entry_points[i] triggerenable(1);
 	}
-	bb::function_2c248b75("zone_enable_" + zone_name);
+	bb::logroundevent("zone_enable_" + zone_name);
 }
 
 /*
@@ -1075,7 +1075,7 @@ function debug_show_spawn_locations()
 		if(isdefined(level.toggle_show_spawn_locations) && level.toggle_show_spawn_locations)
 		{
 			host_player = util::gethostplayer();
-			foreach(var_f972531b, location in level.zm_loc_types[""])
+			foreach(location in level.zm_loc_types[""])
 			{
 				distance = distance(location.origin, host_player.origin);
 				color = (0, 0, 1);
@@ -1233,16 +1233,16 @@ function create_spawner_list(zkeys)
 		zone = level.zones[zkeys[z]];
 		if(zone.is_enabled && zone.is_active && zone.is_spawning_allowed)
 		{
-			foreach(var_82a1e97d, a_locs in zone.a_loc_types)
+			foreach(a_locs in zone.a_loc_types)
 			{
-				foreach(var_c2435400, loc in a_locs)
+				foreach(loc in a_locs)
 				{
 					if(isdefined(loc.is_enabled) && loc.is_enabled == 0)
 					{
 						continue;
 					}
 					tokens = strtok(loc.script_noteworthy, " ");
-					foreach(var_1859a1b1, token in tokens)
+					foreach(token in tokens)
 					{
 						switch(token)
 						{
@@ -1422,7 +1422,7 @@ function _debug_show_zone(zone, color, alpha)
 {
 	if(isdefined(zone))
 	{
-		foreach(var_45994697, volume in zone.volumes)
+		foreach(volume in zone.volumes)
 		{
 			if(!isdefined(color) || !isdefined(alpha))
 			{

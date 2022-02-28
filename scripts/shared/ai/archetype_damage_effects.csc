@@ -16,7 +16,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function main()
+function autoexec main()
 {
 	registerclientfields();
 	loadeffects();
@@ -155,7 +155,7 @@ function loadeffects()
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function _burntag(localclientnum, tag, postfix)
+function private _burntag(localclientnum, tag, postfix)
 {
 	if(isdefined(self) && self hasdobj(localclientnum))
 	{
@@ -190,7 +190,7 @@ private function _burntag(localclientnum, tag, postfix)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function _burnstage(localclientnum, tagarray, shouldwait)
+function private _burnstage(localclientnum, tagarray, shouldwait)
 {
 	if(!isdefined(self))
 	{
@@ -229,7 +229,7 @@ private function _burnstage(localclientnum, tagarray, shouldwait)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _burnbody(localclientnum)
+function private _burnbody(localclientnum)
 {
 	self endon(#"entityshutdown");
 	self.burn_loop_sound_handle = self playloopsound("chr_burn_npc_loop1", 0.2);
@@ -308,7 +308,7 @@ function sndstopburnloop(timer)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _burncorpse(localclientnum, burningduration)
+function private _burncorpse(localclientnum, burningduration)
 {
 	self endon(#"entityshutdown");
 	timer = 10;
@@ -340,7 +340,7 @@ private function _burncorpse(localclientnum, burningduration)
 	wait(20);
 	if(isdefined(self))
 	{
-		foreach(var_e2d14a6a, fx in self.activefx)
+		foreach(fx in self.activefx)
 		{
 			stopfx(localclientnum, fx);
 			self notify(#"stopburningsounds");
@@ -361,7 +361,7 @@ private function _burncorpse(localclientnum, burningduration)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _smoldercorpse(localclientnum)
+function private _smoldercorpse(localclientnum)
 {
 	self endon(#"entityshutdown");
 	bonemodifier = "";
@@ -376,7 +376,7 @@ private function _smoldercorpse(localclientnum)
 	{
 		fxtoplay[fxtoplay.size] = tags[randomint(tags.size)];
 	}
-	foreach(var_77eeeab8, tag in fxtoplay)
+	foreach(tag in fxtoplay)
 	{
 		fx = (("smolder_" + self.archetype) + tag) + "_os";
 		if(isdefined(level._effect[fx]))
@@ -388,7 +388,7 @@ private function _smoldercorpse(localclientnum)
 	wait(20);
 	if(isdefined(self))
 	{
-		foreach(var_a646989f, fx in activefx)
+		foreach(fx in activefx)
 		{
 			stopfx(localclientnum, fx);
 		}
@@ -413,7 +413,7 @@ function actor_fire_fx(localclientnum, value, burningduration)
 			if(isdefined(self.activefx))
 			{
 				self stopallloopsounds(1);
-				foreach(var_d004e599, fx in self.activefx)
+				foreach(fx in self.activefx)
 				{
 					stopfx(localclientnum, fx);
 				}

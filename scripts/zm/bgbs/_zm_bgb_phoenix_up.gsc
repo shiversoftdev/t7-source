@@ -21,7 +21,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_bgb_phoenix_up", &__init__, undefined, "bgb");
 }
@@ -57,22 +57,22 @@ function __init__()
 function validation()
 {
 	players = level.players;
-	foreach(var_ae2f68ab, player in players)
+	foreach(player in players)
 	{
 		if(isdefined(player.var_df0decf1) && player.var_df0decf1)
 		{
-			return 0;
+			return false;
 		}
 		if(isdefined(level.var_11b06c2f) && self [[level.var_11b06c2f]](player, 1, 1))
 		{
-			return 1;
+			return true;
 		}
 		if(self zm_laststand::can_revive(player, 1, 1))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -88,7 +88,7 @@ function activation()
 {
 	playsoundatposition("zmb_bgb_phoenix_activate", (0, 0, 0));
 	players = level.players;
-	foreach(var_240dc023, player in players)
+	foreach(player in players)
 	{
 		can_revive = 0;
 		if(isdefined(level.var_11b06c2f) && self [[level.var_11b06c2f]](player, 1, 1))
@@ -120,6 +120,6 @@ function activation()
 function lost_perk_override(perk, var_2488e46a = undefined, var_24df4040 = undefined)
 {
 	self thread bgb::revive_and_return_perk_on_bgb_activation(perk);
-	return 0;
+	return false;
 }
 

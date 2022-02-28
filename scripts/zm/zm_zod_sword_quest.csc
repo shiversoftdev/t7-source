@@ -24,7 +24,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_zod_sword", &__init__, undefined, undefined);
 }
@@ -90,7 +90,7 @@ function magic_circle_state_internal(localclientnum, newval, n_current_ritual)
 	var_4126c532 = function_5dab7fb(localclientnum, n_current_ritual);
 	var_768e52e3 = undefined;
 	var_5306b772 = struct::get_array("sword_quest_magic_circle_place", "targetname");
-	foreach(var_b41743b4, var_87367d4f in var_5306b772)
+	foreach(var_87367d4f in var_5306b772)
 	{
 		if(var_87367d4f.script_int === n_current_ritual)
 		{
@@ -197,7 +197,7 @@ function function_4d020922(localclientnum, newval, n_character_index)
 		case 0:
 		{
 			var_4126c532.var_d88e6f5f hide();
-			var_4126c532.var_fdd22a10 hide();
+			var_4126c532.e_sword hide();
 			var_4126c532.e_egg hide();
 			if(isdefined(var_4126c532.var_d88e6f5f.sndloop))
 			{
@@ -214,7 +214,7 @@ function function_4d020922(localclientnum, newval, n_character_index)
 			var_4126c532.e_egg.angles = v_angles;
 			var_4126c532.e_egg linkto(var_4126c532.var_d88e6f5f, "tag_weapon_right");
 			var_4126c532.var_d88e6f5f show();
-			var_4126c532.var_fdd22a10 hide();
+			var_4126c532.e_sword hide();
 			var_4126c532.e_egg show();
 			level thread function_bd205438(localclientnum, var_4126c532);
 			var_4126c532.var_d88e6f5f playsound(0, "zmb_ee_keeper_ghost_appear");
@@ -230,7 +230,7 @@ function function_4d020922(localclientnum, newval, n_character_index)
 		case 2:
 		{
 			var_4126c532.var_d88e6f5f show();
-			var_4126c532.var_fdd22a10 hide();
+			var_4126c532.e_sword hide();
 			var_4126c532.e_egg hide();
 			if(!isdefined(var_4126c532.var_d88e6f5f.sndloop))
 			{
@@ -246,7 +246,7 @@ function function_4d020922(localclientnum, newval, n_character_index)
 		case 3:
 		{
 			var_4126c532.var_d88e6f5f hide();
-			var_4126c532.var_fdd22a10 hide();
+			var_4126c532.e_sword hide();
 			var_4126c532.e_egg hide();
 			var_4126c532.e_egg notify("remove_" + "egg_glow");
 			if(isdefined(var_4126c532.var_d88e6f5f.sndloop))
@@ -262,7 +262,7 @@ function function_4d020922(localclientnum, newval, n_character_index)
 			var_4126c532.e_egg unlink();
 			var_4126c532.e_egg.origin = v_origin;
 			var_4126c532.var_d88e6f5f hide();
-			var_4126c532.var_fdd22a10 hide();
+			var_4126c532.e_sword hide();
 			var_4126c532.e_egg show();
 			if(isdefined(var_4126c532.var_d88e6f5f.sndloop))
 			{
@@ -275,7 +275,7 @@ function function_4d020922(localclientnum, newval, n_character_index)
 		case 5:
 		{
 			var_4126c532.var_d88e6f5f show();
-			var_4126c532.var_fdd22a10 hide();
+			var_4126c532.e_sword hide();
 			var_4126c532.e_egg hide();
 			if(!isdefined(var_4126c532.var_d88e6f5f.sndloop))
 			{
@@ -287,7 +287,7 @@ function function_4d020922(localclientnum, newval, n_character_index)
 		case 6:
 		{
 			var_4126c532.var_d88e6f5f show();
-			var_4126c532.var_fdd22a10 hide();
+			var_4126c532.e_sword hide();
 			var_4126c532.e_egg hide();
 			if(!isdefined(var_4126c532.var_d88e6f5f.sndloop))
 			{
@@ -301,29 +301,29 @@ function function_4d020922(localclientnum, newval, n_character_index)
 		{
 			v_origin = var_4126c532.var_d88e6f5f gettagorigin("tag_weapon_right");
 			v_angles = var_4126c532.var_d88e6f5f gettagangles("tag_weapon_right");
-			var_4126c532.var_fdd22a10 unlink();
-			var_4126c532.var_fdd22a10.origin = v_origin;
-			var_4126c532.var_fdd22a10.angles = v_angles;
-			var_4126c532.var_fdd22a10 linkto(var_4126c532.var_d88e6f5f, "tag_weapon_right");
+			var_4126c532.e_sword unlink();
+			var_4126c532.e_sword.origin = v_origin;
+			var_4126c532.e_sword.angles = v_angles;
+			var_4126c532.e_sword linkto(var_4126c532.var_d88e6f5f, "tag_weapon_right");
 			var_4126c532.var_d88e6f5f show();
-			var_4126c532.var_fdd22a10 show();
+			var_4126c532.e_sword show();
 			var_4126c532.e_egg hide();
 			if(!isdefined(var_4126c532.var_d88e6f5f.sndloop))
 			{
 				var_4126c532.var_d88e6f5f.sndloop = var_4126c532.var_d88e6f5f playloopsound("zmb_ee_keeper_ghost_appear_lp", 2);
 			}
 			var_4126c532.var_d88e6f5f notify(#"hash_274ba0e6");
-			var_4126c532.var_fdd22a10 play_fx(localclientnum, "sword_quest_sword_glow", "tag_knife_fx");
+			var_4126c532.e_sword play_fx(localclientnum, "sword_quest_sword_glow", "tag_knife_fx");
 			var_4126c532.var_d88e6f5f animation::play("ai_zombie_zod_keeper_upgrade_sword", undefined, undefined, 1);
 			var_4126c532.var_d88e6f5f thread function_274ba0e6("ai_zombie_zod_keeper_give_me_sword_loop");
 			break;
 		}
 		case 8:
 		{
-			var_4126c532.var_fdd22a10 notify("remove_" + "sword_quest_sword_glow");
+			var_4126c532.e_sword notify("remove_" + "sword_quest_sword_glow");
 			wait(0.016);
 			var_4126c532.var_d88e6f5f show();
-			var_4126c532.var_fdd22a10 hide();
+			var_4126c532.e_sword hide();
 			var_4126c532.e_egg hide();
 			if(!isdefined(var_4126c532.var_d88e6f5f.sndloop))
 			{
@@ -550,10 +550,10 @@ function function_6890ca81(localclientnum, n_character_index)
 		var_4126c532.var_d88e6f5f.angles = s_loc.angles;
 		var_4126c532.var_d88e6f5f setmodel("c_zom_zod_keeper_fb");
 	}
-	if(!isdefined(var_4126c532.var_fdd22a10))
+	if(!isdefined(var_4126c532.e_sword))
 	{
-		var_4126c532.var_fdd22a10 = spawn(localclientnum, s_loc.origin, "script_model");
-		var_4126c532.var_fdd22a10 setmodel(level.var_e91b9e85[n_character_index]);
+		var_4126c532.e_sword = spawn(localclientnum, s_loc.origin, "script_model");
+		var_4126c532.e_sword setmodel(level.var_e91b9e85[n_character_index]);
 	}
 	if(!isdefined(var_4126c532.e_egg))
 	{
@@ -564,7 +564,7 @@ function function_6890ca81(localclientnum, n_character_index)
 	{
 		a_circles = getentarray(localclientnum, "sword_quest_magic_circle_on", "targetname");
 		var_55e0bdcf = undefined;
-		foreach(var_f0b78e47, e_circle in a_circles)
+		foreach(e_circle in a_circles)
 		{
 			if(e_circle.script_int === n_character_index)
 			{
@@ -577,7 +577,7 @@ function function_6890ca81(localclientnum, n_character_index)
 	{
 		a_circles = getentarray(localclientnum, "sword_quest_magic_circle_off", "targetname");
 		var_6a0d8b03 = undefined;
-		foreach(var_cd33b1ef, e_circle in a_circles)
+		foreach(e_circle in a_circles)
 		{
 			if(e_circle.script_int === n_character_index)
 			{
@@ -633,7 +633,7 @@ function get_name_from_ritual_clientfield_value(n_current_ritual)
 function function_85b951d8(var_181b74a5)
 {
 	var_79d1dcf6 = struct::get_array("sword_quest_magic_circle_place", "targetname");
-	foreach(var_75028dbc, var_87367d4f in var_79d1dcf6)
+	foreach(var_87367d4f in var_79d1dcf6)
 	{
 		if(var_87367d4f.script_int === var_181b74a5)
 		{
@@ -654,7 +654,7 @@ function function_85b951d8(var_181b74a5)
 function function_96ae1a10(var_181b74a5, n_character_index)
 {
 	var_79d1dcf6 = struct::get_array("sword_quest_magic_circle_player_" + n_character_index, "targetname");
-	foreach(var_57b92206, var_87367d4f in var_79d1dcf6)
+	foreach(var_87367d4f in var_79d1dcf6)
 	{
 		if(var_87367d4f.script_int === var_181b74a5)
 		{

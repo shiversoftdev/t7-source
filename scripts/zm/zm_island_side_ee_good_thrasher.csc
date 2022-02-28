@@ -123,7 +123,7 @@ function good_thrasher_fx(localclientnum, oldval, newval, bnewent, binitialsnap,
 	{
 		if(isdefined(self.var_ba9281dc))
 		{
-			foreach(var_e9918145, fx_id in self.var_ba9281dc)
+			foreach(fx_id in self.var_ba9281dc)
 			{
 				stopfx(localclientnum, fx_id);
 			}
@@ -136,7 +136,7 @@ function good_thrasher_fx(localclientnum, oldval, newval, bnewent, binitialsnap,
 	}
 	else if(isdefined(self.var_ba9281dc))
 	{
-		foreach(var_d6596e6e, fx_id in self.var_ba9281dc)
+		foreach(fx_id in self.var_ba9281dc)
 		{
 			stopfx(localclientnum, fx_id);
 		}

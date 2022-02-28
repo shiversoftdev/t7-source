@@ -42,7 +42,7 @@ function main()
 	s_right function_e457f1d();
 	s_left function_e457f1d();
 	var_cefeeda4 = getnodearray("powered_bridge_door", "targetname");
-	foreach(var_48b7f060, var_8bd15b35 in var_cefeeda4)
+	foreach(var_8bd15b35 in var_cefeeda4)
 	{
 		unlinktraversal(var_8bd15b35);
 	}
@@ -82,15 +82,15 @@ function function_87d1b410(e_player)
 	if(!level flag::get("power_on"))
 	{
 		self sethintstring(&"ZOMBIE_NEED_POWER");
-		return 0;
+		return false;
 	}
 	if(level flag::get("bridge_in_use"))
 	{
 		self sethintstring(&"ZM_STALINGRAD_BRIDGE_UNAVAILABLE");
-		return 0;
+		return false;
 	}
 	self sethintstring(&"ZM_STALINGRAD_BRIDGE_USE", 500);
-	return 1;
+	return true;
 }
 
 /*
@@ -155,7 +155,7 @@ function activate_bridge(e_player)
 	e_gate movez(100 * -1, 0.05);
 	e_gate waittill(#"movedone");
 	e_gate connectpaths();
-	foreach(var_2671007b, var_8bd15b35 in var_cefeeda4)
+	foreach(var_8bd15b35 in var_cefeeda4)
 	{
 		linktraversal(var_8bd15b35);
 	}
@@ -169,7 +169,7 @@ function activate_bridge(e_player)
 	e_gate movez(100, 0.05);
 	e_gate waittill(#"movedone");
 	e_gate disconnectpaths();
-	foreach(var_32d69962, var_8bd15b35 in var_cefeeda4)
+	foreach(var_8bd15b35 in var_cefeeda4)
 	{
 		unlinktraversal(var_8bd15b35);
 	}
@@ -196,7 +196,7 @@ function function_462efa3d()
 {
 	var_435fc5db = getent("bridge_area", "targetname");
 	a_zombies = getaiteamarray(level.zombie_team);
-	foreach(var_b2c75ad8, ai in a_zombies)
+	foreach(ai in a_zombies)
 	{
 		if(ai istouching(var_435fc5db))
 		{
@@ -276,7 +276,7 @@ function function_40ac3c12(e_player)
 */
 function function_e0c7ad1e(var_fa30b172, var_c83a1961)
 {
-	foreach(var_51a3be6c, player in level.players)
+	foreach(player in level.players)
 	{
 		if(player istouching(var_fa30b172))
 		{
@@ -340,7 +340,7 @@ function function_54227761(var_fa30b172, var_c83a1961, e_player)
 	a_zombies = getaiteamarray(level.zombie_team);
 	n_count = 0;
 	n_kill_count = 0;
-	foreach(var_4ac760c6, ai_zombie in a_zombies)
+	foreach(ai_zombie in a_zombies)
 	{
 		if(ai_zombie istouching(var_fa30b172))
 		{

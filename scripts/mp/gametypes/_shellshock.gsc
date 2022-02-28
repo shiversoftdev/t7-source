@@ -17,7 +17,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("shellshock", &__init__, undefined, undefined);
 }
@@ -80,17 +80,23 @@ function on_damage(cause, damage, weapon)
 		{
 			time = 4;
 		}
-		else if(damage >= 50)
+		else
 		{
-			time = 3;
-		}
-		else if(damage >= 25)
-		{
-			time = 2;
-		}
-		else if(damage > 10)
-		{
-			time = 2;
+			if(damage >= 50)
+			{
+				time = 3;
+			}
+			else
+			{
+				if(damage >= 25)
+				{
+					time = 2;
+				}
+				else if(damage > 10)
+				{
+					time = 2;
+				}
+			}
 		}
 		if(time)
 		{

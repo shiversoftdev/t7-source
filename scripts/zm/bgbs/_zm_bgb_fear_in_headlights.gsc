@@ -18,7 +18,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_bgb_fear_in_headlights", &__init__, undefined, "bgb");
 }
@@ -50,7 +50,7 @@ function __init__()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_b13c2f15()
+function private function_b13c2f15()
 {
 	self endon(#"hash_4e7f43fc");
 	self waittill(#"death");
@@ -73,7 +73,7 @@ private function function_b13c2f15()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_b8eb33c5(ai)
+function private function_b8eb33c5(ai)
 {
 	ai notify(#"hash_4e7f43fc");
 	ai thread function_b13c2f15();
@@ -93,7 +93,7 @@ private function function_b8eb33c5(ai)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_31a2964e(ai)
+function private function_31a2964e(ai)
 {
 	ai notify(#"hash_4e7f43fc");
 	ai setentitypaused(0);
@@ -120,16 +120,16 @@ private function function_31a2964e(ai)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function function_723d94f5(allai, trace, degree = 45)
+function private function_723d94f5(allai, trace, degree = 45)
 {
 	var_f1649153 = allai;
 	players = getplayers();
 	var_445b9352 = cos(degree);
-	foreach(var_420fd479, player in players)
+	foreach(player in players)
 	{
 		var_f1649153 = player cantseeentities(var_f1649153, var_445b9352, trace);
 	}
-	foreach(var_b41743b4, ai in var_f1649153)
+	foreach(ai in var_f1649153)
 	{
 		if(isalive(ai))
 		{
@@ -151,9 +151,9 @@ function validation()
 {
 	if(bgb::is_team_active("zm_bgb_fear_in_headlights"))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -193,7 +193,7 @@ function function_deeb696f()
 	while(true)
 	{
 		allai = getaiarray();
-		foreach(var_a6459b26, ai in allai)
+		foreach(ai in allai)
 		{
 			if(isdefined(ai.var_48cabef5) && ai [[ai.var_48cabef5]]())
 			{
@@ -206,7 +206,7 @@ function function_deeb696f()
 		}
 		var_e4760c66 = [];
 		var_e37fbbbd = [];
-		foreach(var_ef795c4e, ai in allai)
+		foreach(ai in allai)
 		{
 			if(isdefined(ai.aat_turned) && ai.aat_turned && ai ispaused())
 			{
@@ -244,7 +244,7 @@ function kill_fear_in_headlights()
 		self playsound("zmb_bgb_fearinheadlights_end");
 	}
 	allai = getaiarray();
-	foreach(var_a8b601f9, ai in allai)
+	foreach(ai in allai)
 	{
 		function_31a2964e(ai);
 	}

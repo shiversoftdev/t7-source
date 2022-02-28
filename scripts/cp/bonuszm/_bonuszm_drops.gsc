@@ -63,7 +63,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function main()
+function autoexec main()
 {
 	if(!sessionmodeiscampaignzombiesgame())
 	{
@@ -138,54 +138,57 @@ function function_b67e03f7()
 	{
 		var_bf55d8d2[var_bf55d8d2.size] = "instakill";
 	}
-	else if(randomchance < (int(level.var_a9e78bf7["weapondropchance"] * level.var_a9e78bf7["powerdropsscalar"])))
+	else
 	{
-		var_bf55d8d2[var_bf55d8d2.size] = "random_weapon";
-	}
-	if(randomchance < (int(level.var_a9e78bf7["cybercoredropchance"] * level.var_a9e78bf7["powerdropsscalar"])))
-	{
-		var_bf55d8d2[var_bf55d8d2.size] = "cybercom";
-	}
-	if(randomchance < (int(level.var_a9e78bf7["cybercoreupgradeddropchance"] * level.var_a9e78bf7["powerdropsscalar"])))
-	{
-		var_bf55d8d2[var_bf55d8d2.size] = "cybercom_upgraded";
-	}
-	var_7a2764e8 = getactorteamarray("axis");
-	var_d55df350 = isdefined(var_7a2764e8) && var_7a2764e8.size && var_7a2764e8.size >= 3;
-	if(randomchance < (int(level.var_a9e78bf7["instakilldropchance"] * level.var_a9e78bf7["powerdropsscalar"])) && !function_9c4468cc() && !function_5fcda3a0())
-	{
-		var_bf55d8d2[var_bf55d8d2.size] = "instakill";
-	}
-	if(randomchance < (int(level.var_a9e78bf7["maxdropammochance"] * level.var_a9e78bf7["powerdropsscalar"])))
-	{
-		var_bf55d8d2[var_bf55d8d2.size] = "max_ammo";
-	}
-	if(randomchance < (int(level.var_a9e78bf7["maxdropammoupgradedchance"] * level.var_a9e78bf7["powerdropsscalar"])))
-	{
-		var_bf55d8d2[var_bf55d8d2.size] = "max_ammo_upgraded";
-	}
-	if(var_d55df350 && randomchance < (int(level.var_a9e78bf7["instakillupgradeddropchance"] * level.var_a9e78bf7["powerdropsscalar"])) && !function_9c4468cc() && !function_5fcda3a0())
-	{
-		var_b37cc8bd = 0;
-		foreach(var_40ce22db, player in level.players)
+		if(randomchance < (int(level.var_a9e78bf7["weapondropchance"] * level.var_a9e78bf7["powerdropsscalar"])))
 		{
-			if(player hasweapon(level.var_45cae8b1, 1))
-			{
-				var_b37cc8bd = 1;
-			}
+			var_bf55d8d2[var_bf55d8d2.size] = "random_weapon";
 		}
-		if(!var_b37cc8bd)
+		if(randomchance < (int(level.var_a9e78bf7["cybercoredropchance"] * level.var_a9e78bf7["powerdropsscalar"])))
 		{
-			var_bf55d8d2[var_bf55d8d2.size] = "instakill_upgraded";
+			var_bf55d8d2[var_bf55d8d2.size] = "cybercom";
 		}
-		else
+		if(randomchance < (int(level.var_a9e78bf7["cybercoreupgradeddropchance"] * level.var_a9e78bf7["powerdropsscalar"])))
+		{
+			var_bf55d8d2[var_bf55d8d2.size] = "cybercom_upgraded";
+		}
+		var_7a2764e8 = getactorteamarray("axis");
+		var_d55df350 = isdefined(var_7a2764e8) && var_7a2764e8.size && var_7a2764e8.size >= 3;
+		if(randomchance < (int(level.var_a9e78bf7["instakilldropchance"] * level.var_a9e78bf7["powerdropsscalar"])) && !function_9c4468cc() && !function_5fcda3a0())
 		{
 			var_bf55d8d2[var_bf55d8d2.size] = "instakill";
 		}
-	}
-	if(var_d55df350 && randomchance < (int(level.var_a9e78bf7["rapsdropchance"] * level.var_a9e78bf7["powerdropsscalar"])) && (!(isdefined(level.var_5a1513c4) && level.var_5a1513c4)))
-	{
-		var_bf55d8d2[var_bf55d8d2.size] = "raps";
+		if(randomchance < (int(level.var_a9e78bf7["maxdropammochance"] * level.var_a9e78bf7["powerdropsscalar"])))
+		{
+			var_bf55d8d2[var_bf55d8d2.size] = "max_ammo";
+		}
+		if(randomchance < (int(level.var_a9e78bf7["maxdropammoupgradedchance"] * level.var_a9e78bf7["powerdropsscalar"])))
+		{
+			var_bf55d8d2[var_bf55d8d2.size] = "max_ammo_upgraded";
+		}
+		if(var_d55df350 && randomchance < (int(level.var_a9e78bf7["instakillupgradeddropchance"] * level.var_a9e78bf7["powerdropsscalar"])) && !function_9c4468cc() && !function_5fcda3a0())
+		{
+			var_b37cc8bd = 0;
+			foreach(player in level.players)
+			{
+				if(player hasweapon(level.var_45cae8b1, 1))
+				{
+					var_b37cc8bd = 1;
+				}
+			}
+			if(!var_b37cc8bd)
+			{
+				var_bf55d8d2[var_bf55d8d2.size] = "instakill_upgraded";
+			}
+			else
+			{
+				var_bf55d8d2[var_bf55d8d2.size] = "instakill";
+			}
+		}
+		if(var_d55df350 && randomchance < (int(level.var_a9e78bf7["rapsdropchance"] * level.var_a9e78bf7["powerdropsscalar"])) && (!(isdefined(level.var_5a1513c4) && level.var_5a1513c4)))
+		{
+			var_bf55d8d2[var_bf55d8d2.size] = "raps";
+		}
 	}
 	if(var_bf55d8d2.size)
 	{
@@ -365,13 +368,16 @@ function function_fe2b609e(v_moveto_pos, str_model, upgraded, var_b8419776 = 0)
 		{
 			self clientfield::set("powerup_on_fx", 3);
 		}
-		else if(isdefined(upgraded) && upgraded)
-		{
-			self clientfield::set("powerup_on_fx", 2);
-		}
 		else
 		{
-			self clientfield::set("powerup_on_fx", 1);
+			if(isdefined(upgraded) && upgraded)
+			{
+				self clientfield::set("powerup_on_fx", 2);
+			}
+			else
+			{
+				self clientfield::set("powerup_on_fx", 1);
+			}
 		}
 	}
 	self show();
@@ -447,17 +453,23 @@ function function_b050d188()
 		{
 			n_multiplier = n_flash_slow;
 		}
-		else if(i < n_flash_medium)
-		{
-			n_multiplier = 10;
-		}
-		else if(i < n_flash_fast)
-		{
-			n_multiplier = 5;
-		}
 		else
 		{
-			n_multiplier = 2;
+			if(i < n_flash_medium)
+			{
+				n_multiplier = 10;
+			}
+			else
+			{
+				if(i < n_flash_fast)
+				{
+					n_multiplier = 5;
+				}
+				else
+				{
+					n_multiplier = 2;
+				}
+			}
 		}
 		if(b_show)
 		{
@@ -663,7 +675,7 @@ function function_da35c458(str_bonus, var_638b7f73)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_be188509()
+function private function_be188509()
 {
 	level.var_5a1513c4 = 1;
 	closestplayer = arraygetclosest(self.origin, level.players);
@@ -726,7 +738,7 @@ function function_2beeb3b3(upgraded)
 		assert(isdefined(level.var_6412066) && level.var_6412066.size);
 	#/
 	abilities = arraycopy(level.var_6412066);
-	foreach(var_f44256b1, ability in level.var_6412066)
+	foreach(ability in level.var_6412066)
 	{
 		if(self hascybercomability(ability) > 0)
 		{
@@ -767,7 +779,7 @@ function function_2beeb3b3(upgraded)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_8435cfdc(var_b5725157, upgraded)
+function private function_8435cfdc(var_b5725157, upgraded)
 {
 	self endon(#"death");
 	self notify(#"hash_8435cfdc");
@@ -800,7 +812,7 @@ private function function_8435cfdc(var_b5725157, upgraded)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_1c087aac(upgraded)
+function private function_1c087aac(upgraded)
 {
 	self endon(#"death");
 	self endon(#"hash_8435cfdc");
@@ -821,7 +833,7 @@ private function function_1c087aac(upgraded)
 	{
 		wait(0.1);
 	}
-	foreach(var_579ef87a, ability in level.cybercom.abilities)
+	foreach(ability in level.cybercom.abilities)
 	{
 		self clearcybercomability(ability.name);
 		self cybercom_gadget::abilitytaken(ability);
@@ -837,7 +849,7 @@ private function function_1c087aac(upgraded)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_2d73d3d9(upgraded)
+function private function_2d73d3d9(upgraded)
 {
 	self endon(#"death");
 	self endon(#"hash_8435cfdc");
@@ -859,7 +871,7 @@ private function function_2d73d3d9(upgraded)
 		wait(0.1);
 	}
 	wait(5);
-	foreach(var_98a7f586, ability in level.cybercom.abilities)
+	foreach(ability in level.cybercom.abilities)
 	{
 		self clearcybercomability(ability.name);
 		self cybercom_gadget::abilitytaken(ability);
@@ -875,7 +887,7 @@ private function function_2d73d3d9(upgraded)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function bzmoncybercomoncallback(player)
+function private bzmoncybercomoncallback(player)
 {
 	/#
 		assert(isplayer(player));
@@ -899,7 +911,7 @@ private function bzmoncybercomoncallback(player)
 function give_max_ammo()
 {
 	a_w_weapons = self getweaponslist();
-	foreach(var_9017479d, w_weapon in a_w_weapons)
+	foreach(w_weapon in a_w_weapons)
 	{
 		self givemaxammo(w_weapon);
 		self setweaponammoclip(w_weapon, w_weapon.clipsize);
@@ -917,10 +929,10 @@ function give_max_ammo()
 */
 function function_4827a249()
 {
-	foreach(var_1d25397b, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		a_w_weapons = player getweaponslist();
-		foreach(var_9cf9d426, w_weapon in a_w_weapons)
+		foreach(w_weapon in a_w_weapons)
 		{
 			player givemaxammo(w_weapon);
 			player setweaponammoclip(w_weapon, w_weapon.clipsize);
@@ -1015,14 +1027,14 @@ function function_ac97a368()
 */
 function function_9c4468cc()
 {
-	foreach(var_cb3869a0, player in level.players)
+	foreach(player in level.players)
 	{
 		if(isdefined(self.forceanhilateondeath))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1038,9 +1050,9 @@ function function_5fcda3a0()
 {
 	if(isdefined(level.bzm_worldpaused) && level.bzm_worldpaused)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1093,7 +1105,7 @@ function function_eb0b4e74()
 function function_3dce4e74()
 {
 	level.bzm_worldpaused = 1;
-	foreach(var_21f5cc1c, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player clientfield::set_to_player("bonuszm_player_instakill_active_fx", 1);
 		player.forceanhilateondeath = 1;
@@ -1107,7 +1119,7 @@ function function_3dce4e74()
 	setpauseworld(1);
 	if(isdefined(level.heroes) && level.heroes.size)
 	{
-		foreach(var_aada4024, hero in level.heroes)
+		foreach(hero in level.heroes)
 		{
 			hero setignorepauseworld(1);
 		}
@@ -1115,7 +1127,7 @@ function function_3dce4e74()
 	ais = getaiteamarray("allies");
 	if(isdefined(ais) && ais.size)
 	{
-		foreach(var_6405f90, ai in ais)
+		foreach(ai in ais)
 		{
 			if(isvehicle(ai))
 			{
@@ -1149,7 +1161,7 @@ function function_1dfabdfa()
 	setslowmotion(1.2, 1, 2);
 	wait(1);
 	setpauseworld(0);
-	foreach(var_209d81f0, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player clientfield::set_to_player("bonuszm_player_instakill_active_fx", 0);
 		player.forceanhilateondeath = 0;
@@ -1181,7 +1193,7 @@ function function_2a5eb705()
 		{
 			level.var_f011cb7c delete();
 		}
-		foreach(var_3cbe393a, drop in level.var_c85f5b9b)
+		foreach(drop in level.var_c85f5b9b)
 		{
 			if(isdefined(drop))
 			{

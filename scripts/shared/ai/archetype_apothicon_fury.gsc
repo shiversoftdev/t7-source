@@ -28,6 +28,105 @@
 #using scripts\shared\spawner_shared;
 #using scripts\shared\util_shared;
 
+class animationadjustmentinfoz 
+{
+	var adjustmentstarted;
+	var readjustmentstarted;
+
+	/*
+		Name: constructor
+		Namespace: animationadjustmentinfoz
+		Checksum: 0xBC354E48
+		Offset: 0x18D8
+		Size: 0x1C
+		Parameters: 0
+		Flags: Linked
+	*/
+	constructor()
+	{
+		adjustmentstarted = 0;
+		readjustmentstarted = 0;
+	}
+
+	/*
+		Name: destructor
+		Namespace: animationadjustmentinfoz
+		Checksum: 0x99EC1590
+		Offset: 0x1900
+		Size: 0x4
+		Parameters: 0
+		Flags: Linked
+	*/
+	destructor()
+	{
+	}
+
+}
+
+class animationadjustmentinfoxy 
+{
+	var adjustmentstarted;
+
+	/*
+		Name: constructor
+		Namespace: animationadjustmentinfoxy
+		Checksum: 0xAF212837
+		Offset: 0x19A0
+		Size: 0x10
+		Parameters: 0
+		Flags: Linked
+	*/
+	constructor()
+	{
+		adjustmentstarted = 0;
+	}
+
+	/*
+		Name: destructor
+		Namespace: animationadjustmentinfoxy
+		Checksum: 0x99EC1590
+		Offset: 0x19B8
+		Size: 0x4
+		Parameters: 0
+		Flags: Linked
+	*/
+	destructor()
+	{
+	}
+
+}
+
+class jukeinfo 
+{
+
+	/*
+		Name: constructor
+		Namespace: jukeinfo
+		Checksum: 0x99EC1590
+		Offset: 0x54E0
+		Size: 0x4
+		Parameters: 0
+		Flags: Linked
+	*/
+	constructor()
+	{
+	}
+
+	/*
+		Name: destructor
+		Namespace: jukeinfo
+		Checksum: 0x99EC1590
+		Offset: 0x54F0
+		Size: 0x4
+		Parameters: 0
+		Flags: Linked
+	*/
+	destructor()
+	{
+	}
+
+}
+
 #namespace apothiconfurybehavior;
 
 /*
@@ -39,7 +138,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	initapothiconfurybehaviorsandasm();
 	apothiconfuryinterface::registerapothiconfuryinterfaceattributes();
@@ -65,7 +164,7 @@ autoexec function init()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function initapothiconfurybehaviorsandasm()
+function private initapothiconfurybehaviorsandasm()
 {
 	behaviortreenetworkutility::registerbehaviortreescriptapi("apothiconCanJuke", &apothiconcanjuke);
 	behaviortreenetworkutility::registerbehaviortreescriptapi("apothiconJukeInit", &apothiconjukeinit);
@@ -104,7 +203,7 @@ private function initapothiconfurybehaviorsandasm()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function apothiconfuryblackboardinit()
+function private apothiconfuryblackboardinit()
 {
 	blackboard::createblackboardforentity(self);
 	blackboard::registerblackboardattribute(self, "_locomotion_speed", "locomotion_speed_run", undefined);
@@ -152,7 +251,7 @@ private function apothiconfuryblackboardinit()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function apothiconfuryspawnsetup()
+function private apothiconfuryspawnsetup()
 {
 	self.entityradius = 30;
 	self.jukemaxdistance = 1500;
@@ -182,7 +281,7 @@ private function apothiconfuryspawnsetup()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function apothiconfuryonanimscriptedcallback(entity)
+function private apothiconfuryonanimscriptedcallback(entity)
 {
 	entity.__blackboard = undefined;
 	entity apothiconfuryblackboardinit();
@@ -207,7 +306,7 @@ function apothicondeathdissolve(entity)
 	a_filtered_zombies = array::filter(a_zombies, 0, &apothiconzombieeligibleforknockdown, entity, entity.origin);
 	if(a_filtered_zombies.size > 0)
 	{
-		foreach(var_d8c9d541, zombie in a_filtered_zombies)
+		foreach(zombie in a_filtered_zombies)
 		{
 			apothiconknockdownzombie(entity, zombie);
 		}
@@ -236,7 +335,7 @@ function apothicondeathdissolved(entity)
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function mocompapothiconfuryteleportinit(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function private mocompapothiconfuryteleportinit(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	entity orientmode("face angle", entity.angles[1]);
 	entity setrepairpaths(0);
@@ -269,7 +368,7 @@ private function mocompapothiconfuryteleportinit(entity, mocompanim, mocompanimb
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function mocompapothiconfuryteleportterminate(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function private mocompapothiconfuryteleportterminate(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	if(!isdefined(entity.traverseendnode))
 	{
@@ -282,101 +381,6 @@ private function mocompapothiconfuryteleportterminate(entity, mocompanim, mocomp
 	entity.blockingpain = 0;
 	entity.usegoalanimweight = 0;
 	entity.bgbignorefearinheadlights = 0;
-}
-
-#namespace animationadjustmentinfoz;
-
-/*
-	Name: __constructor
-	Namespace: animationadjustmentinfoz
-	Checksum: 0xBC354E48
-	Offset: 0x18D8
-	Size: 0x1C
-	Parameters: 0
-	Flags: Linked
-*/
-function __constructor()
-{
-	self.adjustmentstarted = 0;
-	self.readjustmentstarted = 0;
-}
-
-/*
-	Name: __destructor
-	Namespace: animationadjustmentinfoz
-	Checksum: 0x99EC1590
-	Offset: 0x1900
-	Size: 0x4
-	Parameters: 0
-	Flags: Linked
-*/
-function __destructor()
-{
-}
-
-#namespace apothiconfurybehavior;
-
-/*
-	Name: animationadjustmentinfoz
-	Namespace: apothiconfurybehavior
-	Checksum: 0x8F6A434F
-	Offset: 0x1910
-	Size: 0x86
-	Parameters: 0
-	Flags: AutoExec, Private
-*/
-private autoexec function animationadjustmentinfoz()
-{
-	classes.animationadjustmentinfoz[0] = spawnstruct();
-	classes.animationadjustmentinfoz[0].__vtable[1606033458] = &animationadjustmentinfoz::__destructor;
-	classes.animationadjustmentinfoz[0].__vtable[-1690805083] = &animationadjustmentinfoz::__constructor;
-}
-
-#namespace animationadjustmentinfoxy;
-
-/*
-	Name: __constructor
-	Namespace: animationadjustmentinfoxy
-	Checksum: 0xAF212837
-	Offset: 0x19A0
-	Size: 0x10
-	Parameters: 0
-	Flags: Linked
-*/
-function __constructor()
-{
-	self.adjustmentstarted = 0;
-}
-
-/*
-	Name: __destructor
-	Namespace: animationadjustmentinfoxy
-	Checksum: 0x99EC1590
-	Offset: 0x19B8
-	Size: 0x4
-	Parameters: 0
-	Flags: Linked
-*/
-function __destructor()
-{
-}
-
-#namespace apothiconfurybehavior;
-
-/*
-	Name: animationadjustmentinfoxy
-	Namespace: apothiconfurybehavior
-	Checksum: 0x6716C03E
-	Offset: 0x19C8
-	Size: 0x86
-	Parameters: 0
-	Flags: AutoExec, Private
-*/
-private autoexec function animationadjustmentinfoxy()
-{
-	classes.animationadjustmentinfoxy[0] = spawnstruct();
-	classes.animationadjustmentinfoxy[0].__vtable[1606033458] = &animationadjustmentinfoxy::__destructor;
-	classes.animationadjustmentinfoxy[0].__vtable[-1690805083] = &animationadjustmentinfoxy::__constructor;
 }
 
 /*
@@ -444,9 +448,7 @@ function mocompapothiconfuryjukeinit(entity, mocompanim, mocompanimblendouttime,
 		recordsphere(newstoppos, 3, (1, 1, 0), "", entity);
 	#/
 	entity.animationadjustmentinfoz = undefined;
-	object = new animationadjustmentinfoz();
-	[[ object ]]->__constructor();
-	entity.animationadjustmentinfoz = object;
+	entity.animationadjustmentinfoz = new animationadjustmentinfoz();
 	entity.animationadjustmentinfoz.starttime = starttime;
 	entity.animationadjustmentinfoz.stoptime = stoptime;
 	entity.animationadjustmentinfoz.enemy = entity.enemy;
@@ -544,7 +546,7 @@ function mocompapothiconfuryjuketerminate(entity, mocompanim, mocompanimblendout
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function runbamfreadjustmentanalysis(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function private runbamfreadjustmentanalysis(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	/#
 		assert(isdefined(entity.animationadjustmentinfoz.adjustmentstarted) && entity.animationadjustmentinfoz.adjustmentstarted);
@@ -637,9 +639,7 @@ private function runbamfreadjustmentanalysis(entity, mocompanim, mocompanimblend
 		#/
 		starttime = readjustmentanimtime;
 		stoptime = entity.animationadjustmentinfoz.stoptime;
-		object = new animationadjustmentinfoz();
-		[[ object ]]->__constructor();
-		entity.animationadjustmentinfoz2 = object;
+		entity.animationadjustmentinfoz2 = new animationadjustmentinfoz();
 		entity.animationadjustmentinfoz2.starttime = readjustmentanimtime;
 		entity.animationadjustmentinfoz2.stoptime = stoptime;
 		entity.animationadjustmentinfoz2.landposonground = landposonground;
@@ -664,9 +664,7 @@ private function runbamfreadjustmentanalysis(entity, mocompanim, mocompanimblend
 		meleeendposition = (meleeendposition[0], meleeendposition[1], landpos[2]);
 		xydirection = vectornormalize(meleeendposition - landpos);
 		xydistance = distance(meleeendposition, landpos);
-		object = new animationadjustmentinfoxy();
-		[[ object ]]->__constructor();
-		entity.animationadjustmentinfoxy = object;
+		entity.animationadjustmentinfoxy = new animationadjustmentinfoxy();
 		entity.animationadjustmentinfoxy.starttime = starttime;
 		entity.animationadjustmentinfoxy.stoptime = stoptime;
 		entity.animationadjustmentinfoxy.stepsize = xydistance / adjustduration;
@@ -767,9 +765,7 @@ function mocompapothiconfurybamfinit(entity, mocompanim, mocompanimblendouttime,
 		recordline(newstoppos, landposonground, (0, 1, 0), "", entity);
 		recordsphere(newstoppos, 3, (0, 1, 0), "", entity);
 	#/
-	object = new animationadjustmentinfoz();
-	[[ object ]]->__constructor();
-	entity.animationadjustmentinfoz = object;
+	entity.animationadjustmentinfoz = new animationadjustmentinfoz();
 	entity.animationadjustmentinfoz.starttime = starttime;
 	entity.animationadjustmentinfoz.stoptime = stoptime;
 	entity.animationadjustmentinfoz.enemy = entity.enemy;
@@ -901,30 +897,30 @@ function apothiconshouldmeleecondition(behaviortreeentity)
 {
 	if(isdefined(behaviortreeentity.enemyoverride) && isdefined(behaviortreeentity.enemyoverride[1]))
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(behaviortreeentity.enemy))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(behaviortreeentity.marked_for_death))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(behaviortreeentity.ignoremelee) && behaviortreeentity.ignoremelee)
 	{
-		return 0;
+		return false;
 	}
 	if(distancesquared(behaviortreeentity.origin, behaviortreeentity.enemy.origin) > 10000)
 	{
-		return 0;
+		return false;
 	}
 	yawtoenemy = angleclamp180(behaviortreeentity.angles[1] - (vectortoangles(behaviortreeentity.enemy.origin - behaviortreeentity.origin)[1]));
 	if(abs(yawtoenemy) > 60)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -968,37 +964,37 @@ function apothiconcanbamfinternal(entity, bamfafterjuke = 0)
 {
 	if(!ai::getaiattribute(entity, "can_bamf"))
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(entity.enemy))
 	{
-		return 0;
+		return false;
 	}
 	if(!isplayer(entity.enemy))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(entity.juking) && entity.juking)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(entity.isbamfing) && entity.isbamfing)
 	{
-		return 0;
+		return false;
 	}
 	if(!bamfafterjuke)
 	{
 		if(gettime() < entity.nextbamfmeleetime)
 		{
-			return 0;
+			return false;
 		}
 		jukeevents = blackboard::getblackboardevents("apothicon_fury_bamf");
 		tooclosejukedistancesqr = 400 * 400;
-		foreach(var_9440c573, event in jukeevents)
+		foreach(event in jukeevents)
 		{
 			if(distance2dsquared(entity.origin, event.data.origin) <= tooclosejukedistancesqr)
 			{
-				return 0;
+				return false;
 			}
 		}
 	}
@@ -1008,7 +1004,7 @@ function apothiconcanbamfinternal(entity, bamfafterjuke = 0)
 	enemyorigin = entity.enemy.origin;
 	apothiconfurys = getaiarchetypearray("apothicon_fury");
 	furiesnearplayer = 0;
-	foreach(var_7dc33d8, apothiconfury in apothiconfurys)
+	foreach(apothiconfury in apothiconfurys)
 	{
 		if(distancesquared(enemyorigin, apothiconfury.origin) <= 6400)
 		{
@@ -1017,7 +1013,7 @@ function apothiconcanbamfinternal(entity, bamfafterjuke = 0)
 	}
 	if(furiesnearplayer >= 4)
 	{
-		return 0;
+		return false;
 	}
 	distancetoenemysq = distancesquared(enemyorigin, entity.origin);
 	distanceminthresholdsq = 400 * 400;
@@ -1029,33 +1025,33 @@ function apothiconcanbamfinternal(entity, bamfafterjuke = 0)
 	{
 		if(!util::within_fov(enemyorigin, entity.enemy.angles, entity.origin, 0.642))
 		{
-			return 0;
+			return false;
 		}
 		if(!util::within_fov(entity.origin, entity.angles, enemyorigin, 0.642))
 		{
-			return 0;
+			return false;
 		}
 		meleestartposition = entity.origin;
 		meleeendposition = enemyorigin;
 		if(!ispointonnavmesh(meleestartposition, entity))
 		{
-			return 0;
+			return false;
 		}
 		if(!ispointonnavmesh(meleeendposition, entity))
 		{
-			return 0;
+			return false;
 		}
 		if(!tracepassedonnavmesh(meleestartposition, meleeendposition, entity.entityradius))
 		{
-			return 0;
+			return false;
 		}
 		if(!entity findpath(meleestartposition, meleeendposition))
 		{
-			return 0;
+			return false;
 		}
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1112,9 +1108,9 @@ function apothiconshouldtauntatplayer(entity)
 	tauntevents = blackboard::getblackboardevents("apothicon_fury_taunt");
 	if(isdefined(tauntevents) && tauntevents.size)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1259,7 +1255,7 @@ function apothiconknockdownservice(entity)
 		a_filtered_zombies = array::filter(a_zombies, 0, &apothiconzombieeligibleforknockdown, entity, predicted_pos);
 		if(a_filtered_zombies.size > 0)
 		{
-			foreach(var_d4c822de, zombie in a_filtered_zombies)
+			foreach(zombie in a_filtered_zombies)
 			{
 				apothiconknockdownzombie(entity, zombie);
 			}
@@ -1276,21 +1272,21 @@ function apothiconknockdownservice(entity)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function apothiconzombieeligibleforknockdown(zombie, thrasher, predicted_pos)
+function private apothiconzombieeligibleforknockdown(zombie, thrasher, predicted_pos)
 {
 	if(zombie.knockdown === 1)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(zombie.missinglegs) && zombie.missinglegs)
 	{
-		return 0;
+		return false;
 	}
 	knockdown_dist_sq = 2304;
 	dist_sq = distancesquared(predicted_pos, zombie.origin);
 	if(dist_sq > knockdown_dist_sq)
 	{
-		return 0;
+		return false;
 	}
 	origin = thrasher.origin;
 	facing_vec = anglestoforward(thrasher.angles);
@@ -1302,9 +1298,9 @@ private function apothiconzombieeligibleforknockdown(zombie, thrasher, predicted
 	enemy_dot = vectordot(facing_yaw_vec, enemy_yaw_vec);
 	if(enemy_dot < 0)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1332,31 +1328,34 @@ function apothiconknockdownzombie(entity, zombie)
 		zombie.knockdown_direction = "front";
 		zombie.getup_direction = "getup_back";
 	}
-	else if(dot < 0.5 && dot > -0.5)
+	else
 	{
-		dot = vectordot(zombie_to_thrasher_2d, zombie_right_2d);
-		if(dot > 0)
+		if(dot < 0.5 && dot > -0.5)
 		{
-			zombie.knockdown_direction = "right";
-			if(math::cointoss())
+			dot = vectordot(zombie_to_thrasher_2d, zombie_right_2d);
+			if(dot > 0)
 			{
-				zombie.getup_direction = "getup_back";
+				zombie.knockdown_direction = "right";
+				if(math::cointoss())
+				{
+					zombie.getup_direction = "getup_back";
+				}
+				else
+				{
+					zombie.getup_direction = "getup_belly";
+				}
 			}
 			else
 			{
+				zombie.knockdown_direction = "left";
 				zombie.getup_direction = "getup_belly";
 			}
 		}
 		else
 		{
-			zombie.knockdown_direction = "left";
+			zombie.knockdown_direction = "back";
 			zombie.getup_direction = "getup_belly";
 		}
-	}
-	else
-	{
-		zombie.knockdown_direction = "back";
-		zombie.getup_direction = "getup_belly";
 	}
 }
 
@@ -1373,15 +1372,15 @@ function apothiconshouldswitchtofuriousmode(entity)
 {
 	if(!ai::getaiattribute(entity, "can_be_furious"))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(entity.isfurious) && entity.isfurious)
 	{
-		return 0;
+		return false;
 	}
 	apothiconfurys = getaiarchetypearray("apothicon_fury");
 	count = 0;
-	foreach(var_65c6290c, apothiconfury in apothiconfurys)
+	foreach(apothiconfury in apothiconfurys)
 	{
 		if(isdefined(apothiconfury.isfurious) && apothiconfury.isfurious)
 		{
@@ -1390,14 +1389,14 @@ function apothiconshouldswitchtofuriousmode(entity)
 	}
 	if(count >= 1)
 	{
-		return 0;
+		return false;
 	}
 	furiousevents = blackboard::getblackboardevents("apothicon_furious_mode");
 	if(!furiousevents.size && entity.furiouslevel >= 3)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1426,52 +1425,6 @@ function apothiconfuriousmodeinit(entity)
 	entity.health = entity.health * 2;
 }
 
-#namespace jukeinfo;
-
-/*
-	Name: __constructor
-	Namespace: jukeinfo
-	Checksum: 0x99EC1590
-	Offset: 0x54E0
-	Size: 0x4
-	Parameters: 0
-	Flags: Linked
-*/
-function __constructor()
-{
-}
-
-/*
-	Name: __destructor
-	Namespace: jukeinfo
-	Checksum: 0x99EC1590
-	Offset: 0x54F0
-	Size: 0x4
-	Parameters: 0
-	Flags: Linked
-*/
-function __destructor()
-{
-}
-
-#namespace apothiconfurybehavior;
-
-/*
-	Name: jukeinfo
-	Namespace: apothiconfurybehavior
-	Checksum: 0x1439F2D3
-	Offset: 0x5500
-	Size: 0x86
-	Parameters: 0
-	Flags: AutoExec, Private
-*/
-private autoexec function jukeinfo()
-{
-	classes.jukeinfo[0] = spawnstruct();
-	classes.jukeinfo[0].__vtable[1606033458] = &jukeinfo::__destructor;
-	classes.jukeinfo[0].__vtable[-1690805083] = &jukeinfo::__constructor;
-}
-
 /*
 	Name: apothiconpreemptivejukeservice
 	Namespace: apothiconfurybehavior
@@ -1485,21 +1438,21 @@ function apothiconpreemptivejukeservice(entity)
 {
 	if(!(isdefined(entity.isfurious) && entity.isfurious))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(entity.nextjuketime) && entity.nextjuketime > gettime())
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(entity.enemy))
 	{
 		if(!isplayer(entity.enemy))
 		{
-			return 0;
+			return false;
 		}
 		if(entity.enemy playerads() < entity.nextpreemptivejukeads)
 		{
-			return 0;
+			return false;
 		}
 	}
 	if(apothiconcanjuke(entity))
@@ -1549,59 +1502,59 @@ function apothiconcanjuke(entity)
 {
 	if(!ai::getaiattribute(entity, "can_juke"))
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(entity.enemy) || !isplayer(entity.enemy))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(entity.isjuking) && entity.isjuking)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(entity.apothiconpreemptivejuke) && entity.apothiconpreemptivejuke)
 	{
-		return 1;
+		return true;
 	}
 	if(isdefined(entity.nextjuketime) && gettime() < entity.nextjuketime)
 	{
-		return 0;
+		return false;
 	}
 	jukeevents = blackboard::getblackboardevents("apothicon_fury_juke");
 	tooclosejukedistancesqr = 250 * 250;
-	foreach(var_496859b6, event in jukeevents)
+	foreach(event in jukeevents)
 	{
 		if(distance2dsquared(entity.origin, event.data.origin) <= tooclosejukedistancesqr)
 		{
-			return 0;
+			return false;
 		}
 	}
 	if(distance2dsquared(entity.origin, entity.enemy.origin) < (250 * 250))
 	{
-		return 0;
+		return false;
 	}
 	if(!util::within_fov(entity.enemy.origin, entity.enemy.angles, entity.origin, 0.642))
 	{
-		return 0;
+		return false;
 	}
 	if(!util::within_fov(entity.origin, entity.angles, entity.enemy.origin, 0.642))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(entity.jukemaxdistance) && isdefined(entity.enemy))
 	{
 		maxdistsquared = entity.jukemaxdistance * entity.jukemaxdistance;
 		if(distance2dsquared(entity.origin, entity.enemy.origin) > maxdistsquared)
 		{
-			return 0;
+			return false;
 		}
 	}
 	jukeinfo = calculatejukeinfo(entity);
 	if(isdefined(jukeinfo))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1702,7 +1655,7 @@ function validatejuke(entity, entityradius, jukevector)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function getjukevector(entity, jukeanimalias)
+function private getjukevector(entity, jukeanimalias)
 {
 	jukeanim = entity animmappingsearch(istring(jukeanimalias));
 	localdeltavector = getmovedelta(jukeanim, 0, 1, entity);
@@ -1719,7 +1672,7 @@ private function getjukevector(entity, jukeanimalias)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function calculatejukeinfo(entity)
+function private calculatejukeinfo(entity)
 {
 	if(isdefined(entity.jukeinfo))
 	{
@@ -1734,9 +1687,7 @@ private function calculatejukeinfo(entity)
 	landposonground = validatejuke(entity, entityradius, jukevector);
 	if(isdefined(landposonground))
 	{
-		object = new jukeinfo();
-		[[ object ]]->__constructor();
-		jukeinfo = object;
+		jukeinfo = new jukeinfo();
 		jukeinfo.jukedirection = "left";
 		jukeinfo.jukedistance = "long";
 		jukeinfo.landposonground = landposonground;
@@ -1754,9 +1705,7 @@ private function calculatejukeinfo(entity)
 	landposonground = validatejuke(entity, entityradius, jukevector);
 	if(isdefined(landposonground))
 	{
-		object = new jukeinfo();
-		[[ object ]]->__constructor();
-		jukeinfo = object;
+		jukeinfo = new jukeinfo();
 		jukeinfo.jukedirection = "right";
 		jukeinfo.jukedistance = "long";
 		jukeinfo.landposonground = landposonground;
@@ -1774,9 +1723,7 @@ private function calculatejukeinfo(entity)
 	landposonground = validatejuke(entity, entityradius, jukevector);
 	if(isdefined(landposonground))
 	{
-		object = new jukeinfo();
-		[[ object ]]->__constructor();
-		jukeinfo = object;
+		jukeinfo = new jukeinfo();
 		jukeinfo.jukedirection = "left_front";
 		jukeinfo.jukedistance = "long";
 		jukeinfo.landposonground = landposonground;
@@ -1794,9 +1741,7 @@ private function calculatejukeinfo(entity)
 	landposonground = validatejuke(entity, entityradius, jukevector);
 	if(isdefined(landposonground))
 	{
-		object = new jukeinfo();
-		[[ object ]]->__constructor();
-		jukeinfo = object;
+		jukeinfo = new jukeinfo();
 		jukeinfo.jukedirection = "right_front";
 		jukeinfo.jukedistance = "long";
 		jukeinfo.landposonground = landposonground;
@@ -1843,7 +1788,7 @@ function apothiconbamfout(entity)
 	a_filtered_zombies = array::filter(a_zombies, 0, &apothiconzombieeligibleforknockdown, entity, entity.origin);
 	if(a_filtered_zombies.size > 0)
 	{
-		foreach(var_bb87e3e5, zombie in a_filtered_zombies)
+		foreach(zombie in a_filtered_zombies)
 		{
 			apothiconknockdownzombie(entity, zombie);
 		}
@@ -1886,7 +1831,7 @@ function apothiconbamfin(entity)
 	a_filtered_zombies = array::filter(a_zombies, 0, &apothiconzombieeligibleforknockdown, entity, entity.origin);
 	if(a_filtered_zombies.size > 0)
 	{
-		foreach(var_751e6d69, zombie in a_filtered_zombies)
+		foreach(zombie in a_filtered_zombies)
 		{
 			apothiconknockdownzombie(entity, zombie);
 		}
@@ -1938,29 +1883,44 @@ function apothicondamageclientfieldupdate(entity, shitloc)
 	{
 		increment = 1;
 	}
-	else if(isinarray(array("torso_upper", "torso_mid"), shitloc))
-	{
-		increment = 2;
-	}
-	else if(isinarray(array("torso_lower"), shitloc))
-	{
-		increment = 3;
-	}
-	else if(isinarray(array("right_arm_upper", "right_arm_lower", "right_hand", "gun"), shitloc))
-	{
-		increment = 4;
-	}
-	else if(isinarray(array("left_arm_upper", "left_arm_lower", "left_hand"), shitloc))
-	{
-		increment = 5;
-	}
-	else if(isinarray(array("left_leg_upper", "left_leg_lower", "left_foot"), shitloc))
-	{
-		increment = 7;
-	}
 	else
 	{
-		increment = 6;
+		if(isinarray(array("torso_upper", "torso_mid"), shitloc))
+		{
+			increment = 2;
+		}
+		else
+		{
+			if(isinarray(array("torso_lower"), shitloc))
+			{
+				increment = 3;
+			}
+			else
+			{
+				if(isinarray(array("right_arm_upper", "right_arm_lower", "right_hand", "gun"), shitloc))
+				{
+					increment = 4;
+				}
+				else
+				{
+					if(isinarray(array("left_arm_upper", "left_arm_lower", "left_hand"), shitloc))
+					{
+						increment = 5;
+					}
+					else
+					{
+						if(isinarray(array("left_leg_upper", "left_leg_lower", "left_foot"), shitloc))
+						{
+							increment = 7;
+						}
+						else
+						{
+							increment = 6;
+						}
+					}
+				}
+			}
+		}
 	}
 	entity clientfield::increment("fury_fire_damage", increment);
 }

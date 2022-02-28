@@ -20,7 +20,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("globallogic_ui", &__init__, undefined, undefined);
 }
@@ -138,7 +138,7 @@ function freegameplayhudelems()
 function teamplayercountsequal(playercounts)
 {
 	count = undefined;
-	foreach(var_716a1f9, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(!isdefined(count))
 		{
@@ -147,10 +147,10 @@ function teamplayercountsequal(playercounts)
 		}
 		if(count != playercounts[team])
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -166,7 +166,7 @@ function teamwithlowestplayercount(playercounts, ignore_team)
 {
 	count = 9999;
 	lowest_team = undefined;
-	foreach(var_df802866, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(count > playercounts[team])
 		{
@@ -195,84 +195,87 @@ function menuautoassign(comingfrommenu)
 	{
 		assignment = "allies";
 	}
-	else if(level.teambased)
+	else
 	{
-		if(getdvarint("party_autoteams") == 1)
+		if(level.teambased)
 		{
-			if(level.allow_teamchange == "1" && (self.hasspawned || comingfrommenu))
+			if(getdvarint("party_autoteams") == 1)
 			{
-				assignment = "";
-			}
-			else
-			{
-				team = getassignedteam(self);
-				switch(team)
+				if(level.allow_teamchange == "1" && (self.hasspawned || comingfrommenu))
 				{
-					case 1:
+					assignment = "";
+				}
+				else
+				{
+					team = getassignedteam(self);
+					switch(team)
 					{
-						assignment = teamkeys[1];
-						break;
-					}
-					case 2:
-					{
-						assignment = teamkeys[0];
-						break;
-					}
-					case 3:
-					{
-						assignment = teamkeys[2];
-						break;
-					}
-					case 4:
-					{
-						if(!isdefined(level.forceautoassign) || !level.forceautoassign)
+						case 1:
 						{
-							self setclientscriptmainmenu(game["menu_start_menu"]);
-							return;
+							assignment = teamkeys[1];
+							break;
 						}
-					}
-					default:
-					{
-						assignment = "";
-						if(isdefined(level.teams[team]))
+						case 2:
 						{
-							assignment = team;
+							assignment = teamkeys[0];
+							break;
 						}
-						else if(team == "spectator" && !level.forceautoassign)
+						case 3:
 						{
-							self setclientscriptmainmenu(game["menu_start_menu"]);
-							return;
+							assignment = teamkeys[2];
+							break;
+						}
+						case 4:
+						{
+							if(!isdefined(level.forceautoassign) || !level.forceautoassign)
+							{
+								self setclientscriptmainmenu(game["menu_start_menu"]);
+								return;
+							}
+						}
+						default:
+						{
+							assignment = "";
+							if(isdefined(level.teams[team]))
+							{
+								assignment = team;
+							}
+							else if(team == "spectator" && !level.forceautoassign)
+							{
+								self setclientscriptmainmenu(game["menu_start_menu"]);
+								return;
+							}
 						}
 					}
 				}
 			}
-		}
-		if(assignment == "" || getdvarint("party_autoteams") == 0)
-		{
-			if(sessionmodeiszombiesgame())
+			if(assignment == "" || getdvarint("party_autoteams") == 0)
 			{
-				assignment = "allies";
+				if(sessionmodeiszombiesgame())
+				{
+					assignment = "allies";
+				}
 			}
-		}
-		if(assignment == self.pers["team"] && (self.sessionstate == "playing" || self.sessionstate == "dead"))
-		{
-			self beginclasschoice();
-			return;
-		}
-	}
-	else if(getdvarint("party_autoteams") == 1)
-	{
-		if(level.allow_teamchange != "1" || (!self.hasspawned && !comingfrommenu))
-		{
-			team = getassignedteam(self);
-			if(isdefined(level.teams[team]))
+			if(assignment == self.pers["team"] && (self.sessionstate == "playing" || self.sessionstate == "dead"))
 			{
-				assignment = team;
-			}
-			else if(team == "spectator" && !level.forceautoassign)
-			{
-				self setclientscriptmainmenu(game["menu_start_menu"]);
+				self beginclasschoice();
 				return;
+			}
+		}
+		else if(getdvarint("party_autoteams") == 1)
+		{
+			if(level.allow_teamchange != "1" || (!self.hasspawned && !comingfrommenu))
+			{
+				team = getassignedteam(self);
+				if(isdefined(level.teams[team]))
+				{
+					assignment = team;
+				}
+				else if(team == "spectator" && !level.forceautoassign)
+				{
+					self setclientscriptmainmenu(game["menu_start_menu"]);
+					return;
+				}
 			}
 		}
 	}
@@ -315,7 +318,7 @@ function menuautoassign(comingfrommenu)
 function teamscoresequal()
 {
 	score = undefined;
-	foreach(var_e54fe87b, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(!isdefined(score))
 		{
@@ -324,10 +327,10 @@ function teamscoresequal()
 		}
 		if(score != getteamscore(team))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -343,7 +346,7 @@ function teamwithlowestscore()
 {
 	score = 99999999;
 	lowest_team = undefined;
-	foreach(var_3668fa0a, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(score > getteamscore(team))
 		{

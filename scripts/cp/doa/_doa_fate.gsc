@@ -86,7 +86,7 @@ function init()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_6162a853(var_26fc4461 = 0)
+function private function_6162a853(var_26fc4461 = 0)
 {
 	level endon(#"hash_7b036079");
 	time_left = (gettime() + (level.doa.rules.fate_wait * 1000)) + 10000;
@@ -190,7 +190,7 @@ function function_77ed1bae()
 	locs = struct::get_array("fate_player_spawn", "targetname");
 	if(isdefined(locs) && locs.size == 4)
 	{
-		foreach(var_984e11ad, player in getplayers())
+		foreach(player in getplayers())
 		{
 			spot = locs[player.entnum];
 			player namespace_cdb9a8fe::function_fe0946ac(spot.origin);
@@ -259,7 +259,7 @@ function function_77ed1bae()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_7882f69e(trigger)
+function private function_7882f69e(trigger)
 {
 	self endon(#"death");
 	level waittill(#"hash_7b036079");
@@ -275,7 +275,7 @@ private function function_7882f69e(trigger)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_524284e0()
+function private function_524284e0()
 {
 	self endon(#"death");
 	level thread function_7882f69e(self);
@@ -314,7 +314,7 @@ private function function_524284e0()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_271ba816(var_26fc4461 = 0)
+function private function_271ba816(var_26fc4461 = 0)
 {
 	level endon(#"hash_7b036079");
 	self thread function_46575fe6();
@@ -361,7 +361,7 @@ private function function_271ba816(var_26fc4461 = 0)
 			{
 				avail = level.doa.var_b1698a42.types;
 				players = namespace_831a4a7c::function_5eb6e4d1();
-				foreach(var_10667fa1, player in players)
+				foreach(player in players)
 				{
 					if(player == guy)
 					{
@@ -402,81 +402,102 @@ private function function_271ba816(var_26fc4461 = 0)
 				guy awardfate(fate, self.rock);
 				self notify(#"hash_9075e98");
 			}
-			else if(isdefined(level.doa.var_aaefc0f3) && level.doa.var_aaefc0f3)
+			else
 			{
-				if(guy.doa.fate == 1)
+				if(isdefined(level.doa.var_aaefc0f3) && level.doa.var_aaefc0f3)
 				{
-					type = 10;
-				}
-				else if(guy.doa.fate == 2)
-				{
-					type = 11;
-				}
-				else if(guy.doa.fate == 3)
-				{
-					type = 12;
-				}
-				else if(guy.doa.fate == 4)
-				{
-					type = 13;
-				}
-				if(isdefined(type))
-				{
-					guy awardfate(type, self.rock);
-					self notify(#"hash_14fdf5a2");
+					if(guy.doa.fate == 1)
+					{
+						type = 10;
+					}
+					else
+					{
+						if(guy.doa.fate == 2)
+						{
+							type = 11;
+						}
+						else
+						{
+							if(guy.doa.fate == 3)
+							{
+								type = 12;
+							}
+							else if(guy.doa.fate == 4)
+							{
+								type = 13;
+							}
+						}
+					}
+					if(isdefined(type))
+					{
+						guy awardfate(type, self.rock);
+						self notify(#"hash_14fdf5a2");
+					}
+					else
+					{
+						self thread function_78f27983(guy);
+						self notify(#"hash_fad6c90b");
+					}
+					allfated = 1;
+					foreach(player in getplayers())
+					{
+						if(!isdefined(player.doa) || (!(isdefined(player.doa.var_2219ffc9) && player.doa.var_2219ffc9)))
+						{
+							allfated = 0;
+							break;
+						}
+					}
+					if(allfated)
+					{
+						level notify(#"hash_7b036079");
+					}
 				}
 				else
 				{
-					self thread function_78f27983(guy);
-					self notify(#"hash_fad6c90b");
-				}
-				allfated = 1;
-				foreach(var_d92b9f91, player in getplayers())
-				{
-					if(!isdefined(player.doa) || (!(isdefined(player.doa.var_2219ffc9) && player.doa.var_2219ffc9)))
+					if(self.type == 10 && guy.doa.fate == 1)
 					{
-						allfated = 0;
+						guy awardfate(self.type, self.rock);
+						self notify(#"hash_14fdf5a2");
+						level notify(#"hash_7b036079");
 						break;
 					}
+					else
+					{
+						if(self.type == 11 && guy.doa.fate == 2)
+						{
+							guy awardfate(self.type, self.rock);
+							self notify(#"hash_14fdf5a2");
+							level notify(#"hash_7b036079");
+							break;
+						}
+						else
+						{
+							if(self.type == 12 && guy.doa.fate == 3)
+							{
+								guy awardfate(self.type, self.rock);
+								self notify(#"hash_14fdf5a2");
+								level notify(#"hash_7b036079");
+								break;
+							}
+							else
+							{
+								if(self.type == 13 && guy.doa.fate == 4)
+								{
+									guy awardfate(self.type, self.rock);
+									self notify(#"hash_14fdf5a2");
+									level notify(#"hash_7b036079");
+									break;
+								}
+								else
+								{
+									self thread function_78f27983(guy);
+									self notify(#"hash_fad6c90b");
+									break;
+								}
+							}
+						}
+					}
 				}
-				if(allfated)
-				{
-					level notify(#"hash_7b036079");
-				}
-			}
-			else if(self.type == 10 && guy.doa.fate == 1)
-			{
-				guy awardfate(self.type, self.rock);
-				self notify(#"hash_14fdf5a2");
-				level notify(#"hash_7b036079");
-				break;
-			}
-			else if(self.type == 11 && guy.doa.fate == 2)
-			{
-				guy awardfate(self.type, self.rock);
-				self notify(#"hash_14fdf5a2");
-				level notify(#"hash_7b036079");
-				break;
-			}
-			else if(self.type == 12 && guy.doa.fate == 3)
-			{
-				guy awardfate(self.type, self.rock);
-				self notify(#"hash_14fdf5a2");
-				level notify(#"hash_7b036079");
-				break;
-			}
-			else if(self.type == 13 && guy.doa.fate == 4)
-			{
-				guy awardfate(self.type, self.rock);
-				self notify(#"hash_14fdf5a2");
-				level notify(#"hash_7b036079");
-				break;
-			}
-			else
-			{
-				self thread function_78f27983(guy);
-				self notify(#"hash_fad6c90b");
-				break;
 			}
 		}
 	}
@@ -635,7 +656,7 @@ function function_8c9288de()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_78f27983(player)
+function private function_78f27983(player)
 {
 	level thread function_fd0b8976(&"DOA_FATE_BOOBY_PRIZE", 4, namespace_831a4a7c::function_fea7ed75(self.entnum));
 	if(isdefined(player.doa.var_eb1cd159))
@@ -783,7 +804,7 @@ function function_17fb777b(player, model, modelscale, fate_cb)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_46575fe6()
+function private function_46575fe6()
 {
 	level waittill(#"hash_7b036079");
 	if(isdefined(self))
@@ -812,7 +833,7 @@ function function_c631d045()
 {
 	var_de2c598 = undefined;
 	candidates = [];
-	foreach(var_66b77131, player in getplayers())
+	foreach(player in getplayers())
 	{
 		if(!isdefined(player.doa))
 		{
@@ -848,7 +869,7 @@ function function_c631d045()
 		}
 		candidates[candidates.size] = player;
 	}
-	foreach(var_865a8196, candidate in candidates)
+	foreach(candidate in candidates)
 	{
 		damage = (isdefined(candidate.doa.var_eb1cd159) ? candidate.doa.var_eb1cd159 : randomint(100));
 		karma = candidate.doa.var_faf30682 * 8000;
@@ -972,7 +993,7 @@ function function_833dad0d()
 	locs = struct::get_array("fate_player_spawn", "targetname");
 	if(isdefined(locs) && locs.size == 4)
 	{
-		foreach(var_3a6ea531, player in getplayers())
+		foreach(player in getplayers())
 		{
 			spot = locs[player.entnum];
 			player namespace_cdb9a8fe::function_fe0946ac(spot.origin);
@@ -1000,7 +1021,7 @@ function function_833dad0d()
 	}
 	level notify(#"hash_4213cffb");
 	wait(4);
-	foreach(var_a69dd66, player in getplayers())
+	foreach(player in getplayers())
 	{
 		player freezecontrols(0);
 		player thread namespace_831a4a7c::function_4519b17(0);
@@ -1056,7 +1077,7 @@ function function_be1e2cfc(guardian, var_526b2f85)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_5aaa5a64(shield)
+function private function_5aaa5a64(shield)
 {
 	self endon(#"death");
 	level endon(#"hash_cb54277d");
@@ -1095,7 +1116,7 @@ private function function_5aaa5a64(shield)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_d654dcd9()
+function private function_d654dcd9()
 {
 	level util::waittill_any("boss_of_justice_died", "player_challenge_failure");
 	if(isdefined(self))
@@ -1129,7 +1150,7 @@ private function function_d654dcd9()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_60a14daa(boss)
+function private function_60a14daa(boss)
 {
 	self.boss = boss;
 	self endon(#"death");
@@ -1149,7 +1170,7 @@ private function function_60a14daa(boss)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_b1d23a45(boss)
+function private function_b1d23a45(boss)
 {
 	level endon(#"hash_d1f5acf7");
 	self thread namespace_eaa992c::function_285a2999("tesla_trail");
@@ -1229,7 +1250,7 @@ private function function_b1d23a45(boss)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_4d69c061(org)
+function private function_4d69c061(org)
 {
 	level endon(#"hash_d1f5acf7");
 	level endon(#"hash_cb54277d");
@@ -1284,7 +1305,7 @@ private function function_4d69c061(org)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_51f0dd2c()
+function private function_51f0dd2c()
 {
 	level endon(#"hash_d1f5acf7");
 	level endon(#"hash_cb54277d");
@@ -1348,14 +1369,14 @@ private function function_51f0dd2c()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_cb98790d()
+function private function_cb98790d()
 {
 	level endon(#"hash_d1f5acf7");
 	level endon(#"hash_cb54277d");
 	while(true)
 	{
 		level waittill(#"hash_8817f58");
-		foreach(var_9ee69e19, ball in self.shields)
+		foreach(ball in self.shields)
 		{
 			if(isdefined(ball))
 			{
@@ -1380,7 +1401,7 @@ private function function_cb98790d()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_c492e72d()
+function private function_c492e72d()
 {
 	level endon(#"hash_d1f5acf7");
 	self.health = doa_utility::clamp((level.doa.round_number * 20000) + (getplayers().size * 250000), 250000, 2250000);
@@ -1436,29 +1457,38 @@ private function function_c492e72d()
 			self thread namespace_1a381543::function_90118d8c("zmb_stoneboss_damaged");
 			level notify(#"hash_55acdab7");
 		}
-		else if(lasthealth > stage2 && self.health < stage2)
+		else
 		{
-			self thread namespace_eaa992c::function_285a2999("stoneboss_dmg2");
-			self thread namespace_1a381543::function_90118d8c("zmb_stoneboss_damaged");
-			level notify(#"hash_55acdab7");
-		}
-		else if(lasthealth > stage3 && self.health < stage3)
-		{
-			self thread namespace_eaa992c::function_285a2999("stoneboss_dmg3");
-			self thread namespace_1a381543::function_90118d8c("zmb_stoneboss_damaged");
-			level notify(#"hash_55acdab7");
-		}
-		else if(lasthealth > var_301961e7 && self.health < var_301961e7)
-		{
-			self thread namespace_eaa992c::function_285a2999("stoneboss_dmg4");
-			self thread namespace_1a381543::function_90118d8c("zmb_stoneboss_damaged");
-			level notify(#"hash_55acdab7");
-		}
-		else if(lasthealth > var_a16e77e && self.health < var_a16e77e)
-		{
-			self thread namespace_eaa992c::function_285a2999("stoneboss_dmg5");
-			self thread namespace_1a381543::function_90118d8c("zmb_stoneboss_damaged");
-			level notify(#"hash_55acdab7");
+			if(lasthealth > stage2 && self.health < stage2)
+			{
+				self thread namespace_eaa992c::function_285a2999("stoneboss_dmg2");
+				self thread namespace_1a381543::function_90118d8c("zmb_stoneboss_damaged");
+				level notify(#"hash_55acdab7");
+			}
+			else
+			{
+				if(lasthealth > stage3 && self.health < stage3)
+				{
+					self thread namespace_eaa992c::function_285a2999("stoneboss_dmg3");
+					self thread namespace_1a381543::function_90118d8c("zmb_stoneboss_damaged");
+					level notify(#"hash_55acdab7");
+				}
+				else
+				{
+					if(lasthealth > var_301961e7 && self.health < var_301961e7)
+					{
+						self thread namespace_eaa992c::function_285a2999("stoneboss_dmg4");
+						self thread namespace_1a381543::function_90118d8c("zmb_stoneboss_damaged");
+						level notify(#"hash_55acdab7");
+					}
+					else if(lasthealth > var_a16e77e && self.health < var_a16e77e)
+					{
+						self thread namespace_eaa992c::function_285a2999("stoneboss_dmg5");
+						self thread namespace_1a381543::function_90118d8c("zmb_stoneboss_damaged");
+						level notify(#"hash_55acdab7");
+					}
+				}
+			}
 		}
 		/#
 			doa_utility::debugmsg("" + self.health);
@@ -1480,7 +1510,7 @@ private function function_c492e72d()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_ae21464b()
+function private function_ae21464b()
 {
 	level endon(#"hash_d1f5acf7");
 	level endon(#"hash_cb54277d");
@@ -1507,7 +1537,7 @@ private function function_ae21464b()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_5c819284()
+function private function_5c819284()
 {
 	level endon(#"hash_d1f5acf7");
 	level endon(#"hash_cb54277d");
@@ -1542,7 +1572,7 @@ private function function_5c819284()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_b6a1fab3()
+function private function_b6a1fab3()
 {
 	level endon(#"hash_d1f5acf7");
 	level.doa.var_d0cde02c = undefined;
@@ -1663,7 +1693,7 @@ function function_3caf8e2(endtime)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_69ae5d15(loc)
+function private function_69ae5d15(loc)
 {
 	if(!self isonground())
 	{
@@ -1735,7 +1765,7 @@ private function function_69ae5d15(loc)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_9fc6e261()
+function private function_9fc6e261()
 {
 	self notify(#"hash_9fc6e261");
 	self endon(#"hash_9fc6e261");

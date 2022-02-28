@@ -32,7 +32,7 @@ function main()
 	level flag::wait_till("start_zombie_round_logic");
 	chamber_discs = getentarray("crypt_puzzle_disc", "script_noteworthy");
 	lit_discs = [];
-	foreach(var_1911c85d, disc in chamber_discs)
+	foreach(disc in chamber_discs)
 	{
 		if(isdefined(disc.script_int))
 		{
@@ -55,7 +55,7 @@ function main()
 		wait(10);
 		clientfield::set("light_show", 2);
 		light_show_morse(lit_discs, level.cipher_key);
-		foreach(var_19fc6744, message in level.morse_messages)
+		foreach(message in level.morse_messages)
 		{
 			clientfield::set("light_show", 1);
 			cipher = phrase_convert_to_cipher(message, level.cipher_key);
@@ -127,7 +127,7 @@ function init_morse_code()
 */
 function turn_all_lights_off(a_discs)
 {
-	foreach(var_b1eaf32f, disc in a_discs)
+	foreach(disc in a_discs)
 	{
 		disc zm_tomb_quest_crypt::bryce_cake_light_update(0);
 	}
@@ -144,7 +144,7 @@ function turn_all_lights_off(a_discs)
 */
 function turn_all_lights_on(a_discs)
 {
-	foreach(var_778a120a, disc in a_discs)
+	foreach(disc in a_discs)
 	{
 		disc zm_tomb_quest_crypt::bryce_cake_light_update(1);
 	}

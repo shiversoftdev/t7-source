@@ -18,7 +18,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("menus", &__init__, undefined, undefined);
 }
@@ -54,7 +54,7 @@ function init()
 	game["menu_class"] = "class";
 	game["menu_changeclass"] = "ChooseClass_InGame";
 	game["menu_changeclass_offline"] = "ChooseClass_InGame";
-	foreach(var_de433bf3, team in level.teams)
+	foreach(team in level.teams)
 	{
 		game["menu_changeclass_" + team] = "ChooseClass_InGame";
 	}
@@ -163,7 +163,7 @@ function on_menu_response()
 				self closeingamemenu();
 				if(self ishost())
 				{
-					foreach(var_2671007b, player in getplayers())
+					foreach(player in getplayers())
 					{
 						player givemissingunlocktokens();
 						var_62f6e136 = player getdstat("unlocks", 0);
@@ -182,7 +182,7 @@ function on_menu_response()
 				self closeingamemenu();
 				self iprintln(&"MP_HOST_ENDGAME_RESPONSE");
 			}
-			foreach(var_f0e2fd6f, player in getplayers())
+			foreach(player in getplayers())
 			{
 				if(player.musicplaying === 1)
 				{
@@ -199,7 +199,7 @@ function on_menu_response()
 			var_c722c1b3[2] = "ASSISTS";
 			var_c722c1b3[3] = "INCAPS";
 			var_c722c1b3[4] = "REVIVES";
-			foreach(var_1abd7134, player in level.players)
+			foreach(player in level.players)
 			{
 				player savegame::set_player_data("saved_weapon", undefined);
 				player savegame::set_player_data("saved_weapondata", undefined);
@@ -213,7 +213,7 @@ function on_menu_response()
 				{
 					continue;
 				}
-				foreach(var_a72202cf, stat in var_c722c1b3)
+				foreach(stat in var_c722c1b3)
 				{
 					statvalue = player getdstat("PlayerStatsList", stat, "statValue");
 					player setdstat("PlayerStatsByMap", getrootmapname(), "currentStats", stat, statvalue);

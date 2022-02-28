@@ -26,7 +26,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("scoreevents", &__init__, undefined, undefined);
 }
@@ -561,29 +561,32 @@ function scoreeventplayerkill(data, time)
 			victim recordkillmodifier("firstblood");
 			processscoreevent("first_kill", attacker, victim, weapon);
 		}
-		else if(isdefined(attacker.lastkilledby))
+		else
 		{
-			if(attacker.lastkilledby == victim)
+			if(isdefined(attacker.lastkilledby))
 			{
-				level.globalpaybacks++;
-				processscoreevent("revenge_kill", attacker, victim, weapon);
-				attacker addweaponstat(weapon, "revenge_kill", 1);
-				victim recordkillmodifier("revenge");
-				attacker.lastkilledby = undefined;
+				if(attacker.lastkilledby == victim)
+				{
+					level.globalpaybacks++;
+					processscoreevent("revenge_kill", attacker, victim, weapon);
+					attacker addweaponstat(weapon, "revenge_kill", 1);
+					victim recordkillmodifier("revenge");
+					attacker.lastkilledby = undefined;
+				}
 			}
-		}
-		if(victim killstreaks::is_an_a_killstreak())
-		{
-			level.globalbuzzkills++;
-			processscoreevent("stop_enemy_killstreak", attacker, victim, weapon);
-			victim recordkillmodifier("buzzkill");
-		}
-		if(isdefined(victim.lastmansd) && victim.lastmansd == 1)
-		{
-			processscoreevent("final_kill_elimination", attacker, victim, weapon);
-			if(isdefined(attacker.lastmansd) && attacker.lastmansd == 1)
+			if(victim killstreaks::is_an_a_killstreak())
 			{
-				processscoreevent("elimination_and_last_player_alive", attacker, victim, weapon);
+				level.globalbuzzkills++;
+				processscoreevent("stop_enemy_killstreak", attacker, victim, weapon);
+				victim recordkillmodifier("buzzkill");
+			}
+			if(isdefined(victim.lastmansd) && victim.lastmansd == 1)
+			{
+				processscoreevent("final_kill_elimination", attacker, victim, weapon);
+				if(isdefined(attacker.lastmansd) && attacker.lastmansd == 1)
+				{
+					processscoreevent("elimination_and_last_player_alive", attacker, victim, weapon);
+				}
 			}
 		}
 		if(is_weapon_valid(meansofdeath, weapon, weaponclass, killstreak))
@@ -641,7 +644,7 @@ function scoreeventplayerkill(data, time)
 		}
 		if(isdefined(victim.lastmicrowavedby))
 		{
-			foreach(var_c586cd95, beingmicrowavedby in victim.beingmicrowavedby)
+			foreach(beingmicrowavedby in victim.beingmicrowavedby)
 			{
 				if(isdefined(beingmicrowavedby) && attacker util::isenemyplayer(beingmicrowavedby) == 0)
 				{
@@ -670,27 +673,30 @@ function scoreeventplayerkill(data, time)
 			{
 				processscoreevent("kill_enemy_with_gunbutt", attacker, victim, weapon);
 			}
-			else if(weapon_utils::ispunch(weapon))
+			else
 			{
-				processscoreevent("kill_enemy_with_fists", attacker, victim, weapon);
-			}
-			else if(weapon_utils::isnonbarehandsmelee(weapon))
-			{
-				vangles = victim.anglesondeath[1];
-				pangles = attacker.anglesonkill[1];
-				anglediff = angleclamp180(vangles - pangles);
-				if(anglediff > -30 && anglediff < 70)
+				if(weapon_utils::ispunch(weapon))
 				{
-					level.globalbackstabs++;
-					processscoreevent("backstabber_kill", attacker, victim, weapon);
-					weaponpickedup = 0;
-					if(isdefined(attacker.pickedupweapons) && isdefined(attacker.pickedupweapons[weapon]))
+					processscoreevent("kill_enemy_with_fists", attacker, victim, weapon);
+				}
+				else if(weapon_utils::isnonbarehandsmelee(weapon))
+				{
+					vangles = victim.anglesondeath[1];
+					pangles = attacker.anglesonkill[1];
+					anglediff = angleclamp180(vangles - pangles);
+					if(anglediff > -30 && anglediff < 70)
 					{
-						weaponpickedup = 1;
+						level.globalbackstabs++;
+						processscoreevent("backstabber_kill", attacker, victim, weapon);
+						weaponpickedup = 0;
+						if(isdefined(attacker.pickedupweapons) && isdefined(attacker.pickedupweapons[weapon]))
+						{
+							weaponpickedup = 1;
+						}
+						attacker addweaponstat(weapon, "backstabber_kill", 1, attacker.class_num, weaponpickedup, undefined, attacker.primaryloadoutgunsmithvariantindex, attacker.secondaryloadoutgunsmithvariantindex);
+						attacker.pers["backstabs"]++;
+						attacker.backstabs = attacker.pers["backstabs"];
 					}
-					attacker addweaponstat(weapon, "backstabber_kill", 1, attacker.class_num, weaponpickedup, undefined, attacker.primaryloadoutgunsmithvariantindex, attacker.secondaryloadoutgunsmithvariantindex);
-					attacker.pers["backstabs"]++;
-					attacker.backstabs = attacker.pers["backstabs"];
 				}
 			}
 		}
@@ -711,7 +717,7 @@ function scoreeventplayerkill(data, time)
 				attacker addweaponstat(weapon, "kill_enemy_with_their_weapon", 1);
 				if(isdefined(pickedupweapon.sweapon) && isdefined(pickedupweapon.smeansofdeath) && weapon_utils::ismeleemod(pickedupweapon.smeansofdeath))
 				{
-					foreach(var_e900c637, meleeweapon in level.meleeweapons)
+					foreach(meleeweapon in level.meleeweapons)
 					{
 						if(weapon != meleeweapon && pickedupweapon.sweapon.rootweapon == meleeweapon)
 						{
@@ -1180,36 +1186,51 @@ function is_weapon_valid(meansofdeath, weapon, weaponclass, killstreak)
 	{
 		valid_weapon = 0;
 	}
-	else if(get_distance_for_weapon(weapon, weaponclass) == 0)
-	{
-		valid_weapon = 0;
-	}
-	else if(meansofdeath == "MOD_PISTOL_BULLET" || meansofdeath == "MOD_RIFLE_BULLET")
-	{
-		valid_weapon = 1;
-	}
-	else if(meansofdeath == "MOD_HEAD_SHOT")
-	{
-		valid_weapon = 1;
-	}
-	else if(weapon.rootweapon.name == "hatchet" && meansofdeath == "MOD_IMPACT")
-	{
-		valid_weapon = 1;
-	}
 	else
 	{
-		baseweapon = challenges::getbaseweapon(weapon);
-		if(baseweapon == level.weaponspecialcrossbow && meansofdeath == "MOD_IMPACT")
+		if(get_distance_for_weapon(weapon, weaponclass) == 0)
 		{
-			valid_weapon = 1;
+			valid_weapon = 0;
 		}
-		else if(baseweapon == level.weaponballisticknife && meansofdeath == "MOD_IMPACT")
+		else
 		{
-			valid_weapon = 1;
-		}
-		else if(baseweapon.forcedamagehitlocation || baseweapon == level.weaponshotgunenergy || baseweapon == level.weaponspecialdiscgun && meansofdeath == "MOD_PROJECTILE")
-		{
-			valid_weapon = 1;
+			if(meansofdeath == "MOD_PISTOL_BULLET" || meansofdeath == "MOD_RIFLE_BULLET")
+			{
+				valid_weapon = 1;
+			}
+			else
+			{
+				if(meansofdeath == "MOD_HEAD_SHOT")
+				{
+					valid_weapon = 1;
+				}
+				else
+				{
+					if(weapon.rootweapon.name == "hatchet" && meansofdeath == "MOD_IMPACT")
+					{
+						valid_weapon = 1;
+					}
+					else
+					{
+						baseweapon = challenges::getbaseweapon(weapon);
+						if(baseweapon == level.weaponspecialcrossbow && meansofdeath == "MOD_IMPACT")
+						{
+							valid_weapon = 1;
+						}
+						else
+						{
+							if(baseweapon == level.weaponballisticknife && meansofdeath == "MOD_IMPACT")
+							{
+								valid_weapon = 1;
+							}
+							else if(baseweapon.forcedamagehitlocation || baseweapon == level.weaponshotgunenergy || baseweapon == level.weaponspecialdiscgun && meansofdeath == "MOD_PROJECTILE")
+							{
+								valid_weapon = 1;
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 	return valid_weapon;
@@ -1840,17 +1861,20 @@ function specialiststatabilityusage(usagesinglegame, multitrackperlife)
 			self challenges::processspecialistchallenge("multikill_ability");
 		}
 	}
-	else if(!isdefined(self.specialiststatabilityusage))
+	else
 	{
+		if(!isdefined(self.specialiststatabilityusage))
+		{
+			self.specialiststatabilityusage = 0;
+		}
+		self.specialiststatabilityusage++;
+		self waittilltimeoutordeath(4);
+		if(self.specialiststatabilityusage >= 2)
+		{
+			self challenges::processspecialistchallenge("multikill_ability");
+		}
 		self.specialiststatabilityusage = 0;
 	}
-	self.specialiststatabilityusage++;
-	self waittilltimeoutordeath(4);
-	if(self.specialiststatabilityusage >= 2)
-	{
-		self challenges::processspecialistchallenge("multikill_ability");
-	}
-	self.specialiststatabilityusage = 0;
 }
 
 /*

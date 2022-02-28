@@ -192,14 +192,14 @@ function canprocesschallenges()
 	/#
 		if(getdvarint("", 0))
 		{
-			return 1;
+			return true;
 		}
 	#/
 	if(level.rankedmatch || level.arenamatch || level.wagermatch || sessionmodeiscampaigngame())
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -408,7 +408,7 @@ function isdamagefromplayercontrolledaitank(eattacker, einflictor, weapon)
 			{
 				if(eattacker.remoteweapon == einflictor)
 				{
-					return 1;
+					return true;
 				}
 			}
 		}
@@ -417,10 +417,10 @@ function isdamagefromplayercontrolledaitank(eattacker, einflictor, weapon)
 	{
 		if(isdefined(einflictor) && !isdefined(einflictor.from_ai))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -442,12 +442,12 @@ function isdamagefromplayercontrolledsentry(eattacker, einflictor, weapon)
 			{
 				if(isdefined(einflictor.controlled) && einflictor.controlled)
 				{
-					return 1;
+					return true;
 				}
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -500,7 +500,7 @@ function perkkills(victim, isstunned, time)
 	activecuav = 0;
 	if(level.teambased)
 	{
-		foreach(var_b2bd7722, team in level.teams)
+		foreach(team in level.teams)
 		{
 			/#
 				assert(isdefined(level.activecounteruavs[team]));
@@ -683,7 +683,7 @@ function ishighestscoringplayer(player)
 {
 	if(!isdefined(player.score) || player.score < 1)
 	{
-		return 0;
+		return false;
 	}
 	players = level.players;
 	if(level.teambased)
@@ -715,10 +715,10 @@ function ishighestscoringplayer(player)
 		}
 		if(players[i].score >= highscore)
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1121,13 +1121,16 @@ function destroyscorestreak(weapon, playercontrolled, groundbased, countaskillst
 			self addplayerstat("destroy_scorestreak_with_dart", 1);
 		}
 	}
-	else if(isdefined(weapon.isheroweapon) && weapon.isheroweapon == 1)
+	else
 	{
-		self addplayerstat("destroy_scorestreak_with_specialist", 1);
-	}
-	else if(weaponhasattachment(weapon, "fmj", "rf"))
-	{
-		self addplayerstat("destroy_scorestreak_rapidfire_fmj", 1);
+		if(isdefined(weapon.isheroweapon) && weapon.isheroweapon == 1)
+		{
+			self addplayerstat("destroy_scorestreak_with_specialist", 1);
+		}
+		else if(weaponhasattachment(weapon, "fmj", "rf"))
+		{
+			self addplayerstat("destroy_scorestreak_rapidfire_fmj", 1);
+		}
 	}
 	if(!isdefined(playercontrolled) || playercontrolled == 0)
 	{
@@ -1231,26 +1234,29 @@ function capturedobjective(capturetime, objective)
 			}
 		}
 	}
-	else if(isdefined(level.capturedobjectivefunction))
+	else
 	{
-		self [[level.capturedobjectivefunction]]();
-	}
-	heroabilitywasactiverecently = isdefined(self.heroabilityactive) || (isdefined(self.heroabilitydectivatetime) && self.heroabilitydectivatetime > (gettime() - 3000));
-	if(heroabilitywasactiverecently && isdefined(self.heroability) && self.heroability.name == "gadget_camo")
-	{
-		scoreevents::processscoreevent("optic_camo_capture_objective", self);
-	}
-	if(isdefined(objective))
-	{
-		if(self.challenge_objectivedefensive === objective)
+		if(isdefined(level.capturedobjectivefunction))
 		{
-			if((isdefined(self.challenge_objectivedefensivekillcount) ? self.challenge_objectivedefensivekillcount : 0) > 0 && ((isdefined(self.recentkillcount) ? self.recentkillcount : 0) > 2 || self.challenge_objectivedefensivetriplekillmedalorbetterearned === 1))
+			self [[level.capturedobjectivefunction]]();
+		}
+		heroabilitywasactiverecently = isdefined(self.heroabilityactive) || (isdefined(self.heroabilitydectivatetime) && self.heroabilitydectivatetime > (gettime() - 3000));
+		if(heroabilitywasactiverecently && isdefined(self.heroability) && self.heroability.name == "gadget_camo")
+		{
+			scoreevents::processscoreevent("optic_camo_capture_objective", self);
+		}
+		if(isdefined(objective))
+		{
+			if(self.challenge_objectivedefensive === objective)
 			{
-				self addplayerstat("triple_kill_defenders_and_capture", 1);
+				if((isdefined(self.challenge_objectivedefensivekillcount) ? self.challenge_objectivedefensivekillcount : 0) > 0 && ((isdefined(self.recentkillcount) ? self.recentkillcount : 0) > 2 || self.challenge_objectivedefensivetriplekillmedalorbetterearned === 1))
+				{
+					self addplayerstat("triple_kill_defenders_and_capture", 1);
+				}
+				self.challenge_objectivedefensivekillcount = 0;
+				self.challenge_objectivedefensive = undefined;
+				self.challenge_objectivedefensivetriplekillmedalorbetterearned = undefined;
 			}
-			self.challenge_objectivedefensivekillcount = 0;
-			self.challenge_objectivedefensive = undefined;
-			self.challenge_objectivedefensivetriplekillmedalorbetterearned = undefined;
 		}
 	}
 }
@@ -1443,20 +1449,20 @@ function endedearly(winner)
 {
 	if(level.hostforcedend)
 	{
-		return 1;
+		return true;
 	}
 	if(!isdefined(winner))
 	{
-		return 1;
+		return true;
 	}
 	if(level.teambased)
 	{
 		if(winner == "tie")
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1471,7 +1477,7 @@ function endedearly(winner)
 function getlosersteamscores(winner)
 {
 	teamscores = 0;
-	foreach(var_faca9d47, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(team == winner)
 		{
@@ -1493,7 +1499,7 @@ function getlosersteamscores(winner)
 */
 function didloserfailchallenge(winner, challenge)
 {
-	foreach(var_2a70c54a, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(team == winner)
 		{
@@ -1501,10 +1507,10 @@ function didloserfailchallenge(winner, challenge)
 		}
 		if(game["challenge"][team][challenge])
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1825,7 +1831,7 @@ function killeddog()
 	if(level.teambased)
 	{
 		teammates = util::get_team_alive_players_s(self.team);
-		foreach(var_f1be0cdb, player in teammates.a)
+		foreach(player in teammates.a)
 		{
 			if(player == self)
 			{
@@ -2053,13 +2059,16 @@ function destroyedaircraft(attacker, weapon, playercontrolled)
 		{
 			attacker addplayerstat("destroy_aircraft_with_emp", 1);
 		}
-		else if(weapon.name == "missile_drone_projectile" || weapon.name == "missile_drone")
+		else
 		{
-			attacker addplayerstat("destroy_aircraft_with_missile_drone", 1);
-		}
-		else if(weapon.isbulletweapon)
-		{
-			attacker addplayerstat("shoot_aircraft", 1);
+			if(weapon.name == "missile_drone_projectile" || weapon.name == "missile_drone")
+			{
+				attacker addplayerstat("destroy_aircraft_with_missile_drone", 1);
+			}
+			else if(weapon.isbulletweapon)
+			{
+				attacker addplayerstat("shoot_aircraft", 1);
+			}
 		}
 	}
 	if(attacker util::has_blind_eye_perk_purchased_and_equipped())
@@ -2300,7 +2309,7 @@ function playerkilled(einflictor, attacker, idamage, smeansofdeath, weapon, shit
 	{
 		data.victimactiveproximitygrenades = [];
 		arrayremovevalue(data.victim.activeproximitygrenades, undefined);
-		foreach(var_3f9ea19b, proximitygrenade in data.victim.activeproximitygrenades)
+		foreach(proximitygrenade in data.victim.activeproximitygrenades)
 		{
 			proximitygrenadeinfo = spawnstruct();
 			proximitygrenadeinfo.origin = proximitygrenade.origin;
@@ -2311,7 +2320,7 @@ function playerkilled(einflictor, attacker, idamage, smeansofdeath, weapon, shit
 	{
 		data.victimactivebouncingbetties = [];
 		arrayremovevalue(data.victim.activebouncingbetties, undefined);
-		foreach(var_f9d41d6b, bouncingbetty in data.victim.activebouncingbetties)
+		foreach(bouncingbetty in data.victim.activebouncingbetties)
 		{
 			bouncingbettyinfo = spawnstruct();
 			bouncingbettyinfo.origin = bouncingbetty.origin;
@@ -2516,9 +2525,9 @@ function weaponisknife(weapon)
 {
 	if(weapon == level.weaponbasemelee || weapon == level.weaponbasemeleeheld || weapon == level.weaponballisticknife)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2542,25 +2551,37 @@ function eventreceived(eventname)
 			{
 				self addgametypestat("killstreak_10", 1);
 			}
-			else if(eventname == "killstreak_15")
+			else
 			{
-				self addgametypestat("killstreak_15", 1);
-			}
-			else if(eventname == "killstreak_20")
-			{
-				self addgametypestat("killstreak_20", 1);
-			}
-			else if(eventname == "multikill_3")
-			{
-				self addgametypestat("multikill_3", 1);
-			}
-			else if(eventname == "kill_enemy_who_killed_teammate")
-			{
-				self addgametypestat("kill_enemy_who_killed_teammate", 1);
-			}
-			else if(eventname == "kill_enemy_injuring_teammate")
-			{
-				self addgametypestat("kill_enemy_injuring_teammate", 1);
+				if(eventname == "killstreak_15")
+				{
+					self addgametypestat("killstreak_15", 1);
+				}
+				else
+				{
+					if(eventname == "killstreak_20")
+					{
+						self addgametypestat("killstreak_20", 1);
+					}
+					else
+					{
+						if(eventname == "multikill_3")
+						{
+							self addgametypestat("multikill_3", 1);
+						}
+						else
+						{
+							if(eventname == "kill_enemy_who_killed_teammate")
+							{
+								self addgametypestat("kill_enemy_who_killed_teammate", 1);
+							}
+							else if(eventname == "kill_enemy_injuring_teammate")
+							{
+								self addgametypestat("kill_enemy_injuring_teammate", 1);
+							}
+						}
+					}
+				}
 			}
 			break;
 		}
@@ -2570,17 +2591,23 @@ function eventreceived(eventname)
 			{
 				self addgametypestat("killstreak_10", 1);
 			}
-			else if(eventname == "killstreak_15")
+			else
 			{
-				self addgametypestat("killstreak_15", 1);
-			}
-			else if(eventname == "killstreak_20")
-			{
-				self addgametypestat("killstreak_20", 1);
-			}
-			else if(eventname == "killstreak_30")
-			{
-				self addgametypestat("killstreak_30", 1);
+				if(eventname == "killstreak_15")
+				{
+					self addgametypestat("killstreak_15", 1);
+				}
+				else
+				{
+					if(eventname == "killstreak_20")
+					{
+						self addgametypestat("killstreak_20", 1);
+					}
+					else if(eventname == "killstreak_30")
+					{
+						self addgametypestat("killstreak_30", 1);
+					}
+				}
 			}
 			break;
 		}
@@ -2590,17 +2617,23 @@ function eventreceived(eventname)
 			{
 				self addgametypestat("defused_bomb_last_man_alive", 1);
 			}
-			else if(eventname == "elimination_and_last_player_alive")
+			else
 			{
-				self addgametypestat("elimination_and_last_player_alive", 1);
-			}
-			else if(eventname == "killed_bomb_planter")
-			{
-				self addgametypestat("killed_bomb_planter", 1);
-			}
-			else if(eventname == "killed_bomb_defuser")
-			{
-				self addgametypestat("killed_bomb_defuser", 1);
+				if(eventname == "elimination_and_last_player_alive")
+				{
+					self addgametypestat("elimination_and_last_player_alive", 1);
+				}
+				else
+				{
+					if(eventname == "killed_bomb_planter")
+					{
+						self addgametypestat("killed_bomb_planter", 1);
+					}
+					else if(eventname == "killed_bomb_defuser")
+					{
+						self addgametypestat("killed_bomb_defuser", 1);
+					}
+				}
 			}
 			break;
 		}
@@ -2700,7 +2733,7 @@ function trophy_defense(origin, radius)
 	if(isdefined(level.challenge_scorestreaksenabled) && level.challenge_scorestreaksenabled == 1)
 	{
 		entities = getdamageableentarray(origin, radius);
-		foreach(var_5be3c0eb, entity in entities)
+		foreach(entity in entities)
 		{
 			if(isdefined(entity.challenge_isscorestreak))
 			{

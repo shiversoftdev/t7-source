@@ -60,7 +60,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_zod_ee", &__init__, undefined, undefined);
 }
@@ -104,7 +104,7 @@ function __init__()
 	var_9eb45ed3 = array("boxer", "detective", "femme", "magician");
 	level flag::init("ee_begin");
 	level flag::init("ee_book");
-	foreach(var_a6459b26, str_charname in var_9eb45ed3)
+	foreach(str_charname in var_9eb45ed3)
 	{
 		level flag::init(("ee_keeper_" + str_charname) + "_resurrected");
 		level flag::init(("ee_keeper_" + str_charname) + "_armed");
@@ -279,7 +279,7 @@ function function_c3466d96(b_on)
 	}
 	else
 	{
-		foreach(var_d1785917, mdl_clip in level.var_76c101df)
+		foreach(mdl_clip in level.var_76c101df)
 		{
 			mdl_clip delete();
 		}
@@ -461,7 +461,7 @@ function function_f0c43ca0()
 	{
 		var_c96f65f1 = 1;
 		players = level.activeplayers;
-		foreach(var_8d1c794, player in players)
+		foreach(player in players)
 		{
 			e_volume = getent("defend_area_volume_pap", "targetname");
 			if(!player istouching(e_volume))
@@ -618,7 +618,7 @@ function function_224a2f3e()
 	}
 	level flag::set("ee_final_boss_midattack");
 	level clientfield::set("ee_final_boss_shields", 1);
-	foreach(var_4131ea6a, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		if(isdefined(zm_utility::is_player_valid(player, 0, 0)) && zm_utility::is_player_valid(player, 0, 0))
 		{
@@ -628,7 +628,7 @@ function function_224a2f3e()
 	wait(15);
 	level notify(#"hash_b1c56287");
 	level clientfield::set("ee_final_boss_shields", 0);
-	foreach(var_e5cbcafe, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		if(isdefined(zm_utility::is_player_valid(player)) && zm_utility::is_player_valid(player) && (isdefined(player.var_884d1375) && player.var_884d1375))
 		{
@@ -661,14 +661,14 @@ function function_5334c072(player)
 	while(true)
 	{
 		player.var_884d1375 = 1;
-		foreach(var_21d78be8, var_495730fe in var_dcd4f61a)
+		foreach(var_495730fe in var_dcd4f61a)
 		{
 			v_player_origin = player getorigin();
 			var_e468ad3 = var_495730fe.origin;
 			if(isdefined(v_player_origin))
 			{
-				var_30c97f9b = distancesquared(var_e468ad3, v_player_origin);
-				if(var_30c97f9b <= 9216)
+				n_dist_2 = distancesquared(var_e468ad3, v_player_origin);
+				if(n_dist_2 <= 9216)
 				{
 					function_a8621648(player, 1);
 					return;
@@ -1057,7 +1057,7 @@ function function_729859d0()
 		{
 			level thread function_c898ab1();
 			var_7f207012 = [[ level.o_zod_train ]]->get_players_on_train();
-			foreach(var_469ffc59, var_813273c3 in var_7f207012)
+			foreach(var_813273c3 in var_7f207012)
 			{
 				var_813273c3 thread zm_zod_util::set_rumble_to_player(6, 1);
 			}
@@ -1106,7 +1106,7 @@ function function_f30f87e4(n_index)
 	{
 		var_da3dbbdf waittill(#"damage", amount, attacker, direction, point, mod, tagname, modelname, partname, weapon);
 		var_da3dbbdf.health = 1000000;
-		if(zm_altbody_beast::function_4c03fac9(weapon) && isdefined(attacker) && amount > 0)
+		if(zm_altbody_beast::is_lightning_weapon(weapon) && isdefined(attacker) && amount > 0)
 		{
 			if(isdefined(attacker))
 			{
@@ -1180,9 +1180,9 @@ function function_c898ab1(var_a5322c01)
 function function_f09f9721()
 {
 	level endon(#"hash_c898ab1");
-	var_4843dc70 = [[ level.o_zod_train ]]->function_8cf8e3a5();
+	var_4843dc70 = [[ level.o_zod_train ]]->get_train_vehicle();
 	var_a9f994a9 = struct::get("ee_apothigod_gateworm_junction", "targetname");
-	str_station = [[ level.o_zod_train ]]->function_ae26c4a8();
+	str_station = [[ level.o_zod_train ]]->get_current_station();
 	switch(str_station)
 	{
 		case "slums":
@@ -1272,7 +1272,7 @@ function function_533399b1()
 		else
 		{
 			players = level.activeplayers;
-			foreach(var_b41f5de6, player in players)
+			foreach(player in players)
 			{
 				player thread function_d26c80f1();
 			}
@@ -1303,14 +1303,17 @@ function function_19076f5e()
 	{
 		alias = "zmb_zod_beam_fire_success_1";
 	}
-	else if(level.var_1a1d4400 == 2)
+	else
 	{
-		alias = "zmb_zod_beam_fire_success_2";
-	}
-	else if(level.var_1a1d4400 == 1)
-	{
-		alias = "zmb_zod_beam_fire_success_3";
-		level clientfield::set("sndEndIGC", 1);
+		if(level.var_1a1d4400 == 2)
+		{
+			alias = "zmb_zod_beam_fire_success_2";
+		}
+		else if(level.var_1a1d4400 == 1)
+		{
+			alias = "zmb_zod_beam_fire_success_3";
+			level clientfield::set("sndEndIGC", 1);
+		}
 	}
 	playsoundatposition(alias, (0, 0, 0));
 }
@@ -1353,7 +1356,7 @@ function function_3f5c6609()
 	while(true)
 	{
 		players = level.activeplayers;
-		foreach(var_8b5bf5a9, player in players)
+		foreach(player in players)
 		{
 			if(player.origin.z > 0)
 			{
@@ -1388,7 +1391,7 @@ function ee_ending()
 	function_5db6ba34();
 	cleanup_ai(1);
 	wait(5);
-	foreach(var_64090632, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player zm_altbody_beast::player_take_mana(1);
 		player.play_scene_transition_effect = 1;
@@ -1406,7 +1409,7 @@ function ee_ending()
 	level flag::clear("ee_final_boss_beam_active");
 	zm_altbody_beast::function_fd8fb00d(0);
 	wait(15);
-	foreach(var_ccc649c, player in level.players)
+	foreach(player in level.players)
 	{
 		player zm_stats::increment_challenge_stat("DARKOPS_ZOD_EE");
 		player zm_stats::increment_challenge_stat("DARKOPS_ZOD_SUPER_EE");
@@ -1793,7 +1796,7 @@ function function_d93f551b(n_char_index)
 function function_b54f7960(player, n_char_index)
 {
 	players = level.activeplayers;
-	foreach(var_de50a726, player in players)
+	foreach(player in players)
 	{
 		if(isdefined(player.var_11104075))
 		{
@@ -1805,7 +1808,7 @@ function function_b54f7960(player, n_char_index)
 	player playsound("zmb_zod_totem_place");
 	wait(5);
 	level function_8f4b6b20(n_char_index);
-	foreach(var_c7e39916, var_b9caebb1 in level.var_dc1b8d40)
+	foreach(var_b9caebb1 in level.var_dc1b8d40)
 	{
 		arrayremovevalue(level.var_b94f6d7a, var_b9caebb1);
 	}
@@ -1848,7 +1851,7 @@ function function_6032557b(player, trig_stub)
 function function_6f0edfa1()
 {
 	players = level.activeplayers;
-	foreach(var_a54a5ba5, player in players)
+	foreach(player in players)
 	{
 		if(isdefined(player.var_11104075))
 		{
@@ -1888,7 +1891,7 @@ function function_3089f820(var_ee1ff130)
 		level clientfield::set(("ee_keeper_" + str_name) + "_state", 1);
 	}
 	players = level.activeplayers;
-	foreach(var_b1aff48c, player in players)
+	foreach(player in players)
 	{
 		if(isdefined(player.var_11104075))
 		{
@@ -2038,8 +2041,8 @@ function function_9207a201(player)
 	{
 		var_c7fc450f = 1;
 	}
-	var_a315b31f = level clientfield::get("bm_superbeast");
-	b_is_invis = isdefined(player.beastmode) && player.beastmode && !var_a315b31f || !var_a18af120 || !var_c7fc450f;
+	b_superbeastmode = level clientfield::get("bm_superbeast");
+	b_is_invis = isdefined(player.beastmode) && player.beastmode && !b_superbeastmode || !var_a18af120 || !var_c7fc450f;
 	self setinvisibletoplayer(player, b_is_invis);
 	return !b_is_invis;
 }
@@ -2104,7 +2107,7 @@ function function_4bcb6826()
 	while(true)
 	{
 		var_a74ccb30 = 1;
-		foreach(var_89f99442, str_charname in var_9eb45ed3)
+		foreach(str_charname in var_9eb45ed3)
 		{
 			var_587a4446 = level clientfield::get(("ee_keeper_" + str_charname) + "_state");
 			if(var_587a4446 !== 4)
@@ -2118,7 +2121,7 @@ function function_4bcb6826()
 			continue;
 		}
 		wait(3);
-		foreach(var_f92fcfd3, str_charname in var_9eb45ed3)
+		foreach(str_charname in var_9eb45ed3)
 		{
 			level clientfield::set(("ee_keeper_" + str_charname) + "_state", 5);
 		}
@@ -2139,7 +2142,7 @@ function function_4bcb6826()
 		level.var_dbc3a0ef.s_spawnpoint = a_s_spawnpoints[0];
 		zm_zod_shadowman::function_284b1884(level.var_dbc3a0ef, level.var_dbc3a0ef.s_spawnpoint, 0.1);
 		level.var_dbc3a0ef zm_zod_shadowman::function_a3821eb5(0.1, 4);
-		foreach(var_e78d576, str_charname in var_9eb45ed3)
+		foreach(str_charname in var_9eb45ed3)
 		{
 			level clientfield::set(("ee_keeper_" + str_charname) + "_state", 6);
 		}
@@ -2311,7 +2314,7 @@ function function_3fc4aca5()
 	}
 	level thread cleanup_ai(1);
 	var_9eb45ed3 = array("boxer", "detective", "femme", "magician");
-	foreach(var_b1a828c9, str_charname in var_9eb45ed3)
+	foreach(str_charname in var_9eb45ed3)
 	{
 		if(isdefined(level.var_f86952c7["boss_1_" + str_charname]))
 		{
@@ -2345,7 +2348,7 @@ function function_ce4db8c8(player)
 	player.var_11104075 setmodel("t7_zm_zod_keepers_totem");
 	player.var_11104075 linkto(player, "tag_stowed_back", (0, 12, -32));
 	player.var_11104075 clientfield::set("totem_state_fx", 1);
-	foreach(var_a6707c05, var_b9caebb1 in level.var_b94f6d7a)
+	foreach(var_b9caebb1 in level.var_b94f6d7a)
 	{
 		level thread function_fe31ce39(var_b9caebb1);
 	}
@@ -2412,7 +2415,7 @@ function function_4cc29f4f(player)
 */
 function function_fe26340b()
 {
-	foreach(var_c8ad4027, var_b9caebb1 in level.var_b94f6d7a)
+	foreach(var_b9caebb1 in level.var_b94f6d7a)
 	{
 		if(!isdefined(var_b9caebb1) || !isdefined(var_b9caebb1.unitrigger_stub) || !isdefined(var_b9caebb1.unitrigger_stub.var_4cf62d2c))
 		{
@@ -2434,7 +2437,7 @@ function function_fe26340b()
 */
 function function_6b57b2d3()
 {
-	foreach(var_97056db5, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		if(isdefined(player.var_11104075))
 		{
@@ -2513,7 +2516,7 @@ function function_51ca11ba(player)
 	}
 	b_is_invis = isdefined(player.beastmode) && player.beastmode || var_10cc4e3e || (isdefined(self.stub.b_taken) && self.stub.b_taken);
 	self setinvisibletoplayer(player, b_is_invis);
-	return 1;
+	return true;
 }
 
 /*
@@ -2680,7 +2683,7 @@ function function_832f1b2a()
 {
 	var_fb88b1ef = 0;
 	var_9eb45ed3 = array("boxer", "detective", "femme", "magician");
-	foreach(var_d2807391, str_charname in var_9eb45ed3)
+	foreach(str_charname in var_9eb45ed3)
 	{
 		if((clientfield::get(("ee_keeper_" + str_charname) + "_state")) >= 3)
 		{
@@ -2703,9 +2706,9 @@ function function_224eb2ac()
 {
 	if(level.var_f47099f2 == level.var_e59fb2)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2743,13 +2746,16 @@ function function_353871a(var_ee1ff130, owner)
 		if(isdefined(zm::is_idgun_damage(weapon)) && zm::is_idgun_damage(weapon))
 		{
 		}
-		else if(!isdefined(attacker.archetype))
+		else
 		{
-			return;
-		}
-		if(attacker.archetype !== "margwa" && attacker.archetype !== "zombie" && !isvehicle(attacker))
-		{
-			return;
+			if(!isdefined(attacker.archetype))
+			{
+				return;
+			}
+			if(attacker.archetype !== "margwa" && attacker.archetype !== "zombie" && !isvehicle(attacker))
+			{
+				return;
+			}
 		}
 		var_9124cf71 = var_9124cf71 + amount;
 		if(var_9124cf71 >= var_a62764b3)
@@ -2941,7 +2947,7 @@ function function_737ebab()
 			a_points = array::randomize(queryresult.data);
 			a_spawn_origins = [];
 			n_points_found = 0;
-			foreach(var_3f4856e7, point in a_points)
+			foreach(point in a_points)
 			{
 				if(bullettracepassed(point.origin, spawn_point.origin, 0, favorite_enemy))
 				{
@@ -3071,7 +3077,7 @@ function function_83bdd16b()
 function function_7a40f43c()
 {
 	var_e159ea26 = getentarray("zombie_raps", "targetname");
-	foreach(var_5f43b64d, var_b847ad06 in var_e159ea26)
+	foreach(var_b847ad06 in var_e159ea26)
 	{
 		if(isdefined(var_b847ad06) && isalive(var_b847ad06))
 		{
@@ -3112,14 +3118,14 @@ function cleanup_ai(var_1a60ad71 = 0, var_75541524 = 0)
 		}
 		var_da5df44a[var_da5df44a.size] = "margwa";
 	}
-	foreach(var_5604a202, var_493961de in var_da5df44a)
+	foreach(var_493961de in var_da5df44a)
 	{
 		a_ai = getentarray(var_493961de, "targetname");
 		if(!isdefined(a_ai))
 		{
 			continue;
 		}
-		foreach(var_2477e53c, ai in a_ai)
+		foreach(ai in a_ai)
 		{
 			if(isdefined(ai) && isalive(ai))
 			{
@@ -3133,7 +3139,7 @@ function cleanup_ai(var_1a60ad71 = 0, var_75541524 = 0)
 	{
 		return;
 	}
-	foreach(var_d49c082d, ai in a_ai_zombies)
+	foreach(ai in a_ai_zombies)
 	{
 		if(isdefined(ai) && isalive(ai))
 		{
@@ -3165,7 +3171,7 @@ function function_5db6ba34(var_1a60ad71 = 1, var_75541524 = 0)
 	wait(0.5);
 	a_ai_zombies = getaiteamarray(level.zombie_team);
 	var_6b1085eb = [];
-	foreach(var_e101a114, ai_zombie in a_ai_zombies)
+	foreach(ai_zombie in a_ai_zombies)
 	{
 		ai_zombie.no_powerups = 1;
 		ai_zombie.deathpoints_already_given = 1;
@@ -3241,7 +3247,7 @@ function function_5db6ba34(var_1a60ad71 = 1, var_75541524 = 0)
 function function_904cb175(var_e6fb7eb3)
 {
 	players = level.activeplayers;
-	foreach(var_3576f2b6, player in players)
+	foreach(player in players)
 	{
 		if(isdefined(var_e6fb7eb3))
 		{
@@ -3289,7 +3295,7 @@ function function_c7c3f7b5(var_495327e)
 {
 	if(level flag::get("ee_final_boss_staggered"))
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(var_495327e))
 	{
@@ -3300,9 +3306,9 @@ function function_c7c3f7b5(var_495327e)
 	var_73d2bce8 = level.zm_loc_types["margwa_location"].size < 1;
 	if(var_3026634e || var_f52ee0b1 || var_73d2bce8)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -3317,11 +3323,11 @@ function function_c7c3f7b5(var_495327e)
 function function_37dc5568(inflictor, attacker, damage, dflags, mod, weapon, point, dir, hitloc, offsettime, boneindex, modelindex)
 {
 	damageopen = 0;
-	var_a315b31f = level clientfield::get("bm_superbeast");
-	if(isdefined(attacker) && var_a315b31f)
+	b_superbeastmode = level clientfield::get("bm_superbeast");
+	if(isdefined(attacker) && b_superbeastmode)
 	{
 		headalive = [];
-		foreach(var_883d2f82, head in self.head)
+		foreach(head in self.head)
 		{
 			if(head margwaserverutils::margwacandamagehead())
 			{
@@ -3332,7 +3338,7 @@ function function_37dc5568(inflictor, attacker, damage, dflags, mod, weapon, poi
 		{
 			max = 100000;
 			headclosest = undefined;
-			foreach(var_7cb2ed25, head in headalive)
+			foreach(head in headalive)
 			{
 				distsq = distancesquared(point, self gettagorigin(head.tag));
 				if(distsq < max)
@@ -3772,22 +3778,25 @@ function function_c1cc37db(n_val)
 	{
 		level function_8f4b6b20();
 	}
-	else if(n_val == 5)
+	else
 	{
-		level function_8f4b6b20();
-	}
-	else if(n_val == 6)
-	{
-		for(i = 1; i < 5; i++)
+		if(n_val == 5)
 		{
-			str_charname = function_d93f551b(i);
-			var_27b0f0e4 = level clientfield::get(("ee_keeper_" + str_charname) + "_state");
-			if(var_27b0f0e4 == 3)
-			{
-				continue;
-			}
 			level function_8f4b6b20();
-			wait(1);
+		}
+		else if(n_val == 6)
+		{
+			for(i = 1; i < 5; i++)
+			{
+				str_charname = function_d93f551b(i);
+				var_27b0f0e4 = level clientfield::get(("ee_keeper_" + str_charname) + "_state");
+				if(var_27b0f0e4 == 3)
+				{
+					continue;
+				}
+				level function_8f4b6b20();
+				wait(1);
+			}
 		}
 	}
 }

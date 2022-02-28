@@ -180,7 +180,7 @@ function _off(slot, weapon)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_1852a14f(slot, weapon)
+function private function_1852a14f(slot, weapon)
 {
 	self endon(#"weapon_melee_juke");
 	wait(0.5);
@@ -196,7 +196,7 @@ private function function_1852a14f(slot, weapon)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_6c3ee126(slot, weapon)
+function private function_6c3ee126(slot, weapon)
 {
 	self endon(#"disconnect");
 	self endon(#"hash_1f17ce9a");
@@ -213,7 +213,7 @@ private function function_6c3ee126(slot, weapon)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_98296a6a(slot, weapon)
+function private function_98296a6a(slot, weapon)
 {
 	self endon(#"death");
 	self endon(#"disconnect");
@@ -248,7 +248,7 @@ function _is_primed(slot, weapon)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_875f1595(slot, weapon)
+function private function_875f1595(slot, weapon)
 {
 	self endon(#"death");
 	self endon(#"disconnect");
@@ -275,23 +275,23 @@ private function function_875f1595(slot, weapon)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _is_good_target(target)
+function private _is_good_target(target)
 {
 	if(!isdefined(target))
 	{
-		return 0;
+		return false;
 	}
 	if(!isalive(target))
 	{
-		return 0;
+		return false;
 	}
 	if(target cybercom::cybercom_aicheckoptout("cybercom_unstoppableforce"))
 	{
-		return 0;
+		return false;
 	}
 	if(!(isdefined(target.takedamage) && target.takedamage))
 	{
-		return 0;
+		return false;
 	}
 	if(isactor(target))
 	{
@@ -299,23 +299,23 @@ private function _is_good_target(target)
 		{
 			if(!target cybercom::function_421746e0())
 			{
-				return 0;
+				return false;
 			}
 		}
 	}
 	if(!(isdefined(target.allowdeath) && target.allowdeath))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(target.blockingpain) && target.blockingpain)
 	{
-		return 0;
+		return false;
 	}
 	if(isactor(target) && target cybercom::function_78525729() != "stand" && target cybercom::function_78525729() != "crouch")
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -327,11 +327,11 @@ private function _is_good_target(target)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function _get_valid_targets()
+function private _get_valid_targets()
 {
 	enemies = arraycombine(getaiteamarray("axis"), getaiteamarray("team3"), 0, 0);
 	valid = [];
-	foreach(var_4d4fe28d, mf in enemies)
+	foreach(mf in enemies)
 	{
 		if(!_is_good_target(mf))
 		{
@@ -351,7 +351,7 @@ private function _get_valid_targets()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_40b93b78()
+function private function_40b93b78()
 {
 	self stopjukemove();
 	self notify(#"unstoppable_watch_collisions");
@@ -366,7 +366,7 @@ private function function_40b93b78()
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_649c2f65(enemy, weapon)
+function private function_649c2f65(enemy, weapon)
 {
 	if(enemy cybercom::islinked())
 	{
@@ -378,21 +378,27 @@ private function function_649c2f65(enemy, weapon)
 		enemy dodamage(getdvarint("scr_unstoppable_heavy_vehicle_damage", 300), self.origin, self, self, "none", "MOD_IMPACT", 512, level.cybercom.unstoppable_force.weapon, -1, 1);
 		self function_40b93b78();
 	}
-	else if(enemy.scriptvehicletype == "raps" || enemy.scriptvehicletype == "wasp")
+	else
 	{
-		enemy dodamage(enemy.health, self.origin, self, self, "none", "MOD_IMPACT", 512, level.cybercom.unstoppable_force.weapon, -1, 1);
-	}
-	else if(enemy.scriptvehicletype == "amws")
-	{
-		enemy dodamage(enemy.health, self.origin, self, self, "none", "MOD_IMPACT", 512, level.cybercom.unstoppable_force.weapon, -1, 1);
-		self function_40b93b78();
-	}
-	else if(enemy.scriptvehicletype == "")
-	{
-		if(enemy.archetype == "turret")
+		if(enemy.scriptvehicletype == "raps" || enemy.scriptvehicletype == "wasp")
 		{
 			enemy dodamage(enemy.health, self.origin, self, self, "none", "MOD_IMPACT", 512, level.cybercom.unstoppable_force.weapon, -1, 1);
-			self function_40b93b78();
+		}
+		else
+		{
+			if(enemy.scriptvehicletype == "amws")
+			{
+				enemy dodamage(enemy.health, self.origin, self, self, "none", "MOD_IMPACT", 512, level.cybercom.unstoppable_force.weapon, -1, 1);
+				self function_40b93b78();
+			}
+			else if(enemy.scriptvehicletype == "")
+			{
+				if(enemy.archetype == "turret")
+				{
+					enemy dodamage(enemy.health, self.origin, self, self, "none", "MOD_IMPACT", 512, level.cybercom.unstoppable_force.weapon, -1, 1);
+					self function_40b93b78();
+				}
+			}
 		}
 	}
 }
@@ -424,14 +430,17 @@ function hit_enemy(guy, weapon)
 			guy dodamage(getdvarint("scr_unstoppable_warlord_damage", 40), self.origin, self, self, "none", "MOD_IMPACT", 512, level.cybercom.unstoppable_force.weapon, -1, 1);
 		}
 	}
-	else if(guy.archetype == "human_riotshield")
-	{
-		guy dodamage(guy.health, self.origin, self, self, "none", "MOD_IMPACT", 0, weapon, -1, 1);
-		guy notify(#"bhtn_action_notify", "reactBodyBlow");
-	}
 	else
 	{
-		guy function_b4852552(self);
+		if(guy.archetype == "human_riotshield")
+		{
+			guy dodamage(guy.health, self.origin, self, self, "none", "MOD_IMPACT", 0, weapon, -1, 1);
+			guy notify(#"bhtn_action_notify", "reactBodyBlow");
+		}
+		else
+		{
+			guy function_b4852552(self);
+		}
 	}
 	if(guy.archetype == "robot")
 	{
@@ -462,7 +471,7 @@ function watch_collisions(weapon)
 	{
 		enemies = function_518996b3();
 		hit = 0;
-		foreach(var_9d74717f, guy in enemies)
+		foreach(guy in enemies)
 		{
 			hit++;
 			if(isvehicle(guy))

@@ -20,7 +20,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("vortex_shared", &__init__, &__main__, undefined);
 }
@@ -107,7 +107,7 @@ function init_vortices()
 */
 function get_unused_vortex()
 {
-	foreach(var_7012b4f5, vortex in level.vortex_manager.a_vorticies)
+	foreach(vortex in level.vortex_manager.a_vorticies)
 	{
 		if(!(isdefined(vortex.in_use) && vortex.in_use))
 		{
@@ -129,7 +129,7 @@ function get_unused_vortex()
 function get_active_vortex_count()
 {
 	count = 0;
-	foreach(var_309db713, vortex in level.vortex_manager.a_vorticies)
+	foreach(vortex in level.vortex_manager.a_vorticies)
 	{
 		if(isdefined(vortex.in_use) && vortex.in_use)
 		{
@@ -148,7 +148,7 @@ function get_active_vortex_count()
 	Parameters: 4
 	Flags: Private
 */
-private function stop_vortex_fx_after_time(vortex_fx_handle, vortex_position, vortex_explosion_fx, n_vortex_time)
+function private stop_vortex_fx_after_time(vortex_fx_handle, vortex_position, vortex_explosion_fx, n_vortex_time)
 {
 	n_starttime = gettime();
 	n_curtime = gettime() - n_starttime;
@@ -227,7 +227,7 @@ function start_timed_vortex(v_vortex_origin, n_vortex_radius, vortex_pull_durati
 				circle(v_vortex_origin, n_vortex_radius, (0, 0, 1), 0, 1, 1);
 			#/
 		}
-		foreach(var_a4de089d, ai_zombie in a_ai_zombies)
+		foreach(ai_zombie in a_ai_zombies)
 		{
 			if(isvehicle(ai_zombie))
 			{
@@ -262,7 +262,7 @@ function start_timed_vortex(v_vortex_origin, n_vortex_radius, vortex_pull_durati
 		}
 		if(should_shellshock_player)
 		{
-			foreach(var_d735d617, e_player in a_e_players)
+			foreach(e_player in a_e_players)
 			{
 				if(isdefined(visionset_func))
 				{
@@ -291,7 +291,7 @@ function start_timed_vortex(v_vortex_origin, n_vortex_radius, vortex_pull_durati
 	}
 	else
 	{
-		foreach(var_2e7277ad, zombie in svortex.zombies)
+		foreach(zombie in svortex.zombies)
 		{
 			if(!isdefined(zombie) || !isalive(zombie))
 			{
@@ -350,7 +350,7 @@ function vortex_z_extension(a_ai_zombies, v_vortex_origin, n_vortex_radius)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function vortex_explosion(v_vortex_explosion_origin, eattacker, n_vortex_radius)
+function private vortex_explosion(v_vortex_explosion_origin, eattacker, n_vortex_radius)
 {
 	team = "axis";
 	if(isdefined(level.zombie_team))
@@ -364,7 +364,7 @@ private function vortex_explosion(v_vortex_explosion_origin, eattacker, n_vortex
 			circle(v_vortex_explosion_origin, n_vortex_radius, (1, 0, 0), 0, 1, 1000);
 		#/
 	}
-	foreach(var_eb0d657b, ai_zombie in a_ai_zombies)
+	foreach(ai_zombie in a_ai_zombies)
 	{
 		if(!ai_zombie.ignorevortices)
 		{

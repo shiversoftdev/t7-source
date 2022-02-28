@@ -56,7 +56,7 @@ function main()
 		wait(0.05);
 	}
 	level.var_de693c3 = 1;
-	foreach(var_1db7f1c8, player in getplayers())
+	foreach(player in getplayers())
 	{
 		player.hotjoin = undefined;
 	}
@@ -78,7 +78,7 @@ function main()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function _load()
+function private _load()
 {
 	timeout = gettime() + 5000;
 	while(getnumexpectedplayers() == 0 && gettime() < timeout)
@@ -304,7 +304,7 @@ function initialblack(time = 12)
 	Parameters: 2
 	Flags: Private
 */
-private function function_154ab047(currentround, idx)
+function private function_154ab047(currentround, idx)
 {
 	self endon(#"hash_437a340d");
 	while(isdefined(self) && isdefined(idx))
@@ -361,7 +361,7 @@ function function_437a340d(var_73419762)
 	{
 		return;
 	}
-	foreach(var_a8706945, player in getplayers())
+	foreach(player in getplayers())
 	{
 		if(!isdefined(player))
 		{
@@ -917,7 +917,7 @@ function function_dc4ffe5c()
 				doa_utility::debugmsg("" + curcount);
 			#/
 		}
-		foreach(var_305d4c52, player in players)
+		foreach(player in players)
 		{
 			player thread namespace_64c6b720::function_676edeb7();
 			player thread namespace_831a4a7c::updateweapon();
@@ -954,7 +954,7 @@ function function_64a5cd5e()
 		}
 		level.doa.teleporter delete();
 	}
-	foreach(var_188dd380, player in getplayers())
+	foreach(player in getplayers())
 	{
 		self.doa.respawning = 0;
 		self.var_9ea856f6 = 0;
@@ -966,7 +966,7 @@ function function_64a5cd5e()
 	doa_utility::clearallcorpses();
 	namespace_d88e3a06::function_116bb43();
 	doa_utility::function_1ced251e(1);
-	foreach(var_798a9bc, player in getplayers())
+	foreach(player in getplayers())
 	{
 		player.doa.var_af875fb7 = [];
 		player namespace_831a4a7c::function_7f33210a();
@@ -979,7 +979,7 @@ function function_64a5cd5e()
 	level thread doa_utility::function_c5f3ece8(&"DOA_GAMEOVER", undefined, 6);
 	level clientfield::set("scoreMenu", 1);
 	level clientfield::set("gameover", 1);
-	foreach(var_21f5cc1c, player in getplayers())
+	foreach(player in getplayers())
 	{
 		if(!(isdefined(player.doa.var_80ffe475) && player.doa.var_80ffe475))
 		{
@@ -1020,7 +1020,7 @@ function function_64a5cd5e()
 function upload_leaderboards()
 {
 	players = getplayers();
-	foreach(var_8343c691, player in players)
+	foreach(player in players)
 	{
 		if(!isdefined(player.doa))
 		{

@@ -149,7 +149,7 @@ function onstartgametype()
 	setdemointermissionpoint(spawnpoint.origin, spawnpoint.angles);
 	level.spawn_all = spawnlogic::get_spawnpoint_array("mp_dom_spawn");
 	level.spawn_start = [];
-	foreach(var_3ed956da, team in level.teams)
+	foreach(team in level.teams)
 	{
 		level.spawn_start[team] = spawnlogic::get_spawnpoint_array(("mp_dom_spawn_" + team) + "_start");
 	}
@@ -205,7 +205,7 @@ function onroundendgame(roundwinner)
 {
 	if(level.scoreroundwinbased)
 	{
-		foreach(var_f6095d41, team in level.teams)
+		foreach(team in level.teams)
 		{
 			[[level._setteamscore]](team, game["roundswon"][team]);
 		}
@@ -258,7 +258,7 @@ function domflags()
 		return;
 	}
 	level.flags = [];
-	foreach(var_a919c988, dom_flag in primaryflags)
+	foreach(dom_flag in primaryflags)
 	{
 		if(isdefined(dom_flag.target))
 		{
@@ -268,13 +268,23 @@ function domflags()
 				trigger.visual = dom_flag;
 				trigger.script_label = dom_flag.script_label;
 			}
-			util::error((("" + dom_flag.script_label) + "") + dom_flag.target);
+			else
+			{
+				/#
+					util::error((("" + dom_flag.script_label) + "") + dom_flag.target);
+				#/
+			}
 		}
-		util::error("" + dom_flag.script_label);
+		else
+		{
+			/#
+				util::error("" + dom_flag.script_label);
+			#/
+		}
 		level.flags[level.flags.size] = trigger;
 	}
 	level.domflags = [];
-	foreach(var_ea640538, trigger in level.flags)
+	foreach(trigger in level.flags)
 	{
 		trigger.visual setmodel(level.flagmodel["neutral"]);
 		name = istring("dom" + trigger.visual.script_label);
@@ -943,20 +953,23 @@ function give_capture_credit(touchlist, string, lastownerteam, isbflag, neutrali
 			{
 				scoreevents::processscoreevent("dom_point_secured_neutralizing", player_from_touchlist);
 			}
-			else if(lastownerteam == "neutral")
+			else
 			{
-				if(isbflag)
+				if(lastownerteam == "neutral")
 				{
-					scoreevents::processscoreevent("dom_point_neutral_b_secured", player_from_touchlist);
+					if(isbflag)
+					{
+						scoreevents::processscoreevent("dom_point_neutral_b_secured", player_from_touchlist);
+					}
+					else
+					{
+						scoreevents::processscoreevent("dom_point_neutral_secured", player_from_touchlist);
+					}
 				}
 				else
 				{
-					scoreevents::processscoreevent("dom_point_neutral_secured", player_from_touchlist);
+					scoreevents::processscoreevent("dom_point_secured", player_from_touchlist);
 				}
-			}
-			else
-			{
-				scoreevents::processscoreevent("dom_point_secured", player_from_touchlist);
 			}
 			self.hasbeencaptured = 1;
 			player_from_touchlist recordgameevent("capture");
@@ -972,7 +985,12 @@ function give_capture_credit(touchlist, string, lastownerteam, isbflag, neutrali
 			demo::bookmark("event", gettime(), player_from_touchlist);
 			player_from_touchlist addplayerstatwithgametype("CAPTURES", 1);
 		}
-		player_from_touchlist iprintlnbold("");
+		else
+		{
+			/#
+				player_from_touchlist iprintlnbold("");
+			#/
+		}
 		level thread popups::displayteammessagetoall(string, player_from_touchlist);
 	}
 }
@@ -1007,7 +1025,12 @@ function give_neutralized_credit(touchlist, string, lastownerteam, isbflag)
 			}
 			demo::bookmark("event", gettime(), player_from_touchlist);
 		}
-		player_from_touchlist iprintlnbold("");
+		else
+		{
+			/#
+				player_from_touchlist iprintlnbold("");
+			#/
+		}
 		level thread popups::displayteammessagetoall(string, player_from_touchlist);
 	}
 }
@@ -1084,13 +1107,16 @@ function updatedomscores()
 					nearwinning = "nearWinningFinal";
 					nearlosing = "nearLosingFinal";
 				}
-				else if(randomint(4) < 3)
+				else
 				{
-					nearwinning = "nearWinningFinal";
-				}
-				if(randomint(4) < 1)
-				{
-					nearlosing = "nearLosingFinal";
+					if(randomint(4) < 3)
+					{
+						nearwinning = "nearWinningFinal";
+					}
+					if(randomint(4) < 1)
+					{
+						nearlosing = "nearLosingFinal";
+					}
 				}
 				globallogic_audio::leader_dialog(nearwinning, winningteam);
 				globallogic_audio::leader_dialog_for_other_teams(nearlosing, winningteam);
@@ -1273,7 +1299,12 @@ function onplayerkilled(einflictor, attacker, idamage, smeansofdeath, weapon, vd
 						self recordkillmodifier("defending");
 						break;
 					}
-					attacker iprintlnbold("");
+					else
+					{
+						/#
+							attacker iprintlnbold("");
+						#/
+					}
 				}
 				if(defendedflag)
 				{
@@ -1839,20 +1870,23 @@ function dominated_challenge_check()
 		{
 			allied_flags++;
 		}
-		else if(flag_team == "axis")
-		{
-			axis_flags++;
-		}
 		else
 		{
-			return 0;
+			if(flag_team == "axis")
+			{
+				axis_flags++;
+			}
+			else
+			{
+				return false;
+			}
 		}
 		if(allied_flags > 0 && axis_flags > 0)
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1882,10 +1916,10 @@ function dominated_check()
 		}
 		if(allied_flags > 0 && axis_flags > 0)
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1934,17 +1968,17 @@ function isscoreboosting(player, flag)
 {
 	if(!level.rankedmatch)
 	{
-		return 0;
+		return false;
 	}
 	if(player.capsperminute > level.playercapturelpm)
 	{
-		return 1;
+		return true;
 	}
 	if(flag.capsperminute > level.flagcapturelpm)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1969,10 +2003,13 @@ function onupdateuserate()
 	{
 		self.contested = 1;
 	}
-	else if(previousstate == 1)
+	else
 	{
-		self notify(#"contest_over");
+		if(previousstate == 1)
+		{
+			self notify(#"contest_over");
+		}
+		self.contested = 0;
 	}
-	self.contested = 0;
 }
 

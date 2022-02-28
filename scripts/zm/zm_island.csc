@@ -74,7 +74,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function opt_in()
+function autoexec opt_in()
 {
 	level.aat_in_use = 1;
 	level.bgb_in_use = 1;
@@ -429,14 +429,17 @@ function function_346468e3(localclientnum, oldval, newval, bnewent, binitialsnap
 		setlitfogbank(localclientnum, -1, 1, -1);
 		setworldfogactivebank(localclientnum, 2);
 	}
-	else if(newval == 2)
-	{
-		setworldfogactivebank(localclientnum, 3);
-	}
 	else
 	{
-		setlitfogbank(localclientnum, -1, 0, -1);
-		setworldfogactivebank(localclientnum, 1);
+		if(newval == 2)
+		{
+			setworldfogactivebank(localclientnum, 3);
+		}
+		else
+		{
+			setlitfogbank(localclientnum, -1, 0, -1);
+			setworldfogactivebank(localclientnum, 1);
+		}
 	}
 }
 
@@ -599,7 +602,7 @@ function set_heavy_web_fade_material(localclientnum, oldval, newval, bnewent, bi
 function function_be61cf5a()
 {
 	var_f47aa4cf = getdynentarray();
-	foreach(var_2526b0ad, dyn_ent in var_f47aa4cf)
+	foreach(dyn_ent in var_f47aa4cf)
 	{
 		setdynentenabled(dyn_ent, 0);
 	}

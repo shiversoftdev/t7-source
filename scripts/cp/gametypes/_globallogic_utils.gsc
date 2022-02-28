@@ -271,20 +271,26 @@ function playtickingsound(gametype_tick_sound)
 			time = time - 1;
 			wait(1);
 		}
-		else if(time > 4)
-		{
-			time = time - 0.5;
-			wait(0.5);
-		}
-		else if(time > 1)
-		{
-			time = time - 0.4;
-			wait(0.4);
-		}
 		else
 		{
-			time = time - 0.3;
-			wait(0.3);
+			if(time > 4)
+			{
+				time = time - 0.5;
+				wait(0.5);
+			}
+			else
+			{
+				if(time > 1)
+				{
+					time = time - 0.4;
+					wait(0.4);
+				}
+				else
+				{
+					time = time - 0.3;
+					wait(0.3);
+				}
+			}
 		}
 		hostmigration::waittillhostmigrationdone();
 	}
@@ -552,7 +558,7 @@ function isheadshot(weapon, shitloc, smeansofdeath, einflictor)
 {
 	if(shitloc != "head" && shitloc != "helmet")
 	{
-		return 0;
+		return false;
 	}
 	switch(smeansofdeath)
 	{
@@ -560,17 +566,17 @@ function isheadshot(weapon, shitloc, smeansofdeath, einflictor)
 		case "MOD_MELEE_ASSASSINATE":
 		case "MOD_MELEE_WEAPON_BUTT":
 		{
-			return 0;
+			return false;
 		}
 		case "MOD_IMPACT":
 		{
 			if(weapon != level.weaponballisticknife)
 			{
-				return 0;
+				return false;
 			}
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -661,10 +667,10 @@ function isexcluded(entity, entitylist)
 	{
 		if(entity == entitylist[index])
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -704,7 +710,7 @@ function logteamwinstring(wintype, winner)
 	{
 		log_string = (log_string + ", win: ") + winner;
 	}
-	foreach(var_e6a63568, team in level.teams)
+	foreach(team in level.teams)
 	{
 		log_string = (((log_string + ", ") + team) + ": ") + game["teamScores"][team];
 	}

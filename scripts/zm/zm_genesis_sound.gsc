@@ -34,7 +34,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_genesis_sound", &__init__, undefined, undefined);
 }
@@ -82,10 +82,10 @@ function function_de04b701(state)
 {
 	if(!function_b01e339d(state))
 	{
-		return 0;
+		return false;
 	}
 	level thread function_69f1cd9e(state);
-	return 1;
+	return true;
 }
 
 /*
@@ -99,7 +99,7 @@ function function_de04b701(state)
 */
 function function_69f1cd9e(state)
 {
-	foreach(var_10d5ad4c, player in level.players)
+	foreach(player in level.players)
 	{
 		location = player function_5d99d675();
 		num = function_d6870cf0(state, location);
@@ -134,9 +134,9 @@ function function_b01e339d(state)
 {
 	if(state == "round_start" || state == "round_start_short" || state == "round_end" || state == "game_over")
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

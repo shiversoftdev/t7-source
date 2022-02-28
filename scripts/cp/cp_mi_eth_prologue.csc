@@ -449,16 +449,19 @@ function setup_security_cameras(localclientnum, oldval, newval, bnewent, binitia
 			level.a_cam_objects[localclientnum][level.a_cam_objects[localclientnum].size] = function_b0867fa6(localclientnum, "s_security_standing_wall", 38, 1);
 		}
 	}
-	else if(isdefined(level.a_cam_objects[localclientnum]))
+	else
 	{
-		for(i = 0; i < level.a_cam_objects[localclientnum].size; i++)
+		if(isdefined(level.a_cam_objects[localclientnum]))
 		{
-			level.a_cam_objects[localclientnum][i] clearextracam();
-			level.a_cam_objects[localclientnum][i] delete();
-			level.a_cam_objects[localclientnum][i] = undefined;
+			for(i = 0; i < level.a_cam_objects[localclientnum].size; i++)
+			{
+				level.a_cam_objects[localclientnum][i] clearextracam();
+				level.a_cam_objects[localclientnum][i] delete();
+				level.a_cam_objects[localclientnum][i] = undefined;
+			}
 		}
+		level.a_cam_objects[localclientnum] = undefined;
 	}
-	level.a_cam_objects[localclientnum] = undefined;
 }
 
 /*
@@ -540,7 +543,7 @@ function function_cd98eb8d()
 function function_a1ad4aa7(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
 	var_8b68ce61 = struct::get_array("s_interrogation_physics", "targetname");
-	foreach(var_9cb23362, struct in var_8b68ce61)
+	foreach(struct in var_8b68ce61)
 	{
 		physicsexplosionsphere(localclientnum, struct.origin, 100, 1, 10, 99, 100, 1, 1);
 	}

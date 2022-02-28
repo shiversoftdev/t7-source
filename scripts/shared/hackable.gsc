@@ -16,7 +16,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("hackable", &init, undefined, undefined);
 }
@@ -147,7 +147,7 @@ function find_hackable_object()
 	candidates = [];
 	origin = self.origin;
 	forward = anglestoforward(self.angles);
-	foreach(var_56a0317c, obj in level.hackable_items)
+	foreach(obj in level.hackable_items)
 	{
 		if(self is_object_hackable(obj, origin, forward))
 		{

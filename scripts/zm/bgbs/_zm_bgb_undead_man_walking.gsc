@@ -21,7 +21,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_bgb_undead_man_walking", &__init__, undefined, "bgb");
 }
@@ -59,7 +59,7 @@ function enable()
 	self endon(#"bled_out");
 	self endon(#"bgb_update");
 	self thread function_40e95c74();
-	if(bgb::function_f345a8ce("zm_bgb_undead_man_walking"))
+	if(bgb::increment_ref_count("zm_bgb_undead_man_walking"))
 	{
 		return;
 	}
@@ -79,7 +79,7 @@ function enable()
 function function_40e95c74()
 {
 	self util::waittill_any("disconnect", "bled_out", "bgb_update");
-	if(bgb::function_72936116("zm_bgb_undead_man_walking"))
+	if(bgb::decrement_ref_count("zm_bgb_undead_man_walking"))
 	{
 		return;
 	}

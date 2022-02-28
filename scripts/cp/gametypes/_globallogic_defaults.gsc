@@ -55,27 +55,33 @@ function default_onforfeit(team)
 		endreason = game["strings"]["other_teams_forfeited"];
 		winner = team;
 	}
-	else if(!isdefined(team))
-	{
-		setdvar("ui_text_endreason", game["strings"]["players_forfeited"]);
-		endreason = game["strings"]["players_forfeited"];
-		winner = level.players[0];
-	}
-	else if(isdefined(level.teams[team]))
-	{
-		endreason = game["strings"][team + "_forfeited"];
-		setdvar("ui_text_endreason", endreason);
-		winner = getwinningteamfromloser(team);
-	}
 	else
 	{
-		/#
-			assert(isdefined(team), "");
-		#/
-		/#
-			assert(0, ("" + team) + "");
-		#/
-		winner = "tie";
+		if(!isdefined(team))
+		{
+			setdvar("ui_text_endreason", game["strings"]["players_forfeited"]);
+			endreason = game["strings"]["players_forfeited"];
+			winner = level.players[0];
+		}
+		else
+		{
+			if(isdefined(level.teams[team]))
+			{
+				endreason = game["strings"][team + "_forfeited"];
+				setdvar("ui_text_endreason", endreason);
+				winner = getwinningteamfromloser(team);
+			}
+			else
+			{
+				/#
+					assert(isdefined(team), "");
+				#/
+				/#
+					assert(0, ("" + team) + "");
+				#/
+				winner = "tie";
+			}
+		}
 	}
 	level.forcedend = 1;
 	/#
@@ -162,7 +168,7 @@ function default_onlastteamaliveevent(team)
 */
 function things_exist_which_could_revive_player(team)
 {
-	return 0;
+	return false;
 }
 
 /*
@@ -178,7 +184,7 @@ function team_can_be_revived(team)
 {
 	if(things_exist_which_could_revive_player(team))
 	{
-		return 1;
+		return true;
 	}
 	if(level.playercount[team] == 1 && level.alivecount[team] == 1)
 	{
@@ -187,10 +193,10 @@ function team_can_be_revived(team)
 		#/
 		if(level.aliveplayers[team][0].lives > 0)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -336,7 +342,7 @@ function default_onscorelimit()
 {
 	if(!level.endgameonscorelimit)
 	{
-		return 0;
+		return false;
 	}
 	winner = undefined;
 	if(level.teambased)
@@ -360,7 +366,7 @@ function default_onscorelimit()
 	}
 	setdvar("ui_text_endreason", game["strings"]["score_limit_reached"]);
 	thread globallogic::endgame(winner, game["strings"]["score_limit_reached"]);
-	return 1;
+	return true;
 }
 
 /*
@@ -412,7 +418,12 @@ function default_onspawnintermission()
 	{
 		self spawn(spawnpoint.origin, spawnpoint.angles);
 	}
-	util::error(("" + spawnpointname) + "");
+	else
+	{
+		/#
+			util::error(("" + spawnpointname) + "");
+		#/
+	}
 }
 
 /*

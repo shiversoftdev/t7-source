@@ -19,7 +19,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_bgb_projectile_vomiting", &__init__, undefined, "bgb");
 }
@@ -41,7 +41,7 @@ function __init__()
 	}
 	clientfield::register("actor", "projectile_vomit", 12000, 1, "counter");
 	bgb::register("zm_bgb_projectile_vomiting", "rounds", 5, &enable, &disable, undefined);
-	bgb::function_2b341a2e("zm_bgb_projectile_vomiting", &actor_death_override);
+	bgb::register_actor_death_override("zm_bgb_projectile_vomiting", &actor_death_override);
 }
 
 /*

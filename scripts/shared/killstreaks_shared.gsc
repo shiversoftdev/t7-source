@@ -24,13 +24,13 @@ function is_killstreak_weapon(weapon)
 {
 	if(weapon == level.weaponnone || weapon.notkillstreak)
 	{
-		return 0;
+		return false;
 	}
 	if(weapon.isspecificuse || is_weapon_associated_with_killstreak(weapon))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -65,59 +65,68 @@ function switch_to_last_non_killstreak_weapon(immediate, awayfromball)
 		self disableweaponcycling();
 		self disableoffhandweapons();
 	}
-	else if(isdefined(self.laststand) && self.laststand)
+	else
 	{
-		if(isdefined(self.laststandpistol) && self hasweapon(self.laststandpistol))
+		if(isdefined(self.laststand) && self.laststand)
 		{
-			self switchtoweapon(self.laststandpistol);
-		}
-	}
-	else if(isdefined(self.lastnonkillstreakweapon) && self hasweapon(self.lastnonkillstreakweapon))
-	{
-		if(self.lastnonkillstreakweapon.isheroweapon)
-		{
-			if(self.lastnonkillstreakweapon.gadget_heroversion_2_0)
+			if(isdefined(self.laststandpistol) && self hasweapon(self.laststandpistol))
 			{
-				if(self.lastnonkillstreakweapon.isgadget && self getammocount(self.lastnonkillstreakweapon) > 0)
-				{
-					slot = self gadgetgetslot(self.lastnonkillstreakweapon);
-					if(self ability_player::gadget_is_in_use(slot))
-					{
-						return self switchtoweapon(self.lastnonkillstreakweapon);
-					}
-					return 1;
-				}
+				self switchtoweapon(self.laststandpistol);
 			}
-			else if(self getammocount(self.lastnonkillstreakweapon) > 0)
-			{
-				return self switchtoweapon(self.lastnonkillstreakweapon);
-			}
-			if(isdefined(awayfromball) && awayfromball && isdefined(self.lastdroppableweapon) && self hasweapon(self.lastdroppableweapon))
-			{
-				self switchtoweapon(self.lastdroppableweapon);
-			}
-			else
-			{
-				self switchtoweapon();
-			}
-			return 1;
-		}
-		if(isdefined(immediate) && immediate)
-		{
-			self switchtoweaponimmediate(self.lastnonkillstreakweapon);
 		}
 		else
 		{
-			self switchtoweapon(self.lastnonkillstreakweapon);
+			if(isdefined(self.lastnonkillstreakweapon) && self hasweapon(self.lastnonkillstreakweapon))
+			{
+				if(self.lastnonkillstreakweapon.isheroweapon)
+				{
+					if(self.lastnonkillstreakweapon.gadget_heroversion_2_0)
+					{
+						if(self.lastnonkillstreakweapon.isgadget && self getammocount(self.lastnonkillstreakweapon) > 0)
+						{
+							slot = self gadgetgetslot(self.lastnonkillstreakweapon);
+							if(self ability_player::gadget_is_in_use(slot))
+							{
+								return self switchtoweapon(self.lastnonkillstreakweapon);
+							}
+							return 1;
+						}
+					}
+					else if(self getammocount(self.lastnonkillstreakweapon) > 0)
+					{
+						return self switchtoweapon(self.lastnonkillstreakweapon);
+					}
+					if(isdefined(awayfromball) && awayfromball && isdefined(self.lastdroppableweapon) && self hasweapon(self.lastdroppableweapon))
+					{
+						self switchtoweapon(self.lastdroppableweapon);
+					}
+					else
+					{
+						self switchtoweapon();
+					}
+					return 1;
+				}
+				if(isdefined(immediate) && immediate)
+				{
+					self switchtoweaponimmediate(self.lastnonkillstreakweapon);
+				}
+				else
+				{
+					self switchtoweapon(self.lastnonkillstreakweapon);
+				}
+			}
+			else
+			{
+				if(isdefined(self.lastdroppableweapon) && self hasweapon(self.lastdroppableweapon))
+				{
+					self switchtoweapon(self.lastdroppableweapon);
+				}
+				else
+				{
+					return 0;
+				}
+			}
 		}
-	}
-	else if(isdefined(self.lastdroppableweapon) && self hasweapon(self.lastdroppableweapon))
-	{
-		self switchtoweapon(self.lastdroppableweapon);
-	}
-	else
-	{
-		return 0;
 	}
 	return 1;
 }
@@ -159,10 +168,10 @@ function isheldinventorykillstreakweapon(killstreakweapon)
 		case "inventory_m32":
 		case "inventory_minigun":
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -271,7 +280,7 @@ function hassatellite(team_or_entnum)
 */
 function destroyotherteamsequipment(attacker, weapon)
 {
-	foreach(var_cd41ef9, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(team == attacker.team)
 		{
@@ -368,7 +377,7 @@ function destroytacticalinsertions(attacker, victimteam)
 */
 function destroyotherteamsactivevehicles(attacker, weapon)
 {
-	foreach(var_7a776c7f, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(team == attacker.team)
 		{
@@ -391,7 +400,7 @@ function destroyotherteamsactivevehicles(attacker, weapon)
 function destroyneutralgameplayvehicles(attacker, weapon)
 {
 	script_vehicles = getentarray("script_vehicle", "classname");
-	foreach(var_2ba14403, vehicle in script_vehicles)
+	foreach(vehicle in script_vehicles)
 	{
 		if(isvehicle(vehicle) && (!isdefined(vehicle.team) || vehicle.team == "neutral"))
 		{
@@ -430,7 +439,7 @@ function destroyactivevehicles(attacker, team, weapon)
 	remotedrone = getentarray("remote_drone", "targetname");
 	destroyentities(remotedrone, attacker, team, weapon);
 	script_vehicles = getentarray("script_vehicle", "classname");
-	foreach(var_a785ca5e, vehicle in script_vehicles)
+	foreach(vehicle in script_vehicles)
 	{
 		if(isdefined(team) && vehicle.team == team && isvehicle(vehicle))
 		{
@@ -453,7 +462,7 @@ function destroyactivevehicles(attacker, team, weapon)
 		}
 	}
 	planemortars = getentarray("plane_mortar", "targetname");
-	foreach(var_7d59d21f, planemortar in planemortars)
+	foreach(planemortar in planemortars)
 	{
 		if(isdefined(team) && isdefined(planemortar.team))
 		{
@@ -469,7 +478,7 @@ function destroyactivevehicles(attacker, team, weapon)
 		planemortar notify(#"emp_deployed", attacker);
 	}
 	dronestrikes = getentarray("drone_strike", "targetname");
-	foreach(var_f4755e17, dronestrike in dronestrikes)
+	foreach(dronestrike in dronestrikes)
 	{
 		if(isdefined(team) && isdefined(dronestrike.team))
 		{
@@ -485,7 +494,7 @@ function destroyactivevehicles(attacker, team, weapon)
 		dronestrike notify(#"emp_deployed", attacker);
 	}
 	counteruavs = getentarray("counteruav", "targetname");
-	foreach(var_448cf024, counteruav in counteruavs)
+	foreach(counteruav in counteruavs)
 	{
 		if(isdefined(team) && isdefined(counteruav.team))
 		{
@@ -501,7 +510,7 @@ function destroyactivevehicles(attacker, team, weapon)
 		counteruav notify(#"emp_deployed", attacker);
 	}
 	satellites = getentarray("satellite", "targetname");
-	foreach(var_ca4965d8, satellite in satellites)
+	foreach(satellite in satellites)
 	{
 		if(isdefined(team) && isdefined(satellite.team))
 		{
@@ -517,7 +526,7 @@ function destroyactivevehicles(attacker, team, weapon)
 		satellite notify(#"emp_deployed", attacker);
 	}
 	robots = getaiarchetypearray("robot");
-	foreach(var_9822a285, robot in robots)
+	foreach(robot in robots)
 	{
 		if(robot.allowdeath !== 0 && robot.magic_bullet_shield !== 1 && isdefined(team) && robot.team == team)
 		{
@@ -556,7 +565,7 @@ function destroyentities(entities, attacker, team, weapon)
 	modelname = "";
 	tagname = "";
 	partname = "";
-	foreach(var_3b6438ed, entity in entities)
+	foreach(entity in entities)
 	{
 		if(isdefined(team) && isdefined(entity.team))
 		{

@@ -34,7 +34,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_stalingrad_audio", &__init__, undefined, undefined);
 }
@@ -349,7 +349,7 @@ function function_5c7f73da()
 		{
 			return;
 		}
-		foreach(var_64dbd143, s_reel in var_2de8cf5e)
+		foreach(s_reel in var_2de8cf5e)
 		{
 			var_de6d4fc0 = util::spawn_model(s_reel.model, s_reel.origin, s_reel.angles);
 			s_reel.var_de6d4fc0 = var_de6d4fc0;
@@ -445,7 +445,7 @@ function function_8e130ce5(var_bee8e45)
 */
 function function_ccdb680e(var_2de8cf5e, b_on)
 {
-	foreach(var_c50aeb12, s_reel in var_2de8cf5e)
+	foreach(s_reel in var_2de8cf5e)
 	{
 		if(isdefined(s_reel.var_de6d4fc0))
 		{
@@ -553,7 +553,7 @@ function function_61c5cb4e()
 	var_4540293a = struct::get_array("s_anthem_array", "targetname");
 	level.var_96d76bfc = 0;
 	level.var_c9c5dfcc = var_4540293a.size;
-	foreach(var_d65a6be7, var_71f55e40 in var_4540293a)
+	foreach(var_71f55e40 in var_4540293a)
 	{
 		var_71f55e40 thread function_3b8ba4e9();
 	}
@@ -613,7 +613,7 @@ function function_9fa22cf7()
 {
 	level notify(#"hash_787a404e");
 	var_4540293a = struct::get_array("s_anthem_array", "targetname");
-	foreach(var_7d57d4e0, var_71f55e40 in var_4540293a)
+	foreach(var_71f55e40 in var_4540293a)
 	{
 		if(isdefined(var_71f55e40.var_1431218c))
 		{
@@ -722,10 +722,10 @@ function function_4c503dc7()
 		success = var_d1f154fd[i] function_dc391fc3();
 		if(!(isdefined(success) && success))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -896,7 +896,7 @@ function function_24ff7a78(owner, weapon)
 	{
 		if(array::contains(level.var_a31a784f, var_c4311d6f))
 		{
-			return 0;
+			return false;
 		}
 		var_12bd8497 = getent(var_c4311d6f + "_1_damage", "targetname");
 		if(isdefined(var_12bd8497.var_3eb19318) && var_12bd8497.var_3eb19318 && self istouching(var_12bd8497))
@@ -907,11 +907,11 @@ function function_24ff7a78(owner, weapon)
 			{
 				level flag::set("ballerina_ready");
 				level.monkey_song_override = undefined;
-				return 1;
+				return true;
 			}
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 

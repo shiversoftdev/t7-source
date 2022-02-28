@@ -14,7 +14,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function precache()
+function autoexec precache()
 {
 }
 
@@ -27,7 +27,7 @@ autoexec function precache()
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function main()
+function autoexec main()
 {
 	level._effect["zombie_special_day_effect"] = "zombie/fx_val_chest_burst";
 	ai::add_archetype_spawn_function("zombie", &zombieclientutils::zombie_override_burn_fx);
@@ -73,7 +73,7 @@ function zombiehandler(localclientnum, oldvalue, newvalue, bnewent, binitialsnap
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function _gibcallback(localclientnum, entity, gibflag)
+function private _gibcallback(localclientnum, entity, gibflag)
 {
 	switch(gibflag)
 	{

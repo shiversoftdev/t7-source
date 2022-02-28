@@ -224,7 +224,7 @@ function rigabilitygiven(type, upgraded)
 	}
 	if(isdefined(level._cybercom_rig_ability[type].on_give))
 	{
-		foreach(var_1b3953b7, on_give in level._cybercom_rig_ability[type].on_give)
+		foreach(on_give in level._cybercom_rig_ability[type].on_give)
 		{
 			self [[on_give]](type);
 		}
@@ -244,7 +244,7 @@ function giverigability(type, upgraded = 0, slot, setflags = 1)
 {
 	if(!isdefined(level._cybercom_rig_ability[type]))
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(slot))
 	{
@@ -259,7 +259,7 @@ function giverigability(type, upgraded = 0, slot, setflags = 1)
 		self cybercom::updatecybercomflags();
 	}
 	self rigabilitygiven(type);
-	return 1;
+	return true;
 }
 
 /*
@@ -275,10 +275,10 @@ function function_ccca7010(type)
 {
 	if(!isdefined(level._cybercom_rig_ability[type]))
 	{
-		return 0;
+		return false;
 	}
 	self _take_rig_ability(type);
-	return 1;
+	return true;
 }
 
 /*
@@ -290,15 +290,15 @@ function function_ccca7010(type)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _take_rig_ability(type)
+function private _take_rig_ability(type)
 {
 	if(!isdefined(level._cybercom_rig_ability[type]))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(level._cybercom_rig_ability[type]) && isdefined(level._cybercom_rig_ability[type].on_take))
 	{
-		foreach(var_a289c895, on_take in level._cybercom_rig_ability[type].on_take)
+		foreach(on_take in level._cybercom_rig_ability[type].on_take)
 		{
 			self [[on_take]](type);
 		}
@@ -306,7 +306,7 @@ private function _take_rig_ability(type)
 	self notify("take_ability_" + type);
 	self clearcybercomrig(type);
 	self cybercom::updatecybercomflags();
-	return 1;
+	return true;
 }
 
 /*
@@ -320,7 +320,7 @@ private function _take_rig_ability(type)
 */
 function takeallrigabilities()
 {
-	foreach(var_4adf7bba, ability in level._cybercom_rig_ability)
+	foreach(ability in level._cybercom_rig_ability)
 	{
 		if(self hascybercomrig(ability.name) != 0)
 		{
@@ -341,7 +341,7 @@ function takeallrigabilities()
 */
 function giveallrigabilities()
 {
-	foreach(var_58d913cb, ability in level._cybercom_rig_ability)
+	foreach(ability in level._cybercom_rig_ability)
 	{
 		status = self hascybercomrig(ability.name);
 		if(status != 0)
@@ -370,7 +370,7 @@ function turn_rig_ability_on(type)
 	}
 	if(isdefined(level._cybercom_rig_ability[type]) && isdefined(level._cybercom_rig_ability[type].turn_on))
 	{
-		foreach(var_a5580e8, turn_on in level._cybercom_rig_ability[type].turn_on)
+		foreach(turn_on in level._cybercom_rig_ability[type].turn_on)
 		{
 			self [[turn_on]](type);
 		}
@@ -395,7 +395,7 @@ function turn_rig_ability_off(type)
 	}
 	if(isdefined(level._cybercom_rig_ability[type]) && isdefined(level._cybercom_rig_ability[type].turn_off))
 	{
-		foreach(var_b545f8e9, turn_off in level._cybercom_rig_ability[type].turn_off)
+		foreach(turn_off in level._cybercom_rig_ability[type].turn_off)
 		{
 			self [[turn_off]](type);
 		}

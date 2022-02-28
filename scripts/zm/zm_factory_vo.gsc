@@ -19,7 +19,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_factory_vo", &__init__, &__main__, undefined);
 }
@@ -130,44 +130,56 @@ function function_7884e6b8()
 							var_e140097c++;
 						}
 					}
-					else if(var_e8669.characterindex == 3 && var_261100d2.characterindex == 0 || (var_261100d2.characterindex == 3 && var_e8669.characterindex == 0))
+					else
 					{
-						if(var_b7adf76 < var_5fda2472.size)
+						if(var_e8669.characterindex == 3 && var_261100d2.characterindex == 0 || (var_261100d2.characterindex == 3 && var_e8669.characterindex == 0))
 						{
-							function_c23e3a71(var_5fda2472, var_b7adf76, 1);
-							var_b7adf76++;
+							if(var_b7adf76 < var_5fda2472.size)
+							{
+								function_c23e3a71(var_5fda2472, var_b7adf76, 1);
+								var_b7adf76++;
+							}
 						}
-					}
-					else if(var_e8669.characterindex == 3 && var_261100d2.characterindex == 1 || (var_261100d2.characterindex == 3 && var_e8669.characterindex == 1))
-					{
-						if(var_e60d01d < var_aeae7aa1.size)
+						else
 						{
-							function_c23e3a71(var_aeae7aa1, var_e60d01d, 1);
-							var_e60d01d++;
-						}
-					}
-					else if(var_e8669.characterindex == 2 && var_261100d2.characterindex == 0 || (var_261100d2.characterindex == 2 && var_e8669.characterindex == 0))
-					{
-						if(var_93378973 < var_db90c17b.size)
-						{
-							function_c23e3a71(var_db90c17b, var_93378973, 1);
-							var_93378973++;
-						}
-					}
-					else if(var_e8669.characterindex == 2 && var_261100d2.characterindex == 1 || (var_261100d2.characterindex == 2 && var_e8669.characterindex == 1))
-					{
-						if(var_94078d12 < var_e341729a.size)
-						{
-							function_c23e3a71(var_e341729a, var_94078d12, 1);
-							var_94078d12++;
-						}
-					}
-					else if(var_e8669.characterindex == 0 && var_261100d2.characterindex == 1 || (var_261100d2.characterindex == 0 && var_e8669.characterindex == 1))
-					{
-						if(var_22f40782 < var_4c7aad4a.size)
-						{
-							function_c23e3a71(var_4c7aad4a, var_22f40782, 1);
-							var_22f40782++;
+							if(var_e8669.characterindex == 3 && var_261100d2.characterindex == 1 || (var_261100d2.characterindex == 3 && var_e8669.characterindex == 1))
+							{
+								if(var_e60d01d < var_aeae7aa1.size)
+								{
+									function_c23e3a71(var_aeae7aa1, var_e60d01d, 1);
+									var_e60d01d++;
+								}
+							}
+							else
+							{
+								if(var_e8669.characterindex == 2 && var_261100d2.characterindex == 0 || (var_261100d2.characterindex == 2 && var_e8669.characterindex == 0))
+								{
+									if(var_93378973 < var_db90c17b.size)
+									{
+										function_c23e3a71(var_db90c17b, var_93378973, 1);
+										var_93378973++;
+									}
+								}
+								else
+								{
+									if(var_e8669.characterindex == 2 && var_261100d2.characterindex == 1 || (var_261100d2.characterindex == 2 && var_e8669.characterindex == 1))
+									{
+										if(var_94078d12 < var_e341729a.size)
+										{
+											function_c23e3a71(var_e341729a, var_94078d12, 1);
+											var_94078d12++;
+										}
+									}
+									else if(var_e8669.characterindex == 0 && var_261100d2.characterindex == 1 || (var_261100d2.characterindex == 0 && var_e8669.characterindex == 1))
+									{
+										if(var_22f40782 < var_4c7aad4a.size)
+										{
+											function_c23e3a71(var_4c7aad4a, var_22f40782, 1);
+											var_22f40782++;
+										}
+									}
+								}
+							}
 						}
 					}
 				}
@@ -236,7 +248,7 @@ function function_7aa5324a(var_cbd11028, b_wait_if_busy = 0, n_priority = 0, var
 */
 function function_218256bd(var_eca8128e)
 {
-	foreach(var_e3c5cd07, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		if(isdefined(player))
 		{
@@ -246,7 +258,7 @@ function function_218256bd(var_eca8128e)
 	}
 	if(var_eca8128e)
 	{
-		foreach(var_584bda53, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			var_8f810568 = getnextarraykey(var_4e5ea88d);
 			while(isdefined(player) && (isdefined(player.isspeaking) && player.isspeaking))
@@ -369,7 +381,7 @@ function vo_clear()
 	self.n_vo_priority = 0;
 	self.isspeaking = 0;
 	b_in_a_e_speakers = 0;
-	foreach(var_ca4965d8, e_checkme in level.a_e_speakers)
+	foreach(e_checkme in level.a_e_speakers)
 	{
 		if(e_checkme == self)
 		{

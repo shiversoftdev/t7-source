@@ -39,7 +39,7 @@ function init()
 function bot_idle()
 {
 	approachradiussq = 562500;
-	foreach(var_6516bd2f, zone in level.bombzones)
+	foreach(zone in level.bombzones)
 	{
 		if(isdefined(zone.bombexploded) && zone.bombexploded)
 		{
@@ -64,7 +64,7 @@ function bot_idle()
 		}
 	}
 	zones = array::randomize(level.bombzones);
-	foreach(var_fe0b45ba, zone in zones)
+	foreach(zone in zones)
 	{
 		if(isdefined(zone.bombexploded) && zone.bombexploded)
 		{
@@ -77,7 +77,7 @@ function bot_idle()
 			return;
 		}
 	}
-	foreach(var_37c2c69c, zone in zones)
+	foreach(zone in zones)
 	{
 		if(isdefined(zone.bombexploded) && zone.bombexploded)
 		{
@@ -152,7 +152,7 @@ function combat_think()
 function function_211bcdc()
 {
 	approachradiussq = 562500;
-	foreach(var_f93fbae, zone in level.bombzones)
+	foreach(zone in level.bombzones)
 	{
 		if(isdefined(zone.bombexploded) && zone.bombexploded)
 		{

@@ -72,7 +72,15 @@ function function_d19cb2f8()
 			}
 		}
 	}
-	println("");
+	else
+	{
+		/#
+			println("");
+		#/
+		if(getdvarint("") > 0)
+		{
+		}
+	}
 }
 
 /*
@@ -175,13 +183,16 @@ function sndmusictrig()
 			{
 				level notify(#"hash_51d7bc7c", level.var_65d981dd);
 			}
-			else if(self.script_sound == "takeo")
-			{
-				level notify(#"hash_51d7bc7c", level.var_2d9f200e);
-			}
 			else
 			{
-				level notify(#"hash_51d7bc7c", self.script_sound);
+				if(self.script_sound == "takeo")
+				{
+					level notify(#"hash_51d7bc7c", level.var_2d9f200e);
+				}
+				else
+				{
+					level notify(#"hash_51d7bc7c", self.script_sound);
+				}
 			}
 			while(isdefined(trigplayer) && trigplayer istouching(self))
 			{

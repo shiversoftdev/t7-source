@@ -38,7 +38,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_perk_widows_wine", &__init__, undefined, undefined);
 }
@@ -216,15 +216,18 @@ function widows_wine_perk_activate()
 			self giveweapon(level.w_widows_wine_bowie_knife);
 			self zm_utility::set_player_melee_weapon(level.w_widows_wine_bowie_knife);
 		}
-		else if(self.w_widows_wine_prev_knife.name == "sickle_knife")
-		{
-			self giveweapon(level.w_widows_wine_sickle_knife);
-			self zm_utility::set_player_melee_weapon(level.w_widows_wine_sickle_knife);
-		}
 		else
 		{
-			self giveweapon(level.w_widows_wine_knife);
-			self zm_utility::set_player_melee_weapon(level.w_widows_wine_knife);
+			if(self.w_widows_wine_prev_knife.name == "sickle_knife")
+			{
+				self giveweapon(level.w_widows_wine_sickle_knife);
+				self zm_utility::set_player_melee_weapon(level.w_widows_wine_sickle_knife);
+			}
+			else
+			{
+				self giveweapon(level.w_widows_wine_knife);
+				self zm_utility::set_player_melee_weapon(level.w_widows_wine_knife);
+			}
 		}
 	}
 	/#
@@ -284,10 +287,10 @@ function widows_wine_zombie_damage_response(str_mod, str_hit_location, v_hit_ori
 				damage_type = "damage";
 				e_player zm_score::player_add_points(damage_type, str_mod, str_hit_location, 0, undefined, w_weapon);
 			}
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -686,17 +689,23 @@ function widows_wine_perk_lost(b_pause, str_perk, str_result)
 	{
 		self.w_widows_wine_prev_knife = self.current_melee_weapon;
 	}
-	else if(self.w_widows_wine_prev_knife.name == "bowie_knife")
-	{
-		self takeweapon(level.w_widows_wine_bowie_knife);
-	}
-	else if(self.w_widows_wine_prev_knife.name == "sickle_knife")
-	{
-		self takeweapon(level.w_widows_wine_sickle_knife);
-	}
 	else
 	{
-		self takeweapon(level.w_widows_wine_knife);
+		if(self.w_widows_wine_prev_knife.name == "bowie_knife")
+		{
+			self takeweapon(level.w_widows_wine_bowie_knife);
+		}
+		else
+		{
+			if(self.w_widows_wine_prev_knife.name == "sickle_knife")
+			{
+				self takeweapon(level.w_widows_wine_sickle_knife);
+			}
+			else
+			{
+				self takeweapon(level.w_widows_wine_knife);
+			}
+		}
 	}
 	if(isdefined(self.w_widows_wine_prev_knife))
 	{
@@ -731,9 +740,9 @@ function widows_wine_override_wallbuy_purchase(weapon, wallbuy)
 		{
 			self zm_audio::create_and_play_dialog("general", "sigh");
 		}
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -791,8 +800,8 @@ function widows_wine_override_melee_wallbuy_purchase(vo_dialog_id, flourish_weap
 				self zm_audio::create_and_play_dialog("general", "outofmoney", 1);
 			}
 		}
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 

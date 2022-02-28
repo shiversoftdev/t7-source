@@ -17,7 +17,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_island_fx", &__init__, undefined, undefined);
 }
@@ -337,31 +337,34 @@ function function_bea149a5(localclientnum, var_afc7cc94, var_b05b3457, b_on, n_a
 		self.var_bbfa5d7d = n_alpha;
 		self transition_shader(localclientnum, n_alpha, var_afc7cc94);
 	}
-	else if(isdefined(self.var_bbfa5d7d))
-	{
-		var_bbfa5d7d = self.var_bbfa5d7d;
-	}
 	else
 	{
-		var_bbfa5d7d = 1;
-	}
-	var_24fbb6c6 = var_bbfa5d7d;
-	i = var_bbfa5d7d;
-	while(var_24fbb6c6 >= 0)
-	{
-		self transition_shader(localclientnum, var_24fbb6c6, var_afc7cc94);
-		if(var_c0ce8db2)
+		if(isdefined(self.var_bbfa5d7d))
 		{
-			var_24fbb6c6 = sqrt(i);
+			var_bbfa5d7d = self.var_bbfa5d7d;
 		}
 		else
 		{
-			var_24fbb6c6 = i;
+			var_bbfa5d7d = 1;
 		}
-		wait(0.01);
-		i = i - var_b05b3457;
+		var_24fbb6c6 = var_bbfa5d7d;
+		i = var_bbfa5d7d;
+		while(var_24fbb6c6 >= 0)
+		{
+			self transition_shader(localclientnum, var_24fbb6c6, var_afc7cc94);
+			if(var_c0ce8db2)
+			{
+				var_24fbb6c6 = sqrt(i);
+			}
+			else
+			{
+				var_24fbb6c6 = i;
+			}
+			wait(0.01);
+			i = i - var_b05b3457;
+		}
+		self transition_shader(localclientnum, 0, var_afc7cc94);
 	}
-	self transition_shader(localclientnum, 0, var_afc7cc94);
 }
 
 /*

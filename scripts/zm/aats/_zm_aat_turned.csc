@@ -15,7 +15,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_aat_turned", &__init__, undefined, undefined);
 }
@@ -57,15 +57,18 @@ function zm_aat_turned_cb(localclientnum, oldval, newval, bnewent, binitialsnap,
 		self.fx_aat_turned_torso = playfxontag(localclientnum, "zombie/fx_aat_turned_spore_torso_zmb", self, "j_spine4");
 		self playsound(localclientnum, "");
 	}
-	else if(isdefined(self.fx_aat_turned_eyes))
+	else
 	{
-		stopfx(localclientnum, self.fx_aat_turned_eyes);
-		self.fx_aat_turned_eyes = undefined;
-	}
-	if(isdefined(self.fx_aat_turned_torso))
-	{
-		stopfx(localclientnum, self.fx_aat_turned_torso);
-		self.fx_aat_turned_torso = undefined;
+		if(isdefined(self.fx_aat_turned_eyes))
+		{
+			stopfx(localclientnum, self.fx_aat_turned_eyes);
+			self.fx_aat_turned_eyes = undefined;
+		}
+		if(isdefined(self.fx_aat_turned_torso))
+		{
+			stopfx(localclientnum, self.fx_aat_turned_torso);
+			self.fx_aat_turned_torso = undefined;
+		}
 	}
 }
 

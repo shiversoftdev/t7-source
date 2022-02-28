@@ -313,19 +313,22 @@ function move_gate(pos, lower, time = 1)
 			self notsolid();
 		}
 	}
-	else if(self.classname == "script_brushmodel")
-	{
-	}
 	else
 	{
-		self playsound("zmb_lander_gate");
-	}
-	self notsolid();
-	self moveto(pos.origin, time);
-	self waittill(#"movedone");
-	if(self.classname == "script_brushmodel")
-	{
-		self solid();
+		if(self.classname == "script_brushmodel")
+		{
+		}
+		else
+		{
+			self playsound("zmb_lander_gate");
+		}
+		self notsolid();
+		self moveto(pos.origin, time);
+		self waittill(#"movedone");
+		if(self.classname == "script_brushmodel")
+		{
+			self solid();
+		}
 	}
 	self linkto(lander.anchor);
 }
@@ -733,17 +736,23 @@ function lander_take_off(dest)
 	{
 		level clientfield::set("COSMO_LANDER_CATWALK_BAY", 3);
 	}
-	else if(depart.target == "base_entry_zip_door")
+	else
 	{
-		level clientfield::set("COSMO_LANDER_BASE_ENTRY_BAY", 3);
-	}
-	else if(depart.target == "centrifuge_zip_door")
-	{
-		level clientfield::set("COSMO_LANDER_CENTRIFUGE_BAY", 3);
-	}
-	else if(depart.target == "storage_zip_door")
-	{
-		level clientfield::set("COSMO_LANDER_STORAGE_BAY", 3);
+		if(depart.target == "base_entry_zip_door")
+		{
+			level clientfield::set("COSMO_LANDER_BASE_ENTRY_BAY", 3);
+		}
+		else
+		{
+			if(depart.target == "centrifuge_zip_door")
+			{
+				level clientfield::set("COSMO_LANDER_CENTRIFUGE_BAY", 3);
+			}
+			else if(depart.target == "storage_zip_door")
+			{
+				level clientfield::set("COSMO_LANDER_STORAGE_BAY", 3);
+			}
+		}
 	}
 	depart_door = getentarray(depart.target, "targetname");
 	for(i = 0; i < depart_door.size; i++)
@@ -772,20 +781,26 @@ function lander_take_off(dest)
 			level clientfield::set("COSMO_LANDER_CATWALK_BAY", 2);
 			depart thread function_5f5d494f();
 		}
-		else if(arrive.target == "base_entry_zip_door")
+		else
 		{
-			level clientfield::set("COSMO_LANDER_BASE_ENTRY_BAY", 2);
-			depart thread function_5f5d494f();
-		}
-		else if(arrive.target == "centrifuge_zip_door")
-		{
-			level clientfield::set("COSMO_LANDER_CENTRIFUGE_BAY", 2);
-			depart thread function_5f5d494f();
-		}
-		else if(arrive.target == "storage_zip_door")
-		{
-			level clientfield::set("COSMO_LANDER_STORAGE_BAY", 2);
-			depart thread function_5f5d494f();
+			if(arrive.target == "base_entry_zip_door")
+			{
+				level clientfield::set("COSMO_LANDER_BASE_ENTRY_BAY", 2);
+				depart thread function_5f5d494f();
+			}
+			else
+			{
+				if(arrive.target == "centrifuge_zip_door")
+				{
+					level clientfield::set("COSMO_LANDER_CENTRIFUGE_BAY", 2);
+					depart thread function_5f5d494f();
+				}
+				else if(arrive.target == "storage_zip_door")
+				{
+					level clientfield::set("COSMO_LANDER_STORAGE_BAY", 2);
+					depart thread function_5f5d494f();
+				}
+			}
 		}
 	}
 	lander.sound_ent playsound("zmb_lander_launch");
@@ -825,17 +840,23 @@ function function_5f5d494f()
 	{
 		level clientfield::set("COSMO_LANDER_CATWALK_BAY", 1);
 	}
-	else if(self.target == "base_entry_zip_door")
+	else
 	{
-		level clientfield::set("COSMO_LANDER_BASE_ENTRY_BAY", 1);
-	}
-	else if(self.target == "centrifuge_zip_door")
-	{
-		level clientfield::set("COSMO_LANDER_CENTRIFUGE_BAY", 1);
-	}
-	else if(self.target == "storage_zip_door")
-	{
-		level clientfield::set("COSMO_LANDER_STORAGE_BAY", 1);
+		if(self.target == "base_entry_zip_door")
+		{
+			level clientfield::set("COSMO_LANDER_BASE_ENTRY_BAY", 1);
+		}
+		else
+		{
+			if(self.target == "centrifuge_zip_door")
+			{
+				level clientfield::set("COSMO_LANDER_CENTRIFUGE_BAY", 1);
+			}
+			else if(self.target == "storage_zip_door")
+			{
+				level clientfield::set("COSMO_LANDER_STORAGE_BAY", 1);
+			}
+		}
 	}
 }
 
@@ -1129,29 +1150,35 @@ function lander_goto_dest()
 			level clientfield::set("COSMO_LANDER_CATWALK_BAY", 3);
 			var_5021702 = "lgt_exp_padup_catwalk";
 		}
-		else if(arrive.target == "base_entry_zip_door")
+		else
 		{
-			movetime = 6;
-			acceltime = 0.1;
-			deceltime = 5.9;
-			level clientfield::set("COSMO_LANDER_BASE_ENTRY_BAY", 3);
-			var_5021702 = "lgt_exp_padup_base_entry";
-		}
-		else if(arrive.target == "centrifuge_zip_door")
-		{
-			movetime = 7;
-			acceltime = 0.1;
-			deceltime = 6.9;
-			level clientfield::set("COSMO_LANDER_CENTRIFUGE_BAY", 3);
-			var_5021702 = "lgt_exp_padup_centrifuge";
-		}
-		else if(arrive.target == "storage_zip_door")
-		{
-			movetime = 6;
-			acceltime = 0.1;
-			deceltime = 5.9;
-			level clientfield::set("COSMO_LANDER_STORAGE_BAY", 3);
-			var_5021702 = "lgt_exp_padup_storage";
+			if(arrive.target == "base_entry_zip_door")
+			{
+				movetime = 6;
+				acceltime = 0.1;
+				deceltime = 5.9;
+				level clientfield::set("COSMO_LANDER_BASE_ENTRY_BAY", 3);
+				var_5021702 = "lgt_exp_padup_base_entry";
+			}
+			else
+			{
+				if(arrive.target == "centrifuge_zip_door")
+				{
+					movetime = 7;
+					acceltime = 0.1;
+					deceltime = 6.9;
+					level clientfield::set("COSMO_LANDER_CENTRIFUGE_BAY", 3);
+					var_5021702 = "lgt_exp_padup_centrifuge";
+				}
+				else if(arrive.target == "storage_zip_door")
+				{
+					movetime = 6;
+					acceltime = 0.1;
+					deceltime = 5.9;
+					level clientfield::set("COSMO_LANDER_STORAGE_BAY", 3);
+					var_5021702 = "lgt_exp_padup_storage";
+				}
+			}
 		}
 	}
 	if(var_5021702 != "")
@@ -1415,29 +1442,44 @@ function lander_flight_wobble(lander, final_dest)
 		{
 			self rotateto((randomfloatrange(345, 355), 0, randomfloatrange(0, 5)), rot_time);
 		}
-		else if(lander.depart_station == "lander_station1" && final_dest.targetname == "lander_station5")
-		{
-			self rotateto((randomfloatrange(370, 380), 0, randomfloatrange(-5, 0)), rot_time);
-		}
-		else if(lander.depart_station == "lander_station5" && final_dest.targetname == "lander_station4")
-		{
-			self rotateto((randomfloatrange(370, 380), 0, randomfloatrange(-5, 0)), rot_time);
-		}
-		else if(lander.depart_station == "lander_station4" && final_dest.targetname == "lander_station5")
-		{
-			self rotateto((randomfloatrange(345, 355), 0, randomfloatrange(0, 5)), rot_time);
-		}
-		else if(lander.depart_station == "lander_station5" && final_dest.targetname == "lander_station3")
-		{
-			self rotateto((randomfloatrange(5, 10), 0, randomfloatrange(-15, -10)), rot_time);
-		}
-		else if(lander.depart_station == "lander_station3" && final_dest.targetname == "lander_station5")
-		{
-			self rotateto((randomfloatrange(-10, -5), 0, randomfloatrange(10, 15)), rot_time);
-		}
 		else
 		{
-			self rotateto((randomfloatrange(-5, 5), 0, randomfloatrange(-5, 5)), rot_time);
+			if(lander.depart_station == "lander_station1" && final_dest.targetname == "lander_station5")
+			{
+				self rotateto((randomfloatrange(370, 380), 0, randomfloatrange(-5, 0)), rot_time);
+			}
+			else
+			{
+				if(lander.depart_station == "lander_station5" && final_dest.targetname == "lander_station4")
+				{
+					self rotateto((randomfloatrange(370, 380), 0, randomfloatrange(-5, 0)), rot_time);
+				}
+				else
+				{
+					if(lander.depart_station == "lander_station4" && final_dest.targetname == "lander_station5")
+					{
+						self rotateto((randomfloatrange(345, 355), 0, randomfloatrange(0, 5)), rot_time);
+					}
+					else
+					{
+						if(lander.depart_station == "lander_station5" && final_dest.targetname == "lander_station3")
+						{
+							self rotateto((randomfloatrange(5, 10), 0, randomfloatrange(-15, -10)), rot_time);
+						}
+						else
+						{
+							if(lander.depart_station == "lander_station3" && final_dest.targetname == "lander_station5")
+							{
+								self rotateto((randomfloatrange(-10, -5), 0, randomfloatrange(10, 15)), rot_time);
+							}
+							else
+							{
+								self rotateto((randomfloatrange(-5, 5), 0, randomfloatrange(-5, 5)), rot_time);
+							}
+						}
+					}
+				}
+			}
 		}
 		wait(rot_time);
 		if(first_time)
@@ -1698,8 +1740,8 @@ function is_player_on_lander()
 	base = getent("lander_base", "script_noteworthy");
 	if(rider_trigger istouching(self) || self istouching(lander_trig) || distance(self.origin, base.origin) < 200)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 

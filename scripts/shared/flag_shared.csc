@@ -267,7 +267,7 @@ function wait_till_all_timeout(n_timeout, a_flags)
 function wait_till_any(a_flags)
 {
 	self endon(#"death");
-	foreach(var_351a9394, flag in a_flags)
+	foreach(flag in a_flags)
 	{
 		if(get(flag))
 		{
@@ -392,7 +392,7 @@ function wait_till_clear_any(a_flags)
 	self endon(#"death");
 	while(true)
 	{
-		foreach(var_2ba14403, flag in a_flags)
+		foreach(flag in a_flags)
 		{
 			if(!get(flag))
 			{
@@ -438,6 +438,11 @@ function delete(str_flag)
 	{
 		self.flag[str_flag] = undefined;
 	}
-	println("" + str_flag);
+	else
+	{
+		/#
+			println("" + str_flag);
+		#/
+	}
 }
 

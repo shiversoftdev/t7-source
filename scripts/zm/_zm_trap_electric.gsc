@@ -22,7 +22,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_trap_electric", &__init__, undefined, undefined);
 }
@@ -47,7 +47,7 @@ function __init__()
 	visionset_mgr::register_info("overlay", "zm_trap_electric", 1, level.vsmgr_prio_overlay_zm_trap_electrified, 15, 1, &visionset_mgr::duration_lerp_thread_per_player, 0);
 	level.trap_electric_visionset_registered = 1;
 	a_traps = struct::get_array("trap_electric", "targetname");
-	foreach(var_d71e2c6a, trap in a_traps)
+	foreach(trap in a_traps)
 	{
 		clientfield::register("world", trap.script_noteworthy, 1, 1, "int");
 	}

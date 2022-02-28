@@ -241,7 +241,7 @@ function gravity_zombie_death_response()
 {
 	if(!isdefined(self.in_low_gravity) || self.in_low_gravity == 0 || (isdefined(self._black_hole_bomb_collapse_death) && self._black_hole_bomb_collapse_death))
 	{
-		return 0;
+		return false;
 	}
 	self startragdoll();
 	rag_x = randomintrange(-50, 50);
@@ -255,23 +255,26 @@ function gravity_zombie_death_response()
 		force_max = 50;
 		rag_z = 15;
 	}
-	else if(self.damageweapon == level.start_weapon)
+	else
 	{
-		force_min = 60;
-		force_max = 75;
-		rag_z = 20;
-	}
-	else if(self.damageweapon.weapclass == "spread")
-	{
-		force_min = 100;
-		force_max = 150;
+		if(self.damageweapon == level.start_weapon)
+		{
+			force_min = 60;
+			force_max = 75;
+			rag_z = 20;
+		}
+		else if(self.damageweapon.weapclass == "spread")
+		{
+			force_min = 100;
+			force_max = 150;
+		}
 	}
 	scale = randomintrange(force_min, force_max);
 	rag_x = self.damagedir[0] * scale;
 	rag_y = self.damagedir[1] * scale;
 	dir = (rag_x, rag_y, rag_z);
 	self launchragdoll(dir);
-	return 0;
+	return false;
 }
 
 /*
@@ -288,9 +291,9 @@ function zombie_moon_is_low_gravity_zone(zone_name)
 	zone = getentarray(zone_name, "targetname");
 	if(isdefined(zone[0].script_string) && zone[0].script_string == "lowgravity")
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

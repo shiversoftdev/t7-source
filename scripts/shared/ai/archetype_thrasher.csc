@@ -19,7 +19,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("thrasher", &__init__, undefined, undefined);
 }
@@ -42,7 +42,7 @@ function __init__()
 		clientfield::register("actor", "thrasher_berserk_state", 5000, 1, "int", &thrasherclientutils::thrasherberserkmode, 0, 1);
 		clientfield::register("actor", "thrasher_player_hide", 8000, 4, "int", &thrasherclientutils::thrasherhidefromplayer, 0, 0);
 		clientfield::register("toplayer", "sndPlayerConsumed", 10000, 1, "int", &thrasherclientutils::sndplayerconsumed, 0, 1);
-		foreach(var_72915306, spore in array(1, 2, 4))
+		foreach(spore in array(1, 2, 4))
 		{
 			clientfield::register("actor", "thrasher_spore_impact" + spore, 8000, 1, "counter", &thrasherclientutils::thrashersporeimpact, 0, 0);
 		}
@@ -61,7 +61,7 @@ function __init__()
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function precache()
+function autoexec precache()
 {
 	level._effect["fx_mech_foot_step"] = "dlc1/castle/fx_mech_foot_step";
 	level._effect["fx_thrash_pustule_burst"] = "dlc2/island/fx_thrash_pustule_burst";
@@ -90,7 +90,7 @@ autoexec function precache()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function thrasherspawn(localclientnum)
+function private thrasherspawn(localclientnum)
 {
 	entity = self;
 	entity.ignoreragdoll = 1;
@@ -107,14 +107,14 @@ private function thrasherspawn(localclientnum)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function thrasherfxcleanup()
+function private thrasherfxcleanup()
 {
 	while(true)
 	{
 		pustules = level.thrasherpustules;
 		level.thrasherpustules = [];
 		time = gettime();
-		foreach(var_518797a1, pustule in pustules)
+		foreach(pustule in pustules)
 		{
 			if(pustule.endtime <= time)
 			{
@@ -183,7 +183,7 @@ function thrasherprocessfootstep(localclientnum, pos, surface, notetrack, bone)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _stopfx(localclientnum, effect)
+function private _stopfx(localclientnum, effect)
 {
 	if(isdefined(effect))
 	{
@@ -200,7 +200,7 @@ private function _stopfx(localclientnum, effect)
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function thrasherhidefromplayer(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private thrasherhidefromplayer(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	entity = self;
 	if(!isdefined(entity) || entity.archetype !== "thrasher" || !entity hasdobj(localclientnum))
@@ -229,7 +229,7 @@ private function thrasherhidefromplayer(localclientnum, oldvalue, newvalue, bnew
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function thrasherberserkmode(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private thrasherberserkmode(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	entity = self;
 	if(!isdefined(entity) || entity.archetype !== "thrasher" || !entity hasdobj(localclientnum))
@@ -278,7 +278,7 @@ private function thrasherberserkmode(localclientnum, oldvalue, newvalue, bnewent
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function thrashersporeexplode(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private thrashersporeexplode(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	entity = self;
 	sporeclientfields = array(1, 2, 4);
@@ -327,7 +327,7 @@ private function thrashersporeexplode(localclientnum, oldvalue, newvalue, bnewen
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function thrashersporeimpact(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private thrashersporeimpact(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	entity = self;
 	sporetag = undefined;
@@ -358,7 +358,7 @@ private function thrashersporeimpact(localclientnum, oldvalue, newvalue, bnewent
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function thrasherdisableeyeglow(localclientnum, entity, gibflag)
+function private thrasherdisableeyeglow(localclientnum, entity, gibflag)
 {
 	if(!isdefined(entity) || entity.archetype !== "thrasher" || !entity hasdobj(localclientnum))
 	{
@@ -377,7 +377,7 @@ private function thrasherdisableeyeglow(localclientnum, entity, gibflag)
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function sndplayerconsumed(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
+function private sndplayerconsumed(localclientnum, oldvalue, newvalue, bnewent, binitialsnap, fieldname, wasdemojump)
 {
 	if(newvalue)
 	{
@@ -392,21 +392,24 @@ private function sndplayerconsumed(localclientnum, oldvalue, newvalue, bnewent, 
 		self thread postfx::playpostfxbundle("pstfx_thrasher_stomach");
 		enablespeedblur(localclientnum, 0.07, 0.55, 0.9, 0, 100, 100);
 	}
-	else if(isdefined(self.sndplayerconsumedid))
+	else
 	{
-		self stoploopsound(self.sndplayerconsumedid, 0.5);
-		self.sndplayerconsumedid = undefined;
+		if(isdefined(self.sndplayerconsumedid))
+		{
+			self stoploopsound(self.sndplayerconsumedid, 0.5);
+			self.sndplayerconsumedid = undefined;
+		}
+		if(isdefined(self.n_fx_id_player_consumed))
+		{
+			stopfx(localclientnum, self.n_fx_id_player_consumed);
+			self.n_fx_id_player_consumed = undefined;
+		}
+		self stopallloopsounds(1);
+		if(isdefined(self.playingpostfxbundle))
+		{
+			self thread postfx::stopplayingpostfxbundle();
+		}
+		disablespeedblur(localclientnum);
 	}
-	if(isdefined(self.n_fx_id_player_consumed))
-	{
-		stopfx(localclientnum, self.n_fx_id_player_consumed);
-		self.n_fx_id_player_consumed = undefined;
-	}
-	self stopallloopsounds(1);
-	if(isdefined(self.playingpostfxbundle))
-	{
-		self thread postfx::stopplayingpostfxbundle();
-	}
-	disablespeedblur(localclientnum);
 }
 

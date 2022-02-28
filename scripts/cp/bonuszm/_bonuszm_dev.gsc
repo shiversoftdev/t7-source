@@ -151,7 +151,7 @@ function function_a2a8d5a6()
 			if(getdvarstring("") == "")
 			{
 				level.var_915cfc91 = [];
-				foreach(var_5a40a654, node in nodes)
+				foreach(node in nodes)
 				{
 					if(node.type == "" || node.type == "")
 					{
@@ -164,7 +164,7 @@ function function_a2a8d5a6()
 						}
 					}
 				}
-				foreach(var_da6c0ba9, animscript in level.var_915cfc91)
+				foreach(animscript in level.var_915cfc91)
 				{
 					println("" + animscript);
 				}

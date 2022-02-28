@@ -199,47 +199,47 @@ function _is_primed(slot, weapon)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _lock_requirement(target)
+function private _lock_requirement(target)
 {
 	if(target cybercom::cybercom_aicheckoptout("cybercom_servoshortout"))
 	{
 		self cybercom::function_29bf9dee(target, 2);
-		return 0;
+		return false;
 	}
 	if(isdefined(target.hijacked) && target.hijacked)
 	{
 		self cybercom::function_29bf9dee(target, 4);
-		return 0;
+		return false;
 	}
 	if(isdefined(target.is_disabled) && target.is_disabled)
 	{
 		self cybercom::function_29bf9dee(target, 6);
-		return 0;
+		return false;
 	}
 	if(!isdefined(target.archetype))
 	{
 		self cybercom::function_29bf9dee(target, 2);
-		return 0;
+		return false;
 	}
 	if(isactor(target) && target cybercom::function_78525729() != "stand" && target cybercom::function_78525729() != "crouch")
 	{
-		return 0;
+		return false;
 	}
 	if(isactor(target) && target.archetype != "robot")
 	{
 		self cybercom::function_29bf9dee(target, 2);
-		return 0;
+		return false;
 	}
 	if(!isactor(target) && !isvehicle(target))
 	{
 		self cybercom::function_29bf9dee(target, 2);
-		return 0;
+		return false;
 	}
 	if(isactor(target) && !target isonground() && !target cybercom::function_421746e0())
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -251,7 +251,7 @@ private function _lock_requirement(target)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _get_valid_targets(weapon)
+function private _get_valid_targets(weapon)
 {
 	return arraycombine(getaiteamarray("axis"), getaiteamarray("team3"), 0, 0);
 }
@@ -265,13 +265,13 @@ private function _get_valid_targets(weapon)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _activate_servo_shortout(slot, weapon)
+function private _activate_servo_shortout(slot, weapon)
 {
 	var_98c55a0e = 0;
 	upgraded = self hascybercomability("cybercom_servoshortout") == 2;
 	aborted = 0;
 	fired = 0;
-	foreach(var_be508c16, item in self.cybercom.lock_targets)
+	foreach(item in self.cybercom.lock_targets)
 	{
 		if(isdefined(item.target) && (isdefined(item.inrange) && item.inrange))
 		{
@@ -326,7 +326,7 @@ private function _activate_servo_shortout(slot, weapon)
 	Parameters: 0
 	Flags: Private
 */
-private function _update_gib_position()
+function private _update_gib_position()
 {
 	level.cybercom.servo_shortout.gibcounter++;
 	return level.cybercom.servo_shortout.gibcounter % 3;
@@ -355,23 +355,29 @@ function servo_shortoutvehicle(attacker, upgraded, weapon)
 			self kill(self.origin, (isdefined(attacker) ? attacker : undefined), undefined, weapon);
 		}
 	}
-	else if(issubstr(self.vehicletype, "raps"))
-	{
-		self.servershortout = 1;
-		self thread function_a61788ff();
-		self dodamage(1, self.origin, (isdefined(attacker) ? attacker : undefined), undefined, "none", "MOD_ELECTROCUTED");
-	}
-	else if(issubstr(self.vehicletype, "amws"))
-	{
-		if(isalive(self))
-		{
-			self amws::gib(attacker);
-		}
-	}
 	else
 	{
-		dmg = int(self.healthdefault * 0.1);
-		self dodamage(dmg, self.origin, (isdefined(attacker) ? attacker : undefined), undefined, "none", "MOD_GRENADE_SPLASH", 0, getweapon("emp_grenade"), -1, 1);
+		if(issubstr(self.vehicletype, "raps"))
+		{
+			self.servershortout = 1;
+			self thread function_a61788ff();
+			self dodamage(1, self.origin, (isdefined(attacker) ? attacker : undefined), undefined, "none", "MOD_ELECTROCUTED");
+		}
+		else
+		{
+			if(issubstr(self.vehicletype, "amws"))
+			{
+				if(isalive(self))
+				{
+					self amws::gib(attacker);
+				}
+			}
+			else
+			{
+				dmg = int(self.healthdefault * 0.1);
+				self dodamage(dmg, self.origin, (isdefined(attacker) ? attacker : undefined), undefined, "none", "MOD_GRENADE_SPLASH", 0, getweapon("emp_grenade"), -1, 1);
+			}
+		}
 	}
 }
 
@@ -467,7 +473,7 @@ function ai_activateservoshortout(target, var_9bc2efcb = 1)
 	validtargets = [];
 	if(isarray(target))
 	{
-		foreach(var_c0a5b83e, guy in target)
+		foreach(guy in target)
 		{
 			if(!_lock_requirement(guy))
 			{
@@ -476,20 +482,23 @@ function ai_activateservoshortout(target, var_9bc2efcb = 1)
 			validtargets[validtargets.size] = guy;
 		}
 	}
-	else if(!_lock_requirement(target))
+	else
 	{
-		return;
+		if(!_lock_requirement(target))
+		{
+			return;
+		}
+		validtargets[validtargets.size] = target;
 	}
-	validtargets[validtargets.size] = target;
 	if(isdefined(var_9bc2efcb) && var_9bc2efcb)
 	{
 		type = self cybercom::function_5e3d3aa();
 		self orientmode("face default");
 		self animscripted("ai_cybercom_anim", self.origin, self.angles, ("ai_base_rifle_" + type) + "_exposed_cybercom_activate");
-		self waittill_match(#"ai_cybercom_anim");
+		self waittillmatch(#"ai_cybercom_anim");
 	}
 	weapon = getweapon("gadget_servo_shortout");
-	foreach(var_ca4965d8, guy in validtargets)
+	foreach(guy in validtargets)
 	{
 		if(!cybercom::targetisvalid(guy, weapon))
 		{

@@ -187,7 +187,7 @@ function catwalk_spawn_zone_spawnfunc()
 function skipto_flood_defend_done(str_objective, b_starting, b_direct, player)
 {
 	a_ai = getaiteamarray("axis", "team3");
-	foreach(var_be508c16, ai in a_ai)
+	foreach(ai in a_ai)
 	{
 		if(!(isdefined(ai.archetype) && ai.archetype == "robot"))
 		{
@@ -301,12 +301,12 @@ function clean_up_charging_zone()
 	spawn_manager::kill("flood_combat_charging_room_spawnmanager", 1);
 	spawn_manager::kill("flood_combat_robot_room_spawnmanager", 1);
 	wait(0.05);
-	var_b8a74cba = getaiteamarray("axis");
-	foreach(var_b9659309, var_37ba03da in var_b8a74cba)
+	a_ai_54i = getaiteamarray("axis");
+	foreach(ai_54i in a_ai_54i)
 	{
-		if(isalive(var_37ba03da) && var_37ba03da istouching(t_charging_zone))
+		if(isalive(ai_54i) && ai_54i istouching(t_charging_zone))
 		{
-			var_37ba03da kill();
+			ai_54i kill();
 		}
 	}
 	charging_station_cleanup();
@@ -375,7 +375,7 @@ function weaken_catwalk_close_enemies()
 {
 	a_ai_catwalk_close = getaiteamarray("axis");
 	t_zone = getent("flood_combat_catwalk_front_zone_trig", "targetname");
-	foreach(var_dfe50114, ai_catwalk in a_ai_catwalk_close)
+	foreach(ai_catwalk in a_ai_catwalk_close)
 	{
 		if(isalive(ai_catwalk) && ai_catwalk istouching(t_zone))
 		{
@@ -434,7 +434,7 @@ function zone_wait_till_safe(str_key, str_val = "targetname", str_species = "rob
 		t_safe waittill(#"trigger");
 		n_touchers = 0;
 		a_ai_enemies = getaispeciesarray("axis", str_species);
-		foreach(var_bbe10ea, ai_enemy in a_ai_enemies)
+		foreach(ai_enemy in a_ai_enemies)
 		{
 			if(isalive(ai_enemy) && ai_enemy istouching(self))
 			{
@@ -570,8 +570,8 @@ function handle_fallback_runners_cleanup()
 function issue_fallback()
 {
 	level.b_fallback_active = 1;
-	var_6cb15f43 = getaispeciesarray("axis", "human");
-	foreach(var_abfa31e9, ai_human in var_6cb15f43)
+	a_ai_54i_humans = getaispeciesarray("axis", "human");
+	foreach(ai_human in a_ai_54i_humans)
 	{
 		n_wait = randomfloatrange(0.15, 0.45);
 		wait(n_wait);
@@ -594,8 +594,8 @@ function issue_fallback()
 function cancel_fallback()
 {
 	level.b_fallback_active = 0;
-	var_6cb15f43 = getaispeciesarray("axis", "human");
-	foreach(var_da7a0607, ai_human in var_6cb15f43)
+	a_ai_54i_humans = getaispeciesarray("axis", "human");
+	foreach(ai_human in a_ai_54i_humans)
 	{
 		n_wait = randomfloatrange(0.15, 0.45);
 		if(isalive(ai_human))
@@ -625,7 +625,7 @@ function go_to_nearest_node(v_origin = self.origin, n_min = 256, n_max = 512, b_
 	{
 		a_nd_covers = array::reverse(a_nd_covers);
 	}
-	foreach(var_38dbb726, nd_cover in a_nd_covers)
+	foreach(nd_cover in a_nd_covers)
 	{
 		if(!isnodeoccupied(nd_cover) && isalive(self))
 		{
@@ -692,18 +692,18 @@ function stop_fallback_and_scatter()
 */
 function issue_scatter()
 {
-	var_b8a74cba = getaiteamarray("axis");
+	a_ai_54i = getaiteamarray("axis");
 	t_last_stand_zone = getent("flood_combat_defend_upper_goaltrig", "targetname");
 	t_combat_zone = getent("flood_combat_prelab_zone_aitrig", "targetname");
 	s_center = struct::get("flood_defend_flee_center");
-	foreach(var_fd6910a9, var_37ba03da in var_b8a74cba)
+	foreach(ai_54i in a_ai_54i)
 	{
 		n_wait = randomfloatrange(0.15, 0.45);
-		if(isalive(var_37ba03da) && !var_37ba03da istouching(t_last_stand_zone) && !var_37ba03da istouching(t_combat_zone))
+		if(isalive(ai_54i) && !ai_54i istouching(t_last_stand_zone) && !ai_54i istouching(t_combat_zone))
 		{
-			var_37ba03da.accuracy = 0.1;
-			var_37ba03da.health = 1;
-			var_37ba03da thread go_to_nearest_node(s_center.origin, s_center.radius, s_center.radius, 1);
+			ai_54i.accuracy = 0.1;
+			ai_54i.health = 1;
+			ai_54i thread go_to_nearest_node(s_center.origin, s_center.radius, s_center.radius, 1);
 		}
 	}
 }
@@ -900,16 +900,16 @@ function defend_room_set_state_flooded()
 function flooding_sound_start()
 {
 	wait(1);
-	var_3a7682f2 = getent("flooding_start_1", "targetname");
-	var_14740889 = getent("flooding_start_2", "targetname");
+	flood_start_1 = getent("flooding_start_1", "targetname");
+	flood_start_2 = getent("flooding_start_2", "targetname");
 	torrent_gush_left = getent("evt_torrent_gush_left", "targetname");
 	torrent_gush_right = getent("evt_torrent_gush_right", "targetname");
 	torrent_surface_left = getent("evt_torrent_gush_surface_l", "targetname");
 	torrent_surface_right = getent("evt_torrent_gush_surface_r", "targetname");
-	if(isdefined(var_3a7682f2) && isdefined(var_14740889))
+	if(isdefined(flood_start_1) && isdefined(flood_start_2))
 	{
-		playsoundatposition("evt_flood_start_1", var_3a7682f2.origin);
-		playsoundatposition("evt_flood_start_2", var_14740889.origin);
+		playsoundatposition("evt_flood_start_1", flood_start_1.origin);
+		playsoundatposition("evt_flood_start_2", flood_start_2.origin);
 	}
 	if(isdefined(torrent_gush_left) && isdefined(torrent_gush_right) && isdefined(torrent_surface_left) && isdefined(torrent_surface_right))
 	{
@@ -926,8 +926,8 @@ function flooding_sound_start()
 		torrent_surface_left delete();
 		torrent_surface_right stoploopsound(0.5);
 		torrent_surface_right delete();
-		var_3a7682f2 delete();
-		var_14740889 delete();
+		flood_start_1 delete();
+		flood_start_2 delete();
 	}
 }
 
@@ -947,7 +947,7 @@ function flooding_water_sheeting()
 	e_volume endon(#"death");
 	while(true)
 	{
-		foreach(var_e045ba45, player in level.players)
+		foreach(player in level.players)
 		{
 			if(player istouching(e_volume))
 			{
@@ -1218,7 +1218,7 @@ function play_water_teleport_fx()
 	{
 		level.var_5580212f = gettime();
 	}
-	foreach(var_d2f2e510, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player clientfield::set_to_player("water_teleport", 1);
 	}
@@ -1239,7 +1239,7 @@ function stop_water_teleport_fx(a_ents)
 	{
 		wait(0.1);
 	}
-	foreach(var_52fbc17a, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player clientfield::set_to_player("water_teleport", 0);
 	}
@@ -1286,7 +1286,7 @@ function play_hendricks_defend_scene()
 	{
 		var_a3eb613f = 0;
 		a_ai_enemies = getaiteamarray("axis");
-		foreach(var_8e474186, ai_enemy in a_ai_enemies)
+		foreach(ai_enemy in a_ai_enemies)
 		{
 			if(ai_enemy istouching(var_421ccb2d))
 			{
@@ -1396,7 +1396,7 @@ function kill_anti_campers()
 	self endon(#"trigger");
 	wait(4);
 	a_ai_robots = getentarray("flood_defend_catwalk_spawn_zone_robot" + "_ai", "targetname");
-	foreach(var_e6866017, ai_kill in a_ai_robots)
+	foreach(ai_kill in a_ai_robots)
 	{
 		ai_kill kill();
 	}
@@ -1526,14 +1526,14 @@ function handle_wave_kill_area()
 {
 	s_kill_center = struct::get("flood_defend_wave_source_spot");
 	level waittill(#"debris_hallway_start_radial_kill_pulse");
-	var_b8a74cba = getaispeciesarray("axis", "human");
-	var_b8a74cba = arraysortclosest(var_b8a74cba, s_kill_center.origin);
-	foreach(var_7d7b89ab, var_37ba03da in var_b8a74cba)
+	a_ai_54i = getaispeciesarray("axis", "human");
+	a_ai_54i = arraysortclosest(a_ai_54i, s_kill_center.origin);
+	foreach(ai_54i in a_ai_54i)
 	{
 		wait(randomfloatrange(0.2, 0.32));
-		if(isalive(var_37ba03da) && distance2d(var_37ba03da.origin, s_kill_center.origin) <= s_kill_center.radius)
+		if(isalive(ai_54i) && distance2d(ai_54i.origin, s_kill_center.origin) <= s_kill_center.radius)
 		{
-			var_37ba03da kill();
+			ai_54i kill();
 		}
 	}
 	level flag::set("flood_defend_flood_hallway_kill_zone_enabled");

@@ -27,7 +27,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_perk_quick_revive", &__init__, undefined, undefined);
 }
@@ -299,7 +299,7 @@ function reenable_quickrevive(machine_clip, solo_mode)
 		power_state = 1;
 		should_pause = 1;
 		players = getplayers();
-		foreach(var_64dbd143, player in players)
+		foreach(player in players)
 		{
 			if(isdefined(player.lives) && player.lives > 0 && power_state)
 			{
@@ -331,39 +331,42 @@ function reenable_quickrevive(machine_clip, solo_mode)
 		wait(0.1);
 		level notify(#"stop_quickrevive_logic");
 	}
-	else if(!(isdefined(level._dont_unhide_quickervive_on_hotjoin) && level._dont_unhide_quickervive_on_hotjoin))
+	else
 	{
-		unhide_quickrevive();
-		level notify(#"revive_off");
-		wait(0.1);
-	}
-	level notify(#"revive_hide");
-	level notify(#"stop_quickrevive_logic");
-	restart_quickrevive();
-	triggers = getentarray("zombie_vending", "targetname");
-	foreach(var_c5f589f9, trigger in triggers)
-	{
-		if(!isdefined(trigger.script_noteworthy))
+		if(!(isdefined(level._dont_unhide_quickervive_on_hotjoin) && level._dont_unhide_quickervive_on_hotjoin))
 		{
-			continue;
+			unhide_quickrevive();
+			level notify(#"revive_off");
+			wait(0.1);
 		}
-		if(trigger.script_noteworthy == "specialty_quickrevive")
+		level notify(#"revive_hide");
+		level notify(#"stop_quickrevive_logic");
+		restart_quickrevive();
+		triggers = getentarray("zombie_vending", "targetname");
+		foreach(trigger in triggers)
 		{
-			if(isdefined(trigger.script_int))
+			if(!isdefined(trigger.script_noteworthy))
 			{
-				if(level flag::get("power_on" + trigger.script_int))
+				continue;
+			}
+			if(trigger.script_noteworthy == "specialty_quickrevive")
+			{
+				if(isdefined(trigger.script_int))
+				{
+					if(level flag::get("power_on" + trigger.script_int))
+					{
+						power_state = 1;
+					}
+					continue;
+				}
+				if(level flag::get("power_on"))
 				{
 					power_state = 1;
 				}
-				continue;
-			}
-			if(level flag::get("power_on"))
-			{
-				power_state = 1;
 			}
 		}
+		update_quickrevive_power_state(power_state);
 	}
-	update_quickrevive_power_state(power_state);
 	level thread turn_revive_on();
 	if(power_state)
 	{
@@ -382,7 +385,7 @@ function reenable_quickrevive(machine_clip, solo_mode)
 	}
 	should_pause = 1;
 	players = getplayers();
-	foreach(var_70c9db2f, player in players)
+	foreach(player in players)
 	{
 		if(!zm_utility::is_player_valid(player))
 		{
@@ -464,11 +467,14 @@ function check_quickrevive_for_hotjoin()
 		}
 		level flag::set("solo_game");
 	}
-	else if(level flag::get("solo_game"))
+	else
 	{
-		should_update = 1;
+		if(level flag::get("solo_game"))
+		{
+			should_update = 1;
+		}
+		level flag::clear("solo_game");
 	}
-	level flag::clear("solo_game");
 	level.using_solo_revive = solo_mode;
 	level.revive_machine_is_solo = solo_mode;
 	zm::set_default_laststand_pistol(solo_mode);
@@ -565,7 +571,7 @@ function disable_quickrevive(machine_clip)
 	if(isdefined(level.solo_revive_init) && level.solo_revive_init && level flag::get("solo_revive") && isdefined(level.quick_revive_machine))
 	{
 		triggers = getentarray("zombie_vending", "targetname");
-		foreach(var_abfa31e9, trigger in triggers)
+		foreach(trigger in triggers)
 		{
 			if(!isdefined(trigger.script_noteworthy))
 			{
@@ -576,7 +582,7 @@ function disable_quickrevive(machine_clip)
 				trigger triggerenable(0);
 			}
 		}
-		foreach(var_1171aa34, item in level.powered_items)
+		foreach(item in level.powered_items)
 		{
 			if(isdefined(item.target) && isdefined(item.target.script_noteworthy) && item.target.script_noteworthy == "specialty_quickrevive")
 			{
@@ -690,16 +696,19 @@ function unhide_quickrevive()
 		level.quick_revive_machine waittill(#"movedone");
 		level.quick_revive_machine.angles = level.quick_revive_default_angles;
 	}
-	else if(isdefined(level.quick_revive_linked_ent))
+	else
 	{
-		org = level.quick_revive_linked_ent.origin;
-		if(isdefined(level.quick_revive_linked_ent_offset))
+		if(isdefined(level.quick_revive_linked_ent))
 		{
-			org = org + level.quick_revive_linked_ent_offset;
+			org = level.quick_revive_linked_ent.origin;
+			if(isdefined(level.quick_revive_linked_ent_offset))
+			{
+				org = org + level.quick_revive_linked_ent_offset;
+			}
+			level.quick_revive_machine.origin = org;
 		}
-		level.quick_revive_machine.origin = org;
+		level.quick_revive_machine vibrate(vectorscale((0, -1, 0), 100), 0.3, 0.4, 3);
 	}
-	level.quick_revive_machine vibrate(vectorscale((0, -1, 0), 100), 0.3, 0.4, 3);
 	if(isdefined(level.quick_revive_linked_ent))
 	{
 		level.quick_revive_machine linkto(level.quick_revive_linked_ent);
@@ -719,7 +728,7 @@ function unhide_quickrevive()
 function restart_quickrevive()
 {
 	triggers = getentarray("zombie_vending", "targetname");
-	foreach(var_77085d2, trigger in triggers)
+	foreach(trigger in triggers)
 	{
 		if(!isdefined(trigger.script_noteworthy))
 		{
@@ -745,7 +754,7 @@ function restart_quickrevive()
 */
 function update_quickrevive_power_state(poweron)
 {
-	foreach(var_a24ba320, item in level.powered_items)
+	foreach(item in level.powered_items)
 	{
 		if(isdefined(item.target) && isdefined(item.target.script_noteworthy) && item.target.script_noteworthy == "specialty_quickrevive")
 		{
@@ -790,7 +799,7 @@ function solo_revive_buy_trigger_move(revive_trigger_noteworthy)
 {
 	self endon(#"death");
 	revive_perk_triggers = getentarray(revive_trigger_noteworthy, "script_noteworthy");
-	foreach(var_91b6597, revive_perk_trigger in revive_perk_triggers)
+	foreach(revive_perk_trigger in revive_perk_triggers)
 	{
 		self thread solo_revive_buy_trigger_move_trigger(revive_perk_trigger);
 	}

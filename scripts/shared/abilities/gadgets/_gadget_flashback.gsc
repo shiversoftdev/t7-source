@@ -22,7 +22,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("gadget_flashback", &__init__, undefined, undefined);
 }
@@ -204,7 +204,7 @@ function debug_star(origin, seconds, color)
 function drop_unlinked_grenades(linkedgrenades)
 {
 	waittillframeend();
-	foreach(var_fdefe801, grenade in linkedgrenades)
+	foreach(grenade in linkedgrenades)
 	{
 		grenade launch((randomfloatrange(-5, 5), randomfloatrange(-5, 5), 5));
 	}
@@ -226,7 +226,7 @@ function unlink_grenades(oldpos)
 	grenades = getentarray("grenade", "classname");
 	radiussq = radius * radius;
 	linkedgrenades = [];
-	foreach(var_804320bd, grenade in grenades)
+	foreach(grenade in grenades)
 	{
 		if(distancesquared(origin, grenade.origin) < radiussq)
 		{

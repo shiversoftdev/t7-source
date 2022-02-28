@@ -60,7 +60,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("ability_player", &__init__, undefined, undefined);
 }
@@ -183,16 +183,16 @@ function is_using_any_gadget()
 {
 	if(!isplayer(self))
 	{
-		return 0;
+		return false;
 	}
 	for(i = 0; i < 3; i++)
 	{
 		if(self gadget_is_in_use(i))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -261,7 +261,7 @@ function gadgets_wait_for_game_end()
 {
 	level waittill(#"game_ended");
 	players = getplayers();
-	foreach(var_e6d1a490, player in players)
+	foreach(player in players)
 	{
 		if(!isalive(player))
 		{
@@ -667,7 +667,7 @@ function give_gadget(slot, weapon)
 	{
 		if(isdefined(level._gadgets_level[self._gadgets_player[slot].gadget_type].on_give))
 		{
-			foreach(var_d45abeb7, on_give in level._gadgets_level[self._gadgets_player[slot].gadget_type].on_give)
+			foreach(on_give in level._gadgets_level[self._gadgets_player[slot].gadget_type].on_give)
 			{
 				self [[on_give]](slot, weapon);
 			}
@@ -698,7 +698,7 @@ function take_gadget(slot, weapon)
 	{
 		if(isdefined(level._gadgets_level[self._gadgets_player[slot].gadget_type].on_take))
 		{
-			foreach(var_261b334a, on_take in level._gadgets_level[self._gadgets_player[slot].gadget_type].on_take)
+			foreach(on_take in level._gadgets_level[self._gadgets_player[slot].gadget_type].on_take)
 			{
 				self [[on_take]](slot, weapon);
 			}
@@ -727,7 +727,7 @@ function turn_gadget_on(slot, weapon)
 	{
 		if(isdefined(level._gadgets_level[self._gadgets_player[slot].gadget_type].turn_on))
 		{
-			foreach(var_73b42746, turn_on in level._gadgets_level[self._gadgets_player[slot].gadget_type].turn_on)
+			foreach(turn_on in level._gadgets_level[self._gadgets_player[slot].gadget_type].turn_on)
 			{
 				self [[turn_on]](slot, weapon);
 				self trackheropoweractivated(game["timepassed"]);
@@ -784,7 +784,7 @@ function turn_gadget_off(slot, weapon)
 	}
 	if(isdefined(level._gadgets_level[self._gadgets_player[slot].gadget_type].turn_off))
 	{
-		foreach(var_e8b72834, turn_off in level._gadgets_level[self._gadgets_player[slot].gadget_type].turn_off)
+		foreach(turn_off in level._gadgets_level[self._gadgets_player[slot].gadget_type].turn_off)
 		{
 			self [[turn_off]](slot, weapon);
 			dead = self.health <= 0;
@@ -919,7 +919,7 @@ function gadget_flicker(slot, weapon)
 	}
 	if(isdefined(level._gadgets_level[self._gadgets_player[slot].gadget_type].on_flicker))
 	{
-		foreach(var_b33959a5, on_flicker in level._gadgets_level[self._gadgets_player[slot].gadget_type].on_flicker)
+		foreach(on_flicker in level._gadgets_level[self._gadgets_player[slot].gadget_type].on_flicker)
 		{
 			self [[on_flicker]](slot, weapon);
 		}
@@ -977,7 +977,7 @@ function gadget_ready(slot, weapon)
 	bbprint("mpheropowerevents", "spawnid %d gametime %d name %s powerstate %s playername %s xuid %s", getplayerspawnid(self), gettime(), self._gadgets_player[slot].name, "ready", self.name, xuid);
 	if(isdefined(level._gadgets_level[self._gadgets_player[slot].gadget_type].on_ready))
 	{
-		foreach(var_1833de4e, on_ready in level._gadgets_level[self._gadgets_player[slot].gadget_type].on_ready)
+		foreach(on_ready in level._gadgets_level[self._gadgets_player[slot].gadget_type].on_ready)
 		{
 			self [[on_ready]](slot, weapon);
 		}
@@ -1005,7 +1005,7 @@ function gadget_primed(slot, weapon)
 	}
 	if(isdefined(level._gadgets_level[self._gadgets_player[slot].gadget_type].on_primed))
 	{
-		foreach(var_9156795c, on_primed in level._gadgets_level[self._gadgets_player[slot].gadget_type].on_primed)
+		foreach(on_primed in level._gadgets_level[self._gadgets_player[slot].gadget_type].on_primed)
 		{
 			self [[on_primed]](slot, weapon);
 		}

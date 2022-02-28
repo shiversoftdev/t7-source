@@ -127,25 +127,37 @@ function switch_progress_sound()
 		{
 			time = 0.5;
 		}
-		else if(self.script_noteworthy == "2")
-		{
-			time = 1;
-		}
-		else if(self.script_noteworthy == "3")
-		{
-			time = 1.5;
-		}
-		else if(self.script_noteworthy == "4")
-		{
-			time = 2;
-		}
-		else if(self.script_noteworthy == "5")
-		{
-			time = 2.5;
-		}
 		else
 		{
-			time = 0;
+			if(self.script_noteworthy == "2")
+			{
+				time = 1;
+			}
+			else
+			{
+				if(self.script_noteworthy == "3")
+				{
+					time = 1.5;
+				}
+				else
+				{
+					if(self.script_noteworthy == "4")
+					{
+						time = 2;
+					}
+					else
+					{
+						if(self.script_noteworthy == "5")
+						{
+							time = 2.5;
+						}
+						else
+						{
+							time = 0;
+						}
+					}
+				}
+			}
 		}
 		wait(time);
 		playsound(0, "evt_switch_progress", self.origin);

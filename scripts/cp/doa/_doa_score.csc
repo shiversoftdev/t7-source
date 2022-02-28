@@ -205,12 +205,12 @@ function function_cdb6d911()
 	self endon(#"hash_cdb6d911");
 	while(true)
 	{
-		foreach(var_40ce22db, model in level.var_b9d30140)
+		foreach(model in level.var_b9d30140)
 		{
 			setuimodelvalue(getuimodel(model, "ribbon"), 0);
 		}
 		var_324ecf57 = level.var_29e6f519[0];
-		foreach(var_cae08306, doa in level.var_29e6f519)
+		foreach(doa in level.var_29e6f519)
 		{
 			if(doa.score > var_324ecf57.score)
 			{
@@ -240,7 +240,7 @@ function function_4d819138()
 	self endon(#"hash_4d819138");
 	while(true)
 	{
-		foreach(var_8cc4e06f, doa in level.var_29e6f519)
+		foreach(doa in level.var_29e6f519)
 		{
 			if(!isdefined(doa.player))
 			{
@@ -287,7 +287,7 @@ function function_2c9a6a47()
 	while(true)
 	{
 		wait(0.016);
-		foreach(var_32495fea, doa in level.var_29e6f519)
+		foreach(doa in level.var_29e6f519)
 		{
 			setuimodelvalue(getuimodel(doa.ui_model, "respawn"), "");
 			if(isdefined(level.var_c8a4d758) && level.var_c8a4d758)

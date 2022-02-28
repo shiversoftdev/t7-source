@@ -46,7 +46,7 @@ function init_stage()
 {
 	level._cur_stage_name = "step_2";
 	a_structs = struct::get_array("robot_head_staff", "targetname");
-	foreach(var_3c27f970, unitrigger_stub in a_structs)
+	foreach(unitrigger_stub in a_structs)
 	{
 		level thread create_robot_head_trigger(unitrigger_stub);
 		util::wait_network_frame();
@@ -88,14 +88,14 @@ function stage_logic()
 function exit_stage(success)
 {
 	a_structs = struct::get_array("robot_head_staff", "targetname");
-	foreach(var_56a0317c, struct in a_structs)
+	foreach(struct in a_structs)
 	{
 		struct thread remove_plinth();
 		util::wait_network_frame();
 		util::wait_network_frame();
 		util::wait_network_frame();
 	}
-	foreach(var_a9ca35d7, var_5ec0aa73 in level.a_elemental_staffs)
+	foreach(var_5ec0aa73 in level.a_elemental_staffs)
 	{
 		e_upgraded_staff = zm_tomb_craftables::get_staff_info_from_weapon_name(var_5ec0aa73.w_weapon, 0);
 		e_upgraded_staff.ee_in_use = undefined;

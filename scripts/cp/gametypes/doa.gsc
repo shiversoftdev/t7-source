@@ -24,7 +24,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function ignore_systems()
+function autoexec ignore_systems()
 {
 	level.var_be177839 = "";
 	system::ignore("cybercom");
@@ -87,9 +87,7 @@ function main()
 	setscoreboardcolumns("kills", "gems", "skulls", "chickens", "deaths");
 	if(!isdefined(level.gib_throttle))
 	{
-		object = new throttle();
-		[[ object ]]->__constructor();
-		level.gib_throttle = object;
+		level.gib_throttle = new throttle();
 	}
 	[[ level.gib_throttle ]]->initialize(5, 0.2);
 }
@@ -110,7 +108,7 @@ function onstartgametype()
 	game["switchedsides"] = 0;
 	level.spawnmins = (0, 0, 0);
 	level.spawnmaxs = (0, 0, 0);
-	foreach(var_5d2cefaa, team in level.playerteams)
+	foreach(team in level.playerteams)
 	{
 		util::setobjectivetext(team, &"OBJECTIVES_COOP");
 		util::setobjectivehinttext(team, &"OBJECTIVES_COOP_HINT");
@@ -179,7 +177,7 @@ function onplayerkilled(einflictor, attacker, idamage, smeansofdeath, weapon, vd
 */
 function wait_to_spawn()
 {
-	return 1;
+	return true;
 }
 
 /*
@@ -193,6 +191,6 @@ function wait_to_spawn()
 */
 function may_player_spawn()
 {
-	return 1;
+	return true;
 }
 

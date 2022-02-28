@@ -18,7 +18,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("globallogic_audio", &__init__, undefined, undefined);
 }
@@ -333,7 +333,7 @@ function suspensemusic(random)
 */
 function leaderdialogforotherteams(dialog, skip_team, squad_dialog)
 {
-	foreach(var_7d59d21f, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(team != skip_team)
 		{
@@ -368,7 +368,7 @@ function announceroundwinner(winner, delay)
 	}
 	else
 	{
-		foreach(var_c4618acf, team in level.teams)
+		foreach(team in level.teams)
 		{
 			thread util::playsoundonplayers(("mus_round_draw" + "_") + level.teampostfix[team]);
 		}
@@ -456,7 +456,7 @@ function leaderdialog(dialog, team, group, excludelist, squaddialog)
 	if(!isdefined(team))
 	{
 		dialogs = [];
-		foreach(var_b3292528, team in level.teams)
+		foreach(team in level.teams)
 		{
 			dialogs[team] = dialog;
 		}
@@ -552,7 +552,7 @@ function leaderdialogallteams(dialogs, group, excludelist)
 */
 function flushdialog()
 {
-	foreach(var_a6c38c41, player in level.players)
+	foreach(player in level.players)
 	{
 		player flushdialogonplayer();
 	}
@@ -586,7 +586,7 @@ function flushdialogonplayer()
 */
 function flushgroupdialog(group)
 {
-	foreach(var_2fb1e81, player in level.players)
+	foreach(player in level.players)
 	{
 		player flushgroupdialogonplayer(group);
 	}
@@ -675,7 +675,7 @@ function testdialogqueue(group)
 {
 	/#
 		count = 0;
-		foreach(var_9b81fbc7, temp in self.leaderdialogqueue)
+		foreach(temp in self.leaderdialogqueue)
 		{
 			if(temp == group)
 			{
@@ -827,17 +827,17 @@ function playleaderdialogonplayer(dialog)
 function isteamwinning(checkteam)
 {
 	score = game["teamScores"][checkteam];
-	foreach(var_f94c8fb8, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(team != checkteam)
 		{
 			if(game["teamScores"][team] >= score)
 			{
-				return 0;
+				return false;
 			}
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -851,16 +851,16 @@ function isteamwinning(checkteam)
 */
 function announceteamiswinning()
 {
-	foreach(var_2d73003b, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(isteamwinning(team))
 		{
 			leaderdialog("winning", team, undefined, undefined, "squad_winning");
 			leaderdialogforotherteams("losing", team, "squad_losing");
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -889,7 +889,7 @@ function musiccontroller()
 				}
 			}
 			level waittill(#"match_ending_very_soon");
-			foreach(var_642eef6a, team in level.teams)
+			foreach(team in level.teams)
 			{
 				leaderdialog("timesup", team, undefined, undefined, "squad_30sec");
 			}

@@ -30,7 +30,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_ai_dogs", &__init__, undefined, "aat");
 }
@@ -278,17 +278,23 @@ function waiting_for_next_dog_spawn(count, max)
 	{
 		default_wait = 3;
 	}
-	else if(level.dog_round_count == 2)
-	{
-		default_wait = 2.5;
-	}
-	else if(level.dog_round_count == 3)
-	{
-		default_wait = 2;
-	}
 	else
 	{
-		default_wait = 1.5;
+		if(level.dog_round_count == 2)
+		{
+			default_wait = 2.5;
+		}
+		else
+		{
+			if(level.dog_round_count == 3)
+			{
+				default_wait = 2;
+			}
+			else
+			{
+				default_wait = 1.5;
+			}
+		}
 	}
 	default_wait = default_wait - (count / max);
 	default_wait = max(default_wait, 0.05);
@@ -461,17 +467,23 @@ function dog_health_increase()
 	{
 		level.dog_health = 400;
 	}
-	else if(level.dog_round_count == 2)
+	else
 	{
-		level.dog_health = 900;
-	}
-	else if(level.dog_round_count == 3)
-	{
-		level.dog_health = 1300;
-	}
-	else if(level.dog_round_count == 4)
-	{
-		level.dog_health = 1600;
+		if(level.dog_round_count == 2)
+		{
+			level.dog_health = 900;
+		}
+		else
+		{
+			if(level.dog_round_count == 3)
+			{
+				level.dog_health = 1300;
+			}
+			else if(level.dog_round_count == 4)
+			{
+				level.dog_health = 1600;
+			}
+		}
 	}
 	if(level.dog_health > 1600)
 	{
@@ -905,7 +917,7 @@ function special_dog_spawn(num_to_spawn, spawners, spawn_point)
 	dogs = getaispeciesarray("all", "zombie_dog");
 	if(isdefined(dogs) && dogs.size >= 9)
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(num_to_spawn))
 	{
@@ -932,33 +944,36 @@ function special_dog_spawn(num_to_spawn, spawners, spawn_point)
 				level flag::set("dog_clips");
 			}
 		}
-		else if(isdefined(level.dog_spawn_func))
-		{
-			spawn_loc = [[level.dog_spawn_func]](level.dog_spawners, favorite_enemy);
-			ai = zombie_utility::spawn_zombie(level.dog_spawners[0]);
-			if(isdefined(ai))
-			{
-				ai.favoriteenemy = favorite_enemy;
-				spawn_loc thread dog_spawn_fx(ai, spawn_loc);
-				count++;
-				level flag::set("dog_clips");
-			}
-		}
 		else
 		{
-			spawn_point = dog_spawn_factory_logic(favorite_enemy);
-			ai = zombie_utility::spawn_zombie(level.dog_spawners[0]);
-			if(isdefined(ai))
+			if(isdefined(level.dog_spawn_func))
 			{
-				ai.favoriteenemy = favorite_enemy;
-				spawn_point thread dog_spawn_fx(ai, spawn_point);
-				count++;
-				level flag::set("dog_clips");
+				spawn_loc = [[level.dog_spawn_func]](level.dog_spawners, favorite_enemy);
+				ai = zombie_utility::spawn_zombie(level.dog_spawners[0]);
+				if(isdefined(ai))
+				{
+					ai.favoriteenemy = favorite_enemy;
+					spawn_loc thread dog_spawn_fx(ai, spawn_loc);
+					count++;
+					level flag::set("dog_clips");
+				}
+			}
+			else
+			{
+				spawn_point = dog_spawn_factory_logic(favorite_enemy);
+				ai = zombie_utility::spawn_zombie(level.dog_spawners[0]);
+				if(isdefined(ai))
+				{
+					ai.favoriteenemy = favorite_enemy;
+					spawn_point thread dog_spawn_fx(ai, spawn_point);
+					count++;
+					level flag::set("dog_clips");
+				}
 			}
 		}
 		waiting_for_next_dog_spawn(count, num_to_spawn);
 	}
-	return 1;
+	return true;
 }
 
 /*

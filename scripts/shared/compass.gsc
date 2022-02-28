@@ -42,16 +42,19 @@ function setupminimap(material)
 			southeast = corner0 + side;
 		}
 	}
-	else if(vectordot(cornerdiff, north) > 0)
-	{
-		side = vecscale(north, vectordot(cornerdiff, north));
-		northwest = corner0 + side;
-		southeast = corner1 - side;
-	}
 	else
 	{
-		northwest = corner0;
-		southeast = corner1;
+		if(vectordot(cornerdiff, north) > 0)
+		{
+			side = vecscale(north, vectordot(cornerdiff, north));
+			northwest = corner0 + side;
+			southeast = corner1 - side;
+		}
+		else
+		{
+			northwest = corner0;
+			southeast = corner1;
+		}
 	}
 	if(requiredmapaspectratio > 0)
 	{

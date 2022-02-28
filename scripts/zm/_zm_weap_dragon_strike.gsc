@@ -30,7 +30,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_weap_dragon_strike", &__init__, &__main__, undefined);
 }
@@ -166,13 +166,16 @@ function function_ab4fad2f()
 	{
 		n_max_ammo = 1;
 	}
-	else if(var_5a0c399b == getweapon("launcher_dragon_strike_upgraded"))
-	{
-		n_max_ammo = 2;
-	}
 	else
 	{
-		return;
+		if(var_5a0c399b == getweapon("launcher_dragon_strike_upgraded"))
+		{
+			n_max_ammo = 2;
+		}
+		else
+		{
+			return;
+		}
 	}
 	if(self getammocount(var_5a0c399b) < n_max_ammo)
 	{
@@ -198,7 +201,7 @@ function function_ff07e778()
 	a_players = getplayers();
 	for(i = 0; i < a_players.size; i++)
 	{
-		foreach(var_4c491cdb, var_3ef7692 in level.placeable_mines)
+		foreach(var_3ef7692 in level.placeable_mines)
 		{
 			if(a_players[i] zm_utility::is_player_placeable_mine(var_3ef7692))
 			{
@@ -352,9 +355,9 @@ function function_9e0c324b(var_382bb75)
 {
 	if(var_382bb75 == getweapon("launcher_dragon_strike") || var_382bb75 == getweapon("launcher_dragon_strike_upgraded"))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -408,9 +411,9 @@ function function_f80cd2c9()
 {
 	if(isdefined(self.var_be00572f))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -550,7 +553,7 @@ function function_a6d19957(b_upgraded, var_aa911866, v_hitloc, n_range)
 	{
 		n_clientfield = 1;
 	}
-	foreach(var_a6c38c41, ai_zombie in a_ai_zombies)
+	foreach(ai_zombie in a_ai_zombies)
 	{
 		if(isdefined(ai_zombie) && (!(isdefined(ai_zombie.var_4cfc625d) && ai_zombie.var_4cfc625d)))
 		{
@@ -787,20 +790,23 @@ function function_6c8dfca2(w_weapon)
 		{
 			w_weapon = self.prev_weapon_before_equipment_change;
 		}
-		else if(isdefined(self.weapon_stowed))
-		{
-			w_weapon = self.weapon_stowed;
-		}
 		else
 		{
-			var_e30cfc3e = self getweaponslistprimaries();
-			if(var_e30cfc3e.size > 0)
+			if(isdefined(self.weapon_stowed))
 			{
-				w_weapon = var_e30cfc3e[0];
+				w_weapon = self.weapon_stowed;
 			}
 			else
 			{
-				return;
+				var_e30cfc3e = self getweaponslistprimaries();
+				if(var_e30cfc3e.size > 0)
+				{
+					w_weapon = var_e30cfc3e[0];
+				}
+				else
+				{
+					return;
+				}
 			}
 		}
 	}

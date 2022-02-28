@@ -22,7 +22,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("vehicleriders", &__init__, undefined, undefined);
 }
@@ -39,9 +39,9 @@ autoexec function __init__sytem__()
 function __init__()
 {
 	a_registered_fields = [];
-	foreach(var_e67f5704, bundle in struct::get_script_bundles("vehicleriders"))
+	foreach(bundle in struct::get_script_bundles("vehicleriders"))
 	{
-		foreach(var_32844bd6, object in bundle.objects)
+		foreach(object in bundle.objects)
 		{
 			if(isstring(object.vehicleenteranim))
 			{
@@ -57,7 +57,7 @@ function __init__()
 			}
 		}
 	}
-	foreach(var_4639524f, str_clientfield in a_registered_fields)
+	foreach(str_clientfield in a_registered_fields)
 	{
 		clientfield::register("vehicle", str_clientfield, 1, 1, "counter", &play_vehicle_anim, 0, 0);
 	}
@@ -82,18 +82,21 @@ function play_vehicle_anim(localclientnum, oldval, newval, bnewent, binitialsnap
 		str_pos = getsubstr(fieldname, 0, fieldname.size - 6);
 		str_action = "enter";
 	}
-	else if(strendswith(fieldname, "_exit"))
+	else
 	{
-		str_pos = getsubstr(fieldname, 0, fieldname.size - 5);
-		str_action = "exit";
-	}
-	else if(strendswith(fieldname, "_death"))
-	{
-		str_pos = getsubstr(fieldname, 0, fieldname.size - 6);
-		str_action = "death";
+		if(strendswith(fieldname, "_exit"))
+		{
+			str_pos = getsubstr(fieldname, 0, fieldname.size - 5);
+			str_action = "exit";
+		}
+		else if(strendswith(fieldname, "_death"))
+		{
+			str_pos = getsubstr(fieldname, 0, fieldname.size - 6);
+			str_action = "death";
+		}
 	}
 	str_vh_anim = undefined;
-	foreach(var_a9b3caa, s_rider in s_bundle.objects)
+	foreach(s_rider in s_bundle.objects)
 	{
 		if(s_rider.position == str_pos)
 		{

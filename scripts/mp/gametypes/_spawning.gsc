@@ -23,7 +23,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("spawning", &__init__, undefined, undefined);
 }
@@ -42,7 +42,7 @@ function __init__()
 	level init_spawn_system();
 	level.influencers = [];
 	level.recently_deceased = [];
-	foreach(var_1c0d5a10, team in level.teams)
+	foreach(team in level.teams)
 	{
 		level.recently_deceased[team] = util::spawn_array_struct();
 	}
@@ -83,7 +83,7 @@ function init_spawn_system()
 	spawnsystem.ispawn_teammask["free"] = spawnsystem.ispawn_teammask_free;
 	all = spawnsystem.ispawn_teammask_free;
 	count = 1;
-	foreach(var_35967617, team in level.teams)
+	foreach(team in level.teams)
 	{
 		spawnsystem.ispawn_teammask[team] = 1 << count;
 		all = all | spawnsystem.ispawn_teammask[team];
@@ -387,16 +387,19 @@ function create_player_influencers()
 		team_mask = level.spawnsystem.ispawn_teammask_free;
 		enemy_teams_mask = level.spawnsystem.ispawn_teammask_free;
 	}
-	else if(isdefined(self.pers["team"]))
-	{
-		team = self.pers["team"];
-		team_mask = util::getteammask(team);
-		enemy_teams_mask = util::getotherteamsmask(team);
-	}
 	else
 	{
-		team_mask = 0;
-		enemy_teams_mask = 0;
+		if(isdefined(self.pers["team"]))
+		{
+			team = self.pers["team"];
+			team_mask = util::getteammask(team);
+			enemy_teams_mask = util::getotherteamsmask(team);
+		}
+		else
+		{
+			team_mask = 0;
+			enemy_teams_mask = 0;
+		}
 	}
 	angles = self.angles;
 	origin = self.origin;
@@ -442,7 +445,7 @@ function create_player_spawn_influencers(spawn_origin)
 */
 function remove_influencer(to_be_removed)
 {
-	foreach(var_a446eb6f, influencer in self.influencers)
+	foreach(influencer in self.influencers)
 	{
 		if(influencer == to_be_removed)
 		{
@@ -474,7 +477,7 @@ function remove_influencers()
 {
 	if(isdefined(self.influencers))
 	{
-		foreach(var_f51cc11b, influencer in self.influencers)
+		foreach(influencer in self.influencers)
 		{
 			removeinfluencer(influencer);
 		}
@@ -528,7 +531,7 @@ function watch_remove_influencer()
 */
 function enable_influencers(enabled)
 {
-	foreach(var_ca8afd1, influencer in self.influencers)
+	foreach(influencer in self.influencers)
 	{
 		enableinfluencer(influencer, enabled);
 	}
@@ -576,14 +579,14 @@ function player_influencers_set_team()
 	}
 	if(isdefined(self.influencersfriendly))
 	{
-		foreach(var_34bc1d06, influencer in self.influencersfriendly)
+		foreach(influencer in self.influencersfriendly)
 		{
 			setinfluencerteammask(influencer, team_mask);
 		}
 	}
 	if(isdefined(self.influencersenemy))
 	{
-		foreach(var_5b900a43, influencer in self.influencersenemy)
+		foreach(influencer in self.influencersenemy)
 		{
 			setinfluencerteammask(influencer, enemy_teams_mask);
 		}
@@ -658,7 +661,12 @@ function create_map_placed_influencer(influencer_entity)
 		team_mask = util::getteammask(influencer_entity.script_team);
 		level create_enemy_influencer(influencer_entity.script_noteworty, influencer_entity.origin, team_mask);
 	}
-	assertmsg("");
+	else
+	{
+		/#
+			assertmsg("");
+		#/
+	}
 	return influencer_id;
 }
 
@@ -673,14 +681,14 @@ function create_map_placed_influencer(influencer_entity)
 */
 function updateallspawnpoints()
 {
-	foreach(var_2bcecc94, team in level.teams)
+	foreach(team in level.teams)
 	{
 		gatherspawnpoints(team);
 	}
 	clearspawnpoints(0);
 	if(level.teambased)
 	{
-		foreach(var_456bae16, team in level.teams)
+		foreach(team in level.teams)
 		{
 			addspawnpoints(team, level.player_spawn_points[team], 0);
 			enablespawnpointlist(0, util::getteammask(team));
@@ -688,7 +696,7 @@ function updateallspawnpoints()
 	}
 	else
 	{
-		foreach(var_757f815e, team in level.teams)
+		foreach(team in level.teams)
 		{
 			addspawnpoints("free", level.player_spawn_points[team], 0);
 			enablespawnpointlist(0, util::getteammask(team));
@@ -717,14 +725,14 @@ function update_fallback_spawnpoints()
 	}
 	if(level.teambased)
 	{
-		foreach(var_76958f6d, team in level.teams)
+		foreach(team in level.teams)
 		{
 			addspawnpoints(team, level.player_fallback_points[team], 1);
 		}
 	}
 	else
 	{
-		foreach(var_ccabdd1e, team in level.teams)
+		foreach(team in level.teams)
 		{
 			addspawnpoints("free", level.player_fallback_points[team], 1);
 		}
@@ -745,7 +753,7 @@ function add_fallback_spawnpoints(team, point_class)
 	if(!isdefined(level.player_fallback_points))
 	{
 		level.player_fallback_points = [];
-		foreach(var_bce4567, level_team in level.teams)
+		foreach(level_team in level.teams)
 		{
 			level.player_fallback_points[level_team] = [];
 		}
@@ -783,13 +791,13 @@ function is_spawn_trapped(team)
 	#/
 	if(!level.rankedmatch)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(level.alivetimesaverage[team]) && level.alivetimesaverage[team] != 0 && level.alivetimesaverage[team] < (level.spawntraptriggertime * 1000))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -805,11 +813,11 @@ function use_start_spawns(predictedspawn)
 {
 	if(level.alwaysusestartspawns)
 	{
-		return 1;
+		return true;
 	}
 	if(!level.usestartspawns)
 	{
-		return 0;
+		return false;
 	}
 	if(level.teambased)
 	{
@@ -820,7 +828,7 @@ function use_start_spawns(predictedspawn)
 			{
 				level.usestartspawns = 0;
 			}
-			return 0;
+			return false;
 		}
 	}
 	else if((level.aliveplayers["free"].size + level.spawningplayers["free"].size) >= level.spawn_start.size)
@@ -829,9 +837,9 @@ function use_start_spawns(predictedspawn)
 		{
 			level.usestartspawns = 0;
 		}
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -868,57 +876,60 @@ function onspawnplayer(predictedspawn = 0)
 		spawn_origin = self.resurrect_origin;
 		spawn_angles = self.resurrect_angles;
 	}
-	else if(spawnoverride)
+	else
 	{
-		if(predictedspawn && isdefined(self.tacticalinsertion))
+		if(spawnoverride)
 		{
-			self predictspawnpoint(self.tacticalinsertion.origin, self.tacticalinsertion.angles);
+			if(predictedspawn && isdefined(self.tacticalinsertion))
+			{
+				self predictspawnpoint(self.tacticalinsertion.origin, self.tacticalinsertion.angles);
+			}
+			return;
 		}
-		return;
-	}
-	if(self use_start_spawns(predictedspawn))
-	{
-		if(!predictedspawn)
+		if(self use_start_spawns(predictedspawn))
 		{
+			if(!predictedspawn)
+			{
+				if(level.teambased)
+				{
+					level.spawningplayers[self.team][level.spawningplayers[self.team].size] = self;
+				}
+				else
+				{
+					level.spawningplayers["free"][level.spawningplayers["free"].size] = self;
+				}
+			}
 			if(level.teambased)
 			{
-				level.spawningplayers[self.team][level.spawningplayers[self.team].size] = self;
+				spawnteam = self.pers["team"];
+				if(game["switchedsides"])
+				{
+					spawnteam = util::getotherteam(spawnteam);
+				}
+				spawnpoint = spawnlogic::get_spawnpoint_random(level.spawn_start[spawnteam], predictedspawn);
 			}
 			else
 			{
-				level.spawningplayers["free"][level.spawningplayers["free"].size] = self;
+				spawnpoint = spawnlogic::get_spawnpoint_random(level.spawn_start, predictedspawn);
 			}
-		}
-		if(level.teambased)
-		{
-			spawnteam = self.pers["team"];
-			if(game["switchedsides"])
+			if(isdefined(spawnpoint))
 			{
-				spawnteam = util::getotherteam(spawnteam);
+				spawn_origin = spawnpoint.origin;
+				spawn_angles = spawnpoint.angles;
 			}
-			spawnpoint = spawnlogic::get_spawnpoint_random(level.spawn_start[spawnteam], predictedspawn);
+			if(isdefined(level.var_e0d16266))
+			{
+				[[level.var_e0d16266]](spawnpoint, predictedspawn);
+			}
 		}
 		else
 		{
-			spawnpoint = spawnlogic::get_spawnpoint_random(level.spawn_start, predictedspawn);
-		}
-		if(isdefined(spawnpoint))
-		{
-			spawn_origin = spawnpoint.origin;
-			spawn_angles = spawnpoint.angles;
-		}
-		if(isdefined(level.var_e0d16266))
-		{
-			[[level.var_e0d16266]](spawnpoint, predictedspawn);
-		}
-	}
-	else
-	{
-		spawn_point = getspawnpoint(self, predictedspawn);
-		if(isdefined(spawn_point))
-		{
-			spawn_origin = spawn_point["origin"];
-			spawn_angles = spawn_point["angles"];
+			spawn_point = getspawnpoint(self, predictedspawn);
+			if(isdefined(spawn_point))
+			{
+				spawn_origin = spawn_point["origin"];
+				spawn_angles = spawn_point["angles"];
+			}
 		}
 	}
 	if(!isdefined(spawn_origin))
@@ -1014,7 +1025,7 @@ function get_debug_spawnpoint(player)
 	if(team == "free")
 	{
 		spawn_counts = 0;
-		foreach(var_af474816, team in level.teams)
+		foreach(team in level.teams)
 		{
 			spawn_counts = spawn_counts + level.player_spawn_points[team].size;
 		}
@@ -1023,7 +1034,7 @@ function get_debug_spawnpoint(player)
 			level.test_spawn_point_index = 0;
 		}
 		count = 0;
-		foreach(var_306c57cf, team in level.teams)
+		foreach(team in level.teams)
 		{
 			size = level.player_spawn_points[team].size;
 			if(level.test_spawn_point_index < (count + size))
@@ -1033,11 +1044,14 @@ function get_debug_spawnpoint(player)
 			count = count + size;
 		}
 	}
-	else if(level.test_spawn_point_index >= level.player_spawn_points[team].size)
+	else
 	{
-		level.test_spawn_point_index = 0;
+		if(level.test_spawn_point_index >= level.player_spawn_points[team].size)
+		{
+			level.test_spawn_point_index = 0;
+		}
+		return level.player_spawn_points[team][level.test_spawn_point_index];
 	}
-	return level.player_spawn_points[team][level.test_spawn_point_index];
 }
 
 /*
@@ -1219,16 +1233,16 @@ function spawn_point_class_name_being_used(name)
 {
 	if(!isdefined(level.spawn_point_class_names))
 	{
-		return 0;
+		return false;
 	}
 	for(i = 0; i < level.spawn_point_class_names.size; i++)
 	{
 		if(level.spawn_point_class_names[i] == name)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1242,7 +1256,7 @@ function spawn_point_class_name_being_used(name)
 */
 function codecallback_updatespawnpoints()
 {
-	foreach(var_20695021, team in level.teams)
+	foreach(team in level.teams)
 	{
 		spawnlogic::rebuild_spawn_points(team);
 	}

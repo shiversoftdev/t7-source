@@ -98,7 +98,7 @@ function main_quest_init()
 	level.a_elemental_staffs["staff_fire"] = staff_fire;
 	level.a_elemental_staffs["staff_lightning"] = staff_lightning;
 	level.a_elemental_staffs["staff_water"] = staff_water;
-	foreach(var_fdefe801, staff in level.a_elemental_staffs)
+	foreach(staff in level.a_elemental_staffs)
 	{
 		staff.charger.charges_received = 0;
 		staff.charger.is_inserted = 0;
@@ -143,7 +143,7 @@ function main_quest_init()
 	level.a_elemental_staffs_upgraded["staff_fire_upgraded"] = staff_fire_upgraded;
 	level.a_elemental_staffs_upgraded["staff_lightning_upgraded"] = staff_lightning_upgraded;
 	level.a_elemental_staffs_upgraded["staff_water_upgraded"] = staff_water_upgraded;
-	foreach(var_da41ada0, staff_upgraded in level.a_elemental_staffs_upgraded)
+	foreach(staff_upgraded in level.a_elemental_staffs_upgraded)
 	{
 		staff_upgraded.charger.charges_received = 0;
 		staff_upgraded.charger.is_inserted = 0;
@@ -153,7 +153,7 @@ function main_quest_init()
 		staff_upgraded thread place_staffs_encasement();
 		staff_upgraded ghost();
 	}
-	foreach(var_1abd7134, staff in level.a_elemental_staffs)
+	foreach(staff in level.a_elemental_staffs)
 	{
 		staff.prev_ammo_clip = staff.w_weapon.clipsize;
 		staff.prev_ammo_stock = staff.w_weapon.startammo;
@@ -242,7 +242,7 @@ function chambers_init()
 	a_stargate_gramophones = struct::get_array("stargate_gramophone_pos", "targetname");
 	array::thread_all(a_stargate_gramophones, &run_gramophone_teleporter);
 	a_door_main = getentarray("chamber_entrance", "targetname");
-	foreach(var_89860180, e_door in a_door_main)
+	foreach(e_door in a_door_main)
 	{
 		if(e_door.classname == "script_brushmodel")
 		{
@@ -551,9 +551,9 @@ function function_ed81ffaa(player)
 {
 	if(level flag::get("crypt_opened") || (isdefined(level.b_open_all_gramophone_doors) && level.b_open_all_gramophone_doors))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -588,7 +588,7 @@ function chamber_blocker()
 */
 function watch_for_staff_upgrades()
 {
-	foreach(var_ff3e4e77, staff in level.a_elemental_staffs)
+	foreach(staff in level.a_elemental_staffs)
 	{
 		staff thread staff_upgrade_watch();
 	}
@@ -673,14 +673,14 @@ function staff_get_insert_message()
 function player_has_staff()
 {
 	a_weapons = self getweaponslistprimaries();
-	foreach(var_f23163e5, weapon in a_weapons)
+	foreach(weapon in a_weapons)
 	{
 		if(issubstr(weapon.name, "staff"))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -732,7 +732,7 @@ function watch_for_player_pickup_staff()
 			{
 				player takeweapon(weapon_drop);
 			}
-			foreach(var_ee5097f2, weapon in a_weapons)
+			foreach(weapon in a_weapons)
 			{
 				if(issubstr(weapon.name, "staff"))
 				{
@@ -774,7 +774,7 @@ function watch_staff_ammo_reload()
 	{
 		self waittill(#"zmb_max_ammo");
 		a_weapons = self getweaponslistprimaries();
-		foreach(var_c1290e00, weapon in a_weapons)
+		foreach(weapon in a_weapons)
 		{
 			if(issubstr(weapon.name, "staff"))
 			{
@@ -941,7 +941,7 @@ function mechz_staff_piece_failsafe()
 	{
 		a_players = getplayers();
 		b_anyone_near = 0;
-		foreach(var_aada4024, e_player in a_players)
+		foreach(e_player in a_players)
 		{
 			dist_sq = distance2dsquared(e_player.origin, self.origin);
 			if(dist_sq < min_dist_sq)
@@ -982,7 +982,7 @@ function biplane_clue()
 		}
 		wait(randomfloatrange(5, 15));
 		a_players = getplayers();
-		foreach(var_d36fd8b2, e_player in a_players)
+		foreach(e_player in a_players)
 		{
 			level notify(#"sam_clue_biplane", e_player);
 		}
@@ -1000,7 +1000,7 @@ function biplane_clue()
 */
 function staff_biplane_drop_pieces(a_staff_pieces)
 {
-	foreach(var_c7e59655, staff_piece in a_staff_pieces)
+	foreach(staff_piece in a_staff_pieces)
 	{
 		staff_piece zm_tomb_craftables::craftable_waittill_spawned();
 		staff_piece.origin = staff_piece.piecespawn.model.origin;
@@ -1034,7 +1034,7 @@ function staff_biplane_drop_pieces(a_staff_pieces)
 	vh_biplane delete();
 	e_fx_tag clientfield::set("plane_fx", 0);
 	playfx(level._effect["biplane_explode"], e_fx_tag.origin);
-	foreach(var_a08ad1c0, staff_piece in a_staff_pieces)
+	foreach(staff_piece in a_staff_pieces)
 	{
 		staff_piece.e_fx = spawn("script_model", e_fx_tag.origin);
 		staff_piece.e_fx setmodel("tag_origin");
@@ -1043,7 +1043,7 @@ function staff_biplane_drop_pieces(a_staff_pieces)
 	}
 	a_staff_pieces[0].e_fx waittill(#"movedone");
 	e_fx_tag delete();
-	foreach(var_f96af48, staff_piece in a_staff_pieces)
+	foreach(staff_piece in a_staff_pieces)
 	{
 		staff_piece.piecespawn.model movez(500, 0.05);
 		staff_piece.piecespawn.model waittill(#"movedone");
@@ -1092,7 +1092,7 @@ function zone_capture_clue(str_zone)
 			wait(1);
 		}
 		a_players = getplayers();
-		foreach(var_c50330b5, e_player in a_players)
+		foreach(e_player in a_players)
 		{
 			level notify(#"sam_clue_zonecap", e_player);
 		}
@@ -1130,7 +1130,7 @@ function staff_unlock_with_zone_capture(s_staff_piece)
 		}
 	}
 	level notify(#"staff_piece_capture_complete");
-	foreach(var_6844c71d, uts_box in level.a_uts_challenge_boxes)
+	foreach(uts_box in level.a_uts_challenge_boxes)
 	{
 		if(uts_box.str_location == "church_capture")
 		{
@@ -1161,7 +1161,7 @@ function reward_staff_piece(player, s_stat)
 	util::wait_network_frame();
 	if(!zm_challenges_tomb::reward_rise_and_grab(m_piece, 50, 2, 2, -1))
 	{
-		return 0;
+		return false;
 	}
 	n_dist = 9999;
 	a_players = getplayers();
@@ -1171,7 +1171,7 @@ function reward_staff_piece(player, s_stat)
 		a_players[0] zm_craftables::player_take_piece(self.s_staff_piece.piecespawn);
 	}
 	m_piece delete();
-	return 1;
+	return true;
 }
 
 /*
@@ -1187,7 +1187,7 @@ function dig_spot_get_staff_piece(e_player)
 {
 	level notify(#"sam_clue_dig", e_player);
 	str_zone = self.str_zone;
-	foreach(var_911972a9, s_staff in level.ice_staff_pieces)
+	foreach(s_staff in level.ice_staff_pieces)
 	{
 		if(!isdefined(s_staff.num_misses))
 		{
@@ -1249,7 +1249,7 @@ function staff_ice_dig_pieces(a_staff_pieces)
 {
 	level flagsys::wait_till("start_zombie_round_logic");
 	level.ice_staff_pieces = arraycopy(a_staff_pieces);
-	foreach(var_5379b295, s_piece in level.ice_staff_pieces)
+	foreach(s_piece in level.ice_staff_pieces)
 	{
 		s_piece zm_tomb_craftables::craftable_waittill_spawned();
 		s_piece.piecespawn.model ghost();
@@ -1513,7 +1513,7 @@ function zombie_killed_override(einflictor, attacker, idamage, smeansofdeath, sw
 		}
 		s_nearest_staff = undefined;
 		n_nearest_dist_sq = n_max_dist_sq;
-		foreach(var_aa465d6e, staff in level.a_elemental_staffs)
+		foreach(staff in level.a_elemental_staffs)
 		{
 			if(isdefined(staff.charger.full) && staff.charger.full)
 			{
@@ -1587,7 +1587,7 @@ function staff_charger_check()
 			self clientfield::set("staff_charger", 0);
 			self.charger.full = 1;
 			level clientfield::set(self.quest_clientfield, 4);
-			foreach(var_50743d2c, player in level.players)
+			foreach(player in level.players)
 			{
 				player thread zm_craftables::player_show_craftable_parts_ui(undefined, ("zmInventory." + self.element) + "_staff.visible", 0);
 			}

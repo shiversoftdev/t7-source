@@ -10,7 +10,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function initanimationmocomps()
+function autoexec initanimationmocomps()
 {
 	level._animationmocomps = [];
 }
@@ -36,13 +36,16 @@ function runanimationmocomp(mocompname, mocompstatus, asmentity, mocompanim, moc
 	{
 		mocompstatus = "asm_mocomp_start";
 	}
-	else if(mocompstatus == 1)
-	{
-		mocompstatus = "asm_mocomp_update";
-	}
 	else
 	{
-		mocompstatus = "asm_mocomp_terminate";
+		if(mocompstatus == 1)
+		{
+			mocompstatus = "asm_mocomp_update";
+		}
+		else
+		{
+			mocompstatus = "asm_mocomp_terminate";
+		}
 	}
 	animationmocompresult = asmentity [[level._animationmocomps[mocompname][mocompstatus]]](asmentity, mocompanim, mocompanimblendouttime, "", mocompduration);
 	return animationmocompresult;

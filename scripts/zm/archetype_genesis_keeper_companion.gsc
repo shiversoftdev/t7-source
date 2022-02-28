@@ -34,18 +34,23 @@
 #using scripts\zm\_zm_spawner;
 #using scripts\zm\archetype_genesis_keeper_companion_interface;
 
-#namespace namespace_6d577909;
+class var_78f8bb8 : namespace_78f8bb8
+{
+
+}
+
+#namespace keepercompanionbehavior;
 
 /*
 	Name: main
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x72B60B40
 	Offset: 0xBD8
 	Size: 0x234
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function main()
+function autoexec main()
 {
 	clientfield::register("allplayers", "being_keeper_revived", 15000, 1, "int");
 	clientfield::register("actor", "keeper_reviving", 15000, 1, "int");
@@ -59,13 +64,13 @@ autoexec function main()
 	initzombiebehaviorsandasm();
 	spawner::add_archetype_spawn_function("keeper_companion", &function_8c4e826e);
 	spawner::add_archetype_spawn_function("keeper_companion", &function_bd5d4573);
-	namespace_170b115c::function_e7b6b58c();
+	keepercompanioninterface::function_e7b6b58c();
 	registerbehaviorscriptfunctions();
 }
 
 /*
 	Name: registerbehaviorscriptfunctions
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x6287AC41
 	Offset: 0xE18
 	Size: 0x11C
@@ -85,14 +90,14 @@ function registerbehaviorscriptfunctions()
 
 /*
 	Name: initzombiebehaviorsandasm
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x3FCFA396
 	Offset: 0xF40
 	Size: 0x234
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function initzombiebehaviorsandasm()
+function private initzombiebehaviorsandasm()
 {
 	animationstatenetwork::registeranimationmocomp("mocomp_teleport_out_traversal@keeper_companion", &function_3ff0b3e, undefined, undefined);
 	animationstatenetwork::registeranimationmocomp("mocomp_teleport_in_traversal@keeper_companion", &function_f1efe0ab, undefined, undefined);
@@ -110,7 +115,7 @@ private function initzombiebehaviorsandasm()
 
 /*
 	Name: function_3ff0b3e
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x24F08C7E
 	Offset: 0x1180
 	Size: 0xD8
@@ -129,7 +134,7 @@ function function_3ff0b3e(entity, mocompanim, mocompanimblendouttime, mocompanim
 
 /*
 	Name: function_f1efe0ab
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x2E24DE20
 	Offset: 0x1260
 	Size: 0x1DC
@@ -157,7 +162,7 @@ function function_f1efe0ab(entity, mocompanim, mocompanimblendouttime, mocompani
 
 /*
 	Name: function_7cf81f38
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0xA5DEA8C0
 	Offset: 0x1448
 	Size: 0x1E4
@@ -171,23 +176,29 @@ function function_7cf81f38(entity, mocompanim, mocompanimblendouttime, mocompani
 	{
 		entity orientmode("face direction", vectornormalize(self.var_b46b4189.origin - entity.origin));
 	}
-	else if(isdefined(entity.var_92aa697) && entity.var_92aa697 && isdefined(entity.var_8cf1ff79))
-	{
-		entity orientmode("face direction", vectornormalize(entity.var_8cf1ff79 - entity.origin));
-	}
-	else if(isdefined(entity.leader))
-	{
-		entity orientmode("face direction", vectornormalize(entity.leader.origin - entity.origin));
-	}
 	else
 	{
-		entity orientmode("face angle", entity.angles[1]);
+		if(isdefined(entity.var_92aa697) && entity.var_92aa697 && isdefined(entity.var_8cf1ff79))
+		{
+			entity orientmode("face direction", vectornormalize(entity.var_8cf1ff79 - entity.origin));
+		}
+		else
+		{
+			if(isdefined(entity.leader))
+			{
+				entity orientmode("face direction", vectornormalize(entity.leader.origin - entity.origin));
+			}
+			else
+			{
+				entity orientmode("face angle", entity.angles[1]);
+			}
+		}
 	}
 }
 
 /*
 	Name: function_8c2af335
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0xB5199791
 	Offset: 0x1638
 	Size: 0x2A4
@@ -202,17 +213,23 @@ function function_8c2af335(entity, mocompanim, mocompanimblendouttime, mocompani
 	{
 		entity orientmode("face direction", vectornormalize(self.var_b46b4189.origin - entity.origin));
 	}
-	else if(isdefined(entity.var_92aa697) && entity.var_92aa697 && isdefined(entity.var_8cf1ff79))
-	{
-		entity orientmode("face direction", vectornormalize(entity.var_8cf1ff79 - entity.origin));
-	}
-	else if(isdefined(entity.leader))
-	{
-		entity orientmode("face direction", vectornormalize(entity.leader.origin - entity.origin));
-	}
 	else
 	{
-		entity orientmode("face angle", entity.angles[1]);
+		if(isdefined(entity.var_92aa697) && entity.var_92aa697 && isdefined(entity.var_8cf1ff79))
+		{
+			entity orientmode("face direction", vectornormalize(entity.var_8cf1ff79 - entity.origin));
+		}
+		else
+		{
+			if(isdefined(entity.leader))
+			{
+				entity orientmode("face direction", vectornormalize(entity.leader.origin - entity.origin));
+			}
+			else
+			{
+				entity orientmode("face angle", entity.angles[1]);
+			}
+		}
 	}
 	if(!entity.manualtraversemode && isdefined(entity.traversalstartdist) && entity.traversalstartdist >= 0)
 	{
@@ -225,7 +242,7 @@ function function_8c2af335(entity, mocompanim, mocompanimblendouttime, mocompani
 
 /*
 	Name: function_8d3c82f6
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x12D60B53
 	Offset: 0x18E8
 	Size: 0x4C
@@ -240,7 +257,7 @@ function function_8d3c82f6(entity, mocompanim, mocompanimblendouttime, mocompani
 
 /*
 	Name: function_cd4d7e12
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0xC7AE30DB
 	Offset: 0x1940
 	Size: 0x44
@@ -255,7 +272,7 @@ function function_cd4d7e12(entity)
 
 /*
 	Name: function_d938ace7
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x53F76973
 	Offset: 0x1990
 	Size: 0x44
@@ -270,7 +287,7 @@ function function_d938ace7(entity)
 
 /*
 	Name: function_10c1bf1
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0xF83C9504
 	Offset: 0x19E0
 	Size: 0x44
@@ -285,7 +302,7 @@ function function_10c1bf1(entity)
 
 /*
 	Name: function_26729028
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0xC2C70711
 	Offset: 0x1A30
 	Size: 0x5C
@@ -301,7 +318,7 @@ function function_26729028(entity)
 
 /*
 	Name: function_8a22bf01
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x49022FAD
 	Offset: 0x1A98
 	Size: 0x64
@@ -318,14 +335,14 @@ function function_8a22bf01(entity)
 
 /*
 	Name: function_8c4e826e
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x368D6748
 	Offset: 0x1B08
 	Size: 0x124
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_8c4e826e()
+function private function_8c4e826e()
 {
 	blackboard::createblackboardforentity(self);
 	ai::createinterfaceforentity(self);
@@ -351,14 +368,14 @@ private function function_8c4e826e()
 
 /*
 	Name: function_bd5d4573
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x4F791437
 	Offset: 0x1C38
 	Size: 0x24C
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_bd5d4573()
+function private function_bd5d4573()
 {
 	self.fullhealth = self.health;
 	self.highlyawareradius = 350;
@@ -393,14 +410,14 @@ private function function_bd5d4573()
 
 /*
 	Name: function_98f178fc
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0xA4E9E21A
 	Offset: 0x1E90
 	Size: 0xE0
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_98f178fc(entity)
+function private function_98f178fc(entity)
 {
 	entity endon(#"death");
 	while(true)
@@ -419,39 +436,39 @@ private function function_98f178fc(entity)
 
 /*
 	Name: keepercompaniondelaymovement
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x264D6D31
 	Offset: 0x1F78
 	Size: 0x44
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function keepercompaniondelaymovement(entity)
+function private keepercompaniondelaymovement(entity)
 {
 	entity pathmode("move delayed", 0, randomfloatrange(1, 2));
 }
 
 /*
 	Name: _isvalidplayer
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0xD818C886
 	Offset: 0x1FC8
 	Size: 0xAE
 	Parameters: 1
 	Flags: Private
 */
-private function _isvalidplayer(player)
+function private _isvalidplayer(player)
 {
 	if(!isdefined(player) || !isalive(player) || !isplayer(player) || player.sessionstate == "spectator" || player.sessionstate == "intermission" || player laststand::player_is_in_laststand() || player.ignoreme)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
 	Name: keepercompanionshouldtraverse
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x8719B416
 	Offset: 0x2080
 	Size: 0x28
@@ -462,39 +479,39 @@ function keepercompanionshouldtraverse(entity)
 {
 	if(isdefined(entity.traversestartnode))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
 	Name: keepercompanionshouldmove
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x99305865
 	Offset: 0x20B0
 	Size: 0x2E
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function keepercompanionshouldmove(entity)
+function private keepercompanionshouldmove(entity)
 {
 	if(!entity haspath())
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
 	Name: function_469c9511
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x9FE8A9B3
 	Offset: 0x20E8
 	Size: 0x1DC
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_469c9511(entity)
+function private function_469c9511(entity)
 {
 	entity endon(#"death");
 	entity endon(#"outro");
@@ -524,14 +541,14 @@ private function function_469c9511(entity)
 
 /*
 	Name: keepercompanionmovementservice
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x735727BB
 	Offset: 0x22D0
 	Size: 0xA1C
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function keepercompanionmovementservice(entity)
+function private keepercompanionmovementservice(entity)
 {
 	if(isdefined(level.var_bfd9ed83) && (isdefined(level.var_bfd9ed83.eligible_leader) && level.var_bfd9ed83.eligible_leader))
 	{
@@ -588,7 +605,7 @@ private function keepercompanionmovementservice(entity)
 			}
 		}
 	}
-	foreach(var_819284ac, player in level.players)
+	foreach(player in level.players)
 	{
 		if(player laststand::player_is_in_laststand() && entity.reviving_a_player === 0 && player.revivetrigger.beingrevived !== 1)
 		{
@@ -611,7 +628,7 @@ private function keepercompanionmovementservice(entity)
 		{
 			entity.var_34a9f1ad = 0;
 		}
-		foreach(var_b31f4172, powerup in level.active_powerups)
+		foreach(powerup in level.active_powerups)
 		{
 			if(isinarray(entity.var_fb400bf7, powerup.powerup_name))
 			{
@@ -645,7 +662,7 @@ private function keepercompanionmovementservice(entity)
 		{
 			enemies = getaiteamarray(level.zombie_team);
 			validenemies = [];
-			foreach(var_dfc9d7c2, enemy in enemies)
+			foreach(enemy in enemies)
 			{
 				if(isdefined(enemy.completed_emerging_into_playable_area) && enemy.completed_emerging_into_playable_area && entity cansee(entity.leader, 3000) && util::within_fov(entity.leader.origin, entity.leader.angles, enemy.origin, cos(70)))
 				{
@@ -670,14 +687,14 @@ private function keepercompanionmovementservice(entity)
 
 /*
 	Name: get_average_origin
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x894FE74D
 	Offset: 0x2CF8
 	Size: 0x114
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function get_average_origin(entities, var_d4653ed3)
+function private get_average_origin(entities, var_d4653ed3)
 {
 	/#
 		assert(isarray(entities));
@@ -697,14 +714,14 @@ private function get_average_origin(entities, var_d4653ed3)
 
 /*
 	Name: function_34117adf
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0xEC0765FC
 	Offset: 0x2E18
 	Size: 0x60
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_34117adf(var_5935e1b9)
+function private function_34117adf(var_5935e1b9)
 {
 	self endon(#"death");
 	self.var_53ce2a4e = 1;
@@ -716,14 +733,14 @@ private function function_34117adf(var_5935e1b9)
 
 /*
 	Name: teleport_to_location
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0xF89FB7BC
 	Offset: 0x2E80
 	Size: 0x128
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function teleport_to_location(position, angles)
+function private teleport_to_location(position, angles)
 {
 	self endon(#"death");
 	self endon(#"outro");
@@ -742,14 +759,14 @@ private function teleport_to_location(position, angles)
 
 /*
 	Name: function_3463b8c2
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0xADE354E2
 	Offset: 0x2FB0
 	Size: 0x174
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_3463b8c2(var_ee6ad78e)
+function private function_3463b8c2(var_ee6ad78e)
 {
 	self endon(#"death");
 	self endon(#"outro");
@@ -768,14 +785,14 @@ private function function_3463b8c2(var_ee6ad78e)
 
 /*
 	Name: pick_new_movement_point
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x6DA9A7B7
 	Offset: 0x3130
 	Size: 0x1DC
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function pick_new_movement_point()
+function private pick_new_movement_point()
 {
 	queryresult = positionquery_source_navigation(self.companion_anchor_point, 96, 256, 48, 20, self);
 	if(queryresult.data.size)
@@ -808,14 +825,14 @@ private function pick_new_movement_point()
 
 /*
 	Name: function_ab299a53
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0xC61FF39C
 	Offset: 0x3318
 	Size: 0xB8
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_ab299a53(parasite)
+function private function_ab299a53(parasite)
 {
 	point = self;
 	height_difference = abs(point.origin[2] - parasite.origin[2]);
@@ -825,7 +842,7 @@ private function function_ab299a53(parasite)
 
 /*
 	Name: function_95adf61c
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x189D5488
 	Offset: 0x33D8
 	Size: 0x4EC
@@ -908,7 +925,7 @@ function function_95adf61c(player)
 
 /*
 	Name: function_f95febaf
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x77DCBF4
 	Offset: 0x38D0
 	Size: 0xD8
@@ -934,7 +951,7 @@ function function_f95febaf(player)
 
 /*
 	Name: function_703fda6d
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x69A9E703
 	Offset: 0x39B0
 	Size: 0x12A
@@ -948,7 +965,7 @@ function function_703fda6d(player)
 	self.var_b46b4189 = undefined;
 	if(!isdefined(player))
 	{
-		foreach(var_9e8dd350, player in level.players)
+		foreach(player in level.players)
 		{
 			player.var_c35d3027 = 0;
 			player clientfield::set("being_keeper_revived", 0);
@@ -964,14 +981,14 @@ function function_703fda6d(player)
 
 /*
 	Name: keepercompanionkeepsupdatemovementmode
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x4A842122
 	Offset: 0x3AE8
 	Size: 0xC4
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function keepercompanionkeepsupdatemovementmode(entity)
+function private keepercompanionkeepsupdatemovementmode(entity)
 {
 	var_ef42515b = 90000;
 	var_1be8672c = 90000;
@@ -988,14 +1005,14 @@ private function keepercompanionkeepsupdatemovementmode(entity)
 
 /*
 	Name: function_36af0313
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x82EE78BD
 	Offset: 0x3BB8
 	Size: 0x324
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_36af0313(entity, var_109b8552)
+function private function_36af0313(entity, var_109b8552)
 {
 	entity endon(#"death");
 	entity notify(#"hash_36af0313");
@@ -1057,14 +1074,14 @@ private function function_36af0313(entity, var_109b8552)
 
 /*
 	Name: function_5d2ab113
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0xA8AAAE53
 	Offset: 0x3EE8
 	Size: 0x90
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_5d2ab113(entity)
+function private function_5d2ab113(entity)
 {
 	/#
 		recordenttext("", self, (1, 0, 0), "");
@@ -1077,18 +1094,18 @@ private function function_5d2ab113(entity)
 
 /*
 	Name: function_87727b5b
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x2F436FD2
 	Offset: 0x3F80
 	Size: 0x27E
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_87727b5b(entity)
+function private function_87727b5b(entity)
 {
 	enemies = getaiarray();
 	validenemies = [];
-	foreach(var_84d7c5bb, enemy in enemies)
+	foreach(enemy in enemies)
 	{
 		if(enemy.team != entity.team && (entity cansee(enemy) || distancesquared(entity.origin, enemy.origin) <= (350 * 350)))
 		{
@@ -1112,7 +1129,7 @@ private function function_87727b5b(entity)
 		}
 	}
 	/#
-		foreach(var_f54b35cc, enemy in validenemies)
+		foreach(enemy in validenemies)
 		{
 			recordline(entity.origin, enemy.origin, (0, 1, 0), "", entity);
 		}
@@ -1122,14 +1139,14 @@ private function function_87727b5b(entity)
 
 /*
 	Name: keeperupdatethunderwallattackparams
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0xF8CFC967
 	Offset: 0x4208
 	Size: 0x3A6
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function keeperupdatethunderwallattackparams(entity)
+function private keeperupdatethunderwallattackparams(entity)
 {
 	var_9540bf56 = 1;
 	if(isdefined(entity.var_92aa697) && entity.var_92aa697)
@@ -1159,17 +1176,20 @@ private function keeperupdatethunderwallattackparams(entity)
 		{
 			entity.var_8cf1ff79 = undefined;
 		}
-		else if(gettime() >= entity.var_3e807a19)
-		{
-			if(var_a59136fc.size)
-			{
-				entity.var_8cf1ff79 = get_average_origin(var_a59136fc, entity.origin[2]);
-				var_a943c5d0 = 1;
-			}
-		}
 		else
 		{
-			entity.var_8cf1ff79 = get_average_origin(var_a59136fc, entity.origin[2]);
+			if(gettime() >= entity.var_3e807a19)
+			{
+				if(var_a59136fc.size)
+				{
+					entity.var_8cf1ff79 = get_average_origin(var_a59136fc, entity.origin[2]);
+					var_a943c5d0 = 1;
+				}
+			}
+			else
+			{
+				entity.var_8cf1ff79 = get_average_origin(var_a59136fc, entity.origin[2]);
+			}
 		}
 	}
 	if(!var_9540bf56)
@@ -1195,33 +1215,36 @@ private function keeperupdatethunderwallattackparams(entity)
 				cooldowntime = entity.var_3e807a19;
 			}
 		}
-		else if(var_a59136fc.size >= 3)
-		{
-			var_109b8552 = "combo";
-			cooldowntime = entity.var_733ed347;
-		}
 		else
 		{
-			return 0;
+			if(var_a59136fc.size >= 3)
+			{
+				var_109b8552 = "combo";
+				cooldowntime = entity.var_733ed347;
+			}
+			else
+			{
+				return false;
+			}
 		}
 		if(gettime() >= cooldowntime)
 		{
 			function_36af0313(entity, var_109b8552);
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
 	Name: keepercompanionupdateleader
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x7E623F34
 	Offset: 0x45B8
 	Size: 0x7C
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function keepercompanionupdateleader(entity)
+function private keepercompanionupdateleader(entity)
 {
 	if(!entity.reviving_a_player)
 	{
@@ -1234,14 +1257,14 @@ private function keepercompanionupdateleader(entity)
 
 /*
 	Name: define_new_leader
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x1A58401A
 	Offset: 0x4640
 	Size: 0x17E
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function define_new_leader()
+function private define_new_leader()
 {
 	if(isdefined(level.var_bfd9ed83) && (isdefined(level.var_bfd9ed83.eligible_leader) && level.var_bfd9ed83.eligible_leader))
 	{
@@ -1258,7 +1281,7 @@ private function define_new_leader()
 		}
 		else
 		{
-			foreach(var_c781cec6, potential_leader in a_potential_leaders)
+			foreach(potential_leader in a_potential_leaders)
 			{
 				dist = pathdistance(self.origin, potential_leader.origin);
 				if(isdefined(dist) && dist < closest_distance)
@@ -1273,17 +1296,17 @@ private function define_new_leader()
 
 /*
 	Name: get_potential_leaders
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0xA7237BE6
 	Offset: 0x47C8
 	Size: 0x122
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function get_potential_leaders(companion)
+function private get_potential_leaders(companion)
 {
 	a_potential_leaders = [];
-	foreach(var_e9ad60f2, player in level.players)
+	foreach(player in level.players)
 	{
 		if(!isdefined(player.eligible_leader))
 		{
@@ -1299,7 +1322,7 @@ private function get_potential_leaders(companion)
 
 /*
 	Name: function_7cbb0165
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x6495F33C
 	Offset: 0x48F8
 	Size: 0xC
@@ -1312,7 +1335,7 @@ function function_7cbb0165(entity)
 
 /*
 	Name: function_c6326468
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x57B7DC2D
 	Offset: 0x4910
 	Size: 0x2C
@@ -1326,7 +1349,7 @@ function function_c6326468(entity)
 
 /*
 	Name: function_ec3b8737
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x7DB7B7C5
 	Offset: 0x4948
 	Size: 0x2C
@@ -1340,7 +1363,7 @@ function function_ec3b8737(entity)
 
 /*
 	Name: function_86b6a4a8
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x97F03172
 	Offset: 0x4980
 	Size: 0x2C
@@ -1354,7 +1377,7 @@ function function_86b6a4a8(entity)
 
 /*
 	Name: function_68cd1247
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x2418A580
 	Offset: 0x49B8
 	Size: 0x148
@@ -1381,14 +1404,14 @@ function function_68cd1247(entity, var_e54db1ed)
 
 /*
 	Name: function_5c472d67
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x1E4C371C
 	Offset: 0x4B08
 	Size: 0x46C
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function function_5c472d67(entity, var_4fd6352b, var_e54db1ed)
+function private function_5c472d67(entity, var_4fd6352b, var_e54db1ed)
 {
 	var_9b627b75 = blackboard::getblackboardattribute(self, "_keeper_protector_attack_type");
 	var_9357f4f4 = 500;
@@ -1421,7 +1444,7 @@ private function function_5c472d67(entity, var_4fd6352b, var_e54db1ed)
 		fov = cos(60);
 	}
 	entity.var_13833827 = [];
-	foreach(var_66b1c56c, zombie in zombies)
+	foreach(zombie in zombies)
 	{
 		if(!isdefined(zombie) || !isalive(zombie))
 		{
@@ -1483,40 +1506,22 @@ function __destructor()
 {
 }
 
-#namespace namespace_6d577909;
-
-/*
-	Name: function_78f8bb8
-	Namespace: namespace_6d577909
-	Checksum: 0x38421D92
-	Offset: 0x4FC0
-	Size: 0x86
-	Parameters: 0
-	Flags: AutoExec, Private
-*/
-private autoexec function function_78f8bb8()
-{
-	classes.var_78f8bb8[0] = spawnstruct();
-	classes.var_78f8bb8[0].__vtable[1606033458] = &namespace_78f8bb8::__destructor;
-	classes.var_78f8bb8[0].__vtable[-1690805083] = &namespace_78f8bb8::__constructor;
-}
+#namespace keepercompanionbehavior;
 
 /*
 	Name: function_84e1787e
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0xCF5D120D
 	Offset: 0x5050
 	Size: 0x11C
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_84e1787e(entity, ai)
+function private function_84e1787e(entity, ai)
 {
 	if(!isdefined(ai.var_78f8bb8))
 	{
-		object = new var_78f8bb8();
-		[[ object ]]->__constructor();
-		ai.var_78f8bb8 = object;
+		ai.var_78f8bb8 = new var_78f8bb8();
 	}
 	/#
 		assert(isdefined(ai.var_78f8bb8));
@@ -1528,21 +1533,21 @@ private function function_84e1787e(entity, ai)
 	}
 	if(ai.var_78f8bb8.var_8e6eac66 >= 200)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
 	Name: function_e620963b
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x66AD8144
 	Offset: 0x5178
 	Size: 0x4E4
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function function_e620963b(entity, ai, var_4fd6352b, var_94f0027d, var_e54db1ed)
+function private function_e620963b(entity, ai, var_4fd6352b, var_94f0027d, var_e54db1ed)
 {
 	if(!isdefined(ai) || !isalive(ai))
 	{
@@ -1569,34 +1574,40 @@ private function function_e620963b(entity, ai, var_4fd6352b, var_94f0027d, var_e
 			}
 		}
 	}
-	else if(ai.archetype == "mechz")
+	else
 	{
-		if(function_84e1787e(entity, ai))
+		if(ai.archetype == "mechz")
 		{
-			if(isdefined(ai.thundergun_fling_func))
+			if(function_84e1787e(entity, ai))
 			{
-				ai thread [[ai.thundergun_fling_func]](entity);
+				if(isdefined(ai.thundergun_fling_func))
+				{
+					ai thread [[ai.thundergun_fling_func]](entity);
+				}
+			}
+			else
+			{
+				/#
+					assert(isdefined(ai.var_78f8bb8));
+				#/
+				if(isdefined(ai.canstun) && ai.canstun && gettime() >= ai.var_78f8bb8.var_54c7425)
+				{
+					ai.reactstun = 1;
+					ai.var_78f8bb8.var_54c7425 = gettime() + randomintrange(3000, 5000);
+				}
 			}
 		}
 		else
 		{
-			/#
-				assert(isdefined(ai.var_78f8bb8));
-			#/
-			if(isdefined(ai.canstun) && ai.canstun && gettime() >= ai.var_78f8bb8.var_54c7425)
+			if(var_e54db1ed == "attack_up")
 			{
-				ai.reactstun = 1;
-				ai.var_78f8bb8.var_54c7425 = gettime() + randomintrange(3000, 5000);
+				ai dodamage(20000, var_4fd6352b, entity);
+			}
+			else
+			{
+				ai dodamage(17000, var_4fd6352b, entity);
 			}
 		}
-	}
-	else if(var_e54db1ed == "attack_up")
-	{
-		ai dodamage(20000, var_4fd6352b, entity);
-	}
-	else
-	{
-		ai dodamage(17000, var_4fd6352b, entity);
 	}
 	if(!isalive(ai))
 	{
@@ -1607,7 +1618,7 @@ private function function_e620963b(entity, ai, var_4fd6352b, var_94f0027d, var_e
 			arrayremovevalue(entity.leader.var_71148446, ai.archetype);
 			entity.leader notify(#"hash_af442f7c");
 		}
-		foreach(var_69c68332, player in level.players)
+		foreach(player in level.players)
 		{
 			if(player laststand::player_is_in_laststand())
 			{
@@ -1628,14 +1639,14 @@ private function function_e620963b(entity, ai, var_4fd6352b, var_94f0027d, var_e
 
 /*
 	Name: function_cd2f0f8a
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0x3E1C2840
 	Offset: 0x5668
 	Size: 0xFC
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function function_cd2f0f8a(entity, var_4fd6352b, var_e54db1ed)
+function private function_cd2f0f8a(entity, var_4fd6352b, var_e54db1ed)
 {
 	if(!isdefined(level.var_fb631584))
 	{
@@ -1655,14 +1666,14 @@ private function function_cd2f0f8a(entity, var_4fd6352b, var_e54db1ed)
 
 /*
 	Name: function_5250c5dd
-	Namespace: namespace_6d577909
+	Namespace: keepercompanionbehavior
 	Checksum: 0xD8E9E6E8
 	Offset: 0x5770
 	Size: 0x3C
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_5250c5dd()
+function private function_5250c5dd()
 {
 	level waittill(#"intermission");
 	wait(5.25);

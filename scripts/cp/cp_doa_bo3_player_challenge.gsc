@@ -120,7 +120,7 @@ function function_31c377e(room)
 	room.glow[room.glow.size] = glow;
 	barricades = struct::get_array(room.name + "_destructible", "targetname");
 	count = 0;
-	foreach(var_e3bb182, item in barricades)
+	foreach(item in barricades)
 	{
 		blocker = spawn("script_model", item.origin);
 		blocker.targetname = "blockerSpiral";
@@ -137,16 +137,16 @@ function function_31c377e(room)
 		}
 	}
 	var_2b8e59af = getentarray(room.name + "_barrier_trigger", "targetname");
-	foreach(var_316cf841, trigger in var_2b8e59af)
+	foreach(trigger in var_2b8e59af)
 	{
 		trigger thread triggernotify();
 	}
 	rewards = struct::get_array(room.name + "_challenge_reward");
-	foreach(var_99630e9d, item in rewards)
+	foreach(item in rewards)
 	{
 		doa_pickups::function_3238133b(item.script_noteworthy, item.origin, 1, 0);
 	}
-	foreach(var_e2e9655e, player in getplayers())
+	foreach(player in getplayers())
 	{
 		player thread function_4c171b8e();
 	}
@@ -219,14 +219,14 @@ function function_8e0e22bb(room)
 {
 	level endon(#"hash_16154574");
 	level endon(#"hash_d1f5acf7");
-	foreach(var_8f437e80, player in getplayers())
+	foreach(player in getplayers())
 	{
 		player freezecontrols(1);
 		player.room = room;
 	}
 	level waittill(#"hash_97276c43");
 	level flag::set("doa_challenge_running");
-	foreach(var_811f8866, player in getplayers())
+	foreach(player in getplayers())
 	{
 		player freezecontrols(0);
 		player notify(#"hash_d28ba89d");
@@ -266,7 +266,7 @@ function function_47a3686b(room)
 function function_7823dbb8(room)
 {
 	axis = getaiteamarray("axis");
-	foreach(var_f055c3f7, guy in axis)
+	foreach(guy in axis)
 	{
 		guy kill();
 	}
@@ -284,7 +284,7 @@ function function_7823dbb8(room)
 function function_eee6e911(room)
 {
 	ents = getentarray(room.name + "_blocker", "targetname");
-	foreach(var_b0e0c615, ent in ents)
+	foreach(ent in ents)
 	{
 		ent delete();
 	}
@@ -294,7 +294,7 @@ function function_eee6e911(room)
 		level.doa.teleporter delete();
 		level.doa.teleporter = undefined;
 	}
-	foreach(var_e26d82db, glow in room.glow)
+	foreach(glow in room.glow)
 	{
 		if(isdefined(glow))
 		{
@@ -315,7 +315,7 @@ function function_eee6e911(room)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_533483a3(room)
+function private function_533483a3(room)
 {
 	level endon(#"hash_16154574");
 	level endon(#"hash_d1f5acf7");
@@ -351,17 +351,23 @@ private function function_533483a3(room)
 					{
 						ai.zombie_move_speed = "super_sprint";
 					}
-					else if(roll < 45)
-					{
-						ai.zombie_move_speed = "sprint";
-					}
-					else if(roll < 80)
-					{
-						ai.zombie_move_speed = "run";
-					}
 					else
 					{
-						ai.zombie_move_speed = "walk";
+						if(roll < 45)
+						{
+							ai.zombie_move_speed = "sprint";
+						}
+						else
+						{
+							if(roll < 80)
+							{
+								ai.zombie_move_speed = "run";
+							}
+							else
+							{
+								ai.zombie_move_speed = "walk";
+							}
+						}
 					}
 					ai.health = 500 + var_1db14d86;
 					ai thread function_c0808a91();
@@ -389,7 +395,7 @@ function function_c0808a91()
 	{
 		if(isdefined(self.players_viscache))
 		{
-			foreach(var_c50aeb12, player in getplayers())
+			foreach(player in getplayers())
 			{
 				idx = (isdefined(player.entnum) ? player.entnum : player getentitynumber());
 				self.players_viscache[idx] = gettime() + 1000;
@@ -472,7 +478,7 @@ function function_6aa91f48(room)
 	room.host_migration = &function_c2b99e74;
 	level thread function_246d3adb(room);
 	level thread function_db531f2f(room);
-	foreach(var_261b334a, player in getplayers())
+	foreach(player in getplayers())
 	{
 		player thread function_b6c25c3c();
 	}
@@ -534,7 +540,7 @@ function function_246d3adb(room)
 	}
 	var_4c36e42e = 0;
 	room.var_e01f23f0 = array::remove_undefined(room.var_e01f23f0);
-	foreach(var_4e9c4bc4, gem in room.var_e01f23f0)
+	foreach(gem in room.var_e01f23f0)
 	{
 		if(isdefined(gem))
 		{
@@ -548,7 +554,7 @@ function function_246d3adb(room)
 		}
 	}
 	level waittill(#"hash_c8bd32b9");
-	foreach(var_6c62ab1c, gem in room.var_e01f23f0)
+	foreach(gem in room.var_e01f23f0)
 	{
 		if(isdefined(gem) && isdefined(gem.trigger))
 		{
@@ -674,13 +680,13 @@ function function_ee260997(room)
 */
 function function_5f0b67a9(room)
 {
-	foreach(var_da7a0607, player in getplayers())
+	foreach(player in getplayers())
 	{
 		player freezecontrols(1);
 	}
 	level waittill(#"hash_c8bd32b9");
 	level flag::set("doa_challenge_running");
-	foreach(var_2bcecc94, player in getplayers())
+	foreach(player in getplayers())
 	{
 		player freezecontrols(0);
 	}
@@ -742,7 +748,7 @@ function function_f1915ffb(room)
 	doa_pickups::function_c1869ec8();
 	level thread doa_utility::killallenemy();
 	players = getplayers();
-	foreach(var_abf93470, player in players)
+	foreach(player in players)
 	{
 		if(!isdefined(player))
 		{
@@ -894,7 +900,7 @@ function function_c2b99e74(room)
 	/#
 		doa_utility::debugmsg("");
 	#/
-	foreach(var_c2fe4bce, player in getplayers())
+	foreach(player in getplayers())
 	{
 		player freezecontrols(1);
 		if(isdefined(player.doa.vehicle) && player.doa.vehicle getvehicleowner() == player)
@@ -908,7 +914,7 @@ function function_c2b99e74(room)
 		}
 	}
 	util::wait_network_frame();
-	foreach(var_53c8103d, player in getplayers())
+	foreach(player in getplayers())
 	{
 		if(isdefined(player.doa.vehicle))
 		{
@@ -1042,7 +1048,7 @@ function function_ba487e2a(room)
 	level thread function_36c315b();
 	level thread function_e812f929();
 	level clientfield::set("set_ui_GlobalGPR0", room.var_b57e2384);
-	foreach(var_f4a42101, player in getplayers())
+	foreach(player in getplayers())
 	{
 		player thread function_14e75d7a();
 	}
@@ -1062,14 +1068,14 @@ function function_ba487e2a(room)
 */
 function function_f14ef72f(room)
 {
-	foreach(var_3a6ea531, player in getplayers())
+	foreach(player in getplayers())
 	{
 		player freezecontrols(1);
 		player.room = room;
 	}
 	level waittill(#"hash_7b0c2638");
 	level flag::set("doa_challenge_running");
-	foreach(var_30afe1eb, player in getplayers())
+	foreach(player in getplayers())
 	{
 		player freezecontrols(0);
 	}
@@ -1191,7 +1197,7 @@ function function_ce5fc0d(room)
 	level thread doa_utility::killallenemy();
 	doa_utility::function_c157030a();
 	waittillframeend();
-	foreach(var_12d05680, player in getplayers())
+	foreach(player in getplayers())
 	{
 		player notify(#"hash_7c5410c4");
 		if(isdefined(player.doa))
@@ -1215,7 +1221,7 @@ function function_ce5fc0d(room)
 	}
 	spots = struct::get_array("redins_pickup_location");
 	level notify(#"ro");
-	foreach(var_79326db2, spot in spots)
+	foreach(spot in spots)
 	{
 		if(isdefined(spot.gem))
 		{
@@ -1266,7 +1272,7 @@ function function_3ed913b4(room)
 	level endon(#"hash_d1f5acf7");
 	level endon(#"hash_16154574");
 	var_e0762056 = getentarray("redins_trigger_lap_latch", "targetname");
-	foreach(var_75a9437, trigger in var_e0762056)
+	foreach(trigger in var_e0762056)
 	{
 		trigger thread function_c218114a();
 	}
@@ -1276,7 +1282,7 @@ function function_3ed913b4(room)
 	while(!isdefined(winner))
 	{
 		players = getplayers();
-		foreach(var_88c32e0c, player in players)
+		foreach(player in players)
 		{
 			if(!isdefined(player.doa) || !isdefined(player.doa.vehicle))
 			{
@@ -1339,7 +1345,7 @@ function function_3ed913b4(room)
 		}
 		wait(0.1);
 	}
-	foreach(var_44fa544b, player in getplayers())
+	foreach(player in getplayers())
 	{
 		if(isdefined(player.doa.vehicle))
 		{
@@ -1513,7 +1519,7 @@ function function_e812f929()
 	level endon(#"hash_276164a7");
 	level endon(#"hash_d1f5acf7");
 	spots = struct::get_array("redins_pickup_location");
-	foreach(var_5a21ce7c, spot in spots)
+	foreach(spot in spots)
 	{
 		spot thread function_fb199a7c();
 	}
@@ -1569,7 +1575,7 @@ function function_41ecdf7e(triggers)
 	while(true)
 	{
 		players = getplayers();
-		foreach(var_8b5bf5a9, player in players)
+		foreach(player in players)
 		{
 			if(!isdefined(player.doa))
 			{
@@ -1584,7 +1590,7 @@ function function_41ecdf7e(triggers)
 				continue;
 			}
 			touching = 0;
-			foreach(var_62dadd2f, trigger in triggers)
+			foreach(trigger in triggers)
 			{
 				if(truck istouching(trigger))
 				{
@@ -1675,7 +1681,7 @@ function function_dae418ed()
 	}
 	waittillframeend();
 	startpoints = struct::get_array("truck_soccer_player_spawnpoint");
-	foreach(var_a8e8eb7b, point in startpoints)
+	foreach(point in startpoints)
 	{
 		if(self.entnum == int(point.script_noteworthy))
 		{
@@ -1731,17 +1737,17 @@ function function_c7e4d911(room)
 	room.host_migration = &function_c2b99e74;
 	room.var_677f63c8 = [];
 	room.var_efbfafed = 0;
-	foreach(var_13f2719e, player in getplayers())
+	foreach(player in getplayers())
 	{
 		player thread function_dae418ed();
 	}
 	triggers = getentarray("truck_soccerr_goal_trigger", "targetname");
-	foreach(var_a1eb0263, trigger in triggers)
+	foreach(trigger in triggers)
 	{
 		trigger thread function_71be5ae5(room);
 	}
 	triggers = getentarray("truck_soccer_blowTrigger", "targetname");
-	foreach(var_955b0b73, trigger in triggers)
+	foreach(trigger in triggers)
 	{
 		trigger thread function_5dac2dae(room);
 	}
@@ -1867,7 +1873,7 @@ function function_ebb572b(player)
 	}
 	items = level doa_pickups::spawnubertreasure(self.origin, var_516eed4b, 2, 0, 0, 3, gem);
 	wait(1);
-	foreach(var_cef08dab, item in items)
+	foreach(item in items)
 	{
 		if(!isdefined(item))
 		{
@@ -1892,7 +1898,7 @@ function function_ebb572b(player)
 */
 function function_db9097e4(room)
 {
-	foreach(var_b8bce921, player in self.var_f1e29613)
+	foreach(player in self.var_f1e29613)
 	{
 		if(!isdefined(player))
 		{
@@ -1950,7 +1956,7 @@ function function_60fcd122(room, goaltrigger)
 		next = struct::get(next.target, "targetname");
 	}
 	idx = 1;
-	foreach(var_6f60f069, glow in goaltrigger.posts)
+	foreach(glow in goaltrigger.posts)
 	{
 		glow.org = spawn("script_model", glow.origin);
 		glow.org.targetname = "glowOrg";
@@ -1969,13 +1975,13 @@ function function_60fcd122(room, goaltrigger)
 		{
 			if(goaltrigger.var_f1e29613.size != lastcount)
 			{
-				foreach(var_945ca520, glow in goaltrigger.posts)
+				foreach(glow in goaltrigger.posts)
 				{
 					if(!isdefined(glow.org))
 					{
 						continue;
 					}
-					foreach(var_5c7a620c, color in goaltrigger.colors)
+					foreach(color in goaltrigger.colors)
 					{
 						glow.org thread namespace_eaa992c::turnofffx("gem_trail_" + color);
 					}
@@ -1988,13 +1994,13 @@ function function_60fcd122(room, goaltrigger)
 		if(goaltrigger.var_f1e29613.size != lastcount)
 		{
 			count = 0;
-			foreach(var_dd906648, glow in goaltrigger.posts)
+			foreach(glow in goaltrigger.posts)
 			{
 				if(!isdefined(glow.org))
 				{
 					continue;
 				}
-				foreach(var_759a4fec, color in goaltrigger.colors)
+				foreach(color in goaltrigger.colors)
 				{
 					glow.org thread namespace_eaa992c::turnofffx("gem_trail_" + color);
 				}
@@ -2006,7 +2012,7 @@ function function_60fcd122(room, goaltrigger)
 				count--;
 			}
 			idx = 0;
-			foreach(var_3f9ea19b, glow in goaltrigger.posts)
+			foreach(glow in goaltrigger.posts)
 			{
 				if(!isdefined(glow.org))
 				{
@@ -2059,13 +2065,16 @@ function function_5dac2dae(room)
 			guy.launched = 1;
 			guy thread doa_utility::function_ba30b321(0.2);
 		}
-		else if(isdefined(guy.var_6977f7b9) && guy.var_6977f7b9)
+		else
 		{
-			guy launchvehicle((0, 0, getdvarint("scr_doa_chicken_bowl_blow_force", 5)), (0, 0, 0), 1);
-		}
-		else if(isvehicle(guy))
-		{
-			guy launchvehicle((0, 0, getdvarint("scr_doa_chicken_bowl_blow_force", 50)), (0, 0, 0), 1);
+			if(isdefined(guy.var_6977f7b9) && guy.var_6977f7b9)
+			{
+				guy launchvehicle((0, 0, getdvarint("scr_doa_chicken_bowl_blow_force", 5)), (0, 0, 0), 1);
+			}
+			else if(isvehicle(guy))
+			{
+				guy launchvehicle((0, 0, getdvarint("scr_doa_chicken_bowl_blow_force", 50)), (0, 0, 0), 1);
+			}
 		}
 	}
 }
@@ -2107,7 +2116,7 @@ function function_71be5ae5(room)
 	level thread function_60fcd122(room, self);
 	while(true)
 	{
-		foreach(var_eb67756e, var_29833f21 in room.var_677f63c8)
+		foreach(var_29833f21 in room.var_677f63c8)
 		{
 			if(isdefined(var_29833f21) && var_29833f21 istouching(self))
 			{
@@ -2117,7 +2126,7 @@ function function_71be5ae5(room)
 		var_9365e303 = 0;
 		players = getplayers();
 		self.var_f1e29613 = [];
-		foreach(var_f14f5077, player in players)
+		foreach(player in players)
 		{
 			if(!isdefined(player))
 			{
@@ -2195,7 +2204,7 @@ function function_fd4f5419(room)
 */
 function function_2ea4cb82(room)
 {
-	foreach(var_f124f26e, player in getplayers())
+	foreach(player in getplayers())
 	{
 		player freezecontrols(1);
 		player.room = room;
@@ -2206,7 +2215,7 @@ function function_2ea4cb82(room)
 	}
 	level waittill(#"hash_130fa748");
 	level flag::set("doa_challenge_running");
-	foreach(var_e99237a0, player in getplayers())
+	foreach(player in getplayers())
 	{
 		player freezecontrols(0);
 		player.room = room;
@@ -2250,11 +2259,11 @@ function function_2ea4cb82(room)
 function function_baa38e65(room)
 {
 	triggers = getentarray("truck_soccerr_goal_trigger", "targetname");
-	foreach(var_7b7788f3, trigger in triggers)
+	foreach(trigger in triggers)
 	{
 		if(isdefined(trigger.posts))
 		{
-			foreach(var_17940fd2, post in trigger.posts)
+			foreach(post in trigger.posts)
 			{
 				if(isdefined(post.org))
 				{
@@ -2264,7 +2273,7 @@ function function_baa38e65(room)
 		}
 	}
 	triggers = getentarray("truck_soccer_blowTrigger", "targetname");
-	foreach(var_5ddb87a4, trigger in triggers)
+	foreach(trigger in triggers)
 	{
 		if(isdefined(trigger.org))
 		{
@@ -2333,7 +2342,7 @@ function function_b3939e94(room)
 	doa_pickups::function_c1869ec8();
 	level thread doa_utility::killallenemy();
 	function_baa38e65(room);
-	foreach(var_dadeeea5, player in getplayers())
+	foreach(player in getplayers())
 	{
 		player notify(#"hash_7c5410c4");
 		if(isdefined(player) && isdefined(player.doa))
@@ -2352,7 +2361,7 @@ function function_b3939e94(room)
 		}
 	}
 	level.doa.var_bc9b7c71 = room.var_e5c8b9e7;
-	foreach(var_7cf1da9, egg in room.var_677f63c8)
+	foreach(egg in room.var_677f63c8)
 	{
 		if(isdefined(egg))
 		{
@@ -2444,7 +2453,7 @@ function function_c0485deb(def)
 	level.doa.var_99f9e71a["bottom"] = [];
 	level.doa.var_99f9e71a["right"] = [];
 	level.doa.var_99f9e71a["left"] = [];
-	foreach(var_fdff036e, cow in var_a558424)
+	foreach(cow in var_a558424)
 	{
 		level.doa.var_99f9e71a[cow.script_parameters][level.doa.var_99f9e71a[cow.script_parameters].size] = cow;
 	}
@@ -2536,7 +2545,7 @@ function function_caf96f2d()
 	while(true)
 	{
 		self animscripted("anim", self.origin, self.angles, self.animation);
-		self waittill_match(#"anim");
+		self waittillmatch(#"anim");
 	}
 }
 

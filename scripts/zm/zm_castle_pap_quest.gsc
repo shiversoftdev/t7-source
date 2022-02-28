@@ -28,7 +28,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_castle_pap_quest", &__init__, &__main__, undefined);
 }
@@ -227,7 +227,7 @@ function function_2209afdf()
 function function_5f17a55c()
 {
 	a_players = array::get_all_closest(self.origin, level.players, undefined, 4, 95);
-	foreach(var_9d10a9f0, e_player in a_players)
+	foreach(e_player in a_players)
 	{
 		e_player dodamage(e_player.health + 100, e_player.origin + vectorscale((0, 1, 0), 100));
 		if(self laststand::player_is_in_laststand())
@@ -241,7 +241,7 @@ function function_5f17a55c()
 		self.bleedout_time = 0.5;
 	}
 	a_ai_enemies = array::get_all_closest(self.origin, getaiteamarray(level.zombie_team), undefined, 40, 100);
-	foreach(var_584bda53, ai_zombie in a_ai_enemies)
+	foreach(ai_zombie in a_ai_enemies)
 	{
 		ai_zombie dodamage(ai_zombie.health + 100, ai_zombie.origin + vectorscale((0, 1, 0), 100));
 	}
@@ -423,7 +423,7 @@ function function_eb56512()
 	zm_pap_util::set_interaction_height(256);
 	level.var_94c82bf8 = [];
 	var_aa03df75 = struct::get_array("s_pap_location", "targetname");
-	foreach(var_bbe10ea, var_309749f1 in var_aa03df75)
+	foreach(var_309749f1 in var_aa03df75)
 	{
 		level.var_94c82bf8[var_309749f1.script_int] = var_309749f1;
 	}
@@ -467,7 +467,7 @@ function function_566e5eb4()
 {
 	var_cd9abb80 = getentarray(self.target, "targetname");
 	n_loc_index = 0;
-	foreach(var_f399f3e7, var_c790d258 in var_cd9abb80)
+	foreach(var_c790d258 in var_cd9abb80)
 	{
 		var_b9d22a4b = level.var_1c602ba8[n_loc_index];
 		n_loc_index++;
@@ -491,7 +491,7 @@ function function_566e5eb4()
 function function_335f66d5()
 {
 	wait(0.25);
-	foreach(var_2fb1e81, var_c790d258 in level.var_c9f5f61)
+	foreach(var_c790d258 in level.var_c9f5f61)
 	{
 		var_c790d258 delete();
 	}
@@ -517,7 +517,7 @@ function function_6591f9c7(var_b9d22a4b)
 	self.angles = var_5e73f984.angles;
 	str_scenedef = ("p7_fxanim_zm_castle_pap_part" + self.script_int) + "_arrive_bundle";
 	scene::play(str_scenedef, self);
-	foreach(var_ff243644, s_pap_location in level.var_1c602ba8)
+	foreach(s_pap_location in level.var_1c602ba8)
 	{
 		if(s_pap_location.script_noteworthy == var_b9d22a4b.script_noteworthy)
 		{
@@ -573,7 +573,7 @@ function function_99664e8()
 	if(level.var_e1ee8457 > 0)
 	{
 		self sethintstring(&"ZM_CASTLE_PAP_TP_UNAVAILABLE");
-		return 0;
+		return false;
 	}
 	if(self.stub.parent_struct.activated === 1)
 	{
@@ -585,18 +585,21 @@ function function_99664e8()
 		{
 			self sethintstring("");
 		}
-		else if(!isdefined(level.var_2eccab0d))
-		{
-			self sethintstring("");
-		}
 		else
 		{
-			self sethintstring(&"ZM_CASTLE_PAP_TP_AWAY");
+			if(!isdefined(level.var_2eccab0d))
+			{
+				self sethintstring("");
+			}
+			else
+			{
+				self sethintstring(&"ZM_CASTLE_PAP_TP_AWAY");
+			}
 		}
-		return 0;
+		return false;
 	}
 	self sethintstring(&"ZM_CASTLE_PAP_TP_ACTIVATE");
-	return 1;
+	return true;
 }
 
 /*
@@ -615,11 +618,11 @@ function detect_reentry()
 		{
 			if(self.var_8665ab89 == gettime())
 			{
-				return 1;
+				return true;
 			}
 		}
 		self.var_8665ab89 = gettime();
-		return 0;
+		return false;
 	#/
 }
 
@@ -660,17 +663,17 @@ function function_f04119b5(cmd)
 			{
 				if(level detect_reentry())
 				{
-					return 1;
+					return true;
 				}
 				level.var_1e4d46e3 = 10;
 				wait(1);
 				pap_machine = getent("", "");
 				level.var_54cd8d06 = level.var_1c602ba8[0];
 				array::thread_all(level.players, &function_b9cca08f, pap_machine);
-				return 1;
+				return true;
 			}
 		}
-		return 0;
+		return false;
 	#/
 }
 

@@ -42,7 +42,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_island_takeo_fight", &__init__, undefined, undefined);
 }
@@ -97,7 +97,7 @@ function function_a85ea965()
 	var_9f68aa5.v_off_pos = var_9f68aa5.origin + (vectorscale((-1, 0, 0), 32));
 	array::add(level.var_bbdc1f95.var_e7eb4096.var_7168c71c, var_9f68aa5);
 	var_d8ec11a1 = getentarray("vine_postule", "targetname");
-	foreach(var_832f6a13, var_fb97f73d in var_d8ec11a1)
+	foreach(var_fb97f73d in var_d8ec11a1)
 	{
 		var_fb97f73d.var_7117876c = var_fb97f73d.origin;
 		var_fb97f73d.v_off_pos = var_fb97f73d.origin + (vectorscale((-1, 0, 0), 32));
@@ -114,7 +114,7 @@ function function_a85ea965()
 	for(i = 1; i <= level.var_bbdc1f95.var_69943735.size; i++)
 	{
 		level.var_bbdc1f95.var_69943735[i].b_dead = 0;
-		foreach(var_582a2cf, var_fb97f73d in level.var_bbdc1f95.var_69943735[i].var_7168c71c)
+		foreach(var_fb97f73d in level.var_bbdc1f95.var_69943735[i].var_7168c71c)
 		{
 			var_fb97f73d function_269cf850(0);
 			var_fb97f73d thread function_9c58350b();
@@ -161,7 +161,7 @@ function function_9c58350b()
 	self.var_2340346c = 0;
 	while(!level flag::get("takeo_freed") && (!(isdefined(self.var_2340346c) && self.var_2340346c)))
 	{
-		self waittill(#"damage", n_damage, e_attacker, v_vector, v_point, str_means_of_death, var_c4fe462, var_e64d69f9, var_c04aef90, w_weapon);
+		self waittill(#"damage", n_damage, e_attacker, v_vector, v_point, str_means_of_death, str_string_1, str_string_2, str_string_3, w_weapon);
 		if(!self.takedamage)
 		{
 			continue;
@@ -241,7 +241,7 @@ function function_bf38b3c9(var_6c555b6c = 1, b_force = 0)
 		}
 		self thread scene::play(var_7814e8cc);
 		self.var_6c555b6c = var_6c555b6c;
-		foreach(var_743cfbdd, var_fb97f73d in self.var_7168c71c)
+		foreach(var_fb97f73d in self.var_7168c71c)
 		{
 			var_fb97f73d thread function_269cf850(var_6c555b6c);
 		}
@@ -332,7 +332,7 @@ function function_54d91dfb()
 {
 	self notify(#"hash_c8e5500f");
 	self.b_dead = 1;
-	foreach(var_6ae20026, var_fb97f73d in self.var_7168c71c)
+	foreach(var_fb97f73d in self.var_7168c71c)
 	{
 		var_fb97f73d function_269cf850(0);
 		var_fb97f73d notify(#"hash_c8e5500f");
@@ -382,7 +382,7 @@ function function_6bc98691()
 		str_idle = function_b64005e8(self.script_int, "idle_close");
 		self thread scene::play(str_idle);
 		self.b_dead = 0;
-		foreach(var_93e00c42, var_fb97f73d in self.var_7168c71c)
+		foreach(var_fb97f73d in self.var_7168c71c)
 		{
 			var_fb97f73d function_269cf850(1);
 			wait(0.35);
@@ -661,7 +661,7 @@ function function_ed01b73c(str_state, var_3fd94cb9)
 				level thread exploder::exploder("fxexp_621");
 				playrumbleonposition("zm_island_rumble_takeofight_end_quake", level.mdl_alttakeo.origin);
 				wait(5);
-				foreach(var_bfc95095, player in level.activeplayers)
+				foreach(player in level.activeplayers)
 				{
 					player giveachievement("ZM_ISLAND_COMPLETE_EE");
 				}
@@ -691,7 +691,7 @@ function function_2ea7cbca()
 	var_1f146770 = 0;
 	do
 	{
-		foreach(var_5e66a5e, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			if(player zm_zonemgr::entity_in_zone("zone_bunker_prison", 1))
 			{
@@ -726,7 +726,7 @@ function function_a49f3a92()
 	var_1bc21233 = 0;
 	while(var_1bc21233 != 1)
 	{
-		foreach(var_b2bc6603, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			if(zm_utility::is_player_valid(player) && distancesquared(player.origin, mdl_door.origin) <= var_fe3fa728)
 			{
@@ -791,7 +791,7 @@ function function_9f1fd468()
 function function_87949ac6()
 {
 	level endon(#"hash_ec7f92f6");
-	foreach(var_fc38d90e, var_9c458cf5 in level.var_bbdc1f95.var_69943735)
+	foreach(var_9c458cf5 in level.var_bbdc1f95.var_69943735)
 	{
 		var_9c458cf5 thread function_bf38b3c9(0);
 	}
@@ -918,7 +918,7 @@ function function_b96762d3()
 function function_628b98fd(var_db18d39e = 1)
 {
 	level endon(#"hash_ec7f92f6");
-	foreach(var_ebeb124e, var_9c458cf5 in level.var_bbdc1f95.var_69943735)
+	foreach(var_9c458cf5 in level.var_bbdc1f95.var_69943735)
 	{
 		var_9c458cf5 thread function_bf38b3c9(0);
 	}
@@ -1217,7 +1217,7 @@ function function_4814eea9()
 	level.var_bbdc1f95.var_e7eb4096 thread function_bf38b3c9(1, 1);
 	while(!level flag::get("takeo_freed"))
 	{
-		var_c5d0d808 waittill(#"damage", n_damage, e_attacker, v_vector, v_point, str_means_of_death, var_c4fe462, var_e64d69f9, var_c04aef90, w_weapon);
+		var_c5d0d808 waittill(#"damage", n_damage, e_attacker, v_vector, v_point, str_means_of_death, str_string_1, str_string_2, str_string_3, w_weapon);
 		if(zombie_utility::is_player_valid(e_attacker) && w_weapon.name === "hero_mirg2000_upgraded" && function_9f1fd468() == "fight_end_ready")
 		{
 			level flag::set("takeo_freed");
@@ -1243,7 +1243,7 @@ function function_4814eea9()
 function function_9bbf4262()
 {
 	a_enemies = getaiteamarray("axis");
-	foreach(var_10ee0d54, enemy in a_enemies)
+	foreach(enemy in a_enemies)
 	{
 		if(isalive(enemy) && enemy zm_zonemgr::entity_in_zone("zone_bunker_prison", 1))
 		{
@@ -1293,13 +1293,16 @@ function function_3127ccbd(e_attacker)
 				level thread function_6ccb6373();
 			}
 		}
-		else if(self.script_noteworthy === "zombie_spider_spawner")
+		else
 		{
-			level.var_bbdc1f95.var_bc88fb8b--;
-		}
-		else if(self.script_noteworthy === "zombie_spawner")
-		{
-			level.var_bbdc1f95.var_9defe760--;
+			if(self.script_noteworthy === "zombie_spider_spawner")
+			{
+				level.var_bbdc1f95.var_bc88fb8b--;
+			}
+			else if(self.script_noteworthy === "zombie_spawner")
+			{
+				level.var_bbdc1f95.var_9defe760--;
+			}
 		}
 		if(level.var_bbdc1f95.a_ai_attackers.size == 0)
 		{
@@ -1372,7 +1375,7 @@ function function_fe7b0c13()
 	{
 		var_f66cf9d4 = [];
 		var_75e586c5 = [];
-		foreach(var_57790f42, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			if(player zm_zonemgr::entity_in_zone(var_d3111274, 1))
 			{
@@ -1383,7 +1386,7 @@ function function_fe7b0c13()
 		}
 		if(var_75e586c5.size > 0)
 		{
-			foreach(var_4ec0008f, player in var_75e586c5)
+			foreach(player in var_75e586c5)
 			{
 				if(zm_utility::is_player_valid(player) && player zm_zonemgr::entity_in_active_zone())
 				{
@@ -1396,7 +1399,7 @@ function function_fe7b0c13()
 			}
 		}
 		var_c277590a = 0;
-		foreach(var_f26f423c, player in var_f66cf9d4)
+		foreach(player in var_f66cf9d4)
 		{
 			if(player laststand::player_is_in_laststand() && !isdefined(player.var_5942b967))
 			{
@@ -1429,9 +1432,9 @@ function function_75275516()
 	zm_utility::increment_ignoreme();
 	playsoundatposition("zmb_bgb_abh_teleport_out", self.origin);
 	var_7fcbf214 = struct::get_array("s_takeofight_player_teleport", "targetname");
-	var_68140f76 = var_7fcbf214[self.characterindex];
+	s_respawn_point = var_7fcbf214[self.characterindex];
 	self hide();
-	self setorigin(var_68140f76.origin);
+	self setorigin(s_respawn_point.origin);
 	self freezecontrols(1);
 	v_return_pos = self.origin + vectorscale((0, 0, 1), 60);
 	a_ai = getaiteamarray(level.zombie_team);
@@ -1440,7 +1443,7 @@ function function_75275516()
 	if(a_ai.size > 0)
 	{
 		a_closest = arraysortclosest(a_ai, self.origin);
-		foreach(var_c416948f, ai in a_closest)
+		foreach(ai in a_closest)
 		{
 			n_trace_val = ai sightconetrace(v_return_pos, self);
 			if(n_trace_val > 0.2)
@@ -1462,7 +1465,7 @@ function function_75275516()
 	playfx(level._effect["teleport_aoe"], self.origin);
 	a_ai = getaiarray();
 	a_aoe_ai = arraysortclosest(a_ai, self.origin, a_ai.size, 0, 200);
-	foreach(var_2d64f517, ai in a_aoe_ai)
+	foreach(ai in a_aoe_ai)
 	{
 		if(isactor(ai))
 		{
@@ -1528,50 +1531,50 @@ function function_9eaf14a2(cmd)
 			case "":
 			{
 				level thread function_39a206a1();
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				level thread function_eff03897(1);
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				level thread function_eff03897(2);
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				level thread function_eff03897(3);
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				level.var_bbdc1f95.var_e7eb4096 thread function_54d91dfb();
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				level thread function_5ff8dc0c();
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				level.var_c70a4f00 = 20;
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				level.var_c70a4f00 = 0;
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				level thread function_f59a935a();
-				return 1;
+				return true;
 			}
 		}
-		return 0;
+		return false;
 	#/
 }
 
@@ -1631,7 +1634,7 @@ function function_c8af550a()
 			level flag::set("");
 			wait(1);
 		}
-		foreach(var_6f369260, var_9c458cf5 in level.var_bbdc1f95.var_69943735)
+		foreach(var_9c458cf5 in level.var_bbdc1f95.var_69943735)
 		{
 			var_9c458cf5 function_54d91dfb();
 			var_9c458cf5 hide();
@@ -1662,9 +1665,9 @@ function function_5ff8dc0c()
 			level.var_bbdc1f95.var_9326c958 = !level.var_bbdc1f95.var_9326c958;
 			if(isdefined(level.var_bbdc1f95.var_9326c958) && level.var_bbdc1f95.var_9326c958)
 			{
-				foreach(var_c27bac67, var_9c458cf5 in level.var_bbdc1f95.var_69943735)
+				foreach(var_9c458cf5 in level.var_bbdc1f95.var_69943735)
 				{
-					foreach(var_ae58faa9, var_fb97f73d in var_9c458cf5.var_7168c71c)
+					foreach(var_fb97f73d in var_9c458cf5.var_7168c71c)
 					{
 						var_fb97f73d show();
 					}
@@ -1674,9 +1677,9 @@ function function_5ff8dc0c()
 			}
 			else
 			{
-				foreach(var_4ec3bfc, var_9c458cf5 in level.var_bbdc1f95.var_69943735)
+				foreach(var_9c458cf5 in level.var_bbdc1f95.var_69943735)
 				{
-					foreach(var_536fcedf, var_fb97f73d in var_9c458cf5.var_7168c71c)
+					foreach(var_fb97f73d in var_9c458cf5.var_7168c71c)
 					{
 						var_fb97f73d hide();
 					}
@@ -1700,7 +1703,7 @@ function function_5ff8dc0c()
 function function_f59a935a()
 {
 	/#
-		foreach(var_38f685b4, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			player.var_df4182b1 = 1;
 			player giveweapon(level.weaponriotshield);

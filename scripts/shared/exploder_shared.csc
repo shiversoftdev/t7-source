@@ -16,7 +16,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("exploder", &__init__, undefined, undefined);
 }
@@ -515,11 +515,11 @@ function exploder_is_lightning_exploder(num)
 		{
 			if(level.lightningexploder[i] == num)
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*

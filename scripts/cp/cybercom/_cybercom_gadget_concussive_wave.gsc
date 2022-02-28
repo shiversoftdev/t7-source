@@ -214,7 +214,7 @@ function ai_activateconcussivewave(damage, var_9bc2efcb = 1)
 		type = self cybercom::function_5e3d3aa();
 		self orientmode("face default");
 		self animscripted("ai_cybercom_anim", self.origin, self.angles, ("ai_base_rifle_" + type) + "_exposed_cybercom_activate");
-		self waittill_match(#"ai_cybercom_anim");
+		self waittillmatch(#"ai_cybercom_anim");
 	}
 	self create_concussion_wave(damage);
 }
@@ -228,7 +228,7 @@ function ai_activateconcussivewave(damage, var_9bc2efcb = 1)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _get_valid_targets(weapon)
+function private _get_valid_targets(weapon)
 {
 	humans = arraycombine(getaispeciesarray("axis", "human"), getaispeciesarray("team3", "human"), 0, 0);
 	robots = arraycombine(getaispeciesarray("axis", "robot"), getaispeciesarray("team3", "robot"), 0, 0);
@@ -245,17 +245,17 @@ private function _get_valid_targets(weapon)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _lock_requirement(target)
+function private _lock_requirement(target)
 {
 	if(target cybercom::cybercom_aicheckoptout("cybercom_concussive"))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(target.usingvehicle) && target.usingvehicle)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -304,7 +304,7 @@ function create_damage_wave(damage, attacker)
 	physicsexplosionsphere(attacker.origin, 512, 512, 1);
 	if(isdefined(closetargets) && closetargets.size)
 	{
-		foreach(var_a72202cf, enemy in closetargets)
+		foreach(enemy in closetargets)
 		{
 			if(!isdefined(enemy) || !isdefined(enemy.origin))
 			{

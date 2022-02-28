@@ -33,7 +33,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_blockers", &__init__, &__main__, undefined);
 }
@@ -208,59 +208,65 @@ function door_classify(parent_trig)
 		parent_trig.clip = self;
 		parent_trig.script_string = "clip";
 	}
-	else if(!isdefined(self.script_string))
+	else
 	{
-		if(isdefined(self.script_angles))
+		if(!isdefined(self.script_string))
 		{
-			self.script_string = "rotate";
-		}
-		else if(isdefined(self.script_vector))
-		{
-			self.script_string = "move";
-		}
-	}
-	else if(!isdefined(self.script_string))
-	{
-		self.script_string = "";
-	}
-	switch(self.script_string)
-	{
-		case "anim":
-		{
-			/#
-				assert(isdefined(self.script_animname), "" + self.targetname);
-			#/
-			/#
-				assert(isdefined(level.scr_anim[self.script_animname]), "" + self.script_animname);
-			#/
-			/#
-				assert(isdefined(level.blocker_anim_func), "");
-			#/
-			break;
-		}
-		case "counter_1s":
-		{
-			parent_trig.counter_1s = self;
-			return;
-		}
-		case "counter_10s":
-		{
-			parent_trig.counter_10s = self;
-			return;
-		}
-		case "counter_100s":
-		{
-			parent_trig.counter_100s = self;
-			return;
-		}
-		case "explosives":
-		{
-			if(!isdefined(parent_trig.explosives))
+			if(isdefined(self.script_angles))
 			{
-				parent_trig.explosives = [];
+				self.script_string = "rotate";
 			}
-			parent_trig.explosives[parent_trig.explosives.size] = self;
-			return;
+			else if(isdefined(self.script_vector))
+			{
+				self.script_string = "move";
+			}
+		}
+		else
+		{
+			if(!isdefined(self.script_string))
+			{
+				self.script_string = "";
+			}
+			switch(self.script_string)
+			{
+				case "anim":
+				{
+					/#
+						assert(isdefined(self.script_animname), "" + self.targetname);
+					#/
+					/#
+						assert(isdefined(level.scr_anim[self.script_animname]), "" + self.script_animname);
+					#/
+					/#
+						assert(isdefined(level.blocker_anim_func), "");
+					#/
+					break;
+				}
+				case "counter_1s":
+				{
+					parent_trig.counter_1s = self;
+					return;
+				}
+				case "counter_10s":
+				{
+					parent_trig.counter_10s = self;
+					return;
+				}
+				case "counter_100s":
+				{
+					parent_trig.counter_100s = self;
+					return;
+				}
+				case "explosives":
+				{
+					if(!isdefined(parent_trig.explosives))
+					{
+						parent_trig.explosives = [];
+					}
+					parent_trig.explosives[parent_trig.explosives.size] = self;
+					return;
+				}
+			}
 		}
 	}
 	if(self.classname == "script_brushmodel")
@@ -286,24 +292,24 @@ function door_buy()
 	{
 		if(!who [[level.custom_door_buy_check]](self))
 		{
-			return 0;
+			return false;
 		}
 	}
 	if(getdvarint("zombie_unlock_all") > 0 || (isdefined(force) && force))
 	{
-		return 1;
+		return true;
 	}
 	if(!who usebuttonpressed())
 	{
-		return 0;
+		return false;
 	}
 	if(who zm_utility::in_revive_trigger())
 	{
-		return 0;
+		return false;
 	}
 	if(who.is_drinking > 0)
 	{
-		return 0;
+		return false;
 	}
 	cost = 0;
 	upgraded = 0;
@@ -320,32 +326,38 @@ function door_buy()
 		{
 			self.purchaser = undefined;
 		}
-		else if(who zm_score::can_player_purchase(cost))
-		{
-			who zm_score::minus_to_player_score(cost);
-			scoreevents::processscoreevent("open_door", who);
-			demo::bookmark("zm_player_door", gettime(), who);
-			who zm_stats::increment_client_stat("doors_purchased");
-			who zm_stats::increment_player_stat("doors_purchased");
-			who zm_stats::increment_challenge_stat("SURVIVALIST_BUY_DOOR");
-			self.purchaser = who;
-		}
 		else
 		{
-			zm_utility::play_sound_at_pos("no_purchase", self.doors[0].origin);
-			if(isdefined(level.custom_door_deny_vo_func))
+			if(who zm_score::can_player_purchase(cost))
 			{
-				who thread [[level.custom_door_deny_vo_func]]();
-			}
-			else if(isdefined(level.custom_generic_deny_vo_func))
-			{
-				who thread [[level.custom_generic_deny_vo_func]](1);
+				who zm_score::minus_to_player_score(cost);
+				scoreevents::processscoreevent("open_door", who);
+				demo::bookmark("zm_player_door", gettime(), who);
+				who zm_stats::increment_client_stat("doors_purchased");
+				who zm_stats::increment_player_stat("doors_purchased");
+				who zm_stats::increment_challenge_stat("SURVIVALIST_BUY_DOOR");
+				self.purchaser = who;
 			}
 			else
 			{
-				who zm_audio::create_and_play_dialog("general", "outofmoney");
+				zm_utility::play_sound_at_pos("no_purchase", self.doors[0].origin);
+				if(isdefined(level.custom_door_deny_vo_func))
+				{
+					who thread [[level.custom_door_deny_vo_func]]();
+				}
+				else
+				{
+					if(isdefined(level.custom_generic_deny_vo_func))
+					{
+						who thread [[level.custom_generic_deny_vo_func]](1);
+					}
+					else
+					{
+						who zm_audio::create_and_play_dialog("general", "outofmoney");
+					}
+				}
+				return false;
 			}
-			return 0;
 		}
 	}
 	if(isdefined(level._door_open_rumble_func))
@@ -353,9 +365,9 @@ function door_buy()
 		who thread [[level._door_open_rumble_func]]();
 	}
 	who recordmapevent(5, gettime(), who.origin, level.round_number, cost);
-	bb::function_91f32a58(who, self, cost, self.target, upgraded, "_door", "_purchase");
+	bb::logpurchaseevent(who, self, cost, self.target, upgraded, "_door", "_purchase");
 	who zm_stats::increment_challenge_stat("ZM_DAILY_PURCHASE_DOORS");
-	return 1;
+	return true;
 }
 
 /*
@@ -648,15 +660,15 @@ function kill_trapped_zombies(trigger)
 */
 function any_player_touching(trigger)
 {
-	foreach(var_573b30eb, player in getplayers())
+	foreach(player in getplayers())
 	{
 		if(player istouching(trigger))
 		{
-			return 1;
+			return true;
 		}
 		wait(0.01);
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -670,27 +682,27 @@ function any_player_touching(trigger)
 */
 function any_player_touching_any(trigger, more_triggers)
 {
-	foreach(var_fbd5117f, player in getplayers())
+	foreach(player in getplayers())
 	{
 		if(zm_utility::is_player_valid(player, 0, 1))
 		{
 			if(isdefined(trigger) && player istouching(trigger))
 			{
-				return 1;
+				return true;
 			}
 			if(isdefined(more_triggers) && more_triggers.size > 0)
 			{
-				foreach(var_a83d61df, trig in more_triggers)
+				foreach(trig in more_triggers)
 				{
 					if(isdefined(trig) && player istouching(trig))
 					{
-						return 1;
+						return true;
 					}
 				}
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -705,24 +717,24 @@ function any_player_touching_any(trigger, more_triggers)
 function any_zombie_touching_any(trigger, more_triggers)
 {
 	zombies = getaiteamarray(level.zombie_team);
-	foreach(var_9c1b1634, zombie in zombies)
+	foreach(zombie in zombies)
 	{
 		if(isdefined(trigger) && zombie istouching(trigger))
 		{
-			return 1;
+			return true;
 		}
 		if(isdefined(more_triggers) && more_triggers.size > 0)
 		{
-			foreach(var_d8bee06c, trig in more_triggers)
+			foreach(trig in more_triggers)
 			{
 				if(isdefined(trig) && zombie istouching(trig))
 				{
-					return 1;
+					return true;
 				}
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1051,7 +1063,7 @@ function door_opened(cost, quick_close)
 	self.has_been_opened = 1;
 	all_trigs = getentarray(self.target, "target");
 	self.door_is_moving = 1;
-	foreach(var_3a2b1b15, trig in all_trigs)
+	foreach(trig in all_trigs)
 	{
 		trig.door_is_moving = 1;
 		trig triggerenable(0);
@@ -1102,7 +1114,7 @@ function door_opened(cost, quick_close)
 		is_script_model_door = 0;
 		have_moving_clip_for_door = 0;
 		use_blocker_clip_for_pathing = 0;
-		foreach(var_6b79c256, door in self.doors)
+		foreach(door in self.doors)
 		{
 			if(isdefined(door.ignore_use_blocker_clip_for_pathing_check) && door.ignore_use_blocker_clip_for_pathing_check)
 			{
@@ -1135,7 +1147,7 @@ function door_opened(cost, quick_close)
 	level.active_zone_names = zm_zonemgr::get_active_zone_names();
 	wait(1);
 	self.door_is_moving = 0;
-	foreach(var_46e4ae1, trig in all_trigs)
+	foreach(trig in all_trigs)
 	{
 		trig.door_is_moving = 0;
 	}
@@ -1223,7 +1235,7 @@ function door_solid_thread()
 */
 function door_solid_thread_anim()
 {
-	self waittill_match(#"door_anim");
+	self waittillmatch(#"door_anim");
 	self.door_moving = undefined;
 	while(true)
 	{
@@ -1300,7 +1312,7 @@ function debris_init()
 	if(isdefined(self.target))
 	{
 		targets = getentarray(self.target, "targetname");
-		foreach(var_29235c4d, target in targets)
+		foreach(target in targets)
 		{
 			if(target iszbarrier())
 			{
@@ -1311,7 +1323,7 @@ function debris_init()
 			}
 		}
 		a_nd_targets = getnodearray(self.target, "targetname");
-		foreach(var_a626c34e, nd_target in a_nd_targets)
+		foreach(nd_target in a_nd_targets)
 		{
 			if(isdefined(nd_target.script_noteworthy) && nd_target.script_noteworthy == "air_buy_gate")
 			{
@@ -1355,17 +1367,20 @@ function debris_think()
 		if(getdvarint("zombie_unlock_all") > 0 || (isdefined(force) && force))
 		{
 		}
-		else if(!who usebuttonpressed())
+		else
 		{
-			continue;
-		}
-		if(who.is_drinking > 0)
-		{
-			continue;
-		}
-		if(who zm_utility::in_revive_trigger())
-		{
-			continue;
+			if(!who usebuttonpressed())
+			{
+				continue;
+			}
+			if(who.is_drinking > 0)
+			{
+				continue;
+			}
+			if(who zm_utility::in_revive_trigger())
+			{
+				continue;
+			}
 		}
 		if(zm_utility::is_player_valid(who))
 		{
@@ -1373,20 +1388,23 @@ function debris_think()
 			if(getdvarint("zombie_unlock_all") > 0)
 			{
 			}
-			else if(who zm_score::can_player_purchase(self.zombie_cost))
-			{
-				who zm_score::minus_to_player_score(self.zombie_cost);
-				scoreevents::processscoreevent("open_door", who);
-				demo::bookmark("zm_player_door", gettime(), who);
-				who zm_stats::increment_client_stat("doors_purchased");
-				who zm_stats::increment_player_stat("doors_purchased");
-				who zm_stats::increment_challenge_stat("SURVIVALIST_BUY_DOOR");
-			}
 			else
 			{
-				zm_utility::play_sound_at_pos("no_purchase", self.origin);
-				who zm_audio::create_and_play_dialog("general", "outofmoney");
-				continue;
+				if(who zm_score::can_player_purchase(self.zombie_cost))
+				{
+					who zm_score::minus_to_player_score(self.zombie_cost);
+					scoreevents::processscoreevent("open_door", who);
+					demo::bookmark("zm_player_door", gettime(), who);
+					who zm_stats::increment_client_stat("doors_purchased");
+					who zm_stats::increment_player_stat("doors_purchased");
+					who zm_stats::increment_challenge_stat("SURVIVALIST_BUY_DOOR");
+				}
+				else
+				{
+					zm_utility::play_sound_at_pos("no_purchase", self.origin);
+					who zm_audio::create_and_play_dialog("general", "outofmoney");
+					continue;
+				}
 			}
 			self notify(#"kill_debris_prompt_thread");
 			junk = getentarray(self.target, "targetname");
@@ -1451,7 +1469,7 @@ function debris_think()
 				junk[i] delete();
 			}
 			a_nd_targets = getnodearray(self.target, "targetname");
-			foreach(var_c69532a0, nd_target in a_nd_targets)
+			foreach(nd_target in a_nd_targets)
 			{
 				if(isdefined(nd_target.script_noteworthy) && nd_target.script_noteworthy == "air_buy_gate")
 				{
@@ -1669,29 +1687,32 @@ function blocker_init()
 					}
 				}
 			}
-			else if(targets[j].script_parameters == "repair_board")
+			else
 			{
-				targets[j].unbroken_section = getent(targets[j].target, "targetname");
-				if(isdefined(targets[j].unbroken_section))
+				if(targets[j].script_parameters == "repair_board")
 				{
-					targets[j].unbroken_section linkto(targets[j]);
-					targets[j] hide();
-					targets[j] notsolid();
-					targets[j].unbroken = 1;
-					if(isdefined(targets[j].unbroken_section.script_noteworthy) && targets[j].unbroken_section.script_noteworthy == "glass")
+					targets[j].unbroken_section = getent(targets[j].target, "targetname");
+					if(isdefined(targets[j].unbroken_section))
 					{
-						targets[j].material = "glass";
-						targets[j] thread destructible_glass_barricade(targets[j].unbroken_section, self);
-					}
-					else if(isdefined(targets[j].unbroken_section.script_noteworthy) && targets[j].unbroken_section.script_noteworthy == "metal")
-					{
-						targets[j].material = "metal";
+						targets[j].unbroken_section linkto(targets[j]);
+						targets[j] hide();
+						targets[j] notsolid();
+						targets[j].unbroken = 1;
+						if(isdefined(targets[j].unbroken_section.script_noteworthy) && targets[j].unbroken_section.script_noteworthy == "glass")
+						{
+							targets[j].material = "glass";
+							targets[j] thread destructible_glass_barricade(targets[j].unbroken_section, self);
+						}
+						else if(isdefined(targets[j].unbroken_section.script_noteworthy) && targets[j].unbroken_section.script_noteworthy == "metal")
+						{
+							targets[j].material = "metal";
+						}
 					}
 				}
-			}
-			else if(targets[j].script_parameters == "barricade_vents")
-			{
-				targets[j].material = "metal_vent";
+				else if(targets[j].script_parameters == "barricade_vents")
+				{
+					targets[j].material = "metal_vent";
+				}
 			}
 		}
 		if(isdefined(targets[j].targetname))
@@ -1755,9 +1776,9 @@ function should_delete_zbarriers()
 	gametype = getdvarstring("ui_gametype");
 	if(!zm_utility::is_classic() && !zm_utility::is_standard() && gametype != "zgrief")
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1907,33 +1928,33 @@ function player_fails_blocker_repair_trigger_preamble(player, players, trigger, 
 {
 	if(!isdefined(trigger))
 	{
-		return 1;
+		return true;
 	}
 	if(!zm_utility::is_player_valid(player))
 	{
-		return 1;
+		return true;
 	}
 	if(players.size == 1 && isdefined(players[0].intermission) && players[0].intermission == 1)
 	{
-		return 1;
+		return true;
 	}
 	if(hold_required && !player usebuttonpressed())
 	{
-		return 1;
+		return true;
 	}
 	if(!hold_required && !player util::use_button_held())
 	{
-		return 1;
+		return true;
 	}
 	if(player zm_utility::in_revive_trigger())
 	{
-		return 1;
+		return true;
 	}
 	if(player.is_drinking > 0)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2257,17 +2278,17 @@ function blockerstub_update_prompt(player)
 {
 	if(!zm_utility::is_player_valid(player))
 	{
-		return 0;
+		return false;
 	}
 	if(player zm_utility::in_revive_trigger())
 	{
-		return 0;
+		return false;
 	}
 	if(player.is_drinking > 0)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -2612,37 +2633,49 @@ function zombie_boardtear_audio_offset(chunk)
 		chunk playsound("zmb_break_glass_barrier");
 		chunk.already_broken = 1;
 	}
-	else if(isdefined(chunk.material) && chunk.material == "metal" && chunk.already_broken == 0)
+	else
 	{
-		chunk playsound("grab_metal_bar");
-		wait(randomfloatrange(0.3, 0.6));
-		chunk playsound("break_metal_bar");
-		chunk.already_broken = 1;
-	}
-	else if(isdefined(chunk.material) && chunk.material == "rock")
-	{
-		if(!(isdefined(level.use_clientside_rock_tearin_fx) && level.use_clientside_rock_tearin_fx))
+		if(isdefined(chunk.material) && chunk.material == "metal" && chunk.already_broken == 0)
 		{
-			chunk playsound("zmb_break_rock_barrier");
+			chunk playsound("grab_metal_bar");
 			wait(randomfloatrange(0.3, 0.6));
-			chunk playsound("zmb_break_rock_barrier");
+			chunk playsound("break_metal_bar");
+			chunk.already_broken = 1;
 		}
-		chunk.already_broken = 1;
-	}
-	else if(isdefined(chunk.material) && chunk.material == "metal_vent")
-	{
-		if(!(isdefined(level.use_clientside_board_fx) && level.use_clientside_board_fx))
+		else
 		{
-			chunk playsound("evt_vent_slat_remove");
+			if(isdefined(chunk.material) && chunk.material == "rock")
+			{
+				if(!(isdefined(level.use_clientside_rock_tearin_fx) && level.use_clientside_rock_tearin_fx))
+				{
+					chunk playsound("zmb_break_rock_barrier");
+					wait(randomfloatrange(0.3, 0.6));
+					chunk playsound("zmb_break_rock_barrier");
+				}
+				chunk.already_broken = 1;
+			}
+			else
+			{
+				if(isdefined(chunk.material) && chunk.material == "metal_vent")
+				{
+					if(!(isdefined(level.use_clientside_board_fx) && level.use_clientside_board_fx))
+					{
+						chunk playsound("evt_vent_slat_remove");
+					}
+				}
+				else
+				{
+					if(!(isdefined(level.use_clientside_board_fx) && level.use_clientside_board_fx))
+					{
+						chunk zm_utility::play_sound_on_ent("break_barrier_piece");
+						wait(randomfloatrange(0.3, 0.6));
+						chunk zm_utility::play_sound_on_ent("break_barrier_piece");
+					}
+					chunk.already_broken = 1;
+				}
+			}
 		}
 	}
-	else if(!(isdefined(level.use_clientside_board_fx) && level.use_clientside_board_fx))
-	{
-		chunk zm_utility::play_sound_on_ent("break_barrier_piece");
-		wait(randomfloatrange(0.3, 0.6));
-		chunk zm_utility::play_sound_on_ent("break_barrier_piece");
-	}
-	chunk.already_broken = 1;
 }
 
 /*
@@ -2751,7 +2784,7 @@ function replace_chunk(barrier, chunk, perk, upgrade, via_powerup)
 */
 function open_all_zbarriers()
 {
-	foreach(var_c7b6c04b, barrier in level.exterior_goals)
+	foreach(barrier in level.exterior_goals)
 	{
 		if(isdefined(barrier.zbarrier))
 		{
@@ -2794,15 +2827,18 @@ function zombie_boardtear_audio_plus_fx_offset_repair_horizontal(chunk)
 			chunk zm_utility::play_sound_on_ent("break_barrier_piece");
 		}
 	}
-	else if(isdefined(level.use_clientside_board_fx) && level.use_clientside_board_fx)
-	{
-		chunk clientfield::set("tearin_board_vertical_fx", 0);
-	}
 	else
 	{
-		earthquake(randomfloatrange(0.3, 0.4), randomfloatrange(0.2, 0.4), chunk.origin, 150);
-		wait(randomfloatrange(0.3, 0.6));
-		chunk zm_utility::play_sound_on_ent("break_barrier_piece");
+		if(isdefined(level.use_clientside_board_fx) && level.use_clientside_board_fx)
+		{
+			chunk clientfield::set("tearin_board_vertical_fx", 0);
+		}
+		else
+		{
+			earthquake(randomfloatrange(0.3, 0.4), randomfloatrange(0.2, 0.4), chunk.origin, 150);
+			wait(randomfloatrange(0.3, 0.6));
+			chunk zm_utility::play_sound_on_ent("break_barrier_piece");
+		}
 	}
 }
 
@@ -2830,15 +2866,18 @@ function zombie_boardtear_audio_plus_fx_offset_repair_verticle(chunk)
 			chunk zm_utility::play_sound_on_ent("break_barrier_piece");
 		}
 	}
-	else if(isdefined(level.use_clientside_board_fx) && level.use_clientside_board_fx)
-	{
-		chunk clientfield::set("tearin_board_horizontal_fx", 0);
-	}
 	else
 	{
-		earthquake(randomfloatrange(0.3, 0.4), randomfloatrange(0.2, 0.4), chunk.origin, 150);
-		wait(randomfloatrange(0.3, 0.6));
-		chunk zm_utility::play_sound_on_ent("break_barrier_piece");
+		if(isdefined(level.use_clientside_board_fx) && level.use_clientside_board_fx)
+		{
+			chunk clientfield::set("tearin_board_horizontal_fx", 0);
+		}
+		else
+		{
+			earthquake(randomfloatrange(0.3, 0.4), randomfloatrange(0.2, 0.4), chunk.origin, 150);
+			wait(randomfloatrange(0.3, 0.6));
+			chunk zm_utility::play_sound_on_ent("break_barrier_piece");
+		}
 	}
 }
 
@@ -3141,7 +3180,7 @@ function quantum_bomb_open_nearest_door_validation(position)
 	{
 		if(distancesquared(zombie_doors[i].origin, position) < range_squared)
 		{
-			return 1;
+			return true;
 		}
 	}
 	zombie_airlock_doors = getentarray("zombie_airlock_buy", "targetname");
@@ -3149,7 +3188,7 @@ function quantum_bomb_open_nearest_door_validation(position)
 	{
 		if(distancesquared(zombie_airlock_doors[i].origin, position) < range_squared)
 		{
-			return 1;
+			return true;
 		}
 	}
 	zombie_debris = getentarray("zombie_debris", "targetname");
@@ -3157,10 +3196,10 @@ function quantum_bomb_open_nearest_door_validation(position)
 	{
 		if(distancesquared(zombie_debris[i].origin, position) < range_squared)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*

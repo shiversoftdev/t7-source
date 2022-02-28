@@ -18,7 +18,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("damagefeedback", &__init__, undefined, undefined);
 }
@@ -96,7 +96,7 @@ function should_play_sound(mod)
 {
 	if(!isdefined(mod))
 	{
-		return 0;
+		return false;
 	}
 	switch(mod)
 	{
@@ -107,10 +107,10 @@ function should_play_sound(mod)
 		case "MOD_MELEE_ASSASSINATE":
 		case "MOD_MELEE_WEAPON_BUTT":
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -130,7 +130,7 @@ function update(mod, inflictor, perkfeedback, weapon, victim, psoffsettime, shit
 	}
 	if(isdefined(self.nohitmarkers) && self.nohitmarkers)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(weapon) && (isdefined(weapon.nohitmarker) && weapon.nohitmarker))
 	{
@@ -183,93 +183,108 @@ function update(mod, inflictor, perkfeedback, weapon, victim, psoffsettime, shit
 				}
 			}
 		}
-		else if(isdefined(inflictor) && isdefined(inflictor.soundmod))
-		{
-			switch(inflictor.soundmod)
-			{
-				case "player":
-				{
-					if(isdefined(victim) && (isdefined(victim.isaiclone) && victim.isaiclone))
-					{
-						hitalias = "mpl_hit_alert_clone";
-					}
-					else if(isdefined(victim) && isplayer(victim) && victim flagsys::get("gadget_armor_on") && armor::armor_should_take_damage(inflictor, weapon, mod, shitloc))
-					{
-						hitalias = "mpl_hit_alert_armor";
-					}
-					else if(isdefined(victim) && isplayer(victim) && isdefined(victim.carryobject) && isdefined(victim.carryobject.hitsound) && isdefined(perkfeedback) && perkfeedback == "armor")
-					{
-						hitalias = victim.carryobject.hitsound;
-					}
-					else if(mod == "MOD_BURNED")
-					{
-						hitalias = "mpl_hit_alert_burn";
-					}
-					else
-					{
-						hitalias = "mpl_hit_alert";
-					}
-					break;
-				}
-				case "heatwave":
-				{
-					hitalias = "mpl_hit_alert_heatwave";
-					break;
-				}
-				case "heli":
-				{
-					hitalias = "mpl_hit_alert_air";
-					break;
-				}
-				case "hpm":
-				{
-					hitalias = "mpl_hit_alert_hpm";
-					break;
-				}
-				case "taser_spike":
-				{
-					hitalias = "mpl_hit_alert_taser_spike";
-					break;
-				}
-				case "dog":
-				case "straferun":
-				{
-					break;
-				}
-				case "firefly":
-				{
-					hitalias = "mpl_hit_alert_firefly";
-					break;
-				}
-				case "drone_land":
-				{
-					hitalias = "mpl_hit_alert_air";
-					break;
-				}
-				case "raps":
-				{
-					hitalias = "mpl_hit_alert_air";
-					break;
-				}
-				case "default_loud":
-				{
-					hitalias = "mpl_hit_heli_gunner";
-					break;
-				}
-				default:
-				{
-					hitalias = "mpl_hit_alert";
-					break;
-				}
-			}
-		}
-		else if(mod == "MOD_BURNED")
-		{
-			hitalias = "mpl_hit_alert_burn";
-		}
 		else
 		{
-			hitalias = "mpl_hit_alert";
+			if(isdefined(inflictor) && isdefined(inflictor.soundmod))
+			{
+				switch(inflictor.soundmod)
+				{
+					case "player":
+					{
+						if(isdefined(victim) && (isdefined(victim.isaiclone) && victim.isaiclone))
+						{
+							hitalias = "mpl_hit_alert_clone";
+						}
+						else
+						{
+							if(isdefined(victim) && isplayer(victim) && victim flagsys::get("gadget_armor_on") && armor::armor_should_take_damage(inflictor, weapon, mod, shitloc))
+							{
+								hitalias = "mpl_hit_alert_armor";
+							}
+							else
+							{
+								if(isdefined(victim) && isplayer(victim) && isdefined(victim.carryobject) && isdefined(victim.carryobject.hitsound) && isdefined(perkfeedback) && perkfeedback == "armor")
+								{
+									hitalias = victim.carryobject.hitsound;
+								}
+								else
+								{
+									if(mod == "MOD_BURNED")
+									{
+										hitalias = "mpl_hit_alert_burn";
+									}
+									else
+									{
+										hitalias = "mpl_hit_alert";
+									}
+								}
+							}
+						}
+						break;
+					}
+					case "heatwave":
+					{
+						hitalias = "mpl_hit_alert_heatwave";
+						break;
+					}
+					case "heli":
+					{
+						hitalias = "mpl_hit_alert_air";
+						break;
+					}
+					case "hpm":
+					{
+						hitalias = "mpl_hit_alert_hpm";
+						break;
+					}
+					case "taser_spike":
+					{
+						hitalias = "mpl_hit_alert_taser_spike";
+						break;
+					}
+					case "dog":
+					case "straferun":
+					{
+						break;
+					}
+					case "firefly":
+					{
+						hitalias = "mpl_hit_alert_firefly";
+						break;
+					}
+					case "drone_land":
+					{
+						hitalias = "mpl_hit_alert_air";
+						break;
+					}
+					case "raps":
+					{
+						hitalias = "mpl_hit_alert_air";
+						break;
+					}
+					case "default_loud":
+					{
+						hitalias = "mpl_hit_heli_gunner";
+						break;
+					}
+					default:
+					{
+						hitalias = "mpl_hit_alert";
+						break;
+					}
+				}
+			}
+			else
+			{
+				if(mod == "MOD_BURNED")
+				{
+					hitalias = "mpl_hit_alert_burn";
+				}
+				else
+				{
+					hitalias = "mpl_hit_alert";
+				}
+			}
 		}
 	}
 	if(isdefined(victim) && (isdefined(victim.isaiclone) && victim.isaiclone))
@@ -564,15 +579,15 @@ function dodamagefeedback(weapon, einflictor, idamage, smeansofdeath)
 {
 	if(!isdefined(weapon))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(weapon.nohitmarker) && weapon.nohitmarker)
 	{
-		return 0;
+		return false;
 	}
 	if(level.allowhitmarkers == 0)
 	{
-		return 0;
+		return false;
 	}
 	if(level.allowhitmarkers == 1)
 	{
@@ -580,11 +595,11 @@ function dodamagefeedback(weapon, einflictor, idamage, smeansofdeath)
 		{
 			if(istacticalhitmarker(weapon, smeansofdeath, idamage))
 			{
-				return 0;
+				return false;
 			}
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -604,14 +619,14 @@ function istacticalhitmarker(weapon, smeansofdeath, idamage)
 		{
 			if(smeansofdeath == "MOD_GRENADE_SPLASH")
 			{
-				return 1;
+				return true;
 			}
 		}
 		else if(idamage == 1)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 

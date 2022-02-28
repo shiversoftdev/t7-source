@@ -99,12 +99,12 @@ function function_965d5385()
 		}
 	}
 	var_5381c01a = struct::get_array("player_respawn_point", "targetname");
-	foreach(var_804320bd, s_respawn in var_5381c01a)
+	foreach(s_respawn in var_5381c01a)
 	{
 		if(s_respawn.script_noteworthy === "zone_gatehouse")
 		{
 			var_e50cc92f = struct::get_array(s_respawn.target, "targetname");
-			foreach(var_c236bcb0, s_player_respawn in var_e50cc92f)
+			foreach(s_player_respawn in var_e50cc92f)
 			{
 				function_b1c9999(s_player_respawn);
 			}
@@ -227,7 +227,7 @@ function function_c428951(ai_zombie)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function get_escape_position()
+function private get_escape_position()
 {
 	str_zone = zm_zonemgr::get_zone_from_position(self.origin + vectorscale((0, 0, 1), 32), 1);
 	if(!isdefined(str_zone))
@@ -260,10 +260,10 @@ private function get_escape_position()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function get_wait_locations_in_zones(a_zones)
+function private get_wait_locations_in_zones(a_zones)
 {
 	a_wait_locations = [];
-	foreach(var_8707636f, zone in a_zones)
+	foreach(zone in a_zones)
 	{
 		a_wait_locations = arraycombine(a_wait_locations, level.zones[zone].a_loc_types["wait_location"], 0, 0);
 	}
@@ -279,17 +279,17 @@ private function get_wait_locations_in_zones(a_zones)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_eadbcbdb()
+function private function_eadbcbdb()
 {
 	if(!isdefined(self))
 	{
-		return 0;
+		return false;
 	}
 	if(!ispointonnavmesh(self.origin) || !zm_utility::check_point_in_playable_area(self.origin))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -301,7 +301,7 @@ private function function_eadbcbdb()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_dc683d01(var_b52b26b9)
+function private function_dc683d01(var_b52b26b9)
 {
 	self endon(#"death");
 	self notify(#"stop_find_flesh");
@@ -325,7 +325,7 @@ private function function_dc683d01(var_b52b26b9)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function check_player_available()
+function private check_player_available()
 {
 	self endon(#"death");
 	while(isdefined(self.b_zombie_path_bad) && self.b_zombie_path_bad)
@@ -349,7 +349,7 @@ private function check_player_available()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function can_zombie_see_any_player()
+function private can_zombie_see_any_player()
 {
 	for(i = 0; i < level.activeplayers.size; i++)
 	{
@@ -357,12 +357,12 @@ private function can_zombie_see_any_player()
 		{
 			if(self zm_castle_zombie::function_7b63bf24(level.activeplayers[i]))
 			{
-				return 1;
+				return true;
 			}
 		}
 		wait(0.1);
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -400,8 +400,8 @@ function function_401305fb(var_3c6a24bf)
 {
 	if(isdefined(self.is_flung) && self.is_flung || (isdefined(var_3c6a24bf.is_flung) && var_3c6a24bf.is_flung))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 

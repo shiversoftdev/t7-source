@@ -179,21 +179,21 @@ function inside_bounds(node_origin, bounds)
 	maxs = level.mapcenter + bounds;
 	if(node_origin[0] > maxs[0])
 	{
-		return 0;
+		return false;
 	}
 	if(node_origin[0] < mins[0])
 	{
-		return 0;
+		return false;
 	}
 	if(node_origin[1] > maxs[1])
 	{
-		return 0;
+		return false;
 	}
 	if(node_origin[1] < mins[1])
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -212,7 +212,7 @@ function initdroplocations()
 	possible_nodes = getallnodes();
 	nodes = [];
 	count = 0;
-	foreach(var_2e7277ad, node in possible_nodes)
+	foreach(node in possible_nodes)
 	{
 		if(inside_bounds(node.origin, bound))
 		{

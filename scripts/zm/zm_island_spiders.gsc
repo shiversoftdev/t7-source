@@ -53,7 +53,7 @@ function function_c102a998()
 {
 	wait(6);
 	level flag::clear("spider_round_in_progress");
-	foreach(var_babf5f9b, player in level.players)
+	foreach(player in level.players)
 	{
 		if(player isplayerunderwater())
 		{
@@ -95,25 +95,31 @@ function function_33aa4940()
 			var_7ac5425b = 1;
 		}
 	}
-	else if(level.round_number > 30)
+	else
 	{
-		if(randomfloat(100) < 8)
+		if(level.round_number > 30)
 		{
-			var_7ac5425b = 1;
+			if(randomfloat(100) < 8)
+			{
+				var_7ac5425b = 1;
+			}
 		}
-	}
-	else if(level.round_number > 25)
-	{
-		if(randomfloat(100) < 7)
+		else
 		{
-			var_7ac5425b = 1;
-		}
-	}
-	else if(level.round_number > 20)
-	{
-		if(randomfloat(100) < 5)
-		{
-			var_7ac5425b = 1;
+			if(level.round_number > 25)
+			{
+				if(randomfloat(100) < 7)
+				{
+					var_7ac5425b = 1;
+				}
+			}
+			else if(level.round_number > 20)
+			{
+				if(randomfloat(100) < 5)
+				{
+					var_7ac5425b = 1;
+				}
+			}
 		}
 	}
 	if(level.round_number > level.var_5ccd3661 && level.round_number > 7)
@@ -133,7 +139,7 @@ function function_33aa4940()
 		{
 			var_a5f01313 = struct::get_array("zone_spider_lair_spawners", "targetname");
 			var_901f5ace = [];
-			foreach(var_a6459b26, s_spawner in var_a5f01313)
+			foreach(s_spawner in var_a5f01313)
 			{
 				if(s_spawner.script_noteworthy == "spider_location")
 				{

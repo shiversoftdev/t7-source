@@ -22,7 +22,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("cybercom", &__init__, undefined, undefined);
 }
@@ -432,7 +432,7 @@ function cybercomdisabledall(localclientnum, oldval, newval, bnewent, binitialsn
 	players = getlocalplayers();
 	if(level.cybercom_status == 1)
 	{
-		foreach(var_8cbafcb9, player in players)
+		foreach(player in players)
 		{
 			player notify(#"tactical_menu_close");
 			player.cybercomdisabled = 1;
@@ -440,7 +440,7 @@ function cybercomdisabledall(localclientnum, oldval, newval, bnewent, binitialsn
 	}
 	else
 	{
-		foreach(var_ce72e3ae, player in players)
+		foreach(player in players)
 		{
 			player notify(#"tactical_menu_close");
 			player.cybercomdisabled = undefined;
@@ -988,7 +988,7 @@ function setiffname(localclientnum, oldval, newval, bnewent, binitialsnap, field
 	Parameters: 0
 	Flags: Private
 */
-private function function_13f09a6b()
+function private function_13f09a6b()
 {
 	self endon(#"entityshutdown");
 	self notify(#"hash_e0f9c098");
@@ -1011,7 +1011,7 @@ private function function_13f09a6b()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_d48fcfa6(localclientnum)
+function private function_d48fcfa6(localclientnum)
 {
 	self setdrawname();
 }
@@ -1025,7 +1025,7 @@ private function function_d48fcfa6(localclientnum)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_66be631b()
+function private function_66be631b()
 {
 	alpha = array("A", "B", "C", "D", "E", "F");
 	digit = array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
@@ -1043,20 +1043,23 @@ private function function_66be631b()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_a4cd6b9a()
+function private function_a4cd6b9a()
 {
 	name = "";
 	if(issubstr(self.model, "_54i_"))
 	{
 		var_461b88f6 = "3534:49FF:FE";
 	}
-	else if(issubstr(self.model, "_nrc_"))
-	{
-		var_461b88f6 = "4E52:43FF:FE";
-	}
 	else
 	{
-		var_461b88f6 = "4349:41FF:FE";
+		if(issubstr(self.model, "_nrc_"))
+		{
+			var_461b88f6 = "4E52:43FF:FE";
+		}
+		else
+		{
+			var_461b88f6 = "4349:41FF:FE";
+		}
 	}
 	var_13ff0d3c = function_66be631b();
 	var_86067c77 = function_66be631b();
@@ -1376,13 +1379,16 @@ function function_371a93b4(localclientnum, var_c5f458e4)
 	{
 		var_29ad5b90 = getuimodel(controllermodel, "AbilityWheel.Selected1");
 	}
-	else if(var_e4230c26 == 1)
+	else
 	{
-		var_29ad5b90 = getuimodel(controllermodel, "AbilityWheel.Selected2");
-	}
-	else if(var_e4230c26 == 2)
-	{
-		var_29ad5b90 = getuimodel(controllermodel, "AbilityWheel.Selected3");
+		if(var_e4230c26 == 1)
+		{
+			var_29ad5b90 = getuimodel(controllermodel, "AbilityWheel.Selected2");
+		}
+		else if(var_e4230c26 == 2)
+		{
+			var_29ad5b90 = getuimodel(controllermodel, "AbilityWheel.Selected3");
+		}
 	}
 	if(!isdefined(var_29ad5b90))
 	{

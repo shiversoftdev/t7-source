@@ -71,7 +71,7 @@ function register_clientfields()
 	registerclientfield("world", ("second_idgun" + "_") + "part_heart", 1, shared_bits, "int", &zm_utility::setsharedinventoryuimodels, 0, 1);
 	registerclientfield("world", ("second_idgun" + "_") + "part_skeleton", 1, shared_bits, "int", &zm_utility::setsharedinventoryuimodels, 0, 1);
 	registerclientfield("world", ("second_idgun" + "_") + "part_xenomatter", 1, shared_bits, "int", &zm_utility::setsharedinventoryuimodels, 0, 1);
-	foreach(var_be9647d8, character_name in level.zod_character_names)
+	foreach(character_name in level.zod_character_names)
 	{
 		registerclientfield("world", "holder_of_" + character_name, 1, 3, "int", &zm_utility::setsharedinventoryuimodels, 0, 1);
 	}

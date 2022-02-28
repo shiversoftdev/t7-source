@@ -19,7 +19,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_shadow_zombie", &__init__, undefined, undefined);
 }
@@ -191,13 +191,16 @@ function function_267f859f(localclientnum, fx_id = undefined, b_on = 1, var_afcc
 		{
 			self.vfx_ref = playfxontag(localclientnum, fx_id, self, str_tag);
 		}
-		else if(self.angles === (0, 0, 0))
-		{
-			self.vfx_ref = playfx(localclientnum, fx_id, self.origin);
-		}
 		else
 		{
-			self.vfx_ref = playfx(localclientnum, fx_id, self.origin, self.angles);
+			if(self.angles === (0, 0, 0))
+			{
+				self.vfx_ref = playfx(localclientnum, fx_id, self.origin);
+			}
+			else
+			{
+				self.vfx_ref = playfx(localclientnum, fx_id, self.origin, self.angles);
+			}
 		}
 	}
 	else if(isdefined(self.vfx_ref))

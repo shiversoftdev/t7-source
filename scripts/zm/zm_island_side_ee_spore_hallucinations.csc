@@ -19,7 +19,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_island_side_ee_spore_hallucinations", &__init__, undefined, undefined);
 }
@@ -42,7 +42,7 @@ function __init__()
 	var_b40533fa = findvolumedecalindexarray("side_ee_horror_room_operation");
 	level.var_d76c60c4 = arraycombine(var_68003f28, var_da07ae63, 0, 0);
 	level.var_d76c60c4 = arraycombine(level.var_d76c60c4, var_b40533fa, 0, 0);
-	foreach(var_cd0cd38b, var_27ae6b3e in level.var_d76c60c4)
+	foreach(var_27ae6b3e in level.var_d76c60c4)
 	{
 		hidevolumedecal(var_27ae6b3e);
 	}
@@ -62,7 +62,7 @@ function hallucinate_bloody_walls(localclientnum, oldval, newval, bnewent, binit
 	self thread lui::screen_fade_in(1, "white");
 	if(isdefined(newval) && newval)
 	{
-		foreach(var_2036d7e6, var_78960d69 in level.var_d76c60c4)
+		foreach(var_78960d69 in level.var_d76c60c4)
 		{
 			unhidevolumedecal(var_78960d69);
 		}
@@ -71,7 +71,7 @@ function hallucinate_bloody_walls(localclientnum, oldval, newval, bnewent, binit
 	}
 	else
 	{
-		foreach(var_6eba6ac9, var_78960d69 in level.var_d76c60c4)
+		foreach(var_78960d69 in level.var_d76c60c4)
 		{
 			hidevolumedecal(var_78960d69);
 		}

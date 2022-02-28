@@ -96,21 +96,21 @@ function isallowed()
 {
 	if(!isdefined(self))
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(self.behaviortracker))
 	{
-		return 0;
+		return false;
 	}
 	if(!self.behaviortracker.valid)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(level.disablebehaviortracker) && level.disablebehaviortracker == 1)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*

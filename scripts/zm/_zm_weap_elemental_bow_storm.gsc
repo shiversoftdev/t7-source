@@ -33,7 +33,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("_zm_weap_elemental_bow_storm", &__init__, &__main__, undefined);
 }
@@ -145,7 +145,7 @@ function function_578bf1ca(v_hit_pos, var_31d6c509, var_337b3336, var_94d13bd0)
 			util::wait_network_frame();
 		}
 	}
-	foreach(var_58d913cb, var_6e7a59eb in var_337b3336.var_5d0ae7cb)
+	foreach(var_6e7a59eb in var_337b3336.var_5d0ae7cb)
 	{
 		var_6e7a59eb.var_83cc6f07 = 0;
 	}
@@ -172,7 +172,7 @@ function function_578bf1ca(v_hit_pos, var_31d6c509, var_337b3336, var_94d13bd0)
 			if(isdefined(var_f86783a4))
 			{
 				var_1c7748 = var_337b3336 function_8f86e6d5(var_7b58139b, self);
-				foreach(var_b545f8e9, ai_enemy in var_1c7748)
+				foreach(ai_enemy in var_1c7748)
 				{
 					if(bullettracepassed(ai_enemy getcentroid(), var_337b3336.origin, 0, var_337b3336))
 					{
@@ -202,7 +202,7 @@ function function_578bf1ca(v_hit_pos, var_31d6c509, var_337b3336, var_94d13bd0)
 	}
 	else
 	{
-		foreach(var_743cfbdd, var_6e7a59eb in var_337b3336.var_5d0ae7cb)
+		foreach(var_6e7a59eb in var_337b3336.var_5d0ae7cb)
 		{
 			var_6e7a59eb clientfield::set("elem_storm_bolt_fx", 0);
 		}
@@ -256,7 +256,7 @@ function function_172d425(ai_enemy)
 */
 function function_2624b852()
 {
-	foreach(var_6b1641e5, var_6e7a59eb in self.var_5d0ae7cb)
+	foreach(var_6e7a59eb in self.var_5d0ae7cb)
 	{
 		if(isdefined(var_6e7a59eb) && isdefined(var_6e7a59eb.var_83cc6f07) && !var_6e7a59eb.var_83cc6f07)
 		{
@@ -666,7 +666,7 @@ function function_50d5f4ab(e_player)
 		a_ai_enemies = self function_8f86e6d5(768, e_player);
 		if(a_ai_enemies.size)
 		{
-			foreach(var_f23163e5, ai_enemy in a_ai_enemies)
+			foreach(ai_enemy in a_ai_enemies)
 			{
 				if(bullettracepassed(ai_enemy getcentroid(), self.origin + vectorscale((0, 0, 1), 12), 0, self))
 				{
@@ -725,7 +725,7 @@ function function_2f036bd6()
 	self endon(#"elem_storm_whirlwind_done");
 	while(true)
 	{
-		foreach(var_53c8103d, e_player in level.activeplayers)
+		foreach(e_player in level.activeplayers)
 		{
 			if(isdefined(e_player) && (!(isdefined(e_player.var_a70814ea) && e_player.var_a70814ea)))
 			{

@@ -20,7 +20,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("grapple", &__init__, &__main__, undefined);
 }
@@ -51,7 +51,7 @@ function __init__()
 function __main__()
 {
 	grapple_targets = getentarray("grapple_target", "targetname");
-	foreach(var_5b056450, target in grapple_targets)
+	foreach(target in grapple_targets)
 	{
 		target.grapple_type = 1;
 		target setgrapplabletype(target.grapple_type);
@@ -479,7 +479,7 @@ function can_see(target, target_origin, player_origin, player_forward, distance)
 				line(collided, end, (1, 0, 0), 1, 0, 50);
 			}
 		#/
-		return 0;
+		return false;
 	}
 	/#
 		if(getdvarint(""))
@@ -487,7 +487,7 @@ function can_see(target, target_origin, player_origin, player_forward, distance)
 			line(start, end, (0, 1, 0), 1, 0, 30);
 		}
 	#/
-	return 1;
+	return true;
 }
 
 /*

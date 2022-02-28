@@ -151,7 +151,7 @@ function waitfor_flag_open_chest_location(which)
 function function_a0db1fb9()
 {
 	penbuytrigger = getentarray("pendulum_buy_trigger", "targetname");
-	foreach(var_1b3953b7, var_d8a7af6f in penbuytrigger)
+	foreach(var_d8a7af6f in penbuytrigger)
 	{
 		var_d8a7af6f sethintstring(&"ZOMBIE_CLEAR_DEBRIS");
 		var_d8a7af6f setcursorhint("HINT_NOICON");

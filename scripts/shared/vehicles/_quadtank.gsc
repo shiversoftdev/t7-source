@@ -33,7 +33,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("quadtank", &__init__, undefined, undefined);
 }
@@ -552,13 +552,13 @@ function trophy_disabled()
 {
 	if(self.trophy_down === 1)
 	{
-		return 1;
+		return true;
 	}
 	if(trophy_destroyed())
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -574,9 +574,9 @@ function trophy_destroyed()
 {
 	if(self.trophy_disables >= 4)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -988,20 +988,26 @@ function quadtank_weapon_think_cannon()
 			{
 				self quadtank_turret_scan(0);
 			}
-			else if(cant_see_enemy_count > 30)
-			{
-				self clearlookatent();
-				self cleartargetentity();
-			}
-			else if(isdefined(self.enemy))
-			{
-				self setturrettargetent(self.enemy);
-				self clearlookatent();
-			}
 			else
 			{
-				self clearlookatent();
-				self quadtank_turret_scan(0);
+				if(cant_see_enemy_count > 30)
+				{
+					self clearlookatent();
+					self cleartargetentity();
+				}
+				else
+				{
+					if(isdefined(self.enemy))
+					{
+						self setturrettargetent(self.enemy);
+						self clearlookatent();
+					}
+					else
+					{
+						self clearlookatent();
+						self quadtank_turret_scan(0);
+					}
+				}
 			}
 		}
 	}
@@ -1207,7 +1213,7 @@ function movement_thread_wander()
 		positionquery_filter_distancetogoal(queryresult, self);
 		vehicle_ai::positionquery_filter_outofgoalanchor(queryresult);
 		vehicle_ai::positionquery_filter_random(queryresult, 200, 250);
-		foreach(var_b2b5bcc5, point in queryresult.data)
+		foreach(point in queryresult.data)
 		{
 			if(distance2dsquared(self.origin, point.origin) < 28900)
 			{
@@ -1357,27 +1363,27 @@ function do_melee(shoulddodamage, enemy)
 {
 	if(!isalive(enemy) || distancesquared(enemy.origin, self.origin) > (270 * 270))
 	{
-		return 0;
+		return false;
 	}
 	if(vehicle_ai::entityisarchetype(enemy, "quadtank") || vehicle_ai::entityisarchetype(enemy, "raps"))
 	{
-		return 0;
+		return false;
 	}
 	if(isplayer(enemy) && enemy laststand::player_is_in_laststand())
 	{
-		return 0;
+		return false;
 	}
 	self notify(#"play_meleefx");
 	if(shoulddodamage)
 	{
 		players = getplayers();
-		foreach(var_49abe3d2, player in players)
+		foreach(player in players)
 		{
 			player._takedamage_old = player.takedamage;
 			player.takedamage = 0;
 		}
 		radiusdamage(self.origin + vectorscale((0, 0, 1), 40), 270, 400, 400, self);
-		foreach(var_7d7b89ab, player in players)
+		foreach(player in players)
 		{
 			player.takedamage = player._takedamage_old;
 			player._takedamage_old = undefined;
@@ -1397,7 +1403,7 @@ function do_melee(shoulddodamage, enemy)
 		enemy dodamage(15, self.origin, self);
 	}
 	self playsound("veh_quadtank_emp");
-	return 1;
+	return true;
 }
 
 /*
@@ -1419,7 +1425,7 @@ function quadtank_automelee_update()
 	{
 		enemies = self getenemies();
 		meleed = 0;
-		foreach(var_8cf7c9f1, enemy in enemies)
+		foreach(enemy in enemies)
 		{
 			if(enemy isnotarget())
 			{
@@ -1735,7 +1741,7 @@ function _get_best_target_quadtank_side_turret(a_potential_targets, n_index)
 	e_best_target = undefined;
 	f_best_score = 100000;
 	s_turret = turret::_get_turret_data(n_index);
-	foreach(var_ee49db0e, e_target in a_potential_targets)
+	foreach(e_target in a_potential_targets)
 	{
 		f_score = distance(self.origin, e_target.origin);
 		b_current_target = turret::is_target(e_target, n_index);

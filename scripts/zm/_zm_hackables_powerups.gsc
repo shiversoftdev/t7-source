@@ -107,13 +107,16 @@ function powerup_hack(hacker)
 			self.powerup thread zm_powerups::powerup_grab();
 		}
 	}
-	else if(self.powerup.powerup_name == "full_ammo")
-	{
-		self.powerup zm_powerups::powerup_setup("fire_sale");
-	}
 	else
 	{
-		self.powerup zm_powerups::powerup_setup("full_ammo");
+		if(self.powerup.powerup_name == "full_ammo")
+		{
+			self.powerup zm_powerups::powerup_setup("fire_sale");
+		}
+		else
+		{
+			self.powerup zm_powerups::powerup_setup("full_ammo");
+		}
 	}
 	zm_equip_hacker::deregister_hackable_struct(self);
 }

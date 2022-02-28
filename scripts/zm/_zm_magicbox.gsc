@@ -31,7 +31,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_magicbox", &__init__, &__main__, undefined);
 }
@@ -124,7 +124,7 @@ function treasure_chest_init(start_chest_name)
 	}
 	if(!level.enable_magic)
 	{
-		foreach(var_fc5be8d7, chest in level.chests)
+		foreach(chest in level.chests)
 		{
 			chest hide_chest();
 		}
@@ -312,13 +312,13 @@ function boxstub_update_prompt(player)
 {
 	if(!self trigger_visible_to_player(player))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(level.func_magicbox_update_prompt_use_override))
 	{
 		if([[level.func_magicbox_update_prompt_use_override]]())
 		{
-			return 0;
+			return false;
 		}
 	}
 	self.hint_parm1 = undefined;
@@ -342,7 +342,7 @@ function boxstub_update_prompt(player)
 		self.hint_parm1 = self.stub.trigger_target.zombie_cost;
 		self.hint_string = zm_utility::get_hint_string(self, "default_treasure_chest");
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -389,10 +389,10 @@ function trigger_visible_to_player(player)
 	}
 	if(!visible)
 	{
-		return 0;
+		return false;
 	}
 	self setvisibletoplayer(player);
-	return 1;
+	return true;
 }
 
 /*
@@ -652,25 +652,31 @@ function treasure_chest_think()
 			self.chest_user = user;
 			break;
 		}
-		else if(zm_utility::is_player_valid(user) && user zm_score::can_player_purchase(self.zombie_cost))
+		else
 		{
-			user zm_score::minus_to_player_score(self.zombie_cost);
-			user_cost = self.zombie_cost;
-			self.chest_user = user;
-			break;
-		}
-		else if(isdefined(reduced_cost) && user zm_score::can_player_purchase(reduced_cost))
-		{
-			user zm_score::minus_to_player_score(reduced_cost);
-			user_cost = reduced_cost;
-			self.chest_user = user;
-			break;
-		}
-		else if(!user zm_score::can_player_purchase(self.zombie_cost))
-		{
-			zm_utility::play_sound_at_pos("no_purchase", self.origin);
-			user zm_audio::create_and_play_dialog("general", "outofmoney");
-			continue;
+			if(zm_utility::is_player_valid(user) && user zm_score::can_player_purchase(self.zombie_cost))
+			{
+				user zm_score::minus_to_player_score(self.zombie_cost);
+				user_cost = self.zombie_cost;
+				self.chest_user = user;
+				break;
+			}
+			else
+			{
+				if(isdefined(reduced_cost) && user zm_score::can_player_purchase(reduced_cost))
+				{
+					user zm_score::minus_to_player_score(reduced_cost);
+					user_cost = reduced_cost;
+					self.chest_user = user;
+					break;
+				}
+				else if(!user zm_score::can_player_purchase(self.zombie_cost))
+				{
+					zm_utility::play_sound_at_pos("no_purchase", self.origin);
+					user zm_audio::create_and_play_dialog("general", "outofmoney");
+					continue;
+				}
+			}
 		}
 		wait(0.05);
 	}
@@ -722,127 +728,130 @@ function treasure_chest_think()
 	{
 		self thread treasure_chest_move(self.chest_user);
 	}
-	else if(!(isdefined(self.unbearable_respin) && self.unbearable_respin))
+	else
 	{
-		self.grab_weapon_hint = 1;
-		self.grab_weapon = self.zbarrier.weapon;
-		self.chest_user = user;
-		bb::function_91f32a58(user, self, user_cost, self.grab_weapon, 0, "_magicbox", "_offered");
-		weaponidx = undefined;
-		if(isdefined(self.grab_weapon))
+		if(!(isdefined(self.unbearable_respin) && self.unbearable_respin))
 		{
-			weaponidx = matchrecordgetweaponindex(self.grab_weapon);
+			self.grab_weapon_hint = 1;
+			self.grab_weapon = self.zbarrier.weapon;
+			self.chest_user = user;
+			bb::logpurchaseevent(user, self, user_cost, self.grab_weapon, 0, "_magicbox", "_offered");
+			weaponidx = undefined;
+			if(isdefined(self.grab_weapon))
+			{
+				weaponidx = matchrecordgetweaponindex(self.grab_weapon);
+			}
+			if(isdefined(weaponidx))
+			{
+				user recordmapevent(10, gettime(), user.origin, level.round_number, weaponidx);
+			}
+			thread zm_unitrigger::register_static_unitrigger(self.unitrigger_stub, &magicbox_unitrigger_think);
+			if(isdefined(self.zbarrier) && (!(isdefined(self.zbarrier.closed_by_emp) && self.zbarrier.closed_by_emp)))
+			{
+				self thread treasure_chest_timeout();
+			}
 		}
-		if(isdefined(weaponidx))
+		while(!(isdefined(self.closed_by_emp) && self.closed_by_emp))
 		{
-			user recordmapevent(10, gettime(), user.origin, level.round_number, weaponidx);
-		}
-		thread zm_unitrigger::register_static_unitrigger(self.unitrigger_stub, &magicbox_unitrigger_think);
-		if(isdefined(self.zbarrier) && (!(isdefined(self.zbarrier.closed_by_emp) && self.zbarrier.closed_by_emp)))
-		{
-			self thread treasure_chest_timeout();
-		}
-	}
-	while(!(isdefined(self.closed_by_emp) && self.closed_by_emp))
-	{
-		self waittill(#"trigger", grabber);
-		self.weapon_out = undefined;
-		if(isdefined(level.magic_box_grab_by_anyone) && level.magic_box_grab_by_anyone)
-		{
-			if(isplayer(grabber))
+			self waittill(#"trigger", grabber);
+			self.weapon_out = undefined;
+			if(isdefined(level.magic_box_grab_by_anyone) && level.magic_box_grab_by_anyone)
+			{
+				if(isplayer(grabber))
+				{
+					user = grabber;
+				}
+			}
+			if(isdefined(level.pers_upgrade_box_weapon) && level.pers_upgrade_box_weapon)
+			{
+				self zm_pers_upgrades_functions::pers_upgrade_box_weapon_used(user, grabber);
+			}
+			if(isdefined(grabber.is_drinking) && grabber.is_drinking > 0)
+			{
+				wait(0.1);
+				continue;
+			}
+			if(grabber == user && user getcurrentweapon() == level.weaponnone)
+			{
+				wait(0.1);
+				continue;
+			}
+			if(grabber != level && (isdefined(self.box_rerespun) && self.box_rerespun))
 			{
 				user = grabber;
 			}
-		}
-		if(isdefined(level.pers_upgrade_box_weapon) && level.pers_upgrade_box_weapon)
-		{
-			self zm_pers_upgrades_functions::pers_upgrade_box_weapon_used(user, grabber);
-		}
-		if(isdefined(grabber.is_drinking) && grabber.is_drinking > 0)
-		{
-			wait(0.1);
-			continue;
-		}
-		if(grabber == user && user getcurrentweapon() == level.weaponnone)
-		{
-			wait(0.1);
-			continue;
-		}
-		if(grabber != level && (isdefined(self.box_rerespun) && self.box_rerespun))
-		{
-			user = grabber;
-		}
-		if(grabber == user || grabber == level)
-		{
-			self.box_rerespun = undefined;
-			current_weapon = level.weaponnone;
-			if(zm_utility::is_player_valid(user))
+			if(grabber == user || grabber == level)
 			{
-				current_weapon = user getcurrentweapon();
+				self.box_rerespun = undefined;
+				current_weapon = level.weaponnone;
+				if(zm_utility::is_player_valid(user))
+				{
+					current_weapon = user getcurrentweapon();
+				}
+				if(grabber == user && zm_utility::is_player_valid(user) && !(user.is_drinking > 0) && !zm_utility::is_placeable_mine(current_weapon) && !zm_equipment::is_equipment(current_weapon) && !user zm_utility::is_player_revive_tool(current_weapon) && !current_weapon.isheroweapon && !current_weapon.isgadget)
+				{
+					bb::logpurchaseevent(user, self, user_cost, self.zbarrier.weapon, 0, "_magicbox", "_grabbed");
+					weaponidx = undefined;
+					if(isdefined(self.zbarrier) && isdefined(self.zbarrier.weapon))
+					{
+						weaponidx = matchrecordgetweaponindex(self.zbarrier.weapon);
+					}
+					if(isdefined(weaponidx))
+					{
+						user recordmapevent(11, gettime(), user.origin, level.round_number, weaponidx);
+					}
+					self notify(#"user_grabbed_weapon");
+					user notify(#"user_grabbed_weapon");
+					user thread treasure_chest_give_weapon(self.zbarrier.weapon);
+					demo::bookmark("zm_player_grabbed_magicbox", gettime(), user);
+					user zm_stats::increment_client_stat("grabbed_from_magicbox");
+					user zm_stats::increment_player_stat("grabbed_from_magicbox");
+					break;
+				}
+				else if(grabber == level)
+				{
+					self.timedout = 1;
+					bb::logpurchaseevent(user, self, user_cost, self.zbarrier.weapon, 0, "_magicbox", "_returned");
+					weaponidx = undefined;
+					if(isdefined(self.zbarrier) && isdefined(self.zbarrier.weapon))
+					{
+						weaponidx = matchrecordgetweaponindex(self.zbarrier.weapon);
+					}
+					if(isdefined(weaponidx))
+					{
+						user recordmapevent(12, gettime(), user.origin, level.round_number, weaponidx);
+					}
+					break;
+				}
 			}
-			if(grabber == user && zm_utility::is_player_valid(user) && !(user.is_drinking > 0) && !zm_utility::is_placeable_mine(current_weapon) && !zm_equipment::is_equipment(current_weapon) && !user zm_utility::is_player_revive_tool(current_weapon) && !current_weapon.isheroweapon && !current_weapon.isgadget)
-			{
-				bb::function_91f32a58(user, self, user_cost, self.zbarrier.weapon, 0, "_magicbox", "_grabbed");
-				weaponidx = undefined;
-				if(isdefined(self.zbarrier) && isdefined(self.zbarrier.weapon))
-				{
-					weaponidx = matchrecordgetweaponindex(self.zbarrier.weapon);
-				}
-				if(isdefined(weaponidx))
-				{
-					user recordmapevent(11, gettime(), user.origin, level.round_number, weaponidx);
-				}
-				self notify(#"user_grabbed_weapon");
-				user notify(#"user_grabbed_weapon");
-				user thread treasure_chest_give_weapon(self.zbarrier.weapon);
-				demo::bookmark("zm_player_grabbed_magicbox", gettime(), user);
-				user zm_stats::increment_client_stat("grabbed_from_magicbox");
-				user zm_stats::increment_player_stat("grabbed_from_magicbox");
-				break;
-			}
-			else if(grabber == level)
-			{
-				self.timedout = 1;
-				bb::function_91f32a58(user, self, user_cost, self.zbarrier.weapon, 0, "_magicbox", "_returned");
-				weaponidx = undefined;
-				if(isdefined(self.zbarrier) && isdefined(self.zbarrier.weapon))
-				{
-					weaponidx = matchrecordgetweaponindex(self.zbarrier.weapon);
-				}
-				if(isdefined(weaponidx))
-				{
-					user recordmapevent(12, gettime(), user.origin, level.round_number, weaponidx);
-				}
-				break;
-			}
+			wait(0.05);
 		}
-		wait(0.05);
-	}
-	self.grab_weapon_hint = 0;
-	self.zbarrier notify(#"weapon_grabbed");
-	if(!(isdefined(self._box_opened_by_fire_sale) && self._box_opened_by_fire_sale))
-	{
-		level.chest_accessed = level.chest_accessed + 1;
-	}
-	thread zm_unitrigger::unregister_unitrigger(self.unitrigger_stub);
-	if(isdefined(self.chest_lid))
-	{
-		self.chest_lid thread treasure_chest_lid_close(self.timedout);
-	}
-	if(isdefined(self.zbarrier))
-	{
-		self.zbarrier set_magic_box_zbarrier_state("close");
-		zm_utility::play_sound_at_pos("close_chest", self.origin);
-		self.zbarrier waittill(#"closed");
-		wait(1);
-	}
-	else
-	{
-		wait(3);
-	}
-	if(isdefined(level.zombie_vars["zombie_powerup_fire_sale_on"]) && level.zombie_vars["zombie_powerup_fire_sale_on"] && self [[level._zombiemode_check_firesale_loc_valid_func]]() || self == level.chests[level.chest_index])
-	{
-		thread zm_unitrigger::register_static_unitrigger(self.unitrigger_stub, &magicbox_unitrigger_think);
+		self.grab_weapon_hint = 0;
+		self.zbarrier notify(#"weapon_grabbed");
+		if(!(isdefined(self._box_opened_by_fire_sale) && self._box_opened_by_fire_sale))
+		{
+			level.chest_accessed = level.chest_accessed + 1;
+		}
+		thread zm_unitrigger::unregister_unitrigger(self.unitrigger_stub);
+		if(isdefined(self.chest_lid))
+		{
+			self.chest_lid thread treasure_chest_lid_close(self.timedout);
+		}
+		if(isdefined(self.zbarrier))
+		{
+			self.zbarrier set_magic_box_zbarrier_state("close");
+			zm_utility::play_sound_at_pos("close_chest", self.origin);
+			self.zbarrier waittill(#"closed");
+			wait(1);
+		}
+		else
+		{
+			wait(3);
+		}
+		if(isdefined(level.zombie_vars["zombie_powerup_fire_sale_on"]) && level.zombie_vars["zombie_powerup_fire_sale_on"] && self [[level._zombiemode_check_firesale_loc_valid_func]]() || self == level.chests[level.chest_index])
+		{
+			thread zm_unitrigger::register_static_unitrigger(self.unitrigger_stub, &magicbox_unitrigger_think);
+		}
 	}
 	self._box_open = 0;
 	self._box_opened_by_fire_sale = 0;
@@ -916,30 +925,30 @@ function can_buy_weapon()
 {
 	if(isdefined(self.is_drinking) && self.is_drinking > 0)
 	{
-		return 0;
+		return false;
 	}
 	if(self zm_equipment::hacker_active())
 	{
-		return 0;
+		return false;
 	}
 	current_weapon = self getcurrentweapon();
 	if(zm_utility::is_placeable_mine(current_weapon) || zm_equipment::is_equipment_that_blocks_purchase(current_weapon))
 	{
-		return 0;
+		return false;
 	}
 	if(self zm_utility::in_revive_trigger())
 	{
-		return 0;
+		return false;
 	}
 	if(current_weapon == level.weaponnone)
 	{
-		return 0;
+		return false;
 	}
 	if(current_weapon.isheroweapon || current_weapon.isgadget)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1363,28 +1372,31 @@ function decide_hide_show_hint(endon_notify, second_endon_notify, onlyplayer, ca
 				self setvisibletoplayer(self.chest_user);
 			}
 		}
-		else if(isdefined(onlyplayer))
+		else
 		{
-			if(onlyplayer can_buy_weapon() && (!isdefined(can_buy_weapon_extra_check_func) || onlyplayer [[can_buy_weapon_extra_check_func]](self.weapon)) && !onlyplayer bgb::is_enabled("zm_bgb_disorderly_combat"))
+			if(isdefined(onlyplayer))
 			{
-				self setinvisibletoplayer(onlyplayer, 0);
+				if(onlyplayer can_buy_weapon() && (!isdefined(can_buy_weapon_extra_check_func) || onlyplayer [[can_buy_weapon_extra_check_func]](self.weapon)) && !onlyplayer bgb::is_enabled("zm_bgb_disorderly_combat"))
+				{
+					self setinvisibletoplayer(onlyplayer, 0);
+				}
+				else
+				{
+					self setinvisibletoplayer(onlyplayer, 1);
+				}
 			}
 			else
 			{
-				self setinvisibletoplayer(onlyplayer, 1);
-			}
-		}
-		else
-		{
-			players = getplayers();
-			for(i = 0; i < players.size; i++)
-			{
-				if(players[i] can_buy_weapon() && (!isdefined(can_buy_weapon_extra_check_func) || players[i] [[can_buy_weapon_extra_check_func]](self.weapon)) && !players[i] bgb::is_enabled("zm_bgb_disorderly_combat"))
+				players = getplayers();
+				for(i = 0; i < players.size; i++)
 				{
-					self setinvisibletoplayer(players[i], 0);
-					continue;
+					if(players[i] can_buy_weapon() && (!isdefined(can_buy_weapon_extra_check_func) || players[i] [[can_buy_weapon_extra_check_func]](self.weapon)) && !players[i] bgb::is_enabled("zm_bgb_disorderly_combat"))
+					{
+						self setinvisibletoplayer(players[i], 0);
+						continue;
+					}
+					self setinvisibletoplayer(players[i], 1);
 				}
-				self setinvisibletoplayer(players[i], 1);
 			}
 		}
 		if(use_choke)
@@ -1540,10 +1552,10 @@ function treasure_chest_should_move(chest, player)
 		}
 		if(chance_of_joker > random)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1763,46 +1775,49 @@ function treasure_chest_weapon_spawn(chest, player, respin)
 			level notify(#"weapon_fly_away_end");
 		}
 	}
-	else if(!isdefined(respin))
-	{
-		if(isdefined(chest.box_hacks["respin"]))
-		{
-			self [[chest.box_hacks["respin"]]](chest, player);
-		}
-	}
-	else if(isdefined(chest.box_hacks["respin_respin"]))
-	{
-		self [[chest.box_hacks["respin_respin"]]](chest, player);
-	}
-	if(isdefined(level.custom_magic_box_timer_til_despawn))
-	{
-		self.weapon_model thread [[level.custom_magic_box_timer_til_despawn]](self);
-	}
 	else
 	{
-		self.weapon_model thread timer_til_despawn(v_float);
-	}
-	if(isdefined(self.weapon_model_dw))
-	{
+		if(!isdefined(respin))
+		{
+			if(isdefined(chest.box_hacks["respin"]))
+			{
+				self [[chest.box_hacks["respin"]]](chest, player);
+			}
+		}
+		else if(isdefined(chest.box_hacks["respin_respin"]))
+		{
+			self [[chest.box_hacks["respin_respin"]]](chest, player);
+		}
 		if(isdefined(level.custom_magic_box_timer_til_despawn))
 		{
-			self.weapon_model_dw thread [[level.custom_magic_box_timer_til_despawn]](self);
+			self.weapon_model thread [[level.custom_magic_box_timer_til_despawn]](self);
 		}
 		else
 		{
-			self.weapon_model_dw thread timer_til_despawn(v_float);
-		}
-	}
-	self waittill(#"weapon_grabbed");
-	if(!chest.timedout)
-	{
-		if(isdefined(self.weapon_model))
-		{
-			self.weapon_model delete();
+			self.weapon_model thread timer_til_despawn(v_float);
 		}
 		if(isdefined(self.weapon_model_dw))
 		{
-			self.weapon_model_dw delete();
+			if(isdefined(level.custom_magic_box_timer_til_despawn))
+			{
+				self.weapon_model_dw thread [[level.custom_magic_box_timer_til_despawn]](self);
+			}
+			else
+			{
+				self.weapon_model_dw thread timer_til_despawn(v_float);
+			}
+		}
+		self waittill(#"weapon_grabbed");
+		if(!chest.timedout)
+		{
+			if(isdefined(self.weapon_model))
+			{
+				self.weapon_model delete();
+			}
+			if(isdefined(self.weapon_model_dw))
+			{
+				self.weapon_model_dw delete();
+			}
 		}
 	}
 	chest treasure_chest_weapon_locking(player, preferred_weapon, 0);
@@ -1844,34 +1859,49 @@ function chest_get_max_usage()
 		{
 			max_usage = 3;
 		}
-		else if(players.size == 2)
-		{
-			max_usage = 4;
-		}
-		else if(players.size == 3)
-		{
-			max_usage = 5;
-		}
 		else
 		{
-			max_usage = 6;
+			if(players.size == 2)
+			{
+				max_usage = 4;
+			}
+			else
+			{
+				if(players.size == 3)
+				{
+					max_usage = 5;
+				}
+				else
+				{
+					max_usage = 6;
+				}
+			}
 		}
-	}
-	else if(players.size == 1)
-	{
-		max_usage = 4;
-	}
-	else if(players.size == 2)
-	{
-		max_usage = 4;
-	}
-	else if(players.size == 3)
-	{
-		max_usage = 5;
 	}
 	else
 	{
-		max_usage = 7;
+		if(players.size == 1)
+		{
+			max_usage = 4;
+		}
+		else
+		{
+			if(players.size == 2)
+			{
+				max_usage = 4;
+			}
+			else
+			{
+				if(players.size == 3)
+				{
+					max_usage = 5;
+				}
+				else
+				{
+					max_usage = 7;
+				}
+			}
+		}
 	}
 	return max_usage;
 }
@@ -2172,13 +2202,13 @@ function is_chest_active()
 	curr_state = self.zbarrier get_magic_box_zbarrier_state();
 	if(level flag::get("moving_chest_now"))
 	{
-		return 0;
+		return false;
 	}
 	if(curr_state == "open" || curr_state == "close")
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2302,7 +2332,7 @@ function magicbox_host_migration()
 		{
 			continue;
 		}
-		foreach(var_2130f9f3, chest in level.chests)
+		foreach(chest in level.chests)
 		{
 			if(!(isdefined(chest.hidden) && chest.hidden))
 			{
@@ -2331,7 +2361,7 @@ function box_encounter_vo()
 	self endon(#"left");
 	while(true)
 	{
-		foreach(var_e592e44e, player in getplayers())
+		foreach(player in getplayers())
 		{
 			distancefromplayertobox = distance(player.origin, self.origin);
 			if(distancefromplayertobox < 400 && player zm_utility::is_player_looking_at(self.origin))

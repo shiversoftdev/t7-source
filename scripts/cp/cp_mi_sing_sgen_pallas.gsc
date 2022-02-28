@@ -117,7 +117,7 @@ function skipto_pallas_start_init(str_objective, b_starting)
 	}
 	level thread function_8470b8c(b_starting);
 	level thread pallas_greeting_event(b_starting);
-	foreach(var_df802866, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		e_player util::player_frost_breath(1);
 	}
@@ -133,7 +133,7 @@ function skipto_pallas_start_init(str_objective, b_starting)
 	level flag::wait_till("pallas_death");
 	level notify(#"deleting_corpse");
 	a_pallas_bot = getaiteamarray("team3");
-	foreach(var_316cf841, bot in a_pallas_bot)
+	foreach(bot in a_pallas_bot)
 	{
 		bot delete();
 	}
@@ -198,7 +198,7 @@ function skipto_pallas_end_init(str_objective, b_starting)
 	level thread all_hoses_break();
 	level scene::add_scene_func("cin_sgen_19_ghost_3rd_sh010", &function_48b24f3d, "play");
 	level scene::add_scene_func("cin_sgen_19_ghost_3rd_sh040", &function_ac1384da, "play");
-	level scene::add_scene_func("cin_sgen_19_ghost_3rd_sh110", &function_c524f1b2, "play");
+	level scene::add_scene_func("cin_sgen_19_ghost_3rd_sh110", &ghost_3rd_sh110, "play");
 	level scene::add_scene_func("cin_sgen_19_ghost_3rd_sh050", &function_7d1791ba, "done");
 	level scene::add_scene_func("cin_sgen_19_ghost_3rd_sh190", &pallas_end_igc_complete, "done");
 	level thread scene::play("p7_fxanim_cp_sgen_pallas_ai_tower_collapse_bundle");
@@ -309,7 +309,7 @@ function function_7d1791ba(a_ents)
 }
 
 /*
-	Name: function_c524f1b2
+	Name: ghost_3rd_sh110
 	Namespace: cp_mi_sing_sgen_pallas
 	Checksum: 0xD17421B9
 	Offset: 0x2558
@@ -317,9 +317,9 @@ function function_7d1791ba(a_ents)
 	Parameters: 1
 	Flags: Linked
 */
-function function_c524f1b2(a_ents)
+function ghost_3rd_sh110(a_ents)
 {
-	foreach(var_396e6f73, e_in_scene in a_ents)
+	foreach(e_in_scene in a_ents)
 	{
 		if(e_in_scene == level.ai_hendricks)
 		{
@@ -360,7 +360,7 @@ function skipto_pallas_end_done(str_objective, b_starting, b_direct, player)
 	objectives::complete("cp_level_sgen_confront_pallas");
 	if(!b_starting)
 	{
-		foreach(var_b9659309, e_player in level.players)
+		foreach(e_player in level.players)
 		{
 			e_player util::player_frost_breath(0);
 		}
@@ -440,9 +440,9 @@ function handle_pallas_animation()
 {
 	scene::add_scene_func("cin_sgen_18_01_pallasfight_vign_crucifix_pallas_loop", &scene_callback_pallas_loop, "play");
 	e_pallas_spawner = getent("pallas", "targetname");
-	var_764b080d = getent("pallas2", "targetname");
+	e_pallas_spawner2 = getent("pallas2", "targetname");
 	e_pallas_spawner spawner::add_spawn_function(&pallas_init);
-	var_764b080d spawner::add_spawn_function(&pallas_init, 1);
+	e_pallas_spawner2 spawner::add_spawn_function(&pallas_init, 1);
 	level thread scene::play("cin_sgen_18_01_pallasfight_vign_crucifix_pallas_loop");
 	videostart("cp_sgen_env_diazserver", 1);
 	level waittill(#"pallas_attacked");
@@ -545,7 +545,7 @@ function function_8470b8c(b_starting)
 	level.pallas_tier_two_guards = [];
 	level.pallas_bottom_tier_guards = [];
 	var_91f66e00 = getentarray("pallas_intro_spawner", "targetname");
-	foreach(var_bcccd2c2, sp_robot in var_91f66e00)
+	foreach(sp_robot in var_91f66e00)
 	{
 		ai_robot = spawner::simple_spawn_single(sp_robot);
 		if(isdefined(ai_robot))
@@ -686,15 +686,18 @@ function robot_mindcontrol_center_guard()
 		level.pallas_center_guards[level.pallas_center_guards.size] = self;
 		v_goal_volume = getent("pallas_center_volume", "targetname");
 	}
-	else if(level.pallas_tier_two_guards.size < 6)
-	{
-		level.pallas_tier_two_guards[level.pallas_tier_two_guards.size] = self;
-		v_goal_volume = getent("pallas_tier_two_volume", "targetname");
-	}
 	else
 	{
-		level.pallas_bottom_tier_guards[level.pallas_bottom_tier_guards.size] = self;
-		v_goal_volume = getent("pallas_bottom_tier", "targetname");
+		if(level.pallas_tier_two_guards.size < 6)
+		{
+			level.pallas_tier_two_guards[level.pallas_tier_two_guards.size] = self;
+			v_goal_volume = getent("pallas_tier_two_volume", "targetname");
+		}
+		else
+		{
+			level.pallas_bottom_tier_guards[level.pallas_bottom_tier_guards.size] = self;
+			v_goal_volume = getent("pallas_bottom_tier", "targetname");
+		}
 	}
 	self setgoal(v_goal_volume, 1);
 	self thread function_39072821();
@@ -852,7 +855,7 @@ function elevator_set_shaft_state(str_state)
 	e_lift = getent("boss_fight_lift", "targetname");
 	if(!e_lift.a_e_shaft_doors["left"].str_state === str_state)
 	{
-		foreach(var_77085d2, e_shaft_door in e_lift.a_e_shaft_doors)
+		foreach(e_shaft_door in e_lift.a_e_shaft_doors)
 		{
 			v_move_value = e_shaft_door.script_vector;
 			if(str_state == "close")
@@ -939,7 +942,7 @@ function elevator_lift_intro()
 	level notify(#"elevator_vo");
 	level notify(#"pallas_elevator_starting");
 	a_ai = getaiteamarray("team3");
-	foreach(var_72a57b1d, ai in a_ai)
+	foreach(ai in a_ai)
 	{
 		if(isalive(ai))
 		{
@@ -954,7 +957,7 @@ function elevator_lift_intro()
 	elevator_set_door_state("back", "open");
 	level notify(#"enter_server");
 	a_nd_traverse = getnodearray("pallas_elevator_start", "script_noteworthy");
-	foreach(var_6a14cd34, node in a_nd_traverse)
+	foreach(node in a_nd_traverse)
 	{
 		linktraversal(node);
 	}
@@ -1085,7 +1088,7 @@ function handle_pallas_pillar_weakspot()
 	level endon(#"pallas_start");
 	level waittill(#"pallas_objective_start");
 	a_t_coolants = getentarray("pallas_coolant_control", "targetname");
-	foreach(var_caf4df84, trigger in a_t_coolants)
+	foreach(trigger in a_t_coolants)
 	{
 		trigger sethintstring(&"CP_MI_SING_SGEN_DESTROY_PILLAR");
 		trigger triggerenable(0);
@@ -1580,7 +1583,7 @@ function do_attack_on_hendricks()
 */
 function function_e8ee435e()
 {
-	foreach(var_27d2e73f, ai_bot in level.a_assault_bot)
+	foreach(ai_bot in level.a_assault_bot)
 	{
 		if(isalive(ai_bot))
 		{
@@ -1896,7 +1899,7 @@ function check_wall_climb_vo()
 function detonate_robots(b_immediate = 0)
 {
 	a_e_enemies = getaiteamarray("team3");
-	foreach(var_fdab05a8, e_enemy in a_e_enemies)
+	foreach(e_enemy in a_e_enemies)
 	{
 		if(isalive(e_enemy))
 		{
@@ -2023,7 +2026,7 @@ function check_for_nearby_players()
 	self endon(#"death");
 	while(true)
 	{
-		foreach(var_9a4e63df, player in level.players)
+		foreach(player in level.players)
 		{
 			if(distancesquared(self.origin, player.origin) < 250000)
 			{
@@ -2050,7 +2053,7 @@ function handle_robot_sm(str_triggername, str_sm)
 	while(true)
 	{
 		n_player = 0;
-		foreach(var_32f1922, player in level.players)
+		foreach(player in level.players)
 		{
 			if(player istouching(trigger))
 			{

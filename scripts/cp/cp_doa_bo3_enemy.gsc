@@ -63,7 +63,7 @@ function function_65762352(classname, var_3a9f2119)
 	}
 	if(!isdefined(var_3a9f2119))
 	{
-		foreach(var_a2a5264e, spawner in level.doa.enemyspawners)
+		foreach(spawner in level.doa.enemyspawners)
 		{
 			if(spawner.classname == "script_vehicle" && (isdefined(spawner.archetype) && spawner.archetype == classname || issubstr(spawner.vehicletype, classname)))
 			{
@@ -107,65 +107,107 @@ function function_65762352(classname, var_3a9f2119)
 		{
 			function_ee2c4b95(var_3a9f2119, loc, def);
 		}
-		else if(issubstr(classname, "smokeman"))
+		else
 		{
-			function_b9980eda(var_3a9f2119, loc, def);
-		}
-		else if(issubstr(classname, "parasite_purple"))
-		{
-			function_33525e11(var_3a9f2119, loc, def);
-		}
-		else if(issubstr(classname, "parasite"))
-		{
-			function_1631202b(var_3a9f2119, loc, def);
-		}
-		else if(issubstr(classname, "meatball"))
-		{
-			function_fb051310(var_3a9f2119, loc, def);
-		}
-		else if(issubstr(classname, "cellbreaker"))
-		{
-			function_5e86b6fa(var_3a9f2119, loc, def);
-		}
-		else if(issubstr(classname, "riser"))
-		{
-			function_45849d81(var_3a9f2119, loc, def);
-		}
-		else if(issubstr(classname, "skeleton"))
-		{
-			doa_enemy::function_a4e16560(getent("spawner_zombietron_skeleton", "targetname"), loc, (isdefined(def) ? def.forcespawn : 0));
-		}
-		else if(issubstr(classname, "collector"))
-		{
-			function_53b44cb7(spawner, loc, def, 1);
-		}
-		else if(issubstr(classname, "mannequin_female"))
-		{
-			function_92159541(spawner, loc, def);
-		}
-		else if(issubstr(classname, "basic"))
-		{
-			doa_enemy::function_a4e16560(getent("doa_basic_spawner", "targetname"), loc, (isdefined(def) ? def.forcespawn : 0));
-		}
-		else if(issubstr(classname, "warlord"))
-		{
-			function_a0d7d949(var_3a9f2119, loc, def);
-		}
-		else if(issubstr(classname, "_dog"))
-		{
-			function_bb3b0416(var_3a9f2119, loc, def);
-		}
-		else if(issubstr(classname, "_robot"))
-		{
-			function_4d2a4a76(var_3a9f2119, loc, def);
-		}
-		else if(issubstr(classname, "silverback"))
-		{
-			function_36aa8b6c(loc);
-		}
-		else if(issubstr(classname, "margwa"))
-		{
-			doa_enemy::function_a4e16560(getent("doa_margwa_spawner", "targetname"), loc, (isdefined(def) ? def.forcespawn : 0));
+			if(issubstr(classname, "smokeman"))
+			{
+				function_b9980eda(var_3a9f2119, loc, def);
+			}
+			else
+			{
+				if(issubstr(classname, "parasite_purple"))
+				{
+					function_33525e11(var_3a9f2119, loc, def);
+				}
+				else
+				{
+					if(issubstr(classname, "parasite"))
+					{
+						function_1631202b(var_3a9f2119, loc, def);
+					}
+					else
+					{
+						if(issubstr(classname, "meatball"))
+						{
+							function_fb051310(var_3a9f2119, loc, def);
+						}
+						else
+						{
+							if(issubstr(classname, "cellbreaker"))
+							{
+								function_5e86b6fa(var_3a9f2119, loc, def);
+							}
+							else
+							{
+								if(issubstr(classname, "riser"))
+								{
+									function_45849d81(var_3a9f2119, loc, def);
+								}
+								else
+								{
+									if(issubstr(classname, "skeleton"))
+									{
+										doa_enemy::function_a4e16560(getent("spawner_zombietron_skeleton", "targetname"), loc, (isdefined(def) ? def.forcespawn : 0));
+									}
+									else
+									{
+										if(issubstr(classname, "collector"))
+										{
+											function_53b44cb7(spawner, loc, def, 1);
+										}
+										else
+										{
+											if(issubstr(classname, "mannequin_female"))
+											{
+												function_92159541(spawner, loc, def);
+											}
+											else
+											{
+												if(issubstr(classname, "basic"))
+												{
+													doa_enemy::function_a4e16560(getent("doa_basic_spawner", "targetname"), loc, (isdefined(def) ? def.forcespawn : 0));
+												}
+												else
+												{
+													if(issubstr(classname, "warlord"))
+													{
+														function_a0d7d949(var_3a9f2119, loc, def);
+													}
+													else
+													{
+														if(issubstr(classname, "_dog"))
+														{
+															function_bb3b0416(var_3a9f2119, loc, def);
+														}
+														else
+														{
+															if(issubstr(classname, "_robot"))
+															{
+																function_4d2a4a76(var_3a9f2119, loc, def);
+															}
+															else
+															{
+																if(issubstr(classname, "silverback"))
+																{
+																	function_36aa8b6c(loc);
+																}
+																else if(issubstr(classname, "margwa"))
+																{
+																	doa_enemy::function_a4e16560(getent("doa_margwa_spawner", "targetname"), loc, (isdefined(def) ? def.forcespawn : 0));
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 }
@@ -677,7 +719,7 @@ function droptoground(origin, trailfx, var_b8f99479 = "turret_impact", var_96214
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_9a5d69ac()
+function private function_9a5d69ac()
 {
 	self endon(#"death");
 	self.zombie_move_speed = "walk";
@@ -1221,9 +1263,9 @@ function function_129ef3d()
 {
 	if(!mayspawnentity())
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1447,7 +1489,7 @@ function function_ef4fa49d(&spots, mindist = 300)
 {
 	mindistsq = mindist * mindist;
 	newspots = [];
-	foreach(var_c50330b5, spot in spots)
+	foreach(spot in spots)
 	{
 		if(distancesquared(spot.origin, self.origin) >= mindistsq)
 		{
@@ -1711,7 +1753,7 @@ function function_45849d81(spawner, loc, def)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_28cdab69(def)
+function private function_28cdab69(def)
 {
 	def.initialized = 1;
 	def.var_40c7a009 = 0;
@@ -1739,7 +1781,7 @@ private function function_28cdab69(def)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_1ee8b18c(def, ai)
+function private function_1ee8b18c(def, ai)
 {
 	ai endon(#"hash_9757351b");
 	ai waittill(#"death");
@@ -1755,7 +1797,7 @@ private function function_1ee8b18c(def, ai)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_be745286(def, ai)
+function private function_be745286(def, ai)
 {
 	ai endon(#"death");
 	ai thread function_1ee8b18c(def, ai);
@@ -1779,7 +1821,7 @@ private function function_be745286(def, ai)
 	Parameters: 4
 	Flags: Linked, Private
 */
-private function function_b6d31d3a(spot, hold = 0, fx = "zombie_riser_fx", var_3d98e879 = "ai_zombie_traverse_ground_climbout_fast")
+function private function_b6d31d3a(spot, hold = 0, fx = "zombie_riser_fx", var_3d98e879 = "ai_zombie_traverse_ground_climbout_fast")
 {
 	self endon(#"death");
 	self.rising = 1;
@@ -1823,7 +1865,7 @@ private function function_b6d31d3a(spot, hold = 0, fx = "zombie_riser_fx", var_3
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_2f0633b5()
+function private function_2f0633b5()
 {
 	self endon(#"death");
 	wait(0.5);
@@ -1842,7 +1884,7 @@ private function function_2f0633b5()
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_7c9f5521(zombie, spot)
+function private function_7c9f5521(zombie, spot)
 {
 	zombie endon(#"rise_anim_finished");
 	while(isdefined(zombie) && isdefined(zombie.health) && zombie.health > 1)
@@ -1903,7 +1945,7 @@ function function_57aea19e()
 	{
 		self.var_30fc80e6 = 1;
 		self animscripted("plant_anim", self.origin, self.angles, "ai_wrlrd_stn_combat_doa_plant_mine");
-		self waittill_match(#"hash_eecd4c04");
+		self waittillmatch(#"hash_eecd4c04");
 	}
 	self.var_55361ee6 = self.var_55361ee6 - 1;
 	bomb = spawn("script_model", self.origin);
@@ -1914,7 +1956,7 @@ function function_57aea19e()
 	bomb thread namespace_eaa992c::function_285a2999("explo_warning_light");
 	bomb thread function_97fb783(5);
 	bomb.takedamage = 1;
-	self waittill_match(#"hash_eecd4c04");
+	self waittillmatch(#"hash_eecd4c04");
 	self.var_30fc80e6 = undefined;
 }
 
@@ -2000,7 +2042,7 @@ function function_2fd0d5c7(behaviortreeentity)
 	if(level flag::get("doa_game_is_over"))
 	{
 		behaviortreeentity doa_enemy::function_d30fe558(behaviortreeentity.origin);
-		return 1;
+		return true;
 	}
 	if(isdefined(behaviortreeentity.doa) && behaviortreeentity.doa.stunned != 0)
 	{
@@ -2013,7 +2055,7 @@ function function_2fd0d5c7(behaviortreeentity)
 		{
 			behaviortreeentity doa_enemy::function_d30fe558(behaviortreeentity.origin);
 		}
-		return 1;
+		return true;
 	}
 	if(isdefined(behaviortreeentity.var_55361ee6) && behaviortreeentity.var_55361ee6 > 0)
 	{
@@ -2035,7 +2077,7 @@ function function_2fd0d5c7(behaviortreeentity)
 		else
 		{
 			behaviortreeentity doa_enemy::function_d30fe558(behaviortreeentity.var_8f12ed02);
-			return 1;
+			return true;
 		}
 	}
 	if(isdefined(behaviortreeentity.enemy))
@@ -2047,10 +2089,10 @@ function function_2fd0d5c7(behaviortreeentity)
 			behaviortreeentity.lastknownenemypos = point;
 			behaviortreeentity doa_enemy::function_d30fe558(behaviortreeentity.lastknownenemypos);
 		}
-		return 1;
+		return true;
 	}
 	behaviortreeentity doa_enemy::function_d30fe558(behaviortreeentity.origin);
-	return 0;
+	return false;
 }
 
 /*
@@ -2159,7 +2201,7 @@ function function_772a04fe()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_45f23318(ai)
+function private function_45f23318(ai)
 {
 	self endon(#"death");
 	ai endon(#"goal");
@@ -2228,7 +2270,7 @@ function function_4ce6d0ea()
 	level thread function_7e51c1d2();
 	level notify(#"hash_e2918623");
 	setdvar("scr_margwa_footstep_eq_radius", 0);
-	foreach(var_535d8bca, player in namespace_831a4a7c::function_5eb6e4d1())
+	foreach(player in namespace_831a4a7c::function_5eb6e4d1())
 	{
 		player notify(#"hash_d28ba89d");
 	}
@@ -2274,7 +2316,7 @@ function function_4ce6d0ea()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_e8a17069()
+function private function_e8a17069()
 {
 	self endon(#"death");
 	while(true)
@@ -2321,7 +2363,7 @@ function function_62d794a5()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_13109fad()
+function private function_13109fad()
 {
 	self endon(#"death");
 	while(true)
@@ -2340,7 +2382,7 @@ private function function_13109fad()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_c0147a11()
+function private function_c0147a11()
 {
 	wait(0.05);
 	self endon(#"death");
@@ -2408,23 +2450,26 @@ function margwadamage(inflictor, attacker, damage, dflags, mod, weapon, point, d
 		org setmodel("tag_origin");
 		level doa_pickups::function_3238133b("zombietron_heart", self.origin, 1, 1, 90);
 	}
-	else if(self.health >= self.var_b220d777 && (self.health - damage) < self.var_b220d777)
+	else
 	{
-		self notify(#"hash_2f07c48c");
-		modelhit = "c_zom_margwa_chunks_ri";
-		org = spawn("script_model", self gettagorigin("J_Head_RI"));
-		org.targetname = "margwa1";
-		org setmodel("tag_origin");
-		level doa_pickups::function_3238133b("zombietron_heart", self.origin, 1, 1, 90);
-	}
-	else if(self.health >= self.var_e6ea564a && (self.health - damage) < self.var_e6ea564a)
-	{
-		self notify(#"hash_2f07c48c");
-		modelhit = "c_zom_margwa_chunks_mid";
-		org = spawn("script_model", self gettagorigin("J_Head"));
-		org.targetname = "margwa1";
-		org setmodel("tag_origin");
-		level doa_pickups::function_3238133b("zombietron_heart", self.origin, 1, 1, 90);
+		if(self.health >= self.var_b220d777 && (self.health - damage) < self.var_b220d777)
+		{
+			self notify(#"hash_2f07c48c");
+			modelhit = "c_zom_margwa_chunks_ri";
+			org = spawn("script_model", self gettagorigin("J_Head_RI"));
+			org.targetname = "margwa1";
+			org setmodel("tag_origin");
+			level doa_pickups::function_3238133b("zombietron_heart", self.origin, 1, 1, 90);
+		}
+		else if(self.health >= self.var_e6ea564a && (self.health - damage) < self.var_e6ea564a)
+		{
+			self notify(#"hash_2f07c48c");
+			modelhit = "c_zom_margwa_chunks_mid";
+			org = spawn("script_model", self gettagorigin("J_Head"));
+			org.targetname = "margwa1";
+			org setmodel("tag_origin");
+			level doa_pickups::function_3238133b("zombietron_heart", self.origin, 1, 1, 90);
+		}
 	}
 	if(isdefined(modelhit))
 	{
@@ -2449,7 +2494,7 @@ function margwadamage(inflictor, attacker, damage, dflags, mod, weapon, point, d
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_7ee81ba4(org)
+function private function_7ee81ba4(org)
 {
 	org thread namespace_eaa992c::function_285a2999("margwa_head_explode");
 	wait(1);
@@ -2465,7 +2510,7 @@ private function function_7ee81ba4(org)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function margwaupdatemovespeed()
+function private margwaupdatemovespeed()
 {
 	if(self.zombie_move_speed == "walk")
 	{
@@ -2490,7 +2535,7 @@ private function margwaupdatemovespeed()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_1c99c7cd()
+function private function_1c99c7cd()
 {
 	trigger = spawn("trigger_radius", self.origin, 2, 40, 50);
 	trigger.targetname = "margwaDamag";
@@ -2541,35 +2586,47 @@ function function_771e3915()
 				count = 8;
 				extrawait = 30;
 			}
-			else if(roll < 50)
-			{
-				name = "smokeman";
-				count = 8;
-				extrawait = 60;
-			}
-			else if(roll < 75)
-			{
-				name = "riser";
-				count = 5;
-				extrawait = 0;
-			}
-			else if(roll < 85)
-			{
-				name = "warlord";
-				count = 2;
-				extrawait = 0;
-			}
-			else if(roll < 95)
-			{
-				name = "_dog";
-				count = 2;
-				extrawait = 60;
-			}
 			else
 			{
-				name = "veh_meatball";
-				count = 1;
-				extrawait = 90;
+				if(roll < 50)
+				{
+					name = "smokeman";
+					count = 8;
+					extrawait = 60;
+				}
+				else
+				{
+					if(roll < 75)
+					{
+						name = "riser";
+						count = 5;
+						extrawait = 0;
+					}
+					else
+					{
+						if(roll < 85)
+						{
+							name = "warlord";
+							count = 2;
+							extrawait = 0;
+						}
+						else
+						{
+							if(roll < 95)
+							{
+								name = "_dog";
+								count = 2;
+								extrawait = 60;
+							}
+							else
+							{
+								name = "veh_meatball";
+								count = 1;
+								extrawait = 90;
+							}
+						}
+					}
+				}
 			}
 		}
 		spawner = level.doa.enemyspawners[name];

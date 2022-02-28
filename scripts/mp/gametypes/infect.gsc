@@ -279,7 +279,7 @@ function onstartgametype()
 	spawning::create_map_placed_influencers();
 	level.spawnmins = (0, 0, 0);
 	level.spawnmaxs = (0, 0, 0);
-	foreach(var_c976e1e5, team in level.teams)
+	foreach(team in level.teams)
 	{
 		util::setobjectivetext(team, &"OBJECTIVES_INFECT");
 		util::setobjectivehinttext(team, &"OBJECTIVES_INFECT_HINT");
@@ -289,7 +289,7 @@ function onstartgametype()
 	}
 	spawning::updateallspawnpoints();
 	level.spawn_start = [];
-	foreach(var_e2e9655e, team in level.teams)
+	foreach(team in level.teams)
 	{
 		level.spawn_start[team] = spawnlogic::get_spawnpoint_array(spawning::gettdmstartspawnname(team));
 	}
@@ -499,19 +499,25 @@ function function_485556b(player, comingfrommenu)
 	{
 		teamname = "spectator";
 	}
-	else if(isdefined(level.var_8d48cf10) && level.var_8d48cf10)
-	{
-		level.var_8d48cf10 = undefined;
-		teamname = game["defenders"];
-		level thread function_93f386c5();
-	}
-	else if(isdefined(player.var_1df9e01d) && player.var_1df9e01d || (isdefined(level.infect_chosefirstinfected) && level.infect_chosefirstinfected))
-	{
-		teamname = game["attackers"];
-	}
 	else
 	{
-		teamname = game["defenders"];
+		if(isdefined(level.var_8d48cf10) && level.var_8d48cf10)
+		{
+			level.var_8d48cf10 = undefined;
+			teamname = game["defenders"];
+			level thread function_93f386c5();
+		}
+		else
+		{
+			if(isdefined(player.var_1df9e01d) && player.var_1df9e01d || (isdefined(level.infect_chosefirstinfected) && level.infect_chosefirstinfected))
+			{
+				teamname = game["attackers"];
+			}
+			else
+			{
+				teamname = game["defenders"];
+			}
+		}
 	}
 	return teamname;
 }
@@ -589,7 +595,7 @@ function onroundendgame(roundwinner)
 {
 	if(level.scoreroundwinbased)
 	{
-		foreach(var_dfe50114, team in level.teams)
+		foreach(team in level.teams)
 		{
 			[[level._setteamscore]](team, game["roundswon"][team]);
 		}
@@ -623,7 +629,7 @@ function function_b3349c22()
 function function_40cc7792(team, var_eb4caf58, var_852860b4)
 {
 	players = getplayersonteam(team);
-	foreach(var_343f2964, player in players)
+	foreach(player in players)
 	{
 		player luinotifyevent(&"player_callout", 2, var_eb4caf58, var_852860b4);
 	}
@@ -648,14 +654,17 @@ function onplayerkilled(einflictor, attacker, idamage, smeansofdeath, weapon, vd
 		{
 			processkill = 0;
 		}
-		else if(isplayer(attacker) && attacker != self)
+		else
 		{
-			processkill = 1;
-		}
-		else if(level.infect_allowsuicide && (attacker == self || !isplayer(attacker)))
-		{
-			processkill = 1;
-			wassuicide = 1;
+			if(isplayer(attacker) && attacker != self)
+			{
+				processkill = 1;
+			}
+			else if(level.infect_allowsuicide && (attacker == self || !isplayer(attacker)))
+			{
+				processkill = 1;
+				wassuicide = 1;
+			}
 		}
 	}
 	if(!processkill)
@@ -713,7 +722,7 @@ function function_e523aca(victim, wassuicide)
 		{
 			function_40cc7792(game["attackers"], &"SCORE_INFECTED_SURVIVOR", victim.entnum);
 			survivors = getplayersonteam(game["defenders"]);
-			foreach(var_ae56470f, survivor in survivors)
+			foreach(survivor in survivors)
 			{
 				if(survivor != victim && survivor function_b3349c22())
 				{
@@ -722,13 +731,16 @@ function function_e523aca(victim, wassuicide)
 			}
 		}
 	}
-	else if(var_7dc99dab == 1)
+	else
 	{
-		onfinalsurvivor();
-	}
-	else if(var_7dc99dab == 0)
-	{
-		onsurvivorseliminated();
+		if(var_7dc99dab == 1)
+		{
+			onfinalsurvivor();
+		}
+		else if(var_7dc99dab == 0)
+		{
+			onsurvivorseliminated();
+		}
 	}
 }
 
@@ -841,7 +853,7 @@ function finalsurvivoruav(var_53fb74fd)
 			setteamspyplane(game["attackers"], 1);
 			util::set_team_radar(game["attackers"], 1);
 			removeuav = 1;
-			foreach(var_44031e14, player in level.players)
+			foreach(player in level.players)
 			{
 				sound::play_on_players("fly_hunter_raise_plr");
 			}
@@ -985,22 +997,25 @@ function function_ca9945d6()
 				onfinalsurvivor();
 			}
 		}
-		else if(var_7dc99dab == 0)
+		else
 		{
-			onsurvivorseliminated();
-		}
-		else if(var_9cc4807f == 0)
-		{
-			if(var_7dc99dab == 1)
+			if(var_7dc99dab == 0)
 			{
-				winner = game["defenders"];
-				loser = util::getotherteam(winner);
-				level thread endgame(winner, game["strings"][loser + "_eliminated"]);
+				onsurvivorseliminated();
 			}
-			else if(var_7dc99dab > 1)
+			else if(var_9cc4807f == 0)
 			{
-				level.infect_chosefirstinfected = 0;
-				level thread choosefirstinfected();
+				if(var_7dc99dab == 1)
+				{
+					winner = game["defenders"];
+					loser = util::getotherteam(winner);
+					level thread endgame(winner, game["strings"][loser + "_eliminated"]);
+				}
+				else if(var_7dc99dab > 1)
+				{
+					level.infect_chosefirstinfected = 0;
+					level thread choosefirstinfected();
+				}
 			}
 		}
 	}
@@ -1122,7 +1137,7 @@ function function_4fe19a2e()
 	self loadout::giveloadout_init(1);
 	loadout::setclassnum(self.curclass);
 	self clearperks();
-	foreach(var_21eb6d8, perkname in level.var_ad774848)
+	foreach(perkname in level.var_ad774848)
 	{
 		if(!self hasperk(perkname))
 		{
@@ -1324,7 +1339,7 @@ function function_d418a8fd(team)
 {
 	activeplayers = [];
 	teamplayers = getplayersonteam(team);
-	foreach(var_e8bb3edc, player in teamplayers)
+	foreach(player in teamplayers)
 	{
 		if(player.sessionstate == "spectator")
 		{
@@ -1411,7 +1426,7 @@ function setfirstinfected()
 function forcespawnteam(team)
 {
 	players = getplayersonteam(team);
-	foreach(var_a08ad1c0, player in players)
+	foreach(player in players)
 	{
 		player thread playerforcespawn();
 	}
@@ -1541,7 +1556,7 @@ function changeteam(team)
 function getplayersonteam(team)
 {
 	playersonteam = [];
-	foreach(var_aa386310, player in level.players)
+	foreach(player in level.players)
 	{
 		if(!isdefined(player))
 		{
@@ -1623,9 +1638,9 @@ function maydropweapon(weapon)
 {
 	if(self.team === game["attackers"])
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1661,7 +1676,7 @@ function function_e834578f()
 	{
 		return;
 	}
-	foreach(var_c12d45f1, player in attackers)
+	foreach(player in attackers)
 	{
 		if(!isalive(player))
 		{
@@ -1788,24 +1803,27 @@ function function_c17c938d(winner, endtype, endreasontext, outcometext, team, wi
 		{
 			outcometext = game["strings"]["draw"];
 		}
-		else if(isdefined(self.pers["team"]) && winner == team)
-		{
-			outcometext = game["strings"]["victory"];
-			overridespectator = 1;
-		}
 		else
 		{
-			outcometext = game["strings"]["defeat"];
-			if(level.rankedmatch || level.leaguematch && self.pers["lateJoin"] === 1)
+			if(isdefined(self.pers["team"]) && winner == team)
 			{
-				endreasontext = game["strings"]["join_in_progress_loss"];
+				outcometext = game["strings"]["victory"];
+				overridespectator = 1;
 			}
-			overridespectator = 1;
+			else
+			{
+				outcometext = game["strings"]["defeat"];
+				if(level.rankedmatch || level.leaguematch && self.pers["lateJoin"] === 1)
+				{
+					endreasontext = game["strings"]["join_in_progress_loss"];
+				}
+				overridespectator = 1;
+			}
 		}
 		notifyroundendtoui = 0;
 		if(team == "spectator" && overridespectator)
 		{
-			foreach(var_ef82f8e6, team in level.teams)
+			foreach(team in level.teams)
 			{
 				if(endreasontext == (game["strings"][team + "_eliminated"]))
 				{
@@ -1816,9 +1834,9 @@ function function_c17c938d(winner, endtype, endreasontext, outcometext, team, wi
 			outcometext = game["strings"]["cod_caster_team_wins"];
 		}
 		self luinotifyevent(&"show_outcome", 5, outcometext, endreasontext, int(matchbonus), winnerenum, notifyroundendtoui);
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1925,7 +1943,7 @@ function function_27ccd53(command, args)
 		{
 			case "":
 			{
-				foreach(var_361e03ca, player in level.players)
+				foreach(player in level.players)
 				{
 					if(player util::is_bot())
 					{

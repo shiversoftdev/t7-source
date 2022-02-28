@@ -23,13 +23,16 @@ function spawn_player_clone(player, origin = player.origin, forceweapon, forcemo
 	{
 		weapon = forceweapon;
 	}
-	else if(primaryweapons.size)
-	{
-		weapon = primaryweapons[0];
-	}
 	else
 	{
-		weapon = player getcurrentweapon();
+		if(primaryweapons.size)
+		{
+			weapon = primaryweapons[0];
+		}
+		else
+		{
+			weapon = player getcurrentweapon();
+		}
 	}
 	weaponmodel = weapon.worldmodel;
 	spawner = getent("fake_player_spawner", "targetname");

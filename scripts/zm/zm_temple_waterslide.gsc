@@ -71,7 +71,7 @@ function waterslide_main()
 	var_144a9b89 = getentarray("water_slide_blocker", "targetname");
 	if(isdefined(var_144a9b89) && var_144a9b89.size > 0)
 	{
-		foreach(var_72915306, e_blocker in var_144a9b89)
+		foreach(e_blocker in var_144a9b89)
 		{
 			e_blocker connectpaths();
 			e_blocker movez(128, 1);
@@ -396,7 +396,7 @@ function array_remove(array, object)
 		return;
 	}
 	new_array = [];
-	foreach(var_3668fa0a, item in array)
+	foreach(item in array)
 	{
 		if(item != object)
 		{

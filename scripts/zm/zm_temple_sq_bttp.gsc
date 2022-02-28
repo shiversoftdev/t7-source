@@ -309,17 +309,20 @@ function exit_stage(success)
 		zm_temple_sq::remove_skel();
 		zm_temple_sq_brock::create_radio(7, &zm_temple_sq_brock::radio7_override);
 	}
-	else if(isdefined(level._sq_skel))
+	else
 	{
-		level._sq_skel show();
+		if(isdefined(level._sq_skel))
+		{
+			level._sq_skel show();
+		}
+		zm_temple_sq_brock::create_radio(6);
+		foreach(e_trap in var_b28c3b10)
+		{
+			e_trap show();
+		}
+		level thread zm_temple_sq_skits::fail_skit();
 	}
-	zm_temple_sq_brock::create_radio(6);
-	foreach(var_4513c77c, e_trap in var_b28c3b10)
-	{
-		e_trap show();
-	}
-	level thread zm_temple_sq_skits::fail_skit();
-	foreach(var_9da8b33e, e_trap in var_b28c3b10)
+	foreach(e_trap in var_b28c3b10)
 	{
 		if(isdefined(e_trap.trigger))
 		{

@@ -89,7 +89,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function opt_in()
+function autoexec opt_in()
 {
 	level.aat_in_use = 1;
 	level.bgb_in_use = 1;
@@ -223,7 +223,7 @@ function main()
 function cin_zmhd_sizzle_temple_cam(a_ents)
 {
 	level.disable_print3d_ent = 1;
-	foreach(var_c50aeb12, var_6cae1ad0 in a_ents)
+	foreach(var_6cae1ad0 in a_ents)
 	{
 		if(issubstr(var_6cae1ad0.model, "body"))
 		{
@@ -312,21 +312,21 @@ function function_869d6f66()
 {
 	if(!isdefined(self zm_bgb_anywhere_but_here::function_728dfe3()))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.on_slide) && self.on_slide)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.riding_geyser) && self.riding_geyser)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.is_on_minecart) && self.is_on_minecart)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -342,13 +342,13 @@ function function_90b3897b(ai)
 {
 	if(isdefined(ai.shrinked) && ai.shrinked)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(ai.animname) && ai.animname == "napalm_zombie")
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -364,13 +364,13 @@ function function_f1ef26af(ai)
 {
 	if(isdefined(ai.animname) && ai.animname == "napalm_zombie")
 	{
-		return 0;
+		return false;
 	}
 	if(isalive(ai) && ai.archetype === "zombie" && ai.team === level.zombie_team)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -386,9 +386,9 @@ function function_339a163c()
 {
 	if(isdefined(self) && (isdefined(self.shrinked) && self.shrinked))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -487,7 +487,7 @@ function assign_lowest_unused_character_index()
 		return charindexarray[0];
 	}
 	n_characters_defined = 0;
-	foreach(var_31b6a79d, player in players)
+	foreach(player in players)
 	{
 		if(isdefined(player.characterindex))
 		{
@@ -685,7 +685,7 @@ function function_54da140a()
 			var_343b1937 = a_s_spots[i].script_int;
 		}
 		var_c15b2128 = [];
-		foreach(var_c84e1d89, sp_zombie in level.zombie_spawners)
+		foreach(sp_zombie in level.zombie_spawners)
 		{
 			if(sp_zombie.script_int == var_343b1937)
 			{
@@ -988,17 +988,23 @@ function temple_powerup_fx_func()
 	{
 		self clientfield::set("powerup_fx", 2);
 	}
-	else if(self.any_team)
-	{
-		self clientfield::set("powerup_fx", 4);
-	}
-	else if(self.zombie_grabbable)
-	{
-		self clientfield::set("powerup_fx", 3);
-	}
 	else
 	{
-		self clientfield::set("powerup_fx", 1);
+		if(self.any_team)
+		{
+			self clientfield::set("powerup_fx", 4);
+		}
+		else
+		{
+			if(self.zombie_grabbable)
+			{
+				self clientfield::set("powerup_fx", 3);
+			}
+			else
+			{
+				self clientfield::set("powerup_fx", 1);
+			}
+		}
 	}
 }
 
@@ -1082,7 +1088,7 @@ function array_remove(array, object)
 		return;
 	}
 	new_array = [];
-	foreach(var_494e302a, item in array)
+	foreach(item in array)
 	{
 		if(item != object)
 		{
@@ -1265,9 +1271,9 @@ function check_if_should_avoid_poi()
 {
 	if(isdefined(self.sliding) && self.sliding)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1283,13 +1289,13 @@ function zombie_temple_player_intersection_tracker_override(other_player)
 {
 	if(isdefined(self.riding_geyser) && self.riding_geyser)
 	{
-		return 1;
+		return true;
 	}
 	if(isdefined(other_player.riding_geyser) && other_player.riding_geyser)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1305,17 +1311,17 @@ function zombie_temple_player_out_of_playable_area_monitor_callback()
 {
 	if(isdefined(self.on_slide) && self.on_slide)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.riding_geyser) && self.riding_geyser)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.is_on_minecart) && self.is_on_minecart)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*

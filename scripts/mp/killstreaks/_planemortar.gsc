@@ -48,14 +48,14 @@ function usekillstreakplanemortar(hardpointtype)
 {
 	if(self killstreakrules::iskillstreakallowed(hardpointtype, self.team) == 0)
 	{
-		return 0;
+		return false;
 	}
 	result = self selectplanemortarlocation(hardpointtype);
 	if(!isdefined(result) || !result)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -207,7 +207,7 @@ function useplanemortar(positions)
 	killstreak_id = self killstreakrules::killstreakstart("planemortar", team, 0, 1);
 	if(killstreak_id == -1)
 	{
-		return 0;
+		return false;
 	}
 	self killstreaks::play_killstreak_start_dialog("planemortar", team, killstreak_id);
 	self.planemortarpilotindex = killstreaks::get_random_pilot_index("planemortar");
@@ -215,7 +215,7 @@ function useplanemortar(positions)
 	self addweaponstat(getweapon("planemortar"), "used", 1);
 	self thread planemortar_watchforendnotify(team, killstreak_id);
 	self thread doplanemortar(positions, team, killstreak_id);
-	return 1;
+	return true;
 }
 
 /*
@@ -234,7 +234,7 @@ function doplanemortar(positions, team, killstreak_id)
 	yaw = randomintrange(0, 360);
 	odd = 0;
 	wait(1.25);
-	foreach(var_73525cf6, position in positions)
+	foreach(position in positions)
 	{
 		level spawning::create_enemy_influencer("artillery", position, team);
 		self thread dobombrun(position, yaw, team);
@@ -271,17 +271,23 @@ function plane_mortar_bda_dialog()
 		{
 			bdadialog = "kill1";
 		}
-		else if(self.planemortarbda === 2)
+		else
 		{
-			bdadialog = "kill2";
-		}
-		else if(self.planemortarbda === 3)
-		{
-			bdadialog = "kill3";
-		}
-		else if(isdefined(self.planemortarbda) && self.planemortarbda > 3)
-		{
-			bdadialog = "killMultiple";
+			if(self.planemortarbda === 2)
+			{
+				bdadialog = "kill2";
+			}
+			else
+			{
+				if(self.planemortarbda === 3)
+				{
+					bdadialog = "kill3";
+				}
+				else if(isdefined(self.planemortarbda) && self.planemortarbda > 3)
+				{
+					bdadialog = "killMultiple";
+				}
+			}
 		}
 		self killstreaks::play_pilot_dialog(bdadialog, "planemortar", undefined, self.planemortarpilotindex);
 		if(battlechatter::dialog_chance("taacomPilotKillConfirmChance"))
@@ -492,7 +498,7 @@ function dropbomb(plane, bombposition)
 		return;
 	}
 	targets = getplayers();
-	foreach(var_18b8e1, target in targets)
+	foreach(target in targets)
 	{
 		if(plane.owner util::isenemyplayer(target) && distance2dsquared(target.origin, bombposition) < 250000)
 		{

@@ -21,7 +21,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_bgb_tone_death", &__init__, undefined, "bgb");
 }
@@ -42,7 +42,7 @@ function __init__()
 		return;
 	}
 	bgb::register("zm_bgb_tone_death", "event", &event, undefined, undefined, undefined);
-	bgb::function_2b341a2e("zm_bgb_tone_death", &actor_death_override);
+	bgb::register_actor_death_override("zm_bgb_tone_death", &actor_death_override);
 }
 
 /*
@@ -73,7 +73,7 @@ function event()
 function function_1473087b()
 {
 	self util::waittill_any("disconnect", "bled_out", "bgb_gumball_anim_give", "bgb_tone_death_maxed");
-	self.var_9d977a5f = undefined;
+	self.n_bgb_tone_death_count = undefined;
 }
 
 /*
@@ -94,13 +94,13 @@ function actor_death_override(e_attacker)
 	if(e_attacker bgb::is_enabled("zm_bgb_tone_death"))
 	{
 		self.bgb_tone_death = 1;
-		if(!isdefined(e_attacker.var_9d977a5f))
+		if(!isdefined(e_attacker.n_bgb_tone_death_count))
 		{
-			e_attacker.var_9d977a5f = 25;
+			e_attacker.n_bgb_tone_death_count = 25;
 		}
-		e_attacker.var_9d977a5f--;
-		e_attacker bgb::set_timer(e_attacker.var_9d977a5f, 25);
-		if(e_attacker.var_9d977a5f <= 0)
+		e_attacker.n_bgb_tone_death_count--;
+		e_attacker bgb::set_timer(e_attacker.n_bgb_tone_death_count, 25);
+		if(e_attacker.n_bgb_tone_death_count <= 0)
 		{
 			e_attacker notify(#"bgb_tone_death_maxed");
 		}

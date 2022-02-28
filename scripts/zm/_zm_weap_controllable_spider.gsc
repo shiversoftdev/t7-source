@@ -27,7 +27,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("controllable_spider", &__init__, undefined, undefined);
 }
@@ -46,7 +46,7 @@ function __init__()
 	register_clientfields();
 	zm_placeable_mine::add_mine_type("controllable_spider", &"");
 	callback::on_spawned(&function_b2a01f79);
-	level.var_99f2368e = getweapon("controllable_spider");
+	level.w_controllable_spider = getweapon("controllable_spider");
 	level flag::init("controllable_spider_equipped");
 	/#
 		function_be10e0f1();
@@ -80,10 +80,10 @@ function register_clientfields()
 */
 function function_468b927()
 {
-	if(!self hasweapon(level.var_99f2368e))
+	if(!self hasweapon(level.w_controllable_spider))
 	{
-		self thread zm_placeable_mine::setup_for_player(level.var_99f2368e, "hudItems.showDpadRight_Spider");
-		self givemaxammo(level.var_99f2368e);
+		self thread zm_placeable_mine::setup_for_player(level.w_controllable_spider, "hudItems.showDpadRight_Spider");
+		self givemaxammo(level.w_controllable_spider);
 		level thread function_160ff11f();
 	}
 }
@@ -125,29 +125,32 @@ function function_b2a01f79()
 	while(true)
 	{
 		self waittill(#"weapon_change", w_current, w_previous);
-		if(w_current === level.var_99f2368e)
+		if(w_current === level.w_controllable_spider)
 		{
 			if(!ispointonnavmesh(self.origin) || (isdefined(self.var_b0329be9) && self.var_b0329be9) || !self isonground())
 			{
 				self switchtoweaponimmediate(w_previous);
 				wait(0.05);
 			}
-			else if(var_97cffdb4 === self zm_utility::get_current_zone() || (var_be85f81a === self zm_utility::get_current_zone() && level flag::get("elevator_in_use")))
-			{
-				self switchtoweaponimmediate(w_previous);
-				wait(0.05);
-			}
 			else
 			{
-				n_ammo = self getammocount(level.var_99f2368e);
-				if(n_ammo <= 0)
+				if(var_97cffdb4 === self zm_utility::get_current_zone() || (var_be85f81a === self zm_utility::get_current_zone() && level flag::get("elevator_in_use")))
 				{
-					continue;
+					self switchtoweaponimmediate(w_previous);
+					wait(0.05);
 				}
-				n_ammo--;
-				self setweaponammoclip(level.var_99f2368e, n_ammo);
-				self thread function_40296c9b(w_previous);
-				self waittill(#"hash_6181e737");
+				else
+				{
+					n_ammo = self getammocount(level.w_controllable_spider);
+					if(n_ammo <= 0)
+					{
+						continue;
+					}
+					n_ammo--;
+					self setweaponammoclip(level.w_controllable_spider, n_ammo);
+					self thread function_40296c9b(w_previous);
+					self waittill(#"hash_6181e737");
+				}
 			}
 		}
 	}
@@ -339,11 +342,11 @@ function function_e889b7()
 {
 	self endon(#"disconnect");
 	level waittill(#"between_round_over");
-	n_ammo = self getammocount(level.var_99f2368e);
+	n_ammo = self getammocount(level.w_controllable_spider);
 	if(n_ammo <= 0)
 	{
 		n_ammo++;
-		self setweaponammoclip(level.var_99f2368e, n_ammo);
+		self setweaponammoclip(level.w_controllable_spider, n_ammo);
 	}
 }
 
@@ -360,7 +363,7 @@ function function_84313596(zone_name)
 {
 	if(!zm_zonemgr::zone_is_enabled(zone_name))
 	{
-		return 0;
+		return false;
 	}
 	zone = level.zones[zone_name];
 	for(i = 0; i < zone.volumes.size; i++)
@@ -372,17 +375,17 @@ function function_84313596(zone_name)
 			{
 				if(players[j].var_59bd3c5a istouching(zone.volumes[i]) && !players[j].var_59bd3c5a.sessionstate === "spectator")
 				{
-					return 1;
+					return true;
 				}
 				continue;
 			}
 			if(players[j] istouching(zone.volumes[i]) && !players[j].sessionstate == "spectator")
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -440,14 +443,14 @@ function function_11949f35(cmd)
 		{
 			case "":
 			{
-				foreach(var_5e77b7d, player in level.players)
+				foreach(player in level.players)
 				{
 					player thread function_468b927();
 				}
-				return 1;
+				return true;
 			}
 		}
-		return 0;
+		return false;
 	#/
 }
 

@@ -19,7 +19,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_stalingrad_ambient", &__init__, &__main__, undefined);
 }
@@ -69,7 +69,7 @@ function function_46a16b31()
 {
 	level.var_10752e7a = [];
 	var_10752e7a = struct::get_array("ambient_mortar", "targetname");
-	foreach(var_240dc023, var_b058183b in var_10752e7a)
+	foreach(var_b058183b in var_10752e7a)
 	{
 		str_location = var_b058183b.script_string;
 		if(!isdefined(level.var_10752e7a[str_location]))
@@ -202,7 +202,7 @@ function function_7af373ba(str_zone)
 	b_all_points_used = 0;
 	while(!var_b8f2d177.size)
 	{
-		foreach(var_984e11ad, var_b058183b in var_d8f8470c)
+		foreach(var_b058183b in var_d8f8470c)
 		{
 			if(!isdefined(var_b058183b.b_claimed) || b_all_points_used)
 			{

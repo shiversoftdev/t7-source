@@ -22,7 +22,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_bgb_bullet_boost", &__init__, undefined, "bgb");
 }
@@ -60,22 +60,22 @@ function validation()
 	current_weapon = self getcurrentweapon();
 	if(!self zm_magicbox::can_buy_weapon() || self laststand::player_is_in_laststand() || (isdefined(self.intermission) && self.intermission) || self isthrowinggrenade() || (!self zm_weapons::can_upgrade_weapon(current_weapon) && !zm_weapons::weapon_supports_aat(current_weapon)))
 	{
-		return 0;
+		return false;
 	}
 	if(self isswitchingweapons())
 	{
-		return 0;
+		return false;
 	}
 	if(!zm_weapons::is_weapon_or_base_included(current_weapon))
 	{
-		return 0;
+		return false;
 	}
 	b_weapon_supports_aat = zm_weapons::weapon_supports_aat(current_weapon);
 	if(!b_weapon_supports_aat)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*

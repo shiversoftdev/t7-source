@@ -129,7 +129,7 @@ function function_e9579b3e()
 {
 	level flag::wait_till("zones_initialized");
 	var_874b8995 = struct::get_array("zone_start_spawners", "targetname");
-	foreach(var_82b38790, e_spawner in var_874b8995)
+	foreach(e_spawner in var_874b8995)
 	{
 		if(e_spawner.script_int === 1)
 		{
@@ -144,7 +144,7 @@ function function_e9579b3e()
 			break;
 		}
 	}
-	foreach(var_315ec103, e_spawner in var_874b8995)
+	foreach(e_spawner in var_874b8995)
 	{
 		if(e_spawner.script_int === 1)
 		{
@@ -165,7 +165,7 @@ function function_e9579b3e()
 function function_8ead5cf5()
 {
 	var_405e4f24 = struct::get_array("zone_wizards_tower_spawners", "targetname");
-	foreach(var_d9b47428, s_spawner in var_405e4f24)
+	foreach(s_spawner in var_405e4f24)
 	{
 		if(s_spawner.script_noteworthy === "spawn_location")
 		{
@@ -194,7 +194,7 @@ function function_affecb53(var_405e4f24)
 	while(true)
 	{
 		level flag::wait_till("tesla_coil_on");
-		foreach(var_18d6dc71, e_spawner in var_405e4f24)
+		foreach(e_spawner in var_405e4f24)
 		{
 			if(e_spawner.script_int === 1)
 			{
@@ -202,7 +202,7 @@ function function_affecb53(var_405e4f24)
 			}
 		}
 		level flag::wait_till_clear("tesla_coil_on");
-		foreach(var_86ffd44, e_spawner in var_405e4f24)
+		foreach(e_spawner in var_405e4f24)
 		{
 			if(e_spawner.script_int === 1)
 			{
@@ -235,7 +235,7 @@ function function_48cfc7df(spot)
 	{
 		spot.angles = (0, 0, 0);
 	}
-	self thread n_observation_deck_stage();
+	self thread anchor_delete_watcher();
 	self.mdl_anchor moveto(spot.origin, 0.05);
 	self.mdl_anchor rotateto(spot.angles, 0.05);
 	self.mdl_anchor waittill(#"movedone");
@@ -282,7 +282,7 @@ function function_27a6dd5f()
 }
 
 /*
-	Name: n_observation_deck_stage
+	Name: anchor_delete_watcher
 	Namespace: zm_castle_zones
 	Checksum: 0xA6CB66B5
 	Offset: 0x1A40
@@ -290,7 +290,7 @@ function function_27a6dd5f()
 	Parameters: 0
 	Flags: Linked
 */
-function n_observation_deck_stage()
+function anchor_delete_watcher()
 {
 	self waittill(#"death");
 	if(isdefined(self.mdl_anchor))

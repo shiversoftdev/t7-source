@@ -12,7 +12,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__()
+function autoexec __init__()
 {
 	if(!isdefined(level.struct))
 	{
@@ -33,7 +33,7 @@ function init_structs()
 {
 	level.struct = [];
 	level.scriptbundles = [];
-	level.var_570603 = [];
+	level.scriptbundlelists = [];
 	level.struct_class_names = [];
 	level.struct_class_names["target"] = [];
 	level.struct_class_names["targetname"] = [];
@@ -57,7 +57,7 @@ function init_structs()
 */
 function remove_unneeded_kvps(struct)
 {
-	struct.var_5aabff8a = undefined;
+	struct.igdtseqnum = undefined;
 	struct.configstringfiletype = undefined;
 	/#
 		devstate = struct.devstate;
@@ -85,7 +85,7 @@ function createstruct(struct, type, name)
 	}
 	if(isdefined(type))
 	{
-		var_d64c42bd = getdvarstring("mapname") == "core_frontend";
+		isfrontend = getdvarstring("mapname") == "core_frontend";
 		if(!isdefined(level.scriptbundles[type]))
 		{
 			level.scriptbundles[type] = [];
@@ -98,18 +98,27 @@ function createstruct(struct, type, name)
 		{
 			level.scriptbundles[type][name] = scene::remove_invalid_scene_objects(struct);
 		}
-		else if(!(sessionmodeismultiplayergame() || var_d64c42bd) && type == "mpdialog_player")
-		{
-		}
-		else if(!(sessionmodeismultiplayergame() || var_d64c42bd) && type == "gibcharacterdef" && issubstr(name, "c_t7_mp_"))
-		{
-		}
-		else if(!(sessionmodeiscampaigngame() || var_d64c42bd) && type == "collectibles")
-		{
-		}
 		else
 		{
-			level.scriptbundles[type][name] = struct;
+			if(!(sessionmodeismultiplayergame() || isfrontend) && type == "mpdialog_player")
+			{
+			}
+			else
+			{
+				if(!(sessionmodeismultiplayergame() || isfrontend) && type == "gibcharacterdef" && issubstr(name, "c_t7_mp_"))
+				{
+				}
+				else
+				{
+					if(!(sessionmodeiscampaigngame() || isfrontend) && type == "collectibles")
+					{
+					}
+					else
+					{
+						level.scriptbundles[type][name] = struct;
+					}
+				}
+			}
 		}
 		remove_unneeded_kvps(struct);
 	}
@@ -120,7 +129,7 @@ function createstruct(struct, type, name)
 }
 
 /*
-	Name: function_f3b581d0
+	Name: createscriptbundlelist
 	Namespace: struct
 	Checksum: 0xAF40FD54
 	Offset: 0x510
@@ -128,13 +137,13 @@ function createstruct(struct, type, name)
 	Parameters: 3
 	Flags: Linked
 */
-function function_f3b581d0(items, var_1578b6b3, name)
+function createscriptbundlelist(items, var_1578b6b3, name)
 {
 	if(!isdefined(level.struct))
 	{
 		init_structs();
 	}
-	level.var_570603[var_1578b6b3][name] = items;
+	level.scriptbundlelists[var_1578b6b3][name] = items;
 }
 
 /*
@@ -439,9 +448,9 @@ function get_script_bundles(str_type)
 */
 function get_script_bundle_list(str_type, str_name)
 {
-	if(isdefined(level.var_570603[str_type]) && isdefined(level.var_570603[str_type][str_name]))
+	if(isdefined(level.scriptbundlelists[str_type]) && isdefined(level.scriptbundlelists[str_type][str_name]))
 	{
-		return level.var_570603[str_type][str_name];
+		return level.scriptbundlelists[str_type][str_name];
 	}
 }
 
@@ -486,9 +495,9 @@ function findstruct(param1, name, index)
 		position = param1;
 		foreach(key, _ in level.struct_class_names)
 		{
-			foreach(val, s_array in level.struct_class_names[key])
+			foreach(s_array in level.struct_class_names[key])
 			{
-				foreach(var_c0a5b83e, struct in s_array)
+				foreach(struct in s_array)
 				{
 					if(distancesquared(struct.origin, position) < 1)
 					{
@@ -499,7 +508,7 @@ function findstruct(param1, name, index)
 		}
 		if(isdefined(level.struct))
 		{
-			foreach(var_5e77b7d, struct in level.struct)
+			foreach(struct in level.struct)
 			{
 				if(distancesquared(struct.origin, position) < 1)
 				{

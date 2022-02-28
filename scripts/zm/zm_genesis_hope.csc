@@ -26,7 +26,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_genesis_hope", &__init__, undefined, undefined);
 }
@@ -105,14 +105,17 @@ function function_2e70599d(localclientnum, oldval, newval, bnewent, binitialsnap
 		self.fx_spark = playfxontag(localclientnum, level._effect["spark_of_hope"], self, "j_spine4");
 		self.var_d0642fb4 = self playloopsound("zmb_overachiever_spark_lp", 1);
 	}
-	else if(isdefined(self.fx_spark))
+	else
 	{
-		stopfx(localclientnum, self.fx_spark);
-	}
-	if(isdefined(self.var_d0642fb4))
-	{
-		self stoploopsound(self.var_d0642fb4);
-		self.var_d0642fb4 = undefined;
+		if(isdefined(self.fx_spark))
+		{
+			stopfx(localclientnum, self.fx_spark);
+		}
+		if(isdefined(self.var_d0642fb4))
+		{
+			self stoploopsound(self.var_d0642fb4);
+			self.var_d0642fb4 = undefined;
+		}
 	}
 }
 

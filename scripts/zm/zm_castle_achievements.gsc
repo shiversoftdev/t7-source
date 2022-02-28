@@ -17,25 +17,25 @@
 #using scripts\zm\_zm_utility;
 #using scripts\zm\_zm_weapons;
 
-#namespace namespace_767a4e90;
+#namespace castle_achievements;
 
 /*
 	Name: __init__sytem__
-	Namespace: namespace_767a4e90
+	Namespace: castle_achievements
 	Checksum: 0x68DAC2C3
 	Offset: 0x3F8
 	Size: 0x34
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_castle_achievements", &__init__, undefined, undefined);
 }
 
 /*
 	Name: __init__
-	Namespace: namespace_767a4e90
+	Namespace: castle_achievements
 	Checksum: 0xE01B4A82
 	Offset: 0x438
 	Size: 0x74
@@ -52,7 +52,7 @@ function __init__()
 
 /*
 	Name: on_player_connect
-	Namespace: namespace_767a4e90
+	Namespace: castle_achievements
 	Checksum: 0x309766F3
 	Offset: 0x4B8
 	Size: 0xC4
@@ -73,7 +73,7 @@ function on_player_connect()
 
 /*
 	Name: function_c190d113
-	Namespace: namespace_767a4e90
+	Namespace: castle_achievements
 	Checksum: 0xC0A8ABE8
 	Offset: 0x588
 	Size: 0x44
@@ -88,7 +88,7 @@ function function_c190d113()
 
 /*
 	Name: function_a7a00809
-	Namespace: namespace_767a4e90
+	Namespace: castle_achievements
 	Checksum: 0xFE219CCF
 	Offset: 0x5D8
 	Size: 0x6C
@@ -106,7 +106,7 @@ function function_a7a00809()
 
 /*
 	Name: function_a54c1d45
-	Namespace: namespace_767a4e90
+	Namespace: castle_achievements
 	Checksum: 0xC8F1D473
 	Offset: 0x650
 	Size: 0x144
@@ -136,7 +136,7 @@ function function_a54c1d45()
 
 /*
 	Name: function_abd6b408
-	Namespace: namespace_767a4e90
+	Namespace: castle_achievements
 	Checksum: 0x21E1AB6B
 	Offset: 0x7A0
 	Size: 0x44
@@ -153,7 +153,7 @@ function function_abd6b408()
 
 /*
 	Name: function_2ac65a0e
-	Namespace: namespace_767a4e90
+	Namespace: castle_achievements
 	Checksum: 0x82A77276
 	Offset: 0x7F0
 	Size: 0x94
@@ -177,7 +177,7 @@ function function_2ac65a0e()
 
 /*
 	Name: function_2aca0270
-	Namespace: namespace_767a4e90
+	Namespace: castle_achievements
 	Checksum: 0xDB3E7BFD
 	Offset: 0x890
 	Size: 0x64
@@ -198,7 +198,7 @@ function function_2aca0270()
 
 /*
 	Name: function_763e50f3
-	Namespace: namespace_767a4e90
+	Namespace: castle_achievements
 	Checksum: 0x2ACD5755
 	Offset: 0x900
 	Size: 0x44
@@ -215,7 +215,7 @@ function function_763e50f3()
 
 /*
 	Name: function_ed9679c1
-	Namespace: namespace_767a4e90
+	Namespace: castle_achievements
 	Checksum: 0xBB595704
 	Offset: 0x950
 	Size: 0x44
@@ -232,7 +232,7 @@ function function_ed9679c1()
 
 /*
 	Name: function_fd055c44
-	Namespace: namespace_767a4e90
+	Namespace: castle_achievements
 	Checksum: 0x5D865042
 	Offset: 0x9A0
 	Size: 0x174
@@ -247,7 +247,7 @@ function function_fd055c44()
 	while(true)
 	{
 		self waittill(#"player_did_a_revive");
-		foreach(var_724b9744, e_player in level.players)
+		foreach(e_player in level.players)
 		{
 			if(isdefined(e_player.b_gravity_trap_spikes_in_ground) && e_player.b_gravity_trap_spikes_in_ground && e_player.gravityspikes_state === 3)
 			{
@@ -269,7 +269,7 @@ function function_fd055c44()
 
 /*
 	Name: function_2ec19399
-	Namespace: namespace_767a4e90
+	Namespace: castle_achievements
 	Checksum: 0xF8C75C72
 	Offset: 0xB20
 	Size: 0x94
@@ -290,7 +290,7 @@ function function_2ec19399()
 
 /*
 	Name: function_a0e4a574
-	Namespace: namespace_767a4e90
+	Namespace: castle_achievements
 	Checksum: 0x7710D64A
 	Offset: 0xBC0
 	Size: 0x3C
@@ -309,7 +309,7 @@ function function_a0e4a574()
 
 /*
 	Name: function_1abfde35
-	Namespace: namespace_767a4e90
+	Namespace: castle_achievements
 	Checksum: 0x11EC1EE
 	Offset: 0xC08
 	Size: 0xEC

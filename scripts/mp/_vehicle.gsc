@@ -24,7 +24,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("vehicle", &__init__, undefined, undefined);
 }
@@ -105,7 +105,7 @@ function __init__()
 	chopper_door_open_state = %mp_vehicles::v_huey_door_open_state;
 	chopper_door_closed_state = %mp_vehicles::v_huey_door_close_state;
 	killbrushes = getentarray("water_killbrush", "targetname");
-	foreach(var_e9918145, brush in killbrushes)
+	foreach(brush in killbrushes)
 	{
 		brush thread water_killbrush_think();
 	}
@@ -1006,14 +1006,17 @@ function do_alive_cleanup_wait(test_name)
 		{
 			damagefactor = factor_max;
 		}
-		else if(damagefraction >= curve_end)
-		{
-			damagefactor = factor_min;
-		}
 		else
 		{
-			dydx = (factor_min - factor_max) / (curve_end - curve_begin);
-			damagefactor = factor_max + ((damagefraction - curve_begin) * dydx);
+			if(damagefraction >= curve_end)
+			{
+				damagefactor = factor_min;
+			}
+			else
+			{
+				dydx = (factor_min - factor_max) / (curve_end - curve_begin);
+				damagefactor = factor_max + ((damagefraction - curve_begin) * dydx);
+			}
 		}
 		totalsecstowait = initialrandomwaitseconds * damagefactor;
 		if(secondswaited >= totalsecstowait)
@@ -1256,22 +1259,22 @@ function player_is_driver()
 {
 	if(!isalive(self))
 	{
-		return 0;
+		return false;
 	}
 	vehicle = self getvehicleoccupied();
 	if(isdefined(vehicle))
 	{
 		if(isdefined(vehicle.vehicleclass) && "artillery" == vehicle.vehicleclass)
 		{
-			return 0;
+			return false;
 		}
 		seat = vehicle getoccupantseat(self);
 		if(isdefined(seat) && seat == 0)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1640,19 +1643,22 @@ function respawn_vehicle(respawn_parameters)
 			iprintln("");
 		#/
 	}
-	else if(isdefined(respawn_parameters.destructibledef))
-	{
-		vehicle = spawnvehicle(respawn_parameters.vehicletype, respawn_parameters.origin, respawn_parameters.angles, respawn_parameters.targetname, respawn_parameters.destructibledef);
-	}
 	else
 	{
-		vehicle = spawnvehicle(respawn_parameters.vehicletype, respawn_parameters.origin, respawn_parameters.angles, respawn_parameters.targetname);
+		if(isdefined(respawn_parameters.destructibledef))
+		{
+			vehicle = spawnvehicle(respawn_parameters.vehicletype, respawn_parameters.origin, respawn_parameters.angles, respawn_parameters.targetname, respawn_parameters.destructibledef);
+		}
+		else
+		{
+			vehicle = spawnvehicle(respawn_parameters.vehicletype, respawn_parameters.origin, respawn_parameters.angles, respawn_parameters.targetname);
+		}
+		vehicle.vehicletype = respawn_parameters.vehicletype;
+		vehicle.destructibledef = respawn_parameters.destructibledef;
+		vehicle.health = respawn_parameters.health;
+		vehicle init_vehicle();
+		vehicle vehicle_telefrag_griefers_at_position(respawn_parameters.origin);
 	}
-	vehicle.vehicletype = respawn_parameters.vehicletype;
-	vehicle.destructibledef = respawn_parameters.destructibledef;
-	vehicle.health = respawn_parameters.health;
-	vehicle init_vehicle();
-	vehicle vehicle_telefrag_griefers_at_position(respawn_parameters.origin);
 }
 
 /*
@@ -1674,10 +1680,10 @@ function remove_vehicle_from_world()
 			self.permanentlyremoved = 1;
 			self thread hide_vehicle();
 		}
-		return 0;
+		return false;
 	}
 	self _delete_entity();
-	return 1;
+	return true;
 }
 
 /*
@@ -1804,10 +1810,10 @@ function vehicle_position_will_telefrag(position)
 	{
 		if(players_s.a[i] player_vehicle_position_will_telefrag(position))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2371,7 +2377,7 @@ function kill_any_touching(kill_trigger, kill_duration_ms)
 	kill_weapon = getweapon("hero_minigun");
 	while(gettime() <= kill_expire_time_ms)
 	{
-		foreach(var_81ceab27, player in level.players)
+		foreach(player in level.players)
 		{
 			if(!isdefined(player))
 			{
@@ -2394,7 +2400,7 @@ function kill_any_touching(kill_trigger, kill_duration_ms)
 		potential_victims = getaiarray();
 		if(isdefined(potential_victims))
 		{
-			foreach(var_8ba5ae60, entity in potential_victims)
+			foreach(entity in potential_victims)
 			{
 				if(!isdefined(entity))
 				{
@@ -2451,11 +2457,14 @@ function function_87e9a4ad(veh_name, origin, angles)
 			{
 				wait(1);
 			}
-			else if(isdefined(level.vehicle_about_to_spawn))
+			else
 			{
-				level thread [[level.vehicle_about_to_spawn]](veh_name, origin, angles, fx_prespawn_time);
+				if(isdefined(level.vehicle_about_to_spawn))
+				{
+					level thread [[level.vehicle_about_to_spawn]](veh_name, origin, angles, fx_prespawn_time);
+				}
+				wait(6);
 			}
-			wait(6);
 		}
 	#/
 }
@@ -2608,7 +2617,7 @@ function setcachedperks()
 	/#
 		assert(isdefined(self.perks_before_vehicle));
 	#/
-	foreach(var_44585cfc, perk in self.perks_before_vehicle)
+	foreach(perk in self.perks_before_vehicle)
 	{
 		self setperk(perk);
 	}

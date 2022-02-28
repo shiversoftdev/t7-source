@@ -21,7 +21,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("gadget_resurrect", &__init__, undefined, undefined);
 }
@@ -107,13 +107,16 @@ function player_resurrect_state_changed(localclientnum, oldval, newval, bnewent,
 	{
 		self thread resurrect_down_fx(localclientnum);
 	}
-	else if(newval == 2)
-	{
-		self thread resurrect_up_fx(localclientnum);
-	}
 	else
 	{
-		self thread postfx::stoppostfxbundle();
+		if(newval == 2)
+		{
+			self thread resurrect_up_fx(localclientnum);
+		}
+		else
+		{
+			self thread postfx::stoppostfxbundle();
+		}
 	}
 }
 

@@ -19,7 +19,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function main()
+function autoexec main()
 {
 	archetypecivilian::registerbehaviorscriptfunctions();
 }
@@ -57,7 +57,7 @@ function registerbehaviorscriptfunctions()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function civilianblackboardinit()
+function private civilianblackboardinit()
 {
 	blackboard::createblackboardforentity(self);
 	ai::createinterfaceforentity(self);
@@ -91,7 +91,7 @@ private function civilianblackboardinit()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function archetypecivilianinit()
+function private archetypecivilianinit()
 {
 	entity = self;
 	locomotiontypes = array("alt1", "alt2", "alt3", "alt4");
@@ -109,7 +109,7 @@ private function archetypecivilianinit()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function bb_getpanic()
+function private bb_getpanic()
 {
 	if(ai::getaiattribute(self, "panic"))
 	{
@@ -127,7 +127,7 @@ private function bb_getpanic()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function civilianonanimscriptedcallback(entity)
+function private civilianonanimscriptedcallback(entity)
 {
 	entity.__blackboard = undefined;
 	entity civilianblackboardinit();
@@ -142,7 +142,7 @@ private function civilianonanimscriptedcallback(entity)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function civilianmoveactioninitialize(entity, asmstatename)
+function private civilianmoveactioninitialize(entity, asmstatename)
 {
 	blackboard::setblackboardattribute(entity, "_desired_stance", "stand");
 	animationstatenetworkutility::requeststate(entity, asmstatename);
@@ -158,7 +158,7 @@ private function civilianmoveactioninitialize(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function civilianmoveactionfinalize(entity, asmstatename)
+function private civilianmoveactionfinalize(entity, asmstatename)
 {
 	if(blackboard::getblackboardattribute(entity, "_stance") != "stand")
 	{
@@ -176,7 +176,7 @@ private function civilianmoveactionfinalize(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function civiliancoweractioninitialize(entity, asmstatename)
+function private civiliancoweractioninitialize(entity, asmstatename)
 {
 	if(isdefined(entity.node))
 	{
@@ -203,7 +203,7 @@ private function civiliancoweractioninitialize(entity, asmstatename)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function civilianispanicked(entity)
+function private civilianispanicked(entity)
 {
 	return blackboard::getblackboardattribute(entity, "_panic") == "panic";
 }
@@ -217,9 +217,9 @@ private function civilianispanicked(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function civilianpanic(entity)
+function private civilianpanic(entity)
 {
 	entity ai::set_behavior_attribute("panic", 1);
-	return 1;
+	return true;
 }
 

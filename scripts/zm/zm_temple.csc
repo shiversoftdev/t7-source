@@ -56,7 +56,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function function_d9af860b()
+function autoexec function_d9af860b()
 {
 	level.aat_in_use = 1;
 	level.bgb_in_use = 1;
@@ -1344,12 +1344,15 @@ function spear_move(localclientnum, active, playsound)
 		movetime = randomfloatrange(0.08, 0.22);
 		self moveto(endpos, movetime);
 	}
-	else if(playsound)
+	else
 	{
-		playsound(0, "evt_spiketrap_retract", self.origin);
+		if(playsound)
+		{
+			playsound(0, "evt_spiketrap_retract", self.origin);
+		}
+		movetime = randomfloatrange(0.1, 0.2);
+		self moveto(self.start, movetime);
 	}
-	movetime = randomfloatrange(0.1, 0.2);
-	self moveto(self.start, movetime);
 }
 
 /*
@@ -1563,13 +1566,16 @@ function spinner_get_spin_time()
 	{
 		spintime = 1.5;
 	}
-	else if(self.spinner == 3)
+	else
 	{
-		spintime = 1.2;
-	}
-	else if(self.spinner == 4)
-	{
-		spintime = 0.8;
+		if(self.spinner == 3)
+		{
+			spintime = 1.2;
+		}
+		else if(self.spinner == 4)
+		{
+			spintime = 0.8;
+		}
 	}
 	return spintime;
 }

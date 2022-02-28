@@ -217,7 +217,7 @@ function onstartgametype()
 	spawnpoint = spawnlogic::get_random_intermission_point();
 	setdemointermissionpoint(spawnpoint.origin, spawnpoint.angles);
 	level.spawn_start = [];
-	foreach(var_2b6d0244, team in level.teams)
+	foreach(team in level.teams)
 	{
 		level.spawn_start[team] = spawnlogic::get_spawnpoint_array(("mp_res_spawn_" + team) + "_start");
 	}
@@ -886,15 +886,18 @@ function onuse(player, team)
 			spawnlogic::add_spawn_points("allies", "mp_res_spawn_allies_a");
 			spawnlogic::add_spawn_points("axis", "mp_res_spawn_axis");
 		}
-		else if(label == "_b")
-		{
-			spawnlogic::add_spawn_points(game["attackers"], "mp_res_spawn_allies_b");
-			spawnlogic::add_spawn_points(game["defenders"], "mp_res_spawn_axis");
-		}
 		else
 		{
-			spawnlogic::add_spawn_points("allies", "mp_res_spawn_allies_c");
-			spawnlogic::add_spawn_points("allies", "mp_res_spawn_axis");
+			if(label == "_b")
+			{
+				spawnlogic::add_spawn_points(game["attackers"], "mp_res_spawn_allies_b");
+				spawnlogic::add_spawn_points(game["defenders"], "mp_res_spawn_axis");
+			}
+			else
+			{
+				spawnlogic::add_spawn_points("allies", "mp_res_spawn_allies_c");
+				spawnlogic::add_spawn_points("allies", "mp_res_spawn_axis");
+			}
 		}
 		spawning::updateallspawnpoints();
 		string = &"";
@@ -1085,22 +1088,25 @@ function onplayerkilled(einflictor, attacker, idamage, smeansofdeath, weapon, vd
 				self recordkillmodifier("defending");
 			}
 		}
-		else if(!isdefined(attacker.res_defends))
+		else
 		{
-			attacker.res_defends = 0;
-		}
-		attacker.res_defends++;
-		if(level.playerdefensivemax >= attacker.res_defends)
-		{
-			attacker medals::defenseglobalcount();
-			attacker thread challenges::killedbasedefender(self.touchtriggers[triggerids[0]]);
-			if(isdefined(attacker.pers["defends"]))
+			if(!isdefined(attacker.res_defends))
 			{
-				attacker.pers["defends"]++;
-				attacker.defends = attacker.pers["defends"];
+				attacker.res_defends = 0;
 			}
-			scoreevents::processscoreevent("killed_attacker", attacker, undefined, weapon);
-			self recordkillmodifier("assaulting");
+			attacker.res_defends++;
+			if(level.playerdefensivemax >= attacker.res_defends)
+			{
+				attacker medals::defenseglobalcount();
+				attacker thread challenges::killedbasedefender(self.touchtriggers[triggerids[0]]);
+				if(isdefined(attacker.pers["defends"]))
+				{
+					attacker.pers["defends"]++;
+					attacker.defends = attacker.pers["defends"];
+				}
+				scoreevents::processscoreevent("killed_attacker", attacker, undefined, weapon);
+				self recordkillmodifier("assaulting");
+			}
 		}
 	}
 }

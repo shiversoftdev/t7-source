@@ -27,7 +27,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_zod_transformer", undefined, &__main__, undefined);
 }
@@ -62,7 +62,7 @@ function init_transformers()
 	level flag::wait_till("all_players_spawned");
 	level flag::wait_till("zones_initialized");
 	var_38d937f = getentarray("use_elec_switch", "targetname");
-	foreach(var_36d827b5, var_b46b59df in var_38d937f)
+	foreach(var_b46b59df in var_38d937f)
 	{
 		var_677edb82 = getent(var_b46b59df.target, "targetname");
 		var_677edb82 thread transformer_think(var_b46b59df);

@@ -17,14 +17,14 @@
 function function_25328f50(var_aeda862b)
 {
 	a_decorations = self getdecorations(1);
-	foreach(var_a70a5922, decoration in a_decorations)
+	foreach(decoration in a_decorations)
 	{
 		if(decoration.name == var_aeda862b)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -41,11 +41,11 @@ function function_59f1fa79(map_name = getrootmapname())
 	var_ebb087c2 = self savegame::get_player_data("accolades");
 	if(isdefined(var_ebb087c2))
 	{
-		foreach(var_b840c18a, accolade in var_ebb087c2)
+		foreach(accolade in var_ebb087c2)
 		{
 			if(!(isdefined(accolade.is_completed) && accolade.is_completed))
 			{
-				return 0;
+				return false;
 			}
 		}
 		self setdstat("PlayerStatsByMap", map_name, "allAccoladesComplete", 1);
@@ -64,14 +64,14 @@ function function_59f1fa79(map_name = getrootmapname())
 function function_e72fc18()
 {
 	var_c02de660 = skipto::function_23eda99c();
-	foreach(var_96152f5e, mission in var_c02de660)
+	foreach(mission in var_c02de660)
 	{
 		if(!(isdefined(self getdstat("PlayerStatsByMap", mission, "allAccoladesComplete")) && self getdstat("PlayerStatsByMap", mission, "allAccoladesComplete")))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -94,10 +94,10 @@ function function_45ddfa6()
 		}
 		if(!self isitempurchased(itemindex))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -151,10 +151,10 @@ function function_7006b9ad()
 		var_1976a117 = tablelookup("gamedata/stats/cp/cp_statstable.csv", 0, itemindex, 4);
 		if(!self isitempurchased(itemindex))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -168,20 +168,20 @@ function function_7006b9ad()
 */
 function function_931263b1(difficulty)
 {
-	foreach(var_8be878c6, mission in skipto::function_23eda99c())
+	foreach(mission in skipto::function_23eda99c())
 	{
 		var_a4b6fa1f = self getdstat("PlayerStatsByMap", mission, "highestStats", "HIGHEST_DIFFICULTY");
 		if(var_a4b6fa1f < difficulty)
 		{
-			return 0;
+			return false;
 		}
 		var_346332b8 = self getdstat("PlayerStatsByMap", mission, "checkpointUsed");
 		if(isdefined(var_346332b8) && var_346332b8)
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -243,10 +243,10 @@ function function_7b01cb74()
 		}
 		if(var_b47d78c4 < var_b0863e9a)
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -286,10 +286,10 @@ function function_6cd12a29()
 		var_15879d61 = int(var_ed54f9d7);
 		if(self getdstat("ItemStats", itemindex, "stats", "kills", "statValue") < var_15879d61)
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -305,16 +305,16 @@ function function_bea4ff57()
 {
 	if(!function_13cc355e())
 	{
-		return 0;
+		return false;
 	}
 	if(!function_7b01cb74())
 	{
-		return 0;
+		return false;
 	}
 	if(!function_6cd12a29())
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 

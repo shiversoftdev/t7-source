@@ -33,7 +33,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_weap_black_hole_bomb", &__init__, undefined, undefined);
 }
@@ -70,7 +70,7 @@ function __init__()
 	level flag::init("bhb_anim_change_allowed");
 	level thread black_hole_bomb_throttle_anim_changes();
 	level flag::set("bhb_anim_change_allowed");
-	level.var_453e74a0 = getweapon("black_hole_bomb");
+	level.w_black_hole_bomb = getweapon("black_hole_bomb");
 	level.black_hole_bomb_death_start_func = &black_hole_bomb_event_horizon_death;
 	level.vortexresetcondition = &zm_behavior::zombiekilledbyblackholebombcondition;
 }
@@ -86,8 +86,8 @@ function __init__()
 */
 function player_give_black_hole_bomb()
 {
-	self giveweapon(level.var_453e74a0);
-	self zm_utility::set_player_tactical_grenade(level.var_453e74a0);
+	self giveweapon(level.w_black_hole_bomb);
+	self zm_utility::set_player_tactical_grenade(level.w_black_hole_bomb);
 	self thread player_handle_black_hole_bomb();
 	self thread function_e877695e();
 }
@@ -184,7 +184,7 @@ function player_handle_black_hole_bomb()
 						model thread [[level._black_hole_bomb_poi_override]]();
 					}
 					duration = grenade.weapon.fusetime / 1000;
-					self thread zombie_vortex::start_timed_vortex(grenade.origin, 4227136, duration, undefined, undefined, self, level.var_453e74a0, 0, undefined, 0, 0, 0, grenade);
+					self thread zombie_vortex::start_timed_vortex(grenade.origin, 4227136, duration, undefined, undefined, self, level.w_black_hole_bomb, 0, undefined, 0, 0, 0, grenade);
 					model clientfield::set("toggle_black_hole_deployed", 1);
 					grenade thread function_1ff5cae1();
 					level thread black_hole_bomb_teleport_init(grenade);
@@ -224,7 +224,7 @@ function function_e877695e()
 	{
 		self waittill(#"grenade_pullback", var_f4612f93);
 		var_fe9168ca = 0.75;
-		if(var_f4612f93 == level.var_453e74a0)
+		if(var_f4612f93 == level.w_black_hole_bomb)
 		{
 			wait(var_fe9168ca);
 			self clientfield::set_to_player("bhb_viewlights", 1);
@@ -246,13 +246,13 @@ function function_e877695e()
 function function_1ff5cae1()
 {
 	array::add(level.var_4af7fb42, self);
-	foreach(var_743cfbdd, player in level.players)
+	foreach(player in level.players)
 	{
 		visionset_mgr::activate("visionset", "zombie_cosmodrome_blackhole", player);
 	}
 	self waittill(#"explode");
 	arrayremovevalue(level.var_4af7fb42, self);
-	foreach(var_ccd1e79f, player in level.players)
+	foreach(player in level.players)
 	{
 		visionset_mgr::deactivate("visionset", "zombie_cosmodrome_blackhole", player);
 	}
@@ -272,7 +272,7 @@ function function_bf9781f8(player)
 	while(level.var_4af7fb42.size > 0)
 	{
 		var_a81ad02a = 2147483647;
-		foreach(var_8707636f, bhb in level.var_4af7fb42)
+		foreach(bhb in level.var_4af7fb42)
 		{
 			curr_dist = distancesquared(player.origin, bhb.origin);
 			if(curr_dist < var_a81ad02a)
@@ -301,17 +301,17 @@ function move_valid_poi_to_navmesh(valid_poi)
 {
 	if(!(isdefined(valid_poi) && valid_poi))
 	{
-		return 0;
+		return false;
 	}
 	if(ispointonnavmesh(self.origin))
 	{
-		return 1;
+		return true;
 	}
 	v_orig = self.origin;
 	queryresult = positionquery_source_navigation(self.origin, 0, 200, 100, 2, 15);
 	if(queryresult.data.size)
 	{
-		foreach(var_f8da90eb, point in queryresult.data)
+		foreach(point in queryresult.data)
 		{
 			height_offset = abs(self.origin[2] - point.origin[2]);
 			if(height_offset > 36)
@@ -321,11 +321,11 @@ function move_valid_poi_to_navmesh(valid_poi)
 			if(bullettracepassed(point.origin + vectorscale((0, 0, 1), 20), v_orig + vectorscale((0, 0, 1), 20), 0, self, undefined, 0, 0))
 			{
 				self.origin = point.origin;
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -424,7 +424,7 @@ function get_thrown_black_hole_bomb()
 	while(true)
 	{
 		self waittill(#"grenade_fire", grenade, weapon);
-		if(weapon == level.var_453e74a0)
+		if(weapon == level.w_black_hole_bomb)
 		{
 			grenade.weapon = weapon;
 			return grenade;
@@ -790,13 +790,16 @@ function black_hole_teleport(struct_dest)
 	{
 		destination = struct_dest.origin + prone_offset;
 	}
-	else if(self getstance() == "crouch")
-	{
-		destination = struct_dest.origin + crouch_offset;
-	}
 	else
 	{
-		destination = struct_dest.origin + stand_offset;
+		if(self getstance() == "crouch")
+		{
+			destination = struct_dest.origin + crouch_offset;
+		}
+		else
+		{
+			destination = struct_dest.origin + stand_offset;
+		}
 	}
 	if(isdefined(level._black_hole_teleport_override))
 	{
@@ -921,17 +924,17 @@ function black_hole_teleport_ent_already_in_trigger(trig)
 {
 	if(!isdefined(self._triggers))
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(self._triggers[trig getentitynumber()]))
 	{
-		return 0;
+		return false;
 	}
 	if(!self._triggers[trig getentitynumber()])
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*

@@ -20,7 +20,7 @@ function init()
 	level._effect["box_open"] = "zombie/fx_weapon_box_open_zod_zmb";
 	level._effect["box_closed"] = "zombie/fx_weapon_box_closed_zod_zmb";
 	registerclientfield("zbarrier", "magicbox_initial_fx", 1, 1, "int", &magicbox_initial_closed_fx);
-	registerclientfield("zbarrier", "magicbox_amb_sound", 1, 1, "int", &function_1c9eb55c);
+	registerclientfield("zbarrier", "magicbox_amb_sound", 1, 1, "int", &magicbox_ambient_sound);
 	registerclientfield("zbarrier", "magicbox_open_fx", 1, 2, "int", &magicbox_open_fx);
 }
 
@@ -39,9 +39,9 @@ function magicbox_open_fx(localclientnum, oldval, newval, bnewent, binitialsnap,
 	{
 		self.fx_obj = util::spawn_model(localclientnum, "tag_origin", self.origin, self.angles);
 	}
-	if(!isdefined(self.var_9b17c542))
+	if(!isdefined(self.fx_obj_2))
 	{
-		self.var_9b17c542 = util::spawn_model(localclientnum, "tag_origin", self.origin, self.angles);
+		self.fx_obj_2 = util::spawn_model(localclientnum, "tag_origin", self.origin, self.angles);
 	}
 	switch(newval)
 	{
@@ -53,7 +53,7 @@ function magicbox_open_fx(localclientnum, oldval, newval, bnewent, binitialsnap,
 				stopfx(localclientnum, self.fx_obj.curr_open_fx);
 			}
 			self.fx_obj.curr_amb_fx = playfxontag(localclientnum, level._effect["box_closed"], self.fx_obj, "tag_origin");
-			self.var_9b17c542 stopallloopsounds(1);
+			self.fx_obj_2 stopallloopsounds(1);
 			self notify(#"magicbox_portal_finished");
 			break;
 		}
@@ -64,13 +64,13 @@ function magicbox_open_fx(localclientnum, oldval, newval, bnewent, binitialsnap,
 				stopfx(localclientnum, self.fx_obj.curr_amb_fx);
 			}
 			self.fx_obj.curr_open_fx = playfxontag(localclientnum, level._effect["box_open"], self.fx_obj, "tag_origin");
-			self.var_9b17c542 playloopsound("zmb_hellbox_open_effect");
+			self.fx_obj_2 playloopsound("zmb_hellbox_open_effect");
 			break;
 		}
 		case 2:
 		{
 			self.fx_obj delete();
-			self.var_9b17c542 delete();
+			self.fx_obj_2 delete();
 			break;
 		}
 	}
@@ -102,7 +102,7 @@ function magicbox_initial_closed_fx(localclientnum, oldval, newval, bnewent, bin
 }
 
 /*
-	Name: function_1c9eb55c
+	Name: magicbox_ambient_sound
 	Namespace: zm_magicbox_zod
 	Checksum: 0x2013F6E0
 	Offset: 0x648
@@ -110,7 +110,7 @@ function magicbox_initial_closed_fx(localclientnum, oldval, newval, bnewent, bin
 	Parameters: 7
 	Flags: Linked
 */
-function function_1c9eb55c(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
+function magicbox_ambient_sound(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
 	if(!isdefined(self.fx_obj))
 	{

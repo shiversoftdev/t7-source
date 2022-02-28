@@ -21,7 +21,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_bgb_eye_candy", &__init__, undefined, "bgb");
 }
@@ -42,46 +42,46 @@ function __init__()
 		return;
 	}
 	bgb::register("zm_bgb_eye_candy", "activated", 5, undefined, undefined, &validation, &activation);
-	if(!isdefined(level.var_36ca82ce))
+	if(!isdefined(level.vsmgr_prio_visionset_zm_bgb_eye_candy_1))
 	{
-		level.var_36ca82ce = 113;
+		level.vsmgr_prio_visionset_zm_bgb_eye_candy_1 = 113;
 	}
-	visionset_mgr::register_info("visionset", "zm_bgb_eye_candy_vs_1", 21000, level.var_36ca82ce, 31, 1);
-	if(!isdefined(level.var_b23820a6))
+	visionset_mgr::register_info("visionset", "zm_bgb_eye_candy_vs_1", 21000, level.vsmgr_prio_visionset_zm_bgb_eye_candy_1, 31, 1);
+	if(!isdefined(level.vsmgr_prio_overlay_zm_bgb_eye_candy_1))
 	{
-		level.var_b23820a6 = 113;
+		level.vsmgr_prio_overlay_zm_bgb_eye_candy_1 = 113;
 	}
-	visionset_mgr::register_info("overlay", "zm_bgb_eye_candy_vs_1", 21000, level.var_b23820a6, 1, 1);
-	if(!isdefined(level.var_10c80865))
+	visionset_mgr::register_info("overlay", "zm_bgb_eye_candy_vs_1", 21000, level.vsmgr_prio_overlay_zm_bgb_eye_candy_1, 1, 1);
+	if(!isdefined(level.vsmgr_prio_visionset_zm_bgb_eye_candy_2))
 	{
-		level.var_10c80865 = 114;
+		level.vsmgr_prio_visionset_zm_bgb_eye_candy_2 = 114;
 	}
-	visionset_mgr::register_info("visionset", "zm_bgb_eye_candy_vs_2", 21000, level.var_10c80865, 31, 1);
-	if(!isdefined(level.var_8c35a63d))
+	visionset_mgr::register_info("visionset", "zm_bgb_eye_candy_vs_2", 21000, level.vsmgr_prio_visionset_zm_bgb_eye_candy_2, 31, 1);
+	if(!isdefined(level.vsmgr_prio_overlay_zm_bgb_eye_candy_2))
 	{
-		level.var_8c35a63d = 114;
+		level.vsmgr_prio_overlay_zm_bgb_eye_candy_2 = 114;
 	}
-	visionset_mgr::register_info("overlay", "zm_bgb_eye_candy_vs_2", 21000, level.var_8c35a63d, 1, 1);
-	if(!isdefined(level.var_eac58dfc))
+	visionset_mgr::register_info("overlay", "zm_bgb_eye_candy_vs_2", 21000, level.vsmgr_prio_overlay_zm_bgb_eye_candy_2, 1, 1);
+	if(!isdefined(level.vsmgr_prio_visionset_zm_bgb_eye_candy_3))
 	{
-		level.var_eac58dfc = 115;
+		level.vsmgr_prio_visionset_zm_bgb_eye_candy_3 = 115;
 	}
-	visionset_mgr::register_info("visionset", "zm_bgb_eye_candy_vs_3", 21000, level.var_eac58dfc, 31, 1);
-	if(!isdefined(level.var_66332bd4))
+	visionset_mgr::register_info("visionset", "zm_bgb_eye_candy_vs_3", 21000, level.vsmgr_prio_visionset_zm_bgb_eye_candy_3, 31, 1);
+	if(!isdefined(level.vsmgr_prio_overlay_zm_bgb_eye_candy_3))
 	{
-		level.var_66332bd4 = 115;
+		level.vsmgr_prio_overlay_zm_bgb_eye_candy_3 = 115;
 	}
-	visionset_mgr::register_info("overlay", "zm_bgb_eye_candy_vs_3", 21000, level.var_66332bd4, 1, 1);
-	if(!isdefined(level.var_c4c31393))
+	visionset_mgr::register_info("overlay", "zm_bgb_eye_candy_vs_3", 21000, level.vsmgr_prio_overlay_zm_bgb_eye_candy_3, 1, 1);
+	if(!isdefined(level.vsmgr_prio_visionset_zm_bgb_eye_candy_4))
 	{
-		level.var_c4c31393 = 116;
+		level.vsmgr_prio_visionset_zm_bgb_eye_candy_4 = 116;
 	}
-	visionset_mgr::register_info("visionset", "zm_bgb_eye_candy_vs_4", 21000, level.var_c4c31393, 31, 1);
-	if(!isdefined(level.var_4030b16b))
+	visionset_mgr::register_info("visionset", "zm_bgb_eye_candy_vs_4", 21000, level.vsmgr_prio_visionset_zm_bgb_eye_candy_4, 31, 1);
+	if(!isdefined(level.vsmgr_prio_overlay_zm_bgb_eye_candy_4))
 	{
-		level.var_4030b16b = 116;
+		level.vsmgr_prio_overlay_zm_bgb_eye_candy_4 = 116;
 	}
-	visionset_mgr::register_info("overlay", "zm_bgb_eye_candy_vs_4", 21000, level.var_4030b16b, 1, 1);
+	visionset_mgr::register_info("overlay", "zm_bgb_eye_candy_vs_4", 21000, level.vsmgr_prio_overlay_zm_bgb_eye_candy_4, 1, 1);
 	level.var_29cebda6 = array("zm_bgb_eye_candy_vs_1", "zm_bgb_eye_candy_vs_2", "zm_bgb_eye_candy_vs_3", "zm_bgb_eye_candy_vs_4");
 	n_bits = getminbitcountfornum(5);
 	clientfield::register("toplayer", "eye_candy_render", 21000, n_bits, "int");
@@ -101,7 +101,7 @@ function __init__()
 */
 function validation()
 {
-	return !(isdefined(self bgb::function_e2bcf80c()) && self bgb::function_e2bcf80c());
+	return !(isdefined(self bgb::get_active()) && self bgb::get_active());
 }
 
 /*

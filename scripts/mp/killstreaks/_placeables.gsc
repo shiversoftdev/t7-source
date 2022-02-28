@@ -149,7 +149,7 @@ function innoplacementtrigger()
 		{
 			if(placeable istouching(level.noturretplacementtriggers[i]))
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
@@ -159,15 +159,15 @@ function innoplacementtrigger()
 		{
 			if(placeable istouching(level.fatal_triggers[i]))
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
 	if(placeable oob::istouchinganyoobtrigger())
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

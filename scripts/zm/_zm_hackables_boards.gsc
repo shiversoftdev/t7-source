@@ -154,8 +154,8 @@ function board_qualifier(player)
 {
 	if(zm_utility::all_chunks_intact(self.window, self.window.barrier_chunks) || zm_utility::no_valid_repairable_boards(self.window, self.window.barrier_chunks))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 

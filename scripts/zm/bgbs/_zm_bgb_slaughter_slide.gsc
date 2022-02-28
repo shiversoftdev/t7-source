@@ -17,7 +17,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_bgb_slaughter_slide", &__init__, undefined, "bgb");
 }
@@ -38,8 +38,8 @@ function __init__()
 		return;
 	}
 	bgb::register("zm_bgb_slaughter_slide", "event", &event, undefined, undefined, undefined);
-	bgb::function_3422638b("zm_bgb_slaughter_slide", &actor_damage_override);
-	bgb::function_e22c6124("zm_bgb_slaughter_slide", &vehicle_damage_override);
+	bgb::register_actor_damage_override("zm_bgb_slaughter_slide", &actor_damage_override);
+	bgb::register_vehicle_damage_override("zm_bgb_slaughter_slide", &vehicle_damage_override);
 	level.var_77eb3698 = getweapon("frag_grenade_slaughter_slide");
 }
 

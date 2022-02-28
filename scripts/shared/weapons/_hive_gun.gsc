@@ -1052,16 +1052,16 @@ function firefly_pod_should_damage(watcher, attacker, weapon, damage)
 {
 	if(weapon == watcher.weapon)
 	{
-		return 0;
+		return false;
 	}
 	if(weapon.isemp || weapon.destroysequipment)
 	{
-		return 1;
+		return true;
 	}
 	if(self.damagetaken < 15)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 

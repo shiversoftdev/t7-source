@@ -43,7 +43,7 @@ function bot_update()
 	self.bot.goalflag = undefined;
 	if(!self botgoalreached())
 	{
-		foreach(var_3c27f970, flag in level.domflags)
+		foreach(flag in level.domflags)
 		{
 			if(self bot::goal_in_trigger(flag.trigger))
 			{
@@ -132,7 +132,7 @@ function bot_update_threat_goal()
 */
 function get_capturing_flag()
 {
-	foreach(var_5d2cefaa, flag in level.domflags)
+	foreach(flag in level.domflags)
 	{
 		if(self.team != flag gameobjects::get_owner_team() && self istouching(flag.trigger))
 		{
@@ -155,7 +155,7 @@ function get_best_flag()
 {
 	bestflag = undefined;
 	bestflagdistsq = undefined;
-	foreach(var_d7ed6d98, flag in level.domflags)
+	foreach(flag in level.domflags)
 	{
 		ownerteam = flag gameobjects::get_owner_team();
 		contested = flag gameobjects::get_num_touching_except_team(ownerteam);

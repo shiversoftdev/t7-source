@@ -296,53 +296,62 @@ function menu_input()
 				wait(0.1);
 				continue;
 			}
-			else if(keystring == "" || keystring == "")
-			{
-				if(level.menu_cursor.current_pos < (level.menu_sys[""].options.size - 1))
-				{
-					level.menu_cursor.y = level.menu_cursor.y + 20;
-					level.menu_cursor.current_pos++;
-				}
-				else if(level.menu_cursor.current_pos == (level.menu_sys[""].options.size - 1))
-				{
-					level.menu_cursor.y = level.menu_cursor.y + (level.menu_cursor.current_pos * -20);
-					level.menu_cursor.current_pos = 0;
-				}
-				wait(0.1);
-				continue;
-			}
-			else if(keystring == "" || keystring == "")
-			{
-				key = level.menu_cursor.current_pos;
-			}
 			else
 			{
-				key = int(keystring) - 1;
+				if(keystring == "" || keystring == "")
+				{
+					if(level.menu_cursor.current_pos < (level.menu_sys[""].options.size - 1))
+					{
+						level.menu_cursor.y = level.menu_cursor.y + 20;
+						level.menu_cursor.current_pos++;
+					}
+					else if(level.menu_cursor.current_pos == (level.menu_sys[""].options.size - 1))
+					{
+						level.menu_cursor.y = level.menu_cursor.y + (level.menu_cursor.current_pos * -20);
+						level.menu_cursor.current_pos = 0;
+					}
+					wait(0.1);
+					continue;
+				}
+				else
+				{
+					if(keystring == "" || keystring == "")
+					{
+						key = level.menu_cursor.current_pos;
+					}
+					else
+					{
+						key = int(keystring) - 1;
+					}
+				}
 			}
 			if(key > level.menu_sys[menu_name].options.size)
 			{
 				continue;
 			}
-			else if(isdefined(level.menu_sys[menu_name].parent_menu) && key == level.menu_sys[menu_name].options.size)
+			else
 			{
-				level notify("" + menu_name);
-				level enable_menu(level.menu_sys[menu_name].parent_menu);
-			}
-			else if(isdefined(level.menu_sys[menu_name].func) && isdefined(level.menu_sys[menu_name].func[key]))
-			{
-				level.menu_sys[""].options[key] thread hud_selector(level.menu_sys[""].options[key].x, level.menu_sys[""].options[key].y);
-				if(isdefined(level.menu_sys[menu_name].func_key) && isdefined(level.menu_sys[menu_name].func_key[key]) && level.menu_sys[menu_name].func_key[key] == keystring)
+				if(isdefined(level.menu_sys[menu_name].parent_menu) && key == level.menu_sys[menu_name].options.size)
 				{
-					error_msg = level [[level.menu_sys[menu_name].func[key]]]();
+					level notify("" + menu_name);
+					level enable_menu(level.menu_sys[menu_name].parent_menu);
 				}
-				else
+				else if(isdefined(level.menu_sys[menu_name].func) && isdefined(level.menu_sys[menu_name].func[key]))
 				{
-					error_msg = level [[level.menu_sys[menu_name].func[key]]]();
-				}
-				level thread hud_selector_fade_out();
-				if(isdefined(error_msg))
-				{
-					level thread selection_error(error_msg, level.menu_sys[""].options[key].x, level.menu_sys[""].options[key].y);
+					level.menu_sys[""].options[key] thread hud_selector(level.menu_sys[""].options[key].x, level.menu_sys[""].options[key].y);
+					if(isdefined(level.menu_sys[menu_name].func_key) && isdefined(level.menu_sys[menu_name].func_key[key]) && level.menu_sys[menu_name].func_key[key] == keystring)
+					{
+						error_msg = level [[level.menu_sys[menu_name].func[key]]]();
+					}
+					else
+					{
+						error_msg = level [[level.menu_sys[menu_name].func[key]]]();
+					}
+					level thread hud_selector_fade_out();
+					if(isdefined(error_msg))
+					{
+						level thread selection_error(error_msg, level.menu_sys[""].options[key].x, level.menu_sys[""].options[key].y);
+					}
 				}
 			}
 			if(!isdefined(level.menu_sys[menu_name].children_menu))
@@ -350,15 +359,18 @@ function menu_input()
 				println(("" + menu_name) + "");
 				continue;
 			}
-			else if(!isdefined(level.menu_sys[menu_name].children_menu[key]))
+			else
 			{
-				println(((("" + menu_name) + "") + key) + "");
-				continue;
-			}
-			else if(!isdefined(level.menu_sys[level.menu_sys[menu_name].children_menu[key]]))
-			{
-				println(("" + level.menu_sys[menu_name].options[key]) + "");
-				continue;
+				if(!isdefined(level.menu_sys[menu_name].children_menu[key]))
+				{
+					println(((("" + menu_name) + "") + key) + "");
+					continue;
+				}
+				else if(!isdefined(level.menu_sys[level.menu_sys[menu_name].children_menu[key]]))
+				{
+					println(("" + level.menu_sys[menu_name].options[key]) + "");
+					continue;
+				}
 			}
 			if(isdefined(level.menu_sys[menu_name].children_func) && isdefined(level.menu_sys[menu_name].children_func[key]))
 			{
@@ -400,37 +412,58 @@ function force_menu_back(waittill_msg)
 		{
 			key = "";
 		}
-		else if(key == 2)
+		else
 		{
-			key = "";
-		}
-		else if(key == 3)
-		{
-			key = "";
-		}
-		else if(key == 4)
-		{
-			key = "";
-		}
-		else if(key == 5)
-		{
-			key = "";
-		}
-		else if(key == 6)
-		{
-			key = "";
-		}
-		else if(key == 7)
-		{
-			key = "";
-		}
-		else if(key == 8)
-		{
-			key = "";
-		}
-		else if(key == 9)
-		{
-			key = "";
+			if(key == 2)
+			{
+				key = "";
+			}
+			else
+			{
+				if(key == 3)
+				{
+					key = "";
+				}
+				else
+				{
+					if(key == 4)
+					{
+						key = "";
+					}
+					else
+					{
+						if(key == 5)
+						{
+							key = "";
+						}
+						else
+						{
+							if(key == 6)
+							{
+								key = "";
+							}
+							else
+							{
+								if(key == 7)
+								{
+									key = "";
+								}
+								else
+								{
+									if(key == 8)
+									{
+										key = "";
+									}
+									else if(key == 9)
+									{
+										key = "";
+									}
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 		level notify(#"menu_button_pressed", key);
 	#/
@@ -459,21 +492,30 @@ function list_menu(list, x, y, scale, func, sort, start_num)
 			{
 				alpha = 0.3;
 			}
-			else if(i == 1)
-			{
-				alpha = 0.6;
-			}
-			else if(i == 2)
-			{
-				alpha = 1;
-			}
-			else if(i == 3)
-			{
-				alpha = 0.6;
-			}
 			else
 			{
-				alpha = 0.3;
+				if(i == 1)
+				{
+					alpha = 0.6;
+				}
+				else
+				{
+					if(i == 2)
+					{
+						alpha = 1;
+					}
+					else
+					{
+						if(i == 3)
+						{
+							alpha = 0.6;
+						}
+						else
+						{
+							alpha = 0.3;
+						}
+					}
+				}
 			}
 			hud = set_hudelem(list[i], x, y + ((i - 2) * 15), scale, alpha, sort);
 			if(!isdefined(hud_array))
@@ -506,33 +548,42 @@ function list_menu(list, x, y, scale, func, sort, start_num)
 			{
 				break;
 			}
-			else if(key == "" || key == "")
+			else
 			{
-				if(current_num >= (list.size - 1))
+				if(key == "" || key == "")
 				{
-					continue;
+					if(current_num >= (list.size - 1))
+					{
+						continue;
+					}
+					current_num++;
+					new_move_list_menu(hud_array, list, current_num);
 				}
-				current_num++;
-				new_move_list_menu(hud_array, list, current_num);
-			}
-			else if(key == "" || key == "")
-			{
-				if(current_num <= 0)
+				else
 				{
-					continue;
+					if(key == "" || key == "")
+					{
+						if(current_num <= 0)
+						{
+							continue;
+						}
+						current_num--;
+						new_move_list_menu(hud_array, list, current_num);
+					}
+					else
+					{
+						if(key == "" || key == "")
+						{
+							selected = 1;
+							break;
+						}
+						else if(key == "" || key == "")
+						{
+							selected = 0;
+							break;
+						}
+					}
 				}
-				current_num--;
-				new_move_list_menu(hud_array, list, current_num);
-			}
-			else if(key == "" || key == "")
-			{
-				selected = 1;
-				break;
-			}
-			else if(key == "" || key == "")
-			{
-				selected = 0;
-				break;
 			}
 			level notify(#"scroll_list");
 			if(current_num != old_num)
@@ -609,18 +660,24 @@ function move_list_menu(hud_array, dir, space, num, min_alpha, num_of_fades)
 			side_movement = 1;
 			movement = space;
 		}
-		else if(dir == "")
-		{
-			side_movement = 1;
-			movement = space * -1;
-		}
-		else if(dir == "")
-		{
-			movement = space;
-		}
 		else
 		{
-			movement = space * -1;
+			if(dir == "")
+			{
+				side_movement = 1;
+				movement = space * -1;
+			}
+			else
+			{
+				if(dir == "")
+				{
+					movement = space;
+				}
+				else
+				{
+					movement = space * -1;
+				}
+			}
 		}
 		for(i = 0; i < hud_array.size; i++)
 		{
@@ -1077,22 +1134,28 @@ function dialog_text_box_input(cursor_x, cursor_y, word_length)
 				word = "";
 				break;
 			}
-			else if(button == "" || button == "" || button == "")
+			else
 			{
-				break;
-			}
-			else if(button == "" || button == "")
-			{
-				new_word = "";
-				for(i = 0; i < (word.size - 1); i++)
+				if(button == "" || button == "" || button == "")
 				{
-					new_word = new_word + word[i];
+					break;
 				}
-				word = new_word;
-			}
-			else if(word.size < word_length)
-			{
-				word = word + button;
+				else
+				{
+					if(button == "" || button == "")
+					{
+						new_word = "";
+						for(i = 0; i < (word.size - 1); i++)
+						{
+							new_word = new_word + word[i];
+						}
+						word = new_word;
+					}
+					else if(word.size < word_length)
+					{
+						word = word + button;
+					}
+				}
 			}
 			hud_word settext(word);
 			x = cursor_x;
@@ -1212,25 +1275,37 @@ function get_letter_space(letter)
 		{
 			space = 10;
 		}
-		else if(letter == "" || letter == "" || letter == "" || letter == "" || letter == "" || letter == "")
-		{
-			space = 7;
-		}
-		else if(letter == "" || letter == "" || letter == "")
-		{
-			space = 5;
-		}
-		else if(letter == "" || letter == "")
-		{
-			space = 4;
-		}
-		else if(letter == "")
-		{
-			space = 3;
-		}
 		else
 		{
-			space = 6;
+			if(letter == "" || letter == "" || letter == "" || letter == "" || letter == "" || letter == "")
+			{
+				space = 7;
+			}
+			else
+			{
+				if(letter == "" || letter == "" || letter == "")
+				{
+					space = 5;
+				}
+				else
+				{
+					if(letter == "" || letter == "")
+					{
+						space = 4;
+					}
+					else
+					{
+						if(letter == "")
+						{
+							space = 3;
+						}
+						else
+						{
+							space = 6;
+						}
+					}
+				}
+			}
 		}
 		return space;
 	#/
@@ -1399,10 +1474,10 @@ function any_button_hit(button_hit, type)
 		{
 			if(button_hit == buttons[i])
 			{
-				return 1;
+				return true;
 			}
 		}
-		return 0;
+		return false;
 	#/
 }
 

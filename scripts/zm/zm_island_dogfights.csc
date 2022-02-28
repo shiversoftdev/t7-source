@@ -43,7 +43,7 @@ function init()
 */
 function function_618223cc(a_ents)
 {
-	foreach(var_622a73d9, ent in a_ents)
+	foreach(ent in a_ents)
 	{
 		if(isdefined(ent))
 		{
@@ -231,7 +231,7 @@ function function_4fc200d2(str_targetname, n_wait_time_min = 0, n_wait_time_max 
 		level endon(#"hash_fbb697ce");
 	}
 	var_bbd34e6b = struct::get_array(str_targetname, "targetname");
-	foreach(var_a374677c, s_scene in var_bbd34e6b)
+	foreach(s_scene in var_bbd34e6b)
 	{
 		wait(randomintrange(n_wait_time_min, n_wait_time_max));
 		s_scene thread scene::play();

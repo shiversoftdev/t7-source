@@ -112,7 +112,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function opt_in()
+function autoexec opt_in()
 {
 	level.aat_in_use = 1;
 	level.bgb_in_use = 1;
@@ -285,7 +285,7 @@ function function_4353b980()
 	{
 		level.var_a70b4aef = [];
 		level.var_2c78e44c = [];
-		foreach(var_831551e0, e_spawner in level.zombie_spawners)
+		foreach(e_spawner in level.zombie_spawners)
 		{
 			if(e_spawner.targetname === "skeleton_spawner")
 			{
@@ -335,7 +335,7 @@ function function_1ba33179(zone_name)
 {
 	if(!zm_zonemgr::zone_is_enabled(zone_name))
 	{
-		return 0;
+		return false;
 	}
 	var_46ac7dc1 = 0;
 	if(zone_name == "zone_v10_pad" || zone_name == "zone_v10_pad_exterior")
@@ -352,12 +352,12 @@ function function_1ba33179(zone_name)
 			{
 				if(!var_46ac7dc1 || !players[j] laststand::player_is_in_laststand())
 				{
-					return 1;
+					return true;
 				}
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -400,7 +400,7 @@ function function_fcfd712e(cmd)
 	{
 		case "specialty_deadshot_castle":
 		{
-			foreach(var_358d8fda, player in level.players)
+			foreach(player in level.players)
 			{
 				var_8ceb4930 zm_perks::vending_trigger_post_think(player, "specialty_deadshot");
 			}
@@ -408,7 +408,7 @@ function function_fcfd712e(cmd)
 		}
 		case "specialty_widowswine_castle":
 		{
-			foreach(var_9b050825, player in level.players)
+			foreach(player in level.players)
 			{
 				var_8ceb4930 zm_perks::vending_trigger_post_think(player, "specialty_widowswine");
 			}
@@ -416,7 +416,7 @@ function function_fcfd712e(cmd)
 		}
 		case "specialty_electriccherry_castle":
 		{
-			foreach(var_4f001353, player in level.players)
+			foreach(player in level.players)
 			{
 				var_8ceb4930 zm_perks::vending_trigger_post_think(player, "specialty_electriccherry");
 			}
@@ -424,8 +424,8 @@ function function_fcfd712e(cmd)
 		}
 		case "remove_perks_castle":
 		{
-			zm_devgui::function_54b2ecf8();
-			foreach(var_73aa4390, player in level.players)
+			zm_devgui::zombie_devgui_take_perks();
+			foreach(player in level.players)
 			{
 				player notify("specialty_deadshot" + "_stop");
 				player notify("specialty_widowswine" + "_stop");
@@ -461,13 +461,13 @@ function player_out_of_playable_area_monitor_callback()
 {
 	if(isdefined(self.is_flung) && self.is_flung)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.teleport_origin))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -484,9 +484,9 @@ function function_9b56d76(player)
 	if(self.powerup_name == "castle_tram_token" && player clientfield::get_to_player("has_castle_tram_token"))
 	{
 		player thread function_f42077ff();
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -564,7 +564,7 @@ function offhand_weapon_give_override(str_weapon)
 		self setweaponammoclip(self zm_utility::get_player_tactical_grenade(), 0);
 		self takeweapon(self zm_utility::get_player_tactical_grenade());
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -885,25 +885,37 @@ function function_c7d8dba7()
 	{
 		self clientfield::set("powerup_fuse_fx", 1);
 	}
-	else if(issubstr(self.powerup_name, "demonic_rune"))
-	{
-		self clientfield::set("demonic_rune_fx", 1);
-	}
-	else if(self.only_affects_grabber)
-	{
-		self clientfield::set("powerup_fx", 2);
-	}
-	else if(self.any_team)
-	{
-		self clientfield::set("powerup_fx", 4);
-	}
-	else if(self.zombie_grabbable)
-	{
-		self clientfield::set("powerup_fx", 3);
-	}
 	else
 	{
-		self clientfield::set("powerup_fx", 1);
+		if(issubstr(self.powerup_name, "demonic_rune"))
+		{
+			self clientfield::set("demonic_rune_fx", 1);
+		}
+		else
+		{
+			if(self.only_affects_grabber)
+			{
+				self clientfield::set("powerup_fx", 2);
+			}
+			else
+			{
+				if(self.any_team)
+				{
+					self clientfield::set("powerup_fx", 4);
+				}
+				else
+				{
+					if(self.zombie_grabbable)
+					{
+						self clientfield::set("powerup_fx", 3);
+					}
+					else
+					{
+						self clientfield::set("powerup_fx", 1);
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -1020,7 +1032,7 @@ function function_8921895f()
 	for(i = 0; i < var_cdb0f86b.size; i++)
 	{
 		var_77917a61 = 0;
-		foreach(var_a85ba213, var_68de493a in var_b4442b55)
+		foreach(var_68de493a in var_b4442b55)
 		{
 			if(var_cdb0f86b[i] == var_68de493a)
 			{
@@ -1051,13 +1063,13 @@ function function_98a0818e()
 {
 	if(isdefined(self.is_flung) && self.is_flung || (isdefined(self.var_9a017681) && self.var_9a017681) || (isdefined(self.var_c7a6615d) && self.var_c7a6615d))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.b_teleporting) && self.b_teleporting)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1073,13 +1085,13 @@ function function_869d6f66()
 {
 	if(!isdefined(self zm_bgb_anywhere_but_here::function_728dfe3()))
 	{
-		return 0;
+		return false;
 	}
 	if(level flag::get("boss_fight_begin") && !level flag::get("boss_fight_completed"))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1117,9 +1129,9 @@ function function_6190ec3f()
 	if(!ispointonnavmesh(self.origin, self) || self istouching(var_3592813c) || self istouching(var_a799f077))
 	{
 		self thread zm_equipment::show_hint_text(&"ZM_CASTLE_GRAVITYSPIKE_BAD_LOCATION", 3);
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1190,7 +1202,7 @@ function no_target_override(ai_zombie)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function get_escape_position()
+function private get_escape_position()
 {
 	str_zone = zm_zonemgr::get_zone_from_position(self.origin + vectorscale((0, 0, 1), 32), 1);
 	if(!isdefined(str_zone))
@@ -1223,10 +1235,10 @@ private function get_escape_position()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function get_wait_locations_in_zones(a_zones)
+function private get_wait_locations_in_zones(a_zones)
 {
 	a_wait_locations = [];
-	foreach(var_6844c71d, zone in a_zones)
+	foreach(zone in a_zones)
 	{
 		a_wait_locations = arraycombine(a_wait_locations, level.zones[zone].a_loc_types["wait_location"], 0, 0);
 	}
@@ -1242,17 +1254,17 @@ private function get_wait_locations_in_zones(a_zones)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_eadbcbdb()
+function private function_eadbcbdb()
 {
 	if(!isdefined(self))
 	{
-		return 0;
+		return false;
 	}
 	if(!ispointonnavmesh(self.origin) || !zm_utility::check_point_in_playable_area(self.origin))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1264,7 +1276,7 @@ private function function_eadbcbdb()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_dc683d01(var_b52b26b9)
+function private function_dc683d01(var_b52b26b9)
 {
 	self endon(#"death");
 	self notify(#"stop_find_flesh");
@@ -1288,7 +1300,7 @@ private function function_dc683d01(var_b52b26b9)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function check_player_available()
+function private check_player_available()
 {
 	self endon(#"death");
 	while(isdefined(self.b_zombie_path_bad) && self.b_zombie_path_bad)
@@ -1312,7 +1324,7 @@ private function check_player_available()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function can_zombie_see_any_player()
+function private can_zombie_see_any_player()
 {
 	for(i = 0; i < level.activeplayers.size; i++)
 	{
@@ -1320,12 +1332,12 @@ private function can_zombie_see_any_player()
 		{
 			if(self zm_castle_zombie::function_7b63bf24(level.activeplayers[i]))
 			{
-				return 1;
+				return true;
 			}
 		}
 		wait(0.1);
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1476,12 +1488,12 @@ function function_a691b3f6()
 	level thread scene::play("p7_fxanim_zm_castle_rocket_01_bundle");
 	level waittill(#"start_of_round");
 	var_d16e2136 = struct::get_array("initial_spawn_points");
-	foreach(var_5a655898, player in level.players)
+	foreach(player in level.players)
 	{
 		player zm_utility::create_streamer_hint(var_d16e2136[0].origin, var_d16e2136[0].angles, 1);
 	}
 	wait(9);
-	foreach(var_6476b177, player in level.players)
+	foreach(player in level.players)
 	{
 		player zm_utility::clear_streamer_hint();
 	}
@@ -1713,7 +1725,7 @@ function function_9be4ecd1()
 			if(var_565450eb <= 3 && level.round_number > 3)
 			{
 				a_zombies = getaiteamarray(level.zombie_team);
-				foreach(var_bb65e53b, e_zombie in a_zombies)
+				foreach(e_zombie in a_zombies)
 				{
 					if(e_zombie.zombie_move_speed == "walk")
 					{
@@ -1830,7 +1842,7 @@ function function_ec8a9331(inflictor, attacker, damage, flags, meansofdeath, wea
 {
 	if(self.archetype == "mechz")
 	{
-		return 0;
+		return false;
 	}
 }
 
@@ -1850,11 +1862,11 @@ function detect_reentry()
 		{
 			if(self.var_8665ab89 == gettime())
 			{
-				return 1;
+				return true;
 			}
 		}
 		self.var_8665ab89 = gettime();
-		return 0;
+		return false;
 	#/
 }
 
@@ -1895,13 +1907,13 @@ function function_f04119b5(cmd)
 			{
 				if(level detect_reentry())
 				{
-					return 1;
+					return true;
 				}
 				level thread super_sesame();
-				return 1;
+				return true;
 			}
 		}
-		return 0;
+		return false;
 	#/
 }
 
@@ -1920,7 +1932,7 @@ function super_sesame()
 		zm_devgui::zombie_devgui_open_sesame();
 		level flag::set("");
 		var_15ed352b = getentarray("", "");
-		foreach(var_81c67f4d, var_3b9a12e0 in var_15ed352b)
+		foreach(var_3b9a12e0 in var_15ed352b)
 		{
 			var_3b9a12e0 delete();
 		}

@@ -17,7 +17,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_stalingrad_dragon_strike", &__init__, undefined, undefined);
 }
@@ -50,17 +50,17 @@ function __init__()
 */
 function lockbox_light_1(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
-	if(isdefined(self.var_fbe6c07a))
+	if(isdefined(self.fx_light_1))
 	{
-		stopfx(localclientnum, self.var_fbe6c07a);
+		stopfx(localclientnum, self.fx_light_1);
 	}
 	if(newval == 2)
 	{
-		self.var_fbe6c07a = playfxontag(localclientnum, "dlc3/stalingrad/fx_glow_red_dragonstrike", self, "tag_nixie_red_" + "0");
+		self.fx_light_1 = playfxontag(localclientnum, "dlc3/stalingrad/fx_glow_red_dragonstrike", self, "tag_nixie_red_" + "0");
 	}
 	else
 	{
-		self.var_fbe6c07a = playfxontag(localclientnum, "dlc3/stalingrad/fx_glow_green_dragonstrike", self, "tag_nixie_green_" + "0");
+		self.fx_light_1 = playfxontag(localclientnum, "dlc3/stalingrad/fx_glow_green_dragonstrike", self, "tag_nixie_green_" + "0");
 	}
 }
 
@@ -75,17 +75,17 @@ function lockbox_light_1(localclientnum, oldval, newval, bnewent, binitialsnap, 
 */
 function lockbox_light_2(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
-	if(isdefined(self.var_d5e44611))
+	if(isdefined(self.fx_light_2))
 	{
-		stopfx(localclientnum, self.var_d5e44611);
+		stopfx(localclientnum, self.fx_light_2);
 	}
 	if(newval == 2)
 	{
-		self.var_d5e44611 = playfxontag(localclientnum, "dlc3/stalingrad/fx_glow_red_dragonstrike", self, "tag_nixie_red_" + "1");
+		self.fx_light_2 = playfxontag(localclientnum, "dlc3/stalingrad/fx_glow_red_dragonstrike", self, "tag_nixie_red_" + "1");
 	}
 	else
 	{
-		self.var_d5e44611 = playfxontag(localclientnum, "dlc3/stalingrad/fx_glow_green_dragonstrike", self, "tag_nixie_green_" + "1");
+		self.fx_light_2 = playfxontag(localclientnum, "dlc3/stalingrad/fx_glow_green_dragonstrike", self, "tag_nixie_green_" + "1");
 	}
 }
 
@@ -100,17 +100,17 @@ function lockbox_light_2(localclientnum, oldval, newval, bnewent, binitialsnap, 
 */
 function lockbox_light_3(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
-	if(isdefined(self.var_afe1cba8))
+	if(isdefined(self.fx_light_3))
 	{
-		stopfx(localclientnum, self.var_afe1cba8);
+		stopfx(localclientnum, self.fx_light_3);
 	}
 	if(newval == 2)
 	{
-		self.var_afe1cba8 = playfxontag(localclientnum, "dlc3/stalingrad/fx_glow_red_dragonstrike", self, "tag_nixie_red_" + "2");
+		self.fx_light_3 = playfxontag(localclientnum, "dlc3/stalingrad/fx_glow_red_dragonstrike", self, "tag_nixie_red_" + "2");
 	}
 	else
 	{
-		self.var_afe1cba8 = playfxontag(localclientnum, "dlc3/stalingrad/fx_glow_green_dragonstrike", self, "tag_nixie_green_" + "2");
+		self.fx_light_3 = playfxontag(localclientnum, "dlc3/stalingrad/fx_glow_green_dragonstrike", self, "tag_nixie_green_" + "2");
 	}
 }
 

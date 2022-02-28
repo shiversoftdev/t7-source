@@ -161,13 +161,16 @@ function trygibbinghead(entity, damage, hitloc, isexplosive)
 	{
 		gibserverutils::gibhead(entity);
 	}
-	else if(isinarray(array("head", "neck", "helmet"), hitloc) && randomfloatrange(0, 1) <= 1)
+	else
 	{
-		gibserverutils::gibhead(entity);
-	}
-	else if((entity.health - damage) <= 0 && randomfloatrange(0, 1) <= 0.25)
-	{
-		gibserverutils::gibhead(entity);
+		if(isinarray(array("head", "neck", "helmet"), hitloc) && randomfloatrange(0, 1) <= 1)
+		{
+			gibserverutils::gibhead(entity);
+		}
+		else if((entity.health - damage) <= 0 && randomfloatrange(0, 1) <= 0.25)
+		{
+			gibserverutils::gibhead(entity);
+		}
 	}
 }
 
@@ -196,29 +199,35 @@ function trygibbinglimb(entity, damage, hitloc = level.doa.hitlocs[randomint(lev
 			gibserverutils::gibleftarm(entity);
 		}
 	}
-	else if(isinarray(array("left_hand", "left_arm_lower", "left_arm_upper"), hitloc))
+	else
 	{
-		if(!gibserverutils::isgibbed(entity, 32))
-		{
-			gibserverutils::gibleftarm(entity);
-		}
-	}
-	else if((entity.health - damage) <= 0 && entity.allowdeath && isinarray(array("right_hand", "right_arm_lower", "right_arm_upper"), hitloc))
-	{
-		gibserverutils::gibrightarm(entity);
-	}
-	else if((entity.health - damage) <= 0 && entity.allowdeath && randomfloatrange(0, 1) <= 0.45)
-	{
-		if(math::cointoss())
+		if(isinarray(array("left_hand", "left_arm_lower", "left_arm_upper"), hitloc))
 		{
 			if(!gibserverutils::isgibbed(entity, 32))
 			{
 				gibserverutils::gibleftarm(entity);
 			}
 		}
-		else if(!gibserverutils::isgibbed(entity, 16))
+		else
 		{
-			gibserverutils::gibrightarm(entity);
+			if((entity.health - damage) <= 0 && entity.allowdeath && isinarray(array("right_hand", "right_arm_lower", "right_arm_upper"), hitloc))
+			{
+				gibserverutils::gibrightarm(entity);
+			}
+			else if((entity.health - damage) <= 0 && entity.allowdeath && randomfloatrange(0, 1) <= 0.45)
+			{
+				if(math::cointoss())
+				{
+					if(!gibserverutils::isgibbed(entity, 32))
+					{
+						gibserverutils::gibleftarm(entity);
+					}
+				}
+				else if(!gibserverutils::isgibbed(entity, 16))
+				{
+					gibserverutils::gibrightarm(entity);
+				}
+			}
 		}
 	}
 }
@@ -247,40 +256,46 @@ function trygibbinglegs(entity, damage, hitloc = level.doa.hitlocs[randomint(lev
 		#/
 		entity thread doa_utility::function_e3c30240();
 	}
-	else if(cangiblegs && isinarray(array("left_leg_upper", "left_leg_lower", "left_foot"), hitloc) && randomfloatrange(0, 1) <= 1)
+	else
 	{
-		if((entity.health - damage) > 0)
+		if(cangiblegs && isinarray(array("left_leg_upper", "left_leg_lower", "left_foot"), hitloc) && randomfloatrange(0, 1) <= 1)
 		{
-			entity.becomecrawler = 1;
-		}
-		if(!gibserverutils::isgibbed(entity, 256))
-		{
-			gibserverutils::gibleftleg(entity);
-		}
-	}
-	else if(cangiblegs && isinarray(array("right_leg_upper", "right_leg_lower", "right_foot"), hitloc) && randomfloatrange(0, 1) <= 1)
-	{
-		if((entity.health - damage) > 0)
-		{
-			entity.becomecrawler = 1;
-		}
-		if(!gibserverutils::isgibbed(entity, 128))
-		{
-			gibserverutils::gibrightleg(entity);
-		}
-	}
-	else if((entity.health - damage) <= 0 && entity.allowdeath && randomfloatrange(0, 1) <= 0.25)
-	{
-		if(math::cointoss())
-		{
+			if((entity.health - damage) > 0)
+			{
+				entity.becomecrawler = 1;
+			}
 			if(!gibserverutils::isgibbed(entity, 256))
 			{
 				gibserverutils::gibleftleg(entity);
 			}
 		}
-		else if(!gibserverutils::isgibbed(entity, 128))
+		else
 		{
-			gibserverutils::gibrightleg(entity);
+			if(cangiblegs && isinarray(array("right_leg_upper", "right_leg_lower", "right_foot"), hitloc) && randomfloatrange(0, 1) <= 1)
+			{
+				if((entity.health - damage) > 0)
+				{
+					entity.becomecrawler = 1;
+				}
+				if(!gibserverutils::isgibbed(entity, 128))
+				{
+					gibserverutils::gibrightleg(entity);
+				}
+			}
+			else if((entity.health - damage) <= 0 && entity.allowdeath && randomfloatrange(0, 1) <= 0.25)
+			{
+				if(math::cointoss())
+				{
+					if(!gibserverutils::isgibbed(entity, 256))
+					{
+						gibserverutils::gibleftleg(entity);
+					}
+				}
+				else if(!gibserverutils::isgibbed(entity, 128))
+				{
+					gibserverutils::gibrightleg(entity);
+				}
+			}
 		}
 	}
 }

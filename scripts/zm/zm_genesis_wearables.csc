@@ -43,17 +43,20 @@ function function_f51349bf(localclientnum, oldval, newval, bnewent, binitialsnap
 		}
 		self.n_fx_id = playfx(localclientnum, level._effect["battery_uncharged"], self.origin, anglestoforward(self.angles), (0, 0, 1));
 	}
-	else if(newval == 2)
+	else
 	{
-		if(isdefined(self.n_fx_id))
+		if(newval == 2)
+		{
+			if(isdefined(self.n_fx_id))
+			{
+				deletefx(localclientnum, self.n_fx_id, 1);
+			}
+			self.n_fx_id = playfx(localclientnum, level._effect["battery_charged"], self.origin, anglestoforward(self.angles), (0, 0, 1));
+		}
+		else if(isdefined(self.n_fx_id))
 		{
 			deletefx(localclientnum, self.n_fx_id, 1);
 		}
-		self.n_fx_id = playfx(localclientnum, level._effect["battery_charged"], self.origin, anglestoforward(self.angles), (0, 0, 1));
-	}
-	else if(isdefined(self.n_fx_id))
-	{
-		deletefx(localclientnum, self.n_fx_id, 1);
 	}
 }
 

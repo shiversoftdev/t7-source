@@ -75,13 +75,16 @@ function magic_box_update()
 		{
 			box_mode = "no_power";
 		}
-		else if(isdefined(level.zombie_vars["zombie_powerup_fire_sale_on"]) && level.zombie_vars["zombie_powerup_fire_sale_on"] == 1)
-		{
-			box_mode = "fire_sale";
-		}
 		else
 		{
-			box_mode = "box_available";
+			if(isdefined(level.zombie_vars["zombie_powerup_fire_sale_on"]) && level.zombie_vars["zombie_powerup_fire_sale_on"] == 1)
+			{
+				box_mode = "fire_sale";
+			}
+			else
+			{
+				box_mode = "box_available";
+			}
 		}
 		switch(box_mode)
 		{

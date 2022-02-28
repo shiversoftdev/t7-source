@@ -54,9 +54,9 @@ function optimize_for_splitscreen()
 	{
 		if(getdvarint("splitscreen_playerCount") >= level.var_7064bd2e)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 

@@ -194,7 +194,7 @@ function function_9ab759da(&queue, flag, var_a6cc22d4 = 0)
 	if(queue.size >= 64)
 	{
 		/#
-			foreach(var_7c874e2c, item in queue)
+			foreach(item in queue)
 			{
 				doa_utility::debugmsg("" + item);
 			}

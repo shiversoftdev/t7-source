@@ -24,7 +24,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("auto_turret", &__init__, undefined, undefined);
 }
@@ -225,13 +225,16 @@ function state_unaware_update(params)
 			}
 			scanning_arc = relativeangle;
 		}
-		else if(self.turretontarget)
+		else
 		{
-			turret_left = !turret_left;
-		}
-		if(!turret_left)
-		{
-			scanning_arc = scanning_arc * -1;
+			if(self.turretontarget)
+			{
+				turret_left = !turret_left;
+			}
+			if(!turret_left)
+			{
+				scanning_arc = scanning_arc * -1;
+			}
 		}
 		scanning_pitch = self.settings.scanning_pitch;
 		if(!isdefined(scanning_pitch))
@@ -532,9 +535,9 @@ function turretallowfriendlyfiredamage(einflictor, eattacker, smeansofdeath, wea
 {
 	if(isdefined(eattacker) && isdefined(smeansofdeath) && smeansofdeath == "MOD_EXPLOSIVE")
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

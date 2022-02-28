@@ -25,7 +25,7 @@
 function callback_actorspawned(spawner)
 {
 	self thread spawner::run_spawn_functions();
-	bb::function_a96d8fec(self, spawner);
+	bb::logaispawn(self, spawner);
 }
 
 /*
@@ -127,46 +127,52 @@ function callback_actordamage(einflictor, eattacker, idamage, idflags, smeansofd
 				self globallogic_player::giveattackerandinflictorownerassist(eattacker, einflictor, idamage, smeansofdeath, weapon);
 				self finishactordamage(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, vdamageorigin, psoffsettime, boneindex, surfacetype, vsurfacenormal);
 			}
-			else if(level.friendlyfire == 2)
+			else
 			{
-				return;
-			}
-			if(level.friendlyfire == 3)
-			{
-				idamage = int(idamage * 0.5);
-				if(idamage < 1)
+				if(level.friendlyfire == 2)
 				{
-					idamage = 1;
+					return;
 				}
-				self.lastdamagewasfromenemy = 0;
-				self globallogic_player::giveattackerandinflictorownerassist(eattacker, einflictor, idamage, smeansofdeath, weapon);
-				self finishactordamage(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, vdamageorigin, psoffsettime, boneindex, surfacetype, vsurfacenormal);
+				if(level.friendlyfire == 3)
+				{
+					idamage = int(idamage * 0.5);
+					if(idamage < 1)
+					{
+						idamage = 1;
+					}
+					self.lastdamagewasfromenemy = 0;
+					self globallogic_player::giveattackerandinflictorownerassist(eattacker, einflictor, idamage, smeansofdeath, weapon);
+					self finishactordamage(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, vdamageorigin, psoffsettime, boneindex, surfacetype, vsurfacenormal);
+				}
 			}
 			friendly = 1;
 		}
-		else if(isdefined(eattacker) && isdefined(self.script_owner) && eattacker == self.script_owner && !level.hardcoremode)
-		{
-			return;
-		}
-		if(isdefined(eattacker) && isdefined(self.script_owner) && isdefined(eattacker.script_owner) && eattacker.script_owner == self.script_owner)
-		{
-			return;
-		}
-		if(idamage < 1)
-		{
-			idamage = 1;
-		}
-		if(issubstr(smeansofdeath, "MOD_GRENADE") && isdefined(einflictor) && isdefined(einflictor.iscooked))
-		{
-			self.wascooked = gettime();
-		}
 		else
 		{
-			self.wascooked = undefined;
+			if(isdefined(eattacker) && isdefined(self.script_owner) && eattacker == self.script_owner && !level.hardcoremode)
+			{
+				return;
+			}
+			if(isdefined(eattacker) && isdefined(self.script_owner) && isdefined(eattacker.script_owner) && eattacker.script_owner == self.script_owner)
+			{
+				return;
+			}
+			if(idamage < 1)
+			{
+				idamage = 1;
+			}
+			if(issubstr(smeansofdeath, "MOD_GRENADE") && isdefined(einflictor) && isdefined(einflictor.iscooked))
+			{
+				self.wascooked = gettime();
+			}
+			else
+			{
+				self.wascooked = undefined;
+			}
+			self.lastdamagewasfromenemy = isdefined(eattacker) && eattacker != self;
+			self globallogic_player::giveattackerandinflictorownerassist(eattacker, einflictor, idamage, smeansofdeath, weapon);
+			self finishactordamage(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, vdamageorigin, psoffsettime, boneindex, surfacetype, vsurfacenormal);
 		}
-		self.lastdamagewasfromenemy = isdefined(eattacker) && eattacker != self;
-		self globallogic_player::giveattackerandinflictorownerassist(eattacker, einflictor, idamage, smeansofdeath, weapon);
-		self finishactordamage(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, vdamageorigin, psoffsettime, boneindex, surfacetype, vsurfacenormal);
 		if(isdefined(eattacker) && eattacker != self)
 		{
 			if(!isdefined(einflictor) || !isai(einflictor))

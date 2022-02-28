@@ -198,37 +198,37 @@ function _is_primed(slot, weapon)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _lock_requirement(target)
+function private _lock_requirement(target)
 {
 	if(target cybercom::cybercom_aicheckoptout("cybercom_exosuitbreakdown"))
 	{
 		self cybercom::function_29bf9dee(target, 2);
-		return 0;
+		return false;
 	}
 	if(isdefined(target.is_disabled) && target.is_disabled)
 	{
 		self cybercom::function_29bf9dee(target, 6);
-		return 0;
+		return false;
 	}
 	if(isactor(target) && target cybercom::function_78525729() != "stand" && target cybercom::function_78525729() != "crouch")
 	{
-		return 0;
+		return false;
 	}
 	if(isvehicle(target))
 	{
 		self cybercom::function_29bf9dee(target, 2);
-		return 0;
+		return false;
 	}
 	if(!isdefined(target.archetype) || (target.archetype != "human" && target.archetype != "human_riotshield" && target.archetype != "warlord"))
 	{
 		self cybercom::function_29bf9dee(target, 2);
-		return 0;
+		return false;
 	}
 	if(isactor(target) && !target isonground() && !target cybercom::function_421746e0())
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -240,7 +240,7 @@ private function _lock_requirement(target)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _get_valid_targets(weapon)
+function private _get_valid_targets(weapon)
 {
 	return arraycombine(getaiteamarray("axis"), getaiteamarray("team3"), 0, 0);
 }
@@ -258,7 +258,7 @@ function _activate_exo_breakdown(slot, weapon)
 {
 	aborted = 0;
 	fired = 0;
-	foreach(var_e6d1a490, item in self.cybercom.lock_targets)
+	foreach(item in self.cybercom.lock_targets)
 	{
 		if(isdefined(item.target) && (isdefined(item.inrange) && item.inrange))
 		{
@@ -318,7 +318,7 @@ function ai_activateexosuitbreakdown(target, var_9bc2efcb = 1)
 	validtargets = [];
 	if(isarray(target))
 	{
-		foreach(var_7e4e54bc, guy in target)
+		foreach(guy in target)
 		{
 			if(!_lock_requirement(guy))
 			{
@@ -327,20 +327,23 @@ function ai_activateexosuitbreakdown(target, var_9bc2efcb = 1)
 			validtargets[validtargets.size] = guy;
 		}
 	}
-	else if(!_lock_requirement(target))
+	else
 	{
-		return;
+		if(!_lock_requirement(target))
+		{
+			return;
+		}
+		validtargets[validtargets.size] = target;
 	}
-	validtargets[validtargets.size] = target;
 	if(isdefined(var_9bc2efcb) && var_9bc2efcb)
 	{
 		type = self cybercom::function_5e3d3aa();
 		self orientmode("face default");
 		self animscripted("ai_cybercom_anim", self.origin, self.angles, ("ai_base_rifle_" + type) + "_exposed_cybercom_activate");
-		self waittill_match(#"ai_cybercom_anim");
+		self waittillmatch(#"ai_cybercom_anim");
 	}
 	weapon = getweapon("gadget_exo_breakdown");
-	foreach(var_706613a0, guy in validtargets)
+	foreach(guy in validtargets)
 	{
 		if(!cybercom::targetisvalid(guy, weapon))
 		{
@@ -360,7 +363,7 @@ function ai_activateexosuitbreakdown(target, var_9bc2efcb = 1)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function function_69246d49(attacker, loops, weapon)
+function private function_69246d49(attacker, loops, weapon)
 {
 	self endon(#"death");
 	self.is_disabled = 1;
@@ -372,7 +375,7 @@ private function function_69246d49(attacker, loops, weapon)
 		self dodamage(5, self.origin, (isdefined(attacker) ? attacker : undefined), undefined, "none", "MOD_UNKNOWN", 0, weapon, -1, 1);
 		self.allowpain = 0;
 		wait(0.05);
-		self waittill_match(#"bhtn_action_terminate");
+		self waittillmatch(#"bhtn_action_terminate");
 		loops--;
 	}
 	self.allowpain = 1;
@@ -390,7 +393,7 @@ private function function_69246d49(attacker, loops, weapon)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _exo_breakdown(attacker)
+function private _exo_breakdown(attacker)
 {
 	self endon(#"death");
 	weapon = getweapon("gadget_exo_breakdown");
@@ -445,12 +448,12 @@ private function _exo_breakdown(attacker)
 	self animscripted("exo_intro_anim", self.origin, self.angles, (((("ai_" + base) + "_") + type) + "_exposed_suit_overload_react_intro") + variant, "normal", %generic::body, 1, 0.2);
 	self thread cybercom::stopanimscriptedonnotify("damage_pain", "exo_intro_anim", 1, attacker, weapon);
 	self thread cybercom::stopanimscriptedonnotify("notify_melee_damage", "exo_intro_anim", 1, attacker, weapon);
-	self waittill_match(#"exo_intro_anim");
+	self waittillmatch(#"exo_intro_anim");
 	function_58831b5a(loops, attacker, weapon, variant, base, type);
 	self animscripted("exo_outro_anim", self.origin, self.angles, (((("ai_" + base) + "_") + type) + "_exposed_suit_overload_react_outro") + variant, "normal", %generic::body, 1, 0.2);
 	self thread cybercom::stopanimscriptedonnotify("damage_pain", "exo_outro_anim", 1, attacker, weapon);
 	self thread cybercom::stopanimscriptedonnotify("notify_melee_damage", "exo_outro_anim", 1, attacker, weapon);
-	self waittill_match(#"exo_outro_anim");
+	self waittillmatch(#"exo_outro_anim");
 	self.ignoreall = 0;
 	self.is_disabled = undefined;
 }
@@ -490,7 +493,7 @@ function function_e01b8059(attacker, weapon, variant, base, type)
 	self animscripted("exo_loop_anim", self.origin, self.angles, (((("ai_" + base) + "_") + type) + "_exposed_suit_overload_react_loop") + variant, "normal", %generic::body, 1, 0.2);
 	self thread cybercom::stopanimscriptedonnotify("damage_pain", "exo_loop_anim", 1, attacker, weapon);
 	self thread cybercom::stopanimscriptedonnotify("breakout_exo_loop", "exo_loop_anim", 0, attacker, weapon);
-	self waittill_match(#"exo_loop_anim");
+	self waittillmatch(#"exo_loop_anim");
 }
 
 /*

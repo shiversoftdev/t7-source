@@ -22,7 +22,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("bzm_collectibles", &__init__, &__main__, undefined);
 }
@@ -82,8 +82,8 @@ function function_ab60ef67()
 	level.var_8a9d11b = 0;
 	level.var_7e93a355 = 0;
 	level.collectibles = [];
-	var_a87c5e50 = getentarray("collectible", "script_noteworthy");
-	if(var_a87c5e50.size <= 1)
+	mdl_collectibles = getentarray("collectible", "script_noteworthy");
+	if(mdl_collectibles.size <= 1)
 	{
 		return;
 	}
@@ -97,15 +97,15 @@ function function_ab60ef67()
 		var_12d65c22 = 0;
 	}
 	level.var_f5f95e45 = -1;
-	foreach(var_56a0317c, var_e81a1399 in var_a87c5e50)
+	foreach(mdl_collectible in mdl_collectibles)
 	{
-		if(var_12d65c22 && (distancesquared((-1492, 1690, -640), var_e81a1399.origin)) <= (200 * 200))
+		if(var_12d65c22 && (distancesquared((-1492, 1690, -640), mdl_collectible.origin)) <= (200 * 200))
 		{
 			continue;
 		}
 		level.var_f5f95e45++;
-		var_e81a1399.index = level.var_f5f95e45;
-		collectible = function_8765a33c(var_e81a1399);
+		mdl_collectible.index = level.var_f5f95e45;
+		collectible = function_8765a33c(mdl_collectible);
 		array::add(level.collectibles, collectible, 0);
 	}
 	callback::on_spawned(&on_player_spawned);
@@ -120,18 +120,18 @@ function function_ab60ef67()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_b963f25(var_e81a1399)
+function private function_b963f25(mdl_collectible)
 {
-	var_e81a1399.radius = 60;
-	var_e81a1399.offset = vectorscale((0, 0, 1), 5);
-	var_e81a1399.origin = var_e81a1399.origin + vectorscale((0, 0, 1), 35);
-	var_3efe1e22 = level.var_3efe1e22[var_e81a1399.model];
+	mdl_collectible.radius = 60;
+	mdl_collectible.offset = vectorscale((0, 0, 1), 5);
+	mdl_collectible.origin = mdl_collectible.origin + vectorscale((0, 0, 1), 35);
+	var_3efe1e22 = level.var_3efe1e22[mdl_collectible.model];
 	if(isdefined(var_3efe1e22))
 	{
-		var_e81a1399.radius = var_3efe1e22.radius;
-		var_e81a1399.offset = var_e81a1399.offset + var_3efe1e22.offset;
+		mdl_collectible.radius = var_3efe1e22.radius;
+		mdl_collectible.offset = mdl_collectible.offset + var_3efe1e22.offset;
 	}
-	return var_e81a1399;
+	return mdl_collectible;
 }
 
 /*
@@ -156,39 +156,39 @@ function on_player_spawned()
 	Parameters: 1
 	Flags: Linked
 */
-function function_8765a33c(var_e81a1399)
+function function_8765a33c(mdl_collectible)
 {
-	var_e81a1399 show();
-	var_e81a1399 = function_b963f25(var_e81a1399);
-	trigger_use = spawn("trigger_radius_use", var_e81a1399.origin + var_e81a1399.offset, 0, 100, var_e81a1399.radius);
+	mdl_collectible show();
+	mdl_collectible = function_b963f25(mdl_collectible);
+	trigger_use = spawn("trigger_radius_use", mdl_collectible.origin + mdl_collectible.offset, 0, 100, mdl_collectible.radius);
 	trigger_use triggerignoreteam();
 	trigger_use setvisibletoall();
 	trigger_use usetriggerrequirelookat();
 	trigger_use setteamfortrigger("none");
 	trigger_use setcursorhint("HINT_INTERACTIVE_PROMPT");
 	trigger_use sethintstring(&"COLLECTIBLE_PICK_UP");
-	var_837a6185 = gameobjects::create_use_object("any", trigger_use, array(var_e81a1399), (0, 0, 0), &"cp_magic_song");
+	var_837a6185 = gameobjects::create_use_object("any", trigger_use, array(mdl_collectible), (0, 0, 0), &"cp_magic_song");
 	var_837a6185 gameobjects::allow_use("any");
 	var_837a6185 gameobjects::set_use_time(0.35);
 	var_837a6185 gameobjects::set_owner_team("allies");
 	var_837a6185 gameobjects::set_visible_team("any");
-	var_837a6185.var_e81a1399 = var_e81a1399;
+	var_837a6185.mdl_collectible = mdl_collectible;
 	var_837a6185.onuse = &onuse;
 	var_837a6185.onbeginuse = &onbeginuse;
 	var_837a6185.single_use = 1;
-	var_837a6185.origin = var_e81a1399.origin;
+	var_837a6185.origin = mdl_collectible.origin;
 	var_837a6185.angles = var_837a6185.angles;
-	if(isdefined(var_e81a1399.script_int))
+	if(isdefined(mdl_collectible.script_int))
 	{
-		var_837a6185.index = var_e81a1399.script_int - 1;
+		var_837a6185.index = mdl_collectible.script_int - 1;
 	}
 	else
 	{
-		var_837a6185.index = (int(getsubstr(var_e81a1399.model, var_e81a1399.model.size - 2))) - 1;
+		var_837a6185.index = (int(getsubstr(mdl_collectible.model, mdl_collectible.model.size - 2))) - 1;
 	}
-	var_e81a1399 setmodel("p7_zm_teddybear_sitting");
-	var_e81a1399 clientfield::set("powerup_on_fx", 2);
-	var_e81a1399 setscale(0.7);
+	mdl_collectible setmodel("p7_zm_teddybear_sitting");
+	mdl_collectible clientfield::set("powerup_on_fx", 2);
+	mdl_collectible setscale(0.7);
 	/#
 		level thread debug_draw_line(var_837a6185.origin);
 	#/
@@ -207,13 +207,13 @@ function function_8765a33c(var_e81a1399)
 function function_9b46b73e()
 {
 	mapname = getrootmapname();
-	foreach(var_a4de089d, collectible in level.collectibles)
+	foreach(collectible in level.collectibles)
 	{
-		foreach(var_88ece713, player in level.players)
+		foreach(player in level.players)
 		{
 			if(player getdstat("PlayerStatsByMap", mapname, "collectibles", collectible.index))
 			{
-				collectible.var_e81a1399 setinvisibletoplayer(player);
+				collectible.mdl_collectible setinvisibletoplayer(player);
 				objective_setinvisibletoplayer(collectible.objectiveid, player);
 				collectible.trigger setinvisibletoplayer(player);
 			}
@@ -233,10 +233,10 @@ function function_9b46b73e()
 function onuse(e_player)
 {
 	mapname = getrootmapname();
-	foreach(var_1abd7134, player in level.players)
+	foreach(player in level.players)
 	{
 		player playsoundtoplayer("uin_collectible_pickup", player);
-		self.var_e81a1399 setinvisibletoplayer(player);
+		self.mdl_collectible setinvisibletoplayer(player);
 		self gameobjects::hide_waypoint(player);
 		self.trigger setinvisibletoplayer(player);
 		player setdstat("PlayerStatsByMap", mapname, "collectibles", self.index, 1);
@@ -341,7 +341,7 @@ function onuse(e_player)
 			level.bonuszm_musicoverride = 1;
 			level thread function_d789d2e(state);
 		}
-		foreach(var_d006e2d8, player in level.players)
+		foreach(player in level.players)
 		{
 			if(isdefined(unlockname))
 			{

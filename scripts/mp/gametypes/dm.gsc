@@ -84,7 +84,7 @@ function onstartgametype()
 	spawning::create_map_placed_influencers();
 	level.spawnmins = (0, 0, 0);
 	level.spawnmaxs = (0, 0, 0);
-	foreach(var_19e1098b, team in level.teams)
+	foreach(team in level.teams)
 	{
 		setupteam(team);
 	}

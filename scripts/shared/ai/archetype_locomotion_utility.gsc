@@ -19,7 +19,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function registerbehaviorscriptfunctions()
+function autoexec registerbehaviorscriptfunctions()
 {
 	behaviortreenetworkutility::registerbehaviortreescriptapi("locomotionBehaviorCondition", &locomotionbehaviorcondition);
 	behaviorstatemachine::registerbsmscriptapiinternal("locomotionBehaviorCondition", &locomotionbehaviorcondition);
@@ -66,17 +66,17 @@ autoexec function registerbehaviorscriptfunctions()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function locomotionisonstairs(behaviortreeentity)
+function private locomotionisonstairs(behaviortreeentity)
 {
 	startnode = behaviortreeentity.traversestartnode;
 	if(isdefined(startnode) && behaviortreeentity shouldstarttraversal())
 	{
 		if(isdefined(startnode.animscript) && issubstr(tolower(startnode.animscript), "stairs"))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -88,7 +88,7 @@ private function locomotionisonstairs(behaviortreeentity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function locomotionshouldskipstairs(behaviortreeentity)
+function private locomotionshouldskipstairs(behaviortreeentity)
 {
 	/#
 		assert(isdefined(behaviortreeentity._stairsstartnode) && isdefined(behaviortreeentity._stairsendnode));
@@ -98,20 +98,20 @@ private function locomotionshouldskipstairs(behaviortreeentity)
 	direction = blackboard::getblackboardattribute(behaviortreeentity, "_staircase_direction");
 	if(direction != "staircase_up")
 	{
-		return 0;
+		return false;
 	}
 	numoutsteps = 2;
 	totalstepswithoutout = numtotalsteps - numoutsteps;
 	if(stepssofar >= totalstepswithoutout)
 	{
-		return 0;
+		return false;
 	}
 	remainingsteps = totalstepswithoutout - stepssofar;
 	if(remainingsteps >= 3 || remainingsteps >= 6 || remainingsteps >= 8)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -123,7 +123,7 @@ private function locomotionshouldskipstairs(behaviortreeentity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function locomotionshouldlooponstairs(behaviortreeentity)
+function private locomotionshouldlooponstairs(behaviortreeentity)
 {
 	/#
 		assert(isdefined(behaviortreeentity._stairsstartnode) && isdefined(behaviortreeentity._stairsendnode));
@@ -154,9 +154,9 @@ private function locomotionshouldlooponstairs(behaviortreeentity)
 	if(stepssofar >= (numtotalsteps - numoutsteps))
 	{
 		behaviortreeentity setstairsexittransform();
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -168,7 +168,7 @@ private function locomotionshouldlooponstairs(behaviortreeentity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function locomotionstairsstart(behaviortreeentity)
+function private locomotionstairsstart(behaviortreeentity)
 {
 	startnode = behaviortreeentity.traversestartnode;
 	endnode = behaviortreeentity.traverseendnode;
@@ -246,7 +246,7 @@ private function locomotionstairsstart(behaviortreeentity)
 		}
 	}
 	blackboard::setblackboardattribute(behaviortreeentity, "_staircase_exit_type", exittype);
-	return 1;
+	return true;
 }
 
 /*
@@ -258,7 +258,7 @@ private function locomotionstairsstart(behaviortreeentity)
 	Parameters: 1
 	Flags: Private
 */
-private function locomotionstairloopstart(behaviortreeentity)
+function private locomotionstairloopstart(behaviortreeentity)
 {
 	/#
 		assert(isdefined(behaviortreeentity._stairsstartnode) && isdefined(behaviortreeentity._stairsendnode));
@@ -275,7 +275,7 @@ private function locomotionstairloopstart(behaviortreeentity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function locomotionstairsend(behaviortreeentity)
+function private locomotionstairsend(behaviortreeentity)
 {
 	blackboard::setblackboardattribute(behaviortreeentity, "_staircase_state", undefined);
 	blackboard::setblackboardattribute(behaviortreeentity, "_staircase_direction", undefined);
@@ -290,7 +290,7 @@ private function locomotionstairsend(behaviortreeentity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function locomotionpainbehaviorcondition(entity)
+function private locomotionpainbehaviorcondition(entity)
 {
 	return entity haspath() && entity hasvalidinterrupt("pain");
 }
@@ -318,21 +318,21 @@ function clearpathfromscript(behaviortreeentity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function noncombatlocomotioncondition(behaviortreeentity)
+function private noncombatlocomotioncondition(behaviortreeentity)
 {
 	if(!behaviortreeentity haspath())
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(behaviortreeentity.accuratefire) && behaviortreeentity.accuratefire)
 	{
-		return 1;
+		return true;
 	}
 	if(isdefined(behaviortreeentity.enemy))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -344,21 +344,21 @@ private function noncombatlocomotioncondition(behaviortreeentity)
 	Parameters: 1
 	Flags: Private
 */
-private function combatlocomotioncondition(behaviortreeentity)
+function private combatlocomotioncondition(behaviortreeentity)
 {
 	if(!behaviortreeentity haspath())
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(behaviortreeentity.accuratefire) && behaviortreeentity.accuratefire)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(behaviortreeentity.enemy))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -384,7 +384,7 @@ function locomotionbehaviorcondition(behaviortreeentity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function setdesiredstanceformovement(behaviortreeentity)
+function private setdesiredstanceformovement(behaviortreeentity)
 {
 	if(blackboard::getblackboardattribute(behaviortreeentity, "_stance") != "stand")
 	{
@@ -401,14 +401,14 @@ private function setdesiredstanceformovement(behaviortreeentity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function locomotionshouldtraverse(behaviortreeentity)
+function private locomotionshouldtraverse(behaviortreeentity)
 {
 	startnode = behaviortreeentity.traversestartnode;
 	if(isdefined(startnode) && behaviortreeentity shouldstarttraversal())
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -424,7 +424,7 @@ function traversesetup(behaviortreeentity)
 {
 	blackboard::setblackboardattribute(behaviortreeentity, "_stance", "stand");
 	blackboard::setblackboardattribute(behaviortreeentity, "_traversal_type", behaviortreeentity.traversestartnode.animscript);
-	return 1;
+	return true;
 }
 
 /*
@@ -458,7 +458,7 @@ function traverseactionstart(behaviortreeentity, asmstatename)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function disablerepath(entity)
+function private disablerepath(entity)
 {
 	entity.disablerepath = 1;
 }
@@ -472,7 +472,7 @@ private function disablerepath(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function enablerepath(entity)
+function private enablerepath(entity)
 {
 	entity.disablerepath = 0;
 }
@@ -490,9 +490,9 @@ function shouldstartarrivalcondition(behaviortreeentity)
 {
 	if(behaviortreeentity shouldstartarrival())
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -510,7 +510,7 @@ function cleararrivalpos(behaviortreeentity)
 	{
 		self clearuseposition();
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -525,7 +525,7 @@ function cleararrivalpos(behaviortreeentity)
 function delaymovement(entity)
 {
 	entity pathmode("move delayed", 0, randomfloatrange(1, 2));
-	return 1;
+	return true;
 }
 
 /*
@@ -537,14 +537,14 @@ function delaymovement(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function shouldadjuststanceattacticalwalk(behaviortreeentity)
+function private shouldadjuststanceattacticalwalk(behaviortreeentity)
 {
 	stance = blackboard::getblackboardattribute(behaviortreeentity, "_stance");
 	if(stance != "stand")
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -556,12 +556,12 @@ private function shouldadjuststanceattacticalwalk(behaviortreeentity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function adjuststancetofaceenemyinitialize(behaviortreeentity)
+function private adjuststancetofaceenemyinitialize(behaviortreeentity)
 {
 	behaviortreeentity.newenemyreaction = 0;
 	blackboard::setblackboardattribute(behaviortreeentity, "_desired_stance", "stand");
 	behaviortreeentity orientmode("face enemy");
-	return 1;
+	return true;
 }
 
 /*
@@ -573,7 +573,7 @@ private function adjuststancetofaceenemyinitialize(behaviortreeentity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function adjuststancetofaceenemyterminate(behaviortreeentity)
+function private adjuststancetofaceenemyterminate(behaviortreeentity)
 {
 	blackboard::setblackboardattribute(behaviortreeentity, "_stance", "stand");
 }
@@ -587,14 +587,14 @@ private function adjuststancetofaceenemyterminate(behaviortreeentity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function tacticalwalkactionstart(behaviortreeentity)
+function private tacticalwalkactionstart(behaviortreeentity)
 {
 	cleararrivalpos(behaviortreeentity);
 	resetcoverparameters(behaviortreeentity);
 	setcanbeflanked(behaviortreeentity, 0);
 	blackboard::setblackboardattribute(behaviortreeentity, "_stance", "stand");
 	behaviortreeentity orientmode("face enemy");
-	return 1;
+	return true;
 }
 
 /*
@@ -606,7 +606,7 @@ private function tacticalwalkactionstart(behaviortreeentity)
 	Parameters: 4
 	Flags: Linked, Private
 */
-private function validjukedirection(entity, entitynavmeshposition, forwardoffset, lateraloffset)
+function private validjukedirection(entity, entitynavmeshposition, forwardoffset, lateraloffset)
 {
 	jukenavmeshthreshold = 6;
 	forwardposition = (entity.origin + lateraloffset) + forwardoffset;
@@ -670,13 +670,16 @@ function calculatejukedirection(entity, entityradius, jukedistance)
 				return "right";
 			}
 		}
-		else if(validjukedirection(entity, navmeshposition, forwarddistance, rightjukedistance))
+		else
 		{
-			return "right";
-		}
-		if(validjukedirection(entity, navmeshposition, forwarddistance, rightjukedistance * -1))
-		{
-			return "left";
+			if(validjukedirection(entity, navmeshposition, forwarddistance, rightjukedistance))
+			{
+				return "right";
+			}
+			if(validjukedirection(entity, navmeshposition, forwarddistance, rightjukedistance * -1))
+			{
+				return "left";
+			}
 		}
 	}
 	return defaultdirection;
@@ -691,7 +694,7 @@ function calculatejukedirection(entity, entityradius, jukedistance)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function calculatedefaultjukedirection(entity)
+function private calculatedefaultjukedirection(entity)
 {
 	jukedistance = 30;
 	entityradius = 15;

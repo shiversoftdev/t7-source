@@ -29,7 +29,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_zod_quest", &__init__, undefined, undefined);
 }
@@ -226,7 +226,7 @@ function function_9118f74a(localclientnum, n_current_ritual, var_85dc52da)
 		var_3c32cd48 = getentarray(localclientnum, "quest_ritual_magic_circle_off", "targetname");
 	}
 	str_name = get_name_from_ritual_clientfield_value(n_current_ritual);
-	foreach(var_8707636f, var_fb62adc1 in var_3c32cd48)
+	foreach(var_fb62adc1 in var_3c32cd48)
 	{
 		if(var_fb62adc1.script_string === ("ritual_" + str_name))
 		{
@@ -568,7 +568,7 @@ function ritual_state_internal(localclientnum, newval, n_current_ritual)
 			mdl_ritual clearanim("p7_fxanim_zm_zod_redemption_key_ritual_loop_fast_anim", 0);
 			if(isdefined(mdl_ritual.vfx_trails))
 			{
-				foreach(var_6a05987d, var_2d3cc156 in mdl_ritual.vfx_trails)
+				foreach(var_2d3cc156 in mdl_ritual.vfx_trails)
 				{
 					stopfx(localclientnum, var_2d3cc156);
 				}
@@ -753,7 +753,7 @@ function ritual_success_light_exploder(str_name)
 function toggle_altar_vfx(localclientnum, str_name, b_on)
 {
 	a_ritual_pedestal = getentarray(localclientnum, "ritual_pedestal", "targetname");
-	foreach(var_79ca8aa6, e_ritual_pedestal in a_ritual_pedestal)
+	foreach(e_ritual_pedestal in a_ritual_pedestal)
 	{
 		if(!isdefined(e_ritual_pedestal.ritual_fx))
 		{
@@ -784,7 +784,7 @@ function toggle_altar_vfx(localclientnum, str_name, b_on)
 function function_46df8306(localclientnum, str_name, b_on = 1)
 {
 	a_s_spawn_points = struct::get_array(str_name, "targetname");
-	foreach(var_278b2532, s_spawn_point in a_s_spawn_points)
+	foreach(s_spawn_point in a_s_spawn_points)
 	{
 		s_spawn_point function_267f859f(localclientnum, level._effect["keeper_spawn"], b_on);
 		if(!isdefined(s_spawn_point.var_d52fc488))
@@ -1022,7 +1022,7 @@ function ritual_state_pap(localclientnum, oldval, newval, bnewent, binitialsnap,
 		level thread exploder::exploder("ritual_light_pap");
 		function_46df8306(localclientnum, "defend_area_spawn_point_" + str_name, 1);
 		a_ritual_pedestal = getentarray(localclientnum, "ritual_pedestal", "targetname");
-		foreach(var_e1962f53, e_ritual_pedestal in a_ritual_pedestal)
+		foreach(e_ritual_pedestal in a_ritual_pedestal)
 		{
 			if(!isdefined(e_ritual_pedestal.ritual_fx))
 			{
@@ -1034,44 +1034,47 @@ function ritual_state_pap(localclientnum, oldval, newval, bnewent, binitialsnap,
 			}
 		}
 	}
-	else if(newval == 3)
+	else
 	{
-		var_c6f3f6c3 show();
-		var_c6f3f6c3 thread animation::play("p7_fxanim_zm_zod_gatestone_anim", undefined, undefined, 1);
-		level thread exploder::stop_exploder("ritual_light_pap");
-		level thread function_b2aa47f0();
-		function_46df8306(localclientnum, "defend_area_spawn_point_" + str_name, 0);
-		a_ritual_pedestal = getentarray(localclientnum, "ritual_pedestal", "targetname");
-		foreach(var_fbf351b3, e_ritual_pedestal in a_ritual_pedestal)
+		if(newval == 3)
 		{
-			if(!isdefined(e_ritual_pedestal.ritual_fx))
+			var_c6f3f6c3 show();
+			var_c6f3f6c3 thread animation::play("p7_fxanim_zm_zod_gatestone_anim", undefined, undefined, 1);
+			level thread exploder::stop_exploder("ritual_light_pap");
+			level thread function_b2aa47f0();
+			function_46df8306(localclientnum, "defend_area_spawn_point_" + str_name, 0);
+			a_ritual_pedestal = getentarray(localclientnum, "ritual_pedestal", "targetname");
+			foreach(e_ritual_pedestal in a_ritual_pedestal)
 			{
-				e_ritual_pedestal.ritual_fx = [];
-			}
-			if(isdefined(e_ritual_pedestal.ritual_fx[localclientnum]))
-			{
-				stopfx(localclientnum, e_ritual_pedestal.ritual_fx[localclientnum]);
-				e_ritual_pedestal.ritual_fx[localclientnum] = undefined;
+				if(!isdefined(e_ritual_pedestal.ritual_fx))
+				{
+					e_ritual_pedestal.ritual_fx = [];
+				}
+				if(isdefined(e_ritual_pedestal.ritual_fx[localclientnum]))
+				{
+					stopfx(localclientnum, e_ritual_pedestal.ritual_fx[localclientnum]);
+					e_ritual_pedestal.ritual_fx[localclientnum] = undefined;
+				}
 			}
 		}
-	}
-	else if(newval == 1)
-	{
-		var_c6f3f6c3 hide();
-		level thread exploder::stop_exploder("ritual_light_pap");
-		level thread function_b2aa47f0();
-		function_46df8306(localclientnum, "defend_area_spawn_point_" + str_name, 0);
-		a_ritual_pedestal = getentarray(localclientnum, "ritual_pedestal", "targetname");
-		foreach(var_84d7c5bb, e_ritual_pedestal in a_ritual_pedestal)
+		else if(newval == 1)
 		{
-			if(!isdefined(e_ritual_pedestal.ritual_fx))
+			var_c6f3f6c3 hide();
+			level thread exploder::stop_exploder("ritual_light_pap");
+			level thread function_b2aa47f0();
+			function_46df8306(localclientnum, "defend_area_spawn_point_" + str_name, 0);
+			a_ritual_pedestal = getentarray(localclientnum, "ritual_pedestal", "targetname");
+			foreach(e_ritual_pedestal in a_ritual_pedestal)
 			{
-				e_ritual_pedestal.ritual_fx = [];
-			}
-			if(isdefined(e_ritual_pedestal.ritual_fx[localclientnum]))
-			{
-				stopfx(localclientnum, e_ritual_pedestal.ritual_fx[localclientnum]);
-				e_ritual_pedestal.ritual_fx[localclientnum] = undefined;
+				if(!isdefined(e_ritual_pedestal.ritual_fx))
+				{
+					e_ritual_pedestal.ritual_fx = [];
+				}
+				if(isdefined(e_ritual_pedestal.ritual_fx[localclientnum]))
+				{
+					stopfx(localclientnum, e_ritual_pedestal.ritual_fx[localclientnum]);
+					e_ritual_pedestal.ritual_fx[localclientnum] = undefined;
+				}
 			}
 		}
 	}
@@ -1134,28 +1137,31 @@ function keeper_fx(localclientnum, oldval, newval, bnewent, binitialsnap, fieldn
 			self.sndlooper = self playloopsound("zmb_keeper_looper");
 		}
 	}
-	else if(isdefined(self.var_341f7209))
+	else
 	{
-		stopfx(localclientnum, self.var_341f7209);
+		if(isdefined(self.var_341f7209))
+		{
+			stopfx(localclientnum, self.var_341f7209);
+		}
+		self.var_341f7209 = undefined;
+		if(isdefined(self.var_c5e3cf4b))
+		{
+			stopfx(localclientnum, self.var_c5e3cf4b);
+		}
+		self.var_c5e3cf4b = undefined;
+		if(isdefined(self.var_2d3cc156))
+		{
+			stopfx(localclientnum, self.var_2d3cc156);
+		}
+		self.var_2d3cc156 = undefined;
+		v_origin = self gettagorigin("j_spineupper");
+		v_angles = self gettagangles("j_spineupper");
+		if(isdefined(v_origin) && isdefined(v_angles))
+		{
+			playfx(localclientnum, level._effect["keeper_death"], v_origin, v_angles);
+		}
+		self stopallloopsounds(1);
 	}
-	self.var_341f7209 = undefined;
-	if(isdefined(self.var_c5e3cf4b))
-	{
-		stopfx(localclientnum, self.var_c5e3cf4b);
-	}
-	self.var_c5e3cf4b = undefined;
-	if(isdefined(self.var_2d3cc156))
-	{
-		stopfx(localclientnum, self.var_2d3cc156);
-	}
-	self.var_2d3cc156 = undefined;
-	v_origin = self gettagorigin("j_spineupper");
-	v_angles = self gettagangles("j_spineupper");
-	if(isdefined(v_origin) && isdefined(v_angles))
-	{
-		playfx(localclientnum, level._effect["keeper_death"], v_origin, v_angles);
-	}
-	self stopallloopsounds(1);
 }
 
 /*

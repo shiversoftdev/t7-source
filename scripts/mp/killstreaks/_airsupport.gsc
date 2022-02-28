@@ -439,15 +439,15 @@ function _insidecylinder(point, base, radius, height)
 	{
 		if(point[2] > (base[2] + height))
 		{
-			return 0;
+			return false;
 		}
 	}
 	dist = distance2d(point, base);
 	if(dist < radius)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -617,16 +617,16 @@ function _shouldignorenoflyzone(noflyzone, noflyzones)
 {
 	if(!isdefined(noflyzone))
 	{
-		return 1;
+		return true;
 	}
 	for(i = 0; i < noflyzones.size; i++)
 	{
 		if(isdefined(noflyzones[i]) && noflyzones[i] == noflyzone)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -642,17 +642,17 @@ function _shouldignorestartgoalnoflyzone(noflyzone, startnoflyzones, goalnoflyzo
 {
 	if(!isdefined(noflyzone))
 	{
-		return 1;
+		return true;
 	}
 	if(_shouldignorenoflyzone(noflyzone, startnoflyzones))
 	{
-		return 1;
+		return true;
 	}
 	if(_shouldignorenoflyzone(noflyzone, goalnoflyzones))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -747,10 +747,10 @@ function clearpath(start, end, startnoflyzone, goalnoflyzone)
 	{
 		if(!_shouldignorestartgoalnoflyzone(noflyzones[i], startnoflyzone, goalnoflyzone))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -948,7 +948,7 @@ function entlosradiusdamage(ent, pos, radius, max, min, owner, einflictor)
 				dist = dist * 4;
 				if(dist > radius)
 				{
-					return 0;
+					return false;
 				}
 			}
 			else
@@ -962,7 +962,7 @@ function entlosradiusdamage(ent, pos, radius, max, min, owner, einflictor)
 					dist = dist * 4;
 					if(dist > radius)
 					{
-						return 0;
+						return false;
 					}
 				}
 				else
@@ -980,7 +980,7 @@ function entlosradiusdamage(ent, pos, radius, max, min, owner, einflictor)
 	ent.pos = pos;
 	ent.damageowner = owner;
 	ent.einflictor = einflictor;
-	return 1;
+	return true;
 }
 
 /*
@@ -1642,10 +1642,10 @@ function cantargetplayerwithspecialty()
 	{
 		if(!isdefined(self.nottargettedai_underminspeedtimer) || self.nottargettedai_underminspeedtimer < getdvarint("perk_nottargetedbyai_graceperiod"))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*

@@ -121,14 +121,14 @@ function watch_for_code_touching_trigger(code, trigger)
 */
 function is_in_array(array, item)
 {
-	foreach(var_53b3e826, index in array)
+	foreach(index in array)
 	{
 		if(index == item)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -147,7 +147,7 @@ function array_remove(array, object)
 		return;
 	}
 	new_array = [];
-	foreach(var_5fab8dbb, item in array)
+	foreach(item in array)
 	{
 		if(item != object)
 		{
@@ -181,7 +181,7 @@ function array_removeundefined(array)
 		return;
 	}
 	new_array = [];
-	foreach(var_fdefe801, item in array)
+	foreach(item in array)
 	{
 		if(isdefined(item))
 		{
@@ -294,11 +294,11 @@ function button_not_pressed(button, time)
 	{
 		if(!self buttonpressed(button))
 		{
-			return 1;
+			return true;
 		}
 		wait(0.01);
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -317,11 +317,11 @@ function button_pressed(button, time)
 	{
 		if(self buttonpressed(button))
 		{
-			return 1;
+			return true;
 		}
 		wait(0.01);
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -851,17 +851,17 @@ function is_player_in_radius(player)
 {
 	if(!zombie_utility::is_player_valid(player))
 	{
-		return 0;
+		return false;
 	}
 	if((abs(self.origin[2] - player.origin[2])) > 30)
 	{
-		return 0;
+		return false;
 	}
 	if(distance2dsquared(self.origin, player.origin) > self.radiussq)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*

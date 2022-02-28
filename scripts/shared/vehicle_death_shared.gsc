@@ -21,7 +21,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("vehicle_death", &__init__, undefined, undefined);
 }
@@ -357,13 +357,16 @@ function helicopter_crash_movement(point, dir)
 		{
 			playfxontag(level.heli_crash_smoke_trail_fx, self, "tag_origin");
 		}
-		else if(self.vehicletype == "drone_firescout_axis" || self.vehicletype == "drone_firescout_isi")
-		{
-			playfxontag(level.heli_crash_smoke_trail_fx, self, "tag_main_rotor");
-		}
 		else
 		{
-			playfxontag(level.heli_crash_smoke_trail_fx, self, "tag_engine_left");
+			if(self.vehicletype == "drone_firescout_axis" || self.vehicletype == "drone_firescout_isi")
+			{
+				playfxontag(level.heli_crash_smoke_trail_fx, self, "tag_main_rotor");
+			}
+			else
+			{
+				playfxontag(level.heli_crash_smoke_trail_fx, self, "tag_engine_left");
+			}
 		}
 	}
 	crash_zones = struct::get_array("heli_crash_zone", "targetname");
@@ -395,29 +398,32 @@ function helicopter_crash_movement(point, dir)
 			self thread helicopter_crash_zone_accel(dir);
 		}
 	}
-	else if(isdefined(dir))
-	{
-		dir = vectornormalize(dir);
-	}
 	else
 	{
-		dir = (1, 0, 0);
-	}
-	side_dir = vectorcross(dir, (0, 0, 1));
-	side_dir_mag = randomfloatrange(-500, 500);
-	side_dir_mag = side_dir_mag + (math::sign(side_dir_mag) * 60);
-	side_dir = side_dir * side_dir_mag;
-	side_dir = side_dir + vectorscale((0, 0, 1), 150);
-	self setphysacceleration((randomintrange(-500, 500), randomintrange(-500, 500), -1000));
-	self setvehvelocity(self.velocity + side_dir);
-	self thread helicopter_crash_accel();
-	if(isdefined(point))
-	{
-		self thread helicopter_crash_rotation(point, dir);
-	}
-	else
-	{
-		self thread helicopter_crash_rotation(self.origin, dir);
+		if(isdefined(dir))
+		{
+			dir = vectornormalize(dir);
+		}
+		else
+		{
+			dir = (1, 0, 0);
+		}
+		side_dir = vectorcross(dir, (0, 0, 1));
+		side_dir_mag = randomfloatrange(-500, 500);
+		side_dir_mag = side_dir_mag + (math::sign(side_dir_mag) * 60);
+		side_dir = side_dir * side_dir_mag;
+		side_dir = side_dir + vectorscale((0, 0, 1), 150);
+		self setphysacceleration((randomintrange(-500, 500), randomintrange(-500, 500), -1000));
+		self setvehvelocity(self.velocity + side_dir);
+		self thread helicopter_crash_accel();
+		if(isdefined(point))
+		{
+			self thread helicopter_crash_rotation(point, dir);
+		}
+		else
+		{
+			self thread helicopter_crash_rotation(self.origin, dir);
+		}
 	}
 	self thread crash_collision_test();
 	wait(15);
@@ -1001,7 +1007,7 @@ function crash_path_check(node)
 			detourpath = vehicle::path_detour_get_detourpath(getvehiclenode(targ.target, "targetname"));
 			if(isdefined(detourpath) && isdefined(detourpath.script_crashtype))
 			{
-				return 1;
+				return true;
 			}
 		}
 		if(isdefined(targ.target))
@@ -1009,18 +1015,18 @@ function crash_path_check(node)
 			targ1 = getvehiclenode(targ.target, "targetname");
 			if(isdefined(targ1) && isdefined(targ1.target) && isdefined(targ.targetname) && targ1.target == targ.targetname)
 			{
-				return 0;
+				return false;
 			}
 			if(isdefined(targ1) && targ1 == node)
 			{
-				return 0;
+				return false;
 			}
 			targ = targ1;
 			continue;
 		}
 		targ = undefined;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1116,7 +1122,7 @@ function death_jolt(type)
 	if(isdefined(self.death_anim))
 	{
 		self animscripted("death_anim", self.origin, self.angles, self.death_anim, "normal", %generic::root, 1, 0);
-		self waittill_match(#"death_anim");
+		self waittillmatch(#"death_anim");
 	}
 	else if(self.isphysicsvehicle)
 	{
@@ -1326,68 +1332,86 @@ function death_update_crash(point, dir)
 		{
 			crashtype = self.script_crashtypeoverride;
 		}
-		else if(isdefined(self.vehicleclass) && self.vehicleclass == "plane")
-		{
-			crashtype = "aircraft";
-		}
-		else if(isdefined(self.vehicleclass) && self.vehicleclass == "helicopter")
-		{
-			crashtype = "helicopter";
-		}
-		else if(isdefined(self.vehicleclass) && self.vehicleclass == "boat")
-		{
-			crashtype = "boat";
-		}
-		else if(isdefined(self.currentnode) && crash_path_check(self.currentnode))
-		{
-			crashtype = "none";
-		}
 		else
 		{
-			crashtype = "tank";
+			if(isdefined(self.vehicleclass) && self.vehicleclass == "plane")
+			{
+				crashtype = "aircraft";
+			}
+			else
+			{
+				if(isdefined(self.vehicleclass) && self.vehicleclass == "helicopter")
+				{
+					crashtype = "helicopter";
+				}
+				else
+				{
+					if(isdefined(self.vehicleclass) && self.vehicleclass == "boat")
+					{
+						crashtype = "boat";
+					}
+					else
+					{
+						if(isdefined(self.currentnode) && crash_path_check(self.currentnode))
+						{
+							crashtype = "none";
+						}
+						else
+						{
+							crashtype = "tank";
+						}
+					}
+				}
+			}
 		}
 		if(crashtype == "aircraft")
 		{
 			self thread aircraft_crash(point, dir);
 		}
-		else if(crashtype == "helicopter")
+		else
 		{
-			if(isdefined(self.script_nocorpse))
+			if(crashtype == "helicopter")
 			{
-				self thread helicopter_explode();
-			}
-			else
-			{
-				self thread helicopter_crash(point, dir);
-			}
-		}
-		else if(crashtype == "boat")
-		{
-			self thread boat_crash(point, dir);
-		}
-		else if(crashtype == "tank")
-		{
-			if(!isdefined(self.rollingdeath))
-			{
-				self vehicle::set_speed(0, 25, "Dead");
-			}
-			else
-			{
-				self waittill(#"deathrolloff");
-				self vehicle::set_speed(0, 25, "Dead, finished path intersection");
-			}
-			wait(0.4);
-			if(isdefined(self) && !vehicle::is_corpse(self))
-			{
-				self vehicle::set_speed(0, 10000, "deadstop");
-				self notify(#"deadstop");
-				if(self.disconnectpathonstop === 1)
+				if(isdefined(self.script_nocorpse))
 				{
-					self vehicle::disconnect_paths();
+					self thread helicopter_explode();
 				}
-				if(isdefined(self.tankgetout) && self.tankgetout > 0)
+				else
 				{
-					self waittill(#"animsdone");
+					self thread helicopter_crash(point, dir);
+				}
+			}
+			else
+			{
+				if(crashtype == "boat")
+				{
+					self thread boat_crash(point, dir);
+				}
+				else if(crashtype == "tank")
+				{
+					if(!isdefined(self.rollingdeath))
+					{
+						self vehicle::set_speed(0, 25, "Dead");
+					}
+					else
+					{
+						self waittill(#"deathrolloff");
+						self vehicle::set_speed(0, 25, "Dead, finished path intersection");
+					}
+					wait(0.4);
+					if(isdefined(self) && !vehicle::is_corpse(self))
+					{
+						self vehicle::set_speed(0, 10000, "deadstop");
+						self notify(#"deadstop");
+						if(self.disconnectpathonstop === 1)
+						{
+							self vehicle::disconnect_paths();
+						}
+						if(isdefined(self.tankgetout) && self.tankgetout > 0)
+						{
+							self waittill(#"animsdone");
+						}
+					}
 				}
 			}
 		}

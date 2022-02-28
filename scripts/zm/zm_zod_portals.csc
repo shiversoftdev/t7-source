@@ -28,7 +28,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_zod_portals", &__init__, undefined, undefined);
 }
@@ -123,11 +123,11 @@ function portal_3p(localclientnum, oldval, newval, bnewent, binitialsnap, fieldn
 	self endon(#"death");
 	if(newval == 1)
 	{
-		self.var_e4e89382 = playfxontag(localclientnum, level._effect["portal_3p"], self, "j_spineupper");
+		self.fx_portal_3p = playfxontag(localclientnum, level._effect["portal_3p"], self, "j_spineupper");
 	}
 	else
 	{
-		stop_fx_if_defined(localclientnum, self.var_e4e89382);
+		stop_fx_if_defined(localclientnum, self.fx_portal_3p);
 	}
 }
 
@@ -251,7 +251,7 @@ function portal_state_ending(localclientnum, oldval, newval, bnewent, binitialsn
 	}
 	else
 	{
-		foreach(var_be508c16, fx_id in level.var_120797a1)
+		foreach(fx_id in level.var_120797a1)
 		{
 			stopfx(localclientnum, fx_id);
 		}
@@ -417,13 +417,16 @@ function function_c0c1771a(localclientnum, s_loc, b_open, var_9c9cfb54 = 0)
 	{
 		s_loc.var_7c0ed442[localclientnum] = playfx(localclientnum, level._effect["portal_shortcut_ambient"], s_loc.origin, v_fwd);
 	}
-	else if(var_9c9cfb54)
-	{
-		s_loc.var_20dc3b64[localclientnum] = playfx(localclientnum, level._effect["portal_shortcut_closed_base"], s_loc.origin - vectorscale((0, 0, 1), 48), v_fwd);
-	}
 	else
 	{
-		s_loc.var_7c0ed442[localclientnum] = playfx(localclientnum, level._effect["portal_shortcut_closed"], s_loc.origin, v_fwd);
+		if(var_9c9cfb54)
+		{
+			s_loc.var_20dc3b64[localclientnum] = playfx(localclientnum, level._effect["portal_shortcut_closed_base"], s_loc.origin - vectorscale((0, 0, 1), 48), v_fwd);
+		}
+		else
+		{
+			s_loc.var_7c0ed442[localclientnum] = playfx(localclientnum, level._effect["portal_shortcut_closed"], s_loc.origin, v_fwd);
+		}
 	}
 }
 
@@ -483,7 +486,7 @@ function get_portal_fx_loc(str_targetname, str_areaname, b_is_top)
 	{
 		str_top_or_bottom = "bottom";
 	}
-	foreach(var_e2d14a6a, s_portal_loc in a_s_portal_locs)
+	foreach(s_portal_loc in a_s_portal_locs)
 	{
 		if(s_portal_loc.script_noteworthy === ((str_areaname + "_portal_") + str_top_or_bottom))
 		{

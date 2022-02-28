@@ -14,7 +14,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function main()
+function autoexec main()
 {
 	fxbundles = struct::get_script_bundles("fxcharacterdef");
 	processedfxbundles = [];
@@ -53,13 +53,13 @@ autoexec function main()
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _configentity(localclientnum, entity)
+function private _configentity(localclientnum, entity)
 {
 	if(!isdefined(entity._fxcharacter))
 	{
 		entity._fxcharacter = [];
 		handledgibs = array(8, 16, 32, 128, 256);
-		foreach(var_d808cb51, gibflag in handledgibs)
+		foreach(gibflag in handledgibs)
 		{
 			gibclientutils::addgibcallback(localclientnum, entity, gibflag, &_gibhandler);
 		}
@@ -79,7 +79,7 @@ private function _configentity(localclientnum, entity)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function _destructhandler(localclientnum, entity, piecenumber)
+function private _destructhandler(localclientnum, entity, piecenumber)
 {
 	if(!isdefined(entity._fxcharacter))
 	{
@@ -108,7 +108,7 @@ private function _destructhandler(localclientnum, entity, piecenumber)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function _gibhandler(localclientnum, entity, gibflag)
+function private _gibhandler(localclientnum, entity, gibflag)
 {
 	if(!isdefined(entity._fxcharacter))
 	{
@@ -137,7 +137,7 @@ private function _gibhandler(localclientnum, entity, gibflag)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _gibpartnametogibflag(gibpartname)
+function private _gibpartnametogibflag(gibpartname)
 {
 	if(isdefined(gibpartname))
 	{
@@ -176,7 +176,7 @@ private function _gibpartnametogibflag(gibpartname)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function _isgibbed(localclientnum, entity, stopongibflag)
+function private _isgibbed(localclientnum, entity, stopongibflag)
 {
 	if(!isdefined(stopongibflag))
 	{
@@ -194,7 +194,7 @@ private function _isgibbed(localclientnum, entity, stopongibflag)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function _ispiecedestructed(localclientnum, entity, stoponpiecedestroyed)
+function private _ispiecedestructed(localclientnum, entity, stoponpiecedestroyed)
 {
 	if(!isdefined(stoponpiecedestroyed))
 	{
@@ -212,17 +212,17 @@ private function _ispiecedestructed(localclientnum, entity, stoponpiecedestroyed
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function _shouldplayfx(localclientnum, entity, fxstruct)
+function private _shouldplayfx(localclientnum, entity, fxstruct)
 {
 	if(_isgibbed(localclientnum, entity, fxstruct.stopongib))
 	{
-		return 0;
+		return false;
 	}
 	if(_ispiecedestructed(localclientnum, entity, fxstruct.stoponpiecedestroyed))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -281,7 +281,7 @@ function stopallfxbundles(localclientnum, entity)
 	{
 		fxbundlenames[fxbundlenames.size] = fxbundlename;
 	}
-	foreach(var_c3132459, fxbundlename in fxbundlenames)
+	foreach(fxbundlename in fxbundlenames)
 	{
 		stopfxbundle(localclientnum, entity, fxbundlename);
 	}
@@ -306,7 +306,7 @@ function stopfxbundle(localclientnum, entity, fxscriptbundle)
 	fxbundle = struct::get_script_bundle("fxcharacterdef", fxscriptbundle);
 	if(isdefined(entity._fxcharacter[fxbundle.name]))
 	{
-		foreach(var_32495fea, fx in entity._fxcharacter[fxbundle.name])
+		foreach(fx in entity._fxcharacter[fxbundle.name])
 		{
 			if(isdefined(fx))
 			{

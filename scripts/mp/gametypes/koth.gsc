@@ -83,7 +83,7 @@ function main()
 	}
 	/#
 		trigs = getentarray("", "");
-		foreach(var_f93fbae, trig in trigs)
+		foreach(trig in trigs)
 		{
 			trig delete();
 		}
@@ -101,7 +101,7 @@ function main()
 */
 function updateobjectivehintmessages(defenderteam, defendmessage, attackmessage)
 {
-	foreach(var_cc48158f, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(defenderteam == team)
 		{
@@ -123,7 +123,7 @@ function updateobjectivehintmessages(defenderteam, defendmessage, attackmessage)
 */
 function updateobjectivehintmessage(message)
 {
-	foreach(var_da6c0ba9, team in level.teams)
+	foreach(team in level.teams)
 	{
 		game["strings"]["objective_hint_" + team] = message;
 	}
@@ -192,7 +192,7 @@ function onstartgametype()
 		game["defenders"] = oldattackers;
 	}
 	globallogic_score::resetteamscores();
-	foreach(var_d8c9d541, team in level.teams)
+	foreach(team in level.teams)
 	{
 		util::setobjectivetext(team, &"OBJECTIVES_KOTH");
 		if(level.splitscreen)
@@ -218,7 +218,7 @@ function onstartgametype()
 	spawning::create_map_placed_influencers();
 	level.spawnmins = (0, 0, 0);
 	level.spawnmaxs = (0, 0, 0);
-	foreach(var_ca53498e, team in level.teams)
+	foreach(team in level.teams)
 	{
 		spawnlogic::add_spawn_points(team, "mp_tdm_spawn");
 		spawnlogic::add_spawn_points(team, "mp_multi_team_spawn");
@@ -226,7 +226,7 @@ function onstartgametype()
 	}
 	spawning::updateallspawnpoints();
 	level.spawn_start = [];
-	foreach(var_64dbd143, team in level.teams)
+	foreach(team in level.teams)
 	{
 		level.spawn_start[team] = spawnlogic::get_spawnpoint_array(spawning::gettdmstartspawnname(team));
 	}
@@ -370,7 +370,7 @@ function spawn_next_zone()
 function getnumtouching()
 {
 	numtouching = 0;
-	foreach(var_f4755e17, team in level.teams)
+	foreach(team in level.teams)
 	{
 		numtouching = numtouching + self.numtouching[team];
 	}
@@ -431,7 +431,7 @@ function kothcaptureloop()
 			continue;
 		}
 		ownerteam = level.zone.gameobject gameobjects::get_owner_team();
-		foreach(var_9822a285, team in level.teams)
+		foreach(team in level.teams)
 		{
 			updateobjectivehintmessages(ownerteam, level.objectivehintdefendhq, level.objectivehintcapturezone);
 		}
@@ -614,17 +614,23 @@ function updateteamclientfield()
 	{
 		level clientfield::set("hardpointteam", 3);
 	}
-	else if(ownerteam == "neutral")
-	{
-		level clientfield::set("hardpointteam", 0);
-	}
-	else if(ownerteam == "allies")
-	{
-		level clientfield::set("hardpointteam", 1);
-	}
 	else
 	{
-		level clientfield::set("hardpointteam", 2);
+		if(ownerteam == "neutral")
+		{
+			level clientfield::set("hardpointteam", 0);
+		}
+		else
+		{
+			if(ownerteam == "allies")
+			{
+				level clientfield::set("hardpointteam", 1);
+			}
+			else
+			{
+				level clientfield::set("hardpointteam", 2);
+			}
+		}
 	}
 }
 
@@ -700,7 +706,7 @@ function onzonecapture(player)
 	{
 		self gameobjects::set_use_time(level.destroytime);
 	}
-	foreach(var_b9e1758c, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(team == capture_team)
 		{
@@ -854,7 +860,7 @@ function onzonedestroy(player)
 		otherteammessage = &"MP_KOTH_CAPTURED_BY_ENEMY";
 	}
 	level thread popups::displayteammessagetoall(destroyteammessage, player);
-	foreach(var_37825bdb, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(team == destroyed_team)
 		{
@@ -908,7 +914,7 @@ function onzonecontested()
 	self updateteamclientfield();
 	self recordgameeventnonplayer("hardpoint_contested");
 	resume_time();
-	foreach(var_3697bcf4, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(team == zoneowningteam)
 		{
@@ -999,7 +1005,7 @@ function awardcapturepoints(team, lastcaptureteam)
 			}
 			globallogic_score::giveteamscoreforobjective(team, score);
 			level.kothtotalsecondsinzone++;
-			foreach(var_32eaf5e0, player in level.aliveplayers[team])
+			foreach(player in level.aliveplayers[team])
 			{
 				if(!isdefined(player.touchtriggers[self.entnum]))
 				{
@@ -1045,27 +1051,27 @@ function comparezoneindexes(zone_a, zone_b)
 	script_index_b = zone_b.script_index;
 	if(!isdefined(script_index_a) && !isdefined(script_index_b))
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(script_index_a) && isdefined(script_index_b))
 	{
 		/#
 			println("" + zone_a.origin);
 		#/
-		return 1;
+		return true;
 	}
 	if(isdefined(script_index_a) && !isdefined(script_index_b))
 	{
 		/#
 			println("" + zone_b.origin);
 		#/
-		return 0;
+		return false;
 	}
 	if(script_index_a > script_index_b)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1188,7 +1194,7 @@ function setupzones()
 	level.prevzone = undefined;
 	level.prevzone2 = undefined;
 	setupzoneexclusions();
-	return 1;
+	return true;
 }
 
 /*
@@ -1206,11 +1212,11 @@ function setupzoneexclusions()
 	{
 		return;
 	}
-	foreach(var_e9ad60f2, nullzone in level.levelkothdisable)
+	foreach(nullzone in level.levelkothdisable)
 	{
 		mindist = 1410065408;
 		foundzone = undefined;
-		foreach(var_8e474186, zone in level.zones)
+		foreach(zone in level.zones)
 		{
 			distance = distancesquared(nullzone.origin, zone.origin);
 			if(distance < mindist)
@@ -1413,7 +1419,7 @@ function getnextzonefromqueue()
 function getcountofteamswithplayers(num)
 {
 	has_players = 0;
-	foreach(var_62448b5, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(num[team] > 0)
 		{
@@ -1462,7 +1468,7 @@ function getpointcost(avgpos, origin)
 */
 function pickzonetospawn()
 {
-	foreach(var_e6c9ea33, team in level.teams)
+	foreach(team in level.teams)
 	{
 		avgpos[team] = (0, 0, 0);
 		num[team] = 0;
@@ -1487,7 +1493,7 @@ function pickzonetospawn()
 		level.prevzone = zone;
 		return zone;
 	}
-	foreach(var_66f54f88, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(num[team] == 0)
 		{
@@ -1598,22 +1604,25 @@ function onplayerkilled(einflictor, attacker, idamage, smeansofdeath, weapon, vd
 				self recordkillmodifier("defending");
 				scoreeventprocessed = 1;
 			}
-			else if(!medalgiven)
+			else
 			{
-				if(isdefined(attacker.pers["defends"]))
+				if(!medalgiven)
 				{
-					attacker.pers["defends"]++;
-					attacker.defends = attacker.pers["defends"];
+					if(isdefined(attacker.pers["defends"]))
+					{
+						attacker.pers["defends"]++;
+						attacker.defends = attacker.pers["defends"];
+					}
+					attacker medals::defenseglobalcount();
+					medalgiven = 1;
+					attacker thread challenges::killedbasedefender(level.zone.trig);
+					attacker recordgameevent("defending");
 				}
-				attacker medals::defenseglobalcount();
-				medalgiven = 1;
-				attacker thread challenges::killedbasedefender(level.zone.trig);
-				attacker recordgameevent("defending");
+				attacker challenges::killedzoneattacker(weapon);
+				scoreevents::processscoreevent("hardpoint_kill", attacker, undefined, weapon);
+				self recordkillmodifier("assaulting");
+				scoreeventprocessed = 1;
 			}
-			attacker challenges::killedzoneattacker(weapon);
-			scoreevents::processscoreevent("hardpoint_kill", attacker, undefined, weapon);
-			self recordkillmodifier("assaulting");
-			scoreeventprocessed = 1;
 		}
 	}
 	if(attacker.touchtriggers.size || (level.capturetime == 0 && attacker istouching(level.zone.trig)))
@@ -1647,16 +1656,19 @@ function onplayerkilled(einflictor, attacker, idamage, smeansofdeath, weapon, vd
 					self recordkillmodifier("assaulting");
 				}
 			}
-			else if(!medalgiven)
+			else
 			{
-				attacker medals::offenseglobalcount();
-				medalgiven = 1;
-				attacker thread challenges::killedbaseoffender(level.zone.trig, weapon);
-			}
-			if(scoreeventprocessed == 0)
-			{
-				scoreevents::processscoreevent("hardpoint_kill", attacker, undefined, weapon);
-				self recordkillmodifier("defending");
+				if(!medalgiven)
+				{
+					attacker medals::offenseglobalcount();
+					medalgiven = 1;
+					attacker thread challenges::killedbaseoffender(level.zone.trig, weapon);
+				}
+				if(scoreeventprocessed == 0)
+				{
+					scoreevents::processscoreevent("hardpoint_kill", attacker, undefined, weapon);
+					self recordkillmodifier("defending");
+				}
 			}
 		}
 	}
@@ -1803,12 +1815,12 @@ function isscoreboosting(player)
 {
 	if(!level.rankedmatch)
 	{
-		return 0;
+		return false;
 	}
 	if(player.capsperminute > level.playercapturelpm)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 

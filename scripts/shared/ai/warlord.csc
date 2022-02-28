@@ -14,7 +14,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("warlord", &__init__, undefined, undefined);
 }
@@ -28,7 +28,7 @@ autoexec function __init__sytem__()
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function precache()
+function autoexec precache()
 {
 	level._effect["fx_elec_warlord_damage_1"] = "electric/fx_elec_warlord_damage_1";
 	level._effect["fx_elec_warlord_damage_2"] = "electric/fx_elec_warlord_damage_2";

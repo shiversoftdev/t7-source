@@ -23,7 +23,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_bot", &__init__, undefined, undefined);
 }
@@ -44,7 +44,7 @@ function __init__()
 	#/
 	/#
 		level.onbotspawned = &on_bot_spawned;
-		level.var_93a32db5 = &bot_combat::get_ai_threats;
+		level.getbotthreats = &bot_combat::get_ai_threats;
 		level.botprecombat = &bot::coop_pre_combat;
 		level.botpostcombat = &bot::coop_post_combat;
 		level.botidle = &bot::follow_coop_players;

@@ -35,7 +35,7 @@
 function randomize_craftable_spawns()
 {
 	a_randomized_craftables = array("gramophone_vinyl_ice", "gramophone_vinyl_air", "gramophone_vinyl_elec", "gramophone_vinyl_fire", "gramophone_vinyl_master", "gramophone_vinyl_player");
-	foreach(var_240dc023, str_craftable in a_randomized_craftables)
+	foreach(str_craftable in a_randomized_craftables)
 	{
 		s_original_pos = struct::get(str_craftable, "targetname");
 		a_alt_locations = struct::get_array(str_craftable + "_alt", "targetname");
@@ -113,7 +113,7 @@ function add_craftable_cheat(craftable)
 		{
 			level.cheat_craftables = [];
 		}
-		foreach(var_4c737ae4, s_piece in craftable.a_piecestubs)
+		foreach(s_piece in craftable.a_piecestubs)
 		{
 			id_string = undefined;
 			client_field_val = undefined;
@@ -122,18 +122,21 @@ function add_craftable_cheat(craftable)
 				id_string = s_piece.client_field_id;
 				client_field_val = id_string;
 			}
-			else if(isdefined(s_piece.client_field_state))
-			{
-				id_string = "";
-				client_field_val = s_piece.client_field_state;
-			}
 			else
 			{
-				continue;
+				if(isdefined(s_piece.client_field_state))
+				{
+					id_string = "";
+					client_field_val = s_piece.client_field_state;
+				}
+				else
+				{
+					continue;
+				}
 			}
 			tokens = strtok(id_string, "");
 			display_string = "";
-			foreach(var_feda86e8, token in tokens)
+			foreach(token in tokens)
 			{
 				if(token != "" && token != "" && token != "")
 				{
@@ -147,7 +150,7 @@ function add_craftable_cheat(craftable)
 		wait(0.05);
 		level flag::wait_till("");
 		wait(0.05);
-		foreach(var_62ea6caa, s_piece in craftable.a_piecestubs)
+		foreach(s_piece in craftable.a_piecestubs)
 		{
 			s_piece craftable_waittill_spawned();
 			s_piece.piecespawn.model thread zm_tomb_utility::puzzle_debug_position("", vectorscale((0, 1, 0), 255), undefined, "");
@@ -177,7 +180,7 @@ function autocraft_staffs()
 	level flag::wait_till("start_zombie_round_logic");
 	keys = getarraykeys(level.cheat_craftables);
 	a_players = getplayers();
-	foreach(var_4d4fe28d, key in keys)
+	foreach(key in keys)
 	{
 		if(issubstr(key, "staff") || issubstr(key, "record"))
 		{
@@ -447,7 +450,7 @@ function craftable_add_glow_fx()
 {
 	level flagsys::wait_till("load_main_complete");
 	level flag::wait_till("start_zombie_round_logic");
-	foreach(var_d068ad28, s_craftable in level.zombie_include_craftables)
+	foreach(s_craftable in level.zombie_include_craftables)
 	{
 		if(!issubstr(s_craftable.name, "elemental_staff"))
 		{
@@ -458,26 +461,35 @@ function craftable_add_glow_fx()
 		{
 			n_elem = 1;
 		}
-		else if(issubstr(s_craftable.name, "air"))
-		{
-			n_elem = 2;
-		}
-		else if(issubstr(s_craftable.name, "lightning"))
-		{
-			n_elem = 3;
-		}
-		else if(issubstr(s_craftable.name, "water"))
-		{
-			n_elem = 4;
-		}
 		else
 		{
-			/#
-				iprintlnbold("" + s_craftable.name);
-			#/
-			return;
+			if(issubstr(s_craftable.name, "air"))
+			{
+				n_elem = 2;
+			}
+			else
+			{
+				if(issubstr(s_craftable.name, "lightning"))
+				{
+					n_elem = 3;
+				}
+				else
+				{
+					if(issubstr(s_craftable.name, "water"))
+					{
+						n_elem = 4;
+					}
+					else
+					{
+						/#
+							iprintlnbold("" + s_craftable.name);
+						#/
+						return;
+					}
+				}
+			}
 		}
-		foreach(var_7acf5319, s_piece in s_craftable.a_piecestubs)
+		foreach(s_piece in s_craftable.a_piecestubs)
 		{
 			if(s_piece.piecename == "gem")
 			{
@@ -523,31 +535,31 @@ function tomb_staff_update_prompt(player, b_set_hint_string_now, trigger)
 	str_flag = self.weaponname.name + "_picked_up";
 	if(level flag::get(str_flag))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.crafted) && self.crafted)
 	{
-		return 1;
+		return true;
 	}
 	self.hint_string = &"ZOMBIE_BUILD_PIECE_MORE";
 	if(isdefined(player))
 	{
 		if(!isdefined(player.current_craftable_pieces) || player.current_craftable_pieces.size < 1)
 		{
-			return 0;
+			return false;
 		}
 		if(!self.craftablespawn zm_craftables::craftable_has_piece(player.current_craftable_pieces[0]))
 		{
 			self.hint_string = &"ZOMBIE_BUILD_PIECE_WRONG";
-			return 0;
+			return false;
 		}
 	}
 	if(level.staff_part_count[self.craftablespawn.craftable_name] == 0)
 	{
 		self.hint_string = level.zombie_craftablestubs[self.equipname].str_to_craft;
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -702,9 +714,9 @@ function tankcraftableupdateprompt(player, sethintstringnow, buildabletrigger)
 				buildabletrigger sethintstring(self.hint_string);
 			}
 		}
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -853,14 +865,17 @@ function piece_pickup_conversation(player)
 		level notify(#"quest_progressed", player, 0);
 		level notify(self.piecestub.vo_line_notify, player);
 	}
-	else if(isdefined(self.piecestub.sam_line))
-	{
-		level notify(#"quest_progressed", player, 0);
-		level notify(self.piecestub.sam_line, player);
-	}
 	else
 	{
-		level notify(#"quest_progressed", player, 1);
+		if(isdefined(self.piecestub.sam_line))
+		{
+			level notify(#"quest_progressed", player, 0);
+			level notify(self.piecestub.sam_line, player);
+		}
+		else
+		{
+			level notify(#"quest_progressed", player, 1);
+		}
 	}
 }
 
@@ -879,7 +894,7 @@ function onpickup_common(player)
 	self.piece_owner = player;
 	self thread piece_pickup_conversation(player);
 	/#
-		foreach(var_fdcadaf9, spawn in self.spawns)
+		foreach(spawn in self.spawns)
 		{
 			spawn notify(#"stop_debug_position");
 		}
@@ -990,7 +1005,7 @@ function onpickup_staffpiece(player, elementname)
 	{
 		level notify(self.craftablename + "_all_pieces_found");
 	}
-	foreach(var_3cfc4ebf, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		e_player thread zm_craftables::player_show_craftable_parts_ui(undefined, ("zmInventory." + elementname) + "_staff.visible", 0);
 	}
@@ -1015,7 +1030,7 @@ function onpickup_crystal(player, elementname, elementenum)
 	{
 		self.piecestub.vox_id = undefined;
 	}
-	foreach(var_86300fe7, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		e_player thread zm_craftables::player_show_craftable_parts_ui(undefined, ("zmInventory." + elementname) + "_staff.visible", 0);
 	}
@@ -1125,7 +1140,7 @@ function watch_part_pickup(str_quest_clientfield, n_clientfield_val, var_e46422e
 	}
 	if(isdefined(var_e46422e8))
 	{
-		foreach(var_75a9437, e_player in level.players)
+		foreach(e_player in level.players)
 		{
 			e_player thread zm_craftables::player_show_craftable_parts_ui(undefined, var_e46422e8, 0);
 		}
@@ -1149,7 +1164,7 @@ function count_staff_piece_pickup(a_staff_pieces)
 	}
 	str_name = a_staff_pieces[0].craftablename;
 	level.staff_part_count[str_name] = a_staff_pieces.size;
-	foreach(var_cf0aa5de, piece in a_staff_pieces)
+	foreach(piece in a_staff_pieces)
 	{
 		/#
 			assert(piece.craftablename == str_name);
@@ -1210,7 +1225,7 @@ function onfullycrafted_quadrotor(player)
 	pickup_trig.model setmodel("veh_t7_dlc_zm_quadrotor");
 	pickup_trig.model setscale(0.7);
 	level notify(#"quest_progressed", player, 1);
-	return 1;
+	return true;
 }
 
 /*
@@ -1228,7 +1243,7 @@ function function_52fbdde1(player)
 	if(player hasweapon(var_703e6a13))
 	{
 		self.hint_string = &"ZOMBIE_BUILD_PIECE_HAVE_ONE";
-		return 0;
+		return false;
 	}
 	players = getplayers();
 	for(i = 0; i < players.size; i++)
@@ -1236,21 +1251,21 @@ function function_52fbdde1(player)
 		if(players[i] hasweapon(var_703e6a13))
 		{
 			self.hint_string = &"DLC5_QUADROTOR_UNAVAILABLE";
-			return 0;
+			return false;
 		}
 	}
 	quadrotors = getentarray("quadrotor_ai", "targetname");
 	if(quadrotors.size >= 1)
 	{
 		self.hint_string = &"DLC5_QUADROTOR_UNAVAILABLE";
-		return 0;
+		return false;
 	}
 	if(level flag::get("quadrotor_cooling_down"))
 	{
 		self.hint_string = &"DLC5_QUADROTOR_COOLDOWN";
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1304,7 +1319,7 @@ function staff_fullycrafted(modelname, elementenum)
 		{
 			level flag::set("ee_all_staffs_crafted");
 		}
-		foreach(var_1aabd321, e_player in level.players)
+		foreach(e_player in level.players)
 		{
 			e_player thread zm_craftables::player_show_craftable_parts_ui(undefined, ("zmInventory." + staff_info.element) + "_staff.visible", 1);
 		}
@@ -1314,7 +1329,7 @@ function staff_fullycrafted(modelname, elementenum)
 		str_fieldname = staff_info.element + "_staff.quest_state";
 		level clientfield::set(str_fieldname, 3);
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1693,7 +1708,7 @@ function quadrotor_set_available()
 	wait(60);
 	level flag::clear("quadrotor_cooling_down");
 	clientfield::set("cooldown_steam", 0);
-	foreach(var_1857a472, t_pickup in level.quadrotor_status.pickup_trig.playertrigger)
+	foreach(t_pickup in level.quadrotor_status.pickup_trig.playertrigger)
 	{
 		t_pickup triggerenable(1);
 	}
@@ -1713,7 +1728,7 @@ function quadrotor_set_available()
 function quadrotor_set_unavailable()
 {
 	level.quadrotor_status.picked_up = 1;
-	foreach(var_fd7b7fd8, t_pickup in level.quadrotor_status.pickup_trig.playertrigger)
+	foreach(t_pickup in level.quadrotor_status.pickup_trig.playertrigger)
 	{
 		t_pickup triggerenable(0);
 	}
@@ -1798,12 +1813,12 @@ function setup_quadrotor_purchase(player)
 	{
 		if(players_has_weapon(var_703e6a13))
 		{
-			return 1;
+			return true;
 		}
 		quadrotor = getentarray("quadrotor_ai", "targetname");
 		if(quadrotor.size >= 1)
 		{
-			return 1;
+			return true;
 		}
 		quadrotor_set_unavailable();
 		player zm_weapons::weapon_give(var_703e6a13);
@@ -1821,9 +1836,9 @@ function setup_quadrotor_purchase(player)
 		player notify(#"equip_dieseldrone_zm_given");
 		level thread quadrotor_watcher(player);
 		player thread zm_audio::create_and_play_dialog("general", "build_dd_plc");
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1842,15 +1857,15 @@ function players_has_weapon(weaponname)
 	{
 		if(players[i] hasweapon(weaponname))
 		{
-			return 1;
+			return true;
 		}
 	}
 	quadrotors = getentarray("quadrotor_ai", "targetname");
 	if(quadrotors.size >= 1)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1889,7 +1904,7 @@ function tomb_custom_craftable_validation(player)
 	s_elemental_staff = get_staff_info_from_weapon_name(self.stub.weaponname, 0);
 	str_weapon_check = s_elemental_staff.weapname;
 	a_weapons = player getweaponslistprimaries();
-	foreach(var_c1073b70, weapon in a_weapons)
+	foreach(weapon in a_weapons)
 	{
 		if(issubstr(weapon.name, "staff") && weapon.name != str_weapon_check)
 		{
@@ -1914,7 +1929,7 @@ function tomb_check_crafted_weapon_persistence(player)
 	{
 		if(level.quadrotor_status.crafted)
 		{
-			return 0;
+			return false;
 		}
 	}
 	else if(self.stub.weaponname == level.a_elemental_staffs["staff_air"].w_weapon || self.stub.weaponname == level.a_elemental_staffs["staff_fire"].w_weapon || self.stub.weaponname == level.a_elemental_staffs["staff_lightning"].w_weapon || self.stub.weaponname == level.a_elemental_staffs["staff_water"].w_weapon)
@@ -1951,9 +1966,9 @@ function tomb_check_crafted_weapon_persistence(player)
 			self.stub.hint_string = "";
 			self sethintstring(self.stub.hint_string);
 		}
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1985,19 +2000,19 @@ function is_unclaimed_staff_weapon(var_382bb75)
 {
 	if(!zm_equipment::is_limited(var_382bb75))
 	{
-		return 1;
+		return true;
 	}
 	s_elemental_staff = get_staff_info_from_weapon_name(var_382bb75, 0);
 	str_weapon_check = s_elemental_staff.weapname;
 	players = getplayers();
-	foreach(var_32f1922, player in players)
+	foreach(player in players)
 	{
 		if(isdefined(player) && player.sessionstate == "playing" && player zm_weapons::has_weapon_or_upgrade(var_382bb75))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -2012,7 +2027,7 @@ function is_unclaimed_staff_weapon(var_382bb75)
 function get_staff_info_from_weapon_name(w_weapon, b_base_info_only = 1)
 {
 	str_name = w_weapon.name;
-	foreach(var_b4ab863f, s_staff in level.a_elemental_staffs)
+	foreach(s_staff in level.a_elemental_staffs)
 	{
 		if(s_staff.weapname == str_name || s_staff.upgrade.weapname == str_name)
 		{
@@ -2037,7 +2052,7 @@ function get_staff_info_from_weapon_name(w_weapon, b_base_info_only = 1)
 */
 function get_staff_info_from_element_index(n_index)
 {
-	foreach(var_3fa88551, s_staff in level.a_elemental_staffs)
+	foreach(s_staff in level.a_elemental_staffs)
 	{
 		if(s_staff.enum == n_index)
 		{
@@ -2107,7 +2122,7 @@ function track_staff_weapon_respawn(player)
 		else
 		{
 			weapons = player getweaponslistprimaries();
-			foreach(var_46fe82d7, weapon in weapons)
+			foreach(weapon in weapons)
 			{
 				n_melee_element = 0;
 				if(weapon.name == self.base_weaponname)
@@ -2152,12 +2167,12 @@ function track_staff_weapon_respawn(player)
 	}
 	b_staff_in_use = 0;
 	a_players = getplayers();
-	foreach(var_c5db81b6, check_player in a_players)
+	foreach(check_player in a_players)
 	{
 		if(check_player.sessionstate == "playing")
 		{
 			weapons = check_player getweaponslistprimaries();
-			foreach(var_d3a8ad26, weapon in weapons)
+			foreach(weapon in weapons)
 			{
 				if(weapon.name == self.base_weaponname || weapon.name == s_upgraded_staff.weapname)
 				{
@@ -2216,7 +2231,7 @@ function set_player_staff(var_5ec0aa73, e_player)
 */
 function clear_player_staff_by_player_number(var_d95a0cf3)
 {
-	foreach(var_8d8b935d, s_staff in level.a_elemental_staffs)
+	foreach(s_staff in level.a_elemental_staffs)
 	{
 		if((level clientfield::get(s_staff.element + "_staff.holder")) == var_d95a0cf3)
 		{
@@ -2273,7 +2288,7 @@ function clear_player_staff(var_382bb75, e_owner)
 function hide_staff_model()
 {
 	staffs = getentarray("craftable_staff_model", "script_noteworthy");
-	foreach(var_708710c9, stave in staffs)
+	foreach(stave in staffs)
 	{
 		stave ghost();
 	}

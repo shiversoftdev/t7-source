@@ -16,7 +16,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_laststand", &__init__, undefined, undefined);
 }
@@ -123,15 +123,18 @@ function update_bleedout_timer(localclientnum, oldval, newval, bnewent, binitial
 			level.laststands[playernum].lastbleedouttime = 0;
 			setuimodelvalue(model, 1);
 		}
-		else if(newval == 29)
-		{
-			level.laststands[playernum] notify(#"new_val");
-			level.laststands[playernum] thread animation_update(model, 30, 28);
-		}
 		else
 		{
-			level.laststands[playernum] notify(#"new_val");
-			level.laststands[playernum] thread animation_update(model, level.laststands[playernum].lastbleedouttime, level.laststands[playernum].bleedouttime);
+			if(newval == 29)
+			{
+				level.laststands[playernum] notify(#"new_val");
+				level.laststands[playernum] thread animation_update(model, 30, 28);
+			}
+			else
+			{
+				level.laststands[playernum] notify(#"new_val");
+				level.laststands[playernum] thread animation_update(model, level.laststands[playernum].lastbleedouttime, level.laststands[playernum].bleedouttime);
+			}
 		}
 	}
 }

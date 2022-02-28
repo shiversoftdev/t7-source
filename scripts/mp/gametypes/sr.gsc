@@ -275,7 +275,7 @@ function initspawns()
 	level.spawnmaxs = (0, 0, 0);
 	spawnlogic::place_spawn_points("mp_sd_spawn_attacker");
 	spawnlogic::place_spawn_points("mp_sd_spawn_defender");
-	foreach(var_6168b095, team in level.teams)
+	foreach(team in level.teams)
 	{
 		spawnlogic::add_spawn_points(team, "mp_tdm_spawn");
 	}
@@ -357,15 +357,18 @@ function onplayerkilled(einflictor, attacker, idamage, smeansofdeath, weapon, vd
 			self recordkillmodifier("defending");
 			scoreevents::processscoreevent("killed_defender", attacker, self, weapon);
 		}
-		else if(isdefined(attacker.pers["defends"]))
+		else
 		{
-			attacker.pers["defends"]++;
-			attacker.defends = attacker.pers["defends"];
+			if(isdefined(attacker.pers["defends"]))
+			{
+				attacker.pers["defends"]++;
+				attacker.defends = attacker.pers["defends"];
+			}
+			attacker medals::defenseglobalcount();
+			attacker thread challenges::killedbasedefender(currentobjective);
+			self recordkillmodifier("assaulting");
+			scoreevents::processscoreevent("killed_attacker", attacker, self, weapon);
 		}
-		attacker medals::defenseglobalcount();
-		attacker thread challenges::killedbasedefender(currentobjective);
-		self recordkillmodifier("assaulting");
-		scoreevents::processscoreevent("killed_attacker", attacker, self, weapon);
 	}
 	if(isplayer(attacker) && attacker.pers["team"] != self.pers["team"] && isdefined(self.isbombcarrier) && self.isbombcarrier == 1)
 	{
@@ -400,25 +403,25 @@ function should_spawn_tags(einflictor, attacker, idamage, smeansofdeath, sweapon
 {
 	if(isalive(self))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.switching_teams))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(attacker) && attacker == self)
 	{
-		return 0;
+		return false;
 	}
 	if(level.teambased && isdefined(attacker) && isdefined(attacker.team) && attacker.team == self.team)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(attacker) && (!isdefined(attacker.team) || attacker.team == "free") && (attacker.classname == "trigger_hurt" || attacker.classname == "worldspawn"))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -510,17 +513,20 @@ function ondeadevent(team)
 			sr_endgamewithkillcam(game["defenders"], game["strings"][game["attackers"] + "_eliminated"]);
 		}
 	}
-	else if(team == game["attackers"])
+	else
 	{
-		if(level.bombplanted)
+		if(team == game["attackers"])
 		{
-			return;
+			if(level.bombplanted)
+			{
+				return;
+			}
+			sr_endgamewithkillcam(game["defenders"], game["strings"][game["attackers"] + "_eliminated"]);
 		}
-		sr_endgamewithkillcam(game["defenders"], game["strings"][game["attackers"] + "_eliminated"]);
-	}
-	else if(team == game["defenders"])
-	{
-		sr_endgamewithkillcam(game["attackers"], game["strings"][game["defenders"] + "_eliminated"]);
+		else if(team == game["defenders"])
+		{
+			sr_endgamewithkillcam(game["attackers"], game["strings"][game["defenders"] + "_eliminated"]);
+		}
 	}
 }
 
@@ -1179,7 +1185,7 @@ function bombplanted(destroyedobj, player)
 		exploder::exploder(destroyedobj.exploderindex);
 	}
 	defuseobject gameobjects::destroy_object();
-	foreach(var_f795a20e, zone in level.bombzones)
+	foreach(zone in level.bombzones)
 	{
 		zone gameobjects::disable_object();
 	}
@@ -1242,24 +1248,24 @@ function sr_iskillboosting()
 	roundsplayed = util::getroundsplayed();
 	if(level.playerkillsmax == 0)
 	{
-		return 0;
+		return false;
 	}
 	if(game["totalKills"] > (level.totalkillsmax * (roundsplayed + 1)))
 	{
-		return 1;
+		return true;
 	}
 	if(self.kills > (level.playerkillsmax * (roundsplayed + 1)))
 	{
-		return 1;
+		return true;
 	}
 	if(level.teambased && (self.team == "allies" || self.team == "axis"))
 	{
 		if(game["totalKillsTeam"][self.team] > (level.playerkillsmax * (roundsplayed + 1)))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*

@@ -279,7 +279,7 @@ function _zombie_blood_achievement_think()
 		}
 		if(self.zombie_blood_generators_started > 0 && self.zombie_blood_revives >= 3)
 		{
-			return 1;
+			return true;
 		}
 	}
 }
@@ -335,17 +335,23 @@ function watch_equipped_weapons_for_upgraded_staffs()
 		{
 			self notify(#"upgraded_water_staff_equipped");
 		}
-		else if(str_weapon == "staff_lightning")
+		else
 		{
-			self notify(#"upgraded_lightning_staff_equipped");
-		}
-		else if(str_weapon == "staff_fire")
-		{
-			self notify(#"upgraded_fire_staff_equipped");
-		}
-		else if(str_weapon == "staff_air")
-		{
-			self notify(#"upgraded_air_staff_equipped");
+			if(str_weapon == "staff_lightning")
+			{
+				self notify(#"upgraded_lightning_staff_equipped");
+			}
+			else
+			{
+				if(str_weapon == "staff_fire")
+				{
+					self notify(#"upgraded_fire_staff_equipped");
+				}
+				else if(str_weapon == "staff_air")
+				{
+					self notify(#"upgraded_air_staff_equipped");
+				}
+			}
 		}
 	}
 }

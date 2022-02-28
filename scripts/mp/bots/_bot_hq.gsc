@@ -62,15 +62,15 @@ function has_hq_goal()
 	origin = self getgoal("hq_radio");
 	if(isdefined(origin))
 	{
-		foreach(var_7012b4f5, point in level.radio.points)
+		foreach(point in level.radio.points)
 		{
 			if(distancesquared(origin, point) < 4096)
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -100,17 +100,17 @@ function should_patrol_hq()
 {
 	if(level.radio.gameobject.ownerteam == "neutral")
 	{
-		return 0;
+		return false;
 	}
 	if(level.radio.gameobject.ownerteam != self.team)
 	{
-		return 0;
+		return false;
 	}
 	if(hq_is_contested())
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -233,7 +233,7 @@ function move_to_hq()
 		wait(0.25);
 	}
 	points = array::randomize(level.radio.points);
-	foreach(var_b1335bae, point in points)
+	foreach(point in points)
 	{
 		if(self bot::friend_goal_in_radius("hq_radio", point, 64) == 0)
 		{
@@ -330,7 +330,7 @@ function capture_hq()
 */
 function any_other_team_touching(skip_team)
 {
-	foreach(var_936318a0, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(team == skip_team)
 		{
@@ -338,10 +338,10 @@ function any_other_team_touching(skip_team)
 		}
 		if(level.radio.gameobject.numtouching[team])
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -357,14 +357,14 @@ function is_hq_contested(skip_team)
 {
 	if(any_other_team_touching(skip_team))
 	{
-		return 1;
+		return true;
 	}
 	enemy = self bot::get_closest_enemy(level.radio.baseorigin, 1);
 	if(isdefined(enemy) && distancesquared(enemy.origin, level.radio.baseorigin) < 262144)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

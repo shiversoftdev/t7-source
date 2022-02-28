@@ -46,7 +46,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function function_d9af860b()
+function autoexec function_d9af860b()
 {
 	level.bgb_in_use = 1;
 	level.aat_in_use = 1;
@@ -200,7 +200,7 @@ function include_weapons()
 function function_4e327cec()
 {
 	steptrigs = getentarray(0, "audio_step_trigger", "targetname");
-	foreach(var_70e1f623, trig in steptrigs)
+	foreach(trig in steptrigs)
 	{
 		if(isdefined(trig.script_label) && trig.script_label == "fly_water_wade")
 		{

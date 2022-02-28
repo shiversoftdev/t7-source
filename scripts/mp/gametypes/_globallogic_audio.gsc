@@ -22,7 +22,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("globallogic_audio", &__init__, undefined, undefined);
 }
@@ -151,7 +151,7 @@ function announce_round_winner(winner, delay)
 	}
 	else
 	{
-		foreach(var_65e5fe5d, team in level.teams)
+		foreach(team in level.teams)
 		{
 			thread sound::play_on_players(("mus_round_draw" + "_") + level.teampostfix[team]);
 		}
@@ -202,7 +202,7 @@ function announce_game_winner(winner)
 */
 function flush_dialog()
 {
-	foreach(var_157bd6b7, player in level.players)
+	foreach(player in level.players)
 	{
 		player flush_dialog_on_player();
 	}
@@ -269,17 +269,17 @@ function killstreak_dialog_queued(dialogkey, killstreaktype, killstreakid)
 	{
 		if(dialogkey === self.currentkillstreakdialog.dialogkey && killstreaktype === self.currentkillstreakdialog.killstreaktype && killstreakid === self.currentkillstreakdialog.killstreakid)
 		{
-			return 1;
+			return true;
 		}
 	}
 	for(i = 0; i < self.killstreakdialogqueue.size; i++)
 	{
 		if(dialogkey === self.killstreakdialogqueue[i].dialogkey && killstreaktype === self.killstreakdialogqueue[i].killstreaktype && killstreaktype === self.killstreakdialogqueue[i].killstreaktype)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -293,7 +293,7 @@ function killstreak_dialog_queued(dialogkey, killstreaktype, killstreakid)
 */
 function flush_objective_dialog(objectivekey)
 {
-	foreach(var_c3132459, player in level.players)
+	foreach(player in level.players)
 	{
 		player flush_objective_dialog_on_player(objectivekey);
 	}
@@ -335,7 +335,7 @@ function flush_objective_dialog_on_player(objectivekey)
 */
 function flush_leader_dialog_key(dialogkey)
 {
-	foreach(var_b0e0c615, player in level.players)
+	foreach(player in level.players)
 	{
 		player flush_leader_dialog_key_on_player(dialogkey);
 	}
@@ -544,7 +544,7 @@ function leader_dialog_for_other_teams(dialogkey, skipteam, objectivekey, killst
 	/#
 		assert(isdefined(skipteam));
 	#/
-	foreach(var_67243056, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(team != skipteam)
 		{
@@ -567,7 +567,7 @@ function leader_dialog(dialogkey, team, excludelist, objectivekey, killstreakid,
 	/#
 		assert(isdefined(level.players));
 	#/
-	foreach(var_bbe10ea, player in level.players)
+	foreach(player in level.players)
 	{
 		if(!isdefined(player.pers["team"]))
 		{
@@ -615,7 +615,7 @@ function leader_dialog_on_player(dialogkey, objectivekey, killstreakid, dialogbu
 	}
 	if(isdefined(killstreakid))
 	{
-		foreach(var_9cb23362, item in self.leaderdialogqueue)
+		foreach(item in self.leaderdialogqueue)
 		{
 			if(item.dialogkey == dialogkey)
 			{
@@ -694,7 +694,7 @@ function play_next_leader_dialog()
 	if(isdefined(nextdialog.killstreakids))
 	{
 		triggeredcount = 0;
-		foreach(var_615ccfa0, killstreakid in nextdialog.killstreakids)
+		foreach(killstreakid in nextdialog.killstreakids)
 		{
 			if(isdefined(level.killstreaks_triggered[killstreakid]))
 			{
@@ -963,17 +963,17 @@ function get_dialog_bundle_alias(dialogbundle, dialogkey)
 function is_team_winning(checkteam)
 {
 	score = game["teamScores"][checkteam];
-	foreach(var_21eb6d8, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(team != checkteam)
 		{
 			if(game["teamScores"][team] >= score)
 			{
-				return 0;
+				return false;
 			}
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -987,16 +987,16 @@ function is_team_winning(checkteam)
 */
 function announce_team_is_winning()
 {
-	foreach(var_9cf9d426, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(is_team_winning(team))
 		{
 			leader_dialog("gameWinning", team);
 			leader_dialog_for_other_teams("gameLosing", team);
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1091,7 +1091,7 @@ function announcercontroller()
 			}
 		}
 		level waittill(#"match_ending_very_soon");
-		foreach(var_b958a0f5, team in level.teams)
+		foreach(team in level.teams)
 		{
 			leader_dialog("roundTimeWarning", team, undefined, undefined);
 		}
@@ -1281,7 +1281,7 @@ function set_music_on_team(state, team = "both", wait_time = 0, save_state = 0, 
 	/#
 		assert(isdefined(level.players));
 	#/
-	foreach(var_8305b10c, player in level.players)
+	foreach(player in level.players)
 	{
 		if(team == "both")
 		{

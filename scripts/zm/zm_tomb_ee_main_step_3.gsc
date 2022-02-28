@@ -84,7 +84,7 @@ function exit_stage(success)
 	a_buttons = getentarray("fire_link_button", "targetname");
 	array::delete_all(a_buttons);
 	a_structs = struct::get_array("fire_link", "targetname");
-	foreach(var_7ca2abe5, unitrigger_stub in a_structs)
+	foreach(unitrigger_stub in a_structs)
 	{
 		zm_unitrigger::unregister_unitrigger(unitrigger_stub);
 	}
@@ -103,7 +103,7 @@ function exit_stage(success)
 function create_buttons_and_triggers()
 {
 	a_structs = struct::get_array("fire_link", "targetname");
-	foreach(var_37c2c69c, unitrigger_stub in a_structs)
+	foreach(unitrigger_stub in a_structs)
 	{
 		unitrigger_stub.radius = 36;
 		unitrigger_stub.height = 256;

@@ -24,7 +24,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("raps", &__init__, undefined, undefined);
 }
@@ -237,7 +237,7 @@ function state_combat_update(params)
 			vehicle_ai::positionquery_filter_outofgoalanchor(queryresult);
 			best_point = undefined;
 			best_score = -999999;
-			foreach(var_e9159ec2, point in queryresult.data)
+			foreach(point in queryresult.data)
 			{
 				/#
 					if(!isdefined(point._scoredebug))
@@ -329,7 +329,7 @@ function state_combat_update(params)
 				positionquery_filter_inclaimedlocation(queryresult, self.enemy);
 				best_point = undefined;
 				best_score = -999999;
-				foreach(var_6810cc7c, point in queryresult.data)
+				foreach(point in queryresult.data)
 				{
 					/#
 						if(!isdefined(point._scoredebug))
@@ -475,10 +475,10 @@ function check_detonation_dist(origin, enemy)
 		targetpoint = enemy.origin + enemy_look_dir_offst;
 		if(distance2dsquared(targetpoint, origin) < (self.settings.detonation_distance * self.settings.detonation_distance) && ((abs(targetpoint[2] - origin[2])) < self.settings.detonation_distance || (abs((targetpoint[2] - 20) - origin[2])) < self.settings.detonation_distance))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -605,18 +605,21 @@ function detonation_monitor()
 					self playsoundtoplayer(self.sndalias["vehRapsClose250"], self.enemy);
 				}
 			}
-			else if(disttoenemysquared < (750 * 750))
+			else
 			{
-				if(lastdisttoenemysquared > (750 * 750) && (!(isdefined(self.servershortout) && self.servershortout)) && isdefined(self.sndalias["vehRapsTargeting"]))
+				if(disttoenemysquared < (750 * 750))
 				{
-					self playsoundtoplayer(self.sndalias["vehRapsTargeting"], self.enemy);
+					if(lastdisttoenemysquared > (750 * 750) && (!(isdefined(self.servershortout) && self.servershortout)) && isdefined(self.sndalias["vehRapsTargeting"]))
+					{
+						self playsoundtoplayer(self.sndalias["vehRapsTargeting"], self.enemy);
+					}
 				}
-			}
-			else if(disttoenemysquared < (1500 * 1500))
-			{
-				if(lastdisttoenemysquared > (1500 * 1500) && (!(isdefined(self.servershortout) && self.servershortout)) && isdefined(self.sndalias["vehRapsClose1500"]))
+				else if(disttoenemysquared < (1500 * 1500))
 				{
-					self playsoundtoplayer(self.sndalias["vehRapsClose1500"], self.enemy);
+					if(lastdisttoenemysquared > (1500 * 1500) && (!(isdefined(self.servershortout) && self.servershortout)) && isdefined(self.sndalias["vehRapsClose1500"]))
+					{
+						self playsoundtoplayer(self.sndalias["vehRapsClose1500"], self.enemy);
+					}
 				}
 			}
 			if(disttoenemysquared < lastdisttoenemysquared)
@@ -700,7 +703,7 @@ function try_detonate()
 	}
 	if(isdefined(self.owner))
 	{
-		foreach(var_573b30eb, player in level.players)
+		foreach(player in level.players)
 		{
 			if(self.owner util::isenemyplayer(player) && (!isdefined(self.enemy) || player != self.enemy))
 			{
@@ -953,13 +956,13 @@ function raps_allowfriendlyfiredamage(einflictor, eattacker, smeansofdeath, weap
 {
 	if(isdefined(self.owner) && eattacker == self.owner && isdefined(self.settings.friendly_fire) && int(self.settings.friendly_fire) && !weapon.isemp)
 	{
-		return 1;
+		return true;
 	}
 	if(isdefined(eattacker) && isdefined(eattacker.archetype) && isdefined(smeansofdeath) && eattacker.archetype == "raps" && smeansofdeath == "MOD_EXPLOSIVE")
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1069,13 +1072,16 @@ function slow_raps(trigger)
 			self setspeedimmediate(trigger.script_int, 200, 200);
 		}
 	}
-	else if(isdefined(self._override_raps_combat_speed) && self._override_raps_combat_speed < (0.5 * self.settings.defaultmovespeed))
-	{
-		self setspeed(self._override_raps_combat_speed);
-	}
 	else
 	{
-		self setspeed(0.5 * self.settings.defaultmovespeed);
+		if(isdefined(self._override_raps_combat_speed) && self._override_raps_combat_speed < (0.5 * self.settings.defaultmovespeed))
+		{
+			self setspeed(self._override_raps_combat_speed);
+		}
+		else
+		{
+			self setspeed(0.5 * self.settings.defaultmovespeed);
+		}
 	}
 	wait(1);
 	self resumespeed();
@@ -1097,7 +1103,7 @@ function force_get_enemies()
 	{
 		return self [[level.raps_force_get_enemies]]();
 	}
-	foreach(var_6f50aa93, player in level.players)
+	foreach(player in level.players)
 	{
 		if(self util::isenemyplayer(player) && !player.ignoreme)
 		{
@@ -1242,9 +1248,9 @@ function isdrivableplayervehicle()
 	str_vehicletype = self.vehicletype;
 	if(isdefined(str_vehicletype) && strendswith(str_vehicletype, "_player"))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

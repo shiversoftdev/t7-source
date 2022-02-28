@@ -30,7 +30,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("load", &__init__, undefined, undefined);
 }
@@ -44,7 +44,7 @@ autoexec function __init__sytem__()
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function first_frame()
+function autoexec first_frame()
 {
 	level.first_frame = 1;
 	wait(0.05);
@@ -73,13 +73,16 @@ function __init__()
 	{
 		level.game_mode_suffix = "_cp";
 	}
-	else if(sessionmodeiszombiesgame())
-	{
-		level.game_mode_suffix = "_zm";
-	}
 	else
 	{
-		level.game_mode_suffix = "_mp";
+		if(sessionmodeiszombiesgame())
+		{
+			level.game_mode_suffix = "_zm";
+		}
+		else
+		{
+			level.game_mode_suffix = "_mp";
+		}
 	}
 	level.script = tolower(getdvarstring("mapname"));
 	level.clientscripts = getdvarstring("cg_usingClientScripts") != "";
@@ -109,11 +112,11 @@ function __init__()
 	weapon_ammo();
 	set_objective_text_colors();
 	link_ents();
-	function_b018f2a7();
+	init_push_out_threshold();
 }
 
 /*
-	Name: function_b018f2a7
+	Name: init_push_out_threshold
 	Namespace: load
 	Checksum: 0x5ED8D3F1
 	Offset: 0xAD8
@@ -121,10 +124,10 @@ function __init__()
 	Parameters: 0
 	Flags: Linked
 */
-function function_b018f2a7()
+function init_push_out_threshold()
 {
-	var_ae867510 = getdvarfloat("tu16_physicsPushOutThreshold", -1);
-	if(var_ae867510 != -1)
+	push_out_threshold = getdvarfloat("tu16_physicsPushOutThreshold", -1);
+	if(push_out_threshold != -1)
 	{
 		setdvar("tu16_physicsPushOutThreshold", 20);
 	}
@@ -206,7 +209,7 @@ function t7_cleanup_output()
 		level.cleanup_msgs = array("", "", "");
 		wait(1);
 		println("");
-		foreach(var_fc5be8d7, msg in level.cleanup_msgs)
+		foreach(msg in level.cleanup_msgs)
 		{
 			println("");
 		}
@@ -236,13 +239,16 @@ function level_notify_listener()
 				{
 					level notify(toks[0], toks[1], toks[2]);
 				}
-				else if(toks.size == 2)
-				{
-					level notify(toks[0], toks[1]);
-				}
 				else
 				{
-					level notify(toks[0]);
+					if(toks.size == 2)
+					{
+						level notify(toks[0], toks[1]);
+					}
+					else
+					{
+						level notify(toks[0]);
+					}
 				}
 				setdvar("", "");
 			}
@@ -1197,13 +1203,16 @@ function shock_onpain()
 		{
 			continue;
 		}
-		else if(mod == "MOD_GRENADE_SPLASH" || mod == "MOD_GRENADE" || mod == "MOD_EXPLOSIVE" || mod == "MOD_PROJECTILE_SPLASH")
+		else
 		{
-			self shock_onexplosion(damage);
-		}
-		else if(getdvarstring("blurpain") == "on")
-		{
-			self shellshock("pain", 0.5);
+			if(mod == "MOD_GRENADE_SPLASH" || mod == "MOD_GRENADE" || mod == "MOD_EXPLOSIVE" || mod == "MOD_PROJECTILE_SPLASH")
+			{
+				self shock_onexplosion(damage);
+			}
+			else if(getdvarstring("blurpain") == "on")
+			{
+				self shellshock("pain", 0.5);
+			}
 		}
 	}
 }
@@ -1226,17 +1235,23 @@ function shock_onexplosion(damage)
 	{
 		time = 4;
 	}
-	else if(scaled_damage >= 50)
+	else
 	{
-		time = 3;
-	}
-	else if(scaled_damage >= 25)
-	{
-		time = 2;
-	}
-	else if(scaled_damage > 10)
-	{
-		time = 1;
+		if(scaled_damage >= 50)
+		{
+			time = 3;
+		}
+		else
+		{
+			if(scaled_damage >= 25)
+			{
+				time = 2;
+			}
+			else if(scaled_damage > 10)
+			{
+				time = 1;
+			}
+		}
 	}
 }
 
@@ -1307,7 +1322,7 @@ function on_spawned()
 */
 function link_ents()
 {
-	foreach(var_eb05ab1e, ent in getentarray())
+	foreach(ent in getentarray())
 	{
 		if(isdefined(ent.linkto))
 		{
@@ -1360,7 +1375,7 @@ function art_review()
 			}
 			else
 			{
-				foreach(var_caeb0bbe, trig in trigger::get_all())
+				foreach(trig in trigger::get_all())
 				{
 					trig triggerenable(0);
 				}

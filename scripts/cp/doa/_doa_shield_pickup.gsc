@@ -145,7 +145,7 @@ function barrelupdate()
 	Parameters: 6
 	Flags: Linked, Private
 */
-private function function_80bf1f40(player, note, sfx, var_5e61e69d, mod = "MOD_CRUSH", var_aa78744e)
+function private function_80bf1f40(player, note, sfx, var_5e61e69d, mod = "MOD_CRUSH", var_aa78744e)
 {
 	player endon(note);
 	while(true)
@@ -199,7 +199,7 @@ private function function_80bf1f40(player, note, sfx, var_5e61e69d, mod = "MOD_C
 	Parameters: 4
 	Flags: Linked, Private
 */
-private function function_3c5a0d64(org, note, var_3587f608, var_eaac4dd5)
+function private function_3c5a0d64(org, note, var_3587f608, var_eaac4dd5)
 {
 	self endon(note);
 	self endon(#"disconnect");
@@ -232,7 +232,7 @@ private function function_3c5a0d64(org, note, var_3587f608, var_eaac4dd5)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_121caed2(player)
+function private function_121caed2(player)
 {
 	self endon(#"death");
 	player waittill(#"disconnect");
@@ -292,7 +292,7 @@ private function function_121caed2(player)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_6143f535(org, note)
+function private function_6143f535(org, note)
 {
 	self util::waittill_any(note, "player_died", "kill_shield", "doa_playerVehiclePickup", "kill_duplicate_shields", "disconnect");
 	if(isdefined(self))
@@ -389,7 +389,7 @@ private function function_6143f535(org, note)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_a0a646c2()
+function private function_a0a646c2()
 {
 	self endon(#"death");
 	self.doa.stunned = 1;
@@ -408,7 +408,7 @@ private function function_a0a646c2()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_5f0b5579(player)
+function private function_5f0b5579(player)
 {
 	player endon(#"hash_792240f4");
 	player endon(#"disconnect");
@@ -443,7 +443,7 @@ private function function_5f0b5579(player)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_813e9dbd()
+function private function_813e9dbd()
 {
 	self endon(#"hash_792240f4");
 	self endon(#"disconnect");
@@ -466,7 +466,7 @@ private function function_813e9dbd()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_e6abac68(trigger)
+function private function_e6abac68(trigger)
 {
 	self util::waittill_any("end_teddybear_stun", "disconnect", "player_died", "kill_shield", "disconnect");
 	if(isdefined(self))
@@ -598,7 +598,7 @@ function sawbladeupdate()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_92374630(player)
+function private function_92374630(player)
 {
 	player endon(#"hash_1d724bbf");
 	player endon(#"disconnect");
@@ -643,7 +643,7 @@ private function function_92374630(player)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_f797c54(org, note)
+function private function_f797c54(org, note)
 {
 	self endon(note);
 	self endon(#"disconnect");
@@ -669,7 +669,7 @@ private function function_f797c54(org, note)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_595842c5(org, note)
+function private function_595842c5(org, note)
 {
 	self util::waittill_any(note, "player_died", "kill_shield", "disconnect");
 	if(isdefined(self))

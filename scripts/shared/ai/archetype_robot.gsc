@@ -37,7 +37,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("robot", &__init__, undefined, undefined);
 }
@@ -205,7 +205,7 @@ function robotcleanupchargemeleeattack(behaviortreeentity)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function robotlightsoff(entity, asmstatename)
+function private robotlightsoff(entity, asmstatename)
 {
 	entity ai::set_behavior_attribute("robot_lights", 2);
 	clientfield::set("robot_EMP", 1);
@@ -221,7 +221,7 @@ private function robotlightsoff(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function robotlightsflicker(entity, asmstatename)
+function private robotlightsflicker(entity, asmstatename)
 {
 	entity ai::set_behavior_attribute("robot_lights", 1);
 	clientfield::set("robot_EMP", 1);
@@ -238,7 +238,7 @@ private function robotlightsflicker(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function robotlightson(entity, asmstatename)
+function private robotlightson(entity, asmstatename)
 {
 	entity ai::set_behavior_attribute("robot_lights", 0);
 	clientfield::set("robot_EMP", 0);
@@ -254,7 +254,7 @@ private function robotlightson(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function robotshouldgibdeath(entity, asmstatename)
+function private robotshouldgibdeath(entity, asmstatename)
 {
 	return entity.gibdeath;
 }
@@ -268,7 +268,7 @@ private function robotshouldgibdeath(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function robotempidleinitialize(entity, asmstatename)
+function private robotempidleinitialize(entity, asmstatename)
 {
 	entity.empstoptime = gettime() + entity.empshutdowntime;
 	animationstatenetworkutility::requeststate(entity, asmstatename);
@@ -285,7 +285,7 @@ private function robotempidleinitialize(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function robotempidleupdate(entity, asmstatename)
+function private robotempidleupdate(entity, asmstatename)
 {
 	if(gettime() < entity.empstoptime || entity ai::get_behavior_attribute("shutdown"))
 	{
@@ -307,7 +307,7 @@ private function robotempidleupdate(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function robotempidleterminate(entity, asmstatename)
+function private robotempidleterminate(entity, asmstatename)
 {
 	entity notify(#"emp_shutdown_end");
 	return 4;
@@ -369,7 +369,7 @@ function robotcalcproceduraltraversal(entity, asmstatename)
 {
 	if(!isdefined(entity.traversestartnode) || !isdefined(entity.traverseendnode))
 	{
-		return 1;
+		return true;
 	}
 	entity.traversal = spawnstruct();
 	traversal = entity.traversal;
@@ -398,13 +398,16 @@ function robotcalcproceduraltraversal(entity, asmstatename)
 	{
 		speedboost = 16;
 	}
-	else if(traversal.abslengthtoend > 120)
+	else
 	{
-		speedboost = 8;
-	}
-	else if(traversal.abslengthtoend > 80 || traversal.absheighttoend > 80)
-	{
-		speedboost = 4;
+		if(traversal.abslengthtoend > 120)
+		{
+			speedboost = 8;
+		}
+		else if(traversal.abslengthtoend > 80 || traversal.absheighttoend > 80)
+		{
+			speedboost = 4;
+		}
 	}
 	if(isdefined(entity.traversalspeedboost))
 	{
@@ -483,7 +486,7 @@ function robotcalcproceduraltraversal(entity, asmstatename)
 	traversal.endtime = traversal.starttime + (traversal.curvelength * (1000 / traversal.speedoncurve));
 	traversal.totaltime = traversal.endtime - traversal.starttime;
 	traversal.landing = 0;
-	return 1;
+	return true;
 }
 
 /*
@@ -533,7 +536,7 @@ function robottraverseend(entity)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function robottraverseragdollondeath(entity, asmstatename)
+function private robottraverseragdollondeath(entity, asmstatename)
 {
 	if(!isalive(entity))
 	{
@@ -551,7 +554,7 @@ private function robottraverseragdollondeath(entity, asmstatename)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotshouldproceduraltraverse(entity)
+function private robotshouldproceduraltraverse(entity)
 {
 	if(isdefined(entity.traversestartnode) && isdefined(entity.traverseendnode))
 	{
@@ -570,7 +573,7 @@ private function robotshouldproceduraltraverse(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotwallruntraverse(entity)
+function private robotwallruntraverse(entity)
 {
 	startnode = entity.traversestartnode;
 	endnode = entity.traverseendnode;
@@ -592,7 +595,7 @@ private function robotwallruntraverse(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotshouldwallrun(entity)
+function private robotshouldwallrun(entity)
 {
 	return blackboard::getblackboardattribute(entity, "_robot_traversal_type") == "wall";
 }
@@ -606,7 +609,7 @@ private function robotshouldwallrun(entity)
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function mocomprobotstartwallruninit(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function private mocomprobotstartwallruninit(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	entity setrepairpaths(0);
 	entity orientmode("face angle", entity.angles[1]);
@@ -625,7 +628,7 @@ private function mocomprobotstartwallruninit(entity, mocompanim, mocompanimblend
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function mocomprobotstartwallrunupdate(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function private mocomprobotstartwallrunupdate(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	facenormal = getnavmeshfacenormal(entity.origin, 30);
 	positiononwall = getclosestpointonnavmesh(entity.origin, 30, 0);
@@ -657,7 +660,7 @@ private function mocomprobotstartwallrunupdate(entity, mocompanim, mocompanimble
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function mocomprobotstartwallrunterminate(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function private mocomprobotstartwallrunterminate(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	entity setrepairpaths(1);
 	entity setavoidancemask("avoid all");
@@ -674,7 +677,7 @@ private function mocomprobotstartwallrunterminate(entity, mocompanim, mocompanim
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function calculatecubicbezier(t, p1, p2, p3, p4)
+function private calculatecubicbezier(t, p1, p2, p3, p4)
 {
 	return ((pow(1 - t, 3)) * p1) + (((3 * (pow(1 - t, 2))) * t) * p2) + ((3 * (1 - t)) * pow(t, 2) * p3) + (pow(t, 3) * p4);
 }
@@ -688,7 +691,7 @@ private function calculatecubicbezier(t, p1, p2, p3, p4)
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function mocomprobotstarttraversalinit(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function private mocomprobotstarttraversalinit(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	startnode = entity.traversestartnode;
 	startiswallrun = startnode.spawnflags & 2048;
@@ -748,7 +751,7 @@ private function mocomprobotstarttraversalinit(entity, mocompanim, mocompanimble
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function mocomprobotstarttraversalterminate(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function private mocomprobotstarttraversalterminate(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 }
 
@@ -761,7 +764,7 @@ private function mocomprobotstarttraversalterminate(entity, mocompanim, mocompan
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function mocomprobotproceduraltraversalinit(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function private mocomprobotproceduraltraversalinit(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	traversal = entity.traversal;
 	entity setavoidancemask("avoid none");
@@ -785,7 +788,7 @@ private function mocomprobotproceduraltraversalinit(entity, mocompanim, mocompan
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function mocomprobotproceduraltraversalupdate(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function private mocomprobotproceduraltraversalupdate(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	traversal = entity.traversal;
 	if(isdefined(traversal))
@@ -824,7 +827,7 @@ private function mocomprobotproceduraltraversalupdate(entity, mocompanim, mocomp
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function mocomprobotproceduraltraversalterminate(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function private mocomprobotproceduraltraversalterminate(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	traversal = entity.traversal;
 	if(isdefined(traversal) && gettime() >= traversal.endtime)
@@ -850,7 +853,7 @@ private function mocomprobotproceduraltraversalterminate(entity, mocompanim, moc
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function mocompignorepainfaceenemyinit(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function private mocompignorepainfaceenemyinit(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	entity.blockingpain = 1;
 	if(isdefined(entity.enemy))
@@ -873,7 +876,7 @@ private function mocompignorepainfaceenemyinit(entity, mocompanim, mocompanimble
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function mocompignorepainfaceenemyupdate(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function private mocompignorepainfaceenemyupdate(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	if(isdefined(entity.enemy) && entity getanimtime(mocompanim) < 0.5)
 	{
@@ -894,7 +897,7 @@ private function mocompignorepainfaceenemyupdate(entity, mocompanim, mocompanimb
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function mocompignorepainfaceenemyterminate(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function private mocompignorepainfaceenemyterminate(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	entity.blockingpain = 0;
 }
@@ -908,7 +911,7 @@ private function mocompignorepainfaceenemyterminate(entity, mocompanim, mocompan
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _calculatewallrundirection(startposition, endposition)
+function private _calculatewallrundirection(startposition, endposition)
 {
 	entity = self;
 	facenormal = getnavmeshfacenormal(endposition, 30);
@@ -941,7 +944,7 @@ private function _calculatewallrundirection(startposition, endposition)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function robotwallrunstart()
+function private robotwallrunstart()
 {
 	entity = self;
 	entity.skipdeath = 1;
@@ -959,7 +962,7 @@ private function robotwallrunstart()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function robotwallrunend()
+function private robotwallrunend()
 {
 	entity = self;
 	robottraverseragdollondeath(entity);
@@ -978,7 +981,7 @@ private function robotwallrunend()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function robotsetupwallrunjump()
+function private robotsetupwallrunjump()
 {
 	entity = self;
 	startnode = entity.traversestartnode;
@@ -1025,7 +1028,7 @@ private function robotsetupwallrunjump()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function robotsetupwallrunland()
+function private robotsetupwallrunland()
 {
 	entity = self;
 	startnode = entity.traversestartnode;
@@ -1051,7 +1054,7 @@ private function robotsetupwallrunland()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function robotstartjumpdirection()
+function private robotstartjumpdirection()
 {
 	entity = self;
 	startnode = entity.traversestartnode;
@@ -1082,7 +1085,7 @@ private function robotstartjumpdirection()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function robotendjumpdirection()
+function private robotendjumpdirection()
 {
 	entity = self;
 	startnode = entity.traversestartnode;
@@ -1113,7 +1116,7 @@ private function robotendjumpdirection()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robottraversaltype(node)
+function private robottraversaltype(node)
 {
 	if(isdefined(node))
 	{
@@ -1135,7 +1138,7 @@ private function robottraversaltype(node)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function archetyperobotblackboardinit()
+function private archetyperobotblackboardinit()
 {
 	entity = self;
 	blackboard::createblackboardforentity(entity);
@@ -1228,7 +1231,7 @@ private function archetyperobotblackboardinit()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotcrawlercanshootenemy(entity)
+function private robotcrawlercanshootenemy(entity)
 {
 	if(!isdefined(entity.enemy))
 	{
@@ -1249,7 +1252,7 @@ private function robotcrawlercanshootenemy(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function archetyperobotonanimscriptedcallback(entity)
+function private archetyperobotonanimscriptedcallback(entity)
 {
 	entity.__blackboard = undefined;
 	entity archetyperobotblackboardinit();
@@ -1264,7 +1267,7 @@ private function archetyperobotonanimscriptedcallback(entity)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function robotgetgibbedlimbs()
+function private robotgetgibbedlimbs()
 {
 	entity = self;
 	rightarmgibbed = gibserverutils::isgibbed(entity, 16);
@@ -1293,7 +1296,7 @@ private function robotgetgibbedlimbs()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotinvalidatecover(entity)
+function private robotinvalidatecover(entity)
 {
 	entity.steppedoutofcover = 0;
 	entity pathmode("move allowed");
@@ -1308,7 +1311,7 @@ private function robotinvalidatecover(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotdelaymovement(entity)
+function private robotdelaymovement(entity)
 {
 	entity pathmode("move delayed", 0, randomfloatrange(1, 2));
 }
@@ -1322,7 +1325,7 @@ private function robotdelaymovement(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotmovement(entity)
+function private robotmovement(entity)
 {
 	if(blackboard::getblackboardattribute(entity, "_stance") != "stand")
 	{
@@ -1339,7 +1342,7 @@ private function robotmovement(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotcoverscaninitialize(entity)
+function private robotcoverscaninitialize(entity)
 {
 	blackboard::setblackboardattribute(entity, "_cover_mode", "cover_scan");
 	blackboard::setblackboardattribute(entity, "_desired_stance", "stand");
@@ -1358,7 +1361,7 @@ private function robotcoverscaninitialize(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotcoverscanterminate(entity)
+function private robotcoverscanterminate(entity)
 {
 	aiutility::cleanupcovermode(entity);
 	entity.steppedoutofcover = 1;
@@ -1382,16 +1385,16 @@ function robotcanjuke(entity)
 	{
 		jukeevents = blackboard::getblackboardevents("actor_juke");
 		tooclosejukedistancesqr = 57600;
-		foreach(var_b71aef99, event in jukeevents)
+		foreach(event in jukeevents)
 		{
 			if(distance2dsquared(entity.origin, event.data.origin) <= tooclosejukedistancesqr)
 			{
-				return 0;
+				return false;
 			}
 		}
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1501,7 +1504,7 @@ function robotisatcovermodescan(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotprepareforadjusttocover(entity)
+function private robotprepareforadjusttocover(entity)
 {
 	aiutility::keepclaimnode(entity);
 	blackboard::setblackboardattribute(entity, "_desired_stance", "crouch");
@@ -1516,13 +1519,13 @@ private function robotprepareforadjusttocover(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotcrawlerservice(entity)
+function private robotcrawlerservice(entity)
 {
 	if(isdefined(entity.crawlerlifetime) && entity.crawlerlifetime <= gettime() && entity.health > 0)
 	{
 		entity kill();
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1548,7 +1551,7 @@ function robotiscrawler(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotbecomecrawler(entity)
+function private robotbecomecrawler(entity)
 {
 	if(!entity ai::get_behavior_attribute("can_become_crawler"))
 	{
@@ -1585,7 +1588,7 @@ function robotshouldbecomecrawler(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotismarching(entity)
+function private robotismarching(entity)
 {
 	return blackboard::getblackboardattribute(entity, "_move_mode") == "marching";
 }
@@ -1599,7 +1602,7 @@ private function robotismarching(entity)
 	Parameters: 0
 	Flags: Private
 */
-private function robotlocomotionspeed()
+function private robotlocomotionspeed()
 {
 	entity = self;
 	if(robotismindcontrolled() == "mind_controlled")
@@ -1636,7 +1639,7 @@ private function robotlocomotionspeed()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotcoveroverinitialize(behaviortreeentity)
+function private robotcoveroverinitialize(behaviortreeentity)
 {
 	aiutility::setcovershootstarttime(behaviortreeentity);
 	aiutility::keepclaimnode(behaviortreeentity);
@@ -1653,7 +1656,7 @@ private function robotcoveroverinitialize(behaviortreeentity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotcoveroverterminate(behaviortreeentity)
+function private robotcoveroverterminate(behaviortreeentity)
 {
 	aiutility::cleanupcovermode(behaviortreeentity);
 	aiutility::clearcovershootstarttime(behaviortreeentity);
@@ -1668,7 +1671,7 @@ private function robotcoveroverterminate(behaviortreeentity)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function robotismindcontrolled()
+function private robotismindcontrolled()
 {
 	entity = self;
 	if(entity.controllevel > 1)
@@ -1687,7 +1690,7 @@ private function robotismindcontrolled()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotdonttakecover(entity)
+function private robotdonttakecover(entity)
 {
 	entity.combatmode = "no_cover";
 	entity.resumecover = gettime() + 4000;
@@ -1702,13 +1705,13 @@ private function robotdonttakecover(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _isvalidplayer(player)
+function private _isvalidplayer(player)
 {
 	if(!isdefined(player) || !isalive(player) || !isplayer(player) || player.sessionstate == "spectator" || player.sessionstate == "intermission" || player laststand::player_is_in_laststand() || player.ignoreme)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1720,11 +1723,11 @@ private function _isvalidplayer(player)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotrushenemyservice(entity)
+function private robotrushenemyservice(entity)
 {
 	if(!isdefined(entity.enemy))
 	{
-		return 0;
+		return false;
 	}
 	distancetoenemy = distance2dsquared(entity.origin, entity.enemy.origin);
 	if(distancetoenemy >= 360000 && distancetoenemy <= 1440000)
@@ -1746,7 +1749,7 @@ private function robotrushenemyservice(entity)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _isvalidrusher(entity, neighbor)
+function private _isvalidrusher(entity, neighbor)
 {
 	return isdefined(neighbor) && isdefined(neighbor.archetype) && neighbor.archetype == "robot" && isdefined(neighbor.team) && entity.team == neighbor.team && entity != neighbor && isdefined(neighbor.enemy) && neighbor ai::get_behavior_attribute("move_mode") == "normal" && !neighbor ai::get_behavior_attribute("phalanx") && neighbor ai::get_behavior_attribute("rogue_control") == "level_0" && distancesquared(entity.origin, neighbor.origin) < 160000 && distancesquared(neighbor.origin, neighbor.enemy.origin) < 1440000;
 }
@@ -1760,12 +1763,12 @@ private function _isvalidrusher(entity, neighbor)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotrushneighborservice(entity)
+function private robotrushneighborservice(entity)
 {
 	actors = getaiarray();
 	closestenemy = undefined;
 	closestenemydistance = undefined;
-	foreach(index, ai in actors)
+	foreach(ai in actors)
 	{
 		if(_isvalidrusher(entity, ai))
 		{
@@ -1796,7 +1799,7 @@ private function robotrushneighborservice(entity)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _findclosest(entity, entities)
+function private _findclosest(entity, entities)
 {
 	closest = spawnstruct();
 	if(entities.size > 0)
@@ -1825,19 +1828,19 @@ private function _findclosest(entity, entities)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robottargetservice(entity)
+function private robottargetservice(entity)
 {
 	if(robotabletoshootcondition(entity))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(entity.ignoreall) && entity.ignoreall)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(entity.nexttargetserviceupdate) && entity.nexttargetserviceupdate > gettime() && isalive(entity.favoriteenemy))
 	{
-		return 0;
+		return false;
 	}
 	positiononnavmesh = getclosestpointonnavmesh(entity.origin, 200);
 	if(!isdefined(positiononnavmesh))
@@ -1852,7 +1855,7 @@ private function robottargetservice(entity)
 	playerenemies = [];
 	ai = getaiarray();
 	players = getplayers();
-	foreach(index, value in ai)
+	foreach(value in ai)
 	{
 		if(issentient(value) && entity getignoreent(value))
 		{
@@ -1867,7 +1870,7 @@ private function robottargetservice(entity)
 			}
 		}
 	}
-	foreach(index, value in players)
+	foreach(value in players)
 	{
 		if(_isvalidplayer(value) && value.team != entity.team)
 		{
@@ -1892,19 +1895,25 @@ private function robottargetservice(entity)
 	{
 		entity.favoriteenemy = closestplayer.entity;
 	}
-	else if(!isdefined(closestplayer.entity))
-	{
-		entity.favoriteenemy = closestai.entity;
-		entity.favoriteenemy._currentroguerobot = entity;
-	}
-	else if(closestai.distancesquared < closestplayer.distancesquared)
-	{
-		entity.favoriteenemy = closestai.entity;
-		entity.favoriteenemy._currentroguerobot = entity;
-	}
 	else
 	{
-		entity.favoriteenemy = closestplayer.entity;
+		if(!isdefined(closestplayer.entity))
+		{
+			entity.favoriteenemy = closestai.entity;
+			entity.favoriteenemy._currentroguerobot = entity;
+		}
+		else
+		{
+			if(closestai.distancesquared < closestplayer.distancesquared)
+			{
+				entity.favoriteenemy = closestai.entity;
+				entity.favoriteenemy._currentroguerobot = entity;
+			}
+			else
+			{
+				entity.favoriteenemy = closestplayer.entity;
+			}
+		}
 	}
 	entity.nexttargetserviceupdate = gettime() + randomintrange(2500, 3500);
 }
@@ -1918,7 +1927,7 @@ private function robottargetservice(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function setdesiredstancetostand(behaviortreeentity)
+function private setdesiredstancetostand(behaviortreeentity)
 {
 	currentstance = blackboard::getblackboardattribute(behaviortreeentity, "_stance");
 	if(currentstance == "crouch")
@@ -1936,7 +1945,7 @@ private function setdesiredstancetostand(behaviortreeentity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function setdesiredstancetocrouch(behaviortreeentity)
+function private setdesiredstancetocrouch(behaviortreeentity)
 {
 	currentstance = blackboard::getblackboardattribute(behaviortreeentity, "_stance");
 	if(currentstance == "stand")
@@ -1954,7 +1963,7 @@ private function setdesiredstancetocrouch(behaviortreeentity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function toggledesiredstance(entity)
+function private toggledesiredstance(entity)
 {
 	currentstance = blackboard::getblackboardattribute(entity, "_stance");
 	if(currentstance == "stand")
@@ -1976,7 +1985,7 @@ private function toggledesiredstance(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotshouldshutdown(entity)
+function private robotshouldshutdown(entity)
 {
 	return entity ai::get_behavior_attribute("shutdown");
 }
@@ -1990,7 +1999,7 @@ private function robotshouldshutdown(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotshouldexplode(entity)
+function private robotshouldexplode(entity)
 {
 	if(entity.controllevel >= 3)
 	{
@@ -2016,7 +2025,7 @@ private function robotshouldexplode(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotshouldadjusttocover(entity)
+function private robotshouldadjusttocover(entity)
 {
 	if(!isdefined(entity.node))
 	{
@@ -2034,7 +2043,7 @@ private function robotshouldadjusttocover(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotshouldreactatcover(behaviortreeentity)
+function private robotshouldreactatcover(behaviortreeentity)
 {
 	return blackboard::getblackboardattribute(behaviortreeentity, "_stance") == "crouch" && aiutility::canbeflanked(behaviortreeentity) && behaviortreeentity isatcovernodestrict() && behaviortreeentity isflankedatcovernode() && !behaviortreeentity haspath();
 }
@@ -2048,7 +2057,7 @@ private function robotshouldreactatcover(behaviortreeentity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotexplode(entity)
+function private robotexplode(entity)
 {
 	entity.allowdeath = 0;
 	entity.nocybercom = 1;
@@ -2063,7 +2072,7 @@ private function robotexplode(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotexplodeterminate(entity)
+function private robotexplodeterminate(entity)
 {
 	blackboard::setblackboardattribute(entity, "_gib_location", "legs");
 	entity radiusdamage(entity.origin + vectorscale((0, 0, 1), 36), 60, 100, 50, entity, "MOD_EXPLOSIVE");
@@ -2095,7 +2104,7 @@ private function robotexplodeterminate(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotexposedcoverservice(entity)
+function private robotexposedcoverservice(entity)
 {
 	if(isdefined(entity.steppedoutofcover) && isdefined(entity.steppedoutofcovernode) && (!entity iscovervalid(entity.steppedoutofcovernode) || entity haspath() || !entity issafefromgrenade()))
 	{
@@ -2118,7 +2127,7 @@ private function robotexposedcoverservice(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotisatcovercondition(entity)
+function private robotisatcovercondition(entity)
 {
 	enemytooclose = 0;
 	if(isdefined(entity.enemy))
@@ -2139,7 +2148,7 @@ private function robotisatcovercondition(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotsupportsovercover(entity)
+function private robotsupportsovercover(entity)
 {
 	if(isdefined(entity.node))
 	{
@@ -2161,7 +2170,7 @@ private function robotsupportsovercover(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function canmovetoenemycondition(entity)
+function private canmovetoenemycondition(entity)
 {
 	if(!isdefined(entity.enemy) || entity.enemy.health <= 0)
 	{
@@ -2193,7 +2202,7 @@ private function canmovetoenemycondition(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function canmoveclosetoenemycondition(entity)
+function private canmoveclosetoenemycondition(entity)
 {
 	if(!isdefined(entity.enemy) || entity.enemy.health <= 0)
 	{
@@ -2213,10 +2222,10 @@ private function canmoveclosetoenemycondition(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotstartsprint(entity)
+function private robotstartsprint(entity)
 {
 	blackboard::setblackboardattribute(entity, "_locomotion_speed", "locomotion_speed_sprint");
-	return 1;
+	return true;
 }
 
 /*
@@ -2228,10 +2237,10 @@ private function robotstartsprint(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotstartsupersprint(entity)
+function private robotstartsupersprint(entity)
 {
 	blackboard::setblackboardattribute(entity, "_locomotion_speed", "locomotion_speed_super_sprint");
-	return 1;
+	return true;
 }
 
 /*
@@ -2243,13 +2252,13 @@ private function robotstartsupersprint(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robottacticalwalkactionstart(entity)
+function private robottacticalwalkactionstart(entity)
 {
 	aiutility::resetcoverparameters(entity);
 	aiutility::setcanbeflanked(entity, 0);
 	blackboard::setblackboardattribute(entity, "_locomotion_speed", "locomotion_speed_walk");
 	blackboard::setblackboardattribute(entity, "_stance", "stand");
-	return 1;
+	return true;
 }
 
 /*
@@ -2261,7 +2270,7 @@ private function robottacticalwalkactionstart(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotdie(entity)
+function private robotdie(entity)
 {
 	if(isalive(entity))
 	{
@@ -2278,7 +2287,7 @@ private function robotdie(entity)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function movetoplayerupdate(entity, asmstatename)
+function private movetoplayerupdate(entity, asmstatename)
 {
 	entity.keepclaimednode = 0;
 	positiononnavmesh = getclosestpointonnavmesh(entity.origin, 200);
@@ -2325,18 +2334,24 @@ private function movetoplayerupdate(entity, asmstatename)
 		{
 			shouldrepath = 1;
 		}
-		else if(distancesquared(entity.lastknownenemypos, entity.enemy.origin) > (72 * 72))
+		else
 		{
-			shouldrepath = 1;
-		}
-		else if(distancesquared(entity.origin, entity.enemy.origin) <= (120 * 120))
-		{
-			shouldrepath = 1;
-		}
-		else if(isdefined(entity.pathgoalpos))
-		{
-			distancetogoalsqr = distancesquared(entity.origin, entity.pathgoalpos);
-			shouldrepath = distancetogoalsqr < (72 * 72);
+			if(distancesquared(entity.lastknownenemypos, entity.enemy.origin) > (72 * 72))
+			{
+				shouldrepath = 1;
+			}
+			else
+			{
+				if(distancesquared(entity.origin, entity.enemy.origin) <= (120 * 120))
+				{
+					shouldrepath = 1;
+				}
+				else if(isdefined(entity.pathgoalpos))
+				{
+					distancetogoalsqr = distancesquared(entity.origin, entity.pathgoalpos);
+					shouldrepath = distancetogoalsqr < (72 * 72);
+				}
+			}
 		}
 	}
 	if(shouldrepath)
@@ -2404,13 +2419,13 @@ private function movetoplayerupdate(entity, asmstatename)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotshouldchargemelee(entity)
+function private robotshouldchargemelee(entity)
 {
 	if(aiutility::shouldmutexmelee(entity) && robothasenemytomelee(entity))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2422,7 +2437,7 @@ private function robotshouldchargemelee(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robothasenemytomelee(entity)
+function private robothasenemytomelee(entity)
 {
 	if(isdefined(entity.enemy) && issentient(entity.enemy) && entity.enemy.health > 0)
 	{
@@ -2445,7 +2460,7 @@ private function robothasenemytomelee(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotroguehasenemytomelee(entity)
+function private robotroguehasenemytomelee(entity)
 {
 	if(isdefined(entity.enemy) && issentient(entity.enemy) && entity.enemy.health > 0 && entity ai::get_behavior_attribute("rogue_control") != "level_3")
 	{
@@ -2467,13 +2482,13 @@ private function robotroguehasenemytomelee(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotshouldmelee(entity)
+function private robotshouldmelee(entity)
 {
 	if(aiutility::shouldmutexmelee(entity) && robothascloseenemytomelee(entity))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2485,7 +2500,7 @@ private function robotshouldmelee(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robothascloseenemytomelee(entity)
+function private robothascloseenemytomelee(entity)
 {
 	if(isdefined(entity.enemy) && issentient(entity.enemy) && entity.enemy.health > 0)
 	{
@@ -2512,7 +2527,7 @@ private function robothascloseenemytomelee(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotroguehascloseenemytomelee(entity)
+function private robotroguehascloseenemytomelee(entity)
 {
 	if(isdefined(entity.enemy) && issentient(entity.enemy) && entity.enemy.health > 0 && entity ai::get_behavior_attribute("rogue_control") != "level_3")
 	{
@@ -2530,7 +2545,7 @@ private function robotroguehascloseenemytomelee(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function scriptrequirestosprintcondition(entity)
+function private scriptrequirestosprintcondition(entity)
 {
 	return entity ai::get_behavior_attribute("sprint") && !entity ai::get_behavior_attribute("disablesprint");
 }
@@ -2544,7 +2559,7 @@ private function scriptrequirestosprintcondition(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotscanexposedpainterminate(entity)
+function private robotscanexposedpainterminate(entity)
 {
 	aiutility::cleanupcovermode(entity);
 	blackboard::setblackboardattribute(entity, "_robot_step_in", "fast");
@@ -2559,7 +2574,7 @@ private function robotscanexposedpainterminate(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robottookempdamage(entity)
+function private robottookempdamage(entity)
 {
 	if(isdefined(entity.damageweapon) && isdefined(entity.damagemod))
 	{
@@ -2578,14 +2593,14 @@ private function robottookempdamage(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotnocloseenemyservice(entity)
+function private robotnocloseenemyservice(entity)
 {
 	if(isdefined(entity.enemy) && aiutility::shouldmelee(entity))
 	{
 		entity clearpath();
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2597,7 +2612,7 @@ private function robotnocloseenemyservice(entity)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function _robotoutsidemovementrange(entity, range, useenemypos)
+function private _robotoutsidemovementrange(entity, range, useenemypos)
 {
 	/#
 		assert(isdefined(range));
@@ -2628,7 +2643,7 @@ private function _robotoutsidemovementrange(entity, range, useenemypos)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotoutsidesupersprintrange(entity)
+function private robotoutsidesupersprintrange(entity)
 {
 	return !robotwithinsupersprintrange(entity);
 }
@@ -2642,7 +2657,7 @@ private function robotoutsidesupersprintrange(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotwithinsupersprintrange(entity)
+function private robotwithinsupersprintrange(entity)
 {
 	if(entity ai::get_behavior_attribute("supports_super_sprint") && !entity ai::get_behavior_attribute("disablesprint"))
 	{
@@ -2660,7 +2675,7 @@ private function robotwithinsupersprintrange(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotoutsidesprintrange(entity)
+function private robotoutsidesprintrange(entity)
 {
 	if(entity ai::get_behavior_attribute("supports_super_sprint") && !entity ai::get_behavior_attribute("disablesprint"))
 	{
@@ -2678,7 +2693,7 @@ private function robotoutsidesprintrange(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotoutsidetacticalwalkrange(entity)
+function private robotoutsidetacticalwalkrange(entity)
 {
 	if(entity ai::get_behavior_attribute("disablesprint"))
 	{
@@ -2700,7 +2715,7 @@ private function robotoutsidetacticalwalkrange(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotwithinsprintrange(entity)
+function private robotwithinsprintrange(entity)
 {
 	if(entity ai::get_behavior_attribute("disablesprint"))
 	{
@@ -2722,7 +2737,7 @@ private function robotwithinsprintrange(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function shouldtakeovercondition(entity)
+function private shouldtakeovercondition(entity)
 {
 	switch(entity.controllevel)
 	{
@@ -2751,7 +2766,7 @@ private function shouldtakeovercondition(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function hasminiraps(entity)
+function private hasminiraps(entity)
 {
 	return isdefined(entity.miniraps);
 }
@@ -2765,7 +2780,7 @@ private function hasminiraps(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotismoving(entity)
+function private robotismoving(entity)
 {
 	velocity = entity getvelocity();
 	velocity = (velocity[0], 0, velocity[1]);
@@ -2782,7 +2797,7 @@ private function robotismoving(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotabletoshootcondition(entity)
+function private robotabletoshootcondition(entity)
 {
 	return entity.controllevel <= 1;
 }
@@ -2796,7 +2811,7 @@ private function robotabletoshootcondition(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotshouldtacticalwalk(entity)
+function private robotshouldtacticalwalk(entity)
 {
 	if(!entity haspath())
 	{
@@ -2814,15 +2829,15 @@ private function robotshouldtacticalwalk(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _robotcoverposition(entity)
+function private _robotcoverposition(entity)
 {
 	if(entity isflankedatcovernode())
 	{
-		return 0;
+		return false;
 	}
 	if(entity shouldholdgroundagainstenemy())
 	{
-		return 0;
+		return false;
 	}
 	shouldusecovernode = undefined;
 	itsbeenawhile = gettime() > entity.nextfindbestcovertime;
@@ -2896,11 +2911,11 @@ private function _robotcoverposition(entity)
 				entity.robotnode = node;
 				entity.robotnode.robotclaimed = 1;
 				entity pathmode("move delayed", 0, randomfloatrange(0.25, 2));
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2912,26 +2927,26 @@ private function _robotcoverposition(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _robotescortposition(entity)
+function private _robotescortposition(entity)
 {
 	if(entity ai::get_behavior_attribute("move_mode") == "escort")
 	{
 		escortposition = entity ai::get_behavior_attribute("escort_position");
 		if(!isdefined(escortposition))
 		{
-			return 1;
+			return true;
 		}
 		if(distance2dsquared(entity.origin, escortposition) <= 22500)
 		{
-			return 1;
+			return true;
 		}
 		if(isdefined(entity.escortnexttime) && gettime() < entity.escortnexttime)
 		{
-			return 1;
+			return true;
 		}
 		if(entity getpathmode() == "dont move")
 		{
-			return 1;
+			return true;
 		}
 		positiononnavmesh = getclosestpointonnavmesh(escortposition, 200);
 		if(!isdefined(positiononnavmesh))
@@ -2944,7 +2959,7 @@ private function _robotescortposition(entity)
 		{
 			closestpoint = undefined;
 			closestdistance = undefined;
-			foreach(var_cf4b7858, point in queryresult.data)
+			foreach(point in queryresult.data)
 			{
 				if(!point.inclaimedlocation)
 				{
@@ -2962,9 +2977,9 @@ private function _robotescortposition(entity)
 				entity.escortnexttime = gettime() + randomintrange(200, 300);
 			}
 		}
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2976,23 +2991,23 @@ private function _robotescortposition(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _robotrusherposition(entity)
+function private _robotrusherposition(entity)
 {
 	if(entity ai::get_behavior_attribute("move_mode") == "rusher")
 	{
 		entity pathmode("move allowed");
 		if(!isdefined(entity.enemy))
 		{
-			return 1;
+			return true;
 		}
 		disttoenemysqr = distance2dsquared(entity.origin, entity.enemy.origin);
 		if(disttoenemysqr <= (entity.robotrushermaxradius * entity.robotrushermaxradius) && disttoenemysqr >= (entity.robotrusherminradius * entity.robotrusherminradius))
 		{
-			return 1;
+			return true;
 		}
 		if(isdefined(entity.rushernexttime) && gettime() < entity.rushernexttime)
 		{
-			return 1;
+			return true;
 		}
 		positiononnavmesh = getclosestpointonnavmesh(entity.enemy.origin, 200);
 		if(!isdefined(positiononnavmesh))
@@ -3006,7 +3021,7 @@ private function _robotrusherposition(entity)
 		{
 			closestpoint = undefined;
 			closestdistance = undefined;
-			foreach(var_8f348d72, point in queryresult.data)
+			foreach(point in queryresult.data)
 			{
 				if(!point.inclaimedlocation && point.visibility === 1)
 				{
@@ -3024,9 +3039,9 @@ private function _robotrusherposition(entity)
 				entity.rushernexttime = gettime() + randomintrange(500, 1500);
 			}
 		}
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -3038,13 +3053,13 @@ private function _robotrusherposition(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _robotguardposition(entity)
+function private _robotguardposition(entity)
 {
 	if(entity ai::get_behavior_attribute("move_mode") == "guard")
 	{
 		if(entity getpathmode() == "dont move")
 		{
-			return 1;
+			return true;
 		}
 		if(!isdefined(entity.guardposition) || distancesquared(entity.origin, entity.guardposition) < (60 * 60))
 		{
@@ -3056,7 +3071,7 @@ private function _robotguardposition(entity)
 				minimumdistancesq = entity.goalradius * 0.2;
 				minimumdistancesq = minimumdistancesq * minimumdistancesq;
 				distantpoints = [];
-				foreach(var_8f2c4bd, point in queryresult.data)
+				foreach(point in queryresult.data)
 				{
 					if(distancesquared(entity.origin, point.origin) > minimumdistancesq)
 					{
@@ -3085,13 +3100,13 @@ private function _robotguardposition(entity)
 		if(isdefined(entity.guardposition))
 		{
 			entity useposition(entity.guardposition);
-			return 1;
+			return true;
 		}
 	}
 	entity.guardposition = undefined;
 	entity.intermediateguardposition = undefined;
 	entity.intermediateguardtime = undefined;
-	return 0;
+	return false;
 }
 
 /*
@@ -3103,7 +3118,7 @@ private function _robotguardposition(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotpositionservice(entity)
+function private robotpositionservice(entity)
 {
 	/#
 		if(getdvarint("") && isdefined(entity.enemy))
@@ -3121,35 +3136,35 @@ private function robotpositionservice(entity)
 			entity.robotnode.robotclaimed = undefined;
 			entity.robotnode = undefined;
 		}
-		return 0;
+		return false;
 	}
 	if(entity.disablerepath)
 	{
-		return 0;
+		return false;
 	}
 	if(!robotabletoshootcondition(entity))
 	{
-		return 0;
+		return false;
 	}
 	if(entity ai::get_behavior_attribute("phalanx"))
 	{
-		return 0;
+		return false;
 	}
 	if(aisquads::isfollowingsquadleader(entity))
 	{
-		return 0;
+		return false;
 	}
 	if(_robotrusherposition(entity))
 	{
-		return 1;
+		return true;
 	}
 	if(_robotguardposition(entity))
 	{
-		return 1;
+		return true;
 	}
 	if(_robotescortposition(entity))
 	{
-		return 1;
+		return true;
 	}
 	if(!aiutility::issafefromgrenades(entity))
 	{
@@ -3158,9 +3173,9 @@ private function robotpositionservice(entity)
 	}
 	if(_robotcoverposition(entity))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -3172,7 +3187,7 @@ private function robotpositionservice(entity)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function robotdropstartingweapon(entity, asmstatename)
+function private robotdropstartingweapon(entity, asmstatename)
 {
 	if(entity.weapon.name == level.weaponnone.name)
 	{
@@ -3190,7 +3205,7 @@ private function robotdropstartingweapon(entity, asmstatename)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotjukeinitialize(entity)
+function private robotjukeinitialize(entity)
 {
 	aiutility::choosejukedirection(entity);
 	entity clearpath();
@@ -3210,7 +3225,7 @@ private function robotjukeinitialize(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robotpreemptivejuketerminate(entity)
+function private robotpreemptivejuketerminate(entity)
 {
 	entity.nextpreemptivejuke = gettime() + randomintrange(4000, 6000);
 	entity.nextpreemptivejukeads = randomfloatrange(0.5, 0.95);
@@ -3225,12 +3240,12 @@ private function robotpreemptivejuketerminate(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function robottryreacquireservice(entity)
+function private robottryreacquireservice(entity)
 {
 	movemode = entity ai::get_behavior_attribute("move_mode");
 	if(movemode == "rusher" || movemode == "escort" || movemode == "guard")
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(entity.reacquire_state))
 	{
@@ -3239,31 +3254,31 @@ private function robottryreacquireservice(entity)
 	if(!isdefined(entity.enemy))
 	{
 		entity.reacquire_state = 0;
-		return 0;
+		return false;
 	}
 	if(entity haspath())
 	{
-		return 0;
+		return false;
 	}
 	if(!robotabletoshootcondition(entity))
 	{
-		return 0;
+		return false;
 	}
 	if(entity ai::get_behavior_attribute("force_cover"))
 	{
-		return 0;
+		return false;
 	}
 	if(entity cansee(entity.enemy) && entity canshootenemy())
 	{
 		entity.reacquire_state = 0;
-		return 0;
+		return false;
 	}
 	dirtoenemy = vectornormalize(entity.enemy.origin - entity.origin);
 	forward = anglestoforward(entity.angles);
 	if(vectordot(dirtoenemy, forward) < 0.5)
 	{
 		entity.reacquire_state = 0;
-		return 0;
+		return false;
 	}
 	switch(entity.reacquire_state)
 	{
@@ -3288,7 +3303,7 @@ private function robottryreacquireservice(entity)
 			if(entity.reacquire_state > 15)
 			{
 				entity.reacquire_state = 0;
-				return 0;
+				return false;
 			}
 			break;
 		}
@@ -3296,10 +3311,10 @@ private function robottryreacquireservice(entity)
 	if(isvec(reacquirepos))
 	{
 		entity useposition(reacquirepos);
-		return 1;
+		return true;
 	}
 	entity.reacquire_state++;
-	return 0;
+	return false;
 }
 
 /*
@@ -3311,7 +3326,7 @@ private function robottryreacquireservice(entity)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function takeoverinitialize(entity, asmstatename)
+function private takeoverinitialize(entity, asmstatename)
 {
 	switch(entity ai::get_behavior_attribute("rogue_control"))
 	{
@@ -3344,7 +3359,7 @@ private function takeoverinitialize(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function takeoverterminate(entity, asmstatename)
+function private takeoverterminate(entity, asmstatename)
 {
 	switch(entity ai::get_behavior_attribute("rogue_control"))
 	{
@@ -3367,7 +3382,7 @@ private function takeoverterminate(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function stepintoinitialize(entity, asmstatename)
+function private stepintoinitialize(entity, asmstatename)
 {
 	aiutility::releaseclaimnode(entity);
 	aiutility::usecovernodewrapper(entity, entity.steppedoutofcovernode);
@@ -3387,7 +3402,7 @@ private function stepintoinitialize(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function stepintoterminate(entity, asmstatename)
+function private stepintoterminate(entity, asmstatename)
 {
 	entity.steppedoutofcover = 0;
 	aiutility::releaseclaimnode(entity);
@@ -3404,7 +3419,7 @@ private function stepintoterminate(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function stepoutinitialize(entity, asmstatename)
+function private stepoutinitialize(entity, asmstatename)
 {
 	entity.steppedoutofcovernode = entity.node;
 	aiutility::keepclaimnode(entity);
@@ -3431,7 +3446,7 @@ private function stepoutinitialize(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function stepoutterminate(entity, asmstatename)
+function private stepoutterminate(entity, asmstatename)
 {
 	entity.steppedoutofcover = 1;
 	entity.steppedouttime = gettime();
@@ -3449,7 +3464,7 @@ private function stepoutterminate(entity, asmstatename)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function supportsstepoutcondition(entity)
+function private supportsstepoutcondition(entity)
 {
 	return entity.node.type == "Cover Left" || entity.node.type == "Cover Right" || entity.node.type == "Cover Pillar";
 }
@@ -3463,7 +3478,7 @@ private function supportsstepoutcondition(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function shouldstepincondition(entity)
+function private shouldstepincondition(entity)
 {
 	if(!isdefined(entity.steppedoutofcover) || !entity.steppedoutofcover || !isdefined(entity.steppedouttime) || !entity.steppedoutofcover)
 	{
@@ -3484,7 +3499,7 @@ private function shouldstepincondition(entity)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function robotdeployminiraps()
+function private robotdeployminiraps()
 {
 	entity = self;
 	if(isdefined(entity) && isdefined(entity.miniraps))
@@ -3508,19 +3523,22 @@ private function robotdeployminiraps()
 	Parameters: 4
 	Flags: Linked, Private
 */
-private function _trygibbinghead(entity, damage, hitloc, isexplosive)
+function private _trygibbinghead(entity, damage, hitloc, isexplosive)
 {
 	if(isexplosive && randomfloatrange(0, 1) <= 0.5)
 	{
 		gibserverutils::gibhead(entity);
 	}
-	else if(isinarray(array("head", "neck", "helmet"), hitloc) && randomfloatrange(0, 1) <= 1)
+	else
 	{
-		gibserverutils::gibhead(entity);
-	}
-	else if((entity.health - damage) <= 0 && randomfloatrange(0, 1) <= 0.25)
-	{
-		gibserverutils::gibhead(entity);
+		if(isinarray(array("head", "neck", "helmet"), hitloc) && randomfloatrange(0, 1) <= 1)
+		{
+			gibserverutils::gibhead(entity);
+		}
+		else if((entity.health - damage) <= 0 && randomfloatrange(0, 1) <= 0.25)
+		{
+			gibserverutils::gibhead(entity);
+		}
 	}
 }
 
@@ -3533,7 +3551,7 @@ private function _trygibbinghead(entity, damage, hitloc, isexplosive)
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function _trygibbinglimb(entity, damage, hitloc, isexplosive, ondeath)
+function private _trygibbinglimb(entity, damage, hitloc, isexplosive, ondeath)
 {
 	if(gibserverutils::isgibbed(entity, 32) || gibserverutils::isgibbed(entity, 16))
 	{
@@ -3550,27 +3568,36 @@ private function _trygibbinglimb(entity, damage, hitloc, isexplosive, ondeath)
 			gibserverutils::gibleftarm(entity);
 		}
 	}
-	else if(isinarray(array("left_hand", "left_arm_lower", "left_arm_upper"), hitloc))
+	else
 	{
-		gibserverutils::gibleftarm(entity);
-	}
-	else if(ondeath && isinarray(array("right_hand", "right_arm_lower", "right_arm_upper"), hitloc))
-	{
-		gibserverutils::gibrightarm(entity);
-	}
-	else if(robotsoldierbehavior::robotismindcontrolled() == "mind_controlled" && isinarray(array("right_hand", "right_arm_lower", "right_arm_upper"), hitloc))
-	{
-		gibserverutils::gibrightarm(entity);
-	}
-	else if(ondeath && randomfloatrange(0, 1) <= 0.25)
-	{
-		if(math::cointoss())
+		if(isinarray(array("left_hand", "left_arm_lower", "left_arm_upper"), hitloc))
 		{
 			gibserverutils::gibleftarm(entity);
 		}
 		else
 		{
-			gibserverutils::gibrightarm(entity);
+			if(ondeath && isinarray(array("right_hand", "right_arm_lower", "right_arm_upper"), hitloc))
+			{
+				gibserverutils::gibrightarm(entity);
+			}
+			else
+			{
+				if(robotsoldierbehavior::robotismindcontrolled() == "mind_controlled" && isinarray(array("right_hand", "right_arm_lower", "right_arm_upper"), hitloc))
+				{
+					gibserverutils::gibrightarm(entity);
+				}
+				else if(ondeath && randomfloatrange(0, 1) <= 0.25)
+				{
+					if(math::cointoss())
+					{
+						gibserverutils::gibleftarm(entity);
+					}
+					else
+					{
+						gibserverutils::gibrightarm(entity);
+					}
+				}
+			}
 		}
 	}
 }
@@ -3584,7 +3611,7 @@ private function _trygibbinglimb(entity, damage, hitloc, isexplosive, ondeath)
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function _trygibbinglegs(entity, damage, hitloc, isexplosive, attacker = entity)
+function private _trygibbinglegs(entity, damage, hitloc, isexplosive, attacker = entity)
 {
 	cangiblegs = (entity.health - damage) <= 0 && entity.allowdeath;
 	if(entity ai::get_behavior_attribute("can_become_crawler"))
@@ -3600,31 +3627,37 @@ private function _trygibbinglegs(entity, damage, hitloc, isexplosive, attacker =
 		gibserverutils::giblegs(entity);
 		entity startragdoll();
 	}
-	else if(cangiblegs && isinarray(array("left_leg_upper", "left_leg_lower", "left_foot"), hitloc) && randomfloatrange(0, 1) <= 1)
+	else
 	{
-		if((entity.health - damage) > 0)
+		if(cangiblegs && isinarray(array("left_leg_upper", "left_leg_lower", "left_foot"), hitloc) && randomfloatrange(0, 1) <= 1)
 		{
-			becomecrawler(entity);
-		}
-		gibserverutils::gibleftleg(entity);
-	}
-	else if(cangiblegs && isinarray(array("right_leg_upper", "right_leg_lower", "right_foot"), hitloc) && randomfloatrange(0, 1) <= 1)
-	{
-		if((entity.health - damage) > 0)
-		{
-			becomecrawler(entity);
-		}
-		gibserverutils::gibrightleg(entity);
-	}
-	else if((entity.health - damage) <= 0 && entity.allowdeath && randomfloatrange(0, 1) <= 0.25)
-	{
-		if(math::cointoss())
-		{
+			if((entity.health - damage) > 0)
+			{
+				becomecrawler(entity);
+			}
 			gibserverutils::gibleftleg(entity);
 		}
 		else
 		{
-			gibserverutils::gibrightleg(entity);
+			if(cangiblegs && isinarray(array("right_leg_upper", "right_leg_lower", "right_foot"), hitloc) && randomfloatrange(0, 1) <= 1)
+			{
+				if((entity.health - damage) > 0)
+				{
+					becomecrawler(entity);
+				}
+				gibserverutils::gibrightleg(entity);
+			}
+			else if((entity.health - damage) <= 0 && entity.allowdeath && randomfloatrange(0, 1) <= 0.25)
+			{
+				if(math::cointoss())
+				{
+					gibserverutils::gibleftleg(entity);
+				}
+				else
+				{
+					gibserverutils::gibrightleg(entity);
+				}
+			}
 		}
 	}
 }
@@ -3638,7 +3671,7 @@ private function _trygibbinglegs(entity, damage, hitloc, isexplosive, attacker =
 	Parameters: 12
 	Flags: Linked, Private
 */
-private function robotgibdamageoverride(inflictor, attacker, damage, flags, meansofdeath, weapon, point, dir, hitloc, offsettime, boneindex, modelindex)
+function private robotgibdamageoverride(inflictor, attacker, damage, flags, meansofdeath, weapon, point, dir, hitloc, offsettime, boneindex, modelindex)
 {
 	entity = self;
 	if(isdefined(attacker) && attacker.team == entity.team)
@@ -3671,7 +3704,7 @@ private function robotgibdamageoverride(inflictor, attacker, damage, flags, mean
 	Parameters: 8
 	Flags: Linked, Private
 */
-private function robotdeathoverride(inflictor, attacker, damage, meansofdeath, weapon, dir, hitloc, offsettime)
+function private robotdeathoverride(inflictor, attacker, damage, meansofdeath, weapon, dir, hitloc, offsettime)
 {
 	entity = self;
 	entity ai::set_behavior_attribute("robot_lights", 4);
@@ -3687,7 +3720,7 @@ private function robotdeathoverride(inflictor, attacker, damage, meansofdeath, w
 	Parameters: 8
 	Flags: Linked, Private
 */
-private function robotgibdeathoverride(inflictor, attacker, damage, meansofdeath, weapon, dir, hitloc, offsettime)
+function private robotgibdeathoverride(inflictor, attacker, damage, meansofdeath, weapon, dir, hitloc, offsettime)
 {
 	entity = self;
 	if(!entity ai::get_behavior_attribute("can_gib") || entity.skipdeath)
@@ -3733,7 +3766,7 @@ private function robotgibdeathoverride(inflictor, attacker, damage, meansofdeath
 	Parameters: 8
 	Flags: Linked, Private
 */
-private function robotdestructdeathoverride(inflictor, attacker, damage, meansofdeath, weapon, dir, hitloc, offsettime)
+function private robotdestructdeathoverride(inflictor, attacker, damage, meansofdeath, weapon, dir, hitloc, offsettime)
 {
 	entity = self;
 	if(entity.skipdeath)
@@ -3772,7 +3805,7 @@ private function robotdestructdeathoverride(inflictor, attacker, damage, meansof
 	Parameters: 12
 	Flags: Linked, Private
 */
-private function robotdamageoverride(inflictor, attacker, damage, flags, meansofdamage, weapon, point, dir, hitloc, offsettime, boneindex, modelindex)
+function private robotdamageoverride(inflictor, attacker, damage, flags, meansofdamage, weapon, point, dir, hitloc, offsettime, boneindex, modelindex)
 {
 	entity = self;
 	if(hitloc != "helmet" || hitloc != "head" || hitloc != "neck")
@@ -3838,7 +3871,7 @@ private function robotdamageoverride(inflictor, attacker, damage, flags, meansof
 	Parameters: 12
 	Flags: Linked, Private
 */
-private function robotdestructrandompieces(inflictor, attacker, damage, flags, meansofdamage, weapon, point, dir, hitloc, offsettime, boneindex, modelindex)
+function private robotdestructrandompieces(inflictor, attacker, damage, flags, meansofdamage, weapon, point, dir, hitloc, offsettime, boneindex, modelindex)
 {
 	entity = self;
 	isexplosive = isinarray(array("MOD_CRUSH", "MOD_GRENADE", "MOD_GRENADE_SPLASH", "MOD_PROJECTILE", "MOD_PROJECTILE_SPLASH", "MOD_EXPLOSIVE"), meansofdamage);
@@ -3858,7 +3891,7 @@ private function robotdestructrandompieces(inflictor, attacker, damage, flags, m
 	Parameters: 1
 	Flags: Private
 */
-private function findclosestnavmeshpositiontoenemy(enemy)
+function private findclosestnavmeshpositiontoenemy(enemy)
 {
 	enemypositiononnavmesh = undefined;
 	for(tolerancelevel = 1; tolerancelevel <= 4; tolerancelevel++)
@@ -3881,7 +3914,7 @@ private function findclosestnavmeshpositiontoenemy(enemy)
 	Parameters: 2
 	Flags: Private
 */
-private function robotchoosecoverdirection(entity, stepout)
+function private robotchoosecoverdirection(entity, stepout)
 {
 	if(!isdefined(entity.node))
 	{
@@ -3901,7 +3934,7 @@ private function robotchoosecoverdirection(entity, stepout)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function robotsoldierspawnsetup()
+function private robotsoldierspawnsetup()
 {
 	entity = self;
 	entity.iscrawler = 0;
@@ -3952,25 +3985,31 @@ private function robotsoldierspawnsetup()
 		{
 			entity ai::set_behavior_attribute("", "");
 		}
-		else if(getdvarint("") == 2)
+		else
 		{
-			entity ai::set_behavior_attribute("", "");
-		}
-		else if(getdvarint("") == 3)
-		{
-			entity ai::set_behavior_attribute("", "");
+			if(getdvarint("") == 2)
+			{
+				entity ai::set_behavior_attribute("", "");
+			}
+			else if(getdvarint("") == 3)
+			{
+				entity ai::set_behavior_attribute("", "");
+			}
 		}
 		if(getdvarint("") == 1)
 		{
 			entity ai::set_behavior_attribute("", "");
 		}
-		else if(getdvarint("") == 2)
+		else
 		{
-			entity ai::set_behavior_attribute("", "");
-		}
-		else if(getdvarint("") == 3)
-		{
-			entity ai::set_behavior_attribute("", "");
+			if(getdvarint("") == 2)
+			{
+				entity ai::set_behavior_attribute("", "");
+			}
+			else if(getdvarint("") == 3)
+			{
+				entity ai::set_behavior_attribute("", "");
+			}
 		}
 	#/
 	if(getdvarint("ai_robotForceCrawler") == 1)
@@ -3992,7 +4031,7 @@ private function robotsoldierspawnsetup()
 	Parameters: 1
 	Flags: Private
 */
-private function robotgivewasp(entity)
+function private robotgivewasp(entity)
 {
 	if(isdefined(entity) && !isdefined(entity.wasp))
 	{
@@ -4013,7 +4052,7 @@ private function robotgivewasp(entity)
 	Parameters: 1
 	Flags: Private
 */
-private function robotdeploywasp(entity)
+function private robotdeploywasp(entity)
 {
 	entity endon(#"death");
 	wait(randomfloatrange(7, 10));
@@ -4040,7 +4079,7 @@ private function robotdeploywasp(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function rapsdetonatecountdown(entity)
+function private rapsdetonatecountdown(entity)
 {
 	entity endon(#"death");
 	wait(randomfloatrange(20, 30));
@@ -4056,7 +4095,7 @@ private function rapsdetonatecountdown(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function becomecrawler(entity)
+function private becomecrawler(entity)
 {
 	if(!robotsoldierbehavior::robotiscrawler(entity) && entity ai::get_behavior_attribute("can_become_crawler"))
 	{
@@ -4073,7 +4112,7 @@ private function becomecrawler(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function cleanupequipment(entity)
+function private cleanupequipment(entity)
 {
 	entity waittill(#"death");
 	if(!isdefined(entity))
@@ -4100,7 +4139,7 @@ private function cleanupequipment(entity)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function forcerobotsoldiermindcontrollevel1()
+function private forcerobotsoldiermindcontrollevel1()
 {
 	entity = self;
 	if(entity.controllevel >= 1)
@@ -4122,7 +4161,7 @@ private function forcerobotsoldiermindcontrollevel1()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function forcerobotsoldiermindcontrollevel2()
+function private forcerobotsoldiermindcontrollevel2()
 {
 	entity = self;
 	if(entity.controllevel >= 2)
@@ -4163,7 +4202,7 @@ private function forcerobotsoldiermindcontrollevel2()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function forcerobotsoldiermindcontrollevel3()
+function private forcerobotsoldiermindcontrollevel3()
 {
 	entity = self;
 	if(entity.controllevel >= 3)
@@ -4205,21 +4244,30 @@ function robotlights(entity, attribute, oldvalue, value)
 	{
 		clientfield::set("robot_lights", 3);
 	}
-	else if(value == 0)
+	else
 	{
-		clientfield::set("robot_lights", 0);
-	}
-	else if(value == 1)
-	{
-		clientfield::set("robot_lights", 1);
-	}
-	else if(value == 2)
-	{
-		clientfield::set("robot_lights", 2);
-	}
-	else if(value == 4)
-	{
-		clientfield::set("robot_lights", 4);
+		if(value == 0)
+		{
+			clientfield::set("robot_lights", 0);
+		}
+		else
+		{
+			if(value == 1)
+			{
+				clientfield::set("robot_lights", 1);
+			}
+			else
+			{
+				if(value == 2)
+				{
+					clientfield::set("robot_lights", 2);
+				}
+				else if(value == 4)
+				{
+					clientfield::set("robot_lights", 4);
+				}
+			}
+		}
 	}
 }
 
@@ -4246,13 +4294,16 @@ function randomgibroguerobot(entity)
 			gibserverutils::gibleftarm(entity);
 		}
 	}
-	else if(math::cointoss())
+	else
 	{
-		gibserverutils::gibleftarm(entity);
-	}
-	else if(math::cointoss())
-	{
-		gibserverutils::gibrightarm(entity);
+		if(math::cointoss())
+		{
+			gibserverutils::gibleftarm(entity);
+		}
+		else if(math::cointoss())
+		{
+			gibserverutils::gibrightarm(entity);
+		}
 	}
 }
 

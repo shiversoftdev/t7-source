@@ -48,7 +48,7 @@ function bot_idle()
 		}
 	}
 	approachradiussq = 562500;
-	foreach(var_4639524f, zone in level.bombzones)
+	foreach(zone in level.bombzones)
 	{
 		if(isdefined(level.bombplanted) && level.bombplanted && (!(isdefined(zone.isplanted) && zone.isplanted)))
 		{
@@ -74,7 +74,7 @@ function bot_idle()
 		}
 	}
 	zones = array::randomize(level.bombzones);
-	foreach(var_72915306, zone in zones)
+	foreach(zone in zones)
 	{
 		if(isdefined(level.bombplanted) && level.bombplanted && (!(isdefined(zone.isplanted) && zone.isplanted)))
 		{
@@ -87,7 +87,7 @@ function bot_idle()
 			return;
 		}
 	}
-	foreach(var_b41743b4, zone in zones)
+	foreach(zone in zones)
 	{
 		if(isdefined(level.bombplanted) && level.bombplanted && (!(isdefined(zone.isplanted) && zone.isplanted)))
 		{

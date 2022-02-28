@@ -238,17 +238,17 @@ function watch_for_foot_stomp()
 function footprint_zombie_killed(attacker)
 {
 	a_volumes = getentarray("foot_box_volume", "script_noteworthy");
-	foreach(var_396e6f73, e_volume in a_volumes)
+	foreach(e_volume in a_volumes)
 	{
 		if(self istouching(e_volume) && isdefined(attacker) && isplayer(attacker))
 		{
 			self clientfield::set("foot_print_box_fx", 1);
 			m_box = getent(e_volume.target, "targetname");
 			m_box notify(#"soul_absorbed", attacker);
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -278,7 +278,7 @@ function reward_packed_weapon(player, s_stat)
 	util::wait_network_frame();
 	if(!zm_challenges_tomb::reward_rise_and_grab(m_weapon, 50, 2, 2, 10))
 	{
-		return 0;
+		return false;
 	}
 	weapon_limit = zm_utility::get_player_weapon_limit(player);
 	primaries = player getweaponslistprimaries();
@@ -295,7 +295,7 @@ function reward_packed_weapon(player, s_stat)
 	m_weapon stoploopsound(0.1);
 	player playsound("zmb_powerup_grabbed");
 	m_weapon delete();
-	return 1;
+	return true;
 }
 
 /*
@@ -364,7 +364,7 @@ function reward_powerup(player, str_powerup, n_timeout = 10)
 	util::wait_network_frame();
 	if(!zm_challenges_tomb::reward_rise_and_grab(m_reward, 50, 2, 2, n_timeout))
 	{
-		return 0;
+		return false;
 	}
 	m_reward.hint = s_powerup.hint;
 	if(!isdefined(player))
@@ -395,7 +395,7 @@ function reward_powerup(player, str_powerup, n_timeout = 10)
 	m_reward stoploopsound(0.1);
 	player playsound("zmb_powerup_grabbed");
 	m_reward delete();
-	return 1;
+	return true;
 }
 
 /*
@@ -418,12 +418,12 @@ function reward_double_tap(player, s_stat)
 	util::wait_network_frame();
 	if(!zm_challenges_tomb::reward_rise_and_grab(m_reward, 50, 2, 2, 10))
 	{
-		return 0;
+		return false;
 	}
 	if(player hasperk("specialty_doubletap2") || player zm_perks::has_perk_paused("specialty_doubletap2"))
 	{
 		m_reward thread bottle_reject_sink(player);
-		return 0;
+		return false;
 	}
 	m_reward stoploopsound(0.1);
 	player playsound("zmb_powerup_grabbed");
@@ -432,7 +432,7 @@ function reward_double_tap(player, s_stat)
 	player waittill(#"burp");
 	wait(1.2);
 	m_reward delete();
-	return 1;
+	return true;
 }
 
 /*
@@ -473,14 +473,14 @@ function reward_one_inch_punch(player, s_stat)
 	util::wait_network_frame();
 	if(!zm_challenges_tomb::reward_rise_and_grab(m_reward, 50, 2, 2, 10))
 	{
-		return 0;
+		return false;
 	}
 	player thread _zm_weap_one_inch_punch::one_inch_punch_melee_attack();
 	m_reward stoploopsound(0.1);
 	player playsound("zmb_powerup_grabbed");
 	m_reward delete();
 	player thread one_inch_punch_watch_for_death(s_stat);
-	return 1;
+	return true;
 }
 
 /*
@@ -516,25 +516,25 @@ function reward_beacon(player, s_stat)
 {
 	m_reward = spawn("script_model", self.origin);
 	m_reward.angles = self.angles + vectorscale((0, 1, 0), 180);
-	str_model = getweaponmodel(level.var_25ef5fab);
+	str_model = getweaponmodel(level.w_beacon);
 	m_reward setmodel(str_model);
 	m_reward playsound("zmb_spawn_powerup");
 	m_reward playloopsound("zmb_spawn_powerup_loop", 0.5);
 	util::wait_network_frame();
 	if(!zm_challenges_tomb::reward_rise_and_grab(m_reward, 50, 2, 2, 10))
 	{
-		return 0;
+		return false;
 	}
-	player zm_weapons::weapon_give(level.var_25ef5fab);
-	if(isdefined(level.zombie_include_weapons[level.var_25ef5fab]) & !level.zombie_include_weapons[level.var_25ef5fab])
+	player zm_weapons::weapon_give(level.w_beacon);
+	if(isdefined(level.zombie_include_weapons[level.w_beacon]) & !level.zombie_include_weapons[level.w_beacon])
 	{
-		level.zombie_include_weapons[level.var_25ef5fab] = 1;
-		level.zombie_weapons[level.var_25ef5fab].is_in_box = 1;
+		level.zombie_include_weapons[level.w_beacon] = 1;
+		level.zombie_weapons[level.w_beacon].is_in_box = 1;
 	}
 	m_reward stoploopsound(0.1);
 	player playsound("zmb_powerup_grabbed");
 	m_reward delete();
-	return 1;
+	return true;
 }
 
 /*

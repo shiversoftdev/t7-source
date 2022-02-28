@@ -29,22 +29,22 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
-	function_1e926b47();
+	initzmgenesisbehaviorsandasm();
 	setdvar("scr_zm_use_code_enemy_selection", 0);
-	level.closest_player_override = &function_379dfb9b;
+	level.closest_player_override = &genesis_closest_player;
 	level.pathdist_type = 2;
-	level.custom_rise_func = &function_f05120b4;
-	level.zm_custom_spawn_location_selection = &function_f95a87ae;
-	level.should_zigzag = &function_3a606a5c;
+	level.custom_rise_func = &genesis_custom_rise_func;
+	level.zm_custom_spawn_location_selection = &genesis_custom_spawn_location_selection;
+	level.should_zigzag = &genesis_should_zigzag;
 	level.validate_on_navmesh = 1;
 	level thread update_closest_player();
 	level thread function_68528574();
 	spawner::add_archetype_spawn_function("zombie", &function_e0c0cb69);
 	spawner::add_archetype_spawn_function("spider", &function_6c5e4588);
 	callback::on_spawned(&function_a11812c);
-	level.octobomb_targets = &function_db88b942;
+	level.octobomb_targets = &genesis_octobomb_targets;
 }
 
 /*
@@ -56,7 +56,7 @@ autoexec function init()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_68528574()
+function private function_68528574()
 {
 	level.var_a397a77 = [];
 	level.var_a397a77[level.var_a397a77.size] = "start_island";
@@ -66,14 +66,14 @@ private function function_68528574()
 	level.var_a397a77[level.var_a397a77.size] = "asylum_island";
 	level.var_a397a77[level.var_a397a77.size] = "prison_island";
 	level.var_15ba7eb8 = [];
-	foreach(var_7ca2abe5, island in level.var_a397a77)
+	foreach(island in level.var_a397a77)
 	{
 		level.var_15ba7eb8[level.var_15ba7eb8.size] = getent(island, "targetname");
 	}
 }
 
 /*
-	Name: function_1e926b47
+	Name: initzmgenesisbehaviorsandasm
 	Namespace: zm_genesis_zombie
 	Checksum: 0xD7518B
 	Offset: 0x7A8
@@ -81,9 +81,9 @@ private function function_68528574()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_1e926b47()
+function private initzmgenesisbehaviorsandasm()
 {
-	animationstatenetwork::registeranimationmocomp("mocomp_teleport_traversal@zombie", &function_5683b5d5, undefined, undefined);
+	animationstatenetwork::registeranimationmocomp("mocomp_teleport_traversal@zombie", &teleporttraversalmocompstart, undefined, undefined);
 	behaviortreenetworkutility::registerbehaviortreescriptapi("shouldMoveLowg", &shouldmovelowg);
 }
 
@@ -110,7 +110,7 @@ function shouldmovelowg(entity)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_6c5e4588()
+function private function_6c5e4588()
 {
 	self thread zm::update_zone_name();
 	self.can_reach_enemy = &function_2f50c929;
@@ -125,7 +125,7 @@ private function function_6c5e4588()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_2f50c929()
+function private function_2f50c929()
 {
 	if(isdefined(self.enemy) && isdefined(self.enemy.zone_name))
 	{
@@ -135,11 +135,11 @@ private function function_2f50c929()
 			var_be94e0a7 = self.enemy.zone_name == "apothicon_interior_zone";
 			if(var_51042e52 != var_be94e0a7)
 			{
-				return 0;
+				return false;
 			}
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -151,7 +151,7 @@ private function function_2f50c929()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_e0c0cb69()
+function private function_e0c0cb69()
 {
 	self thread function_2fa8f151();
 	self thread function_bb062ca5();
@@ -167,13 +167,13 @@ private function function_e0c0cb69()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_a11812c()
+function private function_a11812c()
 {
 	self thread function_dc84c8cc();
 }
 
 /*
-	Name: function_db88b942
+	Name: genesis_octobomb_targets
 	Namespace: zm_genesis_zombie
 	Checksum: 0xEA2B5116
 	Offset: 0x9A0
@@ -181,10 +181,10 @@ private function function_a11812c()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_db88b942(targets)
+function private genesis_octobomb_targets(targets)
 {
 	zombies = getactorteamarray(level.zombie_team);
-	foreach(var_be7aea1f, zombie in zombies)
+	foreach(zombie in zombies)
 	{
 		if(zombie.archetype == "keeper" || zombie.archetype == "apothicon_fury")
 		{
@@ -224,7 +224,7 @@ function function_dc84c8cc()
 	while(isdefined(self))
 	{
 		self.var_a3d40b8 = undefined;
-		foreach(var_cd41ef9, volume in level.var_15ba7eb8)
+		foreach(volume in level.var_15ba7eb8)
 		{
 			if(self istouching(volume))
 			{
@@ -278,7 +278,7 @@ function function_2fa8f151()
 	while(isdefined(self))
 	{
 		self.var_a3d40b8 = undefined;
-		foreach(var_f055c3f7, volume in level.var_15ba7eb8)
+		foreach(volume in level.var_15ba7eb8)
 		{
 			if(self istouching(volume))
 			{
@@ -313,7 +313,7 @@ function function_bb062ca5()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_1108488e()
+function private function_1108488e()
 {
 	traversal = self.traversal;
 	speedboost = 0;
@@ -321,19 +321,22 @@ private function function_1108488e()
 	{
 		speedboost = 32;
 	}
-	else if(traversal.abslengthtoend > 120)
+	else
 	{
-		speedboost = 16;
-	}
-	else if(traversal.abslengthtoend > 80 || traversal.absheighttoend > 80)
-	{
-		speedboost = 8;
+		if(traversal.abslengthtoend > 120)
+		{
+			speedboost = 16;
+		}
+		else if(traversal.abslengthtoend > 80 || traversal.absheighttoend > 80)
+		{
+			speedboost = 8;
+		}
 	}
 	return speedboost;
 }
 
 /*
-	Name: function_5683b5d5
+	Name: teleporttraversalmocompstart
 	Namespace: zm_genesis_zombie
 	Checksum: 0x38147028
 	Offset: 0xF10
@@ -341,7 +344,7 @@ private function function_1108488e()
 	Parameters: 5
 	Flags: Linked
 */
-function function_5683b5d5(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function teleporttraversalmocompstart(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	entity.is_teleporting = 1;
 	entity orientmode("face angle", entity.angles[1]);
@@ -369,15 +372,15 @@ function function_ca420408(player)
 {
 	if(isdefined(self.b_ignore_cleanup) && self.b_ignore_cleanup)
 	{
-		return 1;
+		return true;
 	}
 	if(isdefined(player.b_teleporting) && player.b_teleporting)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(player.var_a393601c) && player.var_a393601c)
 	{
-		return 0;
+		return false;
 	}
 	var_bc4ca8d7 = 0;
 	var_85d379f2 = 0;
@@ -407,21 +410,21 @@ function function_ca420408(player)
 	}
 	if(var_bc4ca8d7 && !var_85d379f2)
 	{
-		return 0;
+		return false;
 	}
 	if(!var_bc4ca8d7 && var_85d379f2)
 	{
-		return 0;
+		return false;
 	}
 	if(player_in_apothicon && !var_a70fdedb)
 	{
-		return 0;
+		return false;
 	}
 	if(!player_in_apothicon && var_a70fdedb)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -433,14 +436,14 @@ function function_ca420408(player)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_f01c3337(players)
+function private function_f01c3337(players)
 {
 	if(isdefined(self.last_closest_player) && (isdefined(self.last_closest_player.am_i_valid) && self.last_closest_player.am_i_valid) && self function_ca420408(self.last_closest_player))
 	{
 		return;
 	}
 	self.need_closest_player = 1;
-	foreach(var_5a41a3cd, player in players)
+	foreach(player in players)
 	{
 		if(self function_ca420408(player))
 		{
@@ -452,7 +455,7 @@ private function function_f01c3337(players)
 }
 
 /*
-	Name: function_f05120b4
+	Name: genesis_custom_rise_func
 	Namespace: zm_genesis_zombie
 	Checksum: 0x88562F39
 	Offset: 0x1318
@@ -460,7 +463,7 @@ private function function_f01c3337(players)
 	Parameters: 1
 	Flags: Linked
 */
-function function_f05120b4(s_spot)
+function genesis_custom_rise_func(s_spot)
 {
 	str_anim = "ai_zombie_traverse_ground_climbout_fast";
 	if(isdefined(s_spot.speed))
@@ -473,7 +476,7 @@ function function_f05120b4(s_spot)
 }
 
 /*
-	Name: function_379dfb9b
+	Name: genesis_closest_player
 	Namespace: zm_genesis_zombie
 	Checksum: 0x7EA00C02
 	Offset: 0x13F0
@@ -481,10 +484,10 @@ function function_f05120b4(s_spot)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_379dfb9b(origin, players)
+function private genesis_closest_player(origin, players)
 {
 	keepers = getactorteamarray("allies");
-	foreach(var_27af3274, keeper in keepers)
+	foreach(keeper in keepers)
 	{
 		if(isdefined(keeper.allow_zombie_to_target_ai) && keeper.allow_zombie_to_target_ai)
 		{
@@ -576,14 +579,14 @@ private function function_379dfb9b(origin, players)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function update_closest_player()
+function private update_closest_player()
 {
 	level waittill(#"start_of_round");
 	while(true)
 	{
 		reset_closest_player = 1;
 		zombies = getactorteamarray(level.zombie_team);
-		foreach(var_2812fa03, zombie in zombies)
+		foreach(zombie in zombies)
 		{
 			if(isdefined(zombie.need_closest_player) && zombie.need_closest_player)
 			{
@@ -593,7 +596,7 @@ private function update_closest_player()
 		}
 		if(reset_closest_player)
 		{
-			foreach(var_cf7e0e41, zombie in zombies)
+			foreach(zombie in zombies)
 			{
 				if(isdefined(zombie.need_closest_player))
 				{
@@ -606,7 +609,7 @@ private function update_closest_player()
 }
 
 /*
-	Name: function_f95a87ae
+	Name: genesis_custom_spawn_location_selection
 	Namespace: zm_genesis_zombie
 	Checksum: 0xC197807
 	Offset: 0x1938
@@ -614,7 +617,7 @@ private function update_closest_player()
 	Parameters: 1
 	Flags: Linked
 */
-function function_f95a87ae(a_spots)
+function genesis_custom_spawn_location_selection(a_spots)
 {
 	if(math::cointoss())
 	{
@@ -649,13 +652,16 @@ function function_f95a87ae(a_spots)
 		{
 			s_spot = array::random(var_b008ef9a);
 		}
-		else if(var_e8c67fc0.size)
-		{
-			s_spot = array::random(var_e8c67fc0);
-		}
 		else
 		{
-			s_spot = array::random(a_spots);
+			if(var_e8c67fc0.size)
+			{
+				s_spot = array::random(var_e8c67fc0);
+			}
+			else
+			{
+				s_spot = array::random(a_spots);
+			}
 		}
 	}
 	else
@@ -666,7 +672,7 @@ function function_f95a87ae(a_spots)
 }
 
 /*
-	Name: function_3a606a5c
+	Name: genesis_should_zigzag
 	Namespace: zm_genesis_zombie
 	Checksum: 0xEF703AE
 	Offset: 0x1BB8
@@ -674,11 +680,11 @@ function function_f95a87ae(a_spots)
 	Parameters: 0
 	Flags: Linked
 */
-function function_3a606a5c()
+function genesis_should_zigzag()
 {
 	if(isdefined(self.var_b6b1080c) && self.var_b6b1080c)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.var_a3d40b8))
 	{
@@ -687,11 +693,11 @@ function function_3a606a5c()
 		{
 			if(self.var_a3d40b8 != player.var_a3d40b8)
 			{
-				return 0;
+				return false;
 			}
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*

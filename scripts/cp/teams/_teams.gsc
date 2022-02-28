@@ -19,7 +19,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("teams", &__init__, undefined, undefined);
 }
@@ -154,7 +154,7 @@ function track_played_time()
 {
 	self endon(#"disconnect");
 	self endon(#"killplayedtimemonitor");
-	foreach(var_68124ee2, team in level.teams)
+	foreach(team in level.teams)
 	{
 		self.timeplayed[team] = 0;
 	}
@@ -238,7 +238,7 @@ function update_player_times()
 function update_played_time()
 {
 	pixbeginevent("updatePlayedTime");
-	foreach(var_99630e9d, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(self.timeplayed[team])
 		{
@@ -262,7 +262,7 @@ function update_played_time()
 	{
 		return;
 	}
-	foreach(var_984e11ad, team in level.teams)
+	foreach(team in level.teams)
 	{
 		self.timeplayed[team] = 0;
 	}
@@ -361,11 +361,11 @@ function count_players()
 {
 	players = level.players;
 	playercounts = [];
-	foreach(var_86ffd44, team in level.teams)
+	foreach(team in level.teams)
 	{
 		playercounts[team] = 0;
 	}
-	foreach(var_14fff434, player in level.players)
+	foreach(player in level.players)
 	{
 		if(player == self)
 		{
@@ -392,7 +392,7 @@ function count_players()
 function track_free_played_time()
 {
 	self endon(#"disconnect");
-	foreach(var_89860180, team in level.teams)
+	foreach(team in level.teams)
 	{
 		self.timeplayed[team] = 0;
 	}
@@ -510,7 +510,7 @@ function get_flag_icon(teamref)
 */
 function getenemyteam(player_team)
 {
-	foreach(var_b2bd7722, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(team == player_team)
 		{

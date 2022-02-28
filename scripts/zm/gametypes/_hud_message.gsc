@@ -104,58 +104,76 @@ function teamoutcomenotify(winner, isround, endreasontext)
 		outcometitle.color = (1, 1, 1);
 		winner = "allies";
 	}
-	else if(winner == "intermission")
-	{
-		outcometitle settext(game["strings"]["intermission"]);
-		outcometitle.color = (1, 1, 1);
-		winner = "allies";
-	}
-	else if(winner == "roundend")
-	{
-		outcometitle settext(game["strings"]["roundend"]);
-		outcometitle.color = (1, 1, 1);
-		winner = "allies";
-	}
-	else if(winner == "overtime")
-	{
-		outcometitle settext(game["strings"]["overtime"]);
-		outcometitle.color = (1, 1, 1);
-		winner = "allies";
-	}
-	else if(winner == "tie")
-	{
-		if(isround)
-		{
-			outcometitle settext(game["strings"]["round_draw"]);
-		}
-		else
-		{
-			outcometitle settext(game["strings"]["draw"]);
-		}
-		outcometitle.color = (0.29, 0.61, 0.7);
-		winner = "allies";
-	}
-	else if(isdefined(self.pers["team"]) && winner == team)
-	{
-		if(isround)
-		{
-			outcometitle settext(game["strings"]["round_win"]);
-		}
-		else
-		{
-			outcometitle settext(game["strings"]["victory"]);
-		}
-		outcometitle.color = (0.42, 0.68, 0.46);
-	}
-	else if(isround)
-	{
-		outcometitle settext(game["strings"]["round_loss"]);
-	}
 	else
 	{
-		outcometitle settext(game["strings"]["defeat"]);
+		if(winner == "intermission")
+		{
+			outcometitle settext(game["strings"]["intermission"]);
+			outcometitle.color = (1, 1, 1);
+			winner = "allies";
+		}
+		else
+		{
+			if(winner == "roundend")
+			{
+				outcometitle settext(game["strings"]["roundend"]);
+				outcometitle.color = (1, 1, 1);
+				winner = "allies";
+			}
+			else
+			{
+				if(winner == "overtime")
+				{
+					outcometitle settext(game["strings"]["overtime"]);
+					outcometitle.color = (1, 1, 1);
+					winner = "allies";
+				}
+				else
+				{
+					if(winner == "tie")
+					{
+						if(isround)
+						{
+							outcometitle settext(game["strings"]["round_draw"]);
+						}
+						else
+						{
+							outcometitle settext(game["strings"]["draw"]);
+						}
+						outcometitle.color = (0.29, 0.61, 0.7);
+						winner = "allies";
+					}
+					else
+					{
+						if(isdefined(self.pers["team"]) && winner == team)
+						{
+							if(isround)
+							{
+								outcometitle settext(game["strings"]["round_win"]);
+							}
+							else
+							{
+								outcometitle settext(game["strings"]["victory"]);
+							}
+							outcometitle.color = (0.42, 0.68, 0.46);
+						}
+						else
+						{
+							if(isround)
+							{
+								outcometitle settext(game["strings"]["round_loss"]);
+							}
+							else
+							{
+								outcometitle settext(game["strings"]["defeat"]);
+							}
+							outcometitle.color = (0.73, 0.29, 0.19);
+						}
+					}
+				}
+			}
+		}
 	}
-	outcometitle.color = (0.73, 0.29, 0.19);
 	outcometext settext(endreasontext);
 	outcometitle setcod7decodefx(200, duration, 600);
 	outcometext setpulsefx(100, duration, 1000);
@@ -171,7 +189,7 @@ function teamoutcomenotify(winner, isround, endreasontext)
 	teamicons[team] fadeovertime(0.5);
 	teamicons[team].alpha = 1;
 	currentx = currentx + iconspacing;
-	foreach(var_a8b601f9, enemyteam in level.teams)
+	foreach(enemyteam in level.teams)
 	{
 		if(team == enemyteam)
 		{
@@ -203,7 +221,7 @@ function teamoutcomenotify(winner, isround, endreasontext)
 	teamscores[team].hidewheninmenu = 0;
 	teamscores[team].archived = 0;
 	teamscores[team] setpulsefx(100, duration, 1000);
-	foreach(var_71be5dcc, enemyteam in level.teams)
+	foreach(enemyteam in level.teams)
 	{
 		if(team == enemyteam)
 		{
@@ -341,23 +359,32 @@ function outcomenotify(winner, isroundend, endreasontext)
 	{
 		outcometitle settext(game["strings"]["game_over"]);
 	}
-	else if(isdefined(players[1]) && players[0].score == players[1].score && players[0].deaths == players[1].deaths && (self == players[0] || self == players[1]))
-	{
-		outcometitle settext(game["strings"]["tie"]);
-	}
-	else if(isdefined(players[2]) && players[0].score == players[2].score && players[0].deaths == players[2].deaths && self == players[2])
-	{
-		outcometitle settext(game["strings"]["tie"]);
-	}
-	else if(isdefined(players[0]) && self == players[0])
-	{
-		outcometitle settext(game["strings"]["victory"]);
-		outcometitle.color = (0.42, 0.68, 0.46);
-	}
 	else
 	{
-		outcometitle settext(game["strings"]["defeat"]);
-		outcometitle.color = (0.73, 0.29, 0.19);
+		if(isdefined(players[1]) && players[0].score == players[1].score && players[0].deaths == players[1].deaths && (self == players[0] || self == players[1]))
+		{
+			outcometitle settext(game["strings"]["tie"]);
+		}
+		else
+		{
+			if(isdefined(players[2]) && players[0].score == players[2].score && players[0].deaths == players[2].deaths && self == players[2])
+			{
+				outcometitle settext(game["strings"]["tie"]);
+			}
+			else
+			{
+				if(isdefined(players[0]) && self == players[0])
+				{
+					outcometitle settext(game["strings"]["victory"]);
+					outcometitle.color = (0.42, 0.68, 0.46);
+				}
+				else
+				{
+					outcometitle settext(game["strings"]["defeat"]);
+					outcometitle.color = (0.73, 0.29, 0.19);
+				}
+			}
+		}
 	}
 	outcometitle.glowalpha = 1;
 	outcometitle.hidewheninmenu = 0;
@@ -473,20 +500,26 @@ function wageroutcomenotify(winner, endreasontext)
 		outcometitle.color = (1, 1, 0);
 		outcometitle.glowcolor = (1, 0, 0);
 	}
-	else if(isdefined(level.dontcalcwagerwinnings) && level.dontcalcwagerwinnings == 1)
-	{
-		outcometitle settext(game["strings"]["wager_topwinners"]);
-		outcometitle.color = (0.42, 0.68, 0.46);
-	}
-	else if(isdefined(self.wagerwinnings) && self.wagerwinnings > 0)
-	{
-		outcometitle settext(game["strings"]["wager_inthemoney"]);
-		outcometitle.color = (0.42, 0.68, 0.46);
-	}
 	else
 	{
-		outcometitle settext(game["strings"]["wager_loss"]);
-		outcometitle.color = (0.73, 0.29, 0.19);
+		if(isdefined(level.dontcalcwagerwinnings) && level.dontcalcwagerwinnings == 1)
+		{
+			outcometitle settext(game["strings"]["wager_topwinners"]);
+			outcometitle.color = (0.42, 0.68, 0.46);
+		}
+		else
+		{
+			if(isdefined(self.wagerwinnings) && self.wagerwinnings > 0)
+			{
+				outcometitle settext(game["strings"]["wager_inthemoney"]);
+				outcometitle.color = (0.42, 0.68, 0.46);
+			}
+			else
+			{
+				outcometitle settext(game["strings"]["wager_loss"]);
+				outcometitle.color = (0.73, 0.29, 0.19);
+			}
+		}
 	}
 	outcometitle.glowalpha = 1;
 	outcometitle.hidewheninmenu = 0;
@@ -655,32 +688,41 @@ function teamwageroutcomenotify(winner, isroundend, endreasontext)
 		outcometitle.color = (1, 1, 1);
 		winner = "allies";
 	}
-	else if(winner == "overtime")
+	else
 	{
-		outcometitle settext(game["strings"]["overtime"]);
-		outcometitle.color = (1, 1, 1);
-	}
-	else if(isdefined(self.pers["team"]) && winner == team)
-	{
-		if(isroundend)
+		if(winner == "overtime")
 		{
-			outcometitle settext(game["strings"]["round_win"]);
+			outcometitle settext(game["strings"]["overtime"]);
+			outcometitle.color = (1, 1, 1);
 		}
 		else
 		{
-			outcometitle settext(game["strings"]["victory"]);
+			if(isdefined(self.pers["team"]) && winner == team)
+			{
+				if(isroundend)
+				{
+					outcometitle settext(game["strings"]["round_win"]);
+				}
+				else
+				{
+					outcometitle settext(game["strings"]["victory"]);
+				}
+				outcometitle.color = (0.42, 0.68, 0.46);
+			}
+			else
+			{
+				if(isroundend)
+				{
+					outcometitle settext(game["strings"]["round_loss"]);
+				}
+				else
+				{
+					outcometitle settext(game["strings"]["defeat"]);
+				}
+				outcometitle.color = (0.73, 0.29, 0.19);
+			}
 		}
-		outcometitle.color = (0.42, 0.68, 0.46);
 	}
-	else if(isroundend)
-	{
-		outcometitle settext(game["strings"]["round_loss"]);
-	}
-	else
-	{
-		outcometitle settext(game["strings"]["defeat"]);
-	}
-	outcometitle.color = (0.73, 0.29, 0.19);
 	if(!isdefined(level.dontshowendreason) || !level.dontshowendreason)
 	{
 		outcometext settext(endreasontext);
@@ -696,7 +738,7 @@ function teamwageroutcomenotify(winner, isroundend, endreasontext)
 	teamicons[team].alpha = 0;
 	teamicons[team] fadeovertime(0.5);
 	teamicons[team].alpha = 1;
-	foreach(var_efa8e21e, enemyteam in level.teams)
+	foreach(enemyteam in level.teams)
 	{
 		if(team == enemyteam)
 		{
@@ -720,7 +762,7 @@ function teamwageroutcomenotify(winner, isroundend, endreasontext)
 	teamscores[team].hidewheninmenu = 0;
 	teamscores[team].archived = 0;
 	teamscores[team] setpulsefx(100, duration, 1000);
-	foreach(var_26a0864b, enemyteam in level.teams)
+	foreach(enemyteam in level.teams)
 	{
 		if(team == enemyteam)
 		{
@@ -785,14 +827,14 @@ function resetoutcomenotify(hudelemlist1, hudelemlist2, hudelem3, hudelem4, hude
 	destroyhudelem(hudelem10);
 	if(isdefined(hudelemlist1))
 	{
-		foreach(var_9e8dd350, elem in hudelemlist1)
+		foreach(elem in hudelemlist1)
 		{
 			destroyhudelem(elem);
 		}
 	}
 	if(isdefined(hudelemlist2))
 	{
-		foreach(var_cea1a698, elem in hudelemlist2)
+		foreach(elem in hudelemlist2)
 		{
 			destroyhudelem(elem);
 		}

@@ -25,7 +25,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_weap_staff_fire", &__init__, undefined, undefined);
 }
@@ -46,8 +46,8 @@ function __init__()
 	callback::on_spawned(&onplayerspawned);
 	zm_spawner::register_zombie_damage_callback(&staff_fire_zombie_damage_response);
 	zm_spawner::register_zombie_death_event_callback(&staff_fire_death_event);
-	level.var_32bc7eba = getweapon("staff_fire");
-	level.var_a7e44c35 = getweapon("staff_fire_upgraded");
+	level.w_staff_fire = getweapon("staff_fire");
+	level.w_staff_fire_upgraded = getweapon("staff_fire_upgraded");
 }
 
 /*
@@ -196,7 +196,7 @@ function fire_staff_area_of_effect(e_attacker, w_weapon)
 		a_targets = util::get_array_of_closest(v_pos, a_targets, undefined, undefined, aoe_radius);
 		wait(n_step_size);
 		n_alive_time = n_alive_time - n_step_size;
-		foreach(var_c7670038, e_target in a_targets)
+		foreach(e_target in a_targets)
 		{
 			if(isdefined(e_target) && isalive(e_target))
 			{
@@ -272,7 +272,7 @@ function fire_additional_shots(w_weapon)
 	for(i = 1; i <= n_shots; i++)
 	{
 		wait(0.35);
-		if(isdefined(self) && self getcurrentweapon() == level.var_a7e44c35)
+		if(isdefined(self) && self getcurrentweapon() == level.w_staff_fire_upgraded)
 		{
 			v_player_angles = vectortoangles(self getweaponforwarddir());
 			n_player_pitch = v_player_angles[0];
@@ -304,9 +304,9 @@ function staff_fire_zombie_damage_response(mod, hit_location, hit_origin, player
 	if(self is_staff_fire_damage(self.damageweapon) && mod != "MOD_MELEE")
 	{
 		self thread staff_fire_zombie_hit_response_internal(mod, self.damageweapon, player, amount);
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

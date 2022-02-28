@@ -155,7 +155,7 @@ function dark_battle_main()
 	level.ai_hendricks waittill(#"goal");
 	level thread objectives::breadcrumb("dark_battle_breadcrumb_4");
 	callback::remove_on_ai_killed(&function_e2b1615a);
-	foreach(var_82b38790, player in level.players)
+	foreach(player in level.players)
 	{
 		if(isalive(player))
 		{
@@ -283,7 +283,7 @@ function function_4d2734fa()
 	{
 		b_clear = 1;
 		a_ai = spawner::get_ai_group_ai("aig_darkroom");
-		foreach(var_8e1346e5, ai in a_ai)
+		foreach(ai in a_ai)
 		{
 			if(ai istouching(var_5ca9a217))
 			{
@@ -524,18 +524,18 @@ function function_c2326e34()
 	level endon(#"hash_c63a5f38");
 	var_94ace873 = getentarray("dark_wall_logo_off", "targetname");
 	var_cd29e581 = getentarray("dark_wall_logo_on", "targetname");
-	foreach(var_4f001353, e_sign in var_94ace873)
+	foreach(e_sign in var_94ace873)
 	{
 		e_sign ghost();
 	}
 	level waittill(#"hash_400d768d");
 	exploder::stop_exploder("light_exploder_darkbattle");
 	level util::clientnotify("sndDBB");
-	foreach(var_bfaf3862, e_sign in var_cd29e581)
+	foreach(e_sign in var_cd29e581)
 	{
 		e_sign ghost();
 	}
-	foreach(var_671a4ca0, e_sign in var_94ace873)
+	foreach(e_sign in var_94ace873)
 	{
 		e_sign show();
 	}
@@ -668,7 +668,7 @@ function function_11c60e29(s_vo)
 */
 function dark_battle_behavior_handler()
 {
-	foreach(var_154794f8, player in level.players)
+	foreach(player in level.players)
 	{
 		player thread dark_battle_player_firing_check();
 	}
@@ -810,7 +810,7 @@ function dark_battle_shots_fired(n_chance)
 	self endon(#"death");
 	self endon(#"hash_bd74d007");
 	a_enemies = getentarray("darkroom_enemy", "script_noteworthy");
-	foreach(var_4b0f018a, cur_enemy in a_enemies)
+	foreach(cur_enemy in a_enemies)
 	{
 		if(isalive(cur_enemy) && n_chance > randomfloatrange(0, 1))
 		{
@@ -854,7 +854,7 @@ function fire_at_location(e_target, duration = 5)
 	self thread ai::stop_shoot_at_target();
 	self.firing_at_something = 0;
 	a_nodes = getcovernodearray(self.origin, 192);
-	foreach(var_8f2ca8b6, node in a_nodes)
+	foreach(node in a_nodes)
 	{
 		if(!isnodeoccupied(node))
 		{
@@ -1107,7 +1107,7 @@ function vtol_tackle_main(b_starting)
 	level thread vtol_tackle_enemies();
 	level waittill(#"hash_147f8c7");
 	level cp_prologue_util::spawn_coop_player_replacement("skipto_vtol_tackle_ai");
-	foreach(var_c7e59655, ai_ally in level.var_681ad194)
+	foreach(ai_ally in level.var_681ad194)
 	{
 		ai_ally thread hangar::ai_teleport(("ally_0" + ai_ally.var_a89679b6) + "_vtol_tackle_node");
 		ai_ally function_b243f34();
@@ -1354,7 +1354,7 @@ function ai_setgoal(ai_node)
 function dark_battle_cleanup()
 {
 	a_ai_db_guys = getaiarray("dark_battle_guy", "targetname");
-	foreach(var_722bc1f3, ai_guy in a_ai_db_guys)
+	foreach(ai_guy in a_ai_db_guys)
 	{
 		if(isalive(ai_guy))
 		{

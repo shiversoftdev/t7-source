@@ -35,7 +35,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	function_e84ffe9c();
 	level.margwa_spawners = getentarray("zombie_margwa_spawner", "script_noteworthy");
@@ -81,7 +81,7 @@ function function_4092fa4d()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_e84ffe9c()
+function private function_e84ffe9c()
 {
 	behaviortreenetworkutility::registerbehaviortreescriptapi("zmMargwaTargetService", &function_c0fb414e);
 	behaviortreenetworkutility::registerbehaviortreescriptapi("zmMargwaTeleportService", &function_5d11b2dc);
@@ -109,7 +109,7 @@ private function function_e84ffe9c()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_c0fb414e(entity)
+function private function_c0fb414e(entity)
 {
 	if(isdefined(entity.ignoreall) && entity.ignoreall)
 	{
@@ -160,24 +160,24 @@ private function function_c0fb414e(entity)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function function_f21a8d83(origin, radius, boundarydist)
+function private function_f21a8d83(origin, radius, boundarydist)
 {
 	pos = getclosestpointonnavmesh(origin, 64, 30);
 	if(isdefined(pos))
 	{
 		self setgoal(pos);
 		self.var_baa0a16c = pos;
-		return 1;
+		return true;
 	}
 	pos = getclosestpointonnavmesh(origin, 2048, 30);
 	if(isdefined(pos))
 	{
 		self setgoal(pos);
 		self.var_baa0a16c = pos;
-		return 1;
+		return true;
 	}
 	self setgoal(self.origin);
-	return 0;
+	return false;
 }
 
 /*
@@ -189,7 +189,7 @@ private function function_f21a8d83(origin, radius, boundarydist)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_5d11b2dc(entity)
+function private function_5d11b2dc(entity)
 {
 	if(isdefined(entity.favoriteenemy))
 	{
@@ -198,12 +198,12 @@ private function function_5d11b2dc(entity)
 			var_d3443466 = [[ level.o_zod_train ]]->function_3e62f527();
 			if(isdefined(entity.locked_in_train) && entity.locked_in_train && (!(isdefined(var_d3443466) && var_d3443466)))
 			{
-				return 0;
+				return false;
 			}
 		}
 		if(isdefined(entity.favoriteenemy.b_teleporting) && entity.favoriteenemy.b_teleporting)
 		{
-			return 0;
+			return false;
 		}
 	}
 	if(!(isdefined(entity.needteleportout) && entity.needteleportout) && (!(isdefined(entity.isteleporting) && entity.isteleporting)) && isdefined(entity.favoriteenemy))
@@ -243,12 +243,12 @@ private function function_5d11b2dc(entity)
 					wait_locations = array::randomize(wait_locations);
 					entity.needteleportout = 1;
 					entity.teleportpos = wait_locations[0].origin;
-					return 1;
+					return true;
 				}
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -260,11 +260,11 @@ private function function_5d11b2dc(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_6cc20647(entity)
+function private function_6cc20647(entity)
 {
 	if(isdefined(entity.isteleporting) && entity.isteleporting)
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(entity.zone_name))
 	{
@@ -275,7 +275,7 @@ private function function_6cc20647(entity)
 		entity.previous_zone_name = entity.zone_name;
 		entity.zone_name = zm_utility::get_current_zone();
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -287,14 +287,14 @@ private function function_6cc20647(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_fa29651d(entity)
+function private function_fa29651d(entity)
 {
 	if(entity.zombie_move_speed == "walk")
 	{
-		return 0;
+		return false;
 	}
 	zombies = zombie_utility::get_round_enemy_array();
-	foreach(var_51a3be6c, zombie in zombies)
+	foreach(zombie in zombies)
 	{
 		distsq = distancesquared(entity.origin, zombie.origin);
 		if(distsq < 2304)
@@ -324,16 +324,16 @@ private function function_fa29651d(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_d59056ec(entity)
+function private function_d59056ec(entity)
 {
 	if(isdefined(entity.destroy_octobomb))
 	{
 		entity setgoal(entity.destroy_octobomb.origin);
-		return 1;
+		return true;
 	}
 	if(isdefined(level.octobombs))
 	{
-		foreach(var_f8da90eb, octobomb in level.octobombs)
+		foreach(octobomb in level.octobombs)
 		{
 			if(isdefined(octobomb))
 			{
@@ -342,12 +342,12 @@ private function function_d59056ec(entity)
 				{
 					entity.destroy_octobomb = octobomb;
 					entity setgoal(octobomb.origin);
-					return 1;
+					return true;
 				}
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -359,19 +359,19 @@ private function function_d59056ec(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_604404(entity)
+function private function_604404(entity)
 {
 	if(isdefined(self.react))
 	{
-		foreach(var_7d59d21f, react in self.react)
+		foreach(react in self.react)
 		{
 			if(react == entity)
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -383,7 +383,7 @@ private function function_604404(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_e92d3bb1(entity)
+function private function_e92d3bb1(entity)
 {
 	if(!isdefined(self.react))
 	{
@@ -405,11 +405,11 @@ function function_6312be59(entity)
 {
 	if(!(isdefined(entity.canstun) && entity.canstun))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(level.vortex_manager) && isdefined(level.vortex_manager.a_active_vorticies))
 	{
-		foreach(var_e6a832a7, vortex in level.vortex_manager.a_active_vorticies)
+		foreach(vortex in level.vortex_manager.a_active_vorticies)
 		{
 			if(!vortex function_604404(entity))
 			{
@@ -423,12 +423,12 @@ function function_6312be59(entity)
 						blackboard::setblackboardattribute(entity, "_zombie_damageweapon_type", "packed");
 					}
 					vortex function_e92d3bb1(entity);
-					return 1;
+					return true;
 				}
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -440,7 +440,7 @@ function function_6312be59(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_cbdc3798(entity)
+function private function_cbdc3798(entity)
 {
 	if(isdefined(entity.destroy_octobomb))
 	{
@@ -462,7 +462,7 @@ private function function_cbdc3798(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_ec97fb1e(entity)
+function private function_ec97fb1e(entity)
 {
 	if(isdefined(entity.destroy_octobomb))
 	{
@@ -484,22 +484,22 @@ private function function_ec97fb1e(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_f0e8cb2d(entity)
+function private function_f0e8cb2d(entity)
 {
 	if(!isdefined(entity.destroy_octobomb))
 	{
-		return 0;
+		return false;
 	}
 	if(distancesquared(entity.origin, entity.destroy_octobomb.origin) > 16384)
 	{
-		return 0;
+		return false;
 	}
 	yaw = abs(zombie_utility::getyawtospot(entity.destroy_octobomb.origin));
 	if(yaw > 45)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -511,32 +511,35 @@ private function function_f0e8cb2d(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_1c88d468(entity)
+function private function_1c88d468(entity)
 {
 	if(isdefined(entity.needteleportout) && entity.needteleportout)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(entity.destroy_octobomb))
 	{
 		if(function_f0e8cb2d(entity))
 		{
-			return 0;
+			return false;
 		}
 	}
-	else if(function_ec97fb1e(entity))
+	else
 	{
-		return 0;
-	}
-	if(function_cbdc3798(entity))
-	{
-		return 0;
+		if(function_ec97fb1e(entity))
+		{
+			return false;
+		}
+		if(function_cbdc3798(entity))
+		{
+			return false;
+		}
 	}
 	if(entity haspath())
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -548,7 +551,7 @@ private function function_1c88d468(entity)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_9fab0124(entity, asmstatename)
+function private function_9fab0124(entity, asmstatename)
 {
 	animationstatenetworkutility::requeststate(entity, asmstatename);
 	if(!isdefined(entity.var_41294bba))
@@ -567,7 +570,7 @@ private function function_9fab0124(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_c5832338(entity, asmstatename)
+function private function_c5832338(entity, asmstatename)
 {
 	if(!isdefined(entity.destroy_octobomb))
 	{
@@ -589,7 +592,7 @@ private function function_c5832338(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_7b2a3a90(entity, asmstatename)
+function private function_7b2a3a90(entity, asmstatename)
 {
 	if(isdefined(entity.destroy_octobomb))
 	{
@@ -608,7 +611,7 @@ private function function_7b2a3a90(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_cd380e61(entity, asmstatename)
+function private function_cd380e61(entity, asmstatename)
 {
 	animationstatenetworkutility::requeststate(entity, asmstatename);
 	if(!isdefined(entity.swipe_end_time))
@@ -631,7 +634,7 @@ private function function_cd380e61(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_edd2fa77(entity, asmstatename)
+function private function_edd2fa77(entity, asmstatename)
 {
 	if(isdefined(entity.swipe_end_time) && gettime() > entity.swipe_end_time)
 	{
@@ -649,7 +652,7 @@ private function function_edd2fa77(entity, asmstatename)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_7137a16(entity)
+function private function_7137a16(entity)
 {
 	entity.swipe_end_time = undefined;
 	entity function_941cbfc5();
@@ -665,7 +668,7 @@ private function function_7137a16(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_137093c0(entity)
+function private function_137093c0(entity)
 {
 	entity.swipe_end_time = undefined;
 	entity function_941cbfc5();
@@ -680,7 +683,7 @@ private function function_137093c0(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_743b10d2(entity)
+function private function_743b10d2(entity)
 {
 	margwabehavior::margwateleportinterminate(entity);
 	entity.previous_zone_name = entity.zone_name;
@@ -696,7 +699,7 @@ private function function_743b10d2(entity)
 	Parameters: 0
 	Flags: Private
 */
-private function function_271a21d6()
+function private function_271a21d6()
 {
 	self endon(#"death");
 	entity.waiting = 1;
@@ -713,7 +716,7 @@ private function function_271a21d6()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_17627e34()
+function private function_17627e34()
 {
 	self.destroyheadcb = &function_1f53b1a2;
 	self.bodyfallcb = &margwa_bodyfall;
@@ -739,7 +742,7 @@ private function function_17627e34()
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_1f53b1a2(modelhit, attacker)
+function private function_1f53b1a2(modelhit, attacker)
 {
 	if(isplayer(attacker) && (!(isdefined(self.deathpoints_already_given) && self.deathpoints_already_given)) && (!(isdefined(level.var_1f6ca9c8) && level.var_1f6ca9c8)))
 	{
@@ -778,13 +781,13 @@ private function function_1f53b1a2(modelhit, attacker)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function margwa_bodyfall()
+function private margwa_bodyfall()
 {
 	power_up_origin = (self.origin + vectorscale(anglestoforward(self.angles), 32)) + vectorscale((0, 0, 1), 16);
 	if(isdefined(power_up_origin) && (!(isdefined(self.no_powerups) && self.no_powerups)))
 	{
 		var_3bd46762 = [];
-		foreach(var_21d78be8, powerup in level.zombie_powerup_array)
+		foreach(powerup in level.zombie_powerup_array)
 		{
 			if(powerup == "carpenter")
 			{
@@ -810,10 +813,10 @@ private function margwa_bodyfall()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function margwa_head_explosion()
+function private margwa_head_explosion()
 {
 	players = getplayers();
-	foreach(var_c21d909d, player in players)
+	foreach(player in players)
 	{
 		distsq = distancesquared(self.origin, player.origin);
 		if(distsq < 16384)
@@ -923,7 +926,7 @@ function function_5ffc5a7b(e_player, knockdown = 0)
 {
 	if(isdefined(self))
 	{
-		foreach(var_e72b8869, head in self.head)
+		foreach(head in self.head)
 		{
 			if(head margwaserverutils::margwacandamagehead())
 			{
@@ -970,7 +973,7 @@ function function_618bf323()
 			{
 				if(isdefined(self.head))
 				{
-					foreach(var_993e0195, head in self.head)
+					foreach(head in self.head)
 					{
 						if(head.health > 0)
 						{
@@ -994,7 +997,7 @@ function function_618bf323()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_3d56f587()
+function private function_3d56f587()
 {
 	util::wait_network_frame();
 	self clientfield::increment("margwa_fx_spawn");
@@ -1013,7 +1016,7 @@ private function function_3d56f587()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_551e32b4()
+function private function_551e32b4()
 {
 	self.isfrozen = 1;
 	self ghost();
@@ -1030,7 +1033,7 @@ private function function_551e32b4()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_26c35525()
+function private function_26c35525()
 {
 	self.isfrozen = 0;
 	self show();
@@ -1047,10 +1050,10 @@ private function function_26c35525()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_8d578a58()
+function private function_8d578a58()
 {
 	self waittill(#"death", attacker, mod, weapon);
-	foreach(var_565fc6bb, player in level.players)
+	foreach(player in level.players)
 	{
 		if(player.am_i_valid && (!(isdefined(level.var_1f6ca9c8) && level.var_1f6ca9c8)) && (!(isdefined(self.var_2d5d7413) && self.var_2d5d7413)))
 		{
@@ -1070,16 +1073,16 @@ private function function_8d578a58()
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function function_89e37c9b(entity, inflictor, weapon)
+function private function_89e37c9b(entity, inflictor, weapon)
 {
 	if(!(isdefined(entity.candamage) && entity.candamage))
 	{
-		return 0;
+		return false;
 	}
 	var_ddc770da = [];
 	if(isdefined(entity.head))
 	{
-		foreach(var_4c5d7959, head in entity.head)
+		foreach(head in entity.head)
 		{
 			if(head.health > 0 && head.candamage)
 			{
@@ -1092,7 +1095,7 @@ private function function_89e37c9b(entity, inflictor, weapon)
 		view_pos = self getweaponmuzzlepoint();
 		forward_view_angles = self getweaponforwarddir();
 		var_d8748e76 = undefined;
-		foreach(var_48a1a6c8, head in var_ddc770da)
+		foreach(head in var_ddc770da)
 		{
 			head_pos = entity gettagorigin(head.tag);
 			var_b01d89e6 = distancesquared(head_pos, view_pos);
@@ -1119,12 +1122,12 @@ private function function_89e37c9b(entity, inflictor, weapon)
 				if(entity margwaserverutils::margwakillhead(var_d8748e76.model, self))
 				{
 					entity kill(self.origin, undefined, undefined, weapon);
-					return 1;
+					return true;
 				}
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1136,7 +1139,7 @@ private function function_89e37c9b(entity, inflictor, weapon)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_dbd9ba44(entity, weapon)
+function private function_dbd9ba44(entity, weapon)
 {
 	if(isdefined(entity.canstun) && entity.canstun)
 	{
@@ -1153,7 +1156,7 @@ private function function_dbd9ba44(entity, weapon)
 	Parameters: 0
 	Flags: Private
 */
-private function function_aea7f2f4()
+function private function_aea7f2f4()
 {
 	if(isdefined(self.canstun) && self.canstun)
 	{
@@ -1170,7 +1173,7 @@ private function function_aea7f2f4()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_2aa0209c(trap)
+function private function_2aa0209c(trap)
 {
 	if(isdefined(self.isteleporting) && self.isteleporting || (isdefined(self.needteleportout) && self.needteleportout))
 	{
@@ -1194,10 +1197,10 @@ private function function_2aa0209c(trap)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function margwa_smash_attack()
+function private margwa_smash_attack()
 {
 	zombies = zombie_utility::get_round_enemy_array();
-	foreach(var_ad6d5e49, zombie in zombies)
+	foreach(zombie in zombies)
 	{
 		smashpos = self.origin + vectorscale(anglestoforward(self.angles), 60);
 		distsq = distancesquared(smashpos, zombie.origin);
@@ -1218,7 +1221,7 @@ private function margwa_smash_attack()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_941cbfc5()
+function private function_941cbfc5()
 {
 	r = randomintrange(0, 100);
 	if(r < 40)
@@ -1240,7 +1243,7 @@ private function function_941cbfc5()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_f1358c65(zombie)
+function private function_f1358c65(zombie)
 {
 	var_16ce8ab3 = self.origin - zombie.origin;
 	var_e1fcfc7c = vectornormalize((var_16ce8ab3[0], var_16ce8ab3[1], 0));
@@ -1254,31 +1257,34 @@ private function function_f1358c65(zombie)
 		zombie.knockdown_direction = "front";
 		zombie.getup_direction = "getup_back";
 	}
-	else if(dot < 0.5 && dot > -0.5)
+	else
 	{
-		dot = vectordot(var_e1fcfc7c, zombie_right_2d);
-		if(dot > 0)
+		if(dot < 0.5 && dot > -0.5)
 		{
-			zombie.knockdown_direction = "right";
-			if(math::cointoss())
+			dot = vectordot(var_e1fcfc7c, zombie_right_2d);
+			if(dot > 0)
 			{
-				zombie.getup_direction = "getup_back";
+				zombie.knockdown_direction = "right";
+				if(math::cointoss())
+				{
+					zombie.getup_direction = "getup_back";
+				}
+				else
+				{
+					zombie.getup_direction = "getup_belly";
+				}
 			}
 			else
 			{
+				zombie.knockdown_direction = "left";
 				zombie.getup_direction = "getup_belly";
 			}
 		}
 		else
 		{
-			zombie.knockdown_direction = "left";
+			zombie.knockdown_direction = "back";
 			zombie.getup_direction = "getup_belly";
 		}
-	}
-	else
-	{
-		zombie.knockdown_direction = "back";
-		zombie.getup_direction = "getup_belly";
 	}
 }
 
@@ -1291,7 +1297,7 @@ private function function_f1358c65(zombie)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_cdd8baf7()
+function private function_cdd8baf7()
 {
 	/#
 		level flagsys::wait_till("");
@@ -1308,7 +1314,7 @@ private function function_cdd8baf7()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_a2da506b(cmd)
+function private function_a2da506b(cmd)
 {
 	/#
 		players = getplayers();
@@ -1386,7 +1392,7 @@ private function function_a2da506b(cmd)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_a89905c6()
+function private function_a89905c6()
 {
 	/#
 		rate = 1;

@@ -23,7 +23,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_bgb_flavor_hexed", &__init__, undefined, "bgb");
 }
@@ -60,12 +60,12 @@ function event()
 	self endon(#"disconnect");
 	self endon(#"bled_out");
 	self.var_c3a5a8 = [];
-	var_2cf032a6 = self.var_98ba48a2;
-	foreach(var_23359ff6, var_410edbc8 in level.bgb)
+	var_2cf032a6 = self.bgb_pack;
+	foreach(str_bgb, var_410edbc8 in level.bgb)
 	{
 		if(var_410edbc8.consumable == 1)
 		{
-			if(!isinarray(var_2cf032a6, var_23359ff6) && var_23359ff6 != "zm_bgb_flavor_hexed")
+			if(!isinarray(var_2cf032a6, str_bgb) && str_bgb != "zm_bgb_flavor_hexed")
 			{
 				if(!isdefined(self.var_c3a5a8))
 				{
@@ -75,7 +75,7 @@ function event()
 				{
 					self.var_c3a5a8 = array(self.var_c3a5a8);
 				}
-				self.var_c3a5a8[self.var_c3a5a8.size] = var_23359ff6;
+				self.var_c3a5a8[self.var_c3a5a8.size] = str_bgb;
 			}
 		}
 	}

@@ -26,7 +26,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("gadget_roulette", &__init__, undefined, undefined);
 }
@@ -449,17 +449,20 @@ function giverandomweapon(weapon, isprimaryroll)
 	{
 		randomweapon = self.pers[#"hash_65987563"];
 	}
-	else if(isdefined(self.pers[#"hash_cbcfa831"]) || isdefined(self.pers[#"hash_cbcfa832"]))
+	else
 	{
-		randomweapon = getrandomgadget(isprimaryroll);
-		while(randomweapon == self.pers[#"hash_cbcfa831"] || (isdefined(self.pers[#"hash_cbcfa832"]) && randomweapon == self.pers[#"hash_cbcfa832"]))
+		if(isdefined(self.pers[#"hash_cbcfa831"]) || isdefined(self.pers[#"hash_cbcfa832"]))
+		{
+			randomweapon = getrandomgadget(isprimaryroll);
+			while(randomweapon == self.pers[#"hash_cbcfa831"] || (isdefined(self.pers[#"hash_cbcfa832"]) && randomweapon == self.pers[#"hash_cbcfa832"]))
+			{
+				randomweapon = getrandomgadget(isprimaryroll);
+			}
+		}
+		else
 		{
 			randomweapon = getrandomgadget(isprimaryroll);
 		}
-	}
-	else
-	{
-		randomweapon = getrandomgadget(isprimaryroll);
 	}
 	if(isdefined(level.playgadgetready) && !isprimaryroll)
 	{
@@ -591,7 +594,7 @@ function getrandomgadget(isprimaryroll)
 	randomgadgetnumber = randomintrange(1, level.gadgetrouletteprobabilities[totalcategory] + 1);
 	gadgetnames = getarraykeys(level.gadgetrouletteprobabilities);
 	selectedgadget = "";
-	foreach(var_e2cf4d2b, gadget in gadgetnames)
+	foreach(gadget in gadgetnames)
 	{
 		randomgadgetnumber = randomgadgetnumber - level.gadgetrouletteprobabilities[gadget][category];
 		if(randomgadgetnumber <= 0)

@@ -53,7 +53,7 @@ function onstartgametype()
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function ignore_systems()
+function autoexec ignore_systems()
 {
 	system::ignore("cybercom");
 	system::ignore("healthoverlay");

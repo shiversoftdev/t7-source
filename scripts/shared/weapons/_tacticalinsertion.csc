@@ -29,25 +29,28 @@ function init_shared()
 		lat = latlongstruct.script_vector[0];
 		long = latlongstruct.script_vector[1];
 	}
-	else if(isdefined(level.worldmapx) && isdefined(level.worldmapy))
-	{
-		mapx = level.worldmapx;
-		mapy = level.worldmapy;
-	}
 	else
 	{
-		mapx = 0;
-		mapy = 0;
-	}
-	if(isdefined(level.worldlat) && isdefined(level.worldlong))
-	{
-		lat = level.worldlat;
-		long = level.worldlong;
-	}
-	else
-	{
-		lat = 34.02156;
-		long = -118.4487;
+		if(isdefined(level.worldmapx) && isdefined(level.worldmapy))
+		{
+			mapx = level.worldmapx;
+			mapy = level.worldmapy;
+		}
+		else
+		{
+			mapx = 0;
+			mapy = 0;
+		}
+		if(isdefined(level.worldlat) && isdefined(level.worldlong))
+		{
+			lat = level.worldlat;
+			long = level.worldlong;
+		}
+		else
+		{
+			lat = 34.02156;
+			long = -118.4487;
+		}
 	}
 	setmaplatlong(mapx, mapy, long, lat);
 }

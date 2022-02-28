@@ -31,7 +31,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_genesis_traps", &__init__, &__main__, undefined);
 }
@@ -225,25 +225,25 @@ function function_dc9dafb8(e_player)
 	if(isdefined(e_player.zombie_vars["zombie_powerup_minigun_on"]) && e_player.zombie_vars["zombie_powerup_minigun_on"])
 	{
 		self sethintstring(&"");
-		return 0;
+		return false;
 	}
 	if(isdefined(self.stub.script_int) && !level flag::get("power_on" + self.stub.script_int))
 	{
 		self sethintstring(&"ZOMBIE_NEED_POWER");
-		return 0;
+		return false;
 	}
 	if(self.stub.var_60532813 flag::get("trap_active"))
 	{
 		self sethintstring(&"ZOMBIE_TRAP_ACTIVE");
-		return 0;
+		return false;
 	}
 	if(self.stub.var_60532813 flag::get("trap_cooldown"))
 	{
 		self sethintstring(&"ZOMBIE_TRAP_COOLDOWN");
-		return 0;
+		return false;
 	}
 	self sethintstring(&"ZOMBIE_BUTTON_BUY_TRAP", 1000);
-	return 1;
+	return true;
 }
 
 /*
@@ -420,15 +420,18 @@ function function_ec80dc42(var_4b6ad173)
 				var_dea46db3 = var_dea46db3 + 80;
 			}
 		}
-		else if(var_b6c309e9 >= 180)
+		else
 		{
-			var_4b6ad173 playsound("zmb_flogger_blade_whoosh");
-			var_dea46db3 = var_dea46db3 - 180;
-		}
-		else if(var_b6c309e9 <= -180)
-		{
-			var_4b6ad173 playsound("zmb_flogger_blade_whoosh");
-			var_dea46db3 = var_dea46db3 + 180;
+			if(var_b6c309e9 >= 180)
+			{
+				var_4b6ad173 playsound("zmb_flogger_blade_whoosh");
+				var_dea46db3 = var_dea46db3 - 180;
+			}
+			else if(var_b6c309e9 <= -180)
+			{
+				var_4b6ad173 playsound("zmb_flogger_blade_whoosh");
+				var_dea46db3 = var_dea46db3 + 180;
+			}
 		}
 	}
 }
@@ -603,7 +606,7 @@ function function_f5ad0ae6()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function do_zombie_explode()
+function private do_zombie_explode()
 {
 	util::wait_network_frame();
 	if(isdefined(self))

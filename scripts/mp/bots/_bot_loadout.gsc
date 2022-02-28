@@ -19,7 +19,7 @@ function in_whitelist(itemname)
 {
 	if(!isdefined(itemname))
 	{
-		return 0;
+		return false;
 	}
 	switch(itemname)
 	{
@@ -70,10 +70,10 @@ function in_whitelist(itemname)
 		case "WEAPON_STUN_GRENADE":
 		case "WEAPON_WILLY_PETE":
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -200,7 +200,7 @@ function get_current_class()
 	{
 		return undefined;
 	}
-	foreach(var_b0e0c615, botclass in self.loadoutclasses)
+	foreach(botclass in self.loadoutclasses)
 	{
 		if(botclass.value == currvalue)
 		{
@@ -241,11 +241,11 @@ function pick_hero_weapon()
 	heroweaponref = self getheroweaponname();
 	if(isitemrestricted(heroweaponref))
 	{
-		return 0;
+		return false;
 	}
 	heroweaponname = self get_item_name(heroweaponref);
 	self botclassadditem(0, heroweaponname);
-	return 1;
+	return true;
 }
 
 /*
@@ -262,11 +262,11 @@ function pick_hero_ability()
 	heroabilityref = self getheroabilityname();
 	if(isitemrestricted(heroabilityref))
 	{
-		return 0;
+		return false;
 	}
 	heroabilityname = self get_item_name(heroabilityref);
 	self botclassadditem(0, heroabilityname);
-	return 1;
+	return true;
 }
 
 /*
@@ -576,14 +576,14 @@ function chose_action(action1, chance1, action2, chance2, action3, chance3, acti
 */
 function item_is_claimed(item)
 {
-	foreach(var_5ede318f, claim in self.claimed_items)
+	foreach(claim in self.claimed_items)
 	{
 		if(claim == item)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -841,24 +841,24 @@ function item_is_banned(slot, item)
 {
 	if(item == "WEAPON_KNIFE_BALLISTIC")
 	{
-		return 1;
+		return true;
 	}
 	if(getdvarint("tu6_enableDLCWeapons") == 0 && item == "WEAPON_PEACEKEEPER")
 	{
-		return 1;
+		return true;
 	}
 	if(slot != "killstreak1" && slot != "killstreak2" && slot != "killstreak3")
 	{
-		return 0;
+		return false;
 	}
-	foreach(var_5c9a375d, banned in level.bot_banned_killstreaks)
+	foreach(banned in level.bot_banned_killstreaks)
 	{
 		if(item == banned)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -874,7 +874,7 @@ function build_claimed_list(items)
 {
 	claimed = [];
 	keys = getarraykeys(items);
-	foreach(var_86739a03, key in keys)
+	foreach(key in keys)
 	{
 		claimed[key] = 0;
 	}

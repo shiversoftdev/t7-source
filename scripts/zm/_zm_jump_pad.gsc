@@ -19,7 +19,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_jump_pad", &__init__, undefined, undefined);
 }
@@ -248,41 +248,44 @@ function jump_pad_start(ent_player, endon_condition)
 				}
 			#/
 		}
-		else if(z_dist >= 135)
+		else
 		{
-			z_dist = z_dist * 2.7;
-			forward_scaling = 1.3;
-			/#
-				if(getdvarint(""))
-				{
-					if(getdvarstring("") != "")
+			if(z_dist >= 135)
+			{
+				z_dist = z_dist * 2.7;
+				forward_scaling = 1.3;
+				/#
+					if(getdvarint(""))
 					{
-						z_dist = z_dist * getdvarfloat("");
+						if(getdvarstring("") != "")
+						{
+							z_dist = z_dist * getdvarfloat("");
+						}
+						if(getdvarstring("") != "")
+						{
+							forward_scaling = getdvarfloat("");
+						}
 					}
-					if(getdvarstring("") != "")
+				#/
+			}
+			else if(z_dist < 0)
+			{
+				z_dist = z_dist * 2.4;
+				forward_scaling = 1;
+				/#
+					if(getdvarint(""))
 					{
-						forward_scaling = getdvarfloat("");
+						if(getdvarstring("") != "")
+						{
+							z_dist = z_dist * getdvarfloat("");
+						}
+						if(getdvarstring("") != "")
+						{
+							forward_scaling = getdvarfloat("");
+						}
 					}
-				}
-			#/
-		}
-		else if(z_dist < 0)
-		{
-			z_dist = z_dist * 2.4;
-			forward_scaling = 1;
-			/#
-				if(getdvarint(""))
-				{
-					if(getdvarstring("") != "")
-					{
-						z_dist = z_dist * getdvarfloat("");
-					}
-					if(getdvarstring("") != "")
-					{
-						forward_scaling = getdvarfloat("");
-					}
-				}
-			#/
+				#/
+			}
 		}
 		n_reduction = 0.0015;
 		/#
@@ -437,14 +440,17 @@ function jump_pad_move(vec_direction, flt_time, struct_poi, trigger)
 			self.jump_pad_current = undefined;
 			self.jump_pad_previous = undefined;
 		}
-		else if(!isdefined(self.jump_pad_current))
-		{
-			self.jump_pad_current = trigger;
-		}
 		else
 		{
-			self.jump_pad_previous = self.jump_pad_current;
-			self.jump_pad_current = trigger;
+			if(!isdefined(self.jump_pad_current))
+			{
+				self.jump_pad_current = trigger;
+			}
+			else
+			{
+				self.jump_pad_previous = self.jump_pad_current;
+				self.jump_pad_current = trigger;
+			}
 		}
 	}
 	if(isdefined(self.poi_spot))

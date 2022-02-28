@@ -23,7 +23,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_powerup_carpenter", &__init__, undefined, undefined);
 }
@@ -412,9 +412,9 @@ function func_should_drop_carpenter()
 {
 	if(get_num_window_destroyed() < 5)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*

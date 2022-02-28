@@ -265,15 +265,15 @@ function isinremotenodeploy()
 {
 	if(isdefined(level.qrdrone_nodeployzones) && level.qrdrone_nodeployzones.size)
 	{
-		foreach(var_89860180, zone in level.qrdrone_nodeployzones)
+		foreach(zone in level.qrdrone_nodeployzones)
 		{
 			if(self istouching(zone))
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -396,7 +396,7 @@ function startqrdrone(lifeid, streakname, origin, angles)
 			self notify(#"qrdrone_unlock");
 			self killstreaks::clear_using_remote();
 		}
-		return 0;
+		return false;
 	}
 	team = self.team;
 	killstreak_id = self killstreakrules::killstreakstart("qrdrone", team, 0, 1);
@@ -405,7 +405,7 @@ function startqrdrone(lifeid, streakname, origin, angles)
 		self notify(#"qrdrone_unlock");
 		self util::freeze_player_controls(0);
 		self killstreaks::clear_using_remote();
-		return 0;
+		return false;
 	}
 	self notify(#"qrdrone_unlock");
 	qrdrone = createqrdrone(lifeid, self, streakname, origin, angles, killstreak_id);
@@ -415,12 +415,12 @@ function startqrdrone(lifeid, streakname, origin, angles)
 		self thread qrdrone_ride(lifeid, qrdrone, streakname);
 		qrdrone waittill(#"end_remote");
 		killstreakrules::killstreakstop("qrdrone", team, killstreak_id);
-		return 1;
+		return true;
 	}
 	self iprintlnbold(&"MP_TOO_MANY_VEHICLES");
 	self killstreaks::clear_using_remote();
 	killstreakrules::killstreakstop("qrdrone", team, killstreak_id);
-	return 0;
+	return false;
 }
 
 /*
@@ -668,9 +668,9 @@ function enemy_locking()
 {
 	if(isdefined(self.locking_on) && self.locking_on)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -686,9 +686,9 @@ function enemy_locked()
 {
 	if(isdefined(self.locked_on) && self.locked_on)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -777,7 +777,7 @@ function deleteonkillbrush(player)
 	self endon(#"death");
 	killbrushes = [];
 	hurt = getentarray("trigger_hurt", "classname");
-	foreach(var_40b4f6c8, trig in hurt)
+	foreach(trig in hurt)
 	{
 		if(trig.origin[2] <= player.origin[2] && (!isdefined(trig.script_parameters) || trig.script_parameters != "qrdrone_safe"))
 		{
@@ -795,7 +795,7 @@ function deleteonkillbrush(player)
 				return;
 			}
 		}
-		foreach(var_77085d2, trigger in crate_triggers)
+		foreach(trigger in crate_triggers)
 		{
 			if(trigger.active && self istouching(trigger))
 			{
@@ -805,7 +805,7 @@ function deleteonkillbrush(player)
 		}
 		if(isdefined(level.levelkillbrushes))
 		{
-			foreach(var_c2fe4bce, trigger in level.levelkillbrushes)
+			foreach(trigger in level.levelkillbrushes)
 			{
 				if(self istouching(trigger))
 				{
@@ -1308,10 +1308,10 @@ function qrdrone_in_range()
 	{
 		if(self ismissileinsideheightlock())
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1894,13 +1894,16 @@ function flash_signal_failure(drone)
 		{
 			wait(0.6);
 		}
-		else if(i < 6)
-		{
-			wait(0.5);
-		}
 		else
 		{
-			wait(0.3);
+			if(i < 6)
+			{
+				wait(0.5);
+			}
+			else
+			{
+				wait(0.3);
+			}
 		}
 		i++;
 	}

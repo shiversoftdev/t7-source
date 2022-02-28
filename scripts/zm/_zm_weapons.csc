@@ -18,7 +18,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_weapons", &__init__, &__main__, undefined);
 }
@@ -61,7 +61,7 @@ function __main__()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function on_player_connect(localclientnum)
+function private on_player_connect(localclientnum)
 {
 	if(getmigrationstatus(localclientnum))
 	{
@@ -70,7 +70,7 @@ private function on_player_connect(localclientnum)
 	resetweaponcosts(localclientnum);
 	level flag::wait_till("weapon_table_loaded");
 	level flag::wait_till("weapon_wallbuys_created");
-	foreach(var_3c27f970, weaponcost in level.weapon_costs)
+	foreach(weaponcost in level.weapon_costs)
 	{
 		player_cost = compute_player_weapon_ammo_cost(weaponcost.weapon, weaponcost.ammo_cost, weaponcost.upgraded);
 		setweaponcosts(localclientnum, weaponcost.weapon, weaponcost.cost, weaponcost.ammo_cost, player_cost);
@@ -118,14 +118,17 @@ function compute_player_weapon_ammo_cost(weapon, cost, upgraded, n_base_non_wall
 			n_ammo_cost = n_upgraded_non_wallbuy_cost;
 		}
 	}
-	else if(is_wallbuy(w_root))
-	{
-		n_ammo_cost = cost;
-		n_ammo_cost = zm_utility::halve_score(n_ammo_cost);
-	}
 	else
 	{
-		n_ammo_cost = n_base_non_wallbuy_cost;
+		if(is_wallbuy(w_root))
+		{
+			n_ammo_cost = cost;
+			n_ammo_cost = zm_utility::halve_score(n_ammo_cost);
+		}
+		else
+		{
+			n_ammo_cost = n_base_non_wallbuy_cost;
+		}
 	}
 	return n_ammo_cost;
 }
@@ -215,9 +218,9 @@ function is_weapon_upgraded(weapon)
 	rootweapon = weapon.rootweapon;
 	if(isdefined(level.zombie_weapons_upgraded[rootweapon]))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -316,21 +319,21 @@ function init()
 function is_wallbuy(w_to_check)
 {
 	w_base = w_to_check.rootweapon;
-	foreach(var_ec7edbba, s_wallbuy in level._active_wallbuys)
+	foreach(s_wallbuy in level._active_wallbuys)
 	{
 		if(s_wallbuy.weapon == w_base)
 		{
-			return 1;
+			return true;
 		}
 	}
 	if(isdefined(level._additional_wallbuy_weapons))
 	{
 		if(isinarray(level._additional_wallbuy_weapons, w_base))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -609,7 +612,7 @@ function autofill_wallbuys_init()
 	index = 0;
 	class_all = [];
 	level.active_autofill_wallbuys = [];
-	foreach(var_2812fa03, wallbuy in wallbuys)
+	foreach(wallbuy in wallbuys)
 	{
 		weapon_class = wallbuy.script_string;
 		weapon = undefined;
@@ -660,7 +663,7 @@ function autofill_wallbuys_init()
 		level.active_autofill_wallbuys[level.active_autofill_wallbuys.size] = wallbuy;
 		index++;
 	}
-	foreach(var_9c9809d6, wallbuy in class_all)
+	foreach(wallbuy in class_all)
 	{
 		weapon_name = undefined;
 		for(i = 0; i < array_keys["all"].size; i++)

@@ -77,13 +77,13 @@ function tesla_ok_to_discharge(player)
 {
 	if(!isdefined(player.tesla_discharge))
 	{
-		return 1;
+		return true;
 	}
 	if(player.tesla_discharge == 0)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -171,18 +171,18 @@ function tesla_end_arc_damage(arc_num, enemies_hit_num)
 {
 	if(arc_num >= level.doa.rules.tesla_max_arcs)
 	{
-		return 1;
+		return true;
 	}
 	if(enemies_hit_num >= level.doa.rules.tesla_max_enemies_killed)
 	{
-		return 1;
+		return true;
 	}
 	radius_decay = level.doa.rules.tesla_radius_decay * arc_num;
 	if((level.doa.rules.tesla_radius_start - radius_decay) <= 0)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -430,23 +430,23 @@ function function_395fdfb8(guy, attacker)
 {
 	if(!isdefined(guy))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(guy.boss) && guy.boss)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(guy.damagedby) && guy.damagedby == "tesla" || (isdefined(guy.tesla_death) && guy.tesla_death))
 	{
-		return 0;
+		return false;
 	}
 	if(tesla_ok_to_discharge(attacker))
 	{
 		guy.damagedby = "tesla";
 		guy thread tesla_damage_init(attacker);
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

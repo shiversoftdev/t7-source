@@ -25,7 +25,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_weap_staff_water", &__init__, undefined, undefined);
 }
@@ -91,7 +91,7 @@ function water_dart_cleanup()
 	while(true)
 	{
 		a_grenades = getentarray("grenade", "classname");
-		foreach(var_2671007b, e_grenade in a_grenades)
+		foreach(e_grenade in a_grenades)
 		{
 			if(isdefined(e_grenade.model) && e_grenade.model == "p6_zm_tm_staff_projectile_ice")
 			{
@@ -192,7 +192,7 @@ function staff_water_kill_zombie(player, str_weapon)
 	self zm_tomb_utility::do_damage_network_safe(player, self.health, str_weapon, "MOD_RIFLE_BULLET");
 	if(isdefined(self.deathanim))
 	{
-		self waittill_match(#"death_anim");
+		self waittillmatch(#"death_anim");
 	}
 	if(isdefined(self))
 	{
@@ -351,7 +351,7 @@ function ice_staff_blizzard_do_kills(player, str_weapon)
 	while(true)
 	{
 		a_zombies = getaiarray();
-		foreach(var_e2d14a6a, zombie in a_zombies)
+		foreach(zombie in a_zombies)
 		{
 			if(!(isdefined(zombie.is_on_ice) && zombie.is_on_ice))
 			{
@@ -539,13 +539,16 @@ function ice_affect_zombie(str_weapon = "staff_water", e_player, always_kill = 0
 	{
 		n_damage = 2050;
 	}
-	else if(str_weapon.name == "staff_water_upgraded" || str_weapon.name == "staff_water_upgraded2" || str_weapon.name == "staff_water_upgraded3")
+	else
 	{
-		n_damage = 3300;
-	}
-	else if(str_weapon.name == "one_inch_punch_ice")
-	{
-		n_damage = 11275;
+		if(str_weapon.name == "staff_water_upgraded" || str_weapon.name == "staff_water_upgraded2" || str_weapon.name == "staff_water_upgraded3")
+		{
+			n_damage = 3300;
+		}
+		else if(str_weapon.name == "one_inch_punch_ice")
+		{
+			n_damage = 11275;
+		}
 	}
 	if(isdefined(self.is_on_ice) && self.is_on_ice)
 	{
@@ -650,7 +653,7 @@ function staff_water_death_event(attacker)
 		self freeze_zombie();
 		if(isdefined(self.deathanim))
 		{
-			self waittill_match(#"death_anim");
+			self waittillmatch(#"death_anim");
 		}
 		self thread frozen_zombie_shatter();
 	}
@@ -672,7 +675,7 @@ function _icicle_locate_target(str_weapon)
 	fire_origin = self getplayercamerapos();
 	a_targets = getaiarray();
 	a_targets = util::get_array_of_closest(self.origin, a_targets, undefined, undefined, 600);
-	foreach(var_4dc1e15a, target in a_targets)
+	foreach(target in a_targets)
 	{
 		if(isdefined(target.is_on_ice) && target.is_on_ice)
 		{

@@ -191,19 +191,22 @@ function function_f34bd805(str_piece)
 	{
 		a_players = level.players;
 	}
-	else if(isplayer(self))
-	{
-		a_players = array(self);
-	}
 	else
 	{
-		return;
+		if(isplayer(self))
+		{
+			a_players = array(self);
+		}
+		else
+		{
+			return;
+		}
 	}
 	switch(str_piece)
 	{
 		case "gasmask_part_visor":
 		{
-			foreach(var_62ea6caa, player in a_players)
+			foreach(player in a_players)
 			{
 				player thread clientfield::set_to_player("gaskmask_part_visor", 1);
 				player thread zm_craftables::player_show_craftable_parts_ui("zmInventory.gaskmask_part_visor", "zmInventory.widget_gasmask_parts", 0);
@@ -212,7 +215,7 @@ function function_f34bd805(str_piece)
 		}
 		case "gasmask_part_strap":
 		{
-			foreach(var_be508c16, player in a_players)
+			foreach(player in a_players)
 			{
 				player thread clientfield::set_to_player("gaskmask_part_strap", 1);
 				player thread zm_craftables::player_show_craftable_parts_ui("zmInventory.gaskmask_part_strap", "zmInventory.widget_gasmask_parts", 0);
@@ -221,7 +224,7 @@ function function_f34bd805(str_piece)
 		}
 		case "gasmask_part_filter":
 		{
-			foreach(var_f4baf6cb, player in a_players)
+			foreach(player in a_players)
 			{
 				player thread clientfield::set_to_player("gaskmask_part_filter", 1);
 				player thread zm_craftables::player_show_craftable_parts_ui("zmInventory.gaskmask_part_filter", "zmInventory.widget_gasmask_parts", 0);
@@ -262,7 +265,7 @@ function function_4e02c665(player)
 	var_6796a7a4 moveto((self.origin + anglestoforward(self.angles)) + (-5, 0, -105), 0.05);
 	var_6796a7a4 rotateto(self.angles + vectorscale((0, 1, 0), 90), 0.05);
 	var_6796a7a4 waittill(#"movedone");
-	return 1;
+	return true;
 }
 
 /*
@@ -311,7 +314,7 @@ function function_dbc8e9c0(player)
 	{
 		self sethintstring(&"ZOMBIE_BUILD_PIECE_HAVE_ONE");
 	}
-	return 1;
+	return true;
 }
 
 /*

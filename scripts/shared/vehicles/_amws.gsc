@@ -26,7 +26,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("amws", &__init__, undefined, undefined);
 }
@@ -464,7 +464,7 @@ function state_combat_enter(params)
 */
 function is_ai_using_minigun()
 {
-	return (isdefined(self.settings.ai_uses_minigun) ? self.settings.ai_uses_minigun : 1);
+	return true;
 }
 
 /*
@@ -830,7 +830,7 @@ function getnextmoveposition_wander()
 	positionquery_filter_inclaimedlocation(queryresult, self);
 	best_point = undefined;
 	best_score = -999999;
-	foreach(var_7da172e3, point in queryresult.data)
+	foreach(point in queryresult.data)
 	{
 		randomscore = randomfloatrange(0, 100);
 		disttooriginscore = point.disttoorigin2d * 0.2;
@@ -889,7 +889,7 @@ function getnextmoveposition_evasive(client_flags)
 	loc_00002B1C:
 	queryresult = positionquery_source_navigation(self.origin, (isdefined(self.settings.lock_evade_dist_min) ? self.settings.lock_evade_dist_min : 120), (isdefined(self.settings.lock_evade_dist_max) ? self.settings.lock_evade_dist_max : 360), math::clamp((isdefined(self.settings.lock_evade_dist_half_height) ? self.settings.lock_evade_dist_half_height : 250), 0.1, 99000), (isdefined(self.settings.lock_evade_point_spacing_factor) ? self.settings.lock_evade_point_spacing_factor : 1.5) * self.radius, self);
 	positionquery_filter_inclaimedlocation(queryresult, self);
-	foreach(var_e62d954e, point in queryresult.data)
+	foreach(point in queryresult.data)
 	{
 		if(point.inclaimedlocation)
 		{
@@ -914,7 +914,7 @@ function getnextmoveposition_evasive(client_flags)
 			if(client_flag & remaining_flags_to_process)
 			{
 				positionquery_filter_directness(queryresult, self.origin, attacker.origin);
-				foreach(var_deed7019, point in queryresult.data)
+				foreach(point in queryresult.data)
 				{
 					abs_directness = abs(point.directness);
 					if(abs_directness < 0.2)
@@ -947,7 +947,7 @@ function getnextmoveposition_evasive(client_flags)
 		}
 	}
 	positionquery_filter_directness(queryresult, self.origin, self.origin + (anglestoforward(self.angles) * 360));
-	foreach(var_f4a42101, point in queryresult.data)
+	foreach(point in queryresult.data)
 	{
 		if(point.directness > 0.5)
 		{
@@ -963,7 +963,7 @@ function getnextmoveposition_evasive(client_flags)
 	}
 	best_point = undefined;
 	best_score = -999999;
-	foreach(var_86739a03, point in queryresult.data)
+	foreach(point in queryresult.data)
 	{
 		if(point.score > best_score)
 		{
@@ -1039,7 +1039,7 @@ function getnextmoveposition_tactical(enemy)
 	}
 	best_point = undefined;
 	best_score = -999999;
-	foreach(var_afee5ce1, point in queryresult.data)
+	foreach(point in queryresult.data)
 	{
 		difftoprefereddirectness = abs(point.directness - prefereddirectness);
 		directnessscore = mapfloat(0, 1, 100, 0, difftoprefereddirectness);

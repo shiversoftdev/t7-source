@@ -17,7 +17,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_theater_teleporter", &__init__, undefined, undefined);
 }
@@ -179,19 +179,22 @@ function function_667aa0b4(localclientnum, oldval, newval, bnewent, binitialsnap
 			level.cameraent setextracam(0, 320, 240);
 		}
 	}
-	else if(isdefined(level.cam_corona))
+	else
 	{
-		stopfx(localclientnum, level.cam_corona.var_e39fd443);
-		level.cam_corona delete();
-	}
-	if(level.extracamactive[localclientnum] == 1 && isdefined(level.cameraent))
-	{
-		level.extracamactive[localclientnum] = 0;
-		level.cameraent clearextracam();
-		var_78113405 = struct::get("struct_theater_projector_beam", "targetname");
-		if(isdefined(level.var_3cb13a71[localclientnum]) && isdefined(var_78113405.vid[localclientnum]))
+		if(isdefined(level.cam_corona))
 		{
-			level.var_3cb13a71[localclientnum] = playfxontag(localclientnum, level._effect[level.var_bcdc3660[localclientnum]], var_78113405.vid[localclientnum], "tag_origin");
+			stopfx(localclientnum, level.cam_corona.var_e39fd443);
+			level.cam_corona delete();
+		}
+		if(level.extracamactive[localclientnum] == 1 && isdefined(level.cameraent))
+		{
+			level.extracamactive[localclientnum] = 0;
+			level.cameraent clearextracam();
+			var_78113405 = struct::get("struct_theater_projector_beam", "targetname");
+			if(isdefined(level.var_3cb13a71[localclientnum]) && isdefined(var_78113405.vid[localclientnum]))
+			{
+				level.var_3cb13a71[localclientnum] = playfxontag(localclientnum, level._effect[level.var_bcdc3660[localclientnum]], var_78113405.vid[localclientnum], "tag_origin");
+			}
 		}
 	}
 }
@@ -229,7 +232,7 @@ function function_a8255fab(localclientnum, oldval, newval, bnewent, binitialsnap
 function function_2b23adc9(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
 	a_e_players = getlocalplayers();
-	foreach(var_351a9394, e_player in a_e_players)
+	foreach(e_player in a_e_players)
 	{
 		e_player.var_5c4ad807 = playfxontag(e_player.localclientnum, level._effect["teleport_player_flash"], self, "j_spinelower");
 		setfxignorepause(e_player.localclientnum, e_player.var_5c4ad807, 1);
@@ -252,7 +255,7 @@ function function_6776dea9(localclientnum, oldval, newval, bnewent, binitialsnap
 	v_origin = (-306.75, 1116.25, 0.0660095);
 	v_angles = vectorscale((1, 0, 0), 270);
 	a_e_players = getlocalplayers();
-	foreach(var_7e4e54bc, e_player in a_e_players)
+	foreach(e_player in a_e_players)
 	{
 		e_player.var_a0a2d27 = playfx(e_player.localclientnum, level._effect["teleport_initiate"], v_origin, anglestoforward(v_angles), anglestoup(v_angles));
 		setfxignorepause(e_player.localclientnum, e_player.var_a0a2d27, 1);

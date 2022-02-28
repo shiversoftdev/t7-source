@@ -313,7 +313,7 @@ function minimapwarn(corners)
 function body_customization_setup_helmet(helmet_index)
 {
 	/#
-		foreach(var_6b1641e5, player in getplayers())
+		foreach(player in getplayers())
 		{
 			player setcharacterhelmetstyle(helmet_index);
 		}
@@ -332,7 +332,7 @@ function body_customization_setup_helmet(helmet_index)
 function body_customization_setup_body(character_index, body_index)
 {
 	/#
-		foreach(var_9da8b33e, player in getplayers())
+		foreach(player in getplayers())
 		{
 			player setcharacterbodytype(character_index);
 			player setcharacterbodystyle(body_index);
@@ -401,7 +401,7 @@ function body_customization_populate(mode)
 	/#
 		bodies = getallcharacterbodies(mode);
 		body_customization_devgui_base = "";
-		foreach(var_7905f640, playerbodytype in bodies)
+		foreach(playerbodytype in bodies)
 		{
 			body_name = (makelocalizedstring(getcharacterdisplayname(playerbodytype, mode)) + "") + getcharacterassetname(playerbodytype, mode) + "";
 			adddebugcommand((((((((body_customization_devgui_base + body_name) + "") + "") + "") + "") + "") + playerbodytype) + "");

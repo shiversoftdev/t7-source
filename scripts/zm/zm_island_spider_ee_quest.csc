@@ -64,17 +64,23 @@ function function_f9f39b8e(localclientnum, oldval, newval, bnewent, binitialsnap
 	{
 		self.var_163815ae[localclientnum] = playfxontag(localclientnum, level._effect["spider_drink_lair"], self, "tag_flash");
 	}
-	else if(newval == 2)
+	else
 	{
-		self.var_163815ae[localclientnum] = playfxontag(localclientnum, level._effect["spider_drink_meteor"], self, "tag_flash");
-	}
-	else if(newval == 3)
-	{
-		self.var_163815ae[localclientnum] = playfxontag(localclientnum, level._effect["spider_drink_bunker"], self, "tag_flash");
-	}
-	else if(isdefined(self.var_163815ae[localclientnum]))
-	{
-		deletefx(localclientnum, self.var_163815ae[localclientnum]);
+		if(newval == 2)
+		{
+			self.var_163815ae[localclientnum] = playfxontag(localclientnum, level._effect["spider_drink_meteor"], self, "tag_flash");
+		}
+		else
+		{
+			if(newval == 3)
+			{
+				self.var_163815ae[localclientnum] = playfxontag(localclientnum, level._effect["spider_drink_bunker"], self, "tag_flash");
+			}
+			else if(isdefined(self.var_163815ae[localclientnum]))
+			{
+				deletefx(localclientnum, self.var_163815ae[localclientnum]);
+			}
+		}
 	}
 }
 

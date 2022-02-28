@@ -50,7 +50,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_ai_mechz_claw", &__init__, &__main__, undefined);
 }
@@ -89,7 +89,7 @@ function __init__()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function __main__()
+function private __main__()
 {
 }
 
@@ -102,7 +102,7 @@ private function __main__()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_f20c04a4()
+function private function_f20c04a4()
 {
 	behaviortreenetworkutility::registerbehaviortreescriptapi("zmMechzShouldShootClaw", &function_bdc90f38);
 	behaviortreenetworkutility::registerbehaviortreeaction("zmMechzShootClawAction", &function_86ac6346, &function_a94df749, &function_1b118e5);
@@ -123,41 +123,41 @@ private function function_f20c04a4()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_bdc90f38(entity)
+function private function_bdc90f38(entity)
 {
 	if(!isdefined(entity.favoriteenemy))
 	{
-		return 0;
+		return false;
 	}
 	if(!(isdefined(entity.has_powercap) && entity.has_powercap))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(entity.last_claw_time) && (gettime() - self.last_claw_time) < level.mechz_claw_cooldown_time)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(entity.berserk) && entity.berserk)
 	{
-		return 0;
+		return false;
 	}
 	if(!entity mechzserverutils::mechzcheckinarc())
 	{
-		return 0;
+		return false;
 	}
 	dist_sq = distancesquared(entity.origin, entity.favoriteenemy.origin);
 	if(dist_sq < 40000 || dist_sq > 1000000)
 	{
-		return 0;
+		return false;
 	}
 	if(!entity.favoriteenemy player_can_be_grabbed())
 	{
-		return 0;
+		return false;
 	}
 	curr_zone = zm_zonemgr::get_zone_from_position(self.origin + vectorscale((0, 0, 1), 36));
 	if(isdefined(curr_zone) && "ug_bottom_zone" == curr_zone)
 	{
-		return 0;
+		return false;
 	}
 	clip_mask = 1 | 8;
 	claw_origin = entity.origin + vectorscale((0, 0, 1), 65);
@@ -165,7 +165,7 @@ private function function_bdc90f38(entity)
 	b_cansee = trace["fraction"] == 1 || (isdefined(trace["entity"]) && trace["entity"] == entity.favoriteenemy);
 	if(!b_cansee)
 	{
-		return 0;
+		return false;
 	}
 }
 
@@ -178,17 +178,17 @@ private function function_bdc90f38(entity)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function player_can_be_grabbed()
+function private player_can_be_grabbed()
 {
 	if(self getstance() == "prone")
 	{
-		return 0;
+		return false;
 	}
 	if(!zm_utility::is_player_valid(self))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -200,7 +200,7 @@ private function player_can_be_grabbed()
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_86ac6346(entity, asmstatename)
+function private function_86ac6346(entity, asmstatename)
 {
 	animationstatenetworkutility::requeststate(entity, asmstatename);
 	function_456e76fa(entity);
@@ -216,7 +216,7 @@ private function function_86ac6346(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_a94df749(entity, asmstatename)
+function private function_a94df749(entity, asmstatename)
 {
 	if(!(isdefined(entity.var_7bee990f) && entity.var_7bee990f))
 	{
@@ -234,7 +234,7 @@ private function function_a94df749(entity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_1b118e5(entity, asmstatename)
+function private function_1b118e5(entity, asmstatename)
 {
 	return 4;
 }
@@ -248,7 +248,7 @@ private function function_1b118e5(entity, asmstatename)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_456e76fa(entity)
+function private function_456e76fa(entity)
 {
 	self thread function_31c4b972();
 	level flag::set("mechz_launching_claw");
@@ -263,7 +263,7 @@ private function function_456e76fa(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_a844c266(entity)
+function private function_a844c266(entity)
 {
 }
 
@@ -276,7 +276,7 @@ private function function_a844c266(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_75278fab(entity)
+function private function_75278fab(entity)
 {
 }
 
@@ -289,7 +289,7 @@ private function function_75278fab(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_de3abdba(entity)
+function private function_de3abdba(entity)
 {
 	self.var_7bee990f = 1;
 	self.last_claw_time = gettime();
@@ -307,7 +307,7 @@ private function function_de3abdba(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_48c03479(entity)
+function private function_48c03479(entity)
 {
 	entity notify(#"hash_8225d137");
 	entity clientfield::set("mechz_ft", 1);
@@ -324,14 +324,14 @@ private function function_48c03479(entity)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_fa513ca0()
+function private function_fa513ca0()
 {
 	self endon(#"death");
 	self endon(#"hash_8225d137");
 	while(true)
 	{
 		players = getplayers();
-		foreach(var_a6cf6d36, player in players)
+		foreach(player in players)
 		{
 			if(!(isdefined(player.is_burning) && player.is_burning))
 			{
@@ -354,7 +354,7 @@ private function function_fa513ca0()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_235008e3(entity)
+function private function_235008e3(entity)
 {
 	entity notify(#"hash_8225d137");
 	entity clientfield::set("mechz_ft", 0);
@@ -372,7 +372,7 @@ private function function_235008e3(entity)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_1aacf7d4()
+function private function_1aacf7d4()
 {
 	if(isdefined(self.m_claw))
 	{
@@ -418,7 +418,7 @@ private function function_1aacf7d4()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_5dfc412a()
+function private function_5dfc412a()
 {
 	self endon(#"death");
 	self.m_claw_damage_trigger endon(#"death");
@@ -448,7 +448,7 @@ private function function_5dfc412a()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_31c4b972()
+function private function_31c4b972()
 {
 	self endon(#"claw_complete");
 	self util::waittill_either("death", "kill_claw");
@@ -464,7 +464,7 @@ private function function_31c4b972()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_90832db7()
+function private function_90832db7()
 {
 	self.fx_field = self.fx_field & (~256);
 	self.fx_field = self.fx_field & (~64);
@@ -483,25 +483,28 @@ private function function_90832db7()
 			self function_4208b4ec();
 			level flag::clear("mechz_launching_claw");
 		}
-		else if(!self.m_claw islinkedto(self))
+		else
 		{
-			v_claw_origin = self gettagorigin("tag_claw");
-			v_claw_angles = self gettagangles("tag_claw");
-			n_dist = distance(self.m_claw.origin, v_claw_origin);
-			n_time = n_dist / 1000;
-			self.m_claw moveto(v_claw_origin, max(0.05, n_time));
-			self.m_claw playloopsound("zmb_ai_mechz_claw_loop_in", 0.1);
-			self.m_claw waittill(#"movedone");
-			v_claw_origin = self gettagorigin("tag_claw");
-			v_claw_angles = self gettagangles("tag_claw");
-			self.m_claw playsound("zmb_ai_mechz_claw_back");
-			self.m_claw stoploopsound(1);
-			self.m_claw.origin = v_claw_origin;
-			self.m_claw.angles = v_claw_angles;
-			self.m_claw clearanim(%mechz_claw::root, 0.2);
-			self.m_claw linkto(self, "tag_claw", (0, 0, 0));
+			if(!self.m_claw islinkedto(self))
+			{
+				v_claw_origin = self gettagorigin("tag_claw");
+				v_claw_angles = self gettagangles("tag_claw");
+				n_dist = distance(self.m_claw.origin, v_claw_origin);
+				n_time = n_dist / 1000;
+				self.m_claw moveto(v_claw_origin, max(0.05, n_time));
+				self.m_claw playloopsound("zmb_ai_mechz_claw_loop_in", 0.1);
+				self.m_claw waittill(#"movedone");
+				v_claw_origin = self gettagorigin("tag_claw");
+				v_claw_angles = self gettagangles("tag_claw");
+				self.m_claw playsound("zmb_ai_mechz_claw_back");
+				self.m_claw stoploopsound(1);
+				self.m_claw.origin = v_claw_origin;
+				self.m_claw.angles = v_claw_angles;
+				self.m_claw clearanim(%mechz_claw::root, 0.2);
+				self.m_claw linkto(self, "tag_claw", (0, 0, 0));
+			}
+			self.m_claw setanim(%mechz_claw::ai_zombie_mech_grapple_arm_closed_idle, 1, 0.2, 1);
 		}
-		self.m_claw setanim(%mechz_claw::ai_zombie_mech_grapple_arm_closed_idle, 1, 0.2, 1);
 	}
 	self notify(#"claw_complete");
 	self.var_7bee990f = 0;
@@ -516,7 +519,7 @@ private function function_90832db7()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_4208b4ec()
+function private function_4208b4ec()
 {
 	if(isdefined(self.m_claw))
 	{
@@ -547,7 +550,7 @@ private function function_4208b4ec()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_36db86b()
+function private function_36db86b()
 {
 	wait(30);
 	self delete();
@@ -562,7 +565,7 @@ private function function_36db86b()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_9bfd96c8(bopenclaw)
+function private function_9bfd96c8(bopenclaw)
 {
 	self.explosive_dmg_taken_on_grab_start = undefined;
 	if(isdefined(self.e_grabbed))
@@ -598,7 +601,7 @@ private function function_9bfd96c8(bopenclaw)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_7c33f4fb()
+function private function_7c33f4fb()
 {
 	if(!isdefined(self.explosive_dmg_taken))
 	{
@@ -616,7 +619,7 @@ private function function_7c33f4fb()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_d6f31ed2()
+function private function_d6f31ed2()
 {
 	self mechzserverutils::hide_part("tag_claw");
 	self.m_claw hide();
@@ -631,7 +634,7 @@ private function function_d6f31ed2()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_5f5eaf3a(ai_mechz)
+function private function_5f5eaf3a(ai_mechz)
 {
 	self endon(#"disconnect");
 	self zm_audio::create_and_play_dialog("general", "mech_grab");
@@ -655,7 +658,7 @@ private function function_5f5eaf3a(ai_mechz)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function play_shoot_arm_hint_vo()
+function private play_shoot_arm_hint_vo()
 {
 	self endon(#"death");
 	while(true)
@@ -665,7 +668,7 @@ private function play_shoot_arm_hint_vo()
 			return;
 		}
 		a_players = getplayers();
-		foreach(var_d921bbdb, player in a_players)
+		foreach(player in a_players)
 		{
 			if(player == self.e_grabbed)
 			{
@@ -696,7 +699,7 @@ private function play_shoot_arm_hint_vo()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_671deda5()
+function private function_671deda5()
 {
 	if(isdefined(self.e_grabbed))
 	{
@@ -713,7 +716,7 @@ private function function_671deda5()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_6028875a()
+function private function_6028875a()
 {
 	if(isdefined(self.explosive_dmg_taken_on_grab_start))
 	{
@@ -734,7 +737,7 @@ private function function_6028875a()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_8b0a73b5(mechz)
+function private function_8b0a73b5(mechz)
 {
 	self endon(#"death");
 	self endon(#"disconnect");
@@ -761,7 +764,7 @@ private function function_8b0a73b5(mechz)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_bed84b4(mechz)
+function private function_bed84b4(mechz)
 {
 	self endon(#"death");
 	self endon(#"disconnect");
@@ -788,7 +791,7 @@ private function function_bed84b4(mechz)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_38d105a4(mechz)
+function private function_38d105a4(mechz)
 {
 	self endon(#"death");
 	self endon(#"disconnect");
@@ -812,7 +815,7 @@ private function function_38d105a4(mechz)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_672f9804()
+function private function_672f9804()
 {
 	self endon(#"death");
 	self endon(#"kill_claw");
@@ -843,7 +846,7 @@ private function function_672f9804()
 	do
 	{
 		a_players = getplayers();
-		foreach(var_3e3658b7, player in a_players)
+		foreach(player in a_players)
 		{
 			if(!zm_utility::is_player_valid(player, 1, 1) || !player player_can_be_grabbed())
 			{
@@ -894,7 +897,7 @@ private function function_672f9804()
 	if(!isdefined(self.e_grabbed))
 	{
 		a_ai_zombies = zombie_utility::get_round_enemy_array();
-		foreach(var_e1c0a102, ai_zombie in a_ai_zombies)
+		foreach(ai_zombie in a_ai_zombies)
 		{
 			if(!isalive(ai_zombie) || (isdefined(ai_zombie.is_giant_robot) && ai_zombie.is_giant_robot) || (isdefined(ai_zombie.is_mechz) && ai_zombie.is_mechz))
 			{
@@ -972,7 +975,7 @@ private function function_672f9804()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_eb9df173(player)
+function private function_eb9df173(player)
 {
 	player endon(#"death");
 	player endon(#"disconnect");
@@ -1004,7 +1007,7 @@ private function function_eb9df173(player)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_7792d05e(player)
+function private function_7792d05e(player)
 {
 	self endon(#"claw_damaged");
 	player endon(#"death");
@@ -1025,7 +1028,7 @@ private function function_7792d05e(player)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_d0e280a0(mechz)
+function private function_d0e280a0(mechz)
 {
 	mechz endon(#"claw_damaged");
 	mechz endon(#"death");
@@ -1047,7 +1050,7 @@ private function function_d0e280a0(mechz)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_2998f2a1()
+function private function_2998f2a1()
 {
 	self waittill(#"movedone");
 	wait(0.05);
@@ -1063,9 +1066,9 @@ private function function_2998f2a1()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_860f0461(mechz)
+function private function_860f0461(mechz)
 {
-	mechz waittill_match(#"flamethrower_anim");
+	mechz waittillmatch(#"flamethrower_anim");
 	if(isalive(self))
 	{
 		self dodamage(self.health, self.origin, self);

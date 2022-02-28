@@ -45,25 +45,28 @@ function digger_moving_earthquake_rumble(localclientnum, oldval, newval, bnewent
 			level thread do_digger_moving_earthquake_rumble(i, self);
 		}
 	}
-	else if(isdefined(self.headlight1))
+	else
 	{
-		for(i = 0; i < level.localplayers.size; i++)
+		if(isdefined(self.headlight1))
 		{
-			stopfx(i, self.headlight1);
-			stopfx(i, self.headlight2);
-			stopfx(i, self.blink1);
-			stopfx(i, self.blink2);
-			if(isdefined(self.tread_fx))
+			for(i = 0; i < level.localplayers.size; i++)
 			{
-				stopfx(i, self.tread_fx);
-			}
-			if(isdefined(self.var_deef11e2))
-			{
-				stopfx(i, self.var_deef11e2);
+				stopfx(i, self.headlight1);
+				stopfx(i, self.headlight2);
+				stopfx(i, self.blink1);
+				stopfx(i, self.blink2);
+				if(isdefined(self.tread_fx))
+				{
+					stopfx(i, self.tread_fx);
+				}
+				if(isdefined(self.var_deef11e2))
+				{
+					stopfx(i, self.var_deef11e2);
+				}
 			}
 		}
+		self notify(#"stop_moving_rumble");
 	}
-	self notify(#"stop_moving_rumble");
 }
 
 /*
@@ -254,19 +257,22 @@ function digger_arm_fx(localclientnum, oldval, newval, bnewent, binitialsnap, fi
 			level thread do_digger_arm_fx(i, self);
 		}
 	}
-	else if(isdefined(self.blink1))
+	else
 	{
-		for(i = 0; i < level.localplayers.size; i++)
+		if(isdefined(self.blink1))
 		{
-			stopfx(i, self.blink1);
-			stopfx(i, self.blink2);
+			for(i = 0; i < level.localplayers.size; i++)
+			{
+				stopfx(i, self.blink1);
+				stopfx(i, self.blink2);
+			}
 		}
-	}
-	if(isdefined(self.var_5f9ccb3a))
-	{
-		for(i = 0; i < level.localplayers.size; i++)
+		if(isdefined(self.var_5f9ccb3a))
 		{
-			stopfx(i, self.var_5f9ccb3a);
+			for(i = 0; i < level.localplayers.size; i++)
+			{
+				stopfx(i, self.var_5f9ccb3a);
+			}
 		}
 	}
 }

@@ -10,7 +10,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function main()
+function autoexec main()
 {
 	/#
 		level.__ai_debuginterface = getdvarint("");
@@ -26,7 +26,7 @@ autoexec function main()
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function _checkvalue(archetype, attributename, value)
+function private _checkvalue(archetype, attributename, value)
 {
 	/#
 		attribute = level.__ai_interface[archetype][attributename];
@@ -82,7 +82,7 @@ private function _checkvalue(archetype, attributename, value)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _checkprerequisites(entity, attribute)
+function private _checkprerequisites(entity, attribute)
 {
 	/#
 		/#
@@ -124,7 +124,7 @@ private function _checkprerequisites(entity, attribute)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function _checkregistrationprerequisites(archetype, attribute, callbackfunction)
+function private _checkregistrationprerequisites(archetype, attribute, callbackfunction)
 {
 	/#
 		/#
@@ -148,7 +148,7 @@ private function _checkregistrationprerequisites(archetype, attribute, callbackf
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _initializelevelinterface(archetype)
+function private _initializelevelinterface(archetype)
 {
 	if(!isdefined(level.__ai_interface))
 	{

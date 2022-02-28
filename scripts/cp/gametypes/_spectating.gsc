@@ -14,7 +14,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("spectating", &__init__, undefined, undefined);
 }
@@ -47,7 +47,7 @@ function __init__()
 */
 function init()
 {
-	foreach(var_9a7a6232, team in level.teams)
+	foreach(team in level.teams)
 	{
 		level.spectateoverride[team] = spawnstruct();
 	}
@@ -132,10 +132,10 @@ function other_local_player_still_alive()
 		}
 		if(isalive(level.players[index]))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -149,7 +149,7 @@ function other_local_player_still_alive()
 */
 function allow_all_teams(allow)
 {
-	foreach(var_a9ca35d7, team in level.teams)
+	foreach(team in level.teams)
 	{
 		self allowspectateteam(team, allow);
 	}
@@ -166,7 +166,7 @@ function allow_all_teams(allow)
 */
 function allow_all_teams_except(skip_team, allow)
 {
-	foreach(var_79b6628f, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(team == skip_team)
 		{
@@ -234,20 +234,23 @@ function set_permissions()
 				self allowspectateteam("freelook", 0);
 				self allowspectateteam("localplayers", 1);
 			}
-			else if(isdefined(team) && isdefined(level.teams[team]))
-			{
-				self allowspectateteam(team, 1);
-				self allow_all_teams_except(team, 0);
-				self allowspectateteam("freelook", 0);
-				self allowspectateteam("none", 0);
-				self allowspectateteam("localplayers", 1);
-			}
 			else
 			{
-				self allow_all_teams(0);
-				self allowspectateteam("freelook", 0);
-				self allowspectateteam("none", 0);
-				self allowspectateteam("localplayers", 1);
+				if(isdefined(team) && isdefined(level.teams[team]))
+				{
+					self allowspectateteam(team, 1);
+					self allow_all_teams_except(team, 0);
+					self allowspectateteam("freelook", 0);
+					self allowspectateteam("none", 0);
+					self allowspectateteam("localplayers", 1);
+				}
+				else
+				{
+					self allow_all_teams(0);
+					self allowspectateteam("freelook", 0);
+					self allowspectateteam("none", 0);
+					self allowspectateteam("localplayers", 1);
+				}
 			}
 			break;
 		}

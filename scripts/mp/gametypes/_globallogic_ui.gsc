@@ -127,7 +127,7 @@ function freegameplayhudelems()
 function teamplayercountsequal(playercounts)
 {
 	count = undefined;
-	foreach(var_716a1f9, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(!isdefined(count))
 		{
@@ -136,10 +136,10 @@ function teamplayercountsequal(playercounts)
 		}
 		if(count != playercounts[team])
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -155,7 +155,7 @@ function teamwithlowestplayercount(playercounts, ignore_team)
 {
 	count = 9999;
 	lowest_team = undefined;
-	foreach(var_df802866, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(count > playercounts[team])
 		{
@@ -179,33 +179,33 @@ function shouldbespectatorlatejoin(teamname, comingfrommenu)
 {
 	if(level.rankedmatch)
 	{
-		return 0;
+		return false;
 	}
 	if(teamname != "free")
 	{
-		return 0;
+		return false;
 	}
 	if(comingfrommenu)
 	{
-		return 0;
+		return false;
 	}
 	if(self ishost())
 	{
-		return 0;
+		return false;
 	}
 	if(level.forceautoassign)
 	{
-		return 0;
+		return false;
 	}
 	if(self util::is_bot())
 	{
-		return 0;
+		return false;
 	}
 	if(self issplitscreen())
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -244,42 +244,48 @@ function menuautoassign(comingfrommenu)
 				assignment = util::getotherteam(host.team);
 			}
 		}
-		else if(isdefined(level.var_485556b))
-		{
-			assignment = [[level.var_485556b]](self, comingfrommenu);
-		}
 		else
 		{
-			teamname = getassignedteamname(self);
-			if(isdefined(teamname) && teamname != "free" && !comingfrommenu)
+			if(isdefined(level.var_485556b))
 			{
-				assignment = teamname;
-			}
-			else if(shouldbespectatorlatejoin(teamname, comingfrommenu))
-			{
-				assignment = "spectator";
+				assignment = [[level.var_485556b]](self, comingfrommenu);
 			}
 			else
 			{
-				playercounts = self teams::count_players();
-				if(teamplayercountsequal(playercounts))
+				teamname = getassignedteamname(self);
+				if(isdefined(teamname) && teamname != "free" && !comingfrommenu)
 				{
-					if(!level.splitscreen && self issplitscreen())
-					{
-						assignment = self get_splitscreen_team();
-						if(assignment == "")
-						{
-							assignment = pickteamfromscores(teamkeys);
-						}
-					}
-					else
-					{
-						assignment = pickteamfromscores(teamkeys);
-					}
+					assignment = teamname;
 				}
 				else
 				{
-					assignment = teamwithlowestplayercount(playercounts, "none");
+					if(shouldbespectatorlatejoin(teamname, comingfrommenu))
+					{
+						assignment = "spectator";
+					}
+					else
+					{
+						playercounts = self teams::count_players();
+						if(teamplayercountsequal(playercounts))
+						{
+							if(!level.splitscreen && self issplitscreen())
+							{
+								assignment = self get_splitscreen_team();
+								if(assignment == "")
+								{
+									assignment = pickteamfromscores(teamkeys);
+								}
+							}
+							else
+							{
+								assignment = pickteamfromscores(teamkeys);
+							}
+						}
+						else
+						{
+							assignment = teamwithlowestplayercount(playercounts, "none");
+						}
+					}
 				}
 			}
 		}
@@ -289,31 +295,34 @@ function menuautoassign(comingfrommenu)
 			return;
 		}
 	}
-	else if(!comingfrommenu)
-	{
-		assignment = self.sessionteam;
-	}
 	else
 	{
-		clientnum = self getentitynumber();
-		count = 0;
-		foreach(var_3b026e9d, team in level.teams)
+		if(!comingfrommenu)
 		{
-			if(team == "free")
+			assignment = self.sessionteam;
+		}
+		else
+		{
+			clientnum = self getentitynumber();
+			count = 0;
+			foreach(team in level.teams)
 			{
-				continue;
-			}
-			count++;
-			if(count == (clientnum + 1))
-			{
-				assignment = team;
-				break;
+				if(team == "free")
+				{
+					continue;
+				}
+				count++;
+				if(count == (clientnum + 1))
+				{
+					assignment = team;
+					break;
+				}
 			}
 		}
-	}
-	if(self.sessionstate == "playing" || self.sessionstate == "dead")
-	{
-		return;
+		if(self.sessionstate == "playing" || self.sessionstate == "dead")
+		{
+			return;
+		}
 	}
 	if(assignment == "spectator" && !level.forceautoassign)
 	{
@@ -363,7 +372,7 @@ function menuautoassign(comingfrommenu)
 function teamscoresequal()
 {
 	score = undefined;
-	foreach(var_cf1c43f1, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(!isdefined(score))
 		{
@@ -372,10 +381,10 @@ function teamscoresequal()
 		}
 		if(score != getteamscore(team))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -391,7 +400,7 @@ function teamwithlowestscore()
 {
 	score = 99999999;
 	lowest_team = undefined;
-	foreach(var_e2d14a6a, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(score > getteamscore(team))
 		{
@@ -700,30 +709,33 @@ function menuclass(response, forcedclass)
 			self iprintlnbold(game["strings"]["change_class"]);
 		}
 	}
-	else if(self.sessionstate != "spectator")
+	else
 	{
-		if(self isinvehicle())
+		if(self.sessionstate != "spectator")
 		{
-			return;
+			if(self isinvehicle())
+			{
+				return;
+			}
+			if(self isremotecontrolling())
+			{
+				return;
+			}
+			if(self isweaponviewonlylinked())
+			{
+				return false;
+			}
 		}
-		if(self isremotecontrolling())
+		if(game["state"] == "playing")
 		{
-			return;
+			timepassed = undefined;
+			if(isdefined(self.respawntimerstarttime))
+			{
+				timepassed = (gettime() - self.respawntimerstarttime) / 1000;
+			}
+			self thread [[level.spawnclient]](timepassed);
+			self.respawntimerstarttime = undefined;
 		}
-		if(self isweaponviewonlylinked())
-		{
-			return 0;
-		}
-	}
-	if(game["state"] == "playing")
-	{
-		timepassed = undefined;
-		if(isdefined(self.respawntimerstarttime))
-		{
-			timepassed = (gettime() - self.respawntimerstarttime) / 1000;
-		}
-		self thread [[level.spawnclient]](timepassed);
-		self.respawntimerstarttime = undefined;
 	}
 	level thread globallogic::updateteamstatus();
 	self thread spectating::set_permissions_for_machine();

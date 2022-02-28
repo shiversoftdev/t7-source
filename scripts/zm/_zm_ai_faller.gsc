@@ -24,7 +24,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	initfallerbehaviorsandasm();
 	animationstatenetwork::registernotetrackhandlerfunction("faller_melee", &handle_fall_notetracks);
@@ -40,7 +40,7 @@ autoexec function init()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function initfallerbehaviorsandasm()
+function private initfallerbehaviorsandasm()
 {
 	behaviortreenetworkutility::registerbehaviortreeaction("fallerDropAction", &fallerdropaction, &fallerdropactionupdate, &fallerdropactionterminate);
 	behaviortreenetworkutility::registerbehaviortreescriptapi("shouldFallerDrop", &shouldfallerdrop);
@@ -112,9 +112,9 @@ function shouldfallerdrop(entity)
 {
 	if(isdefined(entity.faller_drop) && entity.faller_drop)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -130,9 +130,9 @@ function isfallerinceiling(entity)
 {
 	if(isdefined(entity.in_the_ceiling) && entity.in_the_ceiling && (!(isdefined(entity.normal_death) && entity.normal_death)))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -157,7 +157,7 @@ function fallerceilingdeath(entity)
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function mocompfallerdrop(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function private mocompfallerdrop(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	entity animmode("nogravity", 0);
 }
@@ -171,7 +171,7 @@ private function mocompfallerdrop(entity, mocompanim, mocompanimblendouttime, mo
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function mocompceilingdeath(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function private mocompceilingdeath(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	entity animmode("noclip", 0);
 }
@@ -256,13 +256,16 @@ function setup_deathfunc(func_name)
 	{
 		self.deathfunction = func_name;
 	}
-	else if(isdefined(level.custom_faller_death))
-	{
-		self.deathfunction = level.custom_faller_death;
-	}
 	else
 	{
-		self.deathfunction = &zombie_fall_death_func;
+		if(isdefined(level.custom_faller_death))
+		{
+			self.deathfunction = level.custom_faller_death;
+		}
+		else
+		{
+			self.deathfunction = &zombie_fall_death_func;
+		}
 	}
 }
 
@@ -371,30 +374,42 @@ function zombie_faller_do_fall()
 				self.zombie_faller_should_drop = 1;
 			}
 		}
-		else if(self zombie_faller_always_drop())
-		{
-			self.zombie_faller_should_drop = 1;
-			break;
-		}
-		else if(gettime() >= (self.zombie_faller_wait_start + 20000))
-		{
-			self.zombie_faller_should_drop = 1;
-			break;
-		}
-		else if(self zombie_faller_drop_not_occupied())
-		{
-			self.zombie_faller_should_drop = 1;
-			break;
-		}
-		else if(math::cointoss())
-		{
-			self animscripted("fall_anim", self.origin, self.zombie_faller_location.angles, "ai_zm_dlc5_zombie_ceiling_attack_01");
-			wait(level.faller_attack_01_time);
-		}
 		else
 		{
-			self animscripted("fall_anim", self.origin, self.zombie_faller_location.angles, "ai_zm_dlc5_zombie_ceiling_attack_02");
-			wait(level.faller_attack_02_time);
+			if(self zombie_faller_always_drop())
+			{
+				self.zombie_faller_should_drop = 1;
+				break;
+			}
+			else
+			{
+				if(gettime() >= (self.zombie_faller_wait_start + 20000))
+				{
+					self.zombie_faller_should_drop = 1;
+					break;
+				}
+				else
+				{
+					if(self zombie_faller_drop_not_occupied())
+					{
+						self.zombie_faller_should_drop = 1;
+						break;
+					}
+					else
+					{
+						if(math::cointoss())
+						{
+							self animscripted("fall_anim", self.origin, self.zombie_faller_location.angles, "ai_zm_dlc5_zombie_ceiling_attack_01");
+							wait(level.faller_attack_01_time);
+						}
+						else
+						{
+							self animscripted("fall_anim", self.origin, self.zombie_faller_location.angles, "ai_zm_dlc5_zombie_ceiling_attack_02");
+							wait(level.faller_attack_02_time);
+						}
+					}
+				}
+			}
 		}
 	}
 	self notify(#"falling");
@@ -474,9 +489,9 @@ function zombie_faller_always_drop()
 {
 	if(isdefined(self.zombie_faller_location.drop_now) && self.zombie_faller_location.drop_now)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -574,18 +589,21 @@ function zombie_faller_watch_player(player)
 			}
 			incloserange = 1;
 		}
-		else if(incloserange)
+		else
 		{
-			dirtoplayerexit = player.origin - self.origin;
-			dirtoplayerexit = (dirtoplayerexit[0], dirtoplayerexit[1], 0);
-			dirtoplayerexit = vectornormalize(dirtoplayerexit);
-			if(vectordot(dirtoplayerenter, dirtoplayerexit) < 0)
+			if(incloserange)
 			{
-				self.zombie_faller_should_drop = 1;
-				break;
+				dirtoplayerexit = player.origin - self.origin;
+				dirtoplayerexit = (dirtoplayerexit[0], dirtoplayerexit[1], 0);
+				dirtoplayerexit = vectornormalize(dirtoplayerexit);
+				if(vectordot(dirtoplayerenter, dirtoplayerexit) < 0)
+				{
+					self.zombie_faller_should_drop = 1;
+					break;
+				}
 			}
+			incloserange = 0;
 		}
-		incloserange = 0;
 		wait(0.1);
 	}
 }

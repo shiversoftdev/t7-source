@@ -7,25 +7,25 @@
 #using scripts\zm\_zm_weap_dragon_strike;
 #using scripts\zm\_zm_weapons;
 
-#namespace namespace_8215525;
+#namespace dragon_scale_shield;
 
 /*
 	Name: __init__sytem__
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0x5EBD6D12
 	Offset: 0x320
 	Size: 0x34
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_weap_dragonshield", &__init__, undefined, undefined);
 }
 
 /*
 	Name: __init__
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0xE23126A3
 	Offset: 0x360
 	Size: 0x1FC
@@ -45,7 +45,7 @@ function __init__()
 
 /*
 	Name: function_3b8ce539
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0xAA9D3096
 	Offset: 0x568
 	Size: 0xA4
@@ -66,7 +66,7 @@ function function_3b8ce539(localclientnum, oldval, newval, bnewent, binitialsnap
 
 /*
 	Name: function_adc7474a
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0xF18DBB7A
 	Offset: 0x618
 	Size: 0xA4
@@ -87,7 +87,7 @@ function function_adc7474a(localclientnum, oldval, newval, bnewent, binitialsnap
 
 /*
 	Name: function_627dd7e5
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0x2C66E416
 	Offset: 0x6C8
 	Size: 0xA4
@@ -108,7 +108,7 @@ function function_627dd7e5(localclientnum, oldval, newval, bnewent, binitialsnap
 
 /*
 	Name: dragonshield_snd_projectile_impact
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0x17DC5F73
 	Offset: 0x778
 	Size: 0x8C
@@ -123,7 +123,7 @@ function dragonshield_snd_projectile_impact(localclientnum, oldval, newval, bnew
 
 /*
 	Name: dragonshield_snd_zombie_knockdown
-	Namespace: namespace_8215525
+	Namespace: dragon_scale_shield
 	Checksum: 0xBA4B1BD4
 	Offset: 0x810
 	Size: 0x64

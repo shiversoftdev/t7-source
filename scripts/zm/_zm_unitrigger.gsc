@@ -15,7 +15,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_unitrigger", &__init__, undefined, undefined);
 }
@@ -260,7 +260,7 @@ function unregister_unitrigger_internal(unitrigger_stub)
 		if(isdefined(unitrigger_stub.playertrigger) && unitrigger_stub.playertrigger.size > 0)
 		{
 			keys = getarraykeys(unitrigger_stub.playertrigger);
-			foreach(var_62ea6caa, key in keys)
+			foreach(key in keys)
 			{
 				trigger = unitrigger_stub.playertrigger[key];
 				trigger notify(#"kill_trigger");
@@ -525,18 +525,21 @@ function assess_and_apply_visibility(trigger, stub, player, default_keep)
 			trigger.reassess_time = undefined;
 		}
 	}
-	else if(isdefined(trigger.thread_running) && trigger.thread_running)
-	{
-		keep_thread = 0;
-	}
-	trigger.thread_running = 0;
-	if(isdefined(stub.inactive_reassess_time))
-	{
-		trigger.reassess_time = stub.inactive_reassess_time;
-	}
 	else
 	{
-		trigger.reassess_time = 1;
+		if(isdefined(trigger.thread_running) && trigger.thread_running)
+		{
+			keep_thread = 0;
+		}
+		trigger.thread_running = 0;
+		if(isdefined(stub.inactive_reassess_time))
+		{
+			trigger.reassess_time = stub.inactive_reassess_time;
+		}
+		else
+		{
+			trigger.reassess_time = 1;
+		}
 	}
 	return keep_thread;
 }
@@ -827,14 +830,17 @@ function check_and_build_trigger_from_unitrigger_stub(stub, player)
 			trigger = stub.playertrigger[player getentitynumber()];
 		}
 	}
-	else if(!isdefined(stub.trigger))
-	{
-		trigger = build_trigger_from_unitrigger_stub(stub, player);
-		level._unitriggers.trigger_pool[player getentitynumber()] = trigger;
-	}
 	else
 	{
-		trigger = stub.trigger;
+		if(!isdefined(stub.trigger))
+		{
+			trigger = build_trigger_from_unitrigger_stub(stub, player);
+			level._unitriggers.trigger_pool[player getentitynumber()] = trigger;
+		}
+		else
+		{
+			trigger = stub.trigger;
+		}
 	}
 	return trigger;
 }
@@ -938,17 +944,23 @@ function build_trigger_from_unitrigger_stub(stub, player)
 			{
 				trigger sethintstring(stub.hint_string, stub.hint_parm1, stub.hint_parm2);
 			}
-			else if(isdefined(stub.hint_parm1))
-			{
-				trigger sethintstring(stub.hint_string, stub.hint_parm1);
-			}
-			else if(isdefined(stub.cost) && (!(isdefined(level.weapon_cost_client_filled) && level.weapon_cost_client_filled)))
-			{
-				trigger sethintstring(stub.hint_string, stub.cost);
-			}
 			else
 			{
-				trigger sethintstring(stub.hint_string);
+				if(isdefined(stub.hint_parm1))
+				{
+					trigger sethintstring(stub.hint_string, stub.hint_parm1);
+				}
+				else
+				{
+					if(isdefined(stub.cost) && (!(isdefined(level.weapon_cost_client_filled) && level.weapon_cost_client_filled)))
+					{
+						trigger sethintstring(stub.hint_string, stub.cost);
+					}
+					else
+					{
+						trigger sethintstring(stub.hint_string);
+					}
+				}
 			}
 		}
 		trigger.stub = stub;

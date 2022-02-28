@@ -97,7 +97,7 @@ function tank_discovery_vo()
 	while(true)
 	{
 		a_players = getplayers();
-		foreach(var_b41743b4, e_player in a_players)
+		foreach(e_player in a_players)
 		{
 			dist_sq = distance2dsquared(level.vh_tank.origin, e_player.origin);
 			height_diff = abs(level.vh_tank.origin[2] - e_player.origin[2]);
@@ -136,7 +136,7 @@ function tank_drop_powerups()
 	while(true)
 	{
 		self flag::wait_till("tank_moving");
-		foreach(var_9d8c8c73, node in a_drop_nodes)
+		foreach(node in a_drop_nodes)
 		{
 			dist_sq = distance2dsquared(node.origin, self.origin);
 			if(dist_sq < 40000)
@@ -270,20 +270,20 @@ function tank_debug_tags()
 			{
 				if(!(isdefined(self.tags_drawing) && self.tags_drawing))
 				{
-					foreach(var_9d10a9f0, s_tag in self.a_tank_tags)
+					foreach(s_tag in self.a_tank_tags)
 					{
 						self thread draw_tank_tag(s_tag);
 					}
 					self.tags_drawing = 1;
 				}
 				ang = self.angles;
-				foreach(var_97c0d835, s_spot in a_spots)
+				foreach(s_spot in a_spots)
 				{
 					org = self tank_get_jump_down_offset(s_spot);
 					box(org, vectorscale((-1, -1, 0), 4), vectorscale((1, 1, 1), 4), ang[1], vectorscale((1, 1, 0), 128), 1, 0, 1);
 				}
 				a_zombies = zombie_utility::get_round_enemy_array();
-				foreach(var_a450cf25, e_zombie in a_zombies)
+				foreach(e_zombie in a_zombies)
 				{
 					if(isdefined(e_zombie.tank_state))
 					{
@@ -386,7 +386,7 @@ function tank_setup()
 	m_tank_path_blocker = getent("tank_path_blocker", "targetname");
 	m_tank_path_blocker delete();
 	a_tank_jump_down_spots = struct::get_array("tank_jump_down_spots", "script_noteworthy");
-	foreach(var_994af3a9, s_spot in a_tank_jump_down_spots)
+	foreach(s_spot in a_tank_jump_down_spots)
 	{
 		self tank_jump_down_store_offset(s_spot);
 	}
@@ -479,7 +479,7 @@ function function_617c74cb()
 */
 function function_1db98f69(tag_name)
 {
-	foreach(var_d92b9f91, tag_struct in self.a_tank_tags)
+	foreach(tag_struct in self.a_tank_tags)
 	{
 		if(tag_struct.str_tag == tag_name)
 		{
@@ -500,7 +500,7 @@ function function_1db98f69(tag_name)
 */
 function function_21d81b2c(tag_name)
 {
-	foreach(var_70c7ddf0, tag_struct in self.a_mechz_tags)
+	foreach(tag_struct in self.a_mechz_tags)
 	{
 		if(tag_struct.str_tag == tag_name)
 		{
@@ -644,7 +644,7 @@ function players_on_tank_update()
 	while(true)
 	{
 		a_players = getplayers();
-		foreach(var_3774249d, e_player in a_players)
+		foreach(e_player in a_players)
 		{
 			if(zombie_utility::is_player_valid(e_player))
 			{
@@ -659,7 +659,7 @@ function players_on_tank_update()
 					e_player thread tank_rumble_update();
 					e_player thread tank_rides_around_map_achievement_watcher();
 					e_player thread tank_force_crouch_from_prone_after_on_tank();
-					foreach(var_51d146fd, trig in self.var_e444d47d)
+					foreach(trig in self.var_e444d47d)
 					{
 						e_player thread function_de2a4a6e(trig);
 					}
@@ -766,13 +766,13 @@ function entity_on_tank()
 {
 	if(!self isonground() && (self istouching(level.vh_tank.e_roof) || self istouching(level.vh_tank.var_4da798ac)))
 	{
-		return 1;
+		return true;
 	}
 	if(self getgroundent() === level.vh_tank)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -789,7 +789,7 @@ function tank_station()
 	self thread tank_watch_use();
 	self thread tank_movement();
 	a_call_boxes = getentarray("trig_tank_station_call", "targetname");
-	foreach(var_cc2ee97c, t_call_box in a_call_boxes)
+	foreach(t_call_box in a_call_boxes)
 	{
 		t_call_box thread tank_call_box();
 	}
@@ -819,7 +819,7 @@ function tank_left_behind()
 	a_players = getplayers();
 	a_victims = [];
 	v_tank_fwd = anglestoforward(self.angles);
-	foreach(var_6142a614, e_player in a_players)
+	foreach(e_player in a_players)
 	{
 		if(isdefined(e_player.b_already_on_tank) && e_player.b_already_on_tank)
 		{
@@ -951,7 +951,7 @@ function tank_call_boxes_update()
 	a_trigs = getentarray("trig_tank_station_call", "targetname");
 	moving = level.vh_tank flag::get("tank_moving");
 	cooling = level.vh_tank flag::get("tank_cooldown");
-	foreach(var_483bd0a1, trig in a_trigs)
+	foreach(trig in a_trigs)
 	{
 		at_this_station = trig.script_noteworthy == ("call_box_" + str_loc);
 		trig setcursorhint("HINT_NOICON");
@@ -1093,7 +1093,7 @@ function tank_connect_paths()
 function tank_kill_players()
 {
 	self endon(#"tank_cooldown");
-	foreach(var_50b15538, player in level.players)
+	foreach(player in level.players)
 	{
 		player.var_32857832 = 0;
 	}
@@ -1133,7 +1133,7 @@ function tank_ran_me_over()
 	self disableinvulnerability();
 	self dodamage(self.health + 1000, self.origin);
 	a_nodes = getnodesinradiussorted(self.origin, 256, 0, 72, "path", 15);
-	foreach(var_16bbbed1, node in a_nodes)
+	foreach(node in a_nodes)
 	{
 		str_zone = zm_zonemgr::get_zone_from_position(node.origin);
 		if(!isdefined(str_zone))
@@ -1356,7 +1356,7 @@ function get_players_on_tank(valid_targets_only = 0)
 {
 	a_players_on_tank = [];
 	a_players = getplayers();
-	foreach(var_9996cc5e, e_player in a_players)
+	foreach(e_player in a_players)
 	{
 		if(zombie_utility::is_player_valid(e_player) && (isdefined(e_player.b_already_on_tank) && e_player.b_already_on_tank))
 		{
@@ -1540,7 +1540,7 @@ function zombies_watch_tank()
 	while(true)
 	{
 		a_zombies = zombie_utility::get_round_enemy_array();
-		foreach(var_aaa41116, e_zombie in a_zombies)
+		foreach(e_zombie in a_zombies)
 		{
 			if(!isdefined(e_zombie.tank_state))
 			{
@@ -1827,7 +1827,7 @@ function tank_zombie_think()
 				{
 					a_players = getplayers();
 					a_eligible_players = [];
-					foreach(var_3f9ea19b, e_player in a_players)
+					foreach(e_player in a_players)
 					{
 						if(!(isdefined(e_player.ignoreme) && e_player.ignoreme) && zombie_utility::is_player_valid(e_player))
 						{
@@ -1840,13 +1840,16 @@ function tank_zombie_think()
 						{
 							self.favoriteenemy = array::random(a_eligible_players);
 						}
-						else if(self.var_13ed8adf === level.time)
-						{
-							self.favoriteenemy = zm_tomb_utility::tomb_get_closest_player_using_paths(self.origin, a_eligible_players);
-						}
 						else
 						{
-							self.favoriteenemy = self.var_85a4d178;
+							if(self.var_13ed8adf === level.time)
+							{
+								self.favoriteenemy = zm_tomb_utility::tomb_get_closest_player_using_paths(self.origin, a_eligible_players);
+							}
+							else
+							{
+								self.favoriteenemy = self.var_85a4d178;
+							}
 						}
 					}
 				}
@@ -2052,7 +2055,7 @@ function tank_mark_tag_occupied(str_tag, ai_occupier, set_occupied)
 		if(!isdefined(current_occupier))
 		{
 			self.tag_occupied[str_tag] = ai_occupier;
-			return 1;
+			return true;
 		}
 		if(ai_occupier == current_occupier || !isalive(current_occupier))
 		{
@@ -2060,21 +2063,21 @@ function tank_mark_tag_occupied(str_tag, ai_occupier, set_occupied)
 			if(dist_sq_to_tag < min_dist_sq_to_tag)
 			{
 				self.tag_occupied[str_tag] = ai_occupier;
-				return 1;
+				return true;
 			}
 		}
-		return 0;
+		return false;
 	}
 	if(!isdefined(current_occupier))
 	{
-		return 1;
+		return true;
 	}
 	if(current_occupier != ai_occupier)
 	{
-		return 0;
+		return false;
 	}
 	self.tag_occupied[str_tag] = undefined;
-	return 1;
+	return true;
 }
 
 /*
@@ -2091,7 +2094,7 @@ function is_tag_crowded(str_tag)
 	v_tag = self gettagorigin(str_tag);
 	a_zombies = getaiteamarray(level.zombie_team);
 	n_nearby_zombies = 0;
-	foreach(var_78428dba, e_zombie in a_zombies)
+	foreach(e_zombie in a_zombies)
 	{
 		dist_sq = distancesquared(v_tag, e_zombie.origin);
 		if(dist_sq < 4096)
@@ -2106,11 +2109,11 @@ function is_tag_crowded(str_tag)
 			n_nearby_zombies++;
 			if(n_nearby_zombies >= 4)
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2131,7 +2134,7 @@ function get_closest_valid_tank_tag(jumping_down = 0)
 	{
 		disable_sides = 1;
 	}
-	foreach(var_678918f4, s_tag in level.vh_tank.a_tank_tags)
+	foreach(s_tag in level.vh_tank.a_tank_tags)
 	{
 		if(level.vh_tank tank_tag_is_valid(s_tag, disable_sides))
 		{
@@ -2207,7 +2210,7 @@ function tank_flamethrower_get_targets(str_tag, n_flamethrower_id)
 	v_tag_angles = self gettagangles(str_tag);
 	v_tag_fwd = anglestoforward(v_tag_angles);
 	v_kill_pos = v_tag_pos + (v_tag_fwd * 80);
-	foreach(var_f92fcfd3, ai_zombie in a_zombies)
+	foreach(ai_zombie in a_zombies)
 	{
 		dist_sq = distance2dsquared(ai_zombie.origin, v_kill_pos);
 		if(dist_sq > (80 * 80))
@@ -2255,7 +2258,7 @@ function tank_flamethrower_cycle_targets(str_tag, n_flamethrower_id)
 	while(true)
 	{
 		a_targets = tank_flamethrower_get_targets(str_tag, n_flamethrower_id);
-		foreach(var_e78d576, ai in a_targets)
+		foreach(ai in a_targets)
 		{
 			if(isalive(ai))
 			{
@@ -2332,7 +2335,7 @@ function flamethrower_damage_zombies(n_flamethrower_id, str_tag)
 	while(true)
 	{
 		a_targets = tank_flamethrower_get_targets(str_tag, n_flamethrower_id);
-		foreach(var_ea17571c, ai_zombie in a_targets)
+		foreach(ai_zombie in a_targets)
 		{
 			if(isalive(ai_zombie))
 			{
@@ -2400,13 +2403,16 @@ function enemy_location_override()
 		{
 			self.goalradius = 128;
 		}
-		else if(self.tank_state == "tag_chase")
-		{
-			self.goalradius = 16;
-		}
 		else
 		{
-			self.goalradius = 32;
+			if(self.tank_state == "tag_chase")
+			{
+				self.goalradius = 16;
+			}
+			else
+			{
+				self.goalradius = 32;
+			}
 		}
 		if(self.tank_state == "tank_chase" || (self.tank_state == "none" && (isdefined(enemy.b_already_on_tank) && enemy.b_already_on_tank)))
 		{
@@ -2458,20 +2464,23 @@ function enemy_location_override()
 				self.ignoreall = 0;
 			}
 		}
-		else if(self.tank_state == "tag_chase")
+		else
 		{
-			if(self.str_tank_tag === "window_right_front_jmp_jnt")
+			if(self.tank_state == "tag_chase")
 			{
-				location = getstartorigin(tank gettagorigin("window_right_front_jmp_jnt"), tank gettagangles("window_right_front_jmp_jnt"), "ai_zm_dlc5_zombie_jump_up_markiv_front");
+				if(self.str_tank_tag === "window_right_front_jmp_jnt")
+				{
+					location = getstartorigin(tank gettagorigin("window_right_front_jmp_jnt"), tank gettagangles("window_right_front_jmp_jnt"), "ai_zm_dlc5_zombie_jump_up_markiv_front");
+				}
+				else
+				{
+					location = level.vh_tank function_1db98f69(self.str_tank_tag);
+				}
 			}
-			else
+			else if(self.tank_state == "exit_tank")
 			{
-				location = level.vh_tank function_1db98f69(self.str_tank_tag);
+				location = level.vh_tank tank_get_jump_down_offset(self.tank_tag);
 			}
-		}
-		else if(self.tank_state == "exit_tank")
-		{
-			location = level.vh_tank tank_get_jump_down_offset(self.tank_tag);
 		}
 	}
 	if(self.var_13ed8adf === level.time && isdefined(location))
@@ -2532,16 +2541,16 @@ function zombie_on_tank_death_animscript_callback(einflictor, eattacker, idamage
 	{
 		self notify(#"killanimscript");
 		self zombie_utility::reset_attack_spot();
-		return 1;
+		return true;
 	}
 	if(isdefined(self))
 	{
 		level zm_spawner::zombie_death_points(self.origin, smeansofdeath, shitloc, eattacker, self);
 		self notify(#"killanimscript");
 		self zombie_utility::reset_attack_spot();
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

@@ -23,7 +23,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("helicopter", &__init__, undefined, undefined);
 }
@@ -403,7 +403,12 @@ function startfx(localclientnum)
 			self.exhaustrightfxhandle = playfxontag(localclientnum, self.exhaustfx, self, "tag_engine_right");
 		}
 	}
-	println("");
+	else
+	{
+		/#
+			println("");
+		#/
+	}
 	if(isdefined(self.vehicletype))
 	{
 		light_fx = undefined;
@@ -507,19 +512,25 @@ function damage_fx_stages(localclientnum)
 				}
 				fx = trail_fx(localclientnum, level.chopper_fx["damage"]["light_smoke"], "tag_engine_left");
 			}
-			else if(self gethelidamagestate() == 1)
+			else
 			{
-				if(isdefined(fx))
+				if(self gethelidamagestate() == 1)
 				{
-					stopfx(localclientnum, fx);
+					if(isdefined(fx))
+					{
+						stopfx(localclientnum, fx);
+					}
+					fx = trail_fx(localclientnum, level.chopper_fx["damage"]["heavy_smoke"], "tag_engine_left");
 				}
-				fx = trail_fx(localclientnum, level.chopper_fx["damage"]["heavy_smoke"], "tag_engine_left");
+				else
+				{
+					if(isdefined(fx))
+					{
+						stopfx(localclientnum, fx);
+					}
+					self notify(#"hash_f6285749");
+				}
 			}
-			else if(isdefined(fx))
-			{
-				stopfx(localclientnum, fx);
-			}
-			self notify(#"hash_f6285749");
 			last_damage_state = self gethelidamagestate();
 		}
 		wait(0.25);
@@ -780,13 +791,16 @@ function marker_state_changed(localclientnum, oldval, newval, bnewent, binitials
 	{
 		player.markerfx = killstreakcorebundle.fxvalidlocation;
 	}
-	else if(newval == 2)
-	{
-		player.markerfx = killstreakcorebundle.fxinvalidlocation;
-	}
 	else
 	{
-		player.markerfx = undefined;
+		if(newval == 2)
+		{
+			player.markerfx = killstreakcorebundle.fxinvalidlocation;
+		}
+		else
+		{
+			player.markerfx = undefined;
+		}
 	}
 	if(isdefined(player.markerobj) && !player.markerobj hasdobj(localclientnum))
 	{

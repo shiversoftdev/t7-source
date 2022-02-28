@@ -23,7 +23,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("spawner", &__init__, &__main__, undefined);
 }
@@ -94,7 +94,7 @@ function __main__()
 	waittillframeend();
 	ai = getaispeciesarray("all");
 	array::thread_all(ai, &living_ai_prethink);
-	foreach(var_1127fad8, ai_guy in ai)
+	foreach(ai_guy in ai)
 	{
 		if(isalive(ai_guy))
 		{
@@ -123,7 +123,7 @@ function update_nav_triggers()
 		return;
 	}
 	level.navmesh_zones = [];
-	foreach(var_2b851d38, trig in a_nav_triggers)
+	foreach(trig in a_nav_triggers)
 	{
 		level.navmesh_zones[trig.targetname] = 0;
 	}
@@ -163,7 +163,7 @@ function global_ai_array()
 		}
 		else
 		{
-			foreach(var_f4baf6cb, aiarray in level.ai)
+			foreach(aiarray in level.ai)
 			{
 				if(isinarray(aiarray, self))
 				{
@@ -175,7 +175,7 @@ function global_ai_array()
 	}
 	else
 	{
-		foreach(team, array in level.ai)
+		foreach(array in level.ai)
 		{
 			for(i = array.size - 1; i >= 0; i--)
 			{
@@ -931,15 +931,18 @@ function set_goal_volume()
 			pos = node;
 			self setgoal(pos);
 		}
-		else if(isdefined(ent))
+		else
 		{
-			pos = ent;
-			self setgoal(pos.origin);
-		}
-		else if(isdefined(struct))
-		{
-			pos = struct;
-			self setgoal(pos.origin);
+			if(isdefined(ent))
+			{
+				pos = ent;
+				self setgoal(pos.origin);
+			}
+			else if(isdefined(struct))
+			{
+				pos = struct;
+				self setgoal(pos.origin);
+			}
 		}
 		if(isdefined(pos.radius) && pos.radius != 0)
 		{
@@ -954,14 +957,17 @@ function set_goal_volume()
 	{
 		self setgoal(volume);
 	}
-	else if(isdefined(self.script_spawner_targets))
-	{
-		self waittill(#"spawner_target_set");
-		self setgoal(volume);
-	}
 	else
 	{
-		self setgoal(volume);
+		if(isdefined(self.script_spawner_targets))
+		{
+			self waittill(#"spawner_target_set");
+			self setgoal(volume);
+		}
+		else
+		{
+			self setgoal(volume);
+		}
 	}
 }
 
@@ -1124,7 +1130,7 @@ function go_to_spawner_target(target_names)
 		{
 			nodespresent = 1;
 		}
-		foreach(var_39893e01, node in target_nodes)
+		foreach(node in target_nodes)
 		{
 			if(isnodeoccupied(node) || (isdefined(node.node_claimed) && node.node_claimed))
 			{
@@ -1167,7 +1173,7 @@ function go_to_spawner_target(target_names)
 	{
 		while(nodes.size == 0)
 		{
-			foreach(var_8bc8a375, node in a_nodes_unavailable)
+			foreach(node in a_nodes_unavailable)
 			{
 				if(!isnodeoccupied(node) && (!(isdefined(node.node_claimed) && node.node_claimed)) && (!(isdefined(node.spawnflags) && (node.spawnflags & 512) == 512)))
 				{
@@ -1418,7 +1424,7 @@ function go_to_node_wait_for_player(node, get_target_func, dist)
 		player = players[i];
 		if(distancesquared(player.origin, node.origin) < distancesquared(self.origin, node.origin))
 		{
-			return 1;
+			return true;
 		}
 	}
 	vec = anglestoforward(self.angles);
@@ -1449,7 +1455,7 @@ function go_to_node_wait_for_player(node, get_target_func, dist)
 		value = vec2[i];
 		if(vectordot(vec, value) > 0)
 		{
-			return 1;
+			return true;
 		}
 	}
 	dist2rd = dist * dist;
@@ -1458,10 +1464,10 @@ function go_to_node_wait_for_player(node, get_target_func, dist)
 		player = players[i];
 		if(distancesquared(player.origin, self.origin) < dist2rd)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2426,17 +2432,23 @@ function flood_spawner_think(trigger)
 			{
 				wait(randomfloatrange(5, 9));
 			}
-			else if(players.size == 2)
+			else
 			{
-				wait(randomfloatrange(3, 6));
-			}
-			else if(players.size == 3)
-			{
-				wait(randomfloatrange(1, 4));
-			}
-			else if(players.size == 4)
-			{
-				wait(randomfloatrange(0.5, 1.5));
+				if(players.size == 2)
+				{
+					wait(randomfloatrange(3, 6));
+				}
+				else
+				{
+					if(players.size == 3)
+					{
+						wait(randomfloatrange(1, 4));
+					}
+					else if(players.size == 4)
+					{
+						wait(randomfloatrange(0.5, 1.5));
+					}
+				}
 			}
 		}
 	}
@@ -2554,7 +2566,7 @@ function show_bad_path()
 */
 function watches_for_friendly_fire()
 {
-	return 1;
+	return true;
 }
 
 /*
@@ -2788,7 +2800,7 @@ function check_player_requirements()
 		if(n_player_count < self.script_minplayers)
 		{
 			self delete();
-			return 0;
+			return false;
 		}
 	}
 	if(isdefined(self.script_numplayers))
@@ -2796,7 +2808,7 @@ function check_player_requirements()
 		if(n_player_count < self.script_numplayers)
 		{
 			self delete();
-			return 0;
+			return false;
 		}
 	}
 	if(isdefined(self.script_maxplayers))
@@ -2804,10 +2816,10 @@ function check_player_requirements()
 		if(n_player_count > self.script_maxplayers)
 		{
 			self delete();
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -2830,10 +2842,10 @@ function spawn_failed(spawn)
 		waittillframeend();
 		if(isalive(spawn))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -2847,7 +2859,7 @@ function spawn_failed(spawn)
 */
 function kill_spawnernum(number)
 {
-	foreach(var_707cda0e, sp in getspawnerarray("" + number, "script_killspawner"))
+	foreach(sp in getspawnerarray("" + number, "script_killspawner"))
 	{
 		sp delete();
 	}
@@ -3022,7 +3034,7 @@ function get_ai_group_sentient_count(aigroup)
 function get_ai_group_spawner_count(aigroup)
 {
 	n_count = 0;
-	foreach(var_73824f77, sp in level._ai_group[aigroup].spawners)
+	foreach(sp in level._ai_group[aigroup].spawners)
 	{
 		if(isdefined(sp))
 		{
@@ -3335,17 +3347,20 @@ function simple_spawn(name_or_spawners, spawn_func, param1, param2, param3, para
 			assert(spawners.size, ("" + name_or_spawners) + "");
 		#/
 	}
-	else if(!isdefined(name_or_spawners))
+	else
 	{
-		name_or_spawners = [];
+		if(!isdefined(name_or_spawners))
+		{
+			name_or_spawners = [];
+		}
+		else if(!isarray(name_or_spawners))
+		{
+			name_or_spawners = array(name_or_spawners);
+		}
+		spawners = name_or_spawners;
 	}
-	else if(!isarray(name_or_spawners))
-	{
-		name_or_spawners = array(name_or_spawners);
-	}
-	spawners = name_or_spawners;
 	a_spawned = [];
-	foreach(var_14120388, sp in spawners)
+	foreach(sp in spawners)
 	{
 		e_spawned = sp spawn(bforce);
 		if(isdefined(e_spawned))
@@ -3436,7 +3451,7 @@ function getscoreinfoxp(type)
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init_npcdeathtracking()
+function autoexec init_npcdeathtracking()
 {
 	/#
 		level.a_npcdeaths = [];
@@ -3733,7 +3748,7 @@ function listenfornpcdeaths()
 					}
 					else
 					{
-						foreach(var_57864a71, deadnpctypecount in level.a_npcdeaths)
+						foreach(deadnpctypecount in level.a_npcdeaths)
 						{
 							level.s_killsoutput = (((((level.s_killsoutput + deadnpctypecount.strscoretype) + "") + deadnpctypecount.icount) + "") + deadnpctypecount.ikilledbyplayercount) + "";
 						}
@@ -3784,7 +3799,7 @@ function checkfordeathtrackingreset()
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init_female_spawn()
+function autoexec init_female_spawn()
 {
 	level.female_percent = 0;
 	set_female_percent(30);

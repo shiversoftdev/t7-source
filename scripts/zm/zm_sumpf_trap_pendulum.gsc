@@ -370,40 +370,46 @@ function zombiependamage(parent, who)
 	{
 		self.a.nodeath = 1;
 	}
-	else if(!isdefined(level.numlaunched))
+	else
 	{
-		level thread launch_monitor();
-	}
-	if(!isdefined(self.flung))
-	{
-		if(parent.script_noteworthy == "1")
+		if(!isdefined(level.numlaunched))
 		{
-			x = randomintrange(200, 250);
-			y = randomintrange(-35, 35);
-			z = randomintrange(95, 120);
+			level thread launch_monitor();
 		}
-		else
+		if(!isdefined(self.flung))
 		{
-			x = randomintrange(-250, -200);
-			y = randomintrange(-35, 35);
-			z = randomintrange(95, 120);
+			if(parent.script_noteworthy == "1")
+			{
+				x = randomintrange(200, 250);
+				y = randomintrange(-35, 35);
+				z = randomintrange(95, 120);
+			}
+			else
+			{
+				x = randomintrange(-250, -200);
+				y = randomintrange(-35, 35);
+				z = randomintrange(95, 120);
+			}
+			if(level.my_time < 6)
+			{
+				adjustment = level.my_time / 6;
+			}
+			else
+			{
+				if(level.my_time > 24)
+				{
+					adjustment = (30 - level.my_time) / 6;
+				}
+				else
+				{
+					adjustment = 1;
+				}
+			}
+			x = x * adjustment;
+			y = y * adjustment;
+			z = z * adjustment;
+			self thread do_launch(x, y, z, parent);
 		}
-		if(level.my_time < 6)
-		{
-			adjustment = level.my_time / 6;
-		}
-		else if(level.my_time > 24)
-		{
-			adjustment = (30 - level.my_time) / 6;
-		}
-		else
-		{
-			adjustment = 1;
-		}
-		x = x * adjustment;
-		y = y * adjustment;
-		z = z * adjustment;
-		self thread do_launch(x, y, z, parent);
 	}
 }
 

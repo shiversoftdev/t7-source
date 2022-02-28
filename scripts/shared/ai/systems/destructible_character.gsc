@@ -15,7 +15,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function main()
+function autoexec main()
 {
 	clientfield::register("actor", "destructible_character_state", 1, 21, "int");
 	destructibles = struct::get_script_bundles("destructiblecharacterdef");
@@ -56,7 +56,7 @@ autoexec function main()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _getdestructstate(entity)
+function private _getdestructstate(entity)
 {
 	if(isdefined(entity._destruct_state))
 	{
@@ -74,7 +74,7 @@ private function _getdestructstate(entity)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _setdestructed(entity, destructflag)
+function private _setdestructed(entity, destructflag)
 {
 	entity._destruct_state = _getdestructstate(entity) | destructflag;
 	entity clientfield::set("destructible_character_state", entity._destruct_state);
@@ -212,7 +212,7 @@ function destructnumberrandompieces(entity, num_pieces_to_destruct = 0)
 		destructible_pieces_list[i] = i + 1;
 	}
 	destructible_pieces_list = array::randomize(destructible_pieces_list);
-	foreach(var_4adf7bba, piece in destructible_pieces_list)
+	foreach(piece in destructible_pieces_list)
 	{
 		if(!isdestructed(entity, piece))
 		{

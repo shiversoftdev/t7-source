@@ -38,7 +38,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("skipto", &__init__, &__main__, undefined);
 }
@@ -350,9 +350,9 @@ function objective_leave_incomplete(skipto)
 		return;
 	}
 	level.skipto_settings[skipto].objective_mark_complete = 0;
-	foreach(var_24c4e65d, player in level.players)
+	foreach(player in level.players)
 	{
-		bb::function_bea1c67c(skipto, player, "leave_objective_incomplete");
+		bb::logobjectivestatuschange(skipto, player, "leave_objective_incomplete");
 	}
 }
 
@@ -660,9 +660,9 @@ function check_skipto_condition(conditions, adding)
 	{
 		if(isdefined(level.skipto_settings[conditions]) && (isdefined(level.skipto_settings[conditions].objective_running) && level.skipto_settings[conditions].objective_running || isinarray(adding, conditions)))
 		{
-			return 0;
+			return false;
 		}
-		return 1;
+		return true;
 	}
 	if(conditions["op"] == ("|"))
 	{
@@ -670,19 +670,19 @@ function check_skipto_condition(conditions, adding)
 		{
 			if(check_skipto_condition(conditions[i], adding))
 			{
-				return 1;
+				return true;
 			}
 		}
-		return 0;
+		return false;
 	}
 	for(i = 0; i < (conditions.size - 1); i++)
 	{
 		if(!check_skipto_condition(conditions[i], adding))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -697,7 +697,7 @@ function check_skipto_condition(conditions, adding)
 function check_skipto_conditions(objectives)
 {
 	result = [];
-	foreach(var_f52cf598, name in objectives)
+	foreach(name in objectives)
 	{
 		if(check_skipto_condition(level.skipto_settings[name].completion_conditions, result))
 		{
@@ -726,13 +726,13 @@ function check_skipto_conditions(objectives)
 */
 function build_objective_tree()
 {
-	foreach(var_1bcec88, struct in level.skipto_settings)
+	foreach(struct in level.skipto_settings)
 	{
 		if(isdefined(struct.public) && struct.public)
 		{
 			if(struct.launch_after.size)
 			{
-				foreach(var_2d7ce3f1, launch_after in struct.launch_after)
+				foreach(launch_after in struct.launch_after)
 				{
 					if(isdefined(level.skipto_settings[launch_after]))
 					{
@@ -761,16 +761,19 @@ function build_objective_tree()
 					level.skipto_settings["_default"].next[level.skipto_settings["_default"].next.size] = struct.name;
 				}
 			}
-			else if(!isdefined(level.skipto_settings["_default"].next))
+			else
 			{
-				level.skipto_settings["_default"].next = [];
+				if(!isdefined(level.skipto_settings["_default"].next))
+				{
+					level.skipto_settings["_default"].next = [];
+				}
+				else if(!isarray(level.skipto_settings["_default"].next))
+				{
+					level.skipto_settings["_default"].next = array(level.skipto_settings["_default"].next);
+				}
+				level.skipto_settings["_default"].next[level.skipto_settings["_default"].next.size] = struct.name;
 			}
-			else if(!isarray(level.skipto_settings["_default"].next))
-			{
-				level.skipto_settings["_default"].next = array(level.skipto_settings["_default"].next);
-			}
-			level.skipto_settings["_default"].next[level.skipto_settings["_default"].next.size] = struct.name;
-			foreach(var_2be8e4c7, end_before in struct.end_before)
+			foreach(end_before in struct.end_before)
 			{
 				if(isdefined(level.skipto_settings[end_before]))
 				{
@@ -787,7 +790,7 @@ function build_objective_tree()
 			}
 		}
 	}
-	foreach(var_c42e8369, struct in level.skipto_settings)
+	foreach(struct in level.skipto_settings)
 	{
 		if(isdefined(struct.public) && struct.public)
 		{
@@ -838,7 +841,7 @@ function skiptos_to_string(skiptos)
 {
 	skiptostr = "";
 	first = 1;
-	foreach(var_66b77131, skipto in skiptos)
+	foreach(skipto in skiptos)
 	{
 		if(!first)
 		{
@@ -1009,7 +1012,7 @@ function validate_skiptos(skiptos)
 	while(isdefined(skiptos) && skiptos.size && !done)
 	{
 		done = 1;
-		foreach(var_8f2ca8b6, skipto in skiptos)
+		foreach(skipto in skiptos)
 		{
 			if(!isdefined(level.skipto_settings[skipto]))
 			{
@@ -1175,7 +1178,7 @@ function devgui()
 	jumpmenu = rootmenu + ("Jump to/");
 	index = 1;
 	adddebugcommand(((((jumpmenu + "Default:0\" \"set ") + "skipto_jump") + " ") + "_default") + "\" \n");
-	foreach(var_79326db2, struct in level.skipto_settings)
+	foreach(struct in level.skipto_settings)
 	{
 		name = (struct.name + ":") + index;
 		index++;
@@ -1248,9 +1251,9 @@ function key_combo_pressed()
 	player = getplayers()[0];
 	if(isdefined(player) && player buttonpressed("BUTTON_X") && player buttonpressed("DPAD_RIGHT") && player buttonpressed("BUTTON_LSHLDR") && player buttonpressed("BUTTON_RSHLDR"))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1294,7 +1297,7 @@ function change_completion_menu(objectives)
 	rootmenu = "devgui_cmd \"Map/Skipto/";
 	compmenu = rootmenu + ("Complete/");
 	index = 1;
-	foreach(var_dd043def, objective in objectives)
+	foreach(objective in objectives)
 	{
 		name = (objective + ":") + index;
 		index++;
@@ -1315,7 +1318,7 @@ function get_names()
 {
 	index = 0;
 	names = [];
-	foreach(var_6c6e44f3, struct in level.skipto_settings)
+	foreach(struct in level.skipto_settings)
 	{
 		name = struct.name;
 		names[index] = name;
@@ -1556,9 +1559,9 @@ function is_dev(skipto)
 	substr = tolower(getsubstr(skipto, 0, 4));
 	if(substr == "dev_")
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1700,7 +1703,7 @@ function teleport_ai(skipto_name, friendly_ai)
 	{
 		return;
 	}
-	foreach(var_54fb6eaa, ai in friendly_ai)
+	foreach(ai in friendly_ai)
 	{
 		if(isdefined(ai))
 		{
@@ -1839,7 +1842,7 @@ function convert_token(str, fromtok, totok)
 	sarray = strtok(str, fromtok);
 	ostr = "";
 	first = 1;
-	foreach(var_536fcedf, s in sarray)
+	foreach(s in sarray)
 	{
 		if(!first)
 		{
@@ -2004,14 +2007,14 @@ function function_84008d8d(objectivename, player)
 	var_b1f1efe7 = 0;
 	var_394190fb = 0;
 	var_d88606f6 = 0;
-	var_32d177c9 = 0;
+	wallruncount = 0;
 	var_4dbe4ef9 = 0;
 	if(isdefined(player.movementtracking))
 	{
 		if(isdefined(player.movementtracking.wallrunning))
 		{
 			var_394190fb = player.movementtracking.wallrunning.distance;
-			var_32d177c9 = player.movementtracking.wallrunning.count;
+			wallruncount = player.movementtracking.wallrunning.count;
 		}
 		if(isdefined(player.movementtracking.sprinting))
 		{
@@ -2026,7 +2029,7 @@ function function_84008d8d(objectivename, player)
 	player function_bc7b05ac("distance_wallrun", objectiveindex, player.var_dc615b.distance_wallrun, int(var_394190fb));
 	player function_bc7b05ac("distance_sprinted", objectiveindex, player.var_dc615b.distance_sprinted, int(var_b1f1efe7));
 	player function_bc7b05ac("distance_boosted", objectiveindex, player.var_dc615b.distance_boosted, int(var_d88606f6));
-	player function_bc7b05ac("wallruns_total", objectiveindex, player.var_dc615b.wallruns_total, int(var_32d177c9));
+	player function_bc7b05ac("wallruns_total", objectiveindex, player.var_dc615b.wallruns_total, int(wallruncount));
 	player function_bc7b05ac("boosts_total", objectiveindex, player.var_dc615b.boosts_total, int(var_4dbe4ef9));
 	player matchrecordsetcheckpointstat(objectiveindex, "start_difficulty", player.var_dc615b.difficulty);
 	player matchrecordsetcheckpointstat(objectiveindex, "end_difficulty", level.gameskill);
@@ -2069,14 +2072,14 @@ function function_723221dd(player)
 	var_b1f1efe7 = 0;
 	var_394190fb = 0;
 	var_d88606f6 = 0;
-	var_32d177c9 = 0;
+	wallruncount = 0;
 	var_4dbe4ef9 = 0;
 	if(isdefined(player.movementtracking))
 	{
 		if(isdefined(player.movementtracking.wallrunning))
 		{
 			var_394190fb = player.movementtracking.wallrunning.distance;
-			var_32d177c9 = player.movementtracking.wallrunning.count;
+			wallruncount = player.movementtracking.wallrunning.count;
 		}
 		if(isdefined(player.movementtracking.sprinting))
 		{
@@ -2091,7 +2094,7 @@ function function_723221dd(player)
 	player.var_dc615b.distance_wallrun = int(var_394190fb);
 	player.var_dc615b.distance_sprinted = int(var_b1f1efe7);
 	player.var_dc615b.distance_boosted = int(var_d88606f6);
-	player.var_dc615b.wallruns_total = int(var_32d177c9);
+	player.var_dc615b.wallruns_total = int(wallruncount);
 	player.var_dc615b.boosts_total = int(var_4dbe4ef9);
 }
 
@@ -2199,13 +2202,13 @@ function objective_completed(name, player)
 		assert(isdefined(level.skipto_settings[name]), ("" + name) + "");
 	#/
 	setdvar("NPCDeathTracking_Save", 1);
-	foreach(var_47441b8b, var_eff42720 in level.players)
+	foreach(var_eff42720 in level.players)
 	{
 		if(var_eff42720 istestclient())
 		{
 			continue;
 		}
-		bb::function_bea1c67c(name, var_eff42720, "complete");
+		bb::logobjectivestatuschange(name, var_eff42720, "complete");
 		var_eff42720 globallogic_player::function_ece4ca01();
 	}
 	if(isdefined(name))
@@ -2216,7 +2219,7 @@ function objective_completed(name, player)
 		}
 		else
 		{
-			foreach(var_ada632bd, var_63af5576 in level.players)
+			foreach(var_63af5576 in level.players)
 			{
 				function_84008d8d(name, var_63af5576);
 			}
@@ -2241,9 +2244,9 @@ function objective_completed(name, player)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_52904bc9()
+function private function_52904bc9()
 {
-	foreach(var_a0c3a634, trig in trigger::get_all())
+	foreach(trig in trigger::get_all())
 	{
 		if(isdefined(trig.var_22c28736))
 		{
@@ -2261,7 +2264,7 @@ private function function_52904bc9()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_87fe8621()
+function private function_87fe8621()
 {
 	self endon(#"death");
 	level flag::wait_till("all_players_spawned");
@@ -2275,7 +2278,7 @@ private function function_87fe8621()
 		if(isplayer(lead_player))
 		{
 			self notify(#"hash_c0b9931e");
-			foreach(var_cf7f2f50, player in level.players)
+			foreach(player in level.players)
 			{
 				if(player != lead_player)
 				{
@@ -2316,7 +2319,7 @@ function function_659bb22b(var_3a36166b)
 {
 	a_ret = [];
 	var_717810f = spawnlogic::get_all_spawn_points(1);
-	foreach(var_affc0eab, loc in var_717810f)
+	foreach(loc in var_717810f)
 	{
 		if(loc.var_22c28736 === var_3a36166b)
 		{
@@ -2343,7 +2346,7 @@ function function_659bb22b(var_3a36166b)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_61843b91(var_717810f, n_player_dist)
+function private function_61843b91(var_717810f, n_player_dist)
 {
 	self endon(#"death");
 	if(self isinvehicle())
@@ -2378,7 +2381,7 @@ private function function_61843b91(var_717810f, n_player_dist)
 		self unlink();
 		wait(0.1);
 	}
-	foreach(var_27eb58ef, loc in var_717810f)
+	foreach(loc in var_717810f)
 	{
 		if(!(isdefined(loc.b_used) && loc.b_used))
 		{
@@ -2430,7 +2433,7 @@ function show_level_objectives(objectives)
 	/#
 		setdvar("", 1);
 		index = 0;
-		foreach(var_1855ec96, name in objectives)
+		foreach(name in objectives)
 		{
 			skipto_struct = level.skipto_settings[name];
 			if(isdefined(skipto_struct.str_name) && skipto_struct.str_name.size)
@@ -2455,7 +2458,7 @@ function show_level_objectives(objectives)
 function set_level_objective(objectives, starting, player)
 {
 	clear_recursion();
-	foreach(var_9401096b, name in objectives)
+	foreach(name in objectives)
 	{
 		if(isdefined(level.skipto_settings[name]))
 		{
@@ -2464,7 +2467,7 @@ function set_level_objective(objectives, starting, player)
 	}
 	if(isdefined(level.func_skipto_cleanup))
 	{
-		foreach(var_ac365864, name in objectives)
+		foreach(name in objectives)
 		{
 			thread [[level.func_skipto_cleanup]](name);
 		}
@@ -2490,7 +2493,7 @@ function set_level_objective(objectives, starting, player)
 	}
 	else
 	{
-		foreach(var_4b655191, var_63af5576 in level.players)
+		foreach(var_63af5576 in level.players)
 		{
 			function_723221dd(var_63af5576);
 		}
@@ -2532,48 +2535,51 @@ function start_objective_logic(name, starting)
 {
 	if(isarray(name))
 	{
-		foreach(var_fdad1d9b, element in name)
+		foreach(element in name)
 		{
 			start_objective_logic(element, starting);
 		}
 	}
-	else if(isdefined(level.skipto_settings[name]))
+	else
 	{
-		if(!(isdefined(level.skipto_settings[name].objective_running) && level.skipto_settings[name].objective_running))
+		if(isdefined(level.skipto_settings[name]))
 		{
-			if(!isinarray(level.skipto_current_objective, name))
+			if(!(isdefined(level.skipto_settings[name].objective_running) && level.skipto_settings[name].objective_running))
 			{
-				if(!isdefined(level.skipto_current_objective))
+				if(!isinarray(level.skipto_current_objective, name))
 				{
-					level.skipto_current_objective = [];
+					if(!isdefined(level.skipto_current_objective))
+					{
+						level.skipto_current_objective = [];
+					}
+					else if(!isarray(level.skipto_current_objective))
+					{
+						level.skipto_current_objective = array(level.skipto_current_objective);
+					}
+					level.skipto_current_objective[level.skipto_current_objective.size] = name;
 				}
-				else if(!isarray(level.skipto_current_objective))
+				level notify(name + "_init");
+				level.skipto_settings[name].objective_running = 1;
+				if(!getdvarint("art_review", 0))
 				{
-					level.skipto_current_objective = array(level.skipto_current_objective);
+					standard_objective_init(name, starting);
+					if(isdefined(level.skipto_settings[name].skipto_func))
+					{
+						thread [[level.skipto_settings[name].skipto_func]](name, starting);
+						savegame::checkpoint_save(level.skipto_settings[name].var_2bc8bbd9);
+					}
 				}
-				level.skipto_current_objective[level.skipto_current_objective.size] = name;
 			}
-			level notify(name + "_init");
-			level.skipto_settings[name].objective_running = 1;
-			if(!getdvarint("art_review", 0))
+			if(!(isdefined(level.skipto_settings[name].logic_running) && level.skipto_settings[name].logic_running) && isdefined(level.skipto_settings[name].logic_func))
 			{
-				standard_objective_init(name, starting);
-				if(isdefined(level.skipto_settings[name].skipto_func))
-				{
-					thread [[level.skipto_settings[name].skipto_func]](name, starting);
-					savegame::checkpoint_save(level.skipto_settings[name].var_2bc8bbd9);
-				}
+				level.skipto_settings[name].logic_running = 1;
+				thread [[level.skipto_settings[name].logic_func]](name);
 			}
 		}
-		if(!(isdefined(level.skipto_settings[name].logic_running) && level.skipto_settings[name].logic_running) && isdefined(level.skipto_settings[name].logic_func))
+		foreach(player in level.players)
 		{
-			level.skipto_settings[name].logic_running = 1;
-			thread [[level.skipto_settings[name].logic_func]](name);
+			bb::logobjectivestatuschange(name, player, "start");
 		}
-	}
-	foreach(var_a6707c05, player in level.players)
-	{
-		bb::function_bea1c67c(name, player, "start");
 	}
 }
 
@@ -2588,7 +2594,7 @@ function start_objective_logic(name, starting)
 */
 function clear_recursion()
 {
-	foreach(var_296d1504, skipto in level.skipto_settings)
+	foreach(skipto in level.skipto_settings)
 	{
 		skipto.cleanup_recursion = 0;
 	}
@@ -2607,7 +2613,7 @@ function stop_objective_logic(name, starting, direct, player)
 {
 	if(isarray(name))
 	{
-		foreach(var_a8047b2f, element in name)
+		foreach(element in name)
 		{
 			stop_objective_logic(element, starting, direct, player);
 		}
@@ -2639,7 +2645,7 @@ function stop_objective_logic(name, starting, direct, player)
 			if(!(isdefined(level.skipto_settings[name].looping) && level.skipto_settings[name].looping))
 			{
 				prev = level.skipto_settings[name].prev;
-				foreach(var_aa0dc1a, element in prev)
+				foreach(element in prev)
 				{
 					stop_objective_logic(element, starting, 0, player);
 				}
@@ -2702,7 +2708,7 @@ function filter_player_spawnpoints(player, spawnpoints, str_skipto)
 	{
 		objectives = array(objectives);
 	}
-	foreach(var_af1fa702, objective in objectives)
+	foreach(objective in objectives)
 	{
 		if(isdefined(level.skipto_settings[objective]))
 		{
@@ -2724,7 +2730,7 @@ function filter_player_spawnpoints(player, spawnpoints, str_skipto)
 	{
 		anypoints = [];
 		retpoints = [];
-		foreach(var_ac4e7358, point in spawnpoints)
+		foreach(point in spawnpoints)
 		{
 			point.different_skipto = 0;
 			if(isdefined(point.script_objective) && isinarray(filter, point.script_objective))
@@ -2776,7 +2782,7 @@ function filter_player_spawnpoints(player, spawnpoints, str_skipto)
 function delete_start_spawns(str_skipto)
 {
 	a_spawns = spawnlogic::get_spawnpoint_array("cp_coop_spawn");
-	foreach(var_596d20e0, spawn_point in a_spawns)
+	foreach(spawn_point in a_spawns)
 	{
 		if(spawn_point.script_objective == str_skipto)
 		{
@@ -2807,7 +2813,12 @@ function function_b0e512a3()
 	{
 		switchmap_preload(str_next_map);
 	}
-	assert(0, "");
+	else
+	{
+		/#
+			assert(0, "");
+		#/
+	}
 }
 
 /*
@@ -2863,7 +2874,7 @@ function function_f380969b()
 	{
 		self waittill(#"menuresponse", menu, response);
 	}
-	foreach(var_79a2d5ec, player in getplayers())
+	foreach(player in getplayers())
 	{
 		if(player == self)
 		{
@@ -3038,10 +3049,10 @@ function level_completed(skipto, starting)
 		return;
 	}
 	level.level_ending = 1;
-	foreach(var_577657a0, var_63af5576 in level.players)
+	foreach(var_63af5576 in level.players)
 	{
-		bb::function_bea1c67c("_level", var_63af5576, "complete");
-		bb::function_e7f3440(var_63af5576);
+		bb::logobjectivestatuschange("_level", var_63af5576, "complete");
+		bb::logmatchsummary(var_63af5576);
 	}
 	matchrecordsetcurrentlevelcomplete();
 	matchrecordsetleveldifficultyforindex(1, level.gameskill);
@@ -3054,7 +3065,7 @@ function level_completed(skipto, starting)
 	{
 		level thread sndcreditsmusic();
 		level flag::init("credits_done");
-		foreach(var_443e44c9, player in level.players)
+		foreach(player in level.players)
 		{
 			player thread function_4aa085d7();
 		}
@@ -3078,7 +3089,7 @@ function level_completed(skipto, starting)
 		{
 			world.highest_map_reached = str_next_map;
 			mapindex = getmaporder(str_next_map);
-			foreach(var_c6ac9331, player in level.players)
+			foreach(player in level.players)
 			{
 				if(player ishost())
 				{
@@ -3131,7 +3142,7 @@ function level_completed(skipto, starting)
 	}
 	util::wait_network_frame();
 	set_current_skipto("");
-	foreach(var_d29a9d1d, player in getplayers())
+	foreach(player in getplayers())
 	{
 		player player::take_weapons();
 		player savegame::set_player_data("saved_weapon", player._current_weapon.name);
@@ -3145,7 +3156,7 @@ function level_completed(skipto, starting)
 		next_map = function_c7f783fe();
 		if(isdefined(next_map) && function_cb7247d8(next_map))
 		{
-			foreach(var_72e0a1d2, player in level.players)
+			foreach(player in level.players)
 			{
 				player globallogic_player::function_4cef9872(next_map);
 			}
@@ -3174,7 +3185,7 @@ function level_completed(skipto, starting)
 	}
 	if(!isdefined(str_next_map) || function_cb7247d8(str_next_map))
 	{
-		foreach(var_48f5e837, e_player in level.players)
+		foreach(e_player in level.players)
 		{
 			if(getdvarint("ui_blocksaves") == 0 && e_player ishost() && isdefined(e_player savegame::get_player_data("savegame_score")))
 			{
@@ -3281,12 +3292,15 @@ function level_completed(skipto, starting)
 						e_player givedecoration("cp_medal_no_deaths");
 					}
 				}
-				else if(var_a4b6fa1f >= 3 && (!(isdefined(e_player getdstat("PlayerStatsByMap", getrootmapname(), "checkpointUsed")) && e_player getdstat("PlayerStatsByMap", getrootmapname(), "checkpointUsed"))))
-				{
-				}
 				else
 				{
-					e_player setdstat("PlayerStatsByMap", getrootmapname(), "checkpointUsed", 1);
+					if(var_a4b6fa1f >= 3 && (!(isdefined(e_player getdstat("PlayerStatsByMap", getrootmapname(), "checkpointUsed")) && e_player getdstat("PlayerStatsByMap", getrootmapname(), "checkpointUsed"))))
+					{
+					}
+					else
+					{
+						e_player setdstat("PlayerStatsByMap", getrootmapname(), "checkpointUsed", 1);
+					}
 				}
 			}
 			if(e_player decorations::function_bea4ff57())
@@ -3297,7 +3311,7 @@ function level_completed(skipto, starting)
 	}
 	level flag::init("all_players_set_aar_scoreboard");
 	level.var_a7c3eb6f = 0;
-	foreach(var_c90f0a77, player in getplayers())
+	foreach(player in getplayers())
 	{
 		player thread function_61688376();
 	}
@@ -3312,7 +3326,7 @@ function level_completed(skipto, starting)
 		if(isdefined(level.var_d086f08f) && level.var_d086f08f && !sessionmodeiscampaignzombiesgame())
 		{
 			level accolades::commit(str_next_map);
-			foreach(var_44ba274c, e_player in level.players)
+			foreach(e_player in level.players)
 			{
 				e_player setdstat("PlayerStatsByMap", getrootmapname(), "lastCompletedDifficulty", level.gameskilllowest);
 				if(e_player decorations::function_e72fc18())
@@ -3339,7 +3353,7 @@ function level_completed(skipto, starting)
 		{
 			if(function_cb7247d8(str_next_map))
 			{
-				foreach(var_133ec17b, player in getplayers())
+				foreach(player in getplayers())
 				{
 					player savegame::set_player_data("show_aar", 1);
 				}
@@ -3438,7 +3452,7 @@ function function_4aa085d7()
 		self closeluimenu(self.var_40ac72fa);
 		self freezecontrols(0);
 		self.var_40ac72fa = undefined;
-		foreach(var_6efa31d9, player in getplayers())
+		foreach(player in getplayers())
 		{
 			if(player == self)
 			{
@@ -3520,7 +3534,7 @@ function function_95093ed5(map_name = getrootmapname())
 	array::add(var_32c2816f, "SCORE");
 	array::add(var_32c2816f, "ASSISTS");
 	array::add(var_32c2816f, "REVIVES");
-	foreach(var_fdec9a, var_8dca536c in var_32c2816f)
+	foreach(var_8dca536c in var_32c2816f)
 	{
 		var_43ea6c98 = function_df7ef426(var_8dca536c, map_name);
 		/#
@@ -3568,10 +3582,10 @@ function function_8295f89d(difficulty)
 {
 	if(self getdstat("PlayerStatsByMap", getrootmapname(), "completedDifficulties", difficulty) == 1)
 	{
-		return 0;
+		return false;
 	}
 	var_cfc9cbb7 = function_23eda99c();
-	foreach(var_8f737101, mission in var_cfc9cbb7)
+	foreach(mission in var_cfc9cbb7)
 	{
 		if(mission == getrootmapname())
 		{
@@ -3579,10 +3593,10 @@ function function_8295f89d(difficulty)
 		}
 		if(self getdstat("PlayerStatsByMap", mission, "completedDifficulties", difficulty) == 0)
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -3681,10 +3695,10 @@ function function_a5a105e8()
 function function_54fdc879()
 {
 	var_cfc9cbb7 = function_23eda99c();
-	foreach(var_bea68918, player in level.players)
+	foreach(player in level.players)
 	{
 		var_6511b67a = 1;
-		foreach(var_7022f635, mission in var_cfc9cbb7)
+		foreach(mission in var_cfc9cbb7)
 		{
 			if(player getdstat("PlayerStatsByMap", mission, "hasBeenCompleted") == 0)
 			{
@@ -3708,7 +3722,7 @@ function function_54fdc879()
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function standard_objective_init(skipto, starting)
+function private standard_objective_init(skipto, starting)
 {
 	if(isdefined(level.bzmstartobjectivecallback))
 	{
@@ -3743,7 +3757,7 @@ function set_level_start_flag(str_flag)
 	Parameters: 4
 	Flags: Linked, Private
 */
-private function standard_objective_done(skipto, starting, direct, player)
+function private standard_objective_done(skipto, starting, direct, player)
 {
 	if(isdefined(level.bzmwaitforobjectivecompletioncallback))
 	{
@@ -3761,7 +3775,7 @@ private function standard_objective_done(skipto, starting, direct, player)
 	{
 		waittillframeend();
 		a_entities = getentarray(skipto, "script_objective");
-		foreach(var_86a2475a, entity in a_entities)
+		foreach(entity in a_entities)
 		{
 			if(issentient(entity))
 			{
@@ -3807,7 +3821,7 @@ function watch_completion(name)
 {
 	first_trigger = undefined;
 	objective_triggers = getentarray("objective", "targetname");
-	foreach(var_c32afbe6, trigger in objective_triggers)
+	foreach(trigger in objective_triggers)
 	{
 		if(trigger.script_objective == name)
 		{
@@ -3831,14 +3845,14 @@ function watch_completion(name)
 */
 function all_players_touching(trigger)
 {
-	foreach(var_11ae8ec9, player in getplayers())
+	foreach(player in getplayers())
 	{
 		if(!player istouching(trigger))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -3867,7 +3881,7 @@ function trigger_wait_completion(trigger, name)
 		trigger waittill(#"trigger", player);
 		if(trigger.script_noteworthy === "warpplayers")
 		{
-			foreach(var_cd1747bd, other_player in level.players)
+			foreach(other_player in level.players)
 			{
 				if(other_player != player)
 				{
@@ -3936,7 +3950,7 @@ function catch_up_teleport()
 function entity_mover_main()
 {
 	entity_movers = struct::get_array("entity_objective_loc");
-	foreach(var_8cb7aaf4, mover in entity_movers)
+	foreach(mover in entity_movers)
 	{
 		if(!isdefined(mover.angles))
 		{
@@ -3973,9 +3987,9 @@ function entity_mover_main()
 */
 function entity_mover_use_objectives(objectives)
 {
-	foreach(var_73c21b1d, objective in objectives)
+	foreach(objective in objectives)
 	{
-		foreach(var_bfc70fef, mover in level.skipto_settings[objective].ent_movers)
+		foreach(mover in level.skipto_settings[objective].ent_movers)
 		{
 			thread apply_mover(mover);
 		}
@@ -4005,7 +4019,7 @@ function apply_mover(mover)
 		{
 			speed = 0.05;
 		}
-		foreach(var_30edc3f9, target in targets)
+		foreach(target in targets)
 		{
 			if(!isdefined(target.start_mover))
 			{
@@ -4032,7 +4046,7 @@ function apply_mover(mover)
 		}
 		script_mover = spawn("script_origin", start_mover.origin);
 		script_mover.angles = start_mover.angles;
-		foreach(var_4dc9846a, target in targets)
+		foreach(target in targets)
 		{
 			target linkto(script_mover, "", script_mover worldtolocalcoords(target.origin), target.angles - script_mover.angles);
 		}
@@ -4040,7 +4054,7 @@ function apply_mover(mover)
 		script_mover moveto(mover.origin, speed);
 		script_mover rotateto(mover.angles, speed);
 		script_mover waittill(#"movedone");
-		foreach(var_5048227b, target in targets)
+		foreach(target in targets)
 		{
 			target.last_mover = mover;
 			target unlink();
@@ -4049,7 +4063,7 @@ function apply_mover(mover)
 	}
 	else
 	{
-		foreach(var_6d918e31, target in targets)
+		foreach(target in targets)
 		{
 			target.origin = mover.origin;
 			if(isdefined(mover.angles))
@@ -4130,7 +4144,7 @@ function function_27c2dde4()
 	/#
 		if(isdefined(level.scriptbundles) && isdefined(level.scriptbundles[""]))
 		{
-			foreach(var_9c90a169, scene in level.scriptbundles[""])
+			foreach(scene in level.scriptbundles[""])
 			{
 				if(!isdefined(scene.used))
 				{
@@ -4166,7 +4180,7 @@ function update_billboard()
 					level.billboard_event_type = level.billboards[level.current_skipto][1];
 					level.billboard_event_size = level.billboards[level.current_skipto][2];
 					level.billboard_event_state = level.billboards[level.current_skipto][3];
-					foreach(var_1f51856a, player in level.players)
+					foreach(player in level.players)
 					{
 						player notify(#"update_billboard");
 					}
@@ -4215,21 +4229,24 @@ function update_player_billboard()
 						lui_menu = undefined;
 					}
 				}
-				else if(!isdefined(lui_menu))
-				{
-					lui_menu = self openluimenu("");
-				}
-				self lui::play_animation(lui_menu, "");
-				if(isdefined(level.billboard_event_state))
-				{
-					self setluimenudata(lui_menu, "", ((level.billboard_event + "") + level.billboard_event_state) + "");
-				}
 				else
 				{
-					self setluimenudata(lui_menu, "", level.billboard_event);
+					if(!isdefined(lui_menu))
+					{
+						lui_menu = self openluimenu("");
+					}
+					self lui::play_animation(lui_menu, "");
+					if(isdefined(level.billboard_event_state))
+					{
+						self setluimenudata(lui_menu, "", ((level.billboard_event + "") + level.billboard_event_state) + "");
+					}
+					else
+					{
+						self setluimenudata(lui_menu, "", level.billboard_event);
+					}
+					self setluimenudata(lui_menu, "", level.billboard_event_type);
+					self setluimenudata(lui_menu, "", level.billboard_event_size);
 				}
-				self setluimenudata(lui_menu, "", level.billboard_event_type);
-				self setluimenudata(lui_menu, "", level.billboard_event_size);
 			}
 			self waittill(#"update_billboard");
 		}

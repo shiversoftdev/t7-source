@@ -62,7 +62,7 @@ function skipto_testing_lab_igc_init(str_objective, b_starting)
 	level.var_280d5f68.v_start_pos = level.var_280d5f68.origin;
 	level.var_3c301126 = getent("human_lab_door_r", "targetname");
 	level.var_3c301126.v_start_pos = level.var_3c301126.origin;
-	level scene::add_scene_func("cin_sgen_14_humanlab_3rd_sh005", &function_b884ec52, "play");
+	level scene::add_scene_func("cin_sgen_14_humanlab_3rd_sh005", &humanlab_3rd_sh005, "play");
 	level scene::add_scene_func("cin_sgen_14_humanlab_3rd_sh200", &dni_lab_igc_complete, "done");
 	level scene::add_scene_func("cin_sgen_14_humanlab_3rd_sh200", &function_5841c784, "players_done");
 	level scene::add_scene_func("cin_sgen_14_humanlab_3rd_sh040", &function_7a6f4571, "play");
@@ -133,7 +133,7 @@ function function_652f4022()
 }
 
 /*
-	Name: function_b884ec52
+	Name: humanlab_3rd_sh005
 	Namespace: cp_mi_sing_sgen_testing_lab_igc
 	Checksum: 0x69BD6FC5
 	Offset: 0x10C0
@@ -141,9 +141,9 @@ function function_652f4022()
 	Parameters: 1
 	Flags: Linked
 */
-function function_b884ec52(a_ents)
+function humanlab_3rd_sh005(a_ents)
 {
-	foreach(var_9d8c8c73, e_in_scene in a_ents)
+	foreach(e_in_scene in a_ents)
 	{
 		if(isplayer(e_in_scene))
 		{

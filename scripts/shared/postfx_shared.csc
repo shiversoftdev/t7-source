@@ -19,7 +19,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("postfx_bundle", &__init__, undefined, undefined);
 }
@@ -426,7 +426,7 @@ function setfrontendstreamingoverlay(localclientnum, system, enabled)
 		self.overlayclients[localclientnum] = [];
 	}
 	self.overlayclients[localclientnum][system] = enabled;
-	foreach(_, en in self.overlayclients[localclientnum])
+	foreach(en in self.overlayclients[localclientnum])
 	{
 		if(en)
 		{

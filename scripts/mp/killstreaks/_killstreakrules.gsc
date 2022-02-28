@@ -237,7 +237,7 @@ function killstreakstart(hardpointtype, team, hacked, displayteammessage)
 		}
 	}
 	keys = getarraykeys(level.killstreaktype[hardpointtype]);
-	foreach(var_b545f8e9, key in keys)
+	foreach(key in keys)
 	{
 		if(!level.killstreaktype[hardpointtype][key].counts)
 		{
@@ -373,7 +373,7 @@ function killstreakstop(hardpointtype, team, id)
 		killstreak_debug_text((((("" + hardpointtype) + "") + team) + "") + idstr);
 	#/
 	keys = getarraykeys(level.killstreaktype[hardpointtype]);
-	foreach(var_df680d72, key in keys)
+	foreach(key in keys)
 	{
 		if(!level.killstreaktype[hardpointtype][key].counts)
 		{
@@ -451,7 +451,7 @@ function iskillstreakallowed(hardpointtype, team)
 	}
 	isallowed = 1;
 	keys = getarraykeys(level.killstreaktype[hardpointtype]);
-	foreach(var_77eeeab8, key in keys)
+	foreach(key in keys)
 	{
 		if(!level.killstreaktype[hardpointtype][key].checks)
 		{

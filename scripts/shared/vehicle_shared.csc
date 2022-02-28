@@ -19,7 +19,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("vehicle_shared", &__init__, undefined, undefined);
 }
@@ -492,15 +492,18 @@ function addanimtolist(animitem, &liston, &listoff, playwhenoff, id, maxid)
 			}
 			listoff[listoff.size] = animitem;
 		}
-		else if(!isdefined(liston))
+		else
 		{
-			liston = [];
+			if(!isdefined(liston))
+			{
+				liston = [];
+			}
+			else if(!isarray(liston))
+			{
+				liston = array(liston);
+			}
+			liston[liston.size] = animitem;
 		}
-		else if(!isarray(liston))
-		{
-			liston = array(liston);
-		}
-		liston[liston.size] = animitem;
 	}
 }
 
@@ -664,7 +667,7 @@ function lights_group_toggle(localclientnum, id, ison)
 	groupid = id - 1;
 	if(isdefined(self.lightfxgroups) && groupid < self.lightfxgroups.size)
 	{
-		foreach(var_6a05987d, fx_handle in self.lightfxgroups[groupid])
+		foreach(fx_handle in self.lightfxgroups[groupid])
 		{
 			stopfx(localclientnum, fx_handle);
 		}
@@ -902,7 +905,7 @@ function toggle_fx_bundle(localclientnum, name, turnon)
 		handle = self.fx_handles[name];
 		if(isarray(handle))
 		{
-			foreach(var_2dc595d4, handleelement in handle)
+			foreach(handleelement in handle)
 			{
 				stopfx(localclientnum, handleelement);
 			}
@@ -1039,21 +1042,24 @@ function toggle_flir_postfxbundle(localclientnum, oldval, newval, bnewent, binit
 		player thread postfx::stopplayingpostfxbundle();
 		update_ui_fullscreen_filter_model(localclientnum, 0);
 	}
-	else if(newval == 1)
+	else
 	{
-		if(player shouldchangescreenpostfx(localclientnum))
+		if(newval == 1)
 		{
-			player thread postfx::playpostfxbundle("pstfx_infrared");
-			update_ui_fullscreen_filter_model(localclientnum, 2);
+			if(player shouldchangescreenpostfx(localclientnum))
+			{
+				player thread postfx::playpostfxbundle("pstfx_infrared");
+				update_ui_fullscreen_filter_model(localclientnum, 2);
+			}
 		}
-	}
-	else if(newval == 2)
-	{
-		should_change = 1;
-		if(player shouldchangescreenpostfx(localclientnum))
+		else if(newval == 2)
 		{
-			player thread postfx::playpostfxbundle("pstfx_flir");
-			update_ui_fullscreen_filter_model(localclientnum, 1);
+			should_change = 1;
+			if(player shouldchangescreenpostfx(localclientnum))
+			{
+				player thread postfx::playpostfxbundle("pstfx_flir");
+				update_ui_fullscreen_filter_model(localclientnum, 1);
+			}
 		}
 	}
 }
@@ -1078,10 +1084,10 @@ function shouldchangescreenpostfx(localclientnum)
 		killcamentity = player getkillcamentity(localclientnum);
 		if(isdefined(killcamentity) && killcamentity != player)
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1160,43 +1166,49 @@ function field_toggle_treadfx(localclientnum, oldval, newval, bnewent, binitials
 				self kill_treads_forever();
 			}
 		}
-		else if(isdefined(self.csf_no_tread))
-		{
-			self.csf_no_tread = 0;
-		}
-		self kill_treads_forever();
-		self thread aircraft_dustkick();
-	}
-	else if(newval)
-	{
-		/#
-			println("");
-		#/
-		if(isdefined(bnewent) && bnewent)
-		{
-			/#
-				println("" + self getentitynumber());
-			#/
-			self.csf_no_tread = 1;
-		}
 		else
 		{
-			/#
-				println("" + self getentitynumber());
-			#/
+			if(isdefined(self.csf_no_tread))
+			{
+				self.csf_no_tread = 0;
+			}
 			self kill_treads_forever();
+			self thread aircraft_dustkick();
 		}
 	}
 	else
 	{
-		/#
-			println("");
-		#/
-		if(isdefined(self.csf_no_tread))
+		if(newval)
 		{
-			self.csf_no_tread = 0;
+			/#
+				println("");
+			#/
+			if(isdefined(bnewent) && bnewent)
+			{
+				/#
+					println("" + self getentitynumber());
+				#/
+				self.csf_no_tread = 1;
+			}
+			else
+			{
+				/#
+					println("" + self getentitynumber());
+				#/
+				self kill_treads_forever();
+			}
 		}
-		self kill_treads_forever();
+		else
+		{
+			/#
+				println("");
+			#/
+			if(isdefined(self.csf_no_tread))
+			{
+				self.csf_no_tread = 0;
+			}
+			self kill_treads_forever();
+		}
 	}
 }
 
@@ -1413,12 +1425,15 @@ function field_toggle_exhaustfx_handler(localclientnum, oldval, newval, bnewent,
 			self stop_exhaust(localclientnum);
 		}
 	}
-	else if(isdefined(self.csf_no_exhaust))
+	else
 	{
-		self.csf_no_exhaust = 0;
+		if(isdefined(self.csf_no_exhaust))
+		{
+			self.csf_no_exhaust = 0;
+		}
+		self stop_exhaust(localclientnum);
+		self play_exhaust(localclientnum);
 	}
-	self stop_exhaust(localclientnum);
-	self play_exhaust(localclientnum);
 }
 
 /*
@@ -1474,17 +1489,23 @@ function field_toggle_lights_handler(localclientnum, oldval, newval, bnewent, bi
 	{
 		self lights_off(localclientnum);
 	}
-	else if(newval == 2)
-	{
-		self lights_on(localclientnum, "allies");
-	}
-	else if(newval == 3)
-	{
-		self lights_on(localclientnum, "axis");
-	}
 	else
 	{
-		self lights_on(localclientnum);
+		if(newval == 2)
+		{
+			self lights_on(localclientnum, "allies");
+		}
+		else
+		{
+			if(newval == 3)
+			{
+				self lights_on(localclientnum, "axis");
+			}
+			else
+			{
+				self lights_on(localclientnum);
+			}
+		}
 	}
 	control_lights_groups(localclientnum, newval != 1);
 }
@@ -1554,7 +1575,7 @@ function field_update_damage_state(localclientnum, oldval, newval, bnewent, bini
 	settings = struct::get_script_bundle("vehiclecustomsettings", self.scriptbundlesettings);
 	if(isdefined(self.damage_state_fx_handles))
 	{
-		foreach(var_85741aa0, fx_handle in self.damage_state_fx_handles)
+		foreach(fx_handle in self.damage_state_fx_handles)
 		{
 			stopfx(localclientnum, fx_handle);
 		}
@@ -1712,13 +1733,16 @@ function field_death_spawn_dynents(localclientnum, oldval, newval, bnewent, bini
 			{
 				dynent = createdynentandlaunch(localclientnum, model, self.origin + offset, self.angles, (0, 0, 0), velocity * 0.8, fx);
 			}
-			else if(newval == 1 && isdefined(fx))
-			{
-				dynent = createdynentandlaunch(localclientnum, model, self.origin + offset, self.angles, (0, 0, 0), velocity * 0.8, fx);
-			}
 			else
 			{
-				dynent = createdynentandlaunch(localclientnum, model, self.origin + offset, self.angles, (0, 0, 0), velocity * 0.8);
+				if(newval == 1 && isdefined(fx))
+				{
+					dynent = createdynentandlaunch(localclientnum, model, self.origin + offset, self.angles, (0, 0, 0), velocity * 0.8, fx);
+				}
+				else
+				{
+					dynent = createdynentandlaunch(localclientnum, model, self.origin + offset, self.angles, (0, 0, 0), velocity * 0.8);
+				}
 			}
 			if(isdefined(dynent))
 			{
@@ -1803,7 +1827,7 @@ function field_gib_spawn_dynents(localclientnum, oldval, newval, bnewent, biniti
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function build_damage_filter_list()
+function autoexec build_damage_filter_list()
 {
 	if(!isdefined(level.vehicle_damage_filters))
 	{

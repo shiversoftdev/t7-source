@@ -270,10 +270,10 @@ function function_daa4f9c9(player)
 	if(level flag::get("rocket_pad_trigger_available") && (!(isdefined(level.var_ddbeeb3f) && level.var_ddbeeb3f)))
 	{
 		self sethintstring(&"ZM_CASTLE_GRAVITYSPIKE_A10_SWITCH");
-		return 1;
+		return true;
 	}
 	self sethintstring("");
-	return 0;
+	return false;
 }
 
 /*
@@ -451,10 +451,10 @@ function function_26a928fd(player)
 	if(!(isdefined(level.var_ddbeeb3f) && level.var_ddbeeb3f) && (isdefined(level.var_d73f1734) && level.var_d73f1734))
 	{
 		self sethintstring(&"ZM_CASTLE_GRAVITYSPIKE_A10_CONSOLE");
-		return 1;
+		return true;
 	}
 	self sethintstring("");
-	return 0;
+	return false;
 }
 
 /*
@@ -499,7 +499,7 @@ function function_f387f091()
 		n_round_zombies = zombie_utility::get_current_zombie_count();
 		var_bf9f0aee = 0;
 		a_zombies = getaiteamarray(level.zombie_team);
-		foreach(var_bb42d34, e_zombie in a_zombies)
+		foreach(e_zombie in a_zombies)
 		{
 			if(e_zombie.targetname == "a10_zombie")
 			{
@@ -894,7 +894,7 @@ function function_c1e52ea6(player)
 	player thread function_9708cb71(self.piecename);
 	player thread zm_castle_vo::function_43b44df3();
 	level notify(#"widget_ui_override");
-	foreach(var_ac76146c, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		e_player thread function_c1727537("zmInventory.player_crafted_gravityspikes", "zmInventory.widget_gravityspike_parts", 0);
 		e_player thread show_infotext_for_duration("ZMUI_GRAVITYSPIKE_PART_PICKUP", 3.5);
@@ -913,7 +913,7 @@ function function_c1e52ea6(player)
 function function_61ac1c22(player)
 {
 	level notify(#"widget_ui_override");
-	foreach(var_3ac13aca, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		if(zm_utility::is_player_valid(e_player))
 		{
@@ -923,7 +923,7 @@ function function_61ac1c22(player)
 	}
 	self function_98c7dfa5(self.origin, self.angles);
 	level notify(#"hash_71de5140");
-	return 1;
+	return true;
 }
 
 /*
@@ -935,7 +935,7 @@ function function_61ac1c22(player)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function function_c1727537(str_crafted_clientuimodel, str_widget_clientuimodel, b_is_crafted)
+function private function_c1727537(str_crafted_clientuimodel, str_widget_clientuimodel, b_is_crafted)
 {
 	self endon(#"disconnect");
 	if(b_is_crafted)
@@ -999,10 +999,10 @@ function function_4ae7dabf(player)
 	if(player.gravityspikes_state == 0)
 	{
 		self sethintstring(&"ZM_CASTLE_GRAVITYSPIKE_PICKUP");
-		return 1;
+		return true;
 	}
 	self sethintstring(&"ZM_CASTLE_GRAVITYSPIKE_ALREADY_HAVE");
-	return 0;
+	return false;
 }
 
 /*

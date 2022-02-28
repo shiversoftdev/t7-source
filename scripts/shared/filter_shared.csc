@@ -219,17 +219,23 @@ function enable_filter_hazmat(player, filterid, overlayid, stage, opacity)
 	{
 		setoverlaymaterial(player.localclientnum, overlayid, mapped_material_id("generic_overlay_hazmat_1"), 1);
 	}
-	else if(stage == 2)
+	else
 	{
-		setoverlaymaterial(player.localclientnum, overlayid, mapped_material_id("generic_overlay_hazmat_2"), 1);
-	}
-	else if(stage == 3)
-	{
-		setoverlaymaterial(player.localclientnum, overlayid, mapped_material_id("generic_overlay_hazmat_3"), 1);
-	}
-	else if(stage == 4)
-	{
-		setoverlaymaterial(player.localclientnum, overlayid, mapped_material_id("generic_overlay_hazmat_4"), 1);
+		if(stage == 2)
+		{
+			setoverlaymaterial(player.localclientnum, overlayid, mapped_material_id("generic_overlay_hazmat_2"), 1);
+		}
+		else
+		{
+			if(stage == 3)
+			{
+				setoverlaymaterial(player.localclientnum, overlayid, mapped_material_id("generic_overlay_hazmat_3"), 1);
+			}
+			else if(stage == 4)
+			{
+				setoverlaymaterial(player.localclientnum, overlayid, mapped_material_id("generic_overlay_hazmat_4"), 1);
+			}
+		}
 	}
 	setoverlayenabled(player.localclientnum, overlayid, 1);
 	set_filter_hazmat_opacity(player, filterid, overlayid, opacity);

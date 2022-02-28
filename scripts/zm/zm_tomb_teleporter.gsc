@@ -44,7 +44,7 @@ function teleporter_init()
 	level.n_teleport_time = 0;
 	level.a_teleport_models = [];
 	a_entrance_models = getentarray("teleport_model", "targetname");
-	foreach(var_94bce532, e_model in a_entrance_models)
+	foreach(e_model in a_entrance_models)
 	{
 		e_model useanimtree($generic);
 		level.a_teleport_models[e_model.script_int] = e_model;
@@ -53,7 +53,7 @@ function teleporter_init()
 	array::thread_all(a_entrance_models, &teleporter_samantha_chamber_line);
 	a_portal_frames = getentarray("portal_exit_frame", "script_noteworthy");
 	level.a_portal_exit_frames = [];
-	foreach(var_c8a7a0b7, e_frame in a_portal_frames)
+	foreach(e_frame in a_portal_frames)
 	{
 		e_frame useanimtree($generic);
 		e_frame ghost();
@@ -62,13 +62,13 @@ function teleporter_init()
 	}
 	level.a_teleport_exits = [];
 	a_exits = struct::get_array("portal_exit", "script_noteworthy");
-	foreach(var_ebbdd1ca, s_portal in a_exits)
+	foreach(s_portal in a_exits)
 	{
 		level.a_teleport_exits[s_portal.script_int] = s_portal;
 	}
 	level.a_teleport_exit_triggers = [];
 	a_trigs = struct::get_array("chamber_exit_trigger", "script_noteworthy");
-	foreach(var_8e14c94b, s_trig in a_trigs)
+	foreach(s_trig in a_trigs)
 	{
 		level.a_teleport_exit_triggers[s_trig.script_int] = s_trig;
 	}
@@ -107,7 +107,7 @@ function teleporter_samantha_chamber_line()
 	while(!level.sam_chamber_line_played)
 	{
 		a_players = getplayers();
-		foreach(var_19e1098b, e_player in a_players)
+		foreach(e_player in a_players)
 		{
 			dist_sq = distance2dsquared(self.origin, e_player.origin);
 			height_diff = abs(self.origin[2] - e_player.origin[2]);
@@ -363,7 +363,7 @@ function teleporter_radius_think(radius = 120)
 	while(true)
 	{
 		a_players = getplayers();
-		foreach(var_7220281c, e_player in a_players)
+		foreach(e_player in a_players)
 		{
 			dist_sq = distancesquared(e_player.origin, self.origin);
 			if(dist_sq < radius_sq && e_player getstance() != "prone" && (!(isdefined(e_player.teleporting) && e_player.teleporting)))
@@ -460,7 +460,7 @@ function stargate_play_fx()
 function spawn_stargate_fx_origins()
 {
 	a_teleport_positions = struct::get_array("teleport_room", "script_noteworthy");
-	foreach(var_466030b3, s_teleport in a_teleport_positions)
+	foreach(s_teleport in a_teleport_positions)
 	{
 		v_fx_pos = (s_teleport.origin + (0, 0, 64)) + (anglestoforward(s_teleport.angles) * 120);
 		s_teleport.e_fx = spawn("script_model", v_fx_pos);
@@ -503,13 +503,16 @@ function stargate_teleport_player(str_teleport_to, player, n_teleport_time_sec =
 	{
 		desired_origin = image_room.origin + prone_offset;
 	}
-	else if(player getstance() == "crouch")
-	{
-		desired_origin = image_room.origin + crouch_offset;
-	}
 	else
 	{
-		desired_origin = image_room.origin + stand_offset;
+		if(player getstance() == "crouch")
+		{
+			desired_origin = image_room.origin + crouch_offset;
+		}
+		else
+		{
+			desired_origin = image_room.origin + stand_offset;
+		}
 	}
 	player.teleport_origin = spawn("script_model", player.origin);
 	player.teleport_origin setmodel("tag_origin");
@@ -572,14 +575,14 @@ function is_teleport_landing_valid(s_pos, n_radius)
 {
 	n_radius_sq = n_radius * n_radius;
 	a_players = getplayers();
-	foreach(var_9c9809d6, e_player in a_players)
+	foreach(e_player in a_players)
 	{
 		if(distance2dsquared(s_pos.origin, e_player.origin) < n_radius_sq)
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -597,7 +600,7 @@ function get_free_teleport_pos(player, a_structs)
 	while(true)
 	{
 		a_players = getplayers();
-		foreach(var_99c6d62c, s_pos in a_structs)
+		foreach(s_pos in a_structs)
 		{
 			if(is_teleport_landing_valid(s_pos, n_player_radius))
 			{

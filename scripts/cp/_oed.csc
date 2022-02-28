@@ -22,7 +22,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("oed", &__init__, undefined, undefined);
 }
@@ -140,7 +140,7 @@ function tmode_remove_all_ents(localclientnum)
 		return;
 	}
 	a_all_entities = getentarray(localclientnum);
-	foreach(var_582a2cf, entity in a_all_entities)
+	foreach(entity in a_all_entities)
 	{
 		if(isdefined(entity.tmode_set) && entity.tmode_set)
 		{
@@ -354,7 +354,7 @@ function set_entity_thermal(localclientnum, b_enabled)
 function activate_thermal_ents(localclientnum)
 {
 	a_e_thermals = getentarray(localclientnum);
-	foreach(var_e35821c2, entity in a_e_thermals)
+	foreach(entity in a_e_thermals)
 	{
 		if(isdefined(entity.b_show_thermal) && entity.b_show_thermal)
 		{
@@ -375,7 +375,7 @@ function activate_thermal_ents(localclientnum)
 function deactivate_thermal_ents(localclientnum)
 {
 	a_e_thermals = getentarray(localclientnum);
-	foreach(var_2b6d0244, entity in a_e_thermals)
+	foreach(entity in a_e_thermals)
 	{
 		if(isdefined(entity.b_show_thermal) && entity.b_show_thermal)
 		{

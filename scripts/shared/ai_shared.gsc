@@ -209,9 +209,9 @@ function is_dead_sentient()
 {
 	if(issentient(self) && !isalive(self))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -315,7 +315,7 @@ function waittill_dead_or_dying(guys, num, timeoutlength)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function waittill_dead_thread(ent)
+function private waittill_dead_thread(ent)
 {
 	self waittill(#"death");
 	ent.count--;
@@ -362,7 +362,7 @@ function waittill_dead_timeout(timeoutlength)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function wait_for_shoot()
+function private wait_for_shoot()
 {
 	self endon(#"stop_shoot_at_target");
 	if(isvehicle(self))
@@ -684,7 +684,7 @@ function stoppainwaitinterval()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function _allowpainrestore()
+function private _allowpainrestore()
 {
 	self endon(#"death");
 	self util::waittill_any("painWaitIntervalRemove", "painWaitInterval");
@@ -831,13 +831,16 @@ function patrol_next_node()
 	{
 		self end_and_clean_patrol_behaviors();
 	}
-	else if(target_nodes.size != 0)
-	{
-		self.currentgoal = array::random(target_nodes);
-	}
 	else
 	{
-		self.currentgoal = array::random(target_scenes);
+		if(target_nodes.size != 0)
+		{
+			self.currentgoal = array::random(target_nodes);
+		}
+		else
+		{
+			self.currentgoal = array::random(target_scenes);
+		}
 	}
 }
 
@@ -953,8 +956,8 @@ function shouldregisterclientfieldforarchetype(archetype)
 {
 	if(isdefined(level.clientfieldaicheck) && level.clientfieldaicheck && !isarchetypeloaded(archetype))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 

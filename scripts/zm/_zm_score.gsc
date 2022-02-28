@@ -23,7 +23,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_score", &__init__, undefined, undefined);
 }
@@ -163,7 +163,7 @@ function score_cf_register_info(name, version, max_count)
 */
 function score_cf_increment_info(name)
 {
-	foreach(var_832f6a13, player in level.players)
+	foreach(player in level.players)
 	{
 		thread wait_score_cf_increment_info(player, (("PlayerList.client" + self.entity_num) + ".score_cf_") + name);
 	}
@@ -430,17 +430,23 @@ function get_zombie_death_player_points()
 	{
 		points = level.zombie_vars["zombie_score_kill_1player"];
 	}
-	else if(players.size == 2)
-	{
-		points = level.zombie_vars["zombie_score_kill_2player"];
-	}
-	else if(players.size == 3)
-	{
-		points = level.zombie_vars["zombie_score_kill_3player"];
-	}
 	else
 	{
-		points = level.zombie_vars["zombie_score_kill_4player"];
+		if(players.size == 2)
+		{
+			points = level.zombie_vars["zombie_score_kill_2player"];
+		}
+		else
+		{
+			if(players.size == 3)
+			{
+				points = level.zombie_vars["zombie_score_kill_3player"];
+			}
+			else
+			{
+				points = level.zombie_vars["zombie_score_kill_4player"];
+			}
+		}
 	}
 	return points;
 }
@@ -456,7 +462,7 @@ function get_zombie_death_player_points()
 */
 function get_zombie_death_team_points()
 {
-	return 0;
+	return false;
 }
 
 /*
@@ -740,12 +746,12 @@ function can_player_purchase(n_cost)
 {
 	if(self.score >= n_cost)
 	{
-		return 1;
+		return true;
 	}
 	if(self bgb::is_enabled("zm_bgb_shopping_free"))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 

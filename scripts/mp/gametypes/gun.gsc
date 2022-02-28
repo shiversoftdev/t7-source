@@ -232,7 +232,7 @@ function onstartgametype()
 	setclientnamemode("auto_change");
 	level.spawnmins = (0, 0, 0);
 	level.spawnmaxs = (0, 0, 0);
-	foreach(var_e6446b18, team in level.teams)
+	foreach(team in level.teams)
 	{
 		setupteam(team);
 	}
@@ -472,7 +472,7 @@ function givecustomloadout(takeoldweapon = 0)
 	{
 		oldweapon = self getcurrentweapon();
 		weapons = self getweaponslist();
-		foreach(var_67243056, weapon in weapons)
+		foreach(weapon in weapons)
 		{
 			if(weapon != oldweapon)
 			{

@@ -46,7 +46,7 @@ function main()
 function on_player_connect_crypt()
 {
 	discs = getentarray("crypt_puzzle_disc", "script_noteworthy");
-	foreach(var_4639524f, disc in discs)
+	foreach(disc in discs)
 	{
 		disc util::delay(0.5, undefined, &bryce_cake_light_update, 0);
 	}
@@ -96,7 +96,7 @@ function chamber_disc_run()
 	if(isdefined(self.target))
 	{
 		a_levers = getentarray(self.target, "targetname");
-		foreach(var_11c04c33, e_lever in a_levers)
+		foreach(e_lever in a_levers)
 		{
 			e_lever.trigger_stub = zm_tomb_utility::tomb_spawn_trigger_radius(e_lever.origin, 100, 1);
 			e_lever.trigger_stub.require_look_at = 0;
@@ -175,7 +175,7 @@ function init_crypt_gems()
 {
 	disc = getent("crypt_puzzle_disc_main", "targetname");
 	gems = getentarray("crypt_gem", "script_noteworthy");
-	foreach(var_c236bcb0, gem in gems)
+	foreach(gem in gems)
 	{
 		gem linkto(disc);
 		gem thread run_crypt_gem_pos();
@@ -196,7 +196,7 @@ function light_discs_bottom_to_top()
 	discs = getentarray("crypt_puzzle_disc", "script_noteworthy");
 	for(i = 1; i <= 4; i++)
 	{
-		foreach(var_a289c895, disc in discs)
+		foreach(disc in discs)
 		{
 			if(disc.script_int === i)
 			{
@@ -357,7 +357,7 @@ function chamber_disc_move_to_position()
 function chamber_discs_move_all_to_position(discs = getentarray("chamber_puzzle_disc", "script_noteworthy"))
 {
 	level flag::set("disc_rotation_active");
-	foreach(var_9f0870a9, e_disc in discs)
+	foreach(e_disc in discs)
 	{
 		e_disc chamber_disc_move_to_position();
 	}
@@ -392,7 +392,7 @@ function chamber_disc_gem_has_clearance(gem_name)
 {
 	gem_position = chamber_disc_get_gem_position(gem_name);
 	discs = getentarray("crypt_puzzle_disc", "script_noteworthy");
-	foreach(var_3b66362c, disc in discs)
+	foreach(disc in discs)
 	{
 		if(disc.targetname === "crypt_puzzle_disc_main")
 		{
@@ -400,10 +400,10 @@ function chamber_disc_gem_has_clearance(gem_name)
 		}
 		if(disc.position != gem_position)
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -470,7 +470,7 @@ function chamber_discs_randomize()
 {
 	discs = getentarray("crypt_puzzle_disc", "script_noteworthy");
 	prev_disc_pos = 0;
-	foreach(var_80441e36, disc in discs)
+	foreach(disc in discs)
 	{
 		if(!isdefined(disc.target))
 		{

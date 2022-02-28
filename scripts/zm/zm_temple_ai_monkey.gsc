@@ -38,14 +38,14 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function function_dafa313c()
+function autoexec function_dafa313c()
 {
 	clientfield::register("scriptmover", "monkey_ragdoll", 21000, 1, "int");
-	function_1444ad65();
+	initmonkeybehaviorsandasm();
 }
 
 /*
-	Name: function_1444ad65
+	Name: initmonkeybehaviorsandasm
 	Namespace: zm_temple_ai_monkey
 	Checksum: 0xC8165D87
 	Offset: 0xB10
@@ -53,7 +53,7 @@ autoexec function function_dafa313c()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_1444ad65()
+function private initmonkeybehaviorsandasm()
 {
 	behaviortreenetworkutility::registerbehaviortreescriptapi("templeMonkeyTargetService", &templemonkeytargetservice);
 	behaviortreenetworkutility::registerbehaviortreescriptapi("templeMonkeyDeathStart", &templemonkeydeathstart);
@@ -68,9 +68,9 @@ private function function_1444ad65()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function templemonkeytargetservice(entity)
+function private templemonkeytargetservice(entity)
 {
-	return 1;
+	return true;
 }
 
 /*
@@ -82,7 +82,7 @@ private function templemonkeytargetservice(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function templemonkeydeathstart(entity)
+function private templemonkeydeathstart(entity)
 {
 	if(isdefined(entity.powerup_to_grab))
 	{
@@ -139,7 +139,7 @@ function init()
 function monkey_grenade_watcher_temple()
 {
 	level flag::wait_till("initial_players_connected");
-	level thread namespace_8fb880d9::monkey_grenade_watcher();
+	level thread zm_ai_monkey::monkey_grenade_watcher();
 }
 
 /*
@@ -224,13 +224,13 @@ function barrier_test(zone, ent, mindist, checkvisible)
 {
 	if(!zone.is_active)
 	{
-		return 1;
+		return true;
 	}
 	mindist2 = mindist * mindist;
 	disttobarrier = distancesquared(ent.origin, self.origin);
 	if(disttobarrier < mindist2)
 	{
-		return 0;
+		return false;
 	}
 	if(checkvisible)
 	{
@@ -245,12 +245,12 @@ function barrier_test(zone, ent, mindist, checkvisible)
 			{
 				if(self player_can_see_me(player))
 				{
-					return 0;
+					return false;
 				}
 			}
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -622,7 +622,7 @@ function _monkey_zombietempledeathcallback(einflictor, attacker, idamage, smeans
 	{
 		self thread zombie_death::flame_death_fx();
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -703,7 +703,7 @@ function _monkey_destroyboards(barrier, chunk, location)
 	chunk zm_blockers::update_states("target_by_zombie");
 	self teleport(location, self.angles);
 	time = self getanimlengthfromasd("zm_attack_perks_front", 0);
-	self thread namespace_8fb880d9::play_attack_impacts(time);
+	self thread zm_ai_monkey::play_attack_impacts(time);
 	zombie_shared::donotetracks("attack_perks_front");
 	playfx(level._effect["wood_chunk_destory"], chunk.origin);
 	if(chunk.script_noteworthy == "4" || chunk.script_noteworthy == "6")
@@ -1264,7 +1264,7 @@ function _monkey_zombietempleescapedeathcallback(einflictor, attacker, idamage, 
 		self thread _monkey_gib();
 		self util::delay(0.05, undefined, &zm_utility::self_delete);
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1744,9 +1744,9 @@ function zone_is_active(zone_name)
 {
 	if(!isdefined(level.zones) || !isdefined(level.zones[zone_name]) || !level.zones[zone_name].is_active)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1996,13 +1996,13 @@ function monkey_ambient_can_make_sound()
 {
 	if(gettime() < level.ambient_monkey_next_sound_time)
 	{
-		return 0;
+		return false;
 	}
 	if(gettime() < self.next_sound_time)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -2232,7 +2232,7 @@ function monkey_zombie_grenade_pickup()
 function monkey_zombie_grenade_throw_watcher(target, animname)
 {
 	self endon(#"death");
-	self waittill_match(animname);
+	self waittillmatch(animname);
 	throw_angle = randomintrange(20, 30);
 	dir = vectortoangles(target.origin - self.origin);
 	dir = (dir[0] - throw_angle, dir[1], dir[2]);

@@ -104,7 +104,7 @@ function get_ai_threats()
 */
 function ignore_none(entity)
 {
-	return 0;
+	return false;
 }
 
 /*
@@ -268,9 +268,9 @@ function get_new_threat(maxdistance)
 	if(isdefined(entity) && entity !== self.bot.threat.entity)
 	{
 		self set_threat(entity);
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -289,7 +289,7 @@ function get_greatest_threat(maxdistance)
 	{
 		return undefined;
 	}
-	foreach(var_274d6824, entity in threats)
+	foreach(entity in threats)
 	{
 		if(self [[level.botignorethreat]](entity))
 		{
@@ -448,14 +448,14 @@ function melee_attack()
 {
 	if(self.bot.threat.dot < level.botsettings.meleedot)
 	{
-		return 0;
+		return false;
 	}
 	if(distancesquared(self.origin, self.bot.threat.lastposition) > level.botsettings.meleerangesq)
 	{
-		return 0;
+		return false;
 	}
 	self bot::tap_melee_button();
-	return 1;
+	return true;
 }
 
 /*
@@ -868,7 +868,7 @@ function switch_weapon()
 	currentweapon = self getcurrentweapon();
 	if(self isswitchingweapons() || currentweapon.isheroweapon || currentweapon.isitem)
 	{
-		return 0;
+		return false;
 	}
 	weapon = bot::get_ready_gadget();
 	if(weapon != level.weaponnone)
@@ -876,13 +876,13 @@ function switch_weapon()
 		if(!isdefined(level.enemyempactive) || !self [[level.enemyempactive]]())
 		{
 			self bot::activate_hero_gadget(weapon);
-			return 1;
+			return true;
 		}
 	}
 	weapons = self getweaponslistprimaries();
 	if(currentweapon == level.weaponnone || currentweapon.weapclass == "melee" || currentweapon.weapclass == "rocketLauncher" || currentweapon.weapclass == "pistol")
 	{
-		foreach(var_aedb9a10, weapon in weapons)
+		foreach(weapon in weapons)
 		{
 			if(weapon == currentweapon)
 			{
@@ -891,31 +891,31 @@ function switch_weapon()
 			if(self getweaponammoclip(weapon) || self getweaponammostock(weapon))
 			{
 				self botswitchtoweapon(weapon);
-				return 1;
+				return true;
 			}
 		}
-		return 0;
+		return false;
 	}
 	currentammostock = self getweaponammostock(currentweapon);
 	if(currentammostock)
 	{
-		return 0;
+		return false;
 	}
 	switchfrac = 0.3;
 	currentclipfrac = self weapon_clip_frac(currentweapon);
 	if(currentclipfrac > switchfrac)
 	{
-		return 0;
+		return false;
 	}
-	foreach(var_cc2505c6, weapon in weapons)
+	foreach(weapon in weapons)
 	{
 		if(self getweaponammostock(weapon) || self weapon_clip_frac(weapon) > switchfrac)
 		{
 			self botswitchtoweapon(weapon);
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -936,7 +936,7 @@ function threat_switch_weapon()
 	}
 	currentammostock = self getweaponammostock(currentweapon);
 	weapons = self getweaponslistprimaries();
-	foreach(var_e72b8869, weapon in weapons)
+	foreach(weapon in weapons)
 	{
 		if(weapon == currentweapon || weapon.requirelockontofire)
 		{
@@ -949,18 +949,21 @@ function threat_switch_weapon()
 				continue;
 			}
 		}
-		else if(!self getweaponammoclip(weapon) && currentammostock)
+		else
 		{
-			continue;
-		}
-		weaponammostock = self getweaponammostock(weapon);
-		if(!currentammostock && !weaponammostock)
-		{
-			continue;
-		}
-		if(weapon.weapclass != "pistol" && randomintrange(0, 100) < 75)
-		{
-			continue;
+			if(!self getweaponammoclip(weapon) && currentammostock)
+			{
+				continue;
+			}
+			weaponammostock = self getweaponammostock(weapon);
+			if(!currentammostock && !weaponammostock)
+			{
+				continue;
+			}
+			if(weapon.weapclass != "pistol" && randomintrange(0, 100) < 75)
+			{
+				continue;
+			}
 		}
 		self botswitchtoweapon(weapon);
 	}
@@ -980,7 +983,7 @@ function reload_weapon()
 	weapon = self getcurrentweapon();
 	if(!self getweaponammostock(weapon))
 	{
-		return 0;
+		return false;
 	}
 	reloadfrac = 0.5;
 	if(weapon.weapclass == "mg")
@@ -990,9 +993,9 @@ function reload_weapon()
 	if(self weapon_clip_frac(weapon) < reloadfrac)
 	{
 		self bot::tap_reload_button();
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1129,7 +1132,7 @@ function get_throw_velocity(weapon)
 function get_lethal_grenade()
 {
 	weaponslist = self getweaponslist();
-	foreach(var_aada4024, weapon in weaponslist)
+	foreach(weapon in weaponslist)
 	{
 		if(weapon.type == "grenade" && self getweaponammostock(weapon))
 		{
@@ -1216,7 +1219,7 @@ function combat_strafe(radiusmin = (isdefined(level.botsettings.strafemin) ? lev
 	#/
 	queryresult = positionquery_source_navigation(self.origin, radiusmin, radiusmax, 64, spacing, self);
 	best_point = undefined;
-	foreach(var_193a5ce2, point in queryresult.data)
+	foreach(point in queryresult.data)
 	{
 		movedir = vectornormalize(point.origin - self.origin);
 		dot = vectordot(movedir, fwd);

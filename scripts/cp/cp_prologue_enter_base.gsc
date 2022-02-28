@@ -81,7 +81,7 @@ function nrc_knocking_main()
 	{
 		level thread [[level.bzmloadoutchangecallback]]();
 	}
-	foreach(var_a9ca35d7, ai_ally in level.var_681ad194)
+	foreach(ai_ally in level.var_681ad194)
 	{
 		ai_ally.goalradius = 16;
 		ai_ally setgoal(getnode(("ally0" + ai_ally.var_a89679b6) + "_start_node", "targetname"));
@@ -161,12 +161,12 @@ function function_e4486a45()
 */
 function function_d511e678()
 {
-	var_b0b3b56f = struct::get("prologue_nrc_kocking_door1", "targetname");
-	[[ var_b0b3b56f.c_door ]]->unlock();
-	[[ var_b0b3b56f.c_door ]]->open();
-	var_3eac4634 = struct::get("prologue_nrc_kocking_door2", "targetname");
-	[[ var_3eac4634.c_door ]]->unlock();
-	[[ var_3eac4634.c_door ]]->open();
+	s_door_1 = struct::get("prologue_nrc_kocking_door1", "targetname");
+	[[ s_door_1.c_door ]]->unlock();
+	[[ s_door_1.c_door ]]->open();
+	s_door_2 = struct::get("prologue_nrc_kocking_door2", "targetname");
+	[[ s_door_2.c_door ]]->unlock();
+	[[ s_door_2.c_door ]]->open();
 	e_sight_block = getent("nrc_knocking_door_sight_clip", "targetname");
 	e_sight_block delete();
 }
@@ -239,7 +239,7 @@ function blend_in_precache()
 function blend_in_main()
 {
 	level cp_prologue_util::spawn_coop_player_replacement("skipto_blend_in");
-	foreach(var_584bda53, ai_ally in level.var_681ad194)
+	foreach(ai_ally in level.var_681ad194)
 	{
 		ai_ally ai::set_ignoreme(1);
 		ai_ally ai::set_pacifist(1);
@@ -653,7 +653,7 @@ function function_a7dec0e7()
 	level thread function_a87bddf2();
 	level.ai_hendricks.pacifist = 1;
 	level.ai_hendricks.ignoreme = 1;
-	foreach(var_dfe3eff5, ai_ally in level.var_681ad194)
+	foreach(ai_ally in level.var_681ad194)
 	{
 		ai_ally ai::set_ignoreme(1);
 		ai_ally ai::set_pacifist(1);
@@ -697,7 +697,7 @@ function function_a87bddf2()
 function function_be42a33f()
 {
 	trigger::wait_till("tarmac_move_friendies");
-	foreach(var_35de897, ai_ally in level.var_681ad194)
+	foreach(ai_ally in level.var_681ad194)
 	{
 		ai_ally thread setgoal_then_delete(("ally0" + ai_ally.var_a89679b6) + "_tunnel_goal", "security_cam_active");
 	}
@@ -848,7 +848,7 @@ function function_92e75cce(n_range, var_b0ecff80 = 1)
 	do
 	{
 		b_player_near = 0;
-		foreach(var_6a14cd34, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			b_player_near = b_player_near || distancesquared(self.origin, player.origin) <= var_a972c5dd;
 		}
@@ -1039,8 +1039,8 @@ function function_599e2f36()
 	{
 		index = randomintrange(0, a_vehicles.size);
 		veh_to_spawn = a_vehicles[index] + "_far";
-		var_6be5d72c = vehicle::simple_spawn_single(veh_to_spawn);
-		var_6be5d72c thread tunneltruck("tunnel_truck2_node");
+		sp_tunneltruck2 = vehicle::simple_spawn_single(veh_to_spawn);
+		sp_tunneltruck2 thread tunneltruck("tunnel_truck2_node");
 		delay_between_spawns = randomfloatrange(10, 15);
 		wait(delay_between_spawns);
 		if(level flag::get("stop_tunnel_spawns"))
@@ -1089,7 +1089,7 @@ function function_71f51761()
 */
 function function_63075f1d()
 {
-	foreach(var_2c04c474, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player thread function_3f3cae8c();
 	}
@@ -1653,15 +1653,18 @@ function function_173d3769(str_state, var_abf03d83 = 0)
 			var_280d5f68 rotateyaw(90 * -1, 6, 1, 1);
 		}
 	}
-	else if(var_abf03d83)
-	{
-		var_3c301126 rotateyaw(90 * -1, 0.05);
-		var_280d5f68 rotateyaw(90, 0.05);
-	}
 	else
 	{
-		var_3c301126 rotateyaw(90 * -1, 6, 1, 1);
-		var_280d5f68 rotateyaw(90, 6, 1, 1);
+		if(var_abf03d83)
+		{
+			var_3c301126 rotateyaw(90 * -1, 0.05);
+			var_280d5f68 rotateyaw(90, 0.05);
+		}
+		else
+		{
+			var_3c301126 rotateyaw(90 * -1, 6, 1, 1);
+			var_280d5f68 rotateyaw(90, 6, 1, 1);
+		}
 	}
 	var_3c301126 waittill(#"rotatedone");
 	var_3c301126 stoploopsound(0.5);
@@ -1681,7 +1684,7 @@ function take_out_guards_objective_handler()
 {
 	level waittill(#"hash_81d6c615");
 	a_clean_up_group_start_through_take_out_guards = getaiarray("start_through_take_out_guards", "script_aigroup");
-	foreach(var_c1073b70, ai_entity in a_clean_up_group_start_through_take_out_guards)
+	foreach(ai_entity in a_clean_up_group_start_through_take_out_guards)
 	{
 		if(isalive(ai_entity))
 		{

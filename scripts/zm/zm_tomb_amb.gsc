@@ -171,7 +171,7 @@ function sndlocationshouldplay(array, activezone)
 	{
 		return shouldplay;
 	}
-	foreach(var_99630e9d, place in array)
+	foreach(place in array)
 	{
 		if(place == activezone)
 		{
@@ -184,7 +184,7 @@ function sndlocationshouldplay(array, activezone)
 	}
 	playersinlocal = 0;
 	players = getplayers();
-	foreach(var_40ce22db, player in players)
+	foreach(player in players)
 	{
 		if(player zm_zonemgr::entity_in_zone(activezone))
 		{
@@ -273,7 +273,7 @@ function sndcurrentlocationarray(current_array, activezone, numcut, max_num_remo
 	{
 		current_array = sndlocationsarray();
 	}
-	foreach(var_d735d617, place in current_array)
+	foreach(place in current_array)
 	{
 		if(place == activezone)
 		{
@@ -297,14 +297,14 @@ function sndlocationbetweenrounds()
 {
 	level endon(#"newzoneactive");
 	activezones = zm_zonemgr::get_active_zone_names();
-	foreach(var_32495fea, zone in activezones)
+	foreach(zone in activezones)
 	{
 		if(isdefined(level.sndlastzone) && zone == level.sndlastzone)
 		{
 			continue;
 		}
 		players = getplayers();
-		foreach(var_b0e0c615, player in players)
+		foreach(player in players)
 		{
 			if(player zm_zonemgr::entity_in_zone(zone))
 			{
@@ -390,7 +390,7 @@ function sndplaystingerwithoverride(state, var_70f98722)
 function snddoormusictrigs()
 {
 	trigs = getentarray("sndMusicDoor", "script_noteworthy");
-	foreach(var_5f70e9dc, trig in trigs)
+	foreach(trig in trigs)
 	{
 		trig thread snddoormusic();
 	}
@@ -550,13 +550,13 @@ function function_f36e092d()
 {
 	if(!zm_audio_zhd::function_8090042c())
 	{
-		return 0;
+		return false;
 	}
 	if(self getstance() != "prone")
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -675,7 +675,7 @@ function function_3630300b()
 	var_d1f154fd = array::sort_by_script_int(var_d1f154fd, 1);
 	level.var_aa39de8 = 0;
 	wait(1);
-	foreach(var_a7313786, var_6d450235 in var_d1f154fd)
+	foreach(var_6d450235 in var_d1f154fd)
 	{
 		var_6d450235 thread function_b8227f87();
 		wait(1);
@@ -685,7 +685,7 @@ function function_3630300b()
 		wait(0.1);
 	}
 	wait(1);
-	return 1;
+	return true;
 }
 
 /*

@@ -60,7 +60,7 @@ function function_5e408c24(origin, region, minradius, maxradius)
 {
 	nodes = getnodesinradius(origin, maxradius, minradius);
 	var_54f3a637 = [];
-	foreach(var_c8a7a0b7, node in nodes)
+	foreach(node in nodes)
 	{
 		if(isdefined(region))
 		{
@@ -210,13 +210,13 @@ function function_51828ce6()
 {
 	if(!self isinscriptedstate())
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.current_scene) && isstring(self.current_scene))
 	{
 		if(isinarray(level.var_3a7fa0a9, self.current_scene))
 		{
-			return 1;
+			return true;
 		}
 	}
 	if(level.script === "cp_mi_sing_sgen")
@@ -225,11 +225,11 @@ function function_51828ce6()
 		{
 			if(isinarray(level.var_3a7fa0a9, self.traversestartnode.animscript))
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -315,7 +315,7 @@ function function_ec036ed3(var_28b84d73, var_14e6a7e9, var_df4e4d0f)
 	var_59b020a9 = undefined;
 	if(isdefined(queryresult) && queryresult.data.size > 0)
 	{
-		foreach(var_56a87db, data in queryresult.data)
+		foreach(data in queryresult.data)
 		{
 			data.score = 0;
 			var_dcf3b4e8 = function_1f637867(var_28b84d73, closestplayer, data);
@@ -386,7 +386,7 @@ function function_ec036ed3(var_28b84d73, var_14e6a7e9, var_df4e4d0f)
 function function_1f637867(var_28b84d73, closestplayer, data)
 {
 	score = 0;
-	foreach(var_d45abeb7, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		var_5734b0ef = distancesquared(data.origin, player.origin);
 		var_d322d6e7 = math::clamp(var_5734b0ef, 0, 1200 * 1200);
@@ -460,7 +460,7 @@ function function_d789e857(var_28b84d73, closestplayer, data)
 function function_fb8e7615(var_28b84d73, closestplayer, data)
 {
 	score = 0;
-	foreach(var_1561be84, location in level.var_5e64ddb4)
+	foreach(location in level.var_5e64ddb4)
 	{
 		var_b0035858 = distancesquared(location, data.origin);
 		if(var_b0035858 <= (120 * 120))
@@ -483,7 +483,7 @@ function function_fb8e7615(var_28b84d73, closestplayer, data)
 function function_4d084a77()
 {
 	/#
-		foreach(var_58ada4a3, location in level.var_5e64ddb4)
+		foreach(location in level.var_5e64ddb4)
 		{
 			recordsphere(location, 4, (1, 1, 0), "");
 		}

@@ -22,7 +22,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_bgb_arms_grace", &__init__, undefined, "bgb");
 }
@@ -108,7 +108,7 @@ function function_f1adaf91(player)
 	if(isdefined(player.laststandprimaryweapons))
 	{
 		var_f0e082e = 0;
-		foreach(var_53b3e826, weapon in player.laststandprimaryweapons)
+		foreach(weapon in player.laststandprimaryweapons)
 		{
 			if(weapon.isprimary)
 			{
@@ -119,7 +119,7 @@ function function_f1adaf91(player)
 				}
 			}
 		}
-		foreach(var_8fbf6103, weapon in player.laststandprimaryweapons)
+		foreach(weapon in player.laststandprimaryweapons)
 		{
 			if(weapon == var_f49711f9)
 			{

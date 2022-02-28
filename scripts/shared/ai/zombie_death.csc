@@ -13,7 +13,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init_fire_fx()
+function autoexec init_fire_fx()
 {
 	wait(0.016);
 	if(!isdefined(level._effect))
@@ -76,7 +76,12 @@ function flame_death_fx(localclientnum)
 			playfxontag(localclientnum, level._effect["character_fire_death_torso"], self, fire_tag);
 		}
 	}
-	println("");
+	else
+	{
+		/#
+			println("");
+		#/
+	}
 	if(isdefined(level._effect) && isdefined(level._effect["character_fire_death_sm"]))
 	{
 		if(self.archetype !== "parasite" && self.archetype !== "raps")
@@ -102,7 +107,12 @@ function flame_death_fx(localclientnum)
 			playfxontag(localclientnum, level._effect["character_fire_death_sm"], self, tagarray[1]);
 		}
 	}
-	println("");
+	else
+	{
+		/#
+			println("");
+		#/
+	}
 }
 
 /*

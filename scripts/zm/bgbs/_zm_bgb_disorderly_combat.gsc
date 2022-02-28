@@ -26,7 +26,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_bgb_disorderly_combat", &__init__, &__main__, "bgb");
 }
@@ -113,7 +113,7 @@ function disable()
 function function_32710943()
 {
 	var_dd341085 = getarraykeys(level.zombie_weapons);
-	foreach(var_a9b3caa, var_134a15b0 in var_dd341085)
+	foreach(var_134a15b0 in var_dd341085)
 	{
 		var_134a15b0 function_32818605();
 	}
@@ -302,12 +302,12 @@ function function_4035ce17(n_index, b_upgraded, var_77bd95a)
 			self thread aat::acquire(var_e3c04036, var_77bd95a);
 		}
 		self bgb::do_one_shot_use(1);
-		return 1;
+		return true;
 	}
 	/#
 		println("" + var_e3c04036.displayname);
 	#/
-	return 0;
+	return false;
 }
 
 /*
@@ -333,15 +333,15 @@ function function_f0cecf3c()
 		case "sniper_fastbolt":
 		case "sniper_powerbolt":
 		{
-			return 1;
+			return true;
 			break;
 		}
 	}
 	if(zm_weapons::is_wonder_weapon(self) || level.start_weapon == self)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -473,14 +473,14 @@ function has_weapon(var_382bb75)
 	w_base = zm_weapons::get_base_weapon(var_382bb75);
 	if(self hasweapon(w_base, 1))
 	{
-		return 1;
+		return true;
 	}
 	var_7321b53b = zm_weapons::get_upgrade_weapon(var_382bb75);
 	if(self hasweapon(var_7321b53b, 1))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

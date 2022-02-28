@@ -43,26 +43,29 @@ function proptrap_downdraft_rumble(localclientnum, oldval, newval, bnewent, bini
 		{
 			player.var_69abefde = [];
 			var_719bbcb8 = struct::get_array("s_proptrap_downdraft_rumble", "targetname");
-			foreach(var_d431e314, var_dd3351d8 in var_719bbcb8)
+			foreach(var_dd3351d8 in var_719bbcb8)
 			{
 				e_pos = util::spawn_model(localclientnum, "tag_origin", var_dd3351d8.origin, var_dd3351d8.angles);
 				array::add(player.var_69abefde, e_pos);
 			}
 		}
-		foreach(var_6eba6ac9, e_pos in player.var_69abefde)
+		foreach(e_pos in player.var_69abefde)
 		{
 			e_pos playrumbleonentity(localclientnum, "zm_island_rumble_proptrap_downdraft");
 		}
 	}
-	else if(isdefined(player.var_69abefde))
+	else
 	{
-		foreach(var_b20650e8, e_pos in player.var_69abefde)
+		if(isdefined(player.var_69abefde))
 		{
-			e_pos stoprumble(localclientnum, "zm_island_rumble_proptrap_downdraft");
-			e_pos delete();
+			foreach(e_pos in player.var_69abefde)
+			{
+				e_pos stoprumble(localclientnum, "zm_island_rumble_proptrap_downdraft");
+				e_pos delete();
+			}
 		}
+		player.var_69abefde = undefined;
 	}
-	player.var_69abefde = undefined;
 }
 
 /*
@@ -105,26 +108,29 @@ function walltrap_draft_rumble(localclientnum, oldval, newval, bnewent, binitial
 		{
 			player.var_d33c558c = [];
 			var_52928b68 = struct::get_array("s_walltrap_draft_rumble", "targetname");
-			foreach(var_1c6d03e, var_7f2e4e88 in var_52928b68)
+			foreach(var_7f2e4e88 in var_52928b68)
 			{
 				e_pos = util::spawn_model(localclientnum, "tag_origin", var_7f2e4e88.origin, var_7f2e4e88.angles);
 				array::add(player.var_d33c558c, e_pos);
 			}
 		}
-		foreach(var_832f6a13, e_pos in player.var_d33c558c)
+		foreach(e_pos in player.var_d33c558c)
 		{
 			e_pos playrumbleonentity(localclientnum, "zm_island_rumble_proptrap_downdraft");
 		}
 	}
-	else if(isdefined(player.var_d33c558c))
+	else
 	{
-		foreach(var_f3de8f22, e_pos in player.var_d33c558c)
+		if(isdefined(player.var_d33c558c))
 		{
-			e_pos stoprumble(localclientnum, "zm_island_rumble_proptrap_downdraft");
-			e_pos delete();
+			foreach(e_pos in player.var_d33c558c)
+			{
+				e_pos stoprumble(localclientnum, "zm_island_rumble_proptrap_downdraft");
+				e_pos delete();
+			}
 		}
+		player.var_d33c558c = undefined;
 	}
-	player.var_d33c558c = undefined;
 }
 
 /*
@@ -165,7 +171,7 @@ function function_24f1be38(localclientnum, str_structname)
 	var_719bbcb8 = struct::get_array(str_structname, "targetname");
 	while(true)
 	{
-		foreach(var_c976e1e5, var_dd3351d8 in var_719bbcb8)
+		foreach(var_dd3351d8 in var_719bbcb8)
 		{
 			if(isdefined(self) && distancesquared(self.origin, var_dd3351d8.origin) < 3600)
 			{

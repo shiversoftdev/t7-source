@@ -48,7 +48,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_genesis_minor_ee", &__init__, &__main__, undefined);
 }
@@ -250,34 +250,34 @@ function function_a5a542a(var_3bb6997f, var_c59a59e1)
 {
 	if(self bgb::is_enabled("zm_bgb_disorderly_combat"))
 	{
-		return 0;
+		return false;
 	}
 	if(zm_utility::is_hero_weapon(var_3bb6997f))
 	{
-		return 0;
+		return false;
 	}
 	if(zm_equipment::is_equipment(var_3bb6997f))
 	{
-		return 0;
+		return false;
 	}
 	if(zm_utility::is_placeable_mine(var_3bb6997f))
 	{
-		return 0;
+		return false;
 	}
 	if(self zm_utility::has_powerup_weapon())
 	{
-		return 0;
+		return false;
 	}
 	var_26e1938e = self getweaponslistprimaries();
 	if(var_c59a59e1 == 0 && var_26e1938e.size < 2)
 	{
-		return 0;
+		return false;
 	}
 	if(var_c59a59e1 == 2 && self zm_weapons::has_weapon_or_upgrade(var_3bb6997f))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -384,7 +384,7 @@ function function_ff9395ca()
 {
 	level.var_61d84403 = [];
 	var_eb751e53 = struct::get_array("writing_trigger", "targetname");
-	foreach(var_ca4965d8, var_2ac294d8 in var_eb751e53)
+	foreach(var_2ac294d8 in var_eb751e53)
 	{
 		var_3cbdaba3 = getent(var_2ac294d8.target, "targetname");
 		array::add(level.var_61d84403, var_3cbdaba3);
@@ -439,7 +439,7 @@ function function_a8fc7a77()
 function function_d0f8a867()
 {
 	b_complete = 1;
-	foreach(var_4db1acdd, var_3cbdaba3 in level.var_61d84403)
+	foreach(var_3cbdaba3 in level.var_61d84403)
 	{
 		switch(var_3cbdaba3.targetname)
 		{
@@ -517,15 +517,15 @@ function function_bc56f047(e_player)
 	{
 		if(level flag::get("writing_on_the_wall_complete"))
 		{
-			return 1;
+			return true;
 		}
 		self.stub.hint_string = "";
 		self sethintstring("");
 		self.stub.cursor_hint = "HINT_NOICON";
 		self setcursorhint("HINT_NOICON");
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -553,7 +553,7 @@ function lil_arnie_upgrade()
 	zm_spawner::deregister_zombie_death_event_callback(&function_4a0f0038);
 	level.check_b_valid_poi = &zm_genesis_ee_quest::function_5516baeb;
 	level flag::wait_till("lil_arnie_done");
-	foreach(var_85f7b780, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		if(player hasweapon(level.w_octobomb))
 		{
@@ -705,17 +705,17 @@ function function_b2869a31(e_player)
 {
 	if(self.stub.b_enabled)
 	{
-		foreach(var_8029f4aa, e_player in level.players)
+		foreach(e_player in level.players)
 		{
 			self setvisibletoplayer(e_player);
 		}
-		return 1;
+		return true;
 	}
-	foreach(var_b2bc6603, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		self setinvisibletoplayer(e_player);
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -734,7 +734,7 @@ function function_2d1b88ec()
 	wait(level.var_557b53fd[level.players.size]);
 	level.var_c592ecc1 = 0;
 	level.var_8091d507 = 0;
-	foreach(var_cf8e42be, s_unitrigger in level.var_aa421b74)
+	foreach(s_unitrigger in level.var_aa421b74)
 	{
 		s_unitrigger.b_enabled = 1;
 	}
@@ -754,7 +754,7 @@ function function_77da8ee0()
 {
 	level flag::set("old_school_activated");
 	playsoundatposition("zmb_minor_skool_complete", (0, 0, 0));
-	foreach(var_c2fe4bce, s_unitrigger in level.var_aa421b74)
+	foreach(s_unitrigger in level.var_aa421b74)
 	{
 		s_unitrigger.b_enabled = 0;
 	}

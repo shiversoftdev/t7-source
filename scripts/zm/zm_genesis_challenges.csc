@@ -16,7 +16,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_stalingrad_challenges", &__init__, undefined, undefined);
 }
@@ -90,7 +90,7 @@ function function_1664174d(localclientnum, oldval, newval, bnewent, binitialsnap
 	var_a879fa43 = self getentitynumber();
 	str_name = "challenge_board_" + var_a879fa43;
 	s_skull = struct::get(str_name, "targetname");
-	foreach(var_e0c1da04, s_skull in level.var_3c3a1522)
+	foreach(s_skull in level.var_3c3a1522)
 	{
 		if(!isdefined(s_skull.var_90369c89))
 		{

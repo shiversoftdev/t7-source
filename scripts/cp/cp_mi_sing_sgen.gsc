@@ -93,7 +93,7 @@ function main()
 	cp_mi_sing_sgen_sound::main();
 	level.b_enhanced_vision_enabled = 1;
 	level.can_revive_use_depthinwater_test = 1;
-	level.var_173c585e = 1;
+	level.overrideammodropteam3 = 1;
 	if(getdvarstring("skipto") === "dev_flood_combat")
 	{
 		sgen_util::rename_coop_spawn_points("flood_combat", "dev_flood_combat");
@@ -500,7 +500,7 @@ function robot_oed_toggles()
 function lift_pillar_cover_pallas()
 {
 	e_pillars = getentarray("diaz_tower_1", "targetname");
-	foreach(var_9358f23, pillar in e_pillars)
+	foreach(pillar in e_pillars)
 	{
 		pillar movez(106, 0.05);
 	}

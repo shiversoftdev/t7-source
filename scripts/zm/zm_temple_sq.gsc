@@ -52,7 +52,7 @@ function init()
 	level._crystal_bounce_paths[5] = array(6, 5, 6, 1, 3, 5, "R");
 	level._crystal_bounce_paths[6] = array(5, 6, 1, 4, 2, 1, 3, "M");
 	var_81c48749 = getentarray("sq_gong", "targetname");
-	foreach(var_9893cd6f, var_3e9e1b32 in var_81c48749)
+	foreach(var_3e9e1b32 in var_81c48749)
 	{
 		var_3e9e1b32.script_vector = vectorscale((0, 0, 1), 40);
 	}
@@ -145,7 +145,7 @@ function watch_for_respawn()
 		self waittill(#"spawned_player");
 		waittillframeend();
 		self zm_sidequests::add_sidequest_icon("sq", "anti115");
-		foreach(var_ef795c4e, perk in level._sq_perk_array)
+		foreach(perk in level._sq_perk_array)
 		{
 			if(!self hasperk(perk))
 			{
@@ -560,17 +560,17 @@ function sundial_button_already_pressed_by(who, buttons)
 	/#
 		if(getplayers().size < 4)
 		{
-			return 0;
+			return false;
 		}
 	#/
 	for(i = 0; i < buttons.size; i++)
 	{
 		if(isdefined(buttons[i].triggering_player) && buttons[i].triggering_player == who)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -706,7 +706,7 @@ function init_sidequest()
 		level._raised_crystals[i] = 0;
 	}
 	var_ed98f9ec = getentarray("sq_spiketrap", "targetname");
-	foreach(var_5c386d0d, e_trap in var_ed98f9ec)
+	foreach(e_trap in var_ed98f9ec)
 	{
 		e_trap show();
 	}
@@ -1010,7 +1010,7 @@ function reset_sidequest()
 */
 function back_to_the_eclipse()
 {
-	foreach(var_58ed7049, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		e_player thread function_5fdf6353();
 	}
@@ -1030,7 +1030,7 @@ function back_to_the_eclipse()
 */
 function back_to_the_future()
 {
-	foreach(var_3a2b1b15, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		e_player thread function_5fdf6353();
 	}
@@ -1360,9 +1360,9 @@ function is_crystal_raised(i)
 {
 	if(isdefined(level._raised_crystals[i - 1]) && (level._raised_crystals[i - 1]) == 1)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1497,24 +1497,30 @@ function crystal_shrink_logic(hotsauce)
 					exploder::exploder("fxexp_529");
 				}
 			}
-			else if(("" + bounce_path[i]) == "R")
-			{
-				start playsound("evt_sq_bag_crystal_bounce_fail");
-				do_bounce_off(start, hotsauce);
-				break;
-			}
-			else if(is_crystal_raised(bounce_path[i]))
-			{
-				end = get_crystal_from_script_int(bounce_path[i]);
-				start playsound("evt_sq_bag_crystal_bounce_correct");
-				level thread bounce_from_a_to_b(start, end, hotsauce);
-				start = end;
-			}
 			else
 			{
-				start playsound("evt_sq_bag_crystal_bounce_fail");
-				do_bounce_off(start, hotsauce);
-				break;
+				if(("" + bounce_path[i]) == "R")
+				{
+					start playsound("evt_sq_bag_crystal_bounce_fail");
+					do_bounce_off(start, hotsauce);
+					break;
+				}
+				else
+				{
+					if(is_crystal_raised(bounce_path[i]))
+					{
+						end = get_crystal_from_script_int(bounce_path[i]);
+						start playsound("evt_sq_bag_crystal_bounce_correct");
+						level thread bounce_from_a_to_b(start, end, hotsauce);
+						start = end;
+					}
+					else
+					{
+						start playsound("evt_sq_bag_crystal_bounce_fail");
+						do_bounce_off(start, hotsauce);
+						break;
+					}
+				}
 			}
 			wait(0.5);
 			if(i == 6)
@@ -1799,15 +1805,15 @@ function function_b1064ab3(cmd)
 			case "":
 			{
 				setdvar("", 0);
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				setdvar("", 1);
-				return 1;
+				return true;
 			}
 		}
-		return 0;
+		return false;
 	#/
 }
 

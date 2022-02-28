@@ -114,7 +114,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function opt_in()
+function autoexec opt_in()
 {
 	level.aat_in_use = 1;
 	level.bgb_in_use = 1;
@@ -387,7 +387,7 @@ function function_2d0e5eb6()
 	for(i = 0; i < var_cdb0f86b.size; i++)
 	{
 		var_77917a61 = 0;
-		foreach(var_d1fcac52, var_68de493a in var_b4442b55)
+		foreach(var_68de493a in var_b4442b55)
 		{
 			if(var_cdb0f86b[i] == var_68de493a)
 			{
@@ -437,7 +437,7 @@ function function_56848b85()
 		{
 			if(isdefined(self.b_on_tank) && self.b_on_tank)
 			{
-				return 1;
+				return true;
 			}
 			a_players[i].origin = level.vh_tank gettagorigin("window_left_rear_jmp_jnt");
 			continue;
@@ -448,7 +448,7 @@ function function_56848b85()
 			continue;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -460,14 +460,14 @@ function function_56848b85()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_ce3464b9(players)
+function private function_ce3464b9(players)
 {
 	if(isdefined(self.last_closest_player) && (isdefined(self.last_closest_player.am_i_valid) && self.last_closest_player.am_i_valid))
 	{
 		return;
 	}
 	self.var_13ed8adf = undefined;
-	foreach(var_2a909a9b, player in players)
+	foreach(player in players)
 	{
 		if(isdefined(player.am_i_valid) && player.am_i_valid && zm_tomb_utility::function_d39fc97a(player))
 		{
@@ -543,7 +543,7 @@ function tomb_closest_player_override(v_zombie_origin, a_players_to_check)
 		{
 			e_player_closest_on_tank = undefined;
 			n_dist_tank_min = 99999999;
-			foreach(var_c21d909d, e_player in a_players)
+			foreach(e_player in a_players)
 			{
 				n_dist_sq = distance2dsquared(self.origin, e_player.origin);
 				if(n_dist_sq < n_dist_tank_min)
@@ -588,21 +588,21 @@ function function_869d6f66()
 {
 	if(!isdefined(self zm_bgb_anywhere_but_here::function_728dfe3()))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.var_b605c6c3) && !self.var_b605c6c3)
 	{
-		return 0;
+		return false;
 	}
 	if(issubstr(self.zone_name, "zone_chamber"))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.b_already_on_tank) && self.b_already_on_tank)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -618,9 +618,9 @@ function function_e36dbcf4()
 {
 	if(self.is_stomped === 1)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -847,7 +847,7 @@ function function_df9f5719()
 			var_343b1937 = a_s_spots[i].script_int;
 		}
 		var_c15b2128 = [];
-		foreach(var_e414cd64, sp_zombie in level.zombie_spawners)
+		foreach(sp_zombie in level.zombie_spawners)
 		{
 			if(sp_zombie.script_int == var_343b1937)
 			{
@@ -915,7 +915,7 @@ function tomb_round_spawn_failsafe()
 		}
 		players = getplayers();
 		zombie_blood = 0;
-		foreach(var_bdd43d76, player in players)
+		foreach(player in players)
 		{
 			if(zm_utility::is_player_valid(player))
 			{
@@ -1076,7 +1076,7 @@ function assign_lowest_unused_character_index()
 		return charindexarray[0];
 	}
 	n_characters_defined = 0;
-	foreach(var_681a6914, player in players)
+	foreach(player in players)
 	{
 		if(isdefined(player.characterindex))
 		{
@@ -1270,9 +1270,9 @@ function equipment_safe_to_drop(weapon)
 {
 	if(!isdefined(self.origin))
 	{
-		return 1;
+		return true;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1292,7 +1292,7 @@ function offhand_weapon_give_override(str_weapon)
 		self setweaponammoclip(self zm_utility::get_player_tactical_grenade(), 0);
 		self takeweapon(self zm_utility::get_player_tactical_grenade());
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1323,13 +1323,13 @@ function tomb_player_intersection_tracker_override(e_player)
 {
 	if(isdefined(e_player.b_already_on_tank) && e_player.b_already_on_tank || (isdefined(self.b_already_on_tank) && self.b_already_on_tank))
 	{
-		return 1;
+		return true;
 	}
 	if(isdefined(e_player.giant_robot_transition) && e_player.giant_robot_transition || (isdefined(self.giant_robot_transition) && self.giant_robot_transition))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1501,59 +1501,71 @@ function watch_devgui_oneinchpunch()
 			if(getdvarstring("") == "")
 			{
 				setdvar("", "");
-				foreach(var_1ecc6aba, player in getplayers())
+				foreach(player in getplayers())
 				{
 					player thread _zm_weap_one_inch_punch::one_inch_punch_melee_attack();
 				}
 			}
-			else if(getdvarstring("") == "")
+			else
 			{
-				setdvar("", "");
-				foreach(var_751e6d69, player in getplayers())
+				if(getdvarstring("") == "")
 				{
-					player.b_punch_upgraded = 1;
-					player.str_punch_element = "";
-					player thread _zm_weap_one_inch_punch::one_inch_punch_melee_attack();
+					setdvar("", "");
+					foreach(player in getplayers())
+					{
+						player.b_punch_upgraded = 1;
+						player.str_punch_element = "";
+						player thread _zm_weap_one_inch_punch::one_inch_punch_melee_attack();
+					}
 				}
-			}
-			else if(getdvarstring("") == "")
-			{
-				setdvar("", "");
-				foreach(var_40f7fce6, player in getplayers())
+				else
 				{
-					player.b_punch_upgraded = 1;
-					player.str_punch_element = "";
-					player thread _zm_weap_one_inch_punch::one_inch_punch_melee_attack();
-				}
-			}
-			else if(getdvarstring("") == "")
-			{
-				setdvar("", "");
-				foreach(var_d4ae0aab, player in getplayers())
-				{
-					player.b_punch_upgraded = 1;
-					player.str_punch_element = "";
-					player thread _zm_weap_one_inch_punch::one_inch_punch_melee_attack();
-				}
-			}
-			else if(getdvarstring("") == "")
-			{
-				setdvar("", "");
-				foreach(var_6f369260, player in getplayers())
-				{
-					player.b_punch_upgraded = 1;
-					player.str_punch_element = "";
-					player thread _zm_weap_one_inch_punch::one_inch_punch_melee_attack();
-				}
-			}
-			else if(getdvarstring("") == "")
-			{
-				setdvar("", "");
-				foreach(var_39d2ed5d, player in getplayers())
-				{
-					player.b_punch_upgraded = 1;
-					player.str_punch_element = "";
-					player thread _zm_weap_one_inch_punch::one_inch_punch_melee_attack();
+					if(getdvarstring("") == "")
+					{
+						setdvar("", "");
+						foreach(player in getplayers())
+						{
+							player.b_punch_upgraded = 1;
+							player.str_punch_element = "";
+							player thread _zm_weap_one_inch_punch::one_inch_punch_melee_attack();
+						}
+					}
+					else
+					{
+						if(getdvarstring("") == "")
+						{
+							setdvar("", "");
+							foreach(player in getplayers())
+							{
+								player.b_punch_upgraded = 1;
+								player.str_punch_element = "";
+								player thread _zm_weap_one_inch_punch::one_inch_punch_melee_attack();
+							}
+						}
+						else
+						{
+							if(getdvarstring("") == "")
+							{
+								setdvar("", "");
+								foreach(player in getplayers())
+								{
+									player.b_punch_upgraded = 1;
+									player.str_punch_element = "";
+									player thread _zm_weap_one_inch_punch::one_inch_punch_melee_attack();
+								}
+							}
+							else if(getdvarstring("") == "")
+							{
+								setdvar("", "");
+								foreach(player in getplayers())
+								{
+									player.b_punch_upgraded = 1;
+									player.str_punch_element = "";
+									player thread _zm_weap_one_inch_punch::one_inch_punch_melee_attack();
+								}
+							}
+						}
+					}
 				}
 			}
 			wait(0.1);
@@ -1947,7 +1959,7 @@ function drop_all_barriers()
 		{
 			continue;
 		}
-		foreach(var_104c775e, zbarrier in zbarriers)
+		foreach(zbarrier in zbarriers)
 		{
 			zbarrier_pieces = zbarrier getnumzbarrierpieces();
 			for(i = 0; i < zbarrier_pieces; i++)
@@ -1994,18 +2006,18 @@ function tomb_special_weapon_magicbox_check(weapon)
 	{
 		if(isdefined(self.beacon_ready) && self.beacon_ready)
 		{
-			return 1;
+			return true;
 		}
-		return 0;
+		return false;
 	}
 	if(isdefined(level.zombie_weapons[weapon].shared_ammo_weapon))
 	{
 		if(self zm_weapons::has_weapon_or_upgrade(level.zombie_weapons[weapon].shared_ammo_weapon))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -2105,9 +2117,9 @@ function tomb_validate_enemy_path_length(player)
 	d = distancesquared(self.origin, player.origin);
 	if(d <= max_dist)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2277,11 +2289,14 @@ function tomb_custom_electric_cherry_reload_attack()
 						}
 						self zm_score::add_to_player_score(40);
 					}
-					else if(!isdefined(a_zombies[i].is_mechz))
+					else
 					{
-						a_zombies[i] thread zm_perk_electric_cherry::electric_cherry_stun();
+						if(!isdefined(a_zombies[i].is_mechz))
+						{
+							a_zombies[i] thread zm_perk_electric_cherry::electric_cherry_stun();
+						}
+						a_zombies[i] thread zm_perk_electric_cherry::electric_cherry_shock_fx();
 					}
-					a_zombies[i] thread zm_perk_electric_cherry::electric_cherry_shock_fx();
 					wait(0.1);
 					if(isalive(a_zombies[i]))
 					{
@@ -2354,7 +2369,7 @@ function tomb_can_track_ammo_custom(weap)
 {
 	if(!isdefined(weap))
 	{
-		return 0;
+		return false;
 	}
 	switch(weap.name)
 	{
@@ -2380,17 +2395,17 @@ function tomb_can_track_ammo_custom(weap)
 		case "zombie_one_inch_punch_flourish":
 		case "zombie_one_inch_punch_upgrade_flourish":
 		{
-			return 0;
+			return false;
 		}
 		default:
 		{
 			if(weap.isperkbottle || zm_utility::is_placeable_mine(weap) || zm_equipment::is_equipment(weap) || issubstr(weap.name, "knife_ballistic_") || getsubstr(weap.name, 0, 3) == "gl_")
 			{
-				return 0;
+				return false;
 			}
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -2416,7 +2431,7 @@ function function_89182d9b()
 	level.machine_assets["specialty_staminup"].power_off_callback = &zm_tomb_capture_zones::custom_vending_power_off;
 	level flag::wait_till("start_zombie_round_logic");
 	wait(0.5);
-	foreach(var_91c6f2ef, var_3b5635b9 in level.powered_items)
+	foreach(var_3b5635b9 in level.powered_items)
 	{
 		if(var_3b5635b9.target.script_noteworthy != "pack_a_punch")
 		{
@@ -2530,8 +2545,8 @@ function player_out_of_playable_area_override()
 {
 	if(self clientfield::get_to_player("mechz_grab"))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 

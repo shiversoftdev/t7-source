@@ -205,37 +205,37 @@ function _is_primed(slot, weapon)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _lock_requirement(target)
+function private _lock_requirement(target)
 {
 	if(target cybercom::cybercom_aicheckoptout("cybercom_mrpukey"))
 	{
 		self cybercom::function_29bf9dee(target, 2);
-		return 0;
+		return false;
 	}
 	if(isdefined(target.is_disabled) && target.is_disabled)
 	{
 		self cybercom::function_29bf9dee(target, 6);
-		return 0;
+		return false;
 	}
 	if(isactor(target) && target cybercom::function_78525729() != "stand" && target cybercom::function_78525729() != "crouch")
 	{
-		return 0;
+		return false;
 	}
 	if(isvehicle(target) || !isdefined(target.archetype))
 	{
 		self cybercom::function_29bf9dee(target, 2);
-		return 0;
+		return false;
 	}
 	if(isactor(target) && target.archetype != "human" && target.archetype != "human_riotshield")
 	{
 		self cybercom::function_29bf9dee(target, 2);
-		return 0;
+		return false;
 	}
 	if(isactor(target) && !target isonground() && !target cybercom::function_421746e0())
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -247,7 +247,7 @@ private function _lock_requirement(target)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _get_valid_targets(weapon)
+function private _get_valid_targets(weapon)
 {
 	return arraycombine(getaiteamarray("axis"), getaiteamarray("team3"), 0, 0);
 }
@@ -261,12 +261,12 @@ private function _get_valid_targets(weapon)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_2de61c3f(slot, weapon)
+function private function_2de61c3f(slot, weapon)
 {
 	upgraded = self hascybercomability("cybercom_mrpukey") == 2;
 	aborted = 0;
 	fired = 0;
-	foreach(var_a4de089d, item in self.cybercom.lock_targets)
+	foreach(item in self.cybercom.lock_targets)
 	{
 		if(isdefined(item.target) && (isdefined(item.inrange) && item.inrange))
 		{
@@ -313,7 +313,7 @@ private function function_2de61c3f(slot, weapon)
 	Parameters: 4
 	Flags: Linked, Private
 */
-private function function_25411db1(upgraded = 0, secondary = 0, attacker, weapon)
+function private function_25411db1(upgraded = 0, secondary = 0, attacker, weapon)
 {
 	self notify(#"hash_f8c5dd60", weapon, attacker);
 	weapon = getweapon("gadget_mrpukey");
@@ -359,10 +359,10 @@ function function_ceb2ee11()
 		model_name = self getattachmodelname(i);
 		if(isinarray(level.cybercom.mrpukey.var_106f11dd, model_name))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -387,7 +387,7 @@ function function_da7ef8ba(target, var_9bc2efcb = 1, upgraded)
 	validtargets = [];
 	if(isarray(target))
 	{
-		foreach(var_af887be9, guy in target)
+		foreach(guy in target)
 		{
 			if(!_lock_requirement(guy))
 			{
@@ -396,20 +396,23 @@ function function_da7ef8ba(target, var_9bc2efcb = 1, upgraded)
 			validtargets[validtargets.size] = guy;
 		}
 	}
-	else if(!_lock_requirement(target))
+	else
 	{
-		return;
+		if(!_lock_requirement(target))
+		{
+			return;
+		}
+		validtargets[validtargets.size] = target;
 	}
-	validtargets[validtargets.size] = target;
 	if(isdefined(var_9bc2efcb) && var_9bc2efcb)
 	{
 		type = self cybercom::function_5e3d3aa();
 		self orientmode("face default");
 		self animscripted("ai_cybercom_anim", self.origin, self.angles, ("ai_base_rifle_" + type) + "_exposed_cybercom_activate");
-		self waittill_match(#"ai_cybercom_anim");
+		self waittillmatch(#"ai_cybercom_anim");
 	}
 	weapon = getweapon("gadget_mrpukey");
-	foreach(var_2b6d0244, guy in validtargets)
+	foreach(guy in validtargets)
 	{
 		if(!cybercom::targetisvalid(guy, weapon))
 		{

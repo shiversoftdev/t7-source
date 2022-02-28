@@ -41,7 +41,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_siegebot_nikolai", &__init__, undefined, undefined);
 }
@@ -103,7 +103,7 @@ function siegebot_initialize()
 	self.var_65850094[3] = 8000;
 	self.var_65850094[4] = 8000;
 	self.var_65850094[5] = 11000;
-	foreach(var_316cf841, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player.var_b3a9099 = 0;
 	}
@@ -357,11 +357,11 @@ function jump_to(target)
 {
 	if(self vehicle_ai::get_current_state() === "jump")
 	{
-		return 0;
+		return false;
 	}
 	if(!vehicle_ai::iscooldownready("jump_cooldown"))
 	{
-		return 0;
+		return false;
 	}
 	if(isvec(target))
 	{
@@ -375,9 +375,9 @@ function jump_to(target)
 	if(isdefined(self.jump.var_e8ce546f) && (600 * 600) < distsqr && distsqr < (1800 * 1800))
 	{
 		self vehicle_ai::set_state("jump");
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -480,7 +480,7 @@ function state_jump_update(params)
 	self.jump.debug_state = "leave_ground";
 	self util::waittill_notify_or_timeout("start_engine", 1);
 	self vehicle::impact_fx(self.settings.takeofffx1);
-	params.landingstate = "land@jump";
+	params.coptermodel = "land@jump";
 	jumpstart = gettime();
 	while(true)
 	{
@@ -514,16 +514,16 @@ function state_jump_update(params)
 				dot = vectordot(dir, forward);
 				if(dot < -0.7)
 				{
-					params.landingstate = "land_turn@jump";
+					params.coptermodel = "land_turn@jump";
 				}
 			}
-			self asmrequestsubstate(params.landingstate);
+			self asmrequestsubstate(params.coptermodel);
 		}
 		wait(0.05);
 	}
 	self.jump.linkent.origin = (self.jump.linkent.origin[0], self.jump.linkent.origin[1], 0) + (0, 0, goal[2]);
 	self notify(#"land_crush");
-	foreach(var_44041b8d, player in level.players)
+	foreach(player in level.players)
 	{
 		if(distance2dsquared(self.origin, player.origin) < (200 * 200))
 		{
@@ -546,7 +546,7 @@ function state_jump_update(params)
 	wait(0.05);
 	self.jump.in_air = 0;
 	self setgoal(self.origin, 0, self.goalradius, self.goalheight);
-	self vehicle_ai::waittill_asm_complete(params.landingstate, 3);
+	self vehicle_ai::waittill_asm_complete(params.coptermodel, 3);
 	self vehicle_ai::cooldown("jump_cooldown", 3);
 	self notify(#"jump_finished");
 	self locomotion_start();
@@ -607,9 +607,9 @@ function side_step()
 		self asmrequestsubstate(jukestate);
 		self vehicle_ai::waittill_asm_complete(jukestate, 3);
 		self locomotion_start();
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -925,7 +925,7 @@ function face_target(position, targetanglediff = 30, var_a39fa3d8 = 1)
 function function_75775e52(point, range)
 {
 	a_zombies = getaiarchetypearray("zombie");
-	foreach(var_9356268c, zombie in a_zombies)
+	foreach(zombie in a_zombies)
 	{
 		if(isalive(zombie) && zombie.knockdown !== 1 && distance2dsquared(point, zombie.origin) < (range * range) && (point[2] - zombie.origin[2]) * (point[2] - zombie.origin[2]) < (100 * 100))
 		{
@@ -969,15 +969,15 @@ function function_b9b039e0(einflictor, eattacker, idamage, idflags, smeansofdeat
 {
 	if(!isplayer(eattacker))
 	{
-		return 0;
+		return false;
 	}
 	if(level flag::get("world_is_paused"))
 	{
-		return 0;
+		return false;
 	}
 	if(smeansofdeath === "MOD_MELEE")
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(weapon))
 	{
@@ -998,12 +998,12 @@ function function_b9b039e0(einflictor, eattacker, idamage, idflags, smeansofdeat
 		n_index = int(var_7e43f478[3]);
 		if(self.var_65850094[n_index] <= 0)
 		{
-			return 0;
+			return false;
 		}
 	}
 	else
 	{
-		return 0;
+		return false;
 	}
 	str_partname = partname;
 	switch(n_index)
@@ -1033,12 +1033,12 @@ function function_b9b039e0(einflictor, eattacker, idamage, idflags, smeansofdeat
 		}
 		default:
 		{
-			return 0;
+			return false;
 		}
 	}
 	if(n_index == 5 && function_86cc3c11() < 4)
 	{
-		return 0;
+		return false;
 	}
 	var_cf402baf = self.var_65850094[n_index] > 0 && (self.var_65850094[n_index] - idamage) <= 0;
 	self.var_65850094[n_index] = self.var_65850094[n_index] - idamage;
@@ -1074,7 +1074,7 @@ function function_b9b039e0(einflictor, eattacker, idamage, idflags, smeansofdeat
 			level notify(#"nikolai_final_weakpoint_revealed");
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1188,12 +1188,12 @@ function function_a3258c2a(var_f8b7c9a1)
 {
 	if(!isalive(self))
 	{
-		return 0;
+		return false;
 	}
 	self endon(#"death");
 	self vehicle_ai::set_state("special_attack");
 	self endon(#"change_state");
-	foreach(var_9b29ce0f, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		self getperfectinfo(player, 0);
 	}
@@ -1249,7 +1249,7 @@ function function_59fe8c9c(targetposition)
 {
 	if(!isalive(self))
 	{
-		return 0;
+		return false;
 	}
 	self endon(#"death");
 	self vehicle_ai::set_state("special_attack");
@@ -1521,7 +1521,7 @@ function function_d7ef4d80()
 	{
 		a_ai_zombies = getaiarchetypearray("zombie");
 		a_ai_zombies = arraysortclosest(a_ai_zombies, self.origin, undefined, undefined, 200);
-		foreach(var_f9954f3e, ai_zombie in a_ai_zombies)
+		foreach(ai_zombie in a_ai_zombies)
 		{
 			if(!isdefined(ai_zombie.is_elemental_zombie))
 			{
@@ -1546,7 +1546,7 @@ function function_dfc5ede1(targetent)
 {
 	if(!isalive(self))
 	{
-		return 0;
+		return false;
 	}
 	self endon(#"death");
 	/#
@@ -1556,7 +1556,7 @@ function function_dfc5ede1(targetent)
 	vectotarget = (target - self.origin[0], target - self.origin[1], 0);
 	if(lengthsquared(vectotarget) < (0.01 * 0.01))
 	{
-		return 0;
+		return false;
 	}
 	self vehicle_ai::set_state("special_attack");
 	self endon(#"change_state");
@@ -1611,16 +1611,16 @@ function is_valid_target(target)
 {
 	if(isdefined(target.ignoreme) && target.ignoreme || target.health <= 0)
 	{
-		return 0;
+		return false;
 	}
 	if(isplayer(target) && target laststand::player_is_in_laststand())
 	{
-		return 0;
+		return false;
 	}
 	if(issentient(target) && (target isnotarget() || !isalive(target)))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 

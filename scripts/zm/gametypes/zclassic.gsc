@@ -53,7 +53,7 @@ function onstartgametype()
 	level.spawnmins = (0, 0, 0);
 	level.spawnmaxs = (0, 0, 0);
 	structs = struct::get_array("player_respawn_point", "targetname");
-	foreach(var_882cee42, struct in structs)
+	foreach(struct in structs)
 	{
 		level.spawnmins = math::expand_mins(level.spawnmins, struct.origin);
 		level.spawnmaxs = math::expand_maxs(level.spawnmaxs, struct.origin);

@@ -20,7 +20,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("globallogic", &__init__, undefined, "visionset_mgr");
 }
@@ -242,7 +242,7 @@ function function_9350c173()
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function function_d00a98f6()
+function autoexec function_d00a98f6()
 {
 	if(getdvarint("sys_threadWatchdogTimeoutLive", 0) > 0)
 	{

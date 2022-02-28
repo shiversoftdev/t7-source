@@ -215,7 +215,7 @@ function function_677ed44f(weapon)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function _corpsewatcher()
+function private _corpsewatcher()
 {
 	self waittill(#"actor_corpse", corpse);
 	if(isdefined(corpse))

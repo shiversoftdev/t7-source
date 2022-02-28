@@ -247,7 +247,7 @@ function _is_primed(slot, weapon)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _lock_requirement(target)
+function private _lock_requirement(target)
 {
 	if(target cybercom::cybercom_aicheckoptout("cybercom_hijack"))
 	{
@@ -259,33 +259,33 @@ private function _lock_requirement(target)
 		{
 			self cybercom::function_29bf9dee(target, 2);
 		}
-		return 0;
+		return false;
 	}
 	if(isdefined(target.lockon_owner) && target.lockon_owner != self)
 	{
 		self cybercom::function_29bf9dee(target, 7);
-		return 0;
+		return false;
 	}
 	if(isdefined(target.hijacked) && target.hijacked)
 	{
 		self cybercom::function_29bf9dee(target, 4);
-		return 0;
+		return false;
 	}
 	if(isdefined(target.is_disabled) && target.is_disabled)
 	{
 		self cybercom::function_29bf9dee(target, 6);
-		return 0;
+		return false;
 	}
 	if(isdefined(target.var_d3f57f67) && target.var_d3f57f67)
 	{
-		return 0;
+		return false;
 	}
 	if(!isvehicle(target))
 	{
 		self cybercom::function_29bf9dee(target, 2);
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -297,7 +297,7 @@ private function _lock_requirement(target)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _get_valid_targets(weapon)
+function private _get_valid_targets(weapon)
 {
 	enemy = arraycombine(getaiteamarray("axis"), getaiteamarray("team3"), 0, 0);
 	ally = getaiteamarray("allies");
@@ -313,11 +313,11 @@ private function _get_valid_targets(weapon)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _activate_security_breach(slot, weapon)
+function private _activate_security_breach(slot, weapon)
 {
 	aborted = 0;
 	fired = 0;
-	foreach(var_d9b47428, item in self.cybercom.lock_targets)
+	foreach(item in self.cybercom.lock_targets)
 	{
 		if(isdefined(item.target) && (isdefined(item.inrange) && item.inrange))
 		{
@@ -369,7 +369,7 @@ private function _activate_security_breach(slot, weapon)
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function _security_breach_ramp_visionset(player, setname, delay, direction, duration)
+function private _security_breach_ramp_visionset(player, setname, delay, direction, duration)
 {
 	wait(delay);
 	if(direction > 0)
@@ -393,19 +393,19 @@ private function _security_breach_ramp_visionset(player, setname, delay, directi
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_637db461(player, weapon)
+function private function_637db461(player, weapon)
 {
 	if(isdefined(self.hijacked) && self.hijacked)
 	{
 		player cybercom::function_29bf9dee(self, 4);
-		return 0;
+		return false;
 	}
 	if(isdefined(self.is_disabled) && self.is_disabled)
 	{
 		player cybercom::function_29bf9dee(self, 6);
-		return 0;
+		return false;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -417,7 +417,7 @@ private function function_637db461(player, weapon)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _security_breach(player, weapon)
+function private _security_breach(player, weapon)
 {
 	wait(getdvarfloat("scr_security_breach_activate_delay", 0.5));
 	if(!isdefined(self))
@@ -672,7 +672,7 @@ function clearanchorvolume()
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _anchor_to_location(player, anchor)
+function private _anchor_to_location(player, anchor)
 {
 	self endon(#"death");
 	player endon(#"return_to_body");
@@ -714,14 +714,17 @@ private function _anchor_to_location(player, anchor)
 			{
 				val = 0;
 			}
-			else if(distancesq >= lostcontactdistsq)
-			{
-				val = maxstatic;
-			}
 			else
 			{
-				range = lostcontactdistsq - losecontactdistsq;
-				val = math::clamp((distancesq - losecontactdistsq) / range, 0, maxstatic);
+				if(distancesq >= lostcontactdistsq)
+				{
+					val = maxstatic;
+				}
+				else
+				{
+					range = lostcontactdistsq - losecontactdistsq;
+					val = math::clamp((distancesq - losecontactdistsq) / range, 0, maxstatic);
+				}
 			}
 			outofrangewarningvalue = distancesq >= (getdvarfloat("scr_security_breach_lost_contact_warning_distance_percent", 0.6) * lostcontactdistsq);
 			if(outofrangewarningvalue !== lastoutofrangewarningvalue)
@@ -759,7 +762,7 @@ private function _anchor_to_location(player, anchor)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _invulnerableforatime(time, player)
+function private _invulnerableforatime(time, player)
 {
 	self endon(#"death");
 	self.takedamage = 0;
@@ -776,7 +779,7 @@ private function _invulnerableforatime(time, player)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _playerspectate(vehicle)
+function private _playerspectate(vehicle)
 {
 	self endon(#"spawned");
 	self util::freeze_player_controls(1);
@@ -807,7 +810,7 @@ private function _playerspectate(vehicle)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _playerspectatechase(vehicle)
+function private _playerspectatechase(vehicle)
 {
 	forward = anglestoforward(vehicle.angles);
 	moveamount = vectorscale(forward, -200);
@@ -843,7 +846,7 @@ private function _playerspectatechase(vehicle)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _wait_for_death(player)
+function private _wait_for_death(player)
 {
 	player endon(#"return_to_body");
 	self waittill(#"death");
@@ -866,7 +869,7 @@ private function _wait_for_death(player)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _wait_for_player_exit(player)
+function private _wait_for_player_exit(player)
 {
 	self endon(#"death");
 	player endon(#"return_to_body");
@@ -897,7 +900,7 @@ private function _wait_for_player_exit(player)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function _wait_for_return(player)
+function private _wait_for_return(player)
 {
 	self thread _wait_for_death(player);
 	self thread _wait_for_player_exit(player);

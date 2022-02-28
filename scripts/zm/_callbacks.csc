@@ -23,7 +23,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("callback", &__init__, undefined, undefined);
 }
@@ -157,28 +157,31 @@ function entityspawned(localclientnum)
 			}
 		}
 	}
-	else if(self.type == "vehicle" || self.type == "helicopter" || self.type == "plane")
+	else
 	{
-		if(isdefined(level._customvehiclecbfunc))
+		if(self.type == "vehicle" || self.type == "helicopter" || self.type == "plane")
 		{
-			self thread [[level._customvehiclecbfunc]](localclientnum);
+			if(isdefined(level._customvehiclecbfunc))
+			{
+				self thread [[level._customvehiclecbfunc]](localclientnum);
+			}
+			self thread vehicle::field_toggle_exhaustfx_handler(localclientnum, undefined, 0, 1);
+			self thread vehicle::field_toggle_lights_handler(localclientnum, undefined, 0, 1);
+			if(self.type == "plane" || self.type == "helicopter")
+			{
+				self thread vehicle::aircraft_dustkick();
+			}
+			else
+			{
+				self thread driving_fx::play_driving_fx(localclientnum);
+			}
 		}
-		self thread vehicle::field_toggle_exhaustfx_handler(localclientnum, undefined, 0, 1);
-		self thread vehicle::field_toggle_lights_handler(localclientnum, undefined, 0, 1);
-		if(self.type == "plane" || self.type == "helicopter")
+		else if(self.type == "actor")
 		{
-			self thread vehicle::aircraft_dustkick();
-		}
-		else
-		{
-			self thread driving_fx::play_driving_fx(localclientnum);
-		}
-	}
-	else if(self.type == "actor")
-	{
-		if(isdefined(level._customactorcbfunc))
-		{
-			self thread [[level._customactorcbfunc]](localclientnum);
+			if(isdefined(level._customactorcbfunc))
+			{
+				self thread [[level._customactorcbfunc]](localclientnum);
+			}
 		}
 	}
 }

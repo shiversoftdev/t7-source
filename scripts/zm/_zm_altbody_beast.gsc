@@ -42,7 +42,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_altbody_beast", &__init__, &__main__, undefined);
 }
@@ -93,12 +93,12 @@ function __init__()
 		thread beastmode_devgui();
 	#/
 	triggers = getentarray("trig_beast_mode_kiosk", "targetname");
-	foreach(var_a8b601f9, trigger in triggers)
+	foreach(trigger in triggers)
 	{
 		trigger delete();
 	}
 	triggers = getentarray("trig_beast_mode_kiosk_unavailable", "targetname");
-	foreach(var_66c26606, trigger in triggers)
+	foreach(trigger in triggers)
 	{
 		trigger delete();
 	}
@@ -118,10 +118,10 @@ function __main__()
 	thread watch_round_start_mana();
 	thread hide_ooze_triggers();
 	thread kiosk_cooldown();
-	thread function_7de05274();
+	thread make_powerups_grapplable();
 	zm_spawner::add_custom_zombie_spawn_logic(&zombie_on_spawn);
-	function_3e9ddcc7();
-	level.var_f68f0aeb = getweapon("syrette_zod_beast");
+	create_lightning_params();
+	level.weaponbeastrevivetool = getweapon("syrette_zod_beast");
 }
 
 /*
@@ -178,19 +178,19 @@ function player_enter_beastmode(name, trigger)
 	if(!isdefined(self.firsttime))
 	{
 		self.firsttime = 1;
-		level.var_9ecbc81 = self.characterindex;
+		level.n_first_beast_mode_player_index = self.characterindex;
 		level notify(#"hash_571c8e3c");
 	}
 	self player_disappear_in_flash(1);
 	self.overrideplayerdamage_original = self.overrideplayerdamage;
 	self.overrideplayerdamage = &player_damage_override_beast_mode;
-	self.weaponrevivetool = level.var_f68f0aeb;
+	self.weaponrevivetool = level.weaponbeastrevivetool;
 	self.get_revive_time = &player_get_revive_time;
 	self zm_utility::increment_ignoreme();
 	self.beastmode = 1;
 	self.inhibit_scoring_from_zombies = 1;
 	self flag::set("in_beastmode");
-	bb::function_e367a93e(self, "enter_beast_mode");
+	bb::logplayerevent(self, "enter_beast_mode");
 	self recordmapevent(1, gettime(), self.origin, level.round_number);
 	self allowstand(1);
 	self allowprone(0);
@@ -223,16 +223,16 @@ function player_enter_beastmode(name, trigger)
 	self thread function_92acebd3();
 	if(level clientfield::get("bm_superbeast"))
 	{
-		self function_5c185b9f();
+		self player_enter_superbeastmode();
 	}
 	/#
 		scr_beast_no_visionset = getdvarint("") > 0;
-		self thread function_5d7a94fa();
+		self thread watch_scr_beast_no_visionset();
 	#/
 }
 
 /*
-	Name: function_5d7a94fa
+	Name: watch_scr_beast_no_visionset
 	Namespace: zm_altbody_beast
 	Checksum: 0xAC0B168C
 	Offset: 0x17E8
@@ -240,14 +240,14 @@ function player_enter_beastmode(name, trigger)
 	Parameters: 1
 	Flags: Linked
 */
-function function_5d7a94fa(localclientnum)
+function watch_scr_beast_no_visionset(localclientnum)
 {
 	self endon(#"player_exit_beastmode");
-	var_3f39d2cc = 0;
+	was_scr_beast_no_visionset = 0;
 	while(isdefined(self))
 	{
 		scr_beast_no_visionset = getdvarint("scr_beast_no_visionset") > 0;
-		if(scr_beast_no_visionset != var_3f39d2cc)
+		if(scr_beast_no_visionset != was_scr_beast_no_visionset)
 		{
 			name = "beast_mode";
 			visionset = "zombie_beast_2";
@@ -275,13 +275,13 @@ function function_5d7a94fa(localclientnum)
 				self.altbody_visionset[name] = 1;
 			}
 		}
-		var_3f39d2cc = scr_beast_no_visionset;
+		was_scr_beast_no_visionset = scr_beast_no_visionset;
 		wait(1);
 	}
 }
 
 /*
-	Name: function_5c185b9f
+	Name: player_enter_superbeastmode
 	Namespace: zm_altbody_beast
 	Checksum: 0xD776B18
 	Offset: 0x1980
@@ -289,21 +289,21 @@ function function_5d7a94fa(localclientnum)
 	Parameters: 0
 	Flags: Linked
 */
-function function_5c185b9f()
+function player_enter_superbeastmode()
 {
 	self zm_utility::decrement_ignoreme();
-	self.var_e3e3d706 = 1;
-	self.var_ff6ba411 = 1;
-	self.var_ce25e278 = 1;
-	self.var_1333176 = &function_57c301a6;
+	self.superbeastmana = 1;
+	self.see_kiosks_in_altbody = 1;
+	self.trigger_kiosks_in_altbody = 1;
+	self.custom_altbody_callback = &player_recharge_superbeastmode;
 	self disableinvulnerability();
-	self thread function_f3cafba8();
-	bb::function_e367a93e(self, "enter_superbeast_mode");
+	self thread superbeastmode_override_hp();
+	bb::logplayerevent(self, "enter_superbeast_mode");
 	self recordmapevent(2, gettime(), self.origin, level.round_number);
 }
 
 /*
-	Name: function_57c301a6
+	Name: player_recharge_superbeastmode
 	Namespace: zm_altbody_beast
 	Checksum: 0x889B4317
 	Offset: 0x1A60
@@ -311,15 +311,15 @@ function function_5c185b9f()
 	Parameters: 2
 	Flags: Linked
 */
-function function_57c301a6(trigger, name)
+function player_recharge_superbeastmode(trigger, name)
 {
 	level notify(#"kiosk_used", trigger.kiosk);
-	self.var_e3e3d706 = 1;
+	self.superbeastmana = 1;
 	self player_update_beast_mode_objects(1);
 }
 
 /*
-	Name: function_f3cafba8
+	Name: superbeastmode_override_hp
 	Namespace: zm_altbody_beast
 	Checksum: 0xEE3DAED4
 	Offset: 0x1AC8
@@ -327,12 +327,12 @@ function function_57c301a6(trigger, name)
 	Parameters: 0
 	Flags: Linked
 */
-function function_f3cafba8()
+function superbeastmode_override_hp()
 {
 	self endon(#"player_exit_beastmode");
 	while(isdefined(self))
 	{
-		self.beastmana = self.var_e3e3d706;
+		self.beastmana = self.superbeastmana;
 		wait(0.05);
 	}
 }
@@ -364,7 +364,7 @@ function player_exit_beastmode(name, trigger)
 		wait(0);
 	}
 	self notify(#"player_exit_beastmode");
-	bb::function_e367a93e(self, "exit_beast_mode");
+	bb::logplayerevent(self, "exit_beast_mode");
 	self thread wait_invulnerable(2);
 	self thread wait_enable_offhand_weapons(3);
 	while(self isthrowinggrenade() || self isgrappling() || (isdefined(self.teleporting) && self.teleporting))
@@ -392,17 +392,17 @@ function player_exit_beastmode(name, trigger)
 	self.overrideplayerdamage_original = undefined;
 	if(level clientfield::get("bm_superbeast"))
 	{
-		var_66a6ef71 = 1;
-		self.var_e3e3d706 = 0;
-		self.var_ff6ba411 = 0;
-		self.var_ce25e278 = 0;
-		self.var_1333176 = undefined;
+		was_superbeast = 1;
+		self.superbeastmana = 0;
+		self.see_kiosks_in_altbody = 0;
+		self.trigger_kiosks_in_altbody = 0;
+		self.custom_altbody_callback = undefined;
 	}
 	else
 	{
-		var_66a6ef71 = 0;
+		was_superbeast = 0;
 	}
-	self thread wait_and_appear(var_66a6ef71);
+	self thread wait_and_appear(was_superbeast);
 }
 
 /*
@@ -414,7 +414,7 @@ function player_exit_beastmode(name, trigger)
 	Parameters: 1
 	Flags: Linked
 */
-function wait_and_appear(var_ee3c4cad)
+function wait_and_appear(no_ignore)
 {
 	self setorigin(self.beast_mode_return_origin);
 	self freezecontrols(1);
@@ -425,7 +425,7 @@ function wait_and_appear(var_ee3c4cad)
 	if(a_ai.size)
 	{
 		a_closest = arraysortclosest(a_ai, self.beast_mode_return_origin);
-		foreach(var_cd97797e, ai in a_closest)
+		foreach(ai in a_closest)
 		{
 			n_trace_val = ai sightconetrace(v_return_pos, self);
 			if(n_trace_val > 0.2)
@@ -460,7 +460,7 @@ function wait_and_appear(var_ee3c4cad)
 	playfx(level._effect["beast_return_aoe"], self.beast_mode_return_origin);
 	a_ai = getaiarray();
 	a_aoe_ai = arraysortclosest(a_ai, self.beast_mode_return_origin, a_ai.size, 0, 200);
-	foreach(var_6a0695f6, ai in a_aoe_ai)
+	foreach(ai in a_aoe_ai)
 	{
 		if(isactor(ai))
 		{
@@ -493,12 +493,12 @@ function wait_and_appear(var_ee3c4cad)
 		self freezecontrols(0);
 	}
 	wait(3);
-	var_a315b31f = level clientfield::get("bm_superbeast");
-	if(!var_ee3c4cad && !var_a315b31f)
+	b_superbeastmode = level clientfield::get("bm_superbeast");
+	if(!no_ignore && !b_superbeastmode)
 	{
 		self zm_utility::decrement_ignoreme();
 	}
-	level notify(#"hash_43352218", self);
+	level notify(#"a_player_exited_beast_mode", self);
 	self thread zm_audio::create_and_play_dialog("beastmode", "exit");
 }
 
@@ -551,13 +551,16 @@ function wait_enable_offhand_weapons(time)
 		{
 			self setweaponammoclip(lethal_grenade, 2);
 		}
-		else if(frac < 0.5)
-		{
-			self setweaponammoclip(lethal_grenade, 3);
-		}
 		else
 		{
-			self setweaponammoclip(lethal_grenade, 4);
+			if(frac < 0.5)
+			{
+				self setweaponammoclip(lethal_grenade, 3);
+			}
+			else
+			{
+				self setweaponammoclip(lethal_grenade, 4);
+			}
 		}
 	}
 	self.beast_grenades_missed = 0;
@@ -574,12 +577,12 @@ function wait_enable_offhand_weapons(time)
 */
 function player_allow_beastmode(name, kiosk)
 {
-	var_a315b31f = level clientfield::get("bm_superbeast");
+	b_superbeastmode = level clientfield::get("bm_superbeast");
 	if(!level flagsys::get("start_zombie_round_logic"))
 	{
 		return 0;
 	}
-	if(isdefined(self.beastmode) && self.beastmode && !var_a315b31f)
+	if(isdefined(self.beastmode) && self.beastmode && !b_superbeastmode)
 	{
 		return 0;
 	}
@@ -649,7 +652,7 @@ function player_on_spawned()
 }
 
 /*
-	Name: function_7de05274
+	Name: make_powerups_grapplable
 	Namespace: zm_altbody_beast
 	Checksum: 0x34C86644
 	Offset: 0x2910
@@ -657,7 +660,7 @@ function player_on_spawned()
 	Parameters: 0
 	Flags: Linked
 */
-function function_7de05274()
+function make_powerups_grapplable()
 {
 	while(true)
 	{
@@ -676,13 +679,13 @@ function function_7de05274()
 	Parameters: 1
 	Flags: Linked
 */
-function function_10dcd1d5(var_4cc12170)
+function function_10dcd1d5(kiosk_name)
 {
-	level.var_8ad0ec05 = struct::get_array(var_4cc12170, "targetname");
-	foreach(var_35de897, kiosk in level.var_8ad0ec05)
+	level.beast_kiosks = struct::get_array(kiosk_name, "targetname");
+	foreach(kiosk in level.beast_kiosks)
 	{
-		kiosk.var_80eeb471 = (var_4cc12170 + "_plr_") + kiosk.origin;
-		kiosk.var_39a60f4a = (var_4cc12170 + "_crs_") + kiosk.origin;
+		kiosk.var_80eeb471 = (kiosk_name + "_plr_") + kiosk.origin;
+		kiosk.var_39a60f4a = (kiosk_name + "_crs_") + kiosk.origin;
 		clientfield::register("world", kiosk.var_80eeb471, 1, 4, "int");
 		kiosk thread _kiosk_cooldown();
 	}
@@ -703,7 +706,7 @@ function update_kiosk_effects()
 	while(isdefined(self))
 	{
 		n_ent_num = self getentitynumber();
-		foreach(var_46e583b4, kiosk in level.var_8ad0ec05)
+		foreach(kiosk in level.beast_kiosks)
 		{
 			n_players_allowed = level clientfield::get(kiosk.var_80eeb471);
 			if(kiosk_allowed(kiosk))
@@ -721,7 +724,7 @@ function update_kiosk_effects()
 }
 
 /*
-	Name: function_61dc030a
+	Name: get_number_of_available_kiosks
 	Namespace: zm_altbody_beast
 	Checksum: 0x9C35D71A
 	Offset: 0x2C40
@@ -729,17 +732,17 @@ function update_kiosk_effects()
 	Parameters: 0
 	Flags: None
 */
-function function_61dc030a()
+function get_number_of_available_kiosks()
 {
-	var_ff430db0 = 0;
-	foreach(var_c5cf7f78, kiosk in level.var_8ad0ec05)
+	n_available_kiosks = 0;
+	foreach(kiosk in level.beast_kiosks)
 	{
 		if(kiosk_allowed(kiosk))
 		{
-			var_ff430db0++;
+			n_available_kiosks++;
 		}
 	}
-	return var_ff430db0;
+	return n_available_kiosks;
 }
 
 /*
@@ -753,7 +756,7 @@ function function_61dc030a()
 */
 function function_f6014f2c(v_origin, var_8ebf7724)
 {
-	a_kiosks = arraysortclosest(level.var_8ad0ec05, v_origin);
+	a_kiosks = arraysortclosest(level.beast_kiosks, v_origin);
 	a_kiosks = array::filter(a_kiosks, 0, &function_b7520b09);
 	for(i = 0; i < a_kiosks.size && i < var_8ebf7724; i++)
 	{
@@ -772,13 +775,13 @@ function function_f6014f2c(v_origin, var_8ebf7724)
 	Parameters: 1
 	Flags: Linked
 */
-function function_b7520b09(var_20fdcbbc)
+function function_b7520b09(s_kiosk)
 {
-	if(!isdefined(var_20fdcbbc) || !isdefined(var_20fdcbbc.is_cooling_down) || !var_20fdcbbc.is_cooling_down)
+	if(!isdefined(s_kiosk) || !isdefined(s_kiosk.is_cooling_down) || !s_kiosk.is_cooling_down)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -854,7 +857,7 @@ function _kiosk_cooldown()
 */
 function function_fd8fb00d(b_cooldown = 1)
 {
-	foreach(var_8f2ca8b6, kiosk in level.var_8ad0ec05)
+	foreach(kiosk in level.beast_kiosks)
 	{
 		if(b_cooldown)
 		{
@@ -922,13 +925,13 @@ function beast_cancel_hint()
 		hint = &"ZM_ZOD_EXIT_BEAST_MODE_HINT_COOP";
 		y = 285;
 	}
-	self thread function_371979a2(12, 12.05);
-	self thread function_59ecc704(12, 12.05);
+	self thread watch_beast_hint_use(12, 12.05);
+	self thread watch_beast_hint_end(12, 12.05);
 	zm_equipment::show_hint_text(hint, 12.05, 1.5, y);
 }
 
 /*
-	Name: function_371979a2
+	Name: watch_beast_hint_use
 	Namespace: zm_altbody_beast
 	Checksum: 0x36FDECEB
 	Offset: 0x3220
@@ -936,7 +939,7 @@ function beast_cancel_hint()
 	Parameters: 2
 	Flags: Linked
 */
-function function_371979a2(mintime, maxtime)
+function watch_beast_hint_use(mintime, maxtime)
 {
 	self endon(#"disconnect");
 	self util::waittill_any_timeout(maxtime, "smashable_smashed", "grapplable_grappled", "shockable_shocked", "disconnect");
@@ -944,7 +947,7 @@ function function_371979a2(mintime, maxtime)
 }
 
 /*
-	Name: function_59ecc704
+	Name: watch_beast_hint_end
 	Namespace: zm_altbody_beast
 	Checksum: 0xD3825F44
 	Offset: 0x32A0
@@ -952,7 +955,7 @@ function function_371979a2(mintime, maxtime)
 	Parameters: 2
 	Flags: Linked
 */
-function function_59ecc704(mintime, maxtime)
+function watch_beast_hint_end(mintime, maxtime)
 {
 	self endon(#"disconnect");
 	wait(mintime);
@@ -979,10 +982,10 @@ function player_stance_hold_think()
 	if(retval == "exit_succeed")
 	{
 		self notify(#"altbody_end");
-		return 1;
+		return true;
 	}
 	self.beast_cancel_timer = 0;
-	return 0;
+	return false;
 }
 
 /*
@@ -1018,17 +1021,17 @@ function player_continue_cancel()
 {
 	if(self isthrowinggrenade())
 	{
-		return 0;
+		return false;
 	}
 	if(!self stancebuttonpressed())
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.teleporting) && self.teleporting)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1222,41 +1225,41 @@ function player_damage_override_beast_mode(einflictor, eattacker, idamage, idfla
 {
 	if(isdefined(eattacker) && isplayer(eattacker))
 	{
-		return 0;
+		return false;
 	}
-	var_a315b31f = level clientfield::get("bm_superbeast");
-	if(var_a315b31f)
+	b_superbeastmode = level clientfield::get("bm_superbeast");
+	if(b_superbeastmode)
 	{
-		var_cc3794d8 = idamage * 0.0005;
-		if(var_cc3794d8 > 0.4)
+		superbeastdamage = idamage * 0.0005;
+		if(superbeastdamage > 0.4)
 		{
-			var_cc3794d8 = 0.4;
+			superbeastdamage = 0.4;
 			self thread zm_zod_util::set_rumble_to_player(3);
 		}
 		else
 		{
 			self thread zm_zod_util::set_rumble_to_player(2);
 		}
-		self.var_e3e3d706 = self.var_e3e3d706 - var_cc3794d8;
-		if(self.var_e3e3d706 <= 0)
+		self.superbeastmana = self.superbeastmana - superbeastdamage;
+		if(self.superbeastmana <= 0)
 		{
 			self notify(#"altbody_end");
 			self player_take_mana(1);
 			self.beastlives = 1;
 		}
-		return 0;
+		return false;
 	}
 	if(isdefined(eattacker) && (isdefined(eattacker.is_zombie) && eattacker.is_zombie || eattacker.team === level.zombie_team))
 	{
-		return 0;
+		return false;
 	}
 	if(idamage < self.health)
 	{
-		return 0;
+		return false;
 	}
 	self notify(#"altbody_end");
 	self player_take_mana(1);
-	return 0;
+	return false;
 }
 
 /*
@@ -1288,14 +1291,14 @@ function player_check_grenades()
 function watch_round_start_mana()
 {
 	level waittill(#"start_of_round");
-	foreach(var_eb05ab1e, player in getplayers())
+	foreach(player in getplayers())
 	{
 		player player_check_grenades();
 	}
 	while(true)
 	{
 		level waittill(#"start_of_round");
-		foreach(var_ab90ad3c, player in getplayers())
+		foreach(player in getplayers())
 		{
 			if(!(isdefined(player.beastmode) && player.beastmode))
 			{
@@ -1318,9 +1321,9 @@ function watch_round_start_mana()
 */
 function player_watch_mana()
 {
-	if(!isdefined(self.var_e3e3d706))
+	if(!isdefined(self.superbeastmana))
 	{
-		self.var_e3e3d706 = 0;
+		self.superbeastmana = 0;
 	}
 	self notify(#"player_watch_mana");
 	self endon(#"player_watch_mana");
@@ -1337,7 +1340,7 @@ function player_watch_mana()
 		}
 		if(level clientfield::get("bm_superbeast"))
 		{
-			n_mapped_mana = math::linear_map(self.var_e3e3d706, 0, 1, 0, 1);
+			n_mapped_mana = math::linear_map(self.superbeastmana, 0, 1, 0, 1);
 		}
 		else
 		{
@@ -1499,9 +1502,9 @@ function player_watch_melee()
 			self player_take_mana(0.03);
 			forward = anglestoforward(self getplayerangles());
 			up = anglestoup(self getplayerangles());
-			var_1a423f4f = (self.origin + (15 * up)) + (30 * forward);
-			level notify(#"beast_melee", self, var_1a423f4f);
-			self radiusdamage(var_1a423f4f, 48, 5000, 5000, self, "MOD_MELEE");
+			meleepos = (self.origin + (15 * up)) + (30 * forward);
+			level notify(#"beast_melee", self, meleepos);
+			self radiusdamage(meleepos, 48, 5000, 5000, self, "MOD_MELEE");
 		}
 	}
 }
@@ -1560,11 +1563,11 @@ function player_beast_melee_juke(weapon)
 	Parameters: 2
 	Flags: Linked
 */
-function function_b484a03e(var_1a423f4f, radius)
+function function_b484a03e(meleepos, radius)
 {
 	mins = (radius * -1, radius * -1, radius * -1);
 	maxs = (radius, radius, radius);
-	return self istouchingvolume(var_1a423f4f, mins, maxs);
+	return self istouchingvolume(meleepos, mins, maxs);
 }
 
 /*
@@ -1591,8 +1594,8 @@ function trigger_melee_only()
 	self setinvisibletoall();
 	while(isdefined(self))
 	{
-		level waittill(#"beast_melee", player, var_1a423f4f);
-		if(isdefined(self) && self function_b484a03e(var_1a423f4f, 48))
+		level waittill(#"beast_melee", player, meleepos);
+		if(isdefined(self) && self function_b484a03e(meleepos, 48))
 		{
 			self useby(player);
 		}
@@ -1600,7 +1603,7 @@ function trigger_melee_only()
 }
 
 /*
-	Name: function_4c03fac9
+	Name: is_lightning_weapon
 	Namespace: zm_altbody_beast
 	Checksum: 0x7C1ED15
 	Offset: 0x4670
@@ -1608,21 +1611,21 @@ function trigger_melee_only()
 	Parameters: 1
 	Flags: Linked
 */
-function function_4c03fac9(weapon)
+function is_lightning_weapon(weapon)
 {
 	if(!isdefined(weapon))
 	{
-		return 0;
+		return false;
 	}
 	if(weapon == getweapon("zombie_beast_lightning_dwl") || weapon == getweapon("zombie_beast_lightning_dwl2") || weapon == getweapon("zombie_beast_lightning_dwl3"))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
-	Name: function_cebfc03f
+	Name: lightning_weapon_level
 	Namespace: zm_altbody_beast
 	Checksum: 0x52374B7B
 	Offset: 0x46F8
@@ -1630,7 +1633,7 @@ function function_4c03fac9(weapon)
 	Parameters: 1
 	Flags: Linked
 */
-function function_cebfc03f(weapon)
+function lightning_weapon_level(weapon)
 {
 	if(!isdefined(weapon))
 	{
@@ -1671,7 +1674,7 @@ function player_watch_lightning()
 	while(isdefined(self))
 	{
 		self waittill(#"weapon_fired", weapon);
-		if(function_4c03fac9(weapon))
+		if(is_lightning_weapon(weapon))
 		{
 			self player_take_mana(0);
 		}
@@ -1679,7 +1682,7 @@ function player_watch_lightning()
 }
 
 /*
-	Name: function_8ee03bb5
+	Name: lightning_aoe
 	Namespace: zm_altbody_beast
 	Checksum: 0x3F65BA91
 	Offset: 0x4838
@@ -1687,25 +1690,25 @@ function player_watch_lightning()
 	Parameters: 1
 	Flags: None
 */
-function function_8ee03bb5(weapon)
+function lightning_aoe(weapon)
 {
 	self endon(#"disconnect");
 	self.tesla_enemies = undefined;
 	self.tesla_enemies_hit = 0;
 	self.tesla_powerup_dropped = 0;
 	self.tesla_arc_count = 0;
-	shocklevel = function_cebfc03f(weapon);
-	var_96f81bff = 36;
+	shocklevel = lightning_weapon_level(weapon);
+	shockradius = 36;
 	switch(shocklevel)
 	{
 		case 2:
 		{
-			var_96f81bff = 72;
+			shockradius = 72;
 			break;
 		}
 		case 3:
 		{
-			var_96f81bff = 108;
+			shockradius = 108;
 			break;
 		}
 	}
@@ -1716,10 +1719,10 @@ function function_8ee03bb5(weapon)
 	{
 		playfx(level._effect["beast_shock_aoe"], center);
 	}
-	zombies = array::get_all_closest(center, getaiteamarray(level.zombie_team), undefined, undefined, var_96f81bff);
-	foreach(var_edeff735, zombie in zombies)
+	zombies = array::get_all_closest(center, getaiteamarray(level.zombie_team), undefined, undefined, shockradius);
+	foreach(zombie in zombies)
 	{
-		zombie thread function_fe8a580e(zombie.origin, center, self, shocklevel);
+		zombie thread arc_damage_init(zombie.origin, center, self, shocklevel);
 		zombie notify(#"bhtn_action_notify", "electrocute");
 	}
 	wait(0.05);
@@ -1727,7 +1730,7 @@ function function_8ee03bb5(weapon)
 }
 
 /*
-	Name: function_fe8a580e
+	Name: arc_damage_init
 	Namespace: zm_altbody_beast
 	Checksum: 0xCCAE80DA
 	Offset: 0x4AC0
@@ -1735,7 +1738,7 @@ function function_8ee03bb5(weapon)
 	Parameters: 4
 	Flags: Linked
 */
-function function_fe8a580e(hit_location, hit_origin, player, shocklevel)
+function arc_damage_init(hit_location, hit_origin, player, shocklevel)
 {
 	player endon(#"disconnect");
 	if(isdefined(self.zombie_tesla_hit) && self.zombie_tesla_hit)
@@ -1744,20 +1747,23 @@ function function_fe8a580e(hit_location, hit_origin, player, shocklevel)
 	}
 	if(shocklevel < 2)
 	{
-		self lightning_chain::arc_damage(self, player, 1, level.var_3a2dca1e);
-	}
-	else if(shocklevel < 3)
-	{
-		self lightning_chain::arc_damage(self, player, 1, level.var_142b4fb5);
+		self lightning_chain::arc_damage(self, player, 1, level.beast_lightning_level_1);
 	}
 	else
 	{
-		self lightning_chain::arc_damage(self, player, 1, level.var_ee28d54c);
+		if(shocklevel < 3)
+		{
+			self lightning_chain::arc_damage(self, player, 1, level.beast_lightning_level_2);
+		}
+		else
+		{
+			self lightning_chain::arc_damage(self, player, 1, level.beast_lightning_level_3);
+		}
 	}
 }
 
 /*
-	Name: function_3e9ddcc7
+	Name: create_lightning_params
 	Namespace: zm_altbody_beast
 	Checksum: 0x34DC2009
 	Offset: 0x4BA8
@@ -1765,16 +1771,16 @@ function function_fe8a580e(hit_location, hit_origin, player, shocklevel)
 	Parameters: 0
 	Flags: Linked
 */
-function function_3e9ddcc7()
+function create_lightning_params()
 {
-	level.var_3a2dca1e = lightning_chain::create_lightning_chain_params(1);
-	level.var_3a2dca1e.should_kill_enemies = 0;
-	level.var_142b4fb5 = lightning_chain::create_lightning_chain_params(2);
-	level.var_142b4fb5.should_kill_enemies = 0;
-	level.var_142b4fb5.clientside_fx = 0;
-	level.var_ee28d54c = lightning_chain::create_lightning_chain_params(3);
-	level.var_ee28d54c.should_kill_enemies = 0;
-	level.var_ee28d54c.clientside_fx = 0;
+	level.beast_lightning_level_1 = lightning_chain::create_lightning_chain_params(1);
+	level.beast_lightning_level_1.should_kill_enemies = 0;
+	level.beast_lightning_level_2 = lightning_chain::create_lightning_chain_params(2);
+	level.beast_lightning_level_2.should_kill_enemies = 0;
+	level.beast_lightning_level_2.clientside_fx = 0;
+	level.beast_lightning_level_3 = lightning_chain::create_lightning_chain_params(3);
+	level.beast_lightning_level_3.should_kill_enemies = 0;
+	level.beast_lightning_level_3.clientside_fx = 0;
 }
 
 /*
@@ -1846,7 +1852,7 @@ function player_watch_grapple()
 				}
 			}
 			self player_take_mana(0);
-			self thread function_77a9a8f6(weapon, "zod_beast_grapple_out", 0.4);
+			self thread player_beast_grapple_rumble(weapon, "zod_beast_grapple_out", 0.4);
 		}
 	}
 }
@@ -1864,11 +1870,11 @@ function function_668dcfac(target)
 {
 	if(isdefined(target.var_deccd0c8) && target.var_deccd0c8)
 	{
-		return 0;
+		return false;
 	}
 	target.var_deccd0c8 = 1;
 	self thread function_b8488073(target, 5);
-	return 1;
+	return true;
 }
 
 /*
@@ -1900,7 +1906,7 @@ function function_b8488073(target, time)
 }
 
 /*
-	Name: function_77a9a8f6
+	Name: player_beast_grapple_rumble
 	Namespace: zm_altbody_beast
 	Checksum: 0xF4CBDE7C
 	Offset: 0x5000
@@ -1908,7 +1914,7 @@ function function_b8488073(target, time)
 	Parameters: 3
 	Flags: Linked
 */
-function function_77a9a8f6(weapon, rumble, length)
+function player_beast_grapple_rumble(weapon, rumble, length)
 {
 	self endon(#"grapple_stick");
 	self endon(#"grapple_pulled");
@@ -1939,11 +1945,11 @@ function grapple_valid_target_check(ent)
 		{
 			if(!(isdefined(ent.completed_emerging_into_playable_area) && ent.completed_emerging_into_playable_area))
 			{
-				return 0;
+				return false;
 			}
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -2029,7 +2035,7 @@ function player_watch_grapple_traverse()
 			self thread player_watch_grapple_landing(origin);
 			self playsound("wpn_beastmode_grapple_pullin");
 			wait(0.15);
-			self thread function_77a9a8f6(weapon, "zod_beast_grapple_reel", 0.2);
+			self thread player_beast_grapple_rumble(weapon, "zod_beast_grapple_reel", 0.2);
 		}
 	}
 }
@@ -2076,7 +2082,7 @@ function player_watch_grappled_zombies()
 		if(weapon == grapple)
 		{
 			wait(0.15);
-			self thread function_77a9a8f6(weapon, "zod_beast_grapple_pull", 0.2);
+			self thread player_beast_grapple_rumble(weapon, "zod_beast_grapple_pull", 0.2);
 		}
 	}
 }
@@ -2126,32 +2132,35 @@ function player_kill_grappled_zombies()
 function zombie_gets_pulled(player)
 {
 	self.grapple_is_fatal = 1;
-	var_4361c12b = player.origin - self.origin;
-	var_168907b4 = vectornormalize((var_4361c12b[0], var_4361c12b[1], 0));
+	zombie_to_player = player.origin - self.origin;
+	zombie_to_player_2d = vectornormalize((zombie_to_player[0], zombie_to_player[1], 0));
 	zombie_forward = anglestoforward(self.angles);
 	zombie_forward_2d = vectornormalize((zombie_forward[0], zombie_forward[1], 0));
 	zombie_right = anglestoright(self.angles);
 	zombie_right_2d = vectornormalize((zombie_right[0], zombie_right[1], 0));
-	dot = vectordot(var_168907b4, zombie_forward_2d);
+	dot = vectordot(zombie_to_player_2d, zombie_forward_2d);
 	if(dot >= 0.5)
 	{
 		self.grapple_direction = "front";
 	}
-	else if(dot < 0.5 && dot > -0.5)
+	else
 	{
-		dot = vectordot(var_168907b4, zombie_right_2d);
-		if(dot > 0)
+		if(dot < 0.5 && dot > -0.5)
 		{
-			self.grapple_direction = "right";
+			dot = vectordot(zombie_to_player_2d, zombie_right_2d);
+			if(dot > 0)
+			{
+				self.grapple_direction = "right";
+			}
+			else
+			{
+				self.grapple_direction = "left";
+			}
 		}
 		else
 		{
-			self.grapple_direction = "left";
+			self.grapple_direction = "back";
 		}
-	}
-	else
-	{
-		self.grapple_direction = "back";
 	}
 	self thread function_d4252c93(player);
 }
@@ -2179,23 +2188,26 @@ function function_d4252c93(player)
 		{
 			self dodamage(1000, player.origin, player);
 		}
-		else if(isdefined(player))
-		{
-			self dodamage(self.health + 1000, player.origin, player);
-		}
 		else
 		{
-			self dodamage(self.health + 1000, self.origin);
-		}
-		if(!isvehicle(self))
-		{
-			self.no_powerups = 1;
-			self.marked_for_recycle = 1;
-			self.has_been_damaged_by_player = 0;
-			self startragdoll();
 			if(isdefined(player))
 			{
-				player clientfield::increment_to_player("beast_blood_on_player");
+				self dodamage(self.health + 1000, player.origin, player);
+			}
+			else
+			{
+				self dodamage(self.health + 1000, self.origin);
+			}
+			if(!isvehicle(self))
+			{
+				self.no_powerups = 1;
+				self.marked_for_recycle = 1;
+				self.has_been_damaged_by_player = 0;
+				self startragdoll();
+				if(isdefined(player))
+				{
+					player clientfield::increment_to_player("beast_blood_on_player");
+				}
 			}
 		}
 	}
@@ -2212,12 +2224,12 @@ function function_d4252c93(player)
 */
 function lightning_zombie_damage_response(mod, hit_location, hit_origin, player, amount, weapon, direction_vec, tagname, modelname, partname, dflags, inflictor, chargelevel)
 {
-	if(function_4c03fac9(weapon))
+	if(is_lightning_weapon(weapon))
 	{
-		shocklevel = function_cebfc03f(weapon);
+		shocklevel = lightning_weapon_level(weapon);
 		self.tesla_death = 0;
-		self thread function_fe8a580e(hit_location, hit_origin, player, shocklevel);
-		return 1;
+		self thread arc_damage_init(hit_location, hit_origin, player, shocklevel);
+		return true;
 	}
 	if(weapon === getweapon("zombie_beast_grapple_dwr"))
 	{
@@ -2226,9 +2238,9 @@ function lightning_zombie_damage_response(mod, hit_location, hit_origin, player,
 			player playrumbleonentity("damage_heavy");
 			earthquake(1, 0.75, player.origin, 100);
 		}
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2247,7 +2259,7 @@ function watch_lightning_damage(triggers)
 	while(isdefined(triggers))
 	{
 		self waittill(#"damage", amount, attacker, direction, point, mod, tagname, modelname, partname, weapon);
-		if(function_4c03fac9(weapon) && isdefined(attacker) && amount > 0)
+		if(is_lightning_weapon(weapon) && isdefined(attacker) && amount > 0)
 		{
 			if(isdefined(attacker))
 			{
@@ -2264,7 +2276,7 @@ function watch_lightning_damage(triggers)
 			}
 			if(isarray(triggers))
 			{
-				foreach(var_355a6f2a, trigger in triggers)
+				foreach(trigger in triggers)
 				{
 					if(isdefined(trigger))
 					{
@@ -2297,7 +2309,7 @@ function beast_mode_death_watch(attacker)
 		self.marked_for_recycle = 1;
 		self.has_been_damaged_by_player = 0;
 	}
-	if(function_4c03fac9(self.damageweapon))
+	if(is_lightning_weapon(self.damageweapon))
 	{
 		self.no_powerups = 1;
 		self.marked_for_recycle = 1;
@@ -2361,7 +2373,7 @@ function trigger_ooze_only()
 }
 
 /*
-	Name: function_7fb730b3
+	Name: zombie_can_be_zapped
 	Namespace: zm_altbody_beast
 	Checksum: 0xBDA24DB1
 	Offset: 0x6128
@@ -2369,25 +2381,25 @@ function trigger_ooze_only()
 	Parameters: 0
 	Flags: Linked
 */
-function function_7fb730b3()
+function zombie_can_be_zapped()
 {
 	if(isdefined(self.barricade_enter) && self.barricade_enter)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.is_traversing) && self.is_traversing)
 	{
-		return 0;
+		return false;
 	}
 	if(!(isdefined(self.completed_emerging_into_playable_area) && self.completed_emerging_into_playable_area) && !isdefined(self.first_node))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.is_leaping) && self.is_leaping)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -2404,7 +2416,7 @@ function lightning_slow_zombie(zombie)
 	zombie endon(#"death");
 	zombie notify(#"lightning_slow_zombie");
 	zombie endon(#"lightning_slow_zombie");
-	if(!zombie function_7fb730b3())
+	if(!zombie zombie_can_be_zapped())
 	{
 		return;
 	}
@@ -2491,7 +2503,7 @@ function lightning_slow_zombie_fx(zombie)
 function function_41cc3fc8()
 {
 	players = level.activeplayers;
-	foreach(var_ed8a77ca, player in players)
+	foreach(player in players)
 	{
 		player thread player_update_beast_mode_objects(isdefined(player.beastmode) && player.beastmode);
 	}
@@ -2601,24 +2613,24 @@ function beastmode_devgui_callback(cmd)
 			}
 			case "":
 			{
-				array::thread_all(players, &function_d92721d1);
+				array::thread_all(players, &player_zombie_devgui_superbeast_mode);
 				retval = 1;
 				break;
 			}
 			case "":
 			{
 				a_trigs = getentarray("", "");
-				foreach(var_142c6ec0, e_trig in a_trigs)
+				foreach(e_trig in a_trigs)
 				{
 					e_trig useby(level.players[0]);
 				}
 				a_trigs = getentarray("", "");
-				foreach(var_904536da, e_trig in a_trigs)
+				foreach(e_trig in a_trigs)
 				{
 					e_trig useby(level.players[0]);
 				}
 				a_str_ritual_flags = array("", "", "", "");
-				foreach(var_9df60e3, var_83f1459 in a_str_ritual_flags)
+				foreach(var_83f1459 in a_str_ritual_flags)
 				{
 					level flag::set(var_83f1459);
 				}
@@ -2740,7 +2752,7 @@ function player_zombie_devgui_beast_mode()
 }
 
 /*
-	Name: function_d92721d1
+	Name: player_zombie_devgui_superbeast_mode
 	Namespace: zm_altbody_beast
 	Checksum: 0x1CEECE13
 	Offset: 0x7068
@@ -2748,7 +2760,7 @@ function player_zombie_devgui_beast_mode()
 	Parameters: 0
 	Flags: Linked
 */
-function function_d92721d1()
+function player_zombie_devgui_superbeast_mode()
 {
 	/#
 		if(self detect_reentry())
@@ -2756,8 +2768,8 @@ function function_d92721d1()
 			return;
 		}
 		level flagsys::wait_till("");
-		var_a315b31f = level clientfield::get("");
-		if(!(isdefined(self.beastmode) && self.beastmode) && !var_a315b31f)
+		b_superbeastmode = level clientfield::get("");
+		if(!(isdefined(self.beastmode) && self.beastmode) && !b_superbeastmode)
 		{
 			self player_give_mana(1);
 			self thread zm_altbody::devgui_start_altbody("");
@@ -2785,11 +2797,11 @@ function detect_reentry()
 		{
 			if(self.devgui_preserve_time == gettime())
 			{
-				return 1;
+				return true;
 			}
 		}
 		self.devgui_preserve_time = gettime();
-		return 0;
+		return false;
 	#/
 }
 

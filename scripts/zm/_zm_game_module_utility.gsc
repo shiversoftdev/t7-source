@@ -20,7 +20,7 @@ function move_ring(ring)
 	level endon(#"end_game");
 	while(true)
 	{
-		foreach(var_8985386e, position in positions)
+		foreach(position in positions)
 		{
 			self moveto(position.origin, randomintrange(30, 45));
 			self waittill(#"movedone");

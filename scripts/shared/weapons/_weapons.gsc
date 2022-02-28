@@ -298,12 +298,15 @@ function track()
 				currenttime = newtime;
 			}
 		}
-		else if(event != "disconnect" && isdefined(self))
+		else
 		{
-			self bb::commit_weapon_data(spawnid, currentweapon, currenttime);
-			update_timings(newtime);
+			if(event != "disconnect" && isdefined(self))
+			{
+				self bb::commit_weapon_data(spawnid, currentweapon, currenttime);
+				update_timings(newtime);
+			}
+			return;
 		}
-		return;
 	}
 }
 
@@ -320,29 +323,29 @@ function may_drop(weapon)
 {
 	if(level.disableweapondrop == 1)
 	{
-		return 0;
+		return false;
 	}
 	if(weapon == level.weaponnone)
 	{
-		return 0;
+		return false;
 	}
 	if(killstreaks::is_killstreak_weapon(weapon))
 	{
-		return 0;
+		return false;
 	}
 	if(weapon.isgameplayweapon)
 	{
-		return 0;
+		return false;
 	}
 	if(!weapon.isprimary)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(level.maydropweapon) && ![[level.maydropweapon]](weapon))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -857,10 +860,10 @@ function is_using_offhand_equipment()
 		weapon = self getcurrentoffhand();
 		if(weapon.isequipment)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1327,7 +1330,7 @@ function get_damageable_ents(pos, radius, dolos, startradius)
 	dogs = [[level.dogmanagerongetdogs]]();
 	if(isdefined(dogs))
 	{
-		foreach(var_29225ed4, dog in dogs)
+		foreach(dog in dogs)
 		{
 			if(!isalive(dog))
 			{
@@ -1417,19 +1420,25 @@ function damage_ent(einflictor, eattacker, idamage, smeansofdeath, weapon, damag
 		self.damageorigin = damagepos;
 		self.entity thread [[level.callbackplayerdamage]](einflictor, eattacker, idamage, 0, smeansofdeath, weapon, damagepos, damagedir, "none", damagepos, 0, 0, undefined);
 	}
-	else if(self.isactor)
-	{
-		self.damageorigin = damagepos;
-		self.entity thread [[level.callbackactordamage]](einflictor, eattacker, idamage, 0, smeansofdeath, weapon, damagepos, damagedir, "none", damagepos, 0, 0, 0, 0, (1, 0, 0));
-	}
-	else if(self.isadestructible)
-	{
-		self.damageorigin = damagepos;
-		self.entity dodamage(idamage, damagepos, eattacker, einflictor, 0, smeansofdeath, 0, weapon);
-	}
 	else
 	{
-		self.entity util::damage_notify_wrapper(idamage, eattacker, (0, 0, 0), (0, 0, 0), "mod_explosive", "", "");
+		if(self.isactor)
+		{
+			self.damageorigin = damagepos;
+			self.entity thread [[level.callbackactordamage]](einflictor, eattacker, idamage, 0, smeansofdeath, weapon, damagepos, damagedir, "none", damagepos, 0, 0, 0, 0, (1, 0, 0));
+		}
+		else
+		{
+			if(self.isadestructible)
+			{
+				self.damageorigin = damagepos;
+				self.entity dodamage(idamage, damagepos, eattacker, einflictor, 0, smeansofdeath, 0, weapon);
+			}
+			else
+			{
+				self.entity util::damage_notify_wrapper(idamage, eattacker, (0, 0, 0), (0, 0, 0), "mod_explosive", "", "");
+			}
+		}
 	}
 }
 
@@ -1905,13 +1914,16 @@ function drop_scavenger_for_death(attacker)
 	{
 		item = self dropscavengeritem(getweapon("scavenger_item_hack"));
 	}
-	else if(isplayer(attacker))
-	{
-		item = self dropscavengeritem(getweapon("scavenger_item"));
-	}
 	else
 	{
-		return;
+		if(isplayer(attacker))
+		{
+			item = self dropscavengeritem(getweapon("scavenger_item"));
+		}
+		else
+		{
+			return;
+		}
 	}
 	item thread scavenger_think();
 }
@@ -1947,17 +1959,17 @@ function should_drop_limited_weapon(weapon, owner)
 	limited_info = owner.limited_info;
 	if(!isdefined(limited_info))
 	{
-		return 1;
+		return true;
 	}
 	if(limited_info.weapon != weapon)
 	{
-		return 1;
+		return true;
 	}
 	if(limited_info.drops <= 0)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -2052,13 +2064,16 @@ function ninebang_doninebang(attacker, weapon, pos, cooktime)
 	{
 		detonations = 3;
 	}
-	else if(cookstages < 4)
-	{
-		detonations = 6;
-	}
 	else
 	{
-		detonations = 9;
+		if(cookstages < 4)
+		{
+			detonations = 6;
+		}
+		else
+		{
+			detonations = 9;
+		}
 	}
 	wait(randomfloatrange(mindelay, maxdelay));
 	for(i = 1; i < detonations; i++)
@@ -2067,7 +2082,7 @@ function ninebang_doninebang(attacker, weapon, pos, cooktime)
 		playsoundatposition("wpn_flash_grenade_explode", newpos);
 		playfx(level._effect["flashNineBang"], newpos);
 		closestplayers = arraysort(level.players, newpos, 1);
-		foreach(var_fdb4e95e, player in closestplayers)
+		foreach(player in closestplayers)
 		{
 			if(!isdefined(player) || !isalive(player))
 			{
@@ -2140,7 +2155,7 @@ function ninebang_doempdamage(player, weapon, position)
 	radiussq = kninebangempradius * kninebangempradius;
 	playsoundatposition("wpn_emp_explode", position);
 	level empgrenade::empexplosiondamageents(player, weapon, position, kninebangempradius, 0);
-	foreach(var_88f21eca, targetent in level.players)
+	foreach(targetent in level.players)
 	{
 		if(ninebang_empcandamage(targetent, position, radiussq, 0, 0))
 		{
@@ -2227,11 +2242,11 @@ function should_suppress_damage(weapon, inflictor)
 {
 	if(!isdefined(weapon))
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(self))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(level.weaponspecialdiscgun) && weapon.statindex == level.weaponspecialdiscgun.statindex)
 	{
@@ -2244,11 +2259,11 @@ function should_suppress_damage(weapon, inflictor)
 			victimentnum = self getentitynumber();
 			if(isdefined(inflictor.hit_info[victimentnum]))
 			{
-				return 1;
+				return true;
 			}
 			inflictor.hit_info[victimentnum] = 1;
 		}
 	}
-	return 0;
+	return false;
 }
 

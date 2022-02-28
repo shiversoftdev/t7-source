@@ -148,7 +148,7 @@ function debug_missile(missile)
 				}
 				level.debug_missile_dots[level.debug_missile_dots.size] = missile_info;
 			}
-			foreach(var_f3de8f22, missile_info in level.debug_missile_dots)
+			foreach(missile_info in level.debug_missile_dots)
 			{
 				dot_color = (isdefined(missile_info.targetentnum) ? (1, 0, 0) : (0, 1, 0));
 				dev::debug_sphere(missile_info.origin, 10, dot_color, 0.66, 1);
@@ -175,10 +175,10 @@ function stingerwaitforads()
 		currentweapon = self getcurrentweapon();
 		if(currentweapon.lockontype != "Legacy Single")
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -383,7 +383,7 @@ function targetwithinrangeofplayspace(target)
 	{
 		if(!isdefined(target))
 		{
-			return 0;
+			return false;
 		}
 		if(!isdefined(level.playspacecenter))
 		{
@@ -395,10 +395,10 @@ function targetwithinrangeofplayspace(target)
 		}
 		if(distance2dsquared(target.origin, level.playspacecenter) > level.missilelockplayspacecheckradiussqr)
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -520,7 +520,7 @@ function getbeststingertarget(weapon)
 	if(targetsvalid.size > 1)
 	{
 		closestratio = 0;
-		foreach(var_cd33b1ef, target in targetsvalid)
+		foreach(target in targetsvalid)
 		{
 			ratio = ratiodistancefromscreencenter(target, weapon);
 			if(ratio > closestratio)
@@ -787,7 +787,7 @@ function locksighttest(target)
 	camerapos = self getplayercamerapos();
 	if(!isdefined(target))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(target.parent))
 	{
@@ -799,7 +799,7 @@ function locksighttest(target)
 	}
 	if(passed)
 	{
-		return 1;
+		return true;
 	}
 	front = target getpointinbounds(1, 0, 0);
 	if(isdefined(target.parent))
@@ -812,7 +812,7 @@ function locksighttest(target)
 	}
 	if(passed)
 	{
-		return 1;
+		return true;
 	}
 	back = target getpointinbounds(-1, 0, 0);
 	if(isdefined(target.parent))
@@ -825,9 +825,9 @@ function locksighttest(target)
 	}
 	if(passed)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -845,7 +845,7 @@ function softsighttest()
 	if(self locksighttest(self.stingertarget))
 	{
 		self.stingerlostsightlinetime = 0;
-		return 1;
+		return true;
 	}
 	if(self.stingerlostsightlinetime == 0)
 	{
@@ -855,9 +855,9 @@ function softsighttest()
 	if(timepassed >= lost_sight_limit)
 	{
 		self clearirtarget();
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1023,17 +1023,23 @@ function setfriendlyflags(weapon, target)
 					self settargetedentityendtime(weapon, killstreakendtime);
 				}
 			}
-			else if(isdefined(target.killstreakendtime))
-			{
-				self settargetedentityendtime(weapon, target.killstreakendtime);
-			}
-			else if(isdefined(target.parentstruct) && isdefined(target.parentstruct.killstreakendtime))
-			{
-				self settargetedentityendtime(weapon, target.parentstruct.killstreakendtime);
-			}
 			else
 			{
-				self settargetedentityendtime(weapon, 0);
+				if(isdefined(target.killstreakendtime))
+				{
+					self settargetedentityendtime(weapon, target.killstreakendtime);
+				}
+				else
+				{
+					if(isdefined(target.parentstruct) && isdefined(target.parentstruct.killstreakendtime))
+					{
+						self settargetedentityendtime(weapon, target.parentstruct.killstreakendtime);
+					}
+					else
+					{
+						self settargetedentityendtime(weapon, 0);
+					}
+				}
 			}
 			self settargetedmissilesremaining(weapon, 0);
 			killstreaktype = target.killstreaktype;
@@ -1051,38 +1057,41 @@ function setfriendlyflags(weapon, target)
 				{
 					self settargetedmissilesremaining(weapon, 1);
 				}
-				else if(isdefined(target.usevtoltime) && isdefined(level.vtol) && isdefined(level.vtol.totalrockethits) && isdefined(level.vtol.missiletodestroy))
-				{
-					self settargetedmissilesremaining(weapon, level.vtol.missiletodestroy - level.vtol.totalrockethits);
-				}
 				else
 				{
-					maxhealth = [[level.killstreakmaxhealthfunction]](killstreaktype);
-					damagetaken = target.damagetaken;
-					if(!isdefined(damagetaken) && isdefined(target.parentstruct))
+					if(isdefined(target.usevtoltime) && isdefined(level.vtol) && isdefined(level.vtol.totalrockethits) && isdefined(level.vtol.missiletodestroy))
 					{
-						damagetaken = target.parentstruct.damagetaken;
+						self settargetedmissilesremaining(weapon, level.vtol.missiletodestroy - level.vtol.totalrockethits);
 					}
-					if(isdefined(target.missiletrackdamage))
+					else
 					{
-						damagetaken = target.missiletrackdamage;
-					}
-					if(isdefined(damagetaken) && isdefined(maxhealth))
-					{
-						damageperrocket = (maxhealth / level.killstreakbundle[killstreaktype].ksrocketstokill) + 1;
-						remaininghealth = maxhealth - damagetaken;
-						if(remaininghealth > 0)
+						maxhealth = [[level.killstreakmaxhealthfunction]](killstreaktype);
+						damagetaken = target.damagetaken;
+						if(!isdefined(damagetaken) && isdefined(target.parentstruct))
 						{
-							missilesremaining = int(ceil(remaininghealth / damageperrocket));
-							if(isdefined(target.numflares) && target.numflares > 0)
+							damagetaken = target.parentstruct.damagetaken;
+						}
+						if(isdefined(target.missiletrackdamage))
+						{
+							damagetaken = target.missiletrackdamage;
+						}
+						if(isdefined(damagetaken) && isdefined(maxhealth))
+						{
+							damageperrocket = (maxhealth / level.killstreakbundle[killstreaktype].ksrocketstokill) + 1;
+							remaininghealth = maxhealth - damagetaken;
+							if(remaininghealth > 0)
 							{
-								missilesremaining = missilesremaining + target.numflares;
+								missilesremaining = int(ceil(remaininghealth / damageperrocket));
+								if(isdefined(target.numflares) && target.numflares > 0)
+								{
+									missilesremaining = missilesremaining + target.numflares;
+								}
+								if(isdefined(target.flak_drone))
+								{
+									missilesremaining = missilesremaining + 1;
+								}
+								self settargetedmissilesremaining(weapon, missilesremaining);
 							}
-							if(isdefined(target.flak_drone))
-							{
-								missilesremaining = missilesremaining + 1;
-							}
-							self settargetedmissilesremaining(weapon, missilesremaining);
 						}
 					}
 				}
@@ -1229,23 +1238,29 @@ function missiletarget_lockonmonitor(player, endon1, endon2)
 				self clientfield::set("heli_warn_locked", 0);
 				self clientfield::set("heli_warn_targeted", 0);
 			}
-			else if(isdefined(self.locked_on) && self.locked_on)
-			{
-				self clientfield::set("heli_warn_locked", 1);
-				self clientfield::set("heli_warn_fired", 0);
-				self clientfield::set("heli_warn_targeted", 0);
-			}
-			else if(isdefined(self.locking_on) && self.locking_on)
-			{
-				self clientfield::set("heli_warn_targeted", 1);
-				self clientfield::set("heli_warn_fired", 0);
-				self clientfield::set("heli_warn_locked", 0);
-			}
 			else
 			{
-				self clientfield::set("heli_warn_fired", 0);
-				self clientfield::set("heli_warn_targeted", 0);
-				self clientfield::set("heli_warn_locked", 0);
+				if(isdefined(self.locked_on) && self.locked_on)
+				{
+					self clientfield::set("heli_warn_locked", 1);
+					self clientfield::set("heli_warn_fired", 0);
+					self clientfield::set("heli_warn_targeted", 0);
+				}
+				else
+				{
+					if(isdefined(self.locking_on) && self.locking_on)
+					{
+						self clientfield::set("heli_warn_targeted", 1);
+						self clientfield::set("heli_warn_fired", 0);
+						self clientfield::set("heli_warn_locked", 0);
+					}
+					else
+					{
+						self clientfield::set("heli_warn_fired", 0);
+						self clientfield::set("heli_warn_targeted", 0);
+						self clientfield::set("heli_warn_locked", 0);
+					}
+				}
 			}
 		}
 		wait(0.1);
@@ -1323,13 +1338,13 @@ function missiletarget_ismissileincoming()
 {
 	if(!isdefined(self.incoming_missile))
 	{
-		return 0;
+		return false;
 	}
 	if(self.incoming_missile)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1345,17 +1360,17 @@ function missiletarget_isotherplayermissileincoming(attacker)
 {
 	if(!isdefined(self.incoming_missile_owner))
 	{
-		return 0;
+		return false;
 	}
 	if(self.incoming_missile_owner.size == 0)
 	{
-		return 0;
+		return false;
 	}
 	if(self.incoming_missile_owner.size == 1 && isdefined(self.incoming_missile_owner[attacker.entnum]))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*

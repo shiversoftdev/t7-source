@@ -61,7 +61,7 @@ function skipto_discover_data_init(str_objective, b_starting)
 		trig_post_discover_data triggerenable(0);
 		exploder::exploder("sgen_flying_IGC");
 		load::function_a2995f22();
-		foreach(var_b41743b4, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			player clientfield::set_to_player("sndSiloBG", 1);
 		}
@@ -165,7 +165,7 @@ function function_8cf3dc94(a_ents)
 function player_data_aquired(a_ents)
 {
 	wait(2.5);
-	foreach(var_82b38790, e_in_scene in a_ents)
+	foreach(e_in_scene in a_ents)
 	{
 		if(isplayer(e_in_scene))
 		{
@@ -311,12 +311,12 @@ function skipto_aquarium_shimmy_init(str_objective, b_starting)
 		level flag::set("hendricks_data_anim_done");
 		level flag::set("glass_railing_kicked");
 		load::function_a2995f22();
-		foreach(var_7905f640, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			player clientfield::set_to_player("sndSiloBG", 1);
 		}
 	}
-	level thread function_2e4ed53c(b_starting);
+	level thread follow_1_vo(b_starting);
 	level thread dust_fx_follow();
 	level thread post_discover_data_breadcrumb();
 	level thread function_982aa3da();
@@ -443,7 +443,7 @@ function post_discover_data_hendricks()
 }
 
 /*
-	Name: function_2e4ed53c
+	Name: follow_1_vo
 	Namespace: cp_mi_sing_sgen_enter_silo
 	Checksum: 0x804420E9
 	Offset: 0x3748
@@ -451,7 +451,7 @@ function post_discover_data_hendricks()
 	Parameters: 1
 	Flags: Linked
 */
-function function_2e4ed53c(b_starting)
+function follow_1_vo(b_starting)
 {
 	level flag::wait_till("post_discover_data");
 	if(b_starting)
@@ -545,7 +545,7 @@ function skipto_gen_lab_init(str_objective, b_starting)
 		level thread gen_lab_objective_breadcrumbs();
 		level thread namespace_d40478f6::function_fb17452c();
 		load::function_a2995f22();
-		foreach(var_cf7e0e41, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			player clientfield::set_to_player("sndSiloBG", 1);
 			player clientfield::set_to_player("dust_motes", 1);
@@ -612,21 +612,21 @@ function function_bed09c90()
 function gen_lab_spawning()
 {
 	level flag::wait_till("trig_spawn_gen_lab");
-	level thread function_eee46d16();
-	level thread function_a05adac1();
+	level thread hendricks_color_wave_1_count();
+	level thread wave_1_enemy_color_chain();
 	level.ai_hendricks thread monitor_hendricks_gunfire();
-	foreach(var_bfc95095, e_player in level.activeplayers)
+	foreach(e_player in level.activeplayers)
 	{
 		e_player thread monitor_player_gunfire();
 	}
 	level thread force_gen_lab_hot();
 	level flag::wait_till("player_mid_gen_lab");
-	spawner::simple_spawn("gen_lab_enemy_wave_2", &function_3121a98c);
+	spawner::simple_spawn("gen_lab_enemy_wave_2", &setup_wave_2_gen_lab_guy);
 	level thread wait_till_lab_cleared();
 }
 
 /*
-	Name: function_3121a98c
+	Name: setup_wave_2_gen_lab_guy
 	Namespace: cp_mi_sing_sgen_enter_silo
 	Checksum: 0x7CD258C1
 	Offset: 0x4188
@@ -634,7 +634,7 @@ function gen_lab_spawning()
 	Parameters: 0
 	Flags: Linked
 */
-function function_3121a98c()
+function setup_wave_2_gen_lab_guy()
 {
 	self.goalradius = 1024;
 	self ai::set_behavior_attribute("cqb", 1);
@@ -643,7 +643,7 @@ function function_3121a98c()
 }
 
 /*
-	Name: function_a05adac1
+	Name: wave_1_enemy_color_chain
 	Namespace: cp_mi_sing_sgen_enter_silo
 	Checksum: 0xB8D10AFF
 	Offset: 0x4210
@@ -651,7 +651,7 @@ function function_3121a98c()
 	Parameters: 0
 	Flags: Linked
 */
-function function_a05adac1()
+function wave_1_enemy_color_chain()
 {
 	level flag::wait_till("gen_lab_gone_hot");
 	level battlechatter::function_d9f49fba(1);
@@ -714,7 +714,7 @@ function monitor_player_gunfire()
 }
 
 /*
-	Name: function_eee46d16
+	Name: hendricks_color_wave_1_count
 	Namespace: cp_mi_sing_sgen_enter_silo
 	Checksum: 0xC00E23B3
 	Offset: 0x43E8
@@ -722,7 +722,7 @@ function monitor_player_gunfire()
 	Parameters: 0
 	Flags: Linked
 */
-function function_eee46d16()
+function hendricks_color_wave_1_count()
 {
 	spawner::waittill_ai_group_amount_killed("gen_lab_enemies", 3);
 	trigger::use("gen_lab_color_chain_front", undefined, undefined, 0);
@@ -742,7 +742,7 @@ function function_eee46d16()
 */
 function setup_patrol_scene(a_ents)
 {
-	foreach(var_92ea7886, ent in a_ents)
+	foreach(ent in a_ents)
 	{
 		if(isai(ent))
 		{
@@ -829,7 +829,7 @@ function gen_lab_sight_check()
 	self endon(#"death");
 	while(true)
 	{
-		foreach(var_117fe172, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			if(self cansee(player))
 			{
@@ -952,7 +952,7 @@ function wait_till_lab_cleared()
 function function_f61c0df8(var_e39815ad, n_time_min, n_time_max)
 {
 	var_91efa0da = getnodearray(var_e39815ad, "targetname");
-	foreach(var_173d5e72, node in var_91efa0da)
+	foreach(node in var_91efa0da)
 	{
 		self warlordinterface::addpreferedpoint(node.origin, n_time_min * 1000, n_time_max * 1000);
 	}
@@ -1044,7 +1044,7 @@ function skipto_post_gen_lab_init(str_objective, b_starting)
 		e_gen_lab_end_door delete();
 		level flag::set("gen_lab_door_opened");
 		load::function_a2995f22();
-		foreach(var_f972531b, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			player clientfield::set_to_player("sndSiloBG", 1);
 			player clientfield::set_to_player("dust_motes", 1);
@@ -1187,7 +1187,7 @@ function skipto_chem_lab_init(str_objective, b_starting)
 		level thread scene::play("cin_sgen_09_01_chemlab_vign_windowknock_robots_start");
 		level thread namespace_d40478f6::play_robot_knock_music();
 		load::function_a2995f22();
-		foreach(var_8bc8a375, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			player clientfield::set_to_player("sndSiloBG", 1);
 			player clientfield::set_to_player("dust_motes", 1);
@@ -1408,7 +1408,7 @@ function skipto_post_chem_lab_init(str_objective, b_starting)
 		trig_player_at_silo_floor triggerenable(0);
 		level flag::set("chem_door_open");
 		load::function_a2995f22();
-		foreach(var_f26f423c, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			player clientfield::set_to_player("sndSiloBG", 1);
 			player clientfield::set_to_player("dust_motes", 1);
@@ -1503,7 +1503,7 @@ function post_chem_lab_vo()
 function ev_player_tutorial()
 {
 	level flag::wait_till("player_ev_tutorial");
-	foreach(var_a1eb0263, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		if(isdefined(player.ev_state) && player.ev_state)
 		{
@@ -1542,7 +1542,7 @@ function skipto_silo_floor_init(str_objective, b_starting)
 		level flag::set("follow3_1");
 		level thread setup_silo_robot_risers();
 		load::function_a2995f22();
-		foreach(var_3cf07dba, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			player clientfield::set_to_player("sndSiloBG", 1);
 			player clientfield::set_to_player("dust_motes", 1);
@@ -1715,7 +1715,7 @@ function function_847fb8ed(var_5b3b7ceb)
 	for(i = 0; i < 5; i++)
 	{
 		a_s_windows = array::randomize(a_s_windows);
-		foreach(var_453218f, s_window in a_s_windows)
+		foreach(s_window in a_s_windows)
 		{
 			magicbullet(level.ai_hendricks.weapon, s_bullet_start.origin, s_window.origin);
 			wait(randomfloatrange(0.05, 0.2));
@@ -1890,7 +1890,7 @@ function skipto_under_silo_init(str_objective, b_starting)
 		level flag::set("start_silo_ambush");
 		level flag::wait_till("all_players_spawned");
 		level thread namespace_d40478f6::function_71f06599();
-		foreach(var_ebd41869, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			player clientfield::set_to_player("sndSiloBG", 1);
 		}
@@ -1900,7 +1900,7 @@ function skipto_under_silo_init(str_objective, b_starting)
 	level clientfield::set("fallen_soldiers_client_fxanims", 1);
 	level.ai_hendricks under_silo_hendricks();
 	level flag::wait_till("enter_corvus");
-	foreach(var_d4f7139c, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player clientfield::set_to_player("sndSiloBG", 0);
 		player clientfield::set_to_player("dust_motes", 0);
@@ -1961,7 +1961,7 @@ function skipto_under_silo_done(str_objective, b_starting, b_direct, player)
 function corpse_cleanup()
 {
 	a_bodies = getcorpsearray();
-	foreach(var_2141a122, corpse in a_bodies)
+	foreach(corpse in a_bodies)
 	{
 		if(isdefined(corpse))
 		{

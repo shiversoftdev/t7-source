@@ -23,7 +23,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("gadget_heat_wave", &__init__, undefined, undefined);
 }
@@ -141,7 +141,7 @@ function clear_heat_wave_fx(localclientnum)
 	{
 		return;
 	}
-	foreach(var_5fab8dbb, fx in self.heatwavefx)
+	foreach(fx in self.heatwavefx)
 	{
 		stopfx(localclientnum, fx);
 	}
@@ -252,12 +252,12 @@ function do_fx(localclientnum, center, yaw_count, pitch)
 		else
 		{
 			/#
-				if(level.debug_heat_wave_traces)
-				{
-					line(fx_position + vectorscale((0, 0, 1), 50), fx_position - vectorscale((0, 0, 1), 50), (1, 0, 0), 1, 0, 300);
-					sphere(fx_position, sphere_size, (1, 0, 1), 1, 1, 8, 300);
-				}
+				line(fx_position + vectorscale((0, 0, 1), 50), fx_position - vectorscale((0, 0, 1), 50), (1, 0, 0), 1, 0, 300);
+				sphere(fx_position, sphere_size, (1, 0, 1), 1, 1, 8, 300);
 			#/
+			if(level.debug_heat_wave_traces)
+			{
+			}
 			if((lengthsquared(vectorcross(forward, tracedir * -1))) == 0)
 			{
 				forward = vectorcross(right, forward);

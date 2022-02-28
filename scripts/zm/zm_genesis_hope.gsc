@@ -29,7 +29,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_genesis_hope", &__init__, &__main__, undefined);
 }
@@ -91,9 +91,9 @@ function start()
 	}
 	var_d028d3a8 = array("ZOD", "FACTORY", "CASTLE", "ISLAND", "STALINGRAD");
 	var_61d59a5a = [];
-	foreach(var_9fb8dcf8, player in level.players)
+	foreach(player in level.players)
 	{
-		foreach(var_53b3e826, var_1493eda1 in var_d028d3a8)
+		foreach(var_1493eda1 in var_d028d3a8)
 		{
 			var_dc163518 = (player zm_stats::get_global_stat(("DARKOPS_" + var_1493eda1) + "_SUPER_EE")) > 0;
 			var_9d5e869 = isinarray(var_61d59a5a, var_1493eda1);
@@ -158,9 +158,9 @@ function function_4903bec6(player)
 	if(var_5d0b57e4 == 1)
 	{
 		self sethintstring("");
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -248,19 +248,19 @@ function function_2650d73f(player)
 	var_3d088ac6 = player clientfield::get_to_player("hope_spark");
 	if(!var_3d088ac6)
 	{
-		return 0;
+		return false;
 	}
 	if(var_5d0b57e4 == 2)
 	{
 		self sethintstring("");
-		return 1;
+		return true;
 	}
 	if(var_5d0b57e4 == 3)
 	{
 		self sethintstring("");
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -345,7 +345,7 @@ function function_6143b210(e_triggerer)
 */
 function function_7e7eb906(e_player, w_weapon)
 {
-	return 1;
+	return true;
 }
 
 /*
@@ -359,7 +359,7 @@ function function_7e7eb906(e_player, w_weapon)
 */
 function function_afddb902()
 {
-	return 1;
+	return true;
 }
 
 /*
@@ -373,7 +373,7 @@ function function_afddb902()
 */
 function function_f648c43()
 {
-	return 0;
+	return false;
 }
 
 /*

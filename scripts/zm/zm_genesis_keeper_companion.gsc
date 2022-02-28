@@ -41,7 +41,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_genesis_companion", &__init__, undefined, undefined);
 }
@@ -144,7 +144,7 @@ function function_2dc24f4b()
 	level.var_d1d9fa3c = 0;
 	level thread function_dbc32a6d();
 	level.var_1e5eff79 = array("temple", "theater", "origins", "castle");
-	foreach(var_cc48158f, str_areaname in level.var_1e5eff79)
+	foreach(str_areaname in level.var_1e5eff79)
 	{
 		create_callbox_unitrigger(str_areaname, &function_adb2c149, &function_d6422d13);
 	}
@@ -165,12 +165,12 @@ function function_2dc24f4b()
 function function_4347fd68()
 {
 	a_e_parts = getentarray(self.target, "targetname");
-	foreach(var_2671007b, e_part in a_e_parts)
+	foreach(e_part in a_e_parts)
 	{
 		e_part hide();
 	}
 	level flag::wait_till("companion_box_built");
-	foreach(var_316cf841, e_part in a_e_parts)
+	foreach(e_part in a_e_parts)
 	{
 		e_part show();
 	}
@@ -253,15 +253,15 @@ function function_fe778474(e_player)
 	if(self.stub flag::get("part_picked_up"))
 	{
 		self sethintstring(&"");
-		return 0;
+		return false;
 	}
 	if(level flag::get("companion_box_parts_collected"))
 	{
 		self sethintstring(&"");
-		return 0;
+		return false;
 	}
 	self sethintstring(&"ZM_GENESIS_CALLBOX_PICKUP_PART");
-	return 1;
+	return true;
 }
 
 /*
@@ -273,7 +273,7 @@ function function_fe778474(e_player)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_384f884a(e_player)
+function private function_384f884a(e_player)
 {
 	self thread zm_craftables::craftable_play_craft_fx(e_player);
 	self thread function_6ba7e9d6(e_player);
@@ -284,9 +284,9 @@ private function function_384f884a(e_player)
 	self.stub zm_unitrigger::run_visibility_function_for_all_triggers();
 	if(str_return == "craft_succeed")
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -298,7 +298,7 @@ private function function_384f884a(e_player)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_6ba7e9d6(e_player)
+function private function_6ba7e9d6(e_player)
 {
 	wait(0.01);
 	if(!isdefined(self))
@@ -319,7 +319,7 @@ private function function_6ba7e9d6(e_player)
 	e_player giveweapon(var_700a22a9);
 	e_player switchtoweapon(var_700a22a9);
 	mdl_anchor = util::spawn_model("tag_origin", e_player.origin, e_player.angles);
-	e_player thread n_observation_deck_stage(mdl_anchor);
+	e_player thread anchor_delete_watcher(mdl_anchor);
 	e_player zm_utility::disable_player_move_states(1);
 	e_player linkto(mdl_anchor);
 	e_player playsound("zmb_keeper_callbox_build_start");
@@ -358,7 +358,7 @@ private function function_6ba7e9d6(e_player)
 }
 
 /*
-	Name: n_observation_deck_stage
+	Name: anchor_delete_watcher
 	Namespace: zm_genesis_keeper_companion
 	Checksum: 0x88972507
 	Offset: 0x1A30
@@ -366,7 +366,7 @@ private function function_6ba7e9d6(e_player)
 	Parameters: 1
 	Flags: Linked
 */
-function n_observation_deck_stage(mdl_anchor)
+function anchor_delete_watcher(mdl_anchor)
 {
 	self util::waittill_any("death", "craftable_progress_end");
 	util::wait_network_frame();
@@ -391,7 +391,7 @@ function function_49da2964(e_player)
 	level clientfield::set(self.var_fdb628a4, 1);
 	e_player playsound("zmb_keeper_callbox_pickup");
 	level notify(#"widget_ui_override");
-	foreach(var_289bce9a, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		e_player thread function_3ab53b5c("zmInventory.player_keeper_protector", "zmInventory.widget_keeper_protector_parts", 0);
 	}
@@ -410,7 +410,7 @@ function function_49da2964(e_player)
 function function_b2ef0035(e_player)
 {
 	level notify(#"widget_ui_override");
-	foreach(var_77eeeab8, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		if(zm_utility::is_player_valid(e_player))
 		{
@@ -428,7 +428,7 @@ function function_b2ef0035(e_player)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function function_3ab53b5c(str_crafted_clientuimodel, str_widget_clientuimodel, b_is_crafted)
+function private function_3ab53b5c(str_crafted_clientuimodel, str_widget_clientuimodel, b_is_crafted)
 {
 	self endon(#"disconnect");
 	if(b_is_crafted)
@@ -495,34 +495,34 @@ function function_adb2c149(e_player)
 	if(!self zm_craftables::anystub_update_prompt(e_player))
 	{
 		self sethintstring(&"");
-		return 0;
+		return false;
 	}
 	if(e_player bgb::is_enabled("zm_bgb_disorderly_combat"))
 	{
 		self sethintstring(&"");
-		return 0;
+		return false;
 	}
 	initial_current_weapon = e_player getcurrentweapon();
 	current_weapon = zm_weapons::get_nonalternate_weapon(initial_current_weapon);
 	if(current_weapon.isheroweapon || current_weapon.isgadget)
 	{
 		self sethintstring(&"");
-		return 0;
+		return false;
 	}
 	if(!level flag::get("companion_box_built"))
 	{
 		if(level flag::get("companion_box_building"))
 		{
 			self sethintstring(&"");
-			return 0;
+			return false;
 		}
 		if(!level flag::get("companion_box_parts_collected"))
 		{
 			self sethintstring(&"ZM_GENESIS_CALLBOX_MISSING_PARTS");
-			return 0;
+			return false;
 		}
 		self sethintstring(&"ZM_GENESIS_CALLBOX_BUILD");
-		return 1;
+		return true;
 	}
 	if(isdefined(level.ai_companion))
 	{
@@ -555,7 +555,7 @@ function function_adb2c149(e_player)
 			}
 		}
 		self sethintstring(&"ZM_GENESIS_ROBOT_ONCALL_IN", hintstring_areaname);
-		return 0;
+		return false;
 	}
 	if(e_player.score < level.var_67d8db6f)
 	{
@@ -565,7 +565,7 @@ function function_adb2c149(e_player)
 	{
 		self sethintstring(&"ZM_GENESIS_ROBOT_SUMMON", level.var_67d8db6f);
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -691,9 +691,9 @@ function filter_callbox_name(e_entity, str_areaname)
 {
 	if(!isdefined(e_entity.script_string) || e_entity.script_string != str_areaname)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -724,7 +724,7 @@ function function_ff7f239d(e_player, s_stub, s_start_pos)
 	level.var_eb326880 = s_stub.str_areaname;
 	level.ai_companion.var_5a513941 = 1;
 	level.ai_companion.is_zombie = 1;
-	foreach(var_f94c8fb8, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		e_player setperk("specialty_pistoldeath");
 	}
@@ -764,8 +764,8 @@ function function_ff7f239d(e_player, s_stub, s_start_pos)
 		n_timeout = n_timeout + 0.1;
 		wait(0.1);
 	}
-	level.ai_companion namespace_6d577909::function_703fda6d();
-	foreach(var_efa8e21e, e_player in level.players)
+	level.ai_companion keepercompanionbehavior::function_703fda6d();
+	foreach(e_player in level.players)
 	{
 		e_player unsetperk("specialty_pistoldeath");
 	}
@@ -793,9 +793,9 @@ function function_bb9e914f(s_stub)
 	{
 		level.var_67d8db6f = 5000;
 		s_stub zm_unitrigger::run_visibility_function_for_all_triggers();
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -904,7 +904,7 @@ function function_91a820f6()
 		{
 			a_e_players = arraycopy(level.activeplayers);
 			a_e_players = array::randomize(a_e_players);
-			foreach(var_bea872b0, e_player in a_e_players)
+			foreach(e_player in a_e_players)
 			{
 				if(distance(self.origin, e_player.origin) < 1000 && e_player zm_utility::is_facing(self, 0.5))
 				{
@@ -1018,13 +1018,16 @@ function function_f2a74fd1(cmd)
 				{
 					level.var_8700c9b1 = 1;
 				}
-				else if(level.var_8700c9b1)
-				{
-					level.var_8700c9b1 = 0;
-				}
 				else
 				{
-					level.var_8700c9b1 = 1;
+					if(level.var_8700c9b1)
+					{
+						level.var_8700c9b1 = 0;
+					}
+					else
+					{
+						level.var_8700c9b1 = 1;
+					}
 				}
 				break;
 			}
@@ -1034,13 +1037,16 @@ function function_f2a74fd1(cmd)
 				{
 					level.var_c3eaadba = 1;
 				}
-				else if(level.var_c3eaadba)
-				{
-					level.var_c3eaadba = 0;
-				}
 				else
 				{
-					level.var_c3eaadba = 1;
+					if(level.var_c3eaadba)
+					{
+						level.var_c3eaadba = 0;
+					}
+					else
+					{
+						level.var_c3eaadba = 1;
+					}
 				}
 				break;
 			}
@@ -1065,7 +1071,7 @@ function function_2fb1022e(n_val)
 			case 1:
 			{
 				var_133619e4 = struct::get_array("", "");
-				foreach(var_5d414c28, s_piece in var_133619e4)
+				foreach(s_piece in var_133619e4)
 				{
 					s_piece notify(#"trigger_activated", level.players[0]);
 				}
@@ -1074,7 +1080,7 @@ function function_2fb1022e(n_val)
 			case 2:
 			{
 				var_7db6b6e1 = struct::get_array("", "");
-				foreach(var_50b15538, s_piece in var_7db6b6e1)
+				foreach(s_piece in var_7db6b6e1)
 				{
 					s_piece notify(#"trigger_activated", level.players[0]);
 				}
@@ -1083,7 +1089,7 @@ function function_2fb1022e(n_val)
 			case 3:
 			{
 				var_79d5129b = struct::get_array("", "");
-				foreach(var_5ac2ae17, s_piece in var_79d5129b)
+				foreach(s_piece in var_79d5129b)
 				{
 					s_piece notify(#"trigger_activated", level.players[0]);
 				}

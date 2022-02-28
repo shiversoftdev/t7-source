@@ -73,7 +73,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function opt_in()
+function autoexec opt_in()
 {
 	level.aat_in_use = 1;
 	level.bgb_in_use = 1;
@@ -205,7 +205,7 @@ function function_12859198()
 */
 function function_b87f949f(a_ents)
 {
-	foreach(var_7a776c7f, ent in a_ents)
+	foreach(ent in a_ents)
 	{
 		ent setignorepauseworld(1);
 	}
@@ -254,13 +254,13 @@ function function_869d6f66()
 {
 	if(!isdefined(self zm_bgb_anywhere_but_here::function_728dfe3()))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.on_zipline) && self.on_zipline)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -276,9 +276,9 @@ function function_3e7eb37b()
 {
 	if(isdefined(self.on_zipline) && self.on_zipline)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -402,7 +402,7 @@ function assign_lowest_unused_character_index()
 		charindexarray = array::randomize(charindexarray);
 		return charindexarray[0];
 	}
-	foreach(var_27af3274, player in level.players)
+	foreach(player in level.players)
 	{
 		if(isdefined(player.characterindex))
 		{

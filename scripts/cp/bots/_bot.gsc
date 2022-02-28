@@ -15,7 +15,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("bot_cp", &__init__, undefined, undefined);
 }
@@ -33,7 +33,7 @@ function __init__()
 {
 	/#
 		level.onbotconnect = &on_bot_connect;
-		level.var_93a32db5 = &bot_combat::get_ai_threats;
+		level.getbotthreats = &bot_combat::get_ai_threats;
 		level.botprecombat = &coop_pre_combat;
 		level.botpostcombat = &coop_post_combat;
 		level.botidle = &follow_coop_players;

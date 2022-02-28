@@ -27,7 +27,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	spawner::add_archetype_spawn_function("thrasher", &function_f8333089);
 }
@@ -41,7 +41,7 @@ autoexec function init()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_f8333089()
+function private function_f8333089()
 {
 	self thread function_9b57ea16();
 }
@@ -55,7 +55,7 @@ private function function_f8333089()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_9b57ea16()
+function private function_9b57ea16()
 {
 	self endon(#"death");
 	wait(1);

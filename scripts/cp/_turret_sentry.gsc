@@ -24,7 +24,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("sentry_turret", &__init__, undefined, undefined);
 }
@@ -253,7 +253,7 @@ function function_c8f2c95d(point)
 	direction = point - self.eyeorigin;
 	angles = vectortoangles(direction);
 	yaw_delta = angleclamp180(angles[1] - self.angles[1]);
-	foreach(index, targetpoint in self.targetpoints)
+	foreach(targetpoint in self.targetpoints)
 	{
 		if(yaw_delta < targetpoint.yaw)
 		{
@@ -583,13 +583,16 @@ function function_2e229297()
 								self.var_b431c4af = self.var_b431c4af * -1;
 								self.var_23b6e300 = self.var_23b6e300 + self.var_b431c4af;
 							}
-							else if(self.var_23b6e300 >= self.targetpoints.size)
-							{
-								self.var_23b6e300 = 0;
-							}
 							else
 							{
-								self.var_23b6e300 = self.targetpoints.size - 1;
+								if(self.var_23b6e300 >= self.targetpoints.size)
+								{
+									self.var_23b6e300 = 0;
+								}
+								else
+								{
+									self.var_23b6e300 = self.targetpoints.size - 1;
+								}
 							}
 						}
 					}

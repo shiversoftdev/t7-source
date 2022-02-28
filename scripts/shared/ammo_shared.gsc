@@ -16,11 +16,9 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function main()
+function autoexec main()
 {
-	object = new throttle();
-	[[ object ]]->__constructor();
-	level.ai_ammo_throttle = object;
+	level.ai_ammo_throttle = new throttle();
 	[[ level.ai_ammo_throttle ]]->initialize(1, 0.1);
 }
 
@@ -86,14 +84,17 @@ function ammo_pouch_think()
 			maxammo = player.grenadetypeprimarycount;
 			b_is_primary_or_secondary_grenade = 1;
 		}
-		else if(weapon == player.grenadetypesecondary && isdefined(player.grenadetypesecondarycount) && player.grenadetypesecondarycount > 0)
+		else
 		{
-			maxammo = player.grenadetypesecondarycount;
-			b_is_primary_or_secondary_grenade = 1;
-		}
-		else if(weapon.inventorytype == "hero" && (isdefined(level.overrideammodropheroweapon) && level.overrideammodropheroweapon))
-		{
-			maxammo = weapon.maxammo;
+			if(weapon == player.grenadetypesecondary && isdefined(player.grenadetypesecondarycount) && player.grenadetypesecondarycount > 0)
+			{
+				maxammo = player.grenadetypesecondarycount;
+				b_is_primary_or_secondary_grenade = 1;
+			}
+			else if(weapon.inventorytype == "hero" && (isdefined(level.overrideammodropheroweapon) && level.overrideammodropheroweapon))
+			{
+				maxammo = weapon.maxammo;
+			}
 		}
 		if(b_is_primary_or_secondary_grenade && player hascybercomrig("cybercom_copycat") != 2)
 		{

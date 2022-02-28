@@ -30,7 +30,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	function_e84ffe9c();
 	spawner::add_archetype_spawn_function("margwa", &function_57c223eb);
@@ -70,7 +70,7 @@ autoexec function init()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_e84ffe9c()
+function private function_e84ffe9c()
 {
 	behaviortreenetworkutility::registerbehaviortreescriptapi("genesisMargwaVortexService", &function_96a94112);
 	behaviortreenetworkutility::registerbehaviortreescriptapi("genesisMargwaSpiderService", &function_9f065361);
@@ -87,7 +87,7 @@ private function function_e84ffe9c()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_96a94112(entity)
+function private function_96a94112(entity)
 {
 	if(isdefined(entity.var_28763934) && entity.var_28763934 < gettime())
 	{
@@ -105,10 +105,10 @@ private function function_96a94112(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_9f065361(entity)
+function private function_9f065361(entity)
 {
 	zombies = getaiteamarray(level.zombie_team);
-	foreach(var_a931e47c, zombie in zombies)
+	foreach(zombie in zombies)
 	{
 		if(zombie.archetype == "spider")
 		{
@@ -130,7 +130,7 @@ private function function_9f065361(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_a5e64246(entity)
+function private function_a5e64246(entity)
 {
 	margwabehavior::margwareactstunterminate(entity);
 	entity.var_aa0a91dd = gettime() + 10000;
@@ -145,7 +145,7 @@ private function function_a5e64246(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_a478da01(entity)
+function private function_a478da01(entity)
 {
 	margwabehavior::margwareactidgunterminate(entity);
 	entity.var_28763934 = gettime() + 10000;
@@ -160,7 +160,7 @@ private function function_a478da01(entity)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_57c223eb()
+function private function_57c223eb()
 {
 	self.var_5ffc5a7b = &function_c27412c6;
 	self.margwapainterminatecb = &function_cc95e566;
@@ -183,7 +183,7 @@ private function function_57c223eb()
 	Parameters: 0
 	Flags: Private
 */
-private function function_9ba47060()
+function private function_9ba47060()
 {
 	self endon(#"death");
 	wait(0.1);
@@ -202,7 +202,7 @@ private function function_9ba47060()
 	Parameters: 0
 	Flags: Private
 */
-private function function_f05e4819()
+function private function_f05e4819()
 {
 	self endon(#"death");
 	self.waiting = 1;
@@ -223,7 +223,7 @@ private function function_f05e4819()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_e1f5236a()
+function private function_e1f5236a()
 {
 	self endon(#"death");
 	wait(1);
@@ -239,7 +239,7 @@ private function function_e1f5236a()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_c27412c6(player)
+function private function_c27412c6(player)
 {
 	self zm_genesis_challenges::function_ca31caac(undefined, player);
 }
@@ -253,15 +253,15 @@ private function function_c27412c6(player)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_cc95e566()
+function private function_cc95e566()
 {
 	if(math::cointoss())
 	{
-		if(namespace_3de4ab6f::function_6bbd2a18(self))
+		if(zm_ai_margwa_elemental::function_6bbd2a18(self))
 		{
 			self.var_322364e8 = 1;
 		}
-		else if(namespace_3de4ab6f::function_b9fad980(self))
+		else if(zm_ai_margwa_elemental::function_b9fad980(self))
 		{
 			self.var_3c58b79c = 1;
 		}
@@ -277,11 +277,11 @@ private function function_cc95e566()
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_df77c1c3(inflictor, attacker)
+function private function_df77c1c3(inflictor, attacker)
 {
 	if(isdefined(self))
 	{
-		foreach(var_7e4e54bc, head in self.head)
+		foreach(head in self.head)
 		{
 			if(head.health > 0)
 			{
@@ -314,13 +314,13 @@ private function function_df77c1c3(inflictor, attacker)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_a8ffa66c(player)
+function private function_a8ffa66c(player)
 {
 	if(isdefined(self))
 	{
 		if(gettime() > self.var_15704e8d)
 		{
-			foreach(var_eefd79cb, head in self.head)
+			foreach(head in self.head)
 			{
 				if(head.health > 0)
 				{
@@ -346,14 +346,14 @@ private function function_a8ffa66c(player)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_f769285c()
+function private function_f769285c()
 {
 	if(self function_2a03f05f())
 	{
 		self.reactstun = 1;
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -369,8 +369,8 @@ function function_2a03f05f()
 {
 	if(isdefined(self.canstun) && self.canstun && self.var_aa0a91dd < gettime())
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 

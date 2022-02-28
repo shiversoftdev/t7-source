@@ -199,7 +199,7 @@ function onstartgametype()
 	level.spawn_axis = spawnlogic::get_spawnpoint_array("mp_sab_spawn_axis");
 	level.spawn_allies = spawnlogic::get_spawnpoint_array("mp_sab_spawn_allies");
 	level.spawn_start = [];
-	foreach(var_bdc3529e, team in level.teams)
+	foreach(team in level.teams)
 	{
 		level.spawn_start[team] = spawnlogic::get_spawnpoint_array(("mp_sab_spawn_" + team) + "_start");
 	}
@@ -292,22 +292,25 @@ function ondeadevent(team)
 			thread globallogic::endgame("tie", game["strings"]["tie"]);
 		}
 	}
-	else if(level.bombplanted)
-	{
-		if(team == level.bombplantedby)
-		{
-			level.plantingteamdead = 1;
-			return;
-		}
-		otherteam = util::getotherteam(level.bombplantedby);
-		globallogic_score::giveteamscoreforobjective(level.bombplantedby, 1);
-		thread globallogic::endgame(level.bombplantedby, game["strings"][otherteam + "_eliminated"]);
-	}
 	else
 	{
-		otherteam = util::getotherteam(team);
-		globallogic_score::giveteamscoreforobjective(otherteam, 1);
-		thread globallogic::endgame(otherteam, game["strings"][team + "_eliminated"]);
+		if(level.bombplanted)
+		{
+			if(team == level.bombplantedby)
+			{
+				level.plantingteamdead = 1;
+				return;
+			}
+			otherteam = util::getotherteam(level.bombplantedby);
+			globallogic_score::giveteamscoreforobjective(level.bombplantedby, 1);
+			thread globallogic::endgame(level.bombplantedby, game["strings"][otherteam + "_eliminated"]);
+		}
+		else
+		{
+			otherteam = util::getotherteam(team);
+			globallogic_score::giveteamscoreforobjective(otherteam, 1);
+			thread globallogic::endgame(otherteam, game["strings"][team + "_eliminated"]);
+		}
 	}
 }
 
@@ -575,26 +578,29 @@ function ondrop(player)
 	if(level.bombplanted)
 	{
 	}
-	else if(isdefined(player))
+	else
 	{
-		util::printonteamarg(&"MP_EXPLOSIVES_DROPPED_BY", self gameobjects::get_owner_team(), player);
-	}
-	sound::play_on_players(game["bomb_dropped_sound"], self gameobjects::get_owner_team());
-	/#
 		if(isdefined(player))
 		{
-			print("");
+			util::printonteamarg(&"MP_EXPLOSIVES_DROPPED_BY", self gameobjects::get_owner_team(), player);
 		}
-		else
-		{
-			print("");
-		}
-	#/
-	globallogic_audio::leader_dialog("bomb_lost", self gameobjects::get_owner_team());
-	player notify(#"event_ended");
-	level.bombzones["axis"].trigger setinvisibletoall();
-	level.bombzones["allies"].trigger setinvisibletoall();
-	thread abandonmentthink(0);
+		sound::play_on_players(game["bomb_dropped_sound"], self gameobjects::get_owner_team());
+		/#
+			if(isdefined(player))
+			{
+				print("");
+			}
+			else
+			{
+				print("");
+			}
+		#/
+		globallogic_audio::leader_dialog("bomb_lost", self gameobjects::get_owner_team());
+		player notify(#"event_ended");
+		level.bombzones["axis"].trigger setinvisibletoall();
+		level.bombzones["allies"].trigger setinvisibletoall();
+		thread abandonmentthink(0);
+	}
 }
 
 /*
@@ -902,14 +908,17 @@ function onplayerkilled(einflictor, attacker, idamage, smeansofdeath, weapon, vd
 			attacker thread challenges::killedbaseoffender(level.bombzones[inbombzoneteam], weapon);
 			self recordkillmodifier("defending");
 		}
-		else if(isdefined(attacker.pers["defends"]))
+		else
 		{
-			attacker.pers["defends"]++;
-			attacker.defends = attacker.pers["defends"];
+			if(isdefined(attacker.pers["defends"]))
+			{
+				attacker.pers["defends"]++;
+				attacker.defends = attacker.pers["defends"];
+			}
+			attacker medals::defenseglobalcount();
+			attacker thread challenges::killedbasedefender(level.bombzones[inbombzoneteam]);
+			self recordkillmodifier("assaulting");
 		}
-		attacker medals::defenseglobalcount();
-		attacker thread challenges::killedbasedefender(level.bombzones[inbombzoneteam]);
-		self recordkillmodifier("assaulting");
 	}
 	if(isplayer(attacker) && attacker.pers["team"] != self.pers["team"] && isdefined(self.isbombcarrier) && self.isbombcarrier == 1)
 	{

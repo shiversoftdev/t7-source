@@ -20,7 +20,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("lui_shared", &__init__, undefined, undefined);
 }
@@ -149,7 +149,7 @@ function addmenuexploders(menu_name, localclientnum, exploder)
 	menu_data = level.client_menus[localclientnum][menu_name];
 	if(isarray(exploder))
 	{
-		foreach(var_19fc6744, expl in exploder)
+		foreach(expl in exploder)
 		{
 			if(!isdefined(menu_data.exploders))
 			{
@@ -162,15 +162,18 @@ function addmenuexploders(menu_name, localclientnum, exploder)
 			menu_data.exploders[menu_data.exploders.size] = expl;
 		}
 	}
-	else if(!isdefined(menu_data.exploders))
+	else
 	{
-		menu_data.exploders = [];
+		if(!isdefined(menu_data.exploders))
+		{
+			menu_data.exploders = [];
+		}
+		else if(!isarray(menu_data.exploders))
+		{
+			menu_data.exploders = array(menu_data.exploders);
+		}
+		menu_data.exploders[menu_data.exploders.size] = exploder;
 	}
-	else if(!isarray(menu_data.exploders))
-	{
-		menu_data.exploders = array(menu_data.exploders);
-	}
-	menu_data.exploders[menu_data.exploders.size] = exploder;
 }
 
 /*
@@ -286,7 +289,7 @@ function setup_menu(localclientnum, menu_data, previous_menu)
 		{
 			if(isarray(previous_menu_info.custom_close_fn))
 			{
-				foreach(var_d6596e6e, fn in previous_menu_info.custom_close_fn)
+				foreach(fn in previous_menu_info.custom_close_fn)
 				{
 					[[fn]](localclientnum, previous_menu_info);
 				}
@@ -298,7 +301,7 @@ function setup_menu(localclientnum, menu_data, previous_menu)
 		}
 		if(isdefined(previous_menu_info.extra_cams))
 		{
-			foreach(var_157bd6b7, extracam_data in previous_menu_info.extra_cams)
+			foreach(extracam_data in previous_menu_info.extra_cams)
 			{
 				multi_extracam::extracam_reset_index(localclientnum, extracam_data.extracam_index);
 			}
@@ -318,7 +321,7 @@ function setup_menu(localclientnum, menu_data, previous_menu)
 		}
 		if(isdefined(previous_menu_info.exploders))
 		{
-			foreach(var_cae08306, exploder in previous_menu_info.exploders)
+			foreach(exploder in previous_menu_info.exploders)
 			{
 				killradiantexploder(localclientnum, exploder);
 			}
@@ -333,7 +336,7 @@ function setup_menu(localclientnum, menu_data, previous_menu)
 		}
 		if(isdefined(new_menu.exploders))
 		{
-			foreach(var_1abd7134, exploder in new_menu.exploders)
+			foreach(exploder in new_menu.exploders)
 			{
 				playradiantexploder(localclientnum, exploder);
 			}
@@ -361,7 +364,7 @@ function setup_menu(localclientnum, menu_data, previous_menu)
 		{
 			if(isarray(new_menu.custom_open_fn))
 			{
-				foreach(var_97c0d835, fn in new_menu.custom_open_fn)
+				foreach(fn in new_menu.custom_open_fn)
 				{
 					[[fn]](localclientnum, new_menu);
 				}
@@ -373,7 +376,7 @@ function setup_menu(localclientnum, menu_data, previous_menu)
 		}
 		if(isdefined(new_menu.extra_cams))
 		{
-			foreach(var_584bda53, extracam_data in new_menu.extra_cams)
+			foreach(extracam_data in new_menu.extra_cams)
 			{
 				if(isdefined(extracam_data.camera_function))
 				{
@@ -447,37 +450,40 @@ function client_menus(localclientnum)
 		{
 			clientmenustack[i].state = state;
 		}
-		else if(status === "closed" || statechange && isdefined(menu_index))
+		else
 		{
-			popped = undefined;
-			if(getdvarint("ui_execdemo_e3") == 1)
+			if(status === "closed" || statechange && isdefined(menu_index))
 			{
-				while(menu_index >= 0)
+				popped = undefined;
+				if(getdvarint("ui_execdemo_e3") == 1)
 				{
-					if(!isdefined(popped))
+					while(menu_index >= 0)
 					{
-						popped = array::pop_front(clientmenustack, 0);
+						if(!isdefined(popped))
+						{
+							popped = array::pop_front(clientmenustack, 0);
+						}
+						menu_index--;
 					}
-					menu_index--;
 				}
+				else
+				{
+					/#
+						assert(menu_index == 0);
+					#/
+					popped = array::pop_front(clientmenustack, 0);
+				}
+				setup_menu(localclientnum, clientmenustack[0], popped);
 			}
-			else
+			if(status === "opened" && (!isdefined(menu_index) || statechange))
 			{
-				/#
-					assert(menu_index == 0);
-				#/
-				popped = array::pop_front(clientmenustack, 0);
+				menu_data = spawnstruct();
+				menu_data.menu_name = menu_name;
+				menu_data.state = state;
+				lastmenu = (clientmenustack.size > 0 ? clientmenustack[0] : undefined);
+				setup_menu(localclientnum, menu_data, lastmenu);
+				array::push_front(clientmenustack, menu_data);
 			}
-			setup_menu(localclientnum, clientmenustack[0], popped);
-		}
-		if(status === "opened" && (!isdefined(menu_index) || statechange))
-		{
-			menu_data = spawnstruct();
-			menu_data.menu_name = menu_name;
-			menu_data.state = state;
-			lastmenu = (clientmenustack.size > 0 ? clientmenustack[0] : undefined);
-			setup_menu(localclientnum, menu_data, lastmenu);
-			array::push_front(clientmenustack, menu_data);
 		}
 	}
 }
@@ -495,7 +501,7 @@ function screen_fade(n_time, n_target_alpha = 1, n_start_alpha = 0, str_color = 
 {
 	if(self == level)
 	{
-		foreach(var_2995431, player in level.players)
+		foreach(player in level.players)
 		{
 			player thread _screen_fade(n_time, n_target_alpha, n_start_alpha, str_color, b_force_close_menu);
 		}
@@ -549,7 +555,7 @@ function screen_close_menu()
 {
 	if(self == level)
 	{
-		foreach(var_f51cc11b, player in level.players)
+		foreach(player in level.players)
 		{
 			player thread _screen_close_menu();
 		}
@@ -569,7 +575,7 @@ function screen_close_menu()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function _screen_close_menu()
+function private _screen_close_menu()
 {
 	self notify(#"_screen_fade");
 	self endon(#"_screen_fade");
@@ -600,7 +606,7 @@ private function _screen_close_menu()
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function _screen_fade(n_time, n_target_alpha, n_start_alpha, v_color, b_force_close_menu)
+function private _screen_fade(n_time, n_target_alpha, n_start_alpha, v_color, b_force_close_menu)
 {
 	self notify(#"_screen_fade");
 	self endon(#"_screen_fade");

@@ -45,7 +45,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("escort", &__init__, undefined, undefined);
 }
@@ -411,17 +411,17 @@ function shouldplayovertimeround()
 	{
 		if(game["overtime_round"] == 1 || !level.gameended)
 		{
-			return 1;
+			return true;
 		}
-		return 0;
+		return false;
 	}
 	alliesroundswon = util::getroundswon("allies");
 	axisroundswon = util::getroundswon("axis");
 	if(util::hitroundlimit() && alliesroundswon == axisroundswon)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -437,7 +437,7 @@ function onroundendgame(winningteam)
 {
 	if(isdefined(game["overtime_round"]))
 	{
-		foreach(var_3b6438ed, team in level.teams)
+		foreach(team in level.teams)
 		{
 			score = game["roundswon"][team];
 			[[level._setteamscore]](team, score);
@@ -604,7 +604,7 @@ function debug_draw_robot_path()
 			nextnode = pathnodes[i + 1];
 			util::debug_line(currnode, nextnode, vectorscale((0, 1, 0), 0.9), 0.9, 0, debug_duration);
 		}
-		foreach(var_77a6988, path in pathnodes)
+		foreach(path in pathnodes)
 		{
 			util::debug_sphere(path, 6, vectorscale((0, 0, 1), 0.9), 0.9, debug_duration);
 		}
@@ -635,7 +635,7 @@ function debug_draw_approximate_robot_path_to_goal(&goalpatharray)
 			nextnode = pathnodes[i + 1];
 			util::debug_line(currnode, nextnode, vectorscale((1, 1, 0), 0.9), 0.9, 0, debug_duration);
 		}
-		foreach(var_dfe3eff5, path in pathnodes)
+		foreach(path in pathnodes)
 		{
 			util::debug_sphere(path, 3, (0, 0.5, 0.5), 0.9, debug_duration);
 		}
@@ -888,7 +888,7 @@ function auto_reboot_robot(time)
 	}
 	if(level.rebootplayers > 0)
 	{
-		foreach(var_a89f2c2f, struct in level.moveobject.touchlist[game["attackers"]])
+		foreach(struct in level.moveobject.touchlist[game["attackers"]])
 		{
 			scoreevents::processscoreevent("escort_robot_reboot", struct.player);
 		}
@@ -1070,11 +1070,11 @@ function robot_damage(einflictor, eattacker, idamage, idflags, smeansofdeath, we
 {
 	if(!(isdefined(self.onground) && self.onground))
 	{
-		return 0;
+		return false;
 	}
 	if(level.shutdowndamage <= 0 || !self.active || eattacker.team == game["attackers"])
 	{
-		return 0;
+		return false;
 	}
 	level.usestartspawns = 0;
 	weapon_damage = killstreak_bundles::get_weapon_damage(level.escortrobotkillstreakbundle, level.shutdowndamage, eattacker, weapon, smeansofdeath, idamage, idflags, undefined);
@@ -1084,7 +1084,7 @@ function robot_damage(einflictor, eattacker, idamage, idflags, smeansofdeath, we
 	}
 	if(!weapon_damage)
 	{
-		return 0;
+		return false;
 	}
 	self.shutdowndamage = self.shutdowndamage + weapon_damage;
 	self notify(#"robot_damaged");
@@ -1117,7 +1117,7 @@ function robot_damage(einflictor, eattacker, idamage, idflags, smeansofdeath, we
 			eattacker recordgameevent("return");
 			origin = eattacker.origin;
 		}
-		foreach(var_819e1e83, player in level.players)
+		foreach(player in level.players)
 		{
 			if(player == eattacker || player.team == self.team || !isdefined(player.damagerobot))
 			{
@@ -1146,33 +1146,39 @@ function robot_damage(einflictor, eattacker, idamage, idflags, smeansofdeath, we
 				}
 				eattacker.planemortarbda++;
 			}
-			else if(weapon.name == "dart" || weapon.name == "dart_turret")
+			else
 			{
-				if(!isdefined(eattacker.dartbda))
+				if(weapon.name == "dart" || weapon.name == "dart_turret")
 				{
-					eattacker.dartbda = 0;
+					if(!isdefined(eattacker.dartbda))
+					{
+						eattacker.dartbda = 0;
+					}
+					eattacker.dartbda++;
 				}
-				eattacker.dartbda++;
-			}
-			else if(weapon.name == "straferun_rockets" || weapon.name == "straferun_gun")
-			{
-				if(isdefined(eattacker.straferunbda))
+				else
 				{
-					eattacker.straferunbda++;
+					if(weapon.name == "straferun_rockets" || weapon.name == "straferun_gun")
+					{
+						if(isdefined(eattacker.straferunbda))
+						{
+							eattacker.straferunbda++;
+						}
+					}
+					else if(weapon.name == "remote_missile_missile" || weapon.name == "remote_missile_bomblet")
+					{
+						if(!isdefined(eattacker.remotemissilebda))
+						{
+							eattacker.remotemissilebda = 0;
+						}
+						eattacker.remotemissilebda++;
+					}
 				}
-			}
-			else if(weapon.name == "remote_missile_missile" || weapon.name == "remote_missile_bomblet")
-			{
-				if(!isdefined(eattacker.remotemissilebda))
-				{
-					eattacker.remotemissilebda = 0;
-				}
-				eattacker.remotemissilebda++;
 			}
 		}
 	}
 	self.health = self.health + 1;
-	return 1;
+	return true;
 }
 
 /*
@@ -1186,7 +1192,7 @@ function robot_damage(einflictor, eattacker, idamage, idflags, smeansofdeath, we
 */
 function robot_damage_none(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, psoffsettime, boneindex, modelindex)
 {
-	return 0;
+	return false;
 }
 
 /*
@@ -1306,7 +1312,7 @@ function reached_closest_nav_mesh_goal_but_still_too_far_and_blocked(goalonnavme
 {
 	if(isdefined(self.immediategoaloverride))
 	{
-		return 0;
+		return false;
 	}
 	distsqr = distancesquared(goalonnavmesh, self.origin);
 	robotreachedclosestgoalonnavmesh = distsqr <= (24 * 24);
@@ -1318,11 +1324,11 @@ function reached_closest_nav_mesh_goal_but_still_too_far_and_blocked(goalonnavme
 			robotisblockedfromgettingtopathgoal = self check_if_goal_is_blocked(self.origin, self.patharray[self.pathindex]);
 			if(robotisblockedfromgettingtopathgoal)
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1704,14 +1710,17 @@ function set_goal_to_point_on_path(recursioncount = 0)
 			self.mostrecentclosestpathpointgoal = closestpathpoint;
 		}
 	}
-	else if(recursioncount < 3)
-	{
-		self find_immediate_goal();
-		self set_goal_to_point_on_path(recursioncount + 1);
-	}
 	else
 	{
-		self stop_robot();
+		if(recursioncount < 3)
+		{
+			self find_immediate_goal();
+			self set_goal_to_point_on_path(recursioncount + 1);
+		}
+		else
+		{
+			self stop_robot();
+		}
 	}
 	/#
 		debug_draw_current_robot_goal(closestpathpoint);
@@ -1743,10 +1752,10 @@ function is_path_distance_to_goal_too_long(&patharray, toolongthreshold)
 		goaldistance = goaldistance + (distance(patharray[i], patharray[i + 1]));
 		if(goaldistance >= toolongthreshold)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1896,7 +1905,7 @@ function setup_move_object(robot, triggername)
 		{
 			useobj.exclusions = [];
 		}
-		foreach(var_36142014, trigger in level.levelescortdisable)
+		foreach(trigger in level.levelescortdisable)
 		{
 			useobj.exclusions[useobj.exclusions.size] = trigger;
 		}
@@ -1957,7 +1966,7 @@ function track_escorting_players()
 	self.robot endon(#"robot_stopped");
 	while(true)
 	{
-		foreach(var_22900798, touch in self.touchlist[self.team])
+		foreach(touch in self.touchlist[self.team])
 		{
 			if(!(isdefined(touch.player.escortingrobot) && touch.player.escortingrobot))
 			{
@@ -1992,7 +2001,7 @@ function track_escort_time(player)
 	{
 		wait(1);
 		touching = 0;
-		foreach(var_f1919569, touch in self.touchlist[self.team])
+		foreach(touch in self.touchlist[self.team])
 		{
 			if(touch.player == player)
 			{
@@ -2144,7 +2153,7 @@ function watch_robot_enter(robot)
 			}
 			attackers = game["attackers"];
 			self.fx.team = attackers;
-			foreach(var_6b600131, player in level.aliveplayers[attackers])
+			foreach(player in level.aliveplayers[attackers])
 			{
 				if(isdefined(player.escortingrobot) && player.escortingrobot)
 				{
@@ -2203,7 +2212,7 @@ function kill_anything_blocking_goal(goal)
 		debug_draw_blocked_path_kill_radius(self.origin, 108);
 	#/
 	entities = getdamageableentarray(self.origin, 108);
-	foreach(var_3a38ccdf, entity in entities)
+	foreach(entity in entities)
 	{
 		if(isplayer(entity))
 		{
@@ -2279,7 +2288,7 @@ function destroy_supply_crate_blocking_goal(dirtogoal)
 	crates = getentarray("care_package", "script_noteworthy");
 	bestcrate = undefined;
 	bestcrateedot = -1E+09;
-	foreach(var_265759c5, crate in crates)
+	foreach(crate in crates)
 	{
 		if(distancesquared(crate.origin, self.origin) > (108 * 108))
 		{
@@ -2298,8 +2307,8 @@ function destroy_supply_crate_blocking_goal(dirtogoal)
 		playsoundatposition("wpn_grenade_explode", bestcrate.origin);
 		wait(0.1);
 		bestcrate supplydrop::cratedelete();
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 

@@ -35,7 +35,7 @@ function main_start()
 */
 function function_36b03ba5(localclientnum)
 {
-	return 0;
+	return false;
 }
 
 /*

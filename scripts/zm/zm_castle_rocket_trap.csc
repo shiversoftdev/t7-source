@@ -121,7 +121,7 @@ function rocket_trap_blast(localclientnum)
 	n_fx_id = playfx(localclientnum, level._effect["rocket_side_blast"], var_52d911b7.origin, v_forward, v_up, 0);
 	wait(0.4);
 	var_a62b9cd7 = struct::get_array("rocket_trap_side_blast", "targetname");
-	foreach(var_4c212d58, var_b25c0a2d in var_a62b9cd7)
+	foreach(var_b25c0a2d in var_a62b9cd7)
 	{
 		var_b25c0a2d thread rocket_trap_side_blast(localclientnum);
 	}

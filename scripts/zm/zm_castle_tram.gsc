@@ -34,7 +34,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_castle_tram", &__init__, &__main__, undefined);
 }
@@ -143,22 +143,22 @@ function function_e16148c8()
 function function_9d4a523c(var_24ee4867)
 {
 	var_9fa821d4 = getent(var_24ee4867, "targetname");
-	foreach(var_7c874e2c, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		if(zm_utility::is_player_valid(player, undefined, 1) && player istouching(var_9fa821d4))
 		{
-			return 1;
+			return true;
 		}
 	}
 	a_zombies = getaiteamarray(level.zombie_team);
-	foreach(var_576f72aa, ai_zombie in a_zombies)
+	foreach(ai_zombie in a_zombies)
 	{
 		if(ai_zombie istouching(var_9fa821d4))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -365,7 +365,7 @@ function function_7b56c646()
 {
 	var_b86004b6 = getentarray("tram_clip", "targetname");
 	var_5cbc86c9 = getentarray("tram_gates", "targetname");
-	foreach(var_62534f7c, e_gate in var_5cbc86c9)
+	foreach(e_gate in var_5cbc86c9)
 	{
 		e_gate.start_pos = e_gate.origin;
 		var_a6052bbf = struct::get(e_gate.target, "targetname");
@@ -374,23 +374,23 @@ function function_7b56c646()
 	while(true)
 	{
 		level flag::wait_till("tram_docked");
-		foreach(var_e3caefb, e_clip in var_b86004b6)
+		foreach(e_clip in var_b86004b6)
 		{
 			e_clip notsolid();
 			e_clip connectpaths();
 		}
-		foreach(var_da163e78, e_gate in var_5cbc86c9)
+		foreach(e_gate in var_5cbc86c9)
 		{
 			e_gate moveto(e_gate.open_pos, 1.5);
 			e_gate playsound("evt_tram_station_gate");
 		}
 		level flag::wait_till_clear("tram_docked");
-		foreach(var_aa026b30, e_clip in var_b86004b6)
+		foreach(e_clip in var_b86004b6)
 		{
 			e_clip solid();
 			e_clip disconnectpaths();
 		}
-		foreach(var_4121b5ed, e_gate in var_5cbc86c9)
+		foreach(e_gate in var_5cbc86c9)
 		{
 			e_gate moveto(e_gate.start_pos, 0.5);
 			e_gate playsound("evt_tram_station_gate");
@@ -411,7 +411,7 @@ function function_3fb91800()
 {
 	var_b86004b6 = getentarray("player_tram_clip", "targetname");
 	var_5cbc86c9 = getentarray("player_tram_gates", "targetname");
-	foreach(var_e2cf4d2b, e_gate in var_5cbc86c9)
+	foreach(e_gate in var_5cbc86c9)
 	{
 		e_gate.start_pos = e_gate.origin;
 		var_a6052bbf = struct::get(e_gate.target, "targetname");
@@ -424,23 +424,23 @@ function function_3fb91800()
 	while(true)
 	{
 		level flag::wait_till("player_tram_docked");
-		foreach(var_457591cc, e_clip in var_b86004b6)
+		foreach(e_clip in var_b86004b6)
 		{
 			e_clip notsolid();
 			e_clip connectpaths();
 		}
-		foreach(var_ca8afd1, e_gate in var_5cbc86c9)
+		foreach(e_gate in var_5cbc86c9)
 		{
 			e_gate moveto(e_gate.open_pos, 1.5);
 			e_gate playsound("evt_tram_station_gate");
 		}
 		level flag::wait_till_clear("player_tram_docked");
-		foreach(var_8b4015fc, e_clip in var_b86004b6)
+		foreach(e_clip in var_b86004b6)
 		{
 			e_clip solid();
 			e_clip disconnectpaths();
 		}
-		foreach(var_a7313786, e_gate in var_5cbc86c9)
+		foreach(e_gate in var_5cbc86c9)
 		{
 			e_gate moveto(e_gate.start_pos, 0.5);
 			e_gate playsound("evt_tram_station_gate");
@@ -475,23 +475,26 @@ function function_1d6e73d0(e_player, s_spawn_pos, var_f2c2f39)
 	{
 		var_929a8e9b = 1;
 	}
-	else if(n_randy <= 20 && level.round_number >= 5)
-	{
-		array::add(a_bonus_types, "bonus_points_team");
-		array::add(a_bonus_types, "fire_sale");
-	}
 	else
 	{
-		array::add(a_bonus_types, "double_points");
-		array::add(a_bonus_types, "insta_kill");
-		array::add(a_bonus_types, "full_ammo");
-		if(level.round_number >= 5)
+		if(n_randy <= 20 && level.round_number >= 5)
 		{
-			array::add(a_bonus_types, "nuke");
+			array::add(a_bonus_types, "bonus_points_team");
+			array::add(a_bonus_types, "fire_sale");
 		}
-		if(isdefined(e_player.hasriotshield) && e_player.hasriotshield && e_player getammocount(e_player.weaponriotshield) !== e_player.weaponriotshield.maxammo)
+		else
 		{
-			array::add(a_bonus_types, "shield_charge");
+			array::add(a_bonus_types, "double_points");
+			array::add(a_bonus_types, "insta_kill");
+			array::add(a_bonus_types, "full_ammo");
+			if(level.round_number >= 5)
+			{
+				array::add(a_bonus_types, "nuke");
+			}
+			if(isdefined(e_player.hasriotshield) && e_player.hasriotshield && e_player getammocount(e_player.weaponriotshield) !== e_player.weaponriotshield.maxammo)
+			{
+				array::add(a_bonus_types, "shield_charge");
+			}
 		}
 	}
 	var_a11baa62 = array("fire_sale", "double_points", "insta_kill", "full_ammo", "nuke");
@@ -500,26 +503,29 @@ function function_1d6e73d0(e_player, s_spawn_pos, var_f2c2f39)
 		var_8b961b44 = function_b29057c7(e_player);
 		var_bd4efc7d = s_spawn_pos function_b21df67c(e_player, var_8b961b44);
 	}
-	else if(isdefined(var_929a8e9b) && var_929a8e9b)
+	else
 	{
-		var_8b961b44 = getweapon("ray_gun");
-		var_2fd9a02f = zm_pap_util::get_triggers();
-		if(zm_magicbox::treasure_chest_canplayerreceiveweapon(e_player, var_8b961b44, var_2fd9a02f))
+		if(isdefined(var_929a8e9b) && var_929a8e9b)
 		{
-			var_bd4efc7d = s_spawn_pos function_b21df67c(e_player, var_8b961b44);
+			var_8b961b44 = getweapon("ray_gun");
+			var_2fd9a02f = zm_pap_util::get_triggers();
+			if(zm_magicbox::treasure_chest_canplayerreceiveweapon(e_player, var_8b961b44, var_2fd9a02f))
+			{
+				var_bd4efc7d = s_spawn_pos function_b21df67c(e_player, var_8b961b44);
+			}
+			else
+			{
+				var_bd4efc7d = zm_powerups::specific_powerup_drop("full_ammo", s_spawn_pos.origin);
+				var_bd4efc7d thread function_bb44b161("full_ammo", var_a11baa62);
+			}
+			var_929a8e9b = undefined;
 		}
 		else
 		{
-			var_bd4efc7d = zm_powerups::specific_powerup_drop("full_ammo", s_spawn_pos.origin);
-			var_bd4efc7d thread function_bb44b161("full_ammo", var_a11baa62);
+			str_type = array::random(a_bonus_types);
+			var_bd4efc7d = zm_powerups::specific_powerup_drop(str_type, s_spawn_pos.origin);
+			var_bd4efc7d thread function_bb44b161(str_type, var_a11baa62);
 		}
-		var_929a8e9b = undefined;
-	}
-	else
-	{
-		str_type = array::random(a_bonus_types);
-		var_bd4efc7d = zm_powerups::specific_powerup_drop(str_type, s_spawn_pos.origin);
-		var_bd4efc7d thread function_bb44b161(str_type, var_a11baa62);
 	}
 	if(n_randy >= 97)
 	{
@@ -674,7 +680,7 @@ function weapon_trigger_update_prompt(player)
 {
 	self setcursorhint("HINT_WEAPON", self.stub.wpn);
 	self sethintstring(&"ZOMBIE_TRADE_WEAPON_FILL");
-	return 1;
+	return true;
 }
 
 /*
@@ -844,33 +850,36 @@ function function_5ea427bf(player)
 		cursor_hint_weapon = self.stub.weapon_pickup;
 		self setcursorhint(cursor_hint, cursor_hint_weapon);
 	}
-	else if(level flag::get("tram_docked") || level flag::get("player_tram_docked"))
+	else
 	{
-		self.stub.hint_string = &"ZM_CASTLE_TRAM_DOCKED";
+		if(level flag::get("tram_docked") || level flag::get("player_tram_docked"))
+		{
+			self.stub.hint_string = &"ZM_CASTLE_TRAM_DOCKED";
+			self sethintstring(self.stub.hint_string);
+			return false;
+		}
+		if(level flag::get("tram_moving"))
+		{
+			self.stub.hint_string = &"ZM_CASTLE_TRAM_MOVING";
+			self sethintstring(self.stub.hint_string);
+			return false;
+		}
+		if(level flag::get("tram_cooldown"))
+		{
+			self.stub.hint_string = &"ZM_CASTLE_TRAM_COOLDOWN";
+			self sethintstring(self.stub.hint_string);
+			return false;
+		}
+		if(zm_powerup_castle_tram_token::function_83ef471e(player))
+		{
+			self.stub.hint_string = &"ZM_CASTLE_TRAM_CALL";
+			self sethintstring(self.stub.hint_string);
+			return true;
+		}
+		self.stub.hint_string = &"ZM_CASTLE_TRAM_REQUIRES_TOKEN";
 		self sethintstring(self.stub.hint_string);
-		return 0;
+		return true;
 	}
-	if(level flag::get("tram_moving"))
-	{
-		self.stub.hint_string = &"ZM_CASTLE_TRAM_MOVING";
-		self sethintstring(self.stub.hint_string);
-		return 0;
-	}
-	if(level flag::get("tram_cooldown"))
-	{
-		self.stub.hint_string = &"ZM_CASTLE_TRAM_COOLDOWN";
-		self sethintstring(self.stub.hint_string);
-		return 0;
-	}
-	if(zm_powerup_castle_tram_token::function_83ef471e(player))
-	{
-		self.stub.hint_string = &"ZM_CASTLE_TRAM_CALL";
-		self sethintstring(self.stub.hint_string);
-		return 1;
-	}
-	self.stub.hint_string = &"ZM_CASTLE_TRAM_REQUIRES_TOKEN";
-	self sethintstring(self.stub.hint_string);
-	return 1;
 }
 
 /*
@@ -995,7 +1004,7 @@ function function_72d0fbe3(cmd)
 		{
 			case "":
 			{
-				foreach(var_c2b8c473, e_player in level.activeplayers)
+				foreach(e_player in level.activeplayers)
 				{
 					e_player.var_a1ba5103 = 1;
 					e_player.var_66e0478a = 5;

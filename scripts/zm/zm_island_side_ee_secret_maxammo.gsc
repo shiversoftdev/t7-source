@@ -34,7 +34,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_island_side_ee_secret_maxammo", &__init__, undefined, undefined);
 }
@@ -197,10 +197,10 @@ function function_41601624(cmd)
 			case "":
 			{
 				function_8ae0d6df();
-				return 1;
+				return true;
 			}
 		}
-		return 0;
+		return false;
 	#/
 }
 

@@ -48,7 +48,7 @@ function spawn_trigger_radius(origin, radius, use_trigger = 0, func_per_player_m
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function spawn_unitrigger(origin, angles, radius_or_dims, use_trigger = 0, func_per_player_msg)
+function private spawn_unitrigger(origin, angles, radius_or_dims, use_trigger = 0, func_per_player_msg)
 {
 	trigger_stub = spawnstruct();
 	trigger_stub.origin = origin;
@@ -142,7 +142,7 @@ function function_5ea427bf(player)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function unitrigger_think()
+function private unitrigger_think()
 {
 	self endon(#"kill_trigger");
 	self.stub thread unitrigger_refresh_message();
@@ -237,7 +237,7 @@ function function_7448e472(e_target)
 							playsoundatposition("zmb_wpn_skullgun_discover", e_target.origin);
 							self notify(#"skullweapon_revealed_location");
 							self thread function_4aedb20b();
-							foreach(var_b5c469a, player in level.players)
+							foreach(player in level.players)
 							{
 								if(e_target === player.var_abd1c759)
 								{
@@ -295,7 +295,7 @@ function function_4aedb20b()
 */
 function function_925aa63a(var_fedda046, n_delay = 0.1, n_value, b_delete = 1)
 {
-	foreach(var_2e7277ad, var_1c7231df in var_fedda046)
+	foreach(var_1c7231df in var_fedda046)
 	{
 		if(isdefined(var_1c7231df))
 		{
@@ -306,7 +306,7 @@ function function_925aa63a(var_fedda046, n_delay = 0.1, n_value, b_delete = 1)
 	wait(1);
 	if(isdefined(b_delete) && b_delete)
 	{
-		foreach(var_4513c77c, var_1c7231df in var_fedda046)
+		foreach(var_1c7231df in var_fedda046)
 		{
 			var_1c7231df delete();
 		}
@@ -374,7 +374,7 @@ function function_1867f3e8(n_distance)
 	str_player_zone = self zm_zonemgr::get_player_zone();
 	a_enemies = getaiteamarray("axis");
 	var_9efb74d5 = 0;
-	foreach(var_83174f1f, enemy in a_enemies)
+	foreach(enemy in a_enemies)
 	{
 		if(isalive(enemy) && enemy zm_zonemgr::entity_in_zone(str_player_zone) && distancesquared(self.origin, enemy.origin) < n_dist_sq)
 		{
@@ -424,14 +424,14 @@ function function_4bf4ac40(v_loc)
 */
 function any_player_looking_at(v_org, n_dot, b_do_trace, e_ignore)
 {
-	foreach(var_289bce9a, player in level.players)
+	foreach(player in level.players)
 	{
 		if(zm_utility::is_player_valid(player) && player util::is_player_looking_at(v_org, n_dot, b_do_trace, e_ignore))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -464,20 +464,23 @@ function swap_weapon(wpn_new)
 		{
 			self function_3420bc2f(wpn_new);
 		}
-		else if(wpn_new.type === "grenade")
-		{
-			self zm_weapons::weapon_give(wpn_new);
-		}
 		else
 		{
-			self take_old_weapon_and_give_new(wpn_current, wpn_new);
+			if(wpn_new.type === "grenade")
+			{
+				self zm_weapons::weapon_give(wpn_new);
+			}
+			else
+			{
+				self take_old_weapon_and_give_new(wpn_current, wpn_new);
+			}
 		}
 	}
 	else
 	{
 		var_c259e5ce = self zm_weapons::get_player_weapon_with_same_base(wpn_new);
 		var_6c6831af = self getweaponslist(1);
-		foreach(var_d92b9f91, weapon in var_6c6831af)
+		foreach(weapon in var_6c6831af)
 		{
 			if(self zm_weapons::get_player_weapon_with_same_base(weapon) === var_c259e5ce)
 			{
@@ -518,7 +521,7 @@ function take_old_weapon_and_give_new(current_weapon, weapon)
 function function_3420bc2f(wpn_new)
 {
 	var_c5716cdc = self getweaponslist(1);
-	foreach(var_7d57d4e0, weapon in var_c5716cdc)
+	foreach(weapon in var_c5716cdc)
 	{
 		if(weapon.type === "melee")
 		{

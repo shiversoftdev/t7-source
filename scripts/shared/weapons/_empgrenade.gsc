@@ -17,7 +17,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("empgrenade", &__init__, undefined, undefined);
 }
@@ -88,20 +88,26 @@ function monitorempgrenade()
 			{
 				continue;
 			}
-			else if(friendlyfire == 1)
+			else
 			{
-				hurtattacker = 0;
-				hurtvictim = 1;
-			}
-			else if(friendlyfire == 2)
-			{
-				hurtvictim = 0;
-				hurtattacker = 1;
-			}
-			else if(friendlyfire == 3)
-			{
-				hurtattacker = 1;
-				hurtvictim = 1;
+				if(friendlyfire == 1)
+				{
+					hurtattacker = 0;
+					hurtvictim = 1;
+				}
+				else
+				{
+					if(friendlyfire == 2)
+					{
+						hurtvictim = 0;
+						hurtattacker = 1;
+					}
+					else if(friendlyfire == 3)
+					{
+						hurtattacker = 1;
+						hurtvictim = 1;
+					}
+				}
 			}
 		}
 		if(hurtvictim && isdefined(self))
@@ -326,7 +332,7 @@ function empexplosiondamageents(owner, weapon, origin, radius, damageplayers)
 	{
 		damageplayers = 1;
 	}
-	foreach(var_9d74717f, ent in ents)
+	foreach(ent in ents)
 	{
 		if(!damageplayers && isplayer(ent))
 		{

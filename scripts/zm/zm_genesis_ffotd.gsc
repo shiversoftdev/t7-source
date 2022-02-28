@@ -65,37 +65,37 @@ function function_dce2d8a9(str_zone)
 {
 	if(zm_zonemgr::any_player_in_zone(str_zone))
 	{
-		return 1;
+		return true;
 	}
 	switch(str_zone)
 	{
 		case "zm_theater_zone":
 		{
-			foreach(var_9893cd6f, player in level.activeplayers)
+			foreach(player in level.activeplayers)
 			{
 				x = player.origin[0];
 				y = player.origin[1];
 				z = player.origin[2];
 				if(x > -1200 && x < -1170 && (y > -8570 && y < -8540) && (z > -1710 && z < -1500))
 				{
-					return 1;
+					return true;
 				}
 			}
 			break;
 		}
 		case "zm_castle_power_zone":
 		{
-			foreach(var_68124ee2, player in level.activeplayers)
+			foreach(player in level.activeplayers)
 			{
 				if(player istouching(level.var_92a78c17))
 				{
-					return 1;
+					return true;
 				}
 			}
 			break;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -114,13 +114,13 @@ function function_d51867e()
 	z = self.origin[2];
 	if(x > -1200 && x < -1170 && (y > -8570 && y < -8540) && (z > -1710 && z < -1500))
 	{
-		return 1;
+		return true;
 	}
 	if(self istouching(level.var_92a78c17))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -140,7 +140,7 @@ function function_8921895f()
 	for(i = 0; i < var_cdb0f86b.size; i++)
 	{
 		var_77917a61 = 0;
-		foreach(var_e8393719, var_68de493a in var_b4442b55)
+		foreach(var_68de493a in var_b4442b55)
 		{
 			if(var_cdb0f86b[i] == var_68de493a)
 			{

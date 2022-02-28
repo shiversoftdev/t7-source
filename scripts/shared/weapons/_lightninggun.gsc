@@ -215,7 +215,7 @@ function lightninggun_find_arc_targets(eattacker, arc_source, arc_source_origin,
 	}
 	allenemyaliveplayers = util::get_other_teams_alive_players_s(eattacker.team);
 	closestplayers = arraysort(allenemyaliveplayers.a, arc_source_origin, 1);
-	foreach(var_2646a272, player in closestplayers)
+	foreach(player in closestplayers)
 	{
 		if(isdefined(arc_source) && player == arc_source)
 		{

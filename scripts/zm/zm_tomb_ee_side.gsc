@@ -163,9 +163,9 @@ function swap_mg(e_player)
 			e_player givestartammo(var_4caca97d);
 			e_player switchtoweapon(var_4caca97d);
 		}
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -252,7 +252,7 @@ function wagon_fire_start()
 {
 	level.n_wagon_fires_out = 0;
 	a_triggers = getentarray("wagon_damage_trigger", "targetname");
-	foreach(var_12815623, trigger in a_triggers)
+	foreach(trigger in a_triggers)
 	{
 		trigger thread wagon_fire_trigger_watch();
 		level clientfield::set(trigger.script_noteworthy, 1);
@@ -470,13 +470,13 @@ function bunker_trigger_thread()
 		else if(player.sq_one_inch_punch_stage == 6 && (isdefined(player.beacon_ready) && player.beacon_ready))
 		{
 			player clientfield::set_to_player("ee_beacon_reward", 0);
-			var_25ef5fab = getweapon("beacon");
-			player zm_weapons::weapon_give(var_25ef5fab);
+			w_beacon = getweapon("beacon");
+			player zm_weapons::weapon_give(w_beacon);
 			player thread zm_tomb_vo::richtofenrespondvoplay("get_beacon");
-			if(isdefined(level.zombie_include_weapons[var_25ef5fab]) && !level.zombie_include_weapons[var_25ef5fab])
+			if(isdefined(level.zombie_include_weapons[w_beacon]) && !level.zombie_include_weapons[w_beacon])
 			{
-				level.zombie_include_weapons[var_25ef5fab] = 1;
-				level.zombie_weapons[var_25ef5fab].is_in_box = 1;
+				level.zombie_include_weapons[w_beacon] = 1;
+				level.zombie_weapons[w_beacon].is_in_box = 1;
 			}
 			player playsound("zmb_squest_oiptablet_get_reward");
 			player.sq_one_inch_punch_stage++;
@@ -764,7 +764,7 @@ function radio_ee_song()
 	level.found_ee_radio_count = 0;
 	wait(3);
 	a_structs = struct::get_array("ee_radio_pos", "targetname");
-	foreach(var_8a3169d3, unitrigger_stub in a_structs)
+	foreach(unitrigger_stub in a_structs)
 	{
 		unitrigger_stub.radius = 50;
 		unitrigger_stub.height = 128;

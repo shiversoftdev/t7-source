@@ -475,7 +475,7 @@ function function_f9753551()
 function ai_cleanup()
 {
 	a_ais = getaiteamarray("axis");
-	foreach(var_5e77b7d, ai in a_ais)
+	foreach(ai in a_ais)
 	{
 		if(isalive(ai))
 		{

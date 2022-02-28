@@ -30,7 +30,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_powerup_demonic_rune", &__init__, undefined, undefined);
 }
@@ -210,11 +210,11 @@ function detect_reentry()
 		{
 			if(self.var_1688944a == gettime())
 			{
-				return 1;
+				return true;
 			}
 		}
 		self.var_1688944a = gettime();
-		return 0;
+		return false;
 	#/
 }
 
@@ -244,7 +244,7 @@ function function_a4207c70(cmd)
 					return 1;
 				}
 				level.var_bb00a6cd = cmd;
-				level.var_6e68c0d8 thread zm_devgui::function_9589a11f(cmd, 1);
+				level.var_6e68c0d8 thread zm_devgui::zombie_devgui_give_powerup_player(cmd, 1);
 				return 1;
 			}
 			case "":
@@ -254,7 +254,7 @@ function function_a4207c70(cmd)
 					return 1;
 				}
 				level.var_bb00a6cd = cmd;
-				level.var_6e68c0d8 thread zm_devgui::function_9589a11f(cmd, 1);
+				level.var_6e68c0d8 thread zm_devgui::zombie_devgui_give_powerup_player(cmd, 1);
 				return 1;
 			}
 			case "":
@@ -264,7 +264,7 @@ function function_a4207c70(cmd)
 					return 1;
 				}
 				level.var_bb00a6cd = cmd;
-				level.var_6e68c0d8 thread zm_devgui::function_9589a11f(cmd, 1);
+				level.var_6e68c0d8 thread zm_devgui::zombie_devgui_give_powerup_player(cmd, 1);
 				return 1;
 			}
 			case "":
@@ -274,7 +274,7 @@ function function_a4207c70(cmd)
 					return 1;
 				}
 				level.var_bb00a6cd = cmd;
-				level.var_6e68c0d8 thread zm_devgui::function_9589a11f(cmd, 1);
+				level.var_6e68c0d8 thread zm_devgui::zombie_devgui_give_powerup_player(cmd, 1);
 				return 1;
 			}
 			case "":
@@ -284,7 +284,7 @@ function function_a4207c70(cmd)
 					return 1;
 				}
 				level.var_bb00a6cd = cmd;
-				level.var_6e68c0d8 thread zm_devgui::function_9589a11f(cmd, 1);
+				level.var_6e68c0d8 thread zm_devgui::zombie_devgui_give_powerup_player(cmd, 1);
 				return 1;
 			}
 			case "":
@@ -294,7 +294,7 @@ function function_a4207c70(cmd)
 					return 1;
 				}
 				level.var_bb00a6cd = cmd;
-				level.var_6e68c0d8 thread zm_devgui::function_9589a11f(cmd, 1);
+				level.var_6e68c0d8 thread zm_devgui::zombie_devgui_give_powerup_player(cmd, 1);
 				return 1;
 			}
 		}

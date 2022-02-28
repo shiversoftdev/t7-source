@@ -13,7 +13,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	/#
 		system::register("", &__init__, undefined, undefined);
@@ -443,9 +443,9 @@ function debugshouldclearstate()
 	/#
 		if(isdefined(self.debuginfo) && isdefined(self.debuginfo.shouldclearonanimscriptchange) && self.debuginfo.shouldclearonanimscriptchange)
 		{
-			return 1;
+			return true;
 		}
-		return 0;
+		return false;
 	#/
 }
 
@@ -572,7 +572,7 @@ function delete_all_ai_corpses()
 	/#
 		setdvar("", 0);
 		corpses = getcorpsearray();
-		foreach(var_e3caefb, corpse in corpses)
+		foreach(corpse in corpses)
 		{
 			if(isactorcorpse(corpse))
 			{

@@ -30,7 +30,7 @@
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_542758d0()
+function private function_542758d0()
 {
 	level.doa.var_f5e35752 = [];
 	level.doa.var_5a609640 = [];
@@ -102,7 +102,7 @@ function function_8c6e89b4(round)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_5f5d09ae()
+function private function_5f5d09ae()
 {
 	def = function_8c6e89b4(level.doa.round_number);
 	if(!isdefined(def))
@@ -203,7 +203,7 @@ function function_c81e1083(name)
 function main()
 {
 	level endon(#"hash_24d3a44");
-	foreach(var_316cf841, player in getplayers())
+	foreach(player in getplayers())
 	{
 		player thread namespace_831a4a7c::function_7d7a7fde();
 	}
@@ -260,7 +260,7 @@ function main()
 			#/
 			flag::clear("doa_round_active");
 			level notify(#"hash_e9dfbb22");
-			foreach(var_ffb6ee91, player in getplayers())
+			foreach(player in getplayers())
 			{
 				player notify(#"hash_e9dfbb22");
 			}
@@ -313,7 +313,7 @@ function main()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_d87cb356()
+function private function_d87cb356()
 {
 	self notify(#"hash_d87cb356");
 	self endon(#"hash_d87cb356");
@@ -433,7 +433,7 @@ function function_fe0946ac(spawn_origin, var_97887a95 = 1)
 	}
 	var_60de7d19 = namespace_3ca3c537::function_61d60e0b();
 	self thread namespace_831a4a7c::function_7d7a7fde();
-	foreach(var_74a0c36c, guardian in self.doa.var_af875fb7)
+	foreach(guardian in self.doa.var_af875fb7)
 	{
 		if(isdefined(guardian))
 		{
@@ -444,12 +444,15 @@ function function_fe0946ac(spawn_origin, var_97887a95 = 1)
 	{
 		self thread function_f581d585(spawn_origin, var_60de7d19);
 	}
-	else if(!isdefined(self.doa.shield_is_on))
+	else
 	{
-		self.doa.var_f4a883ed = undefined;
-		self disableinvulnerability();
+		if(!isdefined(self.doa.shield_is_on))
+		{
+			self.doa.var_f4a883ed = undefined;
+			self disableinvulnerability();
+		}
+		self setorigin(spawn_origin);
 	}
-	self setorigin(spawn_origin);
 	angles = vectortoangles(var_60de7d19 - self.origin);
 	self setplayerangles((0, angles[1], 0));
 	self notify(#"move_to_start");
@@ -485,18 +488,18 @@ function function_55762a85(spawn_origin)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_ff7f941a(def)
+function private function_ff7f941a(def)
 {
 	num = doa_utility::function_2f0d697f(def.spawner);
 	if(num >= def.var_84aef63e)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(def.var_a0b2e897) && namespace_3ca3c537::function_d2d75f5d() != def.var_a0b2e897)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -697,7 +700,7 @@ function function_87703158(var_372a8daa = 0)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_da304666(wave_number, round_number)
+function private function_da304666(wave_number, round_number)
 {
 	wave = spawnstruct();
 	wave.spawn_duration = (1 + (randomfloatrange(0, 1 + (wave_number * 0.3)))) + (randomfloatrange(0, 1 + (round_number * 0.2)));
@@ -749,9 +752,9 @@ function function_703bb8b2(round_number)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_d9345c74()
+function private function_d9345c74()
 {
-	foreach(var_dfe3eff5, player in getplayers())
+	foreach(player in getplayers())
 	{
 		if(isdefined(player.doa) && player.doa.var_e1956fd2 > 0)
 		{
@@ -787,7 +790,7 @@ private function function_d9345c74()
 			if(isdefined(level.doa.var_d0cde02c.var_bb9ff15b))
 			{
 				count = 0;
-				foreach(var_dd5b6e2e, def in level.doa.var_f5e35752)
+				foreach(def in level.doa.var_f5e35752)
 				{
 					if(def.number == level.doa.var_d0cde02c.number)
 					{

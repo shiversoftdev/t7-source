@@ -29,7 +29,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function main()
+function autoexec main()
 {
 	spawner::add_archetype_spawn_function("human_rpg", &humanrpgbehavior::archetypehumanrpgblackboardinit);
 	humanrpgbehavior::registerbehaviorscriptfunctions();
@@ -60,7 +60,7 @@ function registerbehaviorscriptfunctions()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function archetypehumanrpgblackboardinit()
+function private archetypehumanrpgblackboardinit()
 {
 	entity = self;
 	blackboard::createblackboardforentity(entity);
@@ -82,7 +82,7 @@ private function archetypehumanrpgblackboardinit()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function archetypehumanrpgonanimscriptedcallback(entity)
+function private archetypehumanrpgonanimscriptedcallback(entity)
 {
 	entity.__blackboard = undefined;
 	entity archetypehumanrpgblackboardinit();

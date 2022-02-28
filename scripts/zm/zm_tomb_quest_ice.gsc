@@ -59,7 +59,7 @@ function ice_puzzle_1_init()
 	ice_tiles_randomize();
 	a_ceiling_tile_brushes = getentarray("ice_ceiling_tile", "script_noteworthy");
 	level.unsolved_tiles = a_ceiling_tile_brushes;
-	foreach(var_e498c241, tile in a_ceiling_tile_brushes)
+	foreach(tile in a_ceiling_tile_brushes)
 	{
 		tile.showing_tile_side = 0;
 		tile.value = int(tile.script_string);
@@ -67,7 +67,7 @@ function ice_puzzle_1_init()
 		tile thread ceiling_tile_process_damage();
 	}
 	a_ice_ternary_digit_brushes = getentarray("ice_chamber_digit", "targetname");
-	foreach(var_11c04c33, digit in a_ice_ternary_digit_brushes)
+	foreach(digit in a_ice_ternary_digit_brushes)
 	{
 		digit ghost();
 		digit notsolid();
@@ -100,7 +100,7 @@ function ice_puzzle_1_init()
 function ice_puzzle_1_cleanup()
 {
 	a_ceiling_tile_brushes = getentarray("ice_ceiling_tile", "script_noteworthy");
-	foreach(var_832f6a13, tile in a_ceiling_tile_brushes)
+	foreach(tile in a_ceiling_tile_brushes)
 	{
 		tile thread ceiling_tile_flip(0);
 	}
@@ -122,14 +122,14 @@ function ice_tiles_randomize()
 	a_original_tiles = getentarray("ice_tile_original", "targetname");
 	a_original_tiles = array::sort_by_script_int(a_original_tiles, 1);
 	a_original_positions = [];
-	foreach(var_f93fbae, e_tile in a_original_tiles)
+	foreach(e_tile in a_original_tiles)
 	{
 		a_original_positions[a_original_positions.size] = e_tile.origin;
 	}
 	a_unused_tiles = getentarray("ice_ceiling_tile", "script_noteworthy");
 	n_total_tiles = a_unused_tiles.size;
 	n_index = 0;
-	foreach(var_df802866, v_pos in a_original_positions)
+	foreach(v_pos in a_original_positions)
 	{
 		e_tile = array::random(a_unused_tiles);
 		arrayremovevalue(a_unused_tiles, e_tile, 0);
@@ -158,7 +158,7 @@ function ice_tiles_randomize()
 function reset_tiles()
 {
 	a_ceiling_tile_brushes = getentarray("ice_ceiling_tile", "script_noteworthy");
-	foreach(var_c976e1e5, tile in a_ceiling_tile_brushes)
+	foreach(tile in a_ceiling_tile_brushes)
 	{
 		tile thread ceiling_tile_flip(1);
 	}
@@ -180,7 +180,7 @@ function update_ternary_display()
 	while(true)
 	{
 		level waittill(#"update_ice_chamber_digits", newval);
-		foreach(var_96e4708c, digit in a_ice_ternary_digit_brushes)
+		foreach(digit in a_ice_ternary_digit_brushes)
 		{
 			digit ghost();
 			if(isdefined(newval))
@@ -372,7 +372,7 @@ function ice_puzzle_2_run()
 {
 	a_stone_positions = struct::get_array("puzzle_stone_water", "targetname");
 	level.ice_stones_remaining = a_stone_positions.size;
-	foreach(var_fec26bf4, s_stone in a_stone_positions)
+	foreach(s_stone in a_stone_positions)
 	{
 		s_stone thread ice_stone_run();
 		util::wait_network_frame();
@@ -443,14 +443,14 @@ function ice_stone_run()
 		level thread zm_tomb_utility::play_puzzle_stinger_on_all_players();
 		level.weather_snow = 5;
 		level.weather_rain = 0;
-		foreach(var_bbe10ea, player in getplayers())
+		foreach(player in getplayers())
 		{
 			player zm_tomb_utility::set_weather_to_player();
 		}
 		wait(5);
 		level.weather_snow = 0;
 		level.weather_rain = 0;
-		foreach(var_3b6438ed, player in getplayers())
+		foreach(player in getplayers())
 		{
 			player zm_tomb_utility::set_weather_to_player();
 		}

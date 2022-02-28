@@ -20,7 +20,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("perks", &__init__, undefined, undefined);
 }
@@ -160,24 +160,27 @@ function monitorgpsjammer()
 		{
 			gpsjammerprotection = 1;
 		}
-		else if(timesincedistancecheck > 1)
+		else
 		{
-			timesincedistancecheck = 0;
-			if(distancesquared(previousorigin, self.origin) < mindistancesq)
+			if(timesincedistancecheck > 1)
 			{
-				faileddistancecheck = 1;
+				timesincedistancecheck = 0;
+				if(distancesquared(previousorigin, self.origin) < mindistancesq)
+				{
+					faileddistancecheck = 1;
+				}
+				else
+				{
+					faileddistancecheck = 0;
+				}
+				previousorigin = self.origin;
 			}
-			else
+			velocity = self getvelocity();
+			speedsq = lengthsquared(velocity);
+			if(speedsq > minspeedsq && faileddistancecheck == 0)
 			{
-				faileddistancecheck = 0;
+				gpsjammerprotection = 1;
 			}
-			previousorigin = self.origin;
-		}
-		velocity = self getvelocity();
-		speedsq = lengthsquared(velocity);
-		if(speedsq > minspeedsq && faileddistancecheck == 0)
-		{
-			gpsjammerprotection = 1;
 		}
 		if(gpsjammerprotection == 1 && self hasperk("specialty_gpsjammer"))
 		{
@@ -278,24 +281,27 @@ function monitorsengrenjammer()
 		{
 			sgjammerprotection = 1;
 		}
-		else if(timesincedistancecheck > 1)
+		else
 		{
-			timesincedistancecheck = 0;
-			if(distancesquared(previousorigin, self.origin) < mindistancesq)
+			if(timesincedistancecheck > 1)
 			{
-				faileddistancecheck = 1;
+				timesincedistancecheck = 0;
+				if(distancesquared(previousorigin, self.origin) < mindistancesq)
+				{
+					faileddistancecheck = 1;
+				}
+				else
+				{
+					faileddistancecheck = 0;
+				}
+				previousorigin = self.origin;
 			}
-			else
+			velocity = self getvelocity();
+			speedsq = lengthsquared(velocity);
+			if(speedsq > minspeedsq && faileddistancecheck == 0)
 			{
-				faileddistancecheck = 0;
+				sgjammerprotection = 1;
 			}
-			previousorigin = self.origin;
-		}
-		velocity = self getvelocity();
-		speedsq = lengthsquared(velocity);
-		if(speedsq > minspeedsq && faileddistancecheck == 0)
-		{
-			sgjammerprotection = 1;
 		}
 		if(sgjammerprotection == 1 && self hasperk("specialty_sengrenjammer"))
 		{

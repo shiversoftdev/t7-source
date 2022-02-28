@@ -19,7 +19,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_stats", &__init__, undefined, undefined);
 }
@@ -774,7 +774,7 @@ function update_global_counters_on_match_end()
 	cheat_too_friendly = 0;
 	cheat_total = 0;
 	players = getplayers();
-	foreach(var_bfc95095, player in players)
+	foreach(player in players)
 	{
 		deaths = deaths + player.pers["deaths"];
 		kills = kills + player.pers["kills"];

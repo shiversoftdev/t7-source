@@ -38,7 +38,7 @@ function callback_actorspawned(spawner)
 {
 	self thread spawner::spawn_think(spawner);
 	self globallogic_player::resetattackerlist();
-	bb::function_a96d8fec(self, spawner);
+	bb::logaispawn(self, spawner);
 }
 
 /*
@@ -206,18 +206,21 @@ function callback_actordamage(einflictor, eattacker, idamage, idflags, smeansofd
 				}
 				self.lastdamagewasfromenemy = 0;
 			}
-			else if(level.friendlyfire == 2)
+			else
 			{
-				return;
-			}
-			if(level.friendlyfire == 3)
-			{
-				idamage = int(idamage * 0.5);
-				if(idamage < 1)
+				if(level.friendlyfire == 2)
 				{
-					idamage = 1;
+					return;
 				}
-				self.lastdamagewasfromenemy = 0;
+				if(level.friendlyfire == 3)
+				{
+					idamage = int(idamage * 0.5);
+					if(idamage < 1)
+					{
+						idamage = 1;
+					}
+					self.lastdamagewasfromenemy = 0;
+				}
 			}
 		}
 		if(isdefined(eattacker) && eattacker != self)
@@ -231,7 +234,7 @@ function callback_actordamage(einflictor, eattacker, idamage, idflags, smeansofd
 			}
 		}
 	}
-	bb::function_2aa586aa(eattacker, self, weapon, idamage, smeansofdeath, shitloc, actorkilled, actorkilled);
+	bb::logdamage(eattacker, self, weapon, idamage, smeansofdeath, shitloc, actorkilled, actorkilled);
 	self globallogic_player::giveattackerandinflictorownerassist(eattacker, einflictor, idamage, smeansofdeath, weapon);
 	self finishactordamage(einflictor, eattacker, idamage, idflags, smeansofdeath, weapon, vpoint, vdir, shitloc, vdamageorigin, psoffsettime, boneindex, surfacetype, surfacenormal);
 }
@@ -300,7 +303,7 @@ function callback_actorkilled(einflictor, eattacker, idamage, smeansofdeath, wea
 			self [[killedcallback]](einflictor, eattacker, idamage, smeansofdeath, weapon, vdir, shitloc, psoffsettime);
 		}
 	}
-	if(isplayer(eattacker) && (isdefined(level.overrideammodropallies) && level.overrideammodropallies && self.team == "allies" || (isdefined(level.var_173c585e) && level.var_173c585e && self.team == "team3") || self.team == "axis"))
+	if(isplayer(eattacker) && (isdefined(level.overrideammodropallies) && level.overrideammodropallies && self.team == "allies" || (isdefined(level.overrideammodropteam3) && level.overrideammodropteam3 && self.team == "team3") || self.team == "axis"))
 	{
 		self thread ammo::dropaiammo();
 	}

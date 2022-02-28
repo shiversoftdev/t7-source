@@ -29,7 +29,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function main()
+function autoexec main()
 {
 	spawner::add_archetype_spawn_function("human_riotshield", &humanriotshieldbehavior::archetypehumanriotshieldblackboardinit);
 	spawner::add_archetype_spawn_function("human_riotshield", &humanriotshieldserverutils::humanriotshieldspawnsetup);
@@ -71,7 +71,7 @@ function registerbehaviorscriptfunctions()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function archetypehumanriotshieldblackboardinit()
+function private archetypehumanriotshieldblackboardinit()
 {
 	entity = self;
 	blackboard::createblackboardforentity(entity);
@@ -99,7 +99,7 @@ private function archetypehumanriotshieldblackboardinit()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function archetypehumanriotshieldonanimscriptedcallback(entity)
+function private archetypehumanriotshieldonanimscriptedcallback(entity)
 {
 	entity.__blackboard = undefined;
 	entity archetypehumanriotshieldblackboardinit();
@@ -114,7 +114,7 @@ private function archetypehumanriotshieldonanimscriptedcallback(entity)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function riotshieldmovemode()
+function private riotshieldmovemode()
 {
 	entity = self;
 	if(entity ai::get_behavior_attribute("phalanx"))
@@ -133,21 +133,21 @@ private function riotshieldmovemode()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function riotshieldshouldflinch(entity)
+function private riotshieldshouldflinch(entity)
 {
 	if(entity haspath() && entity ai::get_behavior_attribute("phalanx"))
 	{
-		return 1;
+		return true;
 	}
 	if(entity.damagelocation != "riotshield")
 	{
-		return 0;
+		return false;
 	}
 	if(entity.damagelocation == "riotshield" && entity.flinchcount >= 5 && (entity.lastflinchtime + 1500) >= gettime())
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -159,7 +159,7 @@ private function riotshieldshouldflinch(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function riotshieldincrementflinchcount(entity)
+function private riotshieldincrementflinchcount(entity)
 {
 	entity.flinchcount++;
 	entity.lastflinchtime = gettime();
@@ -174,7 +174,7 @@ private function riotshieldincrementflinchcount(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function riotshieldclearflinchcount(entity)
+function private riotshieldclearflinchcount(entity)
 {
 	entity.lastflinchtime = gettime();
 	entity.flinchcount = 0;
@@ -189,9 +189,9 @@ private function riotshieldclearflinchcount(entity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function riotshieldshouldtacticalwalk(behaviortreeentity)
+function private riotshieldshouldtacticalwalk(behaviortreeentity)
 {
-	return 1;
+	return true;
 }
 
 /*
@@ -203,16 +203,16 @@ private function riotshieldshouldtacticalwalk(behaviortreeentity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function riotshieldnoncombatlocomotioncondition(behaviortreeentity)
+function private riotshieldnoncombatlocomotioncondition(behaviortreeentity)
 {
 	if(isdefined(behaviortreeentity.enemy))
 	{
 		if(distancesquared(behaviortreeentity.origin, behaviortreeentity lastknownpos(behaviortreeentity.enemy)) > 490000)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -224,14 +224,14 @@ private function riotshieldnoncombatlocomotioncondition(behaviortreeentity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function riotshieldadvanceonenemyservice(behaviortreeentity)
+function private riotshieldadvanceonenemyservice(behaviortreeentity)
 {
 	itsbeenawhile = gettime() > behaviortreeentity.nextfindbestcovertime;
 	isatscriptgoal = behaviortreeentity isatgoal();
 	toolongatnode = 0;
 	if(behaviortreeentity ai::get_behavior_attribute("phalanx"))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(behaviortreeentity.chosennode))
 	{
@@ -257,7 +257,7 @@ private function riotshieldadvanceonenemyservice(behaviortreeentity)
 	{
 		closestrandomnode = undefined;
 		closestrandomnodes = behaviortreeentity findbestcovernodes(behaviortreeentity.goalradius, behaviortreeentity.goalpos);
-		foreach(var_40bfeb9d, node in closestrandomnodes)
+		foreach(node in closestrandomnodes)
 		{
 			if(isdefined(behaviortreeentity.chosennode) && behaviortreeentity.chosennode == node)
 			{
@@ -280,10 +280,10 @@ private function riotshieldadvanceonenemyservice(behaviortreeentity)
 			behaviortreeentity.chosennode = closestrandomnode;
 			behaviortreeentity.timeatnodemax = randomintrange(behaviortreeentity.movedelaymin, behaviortreeentity.movedelaymax);
 			behaviortreeentity.timeatchosennode = undefined;
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -295,7 +295,7 @@ private function riotshieldadvanceonenemyservice(behaviortreeentity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function riotshieldtacticalwalkstart(behaviortreeentity)
+function private riotshieldtacticalwalkstart(behaviortreeentity)
 {
 	aiutility::resetcoverparameters(behaviortreeentity);
 	aiutility::setcanbeflanked(behaviortreeentity, 0);
@@ -312,15 +312,15 @@ private function riotshieldtacticalwalkstart(behaviortreeentity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function riotshieldunarmedtargetservice(behaviortreeentity)
+function private riotshieldunarmedtargetservice(behaviortreeentity)
 {
 	if(!aiutility::shouldmutexmelee(behaviortreeentity))
 	{
-		return 0;
+		return false;
 	}
 	enemies = [];
 	ai = getaiarray();
-	foreach(index, value in ai)
+	foreach(value in ai)
 	{
 		if(value.team != behaviortreeentity.team && isactor(value))
 		{
@@ -370,9 +370,9 @@ private function riotshieldunarmedtargetservice(behaviortreeentity)
 		{
 			behaviortreeentity.favoriteenemy.targeted_by = behaviortreeentity;
 		}
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -384,11 +384,11 @@ private function riotshieldunarmedtargetservice(behaviortreeentity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function riotshieldunarmedadvanceonenemyservice(behaviortreeentity)
+function private riotshieldunarmedadvanceonenemyservice(behaviortreeentity)
 {
 	if(gettime() < behaviortreeentity.nextfindbestcovertime)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(behaviortreeentity.favoriteenemy))
 	{
@@ -399,11 +399,11 @@ private function riotshieldunarmedadvanceonenemyservice(behaviortreeentity)
 		if(enemydistance < (behaviortreeentity.goalradius * behaviortreeentity.goalradius))
 		{
 			behaviortreeentity useposition(behaviortreeentity.favoriteenemy.origin);
-			return 1;
+			return true;
 		}
 	}
 	behaviortreeentity clearuseposition();
-	return 0;
+	return false;
 }
 
 /*
@@ -415,7 +415,7 @@ private function riotshieldunarmedadvanceonenemyservice(behaviortreeentity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function unarmedwalkactionstart(behaviortreeentity)
+function private unarmedwalkactionstart(behaviortreeentity)
 {
 	blackboard::setblackboardattribute(behaviortreeentity, "_stance", "stand");
 	behaviortreeentity orientmode("face enemy");
@@ -430,7 +430,7 @@ private function unarmedwalkactionstart(behaviortreeentity)
 	Parameters: 8
 	Flags: Linked, Private
 */
-private function riotshieldkilledoverride(inflictor, attacker, damage, meansofdeath, weapon, dir, hitloc, offsettime)
+function private riotshieldkilledoverride(inflictor, attacker, damage, meansofdeath, weapon, dir, hitloc, offsettime)
 {
 	entity = self;
 	aiutility::dropriotshield(entity);
@@ -446,7 +446,7 @@ private function riotshieldkilledoverride(inflictor, attacker, damage, meansofde
 	Parameters: 12
 	Flags: Linked, Private
 */
-private function riotshielddamageoverride(einflictor, eattacker, idamage, idflags, smeansofdeath, sweapon, vpoint, vdir, shitloc, psoffsettime, boneindex, modelindex)
+function private riotshielddamageoverride(einflictor, eattacker, idamage, idflags, smeansofdeath, sweapon, vpoint, vdir, shitloc, psoffsettime, boneindex, modelindex)
 {
 	entity = self;
 	if(shitloc == "riotshield")

@@ -29,7 +29,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_perk_electric_cherry", &__init__, undefined, undefined);
 }
@@ -217,7 +217,7 @@ function electric_cherry_perk_machine_think()
 function electric_cherry_host_migration_func()
 {
 	a_electric_cherry_perk_machines = getentarray("vending_electriccherry", "targetname");
-	foreach(var_e453067f, perk_machine in a_electric_cherry_perk_machines)
+	foreach(perk_machine in a_electric_cherry_perk_machines)
 	{
 		if(isdefined(perk_machine.model) && perk_machine.model == "p7_zm_vending_nuke")
 		{
@@ -297,13 +297,16 @@ function electric_cherry_death_fx()
 			self clientfield::set("tesla_shock_eyes_fx", 1);
 		}
 	}
-	else if(isvehicle(self))
-	{
-		self clientfield::set("tesla_death_fx_veh", 1);
-	}
 	else
 	{
-		self clientfield::set("tesla_death_fx", 1);
+		if(isvehicle(self))
+		{
+			self clientfield::set("tesla_death_fx_veh", 1);
+		}
+		else
+		{
+			self clientfield::set("tesla_death_fx", 1);
+		}
 	}
 }
 
@@ -472,11 +475,14 @@ function electric_cherry_reload_attack()
 						}
 						self zm_score::add_to_player_score(40);
 					}
-					else if(!isdefined(a_zombies[i].is_brutus))
+					else
 					{
-						a_zombies[i] thread electric_cherry_stun();
+						if(!isdefined(a_zombies[i].is_brutus))
+						{
+							a_zombies[i] thread electric_cherry_stun();
+						}
+						a_zombies[i] thread electric_cherry_shock_fx();
 					}
-					a_zombies[i] thread electric_cherry_shock_fx();
 					wait(0.1);
 					if(isdefined(a_zombies[i]) && isalive(a_zombies[i]))
 					{
@@ -584,13 +590,16 @@ function electric_cherry_reload_fx(n_fraction)
 	{
 		codesetclientfield(self, "electric_cherry_reload_fx", 1);
 	}
-	else if(n_fraction >= 0.33 && n_fraction < 0.67)
-	{
-		codesetclientfield(self, "electric_cherry_reload_fx", 2);
-	}
 	else
 	{
-		codesetclientfield(self, "electric_cherry_reload_fx", 3);
+		if(n_fraction >= 0.33 && n_fraction < 0.67)
+		{
+			codesetclientfield(self, "electric_cherry_reload_fx", 2);
+		}
+		else
+		{
+			codesetclientfield(self, "electric_cherry_reload_fx", 3);
+		}
 	}
 	wait(1);
 	codesetclientfield(self, "electric_cherry_reload_fx", 0);

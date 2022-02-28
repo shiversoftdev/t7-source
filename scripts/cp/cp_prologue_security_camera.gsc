@@ -140,7 +140,7 @@ function function_6475a61e()
 function function_e1a52cb4()
 {
 	var_d62d9e75 = 0;
-	foreach(var_cae08306, e_player in level.activeplayers)
+	foreach(e_player in level.activeplayers)
 	{
 		if(isdefined(e_player.var_1f4942ae) && e_player.var_1f4942ae)
 		{
@@ -235,11 +235,11 @@ function function_9f9f8c2a()
 function turn_off_security_cameras()
 {
 	showmiscmodels("security_decal_prop");
-	foreach(var_af887be9, e_player in level.activeplayers)
+	foreach(e_player in level.activeplayers)
 	{
 		e_player clientfield::set_to_player("turn_on_multicam", 0);
 	}
-	foreach(var_ab75deae, s_camera in level.security_cams)
+	foreach(s_camera in level.security_cams)
 	{
 		if(isdefined(s_camera.str_scene) && level scene::is_playing(s_camera.str_scene))
 		{
@@ -399,7 +399,7 @@ function player_uses_the_security_camera_station(s_player_use, extra_cam_index)
 */
 function function_d77b3165(extra_cam_index)
 {
-	foreach(var_34bc1d06, player in level.players)
+	foreach(player in level.players)
 	{
 		player clientfield::set_to_player("set_cam_lookat_object", level.var_d658503a);
 	}
@@ -477,7 +477,7 @@ function function_c41806ee(a_ents, n_index)
 function function_48f438fd(a_ents)
 {
 	util::wait_network_frame();
-	foreach(var_c6575449, ent in a_ents)
+	foreach(ent in a_ents)
 	{
 		if(ent.model === "tag_origin")
 		{
@@ -502,7 +502,7 @@ function function_48f438fd(a_ents)
 */
 function function_6840a15e(n_index)
 {
-	foreach(var_757f815e, var_1ca98eed in level.security_cams)
+	foreach(var_1ca98eed in level.security_cams)
 	{
 		if(var_1ca98eed.n_index == n_index)
 		{
@@ -522,7 +522,7 @@ function function_6840a15e(n_index)
 */
 function function_5e3416f2(str_scene)
 {
-	foreach(var_6a05987d, var_1ca98eed in level.security_cams)
+	foreach(var_1ca98eed in level.security_cams)
 	{
 		if(var_1ca98eed.str_scene === str_scene)
 		{
@@ -543,7 +543,7 @@ function function_5e3416f2(str_scene)
 function turn_on_security_camera(cam_index)
 {
 	hidemiscmodels("security_decal_prop");
-	foreach(var_48e2032, e_player in level.activeplayers)
+	foreach(e_player in level.activeplayers)
 	{
 		e_player clientfield::set_to_player("turn_on_multicam", cam_index);
 	}
@@ -684,15 +684,15 @@ function start_face_scanner(extra_cam_index)
 	if(var_1ca98eed.var_a1a1b35e == 0)
 	{
 		wait(2);
-		return 0;
+		return false;
 	}
 	wait(0.5);
 	level flag::wait_till("face_scanning_complete");
 	if(level.var_d658503a == level.var_690ce961)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

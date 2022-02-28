@@ -25,7 +25,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_challenges_tomb", &__init__, &__main__, undefined);
 }
@@ -84,10 +84,10 @@ function __main__()
 function onplayerconnect()
 {
 	player_stats_init(self.characterindex);
-	foreach(var_a9b3caa, s_stat in level._challenges.a_players[self.characterindex].a_stats)
+	foreach(s_stat in level._challenges.a_players[self.characterindex].a_stats)
 	{
 		s_stat.b_display_tag = 1;
-		foreach(var_9893cd6f, m_board in level.a_m_challenge_boards)
+		foreach(m_board in level.a_m_challenge_boards)
 		{
 			m_board showpart(s_stat.str_medal_tag);
 			m_board hidepart(s_stat.str_glow_tag);
@@ -109,7 +109,7 @@ function onplayerspawned()
 	self endon(#"disconnect");
 	for(;;)
 	{
-		foreach(var_261eb2ef, s_stat in level._challenges.a_players[self.characterindex].a_stats)
+		foreach(s_stat in level._challenges.a_players[self.characterindex].a_stats)
 		{
 			if(!s_stat.b_medal_awarded)
 			{
@@ -122,7 +122,7 @@ function onplayerspawned()
 			}
 			self clientfield::set_to_player(s_stat.s_parent.cf_complete, var_c4dd09e9);
 		}
-		foreach(var_832f6a13, s_stat in level._challenges.s_team.a_stats)
+		foreach(s_stat in level._challenges.s_team.a_stats)
 		{
 			if(!s_stat.b_medal_awarded)
 			{
@@ -155,7 +155,7 @@ function stats_init()
 	{
 		[[level.challenges_add_stats]]();
 	}
-	foreach(var_7275f54d, stat in level._challenges.a_stats)
+	foreach(stat in level._challenges.a_stats)
 	{
 		if(isdefined(stat.fp_init_stat))
 		{
@@ -217,7 +217,7 @@ function player_stats_init(n_index)
 	}
 	s_player_set = level._challenges.a_players[n_index];
 	n_challenge_index = 1;
-	foreach(var_e9159ec2, s_challenge in level._challenges.a_stats)
+	foreach(s_challenge in level._challenges.a_stats)
 	{
 		if(!s_challenge.b_team)
 		{
@@ -258,7 +258,7 @@ function team_stats_init(n_index)
 		level._challenges.s_team.a_stats = [];
 	}
 	s_team_set = level._challenges.s_team;
-	foreach(var_3b026e9d, s_challenge in level._challenges.a_stats)
+	foreach(s_challenge in level._challenges.a_stats)
 	{
 		if(s_challenge.b_team)
 		{
@@ -294,9 +294,9 @@ function challenge_exists(str_name)
 {
 	if(isdefined(level._challenges.a_stats[str_name]))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -393,7 +393,7 @@ function check_stat_complete(s_stat)
 {
 	if(s_stat.b_medal_awarded)
 	{
-		return 1;
+		return true;
 	}
 	if(s_stat.n_value >= s_stat.s_parent.n_goal)
 	{
@@ -404,7 +404,7 @@ function check_stat_complete(s_stat)
 			s_team_stats.n_completed++;
 			s_team_stats.n_medals_held++;
 			a_players = getplayers();
-			foreach(var_9df16521, player in a_players)
+			foreach(player in a_players)
 			{
 				player clientfield::set_to_player(s_stat.s_parent.cf_complete, 1);
 				player function_fbbc8608(s_stat.s_parent.str_hint, s_stat.s_parent.n_index);
@@ -421,7 +421,7 @@ function check_stat_complete(s_stat)
 			self clientfield::set_to_player(s_stat.s_parent.cf_complete, 1);
 			self function_fbbc8608(s_stat.s_parent.str_hint, s_stat.s_parent.n_index);
 		}
-		foreach(var_b057f17e, m_board in level.a_m_challenge_boards)
+		foreach(m_board in level.a_m_challenge_boards)
 		{
 			m_board showpart(s_stat.str_glow_tag);
 		}
@@ -434,7 +434,7 @@ function check_stat_complete(s_stat)
 		}
 		else
 		{
-			foreach(var_f51cc11b, player in getplayers())
+			foreach(player in getplayers())
 			{
 				if(isdefined(player.characterindex))
 				{
@@ -470,17 +470,17 @@ function stat_reward_available(stat, player)
 	}
 	if(!s_stat.b_medal_awarded)
 	{
-		return 0;
+		return false;
 	}
 	if(s_stat.b_reward_claimed)
 	{
-		return 0;
+		return false;
 	}
 	if(s_stat.s_parent.b_team && s_stat.a_b_player_rewarded[player.characterindex])
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -494,14 +494,14 @@ function stat_reward_available(stat, player)
 */
 function player_has_unclaimed_team_reward()
 {
-	foreach(var_b1429065, s_stat in level._challenges.s_team.a_stats)
+	foreach(s_stat in level._challenges.s_team.a_stats)
 	{
 		if(s_stat.b_medal_awarded && !s_stat.a_b_player_rewarded[self.characterindex])
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -524,7 +524,7 @@ function board_init(m_board)
 	{
 		str_character = a_characters[n_char_index];
 		n_challenge_index = 1;
-		foreach(var_c386209f, s_stat in s_set.a_stats)
+		foreach(s_stat in s_set.a_stats)
 		{
 			str_medal_tag = (("j_" + str_character) + "_medal_0") + n_challenge_index;
 			str_glow_tag = (("j_" + str_character) + "_glow_0") + n_challenge_index;
@@ -547,7 +547,7 @@ function board_init(m_board)
 			n_challenge_index++;
 		}
 	}
-	foreach(var_e5b1b2cb, s_stat in level._challenges.s_team.a_stats)
+	foreach(s_stat in level._challenges.s_team.a_stats)
 	{
 		str_medal_tag = "j_g_medal";
 		str_glow_tag = "j_g_glow";
@@ -641,10 +641,10 @@ function box_prompt_and_visiblity(player)
 {
 	if(self.stub.b_disable_trigger)
 	{
-		return 0;
+		return false;
 	}
 	self update_box_prompt(player);
-	return 1;
+	return true;
 }
 
 /*
@@ -683,7 +683,7 @@ function update_box_prompt(player)
 		n_closest_dot = 0.996;
 		v_eye_origin = player getplayercamerapos();
 		v_eye_direction = anglestoforward(player getplayerangles());
-		foreach(str_tag, s_tag in m_board.a_s_medal_tags)
+		foreach(s_tag in m_board.a_s_medal_tags)
 		{
 			if(!s_tag.s_stat.b_display_tag)
 			{
@@ -827,7 +827,7 @@ function get_reward_category(player, s_select_stat)
 */
 function get_reward_stat(s_category)
 {
-	foreach(var_733b872c, s_stat in s_category.a_stats)
+	foreach(s_stat in s_category.a_stats)
 	{
 		if(s_stat.b_medal_awarded && !s_stat.b_reward_claimed)
 		{
@@ -919,7 +919,7 @@ function spawn_reward(player, s_select_stat)
 			{
 				s_stat.a_b_player_rewarded[player.characterindex] = 1;
 				a_players = getplayers();
-				foreach(var_32eaf5e0, player in a_players)
+				foreach(player in a_players)
 				{
 					if(!s_stat.a_b_player_rewarded[player.characterindex])
 					{
@@ -1000,9 +1000,9 @@ function reward_rise_and_grab(m_reward, n_z, n_rise_time, n_delay, n_timeout)
 	self reward_grab_wait(n_timeout);
 	if(self flag::get("reward_timeout"))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1087,13 +1087,13 @@ function devgui_award_challenge(n_index)
 			s_stat.b_medal_awarded = 1;
 			s_stat.b_reward_claimed = 0;
 			a_players = getplayers();
-			foreach(var_93fadad0, player in a_players)
+			foreach(player in a_players)
 			{
 				s_stat.a_b_player_rewarded[player.characterindex] = 0;
 				player clientfield::set_to_player(s_stat.s_parent.cf_complete, 1);
 				player function_fbbc8608(s_stat.s_parent.str_hint, s_stat.s_parent.n_index);
 			}
-			foreach(var_f96af48, m_board in level.a_m_challenge_boards)
+			foreach(m_board in level.a_m_challenge_boards)
 			{
 				m_board showpart(s_stat.str_glow_tag);
 			}
@@ -1102,7 +1102,7 @@ function devgui_award_challenge(n_index)
 		{
 			a_keys = getarraykeys(level._challenges.a_players[0].a_stats);
 			a_players = getplayers();
-			foreach(var_dd043def, player in a_players)
+			foreach(player in a_players)
 			{
 				s_player_data = level._challenges.a_players[player.characterindex];
 				s_player_data.n_completed++;
@@ -1112,7 +1112,7 @@ function devgui_award_challenge(n_index)
 				s_stat.b_reward_claimed = 0;
 				player clientfield::set_to_player(s_stat.s_parent.cf_complete, 1);
 				player function_fbbc8608(s_stat.s_parent.str_hint, s_stat.s_parent.n_index);
-				foreach(var_6c6e44f3, m_board in level.a_m_challenge_boards)
+				foreach(m_board in level.a_m_challenge_boards)
 				{
 					m_board showpart(s_stat.str_glow_tag);
 				}

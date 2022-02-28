@@ -98,7 +98,7 @@ function _setup_pap_blocker()
 		level.brush_pap_traversal solid();
 		level.brush_pap_traversal disconnectpaths();
 		a_nodes = getnodearray("node_pap_jump_bottom", "targetname");
-		foreach(var_372a7541, node in a_nodes)
+		foreach(node in a_nodes)
 		{
 			linktraversal(node);
 		}
@@ -334,9 +334,9 @@ function _pap_pressure_plate_move_enabled()
 	numplayers = getplayers().size;
 	if(numplayers >= self.requiredplayers)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -788,7 +788,7 @@ function _wait_for_all_stairs_up()
 	if(isdefined(level.brush_pap_traversal))
 	{
 		a_nodes = getnodearray("node_pap_jump_bottom", "targetname");
-		foreach(var_1e00a3ab, node in a_nodes)
+		foreach(node in a_nodes)
 		{
 			unlinktraversal(node);
 		}
@@ -820,7 +820,7 @@ function _wait_for_all_stairs_down()
 	if(isdefined(level.brush_pap_traversal))
 	{
 		a_nodes = getnodearray("node_pap_jump_bottom", "targetname");
-		foreach(var_bfc95095, node in a_nodes)
+		foreach(node in a_nodes)
 		{
 			linktraversal(node);
 		}

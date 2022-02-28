@@ -14,7 +14,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__()
+function autoexec __init__()
 {
 	/#
 		setdvar("", 0);
@@ -81,13 +81,16 @@ function anim_info_render_thread(animation, v_origin_or_ent, v_angles_or_tag, n_
 			{
 				str_name = self.anim_debug_name;
 			}
-			else if(isdefined(self.animname))
+			else
 			{
-				str_name = self.animname;
-			}
-			else if(isdefined(self.targetname))
-			{
-				str_name = self.targetname;
+				if(isdefined(self.animname))
+				{
+					str_name = self.animname;
+				}
+				else if(isdefined(self.targetname))
+				{
+					str_name = self.targetname;
+				}
 			}
 			print3d(self.origin, ((self getentnum() + get_ent_type()) + "") + str_name, color, 0.8, 0.3);
 			print3d(self.origin - vectorscale((0, 0, 1), 5), "" + animation, color, 0.8, 0.3);

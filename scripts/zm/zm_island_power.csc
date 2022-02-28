@@ -66,7 +66,7 @@ function bucket_fx(localclientnum, oldval, newval, bnewent, binitialsnap, fieldn
 function power_switch_1_fx(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
 	a_s_fx = struct::get_array("power_switch_1_fx", "targetname");
-	foreach(var_622a73d9, s_fx in a_s_fx)
+	foreach(s_fx in a_s_fx)
 	{
 		if(isdefined(s_fx.a_fx_id))
 		{
@@ -81,7 +81,7 @@ function power_switch_1_fx(localclientnum, oldval, newval, bnewent, binitialsnap
 	{
 		var_92ee343f = getent(localclientnum, "power_wires_lab_a", "targetname");
 		var_92ee343f thread function_5ae9f178(localclientnum, 0);
-		foreach(var_7012b4f5, s_fx in a_s_fx)
+		foreach(s_fx in a_s_fx)
 		{
 			if(!isdefined(s_fx.a_fx_id))
 			{
@@ -94,7 +94,7 @@ function power_switch_1_fx(localclientnum, oldval, newval, bnewent, binitialsnap
 	{
 		var_92ee343f = getent(localclientnum, "power_wires_lab_a", "targetname");
 		var_92ee343f thread function_5ae9f178(localclientnum, 1);
-		foreach(var_e498c241, s_fx in a_s_fx)
+		foreach(s_fx in a_s_fx)
 		{
 			if(!isdefined(s_fx.a_fx_id))
 			{
@@ -117,7 +117,7 @@ function power_switch_1_fx(localclientnum, oldval, newval, bnewent, binitialsnap
 function power_switch_2_fx(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
 	a_s_fx = struct::get_array("power_switch_2_fx", "targetname");
-	foreach(var_8e14c94b, s_fx in a_s_fx)
+	foreach(s_fx in a_s_fx)
 	{
 		if(isdefined(s_fx.a_fx_id))
 		{
@@ -132,7 +132,7 @@ function power_switch_2_fx(localclientnum, oldval, newval, bnewent, binitialsnap
 	{
 		var_92ee343f = getent(localclientnum, "power_wires_lab_b", "targetname");
 		var_92ee343f thread function_5ae9f178(localclientnum, 0);
-		foreach(var_1127fad8, s_fx in a_s_fx)
+		foreach(s_fx in a_s_fx)
 		{
 			if(!isdefined(s_fx.a_fx_id))
 			{
@@ -145,7 +145,7 @@ function power_switch_2_fx(localclientnum, oldval, newval, bnewent, binitialsnap
 	{
 		var_92ee343f = getent(localclientnum, "power_wires_lab_b", "targetname");
 		var_92ee343f thread function_5ae9f178(localclientnum, 1);
-		foreach(var_3fe383f4, s_fx in a_s_fx)
+		foreach(s_fx in a_s_fx)
 		{
 			if(!isdefined(s_fx.a_fx_id))
 			{

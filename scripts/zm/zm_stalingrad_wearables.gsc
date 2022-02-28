@@ -262,15 +262,15 @@ function function_2c1e6f00(e_player)
 	if(e_player.var_e7d196cc === "dragon_wings")
 	{
 		self sethintstring(&"ZM_STALINGRAD_WEARABLE_EQUIPPED");
-		return 0;
+		return false;
 	}
 	if(level flag::get("dragon_platforms_all_used") && level flag::get("dragon_wings_items_aquired"))
 	{
 		self sethintstring(&"ZM_STALINGRAD_WEARABLE_WINGS_EQUIP");
-		return 1;
+		return true;
 	}
 	self sethintstring("");
-	return 0;
+	return false;
 }
 
 /*
@@ -323,7 +323,7 @@ function function_484ecd5()
 {
 	var_e48fcb77 = struct::get_array("wings_transport_struct", "targetname");
 	level.var_37e960a1 = [];
-	foreach(var_b9659309, var_c4917757 in var_e48fcb77)
+	foreach(var_c4917757 in var_e48fcb77)
 	{
 		var_cb03b137 = util::spawn_model(var_c4917757.model, var_c4917757.origin, var_c4917757.angles);
 		var_cb03b137 setscale(0.3);
@@ -380,10 +380,10 @@ function function_9a167439(e_player)
 	if(e_player.var_e7d196cc === "dragon_wings")
 	{
 		self sethintstring(&"ZM_STALINGRAD_WINGS_TRANSPORT");
-		return 1;
+		return true;
 	}
 	self sethintstring("");
-	return 0;
+	return false;
 }
 
 /*
@@ -518,15 +518,15 @@ function function_449ba539(e_player)
 	if(e_player.var_e7d196cc === "raz_hat")
 	{
 		self sethintstring(&"ZM_STALINGRAD_WEARABLE_EQUIPPED");
-		return 0;
+		return false;
 	}
 	if(level flag::get("wearables_raz_mask_complete") && level flag::get("wearables_raz_arms_complete"))
 	{
 		self sethintstring(&"ZM_STALINGRAD_WEARABLE_RAZ_MASK_EQUIP");
-		return 1;
+		return true;
 	}
 	self sethintstring("");
-	return 0;
+	return false;
 }
 
 /*
@@ -656,15 +656,15 @@ function function_a6595bd6(e_player)
 	if(e_player.var_e7d196cc === "sentinel_hat")
 	{
 		self sethintstring(&"ZM_STALINGRAD_WEARABLE_EQUIPPED");
-		return 0;
+		return false;
 	}
 	if(level flag::get("wearables_sentinel_arms_complete") && level flag::get("wearables_sentinel_camera_complete"))
 	{
 		self sethintstring(&"ZM_STALINGRAD_WEARABLE_VALKYRIE_HAT_EQUIP");
-		return 1;
+		return true;
 	}
 	self sethintstring("");
-	return 0;
+	return false;
 }
 
 /*
@@ -834,7 +834,7 @@ function function_19458e73()
 	level.var_8f92a57b.var_3297395c zm_unitrigger::create_unitrigger("", 32, &function_cf47076, &function_ac90554d);
 	level flag::wait_till("drshup_quest_done");
 	level.var_8f92a57b.var_18d10053 zm_equipment::buy("dragonshield_upgraded");
-	foreach(var_b033e43c, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player thread function_fa020cda();
 	}
@@ -914,13 +914,13 @@ function function_a3232de(e_attacker)
 function function_5e8bb6cc()
 {
 	level flag::wait_till("drshup_step_1_done");
-	foreach(var_9a28a07c, s_loc in level.var_8f92a57b.var_3ec0a9c2)
+	foreach(s_loc in level.var_8f92a57b.var_3ec0a9c2)
 	{
 		s_loc.model = spawn("script_model", s_loc.origin);
 		s_loc.model setmodel("p7_zm_sta_dragon_shield_rune_shoot_light");
 		s_loc.model.angles = s_loc.angles;
 	}
-	foreach(var_9017479d, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		player thread function_70aa26aa();
 	}
@@ -952,7 +952,7 @@ function function_70aa26aa()
 		knockdown_range_squared = level.zombie_vars["dragonshield_knockdown_range"] * level.zombie_vars["dragonshield_knockdown_range"];
 		forward_view_angles = self getweaponforwarddir();
 		end_pos = var_7dda366c + vectorscale(forward_view_angles, level.zombie_vars["dragonshield_knockdown_range"]);
-		foreach(var_fc36dbcf, s_rune in var_3ec0a9c2)
+		foreach(s_rune in var_3ec0a9c2)
 		{
 			var_cb78916d = s_rune.origin;
 			var_8112eb05 = distancesquared(var_7dda366c, var_cb78916d);
@@ -988,10 +988,10 @@ function function_cf47076(e_player)
 	if(!level flag::get("drshup_bathed_in_blood") && level flag::get("drshup_bathed_in_flame") && level flag::get("drshup_rune_step_done"))
 	{
 		self sethintstring(&"ZM_STALINGRAD_SHIELD_UPGRADE");
-		return 1;
+		return true;
 	}
 	self sethintstring("");
-	return 0;
+	return false;
 }
 
 /*

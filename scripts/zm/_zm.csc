@@ -104,7 +104,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function ignore_systems()
+function autoexec ignore_systems()
 {
 	system::ignore("gadget_clone");
 	system::ignore("gadget_heat_wave");
@@ -276,7 +276,7 @@ function function_9fee0219()
 			if(dvar_value != var_d38a76f6)
 			{
 				players = level.var_478e3c32;
-				foreach(var_c5f589f9, player in players)
+				foreach(player in players)
 				{
 					player duplicate_render::set_dr_flag("", !dvar_value);
 					player duplicate_render::update_dr_filters(0);
@@ -1149,16 +1149,16 @@ function has_gibbed_piece(piece_index)
 {
 	if(!isdefined(self.gibbed_pieces))
 	{
-		return 0;
+		return false;
 	}
 	for(i = 0; i < self.gibbed_pieces.size; i++)
 	{
 		if(self.gibbed_pieces[i] == piece_index)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1292,9 +1292,9 @@ function check_should_gib()
 {
 	if(level.gibcount <= level.gibmaxcount)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1791,17 +1791,23 @@ function rise_dust_fx(clientnum, type, billow_fx, burst_fx)
 	{
 		effect = level._effect["rise_dust_water"];
 	}
-	else if(type == "snow")
+	else
 	{
-		effect = level._effect["rise_dust_snow"];
-	}
-	else if(type == "foliage")
-	{
-		effect = level._effect["rise_dust_foliage"];
-	}
-	else if(type == "none")
-	{
-		return;
+		if(type == "snow")
+		{
+			effect = level._effect["rise_dust_snow"];
+		}
+		else
+		{
+			if(type == "foliage")
+			{
+				effect = level._effect["rise_dust_foliage"];
+			}
+			else if(type == "none")
+			{
+				return;
+			}
+		}
 	}
 	t = 0;
 	while(t < dust_time)

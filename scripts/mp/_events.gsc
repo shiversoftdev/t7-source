@@ -120,14 +120,14 @@ function add_round_score_event(score, notify_string, client_notify_string)
 */
 function any_team_reach_score(score)
 {
-	foreach(var_1c0d5a10, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(game["teamScores"][team] >= score)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*

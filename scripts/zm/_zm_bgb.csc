@@ -18,7 +18,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("bgb", &__init__, &__main__, undefined);
 }
@@ -38,10 +38,10 @@ function __init__()
 	{
 		return;
 	}
-	level.var_adfa48c4 = getweapon("zombie_bgb_grab");
+	level.weaponbgbgrab = getweapon("zombie_bgb_grab");
 	callback::on_localclient_connect(&on_player_connect);
 	level.bgb = [];
-	level.var_98ba48a2 = [];
+	level.bgb_pack = [];
 	clientfield::register("clientuimodel", "bgb_current", 1, 8, "int", &function_cec2dbda, 0, 0);
 	clientfield::register("clientuimodel", "bgb_display", 1, 1, "int", undefined, 0, 0);
 	clientfield::register("clientuimodel", "bgb_timer", 1, 8, "float", undefined, 0, 0);
@@ -61,13 +61,13 @@ function __init__()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function __main__()
+function private __main__()
 {
 	if(!(isdefined(level.bgb_in_use) && level.bgb_in_use))
 	{
 		return;
 	}
-	function_47aee2eb();
+	bgb_finalize();
 }
 
 /*
@@ -79,17 +79,17 @@ private function __main__()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function on_player_connect(localclientnum)
+function private on_player_connect(localclientnum)
 {
 	if(!(isdefined(level.bgb_in_use) && level.bgb_in_use))
 	{
 		return;
 	}
-	self thread function_e94a4b1b(localclientnum);
+	self thread bgb_player_init(localclientnum);
 }
 
 /*
-	Name: function_e94a4b1b
+	Name: bgb_player_init
 	Namespace: bgb
 	Checksum: 0x7253B4EB
 	Offset: 0x580
@@ -97,17 +97,17 @@ private function on_player_connect(localclientnum)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_e94a4b1b(localclientnum)
+function private bgb_player_init(localclientnum)
 {
-	if(isdefined(level.var_98ba48a2[localclientnum]))
+	if(isdefined(level.bgb_pack[localclientnum]))
 	{
 		return;
 	}
-	level.var_98ba48a2[localclientnum] = getbubblegumpack(localclientnum);
+	level.bgb_pack[localclientnum] = getbubblegumpack(localclientnum);
 }
 
 /*
-	Name: function_47aee2eb
+	Name: bgb_finalize
 	Namespace: bgb
 	Checksum: 0x92D48920
 	Offset: 0x5D0
@@ -115,7 +115,7 @@ private function function_e94a4b1b(localclientnum)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_47aee2eb()
+function private bgb_finalize()
 {
 	level.var_f3c83828 = [];
 	level.var_f3c83828[0] = "base";
@@ -124,7 +124,7 @@ private function function_47aee2eb()
 	level.var_f3c83828[3] = "swirl";
 	level.var_f3c83828[4] = "pinwheel";
 	statstablename = util::getstatstablename();
-	level.var_318929eb = [];
+	level.bgb_item_index_to_name = [];
 	keys = getarraykeys(level.bgb);
 	for(i = 0; i < keys.size; i++)
 	{
@@ -139,9 +139,9 @@ private function function_47aee2eb()
 			level.bgb[keys[i]].consumable = 1;
 		}
 		level.bgb[keys[i]].camo_index = int(tablelookup(statstablename, 0, level.bgb[keys[i]].item_index, 5));
-		level.bgb[keys[i]].var_d3c80142 = "tag_gumball_" + level.bgb[keys[i]].limit_type;
+		level.bgb[keys[i]].flying_gumball_tag = "tag_gumball_" + level.bgb[keys[i]].limit_type;
 		level.bgb[keys[i]].var_ece14434 = (("tag_gumball_" + level.bgb[keys[i]].limit_type) + "_") + level.var_f3c83828[level.bgb[keys[i]].rarity];
-		level.var_318929eb[level.bgb[keys[i]].item_index] = keys[i];
+		level.bgb_item_index_to_name[level.bgb[keys[i]].item_index] = keys[i];
 	}
 }
 
@@ -182,7 +182,7 @@ function register(name, limit_type)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_78c4bfa(localclientnum, time)
+function private function_78c4bfa(localclientnum, time)
 {
 	self endon(#"death");
 	self endon(#"entityshutdown");
@@ -238,9 +238,9 @@ private function function_78c4bfa(localclientnum, time)
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function function_cec2dbda(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
+function private function_cec2dbda(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
-	self.bgb = level.var_318929eb[newval];
+	self.bgb = level.bgb_item_index_to_name[newval];
 	self thread function_78c4bfa(localclientnum, 3);
 }
 
@@ -253,7 +253,7 @@ private function function_cec2dbda(localclientnum, oldval, newval, bnewent, bini
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_c8a1c86(localclientnum, fx)
+function private function_c8a1c86(localclientnum, fx)
 {
 	if(isdefined(self.var_d7197e33))
 	{
@@ -275,7 +275,7 @@ private function function_c8a1c86(localclientnum, fx)
 	Parameters: 7
 	Flags: Linked, Private
 */
-private function bgb_blow_bubble(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
+function private bgb_blow_bubble(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
 	function_c8a1c86(localclientnum, level._effect["bgb_blow_bubble"]);
 	self thread function_78c4bfa(localclientnum, 0.5);

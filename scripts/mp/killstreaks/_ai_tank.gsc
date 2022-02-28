@@ -225,14 +225,14 @@ function valid_location(location = self.origin)
 		trace = physicstrace(start, end, (0, 0, 0), (0, 0, 0), self, 16);
 		if(trace["fraction"] < 1)
 		{
-			return 0;
+			return false;
 		}
 	}
 	if(self oob::istouchinganyoobtrigger())
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -490,7 +490,7 @@ function tank_think_debug()
 			#/
 			if(isdefined(self.debug_ai_move_to_points_considered))
 			{
-				foreach(var_ca8afd1, point in self.debug_ai_move_to_points_considered)
+				foreach(point in self.debug_ai_move_to_points_considered)
 				{
 					point_color = vectorscale((1, 1, 1), 0.65);
 					if(isdefined(point.score))
@@ -501,13 +501,16 @@ function tank_think_debug()
 							{
 								point_color = (0.65, 0.1, 0.1);
 							}
-							else if(point.score > 50)
-							{
-								point_color = (0.1, 0.65, 0.1);
-							}
 							else
 							{
-								point_color = (0.95, 0.95, 0.1);
+								if(point.score > 50)
+								{
+									point_color = (0.1, 0.65, 0.1);
+								}
+								else
+								{
+									point_color = (0.95, 0.95, 0.1);
+								}
 							}
 							score_text_scale = text_scale;
 							score_text_color = text_color;
@@ -1151,7 +1154,7 @@ function tank_get_player_enemies(on_radar)
 		{
 			continue;
 		}
-		foreach(var_aec5a875, player in team)
+		foreach(player in team)
 		{
 			if(!valid_target(player, self.team, self.owner))
 			{
@@ -1188,7 +1191,7 @@ function tank_compute_enemy_position()
 		x = 0;
 		y = 0;
 		z = 0;
-		foreach(var_daaffde7, enemy in enemies)
+		foreach(enemy in enemies)
 		{
 			x = x + enemy.origin[0];
 			y = y + enemy.origin[1];
@@ -1215,34 +1218,34 @@ function valid_target(target, team, owner)
 {
 	if(!isdefined(target))
 	{
-		return 0;
+		return false;
 	}
 	if(!isalive(target))
 	{
-		return 0;
+		return false;
 	}
 	if(target == owner)
 	{
-		return 0;
+		return false;
 	}
 	if(isplayer(target))
 	{
 		if(target.sessionstate != "playing")
 		{
-			return 0;
+			return false;
 		}
 		if(isdefined(target.lastspawntime) && (gettime() - target.lastspawntime) < 3000)
 		{
-			return 0;
+			return false;
 		}
 		if(target hasperk("specialty_nottargetedbyaitank"))
 		{
-			return 0;
+			return false;
 		}
 		/#
 			if(target isinmovemode("", ""))
 			{
-				return 0;
+				return false;
 			}
 		#/
 	}
@@ -1250,29 +1253,29 @@ function valid_target(target, team, owner)
 	{
 		if(isdefined(target.team) && team == target.team)
 		{
-			return 0;
+			return false;
 		}
 	}
 	if(isdefined(target.owner) && target.owner == owner)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(target.script_owner) && target.script_owner == owner)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(target.dead) && target.dead)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(target.targetname) && target.targetname == "riotshield_mp")
 	{
 		if(isdefined(target.damagetaken) && target.damagetaken >= getdvarint("riotshield_deployed_health"))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1597,7 +1600,7 @@ function devgui_debug_route()
 		}
 		iprintln("");
 		tanks = getentarray("", "");
-		foreach(var_c416948f, tank in tanks)
+		foreach(tank in tanks)
 		{
 			tank notify(#"debug_patrol");
 			tank thread tank_debug_patrol(nodes[0], nodes[1]);

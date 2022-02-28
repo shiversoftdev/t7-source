@@ -17,7 +17,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_ai_sentinel_drone", &__init__, &__main__, undefined);
 }
@@ -31,7 +31,7 @@ autoexec function __init__sytem__()
 	Parameters: 0
 	Flags: Linked, AutoExec
 */
-autoexec function __init__()
+function autoexec __init__()
 {
 	clientfield::register("world", "sentinel_round_fog", 12000, 1, "int", &sentinel_round_fog, 0, 0);
 	clientfield::register("toplayer", "sentinel_round_fx", 12000, 1, "int", &sentinel_round_fx, 0, 0);
@@ -220,15 +220,18 @@ function sentinel_spawn_fx(n_local_client, n_val_old, n_val_new, b_ent_new, b_in
 		self.var_e43aab07 = playfxontag(n_local_client, level._effect["sentinel_spawn_in"], self, "tag_origin");
 		setfxignorepause(n_local_client, self.var_e43aab07, 1);
 	}
-	else if(isdefined(self.var_e43aab07))
+	else
 	{
-		stopfx(n_local_client, self.var_e43aab07);
-	}
-	playfxontag(n_local_client, level._effect["sentinel_spawn_impact"], self, "tag_origin");
-	wait(1);
-	if(isdefined(self))
-	{
-		sentinel_play_taunt(n_local_client, level.var_266194a);
+		if(isdefined(self.var_e43aab07))
+		{
+			stopfx(n_local_client, self.var_e43aab07);
+		}
+		playfxontag(n_local_client, level._effect["sentinel_spawn_impact"], self, "tag_origin");
+		wait(1);
+		if(isdefined(self))
+		{
+			sentinel_play_taunt(n_local_client, level.var_266194a);
+		}
 	}
 }
 

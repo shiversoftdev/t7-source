@@ -45,7 +45,7 @@ function init()
 */
 function temple_special_powerup_setup(powerup)
 {
-	return 1;
+	return true;
 }
 
 /*
@@ -189,7 +189,7 @@ function player_monkey_think(nummonkeys)
 		monkey.attacking_zombie = 0;
 		monkey.no_shrink = 1;
 		monkey setplayercollision(0);
-		monkey namespace_8fb880d9::monkey_prespawn();
+		monkey zm_ai_monkey::monkey_prespawn();
 		monkey forceteleport(spawnloc, spawnangles);
 		if(bloodfx)
 		{
@@ -199,7 +199,7 @@ function player_monkey_think(nummonkeys)
 		playsoundatposition("zmb_bolt", spawnloc);
 		monkey util::magic_bullet_shield();
 		monkey.allowpain = 0;
-		monkey thread namespace_8fb880d9::monkey_zombie_choose_run();
+		monkey thread zm_ai_monkey::monkey_zombie_choose_run();
 		monkey thread monkey_powerup_timeout();
 		monkey thread monkey_protect_player(self);
 	}
@@ -396,9 +396,9 @@ function _ent_inplayablearea()
 	{
 		if(self istouching(level.playable_area[i]))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 

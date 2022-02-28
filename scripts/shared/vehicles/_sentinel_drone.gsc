@@ -27,7 +27,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("sentinel_drone", &__init__, undefined, undefined);
 }
@@ -315,51 +315,51 @@ function defaultrole()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function is_target_valid(target)
+function private is_target_valid(target)
 {
 	if(!isdefined(target))
 	{
-		return 0;
+		return false;
 	}
 	if(!isalive(target))
 	{
-		return 0;
+		return false;
 	}
 	if(isplayer(target) && target.sessionstate == "spectator")
 	{
-		return 0;
+		return false;
 	}
 	if(isplayer(target) && target.sessionstate == "intermission")
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(target.ignoreme) && target.ignoreme)
 	{
-		return 0;
+		return false;
 	}
 	if(target isnotarget())
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(target.is_elemental_zombie) && target.is_elemental_zombie)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(level.is_valid_player_for_sentinel_drone))
 	{
 		if(![[level.is_valid_player_for_sentinel_drone]](target))
 		{
-			return 0;
+			return false;
 		}
 	}
 	if(isdefined(self.should_buff_zombies) && self.should_buff_zombies && isplayer(target))
 	{
 		if(isdefined(get_sentinel_nearest_zombie()))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -488,7 +488,7 @@ function set_sentinel_drone_enemy(enemy)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function sentinel_drone_target_selection()
+function private sentinel_drone_target_selection()
 {
 	self endon(#"change_state");
 	self endon(#"death");
@@ -550,28 +550,37 @@ function state_combat_update(params)
 		{
 			wait(0.1);
 		}
-		else if(isdefined(self.is_charging_at_player) && self.is_charging_at_player)
+		else
 		{
-			wait(0.1);
-		}
-		else if(!isdefined(self.forced_pos) && (isdefined(self.shouldroll) && self.shouldroll))
-		{
-			if(sentinel_dodgeroll())
+			if(isdefined(self.is_charging_at_player) && self.is_charging_at_player)
 			{
-				thread sentinel_navigatetheworld();
+				wait(0.1);
 			}
-		}
-		else if(!isdefined(self.sentinel_droneenemy))
-		{
-			wait(0.25);
-		}
-		else if(self.arms_count > 0)
-		{
-			if(randomint(100) < 30)
+			else
 			{
-				if(self sentinel_firelogic())
+				if(!isdefined(self.forced_pos) && (isdefined(self.shouldroll) && self.shouldroll))
 				{
-					thread sentinel_navigatetheworld();
+					if(sentinel_dodgeroll())
+					{
+						thread sentinel_navigatetheworld();
+					}
+				}
+				else
+				{
+					if(!isdefined(self.sentinel_droneenemy))
+					{
+						wait(0.25);
+					}
+					else if(self.arms_count > 0)
+					{
+						if(randomint(100) < 30)
+						{
+							if(self sentinel_firelogic())
+							{
+								thread sentinel_navigatetheworld();
+							}
+						}
+					}
 				}
 			}
 		}
@@ -766,11 +775,11 @@ function sentinel_navigationstandstill()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function sentinel_shouldchangesentinelposition()
+function private sentinel_shouldchangesentinelposition()
 {
 	if(gettime() > self.nextjuketime)
 	{
-		return 1;
+		return true;
 	}
 	if(isdefined(self.sentinel_droneenemy))
 	{
@@ -783,13 +792,13 @@ private function sentinel_shouldchangesentinelposition()
 				{
 					if(!sentinel_isinsideengagementdistance(self.origin, self.sentinel_droneenemy.origin + vectorscale((0, 0, 1), 48), 1))
 					{
-						return 1;
+						return true;
 					}
 				}
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -801,7 +810,7 @@ private function sentinel_shouldchangesentinelposition()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function sentinel_changesentinelposition()
+function private sentinel_changesentinelposition()
 {
 	self.nextjuketime = 0;
 }
@@ -840,43 +849,52 @@ function sentinel_navigatetheworld()
 		{
 			wait(0.1);
 		}
-		else if(self.goalforced)
+		else
 		{
-			returndata = [];
-			returndata["origin"] = self getclosestpointonnavvolume(self.goalpos, 100);
-			returndata["centerOnNav"] = ispointinnavvolume(self.origin, "navvolume_small");
-			current_pathto_pos = returndata["origin"];
-		}
-		else if(isdefined(self.forced_pos))
-		{
-			returndata = [];
-			returndata["origin"] = self getclosestpointonnavvolume(self.forced_pos, 100);
-			returndata["centerOnNav"] = ispointinnavvolume(self.origin, "navvolume_small");
-			current_pathto_pos = returndata["origin"];
-		}
-		else if(sentinel_shouldchangesentinelposition())
-		{
-			if(isdefined(self.evading_player) && self.evading_player)
+			if(self.goalforced)
 			{
-				self.evading_player = 0;
-				self setspeed(sentinel_evade_speed);
+				returndata = [];
+				returndata["origin"] = self getclosestpointonnavvolume(self.goalpos, 100);
+				returndata["centerOnNav"] = ispointinnavvolume(self.origin, "navvolume_small");
+				current_pathto_pos = returndata["origin"];
 			}
 			else
 			{
-				self setspeed(sentinel_move_speed);
+				if(isdefined(self.forced_pos))
+				{
+					returndata = [];
+					returndata["origin"] = self getclosestpointonnavvolume(self.forced_pos, 100);
+					returndata["centerOnNav"] = ispointinnavvolume(self.origin, "navvolume_small");
+					current_pathto_pos = returndata["origin"];
+				}
+				else
+				{
+					if(sentinel_shouldchangesentinelposition())
+					{
+						if(isdefined(self.evading_player) && self.evading_player)
+						{
+							self.evading_player = 0;
+							self setspeed(sentinel_evade_speed);
+						}
+						else
+						{
+							self setspeed(sentinel_move_speed);
+						}
+						returndata = sentinel_getnextmovepositiontactical(self.should_buff_zombies);
+						current_pathto_pos = returndata["origin"];
+						self.lastjuketime = gettime();
+						self.nextjuketime = (gettime() + 1000) + randomint(4000);
+						b_in_tactical_position = 1;
+					}
+					else if(gettime() > self.next_near_player_check && sentinel_isnearanotherplayer(self.origin, 100))
+					{
+						self.evading_player = 1;
+						self.next_near_player_check = gettime() + 1000;
+						self.nextjuketime = 0;
+						self notify(#"near_goal");
+					}
+				}
 			}
-			returndata = sentinel_getnextmovepositiontactical(self.should_buff_zombies);
-			current_pathto_pos = returndata["origin"];
-			self.lastjuketime = gettime();
-			self.nextjuketime = (gettime() + 1000) + randomint(4000);
-			b_in_tactical_position = 1;
-		}
-		else if(gettime() > self.next_near_player_check && sentinel_isnearanotherplayer(self.origin, 100))
-		{
-			self.evading_player = 1;
-			self.next_near_player_check = gettime() + 1000;
-			self.nextjuketime = 0;
-			self notify(#"near_goal");
 		}
 		is_on_nav_volume = ispointinnavvolume(self.origin, "navvolume_small");
 		/#
@@ -1056,20 +1074,23 @@ function sentinel_getnextmovepositiontactical(b_do_not_chase_enemy)
 		{
 			queryresult = positionquery_source_navigation(self.origin, sentinel_drone_too_close_to_self_dist_ex, sentinel_drone_move_dist_max_ex * querymultiplier, sentinel_drone_hight_ex * querymultiplier, sentinel_drone_move_spacing, "navvolume_small", sentinel_drone_move_spacing * spacing_multiplier);
 		}
-		else if(sentinel_isenemyinnarrowplace())
+		else
 		{
-			spacing_multiplier = 1;
-			sentinel_drone_move_spacing = 15;
-			query_min_dist = self.settings.engagementdistmin * getdvarfloat("sentinel_query_min_dist", 0.2);
-			query_max_dist = query_max_dist * 0.5;
+			if(sentinel_isenemyinnarrowplace())
+			{
+				spacing_multiplier = 1;
+				sentinel_drone_move_spacing = 15;
+				query_min_dist = self.settings.engagementdistmin * getdvarfloat("sentinel_query_min_dist", 0.2);
+				query_max_dist = query_max_dist * 0.5;
+			}
+			else if(isdefined(self.in_compact_mode) && self.in_compact_mode || sentinel_isenemyindoors())
+			{
+				spacing_multiplier = 1;
+				sentinel_drone_move_spacing = 15;
+				query_min_dist = self.settings.engagementdistmin * getdvarfloat("sentinel_query_min_dist", 0.5);
+			}
+			queryresult = positionquery_source_navigation(charge_at_position, query_min_dist, query_max_dist * querymultiplier, sentinel_drone_hight_ex * querymultiplier, sentinel_drone_move_spacing, "navvolume_small", sentinel_drone_move_spacing * spacing_multiplier);
 		}
-		else if(isdefined(self.in_compact_mode) && self.in_compact_mode || sentinel_isenemyindoors())
-		{
-			spacing_multiplier = 1;
-			sentinel_drone_move_spacing = 15;
-			query_min_dist = self.settings.engagementdistmin * getdvarfloat("sentinel_query_min_dist", 0.5);
-		}
-		queryresult = positionquery_source_navigation(charge_at_position, query_min_dist, query_max_dist * querymultiplier, sentinel_drone_hight_ex * querymultiplier, sentinel_drone_move_spacing, "navvolume_small", sentinel_drone_move_spacing * spacing_multiplier);
 	}
 	else
 	{
@@ -1094,7 +1115,7 @@ function sentinel_getnextmovepositiontactical(b_do_not_chase_enemy)
 	best_point = undefined;
 	best_score = undefined;
 	trace_count = 0;
-	foreach(var_5855669, point in queryresult.data)
+	foreach(point in queryresult.data)
 	{
 		if(sentinel_isinsideengagementdistance(enemy_origin, point.origin))
 		{
@@ -1458,16 +1479,16 @@ function sentinel_firelogic()
 {
 	if(isdefined(self.playing_intro_anim) && self.playing_intro_anim)
 	{
-		return 0;
+		return false;
 	}
 	if(self.arms_count <= 0)
 	{
-		return 0;
+		return false;
 	}
 	if(!(isdefined(self.target_initialized) && self.target_initialized))
 	{
 		wait(0.5);
-		return 0;
+		return false;
 	}
 	if(isdefined(self.sentinel_droneenemy) && (!isdefined(self.nextfiretime) || gettime() > self.nextfiretime))
 	{
@@ -1481,7 +1502,7 @@ function sentinel_firelogic()
 				wait(0.1);
 				if(!isdefined(self.sentinel_droneenemy))
 				{
-					return 1;
+					return true;
 				}
 				enemy_pos = self.sentinel_droneenemy.origin;
 				if(randomint(100) < 70)
@@ -1543,11 +1564,11 @@ function sentinel_firelogic()
 				{
 					self.nextfiretime = (gettime() + 2500) + randomint(2500);
 				}
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1822,13 +1843,13 @@ function iscore(part_name)
 {
 	if(!isdefined(part_name))
 	{
-		return 0;
+		return false;
 	}
 	if(part_name == "tag_faceplate_d0" || part_name == "ag_core_d0" || part_name == "tag_center_core" || part_name == "tag_core_spin")
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1844,13 +1865,13 @@ function iscamera(part_name)
 {
 	if(!isdefined(part_name))
 	{
-		return 0;
+		return false;
 	}
 	if(part_name == "tag_camera_dead" || part_name == "tag_flash" || part_name == "tag_laser" || part_name == "tag_turret")
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1892,7 +1913,7 @@ function sentinel_getarmnumber(part_name)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function sentinel_armdamage(damage, arm, eattacker = undefined)
+function private sentinel_armdamage(damage, arm, eattacker = undefined)
 {
 	if(self.arms_count == 0)
 	{
@@ -1928,15 +1949,18 @@ private function sentinel_armdamage(damage, arm, eattacker = undefined)
 			self hidepart("tag_arm_left_01", "", 1);
 			self showpart("tag_arm_left_01_d1", "", 1);
 		}
-		else if(arm == 1)
+		else
 		{
-			self hidepart("tag_arm_right_01", "", 1);
-			self showpart("tag_arm_right_01_d1", "", 1);
-		}
-		else if(arm == 3)
-		{
-			self hidepart("tag_arm_top_01", "", 1);
-			self showpart("tag_arm_top_01_d1", "", 1);
+			if(arm == 1)
+			{
+				self hidepart("tag_arm_right_01", "", 1);
+				self showpart("tag_arm_right_01_d1", "", 1);
+			}
+			else if(arm == 3)
+			{
+				self hidepart("tag_arm_top_01", "", 1);
+				self showpart("tag_arm_top_01_d1", "", 1);
+			}
 		}
 		if(self.arms_count == 0 && (!(isdefined(self.disable_charge_when_no_arms) && self.disable_charge_when_no_arms)))
 		{
@@ -1975,7 +1999,7 @@ function sentinel_destroyallarms(b_disable_charge)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function sentinel_onallarmsdestroyed()
+function private sentinel_onallarmsdestroyed()
 {
 	sentinel_destroyface();
 	sentinel_destroycore();
@@ -1992,7 +2016,7 @@ private function sentinel_onallarmsdestroyed()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function sentinel_destroyface()
+function private sentinel_destroyface()
 {
 	sentinel_facedamage(self.sentineldronehealthface + 1000, "tag_faceplate_d0");
 }
@@ -2006,7 +2030,7 @@ private function sentinel_destroyface()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function sentinel_destroycore()
+function private sentinel_destroycore()
 {
 	sentinel_coredamage(self.sentineldronehealthcore + 1000, "ag_core_d0");
 }
@@ -2020,7 +2044,7 @@ private function sentinel_destroycore()
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function sentinel_facedamage(damage, partname)
+function private sentinel_facedamage(damage, partname)
 {
 	if(damage == 0)
 	{
@@ -2051,7 +2075,7 @@ private function sentinel_facedamage(damage, partname)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function sentinel_coredamage(damage, partname)
+function private sentinel_coredamage(damage, partname)
 {
 	if(damage == 0)
 	{
@@ -2086,7 +2110,7 @@ private function sentinel_coredamage(damage, partname)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function sentinel_cameradamage(damage, partname, eattacker)
+function private sentinel_cameradamage(damage, partname, eattacker)
 {
 	if(damage == 0)
 	{
@@ -2293,10 +2317,10 @@ function sentinel_isenemyindoors()
 	{
 		if(self.sentinel_droneenemy istouching(v_compact_mode))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2312,7 +2336,7 @@ function sentinel_isenemyinnarrowplace()
 {
 	if(!isdefined(self.sentinel_droneenemy))
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(self.v_narrow_volume))
 	{
@@ -2322,10 +2346,10 @@ function sentinel_isenemyinnarrowplace()
 	{
 		if(self.sentinel_droneenemy istouching(self.v_narrow_volume))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2625,7 +2649,7 @@ function sentinel_isnearanothersentinel(point, min_distance)
 {
 	if(!isdefined(level.a_sentinel_drones))
 	{
-		return 0;
+		return false;
 	}
 	for(i = 0; i < level.a_sentinel_drones.size; i++)
 	{
@@ -2641,10 +2665,10 @@ function sentinel_isnearanothersentinel(point, min_distance)
 		distance_sq = distancesquared(level.a_sentinel_drones[i].origin, point);
 		if(distance_sq < min_distance_sq)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2669,10 +2693,10 @@ function sentinel_isnearanotherplayer(origin, min_distance)
 		distance_sq = distancesquared(origin, players[i].origin + vectorscale((0, 0, 1), 48));
 		if(distance_sq < min_distance_sq)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*

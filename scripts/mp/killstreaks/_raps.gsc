@@ -316,7 +316,7 @@ function activaterapskillstreak(hardpointtype)
 	player = self;
 	if(!player killstreakrules::iskillstreakallowed("raps", player.team))
 	{
-		return 0;
+		return false;
 	}
 	if(game["raps_helicopter_positions"].size <= 0)
 	{
@@ -324,13 +324,13 @@ function activaterapskillstreak(hardpointtype)
 			iprintlnbold("");
 		#/
 		self iprintlnbold(&"KILLSTREAK_RAPS_NOT_AVAILABLE");
-		return 0;
+		return false;
 	}
 	killstreakid = player killstreakrules::killstreakstart("raps", player.team);
 	if(killstreakid == -1)
 	{
 		player iprintlnbold(&"KILLSTREAK_RAPS_NOT_AVAILABLE");
-		return 0;
+		return false;
 	}
 	player thread teams::waituntilteamchange(player, &onteamchanged, player.entnum, "raps_complete");
 	level thread watchrapskillstreakend(killstreakid, player.entnum, player.team);
@@ -356,7 +356,7 @@ function activaterapskillstreak(hardpointtype)
 			level thread autoreactivaterapskillstreak(player.entnum, player, hardpointtype);
 		}
 	#/
-	return 1;
+	return true;
 }
 
 /*
@@ -542,7 +542,7 @@ function inithelicopterpositions()
 		if(getdvarint(""))
 		{
 			debug_radius = 220 * 0.5;
-			foreach(var_c386209f, omit_location in omit_locations)
+			foreach(omit_location in omit_locations)
 			{
 				circle(omit_location, debug_radius, vectorscale((1, 1, 1), 0.05), 0, 1, 9999999);
 				circle(omit_location + vectorscale((0, 0, 1), 4), debug_radius, vectorscale((1, 1, 1), 0.05), 0, 1, 9999999);
@@ -556,7 +556,7 @@ function inithelicopterpositions()
 	fit_radius = 220 * 0.5;
 	fit_radius_corner = fit_radius * 0.7071;
 	omit_radius = 220 * 0.5;
-	foreach(var_3bc8007c, point in randomnavmeshpoints)
+	foreach(point in randomnavmeshpoints)
 	{
 		start_water_trace = point + vectorscale((0, 0, 1), 6);
 		stop_water_trace = point + vectorscale((0, 0, 1), 8);
@@ -575,7 +575,7 @@ function inithelicopterpositions()
 			continue;
 		}
 		should_omit = 0;
-		foreach(var_1171aa34, omit_location in omit_locations)
+		foreach(omit_location in omit_locations)
 		{
 			if(distancesquared(omit_location, point) < (omit_radius * omit_radius))
 			{
@@ -617,7 +617,7 @@ function inithelicopterpositions()
 	}
 	flood_fill_start_point = undefined;
 	flood_fill_start_point_distance_squared = 9999999;
-	foreach(var_50931504, point in game["raps_helicopter_positions"])
+	foreach(point in game["raps_helicopter_positions"])
 	{
 		if(!isdefined(point))
 		{
@@ -645,12 +645,12 @@ function inithelicopterpositions()
 			box(mapcenter, vectorscale((-1, -1, 0), 4), (4, 4, 5000), 0, (1, 1, 0), 0.6, 0, time);
 			sphere(flood_fill_start_point, 20, (0, 1, 1), 1, 0, 10, time);
 			box(flood_fill_start_point, vectorscale((-1, -1, 0), 4), (4, 4, 4200), 0, (0, 1, 1), 0.6, 0, time);
-			foreach(var_eb8947fe, point in randomnavmeshpoints)
+			foreach(point in randomnavmeshpoints)
 			{
 				sphere(point + vectorscale((0, 0, 1), 950), 10, (0, 0, 1), 1, 0, 10, time);
 				circle(point, 128, (1, 0, 0), 1, 1, time);
 			}
-			foreach(var_3b4a0f61, point in game[""])
+			foreach(point in game[""])
 			{
 				sphere(point + vectorscale((0, 0, 1), 1000), 10, (0, 1, 0), 1, 0, 10, time);
 				circle(point + vectorscale((0, 0, 1), 2), 128, (0, 1, 0), 1, 1, time);
@@ -687,9 +687,9 @@ function tryaddpointforhelicopterposition(spaciouspoint, minflyheight)
 			game["raps_helicopter_positions"] = array(game["raps_helicopter_positions"]);
 		}
 		game["raps_helicopter_positions"][game["raps_helicopter_positions"].size] = spaciouspoint;
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1104,7 +1104,7 @@ function getotherhelicopterpointtoavoid()
 {
 	avoid_point = undefined;
 	arrayremovevalue(level.raps_helicopters, undefined);
-	foreach(var_79326db2, heli in level.raps_helicopters)
+	foreach(heli in level.raps_helicopters)
 	{
 		if(heli != self)
 		{
@@ -1646,7 +1646,7 @@ function watchrapsdeath(originalowner)
 			attacker challenges::destroynonairscorestreak_poststatslock(weapon);
 			if(isdefined(self.attackers))
 			{
-				foreach(var_be1c5b5, player in self.attackers)
+				foreach(player in self.attackers)
 				{
 					if(isplayer(player) && player != attacker && player != self.owner)
 					{
@@ -1745,7 +1745,7 @@ function initialwaituntilsettled()
 */
 function destroyallraps(entnum, abandoned = 0)
 {
-	foreach(var_8b74109d, raps in level.raps[entnum].raps)
+	foreach(raps in level.raps[entnum].raps)
 	{
 		if(isalive(raps))
 		{
@@ -1767,7 +1767,7 @@ function destroyallraps(entnum, abandoned = 0)
 */
 function forcegetenemies()
 {
-	foreach(var_aa465d6e, player in level.players)
+	foreach(player in level.players)
 	{
 		if(isdefined(self.owner) && self.owner util::isenemyplayer(player) && !player smokegrenade::isinsmokegrenade() && !player hasperk("specialty_nottargetedbyraps"))
 		{

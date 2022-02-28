@@ -115,7 +115,7 @@ function function_dadd24b7(localclientnum, oldval, newval, bnewent, binitialsnap
 		str_tag_name = "tag_brain";
 	}
 	a_e_players = getlocalplayers();
-	foreach(var_68124ee2, e_player in a_e_players)
+	foreach(e_player in a_e_players)
 	{
 		self.var_16ab725 = playfxontag(e_player.localclientnum, level._effect["teleport_arrive_player"], self, str_tag_name);
 		setfxignorepause(e_player.localclientnum, self.var_16ab725, 1);

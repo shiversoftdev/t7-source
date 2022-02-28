@@ -206,7 +206,7 @@ function resetwatchers()
 		return undefined;
 	}
 	team = self.team;
-	foreach(var_811f8866, watcher in self.weaponobjectwatcherarray)
+	foreach(watcher in self.weaponobjectwatcherarray)
 	{
 		resetweaponobjectwatcher(watcher, team);
 	}
@@ -223,11 +223,11 @@ function resetwatchers()
 */
 function createbasewatchers()
 {
-	foreach(index, weapon in level.watcherweapons)
+	foreach(weapon in level.watcherweapons)
 	{
 		self createweaponobjectwatcher(weapon.name, self.team);
 	}
-	foreach(index, weapon in level.retrievableweapons)
+	foreach(weapon in level.retrievableweapons)
 	{
 		self createweaponobjectwatcher(weapon.name, self.team);
 	}
@@ -406,7 +406,7 @@ function createqrdronewatcher()
 function getspikelauncheractivespikecount(watcher)
 {
 	currentitemcount = 0;
-	foreach(var_e54fe87b, obj in watcher.objectarray)
+	foreach(obj in watcher.objectarray)
 	{
 		if(isdefined(obj) && obj.item !== watcher.weapon)
 		{
@@ -663,7 +663,7 @@ function deleteweaponobjectarray()
 {
 	if(isdefined(self.objectarray))
 	{
-		foreach(var_80c111d8, weaponobject in self.objectarray)
+		foreach(weaponobject in self.objectarray)
 		{
 			weaponobject deleteweaponobjectinstance();
 		}
@@ -768,14 +768,17 @@ function weapondetonate(attacker, weapon)
 			self detonate();
 		}
 	}
-	else if(isdefined(self.owner) && isplayer(self.owner))
-	{
-		self.playdialog = 0;
-		self detonate(self.owner);
-	}
 	else
 	{
-		self detonate();
+		if(isdefined(self.owner) && isplayer(self.owner))
+		{
+			self.playdialog = 0;
+			self detonate(self.owner);
+		}
+		else
+		{
+			self detonate();
+		}
 	}
 }
 
@@ -1673,12 +1676,15 @@ function commononspawnuseweaponobject(watcher, owner)
 				if(x_offset > y_offset && x_offset > z_offset)
 				{
 				}
-				else if(y_offset > x_offset && y_offset > z_offset)
+				else
 				{
-				}
-				else if(z_offset > x_offset && z_offset > y_offset)
-				{
-					v_up = v_up * (0, 0, 1);
+					if(y_offset > x_offset && y_offset > z_offset)
+					{
+					}
+					else if(z_offset > x_offset && z_offset > y_offset)
+					{
+						v_up = v_up * (0, 0, 1);
+					}
 				}
 				up_offset_modified = v_up * offset;
 				up_offset = anglestoup(self.angles) * offset;
@@ -1805,7 +1811,7 @@ function proximityalarmloop(watcher, owner)
 		actors = getactorarray();
 		players = getplayers();
 		detectentities = arraycombine(players, actors, 0, 0);
-		foreach(var_f0eb88e8, entity in detectentities)
+		foreach(entity in detectentities)
 		{
 			wait(0.05);
 			if(!isdefined(entity))
@@ -2517,101 +2523,101 @@ function canhack(player, owner, weapon_check)
 {
 	if(!isdefined(player))
 	{
-		return 0;
+		return false;
 	}
 	if(!isplayer(player))
 	{
-		return 0;
+		return false;
 	}
 	if(!isalive(player))
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(owner))
 	{
-		return 0;
+		return false;
 	}
 	if(owner == player)
 	{
-		return 0;
+		return false;
 	}
 	if(level.teambased && player.team == owner.team)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(player.isdefusing) && player.isdefusing)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(player.isplanting) && player.isplanting)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(player.proxbar) && !player.proxbar.hidden)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(player.revivingteammate) && player.revivingteammate == 1)
 	{
-		return 0;
+		return false;
 	}
 	if(!player isonground())
 	{
-		return 0;
+		return false;
 	}
 	if(player isinvehicle())
 	{
-		return 0;
+		return false;
 	}
 	if(player isweaponviewonlylinked())
 	{
-		return 0;
+		return false;
 	}
 	if(!player hasperk("specialty_disarmexplosive"))
 	{
-		return 0;
+		return false;
 	}
 	if(player isempjammed())
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(player.laststand) && player.laststand)
 	{
-		return 0;
+		return false;
 	}
 	if(weapon_check)
 	{
 		if(player isthrowinggrenade())
 		{
-			return 0;
+			return false;
 		}
 		if(player isswitchingweapons())
 		{
-			return 0;
+			return false;
 		}
 		if(player ismeleeing())
 		{
-			return 0;
+			return false;
 		}
 		weapon = player getcurrentweapon();
 		if(!isdefined(weapon))
 		{
-			return 0;
+			return false;
 		}
 		if(weapon == level.weaponnone)
 		{
-			return 0;
+			return false;
 		}
 		if(weapon.isequipment && player isfiring())
 		{
-			return 0;
+			return false;
 		}
 		if(weapon.isspecificuse)
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -2669,52 +2675,52 @@ function proximityweaponobject_validtriggerentity(watcher, ent)
 	{
 		if(isdefined(self.owner) && ent == self.owner)
 		{
-			return 0;
+			return false;
 		}
 		if(isvehicle(ent))
 		{
 			if(watcher.ignorevehicles)
 			{
-				return 0;
+				return false;
 			}
 			if(self.owner === ent.owner)
 			{
-				return 0;
+				return false;
 			}
 		}
 		if(!friendlyfirecheck(self.owner, ent, 0))
 		{
-			return 0;
+			return false;
 		}
 		if(watcher.ignorevehicles && isai(ent) && (!(isdefined(ent.isaiclone) && ent.isaiclone)))
 		{
-			return 0;
+			return false;
 		}
 	}
 	if(lengthsquared(ent getvelocity()) < 10 && !isdefined(watcher.immediatedetonation))
 	{
-		return 0;
+		return false;
 	}
 	if(!ent shouldaffectweaponobject(self, watcher))
 	{
-		return 0;
+		return false;
 	}
 	if(self isstunned())
 	{
-		return 0;
+		return false;
 	}
 	if(isplayer(ent))
 	{
 		if(!isalive(ent))
 		{
-			return 0;
+			return false;
 		}
 		if(isdefined(watcher.immunespecialty) && ent hasperk(watcher.immunespecialty))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -2774,26 +2780,26 @@ function proximityweaponobject_isspawnprotected(watcher, ent)
 {
 	if(!isplayer(ent))
 	{
-		return 0;
+		return false;
 	}
-	foreach(var_34936ad3, protected_ent in self.protected_entities)
+	foreach(protected_ent in self.protected_entities)
 	{
 		if(protected_ent == ent)
 		{
-			return 1;
+			return true;
 		}
 	}
 	linked_to = self getlinkedent();
 	if(linked_to === ent)
 	{
-		return 0;
+		return false;
 	}
 	if(ent player::is_spawn_protected())
 	{
 		self thread proximityweaponobject_spawnprotect(watcher, ent);
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2982,7 +2988,7 @@ function testkillbrushonstationary(a_killbrushes, player)
 	player endon(#"disconnect");
 	self endon(#"death");
 	self waittill(#"stationary");
-	foreach(var_4152e793, trig in a_killbrushes)
+	foreach(trig in a_killbrushes)
 	{
 		if(isdefined(trig) && self istouching(trig))
 		{
@@ -3305,11 +3311,11 @@ function friendlyfirecheck(owner, attacker, forcedfriendlyfirerule)
 {
 	if(!isdefined(owner))
 	{
-		return 1;
+		return true;
 	}
 	if(!level.teambased)
 	{
-		return 1;
+		return true;
 	}
 	friendlyfirerule = [[level.figure_out_friendly_fire]](undefined);
 	if(isdefined(forcedfriendlyfirerule))
@@ -3318,49 +3324,52 @@ function friendlyfirecheck(owner, attacker, forcedfriendlyfirerule)
 	}
 	if(friendlyfirerule != 0)
 	{
-		return 1;
+		return true;
 	}
 	if(attacker == owner)
 	{
-		return 1;
+		return true;
 	}
 	if(isplayer(attacker))
 	{
 		if(!isdefined(attacker.pers["team"]))
 		{
-			return 1;
+			return true;
 		}
 		if(attacker.pers["team"] != owner.pers["team"])
 		{
-			return 1;
+			return true;
 		}
 	}
-	else if(isactor(attacker))
+	else
 	{
-		if(attacker.team != owner.pers["team"])
+		if(isactor(attacker))
 		{
-			return 1;
-		}
-	}
-	else if(isvehicle(attacker))
-	{
-		if(isdefined(attacker.owner) && isplayer(attacker.owner))
-		{
-			if(attacker.owner.pers["team"] != owner.pers["team"])
+			if(attacker.team != owner.pers["team"])
 			{
-				return 1;
+				return true;
 			}
 		}
-		else
+		else if(isvehicle(attacker))
 		{
-			occupant_team = attacker vehicle::vehicle_get_occupant_team();
-			if(occupant_team != owner.pers["team"] && occupant_team != "spectator")
+			if(isdefined(attacker.owner) && isplayer(attacker.owner))
 			{
-				return 1;
+				if(attacker.owner.pers["team"] != owner.pers["team"])
+				{
+					return true;
+				}
+			}
+			else
+			{
+				occupant_team = attacker vehicle::vehicle_get_occupant_team();
+				if(occupant_team != owner.pers["team"] && occupant_team != "spectator")
+				{
+					return true;
+				}
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -3744,14 +3753,14 @@ function watchhatchettrigger(trigger, callback, playersoundonuse, npcsoundonuse)
 function get_held_weapon_match_or_root_match(weapon)
 {
 	pweapons = self getweaponslist(1);
-	foreach(var_453be4df, pweapon in pweapons)
+	foreach(pweapon in pweapons)
 	{
 		if(pweapon == weapon)
 		{
 			return pweapon;
 		}
 	}
-	foreach(var_3c9c023f, pweapon in pweapons)
+	foreach(pweapon in pweapons)
 	{
 		if(pweapon.rootweapon == weapon.rootweapon)
 		{
@@ -3775,7 +3784,7 @@ function get_player_crossbow_weapon()
 	pweapons = self getweaponslist(1);
 	crossbow = getweapon("special_crossbow");
 	crossbow_dw = getweapon("special_crossbow_dw");
-	foreach(var_a86900d8, pweapon in pweapons)
+	foreach(pweapon in pweapons)
 	{
 		if(pweapon.rootweapon == crossbow || pweapon.rootweapon == crossbow_dw)
 		{
@@ -4199,11 +4208,11 @@ function useteamequipmentclientfield(watcher)
 		{
 			if(isdefined(self))
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -4249,7 +4258,7 @@ function destroy_other_teams_supplemental_watcher_objects(attacker, weapon)
 {
 	if(level.teambased)
 	{
-		foreach(var_56059f7b, team in level.teams)
+		foreach(team in level.teams)
 		{
 			if(team == attacker.team)
 			{
@@ -4272,7 +4281,7 @@ function destroy_other_teams_supplemental_watcher_objects(attacker, weapon)
 */
 function destroy_supplemental_watcher_objects(attacker, team, weapon)
 {
-	foreach(var_6de423ca, item in level.supplementalwatcherobjects)
+	foreach(item in level.supplementalwatcherobjects)
 	{
 		if(!isdefined(item.weapon))
 		{

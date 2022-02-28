@@ -15,7 +15,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function main()
+function autoexec main()
 {
 	register_clientfields();
 	level._effect["pap_tp"] = "dlc1/castle/fx_castle_pap_reform";

@@ -181,14 +181,14 @@ function function_5205dda3(var_df826fd8)
 */
 function function_21a777b0()
 {
-	foreach(var_1abd7134, e_player in level.activeplayers)
+	foreach(e_player in level.activeplayers)
 	{
 		if(isdefined(e_player.is_flung) && e_player.is_flung || (isdefined(e_player.var_9a017681) && e_player.var_9a017681))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -547,32 +547,35 @@ function function_e9d3c391(var_ca34f349, v_fling, nd_start, var_173065cc, var_df
 		self zm_utility::clear_streamer_hint();
 		self thread function_d1736cb5();
 	}
-	else if(self.isdog)
+	else
 	{
-		self kill();
-	}
-	else if(self.archetype === "zombie")
-	{
-		self.is_flung = 1;
-		self setplayercollision(0);
-		self.mdl_anchor = util::spawn_model("tag_origin", nd_start.origin, nd_start.angles);
-		self linkto(self.mdl_anchor);
-		nd_next = getvehiclenode(nd_start.target, "targetname");
-		n_distance = distance(nd_start.origin, nd_next.origin);
-		n_time = n_distance / 600;
-		self.mdl_anchor moveto(nd_next.origin, n_time);
-		self.mdl_anchor waittill(#"movedone");
-		self unlink();
-		self startragdoll();
-		self launchragdoll(v_fling * randomfloatrange(0.17, 0.21));
-		util::wait_network_frame();
-		self dodamage(self.health, self.origin);
-		level.zombie_total++;
-		while(self istouching(var_ca34f349))
+		if(self.isdog)
 		{
-			wait(0.1);
+			self kill();
 		}
-		self.is_flung = undefined;
+		else if(self.archetype === "zombie")
+		{
+			self.is_flung = 1;
+			self setplayercollision(0);
+			self.mdl_anchor = util::spawn_model("tag_origin", nd_start.origin, nd_start.angles);
+			self linkto(self.mdl_anchor);
+			nd_next = getvehiclenode(nd_start.target, "targetname");
+			n_distance = distance(nd_start.origin, nd_next.origin);
+			n_time = n_distance / 600;
+			self.mdl_anchor moveto(nd_next.origin, n_time);
+			self.mdl_anchor waittill(#"movedone");
+			self unlink();
+			self startragdoll();
+			self launchragdoll(v_fling * randomfloatrange(0.17, 0.21));
+			util::wait_network_frame();
+			self dodamage(self.health, self.origin);
+			level.zombie_total++;
+			while(self istouching(var_ca34f349))
+			{
+				wait(0.1);
+			}
+			self.is_flung = undefined;
+		}
 	}
 }
 
@@ -871,7 +874,7 @@ function function_29c06608()
 {
 	a_ai = getaiteamarray(level.zombie_team);
 	a_ai_zombies = arraysortclosest(a_ai, self.origin, a_ai.size, 0, 128);
-	foreach(var_2af264eb, ai_zombie in a_ai_zombies)
+	foreach(ai_zombie in a_ai_zombies)
 	{
 		if(ai_zombie.archetype === "zombie")
 		{
@@ -904,31 +907,34 @@ function zombie_slam_direction(ai_zombie)
 		ai_zombie.knockdown_direction = "front";
 		ai_zombie.getup_direction = "getup_back";
 	}
-	else if(v_dot < 0.5 && v_dot > -0.5)
+	else
 	{
-		v_dot = vectordot(v_zombie_to_player_2d, v_zombie_right_2d);
-		if(v_dot > 0)
+		if(v_dot < 0.5 && v_dot > -0.5)
 		{
-			ai_zombie.knockdown_direction = "right";
-			if(math::cointoss())
+			v_dot = vectordot(v_zombie_to_player_2d, v_zombie_right_2d);
+			if(v_dot > 0)
 			{
-				ai_zombie.getup_direction = "getup_back";
+				ai_zombie.knockdown_direction = "right";
+				if(math::cointoss())
+				{
+					ai_zombie.getup_direction = "getup_back";
+				}
+				else
+				{
+					ai_zombie.getup_direction = "getup_belly";
+				}
 			}
 			else
 			{
+				ai_zombie.knockdown_direction = "left";
 				ai_zombie.getup_direction = "getup_belly";
 			}
 		}
 		else
 		{
-			ai_zombie.knockdown_direction = "left";
+			ai_zombie.knockdown_direction = "back";
 			ai_zombie.getup_direction = "getup_belly";
 		}
-	}
-	else
-	{
-		ai_zombie.knockdown_direction = "back";
-		ai_zombie.getup_direction = "getup_belly";
 	}
 	wait(1);
 	self.knockdown = 0;
@@ -969,29 +975,32 @@ function function_485001bf()
 	if(level flag::get("rocket_firing") && self.stub.in_zone === "zone_rooftop")
 	{
 		self sethintstring(&"ZM_CASTLE_WUNDERSPHERE_LOCKED");
-		return 0;
+		return false;
 	}
 	if(isdefined(param1))
 	{
 		self sethintstring(str_msg, param1);
 	}
-	else if(isdefined(self.stub.flag_name) && level flag::get(self.stub.flag_name) == 1)
-	{
-		self sethintstring("");
-	}
 	else
 	{
-		self sethintstring(str_msg);
-		if(str_msg == (&"ZM_CASTLE_FLING_LOCKED"))
+		if(isdefined(self.stub.flag_name) && level flag::get(self.stub.flag_name) == 1)
 		{
-			if(!isdefined(level.var_4f91b555) || !isdefined(level.var_4f91b555["sphere_" + self.stub.in_zone]) || (gettime() - (level.var_4f91b555["sphere_" + self.stub.in_zone])) > 11000)
+			self sethintstring("");
+		}
+		else
+		{
+			self sethintstring(str_msg);
+			if(str_msg == (&"ZM_CASTLE_FLING_LOCKED"))
 			{
-				level.var_4f91b555["sphere_" + self.stub.in_zone] = gettime();
-				playsoundatposition("vox_maxis_pad_pa_unable_0", self.origin);
+				if(!isdefined(level.var_4f91b555) || !isdefined(level.var_4f91b555["sphere_" + self.stub.in_zone]) || (gettime() - (level.var_4f91b555["sphere_" + self.stub.in_zone])) > 11000)
+				{
+					level.var_4f91b555["sphere_" + self.stub.in_zone] = gettime();
+					playsoundatposition("vox_maxis_pad_pa_unable_0", self.origin);
+				}
 			}
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*

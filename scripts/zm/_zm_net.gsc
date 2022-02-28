@@ -105,9 +105,9 @@ function network_entity_valid(entity)
 {
 	if(!isdefined(entity))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*

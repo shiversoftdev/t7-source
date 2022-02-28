@@ -74,7 +74,12 @@ function flame_death_fx()
 		}
 		self.weapon_specific_fire_death_torso_fx = undefined;
 	}
-	println("");
+	else
+	{
+		/#
+			println("");
+		#/
+	}
 	if(isdefined(level._effect) && isdefined(level._effect["character_fire_death_sm"]))
 	{
 		if(self.archetype !== "parasite" && self.archetype !== "raps" && self.archetype !== "spider")
@@ -110,7 +115,12 @@ function flame_death_fx()
 			self.weapon_specific_fire_death_sm_fx = undefined;
 		}
 	}
-	println("");
+	else
+	{
+		/#
+			println("");
+		#/
+	}
 }
 
 /*

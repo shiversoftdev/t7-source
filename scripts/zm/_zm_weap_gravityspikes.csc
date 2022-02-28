@@ -17,7 +17,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_weap_gravityspikes", &__init__, undefined, undefined);
 }
@@ -390,11 +390,14 @@ function sparky_zombie_fx_cb(localclientnum, oldval, newval, bnewent, binitialsn
 		self.n_sparky_fx = playfxontag(localclientnum, level._effect["zombie_spark_light"], self, "J_SpineUpper");
 		setfxignorepause(localclientnum, self.n_sparky_fx, 1);
 	}
-	else if(isdefined(self.n_sparky_fx))
+	else
 	{
-		deletefx(localclientnum, self.n_sparky_fx, 1);
+		if(isdefined(self.n_sparky_fx))
+		{
+			deletefx(localclientnum, self.n_sparky_fx, 1);
+		}
+		self.n_sparky_fx = undefined;
 	}
-	self.n_sparky_fx = undefined;
 }
 
 /*
@@ -413,11 +416,14 @@ function sparky_zombie_trail_fx_cb(localclientnum, oldval, newval, bnewent, bini
 		self.n_trail_fx = playfxontag(localclientnum, level._effect["zombie_spark_trail"], self, "J_SpineUpper");
 		setfxignorepause(localclientnum, self.n_trail_fx, 1);
 	}
-	else if(isdefined(self.n_trail_fx))
+	else
 	{
-		deletefx(localclientnum, self.n_trail_fx, 1);
+		if(isdefined(self.n_trail_fx))
+		{
+			deletefx(localclientnum, self.n_trail_fx, 1);
+		}
+		self.n_trail_fx = undefined;
 	}
-	self.n_trail_fx = undefined;
 }
 
 /*

@@ -58,27 +58,33 @@ function default_onforfeit(team)
 		endreason = game["strings"]["other_teams_forfeited"];
 		winner = team;
 	}
-	else if(!isdefined(team))
-	{
-		setdvar("ui_text_endreason", game["strings"]["players_forfeited"]);
-		endreason = game["strings"]["players_forfeited"];
-		winner = level.players[0];
-	}
-	else if(isdefined(level.teams[team]))
-	{
-		endreason = game["strings"][team + "_forfeited"];
-		setdvar("ui_text_endreason", endreason);
-		winner = getwinningteamfromloser(team);
-	}
 	else
 	{
-		/#
-			assert(isdefined(team), "");
-		#/
-		/#
-			assert(0, ("" + team) + "");
-		#/
-		winner = "tie";
+		if(!isdefined(team))
+		{
+			setdvar("ui_text_endreason", game["strings"]["players_forfeited"]);
+			endreason = game["strings"]["players_forfeited"];
+			winner = level.players[0];
+		}
+		else
+		{
+			if(isdefined(level.teams[team]))
+			{
+				endreason = game["strings"][team + "_forfeited"];
+				setdvar("ui_text_endreason", endreason);
+				winner = getwinningteamfromloser(team);
+			}
+			else
+			{
+				/#
+					assert(isdefined(team), "");
+				#/
+				/#
+					assert(0, ("" + team) + "");
+				#/
+				winner = "tie";
+			}
+		}
 	}
 	level.forcedend = 1;
 	/#
@@ -313,7 +319,7 @@ function default_onscorelimit()
 {
 	if(!level.endgameonscorelimit)
 	{
-		return 0;
+		return false;
 	}
 	winner = undefined;
 	if(level.teambased)
@@ -337,7 +343,7 @@ function default_onscorelimit()
 	}
 	setdvar("ui_text_endreason", game["strings"]["score_limit_reached"]);
 	thread globallogic::endgame(winner, game["strings"]["score_limit_reached"]);
-	return 1;
+	return true;
 }
 
 /*
@@ -373,7 +379,7 @@ function default_onroundscorelimit()
 	}
 	setdvar("ui_text_endreason", game["strings"]["round_score_limit_reached"]);
 	thread globallogic::endgame(winner, game["strings"]["round_score_limit_reached"]);
-	return 1;
+	return true;
 }
 
 /*
@@ -420,7 +426,12 @@ function default_onspawnintermission(endgame)
 	{
 		self spawn(spawnpoint.origin, spawnpoint.angles);
 	}
-	util::error("");
+	else
+	{
+		/#
+			util::error("");
+		#/
+	}
 }
 
 /*

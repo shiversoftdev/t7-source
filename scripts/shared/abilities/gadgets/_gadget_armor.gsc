@@ -22,7 +22,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("gadget_armor", &__init__, undefined, undefined);
 }
@@ -308,7 +308,7 @@ function armor_damage_mod_allowed(weapon, smeansofdeath)
 		case "hero_lightninggun":
 		case "hero_lightninggun_arc":
 		{
-			return 0;
+			return false;
 		}
 		default:
 		{
@@ -333,27 +333,27 @@ function armor_damage_mod_allowed(weapon, smeansofdeath)
 		case "MOD_TRIGGER_HURT":
 		case "MOD_UNKNOWN":
 		{
-			return 0;
+			return false;
 		}
 		case "MOD_PISTOL_BULLET":
 		case "MOD_RIFLE_BULLET":
 		{
-			return 1;
+			return true;
 		}
 		case "MOD_PROJECTILE":
 		{
 			if(weapon.explosionradius == 0)
 			{
-				return 1;
+				return true;
 			}
-			return 0;
+			return false;
 		}
 		default:
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -369,17 +369,17 @@ function armor_should_take_damage(eattacker, weapon, smeansofdeath, shitloc)
 {
 	if(isdefined(eattacker) && !weaponobjects::friendlyfirecheck(self, eattacker))
 	{
-		return 0;
+		return false;
 	}
 	if(!armor_damage_mod_allowed(weapon, smeansofdeath))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(shitloc) && (shitloc == "head" || shitloc == "helmet"))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*

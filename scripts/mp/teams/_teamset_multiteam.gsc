@@ -19,7 +19,7 @@ function main()
 {
 	_teamset::init();
 	toggle = 0;
-	foreach(var_5b056450, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(toggle % 2)
 		{

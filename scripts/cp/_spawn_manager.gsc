@@ -21,7 +21,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("spawn_manager", &__init__, undefined, undefined);
 }
@@ -237,36 +237,39 @@ function set_defaults()
 		#/
 		self.sm_id = self.name;
 	}
-	else if(isdefined(self.targetname) && !strstartswith(self.targetname, "pf"))
-	{
-		/#
-			check_name(self.targetname);
-		#/
-		self.sm_id = self.targetname;
-	}
 	else
 	{
-		auto_id();
+		if(isdefined(self.targetname) && !strstartswith(self.targetname, "pf"))
+		{
+			/#
+				check_name(self.targetname);
+			#/
+			self.sm_id = self.targetname;
+		}
+		else
+		{
+			auto_id();
+		}
 	}
-	if(!isdefined(self.var_bd948b2a))
+	if(!isdefined(self.sm_count_1player))
 	{
-		self.var_bd948b2a = self.count;
+		self.sm_count_1player = self.count;
 	}
-	if(!isdefined(self.var_4cb76884))
+	if(!isdefined(self.sm_active_count_min_1player))
 	{
-		self.var_4cb76884 = (isdefined(self.sm_active_count_min) ? self.sm_active_count_min : level.spawn_manager_max_ai);
+		self.sm_active_count_min_1player = (isdefined(self.sm_active_count_min) ? self.sm_active_count_min : level.spawn_manager_max_ai);
 	}
-	if(!isdefined(self.var_6f1e6d96))
+	if(!isdefined(self.sm_active_count_max_1player))
 	{
-		self.var_6f1e6d96 = (isdefined(self.sm_active_count_max) ? self.sm_active_count_max : level.spawn_manager_max_ai);
+		self.sm_active_count_max_1player = (isdefined(self.sm_active_count_max) ? self.sm_active_count_max : level.spawn_manager_max_ai);
 	}
-	if(!isdefined(self.var_5e6995dd))
+	if(!isdefined(self.sm_group_size_min_1player))
 	{
-		self.var_5e6995dd = (isdefined(self.sm_group_size_min) ? self.sm_group_size_min : 1);
+		self.sm_group_size_min_1player = (isdefined(self.sm_group_size_min) ? self.sm_group_size_min : 1);
 	}
-	if(!isdefined(self.var_5b01a5b7))
+	if(!isdefined(self.sm_group_size_max_1player))
 	{
-		self.var_5b01a5b7 = (isdefined(self.sm_group_size_max) ? self.sm_group_size_max : 1);
+		self.sm_group_size_max_1player = (isdefined(self.sm_group_size_max) ? self.sm_group_size_max : 1);
 	}
 }
 
@@ -283,7 +286,7 @@ function check_name(str_name)
 {
 	/#
 		a_spawn_managers = getentarray("", "");
-		foreach(var_7cf60a90, sm in a_spawn_managers)
+		foreach(sm in a_spawn_managers)
 		{
 			if(sm != self)
 			{
@@ -328,21 +331,27 @@ function auto_id()
 */
 function update_count_for_coop()
 {
-	if(level.players.size >= 4 && isdefined(self.var_afecb75f))
+	if(level.players.size >= 4 && isdefined(self.sm_count_4player))
 	{
-		n_count = self.var_afecb75f;
-	}
-	else if(level.players.size >= 3 && isdefined(self.var_99d7d770))
-	{
-		n_count = self.var_99d7d770;
-	}
-	else if(level.players.size >= 2 && isdefined(self.var_722be5e1))
-	{
-		n_count = self.var_722be5e1;
+		n_count = self.sm_count_4player;
 	}
 	else
 	{
-		n_count = self.var_bd948b2a;
+		if(level.players.size >= 3 && isdefined(self.sm_count_3player))
+		{
+			n_count = self.sm_count_3player;
+		}
+		else
+		{
+			if(level.players.size >= 2 && isdefined(self.sm_count_2player))
+			{
+				n_count = self.sm_count_2player;
+			}
+			else
+			{
+				n_count = self.sm_count_1player;
+			}
+		}
 	}
 	if(n_count > 0)
 	{
@@ -365,21 +374,27 @@ function update_count_for_coop()
 */
 function update_active_count_min_for_coop()
 {
-	if(level.players.size >= 4 && isdefined(self.var_7806fba9))
+	if(level.players.size >= 4 && isdefined(self.sm_active_count_min_4player))
 	{
-		self.sm_active_count_min = self.var_7806fba9;
-	}
-	else if(level.players.size >= 3 && isdefined(self.var_c856abde))
-	{
-		self.sm_active_count_min = self.var_c856abde;
-	}
-	else if(level.players.size >= 2 && isdefined(self.var_7356d647))
-	{
-		self.sm_active_count_min = self.var_7356d647;
+		self.sm_active_count_min = self.sm_active_count_min_4player;
 	}
 	else
 	{
-		self.sm_active_count_min = self.var_4cb76884;
+		if(level.players.size >= 3 && isdefined(self.sm_active_count_min_3player))
+		{
+			self.sm_active_count_min = self.sm_active_count_min_3player;
+		}
+		else
+		{
+			if(level.players.size >= 2 && isdefined(self.sm_active_count_min_2player))
+			{
+				self.sm_active_count_min = self.sm_active_count_min_2player;
+			}
+			else
+			{
+				self.sm_active_count_min = self.sm_active_count_min_1player;
+			}
+		}
 	}
 }
 
@@ -394,21 +409,27 @@ function update_active_count_min_for_coop()
 */
 function update_active_count_max_for_coop()
 {
-	if(level.players.size >= 4 && isdefined(self.var_5132a283))
+	if(level.players.size >= 4 && isdefined(self.sm_active_count_max_4player))
 	{
-		self.sm_active_count_max = self.var_5132a283;
-	}
-	else if(level.players.size >= 3 && isdefined(self.var_1ca2b3fc))
-	{
-		self.sm_active_count_max = self.var_1ca2b3fc;
-	}
-	else if(level.players.size >= 2 && isdefined(self.var_5d148eed))
-	{
-		self.sm_active_count_max = self.var_5d148eed;
+		self.sm_active_count_max = self.sm_active_count_max_4player;
 	}
 	else
 	{
-		self.sm_active_count_max = self.var_6f1e6d96;
+		if(level.players.size >= 3 && isdefined(self.sm_active_count_max_3player))
+		{
+			self.sm_active_count_max = self.sm_active_count_max_3player;
+		}
+		else
+		{
+			if(level.players.size >= 2 && isdefined(self.sm_active_count_max_2player))
+			{
+				self.sm_active_count_max = self.sm_active_count_max_2player;
+			}
+			else
+			{
+				self.sm_active_count_max = self.sm_active_count_max_1player;
+			}
+		}
 	}
 }
 
@@ -423,21 +444,27 @@ function update_active_count_max_for_coop()
 */
 function update_group_size_min_for_coop()
 {
-	if(level.players.size >= 4 && isdefined(self.var_ae6f65e0))
+	if(level.players.size >= 4 && isdefined(self.sm_group_size_min_4player))
 	{
-		self.sm_group_size_min = self.var_ae6f65e0;
-	}
-	else if(level.players.size >= 3 && isdefined(self.var_a56a2c0f))
-	{
-		self.sm_group_size_min = self.var_a56a2c0f;
-	}
-	else if(level.players.size >= 2 && isdefined(self.var_5404b486))
-	{
-		self.sm_group_size_min = self.var_5404b486;
+		self.sm_group_size_min = self.sm_group_size_min_4player;
 	}
 	else
 	{
-		self.sm_group_size_min = self.var_5e6995dd;
+		if(level.players.size >= 3 && isdefined(self.sm_group_size_min_3player))
+		{
+			self.sm_group_size_min = self.sm_group_size_min_3player;
+		}
+		else
+		{
+			if(level.players.size >= 2 && isdefined(self.sm_group_size_min_2player))
+			{
+				self.sm_group_size_min = self.sm_group_size_min_2player;
+			}
+			else
+			{
+				self.sm_group_size_min = self.sm_group_size_min_1player;
+			}
+		}
 	}
 }
 
@@ -452,21 +479,27 @@ function update_group_size_min_for_coop()
 */
 function update_group_size_max_for_coop()
 {
-	if(level.players.size >= 4 && isdefined(self.var_c78c1f22))
+	if(level.players.size >= 4 && isdefined(self.sm_group_size_max_4player))
 	{
-		self.sm_group_size_max = self.var_c78c1f22;
-	}
-	else if(level.players.size >= 3 && isdefined(self.var_5b917145))
-	{
-		self.sm_group_size_max = self.var_5b917145;
-	}
-	else if(level.players.size >= 2 && isdefined(self.var_73a95774))
-	{
-		self.sm_group_size_max = self.var_73a95774;
+		self.sm_group_size_max = self.sm_group_size_max_4player;
 	}
 	else
 	{
-		self.sm_group_size_max = self.var_5b01a5b7;
+		if(level.players.size >= 3 && isdefined(self.sm_group_size_max_3player))
+		{
+			self.sm_group_size_max = self.sm_group_size_max_3player;
+		}
+		else
+		{
+			if(level.players.size >= 2 && isdefined(self.sm_group_size_max_2player))
+			{
+				self.sm_group_size_max = self.sm_group_size_max_2player;
+			}
+			else
+			{
+				self.sm_group_size_max = self.sm_group_size_max_1player;
+			}
+		}
 	}
 }
 
@@ -486,7 +519,7 @@ function update_for_coop()
 	update_active_count_max_for_coop();
 	update_group_size_min_for_coop();
 	update_group_size_max_for_coop();
-	foreach(var_67243056, sp in self.spawners)
+	foreach(sp in self.spawners)
 	{
 		sp update_count_for_coop();
 		sp update_active_count_min_for_coop();
@@ -767,12 +800,12 @@ function spawn_manager_kill_think()
 function start_triggers(trigger_type)
 {
 	triggers = trigger::get_all("trigger_multiple", "trigger_once", "trigger_use", "trigger_radius", "trigger_lookat", "trigger_damage", "trigger_box");
-	foreach(var_fae08ee2, trig in triggers)
+	foreach(trig in triggers)
 	{
 		if(isdefined(trig.target))
 		{
 			targets = get_spawn_manager_array(trig.target);
-			foreach(var_3a558cc4, target in targets)
+			foreach(target in targets)
 			{
 				trig thread spawn_manager_enable_trigger_think(target);
 			}
@@ -847,19 +880,19 @@ function spawn_manager_get_spawners()
 	}
 	self.allspawners = array::exclude(self.allspawners, exclude);
 	spawner_count_with_max_active = 0;
-	foreach(var_26a0864b, sp in self.allspawners)
+	foreach(sp in self.allspawners)
 	{
-		if(!isdefined(sp.var_bd948b2a))
+		if(!isdefined(sp.sm_count_1player))
 		{
-			sp.var_bd948b2a = sp.count;
+			sp.sm_count_1player = sp.count;
 		}
-		if(!isdefined(sp.var_6f1e6d96))
+		if(!isdefined(sp.sm_active_count_max_1player))
 		{
-			sp.var_6f1e6d96 = (isdefined(sp.sm_active_count_max) ? sp.sm_active_count_max : level.spawn_manager_max_ai);
+			sp.sm_active_count_max_1player = (isdefined(sp.sm_active_count_max) ? sp.sm_active_count_max : level.spawn_manager_max_ai);
 		}
-		if(!isdefined(sp.var_4cb76884))
+		if(!isdefined(sp.sm_active_count_min_1player))
 		{
-			sp.var_4cb76884 = (isdefined(sp.sm_active_count_min) ? sp.sm_active_count_min : sp.var_6f1e6d96);
+			sp.sm_active_count_min_1player = (isdefined(sp.sm_active_count_min) ? sp.sm_active_count_min : sp.sm_active_count_max_1player);
 		}
 		sp.activeai = [];
 	}
@@ -963,13 +996,16 @@ function spawn_manager_wait()
 		{
 			coop_scalar = 0.7;
 		}
-		else if(players.size == 3)
+		else
 		{
-			coop_scalar = 0.5;
-		}
-		else if(players.size == 4)
-		{
-			coop_scalar = 0.3;
+			if(players.size == 3)
+			{
+				coop_scalar = 0.5;
+			}
+			else if(players.size == 4)
+			{
+				coop_scalar = 0.3;
+			}
 		}
 		diff = self.script_wait_max - self.script_wait_min;
 		if(abs(diff) > 0)
@@ -1129,7 +1165,12 @@ function use_trig_when_complete(spawn_manager_targetname, trig_name, trig_key, o
 		level flag::wait_till(("sm_" + spawn_manager_targetname) + "_complete");
 		trigger::use(trig_name, trig_key);
 	}
-	assertmsg(("" + spawn_manager_targetname) + "");
+	else
+	{
+		/#
+			assertmsg(("" + spawn_manager_targetname) + "");
+		#/
+	}
 }
 
 /*
@@ -1156,7 +1197,12 @@ function use_trig_when_cleared(spawn_manager_targetname, trig_name, trig_key, on
 		level flag::wait_till(("sm_" + spawn_manager_targetname) + "_cleared");
 		trigger::use(trig_name, trig_key);
 	}
-	assertmsg(("" + spawn_manager_targetname) + "");
+	else
+	{
+		/#
+			assertmsg(("" + spawn_manager_targetname) + "");
+		#/
+	}
 }
 
 /*
@@ -1183,7 +1229,12 @@ function use_trig_when_enabled(spawn_manager_targetname, trig_name, trig_key, on
 		level flag::wait_till(("sm_" + spawn_manager_targetname) + "_enabled");
 		trigger::use(trig_name, trig_key);
 	}
-	assertmsg(("" + spawn_manager_targetname) + "");
+	else
+	{
+		/#
+			assertmsg(("" + spawn_manager_targetname) + "");
+		#/
+	}
 }
 
 /*
@@ -1262,7 +1313,7 @@ function enable(spawn_manager_targetname, no_assert)
 {
 	if(level flag::exists(("sm_" + spawn_manager_targetname) + "_enabled"))
 	{
-		foreach(var_caeb0bbe, sm in level.spawn_managers)
+		foreach(sm in level.spawn_managers)
 		{
 			if(isdefined(sm) && sm.sm_id == spawn_manager_targetname)
 			{
@@ -1292,7 +1343,7 @@ function disable(spawn_manager_targetname, no_assert)
 {
 	if(level flag::exists(("sm_" + spawn_manager_targetname) + "_enabled"))
 	{
-		foreach(var_d0107f70, sm in level.spawn_managers)
+		foreach(sm in level.spawn_managers)
 		{
 			if(isdefined(sm) && sm.sm_id == spawn_manager_targetname)
 			{
@@ -1322,7 +1373,7 @@ function kill(spawn_manager_targetname, no_assert)
 {
 	if(level flag::exists(("sm_" + spawn_manager_targetname) + "_enabled"))
 	{
-		foreach(var_341f5413, sm in level.spawn_managers)
+		foreach(sm in level.spawn_managers)
 		{
 			if(isdefined(sm) && sm.sm_id == spawn_manager_targetname)
 			{
@@ -1355,9 +1406,9 @@ function is_enabled(spawn_manager_targetname)
 	{
 		if(level flag::get(("sm_" + spawn_manager_targetname) + "_enabled"))
 		{
-			return 1;
+			return true;
 		}
-		return 0;
+		return false;
 	}
 	/#
 		assertmsg(("" + spawn_manager_targetname) + "");
@@ -1379,9 +1430,9 @@ function is_complete(spawn_manager_targetname)
 	{
 		if(level flag::get(("sm_" + spawn_manager_targetname) + "_complete"))
 		{
-			return 1;
+			return true;
 		}
-		return 0;
+		return false;
 	}
 	/#
 		assertmsg(("" + spawn_manager_targetname) + "");
@@ -1403,9 +1454,9 @@ function is_cleared(spawn_manager_targetname)
 	{
 		if(level flag::get(("sm_" + spawn_manager_targetname) + "_cleared"))
 		{
-			return 1;
+			return true;
 		}
-		return 0;
+		return false;
 	}
 	/#
 		assertmsg(("" + spawn_manager_targetname) + "");
@@ -1427,9 +1478,9 @@ function is_killed(spawn_manager_targetname)
 	{
 		if(level flag::get(("sm_" + spawn_manager_targetname) + "_killed"))
 		{
-			return 1;
+			return true;
 		}
-		return 0;
+		return false;
 	}
 	/#
 		assertmsg(("" + spawn_manager_targetname) + "");
@@ -1451,7 +1502,12 @@ function wait_till_cleared(spawn_manager_targetname)
 	{
 		level flag::wait_till(("sm_" + spawn_manager_targetname) + "_cleared");
 	}
-	assertmsg(("" + spawn_manager_targetname) + "");
+	else
+	{
+		/#
+			assertmsg(("" + spawn_manager_targetname) + "");
+		#/
+	}
 }
 
 /*
@@ -1475,7 +1531,12 @@ function wait_till_ai_remaining(spawn_manager_targetname, count_to_reach)
 	{
 		level flag::wait_till(("sm_" + spawn_manager_targetname) + "_complete");
 	}
-	assertmsg(("" + spawn_manager_targetname) + "");
+	else
+	{
+		/#
+			assertmsg(("" + spawn_manager_targetname) + "");
+		#/
+	}
 	if(level flag::get(("sm_" + spawn_manager_targetname) + "_cleared"))
 	{
 		return;
@@ -1501,7 +1562,12 @@ function wait_till_complete(spawn_manager_targetname)
 	{
 		level flag::wait_till(("sm_" + spawn_manager_targetname) + "_complete");
 	}
-	assertmsg(("" + spawn_manager_targetname) + "");
+	else
+	{
+		/#
+			assertmsg(("" + spawn_manager_targetname) + "");
+		#/
+	}
 }
 
 /*
@@ -1519,7 +1585,12 @@ function wait_till_enabled(spawn_manager_targetname)
 	{
 		level flag::wait_till(("sm_" + spawn_manager_targetname) + "_enabled");
 	}
-	assertmsg(("" + spawn_manager_targetname) + "");
+	else
+	{
+		/#
+			assertmsg(("" + spawn_manager_targetname) + "");
+		#/
+	}
 }
 
 /*
@@ -1537,7 +1608,12 @@ function wait_till_spawned_count(spawn_manager_targetname, count)
 	{
 		level flag::wait_till(("sm_" + spawn_manager_targetname) + "_enabled");
 	}
-	assertmsg(("" + spawn_manager_targetname) + "");
+	else
+	{
+		/#
+			assertmsg(("" + spawn_manager_targetname) + "");
+		#/
+	}
 	spawn_manager = get_spawn_manager_array(spawn_manager_targetname);
 	/#
 		assert(spawn_manager.size, "");

@@ -27,7 +27,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_attackables", &__init__, &__main__, undefined);
 }
@@ -45,7 +45,7 @@ function __init__()
 {
 	level.attackablecallback = &attackable_callback;
 	level.attackables = struct::get_array("scriptbundle_attackables", "classname");
-	foreach(var_6516bd2f, attackable in level.attackables)
+	foreach(attackable in level.attackables)
 	{
 		attackable.bundle = struct::get_script_bundle("attackables", attackable.scriptbundlename);
 		if(isdefined(attackable.target))
@@ -86,7 +86,7 @@ function __main__()
 */
 function get_attackable()
 {
-	foreach(var_7012b4f5, attackable in level.attackables)
+	foreach(attackable in level.attackables)
 	{
 		if(!(isdefined(attackable.is_active) && attackable.is_active))
 		{
@@ -125,16 +125,16 @@ function get_attackable()
 function get_attackable_slot(entity)
 {
 	self clear_slots();
-	foreach(var_1db7f1c8, slot in self.slot)
+	foreach(slot in self.slot)
 	{
 		if(!isdefined(slot.entity))
 		{
 			slot.entity = entity;
 			entity.attackable_slot = slot;
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -146,9 +146,9 @@ function get_attackable_slot(entity)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function clear_slots()
+function private clear_slots()
 {
-	foreach(var_e1142790, slot in self.slot)
+	foreach(slot in self.slot)
 	{
 		if(!isalive(slot.entity))
 		{

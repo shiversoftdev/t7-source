@@ -44,7 +44,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("bot_mp", &__init__, undefined, undefined);
 }
@@ -169,7 +169,7 @@ function get_host_team()
 */
 function is_bot_comp_stomp()
 {
-	return 0;
+	return false;
 }
 
 /*
@@ -318,7 +318,7 @@ function do_supplydrop(maxrange = 1400)
 	useradiussq = 3844;
 	closestcrate = undefined;
 	closestcratedistsq = undefined;
-	foreach(var_2e7277ad, crate in crates)
+	foreach(crate in crates)
 	{
 		if(!crate isonground())
 		{
@@ -337,7 +337,7 @@ function do_supplydrop(maxrange = 1400)
 				continue;
 			}
 			self press_use_button();
-			return 1;
+			return true;
 		}
 		if(!self has_minimap() && !self botsighttracepassed(crate))
 		{
@@ -357,10 +357,10 @@ function do_supplydrop(maxrange = 1400)
 		if(self botsetgoal(point))
 		{
 			self thread watch_crate(closestcrate);
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -542,10 +542,10 @@ function remove_best_bot(players)
 	bots = filter_bots(players);
 	if(!bots.size)
 	{
-		return 0;
+		return false;
 	}
 	bestbots = [];
-	foreach(var_f3362c58, bot in bots)
+	foreach(bot in bots)
 	{
 		if(bot.sessionstate == "spectator")
 		{
@@ -564,7 +564,7 @@ function remove_best_bot(players)
 	{
 		remove_bot(bots[randomint(bots.size)]);
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -580,7 +580,7 @@ function choose_class()
 {
 	if(isdefined(level.disableclassselection) && level.disableclassselection)
 	{
-		return 0;
+		return false;
 	}
 	currclass = self bot_loadout::get_current_class();
 	if(!isdefined(currclass) || randomint(100) < (isdefined(level.botsettings.changeclassweight) ? level.botsettings.changeclassweight : 0))
@@ -590,10 +590,10 @@ function choose_class()
 	}
 	if(!isdefined(classname) || classname === currclass)
 	{
-		return 0;
+		return false;
 	}
 	self notify(#"menuresponse", "ChooseClass_InGame", classname);
-	return 1;
+	return true;
 }
 
 /*
@@ -613,7 +613,7 @@ function use_killstreak()
 	}
 	weapons = self getweaponslist();
 	inventoryweapon = self getinventoryweapon();
-	foreach(var_6a0695f6, weapon in weapons)
+	foreach(weapon in weapons)
 	{
 		killstreak = killstreaks::get_killstreak_for_weapon(weapon);
 		if(!isdefined(killstreak))
@@ -804,66 +804,66 @@ function init_bot_gametype()
 		case "ball":
 		{
 			bot_ball::init();
-			return 1;
+			return true;
 		}
 		case "conf":
 		{
 			bot_conf::init();
-			return 1;
+			return true;
 		}
 		case "ctf":
 		{
 			bot_ctf::init();
-			return 1;
+			return true;
 		}
 		case "dem":
 		{
 			bot_dem::init();
-			return 1;
+			return true;
 		}
 		case "dm":
 		{
-			return 1;
+			return true;
 		}
 		case "dom":
 		{
 			bot_dom::init();
-			return 1;
+			return true;
 		}
 		case "escort":
 		{
 			namespace_ebd80b8b::init();
-			return 1;
+			return true;
 		}
 		case "infect":
 		{
-			return 1;
+			return true;
 		}
 		case "gun":
 		{
-			return 1;
+			return true;
 		}
 		case "koth":
 		{
 			bot_koth::init();
-			return 1;
+			return true;
 		}
 		case "sd":
 		{
 			bot_sd::init();
-			return 1;
+			return true;
 		}
 		case "clean":
 		{
 			bot_clean::init();
-			return 1;
+			return true;
 		}
 		case "tdm":
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -915,7 +915,7 @@ function get_bot_settings()
 */
 function friend_goal_in_radius(goal_name, origin, radius)
 {
-	return 0;
+	return false;
 }
 
 /*
@@ -929,7 +929,7 @@ function friend_goal_in_radius(goal_name, origin, radius)
 */
 function friend_in_radius(goal_name, origin, radius)
 {
-	return 0;
+	return false;
 }
 
 /*
@@ -971,7 +971,7 @@ function get_closest_enemy(origin, someflag)
 */
 function bot_vehicle_weapon_ammo(weaponname)
 {
-	return 0;
+	return false;
 }
 
 /*
@@ -985,7 +985,7 @@ function bot_vehicle_weapon_ammo(weaponname)
 */
 function navmesh_points_visible(origin, point)
 {
-	return 0;
+	return false;
 }
 
 /*
@@ -1016,7 +1016,7 @@ function function_682f20bc(cmd)
 		var_d03a6f21 = strtok(cmd, "");
 		if(var_d03a6f21.size == 0)
 		{
-			return 0;
+			return false;
 		}
 		host = util::gethostplayerforbots();
 		team = get_host_team();
@@ -1037,7 +1037,7 @@ function function_682f20bc(cmd)
 				{
 					add_bot(team);
 				}
-				return 1;
+				return true;
 			}
 			case "":
 			{
@@ -1046,7 +1046,7 @@ function function_682f20bc(cmd)
 			case "":
 			{
 				remove_bots(undefined, team);
-				return 1;
+				return true;
 			}
 			case "":
 			{
@@ -1059,12 +1059,12 @@ function function_682f20bc(cmd)
 				{
 					bot thread fixed_spawn_override();
 				}
-				return 1;
+				return true;
 			}
 			case "":
 			{
 				players = getplayers();
-				foreach(var_2ddeae41, player in players)
+				foreach(player in players)
 				{
 					if(!player util::is_bot())
 					{
@@ -1078,10 +1078,10 @@ function function_682f20bc(cmd)
 					player setspawnweapon(weapon);
 					player teams::set_player_model(player.team, weapon);
 				}
-				return 1;
+				return true;
 			}
 		}
-		return 0;
+		return false;
 	#/
 }
 
@@ -1124,7 +1124,7 @@ function bot_turn_on_gadget(gadget)
 {
 	/#
 		players = getplayers();
-		foreach(var_e46762fd, player in players)
+		foreach(player in players)
 		{
 			if(!player util::is_bot())
 			{

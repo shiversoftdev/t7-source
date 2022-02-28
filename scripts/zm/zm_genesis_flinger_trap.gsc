@@ -167,25 +167,25 @@ function function_dc9dafb8(e_player)
 	if(isdefined(e_player.zombie_vars["zombie_powerup_minigun_on"]) && e_player.zombie_vars["zombie_powerup_minigun_on"])
 	{
 		self sethintstring(&"");
-		return 0;
+		return false;
 	}
 	if(isdefined(self.stub.script_int) && !level flag::get("power_on" + self.stub.script_int))
 	{
 		self sethintstring(&"ZOMBIE_NEED_POWER");
-		return 0;
+		return false;
 	}
 	if(self.stub.var_60532813 flag::get("trap_active"))
 	{
 		self sethintstring(&"ZOMBIE_TRAP_ACTIVE");
-		return 0;
+		return false;
 	}
 	if(self.stub.var_60532813 flag::get("trap_cooldown"))
 	{
 		self sethintstring(&"ZOMBIE_TRAP_COOLDOWN");
-		return 0;
+		return false;
 	}
 	self sethintstring(&"ZM_GENESIS_FLINGER_TRAP_USE", 1000);
-	return 1;
+	return true;
 }
 
 /*
@@ -324,7 +324,7 @@ function function_ef013ee8(var_c4f1ee44, e_player)
 */
 function function_e0c7ad1e()
 {
-	foreach(var_c5f589f9, e_player in level.activeplayers)
+	foreach(e_player in level.activeplayers)
 	{
 		if(e_player istouching(self))
 		{
@@ -373,7 +373,7 @@ function function_fce6cca8(e_trigger)
 function function_54227761()
 {
 	a_ai_zombies = getaiteamarray(level.zombie_team);
-	foreach(var_8cbafcb9, ai_zombie in a_ai_zombies)
+	foreach(ai_zombie in a_ai_zombies)
 	{
 		if(ai_zombie istouching(self) && (!(isdefined(self.var_b07a0f56) && self.var_b07a0f56)))
 		{
@@ -455,7 +455,7 @@ function function_f5ad0ae6()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function do_zombie_explode()
+function private do_zombie_explode()
 {
 	util::wait_network_frame();
 	if(isdefined(self))

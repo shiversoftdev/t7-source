@@ -52,7 +52,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function opt_in()
+function autoexec opt_in()
 {
 	level.aat_in_use = 1;
 	level.bgb_in_use = 1;
@@ -714,14 +714,17 @@ function cosmodrome_screen_switch(client_num, state, oldstate)
 			screen_to_display = level.magic_box_tv_on;
 		}
 	}
-	else if(state == "f")
-	{
-		screen_to_display = level._cosmodrome_fire_sale;
-	}
 	else
 	{
-		array_number = int(state);
-		screen_to_display = level._box_locations[array_number];
+		if(state == "f")
+		{
+			screen_to_display = level._cosmodrome_fire_sale;
+		}
+		else
+		{
+			array_number = int(state);
+			screen_to_display = level._box_locations[array_number];
+		}
 	}
 	stop_notify = "stop_tv_swap";
 	for(i = 0; i < level.cosmodrome_tvs[client_num].size; i++)
@@ -813,12 +816,15 @@ function play_magic_box_tv_audio(state)
 			self.alias = "amb_tv_static";
 		}
 	}
-	else if(state == "f")
-	{
-	}
 	else
 	{
-		self.alias = "amb_tv_static";
+		if(state == "f")
+		{
+		}
+		else
+		{
+			self.alias = "amb_tv_static";
+		}
 	}
 	if(!isdefined(self.alias))
 	{
@@ -930,32 +936,32 @@ function function_b2c64ce4(n_state)
 	{
 		case 1:
 		{
-			return 1;
+			return true;
 		}
 		case 2:
 		{
 			if(!isdefined(self.script_noteworthy))
 			{
-				return 0;
+				return false;
 			}
 			else
 			{
-				return 1;
+				return true;
 			}
 		}
 		case 3:
 		{
-			return 0;
+			return false;
 		}
 		case 0:
 		{
 			if(!isdefined(self.script_noteworthy))
 			{
-				return 1;
+				return true;
 			}
 			else
 			{
-				return 0;
+				return false;
 			}
 		}
 	}
@@ -1002,9 +1008,9 @@ function function_53c16d30(v_pos)
 {
 	if(self.origin != v_pos)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1463,12 +1469,15 @@ function launch_panel_centrifuge_status(localclientnum, oldval, newval, bnewent,
 		self.centrifuge_status = playfxontag(localclientnum, level._effect["panel_red"], self, "tag_home");
 		setfxignorepause(localclientnum, self.centrifuge_status, 1);
 	}
-	else if(isdefined(self.centrifuge_status))
+	else
 	{
-		stopfx(localclientnum, self.centrifuge_status);
+		if(isdefined(self.centrifuge_status))
+		{
+			stopfx(localclientnum, self.centrifuge_status);
+		}
+		self.centrifuge_status = playfxontag(localclientnum, level._effect["panel_green"], self, "tag_home");
+		setfxignorepause(localclientnum, self.centrifuge_status, 1);
 	}
-	self.centrifuge_status = playfxontag(localclientnum, level._effect["panel_green"], self, "tag_home");
-	setfxignorepause(localclientnum, self.centrifuge_status, 1);
 }
 
 /*

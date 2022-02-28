@@ -72,7 +72,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function function_d9af860b()
+function autoexec function_d9af860b()
 {
 	level.aat_in_use = 1;
 	level.bgb_in_use = 1;
@@ -165,9 +165,9 @@ function function_869d6f66()
 {
 	if(!isdefined(self zm_bgb_anywhere_but_here::function_728dfe3()))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -340,7 +340,7 @@ function assign_lowest_unused_character_index()
 		charindexarray = array::randomize(charindexarray);
 		return charindexarray[0];
 	}
-	foreach(var_8d3c4d3, player in level.players)
+	foreach(player in level.players)
 	{
 		if(isdefined(player.characterindex))
 		{
@@ -467,7 +467,7 @@ function function_54da140a()
 			var_343b1937 = a_s_spots[i].script_int;
 		}
 		var_c15b2128 = [];
-		foreach(var_32ab2a3a, sp_zombie in level.zombie_spawners)
+		foreach(sp_zombie in level.zombie_spawners)
 		{
 			if(sp_zombie.script_int == var_343b1937)
 			{
@@ -566,7 +566,7 @@ function init_weapon_cabinet()
 	}
 	var_e453319 = struct::get(var_68c121fd.target, "targetname");
 	var_e41aa7b8 = getentarray(var_e453319.target, "targetname");
-	foreach(var_7967c090, mdl_door in var_e41aa7b8)
+	foreach(mdl_door in var_e41aa7b8)
 	{
 		mdl_door thread weapon_cabinet_door_open(mdl_door.script_noteworthy);
 	}
@@ -686,7 +686,7 @@ function function_ab3e14a3()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_c86e49f5()
+function private function_c86e49f5()
 {
 	self.cant_move_cb = &function_e6b1e0be;
 }
@@ -700,7 +700,7 @@ private function function_c86e49f5()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_e6b1e0be()
+function private function_e6b1e0be()
 {
 	self pushactors(0);
 	self.enablepushtime = gettime() + 1000;

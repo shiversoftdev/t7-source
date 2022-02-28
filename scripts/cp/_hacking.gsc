@@ -29,7 +29,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("hacking", &__init__, undefined, undefined);
 }
@@ -85,17 +85,20 @@ function init_hack_trigger(n_hacking_time = 0.5, str_objective = &"cp_hacking", 
 	{
 		a_keyline_objects = [];
 	}
-	else if(!isdefined(a_keyline_objects))
+	else
 	{
-		a_keyline_objects = [];
-	}
-	else if(!isarray(a_keyline_objects))
-	{
-		a_keyline_objects = array(a_keyline_objects);
-	}
-	foreach(var_a2a5264e, mdl in a_keyline_objects)
-	{
-		mdl oed::enable_keyline(1);
+		if(!isdefined(a_keyline_objects))
+		{
+			a_keyline_objects = [];
+		}
+		else if(!isarray(a_keyline_objects))
+		{
+			a_keyline_objects = array(a_keyline_objects);
+		}
+		foreach(mdl in a_keyline_objects)
+		{
+			mdl oed::enable_keyline(1);
+		}
 	}
 	visuals = [];
 	game_object = gameobjects::create_use_object("any", self, visuals, (0, 0, 0), str_objective);

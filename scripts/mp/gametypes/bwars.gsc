@@ -170,13 +170,16 @@ function onroundendgame(roundwinner)
 	{
 		winner = "tie";
 	}
-	else if(axisscore > alliedscore)
-	{
-		winner = "axis";
-	}
 	else
 	{
-		winner = "allies";
+		if(axisscore > alliedscore)
+		{
+			winner = "axis";
+		}
+		else
+		{
+			winner = "allies";
+		}
 	}
 	return winner;
 }
@@ -221,7 +224,7 @@ function bwars_init()
 		return;
 	}
 	level.bwars_flags = [];
-	foreach(var_b415c14e, trigger in triggers)
+	foreach(trigger in triggers)
 	{
 		visuals = trigger flag_model_init();
 		flag = gameobjects::create_use_object("neutral", trigger, visuals, vectorscale((0, 0, 1), 100));
@@ -381,7 +384,7 @@ function bwars_scoreboard_update()
 		names[i] = "";
 		scores[i] = -1;
 	}
-	foreach(var_7eb01f0c, player in players)
+	foreach(player in players)
 	{
 		player player_hud_update(names, scores);
 	}
@@ -492,7 +495,7 @@ function player_world_icon_init()
 		return;
 	}
 	self.bwars_icons = [];
-	foreach(var_e33314ba, flag in level.bwars_flags)
+	foreach(flag in level.bwars_flags)
 	{
 		icon = newclienthudelem(self);
 		icon.flag = flag;
@@ -521,7 +524,7 @@ function player_world_icon_update()
 	/#
 		assert(isdefined(self.bwars_icons));
 	#/
-	foreach(var_f66b2791, icon in self.bwars_icons)
+	foreach(icon in self.bwars_icons)
 	{
 		label = icon.flag gameobjects::get_label();
 		owner = icon.flag gameobjects::get_owner_team();
@@ -551,7 +554,7 @@ function player_world_icon_update()
 function world_icon_update()
 {
 	players = getplayers();
-	foreach(var_d3643edb, player in players)
+	foreach(player in players)
 	{
 		player player_world_icon_update();
 	}
@@ -644,7 +647,7 @@ function statusdialog(dialog, team)
 */
 function statusdialogenemies(dialog, friend_team)
 {
-	foreach(var_99c6d62c, team in level.teams)
+	foreach(team in level.teams)
 	{
 		if(team == friend_team)
 		{
@@ -776,7 +779,7 @@ function bwars_update_scores()
 {
 	while(!level.gameended)
 	{
-		foreach(var_9a28a07c, flag in level.bwars_flags)
+		foreach(flag in level.bwars_flags)
 		{
 			owner = flag gameobjects::get_owner_team();
 			if(isplayer(owner))
@@ -786,7 +789,7 @@ function bwars_update_scores()
 		}
 		level bwars_scoreboard_update();
 		players = getplayers();
-		foreach(var_d12044a9, player in players)
+		foreach(player in players)
 		{
 			player globallogic::checkscorelimit();
 		}
@@ -1238,20 +1241,23 @@ function dominated_challenge_check()
 		{
 			allied_flags++;
 		}
-		else if(flag_team == "axis")
-		{
-			axis_flags++;
-		}
 		else
 		{
-			return 0;
+			if(flag_team == "axis")
+			{
+				axis_flags++;
+			}
+			else
+			{
+				return false;
+			}
 		}
 		if(allied_flags > 0 && axis_flags > 0)
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1281,10 +1287,10 @@ function dominated_check()
 		}
 		if(allied_flags > 0 && axis_flags > 0)
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1329,20 +1335,20 @@ function isscoreboosting(player, flag)
 {
 	if(!level.rankedmatch)
 	{
-		return 0;
+		return false;
 	}
 	if(player.capsperminute > level.playercapturelpm)
 	{
-		return 1;
+		return true;
 	}
 	if(flag.capsperminute > level.flagcapturelpm)
 	{
-		return 1;
+		return true;
 	}
 	if(player.numcaps > level.playercapturemax)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 

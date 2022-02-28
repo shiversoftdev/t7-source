@@ -137,7 +137,7 @@ function onstartgametype()
 	spawning::create_map_placed_influencers();
 	level.spawnmins = (0, 0, 0);
 	level.spawnmaxs = (0, 0, 0);
-	foreach(var_e6446b18, team in level.teams)
+	foreach(team in level.teams)
 	{
 		setupteam(team);
 	}
@@ -149,7 +149,7 @@ function onstartgametype()
 		trigger.checkpointindex = index;
 		trigger thread watchcheckpointtrigger();
 		closest = 99999999;
-		foreach(var_bc6b0872, spawn in spawns)
+		foreach(spawn in spawns)
 		{
 			dist = distancesquared(spawn.origin, trigger.origin);
 			if(dist < closest)
@@ -166,10 +166,10 @@ function onstartgametype()
 	/#
 		assert(player_starts.size);
 	#/
-	foreach(var_eefd79cb, track in level.frgame.tracks)
+	foreach(track in level.frgame.tracks)
 	{
 		closest = 99999999;
-		foreach(var_4513c77c, start in player_starts)
+		foreach(start in player_starts)
 		{
 			dist = distancesquared(start.origin, track.starttrigger.origin);
 			if(dist < closest)
@@ -186,7 +186,7 @@ function onstartgametype()
 	/#
 		assert(level.frgame.deathtriggers.size);
 	#/
-	foreach(var_ab75deae, trigger in level.frgame.deathtriggers)
+	foreach(trigger in level.frgame.deathtriggers)
 	{
 		trigger thread watchdeathtrigger();
 	}
@@ -205,10 +205,10 @@ function onstartgametype()
 	{
 		level.displayroundendtext = 1;
 	}
-	foreach(var_acd59c19, item in level.pickup_items)
+	foreach(item in level.pickup_items)
 	{
 		closest = 99999999;
-		foreach(var_6ae20026, trigger in level.frgame.checkpointtriggers)
+		foreach(trigger in level.frgame.checkpointtriggers)
 		{
 			dist = distancesquared(item.origin, trigger.origin);
 			if(dist < closest)
@@ -758,7 +758,7 @@ function setup_weapon_targets()
 	self.weaponobject.targets = [];
 	self.weaponobject.target_visuals = [];
 	targets = getentarray(target_name, "targetname");
-	foreach(var_f4f8b3d9, target in targets)
+	foreach(target in targets)
 	{
 		if(target.script_noteworthy == "fr_target")
 		{
@@ -769,9 +769,9 @@ function setup_weapon_targets()
 			self.weaponobject.target_visuals[self.weaponobject.target_visuals.size] = target;
 		}
 	}
-	foreach(var_26a0864b, target in self.weaponobject.targets)
+	foreach(target in self.weaponobject.targets)
 	{
-		foreach(var_da9b9179, visual in self.weaponobject.target_visuals)
+		foreach(visual in self.weaponobject.target_visuals)
 		{
 			if(target.origin == visual.origin)
 			{
@@ -779,7 +779,7 @@ function setup_weapon_targets()
 			}
 		}
 	}
-	foreach(var_f58ebfe8, target in self.weaponobject.targets)
+	foreach(target in self.weaponobject.targets)
 	{
 		target.blocker = getent(target.target, "targetname");
 		if(isdefined(target.blocker))
@@ -898,7 +898,7 @@ function blocker_disable()
 */
 function reset_targets()
 {
-	foreach(var_bea872b0, target in self.targets)
+	foreach(target in self.targets)
 	{
 		target.blocker blocker_enable();
 		target.visual show();
@@ -918,7 +918,7 @@ function reset_targets()
 */
 function reset_all_targets()
 {
-	foreach(var_af474816, trigger in level.frgame.checkpointtriggers)
+	foreach(trigger in level.frgame.checkpointtriggers)
 	{
 		if(isdefined(trigger.weaponobject))
 		{
@@ -1072,9 +1072,9 @@ function end_game_state()
 	state = level clientfield::get("freerun_state");
 	if(state == 2 || state == 4 || state == 5)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1208,25 +1208,25 @@ function ignorebulletsfired(weapon)
 {
 	if(!isdefined(level.frgame.activespawnpoint))
 	{
-		return 0;
+		return false;
 	}
 	if(!isdefined(level.frgame.activespawnpoint.weaponobject))
 	{
-		return 0;
+		return false;
 	}
 	grace_period = (weapon.firetime * 4) * 1000;
 	if((level.frgame.activespawnpoint.weaponobject.targetshottime + grace_period) >= gettime())
 	{
-		return 1;
+		return true;
 	}
-	foreach(var_f0557cd9, target in level.frgame.activespawnpoint.weaponobject.targets)
+	foreach(target in level.frgame.activespawnpoint.weaponobject.targets)
 	{
 		if(!target.disabled)
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1312,19 +1312,22 @@ function respawnatactivecheckpoint()
 		self setorigin(self.respawn_position);
 		self setvelocity((0, 0, 0));
 	}
-	else if(isdefined(level.frgame.activespawnpoint.spawnpoint))
-	{
-		self setorigin(level.frgame.activespawnpoint.spawnpoint.origin);
-		self setplayerangles(level.frgame.activespawnpoint.spawnpoint.angles);
-		self setvelocity((0, 0, 0));
-	}
 	else
 	{
-		spawn_origin = level.frgame.activespawnlocation;
-		spawn_origin = spawn_origin + vectorscale((0, 0, 1), 5);
-		self setorigin(spawn_origin);
-		self setplayerangles(level.frgame.activespawnangles);
-		self setvelocity((0, 0, 0));
+		if(isdefined(level.frgame.activespawnpoint.spawnpoint))
+		{
+			self setorigin(level.frgame.activespawnpoint.spawnpoint.origin);
+			self setplayerangles(level.frgame.activespawnpoint.spawnpoint.angles);
+			self setvelocity((0, 0, 0));
+		}
+		else
+		{
+			spawn_origin = level.frgame.activespawnlocation;
+			spawn_origin = spawn_origin + vectorscale((0, 0, 1), 5);
+			self setorigin(spawn_origin);
+			self setplayerangles(level.frgame.activespawnangles);
+			self setvelocity((0, 0, 0));
+		}
 	}
 	self setdoublejumpenergy(1);
 	self take_all_player_weapons(1, 1);
@@ -1550,7 +1553,7 @@ function take_all_player_weapons(only_default, immediate)
 		}
 	}
 	weaponslist = self getweaponslist();
-	foreach(var_b741a70, weapon in weaponslist)
+	foreach(weapon in weaponslist)
 	{
 		if(weapon != level.weaponbasemeleeheld && keep_weapon != weapon)
 		{
@@ -1610,7 +1613,7 @@ function take_players_out_of_tutorial_mode()
 {
 	if(level.frgame.tutorials)
 	{
-		foreach(var_833906ab, player in level.players)
+		foreach(player in level.players)
 		{
 			player _tutorial_mode(0);
 		}
@@ -1630,7 +1633,7 @@ function put_players_in_tutorial_mode()
 {
 	if(level.frgame.tutorials)
 	{
-		foreach(var_e5df4b4c, player in level.players)
+		foreach(player in level.players)
 		{
 			player _tutorial_mode(1);
 		}
@@ -1650,7 +1653,7 @@ function enable_all_tutorial_triggers()
 {
 	if(level.frgame.tutorials)
 	{
-		foreach(var_60a3082, trigger in level.frgame.tutorialtriggers)
+		foreach(trigger in level.frgame.tutorialtriggers)
 		{
 			trigger triggerenable(1);
 		}
@@ -1674,7 +1677,7 @@ function activate_tutorial_mode()
 	}
 	level.frgame.tutorials = 1;
 	wait(1);
-	foreach(var_c7ed7ccc, trigger in level.frgame.tutorialtriggers)
+	foreach(trigger in level.frgame.tutorialtriggers)
 	{
 		trigger thread watchtutorialtrigger();
 	}

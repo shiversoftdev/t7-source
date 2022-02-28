@@ -25,7 +25,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("gadget_heat_wave", &__init__, undefined, undefined);
 }
@@ -297,25 +297,25 @@ function is_entity_valid(entity, heatwave)
 {
 	if(!isplayer(entity))
 	{
-		return 0;
+		return false;
 	}
 	if(self getentitynumber() == entity getentitynumber())
 	{
-		return 0;
+		return false;
 	}
 	if(!isalive(entity))
 	{
-		return 0;
+		return false;
 	}
 	if(!entity util::mayapplyscreeneffect())
 	{
-		return 0;
+		return false;
 	}
 	if(!heat_wave_trace_entity(entity, heatwave))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -332,12 +332,12 @@ function heat_wave_trace_entity(entity, heatwave)
 	entitypoint = entity.origin + vectorscale((0, 0, 1), 50);
 	if(!bullettracepassed(heatwave.origin, entitypoint, 1, self, undefined, 0, 1))
 	{
-		return 0;
+		return false;
 	}
 	/#
 		thread util::draw_debug_line(heatwave.origin, entitypoint, 1);
 	#/
-	return 1;
+	return true;
 }
 
 /*
@@ -452,7 +452,7 @@ function heat_wave_damage_entities(weapon, heatwave)
 	while((250 + starttime) > gettime())
 	{
 		entities = getdamageableentarray(heatwave.origin, heatwave.radius, 1);
-		foreach(var_5f70e9dc, entity in entities)
+		foreach(entity in entities)
 		{
 			if(isdefined(entity._heat_wave_damaged_time) && ((entity._heat_wave_damaged_time + 250) + 1) > gettime())
 			{

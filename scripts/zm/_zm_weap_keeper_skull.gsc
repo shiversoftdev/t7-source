@@ -42,7 +42,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("keeper_skull", &__init__, &__main__, undefined);
 }
@@ -365,7 +365,7 @@ function function_32afe89a(ai_zombie)
 	var_9ae6d5f2 = 0;
 	while(self util::attack_button_held() && self function_97d08b97() && !self.var_e1f8edd6 && self.var_118ab24e)
 	{
-		if(isdefined(ai_zombie.var_3940f450) && ai_zombie.var_3940f450)
+		if(isdefined(ai_zombie.b_is_spider) && ai_zombie.b_is_spider)
 		{
 			self function_4aedb20b(1);
 			ai_zombie dodamage(ai_zombie.health, ai_zombie.origin, self);
@@ -494,34 +494,37 @@ function function_e703c25f()
 					wait(0.05);
 				}
 			}
-			else if(self.var_118ab24e && !self attackbuttonpressed() && !self.var_e1f8edd6 && !self ismeleeing())
-			{
-				if(!self.var_141d363e)
-				{
-					self.var_141d363e = 1;
-					self clientfield::set_to_player("skull_torch_fx", 1);
-					self clientfield::set("skull_torch_3p_fx", 1);
-					self clientfield::set("skull_emissive", 1);
-					self thread function_993fa661();
-				}
-				a_zombies = getaiteamarray(level.zombie_team);
-				a_targets = util::get_array_of_closest(self.origin, a_zombies, undefined, undefined, 500);
-				foreach(var_c95cc9b2, ai_zombie in a_targets)
-				{
-					if(ai_zombie.var_9b59d7f8 !== 1 && self function_5fa274c1(ai_zombie) && ai_zombie.completed_emerging_into_playable_area === 1 && (!(isdefined(ai_zombie.thrasherconsumed) && ai_zombie.thrasherconsumed)) && (!(isdefined(ai_zombie.var_3f6ea790) && ai_zombie.var_3f6ea790)))
-					{
-						self thread function_c2e953fb(ai_zombie);
-						self notify(#"skullweapon_mesmerized_zombie");
-					}
-				}
-				wait(0.05);
-			}
 			else
 			{
-				self.var_141d363e = 0;
-				self clientfield::set_to_player("skull_torch_fx", 0);
-				self clientfield::set("skull_torch_3p_fx", 0);
-				self clientfield::set("skull_emissive", 0);
+				if(self.var_118ab24e && !self attackbuttonpressed() && !self.var_e1f8edd6 && !self ismeleeing())
+				{
+					if(!self.var_141d363e)
+					{
+						self.var_141d363e = 1;
+						self clientfield::set_to_player("skull_torch_fx", 1);
+						self clientfield::set("skull_torch_3p_fx", 1);
+						self clientfield::set("skull_emissive", 1);
+						self thread function_993fa661();
+					}
+					a_zombies = getaiteamarray(level.zombie_team);
+					a_targets = util::get_array_of_closest(self.origin, a_zombies, undefined, undefined, 500);
+					foreach(ai_zombie in a_targets)
+					{
+						if(ai_zombie.var_9b59d7f8 !== 1 && self function_5fa274c1(ai_zombie) && ai_zombie.completed_emerging_into_playable_area === 1 && (!(isdefined(ai_zombie.thrasherconsumed) && ai_zombie.thrasherconsumed)) && (!(isdefined(ai_zombie.var_3f6ea790) && ai_zombie.var_3f6ea790)))
+						{
+							self thread function_c2e953fb(ai_zombie);
+							self notify(#"skullweapon_mesmerized_zombie");
+						}
+					}
+					wait(0.05);
+				}
+				else
+				{
+					self.var_141d363e = 0;
+					self clientfield::set_to_player("skull_torch_fx", 0);
+					self clientfield::set("skull_torch_3p_fx", 0);
+					self clientfield::set("skull_emissive", 0);
+				}
 			}
 		}
 		else
@@ -583,32 +586,35 @@ function function_c2e953fb(ai_zombie)
 		if(ai_zombie.var_9b59d7f8 !== 1)
 		{
 			ai_zombie.var_9b59d7f8 = 1;
-			if(!(isdefined(ai_zombie.var_3940f450) && ai_zombie.var_3940f450))
+			if(!(isdefined(ai_zombie.b_is_spider) && ai_zombie.b_is_spider))
 			{
 				ai_zombie thread zombie_utility::zombie_eye_glow_stop();
 				ai_zombie clientfield::set("entranced", 1);
 				ai_zombie thread function_3fca87eb();
 			}
-			else if(isdefined(ai_zombie.var_b4e06d32) && ai_zombie.var_b4e06d32)
-			{
-				ai_zombie clientfield::set("spider_glow_fx", 1);
-				ai_zombie flag::set("spider_from_mars_identified");
-				if(isdefined(level.var_5f1b87ca))
-				{
-					self [[level.var_5f1b87ca]]();
-				}
-			}
 			else
 			{
-				ai_zombie setgoal(ai_zombie.origin);
-				ai_zombie ai::set_ignoreall(1);
+				if(isdefined(ai_zombie.var_b4e06d32) && ai_zombie.var_b4e06d32)
+				{
+					ai_zombie clientfield::set("spider_glow_fx", 1);
+					ai_zombie flag::set("spider_from_mars_identified");
+					if(isdefined(level.var_5f1b87ca))
+					{
+						self [[level.var_5f1b87ca]]();
+					}
+				}
+				else
+				{
+					ai_zombie setgoal(ai_zombie.origin);
+					ai_zombie ai::set_ignoreall(1);
+				}
 			}
 		}
 		wait(0.05);
 	}
 	ai_zombie.var_9b59d7f8 = 0;
 	ai_zombie ai::set_ignoreall(0);
-	if(!(isdefined(ai_zombie.var_3940f450) && ai_zombie.var_3940f450))
+	if(!(isdefined(ai_zombie.b_is_spider) && ai_zombie.b_is_spider))
 	{
 		ai_zombie thread zombie_utility::zombie_eye_glow();
 		ai_zombie clientfield::set("entranced", 0);
@@ -658,9 +664,9 @@ function function_5fa274c1(ai_zombie)
 {
 	if(distance2dsquared(self.origin, ai_zombie.origin) <= 250000)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -677,13 +683,13 @@ function function_fb77a973(ai_zombie)
 	ai_zombie endon(#"death");
 	if(self util::is_player_looking_at(ai_zombie.origin, 0.85, 0))
 	{
-		return 1;
+		return true;
 	}
 	if(self util::is_player_looking_at(ai_zombie getcentroid(), 0.85, 0))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -699,13 +705,13 @@ function function_3f3f64e9(e_prop)
 {
 	if(self util::is_player_looking_at(e_prop.origin, 0.85, 0))
 	{
-		return 1;
+		return true;
 	}
 	if(self util::is_player_looking_at(e_prop getcentroid(), 0.85, 0))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -801,9 +807,9 @@ function function_97d08b97()
 	w_current = self getcurrentweapon();
 	if(w_current == level.var_c003f5b || w_current == level.var_1f1a653b)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

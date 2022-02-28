@@ -43,7 +43,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_genesis_skull_turret", &__init__, &__main__, undefined);
 }
@@ -183,22 +183,25 @@ function function_aeaa2ee6()
 				self thread function_d4781758(e_player);
 			}
 		}
-		else if(e_player zm_score::can_player_purchase(2000))
-		{
-			e_player zm_score::minus_to_player_score(2000);
-			self thread function_4b8fea3(e_player);
-			self thread function_d4781758(e_player);
-		}
 		else
 		{
-			zm_utility::play_sound_at_pos("no_purchase", self.origin);
-			if(isdefined(level.custom_generic_deny_vo_func))
+			if(e_player zm_score::can_player_purchase(2000))
 			{
-				e_player thread [[level.custom_generic_deny_vo_func]](1);
+				e_player zm_score::minus_to_player_score(2000);
+				self thread function_4b8fea3(e_player);
+				self thread function_d4781758(e_player);
 			}
 			else
 			{
-				e_player zm_audio::create_and_play_dialog("general", "outofmoney");
+				zm_utility::play_sound_at_pos("no_purchase", self.origin);
+				if(isdefined(level.custom_generic_deny_vo_func))
+				{
+					e_player thread [[level.custom_generic_deny_vo_func]](1);
+				}
+				else
+				{
+					e_player zm_audio::create_and_play_dialog("general", "outofmoney");
+				}
 			}
 		}
 	}
@@ -272,7 +275,7 @@ function function_d4781758(e_player)
 	self usevehicle(e_player, 0);
 	e_player hideviewmodel();
 	self function_67c99c8d();
-	e_player thread namespace_c20cb06c::function_817b1327();
+	e_player thread genesis_achievements::function_817b1327();
 	str_return = self util::waittill_any("turret_timeout", "exit_vehicle", "turret_locked");
 	e_player.var_db95a9b0 = undefined;
 	self function_e4ac9f57();
@@ -321,35 +324,35 @@ function function_ff090b49(e_player)
 	if(isdefined(e_player.zombie_vars["zombie_powerup_minigun_on"]) && e_player.zombie_vars["zombie_powerup_minigun_on"])
 	{
 		self sethintstring(&"");
-		return 0;
+		return false;
 	}
 	if(isdefined(self.stub.script_int) && !level flag::get("power_on" + self.stub.script_int))
 	{
 		self sethintstring(&"");
-		return 0;
+		return false;
 	}
 	if(self.stub.vh_turret flag::get("turret_active"))
 	{
 		self sethintstring(&"");
-		return 0;
+		return false;
 	}
 	if(self.stub.vh_turret flag::get("turret_cooldown"))
 	{
 		self sethintstring(&"ZM_GENESIS_SKULL_TURRET_COOLDOWN");
-		return 0;
+		return false;
 	}
 	if(self.stub.vh_turret.var_5015d1a3 === e_player)
 	{
 		self sethintstring(&"ZM_GENESIS_REUSE_TURRET");
-		return 1;
+		return true;
 	}
 	if(isdefined(self.stub.vh_turret.var_5015d1a3))
 	{
 		self sethintstring(&"ZM_GENESIS_TURRET_IN_USE");
-		return 0;
+		return false;
 	}
 	self sethintstring(&"ZM_GENESIS_USE_TURRET", 2000);
-	return 1;
+	return true;
 }
 
 /*
@@ -437,38 +440,44 @@ function function_f2c7fc31()
 				e_last_target thread function_67cc41d(self);
 				var_9449eaa2 = "ai_zombie";
 			}
-			else if(isai(e_last_target))
+			else
 			{
-				if(!isdefined(e_last_target.maxhealth))
+				if(isai(e_last_target))
 				{
-					e_last_target.maxhealth = e_last_target.health;
-				}
-				if(e_last_target.archetype == "margwa")
-				{
-					e_last_target dodamage(level.var_6b7244b4, var_fc46c711, e_player, self);
-					if(e_last_target zm_genesis_margwa::function_2a03f05f())
+					if(!isdefined(e_last_target.maxhealth))
 					{
-						e_last_target.reactstun = 1;
+						e_last_target.maxhealth = e_last_target.health;
 					}
-				}
-				else if(e_last_target.archetype == "mechz")
-				{
-					if(e_last_target zm_ai_mechz::function_58655f2a())
+					if(e_last_target.archetype == "margwa")
 					{
-						e_last_target.stun = 1;
+						e_last_target dodamage(level.var_6b7244b4, var_fc46c711, e_player, self);
+						if(e_last_target zm_genesis_margwa::function_2a03f05f())
+						{
+							e_last_target.reactstun = 1;
+						}
 					}
-					e_last_target dodamage(30, var_fc46c711, e_player, self, undefined, "MOD_PROJECTILE_SPLASH", 0, getweapon("none"));
+					else
+					{
+						if(e_last_target.archetype == "mechz")
+						{
+							if(e_last_target zm_ai_mechz::function_58655f2a())
+							{
+								e_last_target.stun = 1;
+							}
+							e_last_target dodamage(30, var_fc46c711, e_player, self, undefined, "MOD_PROJECTILE_SPLASH", 0, getweapon("none"));
+						}
+						else
+						{
+							e_last_target dodamage(e_last_target.maxhealth * 0.01, var_fc46c711, e_player, self);
+						}
+					}
+					var_9449eaa2 = "ai_boss";
 				}
-				else
+				else if(isdefined(e_last_target.targetname) && issubstr(e_last_target.targetname, "sophia_crystal") && level flag::get("phased_sophia_start"))
 				{
-					e_last_target dodamage(e_last_target.maxhealth * 0.01, var_fc46c711, e_player, self);
+					e_last_target notify(#"hash_f79a1db0", self, e_player);
+					var_c18b4417 = 0;
 				}
-				var_9449eaa2 = "ai_boss";
-			}
-			else if(isdefined(e_last_target.targetname) && issubstr(e_last_target.targetname, "sophia_crystal") && level flag::get("phased_sophia_start"))
-			{
-				e_last_target notify(#"hash_f79a1db0", self, e_player);
-				var_c18b4417 = 0;
 			}
 		}
 		else
@@ -702,7 +711,7 @@ function function_7fd518ea()
 	var_9d322e2e = struct::get_array("115_crystals", "script_noteworthy");
 	var_8ddaf045 = struct::get_array("115_crystal_decoy", "script_noteworthy");
 	level.var_49483427 = 0;
-	foreach(var_3138b682, s_crystal in var_9d322e2e)
+	foreach(s_crystal in var_9d322e2e)
 	{
 		var_618c7145 = util::spawn_model("p7_zm_ctl_crystal", s_crystal.origin, s_crystal.angles);
 		var_618c7145 setscale(2);
@@ -713,7 +722,7 @@ function function_7fd518ea()
 		var_618c7145 thread function_c4a9de44();
 		var_618c7145.targetname = s_crystal.targetname;
 	}
-	foreach(var_5c386d0d, var_9d1acd49 in var_8ddaf045)
+	foreach(var_9d1acd49 in var_8ddaf045)
 	{
 		var_40ff3b03 = util::spawn_model("p7_zm_ctl_crystal", var_9d1acd49.origin, var_9d1acd49.angles);
 		var_40ff3b03 setscale(2);
@@ -877,16 +886,16 @@ function function_1d6baeec(var_618c7145)
 	e_turret = self.viewlockedentity;
 	if(!isdefined(e_turret))
 	{
-		return 0;
+		return false;
 	}
 	v_position = e_turret gettagorigin("tag_aim");
 	v_forward = anglestoforward(e_turret gettagangles("tag_aim"));
 	a_trace = beamtrace(v_position, v_position + (v_forward * 20000), 1, e_turret);
 	if(var_618c7145 === a_trace["entity"])
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -922,7 +931,7 @@ function function_67cc41d(vh_turret)
 	self zombie_utility::zombie_eye_glow_stop();
 	if(self.archetype === "zombie")
 	{
-		level notify(#"hash_98ea05", e_player);
+		level notify(#"beam_killed_zombie", e_player);
 	}
 	if(self.archetype === "keeper")
 	{
@@ -1050,7 +1059,7 @@ function function_1f8c58a1(n_val)
 {
 	/#
 		level.var_dc188362 = !(isdefined(level.var_dc188362) && level.var_dc188362);
-		foreach(var_1051b86f, turret in level.var_81e4859)
+		foreach(turret in level.var_81e4859)
 		{
 			turret notify(#"turret_timeout_changed");
 		}

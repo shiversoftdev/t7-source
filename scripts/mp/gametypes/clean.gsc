@@ -30,7 +30,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("clean", &__init__, undefined, undefined);
 }
@@ -130,7 +130,7 @@ function onstartgametype()
 	globallogic_score::resetteamscores();
 	level.spawnmins = (0, 0, 0);
 	level.spawnmaxs = (0, 0, 0);
-	foreach(var_d8c9d541, team in level.teams)
+	foreach(team in level.teams)
 	{
 		util::setobjectivetext(team, &"OBJECTIVES_CLEAN");
 		util::setobjectivehinttext(team, &"OBJECTIVES_CLEAN_HINT");
@@ -147,7 +147,7 @@ function onstartgametype()
 	}
 	spawning::updateallspawnpoints();
 	level.spawn_start = [];
-	foreach(var_d9b47428, team in level.teams)
+	foreach(team in level.teams)
 	{
 		level.spawn_start[team] = spawnlogic::get_spawnpoint_array(spawning::gettdmstartspawnname(team));
 	}
@@ -183,14 +183,14 @@ function onstartgametype()
 function function_7ae0a91b()
 {
 	level waittill(#"game_ended");
-	foreach(var_ec7edbba, taco in level.tacos)
+	foreach(taco in level.tacos)
 	{
 		if(taco clientfield::get("taco_flag") > 0)
 		{
 			taco clientfield::set("taco_flag", 0);
 		}
 	}
-	foreach(var_eefd79cb, var_12b94c16 in level.cleandeposithubs)
+	foreach(var_12b94c16 in level.cleandeposithubs)
 	{
 		var_12b94c16 stoploopsound();
 		if(isdefined(var_12b94c16.baseeffect))
@@ -198,7 +198,7 @@ function function_7ae0a91b()
 			var_12b94c16.baseeffect delete();
 		}
 	}
-	foreach(var_9da8b33e, player in level.players)
+	foreach(player in level.players)
 	{
 		player clientfield::set("taco_carry", 0);
 	}
@@ -431,7 +431,7 @@ function function_65ae6452()
 function function_54bb534d()
 {
 	var_1ea2e34b = undefined;
-	foreach(var_457591cc, taco in level.tacos)
+	foreach(taco in level.tacos)
 	{
 		if(taco.interactteam == "none")
 		{
@@ -703,7 +703,7 @@ function function_f4229f9e()
 		return;
 	}
 	level.cleandeposithubs = [];
-	foreach(var_b2bc6603, point in level.cleandepositpoints)
+	foreach(point in level.cleandepositpoints)
 	{
 		var_12b94c16 = function_4c41767e(point);
 		level.cleandeposithubs[level.cleandeposithubs.size] = var_12b94c16;
@@ -722,7 +722,7 @@ function function_f4229f9e()
 function function_cb0def85(targetname)
 {
 	ents = getentarray(targetname, "targetname");
-	foreach(var_6b53fef3, ent in ents)
+	foreach(ent in ents)
 	{
 		ent delete();
 	}
@@ -740,7 +740,7 @@ function function_cb0def85(targetname)
 function function_afb9f455()
 {
 	scriptmodels = getentarray("script_model", "className");
-	foreach(var_83894dec, scriptmodel in scriptmodels)
+	foreach(scriptmodel in scriptmodels)
 	{
 		if(scriptmodel.model === "p7_mp_flag_base")
 		{
@@ -836,7 +836,7 @@ function function_5b1f87d2()
 	{
 		if(level.var_c8a5fbc4 > 0)
 		{
-			foreach(var_f58ebfe8, team in level.teams)
+			foreach(team in level.teams)
 			{
 				setmatchflag("bomb_timer_a", 1);
 				setbombtimer("A", int((gettime() + 1000) + (level.var_c8a5fbc4 * 1000)));
@@ -855,7 +855,7 @@ function function_5b1f87d2()
 		var_12b94c16 thread function_9bc55b1b();
 		var_12b94c16 spawning::enable_influencers(1);
 		var_12b94c16 playloopsound("mpl_fracture_location_lp");
-		foreach(var_1d25397b, team in level.teams)
+		foreach(team in level.teams)
 		{
 			setmatchflag("bomb_timer_a", 1);
 			setbombtimer("A", int((gettime() + 1000) + (level.cleandepositonlinetime * 1000)));
@@ -1083,14 +1083,17 @@ function function_c8e1c6b3(player, var_b9fd331)
 	{
 		player thread function_aaca5c8e(var_b9fd331);
 	}
-	else if(player.var_3d64ac00 == 5)
+	else
 	{
-		scoreevents::processscoreevent("clean_multi_deposit_normal", player);
-	}
-	else if(player.var_3d64ac00 == 10)
-	{
-		scoreevents::processscoreevent("clean_multi_deposit_big", player);
-		player.var_3d64ac00 = 0;
+		if(player.var_3d64ac00 == 5)
+		{
+			scoreevents::processscoreevent("clean_multi_deposit_normal", player);
+		}
+		else if(player.var_3d64ac00 == 10)
+		{
+			scoreevents::processscoreevent("clean_multi_deposit_big", player);
+			player.var_3d64ac00 = 0;
+		}
 	}
 }
 
@@ -1173,15 +1176,18 @@ function function_2f8f0719(player, victim)
 		scoreevents::processscoreevent("clean_multi_deny_tacos", player);
 		player.var_77a1267e = undefined;
 	}
-	else if(!isdefined(player.var_77a1267e))
+	else
 	{
-		player.var_77a1267e = [];
+		if(!isdefined(player.var_77a1267e))
+		{
+			player.var_77a1267e = [];
+		}
+		else if(!isarray(player.var_77a1267e))
+		{
+			player.var_77a1267e = array(player.var_77a1267e);
+		}
+		player.var_77a1267e[player.var_77a1267e.size] = time;
 	}
-	else if(!isarray(player.var_77a1267e))
-	{
-		player.var_77a1267e = array(player.var_77a1267e);
-	}
-	player.var_77a1267e[player.var_77a1267e.size] = time;
 }
 
 /*
@@ -1250,41 +1256,47 @@ function function_9629206a(player)
 		player addplayerstatwithgametype("CLEANDENIES", 1);
 		function_2f8f0719(player, self.victim);
 	}
-	else if(player.carriedtacos >= 10)
-	{
-		time = gettime();
-		if((time - player.var_f2408e26) > 500)
-		{
-			player playlocalsound("mpl_fracture_enemy_pickup_nope");
-			if(!isdefined(player.var_741e5451))
-			{
-				player.var_741e5451 = 0;
-			}
-			player clientfield::set_player_uimodel("hudItems.cleanCarryFull", player.var_741e5451);
-			player.var_741e5451 = (player.var_741e5451 ? 1 : 0);
-		}
-		player.var_f2408e26 = time;
-		return;
-	}
-	player.carriedtacos++;
-	player clientfield::set_player_uimodel("hudItems.cleanCarryCount", player.carriedtacos);
-	player function_65ae6452();
-	if(player.carriedtacos < 4)
-	{
-		playsoundatposition("mpl_fracture_enemy_pickup_s", self.origin);
-	}
-	else if(player.carriedtacos < 7)
-	{
-		playsoundatposition("mpl_fracture_enemy_pickup_m", self.origin);
-	}
 	else
 	{
-		playsoundatposition("mpl_fracture_enemy_pickup_l", self.origin);
-	}
-	scoreevents::processscoreevent("clean_enemy_collect", player);
-	if(self.attackerteam == player.team && isdefined(self.attacker) && self.attacker != player)
-	{
-		scoreevents::processscoreevent("clean_assist_collect", self.attacker);
+		if(player.carriedtacos >= 10)
+		{
+			time = gettime();
+			if((time - player.var_f2408e26) > 500)
+			{
+				player playlocalsound("mpl_fracture_enemy_pickup_nope");
+				if(!isdefined(player.var_741e5451))
+				{
+					player.var_741e5451 = 0;
+				}
+				player clientfield::set_player_uimodel("hudItems.cleanCarryFull", player.var_741e5451);
+				player.var_741e5451 = (player.var_741e5451 ? 1 : 0);
+			}
+			player.var_f2408e26 = time;
+			return;
+		}
+		player.carriedtacos++;
+		player clientfield::set_player_uimodel("hudItems.cleanCarryCount", player.carriedtacos);
+		player function_65ae6452();
+		if(player.carriedtacos < 4)
+		{
+			playsoundatposition("mpl_fracture_enemy_pickup_s", self.origin);
+		}
+		else
+		{
+			if(player.carriedtacos < 7)
+			{
+				playsoundatposition("mpl_fracture_enemy_pickup_m", self.origin);
+			}
+			else
+			{
+				playsoundatposition("mpl_fracture_enemy_pickup_l", self.origin);
+			}
+		}
+		scoreevents::processscoreevent("clean_enemy_collect", player);
+		if(self.attackerteam == player.team && isdefined(self.attacker) && self.attacker != player)
+		{
+			scoreevents::processscoreevent("clean_assist_collect", self.attacker);
+		}
 	}
 	self function_8e1efaa2();
 }

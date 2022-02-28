@@ -28,7 +28,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_island_portals", &__init__, undefined, undefined);
 }
@@ -116,11 +116,11 @@ function portal_3p(localclientnum, oldval, newval, bnewent, binitialsnap, fieldn
 	self endon(#"death");
 	if(newval == 1)
 	{
-		self.var_e4e89382 = playfxontag(localclientnum, level._effect["portal_3p"], self, "j_spineupper");
+		self.fx_portal_3p = playfxontag(localclientnum, level._effect["portal_3p"], self, "j_spineupper");
 	}
 	else
 	{
-		stop_fx_if_defined(localclientnum, self.var_e4e89382);
+		stop_fx_if_defined(localclientnum, self.fx_portal_3p);
 	}
 }
 
@@ -338,7 +338,7 @@ function get_portal_fx_loc(str_targetname, str_areaname, b_is_top)
 	{
 		str_top_or_bottom = "bottom";
 	}
-	foreach(var_eefd79cb, s_portal_loc in a_s_portal_locs)
+	foreach(s_portal_loc in a_s_portal_locs)
 	{
 		if(s_portal_loc.script_noteworthy === ((str_areaname + "_portal_") + str_top_or_bottom))
 		{
@@ -433,7 +433,7 @@ function portal_state_ending_0(localclientnum, oldval, newval, bnewent, binitial
 	}
 	else
 	{
-		foreach(var_e2d14a6a, fx_id in level.var_2cc3341a.var_2f0937c1)
+		foreach(fx_id in level.var_2cc3341a.var_2f0937c1)
 		{
 			stopfx(localclientnum, fx_id);
 		}
@@ -485,7 +485,7 @@ function portal_state_ending_1(localclientnum, oldval, newval, bnewent, binitial
 	}
 	else
 	{
-		foreach(var_a646989f, fx_id in level.var_52c5ae83.var_2f0937c1)
+		foreach(fx_id in level.var_52c5ae83.var_2f0937c1)
 		{
 			stopfx(localclientnum, fx_id);
 		}
@@ -537,7 +537,7 @@ function portal_state_ending_2(localclientnum, oldval, newval, bnewent, binitial
 	}
 	else
 	{
-		foreach(var_54d6bc66, fx_id in level.var_e0be3f48.var_2f0937c1)
+		foreach(fx_id in level.var_e0be3f48.var_2f0937c1)
 		{
 			stopfx(localclientnum, fx_id);
 		}
@@ -589,7 +589,7 @@ function portal_state_ending_3(localclientnum, oldval, newval, bnewent, binitial
 	}
 	else
 	{
-		foreach(var_fa5b3be1, fx_id in level.var_6c0b9b1.var_2f0937c1)
+		foreach(fx_id in level.var_6c0b9b1.var_2f0937c1)
 		{
 			stopfx(localclientnum, fx_id);
 		}

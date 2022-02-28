@@ -37,7 +37,7 @@ function init_shovel()
 	callback::on_connect(&init_shovel_player);
 	a_shovel_pos = struct::get_array("shovel_location", "targetname");
 	a_shovel_zone = [];
-	foreach(var_240dc023, s_shovel_pos in a_shovel_pos)
+	foreach(s_shovel_pos in a_shovel_pos)
 	{
 		if(!isdefined(a_shovel_zone[s_shovel_pos.script_noteworthy]))
 		{
@@ -45,7 +45,7 @@ function init_shovel()
 		}
 		a_shovel_zone[s_shovel_pos.script_noteworthy][a_shovel_zone[s_shovel_pos.script_noteworthy].size] = s_shovel_pos;
 	}
-	foreach(var_be9647d8, a_zone in a_shovel_zone)
+	foreach(a_zone in a_shovel_zone)
 	{
 		s_pos = a_zone[randomint(a_zone.size)];
 		m_shovel = spawn("script_model", s_pos.origin);
@@ -146,14 +146,14 @@ function shovel_prompt_update(e_player)
 {
 	if(!self unitrigger_stub_show_hint_prompt_valid(e_player))
 	{
-		return 0;
+		return false;
 	}
 	self.hint_string = &"ZM_TOMB_SHPU";
 	if(isdefined(e_player.dig_vars["has_shovel"]) && e_player.dig_vars["has_shovel"])
 	{
 		self.hint_string = &"ZM_TOMB_SHAG";
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -265,9 +265,9 @@ function unitrigger_stub_show_hint_prompt_valid(e_player)
 	if(!zombie_utility::is_player_valid(e_player))
 	{
 		self.hint_string = "";
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -309,7 +309,7 @@ function dig_spots_init()
 	level.n_dig_spots_cur = 0;
 	level.n_dig_spots_max = 15;
 	level.a_dig_spots = struct::get_array("dig_spot", "targetname");
-	foreach(var_4513c77c, s_dig_spot in level.a_dig_spots)
+	foreach(s_dig_spot in level.a_dig_spots)
 	{
 		if(!isdefined(s_dig_spot.angles))
 		{
@@ -380,11 +380,11 @@ function dig_spots_respawn(a_dig_spots)
 		}
 		if(level.weather_snow > 0 && level.ice_staff_pieces.size > 0)
 		{
-			foreach(var_8cbafcb9, s_staff in level.ice_staff_pieces)
+			foreach(s_staff in level.ice_staff_pieces)
 			{
 				a_staff_spots = [];
 				n_active_mounds = 0;
-				foreach(var_e2d14a6a, s_dig_spot in level.a_dig_spots)
+				foreach(s_dig_spot in level.a_dig_spots)
 				{
 					if(isdefined(s_dig_spot.str_zone) && issubstr(s_dig_spot.str_zone, s_staff.zone_substr))
 					{
@@ -456,7 +456,7 @@ function dig_spot_trigger_visibility(player)
 	{
 		self sethintstring(&"ZM_TOMB_NS");
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -525,14 +525,17 @@ function waittill_dug(s_dig_spot)
 					}
 					player.dig_vars["n_losing_streak"]++;
 				}
-				else if(math::cointoss())
-				{
-					self thread dig_up_powerup(player);
-				}
 				else
 				{
-					player dig_reward_dialog("dig_gun");
-					self thread dig_up_weapon(player);
+					if(math::cointoss())
+					{
+						self thread dig_up_powerup(player);
+					}
+					else
+					{
+						player dig_reward_dialog("dig_gun");
+						self thread dig_up_weapon(player);
+					}
 				}
 			}
 			if(!player.dig_vars["has_upgraded_shovel"])
@@ -655,7 +658,7 @@ function dig_get_rare_powerups(player)
 	{
 		a_possible_powerups = arraycombine(a_possible_powerups, array("insta_kill", "full_ammo"), 0, 0);
 	}
-	foreach(var_ce3fdc48, powerup in a_possible_powerups)
+	foreach(powerup in a_possible_powerups)
 	{
 		if(!dig_has_powerup_spawned(powerup))
 		{
@@ -771,10 +774,10 @@ function weapon_trigger_update_prompt(player)
 	if(!zm_utility::is_player_valid(player) || player.is_drinking > 0 || !player zm_magicbox::can_buy_weapon() || player bgb::is_enabled("zm_bgb_disorderly_combat"))
 	{
 		self setcursorhint("HINT_NOICON");
-		return 0;
+		return false;
 	}
 	self setcursorhint("HINT_WEAPON", self.stub.cursor_hint_weapon);
-	return 1;
+	return true;
 }
 
 /*
@@ -798,7 +801,7 @@ function swap_weapon(var_375664a9, e_player)
 		return;
 	}
 	var_6c6831af = e_player getweaponslist(1);
-	foreach(var_4e23abaa, weapon in var_6c6831af)
+	foreach(weapon in var_6c6831af)
 	{
 		w_base = zm_weapons::get_base_weapon(weapon);
 		var_7321b53b = zm_weapons::get_upgrade_weapon(weapon);
@@ -938,7 +941,7 @@ function ee_zombie_blood_dig_disconnect_watch()
 		self.t_zombie_blood_dig delete();
 	}
 	a_z_spots = struct::get_array("zombie_blood_dig_spot", "targetname");
-	foreach(var_afee5ce1, s_pos in a_z_spots)
+	foreach(s_pos in a_z_spots)
 	{
 		if(isdefined(s_pos.n_player) && s_pos.n_player == self getentitynumber())
 		{
@@ -1223,7 +1226,7 @@ function watch_devgui_dig()
 			if(getdvarstring("") == "")
 			{
 				setdvar("", "");
-				foreach(var_722bc1f3, player in getplayers())
+				foreach(player in getplayers())
 				{
 					player.dig_vars[""] = 1;
 					level clientfield::set(function_f4768ce9(player getentitynumber()), 1);
@@ -1232,7 +1235,7 @@ function watch_devgui_dig()
 			if(getdvarstring("") == "")
 			{
 				setdvar("", "");
-				foreach(var_10ee0d54, player in getplayers())
+				foreach(player in getplayers())
 				{
 					player.dig_vars[""] = 1;
 					player.dig_vars[""] = 1;
@@ -1243,7 +1246,7 @@ function watch_devgui_dig()
 			if(getdvarstring("") == "")
 			{
 				setdvar("", "");
-				foreach(var_9b2acb88, player in getplayers())
+				foreach(player in getplayers())
 				{
 					player.dig_vars[""] = 1;
 					n_player = player getentitynumber() + 1;
@@ -1283,7 +1286,7 @@ function watch_devgui_dig()
 			{
 				setdvar("", "");
 				a_z_spots = struct::get_array("", "");
-				foreach(var_5ca06c8d, s_spot in a_z_spots)
+				foreach(s_spot in a_z_spots)
 				{
 					s_spot.m_dig = spawn("", s_spot.origin + (vectorscale((0, 0, -1), 40)));
 					s_spot.m_dig.angles = s_spot.angles;
@@ -1301,7 +1304,7 @@ function watch_devgui_dig()
 				level clientfield::set("", level.weather_rain);
 				level clientfield::set("", level.weather_snow);
 				wait(1);
-				foreach(var_d4e24c6a, player in getplayers())
+				foreach(player in getplayers())
 				{
 					if(zombie_utility::is_player_valid(player, 0, 1))
 					{
@@ -1318,7 +1321,7 @@ function watch_devgui_dig()
 				level clientfield::set("", level.weather_rain);
 				level clientfield::set("", level.weather_snow);
 				wait(1);
-				foreach(var_6146de05, player in getplayers())
+				foreach(player in getplayers())
 				{
 					if(zombie_utility::is_player_valid(player, 0, 1))
 					{
@@ -1335,7 +1338,7 @@ function watch_devgui_dig()
 				level clientfield::set("", level.weather_rain);
 				level clientfield::set("", level.weather_snow);
 				wait(1);
-				foreach(var_5eb93477, player in getplayers())
+				foreach(player in getplayers())
 				{
 					if(zombie_utility::is_player_valid(player, 0, 1))
 					{

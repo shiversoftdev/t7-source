@@ -18,7 +18,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("gravity_spikes", &__init__, undefined, undefined);
 }
@@ -210,6 +210,11 @@ function do_gravity_spike_fx_circle(localclientnum, owner, center, radius, count
 				}
 				playfx(localclientnum, fx, trace["position"], normal, forward);
 			}
+		}
+		else
+		{
+			/#
+			#/
 		}
 		wait(0.016);
 	}

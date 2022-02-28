@@ -20,7 +20,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("duplicate_render", &__init__, undefined, undefined);
 }
@@ -155,25 +155,31 @@ function set_dr_filter(filterset, name, priority, require_flags, refuse_flags, d
 	{
 		filter.require = [];
 	}
-	else if(isarray(require_flags))
-	{
-		filter.require = require_flags;
-	}
 	else
 	{
-		filter.require = strtok(require_flags, ",");
+		if(isarray(require_flags))
+		{
+			filter.require = require_flags;
+		}
+		else
+		{
+			filter.require = strtok(require_flags, ",");
+		}
 	}
 	if(!isdefined(refuse_flags))
 	{
 		filter.refuse = [];
 	}
-	else if(isarray(refuse_flags))
-	{
-		filter.refuse = refuse_flags;
-	}
 	else
 	{
-		filter.refuse = strtok(refuse_flags, ",");
+		if(isarray(refuse_flags))
+		{
+			filter.refuse = refuse_flags;
+		}
+		else
+		{
+			filter.refuse = strtok(refuse_flags, ",");
+		}
 	}
 	filter.types = [];
 	filter.values = [];
@@ -324,7 +330,7 @@ function set_dr_flag_not_array(toset, setto = 1)
 	}
 	if(setto == self.flag[toset])
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(setto) && setto)
 	{
@@ -334,7 +340,7 @@ function set_dr_flag_not_array(toset, setto = 1)
 	{
 		self flag::clear(toset);
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -353,7 +359,7 @@ function set_dr_flag(toset, setto = 1)
 	#/
 	if(isarray(toset))
 	{
-		foreach(var_706613a0, ts in toset)
+		foreach(ts in toset)
 		{
 			set_dr_flag(ts, setto);
 		}
@@ -365,7 +371,7 @@ function set_dr_flag(toset, setto = 1)
 	}
 	if(setto == self.flag[toset])
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(setto) && setto)
 	{
@@ -375,7 +381,7 @@ function set_dr_flag(toset, setto = 1)
 	{
 		self flag::clear(toset);
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -473,7 +479,7 @@ function update_dr_filters(localclientnum)
 function find_dr_filter(filterset = level.drfilters["framebuffer"])
 {
 	best = undefined;
-	foreach(var_7d59d21f, filter in filterset)
+	foreach(filter in filterset)
 	{
 		if(self can_use_filter(filter))
 		{
@@ -501,17 +507,17 @@ function can_use_filter(filter)
 	{
 		if(!self flagsys::get(filter.require[i]))
 		{
-			return 0;
+			return false;
 		}
 	}
 	for(i = 0; i < filter.refuse.size; i++)
 	{
 		if(self flagsys::get(filter.refuse[i]))
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -811,12 +817,12 @@ function show_friendly_outlines(local_client_num)
 {
 	if(!(isdefined(level.friendlycontentoutlines) && level.friendlycontentoutlines))
 	{
-		return 0;
+		return false;
 	}
 	if(isshoutcaster(local_client_num))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 

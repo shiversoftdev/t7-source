@@ -16,7 +16,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function registerbehaviorscriptfunctions()
+function autoexec registerbehaviorscriptfunctions()
 {
 	behaviortreenetworkutility::registerbehaviortreescriptapi("hasCloseEnemy", &hascloseenemy);
 	behaviortreenetworkutility::registerbehaviortreescriptapi("noCloseEnemyService", &nocloseenemyservice);
@@ -37,7 +37,7 @@ autoexec function registerbehaviorscriptfunctions()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function preparetoreacttoenemy(behaviortreeentity)
+function private preparetoreacttoenemy(behaviortreeentity)
 {
 	behaviortreeentity.newenemyreaction = 0;
 	behaviortreeentity.malfunctionreaction = 0;
@@ -53,7 +53,7 @@ private function preparetoreacttoenemy(behaviortreeentity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function resetreactiontoenemy(behaviortreeentity)
+function private resetreactiontoenemy(behaviortreeentity)
 {
 	behaviortreeentity.newenemyreaction = 0;
 	behaviortreeentity.malfunctionreaction = 0;
@@ -68,14 +68,14 @@ private function resetreactiontoenemy(behaviortreeentity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function nocloseenemyservice(behaviortreeentity)
+function private nocloseenemyservice(behaviortreeentity)
 {
 	if(isdefined(behaviortreeentity.enemy) && aiutility::hascloseenemytomelee(behaviortreeentity))
 	{
 		behaviortreeentity clearpath();
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -87,17 +87,17 @@ private function nocloseenemyservice(behaviortreeentity)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function hascloseenemy(behaviortreeentity)
+function private hascloseenemy(behaviortreeentity)
 {
 	if(!isdefined(behaviortreeentity.enemy))
 	{
-		return 0;
+		return false;
 	}
 	if(distancesquared(behaviortreeentity.origin, behaviortreeentity.enemy.origin) < 22500)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -109,7 +109,7 @@ private function hascloseenemy(behaviortreeentity)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function _isvalidneighbor(entity, neighbor)
+function private _isvalidneighbor(entity, neighbor)
 {
 	return isdefined(neighbor) && entity.team === neighbor.team;
 }
@@ -123,14 +123,14 @@ private function _isvalidneighbor(entity, neighbor)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function vengeanceservice(entity)
+function private vengeanceservice(entity)
 {
 	actors = getaiarray();
 	if(!isdefined(entity.attacker))
 	{
 		return;
 	}
-	foreach(index, ai in actors)
+	foreach(ai in actors)
 	{
 		if(_isvalidneighbor(entity, ai) && distancesquared(entity.origin, ai.origin) <= (360 * 360) && randomfloat(1) >= 0.5)
 		{
@@ -148,7 +148,7 @@ private function vengeanceservice(entity)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function setpathmovedelayedrandom(behaviortreeentity, asmstatename)
+function private setpathmovedelayedrandom(behaviortreeentity, asmstatename)
 {
 	behaviortreeentity pathmode("move delayed", 0, randomfloatrange(1, 3));
 }
@@ -162,7 +162,7 @@ private function setpathmovedelayedrandom(behaviortreeentity, asmstatename)
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function exposedsetdesiredstancetostand(behaviortreeentity, asmstatename)
+function private exposedsetdesiredstancetostand(behaviortreeentity, asmstatename)
 {
 	aiutility::keepclaimnode(behaviortreeentity);
 	currentstance = blackboard::getblackboardattribute(behaviortreeentity, "_stance");
@@ -178,7 +178,7 @@ private function exposedsetdesiredstancetostand(behaviortreeentity, asmstatename
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function tryreacquireservice(behaviortreeentity)
+function private tryreacquireservice(behaviortreeentity)
 {
 	if(!isdefined(behaviortreeentity.reacquire_state))
 	{
@@ -187,24 +187,24 @@ private function tryreacquireservice(behaviortreeentity)
 	if(!isdefined(behaviortreeentity.enemy))
 	{
 		behaviortreeentity.reacquire_state = 0;
-		return 0;
+		return false;
 	}
 	if(behaviortreeentity haspath())
 	{
 		behaviortreeentity.reacquire_state = 0;
-		return 0;
+		return false;
 	}
 	if(behaviortreeentity seerecently(behaviortreeentity.enemy, 4))
 	{
 		behaviortreeentity.reacquire_state = 0;
-		return 0;
+		return false;
 	}
 	dirtoenemy = vectornormalize(behaviortreeentity.enemy.origin - behaviortreeentity.origin);
 	forward = anglestoforward(behaviortreeentity.angles);
 	if(vectordot(dirtoenemy, forward) < 0.5)
 	{
 		behaviortreeentity.reacquire_state = 0;
-		return 0;
+		return false;
 	}
 	switch(behaviortreeentity.reacquire_state)
 	{
@@ -229,7 +229,7 @@ private function tryreacquireservice(behaviortreeentity)
 			if(behaviortreeentity.reacquire_state > 15)
 			{
 				behaviortreeentity.reacquire_state = 0;
-				return 0;
+				return false;
 			}
 			break;
 		}
@@ -237,9 +237,9 @@ private function tryreacquireservice(behaviortreeentity)
 	if(isvec(reacquirepos))
 	{
 		behaviortreeentity useposition(reacquirepos);
-		return 1;
+		return true;
 	}
 	behaviortreeentity.reacquire_state++;
-	return 0;
+	return false;
 }
 

@@ -246,11 +246,11 @@ function register_clientfields()
 	registerclientfield("world", ("second_idgun" + "_") + "part_heart", 1, shared_bits, "int", undefined, 0);
 	registerclientfield("world", ("second_idgun" + "_") + "part_skeleton", 1, shared_bits, "int", undefined, 0);
 	registerclientfield("world", ("second_idgun" + "_") + "part_xenomatter", 1, shared_bits, "int", undefined, 0);
-	foreach(var_37125a4d, character_name in level.zod_character_names)
+	foreach(character_name in level.zod_character_names)
 	{
 		registerclientfield("world", "holder_of_" + character_name, 1, 3, "int", undefined, 0);
 	}
-	foreach(var_b5262e4, character_name in level.zod_character_names)
+	foreach(character_name in level.zod_character_names)
 	{
 		registerclientfield("world", "quest_state_" + character_name, 1, 3, "int", undefined, 0);
 	}
@@ -280,9 +280,9 @@ function register_clientfields()
 function craftable_add_glow_fx()
 {
 	level flag::wait_till("start_zombie_round_logic");
-	foreach(var_ea640538, s_craftable in level.zombie_include_craftables)
+	foreach(s_craftable in level.zombie_include_craftables)
 	{
-		foreach(var_9e5f1066, s_piece in s_craftable.a_piecestubs)
+		foreach(s_piece in s_craftable.a_piecestubs)
 		{
 			s_piece craftable_waittill_spawned();
 		}
@@ -383,7 +383,7 @@ function function_27ef9857(player)
 {
 	level flag::set(self.piecename + "_found");
 	player thread function_9708cb71(self.piecename);
-	foreach(var_1561be84, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		e_player thread zm_craftables::player_show_craftable_parts_ui("zmInventory.player_crafted_fusebox", "zmInventory.widget_fuses", 0);
 		e_player thread zm_zod_util::show_infotext_for_duration("ZM_ZOD_UI_FUSE_PICKUP", 3.5);
@@ -406,7 +406,7 @@ function function_6c41d7f2(player)
 	{
 		var_6f73bd35 playsound("zmb_zod_fuse_place");
 	}
-	foreach(var_4e9c4bc4, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		e_player thread zm_craftables::player_show_craftable_parts_ui("zmInventory.player_crafted_fusebox", "zmInventory.widget_fuses", 0);
 		e_player thread zm_zod_util::show_infotext_for_duration("ZM_ZOD_UI_FUSE_PLACED", 3.5);
@@ -591,7 +591,7 @@ function onpickup_idgun_piece(player)
 			break;
 		}
 	}
-	foreach(var_2d7ce3f1, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		e_player thread zm_craftables::player_show_craftable_parts_ui("zmInventory.player_crafted_idgun", "zmInventory.widget_idgun_parts", 0);
 		e_player thread zm_zod_util::show_infotext_for_duration(str_part, 3.5);
@@ -666,7 +666,7 @@ function function_9708cb71(piecename)
 function function_c6c55eb6(e_player)
 {
 	level notify(#"hash_5b9acfd8");
-	foreach(var_24c3d53e, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		if(zm_utility::is_player_valid(e_player))
 		{
@@ -674,7 +674,7 @@ function function_c6c55eb6(e_player)
 			e_player thread zm_zod_util::show_infotext_for_duration("ZM_ZOD_UI_FUSE_CRAFTED", 3.5);
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -725,7 +725,7 @@ function onfullycrafted_ritual(player)
 		level clientfield::set("ritual_state_pap", 1);
 		[[ level.a_o_defend_areas["pap"] ]]->start();
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -759,7 +759,7 @@ function onfullycrafted_idgun(player)
 	{
 		self.var_5449dda7 = 1;
 		players = level.players;
-		foreach(var_f227802f, e_player in players)
+		foreach(e_player in players)
 		{
 			if(zm_utility::is_player_valid(e_player))
 			{
@@ -773,7 +773,7 @@ function onfullycrafted_idgun(player)
 		self.n_gun_index = level.idgun[0].n_gun_index;
 		self.weaponname = getweapon(level.idgun[self.n_gun_index].str_wpnname);
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -805,7 +805,7 @@ function function_57f30dec(player)
 function function_d80876ac(player)
 {
 	players = level.players;
-	foreach(var_4ca300b4, e_player in players)
+	foreach(e_player in players)
 	{
 		if(zm_utility::is_player_valid(e_player))
 		{
@@ -814,7 +814,7 @@ function function_d80876ac(player)
 		}
 	}
 	function_a0e4fb00(self.origin, self.origin, level.idgun[1].n_gun_index);
-	return 1;
+	return true;
 }
 
 /*
@@ -970,9 +970,9 @@ function zod_player_can_craft(player)
 {
 	if(isdefined(player.beastmode) && player.beastmode)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1107,7 +1107,7 @@ function function_ee72d458()
 function get_character_name_from_value(name)
 {
 	a_character_names = array("boxer", "detective", "femme", "magician");
-	foreach(var_f972531b, character_name in a_character_names)
+	foreach(character_name in a_character_names)
 	{
 		if(issubstr(name, character_name))
 		{
@@ -1130,9 +1130,9 @@ function is_piece_a_memento(name)
 	a_memento_names = array("memento_boxer", "memento_detective", "memento_femme", "memento_magician");
 	if(isinarray(a_memento_names, name))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1148,9 +1148,9 @@ function is_piece_a_relic(name)
 {
 	if(name == "relic_boxer" || name == "relic_detective" || name == "relic_femme" || name == "relic_magician")
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

@@ -18,7 +18,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("animation", &__init__, undefined, undefined);
 }
@@ -90,22 +90,25 @@ function _play(animation, v_origin_or_ent = self, v_angles_or_tag, n_rate = 1, n
 	{
 		self animscripted("_anim_notify_", v_origin_or_ent, v_angles_or_tag, animation, n_blend_in, n_rate);
 	}
-	else if(isstring(v_angles_or_tag))
-	{
-		/#
-			assert(isdefined(v_origin_or_ent.model), ((("" + animation) + "") + v_angles_or_tag) + "");
-		#/
-		v_pos = v_origin_or_ent gettagorigin(v_angles_or_tag);
-		v_ang = v_origin_or_ent gettagangles(v_angles_or_tag);
-		self.origin = v_pos;
-		self.angles = v_ang;
-		b_link = 1;
-		self animscripted("_anim_notify_", self.origin, self.angles, animation, n_blend_in, n_rate);
-	}
 	else
 	{
-		v_angles = (isdefined(v_origin_or_ent.angles) ? v_origin_or_ent.angles : (0, 0, 0));
-		self animscripted("_anim_notify_", v_origin_or_ent.origin, v_angles, animation, n_blend_in, n_rate);
+		if(isstring(v_angles_or_tag))
+		{
+			/#
+				assert(isdefined(v_origin_or_ent.model), ((("" + animation) + "") + v_angles_or_tag) + "");
+			#/
+			v_pos = v_origin_or_ent gettagorigin(v_angles_or_tag);
+			v_ang = v_origin_or_ent gettagangles(v_angles_or_tag);
+			self.origin = v_pos;
+			self.angles = v_ang;
+			b_link = 1;
+			self animscripted("_anim_notify_", self.origin, self.angles, animation, n_blend_in, n_rate);
+		}
+		else
+		{
+			v_angles = (isdefined(v_origin_or_ent.angles) ? v_origin_or_ent.angles : (0, 0, 0));
+			self animscripted("_anim_notify_", v_origin_or_ent.origin, v_angles, animation, n_blend_in, n_rate);
+		}
 	}
 	if(!b_link)
 	{
@@ -135,10 +138,10 @@ function _play(animation, v_origin_or_ent = self, v_angles_or_tag, n_rate = 1, n
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function waittill_end()
+function private waittill_end()
 {
 	level endon(#"demo_jump");
-	self waittill_match(#"_anim_notify_");
+	self waittillmatch(#"_anim_notify_");
 }
 
 /*
@@ -293,7 +296,7 @@ function call_notetrack_handler(str_note)
 {
 	if(isdefined(level._animnotetrackhandlers) && isdefined(level._animnotetrackhandlers[str_note]))
 	{
-		foreach(var_71be5dcc, handler in level._animnotetrackhandlers[str_note])
+		foreach(handler in level._animnotetrackhandlers[str_note])
 		{
 			func = handler[0];
 			args = handler[1];

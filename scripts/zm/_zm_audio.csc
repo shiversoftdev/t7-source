@@ -18,7 +18,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_audio", &__init__, undefined, undefined);
 }
@@ -438,15 +438,18 @@ function sndzmblaststand(localclientnum, oldval, newval, bnewent, binitialsnap, 
 			forceambientroom("sndHealth_LastStand");
 		}
 	}
-	else if(isdefined(self.inlaststand) && self.inlaststand)
+	else
 	{
-		playsound(localclientnum, "chr_health_laststand_exit", (0, 0, 0));
-		self.inlaststand = 0;
-		if(!issplitscreen())
+		if(isdefined(self.inlaststand) && self.inlaststand)
 		{
-			forceambientroom("");
+			playsound(localclientnum, "chr_health_laststand_exit", (0, 0, 0));
+			self.inlaststand = 0;
+			if(!issplitscreen())
+			{
+				forceambientroom("");
+			}
 		}
+		setsoundcontext("laststand", "");
 	}
-	setsoundcontext("laststand", "");
 }
 

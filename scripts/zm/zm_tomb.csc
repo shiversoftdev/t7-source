@@ -77,7 +77,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function opt_in()
+function autoexec opt_in()
 {
 	level.aat_in_use = 1;
 	level.bgb_in_use = 1;
@@ -431,18 +431,21 @@ function function_b1ef089b(localclientnum)
 	{
 		self thread callback::playerspawned(localclientnum);
 	}
-	else if(self.type == "vehicle")
+	else
 	{
-		if(self.vehicletype === "heli_quadrotor_zm" || self.vehicletype === "heli_quadrotor_upgraded_zm")
+		if(self.type == "vehicle")
 		{
-			self thread function_b14689f(localclientnum);
+			if(self.vehicletype === "heli_quadrotor_zm" || self.vehicletype === "heli_quadrotor_upgraded_zm")
+			{
+				self thread function_b14689f(localclientnum);
+			}
 		}
-	}
-	else if(self.type == "actor")
-	{
-		if(isdefined(level._customactorcbfunc))
+		else if(self.type == "actor")
 		{
-			self thread [[level._customactorcbfunc]](localclientnum);
+			if(isdefined(level._customactorcbfunc))
+			{
+				self thread [[level._customactorcbfunc]](localclientnum);
+			}
 		}
 	}
 }
@@ -548,7 +551,7 @@ function function_cef99197(localclientnum, oldval, newval, bnewent, binitialsnap
 	else
 	{
 		keys = getarraykeys(level.var_d1435401);
-		foreach(var_7967c090, i in keys)
+		foreach(i in keys)
 		{
 			if(!isdefined(level.var_d1435401[i]))
 			{
@@ -754,14 +757,17 @@ function function_657fb719(localclientnum, light_on)
 		}
 		var_70f85c31 = var_70f85c31 * 10;
 	}
-	else if(isdefined(level.var_656c2f5) && !light_on)
+	else
 	{
-		var_477f7b08 = 0;
-		var_70f85c31 = 0;
-	}
-	else if(light_on)
-	{
-		var_70f85c31 = var_70f85c31 * 10;
+		if(isdefined(level.var_656c2f5) && !light_on)
+		{
+			var_477f7b08 = 0;
+			var_70f85c31 = 0;
+		}
+		else if(light_on)
+		{
+			var_70f85c31 = var_70f85c31 * 10;
+		}
 	}
 	playsound(0, "zmb_crypt_disc_light", self.origin);
 	var_f9e79b00 = self mapshaderconstant(localclientnum, 0, "scriptVector2", 0, var_70f85c31, level.var_1aa82a7e[var_477f7b08], 0);
@@ -847,13 +853,16 @@ function function_61fd4b0c(localclientnum, oldval, newval, bnewent, binitialsnap
 	{
 		var_4c2b197a = struct::get("cooldown_steam_1", "targetname");
 	}
-	else if(newval == 2)
+	else
 	{
-		var_4c2b197a = struct::get("cooldown_steam_2", "targetname");
-	}
-	else if(newval == 3)
-	{
-		var_4c2b197a = struct::get("cooldown_steam_3", "targetname");
+		if(newval == 2)
+		{
+			var_4c2b197a = struct::get("cooldown_steam_2", "targetname");
+		}
+		else if(newval == 3)
+		{
+			var_4c2b197a = struct::get("cooldown_steam_3", "targetname");
+		}
 	}
 	if(isdefined(var_4c2b197a))
 	{
@@ -959,24 +968,33 @@ function crystal_fx(localclientnum, oldval, newval, bnewent, binitialsnap, field
 		self.var_c304583e = playfxontag(localclientnum, level._effect["fire_glow"], self, "tag_origin");
 		setfxignorepause(localclientnum, self.var_c304583e, 1);
 	}
-	else if(newval == 2)
+	else
 	{
-		self.var_c304583e = playfxontag(localclientnum, level._effect["air_glow"], self, "tag_origin");
-		setfxignorepause(localclientnum, self.var_c304583e, 1);
-	}
-	else if(newval == 3)
-	{
-		self.var_c304583e = playfxontag(localclientnum, level._effect["elec_glow"], self, "tag_origin");
-		setfxignorepause(localclientnum, self.var_c304583e, 1);
-	}
-	else if(newval == 4)
-	{
-		self.var_c304583e = playfxontag(localclientnum, level._effect["ice_glow"], self, "tag_origin");
-		setfxignorepause(localclientnum, self.var_c304583e, 1);
-	}
-	else if(newval == 0)
-	{
-		stopfx(localclientnum, self.var_c304583e);
+		if(newval == 2)
+		{
+			self.var_c304583e = playfxontag(localclientnum, level._effect["air_glow"], self, "tag_origin");
+			setfxignorepause(localclientnum, self.var_c304583e, 1);
+		}
+		else
+		{
+			if(newval == 3)
+			{
+				self.var_c304583e = playfxontag(localclientnum, level._effect["elec_glow"], self, "tag_origin");
+				setfxignorepause(localclientnum, self.var_c304583e, 1);
+			}
+			else
+			{
+				if(newval == 4)
+				{
+					self.var_c304583e = playfxontag(localclientnum, level._effect["ice_glow"], self, "tag_origin");
+					setfxignorepause(localclientnum, self.var_c304583e, 1);
+				}
+				else if(newval == 0)
+				{
+					stopfx(localclientnum, self.var_c304583e);
+				}
+			}
+		}
 	}
 }
 
@@ -1096,32 +1114,47 @@ function player_rumble_and_shake(localclientnum, oldval, newval, bnewent, biniti
 	{
 		self thread player_continuous_rumble(localclientnum, 1);
 	}
-	else if(newval == 5)
-	{
-		self thread player_continuous_rumble(localclientnum, 2);
-	}
-	else if(newval == 3)
-	{
-		self earthquake(0.6, 1.5, self.origin, 100);
-		self playrumbleonentity(localclientnum, "artillery_rumble");
-	}
-	else if(newval == 2)
-	{
-		self earthquake(0.3, 1.5, self.origin, 100);
-		self playrumbleonentity(localclientnum, "shotgun_fire");
-	}
-	else if(newval == 1)
-	{
-		self earthquake(0.1, 1, self.origin, 100);
-		self playrumbleonentity(localclientnum, "damage_heavy");
-	}
-	else if(newval == 6)
-	{
-		self thread player_continuous_rumble(localclientnum, 1, 0);
-	}
 	else
 	{
-		self notify(#"stop_rumble_and_shake");
+		if(newval == 5)
+		{
+			self thread player_continuous_rumble(localclientnum, 2);
+		}
+		else
+		{
+			if(newval == 3)
+			{
+				self earthquake(0.6, 1.5, self.origin, 100);
+				self playrumbleonentity(localclientnum, "artillery_rumble");
+			}
+			else
+			{
+				if(newval == 2)
+				{
+					self earthquake(0.3, 1.5, self.origin, 100);
+					self playrumbleonentity(localclientnum, "shotgun_fire");
+				}
+				else
+				{
+					if(newval == 1)
+					{
+						self earthquake(0.1, 1, self.origin, 100);
+						self playrumbleonentity(localclientnum, "damage_heavy");
+					}
+					else
+					{
+						if(newval == 6)
+						{
+							self thread player_continuous_rumble(localclientnum, 1, 0);
+						}
+						else
+						{
+							self notify(#"stop_rumble_and_shake");
+						}
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -1152,11 +1185,14 @@ function player_continuous_rumble(localclientnum, rumble_level, shake_camera = 1
 				self playrumbleonentity(localclientnum, "reload_small");
 				wait(0.05);
 			}
-			else if(shake_camera)
+			else
 			{
-				self earthquake(0.3, 1, self.origin, 100);
+				if(shake_camera)
+				{
+					self earthquake(0.3, 1, self.origin, 100);
+				}
+				self playrumbleonentity(localclientnum, "damage_light");
 			}
-			self playrumbleonentity(localclientnum, "damage_light");
 		}
 		wait(0.1);
 	}
@@ -1189,20 +1225,20 @@ function function_24a5862d(localclientnum, oldval, newval, bnewent, binitialsnap
 {
 	var_aa8e992 = array("phys_lantern01", "phys_lantern02", "phys_lantern03", "phys_lantern04", "phys_lantern05", "phys_lantern06", "phys_lantern07", "phys_lantern08", "phys_lantern09", "phys_lantern10", "phys_lantern11", "phys_lantern12", "phys_lantern13", "phys_lantern14", "phys_lantern15", "phys_lantern16", "phys_lantern17", "phys_lantern18", "phys_lantern19");
 	var_e531bd52 = [];
-	foreach(var_5d0336a3, str_name in var_aa8e992)
+	foreach(str_name in var_aa8e992)
 	{
 		var_e531bd52 = arraycombine(var_e531bd52, getdynentarray(str_name), 0, 0);
 	}
 	if(newval)
 	{
-		foreach(var_46e4ae1, lantern in var_e531bd52)
+		foreach(lantern in var_e531bd52)
 		{
 			lantern function_ea74b5ce(localclientnum);
 		}
 	}
 	else
 	{
-		foreach(var_aa9c2a9f, lantern in var_e531bd52)
+		foreach(lantern in var_e531bd52)
 		{
 			lantern function_b44167d(localclientnum);
 		}
@@ -1326,12 +1362,15 @@ function function_4a9e7e2(localclientnum)
 		self.b_lightning = 0;
 		level.var_1c69bb12.var_b13d6dfb = 0;
 	}
-	else if(isdefined(self.b_lightning) && !self.b_lightning)
+	else
 	{
-		self thread _lightning_thread(localclientnum);
+		if(isdefined(self.b_lightning) && !self.b_lightning)
+		{
+			self thread _lightning_thread(localclientnum);
+		}
+		self thread _rain_thread(level.weather_rain, localclientnum);
+		level.var_1c69bb12.var_b13d6dfb = 1;
 	}
-	self thread _rain_thread(level.weather_rain, localclientnum);
-	level.var_1c69bb12.var_b13d6dfb = 1;
 	level thread function_f099c69d(self);
 }
 
@@ -1369,30 +1408,33 @@ function function_2feb8fa1(localclientnum, oldval, newval, bnewent, binitialsnap
 			setworldfogactivebank(localclientnum, 1);
 		}
 	}
-	else if(newval == 1)
+	else
 	{
-		function_b5ac96ec("rain", localclientnum);
-		setlitfogbank(localclientnum, -1, 2, -1);
-		if(getdvarint("splitscreen_playerCount") > 2)
+		if(newval == 1)
 		{
-			setworldfogactivebank(localclientnum, 12);
+			function_b5ac96ec("rain", localclientnum);
+			setlitfogbank(localclientnum, -1, 2, -1);
+			if(getdvarint("splitscreen_playerCount") > 2)
+			{
+				setworldfogactivebank(localclientnum, 12);
+			}
+			else
+			{
+				setworldfogactivebank(localclientnum, 4);
+			}
 		}
-		else
+		else if(newval == 2)
 		{
-			setworldfogactivebank(localclientnum, 4);
-		}
-	}
-	else if(newval == 2)
-	{
-		function_b5ac96ec("snow", localclientnum);
-		setlitfogbank(localclientnum, -1, 1, -1);
-		if(getdvarint("splitscreen_playerCount") > 2)
-		{
-			setworldfogactivebank(localclientnum, 10);
-		}
-		else
-		{
-			setworldfogactivebank(localclientnum, 2);
+			function_b5ac96ec("snow", localclientnum);
+			setlitfogbank(localclientnum, -1, 1, -1);
+			if(getdvarint("splitscreen_playerCount") > 2)
+			{
+				setworldfogactivebank(localclientnum, 10);
+			}
+			else
+			{
+				setworldfogactivebank(localclientnum, 2);
+			}
 		}
 	}
 }
@@ -1734,16 +1776,19 @@ function foot_print_box_glow(localclientnum, oldval, newval, bnewent, binitialsn
 			self.sndent thread function_3a4d4e97();
 		}
 	}
-	else if(isdefined(self.fx_glow))
+	else
 	{
-		stopfx(localclientnum, self.fx_glow);
-		self.fx_glow = undefined;
-		self thread function_526683dc(localclientnum);
-	}
-	if(isdefined(self.sndent))
-	{
-		self.sndent delete();
-		self.sndent = undefined;
+		if(isdefined(self.fx_glow))
+		{
+			stopfx(localclientnum, self.fx_glow);
+			self.fx_glow = undefined;
+			self thread function_526683dc(localclientnum);
+		}
+		if(isdefined(self.sndent))
+		{
+			self.sndent delete();
+			self.sndent = undefined;
+		}
 	}
 }
 

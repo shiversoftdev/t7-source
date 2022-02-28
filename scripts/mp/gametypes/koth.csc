@@ -151,7 +151,7 @@ function setup_hardpoint_fx(local_client_num, zone_index, state)
 	}
 	if(isdefined(level.hardpointfx[local_client_num]))
 	{
-		foreach(var_582a2cf, fx in level.hardpointfx[local_client_num])
+		foreach(fx in level.hardpointfx[local_client_num])
 		{
 			stopfx(local_client_num, fx);
 		}
@@ -162,7 +162,7 @@ function setup_hardpoint_fx(local_client_num, zone_index, state)
 		if(isdefined(level.visuals[zone_index]))
 		{
 			fx_state = get_fx_state(local_client_num, state, shoutcaster::is_shoutcaster(local_client_num));
-			foreach(var_98786fb6, visual in level.visuals[zone_index])
+			foreach(visual in level.visuals[zone_index])
 			{
 				if(!isdefined(visual.script_fxid))
 				{
@@ -213,11 +213,11 @@ function hardpoint(localclientnum, oldval, newval, bnewent, binitialsnap, fieldn
 	if(level.hardpoints.size == 0)
 	{
 		hardpoints = struct::get_array("koth_zone_center", "targetname");
-		foreach(var_4c491cdb, point in hardpoints)
+		foreach(point in hardpoints)
 		{
 			level.hardpoints[point.script_index] = point;
 		}
-		foreach(var_a5580e8, point in level.hardpoints)
+		foreach(point in level.hardpoints)
 		{
 			level.visuals[point.script_index] = struct::get_array(point.target, "targetname");
 		}

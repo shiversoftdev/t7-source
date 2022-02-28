@@ -29,7 +29,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("parasite", &__init__, undefined, undefined);
 }
@@ -86,7 +86,7 @@ function parasite_damage()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function is_target_valid(target)
+function private is_target_valid(target)
 {
 	if(!isdefined(target))
 	{
@@ -203,7 +203,7 @@ function set_parasite_enemy(enemy)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function parasite_target_selection()
+function private parasite_target_selection()
 {
 	self endon(#"change_state");
 	self endon(#"death");
@@ -403,16 +403,19 @@ function state_combat_update(params)
 			returndata["origin"] = self getclosestpointonnavvolume(self.goalpos, 100);
 			returndata["centerOnNav"] = ispointinnavvolume(self.origin, "navvolume_small");
 		}
-		else if(randomint(100) < self.settings.jukeprobability && (!(isdefined(self.lasttimejuked) && self.lasttimejuked)) || (isdefined(self._override_juke) && self._override_juke))
-		{
-			returndata = getnextmoveposition_forwardjuke();
-			self.lasttimejuked = 1;
-			self._override_juke = undefined;
-		}
 		else
 		{
-			returndata = getnextmoveposition_tactical();
-			self.lasttimejuked = 0;
+			if(randomint(100) < self.settings.jukeprobability && (!(isdefined(self.lasttimejuked) && self.lasttimejuked)) || (isdefined(self._override_juke) && self._override_juke))
+			{
+				returndata = getnextmoveposition_forwardjuke();
+				self.lasttimejuked = 1;
+				self._override_juke = undefined;
+			}
+			else
+			{
+				returndata = getnextmoveposition_tactical();
+				self.lasttimejuked = 0;
+			}
 		}
 		self.current_pathto_pos = returndata["origin"];
 		if(isdefined(self.current_pathto_pos))
@@ -533,7 +536,7 @@ function getnextmoveposition_tactical()
 	best_point = undefined;
 	best_score = -999999;
 	trace_count = 0;
-	foreach(var_ff243644, point in queryresult.data)
+	foreach(point in queryresult.data)
 	{
 		if(!(isdefined(queryresult.centeronnav) && queryresult.centeronnav))
 		{
@@ -640,7 +643,7 @@ function getnextmoveposition_forwardjuke()
 	best_point = undefined;
 	best_score = -999999;
 	trace_count = 0;
-	foreach(var_e5cbcafe, point in queryresult.data)
+	foreach(point in queryresult.data)
 	{
 		if(!(isdefined(queryresult.centeronnav) && queryresult.centeronnav))
 		{

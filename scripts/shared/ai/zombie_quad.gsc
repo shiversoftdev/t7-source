@@ -36,7 +36,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	initzombiebehaviorsandasm();
 	spawner::add_archetype_spawn_function("zombie_quad", &archetypequadblackboardinit);
@@ -100,7 +100,7 @@ function archetypequadblackboardinit()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function archetypequadonanimscriptedcallback(entity)
+function private archetypequadonanimscriptedcallback(entity)
 {
 	entity.__blackboard = undefined;
 	entity archetypequadblackboardinit();
@@ -115,7 +115,7 @@ private function archetypequadonanimscriptedcallback(entity)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function initzombiebehaviorsandasm()
+function private initzombiebehaviorsandasm()
 {
 	animationstatenetwork::registeranimationmocomp("mocomp_teleport_traversal@zombie_quad", &quadteleporttraversalmocompstart, undefined, undefined);
 }

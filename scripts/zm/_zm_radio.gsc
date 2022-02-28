@@ -15,7 +15,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_radio", &__init__, &__main__, undefined);
 }
@@ -44,7 +44,7 @@ function __init__()
 */
 function __main__()
 {
-	level.var_ce7032d4 = -1;
+	level.n_radio_index = -1;
 	str_name = "kzmb";
 	str_key = "targetname";
 	if(isdefined(level.var_f3b142b3))

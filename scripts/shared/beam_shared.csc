@@ -26,7 +26,7 @@ function launch(ent_1, str_tag1, ent_2, str_tag2, str_beam_type)
 	{
 		if(isdefined(level.localplayers))
 		{
-			foreach(var_e67f5704, player in level.localplayers)
+			foreach(player in level.localplayers)
 			{
 				if(isdefined(player))
 				{
@@ -63,7 +63,7 @@ function kill(ent_1, str_tag1, ent_2, str_tag2, str_beam_type)
 	{
 		if(isdefined(level.localplayers))
 		{
-			foreach(var_2cc6ced6, player in level.localplayers)
+			foreach(player in level.localplayers)
 			{
 				if(isdefined(player))
 				{
@@ -88,7 +88,7 @@ function kill(ent_1, str_tag1, ent_2, str_tag2, str_beam_type)
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function _new_beam(ent_1, str_tag1, ent_2, str_tag2, str_beam_type)
+function private _new_beam(ent_1, str_tag1, ent_2, str_tag2, str_beam_type)
 {
 	if(!isdefined(self.active_beams))
 	{
@@ -121,11 +121,11 @@ private function _new_beam(ent_1, str_tag1, ent_2, str_tag2, str_beam_type)
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function _get_beam(ent_1, str_tag1, ent_2, str_tag2, str_beam_type)
+function private _get_beam(ent_1, str_tag1, ent_2, str_tag2, str_beam_type)
 {
 	if(isdefined(self.active_beams))
 	{
-		foreach(var_68124ee2, s_beam in self.active_beams)
+		foreach(s_beam in self.active_beams)
 		{
 			if(s_beam.ent_1 == ent_1 && s_beam.str_tag1 == str_tag1 && s_beam.ent_2 == ent_2 && s_beam.str_tag2 == str_tag2 && s_beam.str_beam_type == str_beam_type)
 			{
@@ -144,7 +144,7 @@ private function _get_beam(ent_1, str_tag1, ent_2, str_tag2, str_beam_type)
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function _kill_on_ent_death(s_beam, ent_1, ent_2)
+function private _kill_on_ent_death(s_beam, ent_1, ent_2)
 {
 	s_beam endon(#"kill");
 	self endon(#"death");

@@ -26,7 +26,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	function_66da4eb0();
 }
@@ -40,7 +40,7 @@ autoexec function init()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_66da4eb0()
+function private function_66da4eb0()
 {
 	behaviortreenetworkutility::registerbehaviortreeaction("traverseWallCrawlAction", &traversewallcrawlaction, &function_7d285db1, undefined);
 	behaviortreenetworkutility::registerbehaviortreescriptapi("shouldWallTraverse", &shouldwalltraverse);
@@ -101,10 +101,10 @@ function shouldwalltraverse(entity)
 	{
 		if(issubstr(entity.traversestartnode.animscript, "zm_wall_crawl_drop"))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -122,10 +122,10 @@ function shouldwallcrawl(entity)
 	{
 		if(gettime() >= self.var_2826ab5d)
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -185,11 +185,11 @@ function quadcollisionservice(behaviortreeentity)
 	{
 		if(gettime() < behaviortreeentity.dontpushtime)
 		{
-			return 1;
+			return true;
 		}
 	}
 	zombies = getaiteamarray(level.zombie_team);
-	foreach(var_5a40a654, zombie in zombies)
+	foreach(zombie in zombies)
 	{
 		if(zombie == behaviortreeentity)
 		{
@@ -205,11 +205,11 @@ function quadcollisionservice(behaviortreeentity)
 			behaviortreeentity pushactors(0);
 			behaviortreeentity.dontpushtime = gettime() + 3000;
 			zombie thread function_77876867();
-			return 1;
+			return true;
 		}
 	}
 	behaviortreeentity pushactors(1);
-	return 0;
+	return false;
 }
 
 /*
@@ -238,7 +238,7 @@ function function_77876867()
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function function_dd3e35df(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function private function_dd3e35df(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	animdist = abs(getmovedelta(mocompanim, 0, 1)[2]);
 	self.ground_pos = bullettrace(self.var_7531a5e3.origin, self.var_7531a5e3.origin + (vectorscale((0, 0, -1), 100000)), 0, self)["position"];
@@ -257,7 +257,7 @@ private function function_dd3e35df(entity, mocompanim, mocompanimblendouttime, m
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function function_5d8b540c(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function private function_5d8b540c(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	entity animmode("noclip", 0);
 }
@@ -271,7 +271,7 @@ private function function_5d8b540c(entity, mocompanim, mocompanimblendouttime, m
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function function_18650281(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function private function_18650281(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	entity allowpitchangle(1);
 	entity.clamptonavmesh = 1;
@@ -286,7 +286,7 @@ private function function_18650281(entity, mocompanim, mocompanimblendouttime, m
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function function_9e9b3f8b(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function private function_9e9b3f8b(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	/#
 		assert(isdefined(entity.traversestartnode));
@@ -307,7 +307,7 @@ private function function_9e9b3f8b(entity, mocompanim, mocompanimblendouttime, m
 	Parameters: 5
 	Flags: Linked, Private
 */
-private function function_2433815e(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
+function private function_2433815e(entity, mocompanim, mocompanimblendouttime, mocompanimflag, mocompduration)
 {
 	entity finishtraversal();
 	entity.usegoalanimweight = 0;
@@ -795,17 +795,23 @@ function manage_zombie_spawn_delay(start_timer)
 	{
 		level.zombie_vars["zombie_spawn_delay"] = randomintrange(30, 45);
 	}
-	else if((gettime() - start_timer) < 25000)
+	else
 	{
-		level.zombie_vars["zombie_spawn_delay"] = randomintrange(15, 30);
-	}
-	else if((gettime() - start_timer) < 35000)
-	{
-		level.zombie_vars["zombie_spawn_delay"] = randomintrange(10, 15);
-	}
-	else if((gettime() - start_timer) < 50000)
-	{
-		level.zombie_vars["zombie_spawn_delay"] = randomintrange(5, 10);
+		if((gettime() - start_timer) < 25000)
+		{
+			level.zombie_vars["zombie_spawn_delay"] = randomintrange(15, 30);
+		}
+		else
+		{
+			if((gettime() - start_timer) < 35000)
+			{
+				level.zombie_vars["zombie_spawn_delay"] = randomintrange(10, 15);
+			}
+			else if((gettime() - start_timer) < 50000)
+			{
+				level.zombie_vars["zombie_spawn_delay"] = randomintrange(5, 10);
+			}
+		}
 	}
 }
 

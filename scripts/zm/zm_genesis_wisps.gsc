@@ -36,7 +36,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_genesis_wisps", &__init__, &__main__, undefined);
 }
@@ -109,7 +109,7 @@ function function_d1c51308()
 	level.a_wisps = [];
 	level.a_wisps["s_trig"] = struct::get_array("s_trig_wisp", "targetname");
 	level.a_wisps["s_fx"] = struct::get_array("s_fx_wisp", "targetname");
-	foreach(var_c5bb5761, s_trig in level.a_wisps["s_trig"])
+	foreach(s_trig in level.a_wisps["s_trig"])
 	{
 		s_unitrigger = s_trig zm_unitrigger::create_unitrigger(&"", 64, &function_836f0458);
 		s_unitrigger.require_look_at = 1;
@@ -138,28 +138,37 @@ function function_f61f49b0()
 			zm_genesis_vo::function_4821b1a3("abcd");
 			function_719d3043(1, "abcd");
 		}
-		else if(str_notify == "wisps_on_shad")
+		else
 		{
-			zm_genesis_vo::function_4821b1a3("shad");
-			function_719d3043(1, "shad");
-		}
-		else if(str_notify == "boss_round_end_vo_done" && var_6cf8e556.size > 0)
-		{
-			var_effd4dcc = var_6cf8e556[0];
-			zm_genesis_vo::function_4821b1a3(var_effd4dcc);
-			function_719d3043(1, var_effd4dcc);
-			arrayremoveindex(var_6cf8e556, 0, 0);
-		}
-		else if(str_notify == "chaos_round_end_vo_done" && var_96cdbf35.size > 0)
-		{
-			var_effd4dcc = var_96cdbf35[0];
-			zm_genesis_vo::function_4821b1a3(var_effd4dcc);
-			function_719d3043(1, var_effd4dcc);
-			arrayremoveindex(var_96cdbf35, 0, 0);
-		}
-		else if(str_notify == "wisps_off")
-		{
-			function_719d3043(0, undefined);
+			if(str_notify == "wisps_on_shad")
+			{
+				zm_genesis_vo::function_4821b1a3("shad");
+				function_719d3043(1, "shad");
+			}
+			else
+			{
+				if(str_notify == "boss_round_end_vo_done" && var_6cf8e556.size > 0)
+				{
+					var_effd4dcc = var_6cf8e556[0];
+					zm_genesis_vo::function_4821b1a3(var_effd4dcc);
+					function_719d3043(1, var_effd4dcc);
+					arrayremoveindex(var_6cf8e556, 0, 0);
+				}
+				else
+				{
+					if(str_notify == "chaos_round_end_vo_done" && var_96cdbf35.size > 0)
+					{
+						var_effd4dcc = var_96cdbf35[0];
+						zm_genesis_vo::function_4821b1a3(var_effd4dcc);
+						function_719d3043(1, var_effd4dcc);
+						arrayremoveindex(var_96cdbf35, 0, 0);
+					}
+					else if(str_notify == "wisps_off")
+					{
+						function_719d3043(0, undefined);
+					}
+				}
+			}
 		}
 	}
 }
@@ -181,7 +190,7 @@ function function_719d3043(b_on = 1, str_who)
 			assert(str_who == "" || str_who == "", "");
 		#/
 		level.var_c1feb276 = "wisp_" + str_who;
-		foreach(var_da6c0ba9, s_trig in level.a_wisps["s_trig"])
+		foreach(s_trig in level.a_wisps["s_trig"])
 		{
 			s_trig thread function_26ed5998(1, str_who);
 		}
@@ -189,7 +198,7 @@ function function_719d3043(b_on = 1, str_who)
 	else
 	{
 		level.var_11db95ba = "wisp_off";
-		foreach(var_316cf841, s_trig in level.a_wisps["s_trig"])
+		foreach(s_trig in level.a_wisps["s_trig"])
 		{
 			s_trig thread function_26ed5998(0, str_who);
 		}
@@ -271,12 +280,12 @@ function function_836f0458(e_player)
 		/#
 			self sethintstring("");
 		#/
-		return 1;
+		return true;
 	}
 	/#
 		self sethintstring("");
 	#/
-	return 0;
+	return false;
 }
 
 /*
@@ -301,7 +310,7 @@ function function_bce246fa()
 	level.var_e2304a21["s_fx"][1] = struct::get("s_fx_funfact_niko", "targetname");
 	level.var_e2304a21["s_fx"][2] = struct::get("s_fx_funfact_rich", "targetname");
 	level.var_e2304a21["s_fx"][3] = struct::get("s_fx_funfact_take", "targetname");
-	foreach(var_396e6f73, s_trig in level.var_e2304a21["s_trig"])
+	foreach(s_trig in level.var_e2304a21["s_trig"])
 	{
 		s_unitrigger = s_trig zm_unitrigger::create_unitrigger(&"", 64, &function_caef395a);
 		s_unitrigger.require_look_at = 1;
@@ -347,7 +356,7 @@ function function_b177eb62()
 */
 function function_cf810f3f(b_on = 1)
 {
-	foreach(var_44df85bd, s_trig in level.var_e2304a21["s_trig"])
+	foreach(s_trig in level.var_e2304a21["s_trig"])
 	{
 		s_trig thread function_584171ff(b_on);
 	}
@@ -437,15 +446,18 @@ function function_198aed06()
 				level thread zm_genesis_vo::function_36734069();
 				level flag::set("funfacts_started");
 			}
-			else if(!level flag::get("funfacts_activated"))
-			{
-				level flag::set("funfacts_activated");
-				level zm_genesis_vo::function_2050fb34();
-				level thread zm_genesis_vo::function_bbeae714(e_player.characterindex);
-			}
 			else
 			{
-				level thread zm_genesis_vo::function_bbeae714(e_player.characterindex);
+				if(!level flag::get("funfacts_activated"))
+				{
+					level flag::set("funfacts_activated");
+					level zm_genesis_vo::function_2050fb34();
+					level thread zm_genesis_vo::function_bbeae714(e_player.characterindex);
+				}
+				else
+				{
+					level thread zm_genesis_vo::function_bbeae714(e_player.characterindex);
+				}
 			}
 		}
 	}
@@ -469,17 +481,17 @@ function function_caef395a(e_player)
 			/#
 				self sethintstring("");
 			#/
-			return 1;
+			return true;
 		}
 		/#
 			self sethintstring("");
 		#/
-		return 0;
+		return false;
 	}
 	/#
 		self sethintstring("");
 	#/
-	return 0;
+	return false;
 }
 
 /*
@@ -572,7 +584,7 @@ function function_12821101(n_val)
 function function_910a409b(n_val)
 {
 	/#
-		foreach(var_57b92206, s_trig in level.var_e2304a21[""])
+		foreach(s_trig in level.var_e2304a21[""])
 		{
 			if(s_trig.script_int == n_val)
 			{
@@ -703,13 +715,16 @@ function function_eaebf31c(n_val)
 		{
 			level notify(#"wisps_on_abcd");
 		}
-		else if(n_val == 2)
+		else
 		{
-			level notify(#"wisps_on_shad");
-		}
-		else if(n_val == 0)
-		{
-			level notify(#"wisps_off");
+			if(n_val == 2)
+			{
+				level notify(#"wisps_on_shad");
+			}
+			else if(n_val == 0)
+			{
+				level notify(#"wisps_off");
+			}
 		}
 	#/
 }

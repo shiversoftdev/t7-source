@@ -38,7 +38,7 @@ function init()
 */
 function on_bot_connect()
 {
-	foreach(var_5b056450, flag in level.flags)
+	foreach(flag in level.flags)
 	{
 		if(flag gameobjects::get_owner_team() == self.team)
 		{

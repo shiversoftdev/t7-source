@@ -80,7 +80,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function opt_in()
+function autoexec opt_in()
 {
 	level.aat_in_use = 1;
 	level.bgb_in_use = 1;
@@ -198,7 +198,7 @@ function main()
 	level.monk_scream_trig = getent("monk_scream_trig", "targetname");
 	zombie_utility::set_zombie_var("zombie_powerup_drop_max_per_round", 4);
 	a_t_audio = getentarray("audio_bump_trigger", "targetname");
-	foreach(var_6168b095, t_audio_bump in a_t_audio)
+	foreach(t_audio_bump in a_t_audio)
 	{
 		if(t_audio_bump.script_sound === "zmb_perks_bump_bottle")
 		{
@@ -250,7 +250,7 @@ function function_a1d5988d()
 	var_e4821d40 = level.zones["wnuen_bridge_zone"].a_loc_types["dog_location"];
 	if(isdefined(var_e4821d40))
 	{
-		foreach(var_9c353fc0, spawn in var_e4821d40)
+		foreach(spawn in var_e4821d40)
 		{
 			if(spawn.origin == (1196, -1459.8, 135.4))
 			{
@@ -281,7 +281,7 @@ function cinematic()
 		wait(0.05);
 	}
 	visionsetnaked("cp_igc_chinatown_intro", 0.05);
-	foreach(var_8fa548d0, e_player in level.players)
+	foreach(e_player in level.players)
 	{
 		e_player freezecontrols(1);
 		e_player allowsprint(0);
@@ -387,7 +387,7 @@ function offhand_weapon_give_override(weapon)
 		self setweaponammoclip(self zm_utility::get_player_tactical_grenade(), 0);
 		self takeweapon(self zm_utility::get_player_tactical_grenade());
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -504,7 +504,7 @@ function assign_lowest_unused_character_index()
 		return charindexarray[0];
 	}
 	n_characters_defined = 0;
-	foreach(var_d3643edb, player in players)
+	foreach(player in players)
 	{
 		if(isdefined(player.characterindex))
 		{
@@ -848,10 +848,10 @@ function validate_and_set_no_target_position(position)
 		{
 			self setgoal(goal_point);
 			self.has_exit_point = 1;
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -879,7 +879,7 @@ function no_target_override(zombie)
 		for(i = 0; i < locs.size; i++)
 		{
 			found_point = 0;
-			foreach(var_6405f90, player in players)
+			foreach(player in players)
 			{
 				if(player laststand::player_is_in_laststand())
 				{
@@ -1020,7 +1020,7 @@ function bridge_init()
 */
 function bridge_disconnect(a_parts)
 {
-	foreach(var_dd1d6a02, part in a_parts)
+	foreach(part in a_parts)
 	{
 		part disconnectpaths();
 	}
@@ -1037,7 +1037,7 @@ function bridge_disconnect(a_parts)
 */
 function bridge_connect(a_parts)
 {
-	foreach(var_5bb4d02d, part in a_parts)
+	foreach(part in a_parts)
 	{
 		part connectpaths();
 	}
@@ -1675,9 +1675,9 @@ function function_81abed86()
 {
 	if(isdefined(self.b_teleporting) && self.b_teleporting)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1947,7 +1947,7 @@ function getrandomnotrichtofen()
 {
 	array = level.players;
 	array::randomize(array);
-	foreach(var_47441b8b, guy in array)
+	foreach(guy in array)
 	{
 		if(guy.characterindex != 2)
 		{
@@ -1968,7 +1968,7 @@ function getrandomnotrichtofen()
 */
 function getspecificcharacter(charindex)
 {
-	foreach(var_7cf1da9, guy in level.players)
+	foreach(guy in level.players)
 	{
 		if(guy.characterindex == charindex)
 		{
@@ -1989,14 +1989,14 @@ function getspecificcharacter(charindex)
 */
 function isanyonetalking()
 {
-	foreach(var_f9ab278f, player in level.players)
+	foreach(player in level.players)
 	{
 		if(isdefined(player.isspeaking) && player.isspeaking)
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2095,17 +2095,20 @@ function sndradiowait(origin, radio, num)
 			alias = "vox_maxis_player_radio3a";
 		}
 	}
-	else if(num == 1)
+	else
 	{
-		alias = "vox_demp_player_radio1b";
-	}
-	if(num == 2)
-	{
-		alias = "vox_niko_player_radio2b";
-	}
-	if(num == 3)
-	{
-		alias = "vox_take_player_radio3b";
+		if(num == 1)
+		{
+			alias = "vox_demp_player_radio1b";
+		}
+		if(num == 2)
+		{
+			alias = "vox_niko_player_radio2b";
+		}
+		if(num == 3)
+		{
+			alias = "vox_take_player_radio3b";
+		}
 	}
 	radionum = num;
 	radioalias = alias;
@@ -2159,7 +2162,7 @@ function function_6ea54e62(grenade, model)
 			return;
 		}
 		var_6cfabdcd = getentarray("sndTransportTrig", "targetname");
-		foreach(var_5ea7481e, trig in var_6cfabdcd)
+		foreach(trig in var_6cfabdcd)
 		{
 			if(grenade istouching(trig))
 			{
@@ -2262,7 +2265,7 @@ function sndpasetup()
 	level.patalking = 0;
 	level.paarray = array();
 	array = struct::get_array("pa_system", "targetname");
-	foreach(var_90cc0e32, pa in array)
+	foreach(pa in array)
 	{
 		ent = spawn("script_origin", pa.origin);
 		if(!isdefined(level.paarray))
@@ -2325,7 +2328,7 @@ function sndpa_dovox(alias, delay, nowait = 0)
 function sndpa_playvox(alias)
 {
 	array::randomize(level.paarray);
-	foreach(var_bfc100d4, pa in level.paarray)
+	foreach(pa in level.paarray)
 	{
 		pa playsound(alias);
 		wait(0.05);
@@ -2409,25 +2412,31 @@ function function_33aa4940()
 			var_88369d66 = 1;
 		}
 	}
-	else if(level.round_number > 25)
+	else
 	{
-		if(randomfloat(100) < 3)
+		if(level.round_number > 25)
 		{
-			var_88369d66 = 1;
+			if(randomfloat(100) < 3)
+			{
+				var_88369d66 = 1;
+			}
 		}
-	}
-	else if(level.round_number > 20)
-	{
-		if(randomfloat(100) < 2)
+		else
 		{
-			var_88369d66 = 1;
-		}
-	}
-	else if(level.round_number > 15)
-	{
-		if(randomfloat(100) < 1)
-		{
-			var_88369d66 = 1;
+			if(level.round_number > 20)
+			{
+				if(randomfloat(100) < 2)
+				{
+					var_88369d66 = 1;
+				}
+			}
+			else if(level.round_number > 15)
+			{
+				if(randomfloat(100) < 1)
+				{
+					var_88369d66 = 1;
+				}
+			}
 		}
 	}
 	if(var_88369d66)
@@ -2503,7 +2512,7 @@ function factory_custom_spawn_location_selection(a_spots)
 	Parameters: 2
 	Flags: Private
 */
-private function factory_closest_player(origin, players)
+function private factory_closest_player(origin, players)
 {
 	closest = players[0];
 	closest_dist = self zm_utility::approximate_path_dist(closest);
@@ -2576,13 +2585,13 @@ function brick_cipher()
 	self create_unitrigger();
 	self waittill(#"trigger_activated");
 	var_74772b0f = getentarray("cipher_bricks", "targetname");
-	foreach(var_b2f68f3f, var_3d01fc2c in var_74772b0f)
+	foreach(var_3d01fc2c in var_74772b0f)
 	{
 		var_3d01fc2c movez(375, 2);
 	}
 	zm_unitrigger::unregister_unitrigger(self.s_unitrigger);
 	wait(2);
-	foreach(var_fb249bd4, var_3d01fc2c in var_74772b0f)
+	foreach(var_3d01fc2c in var_74772b0f)
 	{
 		var_3d01fc2c delete();
 	}
@@ -2720,7 +2729,7 @@ function function_7cb67075()
 		if(w_weapon == var_f1f15003)
 		{
 			e_grenade waittill(#"stationary");
-			foreach(var_83468386, trigger in var_230694a)
+			foreach(trigger in var_230694a)
 			{
 				if(e_grenade istouching(trigger))
 				{
@@ -3033,7 +3042,7 @@ function function_86e1c543()
 		var_65af5e9c = trigger::wait_till("flytrap_prize");
 		if(!(isdefined(level.var_1cbe7756) && level.var_1cbe7756))
 		{
-			foreach(var_76d0b622, player in level.players)
+			foreach(player in level.players)
 			{
 				level scoreevents::processscoreevent("main_EE_quest_factory", player);
 				player zm_stats::increment_global_stat("DARKOPS_FACTORY_EE");
@@ -3085,9 +3094,9 @@ function function_869d6f66()
 {
 	if(!isdefined(self zm_bgb_anywhere_but_here::function_728dfe3()))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -3125,7 +3134,7 @@ function function_35372e3f(n_value)
 			return;
 		}
 		var_ef99f97c = getentarray("", "");
-		foreach(var_df2a940d, trigger in var_ef99f97c)
+		foreach(trigger in var_ef99f97c)
 		{
 			trigger dodamage(100, trigger.origin);
 			wait(5);
@@ -3146,7 +3155,7 @@ function function_7c3a679c(n_value)
 {
 	/#
 		var_957c9ba0 = getweapon("");
-		foreach(var_60932de2, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			player function_5d3bb3fe(var_957c9ba0);
 		}
@@ -3165,7 +3174,7 @@ function function_7c3a679c(n_value)
 function function_1196e483(n_value)
 {
 	/#
-		foreach(var_90a7012a, player in level.players)
+		foreach(player in level.players)
 		{
 			player ability_player::abilities_devgui_power_fill();
 		}

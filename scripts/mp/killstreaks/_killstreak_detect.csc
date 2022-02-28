@@ -19,7 +19,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("killstreak_detect", &__init__, undefined, undefined);
 }
@@ -238,15 +238,18 @@ function updateenemyvehicles(local_client_num, newval)
 		self.isenemyvehicle = 1;
 		self duplicate_render::set_item_friendly_vehicle(local_client_num, 0);
 	}
-	else if(friend === 1 && isdefined(watcher) && watcher duplicate_render::show_friendly_outlines(local_client_num))
-	{
-		driver = self.type === "vehicle" && self islocalclientdriver(local_client_num);
-		showoutlines = driver === 0 && (newval === 1 || newval === 2);
-		self duplicate_render::set_item_friendly_vehicle(local_client_num, showoutlines);
-	}
 	else
 	{
-		self duplicate_render::set_item_friendly_vehicle(local_client_num, 0);
+		if(friend === 1 && isdefined(watcher) && watcher duplicate_render::show_friendly_outlines(local_client_num))
+		{
+			driver = self.type === "vehicle" && self islocalclientdriver(local_client_num);
+			showoutlines = driver === 0 && (newval === 1 || newval === 2);
+			self duplicate_render::set_item_friendly_vehicle(local_client_num, showoutlines);
+		}
+		else
+		{
+			self duplicate_render::set_item_friendly_vehicle(local_client_num, 0);
+		}
 	}
 	if(newval == 2)
 	{
@@ -285,14 +288,17 @@ function updateenemymissiles(local_client_num, newval)
 		self.isenemyvehicle = 1;
 		self duplicate_render::set_item_friendly_explosive(local_client_num, 0);
 	}
-	else if(friend === 1 && isdefined(watcher) && watcher duplicate_render::show_friendly_outlines(local_client_num))
-	{
-		showoutlines = newval === 1 || newval === 2;
-		self duplicate_render::set_item_friendly_explosive(local_client_num, showoutlines);
-	}
 	else
 	{
-		self duplicate_render::set_item_friendly_explosive(local_client_num, 0);
+		if(friend === 1 && isdefined(watcher) && watcher duplicate_render::show_friendly_outlines(local_client_num))
+		{
+			showoutlines = newval === 1 || newval === 2;
+			self duplicate_render::set_item_friendly_explosive(local_client_num, showoutlines);
+		}
+		else
+		{
+			self duplicate_render::set_item_friendly_explosive(local_client_num, 0);
+		}
 	}
 	if(newval == 2)
 	{

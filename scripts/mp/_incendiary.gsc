@@ -24,7 +24,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("incendiary_grenade", &init_shared, undefined, undefined);
 }
@@ -331,7 +331,7 @@ function damageeffectarea(owner, position, radius, height, killcament)
 		durationofincendiary = durationofincendiary - loopwaittime;
 		damageapplied = 0;
 		potential_targets = self getpotentialtargets(owner);
-		foreach(var_4513c77c, target in potential_targets)
+		foreach(target in potential_targets)
 		{
 			self trytoapplyfiredamage(target, owner, position, fireeffectarea, loopwaittime, killcament);
 		}
@@ -381,7 +381,7 @@ function getpotentialtargets(owner)
 		return all_targets;
 	}
 	potential_targets = [];
-	foreach(var_44df85bd, target in all_targets)
+	foreach(target in all_targets)
 	{
 		if(!isdefined(target))
 		{
@@ -405,17 +405,20 @@ function getpotentialtargets(owner)
 				}
 			}
 		}
-		else if(!isdefined(self))
+		else
 		{
-			continue;
-		}
-		if(!isdefined(self.team))
-		{
-			continue;
-		}
-		if(target.team == self.team)
-		{
-			continue;
+			if(!isdefined(self))
+			{
+				continue;
+			}
+			if(!isdefined(self.team))
+			{
+				continue;
+			}
+			if(target.team == self.team)
+			{
+				continue;
+			}
 		}
 		potential_targets[potential_targets.size] = target;
 	}
@@ -572,9 +575,9 @@ function candofiredamage(killcament, victim, resetfiretime)
 	{
 		level.incendiarydamagethistick[entnum] = 0;
 		level thread resetfiredamage(entnum, resetfiretime);
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

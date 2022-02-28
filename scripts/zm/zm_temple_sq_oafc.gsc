@@ -425,7 +425,7 @@ function function_1667d8eb(tile)
 		level endon(#"hash_77a3efe");
 	}
 	var_ad717133 = undefined;
-	foreach(var_575757b6, var_8bf17d58 in var_b7081a33)
+	foreach(var_8bf17d58 in var_b7081a33)
 	{
 		if(tile.tile == var_8bf17d58.tile)
 		{

@@ -178,7 +178,7 @@ function init_stage()
 	/#
 		if(getplayers().size == 1 || getdvarint("") == 2)
 		{
-			getplayers()[0] giveweapon(level.var_953f69a0);
+			getplayers()[0] giveweapon(level.w_shrink_ray_upgraded);
 			level notify(#"raise_crystal_1");
 			level notify(#"raise_crystal_2");
 			level notify(#"raise_crystal_3");
@@ -504,13 +504,16 @@ function gong_resonate(player)
 		{
 			player thread zm_audio::create_and_play_dialog("eggs", "quest8", 1);
 		}
-		else if(self.right_gong && level flag::get("gongs_resonating"))
+		else
 		{
-			player thread zm_audio::create_and_play_dialog("eggs", "quest8", 2);
-		}
-		else if(!self.right_gong)
-		{
-			player thread zm_audio::create_and_play_dialog("eggs", "quest8", 0);
+			if(self.right_gong && level flag::get("gongs_resonating"))
+			{
+				player thread zm_audio::create_and_play_dialog("eggs", "quest8", 2);
+			}
+			else if(!self.right_gong)
+			{
+				player thread zm_audio::create_and_play_dialog("eggs", "quest8", 0);
+			}
 		}
 	}
 	if(self.right_gong == 0)

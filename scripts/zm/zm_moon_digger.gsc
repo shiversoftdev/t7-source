@@ -150,7 +150,7 @@ function function_c497263d()
 		var_beb7660e.var_575a869f = var_575a869f;
 		var_a68e698 = undefined;
 		var_f31f3fa4 = getentarray(var_beb7660e.target, "targetname");
-		foreach(var_e3bb182, mdl_target in var_f31f3fa4)
+		foreach(mdl_target in var_f31f3fa4)
 		{
 			if(mdl_target.model == "p7_zm_moo_crane_mining_arm")
 			{
@@ -161,7 +161,7 @@ function function_c497263d()
 		}
 		var_d0939dba = getentarray(var_f78a8481, "targetname");
 		var_beb7660e.var_d0939dba = var_d0939dba;
-		foreach(var_7c874e2c, e_light in var_d0939dba)
+		foreach(e_light in var_d0939dba)
 		{
 			e_light linkto(var_beb7660e);
 		}
@@ -169,7 +169,7 @@ function function_c497263d()
 		{
 			var_3b91d0ec = getentarray(var_7dbee661, "targetname");
 			var_a68e698.var_3b91d0ec = var_3b91d0ec;
-			foreach(var_576f72aa, e_light in var_3b91d0ec)
+			foreach(e_light in var_3b91d0ec)
 			{
 				e_light linkto(var_a68e698);
 			}
@@ -867,9 +867,9 @@ function digger_hack_qualifer(player)
 {
 	if(!level flag::get(self.hacked_flag))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1212,7 +1212,7 @@ function diggers_visible(visible)
 function function_267c538a()
 {
 	self show();
-	foreach(var_11082587, player in level.players)
+	foreach(player in level.players)
 	{
 		player givededicatedshadow(self);
 	}
@@ -1628,11 +1628,14 @@ function digger_follow_path(body, reverse, arm)
 				level flag::clear("digger_moving");
 			}
 		}
-		else if(!level flag::get("digger_moving"))
+		else
 		{
-			level flag::set("digger_moving");
+			if(!level flag::get("digger_moving"))
+			{
+				level flag::set("digger_moving");
+			}
+			direction = "fwd";
 		}
-		direction = "fwd";
 		last_node_dir = (1, 0, 0);
 		if(isdefined(last_node))
 		{
@@ -1658,15 +1661,18 @@ function digger_follow_path(body, reverse, arm)
 				reached_end = 1;
 			}
 		}
-		else if(isdefined(current_node.previous_node) && isdefined(current_node.previous_node.previous_node))
-		{
-			next_node_dir = current_node.previous_node.previous_node.origin - next_node.origin;
-		}
 		else
 		{
-			end_time = gettime();
-			total_time = end_time - self.start_time;
-			reached_end = 1;
+			if(isdefined(current_node.previous_node) && isdefined(current_node.previous_node.previous_node))
+			{
+				next_node_dir = current_node.previous_node.previous_node.origin - next_node.origin;
+			}
+			else
+			{
+				end_time = gettime();
+				total_time = end_time - self.start_time;
+				reached_end = 1;
+			}
 		}
 		next_node_dir = vectornormalize(next_node_dir);
 		next_node_plane = curr_node_dir + next_node_dir;
@@ -1788,20 +1794,20 @@ function quantum_bomb_remove_digger_validation(position)
 {
 	if(!level flag::get("both_tunnels_breached"))
 	{
-		return 0;
+		return false;
 	}
 	range_squared = 360000;
 	hangar_blocker = getent("digger_hangar_blocker", "targetname");
 	if(distancesquared(hangar_blocker.origin, position) < range_squared)
 	{
-		return 1;
+		return true;
 	}
 	teleporter_blocker = getent("digger_teleporter_blocker", "targetname");
 	if(distancesquared(teleporter_blocker.origin, position) < range_squared)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*

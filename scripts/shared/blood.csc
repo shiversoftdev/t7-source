@@ -16,7 +16,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("blood", &__init__, undefined, undefined);
 }
@@ -252,19 +252,25 @@ function player_watch_blood(localclientnum)
 				shouldenabledoverlay = 1;
 				self blood_in(localclientnum, playerhealth);
 			}
-			else if(playerhealth == priorplayerhealth && playerhealth != 1)
+			else
 			{
-				shouldenabledoverlay = 1;
-				self.lastbloodupdate = getservertime(localclientnum);
-			}
-			else if(self.stage2amount > 0 || self.stage3amount > 0)
-			{
-				shouldenabledoverlay = 1;
-				self blood_out(localclientnum);
-			}
-			else if(isdefined(self.blood_enabled) && self.blood_enabled)
-			{
-				self disable_blood(localclientnum);
+				if(playerhealth == priorplayerhealth && playerhealth != 1)
+				{
+					shouldenabledoverlay = 1;
+					self.lastbloodupdate = getservertime(localclientnum);
+				}
+				else
+				{
+					if(self.stage2amount > 0 || self.stage3amount > 0)
+					{
+						shouldenabledoverlay = 1;
+						self blood_out(localclientnum);
+					}
+					else if(isdefined(self.blood_enabled) && self.blood_enabled)
+					{
+						self disable_blood(localclientnum);
+					}
+				}
 			}
 			priorplayerhealth = playerhealth;
 			if(!(isdefined(self.blood_enabled) && self.blood_enabled) && shouldenabledoverlay)
@@ -277,21 +283,30 @@ function player_watch_blood(localclientnum)
 				{
 					setcontrollerlightbarcolorpulsing(localclientnum, (1, 0, 0), 600);
 				}
-				else if(self.stage2amount == 1)
-				{
-					setcontrollerlightbarcolorpulsing(localclientnum, vectorscale((1, 0, 0), 0.8), 1200);
-				}
-				else if(getgadgetpower(localclientnum) == 1 && (!sessionmodeiscampaigngame() || codegetuimodelclientfield(self, "playerAbilities.inRange")))
-				{
-					setcontrollerlightbarcolorpulsing(localclientnum, (1, 1, 0), 2000);
-				}
-				else if(isdefined(self.controllercolor))
-				{
-					setcontrollerlightbarcolor(localclientnum, self.controllercolor);
-				}
 				else
 				{
-					setcontrollerlightbarcolor(localclientnum);
+					if(self.stage2amount == 1)
+					{
+						setcontrollerlightbarcolorpulsing(localclientnum, vectorscale((1, 0, 0), 0.8), 1200);
+					}
+					else
+					{
+						if(getgadgetpower(localclientnum) == 1 && (!sessionmodeiscampaigngame() || codegetuimodelclientfield(self, "playerAbilities.inRange")))
+						{
+							setcontrollerlightbarcolorpulsing(localclientnum, (1, 1, 0), 2000);
+						}
+						else
+						{
+							if(isdefined(self.controllercolor))
+							{
+								setcontrollerlightbarcolor(localclientnum, self.controllercolor);
+							}
+							else
+							{
+								setcontrollerlightbarcolor(localclientnum);
+							}
+						}
+					}
 				}
 			}
 		}

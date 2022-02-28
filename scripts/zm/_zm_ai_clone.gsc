@@ -38,7 +38,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_ai_clone", &__init__, &__main__, undefined);
 }
@@ -129,12 +129,12 @@ function function_78933fc2()
 {
 	/#
 		level flagsys::wait_till("");
-		zm_devgui::add_custom_devgui_callback(&function_46924c5);
+		zm_devgui::add_custom_devgui_callback(&clone_devgui_callback);
 	#/
 }
 
 /*
-	Name: function_46924c5
+	Name: clone_devgui_callback
 	Namespace: zm_ai_clone
 	Checksum: 0x52E3CFD0
 	Offset: 0x510
@@ -142,7 +142,7 @@ function function_78933fc2()
 	Parameters: 1
 	Flags: Linked
 */
-function function_46924c5(cmd)
+function clone_devgui_callback(cmd)
 {
 	/#
 		switch(cmd)
@@ -163,7 +163,7 @@ function function_46924c5(cmd)
 				clones = getaiarchetypearray("");
 				if(clones.size > 0)
 				{
-					foreach(var_832f6a13, clone in clones)
+					foreach(clone in clones)
 					{
 						clone kill();
 					}

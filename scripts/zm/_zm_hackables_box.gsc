@@ -54,19 +54,22 @@ function custom_check_firesale_loc_valid_func()
 	{
 		box = self.unitrigger_stub.trigger_target;
 	}
-	else if(isdefined(self.stub))
+	else
 	{
-		box = self.stub.trigger_target;
-	}
-	else if(isdefined(self.owner))
-	{
-		box = self.owner;
+		if(isdefined(self.stub))
+		{
+			box = self.stub.trigger_target;
+		}
+		else if(isdefined(self.owner))
+		{
+			box = self.owner;
+		}
 	}
 	if(box.last_hacked_round >= level.round_number)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -237,9 +240,9 @@ function hack_box_qualifier(player)
 {
 	if(player == self.chest.chest_user && isdefined(self.chest.weapon_out))
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -515,12 +518,12 @@ function summon_box_qualifier(player)
 {
 	if(self.chest.last_hacked_round > level.round_number)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(self.chest.zbarrier.chest_moving) && self.chest.zbarrier.chest_moving)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 

@@ -33,7 +33,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("callback", &__init__, undefined, undefined);
 }
@@ -304,30 +304,33 @@ function airsupport(localclientnum, x, y, z, type, yaw, team, teamfaction, owner
 		data.flytime = (planehalfdistance * 2) / data.flyspeed;
 		planetype = "airstrike";
 	}
-	else if(type == "n")
-	{
-		planehalfdistance = 24000;
-		data.planehalfdistance = planehalfdistance;
-		data.startpoint = pos + (vectorscale(anglestoforward(direction), -1 * planehalfdistance));
-		data.endpoint = pos + vectorscale(anglestoforward(direction), planehalfdistance);
-		data.planemodel = airsupport::getplanemodel(teamfaction);
-		data.flybysound = "null";
-		data.washsound = "evt_us_napalm_wash";
-		data.apextime = 2362;
-		data.exittype = exittype;
-		data.flyspeed = 7000;
-		data.flytime = (planehalfdistance * 2) / data.flyspeed;
-		planetype = "napalm";
-	}
 	else
 	{
-		/#
-			println("");
-			println("");
-			println(type);
-			println("");
-		#/
-		return;
+		if(type == "n")
+		{
+			planehalfdistance = 24000;
+			data.planehalfdistance = planehalfdistance;
+			data.startpoint = pos + (vectorscale(anglestoforward(direction), -1 * planehalfdistance));
+			data.endpoint = pos + vectorscale(anglestoforward(direction), planehalfdistance);
+			data.planemodel = airsupport::getplanemodel(teamfaction);
+			data.flybysound = "null";
+			data.washsound = "evt_us_napalm_wash";
+			data.apextime = 2362;
+			data.exittype = exittype;
+			data.flyspeed = 7000;
+			data.flytime = (planehalfdistance * 2) / data.flyspeed;
+			planetype = "napalm";
+		}
+		else
+		{
+			/#
+				println("");
+				println("");
+				println(type);
+				println("");
+			#/
+			return;
+		}
 	}
 }
 

@@ -30,7 +30,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function init()
+function autoexec init()
 {
 	function_b5da43f3();
 	setdvar("scr_zm_use_code_enemy_selection", 0);
@@ -48,7 +48,7 @@ autoexec function init()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_b5da43f3()
+function private function_b5da43f3()
 {
 	behaviortreenetworkutility::registerbehaviortreescriptapi("wasKilledByWaterStaff", &function_901a96ec);
 	behaviortreenetworkutility::registerbehaviortreescriptapi("wasKilledByFireStaff", &function_7ae408dd);
@@ -109,9 +109,9 @@ function function_901a96ec(behaviortreeentity)
 {
 	if(isdefined(behaviortreeentity.var_93022f09) && behaviortreeentity.var_93022f09)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -127,9 +127,9 @@ function function_7ae408dd(behaviortreeentity)
 {
 	if(isdefined(behaviortreeentity.var_1339189a) && behaviortreeentity.var_1339189a)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -145,9 +145,9 @@ function function_a8b7161f(behaviortreeentity)
 {
 	if(isdefined(behaviortreeentity.var_26747e92) && behaviortreeentity.var_26747e92)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -177,9 +177,9 @@ function function_1beccbaf(behaviortreeentity)
 {
 	if(isdefined(behaviortreeentity.var_262d5062) && behaviortreeentity.var_262d5062)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -195,9 +195,9 @@ function function_4638613d(behaviortreeentity)
 {
 	if(isdefined(behaviortreeentity.var_b52ab77a) && behaviortreeentity.var_b52ab77a)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -213,9 +213,9 @@ function zombieshouldwhirlwind(behaviortreeentity)
 {
 	if(isdefined(behaviortreeentity._whirlwind_attract_anim) && behaviortreeentity._whirlwind_attract_anim)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -329,14 +329,14 @@ function function_66e3edec(var_25c21be0)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_ce3464b9(players)
+function private function_ce3464b9(players)
 {
 	if(isdefined(self.last_closest_player) && (isdefined(self.last_closest_player.am_i_valid) && self.last_closest_player.am_i_valid))
 	{
 		return;
 	}
 	self.need_closest_player = 1;
-	foreach(var_25b968fa, player in players)
+	foreach(player in players)
 	{
 		if(isdefined(player.am_i_valid) && player.am_i_valid)
 		{
@@ -356,7 +356,7 @@ private function function_ce3464b9(players)
 	Parameters: 2
 	Flags: Private
 */
-private function function_3394e22d(origin, players)
+function private function_3394e22d(origin, players)
 {
 	if(players.size == 0)
 	{
@@ -431,7 +431,7 @@ private function function_3394e22d(origin, players)
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function update_closest_player()
+function private update_closest_player()
 {
 	level waittill(#"start_of_round");
 	while(true)
@@ -443,7 +443,7 @@ private function update_closest_player()
 		{
 			zombies = arraycombine(zombies, var_6aad1b23, 0, 0);
 		}
-		foreach(var_7d59d21f, zombie in zombies)
+		foreach(zombie in zombies)
 		{
 			if(isdefined(zombie.completed_emerging_into_playable_area) && zombie.completed_emerging_into_playable_area && !isdefined(zombie.var_13ed8adf))
 			{
@@ -453,7 +453,7 @@ private function update_closest_player()
 		}
 		if(reset_closest_player)
 		{
-			foreach(var_4ac760c6, zombie in zombies)
+			foreach(zombie in zombies)
 			{
 				if(isdefined(zombie.var_13ed8adf))
 				{

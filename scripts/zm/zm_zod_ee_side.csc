@@ -22,7 +22,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_zod_ee_side", &__init__, undefined, undefined);
 }
@@ -113,12 +113,12 @@ function function_a5b33f7(localclientnum)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_75ad5595(var_ff840495)
+function private function_75ad5595(var_ff840495)
 {
 	var_ff840495["arnie_tie_mdl"] setscale(0.13);
 	var_ff840495["arnie_hat_mdl"] setscale(0.18);
 	var_ff840495["arnie_cane_mdl"] setscale(0.08);
-	foreach(var_83c7bb6e, var_fba08aba in var_ff840495)
+	foreach(var_fba08aba in var_ff840495)
 	{
 		playfx(0, level._effect["portal_3p"], var_fba08aba.origin);
 	}

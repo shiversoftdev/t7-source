@@ -110,7 +110,7 @@ function activateturret()
 	killstreakid = self killstreakrules::killstreakstart("autoturret", player.team, 0, 0);
 	if(killstreakid == -1)
 	{
-		return 0;
+		return false;
 	}
 	bundle = level.killstreakbundle["autoturret"];
 	turret = player placeables::spawnplaceable("autoturret", killstreakid, &onplaceturret, &oncancelplacement, &onpickupturret, &onshutdown, undefined, undefined, "veh_t7_turret_sentry_gun_world_mp", "veh_t7_turret_sentry_gun_world_yellow", "veh_t7_turret_sentry_gun_world_red", 1, &"KILLSTREAK_SENTRY_TURRET_PICKUP", 90000, undefined, 0, bundle.ksplaceablehint, bundle.ksplaceableinvalidlocationhint);
@@ -122,10 +122,10 @@ function activateturret()
 	event = turret util::waittill_any_return("placed", "cancelled", "death");
 	if(event != "placed")
 	{
-		return 0;
+		return false;
 	}
 	turret playsound("mpl_turret_startup");
-	return 1;
+	return true;
 }
 
 /*

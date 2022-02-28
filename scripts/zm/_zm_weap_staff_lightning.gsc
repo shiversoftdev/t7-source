@@ -25,7 +25,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_weap_staff_lightning", &__init__, undefined, undefined);
 }
@@ -108,7 +108,7 @@ function lightning_ball_wait(n_lifetime_after_move)
 	level endon(#"lightning_ball_created");
 	self waittill(#"movedone");
 	wait(n_lifetime_after_move);
-	return 1;
+	return true;
 }
 
 /*
@@ -183,7 +183,7 @@ function staff_lightning_ball_kill_zombies(e_attacker)
 		a_zombies = staff_lightning_get_valid_targets(e_attacker, self.origin);
 		if(isdefined(a_zombies))
 		{
-			foreach(var_e6d1a490, zombie in a_zombies)
+			foreach(zombie in a_zombies)
 			{
 				if(staff_lightning_is_target_valid(zombie))
 				{
@@ -213,7 +213,7 @@ function staff_lightning_get_valid_targets(player, v_source)
 	a_zombies = util::get_array_of_closest(v_source, a_zombies, undefined, undefined, self.n_range);
 	if(isdefined(a_zombies))
 	{
-		foreach(var_14aedbb, ai_zombie in a_zombies)
+		foreach(ai_zombie in a_zombies)
 		{
 			if(staff_lightning_is_target_valid(ai_zombie))
 			{
@@ -322,17 +322,17 @@ function staff_lightning_is_target_valid(ai_zombie)
 {
 	if(!isdefined(ai_zombie))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(ai_zombie.is_being_zapped) && ai_zombie.is_being_zapped)
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(ai_zombie.is_mechz) && ai_zombie.is_mechz)
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -518,7 +518,7 @@ function staff_lightning_zombie_damage_response(mod, hit_location, hit_origin, p
 	{
 		self thread stun_zombie();
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -559,7 +559,7 @@ function staff_lightning_death_event(attacker)
 		self thread zombie_shock_eyes();
 		if(isdefined(self.deathanim))
 		{
-			self waittill_match(#"death_anim");
+			self waittillmatch(#"death_anim");
 		}
 		self zm_tomb_utility::do_damage_network_safe(self.attacker, self.health, self.damageweapon, "MOD_RIFLE_BULLET");
 	}

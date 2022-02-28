@@ -96,18 +96,21 @@ function monitorflash_internal(amount_distance, amount_angle, attacker, direct_o
 		if(friendlyfire == 1)
 		{
 		}
-		else if(friendlyfire == 2)
+		else
 		{
-			duration = duration * 0.5;
-			rumbleduration = rumbleduration * 0.5;
-			hurtvictim = 0;
-			hurtattacker = 1;
-		}
-		else if(friendlyfire == 3)
-		{
-			duration = duration * 0.5;
-			rumbleduration = rumbleduration * 0.5;
-			hurtattacker = 1;
+			if(friendlyfire == 2)
+			{
+				duration = duration * 0.5;
+				rumbleduration = rumbleduration * 0.5;
+				hurtvictim = 0;
+				hurtattacker = 1;
+			}
+			else if(friendlyfire == 3)
+			{
+				duration = duration * 0.5;
+				rumbleduration = rumbleduration * 0.5;
+				hurtattacker = 1;
+			}
 		}
 	}
 	if(self hasperk("specialty_flashprotection"))

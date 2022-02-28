@@ -31,6 +31,16 @@
 
 #using_animtree("zm_castle");
 
+class var_66e46dd : namespace_66e46dd
+{
+
+}
+
+class var_d7100ae3 : namespace_d7100ae3
+{
+
+}
+
 #namespace zm_castle_ee_side;
 
 /*
@@ -42,7 +52,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_zod_ee_side", &__init__, undefined, undefined);
 }
@@ -129,14 +139,10 @@ function init_flags()
 */
 function function_452b0b5a()
 {
-	object = new var_66e46dd();
-	[[ object ]]->__constructor();
-	level.var_818b7815 = object;
+	level.var_818b7815 = new var_66e46dd();
 	[[ level.var_818b7815 ]]->init();
 	level thread function_e3163325();
-	object = new var_d7100ae3();
-	[[ object ]]->__constructor();
-	level.var_9f94326b = object;
+	level.var_9f94326b = new var_d7100ae3();
 	[[ level.var_9f94326b ]]->init();
 	[[ level.var_9f94326b ]]->function_ec1f5e9(1, 15);
 	level flag::wait_till("ee_power_clocktower");
@@ -192,7 +198,7 @@ function function_c691b60()
 	for(i = 0; i < 5; i++)
 	{
 		var_2de8cf5e = struct::get_array("ee_groph_reels_" + i, "targetname");
-		foreach(var_96e4708c, s_reel in var_2de8cf5e)
+		foreach(s_reel in var_2de8cf5e)
 		{
 			var_df5776d8 = util::spawn_model(s_reel.model, s_reel.origin, s_reel.angles);
 			s_reel.var_df5776d8 = var_df5776d8;
@@ -280,7 +286,7 @@ function function_ffa9011b(var_bee8e45)
 */
 function function_972992c4(var_2de8cf5e, b_on)
 {
-	foreach(var_4e3a8174, s_reel in var_2de8cf5e)
+	foreach(s_reel in var_2de8cf5e)
 	{
 		if(isdefined(s_reel.var_df5776d8))
 		{
@@ -397,7 +403,7 @@ function function_7998107()
 		level.var_37c0c840[i] setinvisibletoall();
 	}
 	players = level.activeplayers;
-	foreach(var_3154dd4d, player in players)
+	foreach(player in players)
 	{
 		player thread function_5c351802();
 	}
@@ -743,14 +749,14 @@ function function_290563e9()
 function function_755ccf7d()
 {
 	var_8b79520 = array("zone_great_hall", "zone_great_hall_upper", "zone_great_hall_upper_left", "zone_armory", "zone_undercroft_chapel", "zone_courtyard", "zone_courtyard_edge");
-	foreach(var_b9e1758c, var_348ee409 in var_8b79520)
+	foreach(var_348ee409 in var_8b79520)
 	{
 		if(zm_zonemgr::any_player_in_zone(var_348ee409))
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -846,29 +852,6 @@ function __destructor()
 }
 
 #namespace zm_castle_ee_side;
-
-/*
-	Name: function_66e46dd
-	Namespace: zm_castle_ee_side
-	Checksum: 0x6DDAF861
-	Offset: 0x2A60
-	Size: 0x1D6
-	Parameters: 0
-	Flags: AutoExec, Private
-*/
-private autoexec function function_66e46dd()
-{
-	classes.var_66e46dd[0] = spawnstruct();
-	classes.var_66e46dd[0].__vtable[1606033458] = &namespace_66e46dd::__destructor;
-	classes.var_66e46dd[0].__vtable[-1690805083] = &namespace_66e46dd::__constructor;
-	classes.var_66e46dd[0].__vtable[1108865185] = &namespace_66e46dd::function_4217f0a1;
-	classes.var_66e46dd[0].__vtable[444949302] = &namespace_66e46dd::function_1a856336;
-	classes.var_66e46dd[0].__vtable[335652466] = &namespace_66e46dd::function_1401a672;
-	classes.var_66e46dd[0].__vtable[1969016701] = &namespace_66e46dd::function_755ccf7d;
-	classes.var_66e46dd[0].__vtable[688219113] = &namespace_66e46dd::function_290563e9;
-	classes.var_66e46dd[0].__vtable[55554463] = &namespace_66e46dd::start;
-	classes.var_66e46dd[0].__vtable[-1017222485] = &namespace_66e46dd::init;
-}
 
 /*
 	Name: function_769b2ff
@@ -1021,7 +1004,7 @@ function function_64e6de56()
 	self waittill(#"damage", damage, attacker, direction_vec, point, type, tagname, modelname, partname, weapon, inflictor);
 	if(type === "MOD_GRENADE" || type === "MOD_GRENADE_SPLASH" || type === "MOD_EXPLOSIVE" || type === "MOD_EXPLOSIVE_SPLASH")
 	{
-		return 0;
+		return false;
 	}
 	if(function_ab61ab31(weapon))
 	{
@@ -1029,15 +1012,15 @@ function function_64e6de56()
 		if(!e_impact istouching(self))
 		{
 			e_impact delete();
-			return 0;
+			return false;
 		}
 		e_impact delete();
 	}
 	if(!isdefined(attacker) || !isplayer(attacker))
 	{
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1055,7 +1038,7 @@ function function_d23efff2()
 	while(true)
 	{
 		a_enemies = getactorteamarray("axis");
-		foreach(var_60c3b533, e_enemy in a_enemies)
+		foreach(e_enemy in a_enemies)
 		{
 			dist2 = distancesquared(self.origin, e_enemy.origin);
 			if(dist2 < 16384)
@@ -1116,7 +1099,7 @@ function function_d249c76c()
 function function_90b13c3d()
 {
 	players = level.activeplayers;
-	foreach(var_a4f2651b, player in players)
+	foreach(player in players)
 	{
 		player function_d249c76c();
 	}
@@ -1302,8 +1285,8 @@ function function_7c237ecb(var_f00386ff = 0)
 	var_15cfdc94 waittill(#"trigger_activated", player);
 	zm_unitrigger::unregister_unitrigger(var_15cfdc94.s_unitrigger);
 	var_acadbb15 delete();
-	player.var_b287be = bgb::function_d51db887();
-	player thread bgb::bgb_gumball_anim(player.var_b287be, 0);
+	player.selected_bgb = bgb::function_d51db887();
+	player thread bgb::bgb_gumball_anim(player.selected_bgb, 0);
 }
 
 /*
@@ -1493,9 +1476,9 @@ function function_1f5408aa()
 {
 	if(self.var_a117a15d == 9 && self.var_246b41b3 == 35)
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -1610,32 +1593,6 @@ function __destructor()
 }
 
 #namespace zm_castle_ee_side;
-
-/*
-	Name: function_d7100ae3
-	Namespace: zm_castle_ee_side
-	Checksum: 0x26448C44
-	Offset: 0x46E8
-	Size: 0x266
-	Parameters: 0
-	Flags: AutoExec, Private
-*/
-private autoexec function function_d7100ae3()
-{
-	classes.var_d7100ae3[0] = spawnstruct();
-	classes.var_d7100ae3[0].__vtable[1606033458] = &namespace_d7100ae3::__destructor;
-	classes.var_d7100ae3[0].__vtable[-1690805083] = &namespace_d7100ae3::__constructor;
-	classes.var_d7100ae3[0].__vtable[1303855009] = &namespace_d7100ae3::function_4db73fa1;
-	classes.var_d7100ae3[0].__vtable[-1434690334] = &namespace_d7100ae3::function_aa7c5ce2;
-	classes.var_d7100ae3[0].__vtable[-1688354808] = &namespace_d7100ae3::set_active;
-	classes.var_d7100ae3[0].__vtable[1905656292] = &namespace_d7100ae3::function_719601e4;
-	classes.var_d7100ae3[0].__vtable[525600938] = &namespace_d7100ae3::function_1f5408aa;
-	classes.var_d7100ae3[0].__vtable[-629110611] = &namespace_d7100ae3::lightning_strikes;
-	classes.var_d7100ae3[0].__vtable[1631848418] = &namespace_d7100ae3::function_614407e2;
-	classes.var_d7100ae3[0].__vtable[247592425] = &namespace_d7100ae3::function_ec1f5e9;
-	classes.var_d7100ae3[0].__vtable[55554463] = &namespace_d7100ae3::start;
-	classes.var_d7100ae3[0].__vtable[-1017222485] = &namespace_d7100ae3::init;
-}
 
 /*
 	Name: function_9e325d85
@@ -1760,11 +1717,11 @@ function function_6ad38393(player, var_7f701981)
 {
 	if(player.var_48391945 > var_7f701981 || (player.var_48391945 == 0 && var_7f701981 == 3))
 	{
-		return 1;
+		return true;
 	}
 	if(player.var_48391945 < var_7f701981 || (var_7f701981 == 0 && player.var_48391945 == 3))
 	{
-		return 0;
+		return false;
 	}
 }
 
@@ -1827,13 +1784,16 @@ function function_aaacffb2(player, s_dest)
 		{
 			desired_origin = var_d3263bfe.origin + var_daad3c3c;
 		}
-		else if(player getstance() == "crouch")
-		{
-			desired_origin = var_d3263bfe.origin + var_6b55b1c4;
-		}
 		else
 		{
-			desired_origin = var_d3263bfe.origin + var_3abe10e2;
+			if(player getstance() == "crouch")
+			{
+				desired_origin = var_d3263bfe.origin + var_6b55b1c4;
+			}
+			else
+			{
+				desired_origin = var_d3263bfe.origin + var_3abe10e2;
+			}
 		}
 		player.var_39386de = spawn("script_origin", player.origin);
 		player.var_39386de.angles = player.angles;
@@ -1979,7 +1939,7 @@ function function_b7365949(trig_stub, player)
 	function_421bb7db();
 	zm_spawner::register_zombie_death_event_callback(&function_8d95ec46);
 	players = level.activeplayers;
-	foreach(var_c84760a5, player in level.activeplayers)
+	foreach(player in level.activeplayers)
 	{
 		if(isdefined(player) && isalive(player))
 		{
@@ -2100,9 +2060,9 @@ function function_8d95ec46(e_attacker)
 	if(var_7c4fe278 == self.damageweapon)
 	{
 		self zombie_utility::zombie_head_gib();
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -2290,7 +2250,7 @@ function function_4b02c768()
 function spare_change()
 {
 	a_triggers = getentarray("audio_bump_trigger", "targetname");
-	foreach(var_c447828c, t_audio_bump in a_triggers)
+	foreach(t_audio_bump in a_triggers)
 	{
 		if(t_audio_bump.script_sound === "zmb_perks_bump_bottle")
 		{
@@ -2401,7 +2361,7 @@ function function_ce8b131c(n_val)
 	/#
 		zm_spawner::register_zombie_death_event_callback(&function_8d95ec46);
 		players = level.activeplayers;
-		foreach(var_fc01037d, player in players)
+		foreach(player in players)
 		{
 			player thread function_45b9eba4();
 		}
@@ -2485,7 +2445,7 @@ function function_4e8ebeb2(n_val)
 {
 	/#
 		players = level.activeplayers;
-		foreach(var_5bfc6c3, player in players)
+		foreach(player in players)
 		{
 			level thread function_27b3a99c(player);
 		}
@@ -2505,7 +2465,7 @@ function function_d40e8eab(n_val)
 {
 	/#
 		players = level.activeplayers;
-		foreach(var_a18582f8, player in players)
+		foreach(player in players)
 		{
 			level thread function_c7bb86e5(player);
 		}

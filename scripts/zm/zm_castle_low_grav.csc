@@ -322,7 +322,7 @@ function function_a81107fc(localclientnum, oldval, newval, bnewent, binitialsnap
 	Parameters: 2
 	Flags: Linked, Private
 */
-private function function_10dcbf51(localclientnum, fxobj)
+function private function_10dcbf51(localclientnum, fxobj)
 {
 	fxobj playsound(localclientnum, "evt_ai_explode");
 	wait(1);

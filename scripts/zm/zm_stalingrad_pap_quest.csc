@@ -21,7 +21,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_stalingrad_pap", &__init__, undefined, undefined);
 }
@@ -109,14 +109,14 @@ function function_4ec66a83(localclientnum, newval, a_s_lights)
 {
 	if(newval)
 	{
-		foreach(var_bc17a9c7, s_light in a_s_lights)
+		foreach(s_light in a_s_lights)
 		{
 			s_light.fx_light = playfx(localclientnum, level._effect["pavlov_lockdown_light"], s_light.origin);
 		}
 	}
 	else
 	{
-		foreach(var_c8a7a0b7, s_light in a_s_lights)
+		foreach(s_light in a_s_lights)
 		{
 			if(isdefined(s_light.fx_light))
 			{

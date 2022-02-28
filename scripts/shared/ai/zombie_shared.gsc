@@ -106,12 +106,12 @@ function handledogsoundnotetracks(note)
 	if(note == "sound_dogstep_run_default" || note == "dogstep_rf" || note == "dogstep_lf")
 	{
 		self playsound("fly_dog_step_run_default");
-		return 1;
+		return true;
 	}
 	prefix = getsubstr(note, 0, 5);
 	if(prefix != "sound")
 	{
-		return 0;
+		return false;
 	}
 	alias = "aml" + getsubstr(note, 5);
 	if(isalive(self))
@@ -122,7 +122,7 @@ function handledogsoundnotetracks(note)
 	{
 		self thread sound::play_in_space(alias, self gettagorigin("tag_eye"));
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -340,15 +340,18 @@ function notetrackgravity(note, flagname)
 	{
 		self animmode("gravity");
 	}
-	else if(issubstr(note, "off"))
+	else
 	{
-		self animmode("nogravity");
-		self.nogravity = 1;
-	}
-	else if(issubstr(note, "code"))
-	{
-		self animmode("none");
-		self.nogravity = undefined;
+		if(issubstr(note, "off"))
+		{
+			self animmode("nogravity");
+			self.nogravity = 1;
+		}
+		else if(issubstr(note, "code"))
+		{
+			self animmode("none");
+			self.nogravity = undefined;
+		}
 	}
 }
 
@@ -788,7 +791,7 @@ function movetooriginovertime(origin, time)
 */
 function returntrue()
 {
-	return 1;
+	return true;
 }
 
 /*
@@ -859,21 +862,24 @@ function trackloop()
 			yawdelta = 0;
 			pitchdelta = 0;
 		}
-		else if(yawdelta > self.rightaimlimit)
+		else
 		{
-			yawdelta = self.rightaimlimit;
-		}
-		else if(yawdelta < self.leftaimlimit)
-		{
-			yawdelta = self.leftaimlimit;
-		}
-		if(pitchdelta > self.upaimlimit)
-		{
-			pitchdelta = self.upaimlimit;
-		}
-		else if(pitchdelta < self.downaimlimit)
-		{
-			pitchdelta = self.downaimlimit;
+			if(yawdelta > self.rightaimlimit)
+			{
+				yawdelta = self.rightaimlimit;
+			}
+			else if(yawdelta < self.leftaimlimit)
+			{
+				yawdelta = self.leftaimlimit;
+			}
+			if(pitchdelta > self.upaimlimit)
+			{
+				pitchdelta = self.upaimlimit;
+			}
+			else if(pitchdelta < self.downaimlimit)
+			{
+				pitchdelta = self.downaimlimit;
+			}
 		}
 		if(firstframe)
 		{

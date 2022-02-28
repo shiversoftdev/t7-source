@@ -132,14 +132,17 @@ function update_base_fx(localclientnum, flag, team)
 	{
 		play_base_fx(localclientnum, flag, fx_name, team);
 	}
-	else if(flag.last_team == "neutral")
-	{
-		play_base_fx(localclientnum, flag, fx_name, team);
-	}
 	else
 	{
-		setfxteam(localclientnum, flag.base_fx, team);
-		flag.last_team = team;
+		if(flag.last_team == "neutral")
+		{
+			play_base_fx(localclientnum, flag, fx_name, team);
+		}
+		else
+		{
+			setfxteam(localclientnum, flag.base_fx, team);
+			flag.last_team = team;
+		}
 	}
 }
 

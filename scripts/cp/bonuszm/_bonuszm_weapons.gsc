@@ -4,6 +4,11 @@
 #using scripts\shared\math_shared;
 #using scripts\shared\weapons\_weapons;
 
+class var_a17e6f03 : namespace_a17e6f03
+{
+
+}
+
 #namespace namespace_a17e6f03;
 
 /*
@@ -35,22 +40,6 @@ function __destructor()
 #namespace namespace_fdfaa57d;
 
 /*
-	Name: function_a17e6f03
-	Namespace: namespace_fdfaa57d
-	Checksum: 0x708CCDEE
-	Offset: 0x1B8
-	Size: 0x86
-	Parameters: 0
-	Flags: AutoExec, Private
-*/
-private autoexec function function_a17e6f03()
-{
-	classes.var_a17e6f03[0] = spawnstruct();
-	classes.var_a17e6f03[0].__vtable[1606033458] = &namespace_a17e6f03::__destructor;
-	classes.var_a17e6f03[0].__vtable[-1690805083] = &namespace_a17e6f03::__constructor;
-}
-
-/*
 	Name: function_58d5283a
 	Namespace: namespace_fdfaa57d
 	Checksum: 0x30387A33
@@ -59,7 +48,7 @@ private autoexec function function_a17e6f03()
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function function_58d5283a()
+function autoexec function_58d5283a()
 {
 	if(!sessionmodeiscampaignzombiesgame())
 	{
@@ -95,9 +84,7 @@ function function_549c28ac(var_6a173bd1)
 	var_adeb478a = tablelookuprowcount(var_6a173bd1);
 	for(i = 0; i < var_adeb478a; i++)
 	{
-		object = new var_a17e6f03();
-		[[ object ]]->__constructor();
-		var_279890e8 = object;
+		var_279890e8 = new var_a17e6f03();
 		var_279890e8.weaponname = tablelookupcolumnforrow(var_6a173bd1, i, 0);
 		var_279890e8.var_bc6ce097 = int(tablelookupcolumnforrow(var_6a173bd1, i, 1));
 		var_279890e8.var_2b758e89 = int(tablelookupcolumnforrow(var_6a173bd1, i, 2));
@@ -290,7 +277,7 @@ function function_43128d49(weaponinfo, var_fe7b5ca3 = 1)
 	}
 	a_weaponlist = self getweaponslist();
 	a_heroweapons = [];
-	foreach(var_ec7edbba, weapon in a_weaponlist)
+	foreach(weapon in a_weaponlist)
 	{
 		if(isdefined(weapon.isheroweapon) && weapon.isheroweapon)
 		{
@@ -306,7 +293,7 @@ function function_43128d49(weaponinfo, var_fe7b5ca3 = 1)
 		}
 	}
 	var_4044e31f = self getweaponslistprimaries();
-	foreach(var_4513c77c, weapon in var_4044e31f)
+	foreach(weapon in var_4044e31f)
 	{
 		if(weapon.isheroweapon || !var_fe7b5ca3)
 		{
@@ -329,7 +316,7 @@ function function_43128d49(weaponinfo, var_fe7b5ca3 = 1)
 		self setweaponammoclip(randomweapon, randomweapon.clipsize);
 		self givemaxammo(randomweapon);
 	}
-	foreach(var_da183bb7, weapon in a_heroweapons)
+	foreach(weapon in a_heroweapons)
 	{
 		self giveweapon(weapon);
 		self setweaponammoclip(weapon, weapon.clipsize);
@@ -360,12 +347,12 @@ function function_7e774306()
 	while(true)
 	{
 		level waittill(#"scene_sequence_started");
-		foreach(var_a919c988, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			player function_be94c003();
 		}
 		level waittill(#"scene_sequence_ended");
-		foreach(var_73487940, player in level.activeplayers)
+		foreach(player in level.activeplayers)
 		{
 			player function_d5efb07f();
 		}

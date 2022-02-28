@@ -24,7 +24,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_theater_achievements", &__init__, undefined, undefined);
 }
@@ -270,11 +270,9 @@ function function_f67810a2()
 {
 	level endon(#"end_game");
 	self endon(#"disconnect");
-	self.var_dcd9b1e7 = 0;
-	while(self.var_dcd9b1e7 >= 200)
+	for(self.var_dcd9b1e7 = 0; self.var_dcd9b1e7 >= 200; self.var_dcd9b1e7++)
 	{
 		self waittill(#"hash_1d8b6c31");
-		self.var_dcd9b1e7++;
 	}
 	/#
 		self iprintln("");

@@ -85,7 +85,7 @@ function function_c97259e9()
 	function_8abc06a5();
 	level thread function_3bccea41();
 	function_f9d235ed();
-	foreach(var_ef795c4e, var_271d87d8 in level.var_961b3545)
+	foreach(var_271d87d8 in level.var_961b3545)
 	{
 		var_271d87d8.machine.b_keep_when_turned_off = 1;
 	}
@@ -112,7 +112,7 @@ function function_8abc06a5()
 		wait(0.05);
 	}
 	level.var_47ff1ff7 = [];
-	foreach(var_4c491cdb, chest in level.chests)
+	foreach(chest in level.chests)
 	{
 		if(chest.zbarrier.state == "initial")
 		{
@@ -121,14 +121,17 @@ function function_8abc06a5()
 				level.var_844a554b[0] = "right";
 				level.var_844a554b[1] = "left";
 			}
-			else if(chest.zbarrier.script_noteworthy == "zone_ruins_chest_zbarrier")
-			{
-				level.var_844a554b[0] = "left";
-				level.var_844a554b[1] = "right";
-			}
 			else
 			{
-				iprintlnbold("ERROR: Magic Box not started in either left nor right side.");
+				if(chest.zbarrier.script_noteworthy == "zone_ruins_chest_zbarrier")
+				{
+					level.var_844a554b[0] = "left";
+					level.var_844a554b[1] = "right";
+				}
+				else
+				{
+					iprintlnbold("ERROR: Magic Box not started in either left nor right side.");
+				}
 			}
 			break;
 		}
@@ -330,7 +333,7 @@ function function_d2e344e9()
 	{
 		wait(0.1);
 	}
-	foreach(var_1acb80b, var_f184b6b4 in level.var_961b3545)
+	foreach(var_f184b6b4 in level.var_961b3545)
 	{
 		if(var_f184b6b4.target !== "vending_revive" && (!(isdefined(var_f184b6b4.var_5a70972b) && var_f184b6b4.var_5a70972b)))
 		{
@@ -354,7 +357,7 @@ function function_c14f3d0d(var_efa86ccd)
 	if(!isdefined(self.script_int))
 	{
 		self.script_int = var_efa86ccd;
-		foreach(var_ef5f441b, var_49c78343 in level.powered_items)
+		foreach(var_49c78343 in level.powered_items)
 		{
 			if(self === var_49c78343.target)
 			{
@@ -681,15 +684,15 @@ function function_9b238648(player)
 	if(!player zm_utility::is_player_looking_at(var_77f9de0d.e_destructible.origin, 0.4, 0))
 	{
 		self sethintstring("");
-		return 0;
+		return false;
 	}
 	if(!isdefined(var_77f9de0d.b_occupied) || (!(isdefined(var_77f9de0d.b_occupied) && var_77f9de0d.b_occupied)))
 	{
 		self sethintstring(&"ZM_ISLAND_TEAR_WEB");
-		return 1;
+		return true;
 	}
 	self sethintstring("");
-	return 0;
+	return false;
 }
 
 /*
@@ -753,9 +756,9 @@ function function_647fcf70(player)
 	player.var_77f9de0d.b_occupied = 0;
 	if(var_a7579b72 == "webtear_succeed")
 	{
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 /*
@@ -843,18 +846,21 @@ function function_12b8ab88(player, var_41b6c34b = 2)
 			player.var_f795ee17 = 1;
 		}
 	}
-	else if(isdefined(player.var_652fc581))
+	else
 	{
-		player.var_652fc581 delete();
-		player.var_652fc581 = undefined;
-	}
-	if(isdefined(self))
-	{
-		self notify(#"webtear_failed");
-	}
-	else if(isdefined(var_a6a648f0.var_160abeb7))
-	{
-		var_a6a648f0.var_160abeb7 zm_ai_spiders::function_9b41e249(0);
+		if(isdefined(player.var_652fc581))
+		{
+			player.var_652fc581 delete();
+			player.var_652fc581 = undefined;
+		}
+		if(isdefined(self))
+		{
+			self notify(#"webtear_failed");
+		}
+		else if(isdefined(var_a6a648f0.var_160abeb7))
+		{
+			var_a6a648f0.var_160abeb7 zm_ai_spiders::function_9b41e249(0);
+		}
 	}
 }
 
@@ -871,24 +877,24 @@ function function_afb24eeb(s_unitrigger)
 {
 	if(self laststand::player_is_in_laststand() || self zm_laststand::is_reviving_any())
 	{
-		return 0;
+		return false;
 	}
 	if(!self usebuttonpressed())
 	{
-		return 0;
+		return false;
 	}
 	if(!self zm_utility::is_player_looking_at(self.var_77f9de0d.e_destructible.origin, 0.4, 0))
 	{
-		return 0;
+		return false;
 	}
 	if(isdefined(s_unitrigger.stub.origin) && isdefined(s_unitrigger.stub.radius))
 	{
 		if(distance(self.origin, s_unitrigger.stub.origin) > s_unitrigger.stub.radius)
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1053,7 +1059,7 @@ function function_d6286636(v_pos)
 function function_f2a3ece3(str_type)
 {
 	var_1ed8ce62 = undefined;
-	foreach(var_c3aae689, vending in level.var_961b3545)
+	foreach(vending in level.var_961b3545)
 	{
 		if(vending.target == str_type)
 		{
@@ -1323,7 +1329,7 @@ function function_53fbb551(v_pos)
 */
 function function_80cf986b()
 {
-	foreach(var_8cf7c9f1, var_48b5604f in level.var_fed21619)
+	foreach(var_48b5604f in level.var_fed21619)
 	{
 		t_perk = arraygetclosest(var_48b5604f.origin, level.var_961b3545);
 		switch(t_perk.script_noteworthy)

@@ -24,7 +24,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_zod_robot", &__init__, undefined, undefined);
 }
@@ -54,7 +54,7 @@ function __init__()
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_a0b7ccbf(localclientnum)
+function private function_a0b7ccbf(localclientnum)
 {
 	entity = self;
 	entity setdrawname(&"ZM_ZOD_ROBOT_NAME");

@@ -142,18 +142,18 @@ function usecarriedkillstreakweapon(hardpointtype)
 {
 	if(!isdefined(hardpointtype))
 	{
-		return 0;
+		return false;
 	}
 	if(self killstreakrules::iskillstreakallowed(hardpointtype, self.team) == 0)
 	{
 		self switchtoweapon(self.lastdroppableweapon);
-		return 0;
+		return false;
 	}
 	currentweapon = self getcurrentweapon();
 	killstreakweapon = killstreaks::get_killstreak_weapon(hardpointtype);
 	if(killstreakweapon == level.weaponnone)
 	{
-		return 0;
+		return false;
 	}
 	level weapons::add_limited_weapon(killstreakweapon, self, 3);
 	if(issubstr(killstreakweapon.name, "inventory"))
@@ -210,19 +210,22 @@ function usecarriedkillstreakweapon(hardpointtype)
 			killstreak_id = self.minigunid;
 		}
 	}
-	else if(!(isdefined(self.m32active) && self.m32active))
-	{
-		killstreak_id = self killstreakrules::killstreakstart(hardpointtype, self.team, 0, 0);
-		if(hardpointtype == "inventory_m32")
-		{
-			killstreak_id = self.pers["killstreak_unique_id"][self.pers["killstreak_unique_id"].size - 1];
-		}
-		self.m32id = killstreak_id;
-		self.m32active = 1;
-	}
 	else
 	{
-		killstreak_id = self.m32id;
+		if(!(isdefined(self.m32active) && self.m32active))
+		{
+			killstreak_id = self killstreakrules::killstreakstart(hardpointtype, self.team, 0, 0);
+			if(hardpointtype == "inventory_m32")
+			{
+				killstreak_id = self.pers["killstreak_unique_id"][self.pers["killstreak_unique_id"].size - 1];
+			}
+			self.m32id = killstreak_id;
+			self.m32active = 1;
+		}
+		else
+		{
+			killstreak_id = self.m32id;
+		}
 	}
 	/#
 		assert(killstreak_id != -1);
@@ -245,7 +248,7 @@ function usecarriedkillstreakweapon(hardpointtype)
 		self thread watchkillstreakremoval(hardpointtype, killstreak_id);
 	}
 	self.usingkillstreakheldweapon = 1;
-	return 0;
+	return false;
 }
 
 /*
@@ -261,12 +264,12 @@ function usekillstreakweaponfromcrate(hardpointtype)
 {
 	if(!isdefined(hardpointtype))
 	{
-		return 0;
+		return false;
 	}
 	killstreakweapon = killstreaks::get_killstreak_weapon(hardpointtype);
 	if(killstreakweapon == level.weaponnone)
 	{
-		return 0;
+		return false;
 	}
 	self.firedkillstreakweapon = 0;
 	self setblockweaponpickup(killstreakweapon, 1);
@@ -289,7 +292,7 @@ function usekillstreakweaponfromcrate(hardpointtype)
 		self thread watchkillstreakremoval(hardpointtype, killstreak_id);
 	}
 	self.usingkillstreakheldweapon = 1;
-	return 1;
+	return true;
 }
 
 /*
@@ -577,41 +580,65 @@ function checkifswitchableweapon(currentweapon, newweapon, killstreakweapon, cur
 	{
 		switchableweapon = 1;
 	}
-	else if(self.firedkillstreakweapon && newweapon == killstreakweapon && currentweapon.iscarriedkillstreak)
+	else
 	{
-		switchableweapon = 1;
-	}
-	else if(newweapon.isequipment)
-	{
-		switchableweapon = 1;
-	}
-	else if(isdefined(level.grenade_array[newweapon]))
-	{
-		switchableweapon = 0;
-	}
-	else if(newweapon.iscarriedkillstreak && currentweapon.iscarriedkillstreak && (!isdefined(currentkillstreakid) || currentkillstreakid != killstreakid))
-	{
-		switchableweapon = 1;
-	}
-	else if(killstreaks::is_killstreak_weapon(newweapon))
-	{
-		switchableweapon = 0;
-	}
-	else if(newweapon.isgameplayweapon)
-	{
-		switchableweapon = 0;
-	}
-	else if(self.firedkillstreakweapon)
-	{
-		switchableweapon = 1;
-	}
-	else if(self.lastnonkillstreakweapon == killstreakweapon)
-	{
-		switchableweapon = 0;
-	}
-	else if(isdefined(topkillstreak) && topkillstreak == killstreakweapon && currentkillstreakid == killstreakid)
-	{
-		switchableweapon = 0;
+		if(self.firedkillstreakweapon && newweapon == killstreakweapon && currentweapon.iscarriedkillstreak)
+		{
+			switchableweapon = 1;
+		}
+		else
+		{
+			if(newweapon.isequipment)
+			{
+				switchableweapon = 1;
+			}
+			else
+			{
+				if(isdefined(level.grenade_array[newweapon]))
+				{
+					switchableweapon = 0;
+				}
+				else
+				{
+					if(newweapon.iscarriedkillstreak && currentweapon.iscarriedkillstreak && (!isdefined(currentkillstreakid) || currentkillstreakid != killstreakid))
+					{
+						switchableweapon = 1;
+					}
+					else
+					{
+						if(killstreaks::is_killstreak_weapon(newweapon))
+						{
+							switchableweapon = 0;
+						}
+						else
+						{
+							if(newweapon.isgameplayweapon)
+							{
+								switchableweapon = 0;
+							}
+							else
+							{
+								if(self.firedkillstreakweapon)
+								{
+									switchableweapon = 1;
+								}
+								else
+								{
+									if(self.lastnonkillstreakweapon == killstreakweapon)
+									{
+										switchableweapon = 0;
+									}
+									else if(isdefined(topkillstreak) && topkillstreak == killstreakweapon && currentkillstreakid == killstreakid)
+									{
+										switchableweapon = 0;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 	return switchableweapon;
 }

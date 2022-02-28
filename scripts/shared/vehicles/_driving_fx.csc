@@ -1,366 +1,326 @@
 // Decompiled by Serious. Credits to Scoba for his original tool, Cerberus, which I heavily upgraded to support remaining features, other games, and other platforms.
 #using scripts\shared\audio_shared;
 
-#namespace groundfx;
-
-/*
-	Name: __constructor
-	Namespace: groundfx
-	Checksum: 0xA01B94AE
-	Offset: 0x230
-	Size: 0x1C
-	Parameters: 0
-	Flags: Linked
-*/
-function __constructor()
+class groundfx 
 {
-	self.id = undefined;
-	self.handle = -1;
-}
+	var handle;
+	var id;
 
-/*
-	Name: __destructor
-	Namespace: groundfx
-	Checksum: 0x99EC1590
-	Offset: 0x258
-	Size: 0x4
-	Parameters: 0
-	Flags: Linked
-*/
-function __destructor()
-{
-}
-
-/*
-	Name: play
-	Namespace: groundfx
-	Checksum: 0x905DFBEF
-	Offset: 0x268
-	Size: 0x144
-	Parameters: 4
-	Flags: Linked
-*/
-function play(localclientnum, vehicle, fx_id, fx_tag)
-{
-	if(!isdefined(fx_id))
+	/*
+		Name: constructor
+		Namespace: groundfx
+		Checksum: 0xA01B94AE
+		Offset: 0x230
+		Size: 0x1C
+		Parameters: 0
+		Flags: Linked
+	*/
+	constructor()
 	{
-		if(self.handle > 0)
+		id = undefined;
+		handle = -1;
+	}
+
+	/*
+		Name: destructor
+		Namespace: groundfx
+		Checksum: 0x99EC1590
+		Offset: 0x258
+		Size: 0x4
+		Parameters: 0
+		Flags: Linked
+	*/
+	destructor()
+	{
+	}
+
+	/*
+		Name: stop
+		Namespace: groundfx
+		Checksum: 0xC63CA503
+		Offset: 0x3B8
+		Size: 0x4C
+		Parameters: 1
+		Flags: Linked
+	*/
+	function stop(localclientnum)
+	{
+		if(handle > 0)
 		{
-			stopfx(localclientnum, self.handle);
+			stopfx(localclientnum, handle);
 		}
-		self.id = undefined;
-		self.handle = -1;
-		return;
+		id = undefined;
+		handle = -1;
 	}
-	if(!isdefined(self.id))
+
+	/*
+		Name: play
+		Namespace: groundfx
+		Checksum: 0x905DFBEF
+		Offset: 0x268
+		Size: 0x144
+		Parameters: 4
+		Flags: Linked
+	*/
+	function play(localclientnum, vehicle, fx_id, fx_tag)
 	{
-		self.id = fx_id;
-		self.handle = playfxontag(localclientnum, self.id, vehicle, fx_tag);
-	}
-	else if(!isdefined(self.id) || self.id != fx_id)
-	{
-		if(self.handle > 0)
+		if(!isdefined(fx_id))
 		{
-			stopfx(localclientnum, self.handle);
+			if(handle > 0)
+			{
+				stopfx(localclientnum, handle);
+			}
+			id = undefined;
+			handle = -1;
+			return;
 		}
-		self.id = fx_id;
-		self.handle = playfxontag(localclientnum, self.id, vehicle, fx_tag);
-	}
-}
-
-/*
-	Name: stop
-	Namespace: groundfx
-	Checksum: 0xC63CA503
-	Offset: 0x3B8
-	Size: 0x4C
-	Parameters: 1
-	Flags: Linked
-*/
-function stop(localclientnum)
-{
-	if(self.handle > 0)
-	{
-		stopfx(localclientnum, self.handle);
-	}
-	self.id = undefined;
-	self.handle = -1;
-}
-
-#namespace driving_fx;
-
-/*
-	Name: groundfx
-	Namespace: driving_fx
-	Checksum: 0x556F9718
-	Offset: 0x410
-	Size: 0xE6
-	Parameters: 0
-	Flags: AutoExec, Private
-*/
-private autoexec function groundfx()
-{
-	classes.groundfx[0] = spawnstruct();
-	classes.groundfx[0].__vtable[-51025227] = &groundfx::stop;
-	classes.groundfx[0].__vtable[1131512199] = &groundfx::play;
-	classes.groundfx[0].__vtable[1606033458] = &groundfx::__destructor;
-	classes.groundfx[0].__vtable[-1690805083] = &groundfx::__constructor;
-}
-
-#namespace vehiclewheelfx;
-
-/*
-	Name: __constructor
-	Namespace: vehiclewheelfx
-	Checksum: 0xF9540FA9
-	Offset: 0x500
-	Size: 0x24
-	Parameters: 0
-	Flags: Linked
-*/
-function __constructor()
-{
-	self.name = "";
-	self.tag_name = "";
-}
-
-/*
-	Name: __destructor
-	Namespace: vehiclewheelfx
-	Checksum: 0x99EC1590
-	Offset: 0x530
-	Size: 0x4
-	Parameters: 0
-	Flags: Linked
-*/
-function __destructor()
-{
-}
-
-/*
-	Name: init
-	Namespace: vehiclewheelfx
-	Checksum: 0x90CD92F7
-	Offset: 0x540
-	Size: 0xC4
-	Parameters: 2
-	Flags: Linked
-*/
-function init(_name, _tag_name)
-{
-	self.name = _name;
-	self.tag_name = _tag_name;
-	self.ground_fx = [];
-	object = new groundfx();
-	[[ object ]]->__constructor();
-	self.ground_fx["skid"] = object;
-	object = new groundfx();
-	[[ object ]]->__constructor();
-	self.ground_fx["tread"] = object;
-	self.ground_fx["tread"].id = "";
-	self.ground_fx["tread"].handle = -1;
-}
-
-/*
-	Name: update
-	Namespace: vehiclewheelfx
-	Checksum: 0x643322EF
-	Offset: 0x610
-	Size: 0x4CC
-	Parameters: 3
-	Flags: Linked
-*/
-function update(localclientnum, vehicle, speed_fraction)
-{
-	if(vehicle.vehicleclass === "boat")
-	{
-		peelingout = 0;
-		sliding = 0;
-		trace = bullettrace(vehicle.origin + vectorscale((0, 0, 1), 60), vehicle.origin - vectorscale((0, 0, 1), 200), 0, vehicle);
-		if(trace["fraction"] < 1)
+		if(!isdefined(id))
 		{
-			surface = trace["surfacetype"];
+			id = fx_id;
+			handle = playfxontag(localclientnum, id, vehicle, fx_tag);
+		}
+		else if(!isdefined(id) || id != fx_id)
+		{
+			if(handle > 0)
+			{
+				stopfx(localclientnum, handle);
+			}
+			id = fx_id;
+			handle = playfxontag(localclientnum, id, vehicle, fx_tag);
+		}
+	}
+
+}
+
+class vehiclewheelfx 
+{
+	var ground_fx;
+	var name;
+	var tag_name;
+
+	/*
+		Name: constructor
+		Namespace: vehiclewheelfx
+		Checksum: 0xF9540FA9
+		Offset: 0x500
+		Size: 0x24
+		Parameters: 0
+		Flags: Linked
+	*/
+	constructor()
+	{
+		name = "";
+		tag_name = "";
+	}
+
+	/*
+		Name: destructor
+		Namespace: vehiclewheelfx
+		Checksum: 0x99EC1590
+		Offset: 0x530
+		Size: 0x4
+		Parameters: 0
+		Flags: Linked
+	*/
+	destructor()
+	{
+	}
+
+	/*
+		Name: update
+		Namespace: vehiclewheelfx
+		Checksum: 0x643322EF
+		Offset: 0x610
+		Size: 0x4CC
+		Parameters: 3
+		Flags: Linked
+	*/
+	function update(localclientnum, vehicle, speed_fraction)
+	{
+		if(vehicle.vehicleclass === "boat")
+		{
+			peelingout = 0;
+			sliding = 0;
+			trace = bullettrace(vehicle.origin + vectorscale((0, 0, 1), 60), vehicle.origin - vectorscale((0, 0, 1), 200), 0, vehicle);
+			if(trace["fraction"] < 1)
+			{
+				surface = trace["surfacetype"];
+			}
+			else
+			{
+				[[ ground_fx["skid"] ]]->stop(localclientnum);
+				[[ ground_fx["tread"] ]]->stop(localclientnum);
+				return;
+			}
 		}
 		else
 		{
-			[[ self.ground_fx["skid"] ]]->stop(localclientnum);
-			[[ self.ground_fx["tread"] ]]->stop(localclientnum);
-			return;
+			if(!vehicle iswheelcolliding(name))
+			{
+				[[ ground_fx["skid"] ]]->stop(localclientnum);
+				[[ ground_fx["tread"] ]]->stop(localclientnum);
+				return;
+			}
+			peelingout = vehicle iswheelpeelingout(name);
+			sliding = vehicle iswheelsliding(name);
+			surface = vehicle getwheelsurface(name);
 		}
-	}
-	else if(!vehicle iswheelcolliding(self.name))
-	{
-		[[ self.ground_fx["skid"] ]]->stop(localclientnum);
-		[[ self.ground_fx["tread"] ]]->stop(localclientnum);
-		return;
-	}
-	peelingout = vehicle iswheelpeelingout(self.name);
-	sliding = vehicle iswheelsliding(self.name);
-	surface = vehicle getwheelsurface(self.name);
-	origin = vehicle gettagorigin(self.tag_name) + (0, 0, 1);
-	angles = vehicle gettagangles(self.tag_name);
-	fwd = anglestoforward(angles);
-	right = anglestoright(angles);
-	rumble = 0;
-	if(peelingout)
-	{
-		peel_fx = vehicle driving_fx::get_wheel_fx("peel", surface);
-		if(isdefined(peel_fx))
+		origin = vehicle gettagorigin(tag_name) + (0, 0, 1);
+		angles = vehicle gettagangles(tag_name);
+		fwd = anglestoforward(angles);
+		right = anglestoright(angles);
+		rumble = 0;
+		if(peelingout)
 		{
-			playfx(localclientnum, peel_fx, origin, fwd * -1);
+			peel_fx = vehicle driving_fx::get_wheel_fx("peel", surface);
+			if(isdefined(peel_fx))
+			{
+				playfx(localclientnum, peel_fx, origin, fwd * -1);
+				rumble = 1;
+			}
+		}
+		if(sliding)
+		{
+			skid_fx = vehicle driving_fx::get_wheel_fx("skid", surface);
+			[[ ground_fx["skid"] ]]->play(localclientnum, vehicle, skid_fx, tag_name);
+			vehicle.skidding = 1;
 			rumble = 1;
 		}
+		else
+		{
+			[[ ground_fx["skid"] ]]->stop(localclientnum);
+		}
+		if(speed_fraction > 0.1)
+		{
+			tread_fx = vehicle driving_fx::get_wheel_fx("tread", surface);
+			[[ ground_fx["tread"] ]]->play(localclientnum, vehicle, tread_fx, tag_name);
+		}
+		else
+		{
+			[[ ground_fx["tread"] ]]->stop(localclientnum);
+		}
+		if(rumble)
+		{
+			if(vehicle islocalclientdriver(localclientnum))
+			{
+				player = getlocalplayer(localclientnum);
+				player playrumbleonentity(localclientnum, "reload_small");
+			}
+		}
 	}
-	if(sliding)
+
+	/*
+		Name: init
+		Namespace: vehiclewheelfx
+		Checksum: 0x90CD92F7
+		Offset: 0x540
+		Size: 0xC4
+		Parameters: 2
+		Flags: Linked
+	*/
+	function init(_name, _tag_name)
 	{
-		skid_fx = vehicle driving_fx::get_wheel_fx("skid", surface);
-		[[ self.ground_fx["skid"] ]]->play(localclientnum, vehicle, skid_fx, self.tag_name);
-		vehicle.skidding = 1;
-		rumble = 1;
+		name = _name;
+		tag_name = _tag_name;
+		ground_fx = [];
+		ground_fx["skid"] = new groundfx();
+		ground_fx["tread"] = new groundfx();
+		ground_fx["tread"].id = "";
+		ground_fx["tread"].handle = -1;
 	}
-	else
+
+}
+
+class vehicle_camera_fx 
+{
+	var quake_strength_max;
+	var quake_strength_min;
+	var quake_time_max;
+	var quake_time_min;
+	var rumble_name;
+
+	/*
+		Name: constructor
+		Namespace: vehicle_camera_fx
+		Checksum: 0xFC47A4E4
+		Offset: 0xBD8
+		Size: 0x54
+		Parameters: 0
+		Flags: Linked
+	*/
+	constructor()
 	{
-		[[ self.ground_fx["skid"] ]]->stop(localclientnum);
+		quake_time_min = 0.5;
+		quake_time_max = 1;
+		quake_strength_min = 0.1;
+		quake_strength_max = 0.115;
+		rumble_name = "";
 	}
-	if(speed_fraction > 0.1)
+
+	/*
+		Name: destructor
+		Namespace: vehicle_camera_fx
+		Checksum: 0x99EC1590
+		Offset: 0xC38
+		Size: 0x4
+		Parameters: 0
+		Flags: Linked
+	*/
+	destructor()
 	{
-		tread_fx = vehicle driving_fx::get_wheel_fx("tread", surface);
-		[[ self.ground_fx["tread"] ]]->play(localclientnum, vehicle, tread_fx, self.tag_name);
 	}
-	else
-	{
-		[[ self.ground_fx["tread"] ]]->stop(localclientnum);
-	}
-	if(rumble)
+
+	/*
+		Name: update
+		Namespace: vehicle_camera_fx
+		Checksum: 0x4DA12EC7
+		Offset: 0xCF0
+		Size: 0x14C
+		Parameters: 3
+		Flags: Linked
+	*/
+	function update(localclientnum, vehicle, speed_fraction)
 	{
 		if(vehicle islocalclientdriver(localclientnum))
 		{
 			player = getlocalplayer(localclientnum);
-			player playrumbleonentity(localclientnum, "reload_small");
-		}
-	}
-}
-
-#namespace driving_fx;
-
-/*
-	Name: vehiclewheelfx
-	Namespace: driving_fx
-	Checksum: 0xA60BACC7
-	Offset: 0xAE8
-	Size: 0xE6
-	Parameters: 0
-	Flags: AutoExec, Private
-*/
-private autoexec function vehiclewheelfx()
-{
-	classes.vehiclewheelfx[0] = spawnstruct();
-	classes.vehiclewheelfx[0].__vtable[-558052070] = &vehiclewheelfx::update;
-	classes.vehiclewheelfx[0].__vtable[-1017222485] = &vehiclewheelfx::init;
-	classes.vehiclewheelfx[0].__vtable[1606033458] = &vehiclewheelfx::__destructor;
-	classes.vehiclewheelfx[0].__vtable[-1690805083] = &vehiclewheelfx::__constructor;
-}
-
-#namespace vehicle_camera_fx;
-
-/*
-	Name: __constructor
-	Namespace: vehicle_camera_fx
-	Checksum: 0xFC47A4E4
-	Offset: 0xBD8
-	Size: 0x54
-	Parameters: 0
-	Flags: Linked
-*/
-function __constructor()
-{
-	self.quake_time_min = 0.5;
-	self.quake_time_max = 1;
-	self.quake_strength_min = 0.1;
-	self.quake_strength_max = 0.115;
-	self.rumble_name = "";
-}
-
-/*
-	Name: __destructor
-	Namespace: vehicle_camera_fx
-	Checksum: 0x99EC1590
-	Offset: 0xC38
-	Size: 0x4
-	Parameters: 0
-	Flags: Linked
-*/
-function __destructor()
-{
-}
-
-/*
-	Name: init
-	Namespace: vehicle_camera_fx
-	Checksum: 0xC5554CEC
-	Offset: 0xC48
-	Size: 0x9C
-	Parameters: 5
-	Flags: Linked
-*/
-function init(t_min, t_max, s_min, s_max, rumble = "")
-{
-	self.quake_time_min = t_min;
-	self.quake_time_max = t_max;
-	self.quake_strength_min = s_min;
-	self.quake_strength_max = s_max;
-	self.rumble_name = (rumble != "" ? rumble : self.rumble_name);
-}
-
-/*
-	Name: update
-	Namespace: vehicle_camera_fx
-	Checksum: 0x4DA12EC7
-	Offset: 0xCF0
-	Size: 0x14C
-	Parameters: 3
-	Flags: Linked
-*/
-function update(localclientnum, vehicle, speed_fraction)
-{
-	if(vehicle islocalclientdriver(localclientnum))
-	{
-		player = getlocalplayer(localclientnum);
-		if(speed_fraction > 0)
-		{
-			strength = randomfloatrange(self.quake_strength_min, self.quake_strength_max) * speed_fraction;
-			time = randomfloatrange(self.quake_time_min, self.quake_time_max);
-			player earthquake(strength, time, player.origin, 500);
-			if(self.rumble_name != "" && speed_fraction > 0.5)
+			if(speed_fraction > 0)
 			{
-				if(randomint(100) < 10)
+				strength = randomfloatrange(quake_strength_min, quake_strength_max) * speed_fraction;
+				time = randomfloatrange(quake_time_min, quake_time_max);
+				player earthquake(strength, time, player.origin, 500);
+				if(rumble_name != "" && speed_fraction > 0.5)
 				{
-					player playrumbleonentity(localclientnum, self.rumble_name);
+					if(randomint(100) < 10)
+					{
+						player playrumbleonentity(localclientnum, rumble_name);
+					}
 				}
 			}
 		}
 	}
+
+	/*
+		Name: init
+		Namespace: vehicle_camera_fx
+		Checksum: 0xC5554CEC
+		Offset: 0xC48
+		Size: 0x9C
+		Parameters: 5
+		Flags: Linked
+	*/
+	function init(t_min, t_max, s_min, s_max, rumble = "")
+	{
+		quake_time_min = t_min;
+		quake_time_max = t_max;
+		quake_strength_min = s_min;
+		quake_strength_max = s_max;
+		rumble_name = (rumble != "" ? rumble : rumble_name);
+	}
+
 }
 
 #namespace driving_fx;
-
-/*
-	Name: vehicle_camera_fx
-	Namespace: driving_fx
-	Checksum: 0x264336C3
-	Offset: 0xE48
-	Size: 0xE6
-	Parameters: 0
-	Flags: AutoExec, Private
-*/
-private autoexec function vehicle_camera_fx()
-{
-	classes.vehicle_camera_fx[0] = spawnstruct();
-	classes.vehicle_camera_fx[0].__vtable[-558052070] = &vehicle_camera_fx::update;
-	classes.vehicle_camera_fx[0].__vtable[-1017222485] = &vehicle_camera_fx::init;
-	classes.vehicle_camera_fx[0].__vtable[1606033458] = &vehicle_camera_fx::__destructor;
-	classes.vehicle_camera_fx[0].__vtable[-1690805083] = &vehicle_camera_fx::__constructor;
-}
 
 /*
 	Name: vehicle_enter
@@ -450,19 +410,13 @@ function play_driving_fx(localclientnum)
 		self.wheel_fx = [];
 		for(i = 0; i < wheel_names.size; i++)
 		{
-			object = new vehiclewheelfx();
-			[[ object ]]->__constructor();
-			self.wheel_fx[i] = object;
+			self.wheel_fx[i] = new vehiclewheelfx();
 			[[ self.wheel_fx[i] ]]->init(wheel_names[i], wheel_tag_names[i]);
 		}
 		self.camera_fx = [];
-		object = new vehicle_camera_fx();
-		[[ object ]]->__constructor();
-		self.camera_fx["speed"] = object;
+		self.camera_fx["speed"] = new vehicle_camera_fx();
 		[[ self.camera_fx["speed"] ]]->init(0.5, 1, 0.1, 0.115, "reload_small");
-		object = new vehicle_camera_fx();
-		[[ object ]]->__constructor();
-		self.camera_fx["skid"] = object;
+		self.camera_fx["skid"] = new vehicle_camera_fx();
 		[[ self.camera_fx["skid"] ]]->init(0.25, 0.35, 0.1, 0.115);
 	}
 	self.last_screen_dirt = 0;
@@ -498,13 +452,16 @@ function get_wheel_fx(type, surface)
 	{
 		fxarray = self.treadfxnamearray;
 	}
-	else if(type == "peel")
+	else
 	{
-		fxarray = self.peelfxnamearray;
-	}
-	else if(type == "skid")
-	{
-		fxarray = self.skidfxnamearray;
+		if(type == "peel")
+		{
+			fxarray = self.peelfxnamearray;
+		}
+		else if(type == "skid")
+		{
+			fxarray = self.skidfxnamearray;
+		}
 	}
 	if(isdefined(fxarray))
 	{
@@ -755,10 +712,10 @@ function dirt_surface_type(surface_type)
 		case "snow":
 		case "water":
 		{
-			return 1;
+			return true;
 		}
 	}
-	return 0;
+	return false;
 }
 
 /*

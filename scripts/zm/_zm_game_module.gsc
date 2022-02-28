@@ -186,7 +186,7 @@ function freeze_players(freeze)
 function respawn_spectators_and_freeze_players()
 {
 	players = getplayers();
-	foreach(var_778a120a, player in players)
+	foreach(player in players)
 	{
 		if(player.sessionstate == "spectator")
 		{
@@ -238,7 +238,7 @@ function damage_callback_no_pvp_damage(einflictor, eattacker, idamage, idflags, 
 function respawn_players()
 {
 	players = getplayers();
-	foreach(var_73609434, player in players)
+	foreach(player in players)
 	{
 		player [[level.spawnplayer]]();
 		player util::freeze_player_controls(1);
@@ -358,7 +358,7 @@ function create_fireworks(launch_spots, min_wait, max_wait, randomize)
 		{
 			launch_spots = array::randomize(launch_spots);
 		}
-		foreach(var_96688e09, spot in launch_spots)
+		foreach(spot in launch_spots)
 		{
 			level thread fireworks_launch(spot);
 			wait(randomfloatrange(min_wait, max_wait));

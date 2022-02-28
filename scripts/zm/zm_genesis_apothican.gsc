@@ -43,7 +43,7 @@
 	Parameters: 0
 	Flags: AutoExec
 */
-autoexec function __init__sytem__()
+function autoexec __init__sytem__()
 {
 	system::register("zm_genesis_apothican", &__init__, &__main__, undefined);
 }
@@ -116,7 +116,7 @@ function __main__()
 	Parameters: 0
 	Flags: Linked, Private
 */
-private function function_ceb45430()
+function private function_ceb45430()
 {
 	if(!self flag::exists("holding_egg"))
 	{
@@ -145,7 +145,7 @@ private function function_ceb45430()
 	Parameters: 3
 	Flags: Linked, Private
 */
-private function function_b67eab19(var_1d640f59, str_widget_clientuimodel, var_18bfcc38)
+function private function_b67eab19(var_1d640f59, str_widget_clientuimodel, var_18bfcc38)
 {
 	level notify(#"widget_ui_override");
 	self endon(#"disconnect");
@@ -356,7 +356,7 @@ function function_538e24a(var_413ea50f, s_stub)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_3298b25f(s_stub)
+function private function_3298b25f(s_stub)
 {
 	self endon(#"death");
 	a_s_spots = struct::get_array(("apothican_exit_" + s_stub.name) + "_pos", "targetname");
@@ -381,13 +381,13 @@ private function function_3298b25f(s_stub)
 	Parameters: 1
 	Flags: Linked, Private
 */
-private function function_fbd80603(player)
+function private function_fbd80603(player)
 {
 	a_s_spots = struct::get_array(("apothican_exit_" + self.name) + "_pos", "targetname");
 	/#
 		assert(a_s_spots.size, "" + self.name);
 	#/
-	foreach(var_4c1dadb3, s_spot in a_s_spots)
+	foreach(s_spot in a_s_spots)
 	{
 		if(s_spot.script_int === (player.characterindex + 1))
 		{
@@ -413,7 +413,7 @@ function function_d1338047()
 	{
 		a_players = level.activeplayers;
 		level.var_b8b48a73 = [];
-		foreach(var_4db1acdd, e_player in a_players)
+		foreach(e_player in a_players)
 		{
 			if(zm_utility::is_player_valid(e_player))
 			{
@@ -497,7 +497,7 @@ function function_6e5d600d()
 	while(true)
 	{
 		a_players = level.activeplayers;
-		foreach(var_75028dbc, e_player in a_players)
+		foreach(e_player in a_players)
 		{
 			if(zm_utility::is_player_valid(e_player))
 			{
@@ -542,7 +542,7 @@ function function_dd6ccbfc()
 	level flag::wait_till_all(array("power_on1", "power_on2", "power_on3", "power_on4"));
 	while(true)
 	{
-		foreach(var_c56cb562, e_player in level.activeplayers)
+		foreach(e_player in level.activeplayers)
 		{
 			if(isdefined(e_player.var_e033e4dc) && e_player.var_e033e4dc)
 			{
@@ -602,7 +602,7 @@ function function_21a5cf5e()
 					a_points = array::randomize(queryresult.data);
 					a_spawn_origins = [];
 					n_points_found = 0;
-					foreach(var_b33959a5, point in a_points)
+					foreach(point in a_points)
 					{
 						str_zone = zm_zonemgr::get_zone_from_position(point.origin, 1);
 						if(isdefined(str_zone) && str_zone == "apothicon_interior_zone")
@@ -726,7 +726,7 @@ function function_2b03ee2a(e_player)
 {
 	queryresult = positionquery_source_navigation(e_player.origin + (0, 0, randomintrange(40, 100)), 300, 600, 10, 10, "navvolume_small");
 	a_points = array::randomize(queryresult.data);
-	foreach(var_3e2c7501, point in a_points)
+	foreach(point in a_points)
 	{
 		if(bullettracepassed(point.origin, e_player.origin, 0, e_player))
 		{
@@ -1039,25 +1039,28 @@ function function_cc6165b0(str_type = "random", var_6ac86802 = 0)
 		{
 			str_type = "plain";
 		}
-		else if(var_c624cf3b < 75)
-		{
-			str_type = "fire";
-		}
 		else
 		{
-			str_type = "shadow";
+			if(var_c624cf3b < 75)
+			{
+				str_type = "fire";
+			}
+			else
+			{
+				str_type = "shadow";
+			}
 		}
 	}
 	switch(str_type)
 	{
 		case "fire":
 		{
-			var_225347e1 = level thread namespace_3de4ab6f::function_75b161ab(undefined, self);
+			var_225347e1 = level thread zm_ai_margwa_elemental::function_75b161ab(undefined, self);
 			break;
 		}
 		case "shadow":
 		{
-			var_225347e1 = level thread namespace_3de4ab6f::function_26efbc37(undefined, self);
+			var_225347e1 = level thread zm_ai_margwa_elemental::function_26efbc37(undefined, self);
 			break;
 		}
 		default:
@@ -1112,10 +1115,10 @@ function function_26da4beb(n_stage)
 	{
 		if(self.script_int > n_stage)
 		{
-			return 0;
+			return false;
 		}
 	}
-	return 1;
+	return true;
 }
 
 /*
@@ -1145,10 +1148,10 @@ function function_a6e114bc(s_pos)
 	}
 	if(!var_d695363e)
 	{
-		return 0;
+		return false;
 	}
 	level.var_f77d7372 = n_current_time;
-	return 1;
+	return true;
 }
 
 /*
@@ -1246,7 +1249,7 @@ function function_411feb6a()
 		}
 		function_9ccb8410(n_delay);
 		level.var_a5d2ba4 = 1;
-		foreach(var_afca70e8, player in level.var_b8b48a73)
+		foreach(player in level.var_b8b48a73)
 		{
 			player playrumbleonentity("zm_genesis_apothicon_gas");
 			earthquake(0.7, 3, s_center.origin, 2000);
@@ -1276,7 +1279,7 @@ function function_2af9e8f2()
 	var_9c840b49 = struct::get_array("gateworm_egg", "targetname");
 	var_9c840b49 = array::randomize(var_9c840b49);
 	level.var_393eea44 = [];
-	foreach(var_fda6ef00, var_21e43ff6 in var_9c840b49)
+	foreach(var_21e43ff6 in var_9c840b49)
 	{
 		if(!isdefined(level.var_393eea44[var_21e43ff6.script_int]))
 		{
@@ -1353,10 +1356,10 @@ function function_e3dd263c(e_player)
 	if(e_player flag::get("holding_egg") || e_player flag::get("holding_gateworm"))
 	{
 		self sethintstring("");
-		return 0;
+		return false;
 	}
 	self sethintstring("");
-	return 1;
+	return true;
 }
 
 /*
@@ -1373,7 +1376,7 @@ function function_9071b894()
 	level flag::wait_till("book_placed");
 	zm_spawner::register_zombie_death_event_callback(&function_31a6b711);
 	level.var_2a7689da = struct::get_array("gateworm_pod", "targetname");
-	foreach(var_e007b619, var_661a8e9b in level.var_2a7689da)
+	foreach(var_661a8e9b in level.var_2a7689da)
 	{
 		var_661a8e9b thread function_ff65120e();
 	}
@@ -1494,10 +1497,10 @@ function function_5bd5869a(e_player)
 	if(e_player flag::get("holding_egg"))
 	{
 		self sethintstring("");
-		return 1;
+		return true;
 	}
 	self sethintstring("");
-	return 0;
+	return false;
 }
 
 /*
@@ -1514,10 +1517,10 @@ function function_4661867f(e_player)
 	if(e_player flag::get("holding_gateworm") || e_player flag::get("holding_egg") || (isdefined(self.stub.related_parent.var_22ee51d7) && self.stub.related_parent.var_22ee51d7 !== e_player))
 	{
 		self sethintstring("");
-		return 0;
+		return false;
 	}
 	self sethintstring("");
-	return 1;
+	return true;
 }
 
 /*
