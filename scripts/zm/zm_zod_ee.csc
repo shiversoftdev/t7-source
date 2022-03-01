@@ -21,8 +21,171 @@
 
 #using_animtree("generic");
 
-class var_b454dc63 : namespace_b454dc63
+class class_b454dc63 
 {
+	var var_3b3701c9;
+	var var_dbea7369;
+	var var_8d207f9b;
+	var var_a9547cdf;
+
+	/*
+		Name: constructor
+		Namespace: namespace_b454dc63
+		Checksum: 0x99EC1590
+		Offset: 0x5A58
+		Size: 0x4
+		Parameters: 0
+		Flags: Linked
+	*/
+	constructor()
+	{
+	}
+
+	/*
+		Name: destructor
+		Namespace: namespace_b454dc63
+		Checksum: 0x99EC1590
+		Offset: 0x5A68
+		Size: 0x4
+		Parameters: 0
+		Flags: Linked
+	*/
+	destructor()
+	{
+	}
+
+	/*
+		Name: function_66844d0d
+		Namespace: namespace_b454dc63
+		Checksum: 0x79C68E9
+		Offset: 0x5920
+		Size: 0x12C
+		Parameters: 2
+		Flags: Linked
+	*/
+	function function_66844d0d(localclientnum, b_active)
+	{
+		var_3b3701c9 = b_active;
+		if(!var_3b3701c9)
+		{
+			var_dbea7369 stoploopsound(3);
+		}
+		else
+		{
+			if(!var_8d207f9b)
+			{
+				var_a9547cdf = "p7_fxanim_zm_zod_apothicons_god_loop_anim";
+				var_dbea7369 setanim("p7_fxanim_zm_zod_apothicons_god_loop_anim", 1, 0, 1);
+				var_dbea7369 playsound(localclientnum, "zmb_zod_apothigod_vox_spawn");
+			}
+			else
+			{
+				level notify(#"hash_465ed3ec");
+				var_a9547cdf = "p7_fxanim_zm_zod_apothicons_god_body_idle_anim";
+				var_dbea7369 setanim(var_a9547cdf, 1, 0, 1);
+				var_dbea7369 playloopsound("zmb_zod_apothigod_vox_lookat_lp", 12);
+			}
+		}
+	}
+
+	/*
+		Name: function_839ff35f
+		Namespace: namespace_b454dc63
+		Checksum: 0x309F06B9
+		Offset: 0x5860
+		Size: 0xB2
+		Parameters: 2
+		Flags: Linked
+	*/
+	function function_839ff35f(localclientnum, mdl_god)
+	{
+		if(!isdefined(mdl_god))
+		{
+			return;
+		}
+		var_dbea7369 util::waittill_dobj(localclientnum);
+		mdl_god setanim("p7_fxanim_zm_zod_apothicons_god_mouth_death_anim", 1, 0, 1);
+		n_animlength = getanimlength("p7_fxanim_zm_zod_apothicons_god_body_death_anim");
+		mdl_god setanim("p7_fxanim_zm_zod_apothicons_god_body_death_anim", 1, 0, 1);
+		wait(n_animlength);
+	}
+
+	/*
+		Name: function_2de612ff
+		Namespace: namespace_b454dc63
+		Checksum: 0x641658DF
+		Offset: 0x5750
+		Size: 0x104
+		Parameters: 2
+		Flags: Linked
+	*/
+	function function_2de612ff(localclientnum, mdl_god)
+	{
+		if(!isdefined(mdl_god))
+		{
+			return;
+		}
+		var_dbea7369 util::waittill_dobj(localclientnum);
+		mdl_god setanim(var_a9547cdf, 1, 0, 1);
+		n_animlength = getanimlength("p7_fxanim_zm_zod_apothicons_god_mouth_roar_anim");
+		mdl_god setanim("p7_fxanim_zm_zod_apothicons_god_mouth_roar_anim", 1, 0, 1);
+		wait(n_animlength);
+		mdl_god setanim("p7_fxanim_zm_zod_apothicons_god_mouth_idle_anim", 1, 0, 1);
+		mdl_god setanim(var_a9547cdf, 1, 0, 1);
+	}
+
+	/*
+		Name: function_465ed3ec
+		Namespace: namespace_b454dc63
+		Checksum: 0x2F609B58
+		Offset: 0x56C0
+		Size: 0x82
+		Parameters: 2
+		Flags: Linked
+	*/
+	function function_465ed3ec(localclientnum, mdl_god)
+	{
+		level notify(#"hash_465ed3ec");
+		level endon(#"hash_465ed3ec");
+		while(true)
+		{
+			self thread function_2de612ff(localclientnum, mdl_god);
+			var_7397ca31 = randomintrange(15, 60);
+			wait(var_7397ca31);
+		}
+	}
+
+	/*
+		Name: function_9e0e6936
+		Namespace: namespace_b454dc63
+		Checksum: 0x3F7C6A0F
+		Offset: 0x56A8
+		Size: 0xA
+		Parameters: 0
+		Flags: Linked
+	*/
+	function function_9e0e6936()
+	{
+		return var_8d207f9b;
+	}
+
+	/*
+		Name: init
+		Namespace: namespace_b454dc63
+		Checksum: 0x8C5E4990
+		Offset: 0x5600
+		Size: 0x9C
+		Parameters: 3
+		Flags: Linked
+	*/
+	function init(localclientnum, mdl_god, var_bae1bdd7)
+	{
+		var_dbea7369 = mdl_god;
+		var_8d207f9b = var_bae1bdd7;
+		var_dbea7369 util::waittill_dobj(localclientnum);
+		var_dbea7369 useanimtree($generic);
+		var_dbea7369 setanim("p7_fxanim_zm_zod_apothicons_god_mouth_idle_anim", 1, 0, 1);
+	}
 
 }
 
@@ -1065,7 +1228,7 @@ function near_apothigod_active(localclientnum, oldval, newval, bnewent, binitial
 {
 	if(!isdefined(level.var_76ed0403))
 	{
-		level.var_76ed0403 = new var_b454dc63();
+		level.var_76ed0403 = new class_b454dc63();
 		[[ level.var_76ed0403 ]]->init(localclientnum, self, 1);
 	}
 	thread [[ level.var_76ed0403 ]]->function_66844d0d(localclientnum, newval);
@@ -1084,7 +1247,7 @@ function far_apothigod_active(localclientnum, oldval, newval, bnewent, binitials
 {
 	if(!isdefined(level.var_d566da8c))
 	{
-		level.var_d566da8c = new var_b454dc63();
+		level.var_d566da8c = new class_b454dc63();
 		[[ level.var_d566da8c ]]->init(localclientnum, self, 0);
 	}
 	thread [[ level.var_d566da8c ]]->function_66844d0d(localclientnum, newval);
@@ -1130,166 +1293,5 @@ function near_apothigod_roar(localclientnum, oldval, newval, bnewent, binitialsn
 function apothigod_death(localclientnum, oldval, newval, bnewent, binitialsnap, fieldname, bwastimejump)
 {
 	thread [[ level.var_76ed0403 ]]->function_839ff35f(localclientnum, self);
-}
-
-#namespace namespace_b454dc63;
-
-/*
-	Name: init
-	Namespace: namespace_b454dc63
-	Checksum: 0x8C5E4990
-	Offset: 0x5600
-	Size: 0x9C
-	Parameters: 3
-	Flags: Linked
-*/
-function init(localclientnum, mdl_god, var_bae1bdd7)
-{
-	self.var_dbea7369 = mdl_god;
-	self.var_8d207f9b = var_bae1bdd7;
-	self.var_dbea7369 util::waittill_dobj(localclientnum);
-	self.var_dbea7369 useanimtree($generic);
-	self.var_dbea7369 setanim("p7_fxanim_zm_zod_apothicons_god_mouth_idle_anim", 1, 0, 1);
-}
-
-/*
-	Name: function_9e0e6936
-	Namespace: namespace_b454dc63
-	Checksum: 0x3F7C6A0F
-	Offset: 0x56A8
-	Size: 0xA
-	Parameters: 0
-	Flags: Linked
-*/
-function function_9e0e6936()
-{
-	return self.var_8d207f9b;
-}
-
-/*
-	Name: function_465ed3ec
-	Namespace: namespace_b454dc63
-	Checksum: 0x2F609B58
-	Offset: 0x56C0
-	Size: 0x82
-	Parameters: 2
-	Flags: Linked
-*/
-function function_465ed3ec(localclientnum, mdl_god)
-{
-	level notify(#"hash_465ed3ec");
-	level endon(#"hash_465ed3ec");
-	while(true)
-	{
-		self thread function_2de612ff(localclientnum, mdl_god);
-		var_7397ca31 = randomintrange(15, 60);
-		wait(var_7397ca31);
-	}
-}
-
-/*
-	Name: function_2de612ff
-	Namespace: namespace_b454dc63
-	Checksum: 0x641658DF
-	Offset: 0x5750
-	Size: 0x104
-	Parameters: 2
-	Flags: Linked
-*/
-function function_2de612ff(localclientnum, mdl_god)
-{
-	if(!isdefined(mdl_god))
-	{
-		return;
-	}
-	self.var_dbea7369 util::waittill_dobj(localclientnum);
-	mdl_god setanim(self.var_a9547cdf, 1, 0, 1);
-	n_animlength = getanimlength("p7_fxanim_zm_zod_apothicons_god_mouth_roar_anim");
-	mdl_god setanim("p7_fxanim_zm_zod_apothicons_god_mouth_roar_anim", 1, 0, 1);
-	wait(n_animlength);
-	mdl_god setanim("p7_fxanim_zm_zod_apothicons_god_mouth_idle_anim", 1, 0, 1);
-	mdl_god setanim(self.var_a9547cdf, 1, 0, 1);
-}
-
-/*
-	Name: function_839ff35f
-	Namespace: namespace_b454dc63
-	Checksum: 0x309F06B9
-	Offset: 0x5860
-	Size: 0xB2
-	Parameters: 2
-	Flags: Linked
-*/
-function function_839ff35f(localclientnum, mdl_god)
-{
-	if(!isdefined(mdl_god))
-	{
-		return;
-	}
-	self.var_dbea7369 util::waittill_dobj(localclientnum);
-	mdl_god setanim("p7_fxanim_zm_zod_apothicons_god_mouth_death_anim", 1, 0, 1);
-	n_animlength = getanimlength("p7_fxanim_zm_zod_apothicons_god_body_death_anim");
-	mdl_god setanim("p7_fxanim_zm_zod_apothicons_god_body_death_anim", 1, 0, 1);
-	wait(n_animlength);
-}
-
-/*
-	Name: function_66844d0d
-	Namespace: namespace_b454dc63
-	Checksum: 0x79C68E9
-	Offset: 0x5920
-	Size: 0x12C
-	Parameters: 2
-	Flags: Linked
-*/
-function function_66844d0d(localclientnum, b_active)
-{
-	self.var_3b3701c9 = b_active;
-	if(!self.var_3b3701c9)
-	{
-		self.var_dbea7369 stoploopsound(3);
-	}
-	else
-	{
-		if(!self.var_8d207f9b)
-		{
-			self.var_a9547cdf = "p7_fxanim_zm_zod_apothicons_god_loop_anim";
-			self.var_dbea7369 setanim("p7_fxanim_zm_zod_apothicons_god_loop_anim", 1, 0, 1);
-			self.var_dbea7369 playsound(localclientnum, "zmb_zod_apothigod_vox_spawn");
-		}
-		else
-		{
-			level notify(#"hash_465ed3ec");
-			self.var_a9547cdf = "p7_fxanim_zm_zod_apothicons_god_body_idle_anim";
-			self.var_dbea7369 setanim(self.var_a9547cdf, 1, 0, 1);
-			self.var_dbea7369 playloopsound("zmb_zod_apothigod_vox_lookat_lp", 12);
-		}
-	}
-}
-
-/*
-	Name: __constructor
-	Namespace: namespace_b454dc63
-	Checksum: 0x99EC1590
-	Offset: 0x5A58
-	Size: 0x4
-	Parameters: 0
-	Flags: Linked
-*/
-function __constructor()
-{
-}
-
-/*
-	Name: __destructor
-	Namespace: namespace_b454dc63
-	Checksum: 0x99EC1590
-	Offset: 0x5A68
-	Size: 0x4
-	Parameters: 0
-	Flags: Linked
-*/
-function __destructor()
-{
 }
 

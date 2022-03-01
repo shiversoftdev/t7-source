@@ -4,37 +4,35 @@
 #using scripts\shared\math_shared;
 #using scripts\shared\weapons\_weapons;
 
-class var_a17e6f03 : namespace_a17e6f03
+class class_a17e6f03 
 {
 
-}
+	/*
+		Name: constructor
+		Namespace: namespace_a17e6f03
+		Checksum: 0x99EC1590
+		Offset: 0x198
+		Size: 0x4
+		Parameters: 0
+		Flags: Linked
+	*/
+	constructor()
+	{
+	}
 
-#namespace namespace_a17e6f03;
+	/*
+		Name: destructor
+		Namespace: namespace_a17e6f03
+		Checksum: 0x99EC1590
+		Offset: 0x1A8
+		Size: 0x4
+		Parameters: 0
+		Flags: Linked
+	*/
+	destructor()
+	{
+	}
 
-/*
-	Name: __constructor
-	Namespace: namespace_a17e6f03
-	Checksum: 0x99EC1590
-	Offset: 0x198
-	Size: 0x4
-	Parameters: 0
-	Flags: Linked
-*/
-function __constructor()
-{
-}
-
-/*
-	Name: __destructor
-	Namespace: namespace_a17e6f03
-	Checksum: 0x99EC1590
-	Offset: 0x1A8
-	Size: 0x4
-	Parameters: 0
-	Flags: Linked
-*/
-function __destructor()
-{
 }
 
 #namespace namespace_fdfaa57d;
@@ -84,7 +82,7 @@ function function_549c28ac(var_6a173bd1)
 	var_adeb478a = tablelookuprowcount(var_6a173bd1);
 	for(i = 0; i < var_adeb478a; i++)
 	{
-		var_279890e8 = new var_a17e6f03();
+		var_279890e8 = new class_a17e6f03();
 		var_279890e8.weaponname = tablelookupcolumnforrow(var_6a173bd1, i, 0);
 		var_279890e8.var_bc6ce097 = int(tablelookupcolumnforrow(var_6a173bd1, i, 1));
 		var_279890e8.var_2b758e89 = int(tablelookupcolumnforrow(var_6a173bd1, i, 2));

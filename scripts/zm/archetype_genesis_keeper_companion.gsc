@@ -34,8 +34,40 @@
 #using scripts\zm\_zm_spawner;
 #using scripts\zm\archetype_genesis_keeper_companion_interface;
 
-class var_78f8bb8 : namespace_78f8bb8
+class class_78f8bb8 
 {
+	var var_2db009f1;
+	var var_8e6eac66;
+	var var_54c7425;
+
+	/*
+		Name: constructor
+		Namespace: namespace_78f8bb8
+		Checksum: 0xE30EEFD5
+		Offset: 0x4F80
+		Size: 0x28
+		Parameters: 0
+		Flags: Linked
+	*/
+	constructor()
+	{
+		var_2db009f1 = gettime();
+		var_8e6eac66 = 0;
+		var_54c7425 = gettime();
+	}
+
+	/*
+		Name: destructor
+		Namespace: namespace_78f8bb8
+		Checksum: 0x99EC1590
+		Offset: 0x4FB0
+		Size: 0x4
+		Parameters: 0
+		Flags: Linked
+	*/
+	destructor()
+	{
+	}
 
 }
 
@@ -1475,39 +1507,6 @@ function private function_5c472d67(entity, var_4fd6352b, var_e54db1ed)
 	}
 }
 
-#namespace namespace_78f8bb8;
-
-/*
-	Name: __constructor
-	Namespace: namespace_78f8bb8
-	Checksum: 0xE30EEFD5
-	Offset: 0x4F80
-	Size: 0x28
-	Parameters: 0
-	Flags: Linked
-*/
-function __constructor()
-{
-	self.var_2db009f1 = gettime();
-	self.var_8e6eac66 = 0;
-	self.var_54c7425 = gettime();
-}
-
-/*
-	Name: __destructor
-	Namespace: namespace_78f8bb8
-	Checksum: 0x99EC1590
-	Offset: 0x4FB0
-	Size: 0x4
-	Parameters: 0
-	Flags: Linked
-*/
-function __destructor()
-{
-}
-
-#namespace keepercompanionbehavior;
-
 /*
 	Name: function_84e1787e
 	Namespace: keepercompanionbehavior
@@ -1521,7 +1520,7 @@ function private function_84e1787e(entity, ai)
 {
 	if(!isdefined(ai.var_78f8bb8))
 	{
-		ai.var_78f8bb8 = new var_78f8bb8();
+		ai.var_78f8bb8 = new class_78f8bb8();
 	}
 	/#
 		assert(isdefined(ai.var_78f8bb8));

@@ -21,8 +21,328 @@
 #using scripts\shared\util_shared;
 #using scripts\shared\weapons_shared;
 
-class var_dafbfd8e : namespace_dafbfd8e
+class class_dafbfd8e 
 {
+	var var_b8eeb0fe;
+	var var_2bcbe272;
+	var var_3f29a509;
+	var var_7c66997c;
+
+	/*
+		Name: constructor
+		Namespace: namespace_dafbfd8e
+		Checksum: 0x199D3232
+		Offset: 0xA30
+		Size: 0x10
+		Parameters: 0
+		Flags: Linked
+	*/
+	constructor()
+	{
+		var_2bcbe272 = 0;
+	}
+
+	/*
+		Name: destructor
+		Namespace: namespace_dafbfd8e
+		Checksum: 0x99EC1590
+		Offset: 0xA48
+		Size: 0x4
+		Parameters: 0
+		Flags: Linked
+	*/
+	destructor()
+	{
+	}
+
+	/*
+		Name: function_b449e467
+		Namespace: namespace_dafbfd8e
+		Checksum: 0xD4BDFC92
+		Offset: 0x1888
+		Size: 0xD8
+		Parameters: 0
+		Flags: Linked
+	*/
+	function function_b449e467()
+	{
+		var_b8eeb0fe.weapon_model clientfield::set("weapon_disappear_fx", 1);
+		util::wait_network_frame();
+		var_b8eeb0fe.weapon_model delete();
+		wait(1);
+		var_b8eeb0fe setzbarrierpiecestate(2, "closing");
+		while(var_b8eeb0fe getzbarrierpiecestate(2) == "closing")
+		{
+			wait(0.1);
+		}
+		var_b8eeb0fe notify(#"closed");
+	}
+
+	/*
+		Name: function_cf5042c5
+		Namespace: namespace_dafbfd8e
+		Checksum: 0xE41281E5
+		Offset: 0x1670
+		Size: 0x20C
+		Parameters: 0
+		Flags: Linked
+	*/
+	function function_cf5042c5()
+	{
+		var_b8eeb0fe setzbarrierpiecestate(2, "opening");
+		while(var_b8eeb0fe getzbarrierpiecestate(2) != "open")
+		{
+			wait(0.1);
+		}
+		var_b8eeb0fe setzbarrierpiecestate(3, "closed");
+		var_b8eeb0fe setzbarrierpiecestate(4, "closed");
+		util::wait_network_frame();
+		var_b8eeb0fe zbarrierpieceuseboxriselogic(3);
+		var_b8eeb0fe zbarrierpieceuseboxriselogic(4);
+		var_b8eeb0fe showzbarrierpiece(3);
+		var_b8eeb0fe showzbarrierpiece(4);
+		var_b8eeb0fe setzbarrierpiecestate(3, "opening");
+		var_b8eeb0fe setzbarrierpiecestate(4, "opening");
+		while(var_b8eeb0fe getzbarrierpiecestate(3) != "open")
+		{
+			wait(0.5);
+		}
+		var_b8eeb0fe hidezbarrierpiece(3);
+		var_b8eeb0fe hidezbarrierpiece(4);
+	}
+
+	/*
+		Name: function_f555c05b
+		Namespace: namespace_dafbfd8e
+		Checksum: 0x502C7259
+		Offset: 0x1638
+		Size: 0x2C
+		Parameters: 0
+		Flags: Linked
+	*/
+	function function_f555c05b()
+	{
+		weaponinfo = namespace_fdfaa57d::function_1e2e0936(1);
+		return weaponinfo;
+	}
+
+	/*
+		Name: function_c3e9e1ab
+		Namespace: namespace_dafbfd8e
+		Checksum: 0x982E330E
+		Offset: 0x1390
+		Size: 0x2A0
+		Parameters: 1
+		Flags: Linked
+	*/
+	function function_c3e9e1ab(e_player)
+	{
+		weapon = level.weaponnone;
+		modelname = undefined;
+		rand = undefined;
+		number_cycles = 40;
+		self thread function_cf5042c5();
+		for(i = 0; i < number_cycles; i++)
+		{
+			if(i < 20)
+			{
+				wait(0.05);
+				continue;
+			}
+			if(i < 30)
+			{
+				wait(0.1);
+				continue;
+			}
+			if(i < 35)
+			{
+				wait(0.2);
+				continue;
+			}
+			if(i < 38)
+			{
+				wait(0.3);
+			}
+		}
+		wait(1);
+		var_b8eeb0fe.weaponinfo = function_f555c05b();
+		v_float = anglestoup(var_b8eeb0fe.angles) * 40;
+		var_b8eeb0fe.weapon_model = spawn("script_model", var_b8eeb0fe.origin + v_float, 0);
+		var_b8eeb0fe.weapon_model.angles = (var_b8eeb0fe.angles[0] * -1, var_b8eeb0fe.angles[1] + 180, var_b8eeb0fe.angles[2] * -1);
+		var_b8eeb0fe.weapon_model useweaponmodel(var_b8eeb0fe.weaponinfo[0], var_b8eeb0fe.weaponinfo[0].worldmodel);
+		var_b8eeb0fe.weapon_model setweaponrenderoptions(var_b8eeb0fe.weaponinfo[2], 0, 0, 0, 0);
+		var_b8eeb0fe notify(#"randomization_done");
+	}
+
+	/*
+		Name: function_7429abd1
+		Namespace: namespace_dafbfd8e
+		Checksum: 0x75EDB728
+		Offset: 0x1300
+		Size: 0x84
+		Parameters: 3
+		Flags: Linked
+	*/
+	function function_7429abd1(var_7983c848, weaponinfo, e_player)
+	{
+		/#
+			assert(isdefined(weaponinfo));
+		#/
+		e_player namespace_fdfaa57d::function_43128d49(weaponinfo, 0);
+		var_7983c848 notify(#"hash_1285c563");
+		e_player unlink();
+	}
+
+	/*
+		Name: function_83bb9b69
+		Namespace: namespace_dafbfd8e
+		Checksum: 0x37FBCE72
+		Offset: 0xF80
+		Size: 0x378
+		Parameters: 1
+		Flags: Linked
+	*/
+	function function_83bb9b69(e_player)
+	{
+		if(var_2bcbe272)
+		{
+			return;
+		}
+		var_3f29a509.gameobject gameobjects::disable_object(1);
+		var_2bcbe272 = 1;
+		var_b8eeb0fe clientfield::set("magicbox_closed_glow", 0);
+		var_b8eeb0fe clientfield::set("magicbox_open_glow", 1);
+		weaponinfo = function_c3e9e1ab(e_player);
+		var_7983c848 = spawn("trigger_radius_use", var_3f29a509.origin + vectorscale((0, 0, 1), 3), 0, 94, 64);
+		var_7983c848 triggerignoreteam();
+		var_7983c848 setvisibletoall();
+		var_7983c848 usetriggerrequirelookat();
+		var_7983c848 setteamfortrigger("none");
+		var_7983c848 setcursorhint("HINT_INTERACTIVE_PROMPT");
+		var_7983c848 sethintstring(&"COOP_MAGICBOX_SWAP_WEAPON");
+		var_b8eeb0fe.var_7983c848 = var_7983c848;
+		var_aafa484e = util::init_interactive_gameobject(var_7983c848, &"cp_magic_box", &"COOP_MAGICBOX_SWAP_WEAPON", &onuse);
+		var_aafa484e.dontlinkplayertotrigger = 1;
+		var_aafa484e.classobj = self;
+		var_aafa484e enablelinkto();
+		var_aafa484e linkto(var_7983c848);
+		e_player unlink();
+		var_7983c848 util::waittill_any_timeout(6, "player_took_weapon");
+		var_7983c848 notify(#"hash_49d64e9");
+		var_aafa484e gameobjects::destroy_object(1, 1);
+		self thread function_b449e467();
+		var_aafa484e delete();
+		var_b8eeb0fe waittill(#"closed");
+		var_b8eeb0fe clientfield::set("magicbox_closed_glow", 1);
+		var_b8eeb0fe clientfield::set("magicbox_open_glow", 0);
+		var_3f29a509.gameobject gameobjects::enable_object(1);
+		var_2bcbe272 = 0;
+	}
+
+	/*
+		Name: onbeginuse
+		Namespace: namespace_dafbfd8e
+		Checksum: 0xA9DF236C
+		Offset: 0xF68
+		Size: 0xC
+		Parameters: 1
+		Flags: Linked
+	*/
+	function onbeginuse(e_player)
+	{
+	}
+
+	/*
+		Name: onuse
+		Namespace: namespace_dafbfd8e
+		Checksum: 0xEED7F6D2
+		Offset: 0xEF0
+		Size: 0x6C
+		Parameters: 1
+		Flags: Linked
+	*/
+	function onuse(e_player)
+	{
+		if(!var_2bcbe272)
+		{
+			self thread function_83bb9b69(e_player);
+		}
+		else
+		{
+			e_player thread function_7429abd1(var_b8eeb0fe.var_7983c848, var_b8eeb0fe.weaponinfo, e_player);
+		}
+	}
+
+	/*
+		Name: function_b471f57b
+		Namespace: namespace_dafbfd8e
+		Checksum: 0xA68DEB28
+		Offset: 0xE68
+		Size: 0x7C
+		Parameters: 0
+		Flags: Linked
+	*/
+	function function_b471f57b()
+	{
+		if(!var_2bcbe272)
+		{
+			var_3f29a509.gameobject gameobjects::destroy_object(1, 1);
+			var_b8eeb0fe clientfield::set("magicbox_closed_glow", 0);
+			util::wait_network_frame();
+			var_b8eeb0fe hide();
+		}
+	}
+
+	/*
+		Name: function_309dd42b
+		Namespace: namespace_dafbfd8e
+		Checksum: 0x8BC511E3
+		Offset: 0xA58
+		Size: 0x404
+		Parameters: 1
+		Flags: Linked
+	*/
+	function function_309dd42b(mdl_mobile_armory)
+	{
+		e_trigger = spawn("trigger_radius_use", mdl_mobile_armory.origin + vectorscale((0, 0, 1), 3), 0, 94, 64);
+		e_trigger triggerignoreteam();
+		e_trigger setvisibletoall();
+		e_trigger usetriggerrequirelookat();
+		e_trigger setteamfortrigger("none");
+		e_trigger setcursorhint("HINT_INTERACTIVE_PROMPT");
+		e_trigger sethintstring(&"COOP_MAGICBOX");
+		var_9fd18135 = getentarray("bonuszm_magicbox", "script_noteworthy");
+		var_b8eeb0fe = arraygetclosest(e_trigger.origin, var_9fd18135);
+		var_b8eeb0fe.origin = mdl_mobile_armory.origin;
+		var_b8eeb0fe.angles = mdl_mobile_armory.angles + (vectorscale((0, -1, 0), 90));
+		var_b8eeb0fe hidezbarrierpiece(1);
+		if(isdefined(mdl_mobile_armory.script_linkto))
+		{
+			moving_platform = getent(mdl_mobile_armory.script_linkto, "targetname");
+			mdl_mobile_armory linkto(moving_platform);
+			var_b8eeb0fe linkto(moving_platform);
+			e_trigger enablelinkto();
+			e_trigger linkto(moving_platform);
+		}
+		s_mobile_armory_object = util::init_interactive_gameobject(e_trigger, &"cp_magic_box", &"COOP_OPEN", &onuse);
+		s_mobile_armory_object.dontlinkplayertotrigger = 1;
+		s_mobile_armory_object.classobj = self;
+		if(!isdefined(mdl_mobile_armory.script_linkto))
+		{
+			s_mobile_armory_object enablelinkto();
+			s_mobile_armory_object linkto(e_trigger);
+		}
+		mdl_mobile_armory.gameobject = s_mobile_armory_object;
+		var_b8eeb0fe.gameobject = s_mobile_armory_object;
+		var_3f29a509 = mdl_mobile_armory;
+		var_7c66997c = e_trigger;
+		var_b8eeb0fe hidezbarrierpiece(0);
+		var_b8eeb0fe clientfield::set("magicbox_closed_glow", 1);
+		var_b8eeb0fe clientfield::set("magicbox_open_glow", 0);
+		var_b8eeb0fe playloopsound("zmb_box_zcamp_loop");
+		var_3f29a509 ghost();
+		var_3f29a509 notsolid();
+	}
 
 }
 
@@ -123,7 +443,7 @@ function __main__()
 */
 function function_2816573(mdl_mobile_armory)
 {
-	var_6982c48a = new var_dafbfd8e();
+	var_6982c48a = new class_dafbfd8e();
 	[[ var_6982c48a ]]->function_309dd42b(mdl_mobile_armory);
 	mdl_mobile_armory.var_b10011b8 = var_6982c48a;
 }
@@ -145,326 +465,6 @@ function function_999eb742()
 		magicbox delete();
 	}
 }
-
-#namespace namespace_dafbfd8e;
-
-/*
-	Name: __constructor
-	Namespace: namespace_dafbfd8e
-	Checksum: 0x199D3232
-	Offset: 0xA30
-	Size: 0x10
-	Parameters: 0
-	Flags: Linked
-*/
-function __constructor()
-{
-	self.var_2bcbe272 = 0;
-}
-
-/*
-	Name: __destructor
-	Namespace: namespace_dafbfd8e
-	Checksum: 0x99EC1590
-	Offset: 0xA48
-	Size: 0x4
-	Parameters: 0
-	Flags: Linked
-*/
-function __destructor()
-{
-}
-
-/*
-	Name: function_309dd42b
-	Namespace: namespace_dafbfd8e
-	Checksum: 0x8BC511E3
-	Offset: 0xA58
-	Size: 0x404
-	Parameters: 1
-	Flags: Linked
-*/
-function function_309dd42b(mdl_mobile_armory)
-{
-	e_trigger = spawn("trigger_radius_use", mdl_mobile_armory.origin + vectorscale((0, 0, 1), 3), 0, 94, 64);
-	e_trigger triggerignoreteam();
-	e_trigger setvisibletoall();
-	e_trigger usetriggerrequirelookat();
-	e_trigger setteamfortrigger("none");
-	e_trigger setcursorhint("HINT_INTERACTIVE_PROMPT");
-	e_trigger sethintstring(&"COOP_MAGICBOX");
-	var_9fd18135 = getentarray("bonuszm_magicbox", "script_noteworthy");
-	self.var_b8eeb0fe = arraygetclosest(e_trigger.origin, var_9fd18135);
-	self.var_b8eeb0fe.origin = mdl_mobile_armory.origin;
-	self.var_b8eeb0fe.angles = mdl_mobile_armory.angles + (vectorscale((0, -1, 0), 90));
-	self.var_b8eeb0fe hidezbarrierpiece(1);
-	if(isdefined(mdl_mobile_armory.script_linkto))
-	{
-		moving_platform = getent(mdl_mobile_armory.script_linkto, "targetname");
-		mdl_mobile_armory linkto(moving_platform);
-		self.var_b8eeb0fe linkto(moving_platform);
-		e_trigger enablelinkto();
-		e_trigger linkto(moving_platform);
-	}
-	s_mobile_armory_object = util::init_interactive_gameobject(e_trigger, &"cp_magic_box", &"COOP_OPEN", &onuse);
-	s_mobile_armory_object.dontlinkplayertotrigger = 1;
-	s_mobile_armory_object.classobj = self;
-	if(!isdefined(mdl_mobile_armory.script_linkto))
-	{
-		s_mobile_armory_object enablelinkto();
-		s_mobile_armory_object linkto(e_trigger);
-	}
-	mdl_mobile_armory.gameobject = s_mobile_armory_object;
-	self.var_b8eeb0fe.gameobject = s_mobile_armory_object;
-	self.var_3f29a509 = mdl_mobile_armory;
-	self.var_7c66997c = e_trigger;
-	self.var_b8eeb0fe hidezbarrierpiece(0);
-	self.var_b8eeb0fe clientfield::set("magicbox_closed_glow", 1);
-	self.var_b8eeb0fe clientfield::set("magicbox_open_glow", 0);
-	self.var_b8eeb0fe playloopsound("zmb_box_zcamp_loop");
-	self.var_3f29a509 ghost();
-	self.var_3f29a509 notsolid();
-}
-
-/*
-	Name: function_b471f57b
-	Namespace: namespace_dafbfd8e
-	Checksum: 0xA68DEB28
-	Offset: 0xE68
-	Size: 0x7C
-	Parameters: 0
-	Flags: Linked
-*/
-function function_b471f57b()
-{
-	if(!self.var_2bcbe272)
-	{
-		self.var_3f29a509.gameobject gameobjects::destroy_object(1, 1);
-		self.var_b8eeb0fe clientfield::set("magicbox_closed_glow", 0);
-		util::wait_network_frame();
-		self.var_b8eeb0fe hide();
-	}
-}
-
-/*
-	Name: onuse
-	Namespace: namespace_dafbfd8e
-	Checksum: 0xEED7F6D2
-	Offset: 0xEF0
-	Size: 0x6C
-	Parameters: 1
-	Flags: Linked
-*/
-function onuse(e_player)
-{
-	if(!self.var_2bcbe272)
-	{
-		self thread function_83bb9b69(e_player);
-	}
-	else
-	{
-		e_player thread function_7429abd1(self.var_b8eeb0fe.var_7983c848, self.var_b8eeb0fe.weaponinfo, e_player);
-	}
-}
-
-/*
-	Name: onbeginuse
-	Namespace: namespace_dafbfd8e
-	Checksum: 0xA9DF236C
-	Offset: 0xF68
-	Size: 0xC
-	Parameters: 1
-	Flags: Linked
-*/
-function onbeginuse(e_player)
-{
-}
-
-/*
-	Name: function_83bb9b69
-	Namespace: namespace_dafbfd8e
-	Checksum: 0x37FBCE72
-	Offset: 0xF80
-	Size: 0x378
-	Parameters: 1
-	Flags: Linked
-*/
-function function_83bb9b69(e_player)
-{
-	if(self.var_2bcbe272)
-	{
-		return;
-	}
-	self.var_3f29a509.gameobject gameobjects::disable_object(1);
-	self.var_2bcbe272 = 1;
-	self.var_b8eeb0fe clientfield::set("magicbox_closed_glow", 0);
-	self.var_b8eeb0fe clientfield::set("magicbox_open_glow", 1);
-	weaponinfo = function_c3e9e1ab(e_player);
-	var_7983c848 = spawn("trigger_radius_use", self.var_3f29a509.origin + vectorscale((0, 0, 1), 3), 0, 94, 64);
-	var_7983c848 triggerignoreteam();
-	var_7983c848 setvisibletoall();
-	var_7983c848 usetriggerrequirelookat();
-	var_7983c848 setteamfortrigger("none");
-	var_7983c848 setcursorhint("HINT_INTERACTIVE_PROMPT");
-	var_7983c848 sethintstring(&"COOP_MAGICBOX_SWAP_WEAPON");
-	self.var_b8eeb0fe.var_7983c848 = var_7983c848;
-	var_aafa484e = util::init_interactive_gameobject(var_7983c848, &"cp_magic_box", &"COOP_MAGICBOX_SWAP_WEAPON", &onuse);
-	var_aafa484e.dontlinkplayertotrigger = 1;
-	var_aafa484e.classobj = self;
-	var_aafa484e enablelinkto();
-	var_aafa484e linkto(var_7983c848);
-	e_player unlink();
-	var_7983c848 util::waittill_any_timeout(6, "player_took_weapon");
-	var_7983c848 notify(#"hash_49d64e9");
-	var_aafa484e gameobjects::destroy_object(1, 1);
-	self thread function_b449e467();
-	var_aafa484e delete();
-	self.var_b8eeb0fe waittill(#"closed");
-	self.var_b8eeb0fe clientfield::set("magicbox_closed_glow", 1);
-	self.var_b8eeb0fe clientfield::set("magicbox_open_glow", 0);
-	self.var_3f29a509.gameobject gameobjects::enable_object(1);
-	self.var_2bcbe272 = 0;
-}
-
-/*
-	Name: function_7429abd1
-	Namespace: namespace_dafbfd8e
-	Checksum: 0x75EDB728
-	Offset: 0x1300
-	Size: 0x84
-	Parameters: 3
-	Flags: Linked
-*/
-function function_7429abd1(var_7983c848, weaponinfo, e_player)
-{
-	/#
-		assert(isdefined(weaponinfo));
-	#/
-	e_player namespace_fdfaa57d::function_43128d49(weaponinfo, 0);
-	var_7983c848 notify(#"hash_1285c563");
-	e_player unlink();
-}
-
-/*
-	Name: function_c3e9e1ab
-	Namespace: namespace_dafbfd8e
-	Checksum: 0x982E330E
-	Offset: 0x1390
-	Size: 0x2A0
-	Parameters: 1
-	Flags: Linked
-*/
-function function_c3e9e1ab(e_player)
-{
-	weapon = level.weaponnone;
-	modelname = undefined;
-	rand = undefined;
-	number_cycles = 40;
-	self thread function_cf5042c5();
-	for(i = 0; i < number_cycles; i++)
-	{
-		if(i < 20)
-		{
-			wait(0.05);
-			continue;
-		}
-		if(i < 30)
-		{
-			wait(0.1);
-			continue;
-		}
-		if(i < 35)
-		{
-			wait(0.2);
-			continue;
-		}
-		if(i < 38)
-		{
-			wait(0.3);
-		}
-	}
-	wait(1);
-	self.var_b8eeb0fe.weaponinfo = function_f555c05b();
-	v_float = anglestoup(self.var_b8eeb0fe.angles) * 40;
-	self.var_b8eeb0fe.weapon_model = spawn("script_model", self.var_b8eeb0fe.origin + v_float, 0);
-	self.var_b8eeb0fe.weapon_model.angles = (self.var_b8eeb0fe.angles[0] * -1, self.var_b8eeb0fe.angles[1] + 180, self.var_b8eeb0fe.angles[2] * -1);
-	self.var_b8eeb0fe.weapon_model useweaponmodel(self.var_b8eeb0fe.weaponinfo[0], self.var_b8eeb0fe.weaponinfo[0].worldmodel);
-	self.var_b8eeb0fe.weapon_model setweaponrenderoptions(self.var_b8eeb0fe.weaponinfo[2], 0, 0, 0, 0);
-	self.var_b8eeb0fe notify(#"randomization_done");
-}
-
-/*
-	Name: function_f555c05b
-	Namespace: namespace_dafbfd8e
-	Checksum: 0x502C7259
-	Offset: 0x1638
-	Size: 0x2C
-	Parameters: 0
-	Flags: Linked
-*/
-function function_f555c05b()
-{
-	weaponinfo = namespace_fdfaa57d::function_1e2e0936(1);
-	return weaponinfo;
-}
-
-/*
-	Name: function_cf5042c5
-	Namespace: namespace_dafbfd8e
-	Checksum: 0xE41281E5
-	Offset: 0x1670
-	Size: 0x20C
-	Parameters: 0
-	Flags: Linked
-*/
-function function_cf5042c5()
-{
-	self.var_b8eeb0fe setzbarrierpiecestate(2, "opening");
-	while(self.var_b8eeb0fe getzbarrierpiecestate(2) != "open")
-	{
-		wait(0.1);
-	}
-	self.var_b8eeb0fe setzbarrierpiecestate(3, "closed");
-	self.var_b8eeb0fe setzbarrierpiecestate(4, "closed");
-	util::wait_network_frame();
-	self.var_b8eeb0fe zbarrierpieceuseboxriselogic(3);
-	self.var_b8eeb0fe zbarrierpieceuseboxriselogic(4);
-	self.var_b8eeb0fe showzbarrierpiece(3);
-	self.var_b8eeb0fe showzbarrierpiece(4);
-	self.var_b8eeb0fe setzbarrierpiecestate(3, "opening");
-	self.var_b8eeb0fe setzbarrierpiecestate(4, "opening");
-	while(self.var_b8eeb0fe getzbarrierpiecestate(3) != "open")
-	{
-		wait(0.5);
-	}
-	self.var_b8eeb0fe hidezbarrierpiece(3);
-	self.var_b8eeb0fe hidezbarrierpiece(4);
-}
-
-/*
-	Name: function_b449e467
-	Namespace: namespace_dafbfd8e
-	Checksum: 0xD4BDFC92
-	Offset: 0x1888
-	Size: 0xD8
-	Parameters: 0
-	Flags: Linked
-*/
-function function_b449e467()
-{
-	self.var_b8eeb0fe.weapon_model clientfield::set("weapon_disappear_fx", 1);
-	util::wait_network_frame();
-	self.var_b8eeb0fe.weapon_model delete();
-	wait(1);
-	self.var_b8eeb0fe setzbarrierpiecestate(2, "closing");
-	while(self.var_b8eeb0fe getzbarrierpiecestate(2) == "closing")
-	{
-		wait(0.1);
-	}
-	self.var_b8eeb0fe notify(#"closed");
-}
-
-#namespace bonuszm;
 
 /*
 	Name: function_89a0f2a6
