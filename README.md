@@ -4,4 +4,5 @@
  They include live dumped scripts, and all sorts of fixes and features that were not originally supported.
 
 # Please report bugs.
-If you locate places that look weird or broken, please tell me and I will try to fix them.
+If you locate places that look weird or broken, please tell me and I will try to fix them. \
+Thanks for the hashes https://github.com/Jake-NotTheMuss/t7-hashes/blob/master/hashes.csv
