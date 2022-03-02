@@ -2613,7 +2613,6 @@ function set_players_dontspeak(bool)
 		}
 		foreach(player in players)
 		{
-			var_91a28485 = getnextarraykey(var_7095611e);
 			while(isdefined(player) && (isdefined(player.isspeaking) && player.isspeaking))
 			{
 				wait(0.1);
@@ -3056,7 +3055,6 @@ function samanthasay(vox_line, e_source, b_wait_for_nearby_speakers = 0, intro_l
 		{
 			foreach(player in nearbyplayers)
 			{
-				var_96cd4938 = getnextarraykey(var_8665d32b);
 				while(isdefined(player) && (isdefined(player.isspeaking) && player.isspeaking))
 				{
 					wait(0.05);
@@ -3126,7 +3124,6 @@ function maxissay(vox_line, m_spot_override, b_wait_for_nearby_speakers)
 		{
 			foreach(player in nearbyplayers)
 			{
-				var_86ef2afc = getnextarraykey(var_16600e5f);
 				while(isdefined(player) && (isdefined(player.isspeaking) && player.isspeaking))
 				{
 					wait(0.05);

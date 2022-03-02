@@ -608,7 +608,6 @@ function function_cdfa9ce8(bird)
 	bird endon(#"hash_cf62504");
 	bird endon(#"death");
 	bird useanimtree($chicken_mech);
-	loc_000023A0:
 	bird.animation = (randomint(2) ? %chicken_mech::a_chicken_mech_idle : %chicken_mech::a_chicken_mech_lay_egg);
 	while(isdefined(bird))
 	{

@@ -773,7 +773,6 @@ function function_a442e988(e_player)
 	var_1916d2ed = getentarray("zombie_sentinel", "targetname");
 	foreach(var_663b2442 in var_1916d2ed)
 	{
-		var_8500f025 = getnextarraykey(var_3e7f8cd8);
 		while(isdefined(var_663b2442) && !var_663b2442 flag::exists("completed_spawning"))
 		{
 			wait(0.05);
@@ -798,7 +797,7 @@ function function_a442e988(e_player)
 				}
 				else
 				{
-					var_663b2442 notify(#"hash_d600cb9a", var_dd5b6e2e);
+					var_663b2442 notify(#"hash_d600cb9a");
 				}
 			}
 			var_d7b33d0c = var_663b2442;

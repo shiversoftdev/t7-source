@@ -354,7 +354,6 @@ function function_89e36314()
 		{
 			var_53a79e45 = (self.var_3c66c303 == 0 ? 5 : 45);
 			var_ad74c1fa = (self.var_3c66c303 == 0 ? 2.2 : 2.5);
-			loc_00001A98:
 			n_accel = (self.var_3c66c303 == 0 ? 0.5 : 0.7);
 			while(self.var_3c66c303 != 2)
 			{
@@ -772,7 +771,6 @@ function function_cce02c2e()
 				var_a59295c6 = undefined;
 				sp = a_spawners[var_b3d71f31];
 				var_b3d71f31++;
-				loc_000031C0:
 				var_b3d71f31 = (var_b3d71f31 >= a_spawners.size ? 0 : var_b3d71f31);
 				while(true)
 				{

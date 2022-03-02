@@ -148,7 +148,6 @@ function zm_frontend_zombie_logic()
 		a_sp_zombie = array::randomize(a_sp_zombie);
 		foreach(sp_zombie in a_sp_zombie)
 		{
-			var_4728d7aa = getnextarraykey(var_87bb3477);
 			while(getaicount() >= 20)
 			{
 				wait(1);

@@ -1046,7 +1046,6 @@ function function_dae6fcbf(name)
 function function_a354fb63(num)
 {
 	b_success = 0;
-	loc_000038B4:
 	trig = getent("boss_hack" + (isdefined(num) ? "" + num : ""), "targetname");
 	while(!b_success)
 	{

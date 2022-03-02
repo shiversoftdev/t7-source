@@ -474,7 +474,6 @@ function hitpoints_loss_event(val)
 function gadget_armor_status(slot, weapon)
 {
 	self endon(#"disconnect");
-	loc_000011E8:
 	maxhitpoints = isdefined(weapon.gadget_max_hitpoints) && (weapon.gadget_max_hitpoints > 0 ? weapon.gadget_max_hitpoints : 100);
 	while(self flagsys::get("gadget_armor_on"))
 	{

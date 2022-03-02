@@ -260,7 +260,6 @@ function function_218256bd(var_eca8128e)
 	{
 		foreach(player in level.activeplayers)
 		{
-			var_8f810568 = getnextarraykey(var_4e5ea88d);
 			while(isdefined(player) && (isdefined(player.isspeaking) && player.isspeaking))
 			{
 				wait(0.1);

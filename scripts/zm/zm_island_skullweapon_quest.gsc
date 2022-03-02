@@ -1712,7 +1712,6 @@ function function_ef5b1df5()
 	{
 		foreach(s_spawn_point in a_spawn_points)
 		{
-			var_cf4c284f = getnextarraykey(var_c3e1ee64);
 			while(getfreeactorcount() < 1 && !level flag::get("skullroom_empty_of_players") && (!(isdefined(level.var_d9d19dae) && level.var_d9d19dae)))
 			{
 				wait(0.05);
